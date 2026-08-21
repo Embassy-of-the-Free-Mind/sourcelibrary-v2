@@ -1,0 +1,23 @@
+{
+  "work": "Dioscorides, De materia medica I.106-107, 1549 Ruel print",
+  "book_id": "69aff2b8c83500af1dbf681e",
+  "page_number": 155,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg0656.tlg001 (Wellmann 1907 critical text — DIFFERENT edition from our 1549 Ruel Greek-Latin print)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0656/tlg001/tlg0656.tlg001.1st1K-grc1.xml",
+  "edition": "Ruel, 1549 (Greek-Latin)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ἄχρις οὗ τακηρὸς γένηται, καὶ ἐπιπλασθεὶς νύκτα ὅλην τρίχας μελαίνει προαποσμηχθείσας Κιμωλίᾳ γῇ. 3 ἁρμόζει δὲ τὰ φύλλα πάντων λεῖα κοπέντα οἰδήμασι, καὶ τὰ ἄτονα δὲ μέρη κρατύνει. αἱ δὲ Σαρδιαναὶ βάλανοι, ἄς τινες λόπιμα ἢ καστανίας ἢ μότα ἡ Διὸς βαλάνους καλοῦσι, στύρουσι καὶ αὐταί, τῶν ὁμοίων τέ εἰσι δραστικαί, καὶ μάλιστα ὁ μεταξὺ τῆς σαρκὸς καὶ τοῦ λέπους φλοιός. ἡ δὲ σὰρξ καὶ τοῖς ἐφήμερον πεπωκόσιν ἁρμόζει. 107 κηκὶς καρπός ἐστι δρυός, ἦς ἡ μέν τις ὀμφακῖτις καλουμένη μικρὰ καὶ κονδυλώδης, στιβαρά, ἀτρύπητος, ἡ δέ τις λεία καὶ κούφη καὶ",
+  "page_class": {
+    "source_class": "print",
+    "layout": "parallel_greek_latin_two_column",
+    "density": "dense",
+    "type_size": "small",
+    "layout_note": "heavily ligatured 16th-c Greek type facing Latin translation",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

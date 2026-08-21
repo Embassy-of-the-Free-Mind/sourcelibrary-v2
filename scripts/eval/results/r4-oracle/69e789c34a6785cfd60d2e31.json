@@ -1,0 +1,40 @@
+{
+  "book_id": "69e789c34a6785cfd60d2e31",
+  "work_identified": "Lama Drakpo Kilaya and White Tara Wish-Fulfilling Wheel fire offering for purifying sins and obscurations (homa ritual), titled 'myur lam rab gsal' (The Clearly Illuminated Swift Path), from the Ogyen Choling estate collection, Bumthang, Bhutan",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "none",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "BDRC \"Ogyen Choling\" \"Vajrakilaya\" \"White Tara\" Tibetan fire puja homa English translation",
+    "\"bla ma drag po\" \"ki la ya\" \"sgol dkar\" \"hom mchod\" Tibetan English translation",
+    "Lotsawa House \"Vajrakilaya\" \"White Tara\" fire offering homa English translation",
+    "BDRC \"O rgyan chos gling\" Bhutan Tibetan ritual collection fire offering",
+    "\"Samten Karmay\" \"Catalogue\" \"Ogyen Choling\" Bhutan Buddhist writings",
+    "\"Ogyen Choling\" OR \"O rgyan chos gling\" Bhutan English translation published book",
+    "\"drag po\" \"ki la ya\" \"sgrol dkar\" \"yid bzhin 'khor lo\" fire offering English Tibet",
+    "\"Guru Drakpo\" OR \"Lama Drakpo\" Kilaya \"White Tara\" combined fire offering homa English published",
+    "Ogyen Choling Bhutan manuscript ritual text English translation scholar",
+    "eap.bl.uk \"EAP105\" \"bla ma drag po\" Tibetan kilaya sgrol dkar",
+    "\"Ogyen Choling\" OR \"O rgyan chos gling\" translated English publication ritual text fire offering",
+    "Lotsawa House \"Guru Drakpo\" \"Drolkar\" OR \"Trolkar\" fire offering English translation",
+    "worldcat \"drag po\" \"kilaya\" \"sgrol dkar\" OR \"White Tara\" fire offering homa Tibetan English",
+    "\"myur lam rab gsal\" \"hom mchod\" Tibetan fire offering Ogyen Choling English",
+    "\"hom mchod\" \"drag po\" \"ki la ya\" \"sgrol dkar\" Tibetan English WorldCat published"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.lotsawahouse.org/topics/fire-offering/", "found": "7 fire offering translations; 2 Vajrakilaya texts (Khenpo Jigme Phuntsok; Tertön Sogyal Yang Nying Pudri) — neither combined with White Tara; no Ogyen Choling text"},
+    {"url": "https://www.lotsawahouse.org/tibetan-masters/khenpo-jigme-phuntsok/vajrakilaya-fire-offering", "found": "Vajrakilaya fire offering for Neck-Pouch Dagger cycle only, no White Tara, composed 1990 by Khenpo Jigme Phuntsok, translated Adam Pearcey 2018 — different text"},
+    {"url": "https://archive.org/details/bdrc-W4CZ74508", "found": "Lama Drakpo Kilaya practice texts (Cambridge ms, 116 pages), different collection, no English translation noted"},
+    {"url": "https://drukpachoegon.org/dechenchoekhorgrandpuja/monthly-lama-drakpo-kilaya-puja", "found": "Drukpa Kargyu Lama Drakpo Kilaya from Pema Karpo's pure vision — different lineage, no White Tara, no English fire offering translation"},
+    {"url": "https://eap.bl.uk/project/EAP105", "found": "British Library EAP105: digitized ~300+ manuscripts from Ogyen Choling; Tibetan texts only, no English translations"},
+    {"url": "https://eap.bl.uk/archive-file/EAP105-2-1-174", "found": "'bla ma thugs kyi snying po las/ me mchod 'phrin las myur 'grub' — related fire offering from Ogyen Choling, Tibetan only"},
+    {"url": "https://www.oling.bt/publications.html", "found": "SSL expired; via web search: publications are museum guides ('A Manor in Central Bhutan', 'The Ogyen Choling Museum'), not ritual text translations"},
+    {"url": "https://rtz.tsadra.org/index.php/Category:Sgrol_dkar_yid_bzhin_%27khor_lo", "found": "403 Forbidden — could not access RTZ category for White Tara Wish-fulfilling Wheel texts"},
+    {"url": "https://library.bdrc.io/", "found": "BDRC full-text search inaccessible via WebFetch; no web-indexed results for this specific combined fire offering text"}
+  ],
+  "reasoning": "This is a highly specific fire offering (homa) ritual from the private Ogyen Choling estate collection (Bumthang, Bhutan), combining Lama Drakpo Kilaya + White Tara Wish-fulfilling Wheel for purification. Lotsawa House fire offerings exhaustively searched — no such combined text exists there. No English translation found across EAP105 digitization project, academic literature, or web searches. The collection (Karmay's 'Diamond Isle' catalogue, 2003) has never had ritual texts translated for publication. BDRC full-text and WorldCat inaccessible, introducing uncertainty."
+}

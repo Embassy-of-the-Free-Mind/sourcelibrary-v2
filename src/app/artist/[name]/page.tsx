@@ -163,6 +163,7 @@ export async function generateMetadata({ params }: ArtistPageProps): Promise<Met
     description: `Visual works by ${artistName} in Source Library's collection of rare historical prints, paintings, and drawings, digitized and catalogued with AI.`,
     alternates: { canonical: `/artist/${name}` },
     openGraph: {
+      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
       title: `${artistName} — Artist — Source Library`,
       description: `Visual works by ${artistName} in Source Library`,
     },

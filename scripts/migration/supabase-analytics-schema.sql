@@ -185,6 +185,12 @@ SELECT
   COUNT(*) FILTER (WHERE status = 'failed') AS failed_count,
   COUNT(*) FILTER (WHERE status = 'success') AS success_count
 FROM gemini_usage
+-- #3452: batch rows are written twice — a zero-token placeholder at submit
+-- ('submitted'/'pending') and the real numbers when results land. Counting the
+-- placeholder double-counts calls and pages. 'duplicate' marks a historical
+-- placeholder whose spend lives on a separate row. See
+-- scripts/migration/exclude-placeholder-rows-from-dashboard-usage.sql.
+WHERE status IS NULL OR status NOT IN ('submitted', 'pending', 'duplicate', 'unknown')
 GROUP BY 1, 2, 3;
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_dashboard_usage_key ON dashboard_usage (day, type, model);

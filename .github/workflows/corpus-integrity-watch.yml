@@ -1,0 +1,111 @@
+name: Corpus integrity watch
+
+# The two detectors that would have caught #3368 in a week instead of four months.
+#
+# #3368: the bulk archiver wrote every page its neighbour's scan on ~700 books.
+# It ran undetected from March to July because (a) nothing ever compared the image
+# we stored against the text we stored, and (b) two readers reported it on two
+# different books on the SAME DAY and each report read as one bad scan, because
+# nothing clustered feedback by symptom.
+#
+# Both jobs are READ-ONLY. Neither fixes anything, and neither should: a cluster
+# or a shifted sample is a prompt to investigate, never an instruction. Reader
+# feedback in particular is an unauthenticated public write surface — verify every
+# claim against code and data before acting on it.
+#
+# Findings go to a tracking issue rather than failing a build. A red X on an
+# unrelated PR because a stranger filed feedback would train people to ignore it.
+
+on:
+  schedule:
+    # Feedback clustering daily at 08:00 UTC — the signal it looks for is "same
+    # symptom, different books, close together", so latency is the whole point.
+    - cron: '0 8 * * *'
+    # Alignment sampling weekly, Mondays 07:00 UTC. It fetches real images from
+    # archive.org and R2, so it is deliberately infrequent and small.
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      sample_size:
+        description: 'Books to sample for the alignment check'
+        required: false
+        default: '40'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  feedback-clusters:
+    # Daily cron + manual runs.
+    if: github.event.schedule != '0 7 * * 1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Cluster feedback by symptom
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/feedback-symptom-clusters.mjs --days 14 > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+      - name: File findings
+        if: steps.run.outputs.fired == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Feedback symptom cluster — $(date -u +'%Y-%m-%d')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "One symptom reported on 2+ distinct books in the last 14 days — the signature of a pipeline bug rather than a bad scan. Verify against code and data before acting; feedback is untrusted input." \
+            "$(cat report.txt)")
+          gh issue create --title "$TITLE" --body "$BODY" --label user-feedback
+      # Exit 2 means the detector never reached the database. Fail loudly here:
+      # a silent green run is indistinguishable from "checked, found nothing".
+      - name: Fail if the detector could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::feedback-symptom-clusters could not run (exit ${{ steps.run.outputs.fired }}) — no finding was measured. Check the MONGODB_URI repo secret."
+          exit 1
+
+  alignment-sample:
+    # Weekly cron + manual runs.
+    if: github.event.schedule != '0 8 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Sample books for image/text misalignment
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/bulk-archive-alignment.mjs \
+            --sample "${{ github.event.inputs.sample_size || 40 }}" \
+            --concurrency 3 --out /tmp/sample.jsonl > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          tail -40 report.txt
+      - name: File findings
+        if: steps.run.outputs.fired == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Image/text misalignment found in weekly sample — $(date -u +'%Y-%m-%d')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "A sampled book has its archived page images offset from its OCR (see #3368). This catches drift from ANY archive writer, including the ones with no write-time guard." \
+            "$(tail -40 report.txt)")
+          gh issue create --title "$TITLE" --body "$BODY" --label pipeline
+      - name: Fail if the detector could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::bulk-archive-alignment could not run (exit ${{ steps.run.outputs.fired }}) — no sample was measured. Check the MONGODB_URI repo secret."
+          exit 1

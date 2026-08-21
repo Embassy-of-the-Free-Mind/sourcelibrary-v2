@@ -1,0 +1,63 @@
+{
+  "book_id": "69920b97e0a548a13d8840d5",
+  "work_identified": "New Testament in Syriac (Peshitta) — British and Foreign Bible Society 1905 critical edition of the Peshitta NT, source-language Syriac text, not an English translation",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The New Testament, or, The Book of the Holy Gospel of our Lord and our God, Jesus the Messiah",
+      "translator": "James Murdock",
+      "pub_year": "1851",
+      "publisher": "Stanford and Swords",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/syriacnewtestam00murdgoog"
+    },
+    {
+      "english_title": "The Peschito Syriac New Testament: Translated into English",
+      "translator": "John Wesley Etheridge",
+      "pub_year": "1849",
+      "publisher": "Longman, Green, Longman, and Roberts",
+      "completeness": "complete",
+      "source_url": "https://aramaicnewtestament.org/peshitta/etheridge/"
+    },
+    {
+      "english_title": "The Holy Bible From the Ancient Eastern Text",
+      "translator": "George M. Lamsa",
+      "pub_year": "1933",
+      "publisher": "A.J. Holman",
+      "completeness": "complete",
+      "source_url": "https://nocr.net/hbm/english/englamsa/index.php"
+    }
+  ],
+  "queries_run": [
+    "Peshitta New Testament English translation history Murdock Etheridge Lamsa",
+    "WorldCat \"New Testament\" Syriac Peshitta English translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Peshitta",
+      "found": "Lists at least 9 complete English translations of the Peshitta NT from 1849 onward, including Etheridge (1849), Murdock (1851), Lamsa (1933), Magiera (2006), Roth (2008)"
+    },
+    {
+      "url": "https://archive.org/details/newtestamentinsy00unse",
+      "found": "Confirms our item is the 1905 British and Foreign Bible Society Syriac-language Peshitta text — source language original, not an English translation"
+    },
+    {
+      "url": "https://aramaicnewtestament.org/peshitta/murdock/",
+      "found": "Murdock 1851 complete English translation from Syriac Peshitta, freely available"
+    },
+    {
+      "url": "https://aramaicnewtestament.org/peshitta/etheridge/",
+      "found": "Etheridge 1849 complete English translation from Syriac Peshitta, freely available"
+    },
+    {
+      "url": "https://nocr.net/hbm/english/englamsa/index.php",
+      "found": "Lamsa 1933 English translation of the Syriac Peshitta NT, confirmed complete"
+    }
+  ],
+  "reasoning": "Our item is the 1905 BFBS Syriac-language Peshitta NT text — a source-language edition, not an English translation. Complete English translations from Syriac exist since 1849 (Etheridge), 1851 (Murdock), 1933 (Lamsa), and many later. Source-language rule: complete modern English of this work exists → not_first."
+}

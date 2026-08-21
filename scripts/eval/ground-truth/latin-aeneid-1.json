@@ -1,0 +1,18 @@
+{
+  "work": "Aeneid I.1-7",
+  "book_id": "6a084d9715c643eb1af3f59e",
+  "page_number": 203,
+  "script": "latin",
+  "language": "Latin",
+  "source": "Wikisource (la), ed. with macrons; folded at compare time",
+  "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+  "ocr_ground_truth": "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam, fātō profugus, Lāvīniaque vēnit lītora, multum ille et terrīs iactātus et altō vī superum saevae memorem Iūnōnis ob īram;",
+  "page_class": {
+    "source_class": "print",
+    "layout": "verse_embedded_in_commentary",
+    "density": "dense",
+    "type_size": "mixed",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": true
+  }
+}

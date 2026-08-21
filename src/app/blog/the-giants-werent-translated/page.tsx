@@ -1,16 +1,20 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Giants Were Never Fully Translated - Source Library',
   description:
     'The most-read book on Source Library, Robert Fludd&rsquo;s Utriusque Cosmi Historia, has never been translated into English in full. Neither have the major works of Kircher, and Ficino only reached English this century. Why "first full translation" is still meaningful.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg', alt: 'Robert Fludd&rsquo;s Integra Naturae, from Utriusque Cosmi Historia, 1617' }],
     title: 'The Giants Were Never Fully Translated',
     description:
       'The most-read book on Source Library has no complete English translation. Neither do the works of the men who made the canon.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg', alt: 'Robert Fludd&rsquo;s Integra Naturae, from Utriusque Cosmi Historia, 1617' }],
   },
   alternates: {
     canonical: '/blog/the-giants-werent-translated',
@@ -201,7 +205,6 @@ export default function GiantsPage() {
         </p>
       </article>
 
-      <BlogComments slug="the-giants-werent-translated" />
     </ContentPageLayout>
   );
 }

@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { stripe } from '@/lib/stripe';
 import { PRICES, PurchaseType } from '@/lib/purchases';
 import { getDb } from '@/lib/mongodb';
+import { toUserId } from '@/lib/user-id';
 
 /**
  * Create a Stripe Checkout session for a single-item purchase (book or image).
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
   // Reuse Stripe customer if we have one
   const db = await getDb();
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { 'membership.stripeCustomerId': 1 } }
   );
   let customerId = user?.membership?.stripeCustomerId;
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
     });
     customerId = customer.id;
     await db.collection('users').updateOne(
-      { _id: session.user.id as any },
+      { _id: toUserId(session.user.id) as any },
       { $set: { 'membership.stripeCustomerId': customerId } }
     );
   }

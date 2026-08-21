@@ -3,11 +3,15 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
-import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
-import SharedLibraryView, { PER_PAGE, type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
+import { getPartnerBySlug } from '@/lib/library-partners';
+import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import LibrarySchema from '@/components/seo/LibrarySchema';
 
-const PER_PAGE_LOCAL = PER_PAGE;
+// Must be a plain server-side constant. Importing PER_PAGE from the (client)
+// SharedLibraryView gave the server a client-reference STUB (a function), so
+// `limit` became a function → range(0, NaN) → empty grid. This was the whole
+// "library pages show no books" bug.
+const PER_PAGE_LOCAL = 60;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -46,9 +50,9 @@ function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, u
 
 // ---------- Static params ----------
 
-export async function generateStaticParams() {
-  return getAllPartnerSlugs().map(slug => ({ slug }));
-}
+// This page reads searchParams (sort / language / offset / search), so render it
+// per request rather than pre-baking it statically.
+export const dynamic = 'force-dynamic';
 
 // ---------- Metadata ----------
 
@@ -75,6 +79,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${partner.name} - Source Library`,
       description,
       type: 'website',
+      // Defining openGraph replaces the root layout's block wholesale, so an
+      // explicit image is required or the page ships no og:image at all.
+      images: [{
+        url: partner.heroImageOverride || 'https://sourcelibrary.org/og-image.jpg',
+        alt: `${partner.name} — Source Library`,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [{
+        url: partner.heroImageOverride || 'https://sourcelibrary.org/og-image.jpg',
+        alt: `${partner.name} — Source Library`,
+      }],
     },
   };
 }
@@ -88,19 +105,53 @@ async function fetchLibraryData(
   offset: number,
   q?: string
 ): Promise<Pick<SharedLibraryViewProps, 'books' | 'total' | 'topBooks' | 'languages' | 'galleryImages' | 'contributingLibraries'>> {
-  const [booksResult, languages, sampleResult] = await Promise.all([
-    browseBooks({
+  // Every query is independently guarded: one slow/failing catalog call must
+  // degrade its own slice, never 500 the whole page.
+  const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
+    try { return await fn(); } catch { return fallback; }
+  };
+  type BrowseResult = Awaited<ReturnType<typeof browseBooks>>;
+  const emptyResult: BrowseResult = { books: [], total: 0 };
+  const chosenSort = (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular';
+  // Show ALL of the library's holdings (not only translated ones — that hid
+  // every book for untranslated collections). Query with the default
+  // pages_count>0 first (fast + safe, even over huge providers); only if that
+  // yields NOTHING (e.g. an art-only provider like the Met, whose single-object
+  // items have pages_count:0) fall back to including page-less artworks. Never
+  // exactCount (it times out over big providers and empties the page).
+  const fetchGrid = async (): Promise<BrowseResult> => {
+    const paged = await safe(() => browseBooks({
       provider: providerKey,
       language: language || undefined,
-      hasTranslation: true,
       search: q && q.length >= 2 ? q : undefined,
-      sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
+      sort: chosenSort,
       offset,
       limit: PER_PAGE_LOCAL,
-      exactCount: true,
-    }),
-    getLanguageCounts({ provider: providerKey }),
-    browseBooks({ provider: providerKey, hasTranslation: true, sort: 'popular', limit: 50 }),
+    }), emptyResult);
+    if (paged.books.length > 0) return paged;
+    return safe(() => browseBooks({
+      provider: providerKey,
+      language: language || undefined,
+      search: q && q.length >= 2 ? q : undefined,
+      sort: chosenSort,
+      offset,
+      limit: PER_PAGE_LOCAL,
+      hasPages: false,
+    }), paged);
+  };
+  const fetchSample = async (): Promise<BrowseResult> => {
+    const paged = await safe(() => browseBooks({ provider: providerKey, sort: 'popular', limit: 50 }), emptyResult);
+    if (paged.books.length > 0) return paged;
+    return safe(() => browseBooks({ provider: providerKey, sort: 'popular', limit: 50, hasPages: false }), paged);
+  };
+  // The grid query is the critical one — run it FIRST and alone. The aux queries
+  // (especially getLanguageCounts, which scans every row for the provider) are
+  // heavy enough that running them concurrently starved/timed-out the grid query
+  // and emptied the page. Books first, then the supporting data.
+  const booksResult = await fetchGrid();
+  const [languages, sampleResult] = await Promise.all([
+    safe(() => getLanguageCounts({ provider: providerKey }), [] as Array<{ lang: string; count: number }>),
+    fetchSample(),
   ]);
 
   const sampleBookIds = sampleResult.books.map(b => b.id);
@@ -133,14 +184,17 @@ async function fetchLibraryData(
     .filter((img): img is Record<string, unknown> => !!img && typeof img === 'object')
     .map((img) => sanitizeGalleryImageDoc(img));
 
-  const { data: contribData } = await supabase
-    .from('books_catalog')
-    .select('contributing_library')
-    .eq('visible', true)
-    .eq('image_source_provider', providerKey)
-    .gt('pages_count', 0)
-    .gt('pages_translated', 0)
-    .not('contributing_library', 'is', null);
+  const contribData = await safe(async () => {
+    const { data } = await supabase
+      .from('books_catalog')
+      .select('contributing_library')
+      .eq('visible', true)
+      .eq('image_source_provider', providerKey)
+      .gt('pages_count', 0)
+      .gt('pages_translated', 0)
+      .not('contributing_library', 'is', null);
+    return data;
+  }, null as { contributing_library: string | null }[] | null);
 
   const contribCounts = new Map<string, number>();
   for (const row of (contribData || [])) {

@@ -1,0 +1,47 @@
+{
+  "book_id": "69f331b5876dd827cbc493ea",
+  "work_identified": "Commonplace book of Latin poetry, MS c.1400-1450, spuriously attributed to Walter Map (d. c.1210) — anonymous 15th-century anthology of verse from the Goliardic tradition; attribution is a 15th-century scribal convention with no firm basis",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Walter Map \"commonplace book\" poetry manuscript 1400 1450 Latin English translation",
+    "Walter Map medieval Latin manuscript poetry anthology English translation WorldCat",
+    "worldcat \"commonplace book of poetry\" \"Walter Map\" OR \"Map, Walter\" manuscript 1400",
+    "\"Walter Mapes\" OR \"Walter Map\" \"Latin poems\" English translation complete modern scholarly",
+    "\"Latin poems\" \"Walter Map\" OR \"Walter Mapes\" English translation Golias Goliardic scholarly complete",
+    "Goliardic poems \"Walter Map\" OR \"Walter Mapes\" English translation book publication 20th 21st century",
+    "worldcat \"Walter Map\" OR \"Walter Mapes\" poetry manuscript English translation complete published"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/latinpoemscommo16mapw",
+      "found": "Thomas Wright ed., The Latin Poems Commonly Attributed to Walter Mapes (Camden Society, 1841) — Latin text edition only; appendix has medieval/early modern vernacular imitations, not a modern English translation"
+    },
+    {
+      "url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupname?key=Map,+Walter,+active+1200",
+      "found": "Only De Nugis Curialium carries English translations; poetry corpus (Wright 1841/1968 reprint) available only in Latin; no modern English poetry edition listed"
+    },
+    {
+      "url": "https://medievalsourcesbibliography.org/sources.php?id=2146116514",
+      "found": "Wright edition entry confirms majority of texts untranslated; only medieval/early modern appendix translations exist; attribution to Map discredited even in 1841"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Walter_Mapes",
+      "found": "No English translation of attributed poetry listed; De Nugis Curialium (different prose work) translated; Goliardic poems listed as disputed/attributed only"
+    },
+    {
+      "url": "https://archive.org/details/goliardpoetsmedi0000unse",
+      "found": "Whicher, The Goliard Poets (1949) — selective verse anthology of Goliardic tradition, not a translation of this specific manuscript or the full Walter Mapes corpus"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Lists_of_English_translations_from_medieval_sources",
+      "found": "Walter Map/Mapes not present in any section of the standard Wikipedia medieval translation lists"
+    }
+  ],
+  "reasoning": "Unique 15th-c. MS anthology of Latin verse spuriously attributed to Map (d. c.1210). The only edition of the attributed poetry is Wright's 1841 Latin text (no modern English); De Nugis Curialium is a separate prose work with its own translations. No prior English translation of this manuscript's content found in archive.org, Online Books Page, medieval sources bibliography, or scholarly literature."
+}

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'What Are Demons? Five Answers from the Primary Sources - Source Library',
@@ -10,7 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'What Are Demons? Five Answers from the Primary Sources',
     description: 'The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel. Source Library holds the texts that document this extraordinary reversal.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg' }],
   },
   alternates: {
     canonical: '/blog/demonology',
@@ -24,7 +27,7 @@ export default function DemonologyPage() {
         <ContentHeader
           title="What Are Demons? Five Answers from the Primary Sources"
           subtitle="The word &ldquo;demon&rdquo; names two almost opposite things — and the history of how it acquired its current meaning is one of the stranger reversals in intellectual history"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg"
+          image="https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg"
           imageAlt="Illustration of a jinn from the Book of Wonders, 14th century"
         >
           <p className="text-stone-400 text-sm mt-4">21 February 2026 &middot; 18 min read</p>
@@ -74,7 +77,7 @@ export default function DemonologyPage() {
           <Link href="/gallery/image/6953b56577f38f6761bd97db-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F6953b56577f38f6761bd979d%2F62.jpg&x=0.091&y=0.078&w=0.792&h=0.835"
+              src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6953b56577f38f6761bd979d%2F62.jpg&x=0.091&y=0.078&w=0.792&h=0.835"
               alt="Horned demonic figure seated cross-legged, surrounded by smaller demons, from the Kitab al-Bulhan (Book of Wonders), 14th century"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
@@ -262,7 +265,7 @@ export default function DemonologyPage() {
             <Link href="/gallery/image/6953b56577f38f6761bd97de-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F6953b56577f38f6761bd979d%2F65.jpg&x=0.128&y=0.235&w=0.768&h=0.672"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6953b56577f38f6761bd979d%2F65.jpg&x=0.128&y=0.235&w=0.768&h=0.672"
                 alt="Three-headed demonic jinn figure from the Kitab al-Bulhan, 14th century Arabic manuscript"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -448,7 +451,7 @@ export default function DemonologyPage() {
             <Link href="/gallery/image/695285d5ab34727b1f04c378-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F695285d5ab34727b1f04c36f%2F9.jpg&x=0.132&y=0.086&w=0.738&h=0.806"
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F695285d5ab34727b1f04c36f%2F9.jpg&x=0.132&y=0.086&w=0.738&h=0.806"
                 alt="Grid of demon seals from the Goetia (Lesser Key of Solomon), showing geometric sigils used in ceremonial evocation"
                 className="w-full max-w-md mx-auto rounded-lg shadow-md"
               />
@@ -605,7 +608,6 @@ export default function DemonologyPage() {
         </div>
       </article>
 
-      <BlogComments slug="demonology" />
     </ContentPageLayout>
   );
 }

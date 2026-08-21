@@ -212,7 +212,7 @@ async function handleTimeline(db: any, params: URLSearchParams) {
     // so repeat traffic doesn't re-trigger the scan. Only set on success;
     // the 503 timeout path above is explicitly no-store.
     headers: {
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
       'CDN-Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
     },
   });

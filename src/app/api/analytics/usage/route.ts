@@ -9,6 +9,11 @@ export const maxDuration = 30;
 const cache = new Map<string, { data: any; timestamp: number }>();
 const CACHE_TTL_MS = 60 * 1000; // 1 minute (Supabase queries are fast)
 
+// Oldest a snapshot may be and still be served. `analytics_usage` is refreshed
+// hourly, so anything past a couple of days means its writer has stopped and
+// the honest answer is "not measurable", not a plausible stale total.
+const MAX_SNAPSHOT_AGE_MS = 2 * 24 * 60 * 60 * 1000;
+
 export const GET = withAuth(async (request: NextRequest, session) => {
   try {
     const { searchParams } = new URL(request.url);
@@ -137,12 +142,45 @@ export const GET = withAuth(async (request: NextRequest, session) => {
     ]);
 
     // === Unpack snapshot (or fall back to dashboard_snapshot) ===
+    //
+    // The fallback exists for the cold case where `analytics_usage` has never
+    // been seeded. It is NOT a stand-in for a rollup that has stopped writing:
+    // `dashboard_snapshot` has no writer on any current path and was measured
+    // at 126 days old on 2026-08-06, so serving it silently would put
+    // four-month-old totals on the dashboard with nothing to say so.
+    //
+    // A number that looks authoritative and is wrong is worse than no number
+    // (`.claude/docs/invariants/measurement-instruments.md`). So: refuse
+    // anything past MAX_SNAPSHOT_AGE_MS, and always report the age and source
+    // of whatever we did serve, so the UI can label it.
     let snap = snapshot?.data;
+    let snapshotSource: 'analytics_usage' | 'dashboard_snapshot' | 'none' =
+      snap ? 'analytics_usage' : 'none';
+    let snapshotUpdatedAt: string | null = snapshot?.updated_at
+      ? new Date(snapshot.updated_at).toISOString()
+      : null;
+
     if (!snap) {
-      // Fall back to dashboard_snapshot if analytics_usage hasn't been seeded yet
       const fallback = await db.collection('system_config').findOne({ _id: 'dashboard_snapshot' } as any);
-      snap = fallback?.data;
+      const fallbackAt = fallback?.updated_at ? new Date(fallback.updated_at) : null;
+      const fallbackAge = fallbackAt ? Date.now() - fallbackAt.getTime() : Infinity;
+
+      if (fallback?.data && fallbackAge <= MAX_SNAPSHOT_AGE_MS) {
+        snap = fallback.data;
+        snapshotSource = 'dashboard_snapshot';
+        snapshotUpdatedAt = fallbackAt!.toISOString();
+      } else {
+        console.warn(
+          `[analytics/usage] analytics_usage missing and dashboard_snapshot is ` +
+          `${Number.isFinite(fallbackAge) ? Math.round(fallbackAge / 86_400_000) + 'd' : 'undated'} old ` +
+          `(max ${MAX_SNAPSHOT_AGE_MS / 86_400_000}d) — serving no snapshot rather than stale totals`
+        );
+      }
     }
+
+    const snapshotAgeMs = snapshotUpdatedAt
+      ? Date.now() - new Date(snapshotUpdatedAt).getTime()
+      : null;
 
     const canon = snap?.canon || {};
     const coverage = snap?.coverage || {};
@@ -238,6 +276,16 @@ export const GET = withAuth(async (request: NextRequest, session) => {
     };
 
     const responseData = {
+      // Provenance for the corpus totals below. `summary` comes from a
+      // periodic rollup, not from a live count, so the UI must be able to say
+      // how old it is — and `source: 'none'` means we refused a stale snapshot
+      // and the totals are zeroes, which must NOT be rendered as real figures.
+      snapshot: {
+        source: snapshotSource,
+        updatedAt: snapshotUpdatedAt,
+        ageMs: snapshotAgeMs,
+        stale: snapshotAgeMs !== null && snapshotAgeMs > MAX_SNAPSHOT_AGE_MS,
+      },
       summary: {
         totalBooks, totalPages, pagesWithOcr, pagesWithTranslation,
         ocrPercentage: totalPages > 0 ? Math.round((pagesWithOcr / totalPages) * 100) : 0,

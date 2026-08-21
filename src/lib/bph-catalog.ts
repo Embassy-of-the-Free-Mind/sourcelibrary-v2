@@ -25,6 +25,7 @@
 
 import { supabaseAdmin } from '@/lib/supabase';
 import { getDb } from '@/lib/mongodb';
+import { catalogKeyColumn } from '@/lib/bph-catalog-key';
 
 /**
  * Fields a contributor or editor can change through this helper. Adding a
@@ -36,8 +37,17 @@ import { getDb } from '@/lib/mongodb';
  * (link enrichers, the generated tsvector trigger, this helper itself).
  */
 export const EDITABLE_BPH_FIELDS = [
-  // Title family
+  // What kind of object this record describes. Decides which fields the editor
+  // form even shows, and gates two of the worklist buckets. Constrained enum
+  // `bph_record_type`; measured production values are exactly:
+  // printed (28,110) · photocopy (959) · manuscript (812).
+  'record_type',
+  // Title family. `full_title` is where MANUSCRIPTS keep their title — 82% of
+  // the 812 manuscripts have one and ZERO have `title` — so leaving it out of
+  // this whitelist made a manuscript's title uneditable anywhere in the UI
+  // (José Bouman, 2026-08-13: "the same format as those already catalogued").
   'title',
+  'full_title',
   'parallel_title',
   'uniform_title',
   // Authorship
@@ -91,6 +101,10 @@ export const EDITABLE_BPH_FIELDS = [
   // Memorix "Internal remarks" — staff working notes. Editable/visible for
   // editor+ only; the public catalog entry page must never render it.
   'internal_remarks',
+  // Exhibition history — where this copy has been shown (José B., 2026-07-29).
+  // Staff-only on the same terms as internal_remarks. Unbounded TEXT: entries
+  // accumulate one line per exhibition over the life of a copy.
+  'exhibition_history',
   // Provenance (ownership history) + collection (named collection the copy
   // belongs to) — kept as two distinct fields per Paul D. (2026-06-24).
   'provenance',
@@ -136,6 +150,19 @@ export interface FieldChange {
 export type FieldChangeMap = Partial<Record<EditableBphField, FieldChange>>;
 
 export interface ApplyWorkRevisionInput {
+  /**
+   * How to address the work: a UBN, or — for the 2,012 records Memorix issues
+   * no UBN for (manuscripts, photographs) — that row's `uuid`. Which column is
+   * queried is decided by shape via catalogKeyColumn(), the same rule the
+   * /catalog/{key} route uses; no UBN in production is uuid-shaped, so the two
+   * cannot collide.
+   *
+   * On create this is the identifier the new row gets. Pass a uuid here to
+   * create a record with NO ubn, which is what a manuscript requires — the BPH
+   * writes UBNs into the physical book by hand, so a synthetic one would end up
+   * in ink inside a manuscript that is not supposed to have one (José Bouman,
+   * 2026-08-13).
+   */
   ubn: string;
   changeType?: ChangeType;
   fieldChanges: FieldChangeMap;
@@ -200,6 +227,11 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
   }
   assertEditableFields(fieldChanges);
 
+  // Which column this key addresses. Shape-based, identical to the public
+  // route's rule — see src/lib/bph-catalog-key.ts for why it cannot collide.
+  const keyCol = catalogKeyColumn(ubn);
+  const isUuidKeyed = keyCol === 'uuid';
+
   // 1. Fetch the current row so we can: (a) merge field_provenance without
   //    clobbering existing entries (USTC matcher, metadata enrichment, etc.)
   //    write their own provenance keys and we must preserve them, and
@@ -207,23 +239,32 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
   // Supabase typed select() with a dynamic column list returns an over-broad
   // union; the runtime shape is { ubn, field_provenance, sl_book_id, ...editable fields }
   // so we cast through unknown and narrow on the application side.
-  const selectCols = ['ubn', 'field_provenance', 'sl_book_id', ...Object.keys(fieldChanges)].join(', ');
+  const selectCols = ['ubn', 'uuid', 'field_provenance', 'sl_book_id', ...Object.keys(fieldChanges)].join(', ');
   const { data: rawCurrent, error: fetchErr } = await supabaseAdmin
     .from('bph_works')
     .select(selectCols)
-    .eq('ubn', ubn)
+    .eq(keyCol, ubn)
     .maybeSingle();
 
   if (fetchErr) throw new BphCatalogError('fetch bph_works failed', fetchErr);
   const current = rawCurrent as unknown as
-    | (Record<string, unknown> & { field_provenance: unknown; sl_book_id: string | null })
+    | (Record<string, unknown> & { uuid: string | null; field_provenance: unknown; sl_book_id: string | null })
     | null;
   if (!current && changeType !== 'create') {
-    throw new BphCatalogError(`bph_works row not found for ubn=${ubn}`);
+    throw new BphCatalogError(`bph_works row not found for ${keyCol}=${ubn}`);
   }
   if (current && changeType === 'create') {
-    throw new BphCatalogError(`A catalogue entry with UBN "${ubn}" already exists — edit it instead`);
+    throw new BphCatalogError(
+      isUuidKeyed
+        ? `A catalogue entry with uuid "${ubn}" already exists — edit it instead`
+        : `A catalogue entry with UBN "${ubn}" already exists — edit it instead`,
+    );
   }
+
+  // The uuid this revision hangs off. For a ubn-keyed edit it comes from the
+  // live row; for a uuid-keyed create the caller's key IS the uuid; for a
+  // ubn-keyed create we mint one so every new row is addressable both ways.
+  const workUuid = isUuidKeyed ? ubn : current?.uuid || crypto.randomUUID();
 
   const appliedAt = new Date().toISOString();
   const revisionId = crypto.randomUUID();
@@ -261,20 +302,59 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     ...provenancePatch,
   };
 
-  const insertRevision = () =>
-    supabaseAdmin!
-      .from('bph_works_revisions')
-      .insert({
-        id: revisionId,
-        ubn,
-        change_type: changeType,
-        field_changes: liveFieldChanges,
-        editor_email: editorEmail,
-        proposed_by: proposedBy,
-        source_pending_id: sourcePendingId,
-        applied_at: appliedAt,
-        note,
-      });
+  // A revision targets a work by UBN or by uuid — never neither (there is a
+  // CHECK constraint saying so). Manuscripts and photographs have no UBN at
+  // all, so `ubn` is null for those and `work_uuid` carries the link. See
+  // scripts/migration/add-bph-uuid-keyed-revisions.sql.
+  const revisionRow = {
+    id: revisionId,
+    ubn: isUuidKeyed ? (current?.ubn as string | null) ?? null : ubn,
+    work_uuid: workUuid,
+    change_type: changeType,
+    field_changes: liveFieldChanges,
+    editor_email: editorEmail,
+    proposed_by: proposedBy,
+    source_pending_id: sourcePendingId,
+    applied_at: appliedAt,
+    note,
+  };
+
+  /**
+   * Insert the revision, degrading if the work_uuid migration hasn't run on
+   * this environment yet.
+   *
+   * Without this, deploying the code before applying the migration would break
+   * EVERY catalogue edit, not just the manuscript ones — an unknown column
+   * fails the insert, and the insert is the gate the whole mutation path sits
+   * behind. A ubn-keyed edit works perfectly well on the old schema, so it
+   * should keep working; only the uuid-keyed rows genuinely need the column,
+   * and they are unreachable on the old schema anyway (the FK would reject
+   * them). Mirrors the same graceful-degradation pattern used by the catalogue
+   * read routes for un-run migrations.
+   */
+  const insertRevision = async () => {
+    const first = await supabaseAdmin!.from('bph_works_revisions').insert(revisionRow);
+    if (!first.error) return first;
+    const msg = (first.error.message || '').toLowerCase();
+    const missingColumn =
+      msg.includes('work_uuid') && (msg.includes('does not exist') || msg.includes('could not find'));
+    if (!missingColumn) return first;
+    if (isUuidKeyed) {
+      // No ubn to fall back on: this row is only reachable through the new
+      // schema. Report the real cause rather than a confusing FK error.
+      return {
+        ...first,
+        error: {
+          ...first.error,
+          message:
+            'This record has no UBN, which needs scripts/migration/add-bph-uuid-keyed-revisions.sql to be applied first. ' +
+            first.error.message,
+        },
+      };
+    }
+    const { work_uuid: _dropped, ...legacyRow } = revisionRow;
+    return supabaseAdmin!.from('bph_works_revisions').insert(legacyRow);
+  };
 
   if (changeType === 'create') {
     // 2a. The revisions table has a FK on ubn → bph_works(ubn), so the row
@@ -283,13 +363,21 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     //     leave a created record with no provenance trail. Only `ubn` is
     //     required by the schema (everything else nullable). The row is marked
     //     Source-Library-originated (via acquisition_source) so it's
-    //     distinguishable from Memorix-synced rows. `record_type` is a
-    //     constrained enum (bph_record_type) we deliberately leave unset
-    //     rather than guess between printed/manuscript/journal.
+    //     distinguishable from Memorix-synced rows.
+    //
+    //     `record_type` is supplied by the cataloguer through the form (it
+    //     decides which fields the form even shows), so it arrives in
+    //     `updates` like any other field. It used to be left unset here
+    //     rather than guessed between printed/manuscript/photocopy — but a
+    //     record with no type can never appear in the worklist buckets that
+    //     filter on it, so guessing was replaced by asking.
+    //
+    //     A uuid-keyed create writes NO ubn: that is the manuscript case.
     const { error: insErr } = await supabaseAdmin
       .from('bph_works')
       .insert({
-        ubn,
+        ubn: isUuidKeyed ? null : ubn,
+        uuid: workUuid,
         ...updates,
         field_provenance: mergedProvenance,
         created_at: appliedAt,
@@ -301,8 +389,9 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     const { error: revErr } = await insertRevision();
     if (revErr) {
       // Roll back the just-created row — a record without history would
-      // violate the audit invariant.
-      await supabaseAdmin.from('bph_works').delete().eq('ubn', ubn);
+      // violate the audit invariant. Delete by uuid: it is set on every row we
+      // insert, including the manuscripts that have no ubn to delete by.
+      await supabaseAdmin.from('bph_works').delete().eq('uuid', workUuid);
       throw new BphCatalogError('insert bph_works_revisions failed (create rolled back)', revErr);
     }
   } else {
@@ -320,7 +409,7 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
         ...updates,
         field_provenance: mergedProvenance,
       })
-      .eq('ubn', ubn);
+      .eq(keyCol, ubn);
 
     if (updErr) {
       // Revision row is already in. Surface the error so the caller knows
@@ -347,32 +436,59 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
 }
 
 /**
- * Suggest the next Source-Library-originated UBN (`SL-000123`). New records
- * created in the editor get an `SL-` prefixed id rather than a numeric one so
- * they never collide with the BPH's authoritative numeric UBN namespace (the
- * Memorix sync upserts on numeric UBNs). Editors can override the suggestion
- * with a real BPH UBN if the record already has one — uniqueness is enforced
- * by the primary key and the create guard in applyWorkRevision.
+ * First UBN reserved for records created on Source Library. The BPH's own
+ * numbering is dense up to ~32,999, so 33,000 is the agreed start of the new
+ * range (José Bouman, 2026-07-15) — see UBN_ALLOCATION_START's usage below.
+ */
+export const UBN_ALLOCATION_START = 33000;
+
+/** How many ids to probe per round-trip when hunting for a free number. */
+const UBN_PROBE_WINDOW = 200;
+
+/** Give up after this many windows (covers 33,000 – 53,000). */
+const UBN_MAX_PROBES = 100;
+
+/**
+ * Suggest the next free numeric UBN, starting at 33,000.
  *
- * Best-effort: on any lookup failure we fall back to a timestamp-free random
- * suffix so the create page still renders a usable default.
+ * This used to hand out `SL-000123`. The prefix was there to keep new records
+ * out of the BPH's authoritative numeric namespace, but the BPH writes the UBN
+ * into the physical book by hand and the `SL-` was too easy to forget, so a
+ * shelf number and a catalogue number could silently diverge (José Bouman,
+ * feedback 2026-07-15). A reserved numeric range gives the same collision
+ * safety with nothing to forget. No `SL-` record was ever created, so there is
+ * no legacy id to migrate.
+ *
+ * Collision safety is not assumed — the allocator probes a window of ids and
+ * returns the lowest one that is actually free, so it stays correct as the
+ * range fills and against the ~20 stray numeric UBNs that already sit above
+ * 33,000 (39424, 40402, … 272622). Uniqueness is still enforced underneath by
+ * the primary key and the create guard in applyWorkRevision; this only picks a
+ * sensible default that the editor can overwrite with a real BPH UBN.
+ *
+ * Best-effort: on any lookup failure we fall back to the start of the range so
+ * the create page still renders a usable default.
  */
 export async function suggestNewUbn(): Promise<string> {
-  const pad = (n: number) => `SL-${String(n).padStart(6, '0')}`;
-  if (!supabaseAdmin) return pad(1);
+  if (!supabaseAdmin) return String(UBN_ALLOCATION_START);
   try {
-    const { data } = await supabaseAdmin
-      .from('bph_works')
-      .select('ubn')
-      .like('ubn', 'SL-%')
-      .order('ubn', { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    const last = (data as { ubn?: string } | null)?.ubn;
-    const n = last ? parseInt(last.replace(/^SL-/, ''), 10) : 0;
-    return pad(Number.isFinite(n) ? n + 1 : 1);
+    for (let probe = 0; probe < UBN_MAX_PROBES; probe++) {
+      const base = UBN_ALLOCATION_START + probe * UBN_PROBE_WINDOW;
+      const window = Array.from({ length: UBN_PROBE_WINDOW }, (_, i) => String(base + i));
+      const { data, error } = await supabaseAdmin
+        .from('bph_works')
+        .select('ubn')
+        .in('ubn', window);
+      if (error) throw error;
+      const taken = new Set((data as { ubn: string }[] | null)?.map((r) => r.ubn) ?? []);
+      const free = window.find((candidate) => !taken.has(candidate));
+      if (free) return free;
+    }
+    // Every id in the probed range is taken — fall through to the range start
+    // rather than guessing past the window; the editor sets the UBN by hand.
+    return String(UBN_ALLOCATION_START);
   } catch {
-    return pad(1);
+    return String(UBN_ALLOCATION_START);
   }
 }
 

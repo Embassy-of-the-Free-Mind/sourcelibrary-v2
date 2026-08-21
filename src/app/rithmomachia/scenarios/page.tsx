@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ScenarioSelector from '@/components/rithmomachia/ScenarioSelector';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
   title: 'Rithmomachia Strategy Scenarios | Source Library',
@@ -13,26 +14,14 @@ export const metadata: Metadata = {
 export default function ScenariosPage() {
   return (
     <main className="min-h-screen bg-cream">
+      <SiteHeader
+        variant="light"
+        breadcrumbs={[
+          { label: 'Rithmomachia', href: '/rithmomachia' },
+          { label: 'Strategy Scenarios', href: '/rithmomachia/scenarios' },
+        ]}
+      />
       <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <Link
-            href="/"
-            className="text-sm text-muted hover:text-secondary transition-colors"
-          >
-            Source Library
-          </Link>
-          <span className="text-muted mx-2">/</span>
-          <Link
-            href="/rithmomachia"
-            className="text-sm text-muted hover:text-secondary transition-colors"
-          >
-            Rithmomachia
-          </Link>
-          <span className="text-muted mx-2">/</span>
-          <span className="text-sm text-secondary">Strategy Scenarios</span>
-        </nav>
-
         <ScenarioSelector />
 
         {/* Footer */}

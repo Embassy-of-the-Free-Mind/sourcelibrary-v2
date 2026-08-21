@@ -18,6 +18,7 @@ import {
   Camera,
 } from 'lucide-react';
 import { IMAGE_LICENSES, type ImageSourceProvider } from '@/lib/types';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { books, catalog } from '@/lib/api-client';
 import type { CatalogResult } from '@/lib/api-client';
 import { create } from 'domain';
@@ -206,15 +207,7 @@ export default function UploadPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link href="/" className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Library
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Progress Steps */}

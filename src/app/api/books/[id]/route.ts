@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { withApiAuth } from '@/lib/api-auth';
+import { EDITION_COUNTER_PROJECTION } from '@/lib/page-translations';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
@@ -39,9 +40,31 @@ export const GET = withApiAuth(async (
     const bookProjection = pagesMode === 'nav' ? {
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
       published: 1, year: 1, language: 1, doi: 1,
+      // The edition-vs-work language distinction (#3942). `language` is the
+      // MANIFESTATION language — what is printed on these leaves — while
+      // `original_language` names the work when it differs (de Slane's French
+      // Muqaddimah: language French, original_language Arabic). Without these
+      // three, every MCP caller saw one scalar and had no way to tell a
+      // translation-of-a-translation from a source text.
+      original_language: 1, text_role: 1, is_translation: 1,
       pages_count: 1, pages_translated: 1,
+      // Per-language edition counters, so get_book can report `editions`
+      // ({ en: 357, es: 357 }) rather than leaving an agent to discover a
+      // Spanish edition by accident (#4095).
+      ...EDITION_COUNTER_PROJECTION,
       categories: 1, reading_summary: 1,
       chapters: 1,
+      // Cover art (all four fields of the cover-write contract, see
+      // src/lib/cover-fields.ts) — the MCP get_book tool attaches the cover
+      // as an inline image block (#3937).
+      thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
+      // Needed by the MCP list_editions tool to find sibling editions of the
+      // same work without a second lookup.
+      work_id: 1,
+      // What the volume's own running heads say it contains. Present only where
+      // the scans carry heads; `status: 'insufficient-heads'` distinguishes
+      // "we looked and could not tell" from "nobody looked".
+      contains_works: 1,
     } : undefined;
 
     const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId ?? undefined);
@@ -253,6 +276,8 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
     const allowedFields = [
       'title', 'display_title', 'author', 'language', 'published',
       ...COVER_WRITE_FIELDS,
+      // Editor-chosen About side plate/page (BookAboutPicker).
+      'about_visual',
       'categories', 'status', 'summary', 'dublin_core',
       // USTC catalog fields
       'ustc_id', 'place_published', 'publisher', 'format',

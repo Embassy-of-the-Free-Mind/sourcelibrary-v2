@@ -11,11 +11,27 @@ everything *around* it.
 
 ## The layers
 
-**`CLAUDE.md` — invariants.** Always loaded. The mission, plus the rules whose violation
-has already cost real damage. Every CRITICAL section is scar tissue from an incident. It
-is deliberately an *index*, not the corpus: ~290 lines, pointing at the reference docs
-rather than inlining them. Loading everything would be both expensive and worse — an
-agent that reads 118 documents has no idea which three matter.
+**`CLAUDE.md` — unconditional invariants.** Always loaded, in every session and every
+terminal. The mission, the workflow rules, and the invariants that apply *regardless of
+what you are working on*. It is deliberately an *index*, not the corpus: ~200 lines,
+pointing at the reference docs rather than inlining them. Loading everything would be
+both expensive and worse — an agent that reads 140 documents has no idea which three
+matter.
+
+**`.claude/docs/invariants/` — conditional invariants.** The same class of knowledge —
+scar tissue, equally binding — but each piece fires only when you touch a particular
+subsystem. Indexed from `CLAUDE.md` by **trigger** ("touching `src/proxy.ts` → read
+`tenant-lockdown.md`"), so it loads when relevant instead of always. Each doc opens with
+a "Read this when" line so an agent can bail in two seconds.
+
+**The budget rule.** These two tiers only stay separate if something enforces it.
+`CLAUDE.md` grew from ~290 lines to **827** between May and August 2026 — a 157KB file
+loaded into every one of ~10 concurrent terminals, roughly 39K tokens before any work
+began — because the ratchet below only ever *added*. Adding a section now means fitting
+the ~250-line budget or demoting an existing one into `invariants/`. The test: **if you
+can name the file or subsystem that triggers a rule, it belongs in `invariants/`; if you
+cannot, it belongs in `CLAUDE.md`.** Note that age is not the criterion — when the split
+was done, the four largest sections were all under three weeks old.
 
 **`.claude/docs/` — reference.** Read on demand, never all at once. Architecture,
 subsystem design, editorial specifications, research notes. If `CLAUDE.md` names a doc,
@@ -56,14 +72,26 @@ proposes moving it here.
 
 ## How writing moves between layers
 
-The ratchet that keeps `CLAUDE.md` alive is one rule, stated in `CLAUDE.md` itself:
+The ratchet that keeps `CLAUDE.md` alive has **two directions**, and for its first three
+months only one of them was written down.
 
-> Every incident handoff ends with a CLAUDE.md check.
-
-Debug a hard problem → write the handoff → ask whether the next person needs an
+**Up.** Debug a hard problem → write the handoff → ask whether the next person needs an
 invariant. If yes, PR the doc change *that session*. Otherwise the lesson lives only in
-the handoff, where nobody will look, and it decays. Both of the large CRITICAL sections
-in `CLAUDE.md` were written this way. The `/lesson` skill runs this loop.
+the handoff, where nobody will look, and it decays. The `/lesson` skill runs this loop.
+
+**Down.** Ask the opposite question at the same moment: *is anything in `CLAUDE.md` now
+conditional?* A rule keyed to a subsystem moves to `invariants/`; a rule superseded by a
+newer one is merged, not appended beside it; a dated stat gets re-measured or deleted.
+Without this half, the file grows monotonically — which is exactly what happened, and
+the section that documented the discipline was itself 2.8× out of date when the split
+finally ran. **`/gnite` asks both questions**, because the end of a session is when the
+lesson is fresh and the file is on your mind.
+
+Two failure modes that only the downward pass catches: the same incident written up
+twice under different aphorisms (the 2026-07-28 usage review had **two** sections, 300
+lines apart, both about unclassified `analytics_events`), and pointers that rot — four
+handoff references had gone dead, three because the handoff correctly lived in the
+private ops repo while `CLAUDE.md` cited a `.claude/handoffs/` path.
 
 The reverse also has to happen. A doc that no longer describes reality is worse than no
 doc, because it is trusted. Stats older than 14 days are to be verified before use, not

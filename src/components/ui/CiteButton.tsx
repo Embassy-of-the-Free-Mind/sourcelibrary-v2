@@ -80,6 +80,8 @@ interface CiteButtonProps {
   /** Tenant slug (e.g. "bph") — produces /bph/book/… URLs instead of /book/… */
   tenantSlug?: string;
   className?: string;
+  /** Hide the "Cite" label — show only the icon. */
+  iconOnly?: boolean;
 }
 
 function formatAccessedDate(): string {
@@ -165,6 +167,7 @@ export default function CiteButton({
   editionVersion,
   tenantSlug,
   className = '',
+  iconOnly = false,
 }: CiteButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -187,7 +190,7 @@ export default function CiteButton({
         title="Cite this book"
       >
         {copiedId ? <Check className="w-4 h-4 text-green-400" /> : <Quote className="w-4 h-4" />}
-        Cite
+        {!iconOnly && 'Cite'}
       </button>
 
       {showMenu && (
@@ -198,14 +201,19 @@ export default function CiteButton({
           />
           {/* Desktop: absolute dropdown. Mobile: fixed bottom sheet */}
           <div className="fixed inset-x-0 bottom-0 sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-1 z-[9999] bg-white sm:rounded-lg rounded-t-xl shadow-lg border border-stone-200 py-1 sm:min-w-[240px]">
-            <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto my-2" />
+            <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto mt-2 mb-1" />
+            {/* Header with close (mobile bottom sheet) */}
+            <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
+              <span className="text-[15px] font-semibold text-stone-900">Cite</span>
+              <button type="button" onClick={() => setShowMenu(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">Close</button>
+            </div>
             {/* APA */}
             <button
               onClick={() => {
                 copyToClipboard(generateApa(props, origin), 'apa');
                 setShowMenu(false);
               }}
-              className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+              className="w-full min-h-[52px] sm:min-h-0 px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
             >
               {copiedId === 'apa' ? <Check className="w-4 h-4 text-status-success" /> : <Copy className="w-4 h-4 text-stone-400" />}
               Copy APA Citation
@@ -217,7 +225,7 @@ export default function CiteButton({
                 copyToClipboard(generateBibtex(props, origin), 'bibtex');
                 setShowMenu(false);
               }}
-              className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+              className="w-full min-h-[52px] sm:min-h-0 px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
             >
               {copiedId === 'bibtex' ? <Check className="w-4 h-4 text-status-success" /> : <Copy className="w-4 h-4 text-stone-400" />}
               Copy BibTeX

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import ReviewStats from '@/components/review/ReviewStats';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 /**
  * Orphan welcome page for invited volunteers.
@@ -46,6 +47,8 @@ const QUEUES = [
 
 export default function VolunteersWelcomePage() {
   return (
+    <>
+    <SiteHeader variant="light" />
     <main className="max-w-3xl mx-auto px-6 py-14">
       <div className="text-sm font-medium text-accent-rust mb-3 tracking-wide uppercase">You're one of the first</div>
       <h1 className="text-4xl font-serif font-bold text-stone-900 mb-4 leading-tight">
@@ -92,17 +95,19 @@ export default function VolunteersWelcomePage() {
           only for spam detection.
         </p>
         <p>
-          <b>Feedback:</b>{' '}
-          <a href="mailto:derek@playpowerlabs.com" className="text-accent-rust hover:underline">
-            derek@playpowerlabs.com
+          <b>Feedback:</b> every queue has a note box — if you can see something the rating buttons
+          can't express, write it there and it comes straight to us. For anything longer,{' '}
+          <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+            team@sourcelibrary.org
           </a>
           . Bug reports, queue ideas, and "this rating UI made me crazy" notes all welcome.
         </p>
         <p>
-          <b>Want to be credited?</b> Reply to the invite email and we'll add you to the contributors page once
-          that lands.
+          <b>Want to be credited?</b> Say so in a note or an email and we'll add you to the
+          contributors page once that lands.
         </p>
       </div>
     </main>
+    </>
   );
 }

@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^latin-vulgate-genesis-5-genealogy\\.json$",
+  "summary": [
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1022,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Vulgate Genesis 5:3-18 (Sethite genealogy), 1566 Louvain Vulgate",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 25,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 1022,
+          "matched": 1022,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01005.htm",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0009317999999999999,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.089886,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

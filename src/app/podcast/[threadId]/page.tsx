@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import TranscriptToggle from '../TranscriptToggle';
+import SiteHeader from '@/components/layout/SiteHeader';
 import EpisodePlayer from '../EpisodePlayer';
 
 export const revalidate = 3600;
@@ -273,15 +274,7 @@ export default async function EpisodePage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
-      <header className="bg-[#fdfcf9] border-b border-[#e8e4dc] py-3">
-        <div className="flex items-center gap-2 px-6 max-w-[960px] mx-auto text-[13px] font-sans text-[#8a8480]">
-          <Link href="/" className="text-[#1a1612] hover:text-[#9e4a3a] transition-colors font-medium tracking-wide">
-            <span className="font-semibold">Source</span><span className="font-light">Library</span>
-          </Link>
-          <span>/</span>
-          <Link href="/podcast" className="hover:text-[#1a1612] transition-colors">Podcast</Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Podcast', href: '/podcast' }]} />
 
       {/* Hero image */}
       {episode.heroImage && (

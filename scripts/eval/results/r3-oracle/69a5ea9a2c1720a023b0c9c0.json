@@ -1,0 +1,34 @@
+{
+  "book_id": "69a5ea9a2c1720a023b0c9c0",
+  "work_identified": "Narsai doctoris Syri homiliae et carmina, Tomus I (Mingana 1905 critical edition of Narsai's Syriac homilies, vol. 1 of 2; contains roughly half of the 47 homilies Mingana edited, plus incipits of unedited ones)",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Narsai \"Homiliae et Carmina\" Mingana English translation complete",
+    "Narsai homilies English translation complete corpus Syriac",
+    "Narsai Connolly 1909 \"liturgical homilies\" complete translation scope how many homilies",
+    "Narsai complete English translation all homilies Syriac Brill Gorgias 2024 2025",
+    "Narsai \"Homiliae et Carmina\" Tomus I Mingana 1905 WorldCat English translation",
+    "WorldCat \"Narsai\" \"homiliae et carmina\" English translation complete site:search.worldcat.org",
+    "Narsai homiliae carmina Mingana \"Tomus I\" content homilies list table of contents",
+    "Butts Heal Kitchen \"Narsai homilies\" 2024 Peeters \"first complete\" OR \"first English\" OR \"no complete translation\"",
+    "Narsai Syriac memre homilies \"previously untranslated\" OR \"never been translated\" English",
+    "\"Narsai\" \"first English translation\" OR \"no previous English\" homilies complete Syriac"
+  ],
+  "sources_consulted": [
+    {"url": "https://studiasyriaca.org/2024/06/11/narsai-the-homilies/", "found": "Butts/Heal/Kitchen 2024 Peeters Vol.1 announced as inaugurating 'the complete translation of Narsai's homilies'; no claim of prior complete translation; 2 more volumes nearing completion"},
+    {"url": "https://en.wikipedia.org/wiki/Narsai", "found": "Lists all English translations: Connolly 1909 (4 liturgical homilies), McLeod 1979 (5 homilies), Frishman 1992 (6 biblical homilies), Butts/Heal/Kitchen 2024 (6 homilies, Vol.1 of planned 4-vol set); no complete translation of full corpus or Tomus I"},
+    {"url": "https://mi.byu.edu/narsai-memre/", "found": "Explicitly states Narsai's homilies 'have never been collected and translated into English before'; characterizes Butts/Heal/Kitchen as filling 'a fundamental gap in the western understanding of eastern Christianity'"},
+    {"url": "https://www.peeters-leuven.be/detail.php?id=9086", "found": "Peeters Narsai Vol.1 (2024): 6 homilies translated; 'aims to provide English translations of all the surviving homilies'; language implies this is unprecedented in scope"},
+    {"url": "https://archive.org/details/narsaihomiliaeetcarmina1", "found": "Mingana 1905 Tomus I confirmed as Syriac-language critical edition (with Latin apparatus); our item IS the source-language original"},
+    {"url": "https://search.worldcat.org/title/ways-and-means-of-the-divine-economy-an-edition-translation-and-study-of-six-biblical-homilies-by-narsai/oclc/31259597", "found": "403 Forbidden — could not retrieve; Frishman 1992 covers 6 biblical homilies only (known from other sources)"},
+    {"url": "https://www.gorgiaspress.com/metrical-homiles-and-dialogue-hymns-of-narsai-2-volume-set", "found": "403 Forbidden; known from other sources to be partial coverage"},
+    {"url": "https://archive.org/stream/liturgicalhomili00narsuoft/liturgicalhomili00narsuoft_djvu.txt", "found": "Connolly 1909 confirmed as 4 liturgical homilies only — not a complete translation of Tomus I content"}
+  ],
+  "reasoning": "No complete prior English translation of Narsai's Homiliae et Carmina Tomus I content exists. Scholarly sources confirm the corpus is 'largely untranslated' in English; the 2024 Peeters project explicitly inaugurates 'the complete translation.' Prior work (Connolly 1909: 4 homilies; McLeod 1979: 5; Frishman 1992: 6) covers only scattered selections. Bounded absence confirmed across syri.ac, Wikipedia, Peeters catalogue, BYU Maxwell Institute."
+}

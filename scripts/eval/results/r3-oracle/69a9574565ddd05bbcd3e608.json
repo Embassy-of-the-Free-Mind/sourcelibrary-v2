@@ -1,0 +1,72 @@
+{
+  "book_id": "69a9574565ddd05bbcd3e608",
+  "work_identified": "Historia Ecclesiastica by Eusebius of Caesarea in Rufinus of Aquileia's Latin version (Books 1–9 = Rufinus's Latin translation of Eusebius; Books 10–11 = Rufinus's own continuation covering 325–395 CE). Our item is the bilingual Graece et Latine edition; source language Latin.",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Rufinus of Aquileia: History of the Church",
+      "translator": "Philip R. Amidon",
+      "pub_year": "2016",
+      "publisher": "Catholic University of America Press (Fathers of the Church, vol. 133)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/History-Church-Fathers-Patristic/dp/0813229022"
+    },
+    {
+      "english_title": "The Church History of Rufinus of Aquileia: Books 10 and 11",
+      "translator": "Philip R. Amidon",
+      "pub_year": "1997",
+      "publisher": "Oxford University Press",
+      "completeness": "partial",
+      "source_url": "https://global.oup.com/academic/product/the-church-history-of-rufinus-of-aquileia-9780195110319"
+    },
+    {
+      "english_title": "Eusebius: Ecclesiastical History (Loeb Classical Library vols. 153, 265)",
+      "translator": "Kirsopp Lake; J. E. L. Oulton",
+      "pub_year": "1926",
+      "publisher": "Harvard University Press / Heinemann (Loeb Classical Library)",
+      "completeness": "complete",
+      "source_url": "https://www.loebclassics.com/view/LCL153/1926/volume.xml"
+    },
+    {
+      "english_title": "The Ecclesiastical History of Eusebius Pamphilus (NPNF 2nd series, vol. 1)",
+      "translator": "Arthur Cushman McGiffert",
+      "pub_year": "1890",
+      "publisher": "Christian Literature Publishing Co.",
+      "completeness": "complete",
+      "source_url": "https://www.newadvent.org/fathers/2501.htm"
+    }
+  ],
+  "queries_run": [
+    "Eusebius Historia Ecclesiastica Church History English translation complete list McGiffert Williamson Loeb",
+    "Rufinus Historia Ecclesiastica continuation Books 10 11 English translation",
+    "Rufinus Aquileia \"History of the Church\" English translation complete all books Fathers of the Church 2016"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.tertullian.org/rpearse/eusebius/works.htm",
+      "found": "Lists English translations of Eusebius HE: Lake/Loeb (1926-32), Lawlor & Oulton/SPCK (1927-28), Deferrari/Fathers of the Church (1953-55), Williamson/Penguin (1965)"
+    },
+    {
+      "url": "https://global.oup.com/academic/product/the-church-history-of-rufinus-of-aquileia-9780195110319",
+      "found": "Amidon 1997 OUP translation of Rufinus Books 10-11 (the continuation only)"
+    },
+    {
+      "url": "https://catalog.princeton.edu/catalog/99101234263506421",
+      "found": "Princeton library record: Amidon 2016 CUA Press Fathers of the Church vol. 133 — complete English translation of ALL 11 books of Rufinus's Latin version"
+    },
+    {
+      "url": "https://www.amazon.com/History-Church-Fathers-Patristic/dp/0813229022",
+      "found": "Confirms Amidon 2016 complete Rufinus translation; ISBN 978-0-8132-2902-7"
+    },
+    {
+      "url": "https://www.loebclassics.com/view/LCL153/1926/volume.xml",
+      "found": "Loeb LCL 153 — Kirsopp Lake English translation of Eusebius HE Books 1-5, 1926"
+    }
+  ],
+  "reasoning": "Eusebius's HE has ≥5 complete English translations (McGiffert 1890, Lake/Loeb 1926, Lawlor-Oulton 1927, Deferrari 1953-55, Williamson 1965). Rufinus's own Latin version (all 11 books incl. his continuation) was fully translated by Amidon (CUA Press, Fathers of the Church vol. 133, 2016). Source-language rule applies: not_first."
+}

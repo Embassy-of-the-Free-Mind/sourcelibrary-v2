@@ -1,0 +1,41 @@
+{
+  "book_id": "69a5d7d74d84314297c07d7f",
+  "work_identified": "Alchemia (1597) by Andreas Libavius — the foundational Latin chemistry textbook, expanded as Alchymia (1606). Distinct from the derived summaries Alchymistische Practic (1603) and Praxis alchymiae (1604).",
+  "verdict": "first_complete",
+  "prior_relationship": "null",
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Andreas Libavius Alchemia 1597 English translation complete",
+    "Libavius \"Alchemia\" translated English translator",
+    "WorldCat Libavius Alchemia English translation",
+    "Libavius \"Alchemia\" \"English translation\" OR \"translated by\" history chemistry 1597",
+    "Libavius Alchemia \"no English translation\" OR \"never been translated\" OR \"untranslated\" history chemistry",
+    "\"alchemia\" libavius \"translated\" english 2020 OR 2021 OR 2022 OR 2023 OR 2024",
+    "Libavius Alchemia excerpt English \"source reader\" OR \"primary source\" history science chemistry anthology translation",
+    "Libavius \"Alchemia\" \"chapter\" english translated excerpt Brock OR Partington OR Leicester history chemistry",
+    "Libavius alchemia excerpt English \"Holmyard\" OR \"Taylor\" OR \"Leicester\" OR \"Partington\" history chemistry anthology",
+    "Libavius Alchemia HathiTrust English translation",
+    "archive.org libavius alchemia english translation",
+    "Libavius \"Alchemia\" English \"Book I\" OR preface OR introduction translation excerpt published",
+    "Libavius \"Alchemia\" English \"William Brock\" OR \"Weeks\" OR \"Newman\" OR \"Principe\" translation primary",
+    "Libavius Alchemia English translation \"history of science\" OR \"history of chemistry\" textbook selections 2000 2010",
+    "site:worldcat.org libavius alchemia"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Andreas_Libavius", "found": "No English translation mentioned; only two German translations (1964 complete; 1996 partial equipment section from 1606 edition) and Latin originals documented"},
+    {"url": "https://www.lindahall.org/about/news/scientist-of-the-day/andreas-libavius/", "found": "No English translation mentioned; library holds 1st and 2nd Latin editions"},
+    {"url": "https://www.abebooks.com/book-search/title/alchemia-andreae-libavii/author/libavius-andreas/", "found": "17 listings — all Latin originals or French facsimile reprints; zero English translations listed"},
+    {"url": "https://archive.org/details/BIUSante_00180", "found": "Original 1606 Latin edition from BIUSante Paris; no English translation on archive.org"},
+    {"url": "https://mineralogicalrecord.com/new_biobibliography/libavius-andreas/", "found": "Detailed bio-bibliography lists only Latin editions (1597, 1606); no English translations documented"},
+    {"url": "https://etheritage.ethz.ch/2011/03/25/das-erste-lehrbuch-der-chemie-andreas-libavius-alchemia-frankfurt-1597/", "found": "ETH heritage: only German translation mentioned (1964, Gesellschaft Deutscher Chemiker, based on 1606 ed.); no English"},
+    {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2570465/", "found": "PMC review of Moran 2007 monograph on Libavius; no English translation of Alchemia mentioned"},
+    {"url": "https://rbx-exhibit2000.scs.illinois.edu/libavius.htm", "found": "SCS/Illinois rare book exhibit on Libavius; no English translation referenced"},
+    {"url": "https://search.worldcat.org/title/andreas-libavius-and-the-transformation-of-alchemy-separating-chemical-cultures-with-polemical-fire/oclc/122309457", "found": "WorldCat entry for Moran monograph; no English Alchemia edition linked"},
+    {"url": "https://www.researchgate.net/publication/30984436_Andreas_Libavius_and_the_Transformation_of_Alchemy_Separating_Chemical_Cultures_with_Polemical_Fire", "found": "ResearchGate entry for Moran 2007; no mention of English translation of Alchemia itself"}
+  ],
+  "reasoning": "No complete English translation of the Alchemia found after searching WorldCat (via results), AbeBooks (17 listings — all Latin or French), archive.org, Wikipedia, Linda Hall Library, Mineralogical Record bio-bibliography, ETHeritage, and history-of-chemistry scholarship (Moran, Partington, Newman, Principe). The only translations are German: a 1964 complete version and a 1996 partial equipment section. English-language scholarship (Partington, Moran) contains brief translated passages — partial scholarly renderings — but no standalone English translation exists. Our item is first complete English."
+}

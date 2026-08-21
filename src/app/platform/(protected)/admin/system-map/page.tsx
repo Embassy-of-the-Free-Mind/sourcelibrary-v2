@@ -188,7 +188,7 @@ const serviceData: Record<string, ServiceInfo> = {
       'Gallery: /gallery extracts illustrations from historical books with AI-generated metadata (subjects, symbols, technique, art period). Supports similarity search via vector embeddings.',
       'Encyclopedia: /encyclopedia/[name] has auto-generated entity pages for people, places, and concepts mentioned across the corpus.',
       'Blog: 29 posts at /blog/*, all hardcoded as JSX components (no CMS or MDX). Topics range from origin story to OCR methodology to progress updates.',
-      'Press: 6 themed press releases at /press/* — alchemy, hermetic tradition, kabbalah, origins of science, world sacred texts, BPH partnership.',
+      'Press: the press room lives at /press-releases (index + /press-releases/[slug] per release). The old themed /press/* pages are archived; /press and /press/* redirect to /press-releases.',
       'Ficino Society: /ficino-society has membership landing, discussion forum, and member directory. Gated by Stripe subscription ($100/year).',
       'Admin: /admin/* has ~15 dashboard pages for pipeline control, collection management, email campaigns, social media, KDP publishing, and duplicate detection.',
     ],

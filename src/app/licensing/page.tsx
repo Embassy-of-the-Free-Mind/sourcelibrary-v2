@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
@@ -120,6 +121,35 @@ export default function LicensingPage() {
           </p>
         </section>
 
+        {/* ── Grounding / RAG tier ── */}
+        <section className="bg-white rounded-xl p-8 border border-border-light">
+          <h2 className="text-2xl text-primary mb-4">Grounding &amp; retrieval (RAG) access</h2>
+          <p className="text-secondary leading-relaxed mb-4">
+            Our content signals declare <code>ai-input=yes</code>: using our pages to
+            ground AI answers at inference time, with attribution, is permitted.
+            What a grounding subscription buys is <em>delivery</em> — an API key with
+            no daily page budget, support, and change notifications — for products
+            that retrieve and cite our pages at scale:
+          </p>
+          <ul className="space-y-2 text-secondary leading-relaxed list-disc pl-5">
+            <li>
+              <strong>Grounding API:</strong> <strong>$499 per month</strong> —
+              unlimited retrieval, attribution with a link back to the source page
+              required in your product&rsquo;s interface.
+            </li>
+            <li>
+              <strong>Grounding API with SLA:</strong> <strong>$1,999 per month</strong> —
+              adds an uptime commitment, support, and webhook notification of
+              re-translated or newly added texts.
+            </li>
+          </ul>
+          <p className="text-secondary leading-relaxed mt-4">
+            Grounding access does not include training rights — those are licensed
+            separately below. The free budgets on the public API remain available
+            for evaluation.
+          </p>
+        </section>
+
         {/* ── Rate card ── */}
         <section className="bg-white rounded-xl p-8 border border-border-light">
           <h2 className="text-2xl text-primary mb-4">Standard training license — rate card</h2>
@@ -138,6 +168,15 @@ export default function LicensingPage() {
             </li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4 mb-4">
+            These are the standard terms for training use — and the rates at which
+            unlicensed use is invoiced. Scoped subscriptions at lower annual rates
+            — a single language corpus, one scholarly domain, or the full
+            collection delivered through our streaming dataset API — are available
+            to partners who take the data cooperatively; see{' '}
+            <Link href="/dataset" className="text-accent-rust hover:underline">the Dataset page</Link>{' '}
+            for plans and a free evaluation tier.
+          </p>
+          <p className="text-secondary leading-relaxed mb-4">
             The license covers training, fine-tuning, and embedding-index use of our
             translations, transcriptions, and editorial content, with attribution.
             What you&rsquo;re licensing is unique: billions of words of <em>aligned
@@ -146,7 +185,18 @@ export default function LicensingPage() {
             (Latin, classical Chinese, Sanskrit, Tibetan, Syriac), none of it in
             Common Crawl. Corpus partners additionally receive priority input on what
             gets translated next through our{' '}
-            <a href="mailto:derek@sourcelibrary.org?subject=AI%20Partnership" className="text-accent-rust hover:underline">sponsorship program</a>.
+            <OutboundLink href="mailto:team@sourcelibrary.org?subject=AI%20Partnership" surface="licensing_sponsorship" channel="email" intent="inquiry" className="text-accent-rust hover:underline">sponsorship program</OutboundLink>.
+          </p>
+          <p className="text-secondary leading-relaxed mb-4">
+            Two properties of licensed data worth knowing. <strong>It&rsquo;s
+            clean:</strong> licensed exports and API responses carry none of the
+            provenance marks embedded in our public serve surfaces — you receive
+            unmarked, checksummed text, and the marks in publicly scraped copies
+            are how unlicensed use is identified. <strong>It&rsquo;s alive:</strong>{' '}
+            these texts are continuously improved — re-read by newer models, revised
+            by human scholars, extended by new acquisitions — so a license with
+            refresh tracks the best current text while a one-time scrape only
+            depreciates.
           </p>
           <p className="text-secondary leading-relaxed">
             <strong>Unlicensed training use is unauthorized.</strong> Where we identify
@@ -161,7 +211,7 @@ export default function LicensingPage() {
           <h2 className="text-2xl text-primary mb-4">Licensing &amp; partnerships</h2>
           <p className="text-secondary leading-relaxed">
             For an AI-training or bulk-dataset license, or a research partnership,
-            contact <a href="mailto:derek@sourcelibrary.org?subject=AI%20Licensing%20Inquiry" className="text-accent-rust hover:underline">derek@sourcelibrary.org</a> with
+            contact <OutboundLink href="mailto:team@sourcelibrary.org?subject=AI%20Licensing%20Inquiry" surface="licensing_inquiry" channel="email" intent="inquiry" className="text-accent-rust hover:underline">team@sourcelibrary.org</OutboundLink> with
             the subject &ldquo;AI Licensing Inquiry.&rdquo; We respond within a day.
           </p>
         </section>

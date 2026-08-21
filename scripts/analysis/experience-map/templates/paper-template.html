@@ -1,0 +1,593 @@
+<meta charset="utf-8">
+<title>Towards a Map of Conscious Experiences Across History</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --paper:#e6e6e1; --paper-raised:#efefeb; --ink:#15181a; --ink-soft:#43494d;
+    --ink-mute:#6f777b; --rule:#c6c8c3; --focus:#2a78d6;
+    --s1:#2a78d6; --s2:#008300; --s3:#e87ba4; --s4:#eda100;
+    --fig-ink:#15181a; --fig-mute:#6f777b; --fig-grid:#c6c8c3; --fig-well:#f5f5f2;
+    --ff-display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --ff-ui:ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --ff-data:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --paper:#111517; --paper-raised:#181d20; --ink:#e8ebeb; --ink-soft:#a9b3b7;
+      --ink-mute:#7e888d; --rule:#2a3337; --focus:#3987e5;
+      --s1:#3987e5; --s2:#008300; --s3:#d55181; --s4:#c98500;
+      --fig-ink:#e8ebeb; --fig-mute:#7e888d; --fig-grid:#2a3337; --fig-well:#0b0f12;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper:#111517; --paper-raised:#181d20; --ink:#e8ebeb; --ink-soft:#a9b3b7;
+    --ink-mute:#7e888d; --rule:#2a3337; --focus:#3987e5;
+    --s1:#3987e5; --s2:#008300; --s3:#d55181; --s4:#c98500;
+    --fig-ink:#e8ebeb; --fig-mute:#7e888d; --fig-grid:#2a3337; --fig-well:#0b0f12;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--ff-display); font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:860px; margin:0 auto; padding:0 26px 90px; }
+  .eyebrow { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-mute); margin:0 0 16px; }
+  h1 { font-weight:400; font-size:clamp(29px,4.2vw,44px); line-height:1.1; letter-spacing:-.015em;
+    margin:0 0 10px; text-wrap:balance; }
+  h1 + .sub { font-size:clamp(17px,2vw,21px); line-height:1.4; color:var(--ink-soft);
+    margin:0 0 26px; font-style:italic; text-wrap:balance; }
+  header.paper { padding:52px 0 26px; border-bottom:1px solid var(--rule); }
+  .draftflag { font-family:var(--ff-ui); font-size:13px; background:var(--paper-raised);
+    border:1px solid var(--rule); border-left:3px solid var(--s4); padding:12px 15px; color:var(--ink-soft); }
+  h2 { font-weight:400; font-size:25px; margin:52px 0 14px; letter-spacing:-.01em; }
+  h3 { font-family:var(--ff-ui); font-weight:600; font-size:15px; margin:30px 0 10px; letter-spacing:.01em; }
+  p { margin:0 0 16px; }
+  .abstract { background:var(--paper-raised); border:1px solid var(--rule); padding:22px 24px; margin:28px 0 0; }
+  .abstract h2 { margin:0 0 10px; font-size:15px; font-family:var(--ff-ui); font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); }
+  .abstract p { font-size:16px; }
+  em.pali { font-style:italic; }
+  a { color:var(--ink); text-underline-offset:3px; }
+  sup.warn { font-family:var(--ff-ui); font-size:11px; color:var(--s4); cursor:help; }
+
+  figure { margin:34px 0; padding:0; }
+  figure .plot { background:var(--paper-raised); border:1px solid var(--rule); padding:18px 18px 12px; overflow-x:auto; }
+  figcaption { font-family:var(--ff-ui); font-size:13.5px; line-height:1.5; color:var(--ink-soft); margin-top:11px; }
+  figcaption b { font-family:var(--ff-data); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-mute); font-weight:400; display:block; margin-bottom:4px; }
+  details.tbl { margin-top:10px; }
+  details.tbl summary { cursor:pointer; font-family:var(--ff-data); font-size:10.5px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); }
+  .tblwrap { overflow-x:auto; border:1px solid var(--rule); margin-top:10px; }
+  table { border-collapse:collapse; width:100%; font-family:var(--ff-ui); font-size:13.5px; }
+  th,td { text-align:left; padding:7px 11px; border-bottom:1px solid var(--rule); }
+  th { font-family:var(--ff-data); font-size:10px; letter-spacing:.11em; text-transform:uppercase;
+    color:var(--ink-mute); font-weight:400; }
+  td.num { text-align:right; font-family:var(--ff-data); font-variant-numeric:tabular-nums; }
+  tbody tr:last-child td { border-bottom:0; }
+  blockquote { margin:0 0 18px; padding-left:17px; border-left:2px solid var(--rule); color:var(--ink-soft); }
+  ol.refs { font-family:var(--ff-ui); font-size:13.5px; color:var(--ink-soft); padding-left:20px; }
+  ol.refs li { margin-bottom:7px; }
+  ul.lim { font-family:var(--ff-ui); font-size:15px; color:var(--ink-soft); padding-left:20px; }
+  ul.lim li { margin-bottom:10px; }
+  .dl { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 0; }
+  .dl button { font-family:var(--ff-ui); font-size:13.5px; padding:9px 15px; cursor:pointer;
+    background:var(--paper-raised); color:var(--ink); border:1px solid var(--rule); }
+  .dl button:hover { border-color:var(--focus); }
+  .dl button:focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
+  .statrow { display:flex; flex-wrap:wrap; gap:0 38px; margin:24px 0 6px;
+    font-family:var(--ff-data); font-variant-numeric:tabular-nums; }
+  .statrow div { display:flex; flex-direction:column; gap:3px; }
+  .statrow b { font-size:26px; font-weight:500; letter-spacing:-.015em; }
+  .statrow span { font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-mute); max-width:20ch; }
+  footer { margin-top:64px; padding-top:24px; border-top:1px solid var(--rule);
+    font-family:var(--ff-ui); font-size:13px; color:var(--ink-mute); }
+  @media (prefers-reduced-motion:reduce) { * { transition:none!important; } }
+</style>
+<div class="wrap">
+
+<header class="paper">
+  <p class="eyebrow">Working paper · Source Library · computational history of experience</p>
+  <h1>Towards a Map of Conscious Experiences Across History</h1>
+  <p class="sub">A first attempt, what it teaches about the requirements, and why the obvious version of the idea does not work</p>
+  <p class="draftflag">
+    <b>Working draft, not for circulation.</b> Citations marked  are from background
+    knowledge and have <em>not</em> been verified against the literature. Classification is by a single
+    language model with no human-validated subset, so no inter-rater agreement statistic is available.
+    Both are blocking issues for submission.
+  </p>
+  <div class="statrow" id="statrow"></div>
+</header>
+
+<div class="abstract">
+  <h2>Abstract</h2>
+  <p>
+    For four thousand years people have tried to write down what happened to them when their
+    consciousness changed — in vision, contemplation, fever, bereavement, intoxication, terror. Those
+    reports survive in hundreds of thousands of pages, in dozens of languages, scattered across
+    traditions that mostly could not read one another. They have never been assembled into anything a
+    person could look at whole. This paper asks what it would take to build such a map, and reports a
+    first attempt.
+  </p>
+  <p>
+    We work over approximately 3.9 million machine-translated pages of primary sources. A blind random
+    sample establishes the size of the field: 5.4% of corpus pages describe experience from the inside,
+    implying 156,000–279,000 such pages in this library alone. We then build two independent sorting
+    instruments — one derived from modern psychometric scales, one extracted from the
+    <em class="pali">Visuddhimagga</em> in its own vocabulary — and run both over identical material.
+  </p>
+  <p>
+    The attempt yields four requirements that any such map must satisfy, each learned by violating it
+    first: retrieval must be stratified by language or the map becomes a portrait of the largest
+    language; genre categories must be historically appropriate or they manufacture their own findings;
+    the instrument must be plural, because a single taxonomy can only rediscover itself; and the map must
+    be honest about measuring descriptions rather than experiences. On that last point we report a
+    result that constrains the whole programme: nearest-neighbour analysis shows the embedding space is
+    organised more strongly by source text (12.4× over chance) and language (5.1×) than by
+    phenomenological content (3.0×). We also report one substantive finding that survives those
+    constraints — the <em class="pali">Visuddhimagga</em>'s concentration ladder does not travel outside
+    its tradition while its sequence of destabilisation does (χ²(1) = 14.61, p &lt; .001, OR = 3.1) — and
+    treat it as a demonstration that the map, built carefully, can answer questions the humanities have
+    only been able to argue about.
+  </p>
+</div>
+
+<h2>1. Why this map is worth building</h2>
+<p>
+  The historical record of inner experience is the largest body of evidence about consciousness that
+  exists, and it is almost entirely unused. Consciousness science works with laboratory reports from
+  living subjects, mostly Western, mostly recent, mostly answering a questionnaire someone else wrote.
+  The historical record is larger by orders of magnitude, spans every culture that kept writing, and
+  covers states no ethics board would permit inducing. What it lacks is not evidence but
+  <em>access</em>: the material is scattered, mostly untranslated, and unsearchable by what it describes.
+</p>
+<p>
+  Machine translation and semantic retrieval remove that specific obstacle for the first time. It is now
+  possible to ask a library, in one query, for every passage in any language that reports the sense of a
+  presence in an empty room — and get back the Syriac, the Tibetan, the Icelandic, and the case note.
+  The question this paper takes up is what one should build with that capacity, and what it takes to
+  build it without producing something that merely looks like knowledge.
+</p>
+<p>
+  A map of conscious experiences across history would do at least four things no existing resource does.
+  It would let the perennialism–constructivism dispute — whether mystical experience has a common core
+  or is constituted by tradition, argued since Stace and
+  Katz — be posed as an empirical question over thousands of sources rather than
+  a canon of exemplary figures. It would recover categories of experience that modern instruments have no
+  items for, and that consequently go unstudied. It would let a person in a state they find frightening
+  discover that it has been described before, by name, in five traditions. And it would give the
+  historical testimony of ordinary people a place in a science that currently has no way to cite them.
+</p>
+
+<h2>2. What would count as such a map</h2>
+<p>
+  The naive version — embed everything, project it, look at the clusters — produces a picture that is
+  confidently wrong, for reasons we document below. Before reporting our attempt we state the criteria
+  we think any serious version must meet. Each was learned the hard way.
+</p>
+<ul class="lim">
+  <li><strong>Every point must be verifiable.</strong> A map of experience assembled by machine is worth
+    nothing if a reader cannot check it. Every passage here is a quotation checked character-for-character
+    against its source page and linked to the scan of that page. Where the map is wrong, a reader can see
+    that it is wrong.</li>
+  <li><strong>Coverage must be stratified, not popular.</strong> Similarity search over a multilingual
+    corpus returns a popularity contest won by the largest language. Coverage has to be enforced.</li>
+  <li><strong>The instrument must be plural.</strong> A map sorted by one taxonomy can only rediscover
+    that taxonomy. At minimum it must be possible to run a tradition's own categories over the same
+    material and compare.</li>
+  <li><strong>There must be a denominator.</strong> Without knowing how much of the corpus is experiential
+    to begin with, there is no way to tell whether an instrument is selecting signal or returning
+    whatever is nearest.</li>
+  <li><strong>Genre and register must be modelled, not assumed.</strong> Historical texts arrive as
+    instruction, testimony, doctrine, and narrative in proportions that differ sharply by tradition;
+    flattening those is not neutral.</li>
+  <li><strong>It must say what it measures.</strong> This is a map of descriptions. The distance between a
+    description and an experience is the subject of §6, and it is larger than one would like.</li>
+</ul>
+
+<h2>3. The size of the field</h2>
+<p>
+  A blind random sample of 788 pages, classified by the same pipeline used everywhere else, gives the
+  first number the programme needs: <strong>5.4%</strong> of corpus pages (95% CI 4.0–7.2, Wilson)
+  describe an experience from the inside. Extrapolated across the corpus that is
+  <strong>156,000–279,000 pages</strong> of experiential material in one library. Our map plots 1,952 of
+  them — roughly a 1% core sample.
+</p>
+<p>
+  The same sample shows what the material mostly is: 48.5% of random pages are doctrinal, 26.5%
+  unrelated, 11.0% instructional, and only <strong>1.3%</strong> first-person testimony. Testimony is rare
+  enough that any map built on it must be built by search, not by browsing — which makes the quality of
+  the search instrument the central methodological problem.
+</p>
+
+<h2>4. First attempt</h2>
+<h3>4.1 Two instruments over identical material</h3>
+<p>
+  Both instruments express each category as several <strong>first-person report sentences</strong> rather
+  than a topic label — "I felt myself dissolve and become one with everything around me" rather than "ego
+  dissolution" — because retrieval matches passages, and the aim is experiential register rather than
+  topical vocabulary. Probes are embedded and matched by cosine similarity against page embeddings.
+</p>
+<p>
+  <strong>Instrument A</strong> takes 36 dimensions: twenty anchored to the MEQ30,
+  5D-ASC and Hood M-scale so results stay comparable to
+  the psychometric literature, plus sixteen the modern scales have no items for but the record documents
+  heavily — felt presence, sleep paralysis, near-death, apparitions of the dead, fever delirium, mystical
+  eros, pain and childbirth, unsourced music, animal transformation, mesmeric trance, sensory deprivation,
+  fasting, inspired dictation, ecstatic dance, autoscopy, uncanny foreknowledge. All sixteen retrieved
+  substantial material, which is itself an argument about what the modern instruments miss.
+</p>
+<p>
+  <strong>Instrument B</strong> is not ours. The <em class="pali">Visuddhimagga</em>, Buddhaghosa's
+  fifth-century Theravāda manual, defines nine attainments of concentration and sixteen knowledges of
+  insight, each with stated criteria for recognising it — an ordered, criterion-based state model written
+  fifteen centuries before the MEQ. We located the pages of our own copy where each stage is defined and
+  extracted the recognition markers and first-person report sentences <em>in the manual's own
+  vocabulary</em>, forbidding substitution of modern psychological terms. This gave 93 probes across 26
+  stages. For <em class="pali">ādīnava-ñāṇa</em>, the knowledge of danger:
+</p>
+<blockquote>
+  “Everywhere I look — at my own body, my thoughts, and the world — I see only a burning charcoal pit, or
+  a murderer with a raised weapon.”
+</blockquote>
+<p>— a sentence assembled from the manual's own similes, by a procedure that let the tradition speak.</p>
+
+<h3>4.2 Integrity constraints</h3>
+<p>
+  Every quotation was checked character-for-character against its source page and <strong>discarded if it
+  did not match</strong>; this rejected 106 silently altered quotations, roughly 3%. Passages were
+  deduplicated at the level of the bibliographic <em>work</em>, so a scripture held in many editions and
+  languages contributes once. Quotations, not pages, were embedded for projection. Classification recorded
+  register, whether the passage is experiential, the antecedent that brought the state on, what followed
+  for the person, what agent the text credits, and whether the text records a dispute about the
+  experience's source.
+</p>
+
+<h2>5. What the attempt teaches</h2>
+
+<h3>5.1 Requirement: stratify, or map the largest language</h3>
+<p>
+  Our first pass used global similarity search and produced a map that was 22.3% English against English's
+  6.5% share of the corpus, and 2.8% Tibetan against Tibetan's 14.5%. Ethiopic, Persian, Japanese and
+  Armenian did not appear at all. Giving every language an identical probe budget corrects this. The cost
+  is that the resulting sample is neither proportional to the corpus nor random, and language frequencies
+  within it must never be read as corpus frequencies — a stratified map is a deliberate instrument, and
+  has to be labelled as one.
+</p>
+
+<figure>
+  <div class="plot">__FIG_LANGUAGES__</div>
+  <figcaption>
+    <b>Figure 1 — Retrieval strategy determines the sample more than the corpus does</b>
+    Language shares under three regimes: the corpus itself, global similarity search, and stratified
+    retrieval. Coverage of a multilingual record is not something a similarity search gives you for free;
+    it is something you have to impose.
+    <details class="tbl"><summary>Show the table</summary><div class="tblwrap" id="tbl-languages"></div></details>
+  </figcaption>
+</figure>
+
+<h3>5.2 Requirement: a denominator, so selection can be distinguished from proximity</h3>
+<p>
+  Instrument A judged 36.3% of what it retrieved to be experiential, against the 5.4% baseline — an
+  enrichment of <strong>6.7×</strong>. Without the baseline this number does not exist, and there is no way
+  to answer the obvious sceptical question of whether the probes are selecting anything at all. Instrument
+  B, instructed to refuse weak matches, claims only 11.0% of what it retrieves: an indigenous stage model
+  turns out to be far stricter than a psychometric checklist, because it asks whether an experience
+  occupies a specific position in an ordered sequence rather than whether it had a quality.
+</p>
+
+<figure>
+  <div class="plot">__FIG_ENRICHMENT__</div>
+  <figcaption>
+    <b>Figure 2 — The instruments select, and they select differently</b>
+    Share of passages judged to describe experience from the inside. The gap between the two instruments
+    is not a defect in either; it reflects a real difference between a checklist of qualities and a
+    diagnostic requiring position in a sequence.
+  </figcaption>
+</figure>
+
+<h3>5.3 Requirement: model register, because traditions transmit different things</h3>
+<p>
+  Across 5,728 classified passages, categories differ sharply in the register through which they reach us.
+  Contemplative-emptiness material arrives 57% as instruction and 6% as testimony; body-dissolution
+  material arrives 7% as instruction and 63% as testimony. Contemplative traditions transmit predominantly
+  <em>method</em>; visionary and medical traditions transmit predominantly <em>report</em>. A map that
+  flattens this would show the contemplative traditions as strangely absent from the phenomenology, when
+  in fact they are present as instructions for producing it. It also has a consequence for the wider
+  field: a questionnaire can only ever collect testimony, so the prescriptive half of the historical
+  record has no modern counterpart against which to be compared.
+</p>
+
+<figure>
+  <div class="plot">__FIG_REGISTER__</div>
+  <figcaption>
+    <b>Figure 3 — Contemplative traditions transmit method; visionary traditions transmit report</b>
+    Share of passages retrieved by each probe theme arriving as prescriptive instruction versus
+    first-person testimony. The six most instruction-leaning and six most testimony-leaning themes.
+    <details class="tbl"><summary>Show the table</summary><div class="tblwrap" id="tbl-register"></div></details>
+  </figcaption>
+</figure>
+
+<h3>5.4 Requirement: historically appropriate genre categories</h3>
+<p>
+  An early pass forced every passage into a testimony/fiction binary and reported 31% testimony. Adding a
+  <strong>vision-narrative</strong> register — for visions related as real within hagiographic, scriptural
+  or devotional narrative, where the modern true/invented distinction does not apply — reassigned most of
+  that material: vision-narrative became the largest single register at 924 of 1,952 passages, and
+  testimony fell to 6.5%. The first number was an artefact of imposing a modern genre distinction on
+  premodern texts. This is the clearest case in the study of a category manufacturing its own finding, and
+  it is the reason we regard category pluralism as a requirement rather than a refinement.
+</p>
+
+<h3>5.5 Demonstration: what a plural instrument can show</h3>
+<p>
+  Running the <em class="pali">Visuddhimagga</em>'s categories over the same corpus produces a result
+  neither instrument yields alone. Its model claimed 295 passages, 82 from inside the Buddhist tradition
+  and 213 from outside it — and its two ladders behave differently across that boundary.
+</p>
+
+<figure>
+  <div class="plot">__FIG_LADDER__</div>
+  <figcaption>
+    <b>Figure 4 — One ladder travels, the other does not</b>
+    Inside the tradition the model mostly describes attainments of concentration, as one expects of a
+    manual written to guide a practice. Outside it, where nobody was following Buddhaghosa's instructions,
+    the stages that fit are overwhelmingly those describing things falling apart. χ²(1) = 14.61 with Yates
+    correction, p &lt; .001, odds ratio 3.1 (n = 265).
+    <details class="tbl"><summary>Show the table</summary><div class="tblwrap" id="tbl-ladder"></div></details>
+  </figcaption>
+</figure>
+
+<figure>
+  <div class="plot">__FIG_STAGES__</div>
+  <figcaption>
+    <b>Figure 5 — Where the matches fall, stage by stage</b>
+    The concentration stages are claimed almost entirely by Buddhist sources; the dark-passage stages,
+    especially appearance as terror, overwhelmingly by sources outside the tradition.
+    <details class="tbl"><summary>Show the table</summary><div class="tblwrap" id="tbl-stages"></div></details>
+  </figcaption>
+</figure>
+
+<figure>
+  <div class="plot">__FIG_SCATTER__</div>
+  <figcaption>
+    <b>Figure 6 — The same asymmetry, in the projection</b>
+    Both instruments' passages in one space; grey marks are the 1,952-passage atlas. Passages claimed from
+    inside the tradition concentrate in one region — the tradition's own technical literature. Passages
+    claimed from outside it are distributed across the whole atlas, because the states they describe are
+    not the property of any one literature.
+  </figcaption>
+</figure>
+
+<p>
+  Christian mystical sources supply 104 of the outside matches, most often to
+  <em class="pali">bhaya-ñāṇa</em>, appearance as terror; Sufi sources match most often to
+  <em class="pali">muñcitukamyatā</em>, desire for deliverance. Ephrem the Syrian and a 1374 Armenian
+  manuscript match to terror; the Jain <em>Uttarādhyayana Sūtra</em> to <em class="pali">ādīnava</em>:
+</p>
+<blockquote>
+  “In this hollow human existence, which is a home for sickness and disease, and is gripped by old age and
+  death, I cannot find even a moment's pleasure.”
+</blockquote>
+<p>
+  <strong>What this does and does not show.</strong> The concentration ladder describes attainments
+  produced by a technique taught in a specific institutional setting; it does not travel, and there is no
+  reason it should. The destabilising phase describes something that happens to people — practitioners and
+  non-practitioners, contemplatives and the bereaved — and it does. This is far weaker than perennialism:
+  not that mystical experience has a common core, only that one particular phase of destabilisation is
+  described in convergent terms by traditions with no contact. The constructivist can absorb it without
+  difficulty, since terror and the wish to escape are ordinary capacities with ordinary vocabularies. What
+  the result demonstrates is not an answer to the old dispute but that the dispute is now
+  <em>addressable</em>: two independently constructed taxonomies, run over identical material, disagree in
+  a measurable and interpretable way.
+</p>
+
+<h2>6. The hard constraint</h2>
+<p>
+  The most important result for the programme is a negative one. For every plotted passage we took its ten
+  nearest neighbours in quotation-embedding space and asked what they share.
+</p>
+
+<figure>
+  <div class="plot">__FIG_NEIGHBOURS__</div>
+  <figcaption>
+    <b>Figure 7 — What a passage's neighbours actually share</b>
+    Source text and language dominate; the phenomenological feature — the thing the map is ostensibly
+    about — lifts least of the four. Embedding quotations rather than whole pages reduced this but did not
+    remove it.
+  </figcaption>
+</figure>
+
+<p>
+  A passage's neighbours are 12.4 times more likely than chance to come from the same book and 5.1 times
+  more likely to share a language, while sharing the actual phenomenological content lifts only 3.0×. The
+  corpus is machine-translated into English and embedded by an English-centric model; proximity is
+  therefore substantially proximity of <em>translationese</em>. There is also a chain of roughly a dozen
+  lossy transformations between an experience and a point on the map — the experience, the memory of it,
+  the decision to write, the conventions available, the copying, the survival, the digitisation, the OCR,
+  the machine translation, the embedding, the probe that retrieved it, the model that judged it.
+</p>
+<p>
+  We take three conclusions. First, honest naming: this is a map of <em>descriptions</em> of experience,
+  and calling it anything else is a claim the data does not support. Second, claim discipline: we report
+  the ladder asymmetry because it compares <em>rates between two populations within one instrument</em>,
+  which is robust to a uniform translation effect, and we decline to report cluster structure as evidence
+  about experience. Third, a research target: the translator effect is measurable, and measuring it — via
+  same-work-different-translator controls and probes written natively in each source language — is the
+  single highest-value next step for the programme.
+</p>
+
+<h2>7. Roadmap</h2>
+<p>
+  What we have is a proof that the field is large, that instruments can be built for it, that a
+  tradition's own categories can be extracted and run as one of them, and that the results are
+  interpretable. What remains, in the order we would do it:
+</p>
+<ul class="lim">
+  <li><strong>Native-language probes.</strong> Written in Pali, Persian, Tibetan, Classical Chinese, not
+    translated from English — the direct attack on the constraint in §6.</li>
+  <li><strong>More indigenous taxonomies.</strong> Already located in this corpus and awaiting the same
+    extraction treatment: Sufi <em class="pali">maqāmāt</em> and <em class="pali">aḥwāl</em> (Hujwīrī's
+    <em>Kashf al-Maḥjūb</em>), the Māṇḍūkya four states, Teresa's seven mansions, Daoist inner alchemy
+    (<em>Xingming Guizhi</em>, 1615), the alchemical colour sequence, scholastic faculty psychology. Where
+    independently constructed taxonomies agree is where the interesting evidence lies.</li>
+  <li><strong>Human validation.</strong> A scholar-annotated subset, inter-rater agreement, and adjudication
+    of the cases where the model and the annotator differ. Nothing here is publishable without it.</li>
+  <li><strong>Antecedents and aftermath as first-class axes.</strong> The corpus records what brought a
+    state on and what it did to the person. Modern experimental work cannot ask the first question,
+    because it holds the cause fixed by design.</li>
+  <li><strong>The visual record.</strong> Alchemical plates, visionary diagrams and cosmological figures are
+    phenomenological reports in another medium, and no text probe will ever retrieve them.</li>
+  <li><strong>Non-elite sources.</strong> Everything here is a printed book by someone literate enough to
+    publish. Asylum casebooks, trial depositions, medical notes and letters are where most describers are.</li>
+</ul>
+
+<h2>8. Data</h2>
+<p>
+  Every plotted passage carries a resolvable link to the scanned page it was transcribed from, so any
+  individual claim can be checked against the facsimile. Both datasets are released in full below.
+</p>
+<div class="dl" id="downloads"></div>
+<div class="tblwrap" style="margin-top:20px"><div id="tbl-sample"></div></div>
+
+<h2>Limitations</h2>
+<ul class="lim">
+  <li><strong>Circularity.</strong> A probe-based map cannot discover a category its probe set did not name.
+    The sixteen dimensions added to Instrument A were added because their absence was noticed by
+    inspection; others are certainly still missing.</li>
+  <li><strong>No second rater.</strong> Single model, single pass, no human-validated subset, therefore no
+    inter-rater agreement statistic. The most serious outstanding gap.</li>
+  <li><strong>Over-matching in literary sources.</strong> A Pushkin lyric about breaking free of nets and a
+    line of Akhmatova's were matched to insight stages. Aggregate rates are defensible; individual matches
+    are not.</li>
+  <li><strong>The inside/outside boundary is crude</strong>, drawn by a tradition-tag list rather than by a
+    scholar, and the classifier itself misassigned many Vajrayāna sources.</li>
+  <li><strong>Normativity.</strong> The <em class="pali">Visuddhimagga</em> is soteriological: it describes
+    what <em>should</em> happen to someone progressing correctly, and was used institutionally to authorise
+    some experiences and pathologise others. Substituting it for the MEQ trades a psychometric bias for a
+    monastic one; the argument of this paper is for holding several such lenses at once, never for
+    crowning one.</li>
+  <li><strong>Corpus composition</strong> reflects digitisation and translation priorities, not history.
+    Century distributions are not evidence about when people had these experiences.</li>
+</ul>
+
+<h2>References</h2>
+<ol class="refs" id="refs"></ol>
+
+<footer id="provenance"></footer>
+</div>
+
+<script id="assets" type="application/json">__ASSETS__</script>
+<script>
+(function(){
+  "use strict";
+  const A = JSON.parse(document.getElementById('assets').textContent);
+  const T = A.tables, N = A.numbers;
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const nf = n => Number(n).toLocaleString('en-US');
+  const pretty = s => (s||'').replace(/[_-]/g,' ');
+
+  document.getElementById('statrow').innerHTML = [
+    [nf(N.atlas_points), 'passages plotted'],
+    [nf(N.classified_total), 'passages classified'],
+    [N.atlas_langs, 'languages'],
+    [nf(N.vism_matched), 'matches to the manual’s stages'],
+    ['6.7×', 'enrichment over baseline']
+  ].map(([v,l]) => '<div><b>'+esc(v)+'</b><span>'+esc(l)+'</span></div>').join('');
+
+  function table(el, head, rows) {
+    document.getElementById(el).innerHTML =
+      '<table><thead><tr>' + head.map(h=>'<th scope="col">'+esc(h)+'</th>').join('') +
+      '</tr></thead><tbody>' + rows.map(r =>
+        '<tr>' + r.map((c,i) => (i? '<td class="num">':'<td>') + esc(c) + '</td>').join('') + '</tr>'
+      ).join('') + '</tbody></table>';
+  }
+
+  table('tbl-languages', ['Language','Share of random corpus sample (%)'], T.languages);
+
+  table('tbl-register', ['Probe theme','Passages','Instruction %','Testimony %'],
+    T.registerSplit.filter(r=>r.n>=40)
+      .sort((a,b)=>(b.instruction/b.n-b.testimony/b.n)-(a.instruction/a.n-a.testimony/a.n))
+      .map(r=>[pretty(r.dim), r.n, Math.round(100*r.instruction/r.n), Math.round(100*r.testimony/r.n)]));
+
+  const L = T.ladder, g=(o,k)=>(o&&o[k])?o[k]:{n:0,pct:0};
+  table('tbl-ladder', ['Source','n','Concentration %','Dark passage %','Other insight %'], [
+    ['Inside the Buddhist tradition', L.insideN, g(L.inside,'concentration').pct, g(L.inside,'dark-night').pct, g(L.inside,'insight-other').pct],
+    ['Outside the tradition', L.outsideN, g(L.outside,'concentration').pct, g(L.outside,'dark-night').pct, g(L.outside,'insight-other').pct]
+  ]);
+
+  const BUD = ['theravada','tibetan-buddhist','mahayana','buddhist','zen','chan'];
+  const vr = A.vism_release;
+  const stageRows = {};
+  vr.forEach(r => {
+    const k = r.stage_label || r.stage;
+    stageRows[k] = stageRows[k] || {inside:0, outside:0, pali:r.pali, ladder:r.ladder};
+    r.inside_tradition ? stageRows[k].inside++ : stageRows[k].outside++;
+  });
+  table('tbl-stages', ['Stage','Pali','Ladder','Inside','Outside'],
+    Object.entries(stageRows).sort((a,b)=>(b[1].inside+b[1].outside)-(a[1].inside+a[1].outside))
+      .map(([k,v])=>[k, v.pali||'—', pretty(v.ladder||''), v.inside, v.outside]));
+
+  // a readable sample of the release, so the data section is not just buttons
+  const sample = A.release.filter(r=>r.quote && r.quote.length>70).slice(0,12);
+  document.getElementById('tbl-sample').innerHTML =
+    '<table><thead><tr><th scope="col">Quotation (sample of the release)</th><th scope="col">Source</th>'+
+    '<th scope="col">Year</th><th scope="col">Register</th><th scope="col">Page</th></tr></thead><tbody>' +
+    sample.map(r => '<tr><td>'+esc(r.quote.slice(0,150))+(r.quote.length>150?'…':'')+'</td>'+
+      '<td>'+esc((r.book||'').slice(0,40))+'</td><td class="num">'+esc(r.year||'—')+'</td>'+
+      '<td>'+esc(pretty(r.register||''))+'</td>'+
+      '<td><a href="'+esc(r.url)+'" target="_blank" rel="noopener">open</a></td></tr>').join('') +
+    '</tbody></table>';
+
+  function csv(rows) {
+    if (!rows.length) return '';
+    const cols = Object.keys(rows[0]);
+    const q = v => { const s = v==null? '' : String(v); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; };
+    return cols.join(',') + '\n' + rows.map(r => cols.map(c => q(r[c])).join(',')).join('\n');
+  }
+  function dl(name, text, type) {
+    const b = new Blob([text], {type});
+    const u = URL.createObjectURL(b);
+    const a = document.createElement('a');
+    a.href = u; a.download = name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(u), 2000);
+  }
+  const DL = [
+    ['Atlas passages (CSV, '+nf(A.release.length)+' rows)', () => dl('atlas-passages.csv', csv(A.release), 'text/csv')],
+    ['Visuddhimagga matches (CSV, '+nf(A.vism_release.length)+' rows)', () => dl('visuddhimagga-matches.csv', csv(A.vism_release), 'text/csv')],
+    ['Summary tables (JSON)', () => dl('summary-tables.json', JSON.stringify(T,null,1), 'application/json')],
+    ['Headline numbers (JSON)', () => dl('numbers.json', JSON.stringify(N,null,1), 'application/json')]
+  ];
+  document.getElementById('downloads').innerHTML = DL.map((d,i)=>'<button type="button" data-i="'+i+'">'+esc(d[0])+'</button>').join('');
+  document.getElementById('downloads').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return; DL[Number(b.dataset.i)][1]();
+  });
+
+  document.getElementById('refs').innerHTML = [
+    'Barrett, F. S., Johnson, M. W., &amp; Griffiths, R. R. (2015). Validation of the revised Mystical Experience Questionnaire in experimental sessions with psilocybin. <em>Journal of Psychopharmacology</em> 29(11), 1182–1190.',
+    'Dittrich, A. (1998). The standardized psychometric assessment of altered states of consciousness (ASCs) in humans. <em>Pharmacopsychiatry</em> 31(Suppl. 2), 80–84.',
+    'Hood, R. W., Jr. (1975). The construction and preliminary validation of a measure of reported mystical experience. <em>Journal for the Scientific Study of Religion</em> 14(1), 29–41.',
+    'Katz, S. T. (1978). Language, epistemology, and mysticism. In S. T. Katz (ed.), <em>Mysticism and Philosophical Analysis</em>, 22–74. Sheldon Press / Oxford University Press.',
+    'Klüver, H. (1928). <em>Mescal: The “Divine” Plant and its Psychological Effects</em>. Kegan Paul, Trench, Trubner &amp; Co. (Held in the corpus; independently retrieved by our probes as the highest-yielding source for elementary imagery.)',
+    'Lindahl, J. R., Fisher, N. E., Cooper, D. J., Rosen, R. K., &amp; Britton, W. B. (2017). The varieties of contemplative experience: A mixed-methods study of meditation-related challenges in Western Buddhists. <em>PLoS ONE</em> 12(5), e0176239.',
+    'Lyon, A. (2026). Mystical entropy: an introduction to the psychedelic-kundalini thesis and the PEACE framework for contemplative research. <em>Philosophical Psychology</em> 39(5), 1691–1716.',
+    'Ñāṇamoli, Bhikkhu (trans.) (1956). <em>The Path of Purification (Visuddhimagga)</em>, by Bhadantācariya Buddhaghosa. R. Ananda Semage, Colombo. [4th ed., Buddhist Publication Society, Kandy, 2010.] The edition from which Instrument B was derived.',
+    'Proudfoot, W. (1985). <em>Religious Experience</em>. University of California Press.',
+    'Pūrṇānanda (1577). <em>Ṣaṭcakranirūpaṇa</em>, ch. 6 of <em>Śrītattvacintāmaṇi</em>. Translated by J. Woodroffe as <em>The Serpent Power</em> (1918).',
+    'Sharf, R. H. (1995). Buddhist modernism and the rhetoric of meditative experience. <em>Numen</em> 42(3), 228–283.',
+    'Stace, W. T. (1961). <em>Mysticism and Philosophy</em>. J. B. Lippincott.',
+  ].map(function(r){ return '<li>'+r+'</li>'; }).join('');
+
+  document.getElementById('provenance').innerHTML =
+    '<p><b>Provenance.</b> This draft was produced in a single working session by an AI system operating '+
+    'over the corpus, including the design of both instruments, the analysis, the figures and the writing. '+
+    'Every numerical claim is computed from retained data files rather than recalled, and the files are '+
+    'downloadable above. Two errors made and corrected during the work are recorded because they bear on '+
+    'trust in the rest: an asserted bug in the retrieval layer that testing showed did not exist, and an '+
+    'initial claim of probe saturation that was a misreading of a row limit.</p>'+
+    '<p>Companion interactive artefacts: the Atlas of Described Experience and the Visuddhimagga comparison.</p>';
+})();
+</script>

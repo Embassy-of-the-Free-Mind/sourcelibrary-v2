@@ -8,7 +8,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
-import { resolveLanguage, resolveDate, type LanguageSignal } from '@/lib/resolve-language';
+import { resolveLanguage, resolveDate, publishedToYear, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
 
@@ -284,6 +284,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       ...(lang.is_translation ? { is_translation: true } : {}),
       ...(lang.language_review ? { language_review: true } : {}),
       published: dateRes.published || 'Unknown',
+      ...(publishedToYear(dateRes.published) !== null ? { year: publishedToYear(dateRes.published)! } : {}),
       ...(dateRes.original_work_year ? { original_work_year: dateRes.original_work_year } : {}),
       field_provenance: { language: lang.provenance },
       categories: categories || [],

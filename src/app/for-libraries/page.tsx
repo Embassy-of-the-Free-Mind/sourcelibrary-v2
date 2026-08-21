@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import type { Metadata } from 'next';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CONTACT_EMAIL = 'partners@sourcelibrary.org';
+const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 export default function ForLibrariesPage() {
   return (
@@ -300,12 +301,15 @@ export default function ForLibrariesPage() {
             of whether Source Library is the right fit.
           </p>
           <div className="flex flex-wrap gap-3">
-            <a
+            <OutboundLink
               href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20partnership%20inquiry`}
+              surface="for_libraries"
+              channel="email"
+              intent="inquiry"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-colors text-sm font-medium"
             >
               Email {CONTACT_EMAIL}
-            </a>
+            </OutboundLink>
             <Link
               href="/about"
               className="inline-flex items-center gap-2 px-5 py-2.5 border border-stone-600 text-stone-100 rounded-full hover:bg-stone-700 transition-colors text-sm"

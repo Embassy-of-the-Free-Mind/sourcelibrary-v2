@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How We Added 950 Books in a Weekend - Research Notes - Source Library',
@@ -9,7 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How We Added 950 Books in a Weekend',
     description: 'A human curator and three autonomous AI agents working in parallel imported 950 books in a single weekend. The architecture and the lessons.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg' }],
   },
   alternates: {
     canonical: '/blog/autonomous-agents',
@@ -487,7 +490,6 @@ export default function AutonomousAgentsPage() {
 
       </article>
 
-      <BlogComments slug="autonomous-agents" />
     </ContentPageLayout>
   );
 }

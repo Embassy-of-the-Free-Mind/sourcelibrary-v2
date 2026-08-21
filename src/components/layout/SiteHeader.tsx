@@ -6,7 +6,10 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { useLocale, localeHref, hasLocalizedTwin, localePath, canonicalPath, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { trackEvent } from '@/lib/track-event';
 
 interface NavLink {
   label: string;
@@ -15,11 +18,18 @@ interface NavLink {
   children?: { label: string; href: string }[];
 }
 
-// Hrefs are constant; labels are resolved per-locale from NAV_STRINGS so the
-// nav stays in one place as languages are added.
-function buildNavLinks(t: NavStrings): NavLink[] {
-  return [
-    { label: t.collections, href: '/collections' },
+// Labels are resolved per-locale from NAV_STRINGS so the nav stays in one place
+// as languages are added. Hrefs are written in their ENGLISH (canonical) form
+// and localized at the end of this function by `localePath`, which is guarded by
+// the route registry in locale-path.ts: an item with a twin gets the `/es`
+// prefix, an item without one is returned untouched and lands on its English
+// page. Doing it per-item by hand is what left `/librarian` pointing at the
+// English librarian from the Spanish header while `/collections` was localized
+// by a ternary two lines above it — the registry knows about `/es/librarian`,
+// the hand-written ternary did not.
+function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
+  const links: NavLink[] = [
+    { label: t.collections, href: '/collections', activePrefix: '/collections' },
     { label: t.gallery, href: '/gallery' },
     {
       label: t.browse,
@@ -28,12 +38,36 @@ function buildNavLinks(t: NavStrings): NavLink[] {
       children: [
         { label: t.browse, href: '/browse' },
         { label: t.catalogue, href: '/catalog' },
+        { label: t.works, href: '/works' },
       ],
     },
-    { label: t.map, href: '/explore/map', activePrefix: '/explore' },
+    // Points at the /explore hub, not /explore/map. The hub carries the entity
+    // stats, the century heatmap, and cards for all three visualizations; the
+    // nav used to skip past it straight to the map, which is why the hub drew
+    // 13 pageviews in the 30 days to 2026-08-13 while the map drew 262 and the
+    // timeline and constellation together drew 139. Linking the room instead of
+    // one corner of it is the whole change.
+    { label: t.explore, href: '/explore', activePrefix: '/explore' },
     { label: t.librarian, href: '/librarian' },
-    { label: t.podcast, href: '/podcast' },
+    // No Podcast item. Measured over the same 30 days, the header was the only
+    // sitewide English entry point to /podcast and it produced 113 plays, of
+    // which 66 (58%) were the one episode featured on the /es homepage — i.e.
+    // the editorial placement, not the nav, is what makes people listen. The
+    // homepage feature is now rendered for both locales (HomeView), which is
+    // where that traffic is meant to come from. Episodes also stay reachable
+    // from their librarian threads and the footer.
   ];
+
+  if (locale === 'en') return links;
+  // `activePrefix` must move with the href, or the Spanish nav highlights
+  // nothing: the pathname is `/es/collections` and the prefix would say
+  // `/collections`.
+  return links.map((link) => ({
+    ...link,
+    href: localePath(link.href, locale),
+    ...(link.activePrefix ? { activePrefix: localePath(link.activePrefix, locale) } : {}),
+    ...(link.children ? { children: link.children.map((c) => ({ ...c, href: localePath(c.href, locale) })) } : {}),
+  }));
 }
 
 interface Breadcrumb {
@@ -73,7 +107,52 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // derived one (null during static prerender).
   const locale = homeLocale ?? pathnameLocale;
   const t = NAV_STRINGS[locale];
-  const NAV_LINKS = buildNavLinks(t);
+  // Global-only surfaces 404 on partner subdomains (the list and rationale live
+  // in src/lib/tenant-global-paths.ts — #3364, #3370), so the nav must not point
+  // at them there: "Map" → /explore/map would be a dead link in the tenant's own
+  // header.
+  //
+  // Reuses the shared `useEmbedContext` signal (tenant subdomain, /embed/ route,
+  // or iframe) rather than a bespoke hostname check — #3367 added a second,
+  // narrower copy of this detection, which is exactly the drift the shared hook
+  // exists to prevent. Resolved after mount, so the static HTML the global site
+  // shares is unchanged and only a tenant visitor sees the item drop.
+  //
+  // Note most pages wrap this in ConditionalSiteHeader, which removes the whole
+  // header on a tenant host post-hydration. This filter is what protects the
+  // pages that render SiteHeader directly and stay reachable there (e.g.
+  // /author/[name]).
+  const isTenantHost = useIsEmbedded();
+  // Dropdown children get the same treatment as top-level links. They used to
+  // be rendered unfiltered, which was harmless only because no child pointed at
+  // a global-only path; `/works` under Browse is the first that does, and an
+  // unfiltered child would put a proxy-404 link in a partner's own header —
+  // the one thing the shared list exists to prevent.
+  //
+  // The hrefs arriving here are already locale-prefixed, so the global-only test
+  // runs on the CANONICAL path: `/es/explore` is the same global-only surface as
+  // `/explore` and a prefix-blind lookup would miss it.
+  const NAV_LINKS = buildNavLinks(t, locale)
+    .filter(link => !(isTenantHost && isGlobalOnlyNavHref(canonicalPath(link.href))))
+    .map(link =>
+      link.children && isTenantHost
+        ? { ...link, children: link.children.filter(child => !isGlobalOnlyNavHref(canonicalPath(child.href))) }
+        : link
+    );
+  // The Support button is deliberately NOT in buildNavLinks: it is an action,
+  // not a destination among peers, and it renders as a pill after the nav rather
+  // than as another link in the row. It goes through the same tenant filter,
+  // which is what keeps it off partner subdomains (`/give` is on the global-only
+  // list — a BPH visitor asked for money on BPH's own domain would reasonably
+  // think the money went to BPH).
+  //
+  // Why it exists at all: measured over the 30 days to 2026-08-05, /support drew
+  // 60 of 330,698 pageviews (0.018%) while /book/* drew 217,490. The site had no
+  // giving link anywhere above the footer's third column, so two-thirds of all
+  // traffic never saw an ask. Every comparable library puts one in the header —
+  // Wikipedia's "Donate" is the first item in its article nav, ahead of "Create
+  // account"; the Internet Archive's sits in its sitewide bar.
+  const showSupport = !(isTenantHost && isGlobalOnlyNavHref('/give'));
   // The EN/ES toggle shows only where a real Spanish twin exists (home, sign-in,
   // support) — the thin-i18n bargain (#2763). On deep English-only pages the
   // toggle is hidden, so clicking ES never bounces the reader to the `/es`
@@ -123,7 +202,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     >
       <div className="flex items-center justify-between px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
         <div className="flex items-center gap-3">
-          <Logo white={isWhiteText} compact={!!breadcrumbs} />
+          <Logo white={isWhiteText} compact={!!breadcrumbs} lang={locale} />
           {breadcrumbs?.map((crumb) => (
             <span key={crumb.href} className="flex items-center gap-3">
               <span className={isWhiteText ? 'text-white/40 hidden sm:inline' : 'text-stone-400 hidden sm:inline'}>/</span>
@@ -196,6 +275,28 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             })}
           </nav>
 
+          {/* Support — a pill, at every breakpoint including mobile, where most
+              reading happens. Ordered before the language toggle and search so
+              it does not get pushed off a narrow viewport. */}
+          {showSupport && (
+            <Link
+              href="/give"
+              // Fired here, at the control, because nothing downstream can
+              // reconstruct it: /api/track collapses self-referrals to 'direct'
+              // and client-side navigation preserves the original external
+              // referrer, so an arrival at /give cannot be attributed after the
+              // fact. trackEvent uses sendBeacon, which survives this navigation.
+              onClick={() => trackEvent('give_nav_click', { source: 'header', url: '/give' })}
+              className={`whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-medium tracking-wide transition-colors ${
+                isWhiteText
+                  ? 'border-white/40 text-white hover:bg-white hover:text-dark'
+                  : 'border-accent-rust text-accent-rust hover:bg-accent-rust hover:text-white'
+              }`}
+            >
+              {t.support}
+            </Link>
+          )}
+
           {/* Language toggle — only on pages with a real Spanish twin (#2763) */}
           {showLangToggle && (
           <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide" aria-label="Language">
@@ -227,9 +328,9 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
 
           {/* Desktop search icon */}
           <Link
-            href="/search"
+            href={localePath('/search', locale)}
             className={`hidden lg:flex items-center justify-center w-8 h-8 rounded-lg transition-colors ${
-              pathname === '/search'
+              canonicalPath(pathname) === '/search'
                 ? (isWhiteText ? 'text-white bg-white/10' : 'text-primary bg-warm')
                 : (isWhiteText ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-secondary hover:text-primary hover:bg-warm/50')
             }`}
@@ -298,7 +399,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 })}
                 <div className="border-t border-border-light my-1.5" />
                 <Link
-                  href="/search"
+                  href={localePath('/search', locale)}
                   className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-warm/50 transition-colors"
                 >
                   {t.search}

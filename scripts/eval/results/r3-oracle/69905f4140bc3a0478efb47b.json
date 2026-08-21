@@ -1,0 +1,53 @@
+{
+  "book_id": "69905f4140bc3a0478efb47b",
+  "work_identified": "Bṛhat Saṃhitā by Varāhamihira (6th-century Sanskrit encyclopaedic treatise on astronomy, divination, and natural science; ~4000 verses, 106 chapters)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Varahamihira's Brihat Samhita with an English Translation and Notes",
+      "translator": "V. Subrahmanya Sastri and M. Ramakrishna Bhat",
+      "pub_year": "1946",
+      "publisher": "V.B. Soobbiah & Sons, Bangalore",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/varahamihira-brihat-samhita-panditabhushana-v-subrahmanya-sastri-1946-with-english-ocr-layer"
+    },
+    {
+      "english_title": "Brhat Samhita of Varahamihira (2 Volumes): With English Translation, Exhaustive Notes and Literary Comments",
+      "translator": "M. Ramakrishna Bhat",
+      "pub_year": "1981",
+      "publisher": "Motilal Banarsidass, Delhi",
+      "completeness": "complete",
+      "source_url": "https://www.mlbd.in/products/brhat-samhita-of-varahamihira-vol-1-with-english-translation-exhaustive-notes-and-literary-comments-m-r-bhat-9788120800984-8120800982"
+    },
+    {
+      "english_title": "Brihat Samhita (serial translation, selected chapters)",
+      "translator": "H. Kern",
+      "pub_year": "1870",
+      "publisher": "Journal of the Royal Asiatic Society, vols 4-7 (1870-1875)",
+      "completeness": "partial",
+      "source_url": "https://en.wikipedia.org/wiki/B%E1%B9%9Bhat_Sa%E1%B9%83hit%C4%81"
+    }
+  ],
+  "queries_run": [
+    "Brihat Samhita Varahamihira English translation M. Ramakrishna Bhat Motilal Banarsidass",
+    "Brihat Samhita English translation complete Varahamihira WorldCat",
+    "Brihat Samhita Varahamihira Hendrik Kern English translation 19th century",
+    "Brihat Samhita Kern 1870 1875 Journal Royal Asiatic Society partial translation chapters",
+    "\"Brihat Samhita\" \"Subrahmanya Sastri\" 1946 1947 complete translation two volumes Bangalore"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/B%E1%B9%9Bhat_Sa%E1%B9%83hit%C4%81", "found": "Lists H. Kern (JRAS 1870-75, partial) and Subrahmanya Sastri & Bhat (1947, 2 vols) as English translations"},
+    {"url": "https://archive.org/details/varahamihira-brihat-samhita-panditabhushana-v-subrahmanya-sastri-1946-with-english-ocr-layer", "found": "Full 1946 Subrahmanya Sastri translation digitized on archive.org, complete 2-volume work"},
+    {"url": "https://www.mlbd.in/products/brhat-samhita-of-varahamihira-vol-1-with-english-translation-exhaustive-notes-and-literary-comments-m-r-bhat-9788120800984-8120800982", "found": "Motilal Banarsidass Vol.1 of M.R. Bhat 1981 translation in print/available"},
+    {"url": "https://www.mlbd.in/products/brhat-samhita-of-varahamihira-2-volumes-m-ramakrishna-bhat-9789390064557-9390064554", "found": "Motilal Banarsidass 2-volume M.R. Bhat set (1996 reprint) listed as active product"},
+    {"url": "https://archive.org/details/VarahamihirasBrihatSamhitaByVSubrahmanyaSastri", "found": "Internet Archive copy of Subrahmanya Sastri English translation"},
+    {"url": "https://archive.org/details/brihatsamhitavarahamihirabruhatkernh.asiaticsociety1865_754_d", "found": "Kern 1865 Asiatic Society edition — Sanskrit text, not an English translation"},
+    {"url": "https://catalogue.nla.gov.au/catalog/1733550", "found": "Access blocked by Anubis security; NLA catalogue record for Sastri/Bhat translation confirmed to exist"}
+  ],
+  "reasoning": "Two complete modern English translations of the Bṛhat Saṃhitā exist: (1) Subrahmanya Sastri & M. Ramakrishna Bhat, 1946, 2 vols, Bangalore — digitized on archive.org; (2) M. Ramakrishna Bhat solo, 1981, 2 vols, Motilal Banarsidass — still in print. Kern's 1870-75 JRAS serial is partial. not_first is clear."
+}

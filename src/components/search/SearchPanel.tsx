@@ -30,9 +30,16 @@ interface SearchResponse {
 interface SearchPanelProps {
   bookId: string;
   className?: string;
+  /** Always-open input with results rendered in-flow (the card grows), instead
+      of a collapsed trigger + absolute dropdown. */
+  inline?: boolean;
+  /** Colour theme for the input chrome. Results are always light. */
+  theme?: 'light' | 'dark';
+  /** Input placeholder text. */
+  placeholder?: string;
 }
 
-export default function SearchPanel({ bookId, className = '' }: SearchPanelProps) {
+export default function SearchPanel({ bookId, className = '', inline = false, theme = 'dark', placeholder = 'Search pages…' }: SearchPanelProps) {
   const router = useRouter();
   const embedHref = useEmbedHref();
   const [query, setQuery] = useState('');
@@ -109,7 +116,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
     inputRef.current?.focus();
   };
 
-  if (!isOpen) {
+  if (!isOpen && !inline) {
     return (
       <button
         onClick={() => {
@@ -128,6 +135,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
     );
   }
 
+  const light = theme === 'light';
   return (
     <div className="relative">
       {/* Search Input */}
@@ -135,53 +143,55 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
         onSubmit={(e) => {
           e.preventDefault();
           if (query.trim()) {
-            setIsOpen(false);
+            if (!inline) setIsOpen(false);
             router.push(`/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`);
           }
         }}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg"
-        style={{ background: 'rgba(255,255,255,0.15)' }}
+        className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl ${light ? 'border border-[#e6e0d3]' : ''}`}
+        style={light ? { background: '#fdfbf6' } : { background: 'rgba(255,255,255,0.15)' }}
       >
         {isSearching ? (
-          <Loader2 className="w-4 h-4 text-white/70 animate-spin" />
+          <Loader2 className={`w-4 h-4 animate-spin ${light ? 'text-stone-400' : 'text-white/70'}`} />
         ) : (
-          <Search className="w-4 h-4 text-white/70" />
+          <Search className={`w-4 h-4 ${light ? 'text-stone-400' : 'text-white/70'}`} />
         )}
         <input
           ref={inputRef}
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search pages..."
-          className="bg-transparent text-white placeholder-white/50 outline-none text-sm w-64 sm:w-80"
-          autoFocus
+          placeholder={placeholder}
+          className={`flex-1 min-w-0 bg-transparent outline-none focus:outline-none focus:ring-0 text-base sm:text-sm ${light ? 'text-stone-800 placeholder-stone-400' : 'text-white placeholder-white/50 sm:w-80'}`}
+          autoFocus={!inline}
         />
         {query && (
-          <button type="button" onClick={handleClear} className="text-white/50 hover:text-white">
+          <button type="button" onClick={handleClear} className={light ? 'text-stone-400 hover:text-stone-700' : 'text-white/50 hover:text-white'}>
             <X className="w-4 h-4" />
           </button>
         )}
-        <button
-          type="button"
-          onClick={() => {
-            setIsOpen(false);
-            setQuery('');
-          }}
-          className="text-white/50 hover:text-white text-xs"
-        >
-          ESC
-        </button>
+        {!inline && (
+          <button
+            type="button"
+            onClick={() => {
+              setIsOpen(false);
+              setQuery('');
+            }}
+            className="text-white/50 hover:text-white text-xs"
+          >
+            ESC
+          </button>
+        )}
       </form>
 
-      {/* Results Dropdown */}
+      {/* Results — in-flow (inline) so the card grows, or an absolute dropdown */}
       {query.trim() && (
         <div
-          className="absolute top-full left-0 right-0 mt-2 rounded-lg shadow-xl overflow-hidden z-50"
+          className={inline ? 'mt-3 rounded-lg overflow-hidden' : 'absolute top-full left-0 right-0 mt-2 rounded-lg shadow-xl overflow-hidden z-50'}
           style={{
             background: 'var(--bg-white)',
             border: '1px solid var(--border-light)',
-            minWidth: '320px',
-            maxHeight: '400px',
+            minWidth: inline ? undefined : '320px',
+            maxHeight: inline ? '360px' : '400px',
             overflowY: 'auto'
           }}
         >

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 interface Props {
@@ -24,8 +24,23 @@ const INTERNAL_PARAMS = new Set(['host_path', '_r']);
  * view, display, c-prefixed catalogue filters, language, offset, ...).
  *
  * Only fires when inside an iframe — no-ops when loaded directly.
+ *
+ * useSearchParams() must stay inside this component's own Suspense boundary:
+ * on statically prerendered routes (the book page is ISR) an unwrapped call
+ * throws a CSR bailout that gets caught by the *page's* outer Suspense,
+ * replacing the entire server-rendered body with its skeleton fallback in the
+ * served HTML — invisible to users (the client re-renders), but crawlers see
+ * a content-free page (issue #2266).
  */
-export default function EmbedNavigationReporter({ book = null, page = null }: Props) {
+export default function EmbedNavigationReporter(props: Props) {
+  return (
+    <Suspense fallback={null}>
+      <EmbedNavigationReporterInner {...props} />
+    </Suspense>
+  );
+}
+
+function EmbedNavigationReporterInner({ book = null, page = null }: Props) {
   const searchParams = useSearchParams();
   // searchParams identity can change between renders without contents changing;
   // depend on the string form so the effect re-fires exactly when the iframe

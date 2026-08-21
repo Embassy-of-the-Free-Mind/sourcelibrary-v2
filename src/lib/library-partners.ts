@@ -1,4 +1,5 @@
 import type { ImageSourceProvider } from '@/lib/types/image-source';
+import { BPH_LOGO } from '@/lib/library-logos';
 
 export interface LibraryPartner {
   slug: string;
@@ -10,6 +11,9 @@ export interface LibraryPartner {
   color: 'rust' | 'sage' | 'violet' | 'gold';
   /** Hand-picked hero image URL — takes priority over auto-selected gallery images */
   heroImageOverride?: string;
+  /** Institution logo (wordmark preferred — it carries the name). Must be on a
+   *  CSP-allowed img host (archive.org, upload.wikimedia.org, images.sourcelibrary.org). */
+  logo?: string;
   /** Has a BPH-style "Books | Catalogue" tab structure driven by a Supabase
    *  bibliographic export (library_catalog_records). When true, the tenant
    *  page renders <UnifiedCatalogue> instead of the plain books grid. The
@@ -33,6 +37,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Internet Archive is a non-profit digital library offering free access to millions of books, movies, and web pages. Their Open Library and book scanning initiatives have digitized millions of volumes from partner libraries worldwide.',
     color: 'rust',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69d0065c73df40dce83db54c/0006.jpg',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Internet_Archive_logo_and_wordmark.svg',
   },
   'gallica': {
     slug: 'gallica',
@@ -43,6 +48,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'Gallica is the digital library of the Bibliothèque nationale de France, providing free access to over 10 million documents including manuscripts, books, maps, and prints from one of the largest libraries in the world.',
     color: 'violet',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5ef41bfd8cafd91e44049/0022.jpg',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Gallica_logo.svg',
   },
   'bavarian-state-library': {
     slug: 'bavarian-state-library',
@@ -62,6 +68,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digital.bodleian.ox.ac.uk',
     description: 'The Bodleian Libraries at the University of Oxford form the largest university library system in the United Kingdom. Their Digital Bodleian platform provides access to rare books, manuscripts, and special collections spanning nearly a millennium.',
     color: 'rust',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/8e/Bodleian_libraries_logo_june2015.png',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/699067d3249ce014347d422a/0014.jpg',
   },
   'cambridge': {
@@ -83,6 +90,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Embassy of the Free Mind in Amsterdam houses the Bibliotheca Philosophica Hermetica, one of the world\'s foremost collections of Hermetic, alchemical, mystical, and esoteric texts from the Renaissance to the present day.',
     color: 'gold',
     heroImageOverride: 'https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/200.jpg',
+    logo: BPH_LOGO,
   },
   'e-rara': {
     slug: 'e-rara',
@@ -103,6 +111,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'Wellcome Collection in London is a free museum and library exploring health, life, and our place in the world. Their digital collections include medical manuscripts, alchemical texts, and works on the history of science and medicine.',
     color: 'rust',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/6991d8978c1030b12444c035/0047.jpg',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Wellcome_Collection_logo.svg',
   },
   'hab-wolfenbuettel': {
     slug: 'hab-wolfenbuettel',
@@ -122,6 +131,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digi.vatlib.it',
     description: 'The Biblioteca Apostolica Vaticana is one of the oldest and most significant libraries in the world. DigiVatLib provides free access to digitized manuscripts, incunabula, and rare printed books from the Vatican\'s extraordinary collections.',
     color: 'violet',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Vatican_Library_Logo.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5e476006a4098422172b0/0443.jpg',
   },
   'google-books': {
@@ -250,6 +260,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.loc.gov',
     description: 'The Library of Congress is the largest library in the world, with millions of items in its collections including books, recordings, photographs, newspapers, maps, and manuscripts spanning the history of human knowledge.',
     color: 'rust',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Logo_of_the_United_States_Library_of_Congress.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/6992f3d4dc69844b023ff228/0179.jpg',
   },
   'british-library': {
@@ -376,6 +387,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.metmuseum.org',
     description: 'The Metropolitan Museum of Art in New York provides open access to its encyclopedic collection spanning 5,000 years, including Egyptian papyri, Islamic manuscripts, medieval art, and Asian calligraphy.',
     color: 'rust',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/7/73/The_Metropolitan_Museum_of_Art_Logo.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/hero/met-book-of-dead.jpg',
   },
   'ndl': {
@@ -406,6 +418,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.vam.ac.uk',
     description: 'The Victoria and Albert Museum in London is the world\'s leading museum of art, design, and performance. Its collections include Leonardo da Vinci\'s notebooks (Codex Forster), Islamic art, and medieval manuscripts.',
     color: 'violet',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Victoria_and_Albert_Museum_Logo.svg',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/6991e70cebc7adff9a0b21e6/0003.jpg',
   },
   'tu-delft': {

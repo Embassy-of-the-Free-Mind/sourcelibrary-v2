@@ -39,6 +39,7 @@
 import { MongoClient } from 'mongodb';
 import { readFileSync } from 'fs';
 import { parseArgs } from 'util';
+import { normalizeStateShelfMark } from '../lib/bph-state-shelfmark.mjs';
 
 const { values: args } = parseArgs({
   options: {
@@ -124,7 +125,9 @@ function loadCSV(path) {
       remarks: c[cols.remarks] || null,
       internal_remarks: c[cols.internalRemarks] || null,
       status: c[cols.status] || null,
-      state_shelf_mark: c[cols.stateShelfMark] || null,
+      // "neen" (Dutch "no") is an answer, not a shelf mark — normalise at the
+      // write boundary so a re-import can't undo the one-off sweep.
+      state_shelf_mark: normalizeStateShelfMark(c[cols.stateShelfMark]),
       acquisition_date: c[cols.acquisitionDate] || null,
       acquisition_source: c[cols.acquisitionSource] || null,
       price: c[cols.price] || null,

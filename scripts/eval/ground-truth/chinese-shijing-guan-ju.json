@@ -7,5 +7,13 @@
   "source": "ctext",
   "source_url": "https://ctext.org/book-of-poetry/guan-ju/zh",
   "anchor": "關關雎鳩",
-  "ocr_ground_truth": "關關雎鳩、在河之洲。窈窕淑女、君子好逑。參差荇菜、左右流之。窈窕淑女、寤寐求之。求之不得、寤寐思服。悠哉悠哉、輾轉反側。參差荇菜、左右采之。窈窕淑女、琴瑟友之。參差荇菜、左右芼之。窈窕淑女、鍾鼓樂之。"
+  "ocr_ground_truth": "關關雎鳩、在河之洲。窈窕淑女、君子好逑。參差荇菜、左右流之。窈窕淑女、寤寐求之。求之不得、寤寐思服。悠哉悠哉、輾轉反側。參差荇菜、左右采之。窈窕淑女、琴瑟友之。參差荇菜、左右芼之。窈窕淑女、鍾鼓樂之。",
+  "page_class": {
+    "source_class": "print",
+    "layout": "kanbun_band_plus_kundoku_body",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": true
+  }
 }

@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^latin-aeneid-1\\.json$",
+  "summary": [
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 144,
+      "charAccuracy": 0.9930555555555556,
+      "rows": [
+        {
+          "work": "Aeneid I.1-7",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 203,
+          "aligned": true,
+          "guard": 0.03571428571428571,
+          "cer": 0.006944444444444444,
+          "charAccuracy": 0.9930555555555556,
+          "refLen": 144,
+          "matched": 143,
+          "source": "Wikisource (la), ed. with macrons; folded at compare time",
+          "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.00068805,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.066984,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

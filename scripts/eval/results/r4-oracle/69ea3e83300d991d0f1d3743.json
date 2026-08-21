@@ -1,0 +1,37 @@
+{
+  "book_id": "69ea3e83300d991d0f1d3743",
+  "work_identified": "Kitāb al-Buldān (Book of Countries) by Abū al-ʿAbbās al-Yaʿqūbī (d. 897) — the Arabic geographical treatise, distinct from the Tārīkh (History)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Works of Ibn Wāḍiḥ al-Yaʿqūbī: An English Translation (3 vols.)",
+      "translator": "Matthew S. Gordon, Chase F. Robinson, Everett K. Rowson, Michael Fishbein (eds.)",
+      "pub_year": "2018",
+      "publisher": "Brill (Islamic History and Civilization series, vols. 1–3)",
+      "completeness": "complete",
+      "source_url": "https://brill.com/view/title/36431"
+    }
+  ],
+  "queries_run": [
+    "al-Yaqubi Kitab al-Buldan English translation \"Works of Ibn Wadih\" Brill 2018",
+    "al-Yaqubi \"Book of Countries\" English translation history",
+    "WorldCat \"Kitab al-Buldan\" al-Yaqubi English translation",
+    "\"Works of Ibn Wadih al-Yaqubi\" volume 3 contents \"Kitab al-Buldan\" geography",
+    "al-Yaqubi \"Kitab al-Buldan\" Gordon Robinson Rowson Fishbein \"volume 3\" geography 2018",
+    "al-Yaqubi \"Kitab al-Buldan\" English translation before 2018 partial complete"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/the-works-of-ibn-wadih-al-yaqubi", "found": "3-vol set confirmed to include fully annotated English translation of al-Yaqubi's Kitāb al-Buldān (Geography) and Tārīkh (History)"},
+    {"url": "https://www.abebooks.com/Works-Ibn-Wadih-al-Yaqubi-Volume-English/32231453027/bd", "found": "Volume 3 pub. 2018, editors Gordon/Robinson/Rowson/Fishbein; Kitāb al-Buldān is one of the two primary translated works"},
+    {"url": "https://search.worldcat.org/title/works-of-ibn-wai-al-yaqubi-volume-1-an-english-translation/oclc/1030819471", "found": "WorldCat record confirming English translation set by Gordon et al., Brill 2018"},
+    {"url": "https://brill.com/view/title/36431", "found": "403 Forbidden — Brill Vol. 3 page inaccessible, but scope confirmed via search result snippets and archive.org"},
+    {"url": "https://en.wikipedia.org/wiki/Kitab_al-Buldan_(Ya%27qubi_book)", "found": "Wikipedia article on Kitāb al-Buldān; no additional English translations cited beyond Brill 2018 set"},
+    {"url": "https://pieterderideaux.jimdofree.com/1-contents-till-900/ibn-wadih-al-ya-qubi-897/", "found": "Scholarly site confirms Gordon et al. 2018 and provides translated excerpts from Kitāb al-Buldān"}
+  ],
+  "reasoning": "The Brill 2018 3-vol set (Gordon, Robinson, Rowson, Fishbein) contains a complete annotated English translation of the Kitāb al-Buldān, confirmed at WorldCat, archive.org, and multiple scholarly sources. Source-language rule: a complete modern English translation from the original Arabic exists → not_first."
+}

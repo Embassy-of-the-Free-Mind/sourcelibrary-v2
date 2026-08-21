@@ -1,0 +1,198 @@
+{
+ "readerWins": 17,
+ "flashWins": 1,
+ "neither": 1,
+ "mcnemar_p": 0.00014495849609375,
+ "detail": [
+  {
+   "n": "01",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum trac",
+   "subagent": "(nobody named)",
+   "flash_lite": "Lazarus Zetzner",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The title page presents an anthology of \"praecipuos selectorum auctorum tractatus\" with no single author, and names Zetzner only in the imprint as the bookseller-publisher who paid for it. His signature on the address to the reader is a publisher's/compiler's preface about assembling and printing the fourth volume, so he is publisher-editor, not the author."
+  },
+  {
+   "n": "03",
+   "title": "Chymischer Monden-Schein",
+   "subagent": "(nobody named)",
+   "flash_lite": "Elias Artista",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The 1739 title page of Chymischer Monden-Schein gives only an anonymous formula (\"von einem, der die Wahrheit nicht läugnet...\"), so the work is deliberately unsigned. \"Elias Artista\" appears in the preface as the honett Herr the narrator met on his travels who instructed him — a figure inside the narrative (and a stock alchemical persona), not a byline."
+  },
+  {
+   "n": "07",
+   "title": "Lettere volgari di diuersi nobilissimi huomini, et ecc",
+   "subagent": "(nobody named)",
+   "flash_lite": "Paulus Manutius",
+   "adjudicator_says": "Antonio Manuzio (Antonio Manutio) — compiler/editor of this anthology of letters by many hands; the letters themselves are by diverse authors",
+   "winner": "neither",
+   "confidence": "medium",
+   "reasoning": "The dedication is signed Antonio Manutio, not Paulus Manutius, and he claims the labour of gathering the letters (\"Quanta fatica io habbia durato à raccorle\", \"dedicandoui le opere della stampa mia\"), so he is the compiler/editor of this anthology rather than its author. B names the wrong Manuzio and A is wrong that no responsible name appears; Castiglione's signature on page 5 belongs to a letter printed inside the collection."
+  },
+  {
+   "n": "08",
+   "title": "Saturn Gnosis. Offizielles Publikationsorgan der deuts",
+   "subagent": "(nobody named)",
+   "flash_lite": "Eugen Grosche",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "\"Herausgegeben von\" means \"edited/issued by\", so Eugen Grosche is named as the editor of this lodge periodical, not its author. The unsigned \"Zum Geleit\" foreword speaks in the collective \"wir\" of the order, so no author is named on these pages."
+  },
+  {
+   "n": "09",
+   "title": "Die Lehren der Rosenkreuzer aus dem 16ten und 17ten Ja",
+   "subagent": "(nobody named)",
+   "flash_lite": "Henricus Madathanus",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "medium",
+   "reasoning": "These pages are a Sammelband, and the catalogued work (\"Die Lehren der Rosenkreuzer\", title-page p.15) names no author — only an unnamed Brother of the Fraternity behind the initials P. F., with figures added by P. S. Henricus Madathanus is named as author on pp.17–19, but those are the title-pages of a different bound-in work, Aureum Seculum Redivivum, so his name does not attach to the book being judged."
+  },
+  {
+   "n": "13",
+   "title": "Chymisches Lust-Gärtlein",
+   "subagent": "(nobody named)",
+   "flash_lite": "Liebhaber der Weisheit",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "\"von Einem Liebhaber der Weisheit\" (\"by a lover of wisdom\") is an indefinite anonymity formula, not a personal name, and the only other name on the title page is the printer Christian Heinrich Pfotenhauer. The preface is likewise signed only \"Der Verleger\" and merely lists the five bound-in tracts, so the Chymisches Lust-Gärtlein names no author."
+  },
+  {
+   "n": "14",
+   "title": "Historiographisches, Satirisches, Alchemistisches, Bri",
+   "subagent": "(nobody named)",
+   "flash_lite": "M. J",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "medium",
+   "reasoning": "The only personal names on these two handwritten title-pages of the Dresden miscellany are the dialogue's subjects and speakers (the Queen of Sweden, Donna Olimpia Maldachini, Pasquino and Marforio), which is a classic anonymous pasquinade; \"M. J fecit\" is a bare pair of initials in a maker's/scribe's formula, not an authorial genitive, \"auctore\", or a signed dedication. Answer B therefore promotes an unidentifiable scribal mark to authorship, so the pages support \"no author named.\""
+  },
+  {
+   "n": "15",
+   "title": "Pistis sophia. A gnostic gospel (with extracts from th",
+   "subagent": "(nobody named)",
+   "flash_lite": "G. R. S. Mead",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The title page assigns Mead only the introduction (and the Englishing from Schwartze's Latin), which are translator/editor roles, not authorship. The work itself, an ancient Gnostic gospel, is named by title alone with no author, so no author is named on these pages."
+  },
+  {
+   "n": "20",
+   "title": "Theatrum Chemicum, Praecipuos Selectorum Auctorum Trac",
+   "subagent": "(nobody named)",
+   "flash_lite": "Lazarus Zetzner",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The title announces an anthology of \"praecipuos selectorum auctorum tractatus\", and the dedication's signer Lazarus Zetzner describes himself as having gathered and arranged other men's works at his own expense — the role of compiler-publisher, matching the imprint \"Sumptibus Heredum Eberh. Zetzneri\". A dedication signature normally marks the author, but here the text of the dedication itself disclaims authorship, so no author is named on these pages."
+  },
+  {
+   "n": "23",
+   "title": "Metropolitan college transactions 1962",
+   "subagent": "(nobody named)",
+   "flash_lite": "W. R. Semken",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "Semken is named with the office title \"M.W. Supreme Magus IX°\" — the presiding officer of the society issuing these Transactions — and Kayley is explicitly labelled \"Editor\", so neither is presented as author. A society's annual transactions is a corporate publication and these title pages name no author."
+  },
+  {
+   "n": "24",
+   "title": "Alchymistisch Siebengestirn : d.i. Sieben schöne u. au",
+   "subagent": "(nobody named)",
+   "flash_lite": "Hermes Trismegistus",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "medium",
+   "reasoning": "The work judged is the 1675 collection 'Alchymistisch Sieben-Gestirn', an anonymous compilation of seven tracts rendered 'aus dem Latein ins Hochdeutsche' by an unnamed translator whose preface is unsigned; the Hermes/Lullius line A quotes is a title-page epigraph verse naming cited authorities, not a byline. Hermes Trismegistus appears as author only on the separate 1674 title-page of one constituent tract (p.11), which is not the volume's author."
+  },
+  {
+   "n": "26",
+   "title": "Letter to the Rosicrucian Brotherhood (PH422)",
+   "subagent": "(nobody named)",
+   "flash_lite": "M. K. E.",
+   "adjudicator_says": "M. K. E.",
+   "winner": "flash",
+   "confidence": "medium",
+   "reasoning": "The two pages are a single letter addressed to the Rosicrucian brotherhood, and the initials M. K. E. stand at its close in the signature position, which is an authorial self-identification rather than a citation, ownership mark, or translator statement. They are initials rather than a resolved name, so the attribution is minimal, but the pages do name a writer for the work, making B's flat 'no author is named' the weaker reading of the same line."
+  },
+  {
+   "n": "30",
+   "title": "Historische Wunder-Beschreibung von der sogenannten sc",
+   "subagent": "(nobody named)",
+   "flash_lite": "N. Thüringer",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The very sentence Answer A quotes says N. Thüringer (Thüring von Ringoltingen) merely FOUND the story already written in French/Welsch among old manuscripts and then translated it into German for Margrave Rudolf von Hochberg, which makes him the translator/adapter, not the author. The author of the underlying history is never named, and the title page adds only anonymous revision (\"Auf ein Neues übersehen, mit reinem Teutsch verbessert\"), so no author is named on these pages."
+  },
+  {
+   "n": "31",
+   "title": "Occulta Philosophia : Von den verborgenen Philosophisc",
+   "subagent": "(nobody named)",
+   "flash_lite": "Hermes Trismegistus",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "Hermes Trismegistus and Basil Valentine are named only as the sources of the appended Emerald Tablet, parables, symbols and 18 figures that accompany ('sampt') the tract, not as its authors; the dedication likewise treats Hermes' Schmaragdtaffel and figures as material explaining 'dieses gegenwertige Tractätlin'. The dialogue itself is presented anonymously and the dedication as transcribed carries no signature, so no author is named."
+  },
+  {
+   "n": "32",
+   "title": "Horae beatae Mariae virginis",
+   "subagent": "(nobody named)",
+   "flash_lite": "Georgius Sigerius",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The Sigerius line is a manuscript presentation/ownership inscription dated 25 December 1596 — over a century after this 1480 Book of Hours — recording that Georgius Sigerius, pastor, gave the book as a New Year's gift to Joannes Andreas de Croaria, so he is the donor/owner, not the author. The only other page is a calendar leaf for January; a Horae beatae Mariae virginis of this kind is anonymous and no author is named."
+  },
+  {
+   "n": "37",
+   "title": "Die Mit dem Marte genau-vereinigte Venus: Oder Tractat",
+   "subagent": "(nobody named)",
+   "flash_lite": "Die Jungfer von der Eden Ruppin",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The clean 1706 Rostock title-page presents the work as an anonymous compilation of 'Verschiedener Autorum Meynungen' gathered from various books and manuscripts, with only the publisher named. B's 'Die Jungfer von der Eden Ruppin gebohrne von Ihrer' comes from the badly garbled duplicate title-page transcription (page 6, which also mangles the title itself) and is OCR noise, not a person named as author."
+  },
+  {
+   "n": "38",
+   "title": "Auriferae artis, quam chemiam vocant, antiquissimi aut",
+   "subagent": "(nobody named)",
+   "flash_lite": "Guglielmo Gratarolo",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The Gratarolo name appears in the printer's address to readers (TYPOGRAPHVS LECTORIBVS) describing a DIFFERENT volume Perna issued some years earlier, after which he says he and learned friends gathered and selected more material for these two new volumes. The title page names only \"antiquissimi authores\" with the printer Petrus Perna, so this collection carries no named author or compiler."
+  },
+  {
+   "n": "39",
+   "title": "Gebet-Buechlein",
+   "subagent": "(nobody named)",
+   "flash_lite": "Lydia Seidel",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "The printed title page (Germantaun: Michael Billmeyer, 1806) attributes the work only to an unnamed \"Christum und sein Wort liebhabenden Seelen\", so the book is anonymous. \"Lydia Seidel ihr Gebet Buch, 1841\" is a flyleaf ownership inscription in a later hand dated 35 years after the imprint — the owner, not the author."
+  },
+  {
+   "n": "42",
+   "title": "Duarum epistolarum à Georgio Morlaeo et Episcapo Winto",
+   "subagent": "(nobody named)",
+   "flash_lite": "N.N.",
+   "adjudicator_says": "(nobody named)",
+   "winner": "reader",
+   "confidence": "high",
+   "reasoning": "\"N.N.\" is the standard Latin placeholder (nomen nescio / nomen nominandum) used precisely to withhold a name, so \"Auctore N.N.\" declares the work anonymous rather than naming an author. The only personal names on the pages are George Morley and Janus Ulitius, who are the subject and addressee of the letters being reviewed, not the author of this reply."
+  }
+ ]
+}

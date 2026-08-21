@@ -48,6 +48,17 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
     const year = edition.published_at ? new Date(edition.published_at).getFullYear() : new Date().getFullYear();
     const author = edition.citation.original_author || 'Anonymous';
 
+    // `language` is the language we translated FROM, which on a translated
+    // edition is not the language of the work. BibTeX has no field for the chain,
+    // so when the two differ the note states it — otherwise a citation for our
+    // English←French←Arabic Muqaddimah reads as though the work were French.
+    // Absent on editions minted before #3959; those keep reading as minted.
+    const work = edition.citation.work_language;
+    const source = edition.citation.original_language;
+    const note = work && source
+      ? `AI-assisted translation from ${source}; the work was written in ${work}`
+      : 'AI-assisted translation';
+
     return `@book{sourcelibrary_${year}_${edition.id.slice(0, 8)},
   author       = {${author}},
   title        = {${edition.citation.original_title}},
@@ -55,10 +66,11 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
   year         = ${year},
   publisher    = {Source Library},
   edition      = {${edition.version}},
-  note         = {AI-assisted translation},${edition.doi ? `
+  note         = {${note}},${edition.doi ? `
   doi          = {${edition.doi}},
   url          = {https://doi.org/${edition.doi}},` : ''}
-  language     = {${edition.citation.original_language || 'unknown'}}
+  language     = {${source || 'unknown'}}${work ? `,
+  origlanguage = {${work}}` : ''}
 }`;
   };
 

@@ -25,9 +25,15 @@ export interface Book {
   // Resource type — visual art, manuscripts, etc. Absent = printed_book (default)
   resource_type?: 'printed_book' | 'manuscript' | 'painting' | 'drawing' | 'print' | 'fresco' | 'emblem' | 'map' | 'tablet' | 'object';
 
+  // Editor-chosen "About" side plate/page. Overrides the auto-picked
+  // representative visual on the book page's About section. Stores the
+  // resolved image + link + caption (re-pickable if a URL ever goes stale).
+  about_visual?: { src: string; href: string; caption?: string } | null;
+
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)
+  localized?: import('@/lib/localized').LocalizedBookMap; // per-language title glosses, e.g. { es: { title } } — see src/lib/localized.ts
 
   // Author and publication
   author: string;
@@ -54,7 +60,12 @@ export interface Book {
 
   // USTC catalog fields
   ustc_id?: string;           // USTC catalog number (e.g., "2029384")
-  place_published?: string;   // City of publication (e.g., "Hamburg")
+  place_published?: string;   // City of publication (e.g., "Hamburg") — import tier
+  /** Same fact, other writers (#4043). Read via resolveImprintPlace() in
+   *  src/lib/imprint.ts — never pick one of these by hand. */
+  place_of_publication?: string;  // ocr/mixed tier
+  publication_place?: string;     // catalogue tier (BPH + USTC)
+  place?: string;                 // stray (1 document)
   publisher?: string;         // Printer/Publisher name
   format?: string;            // Book format (folio, quarto, octavo, etc.)
 
@@ -73,6 +84,7 @@ export interface Book {
   pages_translated?: number;  // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_archived?: number;     // CACHED — pages with archived_photo on R2 (excludes failed archives)
+  pages_translated_es?: number; // CACHED — pages with a Spanish edition (translations.es / legacy translation_es); synced by scripts/maintenance/sync-pages-translated-es.mjs
   translation_percent?: number; // Computed at read time from pages_translated/pages_ocr (never stored). Uses pages_ocr as denominator so blank pages don't penalize the percentage.
   created_at?: Date;
   updated_at?: Date;

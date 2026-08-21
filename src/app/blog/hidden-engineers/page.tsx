@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy - Source Library',
@@ -10,7 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy',
     description: 'Before engineering was a discipline, its knowledge lived inside alchemy, natural magic, and mystical philosophy. The primary sources tell a stranger story than the textbooks.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg' }],
   },
   alternates: {
     canonical: '/blog/hidden-engineers',
@@ -24,7 +27,7 @@ export default function HiddenEngineersPage() {
         <ContentHeader
           title="The Hidden Engineers"
           subtitle="Steam engines in spell books, automata in alchemy, kites in natural magic &mdash; before engineering was a discipline, its knowledge lived in unexpected places"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg"
+          image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg"
           imageAlt="Hero of Alexandria's Aeolipile diagram from a 16th-century manuscript"
         >
           <p className="text-stone-400 text-sm mt-4">27 February 2026 &middot; 22 min read</p>
@@ -79,7 +82,7 @@ export default function HiddenEngineersPage() {
           <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=93">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg"
+              src="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg"
               alt="Page from the Greek manuscript showing Hero of Alexandria's Aeolipile diagram with Greek text and technical annotations"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
@@ -159,7 +162,7 @@ export default function HiddenEngineersPage() {
             <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=153">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/153.jpg"
+                src="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/153.jpg"
                 alt="Opening page of the Poimandres of Hermes Trismegistus with decorative red headpiece, from the same manuscript as Hero's Pneumatica"
                 className="w-full max-w-md mx-auto rounded-lg shadow-md"
               />
@@ -329,7 +332,7 @@ export default function HiddenEngineersPage() {
             <Link href="/book/ten-books-on-architecture-pollio?page=40">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`/api/crop-image?url=${encodeURIComponent('https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6949af986ef4a68b726b7fa9/40.jpg')}&x=0.118&y=0.052&w=0.77&h=0.456`}
+                src={`/api/crop-image?url=${encodeURIComponent('https://images.sourcelibrary.org/archived/6949af986ef4a68b726b7fa9/40.jpg')}&x=0.118&y=0.052&w=0.77&h=0.456`}
                 alt="Woodcut illustration of an ornate spherical aeolipile vessel from Vitruvius De architectura, 1521"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -683,7 +686,7 @@ export default function HiddenEngineersPage() {
             <Link href="/book/the-notebooks-of-leonardo-da-vinci-richter?page=37">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`/api/crop-image?url=${encodeURIComponent('https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6991e93135ed50020acc1458/37.jpg')}&x=0.012&y=0.074&w=0.824&h=0.851`}
+                src={`/api/crop-image?url=${encodeURIComponent('https://images.sourcelibrary.org/archived/6991e93135ed50020acc1458/37.jpg')}&x=0.012&y=0.074&w=0.824&h=0.851`}
                 alt="Leonardo da Vinci's sketches of laborers and mechanical principles from the Notebooks"
                 className="w-full max-w-sm mx-auto rounded-lg shadow-md"
               />
@@ -829,7 +832,6 @@ export default function HiddenEngineersPage() {
         </div>
       </article>
 
-      <BlogComments slug="hidden-engineers" />
     </ContentPageLayout>
   );
 }

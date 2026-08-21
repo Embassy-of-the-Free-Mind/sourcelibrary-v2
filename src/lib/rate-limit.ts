@@ -8,6 +8,8 @@
  * Counters are pruned on access to prevent memory leaks.
  */
 
+import { recordRateLimitDenial } from '@/lib/abuse-log';
+
 interface RateLimitEntry {
   count: number;
   resetAt: number;
@@ -55,6 +57,7 @@ export function checkRateLimit(
   entry.count++;
   if (entry.count > config.limit) {
     const retryAfter = Math.ceil((entry.resetAt - now) / 1000);
+    recordRateLimitDenial(config.name, ip);
     return { allowed: false, retryAfter };
   }
 
@@ -156,7 +159,11 @@ export async function checkRateLimitShared(
     // adding a multi-second tax to every gated request.
     const timeout = new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), 1500));
     const result = await Promise.race([run(), timeout]);
+    // On timeout the in-memory fallback records the denial itself; on the Mongo
+    // path we record here. Logging lives OUTSIDE run() so a slow request whose
+    // run() resolves after the timeout can't also log — one denial, one event.
     if (result === 'timeout') return checkRateLimit(config, ip);
+    if (!result.allowed) recordRateLimitDenial(config.name, ip);
     return result;
   } catch {
     // A limiter outage must never wall a user — degrade to the in-memory cap.

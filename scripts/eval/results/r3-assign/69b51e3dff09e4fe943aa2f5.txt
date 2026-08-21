@@ -1,0 +1,4 @@
+book_id: 69b51e3dff09e4fe943aa2f5
+Title: Gvilielmi Postelli Regii In Academia Viennensi Lingvarvm Peregrinarvm Et Mathematvm Professoris de Linguae Phoenicis siue Hebraicae excellentia & de necessario illius & Arabicae penes Latinos vsu, Praefatio, aut potius loquutionis humanaeue perfectionis Panegyris
+Author: Postel, Guillaume
+Source language: Latin

@@ -87,6 +87,8 @@ export const INDEXES = [
   { collection: 'api_usage', key: { 'ip_hash': 1, 'ts': -1 }, options: { 'name': 'ip_hash_1_ts_-1' }, why: 'Per-client analysis, hashed IP for PII-light logging. src/lib/api-usage.ts.' },
   // ── audit_log ─────────────────────────────────────────────────
   { collection: 'audit_log', key: { 'book_id': 1 }, options: { 'name': 'audit_log_book_idx', 'background': true }, why: 'Lookup by book_id. Archived ensure-indexes route.' },
+  // ── book_events ───────────────────────────────────────────────
+  { collection: 'book_events', key: { 'book_id': 1, 'type': 1 }, options: { 'name': 'book_events_book_type_idx', 'background': true }, why: 'Per-book durable history lookups (image_resolution_upgrade etc.). Unlike audit_log this collection is PERMANENT — never add it to prune-telemetry. rearchive-iiif-fullres.mjs, backfill-resolution-upgrade-events.mjs (#3191).' },
   // ── authors ───────────────────────────────────────────────────
   { collection: 'authors', key: { 'slug': 1 }, options: { 'name': 'slug_1', 'unique': true }, why: 'Canonical slug lookup, the primary key for the author thesaurus. scripts/maintenance/build-authors-collection.mjs.' },
   { collection: 'authors', key: { 'variant_slugs': 1 }, options: { 'name': 'variant_slugs_1' }, why: 'Redirect-map lookup: any variant slug resolves to the canonical author. build-authors-collection.mjs.' },
@@ -263,6 +265,13 @@ export const INDEXES = [
   { collection: 'mcp_tool_calls', key: { 'ip_hash': 1, 'ts': -1 }, options: { 'name': 'ip_hash_1_ts_-1' }, why: 'Per-client analysis for the MCP tool-call log. src/lib/mcp-usage.ts.' },
   { collection: 'mcp_tool_calls', key: { 'tool': 1, 'ts': -1 }, options: { 'name': 'tool_1_ts_-1' }, why: '\'How is tool X doing\' queries. src/lib/mcp-usage.ts.' },
   { collection: 'mcp_tool_calls', key: { 'ts': 1 }, options: { 'name': 'ts_1' }, why: 'Plain ts range index — retention is manual per #2976 decision 2026-07-05; TTL removed (was 90d). src/lib/mcp-usage.ts ensureIndexes(), created lazily; live TTL swapped to plain by scripts/maintenance/swap-ttl-to-plain-indexes.mjs post-deploy.' },
+  // ── mcp_clients ───────────────────────────────────────────────
+  { collection: 'mcp_clients', key: { 'ts': 1 }, options: { 'name': 'ts_1' }, why: 'Plain ts range index — retention is manual per #2976. src/lib/mcp-usage.ts ensureClientIndexes(), created lazily.' },
+  { collection: 'mcp_clients', key: { 'client_name': 1, 'ts': -1 }, options: { 'name': 'client_name_1_ts_-1' }, why: '\'How many distinct clients / which ones\' queries over the MCP initialize handshake. src/lib/mcp-usage.ts.' },
+  { collection: 'mcp_clients', key: { 'ip_hash': 1, 'ts': -1 }, options: { 'name': 'ip_hash_1_ts_-1' }, why: 'Per-client-IP analysis of MCP handshakes. src/lib/mcp-usage.ts.' },
+  // ── correction_events ─────────────────────────────────────────
+  { collection: 'correction_events', key: { 'page_id': 1, 'created_at': -1 }, options: { 'name': 'correction_events_page_idx', 'background': true }, why: 'Corrections for a page, newest first. src/lib/correction-events.ts (#3241).' },
+  { collection: 'correction_events', key: { 'field': 1, 'created_at': -1 }, options: { 'name': 'correction_events_field_idx', 'background': true }, why: 'Eval-side mining: all OCR (or translation) corrections in time order (#3241).' },
   // ── page_revisions ────────────────────────────────────────────
   { collection: 'page_revisions', key: { 'page_id': 1, 'field': 1, 'created_at': -1 }, options: { 'name': 'page_revisions_page_field_idx', 'background': true }, why: 'Lookup by page + field, newest first (revision history). Archived ensure-indexes route.' },
   { collection: 'page_revisions', key: { 'id': 1 }, options: { 'name': 'page_revisions_id_idx', 'background': true, 'unique': true }, why: 'Unique id lookup. Archived ensure-indexes route.' },

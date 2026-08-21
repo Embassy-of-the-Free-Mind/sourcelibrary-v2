@@ -1,0 +1,65 @@
+{
+  "book_id": "69dbc9511040d1d5e20a2023",
+  "work_identified": "De officiis (On Duties) by Marcus Tullius Cicero — this is the core work in a Latin incunable/early-print edition that also contains Laelius sive de amicitia, Cato maior sive de senectute, and Paradoxa Stoicorum; the Omnibonus Leonicenus commentary and Raphael Regius editorship are incidental to work identity",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Tully's three books of offices, in English",
+      "translator": "Thomas Cockman",
+      "pub_year": "1699",
+      "publisher": "unknown (London)",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Thomas_Cockman"
+    },
+    {
+      "english_title": "De officiis. With an English translation",
+      "translator": "Walter Miller",
+      "pub_year": "1913",
+      "publisher": "Loeb Classical Library / Harvard University Press",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/cicero-de-officiis-miller-loeb-1913"
+    },
+    {
+      "english_title": "Cicero: On Duties",
+      "translator": "M. T. Griffin and E. M. Atkins",
+      "pub_year": "1991",
+      "publisher": "Cambridge University Press",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Cicero-Cambridge-History-Political-Thought/dp/0521348358"
+    }
+  ],
+  "queries_run": [
+    "Cicero \"De officiis\" English translation history Walter Miller Loeb 1913 Thomas Cockman",
+    "Cicero \"De amicitia\" \"De senectute\" English translation history complete WorldCat",
+    "Cicero \"De officiis\" \"Paradoxa Stoicorum\" English translation complete prior 1900",
+    "Cicero \"De officiis\" Griffin Atkins Cambridge 1991 \"On Duties\" English translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Thomas_Cockman",
+      "found": "Confirms Thomas Cockman published a complete English translation of De officiis in 1699 titled 'Tully's three books of offices, in English'"
+    },
+    {
+      "url": "https://archive.org/details/cicero-de-officiis-miller-loeb-1913",
+      "found": "Internet Archive copy of Walter Miller's 1913 Loeb Classical Library English translation of De officiis — complete, widely held"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/De_Officiis",
+      "found": "Wikipedia article confirms multiple complete English translations: Walter Miller (1913), P.G. Walsh (2001/Oxford), Michael Grant (Penguin 1960); article notes this is one of the most reproduced Latin texts"
+    },
+    {
+      "url": "https://www.academia.edu/127871765/Cicero_On_duties_ed_M_T_Griffin_and_E_M_Atkins_Cambridge_Cambridge_University_Press_1991_li_189_pp_19_50_37_50_hardback_6_95_9_95_paper",
+      "found": "Confirms Griffin & Atkins 1991 Cambridge UP 'On Duties' is a complete English translation (Cambridge Texts in the History of Political Thought)"
+    },
+    {
+      "url": "https://quod.lib.umich.edu/e/eebo/A18880.0001.001",
+      "found": "EEBO record: 'The booke of Marcus Tullius Cicero entituled Paradoxa Stoicorum' — confirms English translation of Paradoxa Stoicorum published 1569 (further corroborating not_first across all works in this volume)"
+    }
+  ],
+  "reasoning": "De officiis is among the most-translated Latin texts. Thomas Cockman (1699) produced a complete English translation; Walter Miller (Loeb, 1913) produced the modern standard; Griffin & Atkins (Cambridge, 1991) is the leading scholarly translation. All three constitute complete prior English translations. Source-language rule is decisive: not_first."
+}

@@ -24,6 +24,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { generateScholarlyPdf } from '../lib/scholarly-typst.mjs';
+import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -51,6 +52,7 @@ const hasFlag = (f) => args.includes(f);
 const getArg = (f) => { const i = args.indexOf(f); return i >= 0 && i + 1 < args.length ? args[i + 1] : null; };
 
 const MODE = hasFlag('--mint') ? 'mint' : hasFlag('--sample') ? 'sample' : 'dry-run';
+const ALLOW_ANON = hasFlag('--allow-anon');
 const LIMIT = parseInt(getArg('--limit') || getArg('--sample') || String(DEFAULT_LIMIT));
 const BOOK_ID = getArg('--book-id');
 const MIN_QUALITY = parseInt(getArg('--min-quality') || String(DEFAULT_MIN_QUALITY));
@@ -141,20 +143,42 @@ async function zenodoPublish(draftId) {
 
 // ── Zenodo metadata builder ─────────────────────────────────────────
 
-function buildZenodoMetadata(book, edition) {
-  const creators = [];
-
-  // Original author
-  if (book.author) {
-    const parts = book.author.split(' ');
-    const familyName = parts.pop() || book.author;
-    const givenName = parts.join(' ') || undefined;
-    creators.push({
+// Parse a catalog author string into Zenodo person creators. Handles
+// multi-author strings ("A; B"), catalog brackets ("[Zwack, Franz Xaver von]"),
+// and trailing qualifiers ("(attrib.)", "(translator)") — all learned from the
+// 2026-07-20 batch, where 9 records needed post-hoc metadata edits.
+function parseAuthorPersons(author) {
+  if (!author) return [];
+  return author.split(';').map(raw => {
+    const name = raw.trim().replace(/^\[|\]$/g, '').trim();
+    const qual = (name.match(/\(([^)]*)\)\s*$/) || [])[1];
+    const base = name.replace(/\s*\([^)]*\)\s*$/, '').trim();
+    if (!base) return null;
+    let family, given;
+    if (base.includes(',')) {
+      [family, given] = base.split(',').map(s => s.trim());
+    } else {
+      const parts = base.split(/\s+/);
+      family = parts.pop();
+      given = parts.join(' ') || undefined;
+    }
+    return {
       person_or_org: {
-        name: book.author, type: 'personal',
-        family_name: familyName,
-        ...(givenName && { given_name: givenName }),
+        name: qual ? `${base} (${qual})` : base,
+        type: 'personal',
+        family_name: family,
+        ...(given && { given_name: given }),
       },
+    };
+  }).filter(Boolean);
+}
+
+function buildZenodoMetadata(book, edition) {
+  // Original author(s); anonymous works get the conventional "Anonymous"
+  const creators = parseAuthorPersons(book.author);
+  if (creators.length === 0) {
+    creators.push({
+      person_or_org: { name: 'Anonymous', type: 'personal', family_name: 'Anonymous' },
     });
   }
 
@@ -330,7 +354,12 @@ Rules:
 - Do NOT fabricate biographical details, publication histories, or scholarly reception you are not confident about
 - Do NOT claim human editorial review occurred
 - Do NOT include any preamble — start directly with the first heading
-- If you include a claim about historical influence or reception, it should be something a scholar could verify`;
+- If you include a claim about historical influence or reception, it should be something a scholar could verify
+- Do NOT name printers, publishers, patrons, or dedicatees unless they appear in the BIBLIOGRAPHIC DATA above — a 2026 audit of earlier editions found invented imprint details were the #1 error class
+- Do NOT give specific dates/cities/printers for OTHER editions of the work unless you are certain; write "later editions followed" instead
+- Do NOT claim specific named individuals owned, studied, or were influenced by this work unless the connection is famous and well documented
+- Do NOT assert provenance of this particular copy (former owners, famous libraries)
+- If the edition date in the BIBLIOGRAPHIC DATA conflicts with the work's known publication history, do not invent a reconciliation — describe the work generally and refer to "this edition" without dating other printings`;
 
   const result = await model.generateContent(prompt);
   return result.response.text();
@@ -433,7 +462,9 @@ function createEdition(book, translatedPages) {
       title: `English Translation of ${book.display_title || book.title}`,
       original_title: book.title,
       original_author: book.author,
-      original_language: book.language,
+      // original_language is the language we translated FROM; work_language
+      // appears beside it only when the work itself is in a third language.
+      ...citationLanguageFields(book),
       original_published: book.published,
       target_language: 'en',
     },
@@ -576,7 +607,8 @@ async function main() {
       hidden: { $ne: true },
       pages_ocr: { $gt: 0 },
       quality_score: { $gte: MIN_QUALITY },
-      author: { $nin: [null, '', 'Unknown', 'Anonymous'] },
+      // --allow-anon admits authorless works (minted with creator "Anonymous")
+      ...(ALLOW_ANON ? {} : { author: { $nin: [null, '', 'Unknown', 'Anonymous'] } }),
       language: { $nin: [null, '', 'Unknown'] },
       $or: [
         { 'reading_summary.overview': { $exists: true } },

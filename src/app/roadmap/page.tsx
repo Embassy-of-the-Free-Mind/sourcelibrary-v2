@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, BookOpen, Scroll, Compass, FlaskConical, Calculator, Star } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { books } from '@/lib/api-client';
 
 interface RoadmapBook {
@@ -99,8 +100,11 @@ export default function RoadmapPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <BookLoader />
+      <div className="min-h-screen bg-stone-50">
+        <SiteHeader variant="light" />
+        <div className="flex items-center justify-center py-40">
+          <BookLoader />
+        </div>
       </div>
     );
   }
@@ -133,18 +137,7 @@ export default function RoadmapPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-5xl mx-auto px-4 py-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Library
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
@@ -299,7 +292,7 @@ export default function RoadmapPage() {
           </p>
           <div className="flex flex-wrap gap-4">
             <a
-              href="mailto:derek@sourcelibrary.org"
+              href="mailto:team@sourcelibrary.org"
               className="inline-flex items-center gap-2 bg-accent-rust hover:bg-accent-gold/80 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
               <BookOpen className="w-5 h-5" />

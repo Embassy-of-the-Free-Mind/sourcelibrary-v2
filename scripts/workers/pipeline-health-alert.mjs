@@ -214,10 +214,15 @@ async function run() {
     }
     console.log(`[health] Sync-worker: last run ${syncAgeHours.toFixed(1)}h ago, status=${lastSync.status || 'success'}, phases=${lastSync.phases_completed?.join(',') || 'unknown'}`);
   } else {
+    // "May never have run" is what this said for the seven weeks the worker was
+    // exiting early on the pipeline pause (#3408) — true, unhelpful, and read as
+    // a config nit rather than "six derived collections are frozen". A run that
+    // bails before its first phase writes no cron_runs record at all, so absence
+    // means "started and gave up" at least as often as "never scheduled".
     alerts.push({
       level: 'warning',
       check: 'sync_worker_missing',
-      message: 'No sync-worker cron_runs record found. Worker may never have run.',
+      message: 'No sync-worker cron_runs record found — it is not completing runs. A record is only written after the phases execute, so an early exit looks identical to "never scheduled". Check /var/log/sourcelibrary/sync.log on the Hetzner box for the reason before assuming cron is at fault; everything it maintains (page counts, collection counts, gallery images, author slugs, analytics_usage, gemini_usage_daily) is frozen meanwhile.',
     });
   }
 
@@ -320,6 +325,40 @@ async function run() {
     }
   } catch (e) {
     console.error(`[health] index drift check failed: ${e.message}`);
+  }
+
+  // 11. Derived-rollup staleness (#3408). These collections are written by
+  // sync-worker and read by dashboards; when the writer dies they don't error,
+  // they just keep serving the last good value. gemini_usage_daily is the
+  // dangerous one — a dead rollup and a genuinely idle pipeline both read
+  // $0.00, so cost monitoring fails in the "everything is fine" direction.
+  try {
+    const newestDaily = await db.collection('gemini_usage_daily')
+      .find({}).sort({ date: -1 }).limit(1).next();
+    const dailyAgeDays = newestDaily?.date
+      ? (now - new Date(newestDaily.date + 'T00:00:00Z')) / 86400000
+      : Infinity;
+    if (dailyAgeDays > 2) {
+      alerts.push({
+        level: 'warning',
+        check: 'usage_rollup_stale',
+        message: `gemini_usage_daily newest row is ${newestDaily?.date || 'MISSING'} (${Number.isFinite(dailyAgeDays) ? dailyAgeDays.toFixed(0) + 'd' : 'never'} old). Cost dashboards read $0.00 whether spend is zero or the rollup is dead. Fix the sync-worker usage_daily phase, then backfill: node scripts/maintenance/backfill-usage-daily.mjs --from <date>`,
+      });
+    } else {
+      console.log(`[health] gemini_usage_daily current through ${newestDaily.date}`);
+    }
+
+    const snapshot = await db.collection('system_config').findOne({ _id: 'analytics_usage' });
+    const snapAgeH = snapshot?.updated_at ? (now - new Date(snapshot.updated_at)) / 3600000 : Infinity;
+    if (snapAgeH > 48) {
+      alerts.push({
+        level: 'warning',
+        check: 'analytics_snapshot_stale',
+        message: `system_config.analytics_usage last written ${Number.isFinite(snapAgeH) ? (snapAgeH / 24).toFixed(1) + 'd' : 'never'} ago. The /analytics dashboard is serving that snapshot as if it were current.`,
+      });
+    }
+  } catch (e) {
+    console.error(`[health] rollup staleness check failed: ${e.message}`);
   }
 
   // 7. Quick stats

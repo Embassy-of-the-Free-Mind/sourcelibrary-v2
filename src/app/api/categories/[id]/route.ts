@@ -50,10 +50,18 @@ export async function GET(
       },
       {
         $addFields: {
+          // Mongo-side twin of translationPercent() in src/lib/translation-percent.ts
+          // — pages_translated / pages_count, clamped to 0–100. The formula that
+          // stood here divided by (pages_ocr − pages_blank), which exceeds 100%
+          // on 5,835 live books because "blank" leaves do get translated. Keep
+          // the two definitions in step; tests/unit/translation-percent.test.ts
+          // pins the JS side.
           translation_percent: {
             $cond: {
-              if: { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
-              then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $max: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 1] }] }, 100] }] },
+              if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+              then: {
+                $min: [100, { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$pages_count'] }, 100] }] }],
+              },
               else: 0
             }
           }

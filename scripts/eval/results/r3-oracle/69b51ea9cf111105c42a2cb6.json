@@ -1,0 +1,37 @@
+{
+  "book_id": "69b51ea9cf111105c42a2cb6",
+  "work_identified": "Praecursor Introductoriae in Algebram Speciosam Universalem vel Artem Magnam Universalem Sciendi et Demonstrandi — 1723 Latin treatise by Ivo Salzinger (German Lullist scholar) presenting and introducing the Lullist combinatorial/algebraic system, published in Mainz (Moguntiae) as the opening work of Volume III of the Beati Raymundi Lulli Opera edition; volume also contains seven Lullian algebra-related texts attributed to Raimundus Lullus",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Praecursor Introductoriae Algebram Speciosam Universalem Raimundus Lullus English translation",
+    "\"Algebram Speciosam\" \"Raymundi Lulli\" Latin treatise algebra history",
+    "Ivo Salzinger \"Praecursor Introductoriae\" 1723 Lull algebra English translation WorldCat",
+    "Ramon Llull \"Ars Magna\" algebra \"English translation\" history mathematics Lullist",
+    "Salzinger Lull \"Praecursor\" algebra 1723 Mainz Moguntiae translation English scholarship",
+    "Lullist \"algebra\" \"artem magnam\" \"English\" translated work 17th 18th century Salzinger Mainz edition",
+    "Lull Llull Lullism algebra \"universal art\" English translation academic press history 20th 21st century",
+    "\"algebra speciosa\" OR \"algebrae speciosae\" \"Ramon Llull\" OR \"Raimundus Lullus\" English translation history of mathematics algebra",
+    "\"Praecursor Introductoriae\" Lull Salzinger algebra English \"first translation\" OR \"no English\" OR \"never translated\"",
+    "Lull \"algebra\" \"Artem Magnam\" \"Ivo Salzinger\" English scholars Brepols Bonner translation academic",
+    "Salzinger \"Praecursor Introductoriae\" Lull \"Volume III\" OR \"vol. III\" Mainz 1722 algebra translation English scholarship"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.abebooks.com/PRAECURSOR-INTRODUCTORIAE-ALGEBRAM-SPECIOSAM-UNIVERSALEM-VEL/1198585799/bd", "found": "1723 Latin original attributed to Ivo Salzinger; 199 pp, folio, Officina Typographica Mayeriana, Mainz; no English translation mentioned"},
+    {"url": "https://play.google.com/store/books/details/Praecursor_introductoriae_in_Algebram_speciosam_un?id=M3iJAwBnxiwC&gl=US", "found": "1723 Latin text, ex officina typographica Mayeriana per Joannem Georgium Haeffner; attributed to Raymond Lulle; no translation"},
+    {"url": "https://www.loot.co.za/product/raymundus-b-lullius-praecursor-introductoriae-in-algeb/pvyd-1944-g980", "found": "Nabu Press 2012 reprint; 'English, Latin' is catalog-language metadata not a bilingual edition; publisher = Nabu Press (POD facsimile)"},
+    {"url": "https://www.amazon.com/Praecursor-Introductoriae-Algebram-Speciosam-Universalem/dp/1020424885", "found": "Modern POD reprint of 1723 Latin text; no English translation"},
+    {"url": "https://plato.stanford.edu/entries/llull/", "found": "Stanford SEP on Ramon Llull: no mention of Praecursor or English translations of Lullist algebra texts; Salzinger cited only as editor of MOG edition"},
+    {"url": "https://medium.com/@Gloria.Veritatis/salzinger-and-the-lullians-of-majorca-a58212f7f037", "found": "Salzinger's Praecursor discussed as opening text of Volume III of the Mainz edition; his algebraic interpretation of Lull's combinatorial system; no English translation mentioned"},
+    {"url": "https://en.wikipedia.org/wiki/Lullism", "found": "Salzinger listed among notable Lullists; no English translation of Praecursor mentioned"},
+    {"url": "https://mathshistory.st-andrews.ac.uk/Biographies/Llull/", "found": "MacTutor biography of Llull: no mention of algebra speciosa or Salzinger's Praecursor"},
+    {"url": "https://www.ub.edu/llulldb//docs/Supplement%20english_LLULL%20DB.pdf", "found": "Llull DB supplement (Anthony Bonner): no mention of Praecursor or English translation of Salzinger's Lullist algebra text"},
+    {"url": "https://www.brepolsonline.net/content/books/10.1484/M.IPM-EB.5.107305", "found": "Brepols: 'La scienza geometrica nell'Ars lulliana: l'interpretazione di Ivo Salzinger' (2012) — modern scholarship on Salzinger's geometric/algebraic interpretation is in Italian, not English"}
+  ],
+  "reasoning": "1723 Latin treatise (Ivo Salzinger/Lullist) on Llull's combinatorial system as algebra speciosa. Exhaustive search across Amazon, AbeBooks, Google Books, Stanford SEP, Lullism Wikipedia, Medium/Salzinger scholarship, MacTutor, Llull DB, Brepols found no English translation. Modern reprints (Nabu Press 2012) are Latin-only facsimiles. Bonner Princeton 1985 covers Llull's canonical texts, not Salzinger's editorial treatises. WorldCat 403-blocked but consistent absence across all other sources."
+}

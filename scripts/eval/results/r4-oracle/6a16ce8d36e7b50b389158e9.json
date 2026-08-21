@@ -1,0 +1,48 @@
+{
+  "book_id": "6a16ce8d36e7b50b389158e9",
+  "work_identified": "Histoire Naturelle des Indes (Drake Manuscript, Pierpont Morgan Library MA 3900), anonymous French Huguenot, ca. 1586 — 199 illustrated captions on Caribbean plants, animals, and indigenous life",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Histoire Naturelle des Indes: The Drake Manuscript in the Pierpont Morgan Library",
+      "translator": "Ruth S. Kraemer",
+      "pub_year": "1996",
+      "publisher": "W. W. Norton / Pierpont Morgan Library",
+      "completeness": "complete",
+      "source_url": "https://www.abebooks.com/first-edition/Histoire-Naturelle-Indes-Drake-Manuscript-Pierpont/166129648/bd"
+    }
+  ],
+  "queries_run": [
+    "Drake Manuscript \"Histoire Naturelle des Indes\" Pierpont Morgan Library MA 3900 English translation Ruth Kraemer",
+    "\"Histoire Naturelle des Indes\" anonymous French manuscript English translation",
+    "\"Histoire naturelle des Indes\" WorldCat Drake manuscript 1996 Norton Kraemer"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://blackwells.co.uk/bookshop/product/The-Drake-Manuscript-in-the-Pierpont-Morgan-Library-by-Ruth-S-Kraemer-Verlyn-Klinkenborg-Pierpont-Morgan-Library/9780233990095",
+      "found": "Blackwell's listing confirms 1996 facsimile edition with translations by Ruth S. Kraemer, ISBN 9780233990095"
+    },
+    {
+      "url": "https://www.amazon.com/Histoire-Naturelle-Indes-Manuscript-Pierpont/dp/0393039943",
+      "found": "Amazon: Norton 1996 bilingual French/English edition, translator Ruth Kraemer, ISBN 9780393039948"
+    },
+    {
+      "url": "https://archive.org/details/histoirenaturell0000unse_k2v8",
+      "found": "Archive.org: facsimile of the Drake Manuscript — bilingual French/English, Norton 1996, Kraemer translations, 199 captions"
+    },
+    {
+      "url": "https://www.themorgan.org/collection/Histoire-Naturelle-des-Indes/introduction",
+      "found": "Morgan Library: 134-leaf ms, 199 West Indian images with French captions ca. 1586, bequest 1983 — confirms same work"
+    },
+    {
+      "url": "https://www.abebooks.com/first-edition/Histoire-Naturelle-Indes-Drake-Manuscript-Pierpont/166129648/bd",
+      "found": "AbeBooks: 1996 1st ed., W.W. Norton, translator Ruth S. Kraemer, ISBN 9780393039948; translation follows facsimile of all 199 texts"
+    }
+  ],
+  "reasoning": "Our anonymous French 'Histoire Naturelle des Indes' is the Drake Manuscript (PML MA 3900), a ca. 1586 Huguenot illustrated natural history of the Caribbean with 199 captioned plates. A complete English translation by Ruth S. Kraemer was published Norton/Pierpont Morgan Library 1996 (ISBN 9780393039948), covering all 199 texts in facsimile. Prior is same text, complete, modern — verdict not_first."
+}

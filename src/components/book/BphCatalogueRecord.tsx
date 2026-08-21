@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { ExternalLink } from 'lucide-react';
+import { normalizeStateShelfMark } from '@/lib/bph-state-shelfmark';
 
 /**
  * Inline display of a book's BPH catalogue record, side-loaded from Supabase
@@ -221,7 +222,7 @@ export default async function BphCatalogueRecord({ ubn }: { ubn: string }) {
         )}
 
         {(() => {
-          const stateShelfMark = work.state_shelf_mark?.trim().toLowerCase() === 'neen' ? null : work.state_shelf_mark;
+          const stateShelfMark = normalizeStateShelfMark(work.state_shelf_mark);
           if (!work.present_location && !work.shelf_mark && !stateShelfMark && !work.provenance) return null;
           return (
             <Section title="Location at the BPH">

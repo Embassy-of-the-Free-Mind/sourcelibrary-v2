@@ -58,7 +58,7 @@ page.ocr.prompt_version    // "v10"
 page.ocr.prompt_id         // ObjectId-string of the prompt document, or 'hardcoded' / 'custom'
 page.ocr.prompt_hash       // md5 of prompt content (cryptographic verifier)
 page.ocr.prompt_name       // "Standard OCR" | "Latin OCR (Neo-Latin)" | etc
-page.ocr.source            // 'ai' | 'batch_api' | 'manual' | 'contributor' | 'skip'
+page.ocr.source            // see the full enum below — 16 values, not 5
 page.translation.prompt_version
 page.translation.prompt_id
 page.translation.prompt_hash
@@ -125,14 +125,87 @@ For batch jobs the four fields are stamped on the `batch_jobs` row at submission
   book_id: "...",
   field: "ocr" | "translation",
   data: "the full previous text content",
-  source: "ai" | "manual" | "batch_api" | "contributor" | "skip",
+  source: "batch_api" | "ai" | "pipeline_preview" | "manual" | "skip" | "system" |
+          "maintenance" | "mineru" | "realtime_api_sequential" | "unknown" | null |
+          "<sweep-label>",   // ad-hoc, e.g. "shift-repair-erara-2026-07",
+                             // "reocr-download-failure-fix-2026-07"
   model: "gemini-3-flash-preview",
   prompt_version: "v10",
   job_id: "job_abc123",
-  original_date: Date,  // when this content was originally written
-  created_at: Date      // when it was superseded
+  original_date: Date,  // when this content was originally WRITTEN  (a reading clock)
+  created_at: Date      // when it was SUPERSEDED (a snapshot clock — see below)
 }
 ```
+
+### The live `pages.{ocr,translation}.source` enum
+
+Exact counts, 2026-08-04, `node scripts/audit/doc-enum-drift.mjs`. **Guarded** —
+that script fails when production carries a value this doc does not mention, so
+the list below stays true or the audit says so.
+
+| `pages.ocr.source` | rows | | `pages.translation.source` | rows |
+|---|---|---|---|---|
+| `batch_api` | 4,159,051 | | `ai` | 5,153,668 |
+| `ai` | 2,070,501 | | `system` | 92,420 |
+| `pipeline_preview` | 210,527 | | `batch_api` | 82,826 |
+| `corpus` | 5,749 | | `corpus` | 5,759 |
+| `mineru` | 2,586 | | `skip` | 1,153 |
+| `system` | 775 | | `realtime_api_sequential` | 62 |
+| `spread-split` | 277 | | `manual` | 21 |
+| `ia-ocr-repair` | 191 | | `manual-backfill` | 12 |
+| `reocr-contamination-repair-3362` | 93 | | `broadsheet-ocr` | 2 |
+| `batch_api_recovery` | 74 | | `songshi-juan56` | 1 |
+| `manual` | 33 | | `AI generated` | 1 |
+| `wikisource` | 21 | | | |
+| `ai-repair-sync` | 11 | | | |
+| `broadsheet-ocr` | 2 | | | |
+| `songshi-juan56` | 1 | | | |
+| `AI generated` | 1 | | | |
+
+Three things in that table are load-bearing:
+
+- **`wikisource` (21 pages) is not model output at all.** Neither is `corpus`
+  (~5.7K on each field). Any metric that treats `pages.ocr` as "what the model
+  read" is wrong on those rows, and no field other than `source` says so.
+- **Repair sweeps write here too**, exactly as they do on `page_revisions`:
+  `ia-ocr-repair`, `reocr-contamination-repair-3362` (the #3362 shared-key
+  contamination), `spread-split`, `ai-repair-sync`. Text carrying one of these
+  was *relocated or rewritten*, not read from the page in front of it.
+- **`songshi-juan56` and `AI generated` (1 row each) are junk labels** — a book
+  slug and a free-text string that leaked into an enum. Left documented rather
+  than silently ignored, because the alternative is an audit that has to be
+  taught to lie.
+
+**`source` is the mechanism label, and it is the first thing to read when asking
+what a set of revisions actually records.** Measured 2026-08-01 (`node
+scripts/audit/ocr-revision-provenance.mjs`), it cleanly separates real OCR passes
+from bulk maintenance:
+
+| source | ocr rows | translation rows | leaf-shifted (ocr) |
+|---|---|---|---|
+| `batch_api` | 109,982 | 6,584 | 3.8% |
+| `shift-repair-erara-2026-07` | 56,413 | 55,272 | **99.0%** |
+| `pipeline_preview` | 12,949 | — | 0.8% |
+| `ai` | 8,622 | 68,988 | 0% |
+
+A **sweep label** like `shift-repair-erara-2026-07` is written by a one-off
+maintenance script rather than the pipeline. Keep writing them — that label is the
+only reason the #3357 text-shift population is separable from genuine re-OCR at
+all (#3473). Two rules follow:
+
+- **Any bulk script that overwrites `ocr` or `translation` must set a distinctive
+  `source`**, not inherit `ai`/`batch_api`. A sweep that borrows a pipeline label
+  is indistinguishable from real model output forever after.
+- **Add the label here when you write it.** This enum had drifted to 5 documented
+  values against 12 in production, and the undocumented ones covered 111,685 rows
+  — so an audit inferred the mechanism from page-number arithmetic and scan images
+  that a `distinct('source')` would have answered in one query.
+
+**The two dates are not interchangeable.** `created_at` is when the row was
+*snapshotted*, so it is later than the text it holds — the live `pages.ocr.updated_at`
+is older than it on ~84% of pairs, and inversion against it proves nothing.
+`original_date` (91.8% of rows) is the reading clock: on pairs whose model
+demonstrably changed it precedes the live `ocr.updated_at` 99.3% of the time.
 
 ### Where createRevision() is called
 

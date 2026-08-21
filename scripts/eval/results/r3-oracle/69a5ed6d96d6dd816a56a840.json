@@ -1,0 +1,46 @@
+{
+  "book_id": "69a5ed6d96d6dd816a56a840",
+  "work_identified": "Ktaba d-Semhe ('Book of Rays' / 'Book of Splendours') — Bar Hebraeus's larger Syriac grammar; known in scholarship under the French edition title 'Le Livre des Splendeurs, la grande grammaire de Grégoire Barhebraeus' (Martin 1872 / Moberg 1922)",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "A letter by Mar Jacob, bishop of Edessa, on Syriac orthography; also a tract by the same author, and a discourse by Gregory Bar Hebræus on Syriac accents [includes 'the fourth discourse, sixth chapter, On the great points, five sections, from his larger grammar, The Book of Rays' in Syriac and English translation]",
+      "translator": "George Phillips",
+      "pub_year": "1869",
+      "publisher": "Williams and Norgate, London/Edinburgh",
+      "completeness": "partial",
+      "source_url": "https://archive.org/details/letterbymarjacob00jacoiala"
+    }
+  ],
+  "queries_run": [
+    "Bar Hebraeus \"Ktaba d-Semhe\" OR \"Book of Rays\" Syriac grammar English translation",
+    "Bar Hebraeus \"Livre des Splendeurs\" grammar Syriac English translation WorldCat",
+    "Bar Hebraeus Syriac grammar \"grande grammaire\" Moberg English translation 1920 OR 1922",
+    "Bar Hebraeus \"Book of Splendours\" OR \"Ktaba d-Semhe\" English translation published",
+    "Bar Hebraeus Syriac grammar English translation Brill OR Gorgias OR Cambridge",
+    "\"Bar Hebraeus\" grammar \"English\" site:gorgiaspress.com OR site:brill.com",
+    "Bar Hebraeus \"Book of Rays\" OR \"Buch der Strahlen\" OR \"Ktaba d-Semhe\" OR \"Kthobo d-Sinhe\" English translation complete",
+    "Bar Hebraeus Barhebraeus \"great grammar\" OR \"larger grammar\" Syriac English translation 21st century",
+    "Bar Hebraeus Syriac grammar \"no English translation\" OR \"never been translated\" OR \"first English\"",
+    "Bar Hebraeus \"Book of Splendeurs\" OR \"Livre des Splendeurs\" grammar WorldCat English",
+    "Bar Hebraeus Syriac grammar translation English 2010 OR 2015 OR 2020 OR 2021 OR 2022 OR 2023",
+    "Bar Hebraeus \"Book of Rays\" OR \"grande grammaire\" English translation George Phillips OR \"Berheau\" OR \"Bertheau\""
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/lelivredessplend00barhuoft", "found": "Moberg 1922 edition — Syriac text with French scholarly apparatus; no English translation"},
+    {"url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupname?key=Bar+Hebraeus,+1226-1286", "found": "Catalog shows German (Moberg 1907), French (Martin 1872; Moberg 1922) and no English editions of the complete grammar"},
+    {"url": "https://archive.org/details/letterbymarjacob00jacoiala", "found": "Phillips 1869 — partial English: one chapter on Syriac accents from Book of Rays; publisher Williams and Norgate, London/Edinburgh"},
+    {"url": "https://www.newadvent.org/cathen/02294a.htm", "found": "Catholic Encyclopedia: confirms Martin 1872 French edition only; no English translation mentioned"},
+    {"url": "https://en.wikipedia.org/wiki/Bar_Hebraeus", "found": "Wikipedia lists grammatical works (Kthobo d-Ṣinḥe etc.) with no English translations noted"},
+    {"url": "https://www.gorgiaspress.com/bar-hebraeus", "found": "Gorgias Press Bar Hebraeus page: grammar editions in Syriac/Latin or Syriac/German; no complete English grammar translation listed"},
+    {"url": "https://www.roger-pearse.com/weblog/tag/bar-hebraeus/", "found": "Pearse blog: no mention of English translation of the grammar; Wilmshurst 2016 Ecclesiastical Chronicle is described as first complete English of that separate work"},
+    {"url": "https://search.worldcat.org/title/livre-des-splendeurs-la-grande-grammaire-de-gregoire-barhebraeus/oclc/6886700", "found": "403 Forbidden — not directly accessible"},
+    {"url": "https://catalog.hathitrust.org/Record/100336171", "found": "403 Forbidden — not directly accessible"}
+  ],
+  "reasoning": "No complete English translation of Bar Hebraeus's larger Syriac grammar (Ktaba d-Semhe) has been published. The only English is Phillips 1869 (partial: one chapter on Syriac accents). Complete translations exist in German (Moberg 1907) and French (Martin 1872). Our complete English is the first of the whole work, hence first_complete."
+}

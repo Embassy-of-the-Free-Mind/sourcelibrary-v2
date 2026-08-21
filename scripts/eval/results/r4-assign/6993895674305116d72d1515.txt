@@ -1,0 +1,4 @@
+book_id: 6993895674305116d72d1515
+Title: Theophrastus and Aristotle, Corpus (Aldine source MS)
+Author: Theophrastus; Aristotle
+Source language: Greek

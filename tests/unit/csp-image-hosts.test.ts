@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import path from 'path';
+import { CSP_IMG_HOSTS, CSP_IMG_SRC, isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
 
 /**
  * Guards against a class of silent image breakage discovered in PR #2187:
@@ -29,14 +30,15 @@ function toMatcher(host: string): { wildcard: boolean; value: string } {
   return { wildcard: false, value: stripped };
 }
 
-/** Extract the host tokens from the CSP `img-src` directive. */
+/**
+ * The CSP img-src host tokens. Since PR (2026-08) the directive is BUILT from
+ * `src/lib/csp-img-hosts.ts` (shared with getBookThumbnailUrl's renderability
+ * screen), so the module IS the directive — but keep one assertion that
+ * next.config.ts actually consumes it, or this whole suite silently guards a
+ * list the config no longer reads.
+ */
 function parseImgSrcHosts(): string[] {
-  const m = NEXT_CONFIG.match(/"img-src ([^"]+)"/);
-  if (!m) throw new Error('Could not find CSP img-src directive in next.config.ts');
-  return m[1]
-    .split(/\s+/)
-    .filter((t) => t.startsWith('https://'))
-    .map((t) => t.replace(/^https:\/\//, ''));
+  return CSP_IMG_HOSTS.map((t) => t.replace(/^https:\/\//, ''));
 }
 
 /** Extract every hostname from `images.remotePatterns`. */
@@ -60,9 +62,14 @@ describe('CSP img-src / Next image allowlist consistency', () => {
   const imgSrc = parseImgSrcHosts().map(toMatcher);
   const remoteHosts = parseRemotePatternHosts();
 
-  it('finds both allowlists in next.config.ts', () => {
+  it('finds both allowlists', () => {
     expect(imgSrc.length).toBeGreaterThan(5);
     expect(remoteHosts.length).toBeGreaterThan(5);
+  });
+
+  it('next.config.ts builds its img-src from the shared module', () => {
+    expect(NEXT_CONFIG).toContain("from './src/lib/csp-img-hosts'");
+    expect(NEXT_CONFIG).toContain('CSP_IMG_SRC,');
   });
 
   it.each(remoteHosts)('remotePatterns host %s is allowed by CSP img-src', (host) => {
@@ -76,9 +83,8 @@ describe('CSP img-src / Next image allowlist consistency', () => {
 
 describe('Wikimedia image host regression (PR #2187)', () => {
   it('CSP img-src whitelists upload.wikimedia.org, not commons.wikimedia.org', () => {
-    const imgSrcLine = NEXT_CONFIG.match(/"img-src ([^"]+)"/)![1];
-    expect(imgSrcLine).toContain('upload.wikimedia.org');
-    expect(imgSrcLine).not.toContain('commons.wikimedia.org');
+    expect(CSP_IMG_SRC).toContain('upload.wikimedia.org');
+    expect(CSP_IMG_SRC).not.toContain('commons.wikimedia.org');
   });
 
   it('no source file builds a commons.wikimedia.org image URL', () => {
@@ -108,5 +114,51 @@ describe('Wikimedia image host regression (PR #2187)', () => {
         `Resolve Wikimedia images to upload.wikimedia.org instead (see src/lib/wikidata-enrichment.ts):\n` +
         offenders.join('\n'),
     ).toEqual([]);
+  });
+});
+
+describe('isBrowserRenderableImageUrl', () => {
+  it('accepts hosts on the CSP allowlist', () => {
+    expect(isBrowserRenderableImageUrl('https://images.sourcelibrary.org/pages/abc/0001.jpg')).toBe(true);
+    expect(isBrowserRenderableImageUrl('https://iiif.archive.org/iiif/x/full/full/0/default.jpg')).toBe(true);
+    expect(isBrowserRenderableImageUrl('https://upload.wikimedia.org/wikipedia/commons/a/ab/x.jpg')).toBe(true);
+    // Hosts added 2026-08-04 (they held live covers but were CSP-blocked)
+    expect(isBrowserRenderableImageUrl('https://mps.lib.harvard.edu/sds/view/1.jpg')).toBe(true);
+    expect(isBrowserRenderableImageUrl('https://digital.slub-dresden.de/data/x.jpg')).toBe(true);
+  });
+
+  it('matches wildcards on a dot boundary only (no suffix spoofing)', () => {
+    expect(isBrowserRenderableImageUrl('https://iiif.bodleian.ox.ac.uk/iiif/x.jpg')).toBe(true);
+    expect(isBrowserRenderableImageUrl('https://pub-123.r2.dev/x.jpg')).toBe(true);
+    expect(isBrowserRenderableImageUrl('https://evil-r2.dev/x.jpg')).toBe(false);
+    expect(isBrowserRenderableImageUrl('https://notamazonaws.com/x.jpg')).toBe(false);
+  });
+
+  it('rejects archive.org/download/ — allowlisted host, but it 302s to un-allowlisted ia*.us.archive.org', () => {
+    expect(isBrowserRenderableImageUrl('https://archive.org/download/some_item/page/n0/full/pct:15/0/default.jpg')).toBe(false);
+    // Other archive.org paths do not redirect off-host
+    expect(isBrowserRenderableImageUrl('https://archive.org/services/img/some_item')).toBe(true);
+  });
+
+  it('rejects non-https, unknown hosts, junk, and empties', () => {
+    expect(isBrowserRenderableImageUrl('http://images.sourcelibrary.org/x.jpg')).toBe(false);
+    expect(isBrowserRenderableImageUrl('https://example.com/x.jpg')).toBe(false);
+    expect(isBrowserRenderableImageUrl('not a url')).toBe(false);
+    expect(isBrowserRenderableImageUrl('')).toBe(false);
+    expect(isBrowserRenderableImageUrl(null)).toBe(false);
+    expect(isBrowserRenderableImageUrl(undefined)).toBe(false);
+  });
+
+  it('tolerates stray whitespace around stored URLs', () => {
+    expect(isBrowserRenderableImageUrl(' https://images.sourcelibrary.org/x.jpg\n')).toBe(true);
+  });
+});
+
+describe('CSP_IMG_SRC', () => {
+  it('is a complete img-src directive built from the host list', () => {
+    expect(CSP_IMG_SRC.startsWith("img-src 'self' data: blob: ")).toBe(true);
+    for (const host of CSP_IMG_HOSTS) {
+      expect(CSP_IMG_SRC).toContain(host);
+    }
   });
 });

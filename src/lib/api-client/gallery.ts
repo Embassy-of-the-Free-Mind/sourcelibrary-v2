@@ -30,8 +30,12 @@ export const gallery = {
     if (params?.subject) queryParams.append('subject', params.subject);
     if (params?.figure) queryParams.append('figure', params.figure);
     if (params?.symbol) queryParams.append('symbol', params.symbol);
-    if (params?.yearFrom) queryParams.append('yearFrom', params.yearFrom.toString());
-    if (params?.yearTo) queryParams.append('yearTo', params.yearTo.toString());
+    // /api/gallery reads these as yearStart/yearEnd. Sending yearFrom/yearTo
+    // (the option names here) was silently ignored, which left the year filter
+    // on /gallery inert — the page rendered the range while the API served the
+    // whole corpus. Keep the option names, fix the wire names.
+    if (params?.yearFrom) queryParams.append('yearStart', params.yearFrom.toString());
+    if (params?.yearTo) queryParams.append('yearEnd', params.yearTo.toString());
     if (params?.limit) queryParams.append('limit', params.limit.toString());
     if (params?.offset) queryParams.append('offset', params.offset.toString());
     if (params?.minQuality) queryParams.append('minQuality', params.minQuality.toString());

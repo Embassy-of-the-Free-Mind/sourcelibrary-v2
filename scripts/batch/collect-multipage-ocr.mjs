@@ -7,6 +7,8 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -207,6 +209,9 @@ async function main() {
           { $set: { ocr: {} } }
         );
 
+        // Retain existing OCR as a revision before overwriting (#3240); no-op on first write
+        await saveRevisionBeforeOverwrite(db, pageId, 'ocr', { jobId: String(job._id), reason: 'reocr_batch' });
+
         const updateResult = await db.collection('pages').updateOne(
           { id: pageId },
           {
@@ -259,22 +264,11 @@ async function main() {
       }
     );
 
-    // Update book page counts
-    const [counts] = await db.collection('pages').aggregate([
-      { $match: { book_id: job.book_id } },
-      {
-        $group: {
-          _id: null,
-          total: { $sum: 1 },
-          with_ocr: {
-            $sum: { $cond: [{ $and: [{ $ne: ['$ocr.data', null] }, { $ne: ['$ocr.data', ''] }, { $ifNull: ['$ocr.data', false] }] }, 1, 0] }
-          },
-          with_translation: {
-            $sum: { $cond: [{ $and: [{ $ne: ['$translation.data', null] }, { $ne: ['$translation.data', ''] }, { $ifNull: ['$translation.data', false] }] }, 1, 0] }
-          },
-        },
-      },
-    ]).toArray();
+    // Update book page counts — VISIBLE pages only (page_number > 0). See
+    // scripts/lib/page-counts.mjs and issue #3293. Soft-hidden pages never
+    // render and must not inflate counts.
+    const [counts] = await db.collection('pages')
+      .aggregate(buildVisiblePageCountPipeline(job.book_id)).toArray();
 
     if (counts) {
       await db.collection('books').updateOne(

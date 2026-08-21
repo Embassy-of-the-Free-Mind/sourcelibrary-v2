@@ -13,6 +13,7 @@
  */
 
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { validateR2Key } from './r2-key';
 
 // --- R2 client (lazy singleton) ---
 
@@ -71,24 +72,33 @@ export async function storagePut(
   body: Buffer | Uint8Array | ReadableStream,
   options: StoragePutOptions = {}
 ): Promise<StoragePutResult> {
+  // Reject undefined/null/empty path segments before anything reaches the bucket.
+  // A missing interpolation (e.g. `pages/${page.book_id}/...` where book_id was
+  // dropped by a projection) produces ONE object shared by every book — see #3362,
+  // where that silently fed other books' page images to OCR for six days.
+  validateR2Key(pathname, 'storagePut');
+
   const r2 = getR2Client();
 
   if (r2) {
     return r2Put(r2, pathname, body, options);
   }
 
-  // R2 not configured — this should not happen in production
-  console.warn('[storage] WARNING: R2 not configured, falling back to Vercel Blob. This costs money — check R2 env vars.');
-
-  // Fallback to Vercel Blob
-  const { put } = await import('@vercel/blob');
-  const blob = await put(pathname, Buffer.isBuffer(body) ? body : Buffer.from(body as Uint8Array), {
-    access: options.access || 'public',
-    contentType: options.contentType,
-    addRandomSuffix: options.addRandomSuffix ?? false,
-    allowOverwrite: options.allowOverwrite,
-  });
-  return { url: blob.url, pathname: blob.pathname };
+  // R2 not configured. This used to fall through to Vercel Blob behind a
+  // console.warn — which is a silent failure wearing a warning's clothes:
+  // nothing reads server logs on the happy path, the write appears to succeed,
+  // and the object lands in the store we are trying to retire while the row
+  // records a blob.vercel-storage.com URL that no later R2 sweep will find.
+  //
+  // A misconfiguration must not be able to quietly resurrect the old backend.
+  // Fail here instead: the caller sees a real error, and the fix (set the R2
+  // env vars) is named in it.
+  throw new Error(
+    `[storage] R2 is not configured (R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / ` +
+    `R2_SECRET_ACCESS_KEY / R2_BUCKET_NAME) — refusing to write "${pathname}". ` +
+    `Vercel Blob is retired (#3645); writing there costs money and strands the ` +
+    `object outside R2. Set the R2 environment variables.`,
+  );
 }
 
 // --- Path helpers ---

@@ -1,5 +1,6 @@
 import { BASE_URL } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 interface CategorySchemaProps {
   id: string;
@@ -70,7 +71,7 @@ export default function CategorySchema({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 0) }}
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
     />
   );
 }

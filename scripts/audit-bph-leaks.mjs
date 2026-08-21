@@ -25,10 +25,13 @@
  *     decided to render the not-found UI. From outside, it looks like a
  *     working page; the only signal is the marker baked into the HTML.
  *
- * Out of scope (manual audit needed): verifying that every book.id rendered
- * on a page belongs to the tenant. Doable by parsing /book/<id> links and
- * checking each book's tenantId via the API; not implemented here to keep
- * the script offline-friendly.
+ *   - A /book/<id> link that stays ON the subdomain but points at a book the
+ *     tenant does not hold. This was the "out of scope" item in earlier
+ *     versions of this script, and skipping it is what let #3364 sit: the
+ *     encyclopedia linked 102 non-BPH books from bph.sourcelibrary.org using
+ *     RELATIVE hrefs, so every hostname check passed while the page listed
+ *     other libraries' holdings. Requires MONGODB_URI; when it is absent the
+ *     check is reported as NOT RUN rather than silently passing.
  */
 
 const TARGET = (process.argv[2] || 'https://bph.sourcelibrary.org').replace(/\/+$/, '');
@@ -80,6 +83,18 @@ function classifyHref(href, fromUrl) {
 
 const ANCHOR_RE = /<a\b[^>]*\bhref\s*=\s*("([^"]*)"|'([^']*)')/gi;
 
+// Book identifiers referenced anywhere in the HTML — anchors, but also flight
+// data and embedded JSON, since a client-rendered list still tells the reader
+// which books exist. Trailing segments (/page/x, /overview) are dropped.
+const BOOK_REF_RE = /\/book\/([A-Za-z0-9][A-Za-z0-9-]{5,})/g;
+
+function extractBookRefs(html) {
+  if (!html) return [];
+  const out = new Set();
+  for (const m of html.matchAll(BOOK_REF_RE)) out.add(m[1]);
+  return [...out];
+}
+
 function extractHrefs(html) {
   const out = [];
   let m;
@@ -94,6 +109,8 @@ const queue = [];
 const leaks = [];        // { fromUrl, href, resolved }
 const redirectLeaks = []; // { fromUrl, redirectedTo }
 const silentNotFounds = []; // { url } — 200 response carrying notFound() fallback
+const bookRefs = new Map(); // book id-or-slug → first page that linked it
+let unresolvedBookRefs = 0;
 let pagesFetched = 0;
 
 // Next.js stamps this digest into the streamed HTML when a server component
@@ -117,6 +134,17 @@ const SEED_PATHS = [
   '/browse',
   '/explore',
   '/artwork',
+  // Corpus-wide surfaces the proxy now 404s on tenant hosts (#3364). Nothing
+  // links to them from the tenant UI, so only an explicit seed exercises them.
+  // While the block holds these return 404 and contribute nothing; if it is
+  // ever removed they immediately re-expose other libraries' books and the
+  // foreign-book check below fires.
+  '/encyclopedia',
+  '/encyclopedia/Matthiolus',
+  '/explore/timeline',
+  '/explore/map',
+  '/ngrams',
+  '/libraries',
 ];
 for (const p of SEED_PATHS) queue.push({ url: TARGET + p, depth: 0 });
 
@@ -166,6 +194,13 @@ while (queue.length > 0 && pagesFetched < MAX_PAGES) {
     silentNotFounds.push({ url: page.finalUrl || url });
   }
 
+  // Content-level leak: a book link that stays on-subdomain but points at a
+  // book the tenant doesn't hold. Collected here, resolved against the DB after
+  // the crawl (see below) so the link walk stays offline-friendly.
+  for (const ref of extractBookRefs(page.html)) {
+    if (!bookRefs.has(ref)) bookRefs.set(ref, url);
+  }
+
   const hrefs = extractHrefs(page.html);
   for (const href of hrefs) {
     const classified = classifyHref(href, page.finalUrl);
@@ -179,14 +214,73 @@ while (queue.length > 0 && pagesFetched < MAX_PAGES) {
   }
 }
 
+// --- Foreign-book check (needs MONGODB_URI) ---
+//
+// The hostname checks above cannot see this class of leak. `/encyclopedia/X`
+// linked 102 non-BPH books from the BPH subdomain using RELATIVE hrefs, so every
+// link resolved to bph.sourcelibrary.org and the audit passed clean (#3364).
+// A tenant page is only sealed if the books it links to are the tenant's own.
+const foreignBooks = [];
+let bookCheckSkipped = null;
+
+if (bookRefs.size === 0) {
+  bookCheckSkipped = 'no /book/ links found in the crawled HTML';
+} else if (!process.env.MONGODB_URI) {
+  // Never let an unrun check read as a pass.
+  bookCheckSkipped = `MONGODB_URI not set — ${bookRefs.size} book link(s) left unverified`;
+} else {
+  try {
+    const { MongoClient } = await import('mongodb');
+    const client = new MongoClient(process.env.MONGODB_URI);
+    await client.connect();
+    const db = client.db('bookstore');
+
+    const tenantSlug = TENANT_HOST.split('.')[0];
+    const tenantDoc = await db.collection('tenants').findOne(
+      { slug: tenantSlug, status: { $ne: 'deleted' } },
+      { projection: { id: 1, slug: 1 } }
+    );
+
+    if (!tenantDoc?.id) {
+      bookCheckSkipped = `no active tenant found for slug "${tenantSlug}"`;
+    } else {
+      const refs = [...bookRefs.keys()];
+      const books = await db.collection('books')
+        .find({ $or: [{ id: { $in: refs } }, { slug: { $in: refs } }] },
+              { projection: { id: 1, slug: 1, title: 1, display_title: 1, tenantId: 1 } })
+        .toArray();
+
+      for (const b of books) {
+        if (b.tenantId === tenantDoc.id) continue;
+        const ref = bookRefs.has(b.id) ? b.id : b.slug;
+        foreignBooks.push({
+          ref,
+          title: b.display_title || b.title || '(untitled)',
+          fromUrl: bookRefs.get(ref) || '(unknown page)',
+        });
+      }
+      unresolvedBookRefs = refs.length - books.length;
+    }
+    await client.close();
+  } catch (err) {
+    bookCheckSkipped = `lookup failed — ${err?.message || err}`;
+  }
+}
+
 const totalLeaks = leaks.length + redirectLeaks.length;
-const totalIssues = totalLeaks + silentNotFounds.length;
+const totalIssues = totalLeaks + silentNotFounds.length + foreignBooks.length;
 process.stdout.write(`\nBPH lockdown audit\n`);
 process.stdout.write(`  base:           ${TARGET}\n`);
 process.stdout.write(`  pages:          ${pagesFetched} (visited)\n`);
 process.stdout.write(`  depth:          ${MAX_DEPTH}\n`);
 process.stdout.write(`  leaks:          ${totalLeaks}\n`);
 process.stdout.write(`  silent 404s:    ${silentNotFounds.length}\n`);
+process.stdout.write(`  book links:     ${bookRefs.size} seen`);
+process.stdout.write(
+  bookCheckSkipped
+    ? ` — NOT CHECKED (${bookCheckSkipped})\n`
+    : `, ${foreignBooks.length} not held by this tenant${unresolvedBookRefs ? `, ${unresolvedBookRefs} unresolved` : ''}\n`
+);
 
 if (redirectLeaks.length > 0) {
   process.stdout.write(`\nRedirect leaks (${redirectLeaks.length}):\n`);
@@ -225,8 +319,27 @@ if (silentNotFounds.length > 0) {
   }
 }
 
+if (foreignBooks.length > 0) {
+  process.stdout.write(`\nForeign books linked (${foreignBooks.length}):\n`);
+  process.stdout.write(`  Links that stay on ${TENANT_HOST} but point at books this tenant does not hold.\n`);
+  process.stdout.write(`  Hostname checks cannot see these — the hrefs are relative (#3364).\n`);
+  for (const f of foreignBooks.slice(0, 25)) {
+    process.stdout.write(`  /book/${f.ref}  "${f.title.slice(0, 60)}"\n    linked from ${f.fromUrl}\n`);
+  }
+  if (foreignBooks.length > 25) {
+    process.stdout.write(`  … and ${foreignBooks.length - 25} more\n`);
+  }
+}
+
 if (totalIssues === 0) {
-  process.stdout.write(`\nNo issues detected. The subdomain stays inside ${TENANT_HOST}.\n`);
+  if (bookCheckSkipped) {
+    // A skipped check is not a clean bill of health. Say so, and don't claim
+    // the subdomain is sealed on evidence we didn't gather.
+    process.stdout.write(`\nNo link or redirect leaks found, but the book-ownership check did not run (${bookCheckSkipped}).\n`);
+    process.stdout.write(`Re-run with MONGODB_URI set for a complete audit.\n`);
+    process.exit(0);
+  }
+  process.stdout.write(`\nNo issues detected. The subdomain stays inside ${TENANT_HOST}, and every linked book belongs to it.\n`);
   process.exit(0);
 } else {
   process.stdout.write(`\nIssues detected. Patch each before shipping.\n`);

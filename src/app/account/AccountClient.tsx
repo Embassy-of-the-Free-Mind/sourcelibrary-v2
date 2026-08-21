@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, Heart, LogOut, Crown, Users } from 'lucide-react';
 import { toast } from 'sonner';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 interface AccountClientProps {
   user: {
@@ -15,10 +16,20 @@ interface AccountClientProps {
 }
 
 export default function AccountClient({ user }: AccountClientProps) {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [expiresAt, setExpiresAt] = useState<string | null>(null);
   const [managingBilling, setManagingBilling] = useState(false);
+
+  // Reader profile — the four things /welcome asks for. The welcome page tells
+  // readers they can change their answers here, so this editor is what makes
+  // that sentence true; don't remove one without the other.
+  const [readerName, setReaderName] = useState(user.name || '');
+  const [aboutYou, setAboutYou] = useState('');
+  const [preferredLanguage, setPreferredLanguage] = useState('');
+  const [helpDescription, setHelpDescription] = useState('');
+  const [readerLoaded, setReaderLoaded] = useState(false);
+  const [savingReader, setSavingReader] = useState(false);
 
   // Member profile editing
   const [displayName, setDisplayName] = useState('');
@@ -32,6 +43,43 @@ export default function AccountClient({ user }: AccountClientProps) {
       if (data.expiresAt) setExpiresAt(new Date(data.expiresAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
     });
   }, []);
+
+  useEffect(() => {
+    fetch('/api/me/welcome')
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        if (!data) return;
+        setReaderName(data.name || '');
+        setAboutYou(data.about_you || '');
+        setPreferredLanguage(data.preferred_language || '');
+        setHelpDescription(data.help_description || '');
+      })
+      .catch(() => {})
+      .finally(() => setReaderLoaded(true));
+  }, []);
+
+  const saveReaderProfile = async () => {
+    setSavingReader(true);
+    try {
+      const res = await fetch('/api/me/welcome', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: readerName.trim(),
+          about_you: aboutYou.trim(),
+          preferred_language: preferredLanguage.trim(),
+          help_description: helpDescription.trim(),
+        }),
+      });
+      if (!res.ok) throw new Error();
+      await update();
+      toast.success('Profile updated');
+    } catch {
+      toast.error('Failed to save');
+    } finally {
+      setSavingReader(false);
+    }
+  };
 
   // Load member profile
   useEffect(() => {
@@ -75,6 +123,7 @@ export default function AccountClient({ user }: AccountClientProps) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
+      <SiteHeader variant="light" />
       <div className="max-w-xl mx-auto px-4 py-16">
         <h1 className="text-2xl font-serif font-medium mb-8" style={{ color: 'var(--text-primary)' }}>
           Account
@@ -114,6 +163,102 @@ export default function AccountClient({ user }: AccountClientProps) {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Reader profile — editable answers to the /welcome questions */}
+        <div
+          id="reader-profile"
+          className="rounded-xl p-6 mb-6 scroll-mt-24"
+          style={{ background: 'white', border: '1px solid var(--border-light)' }}
+        >
+          <h2 className="text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
+            Reader profile
+          </h2>
+          <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+            What you told us when you joined. Change it whenever you like — every field is optional.
+          </p>
+
+          {!readerLoaded ? (
+            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading…</p>
+          ) : (
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="reader-name" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
+                  Your name
+                </label>
+                <input
+                  id="reader-name"
+                  type="text"
+                  value={readerName}
+                  onChange={e => setReaderName(e.target.value)}
+                  autoComplete="name"
+                  maxLength={100}
+                  placeholder="Your name"
+                  className="w-full px-3 py-2 rounded-lg text-sm"
+                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="reader-about" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
+                  Who you are, and what interests you about Source Library
+                </label>
+                <textarea
+                  id="reader-about"
+                  rows={4}
+                  value={aboutYou}
+                  onChange={e => setAboutYou(e.target.value)}
+                  maxLength={4000}
+                  placeholder="Your background, the authors or traditions you're drawn to, questions you're chasing…"
+                  className="w-full px-3 py-2 rounded-lg text-sm resize-y"
+                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="reader-language" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
+                  The language you prefer to read in
+                </label>
+                <input
+                  id="reader-language"
+                  type="text"
+                  value={preferredLanguage}
+                  onChange={e => setPreferredLanguage(e.target.value)}
+                  maxLength={60}
+                  placeholder="e.g. English, Spanish, Portuguese, Chinese…"
+                  className="w-full px-3 py-2 rounded-lg text-sm"
+                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="reader-help" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
+                  How you&rsquo;d like to help, if at all
+                </label>
+                <textarea
+                  id="reader-help"
+                  rows={3}
+                  value={helpDescription}
+                  onChange={e => setHelpDescription(e.target.value)}
+                  maxLength={2000}
+                  placeholder="Reviewing translations, annotating texts, suggesting books, writing, coding, study groups — or just here to read."
+                  className="w-full px-3 py-2 rounded-lg text-sm resize-y"
+                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={saveReaderProfile}
+                  disabled={savingReader}
+                  className="px-4 py-1.5 rounded-lg text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
+                  style={{ background: 'var(--text-primary)', color: 'white' }}
+                >
+                  {savingReader ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Membership */}

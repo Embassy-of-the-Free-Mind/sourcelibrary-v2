@@ -1,0 +1,4 @@
+book_id: 69b51e18768235dc6598c1b7
+Title: Pymander Mercvrii Trismegisti : Cum Commento Fratris Hannibalis Rosseli Calabri, Ordinis Minorvm Regvlaris obseruantiæ, Theologiæ & Philosophiæ, ad S. Bernardinum Cracoviæ Profeßoris. 1, De SS. Trinitate
+Author: Hermes, Trismegistus, ca. 2./4. Jh.
+Source language: Latin

@@ -2,6 +2,33 @@ import { supabase } from '@/lib/supabase';
 import { expandLanguages } from '@/lib/language-utils';
 
 /**
+ * Thrown when a semantic-search RPC fails. Do NOT swallow this into an empty
+ * result set.
+ *
+ * Why this class exists: every RPC here used to `console.error(...)` and
+ * `return []` on failure, which makes a database fault indistinguishable from
+ * "nothing matched". That is not hypothetical — it hid a completely undeployed
+ * `match_semantic` function for months (see the header of
+ * `scripts/migration/add-match-semantic-rpc.sql`: the lib "catches the error and
+ * returns []"), and in Aug 2026 it caused a language filter returning zero rows
+ * to be misdiagnosed as a filter bug when the filter was working correctly.
+ *
+ * An empty array is an *answer*. An error is not. Callers that genuinely want to
+ * degrade (multi-lane search, the librarian) already wrap these calls in
+ * try/catch and drop the lane; the API routes surface it as a 500. Both are
+ * correct — what was wrong was the callee deciding silently on their behalf.
+ *
+ * Note `getQueryEmbedding` returning null is NOT this case: Gemini being absent
+ * is a documented degrade to keyword-only search, and still returns [].
+ */
+export class SemanticSearchError extends Error {
+  constructor(public readonly rpc: string, message: string) {
+    super(`[semantic-search] ${rpc} failed: ${message}`);
+    this.name = 'SemanticSearchError';
+  }
+}
+
+/**
  * Generate query embedding via Gemini embedding-2-preview.
  * Must use the same model as the backfill (embed-gemini.mjs / backfill-book-embeddings.mjs).
  * Returns null if Gemini is unavailable (search degrades to keyword-only).
@@ -72,8 +99,7 @@ export async function semanticBookSearch(
   });
 
   if (error) {
-    console.error('[semantic-search] match_books_semantic error:', error.message);
-    return [];
+    throw new SemanticSearchError('match_books_semantic', error.message);
   }
 
   return (data || []).map((row: any) => ({
@@ -169,8 +195,7 @@ export async function semanticArtworkSearch(
   });
 
   if (error) {
-    console.error('[semantic-search] match_artworks_semantic error:', error.message);
-    return [];
+    throw new SemanticSearchError('match_artworks_semantic', error.message);
   }
 
   return (data || []).map((row: any) => ({
@@ -235,6 +260,29 @@ export interface SemanticPageSearchOptions {
   language?: string;
   languages?: string[];
   excludeLanguages?: string[];
+  /**
+   * Which TEXT to search — an ISO code. `'en'` (the default) reads
+   * `page_translations`; anything else reads the language-keyed `page_texts`
+   * store via `match_page_texts` (#4095).
+   *
+   * Do not confuse this with `language` / `languages` / `excludeLanguages`,
+   * which filter by the BOOK's edition language and keep that meaning on every
+   * surface (`search-filters-and-lanes.md`). `textLang: 'es'` with
+   * `language: 'Latin'` is a coherent query: the Spanish translation of Latin
+   * editions.
+   */
+  textLang?: string;
+}
+
+/**
+ * The default text language. A store keyed by language needs a name for the
+ * unkeyed English one, and `page_translations` is it.
+ */
+export const DEFAULT_TEXT_LANG = 'en';
+
+/** True when this request should read the language-keyed store rather than English. */
+export function usesLangStore(textLang: string | undefined | null): boolean {
+  return !!textLang && textLang !== DEFAULT_TEXT_LANG;
 }
 
 /**
@@ -269,21 +317,38 @@ export async function semanticPageSearchGlobal(
   const expandedLanguages = (opts.languages?.length ?? 0) > 0 ? expandLanguages(opts.languages!) : null;
   const expandedExcludeLanguages = (opts.excludeLanguages?.length ?? 0) > 0 ? expandLanguages(opts.excludeLanguages!) : null;
 
-  const { data, error } = await supabase.rpc('match_semantic', {
-    query_embedding: JSON.stringify(queryEmbedding),
-    match_threshold: 0.3,
-    match_count: overRequest,
-    filter_tenant_id: opts.tenantId ?? null,
-    filter_language: opts.language ?? null,
-    filter_year_min: opts.yearMin ?? null,
-    filter_year_max: opts.yearMax ?? null,
-    filter_languages: expandedLanguages,
-    filter_exclude_languages: expandedExcludeLanguages,
-  });
+  // The language-keyed store lives in its own table with its own RPC; the two
+  // return identical column names on purpose, so only the call differs.
+  // `page_texts` carries no tenant column — neither does `page_translations`,
+  // whose RPC accepts filter_tenant_id and ignores it — so tenant scoping stays
+  // where it actually happens: the books join in the caller.
+  const rpc = usesLangStore(opts.textLang) ? 'match_page_texts' : 'match_semantic';
+  const { data, error } = usesLangStore(opts.textLang)
+    ? await supabase.rpc('match_page_texts', {
+      query_embedding: JSON.stringify(queryEmbedding),
+      filter_lang: opts.textLang!,
+      match_threshold: 0.3,
+      match_count: overRequest,
+      filter_language: opts.language ?? null,
+      filter_year_min: opts.yearMin ?? null,
+      filter_year_max: opts.yearMax ?? null,
+      filter_languages: expandedLanguages,
+      filter_exclude_languages: expandedExcludeLanguages,
+    })
+    : await supabase.rpc('match_semantic', {
+      query_embedding: JSON.stringify(queryEmbedding),
+      match_threshold: 0.3,
+      match_count: overRequest,
+      filter_tenant_id: opts.tenantId ?? null,
+      filter_language: opts.language ?? null,
+      filter_year_min: opts.yearMin ?? null,
+      filter_year_max: opts.yearMax ?? null,
+      filter_languages: expandedLanguages,
+      filter_exclude_languages: expandedExcludeLanguages,
+    });
 
   if (error) {
-    console.error('[semantic-search] match_semantic error:', error.message);
-    return [];
+    throw new SemanticSearchError(rpc, error.message);
   }
 
   let rows = (data || []) as any[];
@@ -321,6 +386,14 @@ export interface SemanticPageResult {
   book_id: string;
   page_number: number;
   snippet: string;
+  /**
+   * The complete stored page text, when the lane has it (the lexical
+   * `page_texts` lane does). Callers that want to centre a snippet on the hit —
+   * the way the Atlas lane does with its highlights — use this instead of
+   * re-reading the page from Mongo. Absent on the vector lanes, whose snippet
+   * is already the answer.
+   */
+  full_text?: string;
   // 'translation' = verbatim source text (safe to quote)
   // 'summary'     = AI-written continuity preamble that we could not cleanly strip
   snippet_type?: 'translation' | 'summary';
@@ -342,22 +415,31 @@ export async function semanticPageSearchScoped(
   query: string,
   bookIds: string[],
   limit: number = 10,
+  opts?: { textLang?: string },
 ): Promise<SemanticPageResult[]> {
   if (bookIds.length === 0) return [];
 
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
-  const { data, error } = await supabase.rpc('match_pages_in_books', {
-    query_embedding: JSON.stringify(queryEmbedding),
-    book_ids: bookIds,
-    match_threshold: 0.3,
-    match_count: limit,
-  });
+  const rpc = usesLangStore(opts?.textLang) ? 'match_page_texts_in_books' : 'match_pages_in_books';
+  const { data, error } = usesLangStore(opts?.textLang)
+    ? await supabase.rpc('match_page_texts_in_books', {
+      query_embedding: JSON.stringify(queryEmbedding),
+      filter_lang: opts!.textLang!,
+      book_ids: bookIds,
+      match_threshold: 0.3,
+      match_count: limit,
+    })
+    : await supabase.rpc('match_pages_in_books', {
+      query_embedding: JSON.stringify(queryEmbedding),
+      book_ids: bookIds,
+      match_threshold: 0.3,
+      match_count: limit,
+    });
 
   if (error) {
-    console.error('[semantic-search] match_pages_in_books error:', error.message);
-    return [];
+    throw new SemanticSearchError(rpc, error.message);
   }
 
   return (data || []).map((row: any) => {
@@ -373,6 +455,72 @@ export async function semanticPageSearchScoped(
       book_author: row.book_author,
       book_language: row.book_language,
       book_year: row.book_year,
+    };
+  });
+}
+
+// ── Lexical page search in a non-English language (#4095) ────────────
+
+/**
+ * Keyword search over `page_texts` — the language-keyed twin of the Atlas
+ * Search page lane.
+ *
+ * WHY THIS IS POSTGRES AND NOT ATLAS. English keyword search runs on the
+ * `pages_search` Atlas index (`src/lib/atlas-search.ts`), whose mapping is
+ * explicit — `translation.data` and `ocr.data`, `dynamic: false`. Reaching
+ * `translations.es.data` would mean editing that definition, and a definition
+ * change rebuilds the whole index over 18.9M pages, on shared search capacity,
+ * to gain 38K Spanish rows. The Spanish text is already in Supabase for the
+ * vector lane, so a GIN index over it costs nothing and buys something Atlas
+ * would not have given: real Spanish stemming («alquimia» matches «alquímico»),
+ * where `pages_search` uses `lucene.standard` for every language.
+ *
+ * Which stemmer a language gets is decided ONCE, in the SQL function
+ * `page_text_config` — the same function the write-side trigger calls — so the
+ * index and the query can never disagree about it. A language Postgres has no
+ * dictionary for falls back to exact-token matching rather than being stemmed
+ * as something it is not.
+ *
+ * Returns the same row shape as the semantic lanes, so callers merge the two
+ * without a second mapper.
+ */
+export async function lexicalPageSearchLang(
+  query: string,
+  textLang: string,
+  limit: number = 25,
+  opts?: { language?: string; yearMin?: number; yearMax?: number; bookIds?: string[] },
+): Promise<SemanticPageResult[]> {
+  if (!usesLangStore(textLang) || !query.trim()) return [];
+
+  const { data, error } = await supabase.rpc('search_page_texts', {
+    query_text: query,
+    filter_lang: textLang,
+    match_count: limit,
+    filter_language: opts?.language ?? null,
+    filter_year_min: opts?.yearMin ?? null,
+    filter_year_max: opts?.yearMax ?? null,
+    filter_book_ids: opts?.bookIds ?? null,
+  });
+
+  if (error) {
+    throw new SemanticSearchError('search_page_texts', error.message);
+  }
+
+  return (data || []).map((row: Record<string, unknown>) => {
+    const text = (row.translation as string) || '';
+    const { snippet, type } = stripContinuityPrefix(text);
+    return {
+      page_id: row.page_id as string,
+      book_id: row.book_id as string,
+      page_number: row.page_number as number,
+      snippet,
+      snippet_type: type,
+      score: Number(row.similarity) || 0,
+      book_title: row.book_title as string,
+      book_author: (row.book_author as string) ?? null,
+      book_language: (row.book_language as string) ?? null,
+      book_year: (row.book_year as number) ?? null,
+      full_text: text,
     };
   });
 }

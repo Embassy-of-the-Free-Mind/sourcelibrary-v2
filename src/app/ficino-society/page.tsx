@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useState, useEffect } from 'react';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -126,7 +127,7 @@ function FicinoSocietyContent() {
       {/* TITLE */}
       <section className="min-h-[85vh] flex flex-col justify-center items-center relative bg-[#0e0c0a]">
         <div className="absolute inset-0 overflow-hidden">
-          <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg" alt="" className="w-full h-full object-cover opacity-[0.07]" />
+          <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/99.jpg" alt="" className="w-full h-full object-cover opacity-[0.07]" />
         </div>
         <div className="relative z-10 text-center px-6 max-w-2xl">
           <h1 className="text-5xl md:text-6xl lg:text-7xl text-white/90 mb-6 font-serif leading-[1.1]" style={{ fontWeight: 300 }}>
@@ -217,13 +218,13 @@ function FicinoSocietyContent() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-[1px]">
             <div className="aspect-[3/4] overflow-hidden">
-              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/71.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/71.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
             </div>
             <div className="aspect-[3/4] overflow-hidden">
-              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/43.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/43.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
             </div>
             <div className="aspect-[3/4] overflow-hidden hidden md:block">
-              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/99.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
             </div>
           </div>
         </div>
@@ -310,18 +311,18 @@ function FicinoSocietyContent() {
               {isContributor ? 'Thank you' : contributing ? 'Redirecting...' : 'Contribute $100/year'}
             </button>
           ) : (
-            <a
+            <OutboundLink
               href={EFM_STRIPE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              surface="ficino_society"
+              channel="efm_stripe"
               className="inline-block px-8 py-3 rounded text-sm font-sans tracking-wide border border-[#1a1612]/20 text-[#1a1612] hover:brightness-110 transition-all"
             >
               Contribute
-            </a>
+            </OutboundLink>
           )}
           <p className="mt-6 text-[12px] text-[#8a8480] font-body">
             Any amount welcome &mdash;{' '}
-            <a href="mailto:hello@sourcelibrary.org" className="underline">hello@sourcelibrary.org</a>
+            <a href="mailto:team@sourcelibrary.org" className="underline">team@sourcelibrary.org</a>
           </p>
         </div>
       </section>

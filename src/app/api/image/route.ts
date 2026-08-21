@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import sharp from 'sharp';
+import sharp, { type OverlayOptions } from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import crypto from 'crypto';
+import { refuseImageUrl } from '@/lib/image-proxy-hosts';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 // Cache resized images for 1 week
 const CACHE_DURATION = 60 * 60 * 24 * 7;
@@ -45,8 +47,81 @@ async function getProvenanceMark() {
   }
 }
 
+/** Thrown when a redirect hop points somewhere we refuse to follow. */
+class BlockedRedirectError extends Error {
+  constructor(public readonly reason: string) {
+    super(`Redirect refused: ${reason}`);
+    this.name = 'BlockedRedirectError';
+  }
+}
+
+/**
+ * Fetch an image, re-validating the host on EVERY redirect hop.
+ *
+ * axios follows redirects itself (up to 5) and performs no further checks, so
+ * a permitted origin — or, before the dot-boundary fix, an attacker-registered
+ * lookalike — could 302 us onto a private address. We follow the chain by hand
+ * with `maxRedirects: 0` and run each Location through the same policy as the
+ * caller-supplied URL.
+ */
+async function fetchAllowlistedImage(startUrl: string, maxHops = 5) {
+  let current = startUrl;
+
+  for (let hop = 0; hop <= maxHops; hop++) {
+    const response = await axios.get(current, {
+      responseType: 'arraybuffer',
+      timeout: FETCH_TIMEOUT_IN_MS,
+      // Axios timeout includes both connection and response timeouts.
+      // Cap the response body so an oversized source aborts the download
+      // instead of buffering hundreds of MB into the function (throws
+      // ERR_FR_MAX_CONTENT_LENGTH_EXCEEDED, handled by the caller as 413).
+      maxContentLength: MAX_INPUT_BYTES,
+      maxBodyLength: MAX_INPUT_BYTES,
+      maxRedirects: 0,
+      // 3xx must reach us as a value, not an axios throw, so we can inspect
+      // Location. Anything else keeps the usual error behaviour.
+      validateStatus: status => (status >= 200 && status < 300) || (status >= 300 && status < 400),
+    });
+
+    if (response.status < 300) return response;
+
+    const location = response.headers?.location;
+    if (!location) throw new BlockedRedirectError('redirect without a Location header');
+
+    // Relative Locations are legal and common; resolve against the current URL.
+    const next = new URL(location, current).toString();
+    const refusal = refuseImageUrl(next);
+    if (refusal) throw new BlockedRedirectError(refusal);
+    current = next;
+  }
+
+  throw new BlockedRedirectError(`more than ${maxHops} redirects`);
+}
+
+// Ceiling on how much fetch-and-resize work one caller can make us do. Even
+// with a tight allowlist the proxy is still a free image resizer over some very
+// large public buckets, so it needs a cap.
+//
+// Deliberately generous: a gallery grid is dozens of images, and the limiter is
+// per-lambda-instance and in-memory, so the effective ceiling across instances
+// is higher than the number below. Most requests are served from the CDN and
+// never reach this function at all — only cache misses count. Tune via
+// IMAGE_PROXY_PER_MIN if it ever bites a real reader.
+const IMAGE_PROXY_PER_MIN = Number(process.env.IMAGE_PROXY_PER_MIN || 600);
+
 export async function GET(request: NextRequest) {
   try {
+    const rl = checkRateLimit(
+      { name: 'image-proxy', limit: IMAGE_PROXY_PER_MIN, windowSeconds: 60 },
+      getClientIp(request),
+    );
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Too many image requests' },
+        { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const url = searchParams.get('url');
     const width = parseInt(searchParams.get('w') || '400', 10);
@@ -84,35 +159,15 @@ export async function GET(request: NextRequest) {
       }
       buffer = fs.readFileSync(localPath);
     } else {
-      // Only allow trusted image hosts for security
-      const allowedHosts = [
-        'amazonaws.com',
-        'archive.org',
-        'vercel-storage.com',
-        'blob.vercel-storage.com',
-        'r2.dev',                      // Cloudflare R2 (public bucket)
-        'images.sourcelibrary.org',    // Cloudflare R2 (custom domain)
-        // Museum / open-access sources
-        'upload.wikimedia.org',        // Wikimedia Commons (public domain images)
-        'images.metmuseum.org',        // The Metropolitan Museum of Art
-        'openaccess-cdn.clevelandart.org', // Cleveland Museum of Art
-        // IIIF sources
-        'gallica.bnf.fr',
-        'api.digitale-sammlungen.de',  // MDZ/BSB
-        'digi.vatlib.it',              // Vatican
-        'digital.bodleian.ox.ac.uk',   // Bodleian
-        'iiif.bodleian.ox.ac.uk',
-        'digital.archives.go.jp',       // National Archives of Japan
-        'contentdm.oclc.org',           // ContentDM (Laurenziana, etc.)
-        'uvaerfgoed.nl',               // UVA heritage collections
-        'rijksmuseum.nl',              // Rijksmuseum
-        'dl.ndl.go.jp',               // National Diet Library Japan
-        'e-rara.ch',                   // Swiss libraries
-      ];
-      const urlObj = new URL(url);
-      if (!allowedHosts.some(host => urlObj.hostname.endsWith(host))) {
+      // Only allow trusted image hosts. The allowlist and the matching rule
+      // live in src/lib/image-proxy-hosts.ts — matching is on a dot boundary,
+      // NOT a bare suffix. See that file for why (`evilarchive.org` used to
+      // pass), and tests/unit/image-proxy-hosts.test.ts for the cases.
+      const refusal = refuseImageUrl(url);
+      if (refusal) {
         return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
       }
+      const urlObj = new URL(url);
 
       // Fetch the original image with axios for better timeout control
       // Retry logic for transient network errors
@@ -121,21 +176,17 @@ export async function GET(request: NextRequest) {
 
       for (let attempt = 0; attempt <= maxRetries; attempt++) {
         try {
-          const response = await axios.get(url, {
-            responseType: 'arraybuffer',
-            timeout: FETCH_TIMEOUT_IN_MS,
-            // Axios timeout includes both connection and response timeouts.
-            // Cap the response body so an oversized source aborts the download
-            // instead of buffering hundreds of MB into the function (throws
-            // ERR_FR_MAX_CONTENT_LENGTH_EXCEEDED, handled below as 413).
-            maxContentLength: MAX_INPUT_BYTES,
-            maxBodyLength: MAX_INPUT_BYTES,
-          });
+          const response = await fetchAllowlistedImage(url);
 
           buffer = Buffer.from(response.data);
           fetchSucceeded = true;
           break; // Success, exit retry loop
         } catch (fetchError: any) {
+          // A refused redirect is a policy decision, not a transient fault —
+          // return immediately rather than retrying it twice more.
+          if (fetchError instanceof BlockedRedirectError) {
+            return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
+          }
           // Only retry on network errors (ETIMEDOUT, ECONNREFUSED, etc), not on 4xx/5xx responses
           const isRetryable =
             fetchError.code === 'ETIMEDOUT' ||
@@ -240,7 +291,7 @@ export async function GET(request: NextRequest) {
     const imgH = resizedMeta.height || width;
 
     // Apply provenance marks
-    const composites: sharp.OverlayOptions[] = [];
+    const composites: OverlayOptions[] = [];
     const visibleMark = await getProvenanceMark();
 
     if (visibleMark && imgW > 100 && imgH > 100) {

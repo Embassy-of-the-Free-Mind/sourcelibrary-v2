@@ -5,6 +5,7 @@ import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, 
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { isHumanEditedTranslation } from '@/lib/translate-write';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
@@ -52,7 +53,8 @@ export const POST = withAuth(async (request: NextRequest) => {
       customPrompts,
       autoSave = true,
       model = DEFAULT_MODEL,
-      promptInfo // { ocr?: string, translation?: string, summary?: string } - prompt names
+      promptInfo, // { ocr?: string, translation?: string, summary?: string } - prompt names
+      overwriteHuman = false // Explicit bypass of the human-edit guard (#3749)
     } = body;
 
     const { id: tenantId } = getTenantContextFromRequest(request);
@@ -110,12 +112,28 @@ export const POST = withAuth(async (request: NextRequest) => {
       });
     }
 
+    // Human-edit guard (#3749): a translation a person wrote or corrected by
+    // hand (source: 'manual', or edited_by set) must not be silently replaced
+    // by AI output. The generation still runs (the caller may want a preview),
+    // but the save is refused unless overwriteHuman: true is passed.
+    let translationProtected = false;
+    if (pageId && autoSave && !overwriteHuman && (action === 'translation' || action === 'all')) {
+      const existingPage = await db.collection('pages').findOne(
+        { id: pageId, tenantId },
+        { projection: { 'translation.source': 1, 'translation.edited_by': 1 } }
+      );
+      translationProtected = isHumanEditedTranslation(existingPage?.translation);
+      if (translationProtected) {
+        console.log(`[process] Page ${pageId}: translation is human-edited — will not overwrite (pass overwriteHuman: true to bypass)`);
+      }
+    }
+
     // Create revisions of existing content before overwriting
     if (pageId && autoSave) {
       if (action === 'ocr' || action === 'all') {
         await createRevision(pageId, 'ocr');
       }
-      if (action === 'translation' || action === 'all') {
+      if ((action === 'translation' || action === 'all') && !translationProtected) {
         await createRevision(pageId, 'translation');
       }
     }
@@ -374,7 +392,7 @@ export const POST = withAuth(async (request: NextRequest) => {
         }
       }
 
-      if (results.translation && promptRefs.translation) {
+      if (results.translation && promptRefs.translation && !translationProtected) {
         const translationPromptRef = promptRefs.translation.reference;
         updateData['translation'] = {
           data: results.translation,
@@ -420,7 +438,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       );
 
       // Update book counts if translation was processed
-      if (results.translation) {
+      if (results.translation && !translationProtected) {
         const page = await db.collection('pages').findOne({ id: pageId, tenantId });
         if (page?.book_id) {
           const bookId = page.book_id;
@@ -469,7 +487,11 @@ export const POST = withAuth(async (request: NextRequest) => {
       });
     }
 
-    return NextResponse.json({ ...results, usage: totalUsage });
+    return NextResponse.json({
+      ...results,
+      usage: totalUsage,
+      ...(translationProtected && { translationProtected: true }),
+    });
   } catch (error) {
     console.error('Error processing:', error);
     const errorMessage = error instanceof Error ? error.message : 'Processing failed';

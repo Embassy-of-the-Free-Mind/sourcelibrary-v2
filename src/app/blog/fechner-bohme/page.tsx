@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Mystic Who Invented Psychophysics - Research Notes - Source Library',
@@ -9,7 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Mystic Who Invented Psychophysics',
     description: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works reveal the mysticism behind the Weber-Fechner law.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/4.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/4.jpg' }],
   },
   alternates: {
     canonical: '/blog/fechner-bohme',
@@ -23,7 +26,7 @@ export default function FechnerBohmePage() {
         <ContentHeader
           title="The Mystic Who Invented Psychophysics"
           subtitle="Gustav Fechner, Jakob Böhme, and the Secret History of Experimental Psychology"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg"
+          image="https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/4.jpg"
           imageAlt="Title page of Aurora by Jakob Bohme"
         >
           <p className="text-stone-400 text-sm mt-4">16 February 2026 &middot; 15 min read</p>
@@ -405,7 +408,6 @@ export default function FechnerBohmePage() {
         </div>
       </article>
 
-      <BlogComments slug="fechner-bohme" />
     </ContentPageLayout>
   );
 }

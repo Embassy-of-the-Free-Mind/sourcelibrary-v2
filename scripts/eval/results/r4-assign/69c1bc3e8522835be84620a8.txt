@@ -1,0 +1,4 @@
+book_id: 69c1bc3e8522835be84620a8
+Title: Yemenite Hebrew Bible (incomplete)
+Author: Anonymous
+Source language: Hebrew

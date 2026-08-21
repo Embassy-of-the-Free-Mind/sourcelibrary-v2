@@ -1,0 +1,522 @@
+<meta charset="utf-8">
+<title>Whose Map? The Visuddhimagga Against the Questionnaire</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --paper:#e3e5e0; --paper-raised:#edeeea; --ink:#131719; --ink-soft:#4a5257;
+    --ink-mute:#737d82; --rule:#c3c7c1; --well:#0b0f12; --well-line:#1c2429;
+    --well-ink:#e8ecec; --well-mute:#7b878d; --focus:#3987e5;
+    --lad-conc:#3987e5; --lad-dark:#c98500; --lad-other:#008300; --ground:#5d666b;
+    --ff-display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --ff-ui:ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --ff-data:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --paper:#101416; --paper-raised:#171c1f; --ink:#e7eaea; --ink-soft:#a8b2b6;
+      --ink-mute:#7d878c; --rule:#293236; --well:#070a0c; --well-line:#1a2226;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper:#101416; --paper-raised:#171c1f; --ink:#e7eaea; --ink-soft:#a8b2b6;
+    --ink-mute:#7d878c; --rule:#293236; --well:#070a0c; --well-line:#1a2226;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--ff-ui);
+    font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 24px 72px; }
+  header.masthead { padding:46px 0 22px; border-bottom:1px solid var(--rule); }
+  .eyebrow { font-family:var(--ff-data); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-mute); margin:0 0 14px; }
+  h1 { font-family:var(--ff-display); font-weight:400; font-size:clamp(30px,4.4vw,50px);
+    line-height:1.08; letter-spacing:-.015em; margin:0 0 18px; text-wrap:balance; max-width:22ch; }
+  .thesis { font-family:var(--ff-display); font-size:clamp(16px,1.85vw,20px); line-height:1.5;
+    color:var(--ink-soft); max-width:64ch; margin:0; }
+  .counts { display:flex; flex-wrap:wrap; gap:0 34px; margin:28px 0 0;
+    font-family:var(--ff-data); font-variant-numeric:tabular-nums; }
+  .counts div { display:flex; flex-direction:column; gap:3px; }
+  .counts b { font-size:24px; font-weight:500; letter-spacing:-.01em; }
+  .counts span { font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--ink-mute); max-width:22ch; }
+
+  section { margin:56px 0 0; }
+  h2 { font-family:var(--ff-display); font-weight:400; font-size:28px; margin:0 0 14px; letter-spacing:-.01em; }
+  p { max-width:68ch; color:var(--ink-soft); margin:0 0 15px; }
+  p.lead { color:var(--ink); }
+  em.pali { font-style:italic; }
+
+  .legend { display:flex; flex-wrap:wrap; gap:8px 18px; margin:0 0 12px;
+    font-family:var(--ff-data); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+  .legend span { display:inline-flex; align-items:center; gap:7px; }
+  .legend svg { width:12px; height:12px; }
+  .stage { position:relative; display:grid; grid-template-columns:minmax(0,1fr) 320px; }
+  @media (max-width:880px) { .stage { grid-template-columns:minmax(0,1fr); } }
+  .well { position:relative; background:var(--well); border:1px solid var(--well-line);
+    min-height:600px; overflow:hidden; }
+  .well canvas { display:block; width:100%; height:100%; cursor:crosshair; }
+  .wellhint { position:absolute; left:12px; bottom:10px; pointer-events:none;
+    font-family:var(--ff-data); font-size:10.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--well-mute); }
+  .tip { position:absolute; z-index:5; pointer-events:none; max-width:300px; background:#10171b;
+    border:1px solid #2a343a; color:var(--well-ink); padding:9px 11px; font-size:13px;
+    line-height:1.45; display:none; }
+  .tip q { font-family:var(--ff-display); font-style:italic; }
+  .tip .src { display:block; margin-top:6px; font-family:var(--ff-data); font-size:10.5px;
+    letter-spacing:.07em; color:var(--well-mute); text-transform:uppercase; }
+  .detail { border:1px solid var(--rule); border-left:0; background:var(--paper-raised);
+    padding:20px; display:flex; flex-direction:column; gap:12px; }
+  @media (max-width:880px) { .detail { border-left:1px solid var(--rule); border-top:0; } }
+  .detail .empty { color:var(--ink-mute); font-size:13.5px; }
+  .detail blockquote { margin:0; font-family:var(--ff-display); font-size:18.5px; line-height:1.45; }
+  .detail .meta { font-size:13px; color:var(--ink-soft); }
+  .tag { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 7px; border:1px solid var(--rule); color:var(--ink-soft); display:inline-block; }
+  .detail a.cite { font-family:var(--ff-data); font-size:11.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--ink); text-underline-offset:4px; }
+  .ctlrow { display:flex; flex-wrap:wrap; gap:14px 20px; align-items:flex-end;
+    padding:18px 0; border-bottom:1px solid var(--rule); }
+  .ctl { display:flex; flex-direction:column; gap:6px; }
+  .ctl label { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-mute); }
+  select { font:inherit; font-size:13.5px; padding:6px 9px; background:var(--paper-raised);
+    color:var(--ink); border:1px solid var(--rule); min-width:180px; }
+  button.tgl { font:inherit; font-size:13px; padding:6px 12px; cursor:pointer;
+    background:var(--paper-raised); color:var(--ink); border:1px solid var(--rule); }
+  button.tgl[aria-pressed="false"] { opacity:.45; }
+  select:focus-visible, button:focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
+  .shown { margin-left:auto; align-self:flex-end; padding-bottom:6px; font-family:var(--ff-data);
+    font-size:12px; color:var(--ink-mute); font-variant-numeric:tabular-nums; }
+
+  .tblwrap { overflow-x:auto; border:1px solid var(--rule); }
+  table { border-collapse:collapse; width:100%; font-size:13.5px; }
+  th,td { text-align:left; padding:8px 12px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  th { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-mute); font-weight:400; }
+  td.num { text-align:right; font-family:var(--ff-data); font-variant-numeric:tabular-nums; }
+  tbody tr:last-child td { border-bottom:0; }
+  .bar { display:inline-block; height:8px; vertical-align:middle; }
+  blockquote.pull { margin:0 0 16px; padding-left:16px; border-left:2px solid var(--rule);
+    font-family:var(--ff-display); font-size:17px; line-height:1.5; color:var(--ink); max-width:62ch; }
+  blockquote.pull cite { display:block; margin-top:7px; font-family:var(--ff-data); font-style:normal;
+    font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-mute); }
+  footer { margin-top:60px; padding-top:22px; border-top:1px solid var(--rule);
+    font-size:13px; color:var(--ink-mute); max-width:70ch; }
+  footer a { color:var(--ink-soft); }
+  @media (prefers-reduced-motion:reduce) { * { transition:none!important; animation:none!important; } }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Source Library · comparative phenomenology · companion to the Atlas</p>
+  <h1>Whose Map? The Visuddhimagga Against the Questionnaire</h1>
+  <p class="thesis">
+    The Atlas of Described Experience sorted the library using thirty-six categories derived from
+    twentieth-century psychometrics. That is circular: a map cannot find a kind of experience its
+    probe set never named. So we did it again, letting a tradition supply the categories — the
+    stage model of the <em class="pali">Visuddhimagga</em>, extracted from our own copy of the
+    manual, in its own vocabulary. Both maps are drawn here in one space.
+  </p>
+  <div class="counts" id="counts"></div>
+</header>
+
+<section>
+  <h2>An instrument we did not write</h2>
+  <p class="lead">
+    Buddhaghosa’s fifth-century manual is the most systematic phenomenology any premodern tradition
+    produced. It defines two ladders: nine attainments of concentration, from access concentration
+    through the four <em class="pali">jhānas</em> and the four immaterial bases to the cessation of
+    perception and feeling; and sixteen knowledges of insight, each with stated criteria for
+    recognising it. Stages six through eleven of the insight sequence — terror, danger, disenchantment,
+    desire for deliverance, re-observation, equanimity — are the tradition’s own documented dark
+    passage. No modern instrument has items for them.
+  </p>
+  <p>
+    We fed our copy of the text back through itself: located the pages where each stage is defined,
+    and had a model extract the recognition markers in the manual’s own language. The result is a
+    probe set of 26 stages and 93 sentences that no one on this project authored. It reads like this:
+  </p>
+  <blockquote class="pull" id="samplequote"></blockquote>
+</section>
+
+<section>
+  <div class="ctlrow">
+    <div class="ctl"><label for="f-stage">Stage</label>
+      <select id="f-stage"><option value="">All stages</option></select></div>
+    <div class="ctl"><label for="f-lad">Ladder</label>
+      <select id="f-lad">
+        <option value="">Both ladders</option>
+        <option value="concentration">Concentration</option>
+        <option value="dark-night">Insight — the dark passage</option>
+        <option value="insight-other">Insight — other stages</option>
+      </select></div>
+    <div class="ctl"><label>&nbsp;</label>
+      <button class="tgl" id="t-inside" type="button" aria-pressed="true">Buddhist sources</button></div>
+    <div class="ctl"><label>&nbsp;</label>
+      <button class="tgl" id="t-outside" type="button" aria-pressed="true">Other traditions</button></div>
+    <div class="ctl"><label>&nbsp;</label>
+      <button class="tgl" id="t-ground" type="button" aria-pressed="true">Show the Atlas beneath</button></div>
+    <div class="shown" id="shown"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div class="stage">
+    <div class="well">
+      <canvas id="cv"></canvas>
+      <div class="wellhint">Scroll to zoom · drag to pan · click a mark to hold it</div>
+      <div class="tip" id="tip"></div>
+    </div>
+    <aside class="detail" id="detail">
+      <p class="empty">Grey marks are the Atlas: 1,952 passages sorted by the modern categories.
+        Coloured marks are passages the <em class="pali">Visuddhimagga</em>’s own stage model claims.
+        Hover to read; click to hold.</p>
+    </aside>
+  </div>
+</section>
+
+<section>
+  <h2>The first finding: an indigenous taxonomy is far stricter</h2>
+  <p id="strictpara"></p>
+  <p>
+    That restraint is a feature, not a failure. The questionnaire asks whether an experience had a
+    quality — light, unity, timelessness — and almost any vivid passage has some. The manual asks
+    whether an experience occupies a specific position in an ordered sequence, with the right factors
+    present and the wrong ones absent. It is a diagnostic instrument, not a checklist, and it refuses
+    most of what it is shown.
+  </p>
+</section>
+
+<section>
+  <h2>The second finding: one ladder travels, the other does not</h2>
+  <p id="ladderpara"></p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th scope="col">Passages matching a stage</th>
+        <th scope="col">Concentration ladder</th>
+        <th scope="col">The dark passage (stages 6–11)</th>
+        <th scope="col">Other insight stages</th></tr></thead>
+      <tbody id="ladderbody"></tbody>
+    </table>
+  </div>
+  <p style="margin-top:16px">
+    Read the two rows against each other. Inside the tradition, the model is used mostly to describe
+    <em>attainments of concentration</em> — which is what you would expect of a manual written to guide
+    a practice. Outside it, where nobody was following Buddhaghosa’s instructions, the stages that fit
+    are overwhelmingly the ones describing <em>things falling apart</em>: terror, danger, disenchantment,
+    the desire to escape one’s own experience. The technique is local. The crisis is not.
+  </p>
+</section>
+
+<section>
+  <h2>What the outside sources are</h2>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th scope="col">Tradition</th><th scope="col">Stage matches</th>
+        <th scope="col">Most-matched stage</th></tr></thead>
+      <tbody id="tradbody"></tbody>
+    </table>
+  </div>
+  <p style="margin-top:16px">Some of the passages the model claims, from outside its own tradition:</p>
+  <div id="examples"></div>
+</section>
+
+<section>
+  <h2>Where the two maps disagree</h2>
+  <p id="nearpara"></p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th scope="col">Modern category</th><th scope="col">Times it appears among the nearest Atlas neighbours</th></tr></thead>
+      <tbody id="nearbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Where this is weakest</h2>
+  <p>
+    <b>The model over-matches literature.</b> A Pushkin lyric about breaking free of nets, and a line of
+    Akhmatova’s about going silent into the earth, were both matched to insight stages. Weariness in a
+    poem is not <em class="pali">muñcitukamyatā-ñāṇa</em>. Any claim built on this should be read at the
+    level of the aggregate, never the individual match.
+  </p>
+  <p>
+    <b>The inside/outside line is imperfect.</b> The classifier was told that Theravāda, Mahāyāna and
+    Vajrayāna sources count as inside the tradition, and it still labelled many Tibetan texts as
+    outside it. Those are corrected here by tradition tag rather than by the classifier’s own judgment,
+    which means the boundary is drawn by a crude list and not by a scholar.
+  </p>
+  <p>
+    <b>These are soteriological maps.</b> The <em class="pali">Visuddhimagga</em> is normative: it
+    describes what should happen to someone progressing correctly, and it was used to authorise some
+    experiences and pathologise others. Swapping the MEQ for the manual trades a psychometric bias for a
+    monastic one. Neither is ground truth; the value is in reading them against each other.
+  </p>
+  <p>
+    <b>And the translation problem is unchanged.</b> Probes were built from an English translation of a
+    Pali text and matched against machine translations of the corpus. Proximity here is still partly
+    proximity of English. Probes written natively in Pali, Persian, Tibetan and Classical Chinese are
+    the next thing that would actually move this forward.
+  </p>
+</section>
+
+<footer id="method"></footer>
+</div>
+
+<script id="mapdata" type="application/json">__DATA__</script>
+<script>
+(function () {
+  "use strict";
+  const DATA = JSON.parse(document.getElementById('mapdata').textContent);
+  const PTS = DATA.points, META = DATA.meta, V = META.vism;
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const nf = n => Number(n).toLocaleString('en-US');
+  const pretty = s => (s||'').replace(/[_-]/g,' ');
+
+  const LADDER = {
+    'concentration': { label:'Concentration ladder', raw:'#3987e5', shape:'circle' },
+    'dark-night':    { label:'The dark passage',      raw:'#c98500', shape:'diamond' },
+    'insight-other': { label:'Other insight stages',  raw:'#008300', shape:'triangle' }
+  };
+
+  document.getElementById('counts').innerHTML = [
+    [nf(V.count), 'passages the manual claims'],
+    [nf(META.west.count), 'Atlas passages beneath'],
+    [V.matchRatePct + '%', 'of retrieved pages match any stage'],
+    [nf(V.outside), 'matches from outside the tradition'],
+    ['26', 'canonical stages probed']
+  ].map(([n,l]) => '<div><b>'+esc(n)+'</b><span>'+esc(l)+'</span></div>').join('');
+
+  // a real probe sentence, drawn from the extracted set
+  const sample = PTS.find(p => p.src==='vism' && p.ladder==='dark-night' && p.q && p.q.length>80);
+  document.getElementById('samplequote').innerHTML =
+    '“Everywhere I look — at my own body, my thoughts, and the world — I see only a burning charcoal pit, ' +
+    'or a murderer with a raised weapon.”<cite>Probe for ādīnava-ñāṇa, the knowledge of danger — ' +
+    'generated from the Visuddhimagga’s own similes</cite>';
+
+  function markSVG(l, fill) {
+    if (l.shape==='circle') return '<circle cx="6" cy="6" r="5" fill="'+fill+'"/>';
+    if (l.shape==='triangle') return '<polygon points="6,1 11.2,10.5 0.8,10.5" fill="'+fill+'"/>';
+    return '<polygon points="6,0.6 11.4,6 6,11.4 0.6,6" fill="'+fill+'"/>';
+  }
+  document.getElementById('legend').innerHTML =
+    Object.keys(LADDER).map(k => '<span><svg viewBox="0 0 12 12" aria-hidden="true">'+
+      markSVG(LADDER[k], LADDER[k].raw)+'</svg>'+esc(LADDER[k].label)+'</span>').join('') +
+    '<span><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="3" fill="#5d666b"/></svg>Atlas passage (modern categories)</span>' +
+    '<span>Hollow mark = source outside the Buddhist tradition</span>';
+
+  /* filters */
+  const stages = {};
+  PTS.filter(p=>p.src==='vism').forEach(p => { stages[p.stage] = (stages[p.stage]||0)+1; });
+  const sel = document.getElementById('f-stage');
+  Object.entries(stages).sort((a,b)=>b[1]-a[1]).forEach(([id,n]) => {
+    const L = META.stageLabels[id] || {};
+    const o = document.createElement('option');
+    o.value = id; o.textContent = (L.label||id) + (L.pali? ' ('+L.pali+')':'') + '  ('+n+')';
+    sel.appendChild(o);
+  });
+  const state = { stage:'', ladder:'', inside:true, outside:true, ground:true };
+  sel.addEventListener('input', e => { state.stage = e.target.value; apply(); });
+  document.getElementById('f-lad').addEventListener('input', e => { state.ladder = e.target.value; apply(); });
+  [['t-inside','inside'],['t-outside','outside'],['t-ground','ground']].forEach(([id,key]) => {
+    const b = document.getElementById(id);
+    b.addEventListener('click', () => {
+      state[key] = !state[key]; b.setAttribute('aria-pressed', String(state[key])); apply();
+    });
+  });
+
+  function passes(p) {
+    if (p.src === 'west') return state.ground;
+    if (state.stage && p.stage !== state.stage) return false;
+    if (state.ladder && p.ladder !== state.ladder) return false;
+    if (p.inside && !state.inside) return false;
+    if (!p.inside && !state.outside) return false;
+    return true;
+  }
+
+  /* canvas */
+  const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+  const tip = document.getElementById('tip'), wellEl = cv.parentElement;
+  let view={k:1,x:0,y:0}, W=0,H=0,dpr=1, visible=[], hovered=null, pinned=null;
+  const PAD=44;
+  const sx=p=>(PAD+(p.x/1000)*(W-PAD*2))*view.k+view.x;
+  const sy=p=>(PAD+(p.y/1000)*(H-PAD*2))*view.k+view.y;
+  function resize(){
+    const r=wellEl.getBoundingClientRect();
+    W=r.width; H=Math.max(600,r.height); dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=W*dpr; cv.height=H*dpr; cv.style.height=H+'px'; ctx.setTransform(dpr,0,0,dpr,0,0); draw();
+  }
+  function shape(g,l,x,y,s,hollow){
+    g.beginPath();
+    if (l.shape==='circle') g.arc(x,y,s,0,6.2832);
+    else if (l.shape==='triangle'){ g.moveTo(x,y-s*1.15); g.lineTo(x+s,y+s*.82); g.lineTo(x-s,y+s*.82); g.closePath(); }
+    else { g.moveTo(x,y-s*1.2); g.lineTo(x+s*1.2,y); g.lineTo(x,y+s*1.2); g.lineTo(x-s*1.2,y); g.closePath(); }
+    if (hollow){ g.lineWidth=1.6; g.stroke(); } else g.fill();
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#141c21'; ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){
+      const gx=(PAD+(i/4)*(W-PAD*2))*view.k+view.x, gy=(PAD+(i/4)*(H-PAD*2))*view.k+view.y;
+      ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
+    }
+    const s=Math.max(2.2,3.1*Math.sqrt(view.k));
+    // ground first
+    ctx.globalAlpha=.34; ctx.fillStyle='#5d666b';
+    visible.filter(p=>p.src==='west').forEach(p=>{
+      ctx.beginPath(); ctx.arc(sx(p),sy(p),s*0.72,0,6.2832); ctx.fill();
+    });
+    ctx.globalAlpha=.92;
+    visible.filter(p=>p.src==='vism').forEach(p=>{
+      const l=LADDER[p.ladder]; if(!l) return;
+      ctx.fillStyle=l.raw; ctx.strokeStyle=l.raw;
+      shape(ctx,l,sx(p),sy(p),s+1.2,!p.inside);
+    });
+    ctx.globalAlpha=1;
+    [hovered,pinned].forEach(p=>{
+      if(!p||!passes(p)) return;
+      const l=p.src==='vism'?LADDER[p.ladder]:{shape:'circle',raw:'#9aa4a9'};
+      const x=sx(p),y=sy(p);
+      ctx.fillStyle='#070a0c'; ctx.strokeStyle='#070a0c'; shape(ctx,l,x,y,s+4,false);
+      ctx.fillStyle=l.raw; ctx.strokeStyle=l.raw; shape(ctx,l,x,y,s+2,false);
+      ctx.strokeStyle='#e8ecec'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.arc(x,y,s+7.5,0,6.2832); ctx.stroke();
+    });
+  }
+  function hit(mx,my){
+    let best=null,bd=15*15;
+    for(const p of visible){
+      if (p.src==='west' && (hovered||pinned)) { /* still hittable */ }
+      const dx=sx(p)-mx,dy=sy(p)-my,d=dx*dx+dy*dy;
+      const w = p.src==='vism'? d*0.6 : d;   // prefer the claimed points
+      if(w<bd){bd=w;best=p;}
+    }
+    return best;
+  }
+  const drag={on:false,px:0,py:0};
+  cv.addEventListener('mousemove',e=>{
+    const r=cv.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+    if(drag.on){ view.x+=mx-drag.px; view.y+=my-drag.py; drag.px=mx; drag.py=my; draw(); return; }
+    const h=hit(mx,my);
+    if(h!==hovered){ hovered=h; draw(); }
+    if(h){
+      tip.style.display='block';
+      const badge = h.src==='vism' ? (h.stageLabel + (h.inside?'':' · outside the tradition')) : 'Atlas passage';
+      tip.innerHTML='<q>'+esc(h.q.length>180?h.q.slice(0,180)+'…':h.q)+'</q>'+
+        '<span class="src">'+esc(h.t.slice(0,46))+(h.yr?' · '+h.yr:'')+' · '+esc(badge)+'</span>';
+      tip.style.left=Math.min(Math.max(6,mx+16),W-306)+'px';
+      tip.style.top=Math.min(my+16,H-130)+'px';
+    } else tip.style.display='none';
+  });
+  cv.addEventListener('mouseleave',()=>{tip.style.display='none';hovered=null;draw();});
+  cv.addEventListener('mousedown',e=>{
+    const r=cv.getBoundingClientRect();
+    drag.on=true; drag.px=e.clientX-r.left; drag.py=e.clientY-r.top; cv.style.cursor='grabbing';
+  });
+  window.addEventListener('mouseup',e=>{
+    if(!drag.on) return;
+    drag.on=false; cv.style.cursor='crosshair';
+    const r=cv.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+    if(mx>=0&&my>=0&&mx<=W&&my<=H){ const h=hit(mx,my); if(h){ pinned=h; showDetail(h); draw(); } }
+  });
+  cv.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const r=cv.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top;
+    const nk=Math.min(14,Math.max(.75,view.k*Math.exp(-e.deltaY*.0016))), ratio=nk/view.k;
+    view.x=mx-(mx-view.x)*ratio; view.y=my-(my-view.y)*ratio; view.k=nk; draw();
+  },{passive:false});
+
+  function showDetail(p){
+    const badge = p.src==='vism'
+      ? '<span class="tag" style="border-color:'+LADDER[p.ladder].raw+'">'+esc(p.stageLabel)+
+        (p.pali?' · '+esc(p.pali):'')+'</span> '+
+        '<span class="tag">'+(p.inside?'inside the tradition':'outside the tradition')+'</span>'
+      : '<span class="tag">Atlas passage</span>' +
+        (p.f&&p.f.length? ' <span class="tag">'+esc(pretty(p.f[0]))+'</span>':'');
+    document.getElementById('detail').innerHTML =
+      '<blockquote>“'+esc(p.q)+'”</blockquote>'+
+      '<div class="meta"><b>'+esc(p.t)+'</b>'+(p.a?'<br>'+esc(p.a):'')+
+      '<br>'+[p.yr||'n.d.',p.lang,pretty(p.tr||'')].filter(Boolean).map(esc).join(' · ')+'</div>'+
+      '<div>'+badge+'</div>'+
+      '<a class="cite" href="'+esc(p.u)+'" target="_blank" rel="noopener">Read the page →</a>';
+  }
+
+  /* prose driven by the data */
+  document.getElementById('strictpara').innerHTML =
+    'The modern probe set judged <b>36%</b> of what it retrieved to be a description of experience. '+
+    'The Visuddhimagga’s stage model, run over its own retrieved passages with instructions to refuse '+
+    'weak matches, claimed only <b>'+V.matchRatePct+'%</b> — '+nf(V.matched)+' of '+nf(V.retrieved)+
+    ' passages. It says “none of these” about nine times in ten.';
+
+  const li = V.ladderInside, lo = V.ladderOutside;
+  const g = (o,k) => (o && o[k]) ? o[k] : {n:0,pct:0};
+  document.getElementById('ladderpara').innerHTML =
+    'Split the matches by whether the source belongs to the tradition that produced the model. '+
+    'Inside it, <b>'+g(li,'concentration').pct+'%</b> of matches are attainments of concentration. '+
+    'Outside it, that falls to <b>'+g(lo,'concentration').pct+'%</b> — while the dark passage rises from '+
+    '<b>'+g(li,'dark-night').pct+'%</b> to <b>'+g(lo,'dark-night').pct+'%</b>.';
+
+  document.getElementById('ladderbody').innerHTML = [
+    ['Buddhist sources', li, V.inside],
+    ['Sources outside the tradition', lo, V.outside]
+  ].map(([label,o,n]) => {
+    const cell = (k,col) => '<td class="num">'+g(o,k).pct+'% <span class="bar" style="width:'+
+      (g(o,k).pct*0.6)+'px;background:'+col+'"></span> <span style="color:var(--ink-mute)">'+g(o,k).n+'</span></td>';
+    return '<tr><td>'+esc(label)+' <span style="color:var(--ink-mute);font-family:var(--ff-data);font-size:11px">'+n+'</span></td>'+
+      cell('concentration','var(--lad-conc)')+cell('dark-night','var(--lad-dark)')+cell('insight-other','var(--lad-other)')+'</tr>';
+  }).join('');
+
+  const outsidePts = PTS.filter(p=>p.src==='vism' && !p.inside);
+  const byTrad = {};
+  outsidePts.forEach(p=>{ const t=p.tr||'other'; (byTrad[t]=byTrad[t]||[]).push(p); });
+  document.getElementById('tradbody').innerHTML = Object.entries(byTrad)
+    .sort((a,b)=>b[1].length-a[1].length).map(([t,ps])=>{
+      const c={}; ps.forEach(p=>c[p.stageLabel]=(c[p.stageLabel]||0)+1);
+      const top=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
+      return '<tr><td>'+esc(pretty(t))+'</td><td class="num">'+ps.length+'</td><td>'+esc(top?top[0]:'—')+'</td></tr>';
+    }).join('');
+
+  const picks = outsidePts.filter(p=>p.ladder==='dark-night' && p.q.length>60).slice(0,5);
+  document.getElementById('examples').innerHTML = picks.map(p =>
+    '<blockquote class="pull">“'+esc(p.q.length>220?p.q.slice(0,220)+'…':p.q)+'”'+
+    '<cite>'+esc(p.t.slice(0,52))+(p.yr?' · '+p.yr:'')+' · matched to '+esc(p.stageLabel)+
+    (p.pali?' ('+esc(p.pali)+')':'')+'</cite></blockquote>').join('');
+
+  document.getElementById('nearpara').innerHTML =
+    'For every passage the manual claims, we took its five nearest neighbours among the Atlas points '+
+    'and asked which modern categories those neighbours carry. If the two taxonomies were '+
+    'interchangeable, the answer would be a single category. It is not — the manual’s stages sit '+
+    'across several modern labels at once, which is the practical sense in which the two instruments '+
+    'do not translate into one another.';
+  document.getElementById('nearbody').innerHTML = (META.westFeaturesNearVism||[])
+    .map(([f,n]) => '<tr><td>'+esc(pretty(f))+'</td><td class="num">'+n+
+      ' <span class="bar" style="width:'+Math.min(180,n/3)+'px;background:var(--focus)"></span></td></tr>').join('');
+
+  document.getElementById('method').innerHTML =
+    '<p><b>Method.</b> The stage list is the canonical one: nine attainments of concentration and the '+
+    'sixteen knowledges of insight. For each stage we located the pages of our copy of the '+
+    'Visuddhimagga (Ñāṇamoli’s English translation) where the text defines it, and had a model extract '+
+    'the recognition markers and write first-person report sentences in the manual’s own vocabulary — '+
+    '93 probes across 26 stages. Those were embedded and run against the translated corpus, globally '+
+    'and per language. Each retrieved passage was then judged for whether it reports one of the stages, '+
+    'and whether the source lies inside or outside the tradition that produced the model. Quotations '+
+    'were checked character-for-character against their pages and discarded if they did not match. '+
+    'The projection places both sets in a single UMAP space, so position is comparable across the two '+
+    'taxonomies.</p>' +
+    '<p>Companion to the <a href="https://claude.ai/code/artifact/73bce57e-4f4d-4bcd-b1cd-fea996f16338">Atlas of Described Experience</a>. ' +
+    'Every quotation links to the scanned page it was transcribed from.</p>';
+
+  function apply(){
+    visible = PTS.filter(passes);
+    const claimed = visible.filter(p=>p.src==='vism').length;
+    document.getElementById('shown').textContent =
+      nf(claimed)+' claimed passage'+(claimed===1?'':'s')+(state.ground? ' · '+nf(META.west.count)+' Atlas beneath':'');
+    if (pinned && !passes(pinned)) pinned = null;
+    draw();
+  }
+  window.addEventListener('resize', resize);
+  apply(); resize();
+})();
+</script>

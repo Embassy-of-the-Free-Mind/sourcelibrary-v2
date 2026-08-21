@@ -68,6 +68,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { withMongo } from '../lib/mongo.mjs';
 import { appendAttempt } from '../lib/ft-attempt-log.mjs';
+import { toSourceIso } from '../lib/translation-catalog-record.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, '..', 'output');
@@ -217,50 +218,26 @@ function extractSurname(author) {
 // ── Source-language normalisation ──────────────────────────────────────────────
 // The catalog was originally entirely `source_language: 'la'`; #2899 adds
 // non-Latin catalogs (Hebrew/Aramaic via Sefaria, Sanskrit/Pali/etc. via Sacred
-// Books of the East, …). Map both the book's surface/original language AND any
-// ISO code that may already appear in the data to the same bucket so guard (c)
-// compares like with like. Keys are matched after `normalise()` (lowercased,
-// punctuation-stripped). Keep in sync with KNOWN_SOURCE_LANGUAGES in
-// scripts/lib/translation-catalog-record.mjs.
-
-const LANG_TO_ISO = {
-  // Latin
-  latin: 'la', 'latin-german': 'la', la: 'la',
-  // Greek
-  greek: 'grc', 'ancient greek': 'grc', 'classical greek': 'grc', grc: 'grc',
-  // modern European (parity with existing rows)
-  german: 'de', de: 'de', dutch: 'nl', nl: 'nl', french: 'fr', fr: 'fr',
-  italian: 'it', it: 'it', spanish: 'es', es: 'es',
-  // Hebrew / Aramaic
-  hebrew: 'he', 'biblical hebrew': 'he', 'mishnaic hebrew': 'he', he: 'he',
-  aramaic: 'arc', 'jewish aramaic': 'arc', 'imperial aramaic': 'arc', arc: 'arc',
-  // Arabic / Persian
-  arabic: 'ar', ar: 'ar', persian: 'fa', fa: 'fa', avestan: 'ave', ave: 'ave',
-  // South Asian
-  sanskrit: 'sa', sa: 'sa', san: 'sa', pali: 'pli', pli: 'pli', pi: 'pli', tamil: 'ta', ta: 'ta',
-  // Tibetan
-  tibetan: 'bo', bo: 'bo',
-  // Chinese (all classical/literary variants collapse to one bucket) + CJK
-  chinese: 'zh', 'classical chinese': 'zh', 'literary chinese': 'zh', 'old chinese': 'zh',
-  zh: 'zh', lzh: 'zh', zho: 'zh',
-  japanese: 'ja', ja: 'ja', korean: 'ko', ko: 'ko',
-  // Ancient Near East
-  syriac: 'syc', syc: 'syc', armenian: 'hy', hy: 'hy',
-  akkadian: 'akk', akk: 'akk', sumerian: 'sux', sux: 'sux', egyptian: 'egy', egy: 'egy',
-};
+// Books of the East, …). Guard (c) can only compare like with like if BOTH the
+// book's language and the catalog row's `source_language` are resolved to the
+// same ISO bucket.
+//
+// #3460: this file used to own a private LANG_TO_ISO table and apply it to the
+// BOOK side only, comparing the result against the raw catalog string. Any row
+// written with a display name ("Sanskrit", "Greek") therefore failed the guard
+// against every book — silently disabling all 305 hand-verified
+// `claude_subagent_verify` rows, which carry 213 of the catalogue's 385
+// `completeness: 'complete'` rows. The mapping now lives in
+// scripts/lib/translation-catalog-record.mjs as the single source of truth and
+// is applied to both sides.
 
 function bookSourceIso(book) {
   // prefer original_language when present; else the surface language
-  const ol = normalise(book.original_language || '');
-  const l = normalise(book.language || '');
-  for (const key of [ol, l]) {
-    if (!key) continue;
-    if (LANG_TO_ISO[key]) return LANG_TO_ISO[key];
-    // handle compound like "latin-german" → first segment
-    const first = key.split(/[-\/, ]/)[0];
-    if (LANG_TO_ISO[first]) return LANG_TO_ISO[first];
+  for (const raw of [book.original_language, book.language]) {
+    const iso = toSourceIso(raw);
+    if (iso) return iso;
   }
-  return l || ol || 'unknown';
+  return normalise(book.language || '') || normalise(book.original_language || '') || 'unknown';
 }
 
 // ── Guards ─────────────────────────────────────────────────────────────────────
@@ -298,7 +275,9 @@ function guardComplete(row) {
 /** (c) Source-language guard. Pass only when the catalog source matches the book's. */
 function guardSourceLang(book, row) {
   const bookIso = bookSourceIso(book);
-  const catIso = normalise(row.source_language || '');
+  // Resolve the catalog side through the SAME map as the book side. Comparing a
+  // resolved bucket against a raw display name is what made 305 rows inert.
+  const catIso = toSourceIso(row.source_language) || normalise(row.source_language || '');
   if (!catIso) return { pass: false, reason: 'catalog row has no source_language' };
   if (bookIso === 'unknown') return { pass: false, reason: `book source-language unknown (lang="${book.language}")` };
   if (bookIso === catIso) return { pass: true, reason: `source_language match (${catIso})` };

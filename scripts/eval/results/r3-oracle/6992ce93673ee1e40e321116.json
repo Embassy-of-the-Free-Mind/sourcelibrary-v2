@@ -1,0 +1,41 @@
+{
+  "book_id": "6992ce93673ee1e40e321116",
+  "work_identified": "武備志 juan 69 (Wubei Zhi / Treatise on Military Preparedness, vol. 69 of 240), by Mao Yuanyi 茅元儀, 1621 — part of Section 3: Zhen Lian Zhi (陣練制, Formations and Training, juan 52–92)",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Wubei Zhi English translation \"Mao Yuanyi\" 1621 military encyclopedia",
+    "武備志 English translation scholarly sinology",
+    "WorldCat \"wu bei zhi\" OR \"wubei zhi\" English translation sinology",
+    "\"Treatise on Military Preparedness\" English translation Mao Yuanyi complete partial scholarly",
+    "Wubei Zhi volume 69 content section \"Mao Yuanyi\" military",
+    "\"Wubei Zhi\" \"section\" OR \"juan\" 69 military formations troops OR weapons",
+    "\"Wubei Zhi\" OR \"Wu Bei Zhi\" English translation \"formations\" OR \"Zhen Lian\" OR martial arts incomplete scholarly",
+    "site:archive.org \"wubei zhi\" English translation",
+    "\"wu bei zhi\" OR \"wubei zhi\" \"juan 69\" OR \"vol. 69\" OR \"volume 69\" English",
+    "\"Wubei Zhi\" \"陣練制\" OR \"Zhen Lian Zhi\" formations section English translation published book",
+    "Ming military Wubei Zhi \"no complete English\" OR \"not been translated\" OR \"no translation\"",
+    "\"Wubei Zhi\" translation \"chapter\" OR \"volume\" Needham OR Lorge OR Andrade OR Swope English",
+    "Wubei Zhi 武備志 English translation book published sinologist",
+    "\"Wubei Zhi\" OR \"武備志\" \"first English\" OR \"first translation\" OR \"first time English\""
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Wubei_Zhi", "found": "No English translations mentioned; confirms 240-juan scope and five-section structure"},
+    {"url": "https://ctext.org/wiki.pl?if=en&res=180980&remap=gb", "found": "Chinese-only text; vol 69 listed as entry '六十九'; no English translation noted"},
+    {"url": "https://military-history.fandom.com/wiki/Wubei_Zhi", "found": "No English translation mentioned; describes work as Chinese military encyclopedia"},
+    {"url": "https://tplafightingwords.com/category/translations/wu-bei-zhi/", "found": "Partial blog-level translations of martial arts sections (shields, sabre, fist verses) — not vol. 69, not a published translation"},
+    {"url": "https://chinesemartialstudies.com/2018/10/25/martial-classics-the-complete-fist-cannon-in-verse/", "found": "Chad Eisner's English rendering of Qi Jiguang's Fist Canon as republished in Wubei Zhi — a specific martial arts passage only, not a volume translation"},
+    {"url": "https://www.chineselongsword.com/", "found": "Translated 'Long Straight Sword' section from Wubei Zhi; no volume number given; martial arts excerpt only"},
+    {"url": "https://www.loc.gov/item/2004633695/", "found": "Library of Congress record for Wubei Zhi — blocked (403); Chinese-language original"},
+    {"url": "https://www.worldcat.org/search?q=wubei+zhi+english", "found": "WorldCat blocked (403); no English translation surface via search"},
+    {"url": "https://tplafightingwords.com/2021/09/02/shield-wubei-zhi-%E7%89%8C%EF%BC%9A%E6%AD%A6%E5%82%99%E5%BF%97/", "found": "Shield technique translations from Wubei Zhi — no juan number; not vol. 69"},
+    {"url": "https://www.chstm.org/news/rethinking-ontology-chinese-encyclopedias-life-and-times-treatise-military-preparedness-1621", "found": "Scholarly event on Wubei Zhi as encyclopedia — no English translation product mentioned"},
+    {"url": "https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0383399", "found": "UBC thesis on Wubei Zhi as encyclopedic practice — site blocked; no English translation of the text itself"}
+  ],
+  "reasoning": "No complete English translation of the Wubei Zhi exists, confirmed across Wikipedia, CText, multiple scholarly searches, and sinological literature. Juan 69 (Zhen Lian Zhi/formations section) has zero dedicated English translation. Partial martial arts excerpts (fist verses, shield, sabre) appear on niche blogs but cover different sections, not this volume. WorldCat/archive.org returned 403; absence confirmed by thorough web search pattern."
+}

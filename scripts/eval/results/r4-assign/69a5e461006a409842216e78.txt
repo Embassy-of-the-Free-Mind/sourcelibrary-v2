@@ -1,0 +1,4 @@
+book_id: 69a5e461006a409842216e78
+Title: Syriac Manuscript (Codex Vaticanus Syriacus 160)
+Author: Anonymous
+Source language: Syriac

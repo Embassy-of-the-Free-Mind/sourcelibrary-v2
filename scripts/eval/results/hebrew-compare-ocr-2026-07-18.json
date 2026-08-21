@@ -1,0 +1,43 @@
+{
+  "corpus": "hebrew",
+  "against": "ocr",
+  "results": [
+    {
+      "work": "Genesis 1:1-5 (Bereshit)",
+      "bookId": "6952e4bc77f38f6761bc7db1",
+      "pageNumber": 45,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 197,
+      "matched": 197,
+      "aligned": true,
+      "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+      "source_url": "https://www.sefaria.org/Genesis.1"
+    },
+    {
+      "work": "Mishnah Berakhot 1:1",
+      "bookId": "69c1bab38522835be8459bf4",
+      "pageNumber": 176,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 201,
+      "matched": 201,
+      "aligned": true,
+      "source": "Sefaria (Mishnah, Torat Emet)",
+      "source_url": "https://www.sefaria.org/Mishnah_Berakhot.1.1"
+    },
+    {
+      "work": "Psalms 1 (Tehillim)",
+      "bookId": "69e7518610ee9075bcdcde12",
+      "pageNumber": 8,
+      "cer": 0,
+      "charAccuracy": 1,
+      "refLen": 248,
+      "matched": 248,
+      "aligned": true,
+      "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+      "source_url": "https://www.sefaria.org/Psalms.1"
+    }
+  ],
+  "date": "2026-07-18"
+}

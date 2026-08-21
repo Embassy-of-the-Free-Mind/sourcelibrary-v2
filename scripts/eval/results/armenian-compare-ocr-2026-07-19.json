@@ -1,0 +1,19 @@
+{
+  "corpus": "armenian",
+  "against": "ocr",
+  "results": [
+    {
+      "work": "Zohrab NT, John 1:1-14",
+      "bookId": "69a5eae5d507939f0352d3c8",
+      "pageNumber": 724,
+      "cer": 0.08236994219653179,
+      "charAccuracy": 0.9176300578034682,
+      "refLen": 692,
+      "matched": 635,
+      "aligned": true,
+      "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+      "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm"
+    }
+  ],
+  "date": "2026-07-19"
+}

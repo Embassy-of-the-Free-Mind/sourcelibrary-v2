@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Press Releases — Source Library',
     description: 'Official announcements from Source Library and the Embassy of the Free Mind.',
-    images: [{ url: 'https://sourcelibrary.org/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630 }],
   },
 };
 
@@ -92,8 +92,8 @@ export default async function PressReleasesIndex({
 
       <div className="mt-12 bg-warm rounded-lg border border-border-light p-6 text-sm text-secondary">
         <strong className="text-stone-800">Media enquiries:</strong>{' '}
-        <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
-          derek@sourcelibrary.org
+        <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+          team@sourcelibrary.org
         </a>{' '}
         · Embassy of the Free Mind, Keizersgracht 123, Amsterdam
       </div>

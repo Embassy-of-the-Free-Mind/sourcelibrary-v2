@@ -56,10 +56,26 @@ export default function VolunteerForm() {
 
   if (status === 'success') {
     return (
+      /* Do not make this a dead end again. Before 2026-08-02 this screen said
+         "we'll be in touch" and offered no next action, so 132 people signed up
+         and none of them ever reached the review queues — which were live and
+         working the whole time. Any rewrite of this screen must still hand the
+         volunteer something to do in the next thirty seconds. */
       <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
         <h3 className="text-xl font-semibold text-green-900 mb-2">Thank you!</h3>
-        <p className="text-green-700">
-          We&apos;ll be in touch soon. In the meantime, feel free to open any book and start reading. Every correction and annotation helps.
+        <p className="text-green-700 mb-6">
+          We read every one of these, and we&apos;ll write to you about the work that fits what you
+          told us. You don&apos;t have to wait for that to start.
+        </p>
+        <a
+          href="/review"
+          className="inline-block bg-green-800 text-white py-3 px-7 rounded-full hover:bg-green-900 transition-colors text-base font-medium"
+        >
+          Help check a few pages now &rarr;
+        </a>
+        <p className="text-sm text-green-700 mt-4">
+          A few seconds each, signed in so your work is yours. Or just{' '}
+          <a href="/" className="underline hover:text-green-900">open a book and read</a>.
         </p>
       </div>
     );

@@ -5,7 +5,9 @@ import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
+import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 
 export const preferredRegion = 'fra1';
 
@@ -78,7 +80,9 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    return NextResponse.json(page, {
+    // Reader-path provenance: translation carries the invisible imprimatur
+    // (deterministic, no ref — cache-safe). Mirrors the global twin.
+    return NextResponse.json(markPageForReader(page), {
       headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
@@ -87,11 +91,29 @@ export async function GET(
   }
 }
 
+/**
+ * PATCH /api/[tenant]/pages/[id] — replace a page's OCR / translation / summary.
+ *
+ * Gated at `editor` (#3511), matching both the UI gate and the global twin at
+ * /api/pages/[id].
+ *
+ * The 403 below is DELIBERATE and must not be relaxed to match the global twin,
+ * which now treats an absent tenant as global scope (#3542). Here `tenantId`
+ * comes from resolving the `[tenant]` path segment, so failing to resolve one
+ * means the caller named a tenant that does not exist — a misroute, not a global
+ * call. The two routes differ because their tenant inputs differ.
+ *
+ * Note this is NOT the only route the reader's editor reaches: `pagesApi` builds
+ * its URL from `window.location.pathname`, which is `/book/...` on the apex, so
+ * `getTenantSlug()` returns '' and the request interceptor collapses `/api//` to
+ * `/api/` — landing on the global twin. This route serves `/[tenant]/...` and
+ * `/embed/[tenant]/...` paths.
+ */
 export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { tenant, id } = await context.params;
     const db = await getDb();
-    
+
     // Resolve tenant slug to UUID
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) {
@@ -110,6 +132,14 @@ export const PATCH = withAuth(async (request, session, context) => {
     }
     const body = parseResult.data;
 
+    // Strip reader-path provenance marks from the incoming translation before
+    // storing — the editor round-trips served (marked) text. Mirrors the
+    // global twin; OCR deliberately untouched (never marked, and bidi control
+    // marks can be genuine content there).
+    if (body.translation) {
+      body.translation.data = stripProvenanceMarks(body.translation.data);
+    }
+
     const updateData: Record<string, unknown> = {
       updated_at: new Date()
     };
@@ -117,13 +147,10 @@ export const PATCH = withAuth(async (request, session, context) => {
     const now = new Date();
     const editedBy = body.edited_by || 'Unknown';
 
-    // Create revisions of existing content before manual overwrite
-    if (body.ocr) {
-      await createRevision(id, 'ocr');
-    }
-    if (body.translation) {
-      await createRevision(id, 'translation');
-    }
+    // Create revisions of existing content before manual overwrite.
+    // The returned revision carries the before-text for the correction event below.
+    const ocrRevision = body.ocr ? await createRevision(id, 'ocr') : undefined;
+    const translationRevision = body.translation ? await createRevision(id, 'translation') : undefined;
 
     // Update OCR if provided - mark as manual edit
     if (body.ocr) {
@@ -173,6 +200,21 @@ export const PATCH = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
+    // Capture the correction as a labeled model error (#3241) — fire and forget
+    const sessionEmail = session.user?.email;
+    if (body.ocr) {
+      recordCorrectionEvent({
+        revision: ocrRevision, after: body.ocr.data,
+        editorRole: 'editor', editedBy: editedBy, sessionEmail, tenantId,
+      }).catch(() => {});
+    }
+    if (body.translation) {
+      recordCorrectionEvent({
+        revision: translationRevision, after: body.translation.data,
+        editorRole: 'editor', editedBy: editedBy, sessionEmail, tenantId,
+      }).catch(() => {});
+    }
+
     // Track edit for the book (fire and forget - don't block response)
     if (updatedPage.book_id) {
       db.collection('books').updateOne(
@@ -203,13 +245,20 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating page:', error);
     return NextResponse.json({ error: 'Failed to update page' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
+/**
+ * DELETE /api/[tenant]/pages/[id] — hard-delete a page and renumber the rest.
+ *
+ * Gated at `admin`, matching the global twin at /api/pages/[id] (#3511). This
+ * had drifted to the `withAuth` default of `reader`: unlike the text writes
+ * above it creates no revision, so a wrong call was unrecoverable.
+ */
 export const DELETE = withAuth(async (request, session, context) => {
   try {
     const { tenant, id } = await context.params;
     const db = await getDb();
-    
+
     // Resolve tenant slug to UUID
     const tenantId = await resolveTenantId(tenant);
     if (!tenantId) {
@@ -253,4 +302,4 @@ export const DELETE = withAuth(async (request, session, context) => {
     console.error('Error deleting page:', error);
     return NextResponse.json({ error: 'Failed to delete page' }, { status: 500 });
   }
-});
+}, { minRole: 'admin' });

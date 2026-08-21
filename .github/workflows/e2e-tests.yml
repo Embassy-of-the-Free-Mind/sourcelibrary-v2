@@ -8,7 +8,13 @@ on:
       base_url:
         description: 'Base URL to test against'
         required: false
-        default: 'https://sourcelibrary-v2.vercel.app'
+        # Was sourcelibrary-v2.vercel.app, whose reader surface now 308s to the
+        # canonical host (src/lib/alias-host-scope.ts). This job is also on a
+        # daily cron, so it needs a working default — and since that alias only
+        # ever mirrored production, pointing at production is what it has been
+        # testing all along, now through the CDN like a real visitor. For a
+        # branch, pass the preview deployment URL explicitly.
+        default: 'https://sourcelibrary.org'
 
 jobs:
   e2e:
@@ -34,7 +40,7 @@ jobs:
       - name: Run E2E tests
         run: npx playwright test
         env:
-          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary-v2.vercel.app' }}
+          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}
 
       - name: Upload test report
         if: always()
@@ -89,7 +95,7 @@ jobs:
                 ``,
                 `**Date:** ${date}`,
                 `**Run:** ${runUrl}`,
-                `**Base URL:** ${process.env.BASE_URL || 'https://sourcelibrary-v2.vercel.app'}`,
+                `**Base URL:** ${process.env.BASE_URL || 'https://sourcelibrary.org'}`,
                 ``,
                 `Download the \`playwright-report\` artifact from the run for details.`,
                 ``,
@@ -99,4 +105,4 @@ jobs:
               labels: ['bug', 'e2e-tests'],
             });
         env:
-          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary-v2.vercel.app' }}
+          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}

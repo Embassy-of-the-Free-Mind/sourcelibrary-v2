@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PageEditorPage from '@/app/book/[id]/page/[pageId]/page';
+import PageEditorPage from '@/app/book/[id]/page/[pageId]/(reader)/page';
 
 // Iframe-target wrapper for the page reader. See sibling page.tsx for the
 // embed-v1.js coupling rationale.

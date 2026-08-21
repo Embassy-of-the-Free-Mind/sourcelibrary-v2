@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
+import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { execFileSync } from 'child_process';
@@ -231,6 +232,7 @@ export const POST = withCuratorAuth(async (request) => {
       language,
       published,
       categories,
+      ...(publishedToYear(published) !== null ? { year: publishedToYear(published)! } : {}),
       thumbnail: blobUrls[0]?.photo || '',
       pages_count: pageCount,
       pages_ocr: 0,

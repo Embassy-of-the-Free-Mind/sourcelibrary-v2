@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     'Live data on the Source Library collection: books, languages, centuries, topics, and source institutions.',
   alternates: { canonical: '/data' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'The Collection — Source Library',
     description:
       'Live data on the Source Library collection: books, languages, centuries, topics, and source institutions.',

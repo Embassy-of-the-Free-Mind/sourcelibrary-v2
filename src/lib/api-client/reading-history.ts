@@ -20,6 +20,8 @@ export interface ReadingHistoryEntry {
     language?: string;
     thumbnail?: string;
     thumbnail_blob?: string;
+    image_display?: string;
+    image_thumb?: string;
     slug?: string;
     pages_count?: number;
     pages_translated?: number;

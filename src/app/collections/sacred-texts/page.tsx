@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ArrowLeft } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   description:
     'The foundational scriptures of the world\'s spiritual traditions, from the Vedas and Upanishads to the Bible and Quran, from Sumerian hymns to Buddhist sutras and Zoroastrian texts.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Sacred Texts - Source Library',
     description:
       'The foundational scriptures of the world\'s spiritual traditions, from Sumerian hymns to the Vedas, Bible, Quran, and beyond.',
@@ -164,15 +165,8 @@ export default async function SacredTextsPortal() {
     <div className="min-h-screen bg-cream">
       {/* Hero */}
       <div className="bg-dark">
+        <SiteHeader variant="dark" />
         <div className="max-w-[1500px] mx-auto px-6 pt-8 pb-14 sm:pb-16">
-          <Link
-            href="/#library"
-            className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-10"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Library
-          </Link>
-
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-4 font-display">
             Sacred Texts
           </h1>

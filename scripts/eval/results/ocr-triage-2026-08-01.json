@@ -1,0 +1,1435 @@
+{
+ "date": "2026-08-01",
+ "pool": 6420,
+ "hydrated": 2398,
+ "buckets": [
+  {
+   "bucket": "model flagged spans it could not read",
+   "why": "Highest precision signal available. Rank by count: a page with many <unclear> marks is one the model itself says it failed on.",
+   "n_in_sample": 162,
+   "pct_of_sample": 6.8,
+   "examples": [
+    {
+     "why": "model flagged spans it could not read",
+     "book": "avicenna-s-canon-of-medicine-13th-century-latin-ms-cremona",
+     "language": "Latin",
+     "year": 1260,
+     "page_number": 92,
+     "agreement": 0.5196,
+     "unclear": 657,
+     "len_words": [
+      61,
+      6
+     ],
+     "columns": [
+      "2",
+      "2"
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": "Handwritten Gothic textualis (littera textualis)",
+     "reader_url": "https://sourcelibrary.org/book/avicenna-s-canon-of-medicine-13th-century-latin-ms-cremona/page/69b3f78da107e55a0ee1dd5f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b3f78da107e55a0ee1dd03/0092.jpg"
+    },
+    {
+     "why": "model flagged spans it could not read",
+     "book": "bodleian-library-ms-barocci-241-anonymous",
+     "language": "Greek",
+     "year": 1450,
+     "page_number": 537,
+     "agreement": 0.2027,
+     "unclear": 531,
+     "len_words": [
+      335,
+      163
+     ],
+     "columns": [
+      "2",
+      "2"
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "greek",
+      "greek"
+     ],
+     "warning": "Handwritten Greek minuscule script",
+     "reader_url": "https://sourcelibrary.org/book/bodleian-library-ms-barocci-241-anonymous/page/69bfccdf8ab50eb88e8c6e65",
+     "image_url": "https://images.sourcelibrary.org/pages/69bfccdf8ab50eb88e8c6c4c/0537.jpg"
+    },
+    {
+     "why": "model flagged spans it could not read",
+     "book": "geschichte-der-freimaurerei-in-frankreich-aus-achten-urkunde",
+     "language": "German",
+     "year": 1852,
+     "page_number": 515,
+     "agreement": 0.4674,
+     "unclear": 397,
+     "len_words": [
+      55,
+      112
+     ],
+     "columns": [
+      "2",
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "german",
+      "german"
+     ],
+     "warning": "Handwritten German Kurrent script",
+     "reader_url": "https://sourcelibrary.org/book/geschichte-der-freimaurerei-in-frankreich-aus-achten-urkunde/page/69c1af80b82ba5d5bed94ce8",
+     "image_url": "https://images.sourcelibrary.org/pages/69c1af53b82ba5d5bed94ae5/0515.jpg"
+    },
+    {
+     "why": "model flagged spans it could not read",
+     "book": "geschichte-der-freimaurerei-in-frankreich-aus-achten-urkunde",
+     "language": "German",
+     "year": 1852,
+     "page_number": 505,
+     "agreement": 0.5258,
+     "unclear": 313,
+     "len_words": [
+      184,
+      126
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "german",
+      "german"
+     ],
+     "warning": "Handwritten German Kurrent script",
+     "reader_url": "https://sourcelibrary.org/book/geschichte-der-freimaurerei-in-frankreich-aus-achten-urkunde/page/69c1af80b82ba5d5bed94cde",
+     "image_url": "https://images.sourcelibrary.org/pages/69c1af53b82ba5d5bed94ae5/0505.jpg"
+    },
+    {
+     "why": "model flagged spans it could not read",
+     "book": "astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith",
+     "language": "Latin",
+     "year": 1330,
+     "page_number": 743,
+     "agreement": 0.0767,
+     "unclear": 263,
+     "len_words": [
+      175,
+      5
+     ],
+     "columns": [
+      "2",
+      "2"
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": "Handwritten Gothic cursive (textualis/cursiva hybrid). Some abbreviations are standard medieval Latin contractions.",
+     "reader_url": "https://sourcelibrary.org/book/astronomy-and-astrology-cambridge-university-library-ms-gg-john-maudith/page/69906e658a353648e1ecfac7",
+     "image_url": "https://images.sourcelibrary.org/pages/69906e648a353648e1ecf7df/0743.jpg"
+    },
+    {
+     "why": "model flagged spans it could not read",
+     "book": "reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner",
+     "language": "German",
+     "year": 1740,
+     "page_number": -128,
+     "agreement": 0.2536,
+     "unclear": 260,
+     "len_words": [
+      298,
+      292
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "de",
+      "de"
+     ],
+     "warning": "Handwritten German Kurrent script; some ink bleed-through and staining.",
+     "reader_url": "https://sourcelibrary.org/book/reusner-pandora-the-noblest-gift-of-god-18th-century-ms-reusner/page/69b4193d2b0edf3eaa2df23c",
+     "image_url": "https://images.sourcelibrary.org/pages/69b4193d2b0edf3eaa2df1bc/0128.jpg"
+    },
+    {
+     "why": "model flagged spans it could not read",
+     "book": "geschichte-der-freimaurerei-in-frankreich-aus-achten-urkunde",
+     "language": "German",
+     "year": 1852,
+     "page_number": 519,
+     "agreement": 0.45,
+     "unclear": 253,
+     "len_words": [
+      723,
+      298
+     ],
+     "columns": [
+      "2",
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "german",
+      "german"
+     ],
+     "warning": "Handwritten German Kurrent script",
+     "reader_url": "https://sourcelibrary.org/book/geschichte-der-freimaurerei-in-frankreich-aus-achten-urkunde/page/69c1af80b82ba5d5bed94cec",
+     "image_url": "https://images.sourcelibrary.org/pages/69c1af53b82ba5d5bed94ae5/0519.jpg"
+    },
+    {
+     "why": "model flagged spans it could not read",
+     "book": "bodleian-library-ms-barocci-241-anonymous",
+     "language": "Greek",
+     "year": 1450,
+     "page_number": 589,
+     "agreement": 0.1739,
+     "unclear": 183,
+     "len_words": [
+      107,
+      115
+     ],
+     "columns": [
+      "2",
+      "2"
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "greek",
+      "greek"
+     ],
+     "warning": "Handwritten Greek minuscule. Significant parchment damage/loss in the central column area, obscuring text.",
+     "reader_url": "https://sourcelibrary.org/book/bodleian-library-ms-barocci-241-anonymous/page/69bfccdf8ab50eb88e8c6e99",
+     "image_url": "https://images.sourcelibrary.org/pages/69bfccdf8ab50eb88e8c6c4c/0589.jpg"
+    }
+   ]
+  },
+  {
+   "bucket": "one pass produced far more text",
+   "why": "Omission. One pass skipped a block the other transcribed — a column, a note, a whole half of a spread.",
+   "n_in_sample": 232,
+   "pct_of_sample": 9.7,
+   "examples": [
+    {
+     "why": "one pass produced far more text",
+     "book": "li-ki-memoires-sur-les-bienseances-et-les-ceremonies-couvreur",
+     "language": "Chinese",
+     "year": 1899,
+     "page_number": 507,
+     "agreement": 0.0238,
+     "unclear": 0,
+     "len_words": [
+      0,
+      328
+     ],
+     "columns": [
+      "1",
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "french, latin, chinese",
+      "chinese, french, latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/li-ki-memoires-sur-les-bienseances-et-les-ceremonies-couvreur/page/699249f2a2d53df4853c1860",
+     "image_url": "https://images.sourcelibrary.org/pages/699249f1a2d53df4853c1665/0507.jpg"
+    },
+    {
+     "why": "one pass produced far more text",
+     "book": "catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath",
+     "language": "Latin",
+     "year": 1758,
+     "page_number": 174,
+     "agreement": 0.6271,
+     "unclear": 30,
+     "len_words": [
+      109,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": "The image is extremely faded, low contrast, and shows significant bleed-through from the verso, making the text difficult to read.",
+     "reader_url": "https://sourcelibrary.org/book/catalogus-librorum-per-quinquennium-a-commissione-aulica-khunrath/page/69b51df5261c58d63664d528",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51df5261c58d63664d47a/0174.jpg"
+    },
+    {
+     "why": "one pass produced far more text",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 225,
+     "agreement": 0.0071,
+     "unclear": 0,
+     "len_words": [
+      0,
+      269
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2152f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0225.jpg"
+    },
+    {
+     "why": "one pass produced far more text",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 235,
+     "agreement": 0.0032,
+     "unclear": 0,
+     "len_words": [
+      0,
+      294
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd21539",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0235.jpg"
+    },
+    {
+     "why": "one pass produced far more text",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 247,
+     "agreement": 0.0113,
+     "unclear": 0,
+     "len_words": [
+      0,
+      236
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin, german"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd21545",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0247.jpg"
+    },
+    {
+     "why": "one pass produced far more text",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 259,
+     "agreement": 0.0067,
+     "unclear": 0,
+     "len_words": [
+      285,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "illustration"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd21551",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0259.jpg"
+    },
+    {
+     "why": "one pass produced far more text",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 305,
+     "agreement": 0.0075,
+     "unclear": 0,
+     "len_words": [
+      0,
+      255
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2157f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0305.jpg"
+    },
+    {
+     "why": "one pass produced far more text",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 317,
+     "agreement": 0.004,
+     "unclear": 0,
+     "len_words": [
+      0,
+      239
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2158b",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0317.jpg"
+    }
+   ]
+  },
+  {
+   "bucket": "passes disagreed on column count",
+   "why": "The two passes disagreed about the page LAYOUT, so reading order is undetermined. Detectable from the envelope tags alone, no text diff.",
+   "n_in_sample": 1,
+   "pct_of_sample": 0,
+   "examples": [
+    {
+     "why": "passes disagreed on column count",
+     "book": "la-colonie-comedie-en-deux-actes-sacchini",
+     "language": "German",
+     "year": 1776,
+     "page_number": 46,
+     "agreement": 0.5575,
+     "unclear": 0,
+     "len_words": [
+      172,
+      164
+     ],
+     "columns": [
+      "1",
+      "2"
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "french",
+      "french"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/la-colonie-comedie-en-deux-actes-sacchini/page/69b51eb0ff09e4fe943b367f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b51eb0ff09e4fe943b3651/0046.jpg"
+    }
+   ]
+  },
+  {
+   "bucket": "passes disagreed on page type",
+   "why": "They disagreed about what KIND of page it is — plate vs text, title vs body.",
+   "n_in_sample": 58,
+   "pct_of_sample": 2.4,
+   "examples": [
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 545,
+     "agreement": 0,
+     "unclear": 0,
+     "len_words": [
+      3,
+      264
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2166f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0545.jpg"
+    },
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 235,
+     "agreement": 0.0032,
+     "unclear": 0,
+     "len_words": [
+      0,
+      294
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd21539",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0235.jpg"
+    },
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+     "language": "Latin",
+     "year": 1674,
+     "page_number": 398,
+     "agreement": 0.0037,
+     "unclear": 0,
+     "len_words": [
+      0,
+      263
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott/page/69b6b0fa96dc15d4a16cfcf5",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6b0fa96dc15d4a16cfb67/0398.jpg"
+    },
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 317,
+     "agreement": 0.004,
+     "unclear": 0,
+     "len_words": [
+      0,
+      239
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2158b",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0317.jpg"
+    },
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 513,
+     "agreement": 0.004,
+     "unclear": 0,
+     "len_words": [
+      231,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "illustration"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2164f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0513.jpg"
+    },
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 464,
+     "agreement": 0.0044,
+     "unclear": 0,
+     "len_words": [
+      9,
+      221
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2161e",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0464.jpg"
+    },
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+     "language": "Latin",
+     "year": 1674,
+     "page_number": 230,
+     "agreement": 0.0047,
+     "unclear": 0,
+     "len_words": [
+      5,
+      200
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott/page/69b6b0fa96dc15d4a16cfc4d",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6b0fa96dc15d4a16cfb67/0230.jpg"
+    },
+    {
+     "why": "passes disagreed on page type",
+     "book": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+     "language": "Latin",
+     "year": 1674,
+     "page_number": 326,
+     "agreement": 0.0047,
+     "unclear": 0,
+     "len_words": [
+      8,
+      195
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott/page/69b6b0fa96dc15d4a16cfcad",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6b0fa96dc15d4a16cfb67/0326.jpg"
+    }
+   ]
+  },
+  {
+   "bucket": "passes disagreed on language",
+   "why": "They disagreed about the language. Often a multi-script page where each pass picked a different dominant script.",
+   "n_in_sample": 107,
+   "pct_of_sample": 4.5,
+   "examples": [
+    {
+     "why": "passes disagreed on language",
+     "book": "ulyssis-aldrovandi-serpentum-et-draconum-historiae-libri-duo-ambrosini-2",
+     "language": "Latin",
+     "year": 1640,
+     "page_number": 66,
+     "agreement": 0.007,
+     "unclear": 0,
+     "len_words": [
+      7,
+      549
+     ],
+     "columns": [
+      null,
+      "2"
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "latin, greek",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/ulyssis-aldrovandi-serpentum-et-draconum-historiae-libri-duo-ambrosini-2/page/69bd9eaef6d63c919747bf3c",
+     "image_url": "https://images.sourcelibrary.org/pages/69bd9eaef6d63c919747befa/0066.jpg"
+    },
+    {
+     "why": "passes disagreed on language",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 247,
+     "agreement": 0.0113,
+     "unclear": 0,
+     "len_words": [
+      0,
+      236
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin, german"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd21545",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0247.jpg"
+    },
+    {
+     "why": "passes disagreed on language",
+     "book": "the-oxyrhynchus-papyri-part-43-society",
+     "language": "Greek",
+     "year": 1975,
+     "page_number": 79,
+     "agreement": 0.0165,
+     "unclear": 0,
+     "len_words": [
+      0,
+      477
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "english, greek",
+      "english, greek, latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/the-oxyrhynchus-papyri-part-43-society/page/69cf7c73878f40c5945f2d27",
+     "image_url": "https://images.sourcelibrary.org/pages/69cf7c73878f40c5945f2cd8/0079.jpg"
+    },
+    {
+     "why": "passes disagreed on language",
+     "book": "li-ki-memoires-sur-les-bienseances-et-les-ceremonies-couvreur",
+     "language": "Chinese",
+     "year": 1899,
+     "page_number": 507,
+     "agreement": 0.0238,
+     "unclear": 0,
+     "len_words": [
+      0,
+      328
+     ],
+     "columns": [
+      "1",
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "french, latin, chinese",
+      "chinese, french, latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/li-ki-memoires-sur-les-bienseances-et-les-ceremonies-couvreur/page/699249f2a2d53df4853c1860",
+     "image_url": "https://images.sourcelibrary.org/pages/699249f1a2d53df4853c1665/0507.jpg"
+    },
+    {
+     "why": "passes disagreed on language",
+     "book": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+     "language": "Latin",
+     "year": 1677,
+     "page_number": 854,
+     "agreement": 0.0513,
+     "unclear": 0,
+     "len_words": [
+      238,
+      271
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "latin, hebrew",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2/page/69bd9f4bf6d63c9197480406",
+     "image_url": "https://images.sourcelibrary.org/pages/69bd9f4bf6d63c91974800b0/0854.jpg"
+    },
+    {
+     "why": "passes disagreed on language",
+     "book": "codex-dresdensis-maya",
+     "language": "Maya hieroglyphs",
+     "year": 1200,
+     "page_number": 49,
+     "agreement": 0.0639,
+     "unclear": 0,
+     "len_words": [
+      244,
+      79
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "maya hieroglyphs",
+      "maya hieroglyphic script"
+     ],
+     "warning": "The text consists of Maya hieroglyphic blocks and numerical notation (bars and dots). Transcribing these into standard text is not possible as they are logographic/syllabic glyphs. The transcription b",
+     "reader_url": "https://sourcelibrary.org/book/codex-dresdensis-maya/page/69dfd9a6220eedf04e13b14b",
+     "image_url": "https://images.sourcelibrary.org/pages/69dfd9a3220eedf04e13b11a/0049.jpg"
+    },
+    {
+     "why": "passes disagreed on language",
+     "book": "codex-dresdensis-maya",
+     "language": "Maya hieroglyphs",
+     "year": 1200,
+     "page_number": 67,
+     "agreement": 0.1434,
+     "unclear": 0,
+     "len_words": [
+      42,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "maya hieroglyphs",
+      "maya hieroglyphic"
+     ],
+     "warning": "Handwritten Maya hieroglyphic script; transcription represents the visual arrangement of glyph blocks and numerical notation.",
+     "reader_url": "https://sourcelibrary.org/book/codex-dresdensis-maya/page/69dfd9a6220eedf04e13b15d",
+     "image_url": "https://images.sourcelibrary.org/pages/69dfd9a3220eedf04e13b11a/0067.jpg"
+    },
+    {
+     "why": "passes disagreed on language",
+     "book": "codex-dresdensis-maya",
+     "language": "Maya hieroglyphs",
+     "year": 1200,
+     "page_number": 24,
+     "agreement": 0.1464,
+     "unclear": 0,
+     "len_words": [
+      174,
+      147
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "text"
+     ],
+     "lang_tag": [
+      "maya hieroglyphs",
+      "maya hieroglyphic script"
+     ],
+     "warning": "Handwritten Maya hieroglyphic script; text consists of calendrical and astronomical data represented by glyphs and bar-and-dot numerals.",
+     "reader_url": "https://sourcelibrary.org/book/codex-dresdensis-maya/page/69dfd9a6220eedf04e13b132",
+     "image_url": "https://images.sourcelibrary.org/pages/69dfd9a3220eedf04e13b11a/0024.jpg"
+    }
+   ]
+  },
+  {
+   "bucket": "illustration on the page",
+   "why": "Where text meets image, \"what counts as the text\" is a judgement and the passes need not decide alike.",
+   "n_in_sample": 728,
+   "pct_of_sample": 30.4,
+   "examples": [
+    {
+     "why": "illustration on the page",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 513,
+     "agreement": 0.004,
+     "unclear": 0,
+     "len_words": [
+      231,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "illustration"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2164f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0513.jpg"
+    },
+    {
+     "why": "illustration on the page",
+     "book": "fratris-rogeri-bacon-opus-maius-ad-clementem-iv-primum-a-jebb",
+     "language": "Latin",
+     "year": 1750,
+     "page_number": 231,
+     "agreement": 0.0051,
+     "unclear": 0,
+     "len_words": [
+      552,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "diagram"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/fratris-rogeri-bacon-opus-maius-ad-clementem-iv-primum-a-jebb/page/69b6ed303c7947b468d34c25",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6ed303c7947b468d34b3e/0231.jpg"
+    },
+    {
+     "why": "illustration on the page",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 384,
+     "agreement": 0.0066,
+     "unclear": 0,
+     "len_words": [
+      0,
+      273
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd215ce",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0384.jpg"
+    },
+    {
+     "why": "illustration on the page",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 259,
+     "agreement": 0.0067,
+     "unclear": 0,
+     "len_words": [
+      285,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "illustration"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd21551",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0259.jpg"
+    },
+    {
+     "why": "illustration on the page",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 351,
+     "agreement": 0.0085,
+     "unclear": 0,
+     "len_words": [
+      11,
+      205
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd215ad",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0351.jpg"
+    },
+    {
+     "why": "illustration on the page",
+     "book": "athanasii-kircheri-iter-exstaticum-coeleste-quo-mundi-kircher",
+     "language": "Latin",
+     "year": 1671,
+     "page_number": 51,
+     "agreement": 0.0115,
+     "unclear": 0,
+     "len_words": [
+      242,
+      5
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "diagram"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/athanasii-kircheri-iter-exstaticum-coeleste-quo-mundi-kircher/page/69b6aec0dc00a90e322b2b58",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6aec0dc00a90e322b2b25/0051.jpg"
+    },
+    {
+     "why": "illustration on the page",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 524,
+     "agreement": 0.0126,
+     "unclear": 0,
+     "len_words": [
+      0,
+      210
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2165a",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0524.jpg"
+    },
+    {
+     "why": "illustration on the page",
+     "book": "christiani-hugenii-zelemii-dum-viveret-toparchae-opuscula-huygens",
+     "language": "Latin",
+     "year": 1703,
+     "page_number": 315,
+     "agreement": 0.0135,
+     "unclear": 0,
+     "len_words": [
+      218,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "illustration"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/christiani-hugenii-zelemii-dum-viveret-toparchae-opuscula-huygens/page/69b6c2618566c83814659b2b",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6c2618566c838146599f0/0315.jpg"
+    }
+   ]
+  },
+  {
+   "bucket": "marginalia gained or lost",
+   "why": "One pass transcribed marginal notes the other dropped. An inclusion-policy difference, not a reading failure.",
+   "n_in_sample": 204,
+   "pct_of_sample": 8.5,
+   "examples": [
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 235,
+     "agreement": 0.0032,
+     "unclear": 0,
+     "len_words": [
+      0,
+      294
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd21539",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0235.jpg"
+    },
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+     "language": "Latin",
+     "year": 1674,
+     "page_number": 398,
+     "agreement": 0.0037,
+     "unclear": 0,
+     "len_words": [
+      0,
+      263
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott/page/69b6b0fa96dc15d4a16cfcf5",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6b0fa96dc15d4a16cfb67/0398.jpg"
+    },
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 317,
+     "agreement": 0.004,
+     "unclear": 0,
+     "len_words": [
+      0,
+      239
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2158b",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0317.jpg"
+    },
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 513,
+     "agreement": 0.004,
+     "unclear": 0,
+     "len_words": [
+      231,
+      0
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "text",
+      "illustration"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2164f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0513.jpg"
+    },
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+     "language": "Latin",
+     "year": 1674,
+     "page_number": 230,
+     "agreement": 0.0047,
+     "unclear": 0,
+     "len_words": [
+      5,
+      200
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott/page/69b6b0fa96dc15d4a16cfc4d",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6b0fa96dc15d4a16cfb67/0230.jpg"
+    },
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott",
+     "language": "Latin",
+     "year": 1674,
+     "page_number": 326,
+     "agreement": 0.0047,
+     "unclear": 0,
+     "len_words": [
+      8,
+      195
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott/page/69b6b0fa96dc15d4a16cfcad",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6b0fa96dc15d4a16cfb67/0326.jpg"
+    },
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 384,
+     "agreement": 0.0066,
+     "unclear": 0,
+     "len_words": [
+      0,
+      273
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd215ce",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0384.jpg"
+    },
+    {
+     "why": "marginalia gained or lost",
+     "book": "p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott",
+     "language": "Latin",
+     "year": 1657,
+     "page_number": 225,
+     "agreement": 0.0071,
+     "unclear": 0,
+     "len_words": [
+      0,
+      269
+     ],
+     "columns": [
+      null,
+      null
+     ],
+     "page_type": [
+      "illustration",
+      "text"
+     ],
+     "lang_tag": [
+      "latin",
+      "latin"
+     ],
+     "warning": null,
+     "reader_url": "https://sourcelibrary.org/book/p-gasparis-schotti-mechanica-hydraulico-pneumatica-qua-schott/page/69b6a4f5080b19f98fd2152f",
+     "image_url": "https://images.sourcelibrary.org/pages/69b6a4f5080b19f98fd2144e/0225.jpg"
+    }
+   ]
+  }
+ ]
+}

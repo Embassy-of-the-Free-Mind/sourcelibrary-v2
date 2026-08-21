@@ -17,6 +17,7 @@ import { writeFileSync, readFileSync, unlinkSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
+import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
 
 // ── Text processing ─────────────────────────────────────────────────
 
@@ -39,7 +40,11 @@ function translationToTypst(text) {
     ''
   );
 
-  // Remove AI preambles
+  // Remove AI preambles — the canonical guard (#3108) catches conversational
+  // openers ("Note: the text in the image is in French...") that the narrow
+  // regex below misses; it runs after tag removal so a leading tag can't mask
+  // the preamble, and it leaves inline tags intact for footnote extraction
+  out = cleanOcrArtifacts(out);
   out = out.replace(/^(?:Okay,?\s*)?(?:Here(?:'s| is) (?:the|my) (?:translation|modernization|transcription)[\s\S]*?:\s*\n+)/i, '');
 
   // Helper: clean raw tag content for use in footnotes
@@ -103,10 +108,12 @@ function translationToTypst(text) {
   // Now escape Typst special chars (but not our %%FN%% placeholders)
   out = escapeTypst(out);
 
-  // Convert footnote placeholders to Typst footnotes
+  // Convert footnote placeholders to Typst footnotes. The trailing semicolon
+  // explicitly ends the code expression — without it, adjacent text like
+  // "#footnote[...].Feverish" parses as a field access and fails to compile
   for (let i = 0; i < footnotes.length; i++) {
     const escaped = escapeTypst(footnotes[i]);
-    out = out.replace(`%%FN${i}%%`, `#footnote[${escaped}]`);
+    out = out.replace(`%%FN${i}%%`, `#footnote[${escaped}];`);
   }
 
   // Remove markdown table rows (they don't render well — keep content)
@@ -120,12 +127,18 @@ function translationToTypst(text) {
   // Clean up excessive blank lines
   out = out.replace(/\n{4,}/g, '\n\n\n');
 
+  // A line-initial "/ " is Typst term-list syntax and errors without a colon.
+  // Must run LAST: table-row flattening above can create new line-initial
+  // slashes by joining cells
+  out = out.replace(/^([ \t]*)\/(?!\/)/gm, '$1\\/');
+
   return out.trim();
 }
 
 function escapeTypst(text) {
   // Escape characters special in Typst content mode
-  return text
+  // Coerce non-strings: fields like ustc_id are stored as numbers on some books
+  return String(text ?? '')
     .replace(/\\/g, '\\\\')
     .replace(/#/g, '\\#')
     .replace(/\$/g, '\\$')
@@ -136,7 +149,13 @@ function escapeTypst(text) {
     .replace(/\[/g, '\\[')
     .replace(/\]/g, '\\]')
     .replace(/_/g, '\\_')
-    .replace(/\*/g, '\\*');
+    .replace(/\*/g, '\\*')
+    // // and /* open Typst comments even in content mode: // silently eats
+    // the rest of the line (and any closing ] of an enclosing #footnote)
+    .replace(/\/\//g, '\\/\\/')
+    .replace(/\/\*/g, '\\/\\*')
+    // backtick opens a Typst raw block and swallows everything to the next one
+    .replace(/`/g, '\\`');
 }
 
 function markdownToTypst(md) {
@@ -146,6 +165,10 @@ function markdownToTypst(md) {
   // ## Heading → = Heading (Typst level 2 since we use = for title)
   out = out.replace(/^### (.+)$/gm, '=== $1');
   out = out.replace(/^## (.+)$/gm, '== $1');
+
+  // Markdown `*` bullets → `-` bullets BEFORE emphasis conversion,
+  // so a bullet asterisk can't pair with an italic asterisk on the same line
+  out = out.replace(/^(\s*)\*\s+/gm, '$1- ');
 
   // **bold** → *bold*
   out = out.replace(/\*\*(.+?)\*\*/g, '*$1*');
@@ -164,6 +187,20 @@ function markdownToTypst(md) {
   out = out.replace(/@/g, '\\@');
   out = out.replace(/(?<!\\)<(?![a-z])/g, '\\<');
   out = out.replace(/(?<![a-z])>(?!])/g, '\\>');
+
+  // Typst comment-openers in prose (e.g. https:// URLs) silently eat the
+  // rest of the line — escape them
+  out = out.replace(/\/\//g, '\\/\\/');
+  out = out.replace(/\/\*/g, '\\/\\*');
+
+  // Unclosed-delimiter guard: any line left with an odd number of * or _
+  // (AI markdown variance) would make Typst fail to compile — escape them
+  out = out.split('\n').map(line => {
+    if (((line.match(/(?<!\\)\*/g) || []).length) % 2 === 1) line = line.replace(/(?<!\\)\*/g, '\\*');
+    if (((line.match(/(?<!\\)_/g) || []).length) % 2 === 1) line = line.replace(/(?<!\\)_/g, '\\_');
+    if (((line.match(/(?<!\\)`/g) || []).length) % 2 === 1) line = line.replace(/(?<!\\)`/g, '\\`');
+    return line;
+  }).join('\n');
 
   return out;
 }
@@ -431,7 +468,9 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
 
   try {
     execSync(`typst compile "${typFile}" "${pdfFile}"`, {
-      timeout: 60000,
+      // Large books legitimately take minutes, and a loaded machine (this box
+      // often runs concurrent pipeline jobs) stretches that further
+      timeout: 300000,
       stdio: ['pipe', 'pipe', 'pipe'],
     });
 

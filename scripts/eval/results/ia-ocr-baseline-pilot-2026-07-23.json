@@ -1,0 +1,6466 @@
+{
+ "summary": {
+  "date": "2026-07-23",
+  "books_total": 200,
+  "books_aligned": 115,
+  "books_unalignable": 61,
+  "books_skipped": 24,
+  "page_rows": 2276,
+  "by_stratum": {
+   "Latin 1500s (early print, ligatures)": {
+    "aligned": 18,
+    "unalignable": 1,
+    "skipped": 1,
+    "reasons": {
+     "djvu_xml_too_large_69MB": 1,
+     "only_2_of_5_probes_matched": 1
+    }
+   },
+   "Latin 1800s (roman type)": {
+    "aligned": 14,
+    "unalignable": 0,
+    "skipped": 1,
+    "reasons": {
+     "timeout_after_120000ms_twice": 1
+    }
+   },
+   "English 1600s (early modern)": {
+    "aligned": 10,
+    "unalignable": 1,
+    "skipped": 4,
+    "reasons": {
+     "no_djvu_xml (404)": 2,
+     "djvu_xml_too_large_62MB": 1,
+     "only_0_of_5_probes_matched": 1,
+     "djvu_xml_too_large_56MB": 1
+    }
+   },
+   "English 1900s (modern roman)": {
+    "aligned": 12,
+    "unalignable": 1,
+    "skipped": 2,
+    "reasons": {
+     "no_djvu_xml (404)": 2,
+     "only_2_of_5_probes_matched": 1
+    }
+   },
+   "German 1600s (Fraktur likely)": {
+    "aligned": 9,
+    "unalignable": 5,
+    "skipped": 1,
+    "reasons": {
+     "only_2_of_5_probes_matched": 2,
+     "only_0_of_5_probes_matched": 2,
+     "no_djvu_xml (404)": 1,
+     "only_1_of_5_probes_matched": 1
+    }
+   },
+   "German 1900s (Fraktur/roman mix)": {
+    "aligned": 11,
+    "unalignable": 1,
+    "skipped": 3,
+    "reasons": {
+     "no_djvu_xml (404)": 3,
+     "only_2_of_5_probes_matched": 1
+    }
+   },
+   "French 1600s": {
+    "aligned": 14,
+    "unalignable": 1,
+    "skipped": 0,
+    "reasons": {
+     "inconsistent_offsets_across_probes": 1
+    }
+   },
+   "French 1800s": {
+    "aligned": 12,
+    "unalignable": 1,
+    "skipped": 2,
+    "reasons": {
+     "only_2_of_5_probes_matched": 1,
+     "no_djvu_xml (404)": 2
+    }
+   },
+   "Greek 1500s (polytonic print)": {
+    "aligned": 2,
+    "unalignable": 11,
+    "skipped": 2,
+    "reasons": {
+     "only_0_of_5_probes_matched": 8,
+     "timeout_after_120000ms_twice": 1,
+     "only_1_of_5_probes_matched": 2,
+     "only_2_of_5_probes_matched": 1,
+     "no_djvu_xml (404)": 1
+    }
+   },
+   "Greek 1800s": {
+    "aligned": 10,
+    "unalignable": 2,
+    "skipped": 3,
+    "reasons": {
+     "djvu_xml_too_large_71MB": 1,
+     "djvu_xml_too_large_48MB": 2,
+     "only_0_of_5_probes_matched": 1,
+     "only_2_of_5_probes_matched": 1
+    }
+   },
+   "Hebrew (all centuries, pooled — sparse corpus)": {
+    "aligned": 2,
+    "unalignable": 8,
+    "skipped": 5,
+    "reasons": {
+     "timeout_after_120000ms_twice": 1,
+     "only_2_of_5_probes_matched": 2,
+     "djvu_xml_too_large_84MB": 1,
+     "only_0_of_5_probes_matched": 5,
+     "no_djvu_xml (404)": 3,
+     "only_1_of_5_probes_matched": 1
+    }
+   },
+   "Chinese 1600s — EXPECTED-COLLAPSE control": {
+    "aligned": 0,
+    "unalignable": 15,
+    "skipped": 0,
+    "reasons": {
+     "only_0_of_5_probes_matched": 15
+    }
+   },
+   "Chinese 1800s — EXPECTED-COLLAPSE control": {
+    "aligned": 1,
+    "unalignable": 14,
+    "skipped": 0,
+    "reasons": {
+     "only_0_of_5_probes_matched": 12,
+     "insufficient_probe_text": 1,
+     "only_0_of_4_probes_matched": 1
+    }
+   }
+  },
+  "script_century_agreement": [
+   {
+    "n": 348,
+    "sum": 94.71623238172054,
+    "script": "spaced",
+    "language": "Latin",
+    "century": 1500,
+    "mean_agreement": 0.27217308155666825
+   },
+   {
+    "n": 39,
+    "sum": 15.454145973383811,
+    "script": "spaced",
+    "language": "Greek",
+    "century": 1500,
+    "mean_agreement": 0.39626015316368746
+   },
+   {
+    "n": 18,
+    "sum": 6.887085308958374,
+    "script": "spaced",
+    "language": "Hebrew",
+    "century": 1500,
+    "mean_agreement": 0.3826158504976875
+   },
+   {
+    "n": 195,
+    "sum": 110.4001894548423,
+    "script": "spaced",
+    "language": "English",
+    "century": 1600,
+    "mean_agreement": 0.56615481771714
+   },
+   {
+    "n": 169,
+    "sum": 80.62281242256243,
+    "script": "spaced",
+    "language": "German",
+    "century": 1600,
+    "mean_agreement": 0.47705806167196707
+   },
+   {
+    "n": 272,
+    "sum": 160.34715004547803,
+    "script": "spaced",
+    "language": "French",
+    "century": 1600,
+    "mean_agreement": 0.5895115810495516
+   },
+   {
+    "n": 268,
+    "sum": 162.28614181784815,
+    "script": "spaced",
+    "language": "Latin",
+    "century": 1800,
+    "mean_agreement": 0.6055453052904781
+   },
+   {
+    "n": 209,
+    "sum": 168.3242736099669,
+    "script": "spaced",
+    "language": "French",
+    "century": 1800,
+    "mean_agreement": 0.8053792995692196
+   },
+   {
+    "n": 191,
+    "sum": 120.83762465797506,
+    "script": "spaced",
+    "language": "Greek",
+    "century": 1800,
+    "mean_agreement": 0.6326577207223825
+   },
+   {
+    "n": 18,
+    "sum": 9.34647421017269,
+    "script": "spaced",
+    "language": "Hebrew",
+    "century": 1800,
+    "mean_agreement": 0.5192485672318161
+   },
+   {
+    "n": 14,
+    "sum": 10.258543517281431,
+    "script": "spaced",
+    "language": "Chinese",
+    "century": 1800,
+    "mean_agreement": 0.732753108377245
+   },
+   {
+    "n": 222,
+    "sum": 194.0177222670866,
+    "script": "spaced",
+    "language": "English",
+    "century": 1900,
+    "mean_agreement": 0.8739537039057955
+   },
+   {
+    "n": 208,
+    "sum": 114.96576726626171,
+    "script": "spaced",
+    "language": "German",
+    "century": 1900,
+    "mean_agreement": 0.5527200349339505
+   }
+  ]
+ },
+ "book_outcomes": [
+  {
+   "book_id": "69aea80dd9729ce38747faa7",
+   "slug": "de-triangulis-omnimodis-libri-quinque-five-books-on-all-muller",
+   "ia_identifier": "ARes352131",
+   "language": "Latin",
+   "year": 1533,
+   "century": 1500,
+   "pages_count": 239,
+   "pages_ocr": 239,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b2213108069e96e842ee88",
+   "slug": "ovid-heroides-ars-amatoria-remedia-amoris-aldine-press-ovid",
+   "ia_identifier": "ita-bnc-ald-00000004-001",
+   "language": "Latin",
+   "year": 1502,
+   "century": 1500,
+   "pages_count": 426,
+   "pages_ocr": 426,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a0850a215c643eb1af48194",
+   "slug": "in-hoc-volumine-habentur-haec-cornucopiae-siue-linguae-latin",
+   "ia_identifier": "ARes12209",
+   "language": "Latin",
+   "year": 1527,
+   "century": 1500,
+   "pages_count": 924,
+   "pages_ocr": 923,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "skipped",
+   "reason": "djvu_xml_too_large_69MB"
+  },
+  {
+   "book_id": "6a084dd015c643eb1af3ffce",
+   "slug": "in-epistolas-m-tullii-ciceronis-quae-familiares-vocantur-pau-2",
+   "ia_identifier": "bub_gb_e4QbKZ6ix_EC",
+   "language": "Latin",
+   "year": 1592,
+   "century": 1500,
+   "pages_count": 723,
+   "pages_ocr": 720,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a06d5c59a48d51399965b0b",
+   "slug": "de-tenuis-humoris-febrem-faciente-ante-purgationem-per-manuzio",
+   "ia_identifier": "ita-bnc-ald-00000436-001",
+   "language": "Latin",
+   "year": 1558,
+   "century": 1500,
+   "pages_count": 578,
+   "pages_ocr": 25,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a0856d349638a50931c2f92",
+   "slug": "lucretius-navagero-andrea",
+   "ia_identifier": "ita-bnc-ald-00000036-001",
+   "language": "Latin",
+   "year": 1515,
+   "century": 1500,
+   "pages_count": 284,
+   "pages_ocr": 279,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b2f4c05ef23d31023f813b",
+   "slug": "de-emendata-structura-latini-sermonis-estienne",
+   "ia_identifier": "bub_gb_njJvjIAMyMIC",
+   "language": "Latin",
+   "year": 1527,
+   "century": 1500,
+   "pages_count": 259,
+   "pages_ocr": 259,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "69b2f4b2f9f1ad2b3b155688",
+   "slug": "praedium-rusticum-estienne",
+   "ia_identifier": "bub_gb_738XW39YbgsC",
+   "language": "Latin",
+   "year": 1554,
+   "century": 1500,
+   "pages_count": 720,
+   "pages_ocr": 720,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a08551b49638a50931c16af",
+   "slug": "1-quae-hoc-volumine-continentur-annotationes-in-omnia-ouidij",
+   "ia_identifier": "ita-bnc-ald-00000111-001",
+   "language": "Latin",
+   "year": 1534,
+   "century": 1500,
+   "pages_count": 492,
+   "pages_ocr": 474,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a06c835c749b698e5b26647",
+   "slug": "m-tullii-ciceronis-opera-vol-10-mannucciorum-aldine-family",
+   "ia_identifier": "mtulliusciceroma10cice",
+   "language": "Latin",
+   "year": 1583,
+   "century": 1500,
+   "pages_count": 352,
+   "pages_ocr": 25,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 2,
+     "pos": 5,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 188,
+      "score": 0.00666666666666671,
+      "jac": 0.014634146341463415
+     }
+    },
+    {
+     "rank": 6,
+     "pos": 9,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 8,
+     "score": 0.273
+    },
+    {
+     "rank": 11,
+     "pos": 15,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 14,
+      "score": 0.06691449814126393,
+      "jac": 0.075
+     }
+    },
+    {
+     "rank": 15,
+     "pos": 19,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 33,
+      "score": 0.00666666666666671,
+      "jac": 0.03375527426160337
+     }
+    },
+    {
+     "rank": 19,
+     "pos": 23,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 22,
+     "score": 0.277
+    }
+   ]
+  },
+  {
+   "book_id": "6a085a6249638a50931c93c1",
+   "slug": "recens-lutheranarum-assertionum-oppugnatio-per-magistrum-pet",
+   "ia_identifier": "ita-bnc-ald-00000229-001",
+   "language": "Latin",
+   "year": 1543,
+   "century": 1500,
+   "pages_count": 220,
+   "pages_ocr": 220,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b3001fe5d6d64d8e1984c5",
+   "slug": "disputationum-adversus-gentes-libri-octo-arnobius",
+   "ia_identifier": "bub_gb_d62XKsUV6WYC",
+   "language": "Latin",
+   "year": 1560,
+   "century": 1500,
+   "pages_count": 899,
+   "pages_ocr": 899,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a06f5734dcc6d5d8f037e00",
+   "slug": "in-hoc-volumine-haec-continentur-aurelii-cornelii-celsii-manuzio",
+   "ia_identifier": "ita-bnc-ald-00000901-001",
+   "language": "Latin",
+   "year": 1528,
+   "century": 1500,
+   "pages_count": 356,
+   "pages_ocr": 25,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69906309e7b7642c081dddf5",
+   "slug": "de-abstinentia-ab-esu-animalium-porphyry",
+   "ia_identifier": "bub_gb_xwdSbJ7KdiQC",
+   "language": "Latin",
+   "year": 1547,
+   "century": 1500,
+   "pages_count": 217,
+   "pages_ocr": 217,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aeabe767e6731bc1367193",
+   "slug": "de-christiana-religione-ficino",
+   "ia_identifier": "bub_gb_7H4sMei2wRUC",
+   "language": "Latin",
+   "year": 1518,
+   "century": 1500,
+   "pages_count": 188,
+   "pages_ocr": 188,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a08593049638a50931c7124",
+   "slug": "orthographiae-ratio-ab-aldo-manutio-pauli-f-collecta-manuzio",
+   "ia_identifier": "ita-bnc-ald-00000481-001",
+   "language": "Latin",
+   "year": 1561,
+   "century": 1500,
+   "pages_count": 132,
+   "pages_ocr": 130,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a0856a515c643eb1af596e8",
+   "slug": "olympiodorou-philosophou-alexandreos-eis-ta-meteora-tou-aris",
+   "ia_identifier": "bub_gb_JNujBkTguhwC",
+   "language": "Latin",
+   "year": 1551,
+   "century": 1500,
+   "pages_count": 285,
+   "pages_ocr": 285,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a06d4ef9a48d51399964581",
+   "slug": "lucanus-lucan",
+   "ia_identifier": "ita-bnc-ald-00000922-001",
+   "language": "Latin",
+   "year": 1515,
+   "century": 1500,
+   "pages_count": 298,
+   "pages_ocr": 292,
+   "text_role": null,
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a06d3849a48d5139996348c",
+   "slug": "natalis-comitum-veneti-de-venatione-libri-4-hieronymi-manuzio",
+   "ia_identifier": "ita-bnc-ald-00000379-001",
+   "language": "Latin",
+   "year": 1551,
+   "century": 1500,
+   "pages_count": 108,
+   "pages_ocr": 108,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69af201c89ab4ba83f42c996",
+   "slug": "conicorum-libri-quattuor-commandino-1566-commandino",
+   "ia_identifier": "apolloniipergai00apol",
+   "language": "Latin",
+   "year": 1566,
+   "century": 1500,
+   "pages_count": 320,
+   "pages_ocr": 320,
+   "text_role": "original",
+   "stratum": "Latin 1500s (early print, ligatures)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69af244b7c27d4b637fefc3b",
+   "slug": "p-papinii-statii-opera-omnia-statius",
+   "ia_identifier": "ppapiniistatiio00statgoog",
+   "language": "Latin",
+   "year": 1824,
+   "century": 1800,
+   "pages_count": 593,
+   "pages_ocr": 593,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69af41695cafc63dd41ef4df",
+   "slug": "c-cornelii-taciti-opera-tacitus",
+   "ia_identifier": "ccorneliitaciti28tacigoog",
+   "language": "Latin",
+   "year": 1834,
+   "century": 1800,
+   "pages_count": 700,
+   "pages_ocr": 556,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "skipped",
+   "reason": "timeout_after_120000ms_twice"
+  },
+  {
+   "book_id": "69af22b4f98f6eff774cd247",
+   "slug": "florus-epitomae-de-tito-livio-bellorum-omnium-annorum-dcc-florus",
+   "ia_identifier": "epitomaedetitoli00floruoft",
+   "language": "Latin",
+   "year": 1872,
+   "century": 1800,
+   "pages_count": 206,
+   "pages_ocr": 200,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a0f069f900fb4799cef1d4d",
+   "slug": "iohannis-cassiani-conlationes-xxiiii-petschenig-ed-1886-petschenig",
+   "ia_identifier": "iohanniscassian00petsgoog",
+   "language": "Latin",
+   "year": 1886,
+   "century": 1800,
+   "pages_count": 731,
+   "pages_ocr": 25,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69d8cab3a09828f83ddcbe96",
+   "slug": "sylloge-fungorum-omnium-hucusque-cognitorum-vol-1-be96",
+   "ia_identifier": "syllogefungorumo01sac",
+   "language": "Latin",
+   "year": 1882,
+   "century": 1800,
+   "pages_count": 804,
+   "pages_ocr": 801,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -3.6,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "69ae937b6b104a7f50564bfe",
+   "slug": "notice-sur-le-papyrus-gnostique-bruce-amelineau",
+   "ia_identifier": "noticesurlepapyr00amel",
+   "language": "Latin",
+   "year": 1891,
+   "century": 1800,
+   "pages_count": 258,
+   "pages_ocr": 253,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "69af4067c1333bab2648377c",
+   "slug": "d-junii-juvenalis-et-a-persii-flacci-satirae-persius",
+   "ia_identifier": "djuniijuvenalis00juveuoft",
+   "language": "Latin",
+   "year": 1817,
+   "century": 1800,
+   "pages_count": 444,
+   "pages_ocr": 444,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69942e31d607f8e57e4b7df0",
+   "slug": "de-variis-difficilibus-locis-ss-pp-dionysii-et-gregorii-oehler",
+   "ia_identifier": "sanctipatrisnos00maxigoog",
+   "language": "Latin",
+   "year": 1857,
+   "century": 1800,
+   "pages_count": 449,
+   "pages_ocr": 449,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69a9768ee12635ded71c4e2f",
+   "slug": "quaestiones-de-primis-principiis-kopp",
+   "ia_identifier": "bub_gb_vSktvALnbHIC",
+   "language": "Latin",
+   "year": 1826,
+   "century": 1800,
+   "pages_count": 424,
+   "pages_ocr": 420,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69a910df469f44cea7833bcf",
+   "slug": "physici-et-medici-graeci-minores-ideler",
+   "ia_identifier": "BIUSante_33176x02",
+   "language": "Latin",
+   "year": 1842,
+   "century": 1800,
+   "pages_count": 472,
+   "pages_ocr": 472,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aeaacc725425fa6ac97a2d",
+   "slug": "cur-deus-homo-canterbury",
+   "ia_identifier": "sanselmicantuar00laemgoog",
+   "language": "Latin",
+   "year": 1857,
+   "century": 1800,
+   "pages_count": 123,
+   "pages_ocr": 116,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69d8ca9ea09828f83ddcbad0",
+   "slug": "selecta-fungorum-carpologia-vol-2-bad0",
+   "ia_identifier": "mobot31753000797792",
+   "language": "Latin",
+   "year": 1863,
+   "century": 1800,
+   "pages_count": 260,
+   "pages_ocr": 260,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69af21fbc6df16b7172a93b5",
+   "slug": "punica-italicus",
+   "ia_identifier": "punicasili01siliuoft",
+   "language": "Latin",
+   "year": 1890,
+   "century": 1800,
+   "pages_count": 266,
+   "pages_ocr": 265,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aea6ed29b07b134d10efbd",
+   "slug": "la-chimie-au-moyen-age-tome-iii-l-alchimie-arabe-berthelot",
+   "ia_identifier": "b24877797_0003",
+   "language": "Latin",
+   "year": 1893,
+   "century": 1800,
+   "pages_count": 482,
+   "pages_ocr": 482,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69af110006b10527be566845",
+   "slug": "vitruvius-de-architectura-libri-decem-rose-1867-vitruvius",
+   "ia_identifier": "dearchitecturali00vitruoft",
+   "language": "Latin",
+   "year": 1867,
+   "century": 1800,
+   "pages_count": 344,
+   "pages_ocr": 291,
+   "text_role": "original",
+   "stratum": "Latin 1800s (roman type)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1.2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69905f3d40bc3a0478efb0a8",
+   "slug": "surya-siddhanta-with-the-exposition-of-the-hidden-meaning-ranganatha",
+   "ia_identifier": "dli.csl.5298",
+   "language": "English",
+   "year": 1603,
+   "century": 1600,
+   "pages_count": 406,
+   "pages_ocr": 406,
+   "text_role": "modern-translation",
+   "stratum": "English 1600s (early modern)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "6a08fcca25e3a402b23b271b",
+   "slug": "mr-william-shakespeares-comedies-histories-and-tragedies-sec",
+   "ia_identifier": "mrwilliamshakesp00shak_8",
+   "language": "English",
+   "year": 1632,
+   "century": 1600,
+   "pages_count": 924,
+   "pages_ocr": 868,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "skipped",
+   "reason": "djvu_xml_too_large_62MB"
+  },
+  {
+   "book_id": "69aebfdea41a7e10e5a71d19",
+   "slug": "an-attempt-for-the-explication-of-the-phaenomena-hooke",
+   "ia_identifier": "bim_early-english-books-1641-1700_an-attempt-for-the-expli_hooke-robert_1661",
+   "language": "English",
+   "year": 1661,
+   "century": 1600,
+   "pages_count": 59,
+   "pages_ocr": 54,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69cfa93f80eb0ccd3e739280",
+   "slug": "micrographia-or-some-physiological-descriptions-of-minute-hooke",
+   "ia_identifier": "micrographia00hook",
+   "language": "English",
+   "year": 1665,
+   "century": 1600,
+   "pages_count": 380,
+   "pages_ocr": 377,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 37,
+     "pos": 39,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 233,
+      "score": 0.00666666666666671,
+      "jac": 0.008771929824561403
+     }
+    },
+    {
+     "rank": 111,
+     "pos": 114,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 66,
+      "score": 0.030000000000000027,
+      "jac": 0.04216867469879518
+     }
+    },
+    {
+     "rank": 185,
+     "pos": 189,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 274,
+      "score": 0.007936507936507908,
+      "jac": 0.009259259259259259
+     }
+    },
+    {
+     "rank": 259,
+     "pos": 267,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0.00666666666666671,
+      "jac": 0.014285714285714285
+     }
+    },
+    {
+     "rank": 333,
+     "pos": 342,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 296,
+      "score": 0.013333333333333308,
+      "jac": 0.00819672131147541
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "695234e3ab34727b1f044dc2",
+   "slug": "fourth-book-of-occult-philosophy-pseudo-agrippa-with",
+   "ia_identifier": "bib_fict_4103360",
+   "language": "English",
+   "year": 1665,
+   "century": 1600,
+   "pages_count": 230,
+   "pages_ocr": 230,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a08fcf425e3a402b23b32f0",
+   "slug": "the-tragedy-of-hamlet-prince-of-denmarke-william-shakespeare",
+   "ia_identifier": "tragedyofhamletp00shak_1",
+   "language": "English",
+   "year": 1625,
+   "century": 1600,
+   "pages_count": 116,
+   "pages_ocr": 116,
+   "text_role": null,
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "6952db2477f38f6761bc70c4",
+   "slug": "saducismus-triumphatus-evidence-concerning-witches-and-glanvill",
+   "ia_identifier": "saducismustriump00glan",
+   "language": "English",
+   "year": 1681,
+   "century": 1600,
+   "pages_count": 498,
+   "pages_ocr": 498,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a08ddd950bd891addfb471d",
+   "slug": "the-whore-s-rhetorick-calculated-to-the-meridian-of-london-pallavicino",
+   "ia_identifier": "bim_early-english-books-1641-1700_the-whores-rhetorick-_pallavicino-ferrante_1683",
+   "language": "English",
+   "year": 1683,
+   "century": 1600,
+   "pages_count": 253,
+   "pages_ocr": 250,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aec1f00767ad23dd0affb0",
+   "slug": "an-essay-towards-a-real-character-and-a-philosophical-wilkins",
+   "ia_identifier": "AnEssayTowardsARealCharacterAndAPhilosophicalLanguage",
+   "language": "English",
+   "year": 1668,
+   "century": 1600,
+   "pages_count": 670,
+   "pages_ocr": 669,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69b18619c4be2cdd0edc524e",
+   "slug": "the-paradoxal-discourses-helmont",
+   "ia_identifier": "bim_early-english-books-1641-1700_the-paradoxal-discourses_helmont-franciscus-merc_1685",
+   "language": "English",
+   "year": 1685,
+   "century": 1600,
+   "pages_count": 370,
+   "pages_ocr": 25,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6990612f322e01b1349a3d7f",
+   "slug": "a-discourse-of-the-damned-art-of-witchcraft-perkins",
+   "ia_identifier": "bim_early-english-books-1475-1640_a-discourse-of-the-damne_perkins-william_1608",
+   "language": "English",
+   "year": 1608,
+   "century": 1600,
+   "pages_count": 281,
+   "pages_ocr": 281,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69ae955b14ec9b78c4cede73",
+   "slug": "the-history-of-philosophy-complete-edition-1687-stanley",
+   "ia_identifier": "bim_early-english-books-1641-1700_the-history-of-philosoph_stanley-thomas_1687",
+   "language": "English",
+   "year": 1687,
+   "century": 1600,
+   "pages_count": 791,
+   "pages_ocr": 791,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "skipped",
+   "reason": "djvu_xml_too_large_56MB"
+  },
+  {
+   "book_id": "0425b5da-2769-41ae-93dd-76624ba8236a",
+   "slug": "basil-valentine-natural-supernatural-things-1671-valentinus",
+   "ia_identifier": "bim_early-english-books-1641-1700_basilius-valentinus-o_basil-valentine_1671",
+   "language": "English",
+   "year": 1670,
+   "century": 1600,
+   "pages_count": 241,
+   "pages_ocr": 241,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a08fd2625e3a402b23b3b5c",
+   "slug": "seianus-his-fall-ben-jonson",
+   "ia_identifier": "bim_early-english-books-1475-1640_seianus-his-fall_jonson-benjamin_1605",
+   "language": "English",
+   "year": 1605,
+   "century": 1600,
+   "pages_count": 109,
+   "pages_ocr": 108,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6991d8d68c1030b12444cd57",
+   "slug": "the-history-of-philosophy-vol-i-stanley",
+   "ia_identifier": "stanleyhistoryofphilosophy01",
+   "language": "English",
+   "year": 1655,
+   "century": 1600,
+   "pages_count": 318,
+   "pages_ocr": 318,
+   "text_role": "original",
+   "stratum": "English 1600s (early modern)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69ef3d5172c1376fdf2b0031",
+   "slug": "the-taittiriya-upanishad-with-commentaries-of-comm",
+   "ia_identifier": "taittiriyaupanis00sankiala",
+   "language": "English",
+   "year": 1903,
+   "century": 1900,
+   "pages_count": 832,
+   "pages_ocr": 832,
+   "text_role": "modern-translation",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "699258978812793469fdc49f",
+   "slug": "kautilya-s-arthashastra-shamasastry-translation-shamasastry",
+   "ia_identifier": "kautilyas-arthashastra",
+   "language": "English",
+   "year": 1915,
+   "century": 1900,
+   "pages_count": 579,
+   "pages_ocr": 579,
+   "text_role": "modern-translation",
+   "stratum": "English 1900s (modern roman)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69920092768b426600239d31",
+   "slug": "the-last-will-and-testament-of-nicolas-jenson-nicolas-jenson",
+   "ia_identifier": "lastwilltestamen00jens",
+   "language": "English",
+   "year": 1928,
+   "century": 1900,
+   "pages_count": 36,
+   "pages_ocr": 36,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "695591f67bd6d2cd1d619b1d",
+   "slug": "the-enneads-of-plotinus-vol-i-mckenna",
+   "ia_identifier": "theenneads01plot",
+   "language": "English",
+   "year": 1917,
+   "century": 1900,
+   "pages_count": 178,
+   "pages_ocr": 178,
+   "text_role": "modern-translation",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69af4164b0838bf65cdffe93",
+   "slug": "scriptores-historiae-augustae-vol-i-loeb-augustae",
+   "ia_identifier": "scriptoreshistor01camb",
+   "language": "English",
+   "year": 1921,
+   "century": 1900,
+   "pages_count": 544,
+   "pages_ocr": 521,
+   "text_role": "modern-translation",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e533e0d48480a38696480e",
+   "slug": "the-book-of-the-thousand-nights-and-a-night-vol-4",
+   "ia_identifier": "plainliteraltran04burtuoft",
+   "language": "English",
+   "year": 1900,
+   "century": 1900,
+   "pages_count": 434,
+   "pages_ocr": 426,
+   "text_role": "modern-translation",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -7,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 18
+  },
+  {
+   "book_id": "69907c555f855ec553e7475d",
+   "slug": "in-the-shadow-of-the-bush-talbot",
+   "ia_identifier": "inshadowofbush00perc",
+   "language": "English",
+   "year": 1912,
+   "century": 1900,
+   "pages_count": 646,
+   "pages_ocr": 646,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "699065ce3dc2ed39a49f279b",
+   "slug": "songs-of-kabir-kabir-rabindranath",
+   "ia_identifier": "songskabir01kabigoog",
+   "language": "English",
+   "year": 1915,
+   "century": 1900,
+   "pages_count": 175,
+   "pages_ocr": 175,
+   "text_role": "modern-translation",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6953efe61479a63c110887b0",
+   "slug": "characteristics-vol-i-robertson-edition-1900-shaftesbury",
+   "ia_identifier": "characteristicso01shafiala",
+   "language": "English",
+   "year": 1900,
+   "century": 1900,
+   "pages_count": 408,
+   "pages_ocr": 401,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6991bd3e70254d38471e34ce",
+   "slug": "vim-culture-atkinson",
+   "ia_identifier": "atkinson-1913-vim-culture-copy",
+   "language": "English",
+   "year": 1914,
+   "century": 1900,
+   "pages_count": 35,
+   "pages_ocr": 35,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69b99dc21f30176bf4d3751e",
+   "slug": "a-buddhist-catechism-subhadra",
+   "ia_identifier": "abuddhistcatech01subhgoog",
+   "language": "English",
+   "year": 1920,
+   "century": 1900,
+   "pages_count": 103,
+   "pages_ocr": 100,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69a97a40f3f3d2fb7de2736a",
+   "slug": "life-of-apollonius-of-tyana-vol-1-philostratus",
+   "ia_identifier": "philostratuslife0001fcco",
+   "language": "English",
+   "year": 1912,
+   "century": 1900,
+   "pages_count": 632,
+   "pages_ocr": 629,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 62,
+     "pos": 66,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 371,
+      "score": 0.010752688172043001,
+      "jac": 0.016853932584269662
+     }
+    },
+    {
+     "rank": 185,
+     "pos": 190,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 411,
+      "score": 0.010928961748633892,
+      "jac": 0.01818181818181818
+     }
+    },
+    {
+     "rank": 309,
+     "pos": 314,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 435,
+      "score": 0.011494252873563204,
+      "jac": 0.01818181818181818
+     }
+    },
+    {
+     "rank": 433,
+     "pos": 439,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 438,
+     "score": 0.804
+    },
+    {
+     "rank": 556,
+     "pos": 563,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 562,
+     "score": 0.898
+    }
+   ]
+  },
+  {
+   "book_id": "6991bd12879c23a0fef522cb",
+   "slug": "correspondence-course-in-yogi-philosophy-and-oriental-atkinson",
+   "ia_identifier": "correspondencec00atkigoog",
+   "language": "English",
+   "year": 1903,
+   "century": 1900,
+   "pages_count": 246,
+   "pages_ocr": 246,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69ef2f8972c1376fdf2af9df",
+   "slug": "a-history-of-arabian-music-to-the-xiiith-century-farmer",
+   "ia_identifier": "historyofarabian0000henr",
+   "language": "English",
+   "year": 1929,
+   "century": 1900,
+   "pages_count": 294,
+   "pages_ocr": 294,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "69bf6118065df5d87d77927b",
+   "slug": "medieval-heresy-the-inquisition-turberville",
+   "ia_identifier": "cu31924029234147",
+   "language": "English",
+   "year": 1920,
+   "century": 1900,
+   "pages_count": 284,
+   "pages_ocr": 278,
+   "text_role": "original",
+   "stratum": "English 1900s (modern roman)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b52c5fa2d71b015aa97e16",
+   "slug": "cabala-mirror-of-art-and-nature-in-alchemy-michelspacher-2",
+   "ia_identifier": "cabalaspiegelder00cust",
+   "language": "German",
+   "year": 1616,
+   "century": 1600,
+   "pages_count": 58,
+   "pages_ocr": 58,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 3,
+     "pos": 16,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 15,
+     "score": 0.388
+    },
+    {
+     "rank": 8,
+     "pos": 21,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 20,
+     "score": 0.414
+    },
+    {
+     "rank": 14,
+     "pos": 27,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 6,
+      "score": 0.06896551724137934,
+      "jac": 0.038461538461538464
+     }
+    },
+    {
+     "rank": 20,
+     "pos": 36,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 6,
+      "score": 0.02030456852791873,
+      "jac": 0.017094017094017096
+     }
+    },
+    {
+     "rank": 25,
+     "pos": 48,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 6,
+      "score": 0.0444444444444444,
+      "jac": 0.0410958904109589
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a0b50411615109dc53b2628",
+   "slug": "architectura-recreationis-furttenbach",
+   "ia_identifier": "gri_33125009734290",
+   "language": "German",
+   "year": 1640,
+   "century": 1600,
+   "pages_count": 300,
+   "pages_ocr": 25,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 2,
+     "pos": 6,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 262,
+      "score": 0.013333333333333308,
+      "jac": 0.0045871559633027525
+     }
+    },
+    {
+     "rank": 6,
+     "pos": 10,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 282,
+      "score": 0.013937282229965153,
+      "jac": 0.014778325123152709
+     }
+    },
+    {
+     "rank": 11,
+     "pos": 15,
+     "frac": 0.5,
+     "matched": true,
+     "ia_index": 14,
+     "score": 0.133
+    },
+    {
+     "rank": 15,
+     "pos": 19,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 18,
+     "score": 0.227
+    },
+    {
+     "rank": 19,
+     "pos": 23,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 238,
+      "score": 0.033333333333333326,
+      "jac": 0.06726457399103139
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6da19aeb-aec0-411c-b890-73035c92273d",
+   "slug": "fama-fraternitatis-1615-danzig-attr",
+   "ia_identifier": "famafraternitati00andr",
+   "language": "German",
+   "year": 1614,
+   "century": 1600,
+   "pages_count": 152,
+   "pages_ocr": 152,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69482af9914d007380634cf1",
+   "slug": "mirror-of-the-wisdom-of-the-rosy-cross-mogling",
+   "ia_identifier": "specvlvmsophicvm00schw",
+   "language": "German",
+   "year": 1618,
+   "century": 1600,
+   "pages_count": 54,
+   "pages_ocr": 54,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "695592ca7bd6d2cd1d61b2d0",
+   "slug": "della-porta-magia-naturalis-german-1713-porta",
+   "ia_identifier": "b30542170",
+   "language": "German",
+   "year": 1607,
+   "century": 1600,
+   "pages_count": 1160,
+   "pages_ocr": 1158,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "69b1cb49a282e3475aab4b79",
+   "slug": "die-bezauberte-welt-bekker",
+   "ia_identifier": "ned-kbn-all-00007082-001",
+   "language": "German",
+   "year": 1693,
+   "century": 1600,
+   "pages_count": 980,
+   "pages_ocr": 970,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 96,
+     "pos": 106,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 64,
+      "score": 0.01666666666666672,
+      "jac": 0.0625
+     }
+    },
+    {
+     "rank": 287,
+     "pos": 297,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 64,
+      "score": 0.010000000000000009,
+      "jac": 0.0821256038647343
+     }
+    },
+    {
+     "rank": 479,
+     "pos": 489,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 488,
+      "score": 0.050000000000000044,
+      "jac": 0.06912442396313365
+     }
+    },
+    {
+     "rank": 670,
+     "pos": 682,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 904,
+      "score": 0.01666666666666672,
+      "jac": 0.06976744186046512
+     }
+    },
+    {
+     "rank": 861,
+     "pos": 881,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 880,
+      "score": 0.07999999999999996,
+      "jac": 0.10194174757281553
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "695286feab34727b1f04cf28",
+   "slug": "jakob-bohme-alle-theosophische-wercken-complete-works-bohme",
+   "ia_identifier": "10260362bsb",
+   "language": "German",
+   "year": 1682,
+   "century": 1600,
+   "pages_count": 155,
+   "pages_ocr": 155,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6952603cab34727b1f04647b",
+   "slug": "signatura-rerum-signature-of-all-things-bohme",
+   "ia_identifier": "bub_gb_3AdRAAAAcAAJ",
+   "language": "German",
+   "year": 1635,
+   "century": 1600,
+   "pages_count": 409,
+   "pages_ocr": 409,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69528702ab34727b1f04cf65",
+   "slug": "der-weg-zu-christo-bohme",
+   "ia_identifier": "10260436bsb",
+   "language": "German",
+   "year": 1635,
+   "century": 1600,
+   "pages_count": 279,
+   "pages_ocr": 279,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -4.2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "71f68423-2c87-47d3-87fa-a744688d3370",
+   "slug": "chemical-wedding-1616-strassburg-andreae",
+   "ia_identifier": "chymischehochzei00rose",
+   "language": "German",
+   "year": 1616,
+   "century": 1600,
+   "pages_count": 152,
+   "pages_ocr": 152,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a209d5c89e8715c5947a6ac",
+   "slug": "old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch",
+   "ia_identifier": "kpbc.umk.pl.Stare_Druki_005_02_45366",
+   "language": "German",
+   "year": 1684,
+   "century": 1600,
+   "pages_count": 410,
+   "pages_ocr": 410,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69b302af3613a84e6806788a",
+   "slug": "adriatische-rosemund-zesen",
+   "ia_identifier": "ned-kbn-all-00004211-001",
+   "language": "German",
+   "year": 1645,
+   "century": 1600,
+   "pages_count": 400,
+   "pages_ocr": 399,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 37,
+     "pos": 49,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 255,
+      "score": 0.020134228187919434,
+      "jac": 0.028455284552845527
+     }
+    },
+    {
+     "rank": 112,
+     "pos": 129,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 233,
+      "score": 0.026666666666666616,
+      "jac": 0.03056768558951965
+     }
+    },
+    {
+     "rank": 186,
+     "pos": 206,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0.01666666666666672,
+      "jac": 0.03319502074688797
+     }
+    },
+    {
+     "rank": 260,
+     "pos": 284,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 283,
+      "score": 0.02166064981949456,
+      "jac": 0.035856573705179286
+     }
+    },
+    {
+     "rank": 335,
+     "pos": 359,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 191,
+      "score": 0.02491103202846978,
+      "jac": 0.03643724696356275
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a21984bf11c08f10b202651",
+   "slug": "des-gottseeligen-hocherleuchteten-jacob-bohmens-teutonici-bohme",
+   "ia_identifier": "desgottseeligenh03bohm",
+   "language": "German",
+   "year": 1682,
+   "century": 1600,
+   "pages_count": 1152,
+   "pages_ocr": 1049,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "69a5f6b11cf742c360413d42",
+   "slug": "theatrum-machinarum-novum-neuvermehrter-schauplatz-der-bockler",
+   "ia_identifier": "theatrummachinar00bock",
+   "language": "German",
+   "year": 1673,
+   "century": 1600,
+   "pages_count": 372,
+   "pages_ocr": 372,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 10,
+     "score": 0.203
+    },
+    {
+     "rank": 19,
+     "pos": 24,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 23,
+      "score": 0.020000000000000018,
+      "jac": 0.052132701421800945
+     }
+    },
+    {
+     "rank": 32,
+     "pos": 37,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 19,
+      "score": 0.00666666666666671,
+      "jac": 0.06532663316582915
+     }
+    },
+    {
+     "rank": 45,
+     "pos": 50,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 35,
+      "score": 0.01666666666666672,
+      "jac": 0.06532663316582915
+     }
+    },
+    {
+     "rank": 55,
+     "pos": 60,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 37,
+      "score": 0.026666666666666616,
+      "jac": 0.04741379310344827
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6991d67e8c1030b12444b708",
+   "slug": "eine-kurtze-eroffnung-der-dreyen-principien-und-welten-im-gichtel",
+   "ia_identifier": "einekurtzeerofnu00gich",
+   "language": "German",
+   "year": 1693,
+   "century": 1600,
+   "pages_count": 206,
+   "pages_ocr": 206,
+   "text_role": "original",
+   "stratum": "German 1600s (Fraktur likely)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aebae86059efb05d4fcce8",
+   "slug": "praludien-aufsatze-und-reden-zur-philosophie-und-ihrer-windelband",
+   "ia_identifier": "praludien0001wind",
+   "language": "German",
+   "year": 1915,
+   "century": 1900,
+   "pages_count": 320,
+   "pages_ocr": 319,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69ae8ff346eb64441c6ff7b2",
+   "slug": "theorien-uber-den-mehrwert-marx",
+   "ia_identifier": "theorienberden01marxuoft",
+   "language": "German",
+   "year": 1910,
+   "century": 1900,
+   "pages_count": 458,
+   "pages_ocr": 455,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "slug": "logik-eine-untersuchung-der-prinzipien-der-erkenntnis-wundt",
+   "ia_identifier": "logikeineuntersu00wund",
+   "language": "German",
+   "year": 1907,
+   "century": 1900,
+   "pages_count": 684,
+   "pages_ocr": 684,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -4.4,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "69ae8f1b4cc1ca54f8f13fb7",
+   "slug": "zur-kritik-der-politischen-oekonomie-marx",
+   "ia_identifier": "bub_gb_fR4iAQAAIAAJ",
+   "language": "German",
+   "year": 1903,
+   "century": 1900,
+   "pages_count": 227,
+   "pages_ocr": 224,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6992543f59cdabeb78f1d1b3",
+   "slug": "messe-und-herrenmahl-eine-studie-zur-geschichte-der-liturgie-lietzmann",
+   "ia_identifier": "messeundherrenma0008liet",
+   "language": "German",
+   "year": 1926,
+   "century": 1900,
+   "pages_count": 290,
+   "pages_ocr": 290,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "6953e36a77f38f6761becbcd",
+   "slug": "lucifer-gnosis-ga-34-steiner",
+   "ia_identifier": "rudolf-steiner-ga-034",
+   "language": "German",
+   "year": 1904,
+   "century": 1900,
+   "pages_count": 660,
+   "pages_ocr": 660,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aea4c53f91570550876d41",
+   "slug": "logische-untersuchungen-husserl",
+   "ia_identifier": "logischeuntersuc00hussuoft",
+   "language": "German",
+   "year": 1901,
+   "century": 1900,
+   "pages_count": 742,
+   "pages_ocr": 739,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a22d6e168f6a1498e2ffe6a",
+   "slug": "organon-der-heilkunst-haehl-manuscript-of-the-6th-edition-hahnemann",
+   "ia_identifier": "HaehlMS",
+   "language": "German",
+   "year": 1921,
+   "century": 1900,
+   "pages_count": 252,
+   "pages_ocr": 251,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aebb386059efb05d4fd2a6",
+   "slug": "uber-annahmen-meinong",
+   "ia_identifier": "ueberannahmen00meingoog",
+   "language": "German",
+   "year": 1902,
+   "century": 1900,
+   "pages_count": 332,
+   "pages_ocr": 329,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aeaadb67e6731bc136545b",
+   "slug": "uber-die-asthetische-erziehung-des-menschen-schiller",
+   "ia_identifier": "aesthetischeerzi04schiuoft",
+   "language": "German",
+   "year": 1905,
+   "century": 1900,
+   "pages_count": 180,
+   "pages_ocr": 180,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aebb806e076d07213e87d8",
+   "slug": "der-formalismus-in-der-ethik-und-die-materiale-wertethik-scheler",
+   "ia_identifier": "scheler-max-der-formalismus-in-der-ethik-und-die-materiale-wertethik",
+   "language": "German",
+   "year": 1916,
+   "century": 1900,
+   "pages_count": 624,
+   "pages_ocr": 618,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69935b5f2afc33235052333b",
+   "slug": "psychologische-typen-jung",
+   "ia_identifier": "Psychologische_Typen",
+   "language": "German",
+   "year": 1921,
+   "century": 1900,
+   "pages_count": 714,
+   "pages_ocr": 709,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "9f2fd808-7d15-40c2-a333-885c67ff3cb5",
+   "slug": "paramirum-works-paracelsus",
+   "ia_identifier": "b24867330",
+   "language": "German",
+   "year": 1904,
+   "century": 1900,
+   "pages_count": 428,
+   "pages_ocr": 428,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aebb506059efb05d4fd50c",
+   "slug": "ideen-zu-einer-reinen-phanomenologie-und-phanomenologischen-husserl",
+   "ia_identifier": "ideenzueinerrein00unse",
+   "language": "German",
+   "year": 1922,
+   "century": 1900,
+   "pages_count": 419,
+   "pages_ocr": 411,
+   "text_role": null,
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 40,
+     "pos": 51,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 123,
+      "score": 0.023333333333333317,
+      "jac": 0.10152284263959391
+     }
+    },
+    {
+     "rank": 119,
+     "pos": 134,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 69,
+     "score": 0.227
+    },
+    {
+     "rank": 199,
+     "pos": 215,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 104,
+      "score": 0.020000000000000018,
+      "jac": 0.09950248756218906
+     }
+    },
+    {
+     "rank": 279,
+     "pos": 297,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 111,
+      "score": 0.020000000000000018,
+      "jac": 0.09004739336492891
+     }
+    },
+    {
+     "rank": 358,
+     "pos": 378,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 191,
+     "score": 0.18
+    }
+   ]
+  },
+  {
+   "book_id": "69aebb846e076d07213e8a4a",
+   "slug": "uber-ressentiment-und-moralisches-werturteil-scheler",
+   "ia_identifier": "SchelerRessentimentWerturteil",
+   "language": "German",
+   "year": 1912,
+   "century": 1900,
+   "pages_count": 104,
+   "pages_ocr": 104,
+   "text_role": "original",
+   "stratum": "German 1900s (Fraktur/roman mix)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69b2ffca5545150b61b49b4d",
+   "slug": "les-characteres-des-passions-chambre",
+   "ia_identifier": "ned-kbn-all-00002757-001",
+   "language": "French",
+   "year": 1660,
+   "century": 1600,
+   "pages_count": 324,
+   "pages_ocr": 324,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e7540f095c302d3fddcd7d",
+   "slug": "oeuvres-completes-tome-1-moliere",
+   "ia_identifier": "moliere-oeuvres_completes_1",
+   "language": "French",
+   "year": 1660,
+   "century": 1600,
+   "pages_count": 1075,
+   "pages_ocr": 1046,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69906488ef12272ffdc93bda",
+   "slug": "les-vrayes-centuries-et-propheties-1668-amsterdam-nostradamus",
+   "ia_identifier": "NostradamusPropheties1668Amsterdam",
+   "language": "French",
+   "year": 1668,
+   "century": 1600,
+   "pages_count": 201,
+   "pages_ocr": 201,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "695593107bd6d2cd1d61bb03",
+   "slug": "trismosin-la-toyson-d-or-golden-fleece-1612-trismosin",
+   "ia_identifier": "latoysondorovlaf00tris",
+   "language": "French",
+   "year": 1612,
+   "century": 1600,
+   "pages_count": 254,
+   "pages_ocr": 254,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b303cd5facc83a9a3daf2a",
+   "slug": "la-vie-du-pere-paolo-sarpi-micanzio",
+   "ia_identifier": "ned-kbn-all-00002719-001",
+   "language": "French",
+   "year": 1661,
+   "century": 1600,
+   "pages_count": 440,
+   "pages_ocr": 440,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e7541d095c302d3fddd1b3",
+   "slug": "oeuvres-completes-tome-2-moliere",
+   "ia_identifier": "moliere-oeuvres_completes_2",
+   "language": "French",
+   "year": 1666,
+   "century": 1600,
+   "pages_count": 1036,
+   "pages_ocr": 1035,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69906485ef12272ffdc93acc",
+   "slug": "les-propheties-de-m-michel-nostradamus-1605-nostradamus",
+   "ia_identifier": "hin-wel-all-00002530-001",
+   "language": "French",
+   "year": 1605,
+   "century": 1600,
+   "pages_count": 268,
+   "pages_ocr": 268,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b30369983e01f74b986d4b",
+   "slug": "l-alcoran-de-mahomet-du-ryer-trans-ryer",
+   "ia_identifier": "bub_gb_TRjf43mYujAC",
+   "language": "French",
+   "year": 1649,
+   "century": 1600,
+   "pages_count": 711,
+   "pages_ocr": 711,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69a5d90456c52e433d70a3af",
+   "slug": "nouvelle-maniere-de-fortification-par-escluses-stevin",
+   "ia_identifier": "nouvellemaniered00stev",
+   "language": "French",
+   "year": 1618,
+   "century": 1600,
+   "pages_count": 74,
+   "pages_ocr": 74,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "unalignable",
+   "reason": "inconsistent_offsets_across_probes",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 9,
+     "score": 0.777
+    },
+    {
+     "rank": 19,
+     "pos": 24,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 23,
+     "score": 0.803
+    },
+    {
+     "rank": 32,
+     "pos": 39,
+     "frac": 0.5,
+     "matched": true,
+     "ia_index": 63,
+     "score": 0.091
+    },
+    {
+     "rank": 44,
+     "pos": 51,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 50,
+     "score": 0.624
+    },
+    {
+     "rank": 57,
+     "pos": 64,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 63,
+     "score": 0.648
+    }
+   ]
+  },
+  {
+   "book_id": "6a09fb01bd8d6455220a0e4c",
+   "slug": "problemes-plaisants-et-delectables-qui-se-font-par-les-meziriac",
+   "ia_identifier": "bub_gb_18VZAAAAcAAJ",
+   "language": "French",
+   "year": 1612,
+   "century": 1600,
+   "pages_count": 194,
+   "pages_ocr": 25,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "695592437bd6d2cd1d619fd1",
+   "slug": "recueil-de-machines-militaires-avec-l-alphabet-de-trithemius-trithemius",
+   "ia_identifier": "recueildeplusieu00thyb",
+   "language": "French",
+   "year": 1620,
+   "century": 1600,
+   "pages_count": 108,
+   "pages_ocr": 108,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b1cb52b7da27b8f120c07e",
+   "slug": "le-monde-enchante-bekker",
+   "ia_identifier": "ned-kbn-all-00009900-001",
+   "language": "French",
+   "year": 1694,
+   "century": 1600,
+   "pages_count": 544,
+   "pages_ocr": 525,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6991e19f339ebc850994a406",
+   "slug": "le-detail-de-la-france-boisguilbert",
+   "ia_identifier": "ledtaildelafranc01bois",
+   "language": "French",
+   "year": 1695,
+   "century": 1600,
+   "pages_count": 308,
+   "pages_ocr": 308,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b303231997044693a1f4f9",
+   "slug": "de-la-recherche-de-la-verite-malebranche-2",
+   "ia_identifier": "ned-kbn-all-00003656-001",
+   "language": "French",
+   "year": 1680,
+   "century": 1600,
+   "pages_count": 286,
+   "pages_ocr": 286,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b1cae4a282e3475aab3aa6",
+   "slug": "reflexions-curieuses-d-un-esprit-des-interesse-anti-spinoza",
+   "ia_identifier": "ned-kbn-all-00010234-001",
+   "language": "French",
+   "year": 1678,
+   "century": 1600,
+   "pages_count": 638,
+   "pages_ocr": 638,
+   "text_role": "original",
+   "stratum": "French 1600s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69a979e9daf647306a736c91",
+   "slug": "collection-des-anciens-alchimistes-grecs-vol-3-berthelot",
+   "ia_identifier": "collectiondesan04bertgoog",
+   "language": "French",
+   "year": 1888,
+   "century": 1800,
+   "pages_count": 536,
+   "pages_ocr": 432,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a3f031e97e91e1768f69575",
+   "slug": "le-livre-du-prefet-ou-l-edit-de-l-empereur-leon-le-sage-sur-nicole",
+   "ia_identifier": "lelivreduprfet00nico",
+   "language": "French",
+   "year": 1894,
+   "century": 1800,
+   "pages_count": 104,
+   "pages_ocr": 26,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 15
+  },
+  {
+   "book_id": "69de11bd86e6d59321ba120e",
+   "slug": "supplment-au-catalogue-de-loeuvre-grav-de-flicien-rops",
+   "ia_identifier": "supplmentaucata00ramigoog",
+   "language": "French",
+   "year": 1895,
+   "century": 1800,
+   "pages_count": 224,
+   "pages_ocr": 223,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a08f5a050bd891addfb9333",
+   "slug": "monsieur-nicolas-ou-le-c-ur-humain-devoile-memoires-intimes-bretonne",
+   "ia_identifier": "monsieurnicolaso01restuoft",
+   "language": "French",
+   "year": 1883,
+   "century": 1800,
+   "pages_count": 272,
+   "pages_ocr": 25,
+   "text_role": null,
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "6a08f55d50bd891addfb8662",
+   "slug": "memoires-complets-et-authentiques-du-duc-de-saint-simon-vol-louis-de-rouvroy-2",
+   "ia_identifier": "ssmmoirescompl03sain",
+   "language": "French",
+   "year": 1856,
+   "century": 1800,
+   "pages_count": 492,
+   "pages_ocr": 25,
+   "text_role": null,
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69de1c5fd10d4b0d3f6f1fcf",
+   "slug": "works-of-francis-rabelais-vol-2-urquhartmotteux",
+   "ia_identifier": "worksoffrancisra02rabeuoft",
+   "language": "French",
+   "year": 1851,
+   "century": 1800,
+   "pages_count": 590,
+   "pages_ocr": 590,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e41f03d0364cb0bcf79e41",
+   "slug": "nana",
+   "ia_identifier": "nanazola00zolauoft",
+   "language": "French",
+   "year": 1893,
+   "century": 1800,
+   "pages_count": 530,
+   "pages_ocr": 528,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e41a2e8a8dae1074c5335f",
+   "slug": "erotika-biblion",
+   "ia_identifier": "erotikabiblion00mirauoft",
+   "language": "French",
+   "year": 1867,
+   "century": 1800,
+   "pages_count": 260,
+   "pages_ocr": 260,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -2,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "695aa9bfbe4023bd34bd6d81",
+   "slug": "les-mecaniques-ou-l-elevateur-de-heron-carra-de-vaux-1894-trans",
+   "ia_identifier": "lesmcaniquesoul00vauxgoog",
+   "language": "French",
+   "year": 1894,
+   "century": 1800,
+   "pages_count": 332,
+   "pages_ocr": 218,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 19,
+     "pos": 70,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 69,
+     "score": 0.831
+    },
+    {
+     "rank": 58,
+     "pos": 153,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 152,
+     "score": 0.878
+    },
+    {
+     "rank": 97,
+     "pos": 231,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 79,
+      "score": 0,
+      "jac": 0.008620689655172414
+     }
+    },
+    {
+     "rank": 135,
+     "pos": 269,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 1,
+      "score": 0.00666666666666671,
+      "jac": 0.005235602094240838
+     }
+    },
+    {
+     "rank": 174,
+     "pos": 308,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 305,
+      "score": 0.02564102564102566,
+      "jac": 0.006711409395973154
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a08f5b550bd891addfb9658",
+   "slug": "monsieur-nicolas-ou-le-c-ur-humain-devoile-vol-vii-1883-bretonne",
+   "ia_identifier": "monsieurnicolaso07restuoft",
+   "language": "French",
+   "year": 1883,
+   "century": 1800,
+   "pages_count": 272,
+   "pages_ocr": 25,
+   "text_role": null,
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e41eebd0364cb0bcf79aec",
+   "slug": "paralllement",
+   "ia_identifier": "paralllement01verlgoog",
+   "language": "French",
+   "year": 1894,
+   "century": 1800,
+   "pages_count": 142,
+   "pages_ocr": 142,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b00089ea029321151e51ba",
+   "slug": "les-oeuvres-d-euclide-vol-3-ed",
+   "ia_identifier": "lesuvresdeuclide03eucl",
+   "language": "French",
+   "year": 1818,
+   "century": 1800,
+   "pages_count": 654,
+   "pages_ocr": 652,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e7927280b52390feb15ef5",
+   "slug": "madame-bovary-flaubert",
+   "ia_identifier": "bub_gb_ACX5pAfDbL8C",
+   "language": "French",
+   "year": 1857,
+   "century": 1800,
+   "pages_count": 266,
+   "pages_ocr": 241,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a08f9029c1b82475e158ebe",
+   "slug": "foe-koue-ki-ou-relation-des-royaumes-bouddhiques-faxian-s-faxian",
+   "ia_identifier": "in.ernet.dli.2015.107455",
+   "language": "French",
+   "year": 1836,
+   "century": 1800,
+   "pages_count": 511,
+   "pages_ocr": 504,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "6994495a185a84ef595ac2f5",
+   "slug": "collection-des-historiens-anciens-et-modernes-de-l-armenie-ed",
+   "ia_identifier": "chama-01-02-langlois-etal-1867-1869",
+   "language": "French",
+   "year": 1867,
+   "century": 1800,
+   "pages_count": 850,
+   "pages_ocr": 626,
+   "text_role": "original",
+   "stratum": "French 1800s",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69b2f4300e2f024dfbfbbc64",
+   "slug": "homeri-et-hesiodi-certamen-batrachomyomachia-homer",
+   "ia_identifier": "bub_gb_Lo3TKJ8t-U0C",
+   "language": "Greek",
+   "year": 1573,
+   "century": 1500,
+   "pages_count": 209,
+   "pages_ocr": 209,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 20,
+     "pos": 24,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 59,
+     "pos": 63,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 99,
+     "pos": 103,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 139,
+     "pos": 144,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 178,
+     "pos": 184,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "69b2f434f9f1ad2b3b15154a",
+   "slug": "dicaearchi-messenii-quae-supersunt-estienne",
+   "ia_identifier": "bub_gb_zjO3R-LV3DkC",
+   "language": "Greek",
+   "year": 1589,
+   "century": 1500,
+   "pages_count": 292,
+   "pages_ocr": 292,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -3.8,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b2222608069e96e8432997",
+   "slug": "gregory-of-nazianzus-orationes-selectae-xvi-aldine-press-nazianzus",
+   "ia_identifier": "ita-bnc-ald-00000045-001",
+   "language": "Greek",
+   "year": 1516,
+   "century": 1500,
+   "pages_count": 656,
+   "pages_ocr": 656,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 64,
+     "pos": 74,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 125,
+      "score": 0.0043290043290042934,
+      "jac": 0.004149377593360996
+     }
+    },
+    {
+     "rank": 193,
+     "pos": 203,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 125,
+      "score": 0.0043290043290042934,
+      "jac": 0.0040650406504065045
+     }
+    },
+    {
+     "rank": 322,
+     "pos": 332,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 399,
+      "score": 0.004366812227074246,
+      "jac": 0.004166666666666667
+     }
+    },
+    {
+     "rank": 450,
+     "pos": 460,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 399,
+      "score": 0.004366812227074246,
+      "jac": 0.00411522633744856
+     }
+    },
+    {
+     "rank": 579,
+     "pos": 589,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "69b2ff7be5d6d64d8e1968f0",
+   "slug": "opera-omnia-great",
+   "ia_identifier": "bub_gb_xj8O43hh-HwC",
+   "language": "Greek",
+   "year": 1552,
+   "century": 1500,
+   "pages_count": 825,
+   "pages_ocr": 825,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "skipped",
+   "reason": "timeout_after_120000ms_twice"
+  },
+  {
+   "book_id": "69b2f354a9a500a45e5e7db1",
+   "slug": "ori-apollinis-niliaci-de-sacris-notis-et-sculpturis-libri-estienne",
+   "ia_identifier": "orusapolloniliac01hora",
+   "language": "Greek",
+   "year": 1530,
+   "century": 1500,
+   "pages_count": 380,
+   "pages_ocr": 380,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6a09ecd6b4da373307f15964",
+   "slug": "demosthenes-orationes-graece-demosthenes",
+   "ia_identifier": "ARes35218",
+   "language": "Greek",
+   "year": 1504,
+   "century": 1500,
+   "pages_count": 651,
+   "pages_ocr": 651,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 65,
+     "pos": 68,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.004016064257028112
+     }
+    },
+    {
+     "rank": 194,
+     "pos": 197,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.00390625
+     }
+    },
+    {
+     "rank": 324,
+     "pos": 327,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.0038910505836575876
+     }
+    },
+    {
+     "rank": 453,
+     "pos": 456,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 585,
+      "score": 0,
+      "jac": 0.007874015748031496
+     }
+    },
+    {
+     "rank": 582,
+     "pos": 585,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 603,
+      "score": 0,
+      "jac": 0.00392156862745098
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b2f4200e2f024dfbfbb576",
+   "slug": "justini-philosophi-et-martyris-opera-estienne",
+   "ia_identifier": "bub_gb_WeRpCaJPEn8C",
+   "language": "Greek",
+   "year": 1592,
+   "century": 1500,
+   "pages_count": 102,
+   "pages_ocr": 102,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 11,
+      "score": 0.006849315068493178,
+      "jac": 0.0053475935828877
+     }
+    },
+    {
+     "rank": 30,
+     "pos": 32,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 52,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 70,
+     "pos": 72,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 71,
+      "score": 0.00347222222222221,
+      "jac": 0.0038022813688212928
+     }
+    },
+    {
+     "rank": 90,
+     "pos": 92,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "69942ebab2f6748db4abfa24",
+   "slug": "commentaria-in-libros-de-anima-aristotelis-1535-greek-latin-philoponus",
+   "ia_identifier": "bub_gb_8y82p8cG_SUC",
+   "language": "Greek",
+   "year": 1535,
+   "century": 1500,
+   "pages_count": 294,
+   "pages_ocr": 294,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 29,
+     "pos": 30,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 88,
+     "pos": 89,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 147,
+     "pos": 148,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 205,
+     "pos": 206,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 171,
+      "score": 0,
+      "jac": 0.004016064257028112
+     }
+    },
+    {
+     "rank": 264,
+     "pos": 265,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "69b2ffbce5d6d64d8e19757b",
+   "slug": "institutiones-iuris-civilis-greek-justinian",
+   "ia_identifier": "bub_gb_WwjP6aYdZpkC",
+   "language": "Greek",
+   "year": 1534,
+   "century": 1500,
+   "pages_count": 324,
+   "pages_ocr": 324,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 31,
+     "pos": 35,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 94,
+     "pos": 98,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 157,
+     "pos": 161,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 219,
+     "pos": 223,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 204,
+      "score": 0.0033333333333332993,
+      "jac": 0.003937007874015748
+     }
+    },
+    {
+     "rank": 282,
+     "pos": 286,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6a084f8c15c643eb1af4516a",
+   "slug": "in-hoc-uolumine-haec-continentur-mt-cic-officiorum-lib-iii-c",
+   "ia_identifier": "inhocuoluminehae00cice",
+   "language": "Greek",
+   "year": 1519,
+   "century": 1500,
+   "pages_count": 346,
+   "pages_ocr": 343,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 34,
+     "pos": 38,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 101,
+     "pos": 106,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 169,
+     "pos": 174,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 237,
+     "pos": 244,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 304,
+     "pos": 311,
+     "frac": 0.9,
+     "matched": true,
+     "ia_index": 309,
+     "score": 0.2
+    }
+   ]
+  },
+  {
+   "book_id": "69b2f443f9f1ad2b3b152090",
+   "slug": "dionysii-orbis-descriptio-periegetes-estienne",
+   "ia_identifier": "bub_gb_xqpVH24wvAUC",
+   "language": "Greek",
+   "year": 1547,
+   "century": 1500,
+   "pages_count": 211,
+   "pages_ocr": 211,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 20,
+     "pos": 23,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.0037174721189591076
+     }
+    },
+    {
+     "rank": 61,
+     "pos": 64,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.003816793893129771
+     }
+    },
+    {
+     "rank": 101,
+     "pos": 104,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.007547169811320755
+     }
+    },
+    {
+     "rank": 141,
+     "pos": 144,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 84,
+      "score": 0,
+      "jac": 0.007692307692307693
+     }
+    },
+    {
+     "rank": 182,
+     "pos": 185,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 160,
+      "score": 0,
+      "jac": 0.004830917874396135
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a085ab149638a50931c9f35",
+   "slug": "platonos-thoukydidous-kai-demosthenous-epitaphioi-logoi-plat",
+   "ia_identifier": "ita-bnc-ald-00000348-001",
+   "language": "Greek",
+   "year": 1549,
+   "century": 1500,
+   "pages_count": 72,
+   "pages_ocr": 72,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 7,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 20,
+      "score": 0.07954545454545459,
+      "jac": 0.16666666666666666
+     }
+    },
+    {
+     "rank": 18,
+     "pos": 25,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 20,
+      "score": 0,
+      "jac": 0.1206896551724138
+     }
+    },
+    {
+     "rank": 31,
+     "pos": 38,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 20,
+      "score": 0,
+      "jac": 0.11666666666666667
+     }
+    },
+    {
+     "rank": 43,
+     "pos": 50,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 49,
+     "score": 0.171
+    },
+    {
+     "rank": 55,
+     "pos": 62,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 36,
+      "score": 0.041353383458646586,
+      "jac": 0.023715415019762844
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b222ed56715b0e32475a8c",
+   "slug": "greek-anthology-florilegium-epigrammatum-aldine-press-2nd-ed-poets",
+   "ia_identifier": "ita-bnc-ald-00000848-001",
+   "language": "Greek",
+   "year": 1521,
+   "century": 1500,
+   "pages_count": 592,
+   "pages_ocr": 592,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 58,
+     "pos": 64,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 63,
+      "score": 0.06542056074766356,
+      "jac": 0.04597701149425287
+     }
+    },
+    {
+     "rank": 174,
+     "pos": 180,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 179,
+      "score": 0.052631578947368474,
+      "jac": 0.03361344537815126
+     }
+    },
+    {
+     "rank": 290,
+     "pos": 296,
+     "frac": 0.5,
+     "matched": true,
+     "ia_index": 295,
+     "score": 0.105
+    },
+    {
+     "rank": 406,
+     "pos": 412,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 411,
+     "score": 0.147
+    },
+    {
+     "rank": 522,
+     "pos": 528,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 527,
+      "score": 0.0714285714285714,
+      "jac": 0.09274193548387097
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b2f439f9f1ad2b3b151af5",
+   "slug": "eusebii-pamphili-evangelicae-praeparationis-libri-xv-estienne",
+   "ia_identifier": "bub_gb_kSkrRL6yzcgC",
+   "language": "Greek",
+   "year": 1544,
+   "century": 1500,
+   "pages_count": 534,
+   "pages_ocr": 534,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 53,
+     "pos": 54,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.0037735849056603774
+     }
+    },
+    {
+     "rank": 160,
+     "pos": 161,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.003816793893129771
+     }
+    },
+    {
+     "rank": 267,
+     "pos": 268,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.003745318352059925
+     }
+    },
+    {
+     "rank": 373,
+     "pos": 374,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 321,
+      "score": 0,
+      "jac": 0.00390625
+     }
+    },
+    {
+     "rank": 480,
+     "pos": 481,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.003816793893129771
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6952c9c777f38f6761bc2ffd",
+   "slug": "enneads-1580-greek-latin-ficino-trans-plotinus-ficino",
+   "ia_identifier": "ficino-operum-philosophicorum-omnium-gr-lat-1580",
+   "language": "Greek",
+   "year": 1580,
+   "century": 1500,
+   "pages_count": 850,
+   "pages_ocr": 850,
+   "text_role": "original",
+   "stratum": "Greek 1500s (polytonic print)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69a979d2f3f3d2fb7de269cb",
+   "slug": "platonos-timaios-plato",
+   "ia_identifier": "platonostimaiost00platuoft",
+   "language": "Greek",
+   "year": 1888,
+   "century": 1800,
+   "pages_count": 380,
+   "pages_ocr": 380,
+   "text_role": "modern-translation",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b21f05a66227125eb06acb",
+   "slug": "plutarchi-vitae-parallelae-vol-1-sintenis-teubner-sintenis",
+   "ia_identifier": "plutarchivitaep01sintgoog",
+   "language": "Greek",
+   "year": 1870,
+   "century": 1800,
+   "pages_count": 363,
+   "pages_ocr": 362,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aea3113d57a11fc021c0eb",
+   "slug": "analekta-hierosolymitikes-stachyologias-vol-i-papadopoulos",
+   "ia_identifier": "analektahieroso01papagoog",
+   "language": "Greek",
+   "year": 1897,
+   "century": 1800,
+   "pages_count": 649,
+   "pages_ocr": 641,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69aec0f0dd3c98abc0da80ce",
+   "slug": "nicephori-gregorae-byzantina-historia-vol-i-gregoras",
+   "ia_identifier": "bub_gb_xdQFAAAAQAAJ",
+   "language": "Greek",
+   "year": 1830,
+   "century": 1800,
+   "pages_count": 905,
+   "pages_ocr": 905,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69afe65fda5fa12b664a75a2",
+   "slug": "aristotelis-opera-vol-i-bekker-1831-bekker",
+   "ia_identifier": "aristotelisopera01arisrich",
+   "language": "Greek",
+   "year": 1831,
+   "century": 1800,
+   "pages_count": 812,
+   "pages_ocr": 810,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "skipped",
+   "reason": "djvu_xml_too_large_71MB"
+  },
+  {
+   "book_id": "69af1315edb4389041037d06",
+   "slug": "archimedis-opera-omnia-cum-commentariis-eutocii-vol-i-archimedes",
+   "ia_identifier": "archimedisoperao01arch",
+   "language": "Greek",
+   "year": 1880,
+   "century": 1800,
+   "pages_count": 524,
+   "pages_ocr": 500,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69c10d9a42741c656896364d",
+   "slug": "patrologia-graeca-vol-78-isidore-of-pelusium-epistulae-pelusium",
+   "ia_identifier": "bim_early-english-books-1641-1700_patrologiae-cursus-completus-_1860_78",
+   "language": "Greek",
+   "year": 1860,
+   "century": 1800,
+   "pages_count": 889,
+   "pages_ocr": 889,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "skipped",
+   "reason": "djvu_xml_too_large_48MB"
+  },
+  {
+   "book_id": "69942e58d607f8e57e4b8659",
+   "slug": "de-michaele-et-andronico-palaeologis-libri-xiii-cshb-bekker",
+   "ia_identifier": "georgiipachymer00pousgoog",
+   "language": "Greek",
+   "year": 1835,
+   "century": 1800,
+   "pages_count": 927,
+   "pages_ocr": 927,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "6953c68777f38f6761bd9e16",
+   "slug": "aristotelis-opera-omnia-greek-aristotle",
+   "ia_identifier": "aristotelisoper16arisgoog",
+   "language": "Greek",
+   "year": 1837,
+   "century": 1800,
+   "pages_count": 201,
+   "pages_ocr": 201,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69937944b0a84a5763964389",
+   "slug": "homers-odyssey-greek-text-homer",
+   "ia_identifier": "homersodysseyedi01home",
+   "language": "Greek",
+   "year": 1890,
+   "century": 1800,
+   "pages_count": 596,
+   "pages_ocr": 311,
+   "text_role": null,
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b1de9cca46fa60ea1edeed",
+   "slug": "in-aristotelis-physicorum-libros-commentaria-cag-17-philoponus",
+   "ia_identifier": "commentariaina17akaduoft",
+   "language": "Greek",
+   "year": 1888,
+   "century": 1800,
+   "pages_count": 524,
+   "pages_ocr": 521,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 50,
+     "pos": 61,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.00666666666666671,
+      "jac": 0.0196078431372549
+     }
+    },
+    {
+     "rank": 150,
+     "pos": 161,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.00666666666666671,
+      "jac": 0.022727272727272728
+     }
+    },
+    {
+     "rank": 251,
+     "pos": 262,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.00666666666666671,
+      "jac": 0.02197802197802198
+     }
+    },
+    {
+     "rank": 351,
+     "pos": 362,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 368,
+      "score": 0.023333333333333317,
+      "jac": 0.029045643153526972
+     }
+    },
+    {
+     "rank": 451,
+     "pos": 466,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 465,
+      "score": 0.02651515151515149,
+      "jac": 0.022556390977443608
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6964bfcbd00c6d84781505ff",
+   "slug": "philonis-alexandrini-libellus-de-opificio-mundi-cohn",
+   "ia_identifier": "philonisalexand00philgoog",
+   "language": "Greek",
+   "year": 1889,
+   "century": 1800,
+   "pages_count": 189,
+   "pages_ocr": 189,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 17,
+     "pos": 27,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 26,
+     "score": 0.727
+    },
+    {
+     "rank": 52,
+     "pos": 62,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 61,
+     "score": 0.68
+    },
+    {
+     "rank": 87,
+     "pos": 97,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 44,
+      "score": 0,
+      "jac": 0.004219409282700422
+     }
+    },
+    {
+     "rank": 121,
+     "pos": 132,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 44,
+      "score": 0.0033333333333332993,
+      "jac": 0.00411522633744856
+     }
+    },
+    {
+     "rank": 156,
+     "pos": 167,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 166,
+      "score": 0.06432748538011701,
+      "jac": 0.044534412955465584
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6992542459cdabeb78f1c389",
+   "slug": "the-liturgies-of-s-mark-s-james-s-clement-s-chrysostom-s-neale",
+   "ia_identifier": "lsmark00neal",
+   "language": "Greek",
+   "year": 1859,
+   "century": 1800,
+   "pages_count": 182,
+   "pages_ocr": 182,
+   "text_role": "modern-translation",
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 19
+  },
+  {
+   "book_id": "6952e4b477f38f6761bc7d4c",
+   "slug": "vetus-testamentum-graecum-septuagint-with-latin-translation-septuagint",
+   "ia_identifier": "hpalaiadiathkka00jagegoog",
+   "language": "Greek",
+   "year": 1855,
+   "century": 1800,
+   "pages_count": 741,
+   "pages_ocr": 741,
+   "text_role": "original",
+   "stratum": "Greek 1800s",
+   "status": "skipped",
+   "reason": "djvu_xml_too_large_48MB"
+  },
+  {
+   "book_id": "6a08a7b650cb4ea746a094ec",
+   "slug": "plutarch-moralia-vol-i-bernardakis-teubner-plutarch",
+   "ia_identifier": "plutarchichaero01berngoog",
+   "language": "Greek",
+   "year": 1888,
+   "century": 1800,
+   "pages_count": 524,
+   "pages_ocr": 24,
+   "text_role": null,
+   "stratum": "Greek 1800s",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69b2f4a2f9f1ad2b3b1548b3",
+   "slug": "thesaurus-linguae-sanctae-pagnini-hebrew-dictionary-estienne",
+   "ia_identifier": "bub_gb_2XtKbZlpucQC",
+   "language": "Hebrew",
+   "year": 1548,
+   "century": 1500,
+   "pages_count": 1637,
+   "pages_ocr": 1635,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 5,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "69e9617a2beefe2f6f72ba14",
+   "slug": "masa-ot-binyamin-itinerary-tudela",
+   "ia_identifier": "itineraryrabbib00benjgoog",
+   "language": "Hebrew",
+   "year": 1840,
+   "century": 1800,
+   "pages_count": 319,
+   "pages_ocr": 319,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 3,
+   "total_probes": 5,
+   "pages_scored": 20
+  },
+  {
+   "book_id": "699243ebbc722ec0ee80a9d1",
+   "slug": "midrash-bereshit-rabbah-theodor-albeck-critical-edition-eds",
+   "ia_identifier": "midrashbereshitr1216unse",
+   "language": "Hebrew",
+   "year": 1903,
+   "century": 1900,
+   "pages_count": 464,
+   "pages_ocr": 464,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "skipped",
+   "reason": "timeout_after_120000ms_twice"
+  },
+  {
+   "book_id": "6992540a59cdabeb78f1b209",
+   "slug": "the-authorised-daily-prayer-book-singer",
+   "ia_identifier": "authoriseddailyp00sing",
+   "language": "Hebrew",
+   "year": 1890,
+   "century": 1800,
+   "pages_count": 678,
+   "pages_ocr": 678,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 67,
+     "pos": 72,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.03571428571428571
+     }
+    },
+    {
+     "rank": 200,
+     "pos": 205,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 204,
+     "score": 0.959
+    },
+    {
+     "rank": 333,
+     "pos": 338,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 547,
+      "score": 0.01980198019801982,
+      "jac": 0.0425531914893617
+     }
+    },
+    {
+     "rank": 465,
+     "pos": 470,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 475,
+     "score": 0.147
+    },
+    {
+     "rank": 599,
+     "pos": 604,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 643,
+      "score": 0.0561797752808989,
+      "jac": 0.04918032786885246
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b2f3b821208ea9dc278c50",
+   "slug": "duodecim-prophetae-hebrew-text-ed",
+   "ia_identifier": "ARes67513",
+   "language": "Hebrew",
+   "year": 1539,
+   "century": 1500,
+   "pages_count": 341,
+   "pages_ocr": 341,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_2_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 32,
+     "pos": 37,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 36,
+      "score": 0.06000000000000005,
+      "jac": 0.084070796460177
+     }
+    },
+    {
+     "rank": 95,
+     "pos": 103,
+     "frac": 0.3,
+     "matched": true,
+     "ia_index": 102,
+     "score": 0.097
+    },
+    {
+     "rank": 159,
+     "pos": 170,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 169,
+      "score": 0.040000000000000036,
+      "jac": 0.07692307692307693
+     }
+    },
+    {
+     "rank": 222,
+     "pos": 237,
+     "frac": 0.7,
+     "matched": true,
+     "ia_index": 236,
+     "score": 0.15
+    },
+    {
+     "rank": 285,
+     "pos": 302,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 301,
+      "score": 0.053333333333333344,
+      "jac": 0.06896551724137931
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69d5aca44dc55b8478dddf51",
+   "slug": "treasury-of-prayers-vilna-1914-various-romm-press",
+   "ia_identifier": "Siddur_Ozar_ha-Tefillot_Sefard_1914_FULL",
+   "language": "Hebrew",
+   "year": 1914,
+   "century": 1900,
+   "pages_count": 1579,
+   "pages_ocr": 1579,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "skipped",
+   "reason": "djvu_xml_too_large_84MB"
+  },
+  {
+   "book_id": "6990633def12272ffdc907b0",
+   "slug": "the-zohar-sefer-ha-zohar-attributed-2",
+   "ia_identifier": "seferhazoharalha358800",
+   "language": "Hebrew",
+   "year": 1558,
+   "century": 1500,
+   "pages_count": 612,
+   "pages_ocr": 612,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 61,
+     "pos": 62,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 233,
+      "score": 0.0033333333333332993,
+      "jac": 0.011627906976744186
+     }
+    },
+    {
+     "rank": 183,
+     "pos": 184,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 215,
+      "score": 0,
+      "jac": 0.020080321285140562
+     }
+    },
+    {
+     "rank": 305,
+     "pos": 306,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 63,
+      "score": 0.0033333333333332993,
+      "jac": 0.01593625498007968
+     }
+    },
+    {
+     "rank": 426,
+     "pos": 427,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 405,
+      "score": 0.0033333333333332993,
+      "jac": 0.007936507936507936
+     }
+    },
+    {
+     "rank": 548,
+     "pos": 549,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 544,
+      "score": 0.0033333333333332993,
+      "jac": 0.011627906976744186
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "699243fabc722ec0ee80b251",
+   "slug": "prague-haggadah-1526-anonymous",
+   "ia_identifier": "PragueHaggadah1526",
+   "language": "Hebrew",
+   "year": 1526,
+   "century": 1500,
+   "pages_count": 89,
+   "pages_ocr": 89,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "695285cdab34727b1f04c25a",
+   "slug": "sepher-maphteah-shelomo-book-of-the-key-of-solomon-anonymous",
+   "ia_identifier": "b31365905",
+   "language": "Hebrew",
+   "year": 1914,
+   "century": 1900,
+   "pages_count": 192,
+   "pages_ocr": 192,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_1_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 18,
+     "pos": 22,
+     "frac": 0.1,
+     "matched": true,
+     "ia_index": 21,
+     "score": 0.893
+    },
+    {
+     "rank": 55,
+     "pos": 60,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 116,
+      "score": 0,
+      "jac": 0.006622516556291391
+     }
+    },
+    {
+     "rank": 91,
+     "pos": 96,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 26,
+      "score": 0.01666666666666672,
+      "jac": 0.01702127659574468
+     }
+    },
+    {
+     "rank": 127,
+     "pos": 132,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 116,
+      "score": 0,
+      "jac": 0.004807692307692308
+     }
+    },
+    {
+     "rank": 164,
+     "pos": 169,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 11,
+      "score": 0.013333333333333308,
+      "jac": 0.01556420233463035
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69924401bc722ec0ee80b312",
+   "slug": "mikraot-gedolot-first-rabbinic-bible-venice-1517-ed",
+   "ia_identifier": "Miqraot-Gedolot-First-Edition_Venice_1517",
+   "language": "Hebrew",
+   "year": 1517,
+   "century": 1500,
+   "pages_count": 202,
+   "pages_ocr": 202,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "69920bb1e0a548a13d884da7",
+   "slug": "der-hebraische-pentateuch-der-samaritaner-ed",
+   "ia_identifier": "vonGall_SamaritanPentateuch",
+   "language": "Hebrew",
+   "year": 1906,
+   "century": 1900,
+   "pages_count": 563,
+   "pages_ocr": 563,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "skipped",
+   "reason": "no_djvu_xml (404)"
+  },
+  {
+   "book_id": "6990630be7b7642c081de08b",
+   "slug": "the-zohar-sefer-ha-zohar-attributed",
+   "ia_identifier": "seferhazoharalha028800",
+   "language": "Hebrew",
+   "year": 1558,
+   "century": 1500,
+   "pages_count": 548,
+   "pages_ocr": 548,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 55,
+     "pos": 56,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 172,
+      "score": 0.0033333333333332993,
+      "jac": 0.008064516129032258
+     }
+    },
+    {
+     "rank": 164,
+     "pos": 165,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 164,
+      "score": 0,
+      "jac": 0.03404255319148936
+     }
+    },
+    {
+     "rank": 274,
+     "pos": 275,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 322,
+      "score": 0.0033333333333332993,
+      "jac": 0.00851063829787234
+     }
+    },
+    {
+     "rank": 383,
+     "pos": 384,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 383,
+      "score": 0,
+      "jac": 0.028455284552845527
+     }
+    },
+    {
+     "rank": 492,
+     "pos": 493,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 492,
+      "score": 0.0033333333333332993,
+      "jac": 0.024390243902439025
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a08e2eb50bd891addfb5666",
+   "slug": "sefer-mahberot-imanu-el-immanuel-of-rome-constantinople-rome",
+   "ia_identifier": "ldpd_in00034094629_000",
+   "language": "Hebrew",
+   "year": 1535,
+   "century": 1500,
+   "pages_count": 316,
+   "pages_ocr": 24,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 2,
+     "pos": 3,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 295,
+      "score": 0.010000000000000009,
+      "jac": 0.012396694214876033
+     }
+    },
+    {
+     "rank": 7,
+     "pos": 8,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 181,
+      "score": 0.026717557251908386,
+      "jac": 0.013888888888888888
+     }
+    },
+    {
+     "rank": 12,
+     "pos": 13,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 55,
+      "score": 0.01666666666666672,
+      "jac": 0.011494252873563218
+     }
+    },
+    {
+     "rank": 16,
+     "pos": 17,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 182,
+      "score": 0.020000000000000018,
+      "jac": 0.020833333333333332
+     }
+    },
+    {
+     "rank": 21,
+     "pos": 23,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 88,
+      "score": 0.01666666666666672,
+      "jac": 0.013574660633484163
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "695591d17bd6d2cd1d619a70",
+   "slug": "betser-ba-midbar-kabbalistic-commentary-on-torah-zion",
+   "ia_identifier": "ldpd_13432731_000",
+   "language": "Hebrew",
+   "year": 1675,
+   "century": 1600,
+   "pages_count": 172,
+   "pages_ocr": 172,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 17,
+     "pos": 20,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 107,
+      "score": 0.010000000000000009,
+      "jac": 0.006289308176100629
+     }
+    },
+    {
+     "rank": 50,
+     "pos": 53,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 42,
+      "score": 0.003816793893129722,
+      "jac": 0.0072992700729927005
+     }
+    },
+    {
+     "rank": 84,
+     "pos": 87,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 89,
+      "score": 0.00666666666666671,
+      "jac": 0.0078125
+     }
+    },
+    {
+     "rank": 117,
+     "pos": 120,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 150,
+     "pos": 153,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 110,
+      "score": 0.00666666666666671,
+      "jac": 0.00909090909090909
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69d5ac8c4dc55b8478dddcab",
+   "slug": "code-of-jewish-law-civil-section-karo",
+   "ia_identifier": "shulanarukhmiuro00karo",
+   "language": "Hebrew",
+   "year": 1723,
+   "century": 1700,
+   "pages_count": 368,
+   "pages_ocr": 267,
+   "text_role": "original",
+   "stratum": "Hebrew (all centuries, pooled — sparse corpus)",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 27,
+     "pos": 28,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 234,
+      "score": 0,
+      "jac": 0.026200873362445413
+     }
+    },
+    {
+     "rank": 80,
+     "pos": 111,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 109,
+      "score": 0,
+      "jac": 0.03571428571428571
+     }
+    },
+    {
+     "rank": 133,
+     "pos": 194,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 119,
+      "score": 0.0033333333333332993,
+      "jac": 0.023622047244094488
+     }
+    },
+    {
+     "rank": 186,
+     "pos": 262,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 55,
+      "score": 0,
+      "jac": 0.01937984496124031
+     }
+    },
+    {
+     "rank": 239,
+     "pos": 332,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 317,
+      "score": 0,
+      "jac": 0.030837004405286344
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6992cefeb2ff9ac7391f7c60",
+   "slug": "wubei-zhi-vol-92",
+   "ia_identifier": "02092350.cn",
+   "language": "Chinese",
+   "year": 1621,
+   "century": 1600,
+   "pages_count": 107,
+   "pages_ocr": 107,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 28,
+     "pos": 30,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 48,
+     "pos": 53,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 75,
+      "score": 0,
+      "jac": 0.02127659574468085
+     }
+    },
+    {
+     "rank": 67,
+     "pos": 76,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 86,
+     "pos": 96,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cdb543713c66ea63818d",
+   "slug": "sancai-tuhui-vol-47",
+   "ia_identifier": "02098314.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 75,
+   "pages_ocr": 75,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 7,
+     "pos": 9,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 21,
+     "pos": 23,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 36,
+     "pos": 39,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 53,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 48,
+      "score": 0,
+      "jac": 0.012195121951219513
+     }
+    },
+    {
+     "rank": 64,
+     "pos": 68,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992ce83673ee1e40e320d58",
+   "slug": "collected-illustrations-of-the-three-realms-vol-103",
+   "ia_identifier": "02098370.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 79,
+   "pages_ocr": 79,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 8,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.010526315789473717,
+      "jac": 0.0136986301369863
+     }
+    },
+    {
+     "rank": 24,
+     "pos": 26,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.013698630136986356,
+      "jac": 0.015625
+     }
+    },
+    {
+     "rank": 39,
+     "pos": 42,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 53,
+     "pos": 56,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 12,
+      "score": 0.014925373134328401,
+      "jac": 0.015873015873015872
+     }
+    },
+    {
+     "rank": 68,
+     "pos": 71,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992ce63673ee1e40e320633",
+   "slug": "collected-illustrations-of-the-three-realms-7",
+   "ia_identifier": "02098361.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 100,
+   "pages_ocr": 100,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 19,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 14,
+     "pos": 34,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 23,
+     "pos": 56,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 32,
+     "pos": 74,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 43,
+     "pos": 97,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 55,
+      "score": 0,
+      "jac": 0.017857142857142856
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6992cda043713c66ea637aa0",
+   "slug": "collected-illustrations-of-the-three-realms-vol-41",
+   "ia_identifier": "02098308.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 69,
+   "pages_ocr": 69,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 7,
+     "pos": 8,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0.027027027027026973,
+      "jac": 0.027777777777777776
+     }
+    },
+    {
+     "rank": 20,
+     "pos": 21,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 34,
+     "pos": 36,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0.007575757575757569,
+      "jac": 0.0125
+     }
+    },
+    {
+     "rank": 47,
+     "pos": 49,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0.07692307692307687,
+      "jac": 0.08333333333333333
+     }
+    },
+    {
+     "rank": 60,
+     "pos": 62,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cdab43713c66ea637d67",
+   "slug": "sancai-tuhui-vol-44",
+   "ia_identifier": "02098311.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 97,
+   "pages_ocr": 97,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 29,
+     "pos": 31,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 48,
+     "pos": 50,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 67,
+     "pos": 69,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 86,
+     "pos": 88,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cdea81c9d7efb84d0bee",
+   "slug": "wubei-zhi-vol-33",
+   "ia_identifier": "02092291.cn",
+   "language": "Chinese",
+   "year": 1621,
+   "century": 1600,
+   "pages_count": 113,
+   "pages_ocr": 113,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 26,
+     "pos": 40,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 44,
+     "pos": 61,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 61,
+     "pos": 79,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 78,
+     "pos": 96,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cd7543713c66ea63699e",
+   "slug": "sancai-tuhui-vol-29",
+   "ia_identifier": "02098296.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 113,
+   "pages_ocr": 113,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 18,
+     "pos": 33,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 40,
+      "score": 0,
+      "jac": 0.037037037037037035
+     }
+    },
+    {
+     "rank": 30,
+     "pos": 57,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 41,
+     "pos": 79,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 54,
+     "pos": 103,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992ce8a673ee1e40e320f60",
+   "slug": "sancai-tuhui-vol-105",
+   "ia_identifier": "02098372.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 97,
+   "pages_ocr": 97,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0.015151515151515138,
+      "jac": 0.018518518518518517
+     }
+    },
+    {
+     "rank": 28,
+     "pos": 29,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 47,
+     "pos": 48,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0.01666666666666672,
+      "jac": 0.020833333333333332
+     }
+    },
+    {
+     "rank": 66,
+     "pos": 68,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0.011363636363636354,
+      "jac": 0.014084507042253521
+     }
+    },
+    {
+     "rank": 86,
+     "pos": 88,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "69dea80051267905f92aadfe",
+   "slug": "slapping-the-table-in-amazement-first-collection-vol-1",
+   "ia_identifier": "02111647.cn",
+   "language": "Chinese",
+   "year": 1628,
+   "century": 1600,
+   "pages_count": 61,
+   "pages_ocr": 61,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 6,
+     "pos": 7,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 57,
+      "score": 0.006172839506172867,
+      "jac": 0.00980392156862745
+     }
+    },
+    {
+     "rank": 18,
+     "pos": 19,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 17,
+      "score": 0.00877192982456143,
+      "jac": 0.010309278350515464
+     }
+    },
+    {
+     "rank": 30,
+     "pos": 31,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 42,
+     "pos": 43,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 54,
+     "pos": 55,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 57,
+      "score": 0.01538461538461533,
+      "jac": 0.015384615384615385
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6992ce492960dc4e5cea8efb",
+   "slug": "collected-illustrations-of-the-three-realms-volume-87",
+   "ia_identifier": "02098354.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 128,
+   "pages_ocr": 128,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 11,
+     "pos": 14,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 34,
+     "pos": 38,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 56,
+     "pos": 69,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 80,
+     "pos": 93,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 104,
+     "pos": 118,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cdbc43713c66ea6383f4",
+   "slug": "wubei-zhi-vol-25",
+   "ia_identifier": "02092283.cn",
+   "language": "Chinese",
+   "year": 1621,
+   "century": 1600,
+   "pages_count": 91,
+   "pages_ocr": 91,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 26,
+     "pos": 29,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 44,
+     "pos": 48,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 61,
+     "pos": 65,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 78,
+     "pos": 82,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cd6343713c66ea636262",
+   "slug": "sancai-tuhui-vol-24",
+   "ia_identifier": "02098291.cn",
+   "language": "Chinese",
+   "year": 1609,
+   "century": 1600,
+   "pages_count": 108,
+   "pages_ocr": 108,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 8,
+     "pos": 27,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 97,
+      "score": 0,
+      "jac": 0.014285714285714285
+     }
+    },
+    {
+     "rank": 16,
+     "pos": 37,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 32,
+     "pos": 66,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 45,
+     "pos": 89,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 58,
+     "pos": 102,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cf29f5b4f75c1a4c8238",
+   "slug": "treatise-on-military-preparedness-vol-101",
+   "ia_identifier": "02092359.cn",
+   "language": "Chinese",
+   "year": 1621,
+   "century": 1600,
+   "pages_count": 98,
+   "pages_ocr": 98,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 29,
+     "pos": 30,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 48,
+     "pos": 49,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 67,
+     "pos": 68,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 86,
+     "pos": 87,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992ce7d673ee1e40e320b97",
+   "slug": "wubei-zhi-treatise-on-armament-technology-3",
+   "ia_identifier": "02092322.cn",
+   "language": "Chinese",
+   "year": 1621,
+   "century": 1600,
+   "pages_count": 78,
+   "pages_ocr": 78,
+   "text_role": "original",
+   "stratum": "Chinese 1600s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 23,
+     "pos": 24,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 38,
+     "pos": 41,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 54,
+     "pos": 57,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 68,
+     "pos": 71,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "69e7288aa409200ea79f009f",
+   "slug": "vol-8",
+   "ia_identifier": "liaozhaizhiyi08puso",
+   "language": "Chinese",
+   "year": 1869,
+   "century": 1800,
+   "pages_count": 172,
+   "pages_ocr": 172,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 17,
+     "pos": 19,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 52,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 84,
+     "pos": 86,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 117,
+     "pos": 119,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 150,
+     "pos": 152,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cff9f5b4f75c1a4c9d91",
+   "slug": "44",
+   "ia_identifier": "02087132.cn",
+   "language": "Chinese",
+   "year": 1844,
+   "century": 1800,
+   "pages_count": 104,
+   "pages_ocr": 104,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 11,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 27,
+     "pos": 29,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 46,
+     "pos": 49,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 64,
+     "pos": 72,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 82,
+     "pos": 93,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cf0af7519cdd65044cd3",
+   "slug": "illustrated-compendium-of-materia-medica-vol-5",
+   "ia_identifier": "02095438.cn",
+   "language": "Chinese",
+   "year": 1848,
+   "century": 1800,
+   "pages_count": 141,
+   "pages_ocr": 141,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "insufficient_probe_text",
+   "debug": null
+  },
+  {
+   "book_id": "6992cf3cf5b4f75c1a4c8518",
+   "slug": "illustrated-treatise-on-the-maritime-kingdoms-vol-3",
+   "ia_identifier": "02087091.cn",
+   "language": "Chinese",
+   "year": 1844,
+   "century": 1800,
+   "pages_count": 84,
+   "pages_ocr": 84,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 59,
+      "score": 0.0078125,
+      "jac": 0.00980392156862745
+     }
+    },
+    {
+     "rank": 24,
+     "pos": 27,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.010869565217391353,
+      "jac": 0.012195121951219513
+     }
+    },
+    {
+     "rank": 40,
+     "pos": 43,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.007042253521126751,
+      "jac": 0.011764705882352941
+     }
+    },
+    {
+     "rank": 56,
+     "pos": 60,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.008849557522123908,
+      "jac": 0.012658227848101266
+     }
+    },
+    {
+     "rank": 72,
+     "pos": 76,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 18,
+      "score": 0.008695652173912993,
+      "jac": 0.009615384615384616
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69e7494885f786e884a4e57a",
+   "slug": "shijing-book-of-songs-anonymous",
+   "ia_identifier": "wuchingshihching01unse_0",
+   "language": "Chinese",
+   "year": 1842,
+   "century": 1800,
+   "pages_count": 68,
+   "pages_ocr": 68,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 7,
+     "pos": 8,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.013333333333333334
+     }
+    },
+    {
+     "rank": 20,
+     "pos": 21,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 33,
+     "pos": 34,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 46,
+     "pos": 47,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 59,
+     "pos": 60,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6a09f78bec7a5a72f8daad08",
+   "slug": "les-memoires-historiques-de-se-ma-ts-ien-vol-iii-the-eight-sima-qian-chavannes",
+   "ia_identifier": "lesmmoireshisto00chgoog",
+   "language": "Chinese",
+   "year": 1895,
+   "century": 1800,
+   "pages_count": 730,
+   "pages_ocr": 25,
+   "text_role": null,
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "aligned",
+   "scale": 1,
+   "intercept": -1,
+   "matched_probes": 4,
+   "total_probes": 5,
+   "pages_scored": 16
+  },
+  {
+   "book_id": "6992cf4cf5b4f75c1a4c887b",
+   "slug": "illustrated-compendium-of-materia-medica-vol-22",
+   "ia_identifier": "02095455.cn",
+   "language": "Chinese",
+   "year": 1848,
+   "century": 1800,
+   "pages_count": 160,
+   "pages_ocr": 160,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 13,
+     "pos": 22,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 15,
+     "pos": 25,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 29,
+     "pos": 55,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 134,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 59,
+     "pos": 149,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cfa9f5b4f75c1a4c9628",
+   "slug": "illustrated-treatise-on-the-maritime-kingdoms-vol-27",
+   "ia_identifier": "02087115.cn",
+   "language": "Chinese",
+   "year": 1844,
+   "century": 1800,
+   "pages_count": 99,
+   "pages_ocr": 99,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.02040816326530612
+     }
+    },
+    {
+     "rank": 29,
+     "pos": 31,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 49,
+     "pos": 51,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.020833333333333332
+     }
+    },
+    {
+     "rank": 68,
+     "pos": 70,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 4,
+      "score": 0,
+      "jac": 0.02040816326530612
+     }
+    },
+    {
+     "rank": 87,
+     "pos": 89,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cf93f5b4f75c1a4c9383",
+   "slug": "21",
+   "ia_identifier": "02087109.cn",
+   "language": "Chinese",
+   "year": 1844,
+   "century": 1800,
+   "pages_count": 86,
+   "pages_ocr": 86,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 10,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 31,
+      "score": 0,
+      "jac": 0.012658227848101266
+     }
+    },
+    {
+     "rank": 26,
+     "pos": 27,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 43,
+     "pos": 44,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 48,
+      "score": 0,
+      "jac": 0.022727272727272728
+     }
+    },
+    {
+     "rank": 59,
+     "pos": 60,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 77,
+     "pos": 78,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "69e72885a409200ea79efff6",
+   "slug": "vol-7",
+   "ia_identifier": "liaozhaizhiyi07puso",
+   "language": "Chinese",
+   "year": 1869,
+   "century": 1800,
+   "pages_count": 166,
+   "pages_ocr": 166,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 16,
+     "pos": 18,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 49,
+     "pos": 51,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 82,
+     "pos": 84,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 114,
+     "pos": 116,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 147,
+     "pos": 149,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cf1c70ab3737555459c6",
+   "slug": "illustrated-compendium-of-materia-medica-vol-10",
+   "ia_identifier": "02095443.cn",
+   "language": "Chinese",
+   "year": 1848,
+   "century": 1800,
+   "pages_count": 113,
+   "pages_ocr": 113,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_4_probes_matched",
+   "debug": [
+    {
+     "rank": 4,
+     "pos": 9,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 20,
+     "pos": 45,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 32,
+     "pos": 69,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 43,
+     "pos": 89,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cf6ef5b4f75c1a4c8e2c",
+   "slug": "illustrated-investigation-of-the-names-and-natures-of-plants",
+   "ia_identifier": "02095462.cn",
+   "language": "Chinese",
+   "year": 1848,
+   "century": 1800,
+   "pages_count": 99,
+   "pages_ocr": 99,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 9,
+     "pos": 12,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 24,
+      "score": 0.009708737864077666,
+      "jac": 0.013157894736842105
+     }
+    },
+    {
+     "rank": 24,
+     "pos": 31,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 40,
+     "pos": 52,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 56,
+     "pos": 71,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 72,
+     "pos": 90,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cfb1f5b4f75c1a4c968d",
+   "slug": "29",
+   "ia_identifier": "02087117.cn",
+   "language": "Chinese",
+   "year": 1844,
+   "century": 1800,
+   "pages_count": 113,
+   "pages_ocr": 113,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 11,
+     "pos": 14,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 33,
+     "pos": 36,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 55,
+     "pos": 58,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 76,
+     "pos": 79,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 98,
+     "pos": 101,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cf72f5b4f75c1a4c8e92",
+   "slug": "15",
+   "ia_identifier": "02087103.cn",
+   "language": "Chinese",
+   "year": 1844,
+   "century": 1800,
+   "pages_count": 103,
+   "pages_ocr": 103,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 10,
+     "pos": 13,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 30,
+     "pos": 33,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 50,
+     "pos": 53,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 70,
+     "pos": 73,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    },
+    {
+     "rank": 90,
+     "pos": 93,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "no_jaccard_candidates"
+    }
+   ]
+  },
+  {
+   "book_id": "6992cf3527dcac3f8ca1b732",
+   "slug": "1",
+   "ia_identifier": "02087089.cn",
+   "language": "Chinese",
+   "year": 1844,
+   "century": 1800,
+   "pages_count": 117,
+   "pages_ocr": 117,
+   "text_role": "original",
+   "stratum": "Chinese 1800s — EXPECTED-COLLAPSE control",
+   "status": "unalignable",
+   "reason": "only_0_of_5_probes_matched",
+   "debug": [
+    {
+     "rank": 11,
+     "pos": 14,
+     "frac": 0.1,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0.03703703703703709,
+      "jac": 0.03571428571428571
+     }
+    },
+    {
+     "rank": 32,
+     "pos": 38,
+     "frac": 0.3,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0.06666666666666665,
+      "jac": 0.043478260869565216
+     }
+    },
+    {
+     "rank": 54,
+     "pos": 61,
+     "frac": 0.5,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0,
+      "jac": 0.047619047619047616
+     }
+    },
+    {
+     "rank": 76,
+     "pos": 83,
+     "frac": 0.7,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0,
+      "jac": 0.0625
+     }
+    },
+    {
+     "rank": 97,
+     "pos": 104,
+     "frac": 0.9,
+     "matched": false,
+     "reason": "below_match_threshold",
+     "best": {
+      "idx": 28,
+      "score": 0.03125,
+      "jac": 0.01694915254237288
+     }
+    }
+   ]
+  }
+ ]
+}

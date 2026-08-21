@@ -26,6 +26,133 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'suda-benchmark',
+    title: 'Graded by the Suda',
+    subtitle:
+      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a cheap AI judge fails silently — its incapacity arrives dressed as approval. Total API cost: $1.15.',
+    date: '11 August 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/pages/69a99ce86c7545e2236e12de/0300.jpg',
+    imageAlt:
+      'A two-column page of Bekker’s 1854 edition of the Suda, dense Greek type listing the seven men named Didymus.',
+  },
+  {
+    slug: 'greek-lemma-table',
+    title: 'Every Shape of Every Word',
+    subtitle:
+      'We mapped 570,000 Greek word forms to their dictionary entries — the invisible table that turns a 400-year-old page into something you can read, checked against 132,000 words hand-verified by scholars.',
+    date: '10 August 2026',
+    readTime: '5 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/adefe2d5-88a7-4595-9885-903a93abee51/391.jpg',
+    imageAlt: 'A Greek page of the Divini Platonis Opera omnia, 1590.',
+  },
+  {
+    slug: 'nobody-knows-what-has-been-scanned',
+    title: 'Nobody Knows What Has Been Scanned',
+    subtitle:
+      'No institution on earth can answer whether a book has already been digitized. We had to harvest 3.5 million records to answer it for one library — and found 3,655 books nobody has scanned. The case for a global registry.',
+    date: '9 August 2026',
+    readTime: '6 min read',
+    tag: 'Essay',
+    tagColor: 'bg-amber-50 text-amber-700',
+    image: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg',
+    imageAlt:
+      "Engraved title page of Zwinger's Theatrum Humanae Vitae, 1604 — the largest encyclopedia of its age.",
+  },
+  {
+    slug: 'reciting-not-reading',
+    title: 'Reciting, Not Reading',
+    subtitle:
+      'We covered four lines of Genesis with an opaque grey box. Our OCR transcribed them anyway — correctly, seamlessly, and without a word of warning. Then four different prompts failed to stop it, and the one thing that worked was not something we said.',
+    date: '30 July 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://sourcelibrary.org/blog/reciting-not-reading/mask-rect-zoom.jpg',
+    imageAlt:
+      'A 1566 Vulgate page with a grey rectangle covering four lines of Genesis 1:2, fragments of the covered lines still visible at the right edge.',
+  },
+  {
+    slug: 'nine-models-forty-pages',
+    title: 'Nine Models, Forty Pages',
+    subtitle:
+      "We benchmarked every OCR-capable model we could reach — Google's newest releases, three open-weight challengers, one self-hosted on a rented GPU — against the same forty historical pages, with a memorization control and paired statistics. The newest budget model lost to its own predecessor, and an open-weight model reached parity on the pages it can read.",
+    date: '23 July 2026',
+    readTime: '9 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg',
+    imageAlt:
+      "Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing — the Armenian page most models could not read.",
+  },
+  {
+    slug: 'playable-page',
+    title: 'The Playable Page',
+    subtitle:
+      'Old treatises are full of instruments diagrammed and silenced — monochord divisions, tetrachord arcs, string tables worked out to the integer. Three of them, replicated and strung: Galilei\'s two-string bench with its weight pan, the Lyre of Mercury\'s disputed numbers read as three different laws, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
+    date: '19 July 2026',
+    readTime: '3 instruments',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/6955739df63a7571091720cf/80.jpg',
+    imageAlt:
+      'A page of the Boethius manuscript: nested red arcs mapping the chromatic and enharmonic tetrachords, with string names and monochord numbers.',
+  },
+  {
+    slug: 'ngram-viewer',
+    title: 'Chart a Word, Then Read the Page',
+    subtitle:
+      'A Google-Books-style ngram viewer over five centuries of alchemy, Hermetica, and early science — with the two things word-frequency charts have never done: one curve that follows a concept across Latin, German, and French sources at once, and a click-through from any peak to the actual readable pages. Plus an honest guide to what these curves can and cannot prove.',
+    date: '19 July 2026',
+    readTime: '7 min read',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-khunrath-the-four-the-three-the-two-and-the-one.jpg',
+    imageAlt: "Concentric rings of Latin, Greek, and Hebrew words — Heinrich Khunrath's 'The Four, the Three, the Two, and the One,' 1595.",
+  },
+  {
+    slug: 'sound-laboratory',
+    title: 'The Sound Laboratory',
+    subtitle:
+      'Ten interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears — the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Kepler\'s planets auditioned against modern orbits, Kircher\'s sympathetic strings, and Euler\'s formula for sweetness, graded by you. Headphones recommended.',
+    date: '16 July 2026',
+    readTime: '10 experiments',
+    tag: 'Interactive',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg',
+    imageAlt: "A smith at his anvil, hammer raised — Aegidius Sadeler's engraving, 1608.",
+  },
+  {
+    slug: 'nature-of-harmony',
+    title: 'The Nature of Harmony',
+    subtitle:
+      'For twenty-five centuries and across five civilizations, people said the world is built like music — and split at once into those who heard a deep order and those who demanded to measure it. A history of that quarrel, from a plucked string in antiquity to the whole-number ratios inside the atom, told through the books one library holds.',
+    date: '15 July 2026',
+    readTime: '18 min read',
+    tag: 'History of Ideas',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg',
+    imageAlt:
+      "Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago — Nature chained to the divine name above and to the ape of Art below.",
+  },
+  {
+    slug: 'show-me-the-number',
+    title: 'Show Me the Number',
+    subtitle:
+      'We keep saying AI should be in "harmony" with us — aligned, attuned, in tune. Is that a claim you can measure, or a picture we find comforting? Kepler forged the test four hundred years ago. A sequel on synchrony, the Platonic Representation Hypothesis, and where a real law of human–AI harmony could live.',
+    date: '15 July 2026',
+    readTime: '12 min read',
+    tag: 'Essay',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/6952d12e77f38f6761bc5bec/74.jpg',
+    imageAlt:
+      "The five Platonic solids — Kepler's figurae mundanae — from Harmonices Mundi, 1619.",
+  },
+  {
     slug: 'fish-voiced-priest',
     title: 'The Fish-Voiced Priest',
     subtitle:
@@ -162,6 +289,8 @@ export const posts: BlogPost[] = [
     readTime: '3 min read',
     tag: 'Field notes',
     tagColor: 'bg-amber-50 text-amber-800',
+    image: 'https://images.sourcelibrary.org/archived/69e010c0c47b5c9f88213cee/7.jpg',
+    imageAlt: 'Title page of De Boeken des Ouden Verbonds, the Old Testament in Javanese, 1854',
   },
   {
     slug: 'did-an-ai-write-the-encyclical',
@@ -183,8 +312,8 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Research',
     tagColor: 'bg-amber-50 text-amber-800',
-    image: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg',
-    imageAlt: "Frontispiece of Athanasius Kircher's Ars Magna Lucis et Umbrae (1671)",
+    image: 'https://images.sourcelibrary.org/gallery/69526359ab34727b1f046d5a/69568fa01479a63c1108cdb0-0.jpg',
+    imageAlt: 'Two figures wringing collected dew into a basin under the sun and moon — a seventeenth-century alchemical engraving.',
   },
   {
     slug: 'did-the-ai-read-this',
@@ -216,6 +345,7 @@ export const posts: BlogPost[] = [
     readTime: '9 min read',
     tag: 'Research',
     tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg',
   },
   {
     slug: 'the-deletion',
@@ -254,6 +384,7 @@ export const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Interactive',
     tagColor: 'bg-amber-50 text-amber-700',
+    image: 'https://images.sourcelibrary.org/archived/6909d654cf28baa1b4cb0269/4.jpg',
   },
   {
     slug: 'cellulae',
@@ -263,6 +394,7 @@ export const posts: BlogPost[] = [
     readTime: '12 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://images.sourcelibrary.org/archived/695677fdbe7c607c5f03b2d9/717.jpg',
   },
   {
     slug: 'singularity-1486',
@@ -294,6 +426,7 @@ export const posts: BlogPost[] = [
     readTime: '4 min read',
     tag: 'Interactive',
     tagColor: 'bg-amber-50 text-amber-700',
+    image: 'https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg',
   },
   {
     slug: 'rashi-ocr',
@@ -314,6 +447,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg',
   },
   {
     slug: 'visualizing-classification',
@@ -323,6 +457,7 @@ export const posts: BlogPost[] = [
     readTime: '6 min read',
     tag: 'AI research report',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+    image: 'https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg',
   },
   {
     slug: 'history-of-classification',
@@ -332,6 +467,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     tag: 'AI research report',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
+    image: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg',
   },
   {
     slug: 'counting-the-gap',
@@ -341,6 +477,7 @@ export const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Behind the scenes',
     tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/pages/697c8e0fbaa544415f85b6c6/0132-full.jpg',
   },
   {
     slug: 'untranslated-renaissance',
@@ -350,6 +487,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/1000,/0/default.jpg',
   },
   {
     slug: 'origin-story',
@@ -359,7 +497,7 @@ export const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Origin',
     tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg',
+    image: 'https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg',
     imageAlt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind',
   },
   {
@@ -381,8 +519,8 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
-    imageAlt: 'Integra Naturae Speculum by Robert Fludd, showing the Great Chain of Being, 1617',
+    image: 'https://images.sourcelibrary.org/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/366.jpg',
+    imageAlt: "Kircher's Sciathericon chart of the fixed stars, from Ars Magna Lucis et Umbrae, 1646",
   },
   // Hidden: needs rewrite with proper import session data
   // {
@@ -393,7 +531,7 @@ export const posts: BlogPost[] = [
   //   readTime: '12 min read',
   //   tag: 'Methodology',
   //   tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-  //   image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
+  //   image: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg',
   //   imageAlt: 'Page from a 16th-century manuscript showing mechanical diagrams',
   // },
   {
@@ -404,7 +542,7 @@ export const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg',
+    image: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg',
     imageAlt: 'Page from a 16th-century Greek manuscript of Hero of Alexandria\'s Pneumatica, showing mechanical diagrams',
   },
   {
@@ -415,7 +553,7 @@ export const posts: BlogPost[] = [
     readTime: '12 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg',
+    image: 'https://images.sourcelibrary.org/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg',
     imageAlt: 'Page spread from Einleitung zum wahren und gründlichen Erkänntnis des grossen Geheimnisses der Gottseligkeit, an early modern German alchemical text',
   },
   {
@@ -426,7 +564,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg',
+    image: 'https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg',
     imageAlt: 'Code of Hammurabi stele detail showing cuneiform inscription, ca. 1750 BCE',
   },
   {
@@ -437,7 +575,7 @@ export const posts: BlogPost[] = [
     readTime: '18 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+    image: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
     imageAlt: 'Copperplate engraving of a Rithmomachia game board from Selenus, Das Schach- oder König-Spiel, 1616',
   },
   {
@@ -448,7 +586,7 @@ export const posts: BlogPost[] = [
     readTime: '22 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg',
+    image: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg',
     imageAlt: 'Page from a 16th-century Greek manuscript showing Hero of Alexandria\'s Aeolipile diagram',
   },
   {
@@ -459,7 +597,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
+    image: 'https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg',
     imageAlt: 'Frontispiece engraving from Lambspringk\'s De Lapide Philosophico, Frankfurt 1625',
   },
   {
@@ -470,7 +608,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg',
     imageAlt: 'Title page of Symbola Aureae Mensae by Michael Maier, with twelve alchemist portrait medallions, 1617',
   },
   {
@@ -481,8 +619,8 @@ export const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Visual essay',
     tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
-    imageAlt: 'Integra Naturae Speculum by Robert Fludd, showing the Great Chain of Being with celestial spheres and zodiac signs, 1617',
+    image: 'https://images.sourcelibrary.org/archived/694b3b5b58a47807cc735dce/34.jpg',
+    imageAlt: "The heliocentric diagram of the planetary spheres from Copernicus's De Revolutionibus, 1543",
   },
   {
     slug: 'demonology',
@@ -492,7 +630,7 @@ export const posts: BlogPost[] = [
     readTime: '18 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg',
     imageAlt: 'Illustration of a jinn from the Book of Wonders, 14th century',
   },
   {
@@ -503,7 +641,7 @@ export const posts: BlogPost[] = [
     readTime: '22 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg',
+    image: 'https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg',
     imageAlt: 'Zodiac Man (Homo Signorum) from a medieval astrological manuscript',
   },
   {
@@ -514,7 +652,7 @@ export const posts: BlogPost[] = [
     readTime: '14 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg',
+    image: 'https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg',
     imageAlt: 'Frontispiece of Kircher\'s Oedipus Aegyptiacus, 1653',
   },
   {
@@ -525,8 +663,8 @@ export const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg',
-    imageAlt: 'The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450',
+    image: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/5.jpg',
+    imageAlt: 'The red and green lions beneath the radiant sun, from the Ripley Scroll, Bodleian Library, c. 1450',
   },
   {
     slug: 'fire-horse',
@@ -536,7 +674,7 @@ export const posts: BlogPost[] = [
     readTime: '16 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6992cac0d4d545ae73feea71/6.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg',
     imageAlt: 'He Tu (River Map) diagram from Chinese cosmological tradition',
   },
   {
@@ -558,7 +696,7 @@ export const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg',
+    image: 'https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/4.jpg',
     imageAlt: 'Title page of Aurora by Jakob Bohme, with cosmic diagram and Fraktur typography',
   },
   {
@@ -569,7 +707,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/7.jpg',
+    image: 'https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/7.jpg',
     imageAlt: 'Title page of Atalanta Fugiens by Michael Maier, with allegorical scenes',
   },
   {
@@ -594,9 +732,15 @@ export default function BlogPage() {
         <ContentHeader
           title="Research Notes"
           subtitle="AI-assisted research on rare texts, classification, and the history of knowledge. Derek Lomas directs the questions; Claude (Anthropic) builds the analysis. Every claim is grounded in primary sources from the collection."
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
+          image="https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg"
           imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
-        />
+        >
+          <p className="text-stone-400 text-sm mt-4">
+            <Link href="/blog/how-these-are-made" className="hover:text-white underline decoration-stone-500 underline-offset-2 transition-colors">
+              How these notes are made
+            </Link>
+          </p>
+        </ContentHeader>
       }
       bg="bg-cream"
     >

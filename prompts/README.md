@@ -1,6 +1,6 @@
 # `prompts/` — pipeline prompt archive
 
-This directory snapshots the prompts used by Source Library's AI pipeline, organized by phase. **Most files here are reference snapshots, not the live source of truth.** Production prompts live alongside the code that calls them; the archive exists so collaborators and external researchers can read what the pipeline asks the model without cloning the worker code.
+This directory snapshots the prompts used by Source Library's AI pipeline, organized by phase. **Most files here are reference snapshots, not the live source of truth.** Production prompts live alongside the code that calls them — **except the OCR prompt, which is read at runtime from the Mongo `prompts` collection** (`type:'ocr', is_default:true`, currently v15), so the files under `ocr/` are snapshots that can and do lag the live prompt; the archive exists so collaborators and external researchers can read what the pipeline asks the model without cloning the worker code.
 
 ## What's in here
 

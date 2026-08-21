@@ -49,13 +49,58 @@ const statAgeDays = Number(
   args.includes('--stat-age') ? args[args.indexOf('--stat-age') + 1] : 14,
 );
 
-/** Files whose content is read into every session, so stale stats there mislead by default. */
-const AUTO_LOADED = ['CLAUDE.md', 'memory'];
+/**
+ * Files an agent is directed to read as binding, so stale stats there mislead by default.
+ * `CLAUDE.md` and `memory/` load unconditionally; `.claude/docs/invariants/` is the
+ * conditional tier that `CLAUDE.md`'s routing table sends sessions to — it holds most of
+ * the dated numbers that used to live in `CLAUDE.md` itself, and dropping it here would
+ * have silently un-guarded them the day the split landed.
+ */
+const AUTO_LOADED = ['CLAUDE.md', 'memory', '.claude/docs/invariants'];
 const DOCS_DIR = '.claude/docs';
 const ARCHIVE_DIR = '.claude/docs/archive';
 
 /** A date anywhere in the filename: 2026-05-12, 2026-05, or 2026-04. */
 const DATED_FILENAME = /\d{4}-\d{2}(-\d{2})?/;
+
+/**
+ * The HUMAN tier: documents a person opens to understand the system, rather than
+ * documents an agent is routed to mid-task.
+ *
+ * These rot in a way the auto-loaded tier does not, and the difference is
+ * structural. An invariant is anchored to an incident, and incidents do not
+ * change. An overview is full of counts and component names, and those change
+ * weekly. So the tier above stays true by its nature and this one decays by its
+ * nature — and until 2026-08-08 this audit only looked at the tier that was
+ * fine. `ARCHITECTURE.md` had gone 8 months without a commit while describing
+ * page images as living in MongoDB (they are in R2) and the corpus as
+ * "primarily pre-1650 works" (it runs to the 19th century). Nothing flagged it,
+ * because nothing was looking.
+ */
+const HUMAN_TIER = ['ARCHITECTURE.md', 'README.md', '.claude/docs/system-map.md'];
+
+/**
+ * How far the code may move under a human-tier doc before it is suspect.
+ *
+ * Age alone is a poor signal — a doc can be old and perfectly correct. What
+ * matters is DRIFT: how much of the thing being described changed while the
+ * description sat still. So this counts commits touching `src/` since the doc's
+ * own last commit.
+ *
+ * CALIBRATED FROM MEASUREMENT, not chosen for roundness. This repository lands
+ * roughly 14–18 `src/` commits a day, so a threshold of 400 — the first value
+ * tried — fires on any doc left alone for a month, which is ordinary and not a
+ * defect. A check that cries monthly is how people learn to pass `--force`; the
+ * worktree reaper already taught that lesson here.
+ *
+ * 1,500 is about a quarter's worth. The failure this exists to catch scored
+ * **4,122**: that is how many `src/` commits accumulated under `ARCHITECTURE.md`
+ * between 2025-12-25 and 2026-08-08 while it described page images as living in
+ * MongoDB. A real case should trip a guard by a wide margin, not squeak past it.
+ */
+const DRIFT_COMMITS = Number(
+  args.includes('--drift-commits') ? args[args.indexOf('--drift-commits') + 1] : 1500,
+);
 
 function git(...argv) {
   try {
@@ -156,6 +201,25 @@ function staleStats(cutoff) {
   return findings;
 }
 
+/**
+ * Human-tier docs, with how far `src/` moved since each was last touched.
+ *
+ * Reports every one of them, not only the drifted — a short list a person can
+ * read in full is more useful here than a filtered alarm, and seeing a doc sit
+ * at zero drift is the reassurance the alarm cannot give.
+ */
+function humanTierDrift() {
+  return HUMAN_TIER.map((path) => {
+    const last = git('log', '-1', '--format=%cI', '--', path).trim();
+    if (!last) return { path, missing: true, drift: 0, days: 0, last: null };
+    // `--since`, not `<date>..HEAD` — a timestamp is not a revision, and git
+    // rejects it outright rather than resolving it to the nearest commit.
+    const drift = lines(git('log', '--format=%H', `--since=${last}`, 'HEAD', '--', 'src')).length;
+    const days = Math.round((Date.now() - new Date(last).getTime()) / 86400_000);
+    return { path, missing: false, last: last.slice(0, 10), days, drift, over: drift >= DRIFT_COMMITS };
+  });
+}
+
 function main() {
   const cutoff = new Date(Date.now() - statAgeDays * 86400_000);
 
@@ -172,14 +236,18 @@ function main() {
   }
 
   const stats = staleStats(cutoff);
+  const humanTier = humanTierDrift();
+  const drifted = humanTier.filter((d) => d.over || d.missing);
   const report = {
     generated_from_commit: git('rev-parse', '--short', 'HEAD').trim(),
     living_docs: docs.length,
     archived_docs: lines(git('ls-files', ARCHIVE_DIR + '/*.md')).length,
     stat_age_days: statAgeDays,
+    drift_commits_threshold: DRIFT_COMMITS,
     orphans,
     archive_candidates: archiveCandidates,
     stale_stats: stats,
+    human_tier: humanTier,
   };
 
   if (asJson) {
@@ -206,10 +274,19 @@ function main() {
     console.log(`\nSTALE STATS — ${stats.length} lines older than ${statAgeDays}d pairing a date with a number`);
     console.log('  These are read into every session as if current. Re-measure or re-date.\n');
     for (const s of stats) console.log(`    ${s.path}:${s.line}  [${s.date}]  ${s.text}`);
+
+    console.log(`\nHUMAN TIER — docs a person opens to understand the system`);
+    console.log(`  Flagged at ${DRIFT_COMMITS}+ commits to src/ since the doc last changed. Age alone`);
+    console.log('  says little; drift says how far the thing moved while the description sat still.\n');
+    for (const d of humanTier) {
+      if (d.missing) { console.log(`    ✗ ${d.path}  — not tracked`); continue; }
+      const mark = d.over ? '✗' : '✓';
+      console.log(`    ${mark} ${d.path.padEnd(30)} last ${d.last} (${d.days}d)  ${String(d.drift).padStart(5)} src/ commits since`);
+    }
     console.log('');
   }
 
-  const total = orphans.length + archiveCandidates.length + stats.length;
+  const total = orphans.length + archiveCandidates.length + stats.length + drifted.length;
   if (failOnFindings && total > 0) process.exit(1);
 }
 

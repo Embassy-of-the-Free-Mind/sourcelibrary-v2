@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse, after } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { anonymizeIp } from '@/lib/anonymize-ip';
+import { clientIpFromHeaders } from '@/lib/analytics-ingest';
 import { classifyTraffic, type TrafficClass } from '@/lib/traffic-classification';
 
 const SITE_HOST = 'sourcelibrary.org';
@@ -122,8 +122,11 @@ export async function POST(request: NextRequest) {
     const cfVerifiedBot = request.headers.get('cf-verified-bot') === 'true';
     const cfThreat = parseInt(request.headers.get('cf-threat-score') || '', 10);
 
-    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-    const ip = anonymizeIp(rawIp);
+    // Shared with /api/analytics/track so both pageview and event streams key
+    // on the same address. Reads cf-connecting-ip first — see the note on
+    // clientIpFromHeaders for why the previous header order recorded Cloudflare
+    // edge nodes instead of readers.
+    const ip = clientIpFromHeaders(request.headers);
 
     // Spoofed-UA scrapers that pass the UA check are caught by the per-IP cap.
     const rateCapped = exceedsIpCap(ip, effectiveUA || '');

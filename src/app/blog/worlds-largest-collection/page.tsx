@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 
 export const metadata: Metadata = {
@@ -14,11 +13,15 @@ export const metadata: Metadata = {
       'With 4,200+ translated books — 2,400+ for the first time ever — Source Library surpasses every comparable collection. And it\'s free.',
     images: [
       {
-        url: 'https://sourcelibrary.org/og-image.png',
+        url: 'https://sourcelibrary.org/og-image.jpg',
         width: 1200,
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg' }],
   },
   alternates: {
     canonical: '/blog/worlds-largest-collection',
@@ -563,7 +566,6 @@ export default function WorldsLargestCollectionPage() {
           </div>
         </section>
 
-        <BlogComments slug="worlds-largest-collection" />
 
       </article>
     </ContentPageLayout>

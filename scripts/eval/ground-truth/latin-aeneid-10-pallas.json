@@ -1,0 +1,22 @@
+{
+  "work": "Aeneid X.362-382 (Pallas rallies the Arcadians), 1580 Meyen Virgil",
+  "book_id": "6a084d9715c643eb1af3f59e",
+  "page_number": 890,
+  "script": "latin",
+  "language": "Latin",
+  "source": "Wikisource (la), ed. with macrons; folded at compare time",
+  "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_X",
+  "edition": "Venice 1580 (Meyen)",
+  "non_canonical": true,
+  "memorization_risk": "medium",
+  "ocr_ground_truth": "At parte ex aliā, quā saxa rotantia lātē intulerat torrēns arbustaque dīruta rīpīs, Arcadas insuētōs aciēs īnferre pedestrīs ut uīdit Pallās Latiō dare terga sequācī, aspera quīs nātūra locī dīmittere quandō suāsit equōs, ūnum quod rēbus restat ēgēnīs, nunc prece, nunc dictīs uirtūtem accendit amārīs; Quō fugitis, sociī? Per uōs et fortia factā, per ducis Euandrī nōmen dēuictaque bella spemque meam, patriae quae nunc subit aemula laudī, fīdite nē pedibus. Ferrō rumpenda per hostīs est uia. Quā globus ille uirum dēnsissimus urget, hāc uōs et Pallanta ducem patria alta reposcit. Nūmina nūlla premunt, mortālī urgēmur ab hoste mortālēs; totidem nōbīs animaeque manūsque. Ecce maris magnā claudit nōs obice pontus, dēest iam terra fugae: pelagus Trōiamne petāmus? Haec ait, et medius dēnsōs prōrumpit in hostīs. Obuius huic prīmum fātīs adductus inīquīs fit Lagus. Hunc, uellit magnō dum pondere saxum, intortō fīgit tēlō, discrīmina costīs",
+  "page_class": {
+    "source_class": "print",
+    "layout": "verse_embedded_in_commentary",
+    "density": "dense",
+    "type_size": "mixed",
+    "classified_by": "visual audit of the scan, 2026-07-23",
+    "canonical_text": false,
+    "memorization_risk": "medium"
+  }
+}

@@ -39,8 +39,11 @@ const WORKS = [
     '孟子見梁惠王。王曰：叟不遠千里而來，亦將有以利吾國乎？孟子對曰：王何必曰利？亦有仁義而已矣。'],
   ['Great Learning', 'da-xue', '大學|Great Learning|Four Books|四書', '大學之道', 'https://ctext.org/liji/da-xue/zh',
     '大學之道，在明明德，在親民，在止於至善。知止而后有定，定而后能靜，靜而后能安，安而后能慮，慮而后能得。物有本末，事有終始，知所先後，則近道矣。'],
-  ['Doctrine of the Mean', 'zhong-yong', '中庸|Doctrine of the Mean|Four Books|四書', '天命之謂性', 'https://ctext.org/liji/zhong-yong/zh',
-    '天命之謂性，率性之謂道，修道之謂教。道也者，不可須臾離也，可離非道也。是故君子戒慎乎其所不睹，恐懼乎其所不聞。莫見乎隱，莫顯乎微。'],
+  // Doctrine of the Mean REMOVED 2026-07-19: the only aligning page was Daxue
+  // Huowen commentary that merely alludes to 天命 — the stored OCR half-read the
+  // page then RECITED the Zhongyong opening from memory (verified against the
+  // scan). Pages that discuss a canonical text prime recitation; re-add only
+  // with a page that verifiably PRINTS the passage, checked against the image.
   ['Zhuangzi 1', 'zhuangzi-xiaoyaoyou', '莊子|Zhuangzi|南華', '北冥有魚', 'https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh',
     '北冥有魚，其名為鯤。鯤之大，不知其幾千里也。化而為鳥，其名為鵬。鵬之背，不知其幾千里也；怒而飛，其翼若垂天之雲。是鳥也，海運則將徙於南冥。'],
   ['Xunzi (Quan Xue)', 'xunzi-quan-xue', '荀子|Xunzi', '學不可以已', 'https://ctext.org/xunzi/quan-xue/zh',

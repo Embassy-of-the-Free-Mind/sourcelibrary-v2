@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { BookText, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { books, gallery } from '@/lib/api-client';
+import { getPageGridUrl } from '@/lib/utils';
 import SectionsNav from '@/components/layout/SectionsNav';
 
 interface SectionSummary {
@@ -34,22 +35,27 @@ interface ExpandableGuideProps {
   bookId: string;
   /** Detailed summary text, passed from server — renders instantly on expand */
   detailedSummary?: string;
+  /** Render open with no collapse toggle (book page v2 shows it inline). */
+  defaultExpanded?: boolean;
+  /** Hide the standalone illustrations block (the per-section thumbnails in
+   *  SectionsNav are kept). */
+  hideIllustrations?: boolean;
 }
 
-export default function ExpandableGuide({ bookId, detailedSummary, }: ExpandableGuideProps) {
+export default function ExpandableGuide({ bookId, detailedSummary, defaultExpanded = false, hideIllustrations = false }: ExpandableGuideProps) {
   const pathname = usePathname();
 
   // Extract tenant prefix from pathname (format: /{tenant}/book/...)
   const pathParts = pathname.split('/').filter(Boolean);
   const tenantPrefix = pathParts[0] && pathParts[1] === 'book' ? `/${pathParts[0]}` : '';
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const [loadingExtras, setLoadingExtras] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [illustrations, setIllustrations] = useState<GalleryItem[]>([]);
   const [showSections, setShowSections] = useState(true);
   const [showIllustrations, setShowIllustrations] = useState(true);
-  const [pages, setPages] = useState<Array<{ id: string; page_number: number }>>([]);
+  const [pages, setPages] = useState<Array<{ id: string; page_number: number; page_type?: string; thumb?: string }>>([]);
   const [extrasLoaded, setExtrasLoaded] = useState(false);
 
   // Lazy-load sections + illustrations when first expanded
@@ -66,7 +72,7 @@ export default function ExpandableGuide({ bookId, detailedSummary, }: Expandable
         setSections(idx.sectionSummaries);
       }
       if (bookData?.pages) {
-        setPages(bookData.pages.map((p: any) => ({ id: p.id || p._id, page_number: p.page_number })));
+        setPages(bookData.pages.map((p: any) => ({ id: p.id || p._id, page_number: p.page_number, page_type: p.page_type, thumb: getPageGridUrl(p) || undefined })));
       }
       setIllustrations(galleryData.items || []);
       setExtrasLoaded(true);
@@ -74,19 +80,21 @@ export default function ExpandableGuide({ bookId, detailedSummary, }: Expandable
   }, [expanded, extrasLoaded, bookId]);
 
   return (
-    <div className="mt-4">
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="inline-flex items-center gap-2 text-sm font-medium text-accent-rust hover:text-accent-gold-dark transition-colors group"
-      >
-        <BookText className="w-4 h-4" />
-        {expanded ? 'Collapse Reading Guide' : 'Reading Guide: chapter-by-chapter summary, selected quotes and illustrations'}
-        {expanded ? (
-          <ChevronUp className="w-3.5 h-3.5" />
-        ) : (
-          <ChevronDown className="w-3.5 h-3.5" />
-        )}
-      </button>
+    <div className={defaultExpanded ? '' : 'mt-4'}>
+      {!defaultExpanded && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="inline-flex items-center gap-2 text-sm font-medium text-accent-rust hover:text-accent-gold-dark transition-colors group"
+        >
+          <BookText className="w-4 h-4" />
+          {expanded ? 'Collapse Reading Guide' : 'Reading Guide: chapter-by-chapter summary, selected quotes and illustrations'}
+          {expanded ? (
+            <ChevronUp className="w-3.5 h-3.5" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5" />
+          )}
+        </button>
+      )}
 
       {expanded && (
         <div className="mt-5 space-y-6">
@@ -104,36 +112,18 @@ export default function ExpandableGuide({ bookId, detailedSummary, }: Expandable
 
           {/* Sections — lazy-loaded */}
           {sections.length > 0 && (
-            <div>
-              <button
-                onClick={() => setShowSections(!showSections)}
-                className="w-full flex items-center justify-between py-2 text-left"
-              >
-                <h3 className="text-base font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                  Table of Contents
-                  <span className="text-xs font-normal text-stone-400">({sections.length} sections)</span>
-                </h3>
-                {showSections ? (
-                  <ChevronUp className="w-4 h-4 text-stone-400" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-stone-400" />
-                )}
-              </button>
-              {showSections && (
-                <SectionsNav
-                  bookId={bookId}
-                  sections={sections}
-                  pages={pages}
-                  illustrations={illustrations}
-                />
-              )}
-            </div>
+            <SectionsNav
+              bookId={bookId}
+              sections={sections}
+              pages={pages}
+              illustrations={illustrations}
+            />
           )}
 
           {/* Illustrations — lazy-loaded. Per-book, so safe in embed mode
               (gallery.list is scoped to bookId — a tenant book's images are
               tenant-scoped by inheritance). */}
-          {illustrations.length > 0 && (
+          {!hideIllustrations && illustrations.length > 0 && (
             <div>
               <button
                 onClick={() => setShowIllustrations(!showIllustrations)}

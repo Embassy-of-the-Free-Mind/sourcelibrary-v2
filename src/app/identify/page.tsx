@@ -2,7 +2,8 @@
 
 import { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import { Camera, Upload, Loader2, ArrowLeft, ExternalLink } from 'lucide-react';
+import { Camera, Upload, Loader2, ExternalLink } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { bookUrl } from '@/lib/slugify';
 
 interface Match {
@@ -49,11 +50,27 @@ interface Identification {
   web_sources?: { title: string; url: string }[];
 }
 
+interface ConfirmedMatch {
+  book_id: string;
+  book_slug?: string;
+  book_title?: string;
+  book_author?: string;
+  gallery_image_id?: string;
+  page_id?: string;
+  page_number?: number;
+  description?: string;
+  image_url: string;
+  read_url: string;
+  gallery_url?: string;
+  source_type: string;
+}
+
 interface Result {
   identification: Identification;
   matches: Match[];
   visual_search?: boolean;
   verified?: boolean;
+  confirmed?: ConfirmedMatch | null;
   page?: { book_id: string; page_number: number; score: number } | null;
 }
 
@@ -141,60 +158,110 @@ export default function IdentifyPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Header */}
+      {/* Header — the page title band only appears once a photo is in play;
+          the landing hero speaks for itself */}
       <div className="bg-dark text-white">
-        <div className="max-w-2xl mx-auto px-4 py-6">
-          <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mb-4">
-            <ArrowLeft className="w-4 h-4" />
-            Library
-          </Link>
-          <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
-          <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
-        </div>
-      </div>
-
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
-        {/* Upload area */}
-        {!image && (
-          <div className="space-y-3">
-            {/* Camera button (primary on mobile) */}
-            <button
-              onClick={() => cameraInputRef.current?.click()}
-              className="w-full flex items-center justify-center gap-3 px-6 py-12 rounded-xl border-2 border-dashed border-accent-rust/30 bg-white hover:border-accent-rust/60 hover:bg-accent-rust/5 transition-colors cursor-pointer"
-            >
-              <Camera className="w-8 h-8 text-accent-rust" />
-              <div className="text-left">
-                <p className="text-lg font-medium text-primary">Take a Photo</p>
-                <p className="text-sm text-muted">Point your camera at an artwork or book</p>
-              </div>
-            </button>
-            <input
-              ref={cameraInputRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              onChange={handleInputChange}
-              className="hidden"
-            />
-
-            {/* File upload (secondary) */}
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-border-light bg-white hover:border-accent-rust/30 transition-colors text-sm text-secondary cursor-pointer"
-            >
-              <Upload className="w-4 h-4" />
-              Upload from gallery
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleInputChange}
-              className="hidden"
-            />
+        <SiteHeader variant="dark" />
+        {image && (
+          <div className="max-w-2xl mx-auto px-4 py-6">
+            <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
+            <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
           </div>
         )}
+      </div>
 
+      {/* Hidden inputs live outside the conditional states so the hero and
+          any future entry points can share them */}
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        onChange={handleInputChange}
+        className="hidden"
+      />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleInputChange}
+        className="hidden"
+      />
+
+      {/* Landing: you are standing in the room */}
+      {!image && (
+        <>
+          <section className="relative bg-dark">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/identify-hero.jpg"
+              alt="The picture room at the Embassy of the Free Mind in Amsterdam, its walls covered with framed engravings and prints"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Blend the dark site header into the room's ceiling, and carry
+                the text on a deep bottom gradient */}
+            <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-dark to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+            <div className="relative max-w-5xl mx-auto px-5 sm:px-8 min-h-[78vh] sm:min-h-[72vh] flex flex-col justify-end pb-12 sm:pb-16 pt-40">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-white/60 mb-3">
+                Embassy of the Free Mind · Amsterdam
+              </p>
+              <h1 className="font-display text-white font-semibold leading-[1.05] text-[clamp(2.1rem,5.5vw,3.8rem)] max-w-3xl [text-shadow:0_1px_24px_rgba(0,0,0,0.45)]">
+                Every picture here comes from a book.
+              </h1>
+              <p className="text-white/85 mt-4 max-w-xl text-base sm:text-lg leading-relaxed">
+                Photograph any print or engraving — on this wall, or on a page in
+                your hands — and we&apos;ll open the book it comes from.
+              </p>
+
+              {/* Signature: the viewfinder CTA — one more frame on a wall of frames */}
+              <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+                <button
+                  onClick={() => cameraInputRef.current?.click()}
+                  className="group relative inline-flex items-center gap-3 px-8 py-5 text-white cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+                  aria-label="Take a photo of an artwork or page"
+                >
+                  <span aria-hidden className="pointer-events-none absolute inset-0">
+                    <span className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-top-1.5 motion-safe:group-hover:-left-1.5" />
+                    <span className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-top-1.5 motion-safe:group-hover:-right-1.5" />
+                    <span className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-bottom-1.5 motion-safe:group-hover:-left-1.5" />
+                    <span className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white/90 transition-all duration-300 motion-safe:group-hover:-bottom-1.5 motion-safe:group-hover:-right-1.5" />
+                  </span>
+                  <Camera className="w-6 h-6" />
+                  <span className="text-lg font-medium tracking-wide">Take a photo</span>
+                </button>
+
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors cursor-pointer underline-offset-4 hover:underline outline-none focus-visible:ring-2 focus-visible:ring-white/70 rounded-sm"
+                >
+                  <Upload className="w-4 h-4" />
+                  Upload an image
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* How it works — one quiet strip, order is the information */}
+          <section className="border-b border-border-light bg-cream">
+            <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-10">
+              {[
+                { label: 'Photograph', body: 'Frames, glare, and angles are fine.' },
+                { label: 'Match', body: 'Compared against every illustration in the library.' },
+                { label: 'Read', body: 'The exact page opens in the reader, with translation.' },
+              ].map(step => (
+                <div key={step.label}>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-accent-rust">{step.label}</p>
+                  <p className="text-sm text-secondary mt-1.5 leading-snug">{step.body}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
+      )}
+
+      <div className={`max-w-2xl mx-auto px-4 space-y-6 ${image ? 'py-8' : ''}`}>
         {/* Preview + loading */}
         {image && (
           <div className="space-y-4">
@@ -239,6 +306,52 @@ export default function IdentifyPage() {
         {/* Results */}
         {result && (
           <div className="space-y-6">
+            {/* Visually confirmed match — the answer, front and center */}
+            {result.confirmed && (
+              <div className="rounded-xl overflow-hidden bg-white border-2 border-accent-rust/40 shadow-sm">
+                <div className="flex items-center gap-2 px-5 py-3 bg-accent-rust/5 border-b border-accent-rust/20">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-accent-rust">Found in the library</span>
+                  <span className="text-[10px] text-green-700 bg-green-50 rounded px-1.5 py-0.5">confirmed by visual comparison</span>
+                </div>
+                <div className="flex gap-4 p-5">
+                  <div className="w-24 sm:w-32 flex-shrink-0 rounded overflow-hidden bg-stone-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={result.confirmed.image_url} alt="" className="w-full h-auto object-contain" />
+                  </div>
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    {result.confirmed.description && (
+                      <p className="text-sm text-secondary line-clamp-3">{result.confirmed.description}</p>
+                    )}
+                    <p className="font-display font-semibold text-primary">
+                      {result.confirmed.book_title}
+                      {result.confirmed.page_number != null && (
+                        <span className="text-sm font-normal text-muted ml-2">page {result.confirmed.page_number}</span>
+                      )}
+                    </p>
+                    {result.confirmed.book_author && (
+                      <p className="text-sm text-secondary">{result.confirmed.book_author}</p>
+                    )}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <Link
+                        href={result.confirmed.read_url}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-accent-rust text-white text-sm font-medium hover:bg-accent-rust/85 transition-colors"
+                      >
+                        Read this book
+                      </Link>
+                      {result.confirmed.gallery_url && (
+                        <Link
+                          href={result.confirmed.gallery_url}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border-light text-sm text-secondary hover:border-accent-rust/30 transition-colors"
+                        >
+                          View in gallery
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* What Gemini saw */}
             <div className="card p-5 space-y-3">
               <div className="flex items-center justify-between">
@@ -381,14 +494,16 @@ export default function IdentifyPage() {
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <h2 className="text-lg font-display font-semibold text-primary">
-                    {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
+                    {result.confirmed
+                      ? 'Related results'
+                      : result.matches.length === 1 ? 'Closest Match' : `${result.matches.length} Possible Matches`}
                   </h2>
                   {result.visual_search && (
                     <span className="text-[10px] text-blue-600 bg-blue-50 rounded px-1.5 py-0.5">visual search</span>
                   )}
                 </div>
                 <div className="space-y-2">
-                  {result.matches.map((match, i) => {
+                  {result.matches.filter(m => !result.confirmed || m.id !== result.confirmed.book_id).map((match, i) => {
                     const pageUrl = match.page_number
                       ? `${bookUrl({ slug: match.slug, id: match.id })}/page-number/${match.page_number}`
                       : bookUrl({ slug: match.slug, id: match.id });
@@ -410,7 +525,7 @@ export default function IdentifyPage() {
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-primary group-hover:text-accent-rust transition-colors line-clamp-1">
-                          {i === 0 && result.matches.length > 1 && (
+                          {i === 0 && !result.confirmed && result.matches.length > 1 && (
                             <span className="text-xs bg-accent-rust/10 text-accent-rust rounded px-1.5 py-0.5 mr-2">Best match</span>
                           )}
                           {match.display_title || match.title}

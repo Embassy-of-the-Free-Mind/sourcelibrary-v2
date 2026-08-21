@@ -14,15 +14,18 @@ import PagesGrid from './PagesGrid';
 
 interface BookPagesSectionProps {
   bookId: string;
+  bookPath?: string;
   bookTitle?: string;
   pages: Page[];
   totalPageCount?: number;
   displayBrightness?: number;
+  overviewHref?: string;
+  subtitle?: string;
 }
 
-const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
+const PAGES_PER_LOAD = 20; // 2 rows on the 10-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: initialPages, totalPageCount, displayBrightness, overviewHref, subtitle }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
   const [allPagesFetched, setAllPagesFetched] = useState(
     !totalPageCount || initialPages.length >= totalPageCount
@@ -36,7 +39,14 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   // const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
-  const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
+  const [visibleCount, setVisibleCount] = useState(9); // Pagination — mobile default (3×3); desktop bumps to PAGES_PER_LOAD on mount
+
+  // Desktop shows a fuller first screen (2 rows on the 10-col grid); mobile keeps 9.
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 640) {
+      setVisibleCount(v => (v < PAGES_PER_LOAD ? PAGES_PER_LOAD : v));
+    }
+  }, []);
 
   // Fetch remaining pages from API when SSR only sent a partial set
   const fetchRemainingPages = useCallback(async () => {
@@ -505,6 +515,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           return firstSubstantive > 0 ? pages.slice(firstSubstantive) : pages;
         })()}
         bookId={bookId}
+        bookPath={bookPath}
         batchMode={false}
         reorderMode={false}
         selectedPages={selectedPages}
@@ -521,6 +532,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         onLoadMore={handleLoadMore}
         getImageUrl={getImageUrl}
         totalCount={totalPages}
+        overviewHref={overviewHref}
+        subtitle={subtitle}
       />
     </div>
   );

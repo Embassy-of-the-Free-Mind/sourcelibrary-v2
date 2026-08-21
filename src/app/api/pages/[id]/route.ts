@@ -5,7 +5,9 @@ import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
+import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 
 export const preferredRegion = 'fra1';
 
@@ -75,7 +77,9 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    return NextResponse.json(page, {
+    // Reader-path provenance: translation carries the invisible imprimatur.
+    // Deterministic (no ref), so the cache header below stays valid.
+    return NextResponse.json(markPageForReader(page), {
       headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
@@ -84,15 +88,48 @@ export async function GET(
   }
 }
 
+/**
+ * PATCH /api/pages/[id] — replace a page's OCR / translation / summary text.
+ *
+ * Gated at `editor`, matching the UI: the Read/Edit toggle in TranslationEditor
+ * is wrapped in `<AuthCheck role="inner_circle">` (= effective role >= editor),
+ * so this is the API gate for an affordance no reader can see. It defaulted to
+ * `reader` until #3511, which meant any signed-in account could overwrite a
+ * page's text by calling the route directly.
+ *
+ * An absent tenant means GLOBAL SCOPE, not a refusal — the same semantics this
+ * route's GET has always had. This route used to answer 403 whenever no
+ * `x-tenant-id` was resolved, which made page saves fail on every book that
+ * carries no `tenantId` (30,132 of 34,039 visible books, measured 2026-08-04).
+ * The reader lives at `/book/<slug>/page/<id>` on the apex, so the only thing
+ * that ever supplied a tenant there was the proxy's referer fallback
+ * (`resolveTenantForBookSegment`), which resolves the tenant FROM THE BOOK and
+ * therefore returns null for a non-tenant one. Saves worked on the 11.5% of
+ * books owned by a tenant and 403'd on the rest (#3542).
+ *
+ * Access does not widen: with no `x-tenant-id`, `withAuth` cannot read a
+ * `memberships` row (`getTenantMembershipRole` returns null on a falsy tenant),
+ * so `effectiveRole` collapses to the JWT role — `superadmin` or `reader` and
+ * nothing else. Global page edits are therefore superadmin-only, which is the
+ * intended policy for now. Whether a non-superadmin should ever hold global
+ * edit rights is a separate open question — see the companion issue.
+ *
+ * The tenant twin `/api/[tenant]/pages/[id]` deliberately KEEPS its 403: there
+ * an unresolved tenant means the explicit `[tenant]` segment failed to resolve,
+ * which is a genuine misroute rather than a global call.
+ */
 export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const db = await getDb();
     const { id: tenantId } = getTenantContextFromRequest(request);
 
-    if (!tenantId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
+    // Scope the write to the tenant only when one was resolved. Note this must
+    // stay a conditional key: a literal `{ id, tenantId }` with a null tenant
+    // matches missing-and-null in Mongo, so it would appear to work on global
+    // books while silently never matching a tenant-owned page.
+    const scope: Record<string, unknown> = { id };
+    if (tenantId) scope.tenantId = tenantId;
 
     const rawBody = await request.json();
 
@@ -106,6 +143,16 @@ export const PATCH = withAuth(async (request, session, context) => {
     }
     const body = parseResult.data;
 
+    // Reader-served translation carries the invisible provenance imprimatur,
+    // and the editor's save posts that text straight back here. Strip the
+    // zero-width marks before storing so marks never enter the corpus — the
+    // English translation has no legitimate zero-width characters. The OCR is
+    // deliberately left alone: it is never marked, and bidi control marks can
+    // be genuine content in the original-language transcription.
+    if (body.translation) {
+      body.translation.data = stripProvenanceMarks(body.translation.data);
+    }
+
     const updateData: Record<string, unknown> = {
       updated_at: new Date()
     };
@@ -113,13 +160,10 @@ export const PATCH = withAuth(async (request, session, context) => {
     const now = new Date();
     const editedBy = body.edited_by || 'Unknown';
 
-    // Create revisions of existing content before manual overwrite
-    if (body.ocr) {
-      await createRevision(id, 'ocr');
-    }
-    if (body.translation) {
-      await createRevision(id, 'translation');
-    }
+    // Create revisions of existing content before manual overwrite.
+    // The returned revision carries the before-text for the correction event below.
+    const ocrRevision = body.ocr ? await createRevision(id, 'ocr') : undefined;
+    const translationRevision = body.translation ? await createRevision(id, 'translation') : undefined;
 
     // Update OCR if provided - mark as manual edit
     if (body.ocr) {
@@ -160,13 +204,31 @@ export const PATCH = withAuth(async (request, session, context) => {
 
     // Use findOneAndUpdate to get updated document in a single query
     const updatedPage = await db.collection('pages').findOneAndUpdate(
-      { id, tenantId },
+      scope,
       { $set: updateData, $inc: { edit_count: 1 } },
       { returnDocument: 'after' }
     );
 
     if (!updatedPage) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    // Capture the correction as a labeled model error (#3241) — fire and forget
+    const sessionEmail = session.user?.email;
+    if (body.ocr) {
+      recordCorrectionEvent({
+        revision: ocrRevision, after: body.ocr.data,
+        editorRole: 'editor', editedBy: editedBy, sessionEmail,
+        // A global edit has no tenant to attribute; the field is optional.
+        tenantId: tenantId ?? undefined,
+      }).catch(() => {});
+    }
+    if (body.translation) {
+      recordCorrectionEvent({
+        revision: translationRevision, after: body.translation.data,
+        editorRole: 'editor', editedBy: editedBy, sessionEmail,
+        tenantId: tenantId ?? undefined,
+      }).catch(() => {});
     }
 
     // Track edit for the book (fire and forget - don't block response)
@@ -199,7 +261,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error updating page:', error);
     return NextResponse.json({ error: 'Failed to update page' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });
 
 export const DELETE = withAdminAuth(async (request, session, context) => {
   try {
@@ -207,22 +269,25 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
     const db = await getDb();
     const { id: tenantId } = getTenantContextFromRequest(request);
 
-    if (!tenantId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
+    // Absent tenant = global scope, as on PATCH above. Still admin-gated, and
+    // with no `x-tenant-id` that resolves to superadmin only.
+    const scope: Record<string, unknown> = { id };
+    if (tenantId) scope.tenantId = tenantId;
+    const bookScope: Record<string, unknown> = {};
+    if (tenantId) bookScope.tenantId = tenantId;
 
     // Check if page exists
-    const page = await db.collection('pages').findOne({ id, tenantId });
+    const page = await db.collection('pages').findOne(scope);
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
     // Delete the page
-    await db.collection('pages').deleteOne({ id, tenantId });
+    await db.collection('pages').deleteOne(scope);
 
     // Renumber remaining pages for this book - use bulkWrite for speed
     const remainingPages = await db.collection('pages')
-      .find({ book_id: page.book_id, tenantId })
+      .find({ book_id: page.book_id, ...bookScope })
       .sort({ page_number: 1 })
       .toArray();
 

@@ -9,7 +9,17 @@
  * Parses <page-type> tags from OCR text when page.page_type is null.
  * Detects binding photos, digitizer inserts, bookplates (incl. BPH pelican),
  * and prefers decorated title pages with woodcuts/borders/printer's marks.
+ *
+ * TS twin: src/lib/cover-scoring.ts (used by ensure-cover + the book page).
+ * Keep in lock-step — tests/unit/cover-scoring-parity.test.ts runs both over
+ * the same fixtures and fails on divergence.
  */
+
+/** Scanner's hand caught in the frame. Mirror of HAND_IN_FRAME_RE in
+ *  src/lib/cover-scoring.ts — deliberately narrow ("hand-colored",
+ *  "handwriting", body text about hands must not match). */
+export const HAND_IN_FRAME_RE =
+  /\b(?:human|person'?s|scanner'?s|gloved) hand\b|\bhands? (?:is |are )?(?:visible|hold(?:s|ing)|gripping|resting on|in (?:the )?frame|at the (?:edge|corner))|\bfingers? (?:is |are )?(?:visible|hold(?:s|ing)|gripping)|\bthumb (?:is |appears )?(?:visible|hold(?:s|ing)|in (?:the )?frame)/i;
 
 /**
  * Extract page type from <page-type> tags in OCR text.
@@ -30,7 +40,7 @@ export function parsePageTypeFromOcr(ocrText) {
  * @returns {{ score: number, reason: string }}
  */
 export function scorePageForCover(page, options = {}) {
-  const ocrRaw = page.ocr?.data || page.ocr_text || '';
+  const ocrRaw = page.ocr?.data || page.ocr_text || page.ocr_head || '';
   const ocr = ocrRaw.substring(0, 1200).toLowerCase();
   const pageNum = page.page_number;
 
@@ -68,6 +78,11 @@ export function scorePageForCover(page, options = {}) {
       ocr.includes('cover material') || ocr.includes('cover interior') ||
       (ocr.includes('marbled') && pageNum <= 3)) {
     return { score: -80, reason: 'physical book photo' };
+  }
+
+  // Scanner's hand / fingers caught in the frame
+  if (HAND_IN_FRAME_RE.test(ocr)) {
+    return { score: -75, reason: 'hand in frame' };
   }
 
   // Digitizer inserts and portal pages

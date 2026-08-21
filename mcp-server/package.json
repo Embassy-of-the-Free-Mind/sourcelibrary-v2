@@ -1,6 +1,6 @@
 {
   "name": "@source-library/mcp-server",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "mcpName": "io.github.Embassy-of-the-Free-Mind/source-library",
   "description": "Search, read, and cite ~22,000 rare pre-modern texts (alchemy, Hermetica, Kabbalah, theology, early science) with AI-generated English translations. CLI + MCP server, no API key needed.",
   "type": "module",
@@ -40,7 +40,7 @@
     "engravings",
     "illustrations"
   ],
-  "author": "Source Library <hello@sourcelibrary.org>",
+  "author": "Source Library <team@sourcelibrary.org>",
   "license": "MIT",
   "repository": {
     "type": "git",

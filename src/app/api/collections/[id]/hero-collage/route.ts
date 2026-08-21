@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import sharp from 'sharp';
+import sharp, { type OverlayOptions } from 'sharp';
 import { getReadDb } from '@/lib/mongodb';
 
 // Single composited hero-collage image for a collection: a MASONRY of the
@@ -42,13 +42,13 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         const { data, info } = await sharp(Buffer.from(await res.arrayBuffer())).resize({ width: COLW }).toBuffer({ resolveWithObject: true });
         return { data, height: info.height };
       } catch { return null; }
-    }))).filter((r): r is { data: Buffer; height: number } => r !== null);
+    }))).filter((r) => r !== null);
     if (!resized.length) return solid(3600);
 
     // Masonry pack: each image goes to the currently-shortest column; the bottom
     // overflowing tile in a column is cropped so nothing exceeds the canvas.
     const colH = new Array(COLS).fill(0);
-    const tiles: sharp.OverlayOptions[] = [];
+    const tiles: OverlayOptions[] = [];
     for (const r of resized) {
       let c = 0;
       for (let j = 1; j < COLS; j++) if (colH[j] < colH[c]) c = j;

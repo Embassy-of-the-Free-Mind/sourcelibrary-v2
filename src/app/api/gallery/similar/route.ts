@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
       );
       if (resolved.length >= 3) {
         const response = NextResponse.json({ items: resolved, total: resolved.length, method: 'clip' });
-        response.headers.set('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=3600');
+        response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=3600');
         return response;
       }
     }
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Cache 24 hours
-    response.headers.set('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=3600');
+    response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=3600');
 
     return response;
   } catch (error) {

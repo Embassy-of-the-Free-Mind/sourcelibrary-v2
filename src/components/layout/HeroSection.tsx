@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useLocalePath } from '@/lib/i18n';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { isInAppBrowser } from '@/lib/in-app-browser';
 import { useStableSession } from '@/hooks/useStableSession';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { trackEvent } from '@/lib/track-event';
+import { suggestEmailFix } from '@/lib/email-typo';
+import { TurnstileWidget, turnstileConfigured } from '@/components/auth/TurnstileWidget';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { HOME_STRINGS, type HomeLang, type HomeStrings } from '@/lib/home-i18n';
@@ -18,10 +21,18 @@ import { HOME_STRINGS, type HomeLang, type HomeStrings } from '@/lib/home-i18n';
  * librarian invitation lives in its own section below (AskTheSourceBand).
  */
 function HeroSignUp({ t }: { t: HomeStrings }) {
+  // The sign-in page has a Spanish twin; keep the visitor on their locale.
+  const localePath = useLocalePath();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [suggestion, setSuggestion] = useState<string | null>(null);
+  // The hero mints magic links exactly like the sign-in page does, so it needs
+  // the same Turnstile token. Without this the widget is absent here and every
+  // hero signup would 403 the moment Turnstile is switched on in production —
+  // a latent tripwire, since turnstileEnabled() is false today.
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   // Google OAuth is blocked inside Instagram/Facebook/LinkedIn webviews
   // (disallowed_useragent), so the button silently fails there. Detect it and
   // steer the visitor to the email magic link, which always works.
@@ -37,7 +48,12 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
     try {
       // Provider id is 'nodemailer' (next-auth v5 renamed Email→Nodemailer);
       // the old 'email' id silently no-ops and faked a "check your email".
-      const result = await signIn('nodemailer', { email, callbackUrl: '/', redirect: false });
+      const result = await signIn('nodemailer', {
+        email,
+        callbackUrl: '/',
+        redirect: false,
+        'cf-turnstile-response': turnstileToken ?? '',
+      });
       if (result?.error) setError(true);
       else setSent(true);
     } catch {
@@ -70,19 +86,31 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onBlur={(e) => setSuggestion(suggestEmailFix(e.target.value))}
           placeholder={t.emailPlaceholder}
           required
           className="flex-1 px-5 py-3.5 rounded-lg bg-white text-stone-900 placeholder-stone-400 text-base outline-none border border-white focus:ring-2 focus:ring-white/50 transition-colors"
         />
         <button
           type="submit"
-          disabled={loading || !email}
+          disabled={loading || !email || (turnstileConfigured && !turnstileToken)}
           className="px-7 py-3.5 rounded-lg text-base font-medium transition-all hover:brightness-110 disabled:opacity-50 shrink-0"
           style={{ background: 'var(--accent-rust)', color: '#fff' }}
         >
           {loading ? t.sending : t.join}
         </button>
       </form>
+      {/* Renders only when NEXT_PUBLIC_TURNSTILE_SITE_KEY is set. */}
+      <TurnstileWidget onVerify={setTurnstileToken} />
+      {suggestion && (
+        <button
+          type="button"
+          onClick={() => { setEmail(suggestion); setSuggestion(null); }}
+          className="mt-2 text-sm text-white/90 underline text-left"
+        >
+          {t.didYouMean(suggestion)}
+        </button>
+      )}
       {error && (
         <p className="mt-2 text-sm text-red-200">{t.emailError}</p>
       )}
@@ -105,7 +133,7 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
         </button>
         <span className="text-white/30">|</span>
         <Link
-          href="/auth/signin"
+          href={localePath('/auth/signin')}
           className="text-sm text-white/60 hover:text-white/90 transition-colors"
         >
           {t.haveAccount}

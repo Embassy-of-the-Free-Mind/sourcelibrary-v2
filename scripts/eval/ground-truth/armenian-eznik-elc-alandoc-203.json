@@ -1,0 +1,23 @@
+{
+  "work": "Eznik of Kołb, Ełc ałandoc' 293 (against the pagan pantheon; mind, soul and the One, 1826 printed p.203)",
+  "book_id": "69a5e9bb787d6e9b8d42e183",
+  "page_number": 214,
+  "script": "armenian",
+  "language": "Armenian",
+  "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.203",
+  "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik293.htm",
+  "edition": "Venice 1826",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "աստուած եւ արարիչ դնեն զիտս . եւ երրորդ զշունչ , զոր ոգի ամենայնի կոչեն ։ Զերկուսն ի միոջէ պատճառէ անտի դնելով , ցուցին ՝ թե մերձեցան ի դրունս ճշմարտի գիտութեանն ։ Եւ ի նոցանէ այլ անթիւ իմանալիս երեւելիս աստուածս ծննդեամբ ստեղծանելով , անձամբ անձին փտկեցին զդրունս հաւատոյ գիտութեանն ։ Զի իբրեւ զարեգակն եւ զճառագայթս դնեն զԱստուած եւ զաստուածսն իմանալիս երեւելիս . եւ զբնաւ իսկ զաշխարհ մշանջենաւորակից նմա . եւ յամենայնի զնորա ոգին իբրեւ շունչ ամենայնի , եւ յերկինս եւ ի լուսաւորսն , եւ ի հուր եւ յաւդեն , եւ ի ջուրս եւ յերկրի , մինչեւ ցքարինս եւ ցփայտս եւ ցծառս եւ ցարմատս խոտոյ անգամ ։ Եւ այնու կենդանութեամբ , ասեն , ամենայն արարածք զնորա բնութենէն կախեալ կան , որպէս ճառագայթք արեգական զանուէն կախեալ կան ։ Եւ ինքն մի է եւ բազում , եւ",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column",
+    "density": "light",
+    "type_size": "large",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Late-book coverage of the same light cell (offset +11 still holds at p.203; NOTE scan pages 212-213 = printed 201-202 have EMPTY ocr.data — see rejects). Printed p.203 begins mid-word ('[եր]կրորդ'); reference starts at the next full word. Printed p.203 = scan 214. Guard-verified + visually audited 2026-07-19."
+}

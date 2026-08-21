@@ -1,0 +1,892 @@
+{
+  "summary": {
+    "built": "2026-06-30",
+    "round": 3,
+    "purpose": "#2880 pilot Round 3 expansion (+13/stratum), excludes Round 1, oversamples Tier-0 matches for #2885a",
+    "n": 52,
+    "by_stratum": {
+      "badged · western": 13,
+      "badged · non-western": 13,
+      "unbadged · western": 13,
+      "unbadged · non-western": 13
+    },
+    "with_tier0_candidate": 10,
+    "excluded_round1": 104,
+    "note": "Run BOTH tiers. Oracle uses the CORRECTED NA rubric (ft-verdict-contract.md §2, rev 2026-06-30): not_applicable ONLY for already-English / wordless visual art; a container/scripture-volume/compilation we produced the first English of (no prior English of the content) is a FIRST; a complete prior English of the content is not_first. Oracle UNPRIMED — do not feed tier0."
+  },
+  "manifest": [
+    {
+      "id": "69b1deccca46fa60ea1ee439",
+      "title": "Alexander von Tralles: Original-Text und Übersetzung, Vol. 1",
+      "display_title": "Alexander of Tralles: Original Text and Translation",
+      "author": "Alexander of Tralles",
+      "language": "Greek",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:alexander-trallianus:original",
+      "tier0": {
+        "candidates": 2,
+        "title_overlap": 0.4,
+        "catalog_id": "69ab0b7b77a90a8493179f54",
+        "english_title": "The Latin Alexander Trallianus : the text and transmission of a late Latin medical book",
+        "translator": "",
+        "pub_year": 2006,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b51e19efd8df28f2db0768",
+      "title": "Pymander Mercvrii Trismegisti : Cum Commento Fratris Hannibalis Rosseli Calabri, Ordinis Minorvm Regvlaris obseruantiæ, Theologiæ & Philosophiæ, ad S. Bernardinum Cracoviæ Profeßoris. 6, De immortalitate Animae, qui est primus Asclepii",
+      "display_title": "The Asclepius of Hermes Trismegistus with the Commentary of Hannibal Rosselli",
+      "author": "Hermes, Trismegistus, ca. 2./4. Jh.",
+      "language": "Latin",
+      "original_language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "asclepius-mercurii-trismegisti-6-de-immortalitate-animae-qui-hermes",
+      "tier0": {
+        "candidates": 33,
+        "title_overlap": 0.57,
+        "catalog_id": "69ab0b7b77a90a8493179c9f",
+        "english_title": "Hermetica : the ancient Greek and Latin writings which contain religious or philosophic teachings ascribed to Hermes Trismegistus (1:) Introduction, texts, and translation; (2:) Notes on the Corpus Hermeticum; (3:) Notes on the Latin Asclepius and the Hermetic excerpts of Stobaeus; (4:) Testimonia  with introduction, addenda and indices by A.S. Ferguson",
+        "translator": "",
+        "pub_year": 1985,
+        "source_language": "la",
+        "completeness": "partial",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "6970e3619b09d309d780a26c",
+      "title": "Alchimistisch Sieben-Gestirn, das ist: sieben schöne und auserlesene Tractätlein, vom Stein der Weisen",
+      "display_title": "The Alchemical Seven Stars",
+      "author": "Anonymous",
+      "language": "German",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n::alchemical-seven-stars",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 0.33,
+        "catalog_id": "69ab0b7b77a90a8493179a1a",
+        "english_title": "Alchemical poetry, 1575-1700: from previously unpublished manuscripts",
+        "translator": "",
+        "pub_year": 1995,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b51e18768235dc6598c1b7",
+      "title": "Pymander Mercvrii Trismegisti : Cum Commento Fratris Hannibalis Rosseli Calabri, Ordinis Minorvm Regvlaris obseruantiæ, Theologiæ & Philosophiæ, ad S. Bernardinum Cracoviæ Profeßoris. 1, De SS. Trinitate",
+      "display_title": "The Pymander of Hermes Trismegistus with the Commentary of Hannibal Rosseli",
+      "author": "Hermes, Trismegistus, ca. 2./4. Jh.",
+      "language": "Latin",
+      "original_language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:hermes-trismegistus:hannibal-pymander-rosseli",
+      "tier0": {
+        "candidates": 33,
+        "title_overlap": 0.43,
+        "catalog_id": "69ab0b7b77a90a8493179c9f",
+        "english_title": "Hermetica : the ancient Greek and Latin writings which contain religious or philosophic teachings ascribed to Hermes Trismegistus (1:) Introduction, texts, and translation; (2:) Notes on the Corpus Hermeticum; (3:) Notes on the Latin Asclepius and the Hermetic excerpts of Stobaeus; (4:) Testimonia  with introduction, addenda and indices by A.S. Ferguson",
+        "translator": "",
+        "pub_year": 1985,
+        "source_language": "la",
+        "completeness": "partial",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69dc55d2cb6f7429748b94b2",
+      "title": "Liber physiognomiae. Add: Secreta Aristotelis",
+      "display_title": null,
+      "author": "Michael Scotus",
+      "language": "Latin",
+      "original_language": "Latin",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "Q28407388",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69aeab3967e6731bc13662c9",
+      "title": "Quaestiones Camaldulenses",
+      "display_title": "Camaldolese Disputations",
+      "author": "Cristoforo Landino",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "needs_review"
+      },
+      "work_id": "local:a:cristoforo-landino:camaldolese-disputations",
+      "tier0": {
+        "candidates": 3,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b51ea9cf111105c42a2cb6",
+      "title": "Præcursor Introductoriæ Algebram Speciosam Universalem vel Artem Magnam Universalem Sciendi & Demonstrandi B. Raymundi Lulli Doctoris Illum. & Martyris ...",
+      "display_title": "Precursor to the Introduction of the Universal Specious Algebra or the Great Universal Art of Knowledge and Demonstration",
+      "author": "Lullus, Raimundus",
+      "language": "Latin",
+      "original_language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:ramon-llull:algebra-art-demonstration-great-introduction-knowledge-precursor-specious-univer",
+      "tier0": {
+        "candidates": 1,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "author": "Rhenferd, Jacobus",
+      "display_title": "Periculum palmyrenum",
+      "id": "69c842e06c6f3cc53c850dec",
+      "is_first_translation": true,
+      "language": "Latin",
+      "title": "Periculum palmyrenum",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:jacobus-rhenferd:palmyrenum-periculum",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69a5d7d74d84314297c07d7f",
+      "title": "Alchemia",
+      "display_title": "Alchemy",
+      "author": "Andreas Libavius",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "alchemia-libavius",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b51e3dff09e4fe943aa2f5",
+      "title": "Gvilielmi Postelli Regii In Academia Viennensi Lingvarvm Peregrinarvm Et Mathematvm Professoris de Linguae Phoenicis siue Hebraicae excellentia & de necessario illius & Arabicae penes Latinos vsu, Praefatio, aut potius loquutionis humanaeue perfectionis Panegyris",
+      "display_title": "On the Excellence of the Phoenician or Hebrew Language and the Necessary Use of it and Arabic among Latins",
+      "author": "Postel, Guillaume",
+      "language": "Latin",
+      "original_language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "de-linguae-phoenicis-excellentia-praefatio-postel",
+      "tier0": {
+        "candidates": 4,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "698255f20fdc0a098b59a3c0",
+      "title": "'t Nieuwe Jerusalem",
+      "display_title": "The New Jerusalem",
+      "author": "Teellinck, Willem",
+      "language": "Dutch",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:willem-teellinck:jerusalem",
+      "tier0": {
+        "candidates": 2,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69b4cce0d5b6c3815e1a2892",
+      "title": "Moninckx Atlas, vol. 9",
+      "display_title": "Jan Moninckx; Maria Moninckx — Moninckx Atlas, vol. 9 (1686)",
+      "author": "Jan Moninckx; Maria Moninckx",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "Q3628219",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69ae9cde0cfd89c490b715d1",
+      "title": "Herculanensium Voluminum quae Supersunt, Vol. V",
+      "display_title": "The Surviving Herculaneum Volumes, Vol. V",
+      "author": "Real Academia Ercolanese",
+      "language": "Latin",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:real-academia-ercolanese:herculaneum-surviving-vol-volumes",
+      "tier0": null,
+      "stratum": "badged · western"
+    },
+    {
+      "id": "69d5acf04dc55b8478dde728",
+      "title": "Ge'ez Psalter",
+      "display_title": "መዝሙረ ዳዊት (Book of Psalms — Ge'ez Manuscript)",
+      "author": "Anonymous",
+      "language": "Ge'ez",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 0.33,
+        "catalog_id": "69ab0b7a77a90a84931797d0",
+        "english_title": "The book of pontiffs (liber pontificalis)",
+        "translator": "Davis, Raymond",
+        "pub_year": 1989,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69a5ed6d96d6dd816a56a840",
+      "title": "Le Livre des Splendeurs (Grammaire)",
+      "display_title": "The Book of Splendours",
+      "author": "Bar Hebraeus",
+      "language": "Syriac",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:bar-hebraeus:book-splendours",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "695931d4b91a6184ea9433a8",
+      "title": "Amulette composée par Al-Buni",
+      "display_title": "The Amulet of Al-Buni",
+      "author": "Ahmad al-Buni",
+      "language": "Arabic",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:ahmad-al-buni:al-amulet",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e78b614a6785cfd60d553c",
+      "title": "dkar chag chen mo rnam thar bka' rgya ma",
+      "display_title": "dkar chag chen mo rnam thar bka' rgya ma",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:choling-collection-ogyen:bka-chag-chen-dkar-ma-mo-rgya-rnam-thar",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e7618fcc48e59ad74f0599",
+      "title": "Thugs chen gsang 'dus skor",
+      "display_title": "Thugs chen gsang 'dus skor",
+      "author": "Gangtey Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-gangtey-monas:chen-dus-gsang-skor-thugs",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e789aa4a6785cfd60d2cf0",
+      "title": "yang zab mkha' 'gro snyan rgyud kyi bka' srung ye shes ltar sgrub pa seng gdong ma'i gtor zlog nag 'gros su bkod pa",
+      "display_title": "yang zab mkha' 'gro snyan rgyud kyi bka' srung ye shes ltar sgrub pa seng gdong ma'i gtor zlog nag 'gros su bkod pa",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:choling-collection-ogyen:bka-bkod-gdong-gro-gros-gtor-kyi-ltar-ma-mkha-nag-pa",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "6992ce93673ee1e40e321116",
+      "title": "武備志(六十九)",
+      "display_title": "Treatise on Armament Technology (Volume 69)",
+      "author": "茅元儀",
+      "language": "Chinese",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "茅元儀-treatise-armament-technology",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e7887a4a6785cfd60d113d",
+      "title": "jo bo rje dhi pam ka ras mdzad pa'i phreng mo",
+      "display_title": "jo bo rje dhi pam ka ras mdzad pa'i phreng mo",
+      "author": "Drametse Monastery Collection",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:collection-drametse-mona:bo-dhi-jo-ka-mdzad-mo-pa-pam-phreng-ras-rje",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "6953a82c77f38f6761bd0bc5",
+      "title": "New Testament (Armenian-Greek-Italian trilingual)",
+      "display_title": "New Testament",
+      "author": "Various",
+      "language": "Armenian",
+      "work_id": "bible-nt",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69dfede68d34461cbe7f4df4",
+      "title": "Ko-i Genji Monogatari (校異源氏物語), Vol. 1",
+      "display_title": null,
+      "author": "Murasaki Shikibu",
+      "language": "Japanese",
+      "original_language": "Japanese",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "local:a:murasaki-shikibu:1-genji-ko-monogatari-vol",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "6992cf4cf5b4f75c1a4c887b",
+      "title": "植物名實圖考(二十二)",
+      "display_title": "Illustrated Compendium of Materia Medica (Vol. 22)",
+      "author": "吳其濬",
+      "language": "Chinese",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:a:wu-qijun:mingshi-tukao-zhiwu",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e747e685f786e884a49e40",
+      "title": "Edda Sæmundar hinns Fróða",
+      "display_title": null,
+      "author": "Sæmundr fróði (ed. Rasmus Rask)",
+      "language": "Old Norse",
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "is_first_translation": true,
+      "work_id": "local:a:s-mundr-fro-i-ed-rasmus-rask:edda-hinns-mundar",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69e7ac425f1a22ab19aa607c",
+      "title": "Neyphug Thor bu Pad gling bka' 'bum",
+      "display_title": "Neyphug Thor bu Pad gling bka' 'bum",
+      "author": "Neyphug Monastery",
+      "language": "Tibetan",
+      "is_first_translation": true,
+      "translation_verification": {
+        "disposition": "confirmed_first"
+      },
+      "work_id": "local:n:monastery-neyphug:bka-bu-bum-gling-pad-thor",
+      "tier0": null,
+      "stratum": "badged · non-western"
+    },
+    {
+      "id": "69a9574565ddd05bbcd3e608",
+      "title": "Historia Ecclesiastica Graece et Latine (with Rufinus continuation)",
+      "display_title": "Ecclesiastical History",
+      "author": "Eusebius of Caesarea / Rufinus",
+      "language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:n:caesarea-eusebius-rufinu:ecclesiastical-history",
+      "tier0": {
+        "candidates": 18,
+        "title_overlap": 0.5,
+        "catalog_id": "69ab0b7b77a90a8493179ab2",
+        "english_title": "The church history of Rufinus of Aquileia, books 10 and 11",
+        "translator": "Amidon, Philip R.",
+        "pub_year": 1997,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "6952d05477f38f6761bc511e",
+      "title": "Basilica chymica",
+      "display_title": "Royal Chemistry",
+      "author": "Croll, Oswald",
+      "language": "Latin",
+      "original_language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:oswald-croll:chemistry-royal",
+      "tier0": {
+        "candidates": 2,
+        "title_overlap": 0.5,
+        "catalog_id": "69dbbdedf071889fedd298fc",
+        "english_title": "Basilica Chymica & Praxis Chymiatrica, or Royal and Practical Chymistry",
+        "translator": "John Hartmann (and others)",
+        "pub_year": 1670,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "validated_additions"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "697e23c8bb80b2397e771e23",
+      "title": "Hypnerotomachie, ou discours du songe de Poliphile",
+      "display_title": "The Dream of Poliphilus",
+      "author": "[Colonna, Francesco]",
+      "language": "French",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "needs_review"
+      },
+      "work_id": "local:a:francesco-colonna:dans-inventions-poliphile-qui-representees-riches-songe-sont-tableau",
+      "tier0": {
+        "candidates": 9,
+        "title_overlap": 0.5,
+        "catalog_id": "69ab0b7b77a90a8493179f01",
+        "english_title": "Hypnerotomachia Poliphili : the strife of love in a dream",
+        "translator": "Godwin, Joscelyn",
+        "pub_year": 2005,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69dbc9511040d1d5e20a2023",
+      "title": "De officiis (Comm: Omnibonus Leonicenus). Ed: Raphael Regius. Add: Laelius, sive de amicitia (Comm: Omnibonus Leonicenus); Cato maior, sive de senectute (Comm: Martinus Phileticus); Paradoxa Stoicorum",
+      "author": "Cicero, Marcus Tullius",
+      "language": "Latin",
+      "display_title": "On Duties",
+      "is_first_translation": false,
+      "work_id": "Q1180721",
+      "tier0": {
+        "candidates": 40,
+        "title_overlap": 1,
+        "catalog_id": "69ab0b7a77a90a849317985b",
+        "english_title": "Marcus Tullius Ciceroes thre bokes of duties, to Marcus his sonne",
+        "translator": "Grimalde, Nicholas",
+        "pub_year": 1990,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "author": "Kloss, Georg",
+      "display_title": null,
+      "id": "69c2c2dab82ba5d5bedac3e3",
+      "is_first_translation": false,
+      "language": "German",
+      "title": "Annalen der Loge Zur Einigkeit, der Englischen Provinzial-Loge, sowie der Provinzial- und Directorial-Loge des Eclectischen Bundes zu Frankfurt a/M., 1742-1811",
+      "work_id": "local:a:georg-kloss:1742-1811-annalen-bundes-der-directorial-eclectischen-einigkeit-englischen-frank",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69aea8871cbf28a363a4fecc",
+      "title": "De la division du travail social",
+      "display_title": "The Division of Labour in Society",
+      "author": "Émile Durkheim",
+      "language": "French",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:emile-durkheim:division-labour-society",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "author": "[Colonna, Francesco]",
+      "display_title": "Le tableau des riches inventions qui sont representees dans le songe de Poliphile",
+      "id": "69c88b0a6c6f3cc53c85a824",
+      "is_first_translation": false,
+      "language": "German",
+      "title": "Le tableau des riches inventions qui sont representees dans le songe de Poliphile",
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:francesco-colonna:dans-inventions-poliphile-qui-representees-riches-songe-sont-tableau",
+      "tier0": {
+        "candidates": 9,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69b525942379d2fed6c291f6",
+      "title": "Toonneel des aerdrycks, ... /, nieulycx uytgegeven door Wilhelm; en Iohannem Blaeu.",
+      "display_title": "\n              Toonneel des aerdrycks, ... /\n              nieulycx uytgegeven door Wilhelm; en Iohannem Blaeu.\n        ...\n        ",
+      "author": "Blaeu, Willem Jansz",
+      "language": "Dutch",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:willem-jansz-blaeu:aerdrycks-door-en-iohannem-nieulycx-toonneel-uytgegeven-wilhelm",
+      "tier0": {
+        "candidates": 7,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "author": "Roscoe, William",
+      "display_title": "Vie de Laurent de Medicis",
+      "id": "69c63918881bf48c13c42648",
+      "language": "Latin",
+      "title": "Vie de Laurent de Medicis",
+      "work_id": "local:a:william-roscoe:laurent-medicis-vie",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69f331b5876dd827cbc493ea",
+      "title": "Commonplace book: of poetry : manuscript, [between 1400 and 1450]",
+      "display_title": "Commonplace book : of poetry : manuscript, [between 1400 and 1450]. MS Lat 146. Houghton Library, Harvard University, Cambridge, Mass.",
+      "author": "Map, Walter",
+      "language": "Latin",
+      "work_id": "local:a:map-walter:1400-1450-146-book-cambridge-commonplace-houghton-lat-manuscript-mass-poetry-uni",
+      "tier0": {
+        "candidates": 6,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · western"
+    },
+    {
+      "author": "Innozenz",
+      "display_title": "Index librorum prohibitorum Innoc. XI. P. M. iussu editus usque ad annum 1681",
+      "id": "69b6c2e88566c8381465ccbb",
+      "is_first_translation": false,
+      "language": "Latin",
+      "title": "Index librorum prohibitorum Innoc. XI. P. M. iussu editus usque ad annum 1681 : eidem accedit in fine appendix usque ad mensem Iunij 1704",
+      "work_id": "local:a:innozenz:1681-ad-annum-editus-index-innoc-iussu-librorum-prohibitorum-usque-xi",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69b00a0ec42435fcd0cf9acb",
+      "title": "Claudii Galeni Opera Omnia, Vol. 18 Pt. 2",
+      "display_title": "The Complete Works of Claudius Galen, Vol. 18 Pt. 2",
+      "author": "Galen; Karl Gottlob Kühn (ed.)",
+      "language": "Latin",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "first_from_source"
+      },
+      "work_id": "local:a:galen:18-2-claudius-pt-vol-works",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "69aea4b60fefd7831dcda548",
+      "title": "Qu'est-ce que la propriété?",
+      "display_title": "What is Property?",
+      "author": "Pierre-Joseph Proudhon",
+      "language": "French",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:pierre-joseph-proudhon:is-property-what",
+      "tier0": null,
+      "stratum": "unbadged · western"
+    },
+    {
+      "id": "6990630be7b7642c081de08b",
+      "title": "Sefer ha-Zohar (Cremona 1558)",
+      "display_title": "The Book of Splendor",
+      "author": "Moses de León (attributed)",
+      "language": "Hebrew",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "zohar",
+      "tier0": {
+        "candidates": 11,
+        "title_overlap": 0.5,
+        "catalog_id": "69ab0b7a77a90a84931797ff",
+        "english_title": "The Book of causes = Liber de causis (Mediaeval philosophical texts in translation)",
+        "translator": "",
+        "pub_year": 1984,
+        "source_language": "la",
+        "completeness": "unknown",
+        "source": "unesco_master"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "6990693f2f82e0fda4805a70",
+      "title": "Tajika Neelakanthi",
+      "display_title": "Neelakantha's Persian Astrology",
+      "author": "Neelakantha; ed. Anonymous",
+      "language": "Sanskrit",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "needs_review"
+      },
+      "work_id": "Q7676814",
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e787094a6785cfd60ca250",
+      "title": "rNying ma rgyud 'bum Di",
+      "display_title": "rNying ma rgyud 'bum Di",
+      "author": "Drametse Monastery Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:collection-drametse-mona:bum-ma-rgyud-rnying",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e7abf35f1a22ab19aa0d6e",
+      "title": "Kanjur 'Dul ba Ka",
+      "display_title": "Kanjur 'Dul ba Ka",
+      "author": "Neyphug Monastery",
+      "language": "Tibetan",
+      "translation_verification": {},
+      "is_first_translation": false,
+      "work_id": "local:n:monastery-neyphug:ba-dul-ka-kanjur",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69f3383f876dd827cbc5389c",
+      "title": "Miniatures and initial letters : manuscript, [ca. 1500]",
+      "display_title": "Houghton Library. MS Typ 994. Miniatures and initial letters : manuscript, [ca. 1500].",
+      "author": "Matteo",
+      "language": "zxx",
+      "work_id": "local:a:matteo:1500-994-houghton-initial-letters-manuscript-miniatures-typ",
+      "tier0": {
+        "candidates": 6,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69b3e5bd304c1c6b39509eb8",
+      "title": "Collection of kabbalistic texts",
+      "display_title": "Collection of Kabbalistic and Philosophical Writings",
+      "author": "Joseph Gikatilla",
+      "language": "Hebrew",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:joseph-ben-abraham-gikatilla:kabbalistic-philosophical-writings",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e1582bec0a328a49d0a24c",
+      "title": "The Report of Wenamun",
+      "author": "el-Hibe (papyrus scroll)",
+      "language": "Egyptian hieroglyphs",
+      "original_language": "Egyptian hieroglyphs",
+      "display_title": "The Report of Wenamun",
+      "translation_verification": {
+        "disposition": "needs_review"
+      },
+      "is_first_translation": false,
+      "work_id": "local:a:el-hibe-papyrus-scroll:report-wenamun",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e789be4a6785cfd60d2e15",
+      "title": "stag tshang gter ston rdo rje phur pa'i dam can mchod bskul dug mda' nag po",
+      "display_title": "stag tshang gter ston rdo rje phur pa'i dam can mchod bskul dug mda' nag po",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "work_id": "local:n:choling-collection-ogyen:bskul-can-dam-dug-gter-mchod-mda-nag-pa-phur-po-rdo",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69905f4140bc3a0478efb47b",
+      "title": "Brihat Samhita",
+      "display_title": "The Great Compilation",
+      "author": "Varahamihira",
+      "language": "Sanskrit",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:varahamihira:brihat-samhita",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "6a08fd429c1b82475e15c49d",
+      "title": "Hanjung mallok (한중만록), kwon 3 — Memoirs of Crown Princess Hyegyŏng (19th c. Korean manuscript)",
+      "display_title": null,
+      "author": "Crown Princess Hyegyŏng (혜경궁 홍씨)",
+      "language": "Korean",
+      "work_id": "local:a:crown-princess-hyegyong:3-hanjung-kwon-mallok-memoirs",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69a5ea9a2c1720a023b0c9c0",
+      "title": "Narsai: Homiliae et Carmina, Tomus I",
+      "display_title": "Homilies and Songs, Volume 1",
+      "author": "Narsai",
+      "language": "Syriac",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "work_id": "local:a:narsai:homilies-songs-vol",
+      "tier0": null,
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69e7965180b52390feb19416",
+      "title": "rje btsun rdo rje rnal 'byor ma na ro mkha' spyod ma'i lam gyi rim pa'i spyi don gsang chen sgo brgya 'byed pa'i lde mig",
+      "display_title": "rje btsun rdo rje rnal 'byor ma na ro mkha' spyod ma'i lam gyi rim pa'i spyi don gsang chen sgo brgya 'byed pa'i lde mig",
+      "author": "Ogyen Choling Collection",
+      "language": "Tibetan",
+      "is_first_translation": false,
+      "work_id": "local:n:choling-collection-ogyen:brgya-btsun-byed-byor-chen-don-gsang-gyi-lam-lde-ma-mig",
+      "tier0": {
+        "candidates": 13,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    },
+    {
+      "id": "69920b97e0a548a13d8840d5",
+      "title": "New Testament in Syriac (Peshitta)",
+      "display_title": null,
+      "author": "British and Foreign Bible Society",
+      "language": "Syriac",
+      "work_id": "bible-nt",
+      "is_first_translation": false,
+      "translation_verification": {
+        "disposition": "translation_found"
+      },
+      "tier0": {
+        "candidates": 40,
+        "best": null,
+        "note": "surname matched, no title overlap >=0.3"
+      },
+      "stratum": "unbadged · non-western"
+    }
+  ]
+}

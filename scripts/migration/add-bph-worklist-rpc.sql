@@ -1,0 +1,168 @@
+-- The librarian's worklist: what in the catalogue actually needs a human.
+--
+-- Feeds /catalog/workspace. Computed live rather than stored, so it can never
+-- go stale, and kept in SQL rather than assembled from a dozen PostgREST calls
+-- so the *definitions* live in one auditable place.
+--
+-- THE POINT OF THIS FILE IS THE DEFINITIONS, NOT THE SQL. A worklist shown to
+-- someone who has catalogued this collection for eight years has to be right;
+-- a list of things that are not actually wrong reads as "this system does not
+-- understand my collection", and she will stop opening it. Two naive queries
+-- were measured and rejected on 2026-08-01:
+--
+--   "1,047 records have no title" — FALSE. 812 are manuscripts, and 663 of
+--   those carry full_title instead; manuscripts are described in a different
+--   field by design. Genuinely nameless: 320.
+--
+--   "2,260 duplicate shelf marks / 25,738 records" — FALSE. shelf_mark is a
+--   location and class code, not an identifier: 1,867 books legitimately share
+--   "M", 1,383 share "A". There are ZERO duplicate UBNs, which is the
+--   identifier that actually has to be unique.
+--
+-- So each category below is scoped to something a librarian would genuinely
+-- act on, and every one carries samples so the number is never just a number.
+--
+-- EVERY SAMPLE CARRIES `uuid`, AND THAT IS THE ONLY KEY THE SITE CAN RESOLVE.
+-- `bph_works.id` and `bph_works.uuid` are two DIFFERENT uuids on every row, and
+-- /catalog/{key} routes a uuid-shaped key to the `uuid` column (see
+-- src/lib/bph-catalog-key.ts). Three of the categories below select exactly the
+-- rows where `ubn IS NULL`, so their links can only fall back to a uuid — and
+-- while these samples emitted `id`, all 2,012 of them 404'd. José Bouman,
+-- 2026-08-12: "I cannot access these by clicking on them, so I can't see what
+-- is the case" — reported against this worklist, one week after the catalogue
+-- browser's own null-ubn links were fixed in #3654. Same symptom, second path.
+-- `id` is kept in the payload for debugging; never build a link from it.
+--
+-- Run via Supabase SQL editor or psql:
+--   psql "$DATABASE_URL" -f scripts/migration/add-bph-worklist-rpc.sql
+
+BEGIN;
+
+-- Any of the four title columns counts as "described". Used by several
+-- categories, so it lives in one place.
+CREATE OR REPLACE FUNCTION public.bph_any_title(r bph_works)
+RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT COALESCE(
+    NULLIF(TRIM(r.title), ''),
+    NULLIF(TRIM(r.full_title), ''),
+    NULLIF(TRIM(r.uniform_title), ''),
+    NULLIF(TRIM(r.parallel_title), '')
+  )
+$$;
+
+CREATE OR REPLACE FUNCTION public.bph_catalogue_worklist()
+RETURNS TABLE (category text, label text, detail text, n bigint, samples jsonb)
+LANGUAGE sql STABLE AS $$
+  -- Real physical objects, on a shelf, with no name and no catalogue number.
+  -- The most interesting rows in the catalogue and currently invisible.
+  -- José Bouman answered this one on 2026-08-12: "These are indeed incomplete
+  -- descriptions and they will be enhanced (sooner or later). Leave them as
+  -- they are." So it stays visible as a known backlog, but it no longer asks
+  -- for a number — manuscripts never get one — and it no longer reads as a
+  -- question awaiting a decision that has already been made.
+  SELECT 'undescribed_manuscripts',
+         'Manuscripts on the shelf with no title yet',
+         'Known incomplete descriptions, to be enhanced when there is time (José, 12 Aug). Listed so they are not forgotten; nothing to decide.',
+         count(*),
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', present_location)
+                  ORDER BY shelf_mark) FILTER (WHERE rn <= 25), '[]'::jsonb)
+  FROM (
+    SELECT w.*, row_number() OVER (ORDER BY w.shelf_mark) rn
+    FROM bph_works w
+    WHERE w.record_type = 'manuscript'
+      AND public.bph_any_title(w) IS NULL
+      AND w.shelf_mark IS NOT NULL
+      AND w.ubn IS NULL
+  ) t
+
+  UNION ALL
+
+  -- Near-empty printed records: no title, no shelf mark, no number. Almost
+  -- certainly import residue rather than books — but only a librarian can say
+  -- whether they are deletable, so they are surfaced, never cleaned up.
+  SELECT 'empty_printed_stubs',
+         'Printed records with no title, shelf mark or UBN',
+         'Probably residue from an old import rather than real holdings. Needs a decision: complete them, or remove them.',
+         count(*),
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', author)
+                  ORDER BY id) FILTER (WHERE rn <= 25), '[]'::jsonb)
+  FROM (
+    SELECT w.*, row_number() OVER (ORDER BY w.id) rn
+    FROM bph_works w
+    WHERE w.record_type = 'printed'
+      AND public.bph_any_title(w) IS NULL
+      AND w.shelf_mark IS NULL
+      AND w.ubn IS NULL
+  ) t
+
+  UNION ALL
+
+  -- Records with NO WAY TO FIND THE OBJECT: no catalogue number and no shelf
+  -- mark either.
+  --
+  -- This category used to be "Records with no UBN", all 2,012 of them, and it
+  -- was wrong in the way this file exists to prevent — it counted correct data
+  -- as a defect. José Bouman, 2026-08-12, answering it:
+  --
+  --   "Manuscripts never have a UBN, instead they have a manuscript number
+  --    (M+ number, or just a number, like 216, 217, 218). […] M-numbers
+  --    (manuscripts) and FOT-items don't have a UBN"
+  --
+  -- 1,771 of the 2,012 are exactly those manuscripts (812) and photocopies
+  -- (959), correctly catalogued, and no amount of librarian attention would
+  -- ever change them. Asking about them forever is how a worklist teaches
+  -- someone to stop opening it. What is genuinely actionable is a record with
+  -- neither identifier — nothing to search by and nothing to find on a shelf.
+  -- Measured 2026-08-13: 253 rows, of which 228 have no title either (they are
+  -- the empty_printed_stubs above) and 25 have a title but no location at all.
+  SELECT 'unfindable_records',
+         'Records with no UBN and no shelf mark',
+         'Nothing to look them up by and nothing to find them on a shelf with. Each needs an identifier, or removing.',
+         count(*),
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
+                  ORDER BY id) FILTER (WHERE rn <= 25), '[]'::jsonb)
+  FROM (
+    SELECT w.*, public.bph_any_title(w) AS any_title, row_number() OVER (ORDER BY w.id) rn
+    FROM bph_works w
+    WHERE w.ubn IS NULL
+      AND (w.shelf_mark IS NULL OR TRIM(w.shelf_mark) = '')
+  ) t
+
+  UNION ALL
+
+  -- The other half of the "neen" cleanup, deliberately left for a librarian:
+  -- emptying "ja" would destroy the only trace that these copies ARE on loan.
+  -- Answered and swept on 2026-08-13: José chose "yes" over emptying, because
+  -- the value records that the copy IS on loan. The 31 rows were translated by
+  -- scripts/maintenance/translate-ja-state-shelfmark.mjs and the normaliser now
+  -- maps ja→yes at the write boundary, so this returns 0 and drops out of the
+  -- page. It is KEPT as a standing detector: a non-zero count here means a
+  -- Memorix re-import has reintroduced the Dutch.
+  SELECT 'state_shelfmark_ja',
+         'State Collection shelf mark reads "ja" again',
+         'Cleared on 13 Aug (translated to "yes"). If this is non-zero, an import has put the Dutch back — the normaliser should have prevented it.',
+         count(*),
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
+                  ORDER BY ubn) FILTER (WHERE rn <= 25), '[]'::jsonb)
+  FROM (
+    SELECT w.*, public.bph_any_title(w) AS any_title, row_number() OVER (ORDER BY w.ubn) rn
+    FROM bph_works w WHERE lower(trim(w.state_shelf_mark)) = 'ja'
+  ) t
+
+  UNION ALL
+
+  -- Contributor proposals waiting on an editor. Empty today; the queue exists
+  -- and someone has to be told when it is not.
+  SELECT 'pending_contributions',
+         'Suggested changes awaiting review',
+         'Corrections proposed by contributors that need an editor to accept or decline.',
+         count(*),
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id::text, 'shelf_mark', NULL, 'hint', proposer_email)
+                  ORDER BY created_at) FILTER (WHERE rn <= 25), '[]'::jsonb)
+  FROM (
+    SELECT p.*, row_number() OVER (ORDER BY p.created_at) rn
+    FROM bph_works_pending_changes p WHERE p.status = 'pending'
+  ) t
+$$;
+
+COMMIT;

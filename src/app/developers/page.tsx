@@ -2,10 +2,47 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
+import toolManifest from '../../../scripts/audit/mcp-directory-contract.tools.json';
+
+// One row per MCP tool, in the order the table shows them. The blurbs are
+// human one-liners — the agent-facing descriptions live in
+// src/app/api/mcp/route.ts and are much longer.
+const MCP_TOOLS: Array<{ name: string; blurb: string }> = [
+  { name: 'search_library', blurb: 'Find books on a topic — full-text search across the catalog' },
+  { name: 'search_translations', blurb: 'Find quotable passages by keyword across the whole library' },
+  { name: 'search_concept', blurb: 'Semantic passage search — matches paraphrases and adjacent ideas, not just keywords' },
+  { name: 'search_within_book', blurb: 'Search inside a specific book’s pages' },
+  { name: 'list_books', blurb: 'Browse with filters — language, year, category, translation status' },
+  { name: 'list_editions', blurb: 'Every edition of a work the library holds, across languages and centuries' },
+  { name: 'get_book', blurb: 'Book metadata: summary, chapters, edition info, DOI' },
+  { name: 'get_book_text', blurb: 'Read 50+ pages in one call — OCR, translation, or both' },
+  { name: 'get_quote', blurb: 'Exact text of a single page with a stable citation URL' },
+  { name: 'get_quotes', blurb: 'Verbatim text + citation links for up to 25 pages in one call' },
+  { name: 'get_locus', blurb: 'Resolve canonical references — Bekker (Aristotle) and Stephanus (Plato) — to the leaves that carry them' },
+  { name: 'search_images', blurb: 'Search historical illustrations and artworks by subject, symbol, figure, type' },
+  { name: 'submit_feedback', blurb: 'Send bug reports and requests to the team' },
+  { name: 'share_findings', blurb: 'Contribute a cited research dossier back to the library (human-reviewed)' },
+  { name: 'propose_collection', blurb: 'Propose a themed grouping of books (human-reviewed)' },
+];
+
+// Build-time tripwire: the manifest is CI-audited against the live server
+// (scripts/audit/mcp-directory-contract.mjs), so if this table and the manifest
+// disagree, the page is documenting tools that don't exist — fail the build
+// instead of publishing the drift. This page said "9 research tools" for months
+// while the server had 15.
+{
+  const manifestNames = new Set(toolManifest.tools.map((t) => t.name));
+  const tableNames = new Set(MCP_TOOLS.map((t) => t.name));
+  const missing = [...manifestNames].filter((n) => !tableNames.has(n));
+  const extra = [...tableNames].filter((n) => !manifestNames.has(n));
+  if (missing.length || extra.length) {
+    throw new Error(`developers page tool table out of sync with MCP manifest — missing: [${missing}], extra: [${extra}]`);
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Open API over 15,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. 9 research tools, REST endpoints, CLI.',
+  description: `Open API over 15,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. ${MCP_TOOLS.length} research tools, REST endpoints, CLI.`,
   alternates: {
     canonical: '/developers',
   },
@@ -155,7 +192,38 @@ export default function DevelopersPage() {
         <div className="space-y-4 mb-8">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-              <span className="text-sm font-medium text-stone-700">Claude Code (remote &mdash; no install)</span>
+              <span className="text-sm font-medium text-stone-700">Claude.ai &amp; Claude Desktop (Connectors)</span>
+              <span className="text-xs text-muted">No code &mdash; works in the chat you already use</span>
+            </div>
+            <div className="p-4">
+              <ol className="list-decimal list-inside space-y-2 text-sm text-secondary">
+                <li>
+                  Open <span className="font-medium text-stone-700">claude.ai &rarr; Settings &rarr; Connectors</span>{' '}
+                  (Claude Desktop uses the same Connectors settings).
+                </li>
+                <li>
+                  Click <span className="font-medium text-stone-700">Add custom connector</span>.
+                </li>
+                <li>
+                  Name it{' '}
+                  <code className="text-accent-rust bg-stone-100 px-1.5 py-0.5 rounded">Source Library</code>{' '}
+                  &mdash; keep this exact name; shared pages and artifacts that call the library look your connector up by it.
+                </li>
+                <li>
+                  URL:{' '}
+                  <code className="text-accent-rust bg-stone-100 px-1.5 py-0.5 rounded select-all">https://sourcelibrary.org/api/mcp</code>{' '}
+                  &mdash; leave the OAuth fields empty (no authentication), then save.
+                </li>
+                <li>
+                  In any chat, open the tools menu, switch the connector on, and ask away &mdash; try the prompts below.
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
+              <span className="text-sm font-medium text-stone-700">Claude Code (one command)</span>
               <span className="text-xs text-muted">
                 Add <code className="text-stone-700">-H &quot;Authorization: Bearer YOUR_KEY&quot;</code> for higher limits
               </span>
@@ -167,20 +235,8 @@ export default function DevelopersPage() {
 
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-              <span className="text-sm font-medium text-stone-700">Claude Code (local via npm)</span>
-              <span className="text-xs text-muted">Legacy &mdash; prefer remote above</span>
-            </div>
-            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
-{`claude mcp add source-library -- npx -y @source-library/mcp-server`}
-            </pre>
-          </div>
-
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-              <span className="text-sm font-medium text-stone-700">Claude Desktop</span>
-              <span className="text-xs text-muted">
-                macOS: ~/Library/Application Support/Claude/ &nbsp;&bull;&nbsp; Windows: %APPDATA%\Claude\
-              </span>
+              <span className="text-sm font-medium text-stone-700">Other MCP clients (Cursor, Windsurf, custom)</span>
+              <span className="text-xs text-muted">Any client that speaks Streamable HTTP</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`{
@@ -190,6 +246,16 @@ export default function DevelopersPage() {
     }
   }
 }`}
+            </pre>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
+              <span className="text-sm font-medium text-stone-700">Local via npm (stdio-only clients)</span>
+              <span className="text-xs text-muted">Legacy &mdash; prefer the remote URL above</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`claude mcp add source-library -- npx -y @source-library/mcp-server`}
             </pre>
           </div>
         </div>
@@ -218,42 +284,12 @@ export default function DevelopersPage() {
         <div className="overflow-x-auto mb-10">
           <table className="w-full text-sm">
             <tbody className="divide-y divide-stone-100">
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_library</td>
-                <td className="py-2.5 text-secondary">Full-text search across books and page content</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_translations</td>
-                <td className="py-2.5 text-secondary">Search inside translated text across the whole library</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_concept</td>
-                <td className="py-2.5 text-secondary">Semantic / conceptual passage search &mdash; matches paraphrases and adjacent ideas, not just keywords</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_within_book</td>
-                <td className="py-2.5 text-secondary">Search inside a specific book&apos;s pages</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">list_books</td>
-                <td className="py-2.5 text-secondary">Browse with filters &mdash; language, year, category, translation status</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">get_book</td>
-                <td className="py-2.5 text-secondary">Book metadata: summary, chapters, edition info, DOI</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">get_book_text</td>
-                <td className="py-2.5 text-secondary">Read 50+ pages in one call &mdash; OCR, translation, or both</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">get_quote</td>
-                <td className="py-2.5 text-secondary">Exact text of a single page with citation URL</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_images</td>
-                <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations by subject, symbol, type</td>
-              </tr>
+              {MCP_TOOLS.map((tool) => (
+                <tr key={tool.name}>
+                  <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">{tool.name}</td>
+                  <td className="py-2.5 text-secondary">{tool.blurb}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -26,6 +26,13 @@ interface DeepZoomOverlayProps {
   title: string;
   caption?: string;
   onClose: () => void;
+  /**
+   * Open framed on a sub-region instead of the whole page (#2714) — used by the
+   * gallery to land on the illustration. Normalized 0-1 against the MASTER, not
+   * the page-source image; on a split scan those differ, so callers must pass
+   * the output of `remapBboxToMaster`, never a raw `gallery_images.bbox`.
+   */
+  initialBounds?: { x: number; y: number; width: number; height: number } | null;
 }
 
 // Inline DZI ("Deep Zoom Image") descriptor. OpenSeadragon's bundled types model
@@ -44,12 +51,124 @@ function tileSourceFor(m: DeepZoomManifest): any {
   };
 }
 
-export default function DeepZoomOverlay({ manifest, title, caption, onClose }: DeepZoomOverlayProps) {
+/**
+ * Breathing room left around a focused region, as a fraction of its size, so the
+ * illustration doesn't sit edge-to-edge against the viewport.
+ */
+const FOCUS_PADDING = 0.06;
+
+/**
+ * The focused region as an OSD viewport rectangle, padded — or null when there
+ * is nothing to focus (whole-page usage, e.g. ArtworkHero).
+ *
+ * Converts via `imageToViewportRectangle` with PIXEL coordinates rather than by
+ * hand: OSD's viewport is normalized by image WIDTH, so feeding it normalized
+ * y/height directly is the classic silent vertical-offset bug.
+ *
+ * Module-level and pure so the viewer effect can call it without taking a
+ * changing function identity as a dependency.
+ */
+function focusRect(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  viewer: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OpenSeadragon: any,
+  bounds: { x: number; y: number; width: number; height: number } | null | undefined,
+  manifest: DeepZoomManifest,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any | null {
+  if (!bounds || !viewer?.viewport || !OpenSeadragon?.Rect) return null;
+  const padX = bounds.width * FOCUS_PADDING;
+  const padY = bounds.height * FOCUS_PADDING;
+  return viewer.viewport.imageToViewportRectangle(
+    new OpenSeadragon.Rect(
+      Math.max(0, bounds.x - padX) * manifest.width,
+      Math.max(0, bounds.y - padY) * manifest.height,
+      Math.min(1, bounds.width + padX * 2) * manifest.width,
+      Math.min(1, bounds.height + padY * 2) * manifest.height,
+    ),
+  );
+}
+
+/** Frame the focused region. False when there was nothing to focus. */
+function fitToBounds(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  viewer: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OpenSeadragon: any,
+  bounds: { x: number; y: number; width: number; height: number } | null | undefined,
+  manifest: DeepZoomManifest,
+  immediate: boolean,
+): boolean {
+  const rect = focusRect(viewer, OpenSeadragon, bounds, manifest);
+  if (!rect) return false;
+  viewer.viewport.fitBounds(rect, immediate);
+  return true;
+}
+
+/**
+ * Keep the visible viewport inside the focused region.
+ *
+ * Pinning `minZoomLevel` alone is not enough: at the minimum zoom the viewport
+ * is exactly the size of the illustration, but nothing stops the reader panning
+ * that window across the rest of the page scan. The tile source is the whole
+ * PAGE (pyramids are built per page, never per illustration — see
+ * `deepzoom-tile-pages.mjs`), so without this the surrounding text is reachable.
+ *
+ * Pans rather than fits, so clamping can never alter the zoom and start a
+ * feedback loop with the zoom constraint.
+ */
+function clampPanToFocus(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  viewer: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  OpenSeadragon: any,
+  bounds: { x: number; y: number; width: number; height: number } | null | undefined,
+  manifest: DeepZoomManifest,
+): void {
+  const rect = focusRect(viewer, OpenSeadragon, bounds, manifest);
+  if (!rect) return;
+  const vp = viewer.viewport;
+  const view = vp.getBounds();
+
+  // Allowed centre range per axis. When the view is wider than the region there
+  // is no room to move, so centre it.
+  const axis = (viewStart: number, viewSize: number, regionStart: number, regionSize: number) => {
+    const half = Math.min(viewSize, regionSize) / 2;
+    const lo = regionStart + half;
+    const hi = regionStart + regionSize - half;
+    const centre = viewStart + viewSize / 2;
+    if (lo > hi) return regionStart + regionSize / 2;
+    return Math.min(Math.max(centre, lo), hi);
+  };
+
+  const cx = axis(view.x, view.width, rect.x, rect.width);
+  const cy = axis(view.y, view.height, rect.y, rect.height);
+  const centre = vp.getCenter(true);
+  // Sub-pixel drift would thrash panTo on every frame.
+  if (Math.abs(cx - centre.x) < 1e-6 && Math.abs(cy - centre.y) < 1e-6) return;
+  vp.panTo(new OpenSeadragon.Point(cx, cy), true);
+}
+
+export default function DeepZoomOverlay({
+  manifest,
+  title,
+  caption,
+  onClose,
+  initialBounds = null,
+}: DeepZoomOverlayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const viewerRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const osdRef = useRef<any>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
+
+  // Held in a ref, not an effect dep: callers build this object inline, so a new
+  // identity every render would tear down and rebuild the whole viewer.
+  const boundsRef = useRef(initialBounds);
+  boundsRef.current = initialBounds;
 
   useEffect(() => {
     let disposed = false;
@@ -86,7 +205,33 @@ export default function DeepZoomOverlay({ manifest, title, caption, onClose }: D
           immediateRender: false,
         });
         viewerRef.current = viewer;
-        viewer.addHandler('open', () => !disposed && setReady(true));
+        osdRef.current = OpenSeadragon;
+        viewer.addHandler('open', () => {
+          if (disposed) return;
+          // Frame the region before the first paint (immediate = no fly-in from
+          // the whole page), so the gallery lands on the illustration.
+          if (fitToBounds(viewer, OpenSeadragon, boundsRef.current, manifest, true)) {
+            // The illustration is now the OUTERMOST view: the pyramid covers the
+            // whole page scan, and without a floor the reader could zoom out to
+            // the surrounding text. `minZoomLevel` wins over `minZoomImageRatio`
+            // in OSD's getMinZoom(), so this supersedes the 0.8 set above.
+            viewer.viewport.minZoomLevel = viewer.viewport.getZoom(true);
+            viewer.addHandler('viewport-change', () => {
+              if (disposed) return;
+              clampPanToFocus(viewer, OpenSeadragon, boundsRef.current, manifest);
+            });
+            // The floor is an absolute zoom value, so a viewport resize would
+            // leave it stale (the region no longer fits at the old zoom).
+            viewer.addHandler('resize', () => {
+              if (disposed) return;
+              viewer.viewport.minZoomLevel = null;
+              if (fitToBounds(viewer, OpenSeadragon, boundsRef.current, manifest, true)) {
+                viewer.viewport.minZoomLevel = viewer.viewport.getZoom(true);
+              }
+            });
+          }
+          setReady(true);
+        });
         viewer.addHandler('open-failed', () => !disposed && setFailed(true));
       })
       .catch(() => !disposed && setFailed(true));
@@ -122,7 +267,15 @@ export default function DeepZoomOverlay({ manifest, title, caption, onClose }: D
     v.viewport.zoomBy(factor);
     v.viewport.applyConstraints();
   };
-  const home = () => viewerRef.current?.viewport.goHome();
+  // "Home" means where the reader started. When the gallery opened us framed on
+  // an illustration, that's the illustration — not the whole page scan.
+  const home = () => {
+    const v = viewerRef.current;
+    if (!v) return;
+    if (!fitToBounds(v, osdRef.current, boundsRef.current, manifest, false)) {
+      v.viewport.goHome();
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-[60] bg-[#0b0a09]">

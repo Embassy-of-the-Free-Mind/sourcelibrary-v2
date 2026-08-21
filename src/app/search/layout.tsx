@@ -6,8 +6,10 @@ export const metadata: Metadata = {
   description: 'Search over 10,000 translated primary sources — alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
   alternates: {
     canonical: '/search',
+    languages: { en: '/search', es: '/es/search', 'x-default': '/search' },
   },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Search - Source Library',
     description: 'Search over 10,000 translated primary sources — alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
     type: 'website',

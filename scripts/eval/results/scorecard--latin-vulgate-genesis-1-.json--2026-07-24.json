@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^latin-vulgate-genesis-1\\.json$",
+  "summary": [
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 282,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Vulgate Genesis 1:1-5",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 21,
+          "aligned": true,
+          "guard": 0.017543859649122806,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 282,
+          "matched": 282,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0006852,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.065991,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

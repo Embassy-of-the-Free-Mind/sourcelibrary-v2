@@ -1,0 +1,36 @@
+{
+  "book_id": "695931d4b91a6184ea9433a8",
+  "work_identified": "Amulette composée par Al-Boûnî — a 17th-century Arabic amulet/talisman attributed to Ahmad al-Buni, held at the BnF, Paris (Gallica ark:/12148/btv1b110023178); specific Arabic title unidentified from French catalog description alone; likely a short talismanic text (hijab or ta'widha type) distinct from the Shams al-Ma'arif",
+  "verdict": "needs_review",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "weak",
+  "match_key": "none",
+  "confidence": "low",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Ahmad al-Buni amulet talisman English translation WorldCat",
+    "al-Buni \"Amulette\" Arabic manuscript English translation",
+    "al-Buni manuscripts collection \"John Friend\" complete titles list amulet hijab",
+    "\"Amulette composée par Al-Buni\" OR \"amulet al-Buni\" manuscript Bibliothèque nationale",
+    "worldcat.org \"al-Buni\" amulet talisman English translation site:worldcat.org",
+    "\"btv1b110023178\" OR \"amulette al-buni\" BnF Arabic manuscript catalog description",
+    "al-Buni \"Hādhā Ḥijāb\" OR \"hijab\" amulet talisman Arabic English translation 2023 2024",
+    "Noah Gardiner al-Buni amulet corpus manuscripts BnF Paris English scholarship",
+    "BnF \"arabe\" al-Buni amulet Arabic manuscript catalog \"amulette\" Paris title",
+    "\"al-Buni\" amulet English worldcat OR \"library catalog\" OR \"university press\" translated 2020 2021 2022 2023 2024"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Ahmad_al-Buni", "found": "Background on al-Buni (d. 1225); corpus of ~40 works; Shams al-Ma'arif is primary text"},
+    {"url": "https://gallica.bnf.fr/ark:/12148/btv1b110023178.image", "found": "Manuscript confirmed as 17th-century Arabic amulet attributed to al-Buni at BnF; 403 on direct fetch"},
+    {"url": "https://revelore.press/product/shams-al-maarif-the-sun-of-knowledge/", "found": "Inloes/Hamade 2021 translation is a selected partial translation of Shams al-Ma'arif, not this amulet text"},
+    {"url": "https://www.amazon.com/Sun-Knowledge-Shams-al-Maarif-Translation/dp/1947544357", "found": "Amina Inloes 2021 Revelore Press — selected Shams al-Ma'arif translation"},
+    {"url": "https://www.amazon.com/Shams-al-Maarif-Talismans-Magic-Squares/dp/B0CJXGKBQF", "found": "Johann Voldemont 2023 — Shams al-Ma'arif: Talismans and Magic Squares; partial/selected"},
+    {"url": "https://www.amazon.com/H%C4%81dh%C4%81-%E1%B8%A4ij%C4%81b-%CA%BFA%E1%BA%93%C4%ABm-al-Sha%CA%BEn-wa-al-Burh%C4%81n/dp/B0H2PZXCQS", "found": "John Friend translation of Hādhā Ḥijāb ʿAẓīm al-Shaʾn (The Mighty Talisman of Rank and Proof) — a hijab/talisman text attributed to al-Buni; possible match but Arabic title of BnF ms unconfirmed"},
+    {"url": "https://www.amazon.com/Al-Buni-Manuscripts-Collection/dp/B0H2QGCDJC", "found": "John Friend 8-volume collection of al-Buni manuscript translations; none specifically titled 'Amulette composée par Al-Buni'"},
+    {"url": "https://archive.org/details/EsotericismInAManuscriptCultureAhmadAlBuniAndHisReadersThroughTheMamlukPeriodByNoahGardiner", "found": "Noah Gardiner PhD dissertation on al-Buni manuscripts; no specific English translation of this BnF amulet found"},
+    {"url": "https://brill.com/display/book/edcoll/9789004471481/BP000010.xml?language=en", "found": "Brill chapter on amulets in the Corpus Bunianum — 403, inaccessible"},
+    {"url": "https://search.worldcat.org/search?q=al-Buni+amulet", "found": "WorldCat — 403, inaccessible; no direct catalog check possible"}
+  ],
+  "reasoning": "Work identity unresolved: French catalog title 'Amulette composée par Al-Boûnî' does not yield an Arabic title. BnF Gallica, WorldCat, and Brill all returned 403. Known English translations (Inloes 2021 partial Shams, Voldemont 2023 partial Shams, Friend's 8-vol collection incl. one hijab text) cover named works; none confirmed as this specific BnF ms. Match with Friend's 'Hādhā Ḥijāb' plausible but unconfirmed."
+}

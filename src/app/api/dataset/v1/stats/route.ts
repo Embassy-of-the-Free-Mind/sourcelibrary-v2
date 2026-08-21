@@ -130,7 +130,7 @@ export async function GET() {
     // the edge so repeat/bot traffic doesn't re-run these 4 scans. Mirrors
     // the CDN-Cache-Control convention in next.config.ts / api/image.
     headers: {
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
       'CDN-Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
     },
   });

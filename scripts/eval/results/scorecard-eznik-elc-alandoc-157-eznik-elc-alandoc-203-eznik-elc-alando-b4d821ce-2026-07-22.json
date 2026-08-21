@@ -1,0 +1,92 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "gemma-4-31b-it"
+  ],
+  "runs": 1,
+  "only": "eznik-elc-alandoc-157|eznik-elc-alandoc-203|eznik-elc-alandoc-70",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 3,
+      "aligned": 3,
+      "refChars": 1779,
+      "charAccuracy": 0.9775154581225407,
+      "rows": [
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 220-221 (man ranked above the animals, 1826 printed p.157)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 168,
+          "aligned": true,
+          "guard": 0.10526315789473684,
+          "cer": 0.02356902356902357,
+          "charAccuracy": 0.9764309764309764,
+          "refLen": 594,
+          "matched": 580,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.157",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik220.htm",
+          "models": {
+            "gemma-4-31b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 293 (against the pagan pantheon; mind, soul and the One, 1826 printed p.203)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 214,
+          "aligned": true,
+          "guard": 0.0660377358490566,
+          "cer": 0.015332197614991482,
+          "charAccuracy": 0.9846678023850085,
+          "refLen": 587,
+          "matched": 578,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.203",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik293.htm",
+          "models": {
+            "gemma-4-31b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 70-71 (tamed-animals argument)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 80,
+          "aligned": true,
+          "guard": 0.16326530612244897,
+          "cer": 0.028428093645484948,
+          "charAccuracy": 0.9715719063545151,
+          "refLen": 598,
+          "matched": 581,
+          "source": "TITUS etext (Mariès–Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.69",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik070.htm",
+          "models": {
+            "gemma-4-31b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

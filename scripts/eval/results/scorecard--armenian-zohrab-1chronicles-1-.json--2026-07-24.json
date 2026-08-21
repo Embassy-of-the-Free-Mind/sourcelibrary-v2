@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^armenian-zohrab-1chronicles-1\\.json$",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1020,
+      "charAccuracy": 0.9715686274509804,
+      "rows": [
+        {
+          "work": "Zohrab OT, 1 Chronicles 1:1-23 (table-of-nations genealogy)",
+          "bookId": "69a5eae5d507939f0352d3c8",
+          "pageNumber": 267,
+          "aligned": true,
+          "guard": 0.16908212560386474,
+          "cer": 0.028431372549019607,
+          "charAccuracy": 0.9715686274509804,
+          "refLen": 1020,
+          "matched": 991,
+          "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armat/armat339.htm",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0021893999999999998,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.147615,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

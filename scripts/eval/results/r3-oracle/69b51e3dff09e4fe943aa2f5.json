@@ -1,0 +1,68 @@
+{
+  "book_id": "69b51e3dff09e4fe943aa2f5",
+  "work_identified": "De Linguae Phoenicis sive Hebraicae excellentia & de necessario illius & Arabicae penes Latinos usu, Praefatio, aut potius loquutionis humanaeue perfectionis Panegyris — Guillaume Postel, Vienna 1554 (VD16 P4481). A Latin preface/panegyric on the excellence of the Hebrew/Phoenician language and the necessity of it and Arabic for Latin scholars, composed during Postel's professorship at the Vienna Academy.",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Guillaume Postel \"de Linguae Phoenicis\" OR \"Hebrew language excellence\" English translation",
+    "Guillaume Postel Vienna Academy Hebrew Arabic language panegyric English translation",
+    "WorldCat \"Postel\" \"De Linguae Phoenicis\" OR \"linguae phoenicis hebraicae\" English translation",
+    "Guillaume Postel complete works English translation bibliography scholarly",
+    "Postel \"de linguae phoenicis\" 1554 Vienna translation English scholarly publication",
+    "\"Guillaume Postel\" bibliography 1554 \"translated\" \"English\" linguistics Hebrew Arabic",
+    "\"Postel\" \"Panegyris\" OR \"panegyric\" Hebrew Arabic Latin 1554 English translation OR \"in English\" published",
+    "Guillaume Postel \"Linguae Phoenicis\" OR \"Hebraicae excellentia\" English translation published",
+    "Guillaume Postel scholar \"David Hay\" OR \"Hartley\" OR \"Kuntz\" English translation works Hebrew Arabic",
+    "Postel \"Hebraicae excellentia\" OR \"Phoenicis excellentia\" 1554 translated English anthology Renaissance primary sources",
+    "Guillaume Postel \"reasons for learning Arabic\" OR \"defense of Hebrew\" English translation 2020 2021 2022 2023 2024 2025 OR 2026",
+    "Postel \"academiae Viennensis\" OR \"Vienna academy\" Hebrew language Latin 1554 English scholarly edition VD16",
+    "VD16 P4481 Postel \"Linguae Phoenicis\" editions translations",
+    "\"Postel\" \"On the Excellence\" OR \"excellence of Hebrew\" OR \"Hebrew language\" translation English academic",
+    "Guillaume Postel 1510 1581 \"On the Excellence of Hebrew\" OR \"Excellence of the Hebrew Language\" English",
+    "Postel \"Linguae Phoenicis\" OR \"de linguae phoenicis\" full text English translation OR \"I translate\" academic article chapter"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://via-hygeia.art/a-little-guillaume-postel-sampler-part-1-an-introductory-triptych/",
+      "found": "Explicit statement: 'there is almost nothing of his works translated in English (!)'; lists works being translated but NOT De Linguae Phoenicis"
+    },
+    {
+      "url": "https://openlibrary.org/authors/OL97391A/Guillaume_Postel",
+      "found": "86 Postel works catalogued; all in original Latin or French; no English editions found"
+    },
+    {
+      "url": "https://play.google.com/store/books/details/De_Linguae_Phoenicis_sive_Hebraicae_excellentia_de?id=5cJaAAAAcAAJ&hl=en_US",
+      "found": "Only the 1554 Latin original by Zimmermann (Vienna) available; no English edition listed"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Guillaume_Postel",
+      "found": "Major bibliography of Postel works listed; no English translations of linguistic treatises noted"
+    },
+    {
+      "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/postel-guillaumedeg",
+      "found": "403 on fetch; not available for direct check"
+    },
+    {
+      "url": "https://books.google.com/books/about/Guillaume_Postel.html?id=030L3fsNSPIC",
+      "found": "Kuntz's major scholarly monograph on Postel; no indication of English translation of De Linguae Phoenicis"
+    },
+    {
+      "url": "https://rsa.confex.com/rsa/2022/meetingapp.cgi/Paper/11718",
+      "found": "RSA 2022 paper on 'Postel and the Reasons for Learning Arabic' — discusses themes in English but not a complete translation"
+    },
+    {
+      "url": "https://search.worldcat.org/search?q=Postel+Linguae+Phoenicis+Hebraicae",
+      "found": "403 Forbidden; WorldCat direct search blocked"
+    },
+    {
+      "url": "https://archive.org/search?query=postel+linguae+phoenicis",
+      "found": "No readable results returned; only original-language texts by Postel on archive.org"
+    }
+  ],
+  "reasoning": "No English translation of Postel's 1554 Vienna panegyric on Hebrew/Phoenician and Arabic excellence has been published. Via Hygeia (Postel specialist) explicitly confirms 'almost nothing of his works translated in English'. Open Library shows 86 Postel works all in Latin/French. Google Books has only the 1554 Latin original. Exhaustive web searches across scholarly databases, Renaissance studies literature, and library catalogs return no English edition."
+}

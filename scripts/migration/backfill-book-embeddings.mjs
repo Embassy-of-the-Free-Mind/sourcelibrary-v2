@@ -7,7 +7,10 @@
  *
  * For unenriched books, falls back to title + author + description + categories.
  *
- * Cost: $0 (Gemini free tier). Time: ~20 min for 17K books.
+ * Cost: BILLED, but small — one embedding per book, not per page. At $0.20/1M
+ * input tokens and the measured 4.29 chars/token, ~17K books of summary text is
+ * roughly $2-3 per full pass. (This line used to read "$0 (Gemini free tier)";
+ * see .claude/docs/embeddings.md.) Time: ~20 min for 17K books.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
@@ -21,6 +24,10 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import {
+  composeBookEmbeddingText as composeEmbeddingText,
+  BOOK_INDEX_EMBEDDING_PROJECTION,
+} from '../lib/book-embedding-text.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -103,103 +110,6 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ── Text Composition ────────────────────────────────────────────────
 
-/**
- * Compose a rich text representation from book + index data for embedding.
- * This text captures the semantic essence of the book.
- */
-function composeEmbeddingText(book, indexData) {
-  const parts = [];
-
-  // Title and author (always available)
-  parts.push(`${book.display_title || book.title || 'Untitled'} by ${book.author || 'Unknown'}`);
-
-  if (book.language) parts.push(`Language: ${book.language}`);
-  if (book.published) parts.push(`Published: ${book.published}`);
-
-  // Enrichment data (from book_indexes)
-  if (indexData) {
-    // Book summary — the richest semantic signal
-    if (indexData.bookSummary?.detailed) {
-      parts.push(indexData.bookSummary.detailed);
-    } else if (indexData.bookSummary?.brief) {
-      parts.push(indexData.bookSummary.brief);
-    } else if (indexData.bookSummary?.abstract) {
-      parts.push(indexData.bookSummary.abstract);
-    }
-
-    // Section summaries — chapter-level context
-    if (indexData.sectionSummaries?.length > 0) {
-      const sections = indexData.sectionSummaries
-        .map(s => s.title || s.summary)
-        .filter(Boolean)
-        .slice(0, 15); // cap to avoid over-long text
-      if (sections.length > 0) {
-        parts.push(`Chapters: ${sections.join('; ')}`);
-      }
-    }
-
-    // Vocabulary/index entries — topical keywords
-    if (indexData.entries?.length > 0) {
-      const terms = indexData.entries
-        .sort((a, b) => (b.pages?.length || 0) - (a.pages?.length || 0))
-        .slice(0, 50) // top 50 by page frequency
-        .map(e => e.term);
-      parts.push(`Topics: ${terms.join(', ')}`);
-    }
-
-    // Named entities
-    if (indexData.people?.length > 0) {
-      const names = indexData.people.slice(0, 30).map(p => p.name);
-      parts.push(`People: ${names.join(', ')}`);
-    }
-    if (indexData.places?.length > 0) {
-      const names = indexData.places.slice(0, 20).map(p => p.name);
-      parts.push(`Places: ${names.join(', ')}`);
-    }
-    if (indexData.concepts?.length > 0) {
-      const names = indexData.concepts.slice(0, 30).map(c => c.name);
-      parts.push(`Concepts: ${names.join(', ')}`);
-    }
-  }
-
-  // Fallback fields from book document
-  if (book.description && !indexData?.bookSummary) {
-    parts.push(book.description);
-  }
-  if (book.summary && !indexData?.bookSummary) {
-    parts.push(book.summary);
-  }
-  if (book.reading_summary?.overview && !indexData?.bookSummary) {
-    parts.push(book.reading_summary.overview);
-  }
-  if (book.categories?.length > 0) {
-    parts.push(`Categories: ${book.categories.join(', ')}`);
-  }
-
-  // Artwork-specific metadata (commons_description, categories, medium, collections)
-  if (book.content_type === 'artwork') {
-    if (book.commons_description) {
-      parts.push(book.commons_description.slice(0, 500));
-    }
-    if (book.commons_categories) {
-      // commons_categories is a semicolon-separated string from Wikimedia
-      const cats = typeof book.commons_categories === 'string'
-        ? book.commons_categories.split('|').map(c => c.trim()).filter(Boolean).slice(0, 20)
-        : Array.isArray(book.commons_categories) ? book.commons_categories.slice(0, 20) : [];
-      if (cats.length > 0) parts.push(`Subjects: ${cats.join(', ')}`);
-    }
-    if (book.resource_type) parts.push(`Medium: ${book.resource_type}`);
-    if (book.medium) parts.push(`Material: ${book.medium}`);
-    if (book.collections?.length > 0) {
-      const collNames = book.collections.filter(c => c !== 'visual-art').map(c => c.replace(/-/g, ' '));
-      if (collNames.length > 0) parts.push(`Collections: ${collNames.join(', ')}`);
-    }
-  }
-
-  // Truncate to ~8000 chars to stay well within Gemini token limits
-  const text = parts.join('\n').slice(0, 8000);
-  return text;
-}
 
 // ── Main ────────────────────────────────────────────────────────────
 
@@ -262,16 +172,10 @@ async function main() {
 
   if (LIMIT > 0) bookIds = bookIds.slice(0, LIMIT);
 
-  // Only project the fields we need from book_indexes (skip pageSummaries which are huge)
-  const INDEX_PROJECTION = {
-    book_id: 1,
-    bookSummary: 1,
-    sectionSummaries: { $slice: 15 },
-    'entries.term': 1, 'entries.pages': 1,
-    people: { $slice: 30 },
-    places: { $slice: 20 },
-    concepts: { $slice: 30 },
-  };
+  // Only the fields the composer reads (pageSummaries is huge and unused).
+  // Lives beside the composer so a new field can't be added to one and not
+  // the other — a projection that omits a source silently empties that line.
+  const INDEX_PROJECTION = BOOK_INDEX_EMBEDDING_PROJECTION;
 
   const bookMap = new Map(books.map(b => [b.id, b]));
 

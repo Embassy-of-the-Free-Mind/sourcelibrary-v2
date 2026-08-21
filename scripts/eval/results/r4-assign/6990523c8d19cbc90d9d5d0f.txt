@@ -1,0 +1,4 @@
+book_id: 6990523c8d19cbc90d9d5d0f
+Title: Compendio dell'arte essorcistica
+Author: Girolamo Menghi
+Source language: Italian

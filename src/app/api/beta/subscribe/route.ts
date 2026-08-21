@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
+
+// Every new address here triggers a welcome email to that address. Uncapped,
+// that is a spam relay: a script can make sourcelibrary.org mail strangers,
+// and the resulting Resend suspension would also kill the health-check alerts.
+const RATE_LIMIT = { name: 'beta-subscribe', limit: 3, windowSeconds: 3600 };
 
 const WELCOME_HTML = `
 <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
@@ -121,6 +127,17 @@ export async function POST(request: NextRequest) {
         );
       }
       return NextResponse.json({ message: 'Already subscribed!', alreadySubscribed: true });
+    }
+
+    // Gate only the path that actually sends mail. A returning subscriber hits
+    // the early return above without spending budget; a script walking a list of
+    // fresh addresses spends it on every request, which is the case we care about.
+    const limit = await checkRateLimitShared(RATE_LIMIT, getClientIp(request));
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many subscription attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(limit.retryAfter) } },
+      );
     }
 
     // Get IP and country from headers (Cloudflare / Vercel)

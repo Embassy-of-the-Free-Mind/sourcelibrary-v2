@@ -1,0 +1,4 @@
+book_id: 69b1deccca46fa60ea1ee439
+Title: Alexander von Tralles: Original-Text und Übersetzung, Vol. 1
+Author: Alexander of Tralles
+Source language: Greek

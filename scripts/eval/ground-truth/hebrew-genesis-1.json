@@ -1,0 +1,18 @@
+{
+  "work": "Genesis 1:1-5 (Bereshit)",
+  "book_id": "6952e4bc77f38f6761bc7db1",
+  "page_number": 45,
+  "script": "hebrew",
+  "language": "Hebrew",
+  "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+  "source_url": "https://www.sefaria.org/Genesis.1",
+  "ocr_ground_truth": "בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃ וְהָאָ֗רֶץ הָיְתָ֥ה תֹ֙הוּ֙ וָבֹ֔הוּ וְחֹ֖שֶׁךְ עַל־פְּנֵ֣י תְה֑וֹם וְר֣וּחַ אֱלֹהִ֔ים מְרַחֶ֖פֶת עַל־פְּנֵ֥י הַמָּֽיִם׃ וַיֹּ֥אמֶר אֱלֹהִ֖ים יְהִ֣י א֑וֹר וַֽיְהִי־אֽוֹר׃ וַיַּ֧רְא אֱלֹהִ֛ים אֶת־הָא֖וֹר כִּי־ט֑וֹב וַיַּבְדֵּ֣ל אֱלֹהִ֔ים בֵּ֥ין הָא֖וֹר וּבֵ֥ין הַחֹֽשֶׁךְ׃ וַיִּקְרָ֨א אֱלֹהִ֤ים ׀ לָאוֹר֙ י֔וֹם וְלַחֹ֖שֶׁךְ קָ֣רָא לָ֑יְלָה וַֽיְהִי־עֶ֥רֶב וַֽיְהִי־בֹ֖קֶר י֥וֹם אֶחָֽד׃",
+  "page_class": {
+    "source_class": "print",
+    "layout": "pointed_text_with_latin_apparatus",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": true
+  }
+}

@@ -68,11 +68,28 @@ Applies to all contributors — human and AI.
 - `scripts/import/al-badri-direct.mjs` — original direct-insert pattern (bundled IA item).
 - `scripts/import/daoist-alchemy-ia-batch{,-2}.mjs` — batch-via-API examples.
 - `src/lib/dedup.ts` — fingerprint + normalize + `checkDuplicate` + `scanForDuplicates`.
+- `scripts/lib/book-docs.mjs` — `makeBookDoc`/`makePageDoc`, the whitelisted doc constructors.
 - `.claude/docs/chinese-iiif-sources.md` — per-source IIIF manifest patterns + gotchas.
 - `.claude/docs/daoist-alchemy-acquisition-list.md` — a worked want→dedupe→get example.
+
+## Building the insert docs
+Build every `books`/`pages` insert document with `makeBookDoc()` / `makePageDoc()` from
+`scripts/lib/book-docs.mjs` — never a bare object literal. Unknown keys throw, so a 478th
+field cannot ship silently the way the first 477 did; adding one is then a reviewed edit
+to the whitelist. All 50 direct-import scripts already do this — copy the nearest one.
+The rule, the incident behind it, and where per-book *actions* go instead (rows via
+`scripts/lib/sweep-log.mjs`) are in `.claude/docs/invariants/field-sprawl.md`.
 
 ## Invariants (don't violate)
 - Imports land HIDDEN; flip visible only after QA. Always set `visible`/`hidden` as a pair.
 - Dedup on `source_fingerprint` before insert; don't filter dedup by visibility.
 - Subject-filter keyword enumerations by hand — they're noisy.
+- **Archive IIIF pages at NATIVE resolution, never a fixed width cap.** Historic
+  imports at `/full/1000,/`–`/full/2000,/` left ~2.1M pages at 2–9× below the
+  source master (issue #3186; the recovery sweep is expensive — don't add to it).
+  Check `info.json` for the true `width`; if the server caps single-response
+  output below it (`maxWidth`/`maxHeight`, or a `SILENT_CAP_HOSTS` entry in
+  `scripts/lib/iiif-utils.mjs`), tile-stitch with `fetchIiifNativeRes()`.
+  Width caps are doubly destructive on wide-format material (palm leaves,
+  scrolls), where they crush the readable dimension.
 - Respect source terms: ctext.org and NLC China prohibit automated download — do NOT scrape them.

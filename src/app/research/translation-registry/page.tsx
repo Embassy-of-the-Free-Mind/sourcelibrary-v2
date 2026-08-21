@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     'Which early-modern Latin works have already been translated into English — and who translated them? A work-level registry that credits the translators and links to the translations, the companion to the Translation Gap.',
   alternates: { canonical: '/research/translation-registry' },
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'The Translation Registry',
     description:
       'The early-modern Latin works that have been Englished, and the translators who did it. The companion to the Translation Gap.',

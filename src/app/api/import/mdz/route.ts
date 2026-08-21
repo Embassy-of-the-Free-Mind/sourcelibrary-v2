@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
+import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
@@ -202,7 +203,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       language: original_language || 'Unknown',
       original_language: original_language || 'Unknown',
       published: year ? String(year) : 'Unknown',
-      year: year || null,
+      ...(publishedToYear(year) !== null ? { year: publishedToYear(year)! } : {}),
       categories: categories || [],
       ...(work_id ? { work_id } : {}),
       mdz_id: normalizedId,

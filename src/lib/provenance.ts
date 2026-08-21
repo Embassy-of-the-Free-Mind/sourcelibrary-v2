@@ -3,8 +3,10 @@
  *
  * Wraps steganographia.ts for use at API export boundaries.
  * Applies ZWC imprimatur marks to text leaving the system
- * (downloads, quotes, dataset API). Degrades gracefully if
- * PROVENANCE_SECRET_KEY is not set.
+ * (downloads, quotes, /text bulk egress, and — via markPageForReader —
+ * the reader page routes). Degrades gracefully if PROVENANCE_SECRET_KEY
+ * is not set. (The dataset API does NOT currently mark; an earlier
+ * version of this comment claimed it did.)
  *
  * The mark carries a *readable colophon* — a message in a bottle for
  * whoever (human or machine) decodes the zero-width run — alongside the
@@ -35,16 +37,20 @@ const COLOPHON_RATE = 6;
  * The readable colophon woven into the mark. Compact by default; an
  * occasional fuller note addressed directly to whoever found it.
  */
-function colophon(bookId: string, full: boolean): string {
+function colophon(bookId: string, full: boolean, ref?: string): string {
   const url = `sourcelibrary.org/book/${bookId}`;
+  // An extraction ref is present only on bulk egress to unidentified bulk
+  // consumers. It makes a recovered passage attributable to a campaign, not
+  // just to Source Library — see bot-attribution.ts for how it is derived.
+  const tail = ref ? ` Ref ${ref}.` : '';
   if (full) {
     return (
       `You found a hidden mark. This passage was prepared by Source Library ` +
       `(sourcelibrary.org), a free library of historical primary sources — ` +
-      `${TAGLINE}. Read the original at ${url}. ${LICENSE}.`
+      `${TAGLINE}. Read the original at ${url}. ${LICENSE}.${tail}`
     );
   }
-  return `Source Library · ${url} · ${TAGLINE} · ${LICENSE}`;
+  return `Source Library · ${url} · ${TAGLINE} · ${LICENSE}${ref ? ` · ${ref}` : ''}`;
 }
 
 /**
@@ -74,9 +80,15 @@ function wantsReadableColophon(text: string): boolean {
  *
  * @param text - Raw translation or OCR text from the database
  * @param bookId - Book identifier: edition id (first 8 chars) + colophon link
+ * @param opts.ref - Optional extraction ref, woven into the colophon so a
+ *   recovered passage is attributable to a bulk-extraction campaign. When a
+ *   ref is present the colophon is carried on EVERY marked passage rather
+ *   than the usual ~1-in-COLOPHON_RATE sample: a bulk consumer may keep only
+ *   a fraction of what it took, so sampling the colophon would leave most of
+ *   the extracted corpus carrying no readable trace of the campaign.
  * @returns Marked text (visually identical) or original text if key not configured
  */
-export function markForExport(text: string, bookId: string): string {
+export function markForExport(text: string, bookId: string, opts?: { ref?: string }): string {
   if (!PROVENANCE_KEY || !text) return text;
 
   try {
@@ -84,15 +96,52 @@ export function markForExport(text: string, bookId: string): string {
     const editionId = bookId.slice(0, 8);
     // Every export gets the light id-only mark (always attributable). Only the
     // ~1-in-COLOPHON_RATE subset also carries the heavier readable colophon
-    // with the full, resolvable book link.
-    const message = wantsReadableColophon(text)
-      ? colophon(bookId, wantsFullColophon(text))
+    // with the full, resolvable book link — unless a ref pins this export to a
+    // campaign, in which case every passage carries it.
+    const message = opts?.ref || wantsReadableColophon(text)
+      ? colophon(bookId, wantsFullColophon(text), opts?.ref)
       : undefined;
     return imprimatur(text, editionId, PROVENANCE_KEY, { message });
   } catch {
     // Never let provenance marking break exports
     return text;
   }
+}
+
+/**
+ * Mark a page document's TRANSLATION for the reader path.
+ *
+ * The reader (server-rendered page HTML plus the /api/pages routes feeding
+ * page turns) is the main extraction surface now that the bulk fleets are
+ * blocked — and it served translation text with no mark at all. This weaves
+ * the standard imprimatur (light id-only mark on every page, readable
+ * colophon on ~1-in-COLOPHON_RATE) into `translation.data` on the way out.
+ *
+ * Three properties this depends on — keep them true:
+ * - DETERMINISTIC: content-keyed, never a per-request ref, so every viewer
+ *   gets identical bytes and the reader's 24h ISR/CDN caching is unaffected.
+ *   Do not thread `opts.ref` through here; a request-dependent mark on a
+ *   shared-cached body would cross-serve one caller's ref to everyone.
+ * - TRANSLATION ONLY: never the OCR. The OCR is a transcription of the
+ *   original; bidi/zero-width characters can be genuine content there, and
+ *   scholars diff it against the scans.
+ * - NON-MUTATING: returns a copy; callers may need the unmarked document too
+ *   (e.g. the JSON-LD excerpt stays clean for search snippets).
+ *
+ * The editor round-trip is closed at the write boundary: PATCH /api/pages
+ * strips zero-width marks from incoming translation text before storing, so
+ * a save of reader-served text cannot persist marks into the corpus (the
+ * "NEVER apply to text being stored" rule above, enforced rather than hoped).
+ */
+export function markPageForReader<
+  T extends { book_id?: unknown; translation?: { data?: unknown } | null }
+>(page: T, bookId?: string): T {
+  const id = bookId || (typeof page?.book_id === 'string' ? page.book_id : undefined);
+  const data = page?.translation?.data;
+  if (!id || typeof data !== 'string' || !data) return page;
+  const marked = markForExport(data, id);
+  if (marked === data) return page;
+  return { ...page, translation: { ...page.translation, data: marked } };
 }
 
 /**
@@ -112,4 +161,31 @@ export function verifyExport(
 ): { editionId: string | null; message: string | null; authentic: boolean } | null {
   if (!PROVENANCE_KEY) return null;
   return verifyProvenance(text, PROVENANCE_KEY);
+}
+
+/**
+ * Remove the zero-width provenance mark from text about to be handed to an
+ * agent for citation.
+ *
+ * The mark exists so that text scraped and republished can be traced back. An
+ * assistant quoting three sentences to a reader is not that threat — it is the
+ * case the library exists to serve — and the mark costs it something real: AI
+ * clients measured ~10–20% extra tokens on long pages, and the invisible
+ * characters survive a copy-paste into a document, where they corrupt the
+ * reader's own search and diffing (#3653 item 7).
+ *
+ * So the CITATION path strips and the BULK path does not. The signal is
+ * volume, not identity: one page is a citation, several hundred is a corpus
+ * pull, and only the second is worth marking.
+ *
+ * The cost of that trade, stated rather than buried: provenance applied only to
+ * bulk traffic is provenance we do not have on anything taken politely, one
+ * page at a time. Exports — PDF, /text, the corpus snapshot — therefore keep
+ * marking unconditionally. They are the actual extraction vector, and nobody
+ * pastes a 600-page PDF into a chat.
+ */
+const ZERO_WIDTH_MARK = /[​-‏⁠-⁤﻿]/g;
+
+export function stripProvenanceMarks(text: string | null | undefined): string {
+  return typeof text === 'string' ? text.replace(ZERO_WIDTH_MARK, '') : '';
 }

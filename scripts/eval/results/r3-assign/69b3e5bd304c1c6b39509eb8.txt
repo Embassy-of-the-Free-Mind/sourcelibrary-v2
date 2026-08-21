@@ -1,0 +1,4 @@
+book_id: 69b3e5bd304c1c6b39509eb8
+Title: Collection of kabbalistic texts
+Author: Joseph Gikatilla
+Source language: Hebrew

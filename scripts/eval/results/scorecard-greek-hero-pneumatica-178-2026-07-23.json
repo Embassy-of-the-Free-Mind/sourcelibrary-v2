@@ -1,0 +1,44 @@
+{
+  "date": "2026-07-23",
+  "models": [
+    "scw:gemma-3-27b-it"
+  ],
+  "runs": 1,
+  "only": "greek-hero-pneumatica-178",
+  "summary": [
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1028,
+      "charAccuracy": 0.9785992217898832,
+      "rows": [
+        {
+          "work": "Hero of Alexandria, Pneumatica I.38-39 transition (Teubner p.178, temple-door mechanisms)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 252,
+          "aligned": true,
+          "guard": 0.03664921465968586,
+          "cer": 0.021400778210116732,
+          "charAccuracy": 0.9785992217898832,
+          "refLen": 1028,
+          "matched": 1006,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 1,
+              "refused": 0,
+              "costUsd": 0.002317,
+              "consistency": null,
+              "aligned": true,
+              "charAccuracy": 0.9153696498054474,
+              "cer": 0.08463035019455253
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

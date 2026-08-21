@@ -1,0 +1,74 @@
+{
+  "book_id": "69dfede68d34461cbe7f4df4",
+  "work_identified": "Genji Monogatari (The Tale of Genji) by Murasaki Shikibu — Ko-i Genji Monogatari (校異源氏物語) is the 1942 Ikeda Kamekan variorum/critical edition collating manuscript lineages, not a distinct literary work",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "partial",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Tale of Genji",
+      "translator": "Arthur Waley",
+      "pub_year": "1933",
+      "publisher": "Allen & Unwin / Houghton Mifflin",
+      "completeness": "partial",
+      "source_url": "https://en.wikipedia.org/wiki/The_Tale_of_Genji"
+    },
+    {
+      "english_title": "The Tale of Genji",
+      "translator": "Edward G. Seidensticker",
+      "pub_year": "1976",
+      "publisher": "Alfred A. Knopf",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/The_Tale_of_Genji"
+    },
+    {
+      "english_title": "The Tale of Genji",
+      "translator": "Royall Tyler",
+      "pub_year": "2001",
+      "publisher": "Viking/Penguin Classics",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/The_Tale_of_Genji"
+    },
+    {
+      "english_title": "The Tale of Genji",
+      "translator": "Dennis Washburn",
+      "pub_year": "2015",
+      "publisher": "W. W. Norton",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/The_Tale_of_Genji"
+    }
+  ],
+  "queries_run": [
+    "Ko-i Genji Monogatari 校異源氏物語 variorum critical edition Japanese",
+    "Tale of Genji English translations complete Waley Seidensticker Tyler Washburn",
+    "WorldCat \"Ko-i Genji Monogatari\" OR \"校異源氏物語\" English translation",
+    "\"校異源氏物語\" site:worldcat.org OR site:ndl.go.jp",
+    "archive.org \"Genji Monogatari\" English translation complete Seidensticker Tyler"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://ja.wikipedia.org/wiki/%E6%A0%A1%E7%95%B0%E6%BA%90%E6%B0%8F%E7%89%A9%E8%AA%9E",
+      "found": "Ko-i Genji Monogatari confirmed as 1942 variorum critical edition by Ikeda Kamekan (池田亀鑑), classifying Aohyōshihon/Kawauchibon/Betsubon manuscript lineages and comparing textual variants; no English translation mentioned"
+    },
+    {
+      "url": "https://ndlsearch.ndl.go.jp/books/R100000002-I000000907025",
+      "found": "NDL record confirms: 5-volume variorum edition of Genji Monogatari, published 1942 by Chūō Kōronsha, NDC 913.36 (Japanese classical literature with scholarly apparatus)"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/The_Tale_of_Genji",
+      "found": "Multiple complete English translations confirmed: Waley (1925–1933, near-complete), Seidensticker (1976, first complete, Knopf), Tyler (2001, complete, Viking), Washburn (2015, complete, Norton)"
+    },
+    {
+      "url": "https://archive.org/details/the-tale-of-genji",
+      "found": "Archive.org holds English translations of The Tale of Genji including Seidensticker version"
+    },
+    {
+      "url": "https://archive.org/details/genjimonogatari01murauoft",
+      "found": "Archive.org holds Japanese-language Genji Monogatari source text; confirms source work is well-documented"
+    }
+  ],
+  "reasoning": "Ko-i Genji Monogatari is a 1942 variorum scholarly edition (Ikeda Kamekan) of the Genji Monogatari — not a distinct literary work. The underlying text has 4 complete/near-complete English translations: Waley (1933), Seidensticker (1976), Tyler (2001), Washburn (2015). Source-language rule → not_first."
+}

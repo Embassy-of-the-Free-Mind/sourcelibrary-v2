@@ -9,6 +9,7 @@
 
 import { MongoClient, ObjectId } from 'mongodb';
 import { config } from 'dotenv';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 config({ path: '.env.local' });
 
@@ -138,10 +139,9 @@ async function importBook(client: MongoClient, book: BookImport) {
   const getThumbnailUrl = (n: number) =>
     `https://archive.org/download/${book.ia_identifier}/page/n${n}/full/pct:15/0/default.jpg`;
 
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId,
     id: bookIdStr,
-    tenant_id: 'default',
     title: book.title,
     display_title: null,
     author: book.author,
@@ -170,7 +170,7 @@ async function importBook(client: MongoClient, book: BookImport) {
     curator_notes: book.notes,
     created_at: now,
     updated_at: now
-  };
+  });
 
   await booksCol.insertOne(bookDoc);
 
@@ -178,10 +178,9 @@ async function importBook(client: MongoClient, book: BookImport) {
   const pageDocs = [];
   for (let i = 0; i < pageCount; i++) {
     const pageId = new ObjectId();
-    pageDocs.push({
+    pageDocs.push(makePageDoc({
       _id: pageId,
       id: pageId.toHexString(),
-      tenant_id: 'default',
       book_id: bookIdStr,
       page_number: i + 1,
       photo: getPageImageUrl(i),
@@ -191,7 +190,7 @@ async function importBook(client: MongoClient, book: BookImport) {
       translation: { language: 'English', model: null, data: '' },
       created_at: now,
       updated_at: now
-    });
+    }));
   }
 
   // Insert in batches of 500 to avoid memory issues

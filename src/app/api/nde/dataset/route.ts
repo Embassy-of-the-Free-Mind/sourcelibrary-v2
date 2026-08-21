@@ -43,7 +43,7 @@ export async function GET() {
     '@type': 'ContactPoint',
     name: { '@language': 'en', '@value': 'Source Library general inquiries' },
     url: 'https://sourcelibrary.org/about',
-    email: 'derek@sourcelibrary.org',
+    email: 'team@sourcelibrary.org',
   };
 
   const dataset = {
@@ -148,7 +148,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/ld+json; charset=utf-8',
       'Access-Control-Allow-Origin': '*',
-      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=3600',
+      'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=3600',
     },
   });
 }

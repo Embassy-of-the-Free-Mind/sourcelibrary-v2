@@ -1,0 +1,22 @@
+{
+  "work": "Hieronymus, Epistola ad Paulinum (Ep. 53), 1566 Louvain Vulgate",
+  "book_id": "6a26b84361b3857ed05a5221",
+  "page_number": 16,
+  "script": "latin",
+  "language": "Latin",
+  "source": "Latin Wikisource, Vulgata Clementina — Hieronymus Paulino",
+  "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Hieronymus_Paulino",
+  "edition": "Louvain Vulgate (Hentenius), 1566",
+  "non_canonical": true,
+  "memorization_risk": "medium",
+  "ocr_ground_truth": "Frater Ambrosius tua mihi munuscula perferens, detulit simul et suavissimas litteras, quæ a principio amicitiarum fidem probatæ jam fidei, et veteris amicitiæ præferebant. Vera enim illa necessitudo est, et Christi glutino copulata, quam non utilitas rei familiaris, non præsentia tantum corporum, non subdola et palpans adulatio : sed Dei timor, et Divinarum scripturarum studia conciliant. Legimus in veteribus historiis quosdam lustrasse provincias, novos adisse populos, maria transisse : ut eos quos ex libris noverant, coram quoque viderent. Sic Pythagoras Memphiticos vates, sic Plato Ægyptum, et Architam Tarentinum, eamque oram Italiæ, quæ quondam magna Græcia dicebatur, laboriosissime peragravit : ut qui Athenis magister erat, et potens, cujusque doctrinam Academiæ gymnasia personabant, fieret peregrinus atque discipulus : malens aliena verecunde discere, quam sua impudenter ingerere. Denique dum litteras quasi toto fugientes orbe persequitur, captus a piratis et venundatus, etiam tyranno crudelissimo paruit, captivus, vinctus, et servus ; tamen quia philosophus, major emente se fuit.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "two_column_with_marginalia",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "medium"
+  }
+}

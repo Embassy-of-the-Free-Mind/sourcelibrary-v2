@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import OutboundLink from '@/components/analytics/OutboundLink';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
 import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
@@ -24,8 +25,10 @@ export const metadata: Metadata = {
 };
 
 const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
-const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
-const CONTACT_EMAIL = 'derek@sourcelibrary.org';
+// Source Library designation at NAF, not general Embassy support — see the note in
+// src/components/donate/SupportView.tsx.
+const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/embassyofthefreemindsourcelibrary';
+const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Three pecha leaves on a dark ground — the manuscript story at a glance.
 const HERO_IMAGE = 'https://images.sourcelibrary.org/pages/69e787904a6785cfd60cc297/0095.jpg';
@@ -326,10 +329,10 @@ export default async function BhutanLibraryPage() {
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a
+                <OutboundLink
                   href={DONORPERFECT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  surface="bhutan_library"
+                  channel="naf_donorperfect"
                   className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block"
                 >
                   <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">
@@ -337,11 +340,11 @@ export default async function BhutanLibraryPage() {
                   </span>
                   <span className="block text-sm font-semibold text-stone-900">Donate via NAF</span>
                   <span className="block text-xs text-stone-500 mt-1">501(c)(3) public charity</span>
-                </a>
-                <a
+                </OutboundLink>
+                <OutboundLink
                   href={EFM_STRIPE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  surface="bhutan_library"
+                  channel="efm_stripe"
                   className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block"
                 >
                   <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">
@@ -349,17 +352,19 @@ export default async function BhutanLibraryPage() {
                   </span>
                   <span className="block text-sm font-semibold text-stone-900">Donate via EFM</span>
                   <span className="block text-xs text-stone-500 mt-1">ANBI-registered (NL)</span>
-                </a>
+                </OutboundLink>
                 <div className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 sm:col-span-2">
                   <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">
                     Sponsor the campaign — wire, stock, or donor-advised fund
                   </span>
-                  <a
+                  <OutboundLink
                     href={`mailto:${CONTACT_EMAIL}?subject=Bhutan%20Library%20Restoration%20%E2%80%94%20Donation%20Inquiry`}
+                    surface="bhutan_library"
+                    channel="email"
                     className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all"
                   >
                     {CONTACT_EMAIL}
-                  </a>
+                  </OutboundLink>
                 </div>
               </div>
 

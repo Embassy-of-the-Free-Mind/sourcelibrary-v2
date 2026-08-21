@@ -1,0 +1,68 @@
+{
+  "book_id": "69aff09357adc49dbfc4259b",
+  "work_identified": "A Balbale to Inana (Dumuzid-Inana A), ETCSL 4.08.01 — Sumerian dialogue between Utu and Inana concerning flax processing, culminating in anticipation of the bridegroom Ama-ušumgal-ana",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "transliteration",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Harps that Once... Sumerian Poetry in Translation",
+      "translator": "Thorkild Jacobsen",
+      "pub_year": "1987",
+      "publisher": "Yale University Press",
+      "completeness": "complete",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/section4/b40801.htm"
+    },
+    {
+      "english_title": "The Treasures of Darkness: A History of Mesopotamian Religion",
+      "translator": "Thorkild Jacobsen",
+      "pub_year": "1976",
+      "publisher": "Yale University Press",
+      "completeness": "partial",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/section4/b40801.htm"
+    },
+    {
+      "english_title": "The Sacred Marriage Rite: Aspects of Faith, Myth, and Ritual in Ancient Sumer",
+      "translator": "Samuel Noah Kramer",
+      "pub_year": "1969",
+      "publisher": "Indiana University Press",
+      "completeness": "complete",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/section4/b40801.htm"
+    },
+    {
+      "english_title": "A balbale to Inana and Dumuzid (Dumuzid-Inana A): translation",
+      "translator": "Jeremy Black et al. (ETCSL project editors: JAB, GZ, GC, ER)",
+      "pub_year": "1999",
+      "publisher": "Electronic Text Corpus of Sumerian Literature, Faculty of Oriental Studies, University of Oxford",
+      "completeness": "complete",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/section4/tr40801.htm"
+    }
+  ],
+  "queries_run": [
+    "WebFetch https://etcsl.orinst.ox.ac.uk/cgi-bin/etcsl.cgi?text=t.4.08.01 — confirmed composition catalogued with English translation",
+    "WebSearch: ETCSL 4.08.01 \"balbale to Inana\" English translation Oxford",
+    "WebFetch https://etcsl.orinst.ox.ac.uk/section4/tr40801.htm — confirmed complete English translation, ed. Jeremy Black (JAB) et al., pub. Oct 1999",
+    "WebSearch: \"balbale to Inana\" Sumerian English translation worldcat Jeremy Black",
+    "WebFetch https://etcsl.orinst.ox.ac.uk/section4/b40801.htm — bibliography lists Jacobsen 1987 (Yale, pp.13-15), Jacobsen 1976 (Yale, pp.30-32), Kramer 1969 (Indiana UP, pp.68-70) as prior English translations",
+    "WebSearch: worldcat.org \"Dumuzid-Inana\" English translation Sumerian",
+    "WebSearch: \"Dumuzid-Inana A\" OR \"balbale to Inana\" ETCSL 4.08.01 English translation print worldcat"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/cgi-bin/etcsl.cgi?text=t.4.08.01",
+      "found": "Catalog entry confirms ETCSL 4.08.01 is catalogued and has a published English translation"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/section4/tr40801.htm",
+      "found": "Complete English translation of Dumuzid-Inana A by Jeremy Black (JAB) et al., published online October 1999, Oxford; dialogue Utu/Inana on flax-to-linen, bridegroom Ama-ušumgal-ana"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/section4/b40801.htm",
+      "found": "Bibliography page: cites Jacobsen 1987 (Yale UP, pp.13-15), Jacobsen 1976 (Yale UP, pp.30-32), Kramer 1969 (Indiana UP, pp.68-70) each noted as including English translation"
+    }
+  ],
+  "reasoning": "ETCSL (Oxford) published a complete English translation of this exact composition (4.08.01) online in 1999, ed. Jeremy Black et al. The ETCSL bibliography further confirms print translations by Jacobsen (Yale UP, 1987 pp.13-15; 1976 pp.30-32) and Kramer (Indiana UP, 1969 pp.68-70). At least three independent scholarly English translations predate any Source Library rendering. Verdict: not_first."
+}

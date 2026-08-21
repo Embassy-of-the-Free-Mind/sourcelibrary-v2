@@ -5,13 +5,18 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
-import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal, Download } from 'lucide-react';
 import { useEmbed } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 // Book URL helper moved inline to use basePath
 
 interface BphWork {
-  ubn: string;
+  ubn: string | null;
+  /** Manuscripts and photographs get no UBN from Memorix (2,012 rows). `uuid`
+      is the only key they carry, and detailUrl() falls back to it. */
+  uuid?: string | null;
+  /** Manuscript records keep their title here; `title` is null on all of them. */
+  full_title?: string | null;
   title: string | null;
   parallel_title: string | null;
   uniform_title: string | null;
@@ -377,6 +382,21 @@ export default function BphCatalogBrowser({
     return params;
   }, []);
 
+  /**
+   * The current selection as a spreadsheet. Same query string the results came
+   * from, minus paging — the export is the whole selection, not the page on
+   * screen. Asked for by José Bouman (BPH), 2026-08-12: "Is it possible to
+   * export a search selection? […] This is an important feature, that we
+   * often! use!"
+   */
+  const exportHref = useMemo(() => {
+    const params = buildParams(searchQuery, sort, keyword, 0, adv);
+    params.delete('limit');
+    params.delete('offset');
+    const qs = params.toString();
+    return `/api/catalog/bph/export${qs ? `?${qs}` : ''}`;
+  }, [buildParams, searchQuery, sort, keyword, adv]);
+
   const fetchWorks = useCallback(async (q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     // Cancel any in-flight request so fast typing doesn't show stale results
     // when an earlier query resolves after a later one.
@@ -542,7 +562,7 @@ export default function BphCatalogBrowser({
 
   // Resolve digitized status: prefer parent-supplied map (live MongoDB), fall back to row.sl_book_id.
   const resolveDigitized = (w: BphWork) => {
-    const fromMap = digitizedUbns[w.ubn];
+    const fromMap = w.ubn ? digitizedUbns[w.ubn] : undefined;
     if (fromMap) return fromMap;
     if (w.sl_book_id) return { id: w.sl_book_id, slug: w.sl_book_slug || w.sl_book_id };
     return null;
@@ -574,9 +594,15 @@ export default function BphCatalogBrowser({
   // produces the string "null" and the link points at /catalog/null, which
   // 404s as a soft 404 ("Catalogue entry not found"). Observed in
   // not_found_reports 2026-05-26 to 2026-05-28.
-  const detailUrl = (ubn: string | null | undefined): string | null => {
-    if (!ubn) return null;
-    return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(ubn)}`;
+  // Takes the ROW, not a bare ubn: manuscripts and photographs have no UBN
+  // (2,012 rows — every `Fot` record, 442 `M ` manuscripts), so keying on ubn
+  // alone returned null and the caller rendered dead plain text. They all carry
+  // a uuid, and the detail route accepts either key. Reported twice by BPH
+  // staff: José Bouman 2026-07-31, Natalie Koch 2026-08-05.
+  const detailUrl = (w: { ubn?: string | null; uuid?: string | null } | null | undefined): string | null => {
+    const key = w?.ubn || w?.uuid;
+    if (!key) return null;
+    return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(key)}`;
   };
 
   // When the parent supplies a results-header slot (the unified shell does
@@ -653,6 +679,16 @@ export default function BphCatalogBrowser({
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
           </span>
+          {total > 0 && (
+            <a
+              href={exportHref}
+              className="inline-flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors"
+              title={`Download all ${total.toLocaleString('en-US')} results as a spreadsheet`}
+            >
+              <Download className="w-3.5 h-3.5" />
+              Export
+            </a>
+          )}
           <div className="flex items-center gap-3 ml-auto">
             {/* Sort control — sits to the LEFT of the list/grid toggle. Drives
                 the same `sort` state as the list-view column headers, so it
@@ -835,7 +871,7 @@ export default function BphCatalogBrowser({
                 {works.map((w, idx) => {
                   const digitized = resolveDigitized(w);
                   const external = resolveExternal(w, !!digitized);
-                  const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
+                  const displayTitle = w.title || w.full_title || w.parallel_title || w.uniform_title || '(untitled)';
                   const displayAuthor = w.author || w.variant_author || w.pseudonym;
                   return (
                     <tr
@@ -855,9 +891,9 @@ export default function BphCatalogBrowser({
                       </td>
                       <td className="px-3 py-2 align-top">
                         <div className="font-medium text-primary leading-snug">
-                          {detailUrl(w.ubn) ? (
+                          {detailUrl(w) ? (
                             <a
-                              href={detailUrl(w.ubn)!}
+                              href={detailUrl(w)!}
                               className="hover:text-accent-rust transition-colors"
                             >
                               {hl(displayTitle)}
@@ -952,13 +988,13 @@ export default function BphCatalogBrowser({
               {works.map((w, idx) => {
                 const digitized = resolveDigitized(w);
                 const external = resolveExternal(w, !!digitized);
-                const displayTitle = w.title || w.parallel_title || w.uniform_title || '(untitled)';
+                const displayTitle = w.title || w.full_title || w.parallel_title || w.uniform_title || '(untitled)';
                 const displayAuthor = w.author || w.variant_author || w.pseudonym;
                 const href = digitized
                   ? bookUrl({ id: digitized.id, slug: digitized.slug })
                   : external
                     ? bookUrl({ id: external.id, slug: external.slug })
-                    : detailUrl(w.ubn);
+                    : detailUrl(w);
                 const Wrapper: React.ElementType = href ? 'a' : 'div';
                 return (
                   <Wrapper

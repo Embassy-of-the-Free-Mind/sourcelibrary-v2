@@ -13,8 +13,8 @@
  *   - --apply alone is NOT enough — you must also pass
  *     --yes-i-know-this-deletes.
  *   - Allowlisted collections only (api_usage, gemini_usage, analytics_events,
- *     mcp_tool_calls, search_queries, analytics_pageviews, audit_log).
- *     Anything else is refused.
+ *     mcp_tool_calls, mcp_clients, search_queries, analytics_pageviews,
+ *     audit_log). Anything else is refused.
  *   - Before deleting, every doomed row is exported (gzipped EJSON-NDJSON) to
  *     scripts/output/<collection>-prune-<date>.json.gz and the export is
  *     verified non-empty; if the export fails or is empty, nothing is deleted.
@@ -41,6 +41,7 @@ const ALLOWLIST = {
   gemini_usage: 'timestamp',
   analytics_events: 'created_at',
   mcp_tool_calls: 'ts',
+  mcp_clients: 'ts',
   search_queries: 'ts',
   analytics_pageviews: 'timestamp',
   audit_log: 'timestamp',

@@ -1,0 +1,54 @@
+name: Source image URL check
+
+# Fetches every image URL hardcoded in application source and reports 404s.
+#
+# Not a PR check, for the same reason as the BPH lockdown audit: it asserts a
+# property of DEPLOYED assets. A PR-time run would probe production, which by
+# definition does not yet carry the PR's changes — so a newly added image would
+# fail and a newly broken one would pass. (The script does resolve same-origin
+# paths against the working tree's public/ dir, which covers new static assets,
+# but anything on images.sourcelibrary.org is genuinely a post-deploy question.)
+#
+# Why this exists: images embedded in JSX are invisible to every other check.
+# They are not in the database, so no data sweep sees them; they are not links,
+# so blog-link-check ignores them; and a broken <img> renders as empty space
+# rather than an error. A dead composite photograph sat on the live
+# cuneiform-ocr post until the #3645 Blob rehost happened to fetch it.
+
+on:
+  schedule:
+    # 05:20 UTC daily — after the nightly deploys have settled.
+    - cron: '20 5 * * *'
+  workflow_dispatch:
+    inputs:
+      sample:
+        description: 'How many of the generated constellation URLs to sample'
+        required: false
+        default: '400'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Editorial images: exhaustive, and a single 404 fails the job. Someone
+      # chose each of these by hand and it is visible on a real page.
+      - name: Check hand-authored image URLs (exhaustive)
+        run: node scripts/audit/source-image-urls.mjs --code-only
+
+      # Generated constellation payloads: ~44k URLs, sampled. Reported as a rate
+      # and deliberately non-blocking — a few dead covers in a starfield is a
+      # different problem from a dead figure in an essay, and probing 44k URLs
+      # nightly against our own CDN is not worth the traffic.
+      - name: Sample generated constellation URLs (informational)
+        if: always()
+        run: |
+          node scripts/audit/source-image-urls.mjs --data-only \
+            --sample "${{ github.event.inputs.sample || '400' }}" || true

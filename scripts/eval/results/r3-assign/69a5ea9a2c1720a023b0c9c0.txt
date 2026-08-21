@@ -1,0 +1,4 @@
+book_id: 69a5ea9a2c1720a023b0c9c0
+Title: Narsai: Homiliae et Carmina, Tomus I
+Author: Narsai
+Source language: Syriac

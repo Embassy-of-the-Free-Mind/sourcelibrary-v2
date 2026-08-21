@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Loader2, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { Book, Page } from '@/lib/types';
+import { resolveImprintPlace } from '@/lib/imprint';
 import SectionsNav from '@/components/layout/SectionsNav';
 import { BookLoader } from '@/components/ui/BookLoader';
 import LikeButton from '@/components/ui/LikeButton';
@@ -260,10 +261,10 @@ export default function GuidePage({ params }: GuidePageProps) {
                 {book.author}
               </p>
 
-              {/* Publication Info */}
-              {(book.published || book.place_published) && (
+              {/* Publication Info — place via the family resolver (#4043) */}
+              {(book.published || resolveImprintPlace(book)) && (
                 <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-                  {[book.place_published, book.published].filter(Boolean).join(', ')}
+                  {[resolveImprintPlace(book)?.display, book.published].filter(Boolean).join(', ')}
                 </p>
               )}
 

@@ -1,0 +1,4 @@
+book_id: 6a08e32450bd891addfb5eee
+Title: De Spelen van G.A. Bredero — collected plays; Amsterdam 1617
+Author: Gerbrand Adriaensz Bredero
+Source language: Dutch

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras - Research Notes - Source Library',
@@ -11,11 +10,15 @@ export const metadata: Metadata = {
     description: 'Five primary sources in five languages document Rithmomachia, the "Battle of Numbers" — a mathematical board game played across Europe for six centuries.',
     images: [
       {
-        url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg',
+        url: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
         width: 1200,
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg' }],
   },
   alternates: {
     canonical: '/blog/rithmomachia',
@@ -29,7 +32,7 @@ export default function RithmomachiaPage() {
         <ContentHeader
           title="Rithmomachia"
           subtitle="The Forgotten Game That Taught Europe to Think Like Pythagoras"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg"
+          image="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg"
           imageAlt="Copperplate engraving of Rithmomachia game board from Selenus, 1616"
         >
           <p className="text-stone-400 text-sm mt-4">2 March 2026 &middot; 18 min read</p>
@@ -71,7 +74,7 @@ export default function RithmomachiaPage() {
         {/* Hero image — Selenus game board engraving */}
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg"
+            src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg"
             alt="Full-page copperplate engraving of a Rithmomachia game board with 24 numbered pieces arranged in starting position, from Selenus, Das Schach- oder König-Spiel, 1616"
             className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
           />
@@ -210,7 +213,7 @@ export default function RithmomachiaPage() {
         <div className="grid md:grid-cols-2 gap-6 my-10">
           <figure>
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd369ff0f1d2c4517fbb/26.jpg"
+              src="https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/26.jpg"
               alt="Woodcut diagram of a Rithmomachia game board from Barozzi's 1572 Italian treatise, showing an 8x16 grid with numbered pieces in starting positions"
               className="w-full rounded-lg shadow-md"
             />
@@ -221,7 +224,7 @@ export default function RithmomachiaPage() {
           </figure>
           <figure>
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd509ff0f1d2c4518280/37.jpg"
+              src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/37.jpg"
               alt="Diagram of a Rithmomachia game board from Boissiere's 1554 French treatise, showing an 8x16 grid divided into two 8x8 squares"
               className="w-full rounded-lg shadow-md"
             />
@@ -316,7 +319,7 @@ export default function RithmomachiaPage() {
 
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd509ff0f1d2c4518280/39.jpg"
+            src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/39.jpg"
             alt="Diagram from Boissiere's 1554 treatise showing a Rithmomachia game board with pieces of various shapes including circles, triangles and squares bearing numbers"
             className="w-full max-w-xl mx-auto rounded-lg shadow-md"
           />
@@ -409,7 +412,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcdd19ff0f1d2c45182ec/1.jpg"
+                src="https://images.sourcelibrary.org/archived/699fcdd19ff0f1d2c45182ec/1.jpg"
                 alt="Title page of Arithmetica decem libris demonstrata, printed in Paris, 1496"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -435,7 +438,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd509ff0f1d2c4518280/10.jpg"
+                src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/10.jpg"
                 alt="Title page of Le tres excellent et ancien Jeu Pythagorique by Claude de Boissiere, 1554"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -460,7 +463,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd429ff0f1d2c4517fff/3.jpg"
+                src="https://images.sourcelibrary.org/archived/699fcd429ff0f1d2c4517fff/3.jpg"
                 alt="Title page of The Most Noble, Auncient, and Learned Playe by Lever and Fulke, 1563"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -486,7 +489,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd369ff0f1d2c4517fbb/5.jpg"
+                src="https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/5.jpg"
                 alt="Title page of Il nobilissimo et antiquissimo giuoco Pythagoreo by Francesco Barozzi, 1572"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -512,7 +515,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/248.jpg"
+                src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/248.jpg"
                 alt="Copperplate engraving of two aristocratic men in late 16th century dress from Selenus's chess treatise, 1616"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -592,7 +595,7 @@ export default function RithmomachiaPage() {
         {/* Perspective view */}
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/499.jpg"
+            src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/499.jpg"
             alt="Perspective engraving of a Rithmomachia board from Selenus 1616, showing an 8x12 checkered grid with rectangular piece formations"
             className="w-full max-w-xl mx-auto rounded-lg shadow-md"
           />
@@ -891,7 +894,7 @@ export default function RithmomachiaPage() {
         {/* Boissiere mathematical proportions diagram */}
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd509ff0f1d2c4518280/14.jpg"
+            src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/14.jpg"
             alt="Mathematical diagram from Boissiere's 1554 treatise showing a grid of numbers used in Rithmomachia piece values"
             className="w-full max-w-xl mx-auto rounded-lg shadow-md"
           />
@@ -1008,14 +1011,13 @@ export default function RithmomachiaPage() {
             Source Library is a digital library of rare philosophical, scientific, and esoteric texts,
             translated from their original languages using AI and available to read for free.
             Questions or corrections?{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              team@sourcelibrary.org
             </a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="rithmomachia" />
     </ContentPageLayout>
   );
 }

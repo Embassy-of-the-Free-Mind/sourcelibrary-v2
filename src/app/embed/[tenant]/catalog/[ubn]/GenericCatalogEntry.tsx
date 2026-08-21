@@ -6,6 +6,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import type { LibraryPartner } from '@/lib/library-partners';
+import { normalizeStateShelfMark } from '@/lib/bph-state-shelfmark';
 import { AISection } from '@/components/embed/AISection';
 
 // Generic catalogue detail renderer for tenants whose bibliographic data
@@ -424,7 +425,7 @@ export default async function GenericCatalogEntry({
         <Section title={`Location at ${partner.shortName}`}>
           <Field label="Present location" value={row.present_location} />
           <Field label="Shelf mark" value={row.shelf_mark} mono />
-          <Field label="State Collection shelf mark" value={row.state_shelf_mark} mono />
+          <Field label="State Collection shelf mark" value={normalizeStateShelfMark(row.state_shelf_mark)} mono />
           <Field label="Kloss shelf mark" value={klossShelfMark} mono />
           <Field label="Provenance / collection" value={row.provenance} />
         </Section>

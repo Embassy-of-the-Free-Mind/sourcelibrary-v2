@@ -12,6 +12,7 @@
 // Run: set -a; source .env.production.local; set +a; node scripts/workers/archive-ocr.mjs
 
 import { MongoClient } from 'mongodb';
+import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { upgradeToFullRes } from '../lib/iiif-utils.mjs';
@@ -108,17 +109,24 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 // UA the IA bulk archiver uses so per-provider policies are consistent.
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
 
+// Abort only when a connection goes QUIET this long — never merely because a file
+// is big. Overridable per-run; raising it does not slow healthy fetches.
+const FETCH_STALL_MS = parseInt(process.env.ARCHIVE_STALL_TIMEOUT_MS || '60000', 10);
+
 async function downloadImage(url, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
     try {
-      const res = await fetch(url, {
-        signal: controller.signal,
+      // Stall timeout, not a total-duration cap. The old 60s wall-clock abort
+      // was a file-size limit in disguise: it fires on the LARGEST page in a
+      // book — the foldout, the map, the plate — while ordinary text pages
+      // sail through, and the book still reports hundreds of archived pages so
+      // nothing looks wrong. See scripts/lib/fetch-stall-timeout.mjs for the
+      // measured case (42 of 45 double-page engravings lost on one book).
+      const { res, buffer } = await fetchWithStallTimeout(url, {
+        stallMs: FETCH_STALL_MS,
         headers: { 'User-Agent': USER_AGENT, Accept: 'image/jpeg,image/png,image/*;q=0.9,*/*;q=0.1' },
       });
       if (res.status === 429 || res.status === 503) {
-        clearTimeout(timeout);
         if (attempt < retries) {
           const delay = (attempt + 1) * 3000; // 3s, 6s backoff
           await new Promise(r => setTimeout(r, delay));
@@ -126,19 +134,21 @@ async function downloadImage(url, retries = 2) {
         }
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const buffer = Buffer.from(await res.arrayBuffer());
       const mimeType = res.headers.get('content-type') || 'image/jpeg';
       return { buffer, mimeType };
     } catch (err) {
-      clearTimeout(timeout);
-      if (attempt < retries && (err.name === 'AbortError' || err.message?.includes('fetch failed'))) {
+      // A stalled fetch now reports "fetch aborted: stalled …" rather than a
+      // bare AbortError, so retry on that too — otherwise the rename silently
+      // removes a retry path that used to exist.
+      const retryable = err.name === 'AbortError'
+        || err.message?.includes('fetch failed')
+        || err.message?.includes('fetch aborted');
+      if (attempt < retries && retryable) {
         const delay = (attempt + 1) * 3000;
         await new Promise(r => setTimeout(r, delay));
         continue;
       }
       throw err;
-    } finally {
-      clearTimeout(timeout);
     }
   }
 }

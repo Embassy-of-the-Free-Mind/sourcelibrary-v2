@@ -1,0 +1,23 @@
+{
+  "work": "Sefer HaYirah (Rabbenu Yonah) — blessings before enjoyment",
+  "book_id": "69b52593cced70d8e6d72941",
+  "page_number": 20,
+  "script": "hebrew",
+  "language": "Hebrew",
+  "source": "Sefaria, Sefer HaYirah 119-123",
+  "source_url": "https://www.sefaria.org/Sefer_HaYirah.119-123",
+  "edition": "Amsterdam 1627 (pointed print)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ויגביהם בנטילה שלא יחזרו מים הראשונים ויטמאו את הידים. וינגבם היטב ויברך על הלחם המוציא. ויתן ריוח בין תיבה לתיבה. וכל מה שיהנה בו מן העולם הזה בין בפירות בין בריח בין באכילה בין בכל דבר שיהנה אסור להנות בלא ברכה. ויברך בכל דבר לפניו ולאחריו הברכה האמורה בה על פי רבותינו ע\"ה. ואם אינו בקי ילך אצל בקי ללמוד ואל ישים עצמו כבהמה. ואם לא מצא בקי ילך ויניח הנאתו. ולא יהנה מן הדבר עד שידע לברך עליו את בוראו כדת ומשפט.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "two_page_spread_single_column",
+    "density": "light",
+    "type_size": "large",
+    "layout_note": "scan unit is a two-page opening; reference spans both pages of the spread",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

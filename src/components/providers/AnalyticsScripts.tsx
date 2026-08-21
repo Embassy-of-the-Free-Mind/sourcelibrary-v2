@@ -129,7 +129,30 @@ export default function AnalyticsScripts() {
           // and hand every cached visitor the same decision. Analytics events
           // are unaffected; only the replay recording is gated.
           var _slRecordSession = Math.random() < 0.3;
-          posthog.init('${POSTHOG_KEY}', {
+          // Automated-browser gate (#3400). A headless fleet executing our
+          // reader was producing ~35K "users"/day of one-hit sessions — enough
+          // to make PostHog report traffic TRIPLING over a month in which real
+          // human traffic actually fell 4x. Server-side filtering can't help
+          // here: these loads never reach /api/track, and their user-agents are
+          // spoofed desktop Chrome (an impossible 50/50 Windows/Mac split), so
+          // UA matching won't catch them either.
+          //
+          // navigator.webdriver is the W3C-standard flag set by every
+          // automation driver (Puppeteer/Playwright/Selenium) and is never true
+          // in an ordinary browser, so it cannot false-positive a real reader.
+          // Empty navigator.languages is a second headless tell.
+          //
+          // We skip posthog.init OUTRIGHT rather than passing a config option:
+          // an unsupported option would be ignored silently and ship as a
+          // no-op, which is the exact failure class this fix exists to correct.
+          var _slAutomated = (function () {
+            try {
+              if (navigator.webdriver === true) return true;
+              if (!navigator.languages || navigator.languages.length === 0) return true;
+              return false;
+            } catch (e) { return false; }
+          })();
+          if (!_slAutomated) posthog.init('${POSTHOG_KEY}', {
             api_host: '${POSTHOG_HOST}',
             person_profiles: 'identified_only',
             capture_pageview: true,

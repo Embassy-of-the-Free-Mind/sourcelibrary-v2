@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Consistent Is AI OCR? - Research Notes - Source Library',
@@ -9,7 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How Consistent Is AI OCR?',
     description: '1,448 duplicate scans of the same physical pages, OCR\'d independently. The results quantify something nobody has measured before.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/uploads/697b079ac66889d6835b576a/697b09f386b3d3c458a4c04c.jpg' }],
   },
   alternates: {
     canonical: '/blog/ocr-consistency',
@@ -359,7 +362,6 @@ export default function OcrConsistencyPage() {
 
       </article>
 
-      <BlogComments slug="ocr-consistency" />
     </ContentPageLayout>
   );
 }

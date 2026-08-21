@@ -6,8 +6,9 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { computeProcessingPriority } from '@/lib/processing-priority';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
-import { resolveLanguage, resolveDate } from '@/lib/resolve-language';
+import { sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { computeIdentityFields } from '@/lib/identity-fields';
+import { resolveLanguage, resolveDate, publishedToYear } from '@/lib/resolve-language';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { applyTextRole } from '@/lib/text-role';
 
@@ -265,6 +266,21 @@ export async function importBookFromIIIF(
   config: IIIFImportConfig,
   request: NextRequest
 ): Promise<NextResponse> {
+  // #3770: a caller that passes an object where a name belongs either arrives
+  // as a non-string here or — if the caller stringified it while building the
+  // request — as the literal "[object Object]". Both are coercion artifacts,
+  // never names, and nothing downstream can tell them from a real value: the
+  // string propagates into the slug, edition_key and work_id. 3,297 books
+  // imported that way before this guard existed. Reject loudly at the boundary.
+  if (typeof config.author !== 'string' || config.author.includes('[object Object]')) {
+    return NextResponse.json(
+      {
+        error: `Invalid author: ${JSON.stringify(config.author)?.slice(0, 120)} — an object was coerced where a name string belongs. Extract the name (e.g. dcCreator.def[0]) in the caller.`,
+      },
+      { status: 400 }
+    );
+  }
+
   // Fetch IIIF manifest
   const manifestRes = await fetch(config.manifest_url, {
     headers: { 'Accept': 'application/json, application/ld+json' },
@@ -381,6 +397,7 @@ export async function importBookFromIIIF(
     ...(lang.is_translation ? { is_translation: true } : {}),
     ...(lang.language_review ? { language_review: true } : {}),
     published: dateRes.published || 'Unknown',
+    ...(publishedToYear(dateRes.published) !== null ? { year: publishedToYear(dateRes.published)! } : {}),
     ...(dateRes.original_work_year ? { original_work_year: dateRes.original_work_year } : {}),
     field_provenance: { language: lang.provenance },
     categories: config.categories || [],
@@ -429,8 +446,9 @@ export async function importBookFromIIIF(
   // Dedup fields for cross-source matching
   const fp = sourceFingerprint(bookDoc as Record<string, unknown>);
   if (fp) (bookDoc as Record<string, unknown>).source_fingerprint = fp;
-  (bookDoc as Record<string, unknown>).normalized_title = normalizeTitle(config.title);
-  (bookDoc as Record<string, unknown>).normalized_author = normalizeAuthor(config.author);
+  // Identity fields (Phase 0). The identity-worker cron stamps books that
+  // arrive by any other door; writing here just saves route imports the wait.
+  Object.assign(bookDoc as Record<string, unknown>, computeIdentityFields(bookDoc as Record<string, unknown>));
 
   // Publisher/place from IIIF manifest metadata
   if (manifestPublisher) (bookDoc as Record<string, unknown>).publisher = manifestPublisher;

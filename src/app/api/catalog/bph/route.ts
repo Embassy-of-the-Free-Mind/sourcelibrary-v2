@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase, sanitizeFilterValue } from '@/lib/supabase';
-import { normalizeBphSearchText } from '@/lib/text-normalize';
+import { supabase } from '@/lib/supabase';
+import { applyBphFilters, readBphFilters, isUnfiltered } from '@/lib/bph-catalog-filters';
 import { getReadDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { logSearchEvent } from '@/lib/search-event-log';
+import { resolveTenantId } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +21,13 @@ const BPH_DIGITIZED_PINNED_TOTAL = 2222;
 // New (expanded) field set — requires expand-bph-works-schema.sql to have been run.
 const FIELDS_NEW_CORE = [
   'ubn',
+  // Memorix issues no UBN for manuscripts or photographs — 2,012 rows, every
+  // `Fot` record and 442 `M ` manuscripts among them. `uuid` is the only key
+  // they have, and without it the browser can build no detail link at all, so
+  // they rendered as dead plain text (José Bouman 2026-07-31, Natalie Koch
+  // 2026-08-05). `full_title` is where manuscript records keep their title;
+  // `title` is null on all 812 of them.
+  'uuid', 'full_title',
   'title', 'parallel_title', 'uniform_title',
   'author', 'variant_author', 'pseudonym',
   'editor', 'variant_editor',
@@ -77,45 +86,21 @@ function isMissingColumnError(err: { message?: string; code?: string }): boolean
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
 
-  // Simple search.
-  const q = sp.get('q')?.trim() || '';
+  // Filters + sort are parsed and applied by the shared module the CSV export
+  // also uses, so the two surfaces can never diverge.
+  const filters = readBphFilters(sp);
+  const {
+    q, firstTranslation, sort, language, yearFrom, yearTo, digitized,
+    author, title, place, printer, publisher, editor, keyword, shelfMark, provenance,
+  } = filters;
 
-  // Per-field advanced search.
-  const author = sp.get('author')?.trim() || '';
-  const title = sp.get('title')?.trim() || '';
-  const place = sp.get('place')?.trim() || '';
-  const printer = sp.get('printer')?.trim() || '';
-  const publisher = sp.get('publisher')?.trim() || '';
-  const editor = sp.get('editor')?.trim() || '';
-  const keyword = sp.get('keyword')?.trim() || '';
-  const language = sp.get('language')?.trim() || '';
-  const shelfMark = sp.get('shelf_mark')?.trim() || '';
-  const provenance = sp.get('provenance')?.trim() || '';
-
-  const yearFrom = sp.get('yearFrom') ? parseInt(sp.get('yearFrom')!, 10) : null;
-  const yearTo = sp.get('yearTo') ? parseInt(sp.get('yearTo')!, 10) : null;
-
-  const digitized = sp.get('digitized'); // 'true' | 'false' | 'sl' | null
-
-  // First-translation filter: denormalised onto `bph_works.is_first_translation`
-  // by the sync-bph-sl-book-ids cron (and one-shot backfill at
-  // scripts/migration/backfill-bph-first-translation.mjs). Implicitly digitised-on-SL —
-  // only rows with a non-null sl_book_id can carry the flag.
-  const firstTranslation = sp.get('first_translation') === '1';
-
-  const sort = sp.get('sort') || 'title';
   const offset = Math.max(0, parseInt(sp.get('offset') || '0', 10) || 0);
   const limit = Math.min(200, Math.max(1, parseInt(sp.get('limit') || String(PER_PAGE), 10) || PER_PAGE));
 
   // Default unfiltered "digitised on Source Library" view: skip the COUNT(*)
   // and return the pinned 2,222. Any filter / search / advanced field falls
   // through to the normal exact-count path.
-  const isPinnedDigitizedView =
-    digitized === 'sl' &&
-    !q && !author && !title && !place && !printer && !publisher && !editor &&
-    !keyword && !language && !shelfMark && !provenance &&
-    yearFrom === null && yearTo === null &&
-    !firstTranslation;
+  const isPinnedDigitizedView = filters.digitized === 'sl' && isUnfiltered(filters);
 
   // Run the query in the requested mode. Returns the supabase result object.
   async function runQuery(mode: 'new' | 'legacy') {
@@ -132,161 +117,15 @@ export async function GET(req: NextRequest) {
       .from('bph_works')
       .select(fields, isPinnedDigitizedView ? { count: 'planned', head: false } : { count: 'exact' });
 
-    // Simple search. When the diacritic-normalised `search_norm` column
-    // exists (after applying add-bph-diacritic-normalization.sql), query
-    // against it with the normalised user input so "Boehme" finds "Böhme".
-    // Falls back to the original tsvector / per-field ilike on first miss.
-    if (q.length >= 2) {
-      // A bare 3–4 digit query is almost always a publication year, so also
-      // match the numeric `year` column — the text columns / tsvector don't
-      // include the year, so "1545" otherwise returned nothing. Digits-only,
-      // so it's safe to inline in an .or() string.
-      const yearQ = /^\d{3,4}$/.test(q) ? q : null;
-      if (mode === 'new' && hasNormalizedColumns !== false) {
-        if (yearQ) {
-          query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ}`);
-        } else {
-          const normQ = sanitizeFilterValue(normalizeBphSearchText(q));
-          if (normQ.length > 0) {
-            query = query.ilike('search_norm', `%${normQ}%`);
-          }
-        }
-      } else if (mode === 'new') {
-        if (yearQ) {
-          // A tsvector match can't be OR'd with a column filter in a single
-          // .or(); for a pure year, match the year column directly.
-          query = query.eq('year', Number(yearQ));
-        } else {
-          const safe = sanitizeFilterValue(q);
-          query = query.textSearch('search_tsv', safe, { type: 'websearch', config: 'simple' });
-        }
-      } else {
-        const safe = sanitizeFilterValue(q);
-        if (yearQ) {
-          query = query.or(`title.ilike.%${yearQ}%,author.ilike.%${yearQ}%,shelf_mark.ilike.%${yearQ}%,year.eq.${yearQ}`);
-        } else {
-          query = query.or(`title.ilike.%${safe}%,author.ilike.%${safe}%,shelf_mark.ilike.%${safe}%`);
-        }
-      }
-    }
-
-    const ilikeFilter = (col: string, val: string) => {
-      if (!val) return;
-      const safe = sanitizeFilterValue(val);
-      const normVal = sanitizeFilterValue(normalizeBphSearchText(val));
-      const useNorm = mode === 'new' && hasNormalizedColumns !== false && normVal.length > 0;
-
-      if (mode === 'new') {
-        // Per-field `*_norm` columns roll up the standard field with its
-        // variants (e.g. author_norm covers author + variant_author +
-        // pseudonym), so one ilike replaces the previous .or() chain.
-        if (useNorm) {
-          const normCol = col === 'shelf_mark' ? 'shelf_mark_norm' : `${col}_norm`;
-          query = query.ilike(normCol, `%${normVal}%`);
-          return;
-        }
-        if (col === 'author') {
-          query = query.or(`author.ilike.%${safe}%,variant_author.ilike.%${safe}%,pseudonym.ilike.%${safe}%`);
-        } else if (col === 'title') {
-          query = query.or(`title.ilike.%${safe}%,parallel_title.ilike.%${safe}%,uniform_title.ilike.%${safe}%`);
-        } else if (col === 'editor') {
-          query = query.or(`editor.ilike.%${safe}%,variant_editor.ilike.%${safe}%`);
-        } else if (col === 'printer') {
-          query = query.or(`printer.ilike.%${safe}%,variant_printer.ilike.%${safe}%`);
-        } else if (col === 'publisher') {
-          query = query.or(`publisher.ilike.%${safe}%,variant_publisher.ilike.%${safe}%`);
-        } else if (col === 'shelf_mark') {
-          query = query.or(`shelf_mark.ilike.%${safe}%,state_shelf_mark.ilike.%${safe}%`);
-        } else {
-          query = query.ilike(col, `%${safe}%`);
-        }
-      } else {
-        // Legacy schema only has author, title, place, printer, publisher, shelf_mark.
-        if (['author', 'title', 'place', 'printer', 'publisher', 'shelf_mark'].includes(col)) {
-          query = query.ilike(col, `%${safe}%`);
-        }
-        // editor / language / provenance not available in legacy; silently dropped.
-      }
-    };
-    ilikeFilter('author', author);
-    ilikeFilter('title', title);
-    ilikeFilter('editor', editor);
-    ilikeFilter('place', place);
-    ilikeFilter('printer', printer);
-    ilikeFilter('publisher', publisher);
-    ilikeFilter('shelf_mark', shelfMark);
-
-    if (keyword) query = query.eq('keywords', keyword);
-    if (mode === 'new') {
-      if (language) query = query.eq('language', language);
-      if (provenance) query = query.eq('provenance', provenance);
-    }
-
-    if (yearFrom !== null && !Number.isNaN(yearFrom)) query = query.gte('year', yearFrom);
-    if (yearTo !== null && !Number.isNaN(yearTo)) query = query.lte('year', yearTo);
-
-    if (digitized === 'true') {
-      if (mode === 'new') {
-        query = query.or('sl_book_id.not.is.null,ia_identifier.not.is.null');
-      } else {
-        query = query.not('ia_identifier', 'is', null);
-      }
-    } else if (digitized === 'sl' && mode === 'new') {
-      query = query.not('sl_book_id', 'is', null);
-    } else if (digitized === 'held' && mode === 'new') {
-      // Catalogue entries with a non-null `present_location` are books
-      // physically in the building (Leeszaal, Depot, …). Catalog-only
-      // references and works held elsewhere have null present_location.
-      // Requested by Paul Dijstelberge (BPH) — visitors wanted a way to see
-      // just the volumes they could ask to consult on site.
-      query = query.not('present_location', 'is', null);
-    } else if (digitized === 'false') {
-      if (mode === 'new') {
-        query = query.is('sl_book_id', null).is('ia_identifier', null);
-      } else {
-        query = query.is('ia_identifier', null);
-      }
-    }
-
-    // First-translation filter — denormalised column on bph_works. Falls back
-    // to "return nothing" on the legacy schema or runtimes that booted before
-    // the migration ran (auto-detected via the retry path below).
-    if (firstTranslation) {
-      if (mode === 'new' && hasFirstTranslationColumn !== false) {
-        query = query.eq('is_first_translation', true);
-      } else {
-        // No column → return nothing. PostgREST doesn't have a clean
-        // "always false" predicate; use a sentinel that can't appear
-        // in sl_book_id.
-        query = query.eq('sl_book_id', '__no_first_translations__');
-      }
-    }
-
-    switch (sort) {
-      case 'year_asc':
-        query = query.order('year', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
-        break;
-      case 'year_desc':
-        query = query.order('year', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
-        break;
-      case 'author':
-        query = query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
-        break;
-      case 'author_desc':
-        query = query.order('author', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
-        break;
-      case 'title_desc':
-        // nullsFirst:false matches every other sort — Supabase otherwise puts
-        // null titles ahead of real ones for descending sorts, which renders
-        // five "None" rows at the top of an unfiltered desc listing.
-        query = query.order('title', { ascending: false, nullsFirst: false });
-        break;
-      case 'shelfmark':
-        query = query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
-        break;
-      default:
-        query = query.order('title', { ascending: true });
-    }
+    // Every user-facing filter and the sort live in src/lib/bph-catalog-filters.ts,
+    // shared with the CSV export route so the two can never match different
+    // sets. Schema-mode fallbacks stay here — they are about what the database
+    // can answer, not about what the user asked for.
+    query = applyBphFilters(query, filters, {
+      mode,
+      hasNormalizedColumns: hasNormalizedColumns !== false,
+      hasFirstTranslationColumn: hasFirstTranslationColumn !== false,
+    });
 
     return await query.range(offset, offset + limit - 1);
   }
@@ -430,9 +269,54 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  const total = isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0);
+
+  // Record the search. This route is the BPH reading room's front-page search
+  // box — the first thing a visitor sees — and until #3483 it logged nothing at
+  // all, which made "how much do readers search here?" unanswerable.
+  //
+  // Two deliberate exclusions, so the count means "searches" and not "requests":
+  //   - a request carrying no query and no advanced field is *browsing* the
+  //     catalogue (or paging through it), not searching;
+  //   - only `offset === 0` is logged, so paginating deeper into one result set
+  //     stays one search rather than N.
+  // Both matter because this number will be read as a rate against reading-room
+  // pageviews; inflating the numerator would repeat the error this fixes.
+  const advancedTerms = { author, title, place, printer, publisher, editor, keyword, shelfMark, provenance };
+  const hasSearchTerm = !!q || Object.values(advancedTerms).some(Boolean);
+  if (hasSearchTerm && offset === 0) {
+    // Resolved inside the fire-and-forget path so neither the tenant lookup
+    // (cached, but still async) nor the insert sits on the response path.
+    void resolveTenantId('bph')
+      .then((tenantId) => {
+        logSearchEvent({
+          request: req,
+          // The simple search box is `q`; an advanced-only search has no `q`,
+          // so fall back to the field that was actually filled in.
+          query: q || Object.values(advancedTerms).find(Boolean) || '',
+          resultsCount: total,
+          source: 'catalogue',
+          tenantId,
+          filters: {
+            ...Object.fromEntries(Object.entries(advancedTerms).filter(([, v]) => v)),
+            language: language || null,
+            yearFrom,
+            yearTo,
+            digitized,
+            first_translation: firstTranslation || null,
+            sort,
+            // Distinguishes "typed in the simple box" from "used the advanced
+            // form" — they are different behaviours and worth telling apart.
+            advanced: !q,
+          },
+        });
+      })
+      .catch(() => {});
+  }
+
   return NextResponse.json({
     works,
-    total: isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0),
+    total,
     offset,
     limit,
     schemaMode: schemaMode || 'unknown',

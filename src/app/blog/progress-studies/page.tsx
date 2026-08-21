@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base - Source Library',
@@ -10,7 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base',
     description: 'Mokyr\'s "useful knowledge," Howes\'s "improving mentality," and Crawford\'s techno-humanism all predicted what 2,500 newly translated pre-industrial books confirm: innovation has deeper roots than anyone could read.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg' }],
   },
   alternates: {
     canonical: '/blog/progress-studies',
@@ -24,7 +27,7 @@ export default function ProgressStudiesPage() {
         <ContentHeader
           title="The Deeper Roots"
           subtitle="How 2,500 newly translated books confirm what progress studies predicted &mdash; innovation didn&rsquo;t begin with the Industrial Revolution"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/9.jpg"
+          image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg"
           imageAlt="Mechanical diagrams from Hero of Alexandria's Pneumatica"
         >
           <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 15 min read</p>
@@ -599,12 +602,6 @@ export default function ProgressStudiesPage() {
                 internal: true,
               },
               {
-                href: '/press/origins-of-science',
-                title: 'The Mystic Who Discovered Planetary Motion',
-                detail: 'How Kepler\'s occult beliefs led to modern astronomy',
-                internal: true,
-              },
-              {
                 href: 'https://www.theatlantic.com/science/archive/2019/07/we-need-new-science-progress/594946/',
                 title: 'We Need a New Science of Progress',
                 detail: 'Patrick Collison and Tyler Cowen, The Atlantic (2019)',
@@ -674,7 +671,6 @@ export default function ProgressStudiesPage() {
         </div>
       </article>
 
-      <BlogComments slug="progress-studies" />
     </ContentPageLayout>
   );
 }

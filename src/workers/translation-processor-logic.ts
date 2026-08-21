@@ -7,6 +7,7 @@ import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompt
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
+import { isHumanEditedTranslation } from '@/lib/translate-write';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { contentHash } from '@/lib/steganographia';
@@ -131,6 +132,22 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       timestamp: new Date().toISOString(),
       failed: true,
       error: { message: 'No OCR data on page', category: 'no_data' },
+    });
+    return;
+  }
+
+  // Human-edit guard (#3749): a translation a person wrote or corrected by
+  // hand (source: 'manual', or edited_by set) must never be silently replaced
+  // by automated output — that includes the blank-marker write below, so this
+  // check comes first. Refuse before spending the AI call; a job that REALLY
+  // means it sets config.overwriteHuman. Mirrors scripts/lib/translate-core.mjs.
+  if (isHumanEditedTranslation(page.translation) && !job.config?.overwriteHuman) {
+    console.log(`[TRANS] Skipping page ${pageId} — translation is human-edited (source: ${page.translation?.source || 'n/a'}, edited_by: ${page.translation?.edited_by || 'n/a'}); refusing to overwrite`);
+    await sendWriteResult({
+      type: 'translation',
+      bookId, pageId, jobId, targetPageIds,
+      timestamp: new Date().toISOString(),
+      failed: false,
     });
     return;
   }

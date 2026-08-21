@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^hebrew-genesis-1\\.json$",
+  "summary": [
+    {
+      "language": "Hebrew",
+      "script": "hebrew",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 197,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Genesis 1:1-5 (Bereshit)",
+          "bookId": "6952e4bc77f38f6761bc7db1",
+          "pageNumber": 45,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 197,
+          "matched": 197,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Genesis.1",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0009190499999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.8730964467005076,
+              "cer": 0.12690355329949238
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.122136,
+              "consistency": 0.5,
+              "aligned": true,
+              "charAccuracy": 0.8934010152284264,
+              "cer": 0.1065989847715736
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

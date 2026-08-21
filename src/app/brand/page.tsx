@@ -774,7 +774,7 @@ export default function BrandPage() {
               </div>
               <div className="border border-stone-200 rounded-lg p-4">
                 <p className="text-xs uppercase tracking-wide text-stone-400 mb-1">Email</p>
-                <p className="font-mono text-stone-700">derek@playpowerlabs.com</p>
+                <p className="font-mono text-stone-700">team@sourcelibrary.org</p>
                 <p className="text-xs text-stone-500 mt-1">Contact for press, partnerships, donor inquiries</p>
               </div>
             </div>

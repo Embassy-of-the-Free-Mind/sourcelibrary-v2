@@ -1,0 +1,4 @@
+book_id: 6992cd6743713c66ea6363c5
+Title: 三才圖會(二十五)
+Author: 王圻, 王思義
+Source language: Chinese

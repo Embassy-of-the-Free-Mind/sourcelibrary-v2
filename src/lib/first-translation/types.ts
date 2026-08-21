@@ -164,6 +164,13 @@ export interface FirstTranslationBook {
   } | null;
   visible?: boolean;
   pages_translated?: number | null;
+  // Read by the coverage gate (#3435): a first-translation claim is
+  // bibliographic, but the BADGE also implies a reader can read the English.
+  // Denominator mirrors the canonical `translatedToEnglish` homepage stat —
+  // pages_ocr minus blanks — with pages_count as the fallback.
+  pages_ocr?: number | null;
+  pages_blank?: number | null;
+  pages_count?: number | null;
   // Read only by the evidence-quality guard (#2579) when validating a legacy
   // `translation_found` demotion against its cited priors.
   title?: string;

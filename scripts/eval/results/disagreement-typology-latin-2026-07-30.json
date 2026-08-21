@@ -1,0 +1,75 @@
+{
+  "pagesUsed": 250,
+  "subs": 10769,
+  "ins": 7859,
+  "del": 9986,
+  "counts": {
+    "unrelated word": 10588,
+    "partial misread": 139,
+    "single-char substitution": 31,
+    "long-s ↔ f": 6,
+    "accent/diacritic": 3,
+    "tilde abbreviation": 2
+  },
+  "examples": {
+    "unrelated word": [
+      "LVI. → circumsonet.  (p127)",
+      "circumsonēt. → quae  (p127)",
+      "quę → catuli  (p127)",
+      "cubile → institerit?  (p127)",
+      "Cacoethes.] → non  (p127)",
+      "nō → Cautim.  (p127)",
+      "Cautim.] → quod  (p127)",
+      "qđ → pedetentim  (p127)",
+      "pedetētim → non  (p127)",
+      "nō → tuae  (p127)",
+      "tuę → nostrae:  (p127)",
+      "quasiq; → familiarium  (p127)"
+    ],
+    "partial misread": [
+      "Excribi. → Exscribere  (p127)",
+      "nō → non  (p127)",
+      "es → meus  (p127)",
+      "fit → At  (p38)",
+      "noíe → nomine  (p37)",
+      "internos → inter  (p36)",
+      "quę → quae  (p205)",
+      "quę → tua  (p205)",
+      "q → qui  (p205)",
+      "qd → quod  (p205)",
+      "im → Nam  (p37)",
+      "uum → bus  (p37)"
+    ],
+    "single-char substitution": [
+      "quae → qua  (p346)",
+      "qua → quae  (p35)",
+      "qua → quam  (p35)",
+      "honestu → honestum  (p18)",
+      "quē → qui  (p477)",
+      "i → in  (p320)",
+      "i → in  (p320)",
+      "quā → que  (p311)",
+      "τ' → τ’  (p459)",
+      "ἦν → ἐν  (p709)",
+      "no → nu  (p708)",
+      "μότος → Νότος  (p705)"
+    ],
+    "long-s ↔ f": [
+      "fi → si  (p21)",
+      "fiue → siue  (p21)",
+      "Scedafi → Scedasi  (p658)",
+      "fit, → sit,  (p760)",
+      "fit → sit  (p759)",
+      "fit → sit  (p758)"
+    ],
+    "accent/diacritic": [
+      "illā → illa  (p497)",
+      "qualē → quale  (p517)",
+      "quā → qua  (p315)"
+    ],
+    "tilde abbreviation": [
+      "neq̃ → neque  (p475)",
+      "quoq̃ → quoque  (p472)"
+    ]
+  }
+}

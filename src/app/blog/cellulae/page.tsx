@@ -1,15 +1,19 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Cellulae: What Two Pages of a Medieval Manuscript Reveal About Biology, Law, and the Dangers of Careful Reasoning - Source Library',
   description:
     'A word on page 32 of a medieval manuscript launched modern biology. The argument on page 33 helped criminalize rape victims for eight centuries. They were written by the same man.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695677fdbe7c607c5f03b2d9/717.jpg', alt: 'Scientific plate from Philosophical Transactions of the Royal Society, 1694' }],
     title: 'Cellulae: Biology, Law, and the Dangers of Careful Reasoning',
     description: 'A word on page 32 launched modern biology. The argument on page 33 helped criminalize rape victims for eight centuries. Written by the same man, in the same manuscript.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/695677fdbe7c607c5f03b2d9/717.jpg', alt: 'Scientific plate from Philosophical Transactions of the Royal Society, 1694' }],
   },
   alternates: {
     canonical: '/blog/cellulae',
@@ -482,7 +486,6 @@ export default function CellulaePage() {
           </ul>
         </section>
 
-        <BlogComments slug="cellulae" />
       </article>
     </ContentPageLayout>
   );

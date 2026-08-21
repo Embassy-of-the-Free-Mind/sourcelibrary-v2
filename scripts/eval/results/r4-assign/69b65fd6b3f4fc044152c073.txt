@@ -1,0 +1,4 @@
+book_id: 69b65fd6b3f4fc044152c073
+Title: Chronologia sive De tempore et eius mutationibus ecclesiasticis tractatio theologica libris duobus comprehensa
+Author: Wolf, Heinrich
+Source language: Latin

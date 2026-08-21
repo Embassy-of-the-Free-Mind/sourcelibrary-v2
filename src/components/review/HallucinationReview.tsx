@@ -94,6 +94,13 @@ export default function HallucinationReview() {
       onRetry={() => q.fetchNext(q.volunteerId)}
       body={body}
       submitting={q.submitting}
+      canSubmit={q.canSubmit}
+      authStatus={q.authStatus}
+      notePlaceholder="e.g. not a hallucination — it's bleed-through from the facing leaf"
+      note={q.note}
+      onNoteChange={q.setNote}
+      onNoteSubmit={q.submitNote}
+      noteSaved={q.noteSaved}
     />
   );
 }

@@ -1,0 +1,52 @@
+{
+  "book_id": "69a5e461006a409842216e78",
+  "work_identified": "Syriac Life of Symeon the Stylite [ff. 1-79] + Acts of Persian Martyrs under Shapur II — Codex Vaticanus Syriacus 160 (5th-century Syriac codex, distinct abridged recension of the Life)",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Life of St. Simeon Stylites: A Translation of the Syriac Text in Bedjan's Acta Martyrum et Sanctorum, Vol. IV",
+      "translator": "Frederick Lent",
+      "pub_year": "1915",
+      "publisher": "Journal of the American Oriental Society, vol. 35, pp. 103-198",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/jstor-592644"
+    },
+    {
+      "english_title": "The Lives of Simeon Stylites (Cistercian Studies 112)",
+      "translator": "Robert Doran",
+      "pub_year": "1992",
+      "publisher": "Cistercian Publications, Kalamazoo",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/livesofsimeonsty0000unse"
+    }
+  ],
+  "queries_run": [
+    "Codex Vaticanus Syriacus 160 \"Vat. syr. 160\" contents text manuscript",
+    "\"Vatican Syriac 160\" OR \"Vat. syr. 160\" manuscript contents identify",
+    "Syriac Life of Symeon Stylite English translation complete",
+    "\"Vat. sir. 160\" OR \"Vat. syr. 160\" Symeon Stylite \"Persian martyrs\" contents folios",
+    "Robert Doran \"Lives of Simeon Stylites\" 1992 Syriac manuscript used translation source",
+    "Frederick Lent 1915 Syriac Life Simeon Stylites translation complete full text WorldCat",
+    "\"Vat. syr. 160\" \"Shapur\" OR \"Šāpūr\" Persian martyrs specific acts names list",
+    "\"Persian Martyr Acts in Syriac\" Gorgias Press volumes list English translation \"Vatican\"",
+    "Acts Persian Martyrs Syriac \"Vatican 160\" English translation Assemani",
+    "worldcat \"life of simeon stylites\" OR \"life of symeon stylites\" syriac english translation",
+    "Robert Doran 1992 \"Lives of Simeon Stylites\" Syriac life which text \"anonymous Syriac\" Bedjan manuscript"
+  ],
+  "sources_consulted": [
+    {"url": "https://roger-pearse.com/wiki/index.php?title=Vatican_Syriac_manuscripts", "found": "Vat. syr. 160 contains Life of Symeon Stylite (ff. 1-79) + Acts of Persian Martyrs under Shapur II, dated 474 AD"},
+    {"url": "https://www.tertullian.org/fathers/simeon_stylites_vita_00_intro.htm", "found": "Lent 1915 intro: three Syriac mss exist (Vatican/BM 12174/BM 14484); Vatican = independent abridged recension ~473 AD; Lent translated from BM 14484 via Bedjan; 'translated into English for the first time' (1915)"},
+    {"url": "https://archive.org/details/jstor-592644", "found": "Lent 1915 complete Syriac Life translation in JAOS 35, pp. 103-198; based on Bedjan/BM ms, not Vatican recension"},
+    {"url": "https://archive.org/details/livesofsimeonsty0000unse", "found": "Doran 1992: includes anonymous Syriac Life of Simeon Stylites as complete English translation"},
+    {"url": "https://www.academia.edu/43036471/Making_a_Manuscript_Making_a_Cult_Scribal_Production_of_the_Syriac_Life_of_Symeon_the_Stylite_in_Late_Antiquity", "found": "Vatican manuscript confirmed as one of the key Syriac Life manuscripts; Vat. syr. 160 ff. 1-79"},
+    {"url": "https://www.gorgiaspress.com/persian-martyr-acts-in-syriac-text-and-translation", "found": "Gorgias Press series translating individual Persian Martyr Acts into English; Vol. 3 covers Simeon bar Sabba'e"},
+    {"url": "https://www.iranicaonline.org/articles/acts-of-the-persian-martyrs/", "found": "Acts of Persian Martyrs first published from Vat. syr. 160 by Assemani 1748 in Latin; modern English translations partial (Gorgias series)"},
+    {"url": "https://search.worldcat.org/title/lives-of-simeon-stylites/oclc/644083215", "found": "WorldCat record for Doran 1992 confirmed"}
+  ],
+  "reasoning": "Vat. syr. 160 primary text is the Syriac Life of Symeon Stylite (ff. 1-79), an independent abridged recension (~473 AD). Complete modern English translations of this work exist: Lent 1915 (JAOS, from BM Add. 14484/Bedjan) and Doran 1992 (Cistercian). Same underlying work despite different manuscript recension. Acts of Persian Martyrs portion partially Englished (Gorgias Press). Verdict: not_first."
+}

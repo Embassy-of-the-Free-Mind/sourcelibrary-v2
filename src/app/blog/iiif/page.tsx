@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How IIIF Helped Us Translate the Renaissance - Research Notes - Source Library',
@@ -18,6 +17,10 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg' }],
   },
   alternates: {
     canonical: '/blog/iiif',
@@ -772,15 +775,14 @@ export default function IIIFPage() {
             lightning talk at the{' '}
             <a href="https://iiif.io/event/2026/leiden/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-rust underline">IIIF 2026 Annual Conference &amp; Showcase</a>{' '}
             in Leiden and The Hague. Corrections and feedback are welcome &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              team@sourcelibrary.org
             </a>
             .
           </p>
         </div>
       </article>
 
-      <BlogComments slug="iiif" />
     </ContentPageLayout>
   );
 }

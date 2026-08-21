@@ -240,6 +240,35 @@ h1, h2, h3, h4 {
   max-width: 70ch;
   margin-inline: auto;
 }
+/* ---------------------------------------------------------------------------
+   Reading a book in the type it was printed in (#4083, pilot)
+   The reader page adds `.aldine-fount` for books listed in
+   src/lib/fonts/aldine-fount.ts. Both text panels — the transcription and the
+   English translation — are then set in the facsimile traced from that book's
+   own pages, with Cardo behind it for scripts the fount never had.
+   Display only: the DOM text is untouched, so search, copy and citation are
+   unaffected. The reader can switch back to the library's face from the
+   reading-settings popover — that sets data-reader-fount="modern" on the reader
+   root, and these rules stop matching.
+--------------------------------------------------------------------------- */
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] .prose-manuscript,
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
+  font-family: var(--font-aldine-aetna), var(--font-cardo), 'Newsreader', Georgia, serif;
+  /* liga: the ct/ſt/fi sorts. calt: rotate the three impressions of each common
+     letter so neighbours are never the same cast — hand-set, not typeset. */
+  font-feature-settings: "liga" 1, "calt" 1;
+  /* x-height 0.424 em against Newsreader's 0.441 — a 4% bump keeps the reading
+     size the user chose. Measured, not guessed. */
+  font-size: calc(var(--reader-font-size, 18px) * 1.04);
+}
+/* Both reading panels use .prose-manuscript, whose size comes from CSS. The
+   German-source and modernised views use a `.prose` div that sets font-size
+   inline (a React style prop beats a stylesheet rule whatever its specificity),
+   so that one — and only that one — needs !important. */
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
+  font-size: calc(var(--reader-font-size, 15px) * 1.04) !important;
+}
+
 /* Nested NotesRenderer inside an already-capped wrapper: don't re-center */
 [data-reader-panel] .prose-manuscript .prose-manuscript {
   max-width: none;
@@ -431,6 +460,22 @@ h1, h2, h3, h4 {
 .dark-section {
   background: var(--bg-dark);
   color: #fff;
+}
+
+/* Smooth open/close for <details> dropdowns (progressive enhancement:
+ * animates in browsers that support ::details-content + interpolate-size,
+ * and is an instant show/hide everywhere else). Scoped to the dropdowns so
+ * keyword-size interpolation doesn't leak into the rest of the app. */
+details.sl-collapse {
+  interpolate-size: allow-keywords;
+}
+details.sl-collapse::details-content {
+  height: 0;
+  overflow: clip;
+  transition: height 0.32s ease, content-visibility 0.32s ease allow-discrete;
+}
+details.sl-collapse[open]::details-content {
+  height: auto;
 }
 
 /* Scrollbars: use the platform-native overlay scrollbar so it auto-hides and
@@ -799,4 +844,64 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 }
 [data-avatar="true"] {
   border-radius: 9999px !important;
+}
+
+/* Hymn player sing-along highlight (HymnPlayer.tsx) — the currently sounding
+   note and its lyric syllable, driven on the audio scheduler's clock */
+.hymn-now,
+.hymn-now * {
+  fill: var(--accent-rust) !important;
+}
+
+/* ── Hero mosaic focus-in ─────────────────────────────────────────────────────
+   The background mosaic fades in fast, then the blur resolves slowly — a
+   deliberate "come into focus" rather than a hard pop. Opacity and blur are
+   decoupled on the keyframe timeline (opacity done by ~28%, blur over the full
+   run) so the sharpening is clearly visible even though the image itself loads
+   instantly from R2. A named animation (not a Tailwind transition) guarantees
+   the ~1.9s timing regardless of how fast the load fires. */
+/* Mosaic background: a plain fade + subtle zoom (no blur), played once the
+   mosaic image has loaded (so on unseen books it waits for the composite). */
+.hero-focus-in {
+  animation: hero-focus-in 300ms ease-out both;
+}
+@keyframes hero-focus-in {
+  0%   { opacity: 0; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Cover: the SAME fade, but NO zoom — and it plays on page load, independent of
+   the mosaic, so the cover fades in straight away even on an unseen book whose
+   mosaic hasn't generated yet. */
+.hero-cover-in {
+  animation: hero-cover-in 300ms ease-out both;
+}
+@keyframes hero-cover-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-focus-in, .hero-cover-in { animation: none; opacity: 1; transform: none; }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ── Section reveal-in (book page) ────────────────────────────────────────────
+   Sections fade + rise as they scroll into view. Pure CSS via a scroll-driven
+   view() timeline — no JS, no IntersectionObserver, no hydration flash.
+   Guarded by @supports so browsers without scroll-driven animations (and users
+   who prefer reduced motion) simply see the content in place, never hidden.
+   Content already in view on load resolves to the animation's end state. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal-in {
+      animation: reveal-in-kf linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 36%;
+    }
+  }
+}
+@keyframes reveal-in-kf {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

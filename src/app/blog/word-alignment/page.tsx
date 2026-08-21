@@ -8,9 +8,14 @@ export const metadata: Metadata = {
   description:
     'Click any English word to see the original that produced it. On-demand cross-lingual alignment powered by Gemini embeddings.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg', alt: 'Fragment of Greek papyrus from Herculaneum, 1885' }],
     title: 'Reading Through the Translation',
     description:
       'Click any English word to see the original that produced it.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg', alt: 'Fragment of Greek papyrus from Herculaneum, 1885' }],
   },
   alternates: {
     canonical: '/blog/word-alignment',

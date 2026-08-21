@@ -13,6 +13,7 @@ import {
   validateBookAndGetPageNumber,
   getExtensionFromMimeType
 } from '@/lib/uploads/utils';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Maximum file size: 300MB (same as formData upload)
 const MAX_FILE_SIZE_MEGABYTES = 300 * 1024 * 1024;
@@ -27,6 +28,9 @@ const MAX_FILE_SIZE_MEGABYTES = 300 * 1024 * 1024;
  * }
  *
  * Security:
+ * - Requires `editor` or above, or a `Bearer $CRON_SECRET` token for scripts.
+ *   It inserts pages into an attacker-controlled `bookId`, so it must never be
+ *   reachable unauthenticated.
  * - Only accepts HTTPS URLs from ALLOWED_S3_DOMAIN environment variable
  * - Validates URL format and domain before fetching
  * - Enforces 20MB size limit
@@ -39,6 +43,7 @@ const MAX_FILE_SIZE_MEGABYTES = 300 * 1024 * 1024;
  * ```bash
  * curl -X POST http://localhost:3000/api/upload/from-s3 \
  *   -H "Content-Type: application/json" \
+ *   -H "Authorization: Bearer $CRON_SECRET" \
  *   -d '{
  *     "bookId": "book-123",
  *     "imageUrls": [
@@ -48,7 +53,7 @@ const MAX_FILE_SIZE_MEGABYTES = 300 * 1024 * 1024;
  *   }'
  * ```
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   // No-cache headers to prevent Edge Cache from caching this route
   const noCacheHeaders = {
     'Cache-Control': 'no-store, no-cache, must-revalidate, private',
@@ -175,4 +180,4 @@ export async function POST(request: NextRequest) {
       { status: 500, headers: noCacheHeaders }
     );
   }
-}
+}, { minRole: 'editor' })

@@ -1,0 +1,44 @@
+{
+  "date": "2026-07-19",
+  "models": [
+    "gemini-3.1-pro-preview"
+  ],
+  "runs": 3,
+  "only": "philo-opificio-38",
+  "summary": [
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1068,
+      "charAccuracy": 0.99812734082397,
+      "rows": [
+        {
+          "work": "Philo, De opificio mundi 106-109 (Cohn p.38, hebdomad arithmology)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 162,
+          "aligned": true,
+          "guard": 0.009389671361502348,
+          "cer": 0.0018726591760299626,
+          "charAccuracy": 0.99812734082397,
+          "refLen": 1068,
+          "matched": 1066,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.073095,
+              "consistency": 0.6666666666666666,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

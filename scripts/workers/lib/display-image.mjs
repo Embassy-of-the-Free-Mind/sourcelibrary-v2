@@ -10,6 +10,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { assertBookScopedKey } from '../../lib/r2-key.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -166,16 +167,6 @@ export async function generateDisplayVariants(fullResBuffer) {
  * @param {Function} uploadFn - async (key, buffer, contentType) => url
  * @returns {{ archived: string, display: string, thumb: string }}
  */
-/**
- * Validate an R2 key has no undefined/null segments.
- * Catches interpolation bugs before they write garbage to the bucket.
- */
-function validateR2Key(key) {
-  if (/(?:^|\/)(undefined|null)(?:\/|$)/.test(key)) {
-    throw new Error(`R2 key contains invalid segment: ${key}`);
-  }
-}
-
 export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uploadFn) {
   if (!bookId) throw new Error(`uploadPageVariants: bookId is ${bookId} for page ${pageNumber}`);
   const num = String(pageNumber).padStart(4, '0');
@@ -183,9 +174,11 @@ export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uplo
   const archivedKey = `archived/${bookId}/${pageNumber}.jpg`;
   const displayKey = `pages/${bookId}/${num}.jpg`;
   const thumbKey = `pages/${bookId}/${num}-thumb.jpg`;
-  validateR2Key(archivedKey);
-  validateR2Key(displayKey);
-  validateR2Key(thumbKey);
+  // assertBookScopedKey, not just validateR2Key: it also catches a key that is
+  // well-formed but carries the WRONG book's id (#3362).
+  assertBookScopedKey(archivedKey, bookId, 'uploadPageVariants');
+  assertBookScopedKey(displayKey, bookId, 'uploadPageVariants');
+  assertBookScopedKey(thumbKey, bookId, 'uploadPageVariants');
 
   // Kick off full-res upload and metadata read against the buffer we already have,
   // while sharp generates the resized variants in parallel.

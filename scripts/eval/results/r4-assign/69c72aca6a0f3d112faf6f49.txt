@@ -1,0 +1,4 @@
+book_id: 69c72aca6a0f3d112faf6f49
+Title: Adumbratio kabbalae Christianae id est syncatabasis hebraizans
+Author: [Helmont, Franciscus Mercurius van]
+Source language: French

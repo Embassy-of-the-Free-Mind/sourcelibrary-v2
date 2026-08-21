@@ -11,8 +11,33 @@ import { applyCitationFixes, applyImageRemovals } from '@/lib/embassy/citation-f
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
 import LibrarianMessageBody from './_components/MessageBody';
+import { LIBRARIAN_STRINGS, type LibrarianStrings } from '@/lib/librarian-i18n';
+import { localePath, type Locale } from '@/lib/locale-path';
 
 // ── Types ─────────────────────────────────────────────────────────────
+
+// Minimal Web Speech API surface (not in the default TS DOM lib).
+interface SpeechRecognitionResultEventLike {
+  results: ArrayLike<{ isFinal: boolean } & ArrayLike<{ transcript: string }>>;
+}
+
+interface SpeechRecognitionLike {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((e: SpeechRecognitionResultEventLike) => void) | null;
+  onend: (() => void) | null;
+  onerror: ((e: unknown) => void) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+
+function getSpeechRecognitionCtor(): (new () => SpeechRecognitionLike) | null {
+  if (typeof window === 'undefined') return null;
+  const w = window as unknown as Record<string, unknown>;
+  return (w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null) as (new () => SpeechRecognitionLike) | null;
+}
 
 interface SourceCard {
   bookId: string;
@@ -87,43 +112,38 @@ interface FeaturedPassage {
 
 interface LibrarianClientProps {
   featuredPassage: FeaturedPassage | null;
+  /**
+   * The page's locale: `/librarian` → 'en', `/es/librarian` → 'es'. Picks the
+   * chrome dictionary, prefixes every internal link, and travels to the chat
+   * API as `lang` so the Librarian quotes the Spanish edition (see
+   * src/lib/embassy/chat-request.ts). Same component for both routes, so
+   * they cannot drift.
+   */
+  lang?: Locale;
 }
 
-function timeAgo(dateStr: string): string {
+function timeAgo(dateStr: string, t: LibrarianStrings): string {
   const d = new Date(dateStr);
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   const diffMins = Math.floor(diffMs / 60000);
-  if (diffMins < 1) return 'just now';
+  if (diffMins < 1) return t.justNow;
   if (diffMins < 60) return `${diffMins}m ago`;
   const diffHours = Math.floor(diffMins / 60);
   if (diffHours < 24) return `${diffHours}h ago`;
   const diffDays = Math.floor(diffHours / 24);
   if (diffDays < 7) return `${diffDays}d ago`;
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return d.toLocaleDateString(t.dateLocale, { month: 'short', day: 'numeric' });
 }
-
-const TOOL_LABELS: Record<string, string> = {
-  search: 'Searching the collection',
-  search_collection: 'Searching the collection',
-  search_semantic: 'Semantic search',
-  search_wikipedia: 'Checking Wikipedia',
-  search_images: 'Searching illustrations',
-  search_artworks: 'Searching artworks',
-  get_book_page: 'Reading a page',
-  read_nearby_pages: 'Reading nearby pages',
-  add_to_notebook: 'Saving to notebook',
-  present_choices: 'Thinking...',
-};
 
 // ── Source Card Component ─────────────────────────────────────────────
 
-function SourceCardRow({ sources, tenant }: { sources: SourceCard[]; tenant?: string }) {
+function SourceCardRow({ sources, tenant, lang, t }: { sources: SourceCard[]; tenant?: string; lang: Locale; t: LibrarianStrings }) {
   if (sources.length === 0) return null;
   return (
     <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
       {sources.map((s, i) => {
-        const url = tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant) + (s.pageNumber ? `/page-number/${s.pageNumber}` : '');
+        const url = localePath(tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant) + (s.pageNumber ? `/page-number/${s.pageNumber}` : ''), lang);
         return (
           <Link
             key={`${s.bookId}-${s.pageNumber}-${i}`}
@@ -146,7 +166,7 @@ function SourceCardRow({ sources, tenant }: { sources: SourceCard[]; tenant?: st
               </p>
             )}
             {!s.inCollection && (
-              <p className="text-[9px] text-[#b0a89c] font-sans mt-1">Not yet in collection</p>
+              <p className="text-[9px] text-[#b0a89c] font-sans mt-1">{t.notYetInCollection}</p>
             )}
           </Link>
         );
@@ -157,7 +177,7 @@ function SourceCardRow({ sources, tenant }: { sources: SourceCard[]; tenant?: st
 
 // ── Search Steps Component ────────────────────────────────────────────
 
-function SearchSteps({ steps }: { steps: SearchStep[] }) {
+function SearchSteps({ steps, t }: { steps: SearchStep[]; t: LibrarianStrings }) {
   if (steps.length === 0) return null;
   const busy = steps.some(s => s.status === 'searching');
   return (
@@ -183,7 +203,7 @@ function SearchSteps({ steps }: { steps: SearchStep[] }) {
             )}
           </span>
           <span>
-            {TOOL_LABELS[step.name] || step.name}
+            {t.tools[step.name] || step.name}
             {step.query && <span className="text-[#b0a89c]"> &ldquo;{step.query.slice(0, 50)}{step.query.length > 50 ? '...' : ''}&rdquo;</span>}
             {step.status === 'done' && step.summary && (
               <span className="text-[#6b6560]"> &mdash; {step.summary}</span>
@@ -206,18 +226,20 @@ function NotebookPanel({
   topic,
   threadId,
   onClose,
+  t,
 }: {
   findings: NotebookFinding[];
   topic?: string;
   threadId: string | null;
   onClose: () => void;
+  t: LibrarianStrings;
 }) {
   return (
     <div className="border-t border-[#e8e4dc] bg-[#faf8f4]">
       <div className="flex items-center justify-between px-4 py-2.5">
         <div className="flex items-center gap-2 text-[13px] font-sans text-[#6b8f5e]">
           <span aria-hidden>&#x1F4D3;</span>
-          <span className="font-medium">Research notebook</span>
+          <span className="font-medium">{t.notebook}</span>
           <span className="text-[#8a8480]">
             {findings.length} finding{findings.length === 1 ? '' : 's'}{topic ? ` · ${topic}` : ''}
           </span>
@@ -229,7 +251,7 @@ function NotebookPanel({
               download
               className="text-[11px] text-[#6b8f5e] hover:text-[#4a6b40] font-sans"
             >
-              Export
+              {t.exportNotebook}
             </a>
           )}
           <button onClick={onClose} className="text-[11px] text-[#8a8480] hover:text-[#6b6560] font-sans">
@@ -266,68 +288,10 @@ function NotebookPanel({
 
 // ── Main Component ────────────────────────────────────────────────────
 
-const ALL_SUGGESTIONS = [
-  // Alchemy & Hermetica
-  'How did alchemists describe the philosopher\'s stone?',
-  'What did alchemists believe about gold?',
-  'Tell me about the Emerald Tablet',
-  'Who was Hermes Trismegistus?',
-  'What equipment did a working alchemist actually use?',
-  'How did Arabic alchemy reach medieval Europe?',
-  'What did alchemists mean by the marriage of the sun and moon?',
-  // Renaissance philosophy & magic
-  'Who was Marsilio Ficino?',
-  'What do these texts say about the world soul?',
-  'What did Agrippa write about planetary seals?',
-  'What is the relationship between music and magic?',
-  'What books explore resonance as magic?',
-  'How did Giordano Bruno imagine infinite worlds?',
-  'What was the art of memory?',
-  'Was there any conception of artificial intelligence?',
-  'Did anyone write about talking statues or artificial beings?',
-  // Kabbalah & religious mysticism
-  'What is the Kabbalah\'s tree of life?',
-  'What did Christian scholars make of the Zohar?',
-  'What did Jacob Boehme see in his visions?',
-  'How did mystics describe union with the divine?',
-  // Astrology & cosmology
-  'What instruments did astrologers use?',
-  'How did Renaissance scholars understand the cosmos?',
-  'How were comets interpreted before modern astronomy?',
-  'How did Kepler mix astrology with astronomy?',
-  'What did people believe about the music of the spheres?',
-  // Medicine & natural history
-  'What did Paracelsus teach about medicine?',
-  'How were dreams interpreted as medical symptoms?',
-  'What remedies did early herbals prescribe?',
-  'How did physicians explain the plague?',
-  'What did anatomists discover before the microscope?',
-  // Magic, witchcraft & demonology
-  'How were demons understood in early modern Europe?',
-  'What did witch-hunting manuals actually claim?',
-  'How did scholars defend accused witches?',
-  'What were angels thought to know?',
-  // Dreams, divination & prophecy
-  'Did any of these authors write about dreams?',
-  'How did people tell fortunes before tarot cards?',
-  'What prophecies circulated during the Reformation?',
-  // Rosicrucians & secret societies
-  'Who were the Rosicrucians?',
-  'What ciphers and secret alphabets appear in these books?',
-  'What did the Rosicrucian manifestos promise?',
-  // Eastern traditions
-  'What do Tibetan texts say about the nature of mind?',
-  'What does Ayurvedic medicine say about the elements?',
-  'How did Sanskrit astronomers calculate eclipses?',
-  // Art, images & books themselves
-  'What are the strangest illustrations in the collection?',
-  'How were emblem books meant to be read?',
-  'What did the first printed books look like?',
-  'Which books here were never translated until now?',
-];
+// Suggestion chips come from LIBRARIAN_STRINGS[lang].suggestions (src/lib/librarian-i18n.ts).
 
-function pickSuggestions(count: number, extras: string[] = []): string[] {
-  const pool = [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5);
+function pickSuggestions(pool0: readonly string[], count: number, extras: string[] = []): string[] {
+  const pool = [...pool0].sort(() => Math.random() - 0.5);
   const picks = [...extras, ...pool.filter(s => !extras.includes(s))].slice(0, count);
   // Second shuffle so real visitor questions don't always sit first.
   return picks.sort(() => Math.random() - 0.5);
@@ -346,7 +310,9 @@ function looksLikeGoodQuestion(q: string): boolean {
     && QUESTION_START_RE.test(t);
 }
 
-export default function LibrarianClient({ featuredPassage }: LibrarianClientProps) {
+export default function LibrarianClient({ featuredPassage, lang = 'en' }: LibrarianClientProps) {
+  const t = LIBRARIAN_STRINGS[lang];
+  const href = (path: string) => localePath(path, lang);
   const { data: session, status } = useSession();
   const params = useParams<{ tenant: string }>();
   const tenant = params?.tenant;
@@ -354,18 +320,28 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   // Seed deterministically so SSR and the first client render agree (a random
   // initial set caused a hydration mismatch — React #418). Shuffle for variety
   // only after mount, where a state update is safe.
-  const [suggestions, setSuggestions] = useState<string[]>(() => ALL_SUGGESTIONS.slice(0, 6));
-  useEffect(() => { setSuggestions(pickSuggestions(6)); }, []);
+  const [suggestions, setSuggestions] = useState<string[]>(() => t.suggestions.slice(0, 6));
+  useEffect(() => { setSuggestions(pickSuggestions(t.suggestions, 6)); }, [t]);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
   const [myThreads, setMyThreads] = useState<ThreadPreview[]>([]);
+  // A list has three states, not one. Collapsing them was the whole of #4070:
+  // an in-flight or failed fetch left the array empty, and empty rendered as
+  // "No conversations yet" — telling a reader with 112 conversations that they
+  // had none. Never infer emptiness from an array that hasn't loaded.
+  const [threadsState, setThreadsState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [myThreadsState, setMyThreadsState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [reloadMine, setReloadMine] = useState(0);
   const [sidebarTab, setSidebarTab] = useState<'recent' | 'mine'>('recent');
   // Default to "My Conversations" once signed in
   useEffect(() => {
     if (status === 'authenticated') setSidebarTab('mine');
   }, [status]);
+  // Listed by default. The toggle beneath the composer controls whether the
+  // conversation appears in Recent — it never controls a name, because the
+  // server strips those from every surface but the reader's own.
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   // Research notebook accumulated live across the thread (from notebook_update).
   const [notebookFindings, setNotebookFindings] = useState<NotebookFinding[]>([]);
@@ -374,37 +350,136 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
   const [showThinking, setShowThinking] = useState(true);
   const [visibleThreads, setVisibleThreads] = useState(5);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const chatCardRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
+  // ── Speech input (Web Speech API dictation) ─────────────────────────
+  // Live transcription into the textarea; the user reviews/edits, then sends.
+  // Chrome/Edge/Safari only — the mic button is hidden where unsupported.
+  const [listening, setListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  // Text already in the box when dictation starts; transcripts append to it.
+  const dictationBaseRef = useRef('');
+
+  useEffect(() => {
+    setSpeechSupported(Boolean(getSpeechRecognitionCtor()));
+    return () => recognitionRef.current?.abort();
+  }, []);
+
+  const stopDictation = useCallback(() => {
+    recognitionRef.current?.stop();
+    setListening(false);
+  }, []);
+
+  const toggleDictation = useCallback(() => {
+    if (listening) {
+      stopDictation();
+      return;
+    }
+    const Ctor = getSpeechRecognitionCtor();
+    if (!Ctor) return;
+    const rec = new Ctor();
+    rec.lang = typeof navigator !== 'undefined' && navigator.language ? navigator.language : 'en-US';
+    rec.continuous = true;
+    rec.interimResults = true;
+    const current = inputRef.current?.value ?? '';
+    dictationBaseRef.current = current ? current.replace(/\s+$/, '') + ' ' : '';
+    rec.onresult = (e: SpeechRecognitionResultEventLike) => {
+      let transcript = '';
+      for (let i = 0; i < e.results.length; i++) {
+        transcript += e.results[i][0].transcript;
+      }
+      setInput(dictationBaseRef.current + transcript);
+      // Mirror handleInputChange's auto-grow, since programmatic setState
+      // doesn't fire the textarea's onChange.
+      const el = inputRef.current;
+      if (el) {
+        requestAnimationFrame(() => {
+          el.style.height = 'auto';
+          el.style.height = Math.min(el.scrollHeight, 200) + 'px';
+        });
+      }
+    };
+    rec.onend = () => setListening(false);
+    rec.onerror = () => setListening(false);
+    recognitionRef.current = rec;
+    rec.start();
+    setListening(true);
+    inputRef.current?.focus();
+  }, [listening, stopDictation]);
+
+  // Flip the listing toggle. If the conversation already exists it has to be
+  // written through immediately: the old toggle only ever fed the create call,
+  // so a reader who turned listing off mid-conversation changed nothing and
+  // was never told.
+  const setListed = useCallback((listed: boolean) => {
+    setVisibility(listed ? 'public' : 'private');
+    if (!threadId) return;
+    fetch(`/api/embassy/threads/${threadId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listed }),
+    }).catch(() => { });
+  }, [threadId]);
+
   // Fetch public threads
   useEffect(() => {
+    let live = true;
+    setThreadsState('loading');
     fetch('/api/embassy/threads?limit=50')
-      .then(r => r.json())
-      .then(data => { if (data.threads) setThreads(data.threads); })
-      .catch(() => { });
+      .then(async r => {
+        if (!r.ok) throw new Error(`threads ${r.status}`);
+        return r.json();
+      })
+      .then(data => {
+        if (!live) return;
+        setThreads(data.threads ?? []);
+        setThreadsState('ready');
+      })
+      .catch(() => { if (live) setThreadsState('error'); });
+    return () => { live = false; };
   }, []);
 
   // Blend up to two real visitor questions into the suggestion chips once
   // public threads arrive, so the chips reflect what people actually ask.
   useEffect(() => {
+    // Visitor questions in Recent are (almost all) English; only surface them
+    // as chips on the English page.
+    if (lang !== 'en') return;
     const real = Array.from(new Set(
-      threads.map(t => t.preview.question).filter(looksLikeGoodQuestion),
+      threads.map(th => th.preview.question).filter(looksLikeGoodQuestion),
     ));
     if (real.length === 0) return;
     const extras = real.sort(() => Math.random() - 0.5).slice(0, 2);
-    setSuggestions(pickSuggestions(6, extras));
-  }, [threads]);
+    setSuggestions(pickSuggestions(t.suggestions, 6, extras));
+  }, [threads, lang, t]);
 
-  // Fetch user's own threads when signed in
+  // Fetch the reader's own threads once the session resolves. While NextAuth is
+  // still deciding (`status === 'loading'`) this list is NOT empty — it is
+  // unknown, so it stays in the loading state rather than claiming there is no
+  // history.
   useEffect(() => {
-    if (status === 'authenticated') {
-      fetch('/api/embassy/threads?mine=true&limit=20')
-        .then(r => r.json())
-        .then(data => { if (data.threads) setMyThreads(data.threads); })
-        .catch(() => { });
+    if (status !== 'authenticated') {
+      if (status === 'unauthenticated') setMyThreadsState('ready');
+      return;
     }
-  }, [status]);
+    let live = true;
+    setMyThreadsState('loading');
+    fetch('/api/embassy/threads?mine=true&limit=20')
+      .then(async r => {
+        if (!r.ok) throw new Error(`mine ${r.status}`);
+        return r.json();
+      })
+      .then(data => {
+        if (!live) return;
+        setMyThreads(data.threads ?? []);
+        setMyThreadsState('ready');
+      })
+      .catch(() => { if (live) setMyThreadsState('error'); });
+    return () => { live = false; };
+  }, [status, reloadMine]);
 
   // Auto-scroll
   useEffect(() => {
@@ -437,6 +512,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     const trimmed = input.trim();
     if (!trimmed || sending) return;
 
+    if (listening) stopDictation();
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     setInput('');
     setSending(true);
@@ -450,6 +526,18 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
       sources: [],
     };
     setMessages(prev => [...prev, emptyAssistant]);
+
+    // On a touch device the input sits below the fold (hero + tall chat panel
+    // push it down), so after submitting you'd be left staring at the text box
+    // while the Librarian works above it — you had to scroll up to see anything
+    // happening. Dismiss the keyboard and pull the conversation into view so the
+    // search steps and response are visible as they stream in.
+    if (typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)').matches) {
+      inputRef.current?.blur();
+      requestAnimationFrame(() => {
+        chatCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
 
     const abort = new AbortController();
     abortRef.current = abort;
@@ -467,6 +555,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
           })),
           visibility,
           stream: true,
+          lang,
         }),
         signal: abort.signal,
       });
@@ -478,14 +567,14 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
           // to sign in (free) to continue.
           updateLastAssistant(m => ({
             ...m,
-            content: 'You\'ve used your free questions for now. [Sign in](/auth/signin?callbackUrl=/librarian&reason=limit) (free) to keep talking with the Librarian — create an account or sign in with Google.',
+            content: t.limitReached,
           }));
         } else {
           updateLastAssistant(m => ({
             ...m,
             error: true,
             retryQuestion: trimmed,
-            content: err.error || 'I’m sorry — something went wrong on my end. Try again?',
+            content: err.error || t.genericError,
           }));
         }
         setSending(false);
@@ -768,10 +857,10 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
   const handleShareThread = async (i: number) => {
     if (!threadId) return;
-    const url = `${window.location.origin}/librarian/thread/${threadId}`;
+    const url = `${window.location.origin}${href(`/librarian/thread/${threadId}`)}`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'The Librarian — Source Library', url });
+        await navigator.share({ title: t.metaTitle, url });
         return;
       } catch { return; /* user cancelled */ }
     }
@@ -788,9 +877,9 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
     setNotebookTopic(undefined);
     setNotebookOpen(false);
     // Fresh chips for a fresh conversation.
-    const real = threads.map(t => t.preview.question).filter(looksLikeGoodQuestion);
+    const real = lang === 'en' ? threads.map(th => th.preview.question).filter(looksLikeGoodQuestion) : [];
     const extras = real.sort(() => Math.random() - 0.5).slice(0, 2);
-    setSuggestions(pickSuggestions(6, extras));
+    setSuggestions(pickSuggestions(t.suggestions, 6, extras));
     window.history.replaceState(null, '', window.location.pathname);
     inputRef.current?.focus();
   };
@@ -816,11 +905,10 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-10 sm:pt-12 pb-10 animate-fade-in-up">
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
-            The Librarian
+            {t.title}
           </h1>
           <p className="text-white/80 text-base sm:text-lg font-body leading-relaxed max-w-[480px] drop-shadow-sm">
-            Your research agent for over 10,000 rare books. Ask a question, and the Librarian
-            will search the collection, cross-reference sources, and build up findings you can export.
+            {t.intro}
           </p>
         </div>
       </div>
@@ -836,23 +924,26 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
 
             {/* Chat area */}
             <div className="flex-1 min-w-0">
-              <div className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm">
+              <div ref={chatCardRef} className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm scroll-mt-4">
                 {/* Messages */}
                 <div ref={chatContainerRef} className="min-h-[200px] max-h-[70vh] overflow-y-auto p-6 space-y-6">
                   {messages.length === 0 && (
                     <div className="text-center py-8">
                       <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
                       <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
-                        The Librarian searches the collection, Wikipedia, and semantic search
-                        to find answers in over 10,000 rare books.
+                        {t.emptyLead}
                       </p>
                       <p className="text-[#8a8480]/50 text-xs font-body mt-1.5">
-                        Responses may contain errors &mdash; always verify against the source page.
+                        {t.emptyDisclaimer}
                       </p>
                       <div className="flex flex-wrap justify-center gap-2 mt-5">
                         {suggestions.map((suggestion) => (
                           <button
                             key={suggestion}
+                            // Stable hook for e2e: the chip SET is redrawn twice
+                            // after first paint (see pickSuggestions), so tests
+                            // cannot locate a chip by its wording (#3358).
+                            data-testid="suggestion-chip"
                             onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}
                             className="px-3 py-1.5 text-xs text-[#6b6560] border border-[#e8e4dc] rounded-full hover:bg-[#f5f0e8] hover:text-[#444] transition-colors font-sans"
                           >
@@ -891,7 +982,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                                 aria-expanded={showThinking}
                                 className="text-[11px] text-[#b0a89c] hover:text-[#8a8480] font-sans transition-colors"
                               >
-                                {showThinking ? 'Hide reasoning' : 'Show reasoning'}
+                                {showThinking ? t.hideReasoning : t.showReasoning}
                               </button>
                               {showThinking && (
                                 <div className="mt-1 text-[13px] text-[#8a8480] font-body italic leading-relaxed bg-[#faf8f4] rounded px-3 py-2 border-l-2 border-[#e8e4dc]">
@@ -902,7 +993,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                           )}
 
                           {/* Search steps */}
-                          <SearchSteps steps={assistant.steps} />
+                          <SearchSteps steps={assistant.steps} t={t} />
 
                           {/* Response text */}
                           {assistant.content && (
@@ -954,7 +1045,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                           )}
 
                           {/* Source cards */}
-                          <SourceCardRow sources={assistant.sources} tenant={tenant} />
+                          <SourceCardRow sources={assistant.sources} tenant={tenant} lang={lang} t={t} />
 
                           {/* Copy / share actions (once the response has finished streaming) */}
                           {assistant.content && !assistant.error && !(sending && i === messages.length - 1) && (
@@ -970,7 +1061,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                                   onClick={() => handleShareThread(i)}
                                   className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans"
                                 >
-                                  {copiedKey === `share-${i}` ? 'Link copied ✓' : 'Share'}
+                                  {copiedKey === `share-${i}` ? t.linkCopied : t.share}
                                 </button>
                               )}
                             </div>
@@ -1006,6 +1097,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     topic={notebookTopic}
                     threadId={threadId}
                     onClose={() => setNotebookOpen(false)}
+                    t={t}
                   />
                 )}
 
@@ -1017,17 +1109,36 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       value={input}
                       onChange={handleInputChange}
                       onKeyDown={handleKeyDown}
-                      placeholder="Ask the Librarian..."
+                      placeholder={t.placeholder}
                       rows={1}
                       className="flex-1 resize-none border border-[#e8e4dc] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#8a8480] focus:outline-none focus:border-[#c9a86c] transition-colors bg-transparent disabled:opacity-50"
                     />
+                    {speechSupported && (
+                      <button
+                        type="button"
+                        onClick={toggleDictation}
+                        aria-label={listening ? t.stopVoice : t.startVoice}
+                        aria-pressed={listening}
+                        title={listening ? t.stopVoice : t.speakYourQuestion}
+                        className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg border transition-colors ${listening
+                          ? 'border-[#9e4a3a] bg-[#9e4a3a] text-white animate-pulse'
+                          : 'border-[#e8e4dc] text-[#8a8480] hover:text-[#1a1612] hover:border-[#c9a86c]'
+                          }`}
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <rect x="9" y="2" width="6" height="12" rx="3" />
+                          <path d="M5 10a7 7 0 0 0 14 0" />
+                          <line x1="12" y1="19" x2="12" y2="22" />
+                        </svg>
+                      </button>
+                    )}
                     {sending ? (
                       <button
                         type="button"
                         onClick={handleStop}
                         className="flex-shrink-0 px-5 py-2.5 bg-[#9e4a3a] text-white rounded-lg text-sm font-sans hover:bg-[#8b3d30] transition-colors"
                       >
-                        Stop
+                        {t.stop}
                       </button>
                     ) : (
                       <button
@@ -1035,7 +1146,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                         disabled={!input.trim()}
                         className="flex-shrink-0 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-30 transition-colors"
                       >
-                        Send
+                        {t.send}
                       </button>
                     )}
                   </form>
@@ -1044,7 +1155,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     <div className="flex items-center gap-3">
                       {messages.length > 0 && (
                         <button onClick={startNewThread} className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans">
-                          New conversation
+                          {t.newConversation}
                         </button>
                       )}
                       {notebookFindings.length > 0 && (
@@ -1059,25 +1170,27 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       )}
                     </div>
                     <div className="flex items-center gap-3">
-                      {isSignedIn && (
-                        <button
-                          onClick={() => setVisibility(v => v === 'public' ? 'private' : 'public')}
-                          className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
-                        >
-                          <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
-                          <span className="text-[9px]">{visibility === 'public' ? '(visible to others)' : '(only you)'}</span>
-                        </button>
-                      )}
+                      <button
+                        onClick={() => setListed(visibility !== 'public')}
+                        className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
+                      >
+                        <span>{visibility === 'public' ? t.listed : t.notListed}</span>
+                        <span className="text-[9px]">
+                          {visibility === 'public'
+                            ? t.listedHint
+                            : isSignedIn ? t.onlyYou : t.notShownToOthers}
+                        </span>
+                      </button>
                       <span className="text-[9px] text-[#c0b8b0] font-mono">v5</span>
                     </div>
                   </div>
 
                   {!isSignedIn && status !== 'loading' && (
                     <p className="mt-2 text-[12px] text-[#8a8480] font-sans">
-                      <Link href="/auth/signin?callbackUrl=/librarian" className="text-[#9e4a3a] hover:underline">
-                        Sign in
+                      <Link href={`${href('/auth/signin')}?callbackUrl=${encodeURIComponent(href('/librarian'))}`} className="text-[#9e4a3a] hover:underline">
+                        {t.signIn}
                       </Link>
-                      {' '}(free) to save your conversations and keep them private.
+                      {' '}{t.signInToKeep}
                     </p>
                   )}
                 </div>
@@ -1094,7 +1207,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'recent' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
                       }`}
                   >
-                    Recent
+                    {t.recent}
                   </button>
                   {isSignedIn && (
                     <button
@@ -1102,19 +1215,58 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'mine' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
                         }`}
                     >
-                      My Conversations
+                      {t.myConversations}
                     </button>
                   )}
                 </div>
 
+                {sidebarTab === 'recent' && (
+                  <p className="text-[10px] text-[#b0a89c] font-sans mb-3 leading-relaxed">
+                    {t.recentHint}
+                  </p>
+                )}
+
                 {(() => {
-                  const allThreads = sidebarTab === 'mine' ? myThreads : threads;
+                  const isMine = sidebarTab === 'mine';
+                  const allThreads = isMine ? myThreads : threads;
+                  const listState = isMine ? myThreadsState : threadsState;
+                  // Session still resolving means "we don't know yet", not "none".
+                  const loading = listState === 'loading' || (isMine && status === 'loading');
+
+                  if (loading) {
+                    return (
+                      <div className="space-y-3" aria-busy="true">
+                        {[0, 1, 2].map(i => (
+                          <div key={i} className="py-3 border-b border-[#e8e4dc] animate-pulse">
+                            <div className="h-3 bg-[#e8e4dc] rounded w-5/6 mb-2" />
+                            <div className="h-3 bg-[#eee9e1] rounded w-full mb-1.5" />
+                            <div className="h-3 bg-[#eee9e1] rounded w-2/3" />
+                          </div>
+                        ))}
+                        <span className="sr-only">Loading conversations…</span>
+                      </div>
+                    );
+                  }
+
+                  if (listState === 'error') {
+                    return (
+                      <p className="text-[#8a8480] text-sm font-body">
+                        Couldn&rsquo;t load {isMine ? 'your conversations' : 'recent conversations'}.{' '}
+                        <button
+                          onClick={() => { if (isMine) setReloadMine(n => n + 1); else window.location.reload(); }}
+                          className="text-[#9e4a3a] hover:underline"
+                        >
+                          Try again
+                        </button>
+                        .
+                      </p>
+                    );
+                  }
+
                   if (allThreads.length === 0) {
                     return (
                       <p className="text-[#8a8480] text-sm font-body">
-                        {sidebarTab === 'mine'
-                          ? 'No conversations yet. Ask the Librarian something!'
-                          : 'No conversations yet. Be the first to ask the Librarian something.'}
+                        {isMine ? t.noConversationsMine : t.noConversationsRecent}
                       </p>
                     );
                   }
@@ -1125,7 +1277,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                       {displayThreads.map((thread) => (
                         <Link
                           key={thread.id}
-                          href={`/librarian/thread/${thread.id}`}
+                          href={href(`/librarian/thread/${thread.id}`)}
                           className="block py-3 border-b border-[#e8e4dc] hover:bg-[#f5f0e8]/50 transition-colors -mx-2 px-2 rounded"
                         >
                           <p className="text-sm font-body text-[#1a1612] line-clamp-2 leading-snug mb-1">
@@ -1135,8 +1287,8 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                             {thread.preview.answer}
                           </p>
                           <p className="text-[10px] text-[#8a8480] font-sans">
-                            {thread.creatorName} &middot; {timeAgo(thread.lastMessageAt)}
-                            {thread.messageCount > 2 && <span> &middot; {thread.messageCount} messages</span>}
+                            {thread.creatorName} &middot; {timeAgo(thread.lastMessageAt, t)}
+                            {thread.messageCount > 2 && <span> &middot; {thread.messageCount} {t.messages}</span>}
                           </p>
                         </Link>
                       ))}
@@ -1145,7 +1297,7 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                           onClick={() => setVisibleThreads(v => v + 10)}
                           className="block w-full py-2 mt-1 text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans text-center"
                         >
-                          Show more ({allThreads.length - visibleThreads} remaining)
+                          {t.showMore} ({allThreads.length - visibleThreads})
                         </button>
                       )}
                     </div>
@@ -1155,9 +1307,9 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                 {featuredPassage && (
                   <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
                     <p className="text-[11px] text-[#b0a89c] tracking-[0.15em] uppercase font-sans mb-2">
-                      The Librarian is reading
+                      {t.librarianIsReading}
                     </p>
-                    <Link href={featuredPassage.pageId ? `/book/${featuredPassage.bookSlug}/page/${featuredPassage.pageId}` : `/book/${featuredPassage.bookSlug}`} className="block group">
+                    <Link href={href(featuredPassage.pageId ? `/book/${featuredPassage.bookSlug}/page/${featuredPassage.pageId}` : `/book/${featuredPassage.bookSlug}`)} className="block group">
                       <blockquote className="text-[#6b6560] text-[14px] font-body leading-relaxed italic border-l-2 border-[#c9a86c]/50 pl-3">
                         &ldquo;{featuredPassage.text}&rdquo;
                       </blockquote>
@@ -1169,23 +1321,6 @@ export default function LibrarianClient({ featuredPassage }: LibrarianClientProp
                     </Link>
                   </div>
                 )}
-
-                <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
-                  <div className="space-y-2">
-                    <Link href="/librarian/voice" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Voice conversation
-                    </Link>
-                    <Link href="/podcast" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Deep Dives podcast
-                    </Link>
-                    <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      The Ficino Society
-                    </Link>
-                    <Link href="/collections" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Browse the Collection
-                    </Link>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

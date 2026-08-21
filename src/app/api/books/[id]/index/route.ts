@@ -9,6 +9,14 @@ import { isBookReadable } from '@/lib/book-access';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
 import { getBookIndex } from '@/lib/book-index';
+import {
+  attributeEntityPages,
+  buildPageTexts,
+  type NormalizedPage,
+  type PageAttribution,
+  type PagePrecision,
+} from '@/lib/entity-page-match';
+import { entityCounters, type EntityBookRef } from '@/lib/entity-books';
 
 export const maxDuration = 300;
 
@@ -326,31 +334,55 @@ function buildConceptIndexFromBatches(
   places: ConceptEntry[];
   concepts: ConceptEntry[];
 } {
-  // Aggregate from batches
-  const peopleMap = new Map<string, number[]>();
-  const placesMap = new Map<string, number[]>();
-  const conceptsMap = new Map<string, number[]>();
+  // Aggregate from batches.
+  //
+  // Fourth writer of this index (with enrich-worker.mjs Phase 6,
+  // batch-generate-indexes.mjs, and the /api/entities rebuild) and it carried
+  // the same defect: Gemini returns bare name lists for a ~50k-char batch with
+  // no page numbers, and the old code credited EVERY page in the batch range to
+  // EVERY entity in it. Measured on live data, ~22% of the resulting page
+  // citations were real (#3361). Verify against page text instead, and fall
+  // back to a section range rather than guessing.
+  const peopleMap = new Map<string, PageAttribution>();
+  const placesMap = new Map<string, PageAttribution>();
+  const conceptsMap = new Map<string, PageAttribution>();
+
+  const pagesByNumber = new Map(pages.map(p => [p.page_number, p]));
+
+  const accumulate = (map: Map<string, PageAttribution>, term: string, batchPages: NormalizedPage[]) => {
+    if (!term) return;
+    const attribution = attributeEntityPages(term, batchPages);
+    const prev = map.get(term);
+    if (!prev) {
+      map.set(term, attribution);
+      return;
+    }
+    const merged = [...new Set([...prev.pages, ...attribution.pages])].sort((a, b) => a - b);
+    const ranges = [prev.page_range, attribution.page_range].filter(Boolean) as { start: number; end: number }[];
+    const next: PageAttribution = {
+      pages: merged,
+      page_precision: merged.length > 0 ? 'page' : 'section',
+    };
+    if (next.page_precision === 'section' && ranges.length > 0) {
+      next.page_range = {
+        start: Math.min(...ranges.map(r => r.start)),
+        end: Math.max(...ranges.map(r => r.end)),
+      };
+    }
+    map.set(term, next);
+  };
 
   for (const batch of batches) {
-    const pageNumbers = Array.from(
-      { length: batch.pageRange.end - batch.pageRange.start + 1 },
-      (_, i) => batch.pageRange.start + i
-    );
-
-    for (const person of batch.people) {
-      if (!peopleMap.has(person)) peopleMap.set(person, []);
-      peopleMap.get(person)!.push(...pageNumbers);
+    const batchPages: typeof pages = [];
+    for (let n = batch.pageRange.start; n <= batch.pageRange.end; n++) {
+      const p = pagesByNumber.get(n);
+      if (p) batchPages.push(p);
     }
+    const batchPageTexts = buildPageTexts(batchPages);
 
-    for (const place of batch.places) {
-      if (!placesMap.has(place)) placesMap.set(place, []);
-      placesMap.get(place)!.push(...pageNumbers);
-    }
-
-    for (const concept of batch.concepts) {
-      if (!conceptsMap.has(concept)) conceptsMap.set(concept, []);
-      conceptsMap.get(concept)!.push(...pageNumbers);
-    }
+    for (const person of batch.people) accumulate(peopleMap, person, batchPageTexts);
+    for (const place of batch.places) accumulate(placesMap, place, batchPageTexts);
+    for (const concept of batch.concepts) accumulate(conceptsMap, concept, batchPageTexts);
   }
 
   // Also extract vocabulary from OCR tags (existing approach)
@@ -377,23 +409,37 @@ function buildConceptIndexFromBatches(
     }
   }
 
+  // vocabulary/keywords come from per-page tags, so they were always page-exact.
   const mapToEntries = (map: Map<string, number[]>): ConceptEntry[] =>
     Array.from(map.entries())
-      .map(([term, pgs]) => ({ term, pages: [...new Set(pgs)].sort((a, b) => a - b) }))
+      .map(([term, pgs]) => ({
+        term,
+        pages: [...new Set(pgs)].sort((a, b) => a - b),
+        page_precision: 'page' as const,
+      }))
+      .sort((a, b) => b.pages.length - a.pages.length);
+
+  const attributionToEntries = (map: Map<string, PageAttribution>): ConceptEntry[] =>
+    Array.from(map.entries())
+      .map(([term, attribution]) => ({ term, ...attribution }))
       .sort((a, b) => b.pages.length - a.pages.length);
 
   return {
     vocabulary: mapToEntries(vocabMap),
     keywords: mapToEntries(keywordMap),
-    people: mapToEntries(peopleMap),
-    places: mapToEntries(placesMap),
-    concepts: mapToEntries(conceptsMap),
+    people: attributionToEntries(peopleMap),
+    places: attributionToEntries(placesMap),
+    concepts: attributionToEntries(conceptsMap),
   };
 }
 
 interface ConceptEntry {
   term: string;
   pages: number[];
+  /** 'page' — every number in `pages` was verified against that page's text.
+   *  'section' — only the span is known; `pages` is empty (#3361). */
+  page_precision?: PagePrecision;
+  page_range?: { start: number; end: number };
   context?: string; // Brief context from first occurrence
 }
 
@@ -653,17 +699,22 @@ async function generateBookSummary(
     };
   }
 
-  // Compile all extracted information
-  const allThemes = [...new Set(batchExtractions.flatMap(b => b.themes))];
+  // Compile all extracted information. Cap the lists: on very large books
+  // (900+ pages → ~90 batches) the deduped entity sets and batch summaries can
+  // balloon the synthesis prompt/response past the model's limits, truncating
+  // the JSON and (previously) throwing → an empty summary. enrich-worker caps
+  // its equivalent inputs for the same reason; mirror that here.
+  const allThemes = [...new Set(batchExtractions.flatMap(b => b.themes))].slice(0, 30);
   const allQuotes = batchExtractions.flatMap(b => b.quotes);
-  const allPeople = [...new Set(batchExtractions.flatMap(b => b.people))];
-  const allPlaces = [...new Set(batchExtractions.flatMap(b => b.places))];
-  const allConcepts = [...new Set(batchExtractions.flatMap(b => b.concepts))];
+  const allPeople = [...new Set(batchExtractions.flatMap(b => b.people))].slice(0, 40);
+  const allPlaces = [...new Set(batchExtractions.flatMap(b => b.places))].slice(0, 30);
+  const allConcepts = [...new Set(batchExtractions.flatMap(b => b.concepts))].slice(0, 40);
 
-  // Build batch summaries section
+  // Build batch summaries section (bounded so the prompt stays within limits).
   const batchSummariesText = batchExtractions
     .map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`)
-    .join('\n');
+    .join('\n')
+    .slice(0, 16000);
 
   // Build quotes section (limit to best 15)
   const quotesText = allQuotes.slice(0, 15)
@@ -777,13 +828,35 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
     triggered_by: triggeredBy,
   }).catch(console.error); // Non-blocking
 
-  // Parse JSON from response
-  const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse book summary JSON');
-  }
+  // Parse JSON from response — resilient to truncation. On large books the
+  // model can hit its output-token limit mid-JSON (the `sections` array cuts
+  // off), which used to throw and leave the whole summary empty. If the full
+  // object won't parse, salvage the top-level brief/abstract/detailed strings
+  // (they come first in the response) so the About summary still populates,
+  // dropping only the truncated sections.
+  const salvageField = (name: string): string => {
+    const m = responseText.match(new RegExp(`"${name}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+    if (!m) return '';
+    try { return JSON.parse(`"${m[1]}"`); } catch { return m[1]; }
+  };
 
-  const parsed = JSON.parse(jsonMatch[0]);
+  let parsed: { brief?: unknown; abstract?: unknown; detailed?: unknown; sections?: unknown };
+  const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+  try {
+    if (!jsonMatch) throw new Error('no JSON object in response');
+    parsed = JSON.parse(jsonMatch[0]);
+  } catch {
+    parsed = {
+      brief: salvageField('brief'),
+      abstract: salvageField('abstract'),
+      detailed: salvageField('detailed'),
+      sections: [],
+    };
+    if (!parsed.brief && !parsed.abstract && !parsed.detailed) {
+      throw new Error('Failed to parse book summary JSON (nothing salvageable)');
+    }
+    console.warn(`generateBookSummary: response JSON was truncated/invalid for ${bookId}; salvaged scalar summary fields, dropped sections.`);
+  }
 
   // Ensure all fields are strings
   const ensureString = (val: unknown): string => {
@@ -1051,33 +1124,41 @@ async function syncBookEntities(
   // Load alias resolver to merge variant names into canonical entities
   const aliasResolver = await loadAliasResolver(db);
 
-  const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', pages: number[]) => {
+  const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', entry: ConceptEntry) => {
     // Resolve to canonical name
     const canonicalName = aliasResolver.resolve(term, type);
+
+    const bookEntry = {
+      book_id: bookId,
+      book_title: bookTitle,
+      book_author: bookAuthor,
+      ...(bookYear ? { book_year: bookYear } : {}),
+      pages: entry.pages || [],
+      page_precision: entry.page_precision || 'section',
+      ...(entry.page_range ? { page_range: entry.page_range } : {}),
+    };
 
     const update: Record<string, unknown> = {
       $set: { updated_at: now },
       $setOnInsert: { name: canonicalName, type, created_at: now },
-      $addToSet: {
-        books: {
-          book_id: bookId,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          ...(bookYear ? { book_year: bookYear } : {}),
-          pages: pages
-        },
-      } as Record<string, unknown>,
     };
-
     // If this term is a variant, add it to aliases
     if (term !== canonicalName) {
-      (update.$addToSet as Record<string, unknown>).aliases = term;
+      update.$addToSet = { aliases: term };
     }
+    await db.collection('entities').updateOne({ name: canonicalName, type }, update, { upsert: true });
 
+    // Replace this book's entry instead of appending one. `$addToSet` compares
+    // whole subdocuments, so re-indexing a book with a different page list added
+    // a SECOND entry for it — one entity accumulated 162 entries for 117 books
+    // and its hero count disagreed with its own listing (#3361).
     await db.collection('entities').updateOne(
       { name: canonicalName, type },
-      update,
-      { upsert: true }
+      { $pull: { books: { book_id: bookId } } } as Record<string, unknown>
+    );
+    await db.collection('entities').updateOne(
+      { name: canonicalName, type },
+      { $push: { books: bookEntry } } as Record<string, unknown>
     );
   };
 
@@ -1086,17 +1167,17 @@ async function syncBookEntities(
 
   for (const person of conceptIndex.people) {
     if (!person.term) continue;
-    promises.push(syncEntity(person.term, 'person', person.pages));
+    promises.push(syncEntity(person.term, 'person', person));
   }
 
   for (const place of conceptIndex.places) {
     if (!place.term) continue;
-    promises.push(syncEntity(place.term, 'place', place.pages));
+    promises.push(syncEntity(place.term, 'place', place));
   }
 
   for (const concept of conceptIndex.concepts) {
     if (!concept.term) continue;
-    promises.push(syncEntity(concept.term, 'concept', concept.pages));
+    promises.push(syncEntity(concept.term, 'concept', concept));
   }
 
   await Promise.all(promises);
@@ -1113,16 +1194,14 @@ async function syncBookEntities(
   const uniqueTerms = [...new Map(allTerms.map(t => [`${t.type}:${t.name}`, t])).values()];
 
   for (const { name, type } of uniqueTerms) {
-    const entity = await db.collection('entities').findOne({ name, type });
+    const entity = await db.collection('entities').findOne({ name, type }, { projection: { books: 1 } });
     if (entity) {
-      const bookCount = entity.books?.length || 0;
-      const totalMentions = (entity.books || []).reduce(
-        (sum: number, b: { pages: number[] }) => sum + (b.pages?.length || 0),
-        0
-      );
+      // Distinct books, and VERIFIED page references only. Summing raw page-array
+      // lengths over duplicate entries is how one entity came to advertise
+      // "10,700 total mentions" of smeared page slots (#3361).
       await db.collection('entities').updateOne(
         { name, type },
-        { $set: { book_count: bookCount, total_mentions: totalMentions } }
+        { $set: entityCounters((entity.books || []) as EntityBookRef[]) }
       );
     }
   }
@@ -1346,7 +1425,12 @@ export const POST = withAuth(async (request, session, context) => {
     // them via /admin/book-revisions even after the cache is cleared.
     await createBookRevisions(id, ['index', 'summary', 'reading_summary']);
 
-    // Clear cached index and summary
+    // Clear cached index and summary. There are TWO stores: the dedicated
+    // `book_indexes` collection (what getBookIndex reads FIRST) and the legacy
+    // inline `book.index`. Clearing only the inline field left a stale
+    // `book_indexes` doc in place, so GET kept returning the old cached index
+    // and never regenerated. Clear both.
+    await db.collection('book_indexes').deleteOne({ book_id: id });
     await db.collection('books').updateOne(
       { id },
       { $unset: { index: '', summary: '', reading_summary: '' } }

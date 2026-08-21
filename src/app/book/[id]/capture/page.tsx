@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 import Link from 'next/link';
 import CameraCapture from '@/components/camera/CameraCapture';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 import { books } from '@/lib/api-client';
 
 interface Book {
@@ -84,8 +85,22 @@ export default function CapturePage() {
         <div className="w-10" /> {/* Spacer for centering */}
       </header>
 
-      {/* Camera */}
-      <CameraCapture bookId={bookId} onComplete={handleComplete} />
+      {/*
+        Camera. `/api/upload` requires editor, so showing the capture UI to a
+        reader would only produce an opaque 403 at the end of a scanning
+        session. The gate that counts is the one on the route — this is purely
+        so the affordance matches it.
+      */}
+      <AuthCheck
+        role="inner_circle"
+        fallback={
+          <div className="flex-1 flex items-center justify-center p-8 text-center text-stone-400">
+            <p>Page capture is available to Source Library editors.</p>
+          </div>
+        }
+      >
+        <CameraCapture bookId={bookId} onComplete={handleComplete} />
+      </AuthCheck>
     </div>
   );
 }

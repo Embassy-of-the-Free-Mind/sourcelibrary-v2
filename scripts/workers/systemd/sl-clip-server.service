@@ -1,0 +1,33 @@
+# CLIP server for visual (text→image) search. Installed on the Hetzner box at
+# /etc/systemd/system/sl-clip-server.service.
+#
+#   scp this file to the box, then:
+#     systemctl daemon-reload && systemctl enable --now sl-clip-server
+#
+# WHY THIS FILE EXISTS: clip-server.mjs was started by hand, so it had no unit,
+# so it did not come back after the 2026-07-26 reboot. Its sibling on port 3456
+# (sl-embedding-server) did, which made the outage look partial and specific —
+# text search fine, Images tab broken — rather than "a service is down". Every
+# /api/search/visual request 502'd for six days. A reader reported it the next
+# morning and it sat in the queue.
+#
+# The lesson generalises past this one service: if a long-running process on the
+# box is not owned by systemd, it is one reboot from being gone, and nothing will
+# tell you. Audit with:
+#   for p in $(ss -lntpH | grep -oE 'pid=[0-9]+' | cut -d= -f2 | sort -u); do
+#     systemctl status $p --no-pager 2>/dev/null | head -1; done
+# As of 2026-08-02 every listening node/python process is under a unit.
+[Unit]
+Description=Source Library CLIP Server (visual search, Xenova/clip-vit-base-patch32)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/sourcelibrary
+ExecStart=/usr/bin/node scripts/workers/clip-server.mjs
+Restart=always
+RestartSec=5
+Environment=CLIP_PORT=3457
+
+[Install]
+WantedBy=multi-user.target

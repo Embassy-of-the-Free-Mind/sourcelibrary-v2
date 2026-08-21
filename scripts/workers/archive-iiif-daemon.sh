@@ -17,7 +17,21 @@ set -a; source .env.production.local; set +a
 
 W="node scripts/workers/archive-iiif-local.mjs --ignore-pause"
 
+# Optional per-machine guard: skip cycles while on a metered link (phone hotspot,
+# in-flight wifi), where this daemon would otherwise eat the whole uplink. It is
+# checked per CYCLE rather than at startup, so boarding a plane mid-run parks it.
+# FAILS OPEN by design — if the guard is absent (Hetzner, a fresh checkout, another
+# dev's machine) the daemon behaves exactly as it always has. Never make it required:
+# a missing guard must not stop archiving.
+GUARD="${BULK_NET_GUARD:-$HOME/bin/bulk-net-guard.sh}"
+
 while true; do
+  if [ -x "$GUARD" ] && ! "$GUARD" --why; then
+    echo "===== PARKED — metered link, re-checking in 10m $(date) ====="
+    sleep 600
+    continue
+  fi
+
   echo "===== CYCLE $(date) ====="
 
   # Fast lane: plain IIIF (the bulk). Clean, no throttling.

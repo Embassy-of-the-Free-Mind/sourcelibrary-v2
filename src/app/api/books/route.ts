@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     if (tenantContext.slug && !tenantContext.id) {
       return NextResponse.json([], {
         headers: {
-          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+          'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=120',
         },
       });
     }
@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(booksWithTenantSlug, {
       headers: {
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+        'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600',
       },
     });
   } catch (error) {

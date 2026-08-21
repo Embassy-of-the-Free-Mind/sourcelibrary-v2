@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'A History of Astrology Across Traditions - Research Notes - Source Library',
@@ -9,7 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'A History of Astrology Across Traditions',
     description: 'From Babylonian omen texts to Kepler\'s geometrical cosmos — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg' }],
   },
   alternates: {
     canonical: '/blog/history-of-astrology',
@@ -23,7 +26,7 @@ export default function HistoryOfAstrologyPage() {
         <ContentHeader
           title="A History of Astrology Across Traditions"
           subtitle="How the sky became a text — and how five civilisations learned to read it"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg"
+          image="https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg"
           imageAlt="Zodiac Man from a medieval astrological manuscript"
         >
           <p className="text-stone-400 text-sm mt-4">21 February 2026 &middot; 22 min read</p>
@@ -192,7 +195,7 @@ export default function HistoryOfAstrologyPage() {
 
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/74.jpg"
+            src="https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/74.jpg"
             alt="The five planets depicted as sovereign figures, from the Kitab al-Bulhan Arabic astrological manuscript"
             className="w-full rounded-lg shadow-md"
             loading="lazy"
@@ -235,7 +238,7 @@ export default function HistoryOfAstrologyPage() {
 
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6992cac0d4d545ae73feea71/6.jpg"
+            src="https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg"
             alt="The He Tu River Map cosmological diagram from the Wuxing Sanming Tongkao (1657)"
             className="w-full rounded-lg shadow-md"
             loading="lazy"
@@ -263,7 +266,7 @@ export default function HistoryOfAstrologyPage() {
 
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg"
+            src="https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg"
             alt="Zodiac Man (Homo Signorum) woodcut from Gregor Reisch, Margarita Philosophica (1503)"
             className="w-full rounded-lg shadow-md"
             loading="lazy"
@@ -322,7 +325,7 @@ export default function HistoryOfAstrologyPage() {
 
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/34.jpg"
+            src="https://images.sourcelibrary.org/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/34.jpg"
             alt="Kepler's nested Platonic solids diagram from Mysterium Cosmographicum (1596)"
             className="w-full rounded-lg shadow-md"
             loading="lazy"
@@ -348,7 +351,7 @@ export default function HistoryOfAstrologyPage() {
         <p className="text-secondary leading-relaxed mb-6">
         <figure className="my-10">
           <img
-            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/16.jpg"
+            src="https://images.sourcelibrary.org/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/16.jpg"
             alt="Schema magnarum Coniunctionum Saturni et Iovis — diagram of Great Conjunctions from Kepler's Mysterium Cosmographicum"
             className="w-full rounded-lg shadow-md"
             loading="lazy"
@@ -457,7 +460,6 @@ export default function HistoryOfAstrologyPage() {
         </div>
       </article>
 
-      <BlogComments slug="history-of-astrology" />
     </ContentPageLayout>
   );
 }

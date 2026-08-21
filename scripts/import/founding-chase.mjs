@@ -11,6 +11,7 @@
  *   node scripts/import/founding-chase.mjs --commit
  */
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 const COMMIT = process.argv.includes('--commit');
 const BOOKS = [
   { ia: 'bim_early-english-books-1641-1700_a-letter-concerning-tole_locke-john_1689', title: 'A Letter Concerning Toleration', author: 'John Locke', language: 'English', published: '1689' },
@@ -44,13 +45,13 @@ async function main(){
     const contributor=typeof meta.contributor==='string'?stripText(meta.contributor):null;
     const bookId=new ObjectId(),bookIdStr=bookId.toHexString();const slug=await uniqueSlug(db,slugify(`${b.title} ${b.author}`));const now=new Date();
     const photo=i=>`https://archive.org/download/${b.ia}/page/n${i}/full/full/0/default.jpg`,thumb=i=>`https://archive.org/download/${b.ia}/page/n${i}/full/pct:15/0/default.jpg`;
-    const bookDoc={_id:bookId,id:bookIdStr,slug,title:b.title,display_title:null,author:b.author,language:b.language,published:b.published,field_provenance:{language:'caller'},categories:['History','Political Philosophy'],ia_identifier:b.ia,thumbnail:thumb(0),pages_count:pageCount,pages_ocr:0,pages_translated:0,content_type:'book',text_role:'original',
+    const bookDoc=makeBookDoc({_id:bookId,id:bookIdStr,slug,title:b.title,display_title:null,author:b.author,language:b.language,published:b.published,field_provenance:{language:'caller'},categories:['History','Political Philosophy'],ia_identifier:b.ia,thumbnail:thumb(0),pages_count:pageCount,pages_ocr:0,pages_translated:0,content_type:'book',text_role:'original',
       dublin_core:{dc_identifier:[`IA:${b.ia}`,...(iaCatalog.ark?[String(iaCatalog.ark)]:[])],dc_source:`https://archive.org/details/${b.ia}`,...(iaCatalog.subjects?.length?{dc_subject:iaCatalog.subjects}:{})},
       catalog_metadata:iaCatalog,image_source:{provider:'internet_archive',provider_name:'Internet Archive',source_url:`https://archive.org/details/${b.ia}`,identifier:b.ia,license:licenseUrl||'publicdomain',license_url:licenseUrl,rights,...(contributor?{contributing_library:contributor}:{}),access_date:now},
-      page_count_source:pageCountSource,status:'draft',hidden:true,visible:false,source_fingerprint:fp,normalized_title:normalizeTitle(b.title),normalized_author:normalizeAuthor(b.author),created_at:now,updated_at:now};
+      page_count_source:pageCountSource,status:'draft',hidden:true,visible:false,source_fingerprint:fp,normalized_title:normalizeTitle(b.title),normalized_author:normalizeAuthor(b.author),created_at:now,updated_at:now});
     if(!COMMIT){console.log(`DRY  ${b.ia} "${b.title}" (${pageCount}pp)`);imported++;continue;}
     await db.collection('books').insertOne(bookDoc);
-    const CHUNK=500;for(let s=0;s<pageCount;s+=CHUNK){const docs=[];for(let k=0;k<CHUNK&&s+k<pageCount;k++){const i=s+k,pid=new ObjectId();docs.push({_id:pid,id:pid.toHexString(),book_id:bookIdStr,page_number:i+1,photo:photo(i),thumbnail:thumb(i),photo_original:photo(i),created_at:now,updated_at:now});}await db.collection('pages').insertMany(docs,{ordered:false});}
+    const CHUNK=500;for(let s=0;s<pageCount;s+=CHUNK){const docs=[];for(let k=0;k<CHUNK&&s+k<pageCount;k++){const i=s+k,pid=new ObjectId();docs.push(makePageDoc({_id:pid,id:pid.toHexString(),book_id:bookIdStr,page_number:i+1,photo:photo(i),thumbnail:thumb(i),photo_original:photo(i),created_at:now,updated_at:now}));}await db.collection('pages').insertMany(docs,{ordered:false});}
     console.log(`OK   ${b.ia} "${b.title}" (${pageCount}pp)`);imported++;
   }
   await client.close();console.log(`\n=== ${COMMIT?'COMMITTED':'DRY'} — imported:${imported} skipped:${skipped} failed:${failed} ===`);

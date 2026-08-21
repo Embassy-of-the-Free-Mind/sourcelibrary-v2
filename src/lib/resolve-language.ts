@@ -184,3 +184,31 @@ function extractYear(s: string | null): string | null {
   const m = s.match(/-?\d{3,4}/);
   return m ? m[0] : null;
 }
+
+/**
+ * The numeric `year` that date range-filters read (#3267).
+ *
+ * `books.published` is FREE TEXT — `circa 1600`, `[1620]`, `1628.`, `n.d.`,
+ * roman numerals — so it can never be range-compared. `year` is the filterable
+ * twin, and a book without one is invisible to every date filter in search.
+ * Import routes must set it whenever `published` yields a plausible year.
+ *
+ * Returns null rather than guessing: no digits (`n.d.`, `MDCXXVIII`) or an
+ * implausible run (a shelfmark, a page count) leaves the field unset, which is
+ * honest — an absent `year` reads as "unknown", a wrong one silently misfiles
+ * the book into another century's results.
+ */
+export function publishedToYear(published?: string | number | null): number | null {
+  if (published == null) return null;
+  if (typeof published === 'number') return isPlausibleYear(published) ? published : null;
+  const raw = extractYear(clean(published));
+  if (!raw) return null;
+  const n = parseInt(raw, 10);
+  return Number.isFinite(n) && isPlausibleYear(n) ? n : null;
+}
+
+function isPlausibleYear(n: number): boolean {
+  // Widest defensible window for a physical artefact we could hold: no future
+  // imprints, and a floor well below the oldest datable text in the corpus.
+  return n >= -3000 && n <= new Date().getFullYear() + 1;
+}

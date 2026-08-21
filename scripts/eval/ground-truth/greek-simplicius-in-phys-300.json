@@ -1,0 +1,23 @@
+{
+  "work": "Simplicius, In Phys. comm. II 2 ad 194a15 (CAG IX p.300, Empedocles/Democritus on form)",
+  "book_id": "695580c057e3b773024f5e03",
+  "page_number": 336,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+  "edition": "Diels, CAG 9, 1882",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "κατὰ τὴν κυριωτέραν μέντοι, καὶ τοῦτο ἀποφηνάμενος ἄνευ ἀποδείξεως, ὡς ἂν τῷ ἐπιπολαίως ἀκούοντι δόξειεν, ἐπεὶ αὐτὸς τὴν ἀπόδειξιν ἐνεδείξατο εἰ γὰρ διχῶς ἡ φύσις, καὶ ἡ ἑτέρα τῆς ἑτέρας κυριωτέρα καὶ γνωριμωτέρα), περὶ ἀμφοῖν ἂν εἴη τοῦ φυσικοῦ λέγειν κατὰ τὴν κυριωτέραν, πλὴν ὡς ἀναποδείκτως εἰρημένου ἀπορίας ἄξιον εἶναί φησιν, εἴπερ δύο αἱ φύσεις αἱ στοιχειώδεις, περὶ ποτέρας ἄν εἴη τοῦ φυσικοῦ. καὶ ἐκ διαιρέσεως πὼς προάγει τὴν ζήτησιν. ἡ γὰρ περὶ τῆς ἑτέρας ἢ περὶ ἑκατέρας ἢ περὶ τοῦ ἐξ ἀμφοῖν. καὶ εἰ περὶ τοῦ ἐξ ἀμφοῖν δῆλον ὅτι καὶ περὶ ἑκατέρας. ἀδύνατον γὰρ τὸ σύνθετον γινώσκειν ·ἀγνοοῦντα τὰ ἁπλᾶ. εἰ δὲ \" περὶ ἑκατέρας τῆς τε ὕλης καὶ τοὐ εἴδους, ἆρα τῆς αὐτῆς ἐστιν ἑκατέραν γνωρίζειν ἢ ἑτέρας καὶ ἑτέρας, ἐν δὴ τῇ τοιαύτῃ διαιρέσει τὸ ἑκατέρας τμῆμα καθ’ αὑτὸ παρῆκεν ὡς μέλλων αὐτὸ μετὰ τοὐ συναμφοτέρου παραδιδόναι. οὕτως οὖν τὴν ζήτησιν διελὼν δείκνυσιν ὅτι οἱ ἀρχαῖοι φυσικοὶ περὶ τὴν τοῦ ἑτέρου ζήτησιν διέτριβον τοῦ κατὰ τὴν ὕλην, ἐπὶ σμικρὸν τοῦ Ἐμπεδοκλέους καὶ τοῦ Δημοκρίτου τῆς κατὰ τὸ εἶδος φύσεως ἁψαμέ- νων. Ἐμπεδοκλῆς μὲν γὰρ τὸ νεῖκος καὶ τὴν φιλίαν ὡς εἰδοποιοὺς αἰτίας ἐν ταῖς ἀρχαῖς ἀποθέμενος, Δημόκριτος δὲ τὸ σχῆμα καὶ τὴν θέσιν καὶ τὴν τάξιν, τὸ εἶδος οἶμαι κατὰ τὸν λόγον ἀφορίζει, καθ’ ὃν ἕκαστα ἐποίουν· καὶ γὰρ λόγῳ τινὶ ποιεῖ σάρκας καὶ ὀστοῦν καὶ τῶν ἄλλων ἕκαστον.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Density-diversity row vs the existing p.150 pin: ~15-line apparatus block PLUS an indented Empedocles verse quotation mid-page. Printed p.300 = scan 336 (offset +36 verified at p.150 and p.500). Guard-verified + visually audited 2026-07-19."
+}

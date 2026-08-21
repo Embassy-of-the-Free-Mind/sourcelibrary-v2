@@ -1,12 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb, forceReconnect } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { retryWithBackoff, recordFailureStreaks, clearFailureStreaks } from '@/lib/health-alerting';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 15;
+// Raised from 15s to cover the in-probe retry backoff added below. A clean run
+// still finishes in ~1s; only a failing run spends the extra budget.
+export const maxDuration = 25;
 
 const ALERT_EMAIL = process.env.ALERT_EMAIL || 'derek@sourcelibrary.org';
 const COOLDOWN_MS = 60 * 60 * 1000; // 1 alert per hour max
+const ALERT_STATE_KEY = 'auth_alert_state';
+
+/**
+ * Consecutive failed probes required before paging. The probe runs every 10
+ * minutes, so a real outage is still reported within ~20 minutes, while a
+ * single transient fault (the 2026-07-31 Atlas TLS drop) stays silent.
+ */
+const CONSECUTIVE_FAILURES_TO_ALERT = 2;
 
 interface AuthCheck {
   provider: string;
@@ -47,15 +58,51 @@ export async function GET(request: NextRequest) {
   const failures = checks.filter(c => c.status === 'error');
   const status = failures.length === 0 ? 'healthy' : 'broken';
 
-  // Alert if any provider is broken
+  // A single failed probe is not evidence that users cannot sign in — it is far
+  // more often evidence that the probe's own connection blipped. Page only once
+  // the SAME provider has failed on consecutive probes.
+  let streak: Awaited<ReturnType<typeof recordFailureStreaks>> | null = null;
+  const streakDb = await getStreakDb();
+
   if (failures.length > 0) {
-    await sendAuthAlert(failures);
+    streak = await recordFailureStreaks(
+      streakDb,
+      ALERT_STATE_KEY,
+      failures.map(f => f.provider),
+      CONSECUTIVE_FAILURES_TO_ALERT
+    );
+    const confirmed = failures.filter(f => streak!.confirmed.includes(f.provider));
+    if (confirmed.length > 0) {
+      await sendAuthAlert(confirmed, streak);
+    }
+  } else {
+    await clearFailureStreaks(streakDb, ALERT_STATE_KEY);
   }
 
   return NextResponse.json(
-    { status, checks, timestamp: new Date().toISOString() },
+    {
+      status,
+      checks,
+      // Surfaced so the cron log distinguishes "first failure, watching" from
+      // "confirmed, paged" without opening the mailbox.
+      ...(streak ? { alerted: streak.confirmed.length > 0, streaks: streak.streaks } : {}),
+      timestamp: new Date().toISOString(),
+    },
     { status: failures.length > 0 ? 503 : 200 }
   );
+}
+
+/**
+ * Db handle for the streak store. Returns null when Atlas is genuinely
+ * unreachable, which `recordFailureStreaks` treats as "alert now" — a total DB
+ * outage is exactly the case that should page on the first probe.
+ */
+async function getStreakDb() {
+  try {
+    return await getDb();
+  } catch {
+    return null;
+  }
 }
 
 async function checkGoogleOAuth(): Promise<AuthCheck> {
@@ -114,62 +161,68 @@ async function checkEmailProvider(): Promise<AuthCheck> {
     return { provider: 'email', status: 'error', detail: 'RESEND_API_KEY missing' };
   }
 
-  // One retry on transient network errors: the api.resend.com probe occasionally
-  // exceeds the 5s budget even though real `resend.emails.send` calls during
-  // sign-in are unaffected. A single failed probe should not page Derek.
-  let lastErr: unknown;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
+  // Retry transient network errors WITH BACKOFF: the api.resend.com probe
+  // occasionally exceeds the 5s budget even though real `resend.emails.send`
+  // calls during sign-in are unaffected. Back-to-back retries with no delay
+  // (the previous behaviour) are defeated by any fault lasting a second or two.
+  try {
+    return await retryWithBackoff(async () => {
       // Validate API key by fetching domains (lightweight, no side effects)
       const res = await fetch('https://api.resend.com/domains', {
         headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
         signal: AbortSignal.timeout(5000),
       });
+      // A definitive answer from Resend is not worth retrying — return it as-is.
       if (res.status === 401 || res.status === 403) {
-        return { provider: 'email', status: 'error', detail: 'RESEND_API_KEY is invalid' };
+        return { provider: 'email', status: 'error', detail: 'RESEND_API_KEY is invalid' } as AuthCheck;
       }
       if (!res.ok) {
-        return { provider: 'email', status: 'error', detail: `Resend API returned ${res.status}` };
+        return { provider: 'email', status: 'error', detail: `Resend API returned ${res.status}` } as AuthCheck;
       }
-      return { provider: 'email', status: 'ok' };
-    } catch (e) {
-      lastErr = e;
-    }
+      return { provider: 'email', status: 'ok' } as AuthCheck;
+    });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return { provider: 'email', status: 'error', detail: `Resend check failed (after retries): ${msg}` };
   }
-  const msg = lastErr instanceof Error ? lastErr.message : String(lastErr);
-  return { provider: 'email', status: 'error', detail: `Resend check failed (after retry): ${msg}` };
 }
 
 async function checkMongoAdapter(): Promise<AuthCheck> {
-  // One retry with forced reconnect: Atlas TLS handshakes occasionally drop
-  // ("Client network socket disconnected before secure TLS connection was established").
-  // The MongoDB client recovers transparently for user requests, so a single failed
-  // probe should not page Derek.
-  let lastErr: unknown;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      const db = attempt === 0 ? await getDb() : await forceReconnect();
-      const count = await db.collection('users').estimatedDocumentCount({ maxTimeMS: 5000 } as any);
-      if (count === 0) {
-        return { provider: 'database', status: 'error', detail: 'Users collection is empty' };
+  // Retry with forced reconnect AND backoff: Atlas TLS handshakes occasionally
+  // drop ("Client network socket disconnected before secure TLS connection was
+  // established"), most often when a pile of cold functions dial out at once.
+  // The MongoDB client recovers transparently for user requests. The previous
+  // version retried immediately, which is why a single ~2s fault on 2026-07-31
+  // exhausted both attempts and paged a "sign-in is broken" email while users
+  // were signing in normally.
+  try {
+    const count = await retryWithBackoff(
+      async attempt => {
+        const db = attempt === 0 ? await getDb() : await forceReconnect();
+        return db.collection('users').estimatedDocumentCount({ maxTimeMS: 5000 } as any);
       }
-      return { provider: 'database', status: 'ok' };
-    } catch (e) {
-      lastErr = e;
+    );
+    if (count === 0) {
+      return { provider: 'database', status: 'error', detail: 'Users collection is empty' };
     }
+    return { provider: 'database', status: 'ok' };
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return { provider: 'database', status: 'error', detail: `MongoDB check failed (after retries): ${msg}` };
   }
-  const msg = lastErr instanceof Error ? lastErr.message : String(lastErr);
-  return { provider: 'database', status: 'error', detail: `MongoDB check failed (after retry): ${msg}` };
 }
 
-async function sendAuthAlert(failures: AuthCheck[]) {
+async function sendAuthAlert(
+  failures: AuthCheck[],
+  streak: Awaited<ReturnType<typeof recordFailureStreaks>>
+) {
   if (!process.env.RESEND_API_KEY) return;
 
   // Cooldown check
   try {
     const db = await getDb();
     const state = await db.collection('system_config').findOne(
-      { _id: 'auth_alert_state' as any },
+      { _id: ALERT_STATE_KEY as any },
       { maxTimeMS: 5000 } as any
     );
     if (state?.last_sent_at) {
@@ -181,19 +234,31 @@ async function sendAuthAlert(failures: AuthCheck[]) {
   }
 
   const failureRows = failures
-    .map(f => `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">${f.provider}</td><td style="padding:8px;border:1px solid #ddd;color:#c0392b">${f.detail}</td></tr>`)
+    .map(f => `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold">${f.provider}</td><td style="padding:8px;border:1px solid #ddd;color:#c0392b">${f.detail}</td><td style="padding:8px;border:1px solid #ddd;text-align:center">${streak.streaks[f.provider] ?? 1}</td></tr>`)
     .join('\n');
+
+  // Say what was actually observed. The old copy asserted "Users cannot sign in"
+  // off a single probe; on 2026-07-31 that was false — accounts were being
+  // created while the email sat in the inbox.
+  const confidence = streak.storeUnavailable
+    ? 'The streak store was unreachable, so this fired on the first failed probe — Atlas itself is likely down.'
+    : `Failing on ${CONSECUTIVE_FAILURES_TO_ALERT}+ consecutive probes (10 min apart), so this is not a transient blip.`;
 
   const html = `
     <div style="font-family:-apple-system,sans-serif;max-width:560px;margin:0 auto;padding:24px">
-      <h2 style="color:#c0392b;margin:0 0 16px">Sign-in is broken</h2>
-      <p style="color:#333;margin:0 0 16px">
-        Users cannot sign in to Source Library. The following auth providers are failing:
+      <h2 style="color:#c0392b;margin:0 0 16px">Auth provider check is failing</h2>
+      <p style="color:#333;margin:0 0 8px">
+        Sign-in on Source Library may be affected. These providers failed their health probe:
       </p>
+      <p style="color:#666;font-size:13px;margin:0 0 16px">${confidence}</p>
       <table style="border-collapse:collapse;width:100%;margin:0 0 16px">
-        <tr style="background:#f5f5f5"><th style="padding:8px;border:1px solid #ddd;text-align:left">Provider</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Error</th></tr>
+        <tr style="background:#f5f5f5"><th style="padding:8px;border:1px solid #ddd;text-align:left">Provider</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Error</th><th style="padding:8px;border:1px solid #ddd">Probes</th></tr>
         ${failureRows}
       </table>
+      <p style="color:#666;font-size:13px">
+        Confirm real user impact before treating this as an outage — check for recent
+        account creations and sign-in links, not just this probe.
+      </p>
       <p style="color:#666;font-size:13px">
         Check: <a href="https://sourcelibrary.org/api/health/auth">health/auth endpoint</a> |
         <a href="https://console.cloud.google.com/apis/credentials">Google Cloud Console</a>
@@ -208,7 +273,7 @@ async function sendAuthAlert(failures: AuthCheck[]) {
     await resend.emails.send({
       from: 'Source Library <noreply@sourcelibrary.org>',
       to: ALERT_EMAIL,
-      subject: '[CRITICAL] Source Library sign-in is broken',
+      subject: `[CRITICAL] Source Library auth check failing: ${failures.map(f => f.provider).join(', ')}`,
       html,
     });
 
@@ -216,7 +281,7 @@ async function sendAuthAlert(failures: AuthCheck[]) {
     try {
       const db = await getDb();
       await db.collection('system_config').updateOne(
-        { _id: 'auth_alert_state' as any },
+        { _id: ALERT_STATE_KEY as any },
         { $set: { last_sent_at: new Date(), failures } },
         { upsert: true }
       );

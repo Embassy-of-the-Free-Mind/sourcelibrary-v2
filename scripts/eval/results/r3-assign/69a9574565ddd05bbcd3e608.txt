@@ -1,0 +1,4 @@
+book_id: 69a9574565ddd05bbcd3e608
+Title: Historia Ecclesiastica Graece et Latine (with Rufinus continuation)
+Author: Eusebius of Caesarea / Rufinus
+Source language: Latin

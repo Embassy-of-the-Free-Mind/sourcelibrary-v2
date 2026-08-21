@@ -3,3 +3,13 @@ astrologuy
 tools-standlone-gemini-page-split
 ocr-output
 .claude
+
+# Local datasets / scratch — never part of a deploy (35K+ files broke the upload, 2026-08-18).
+# Three tracked JSONs are BUILD-TIME IMPORTS (read/gilgamesh page) and must be re-included —
+# a blanket ignore broke npm run build with Module-not-found (2026-08-18, second incident same day).
+scripts/output/*
+!scripts/output/gilgamesh-tablets.json
+!scripts/output/cuneiform-corpus.json
+!scripts/output/hieroglyph-eval.json
+scripts/eval/results
+.sibling-bak

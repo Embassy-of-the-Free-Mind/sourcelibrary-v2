@@ -1,0 +1,22 @@
+{
+  "work": "Vulgate Genesis 5:3-18 (Sethite genealogy), 1566 Louvain Vulgate",
+  "book_id": "6a26b84361b3857ed05a5221",
+  "page_number": 25,
+  "script": "latin",
+  "language": "Latin",
+  "source": "Clementine Vulgate (drbo.org)",
+  "source_url": "https://www.drbo.org/lvb/chapter/01005.htm",
+  "edition": "Louvain Vulgate (Hentenius), 1566",
+  "non_canonical": true,
+  "memorization_risk": "medium",
+  "ocr_ground_truth": "Vixit autem Adam centum triginta annis : et genuit ad imaginem et similitudinem suam, vocavitque nomen ejus Seth. Et facti sunt dies Adam, postquam genuit Seth, octingenti anni : genuitque filios et filias. Et factum est omne tempus quod vixit Adam, anni nongenti triginta, et mortuus est. Vixit quoque Seth centum quinque annis, et genuit Enos. Vixitque Seth, postquam genuit Enos, octingentis septem annis, genuitque filios et filias. Et facti sunt omnes dies Seth nongentorum duodecim annorum, et mortuus est. Vixit vero Enos nonaginta annis, et genuit Cainan. Post cujus ortum vixit octingentis quindecim annis, et genuit filios et filias. Factique sunt omnes dies Enos nongenti quinque anni, et mortuus est. Vixit quoque Cainan septuaginta annis, et genuit Malaleel. Et vixit Cainan, postquam genuit Malaleel, octingentis quadraginta annis, genuitque filios et filias. Et facti sunt omnes dies Cainan nongenti decem anni, et mortuus est. Vixit autem Malaleel sexaginta quinque annis, et genuit Jared. Et vixit Malaleel, postquam genuit Jared, octingentis triginta annis, et genuit filios et filias. Et facti sunt omnes dies Malaleel octingenti nonaginta quinque anni, et mortuus est. Vixitque Jared centum sexaginta duobus annis, et genuit Henoch.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "two_column_with_marginal_refs",
+    "density": "dense",
+    "type_size": "small",
+    "classified_by": "visual audit of the scan, 2026-07-23",
+    "canonical_text": false,
+    "memorization_risk": "medium"
+  }
+}

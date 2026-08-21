@@ -1,0 +1,4 @@
+book_id: c4aa9f54-cf66-4065-a310-9b786b4d9954
+Title: De Consolatione Philosophiae
+Author: Boethius; comm. Thomas Waleys
+Source language: Latin

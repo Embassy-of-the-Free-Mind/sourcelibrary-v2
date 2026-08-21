@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
+import SiteHeader from '@/components/layout/SiteHeader';
+import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import {
   CANONICAL_ENTITIES_COLLECTION,
   canonicalEntitiesReadpathEnabled,
@@ -17,6 +19,7 @@ export const metadata: Metadata = {
   description:
     'Interactive timeline of 2,900+ historical figures from the Western esoteric tradition, plotted by birth and death dates from Wikidata.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'Timeline — Explore — Source Library',
     description:
       'Lifespans of historical figures — who was alive when, and how intellectual movements clustered.',
@@ -376,5 +379,15 @@ export default async function TimelinePage() {
   const data = canonicalEntitiesReadpathEnabled()
     ? await fetchTimelineDataCanonical()
     : await fetchTimelineData();
-  return <TimelineLoader entities={data.entities} stats={data.stats} />;
+  return (
+    <>
+      <SiteHeader variant="light" />
+      {/* This page is itself a tab in ExploreTabBar but never rendered it, so
+          landing here was a dead end — no route to Map, Constellation or Ngrams. */}
+      <div className="max-w-7xl mx-auto px-4 pt-4">
+        <ExploreTabBar />
+      </div>
+      <TimelineLoader entities={data.entities} stats={data.stats} />
+    </>
+  );
 }

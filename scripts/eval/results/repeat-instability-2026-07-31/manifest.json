@@ -1,0 +1,73 @@
+{
+  "design": "scripts/eval/PREREGISTRATION-repeat-instability.md",
+  "seed": 7,
+  "pairs": 12,
+  "thresholds": {
+    "unstable_max": 0.85,
+    "stable_min": 0.97,
+    "min_body_words": 80
+  },
+  "task": "For each pair, looking ONLY at the images: which page is harder to read? A / B / indistinguishable. Record a reason. Write every verdict to verdicts.json BEFORE opening key.json.",
+  "manifest": [
+    {
+      "pair": "01",
+      "a": "page-01-A.jpg",
+      "b": "page-01-B.jpg"
+    },
+    {
+      "pair": "02",
+      "a": "page-02-A.jpg",
+      "b": "page-02-B.jpg"
+    },
+    {
+      "pair": "03",
+      "a": "page-03-A.jpg",
+      "b": "page-03-B.jpg"
+    },
+    {
+      "pair": "04",
+      "a": "page-04-A.jpg",
+      "b": "page-04-B.jpg"
+    },
+    {
+      "pair": "05",
+      "a": "page-05-A.jpg",
+      "b": "page-05-B.jpg"
+    },
+    {
+      "pair": "06",
+      "a": "page-06-A.jpg",
+      "b": "page-06-B.jpg"
+    },
+    {
+      "pair": "07",
+      "a": "page-07-A.jpg",
+      "b": "page-07-B.jpg"
+    },
+    {
+      "pair": "08",
+      "a": "page-08-A.jpg",
+      "b": "page-08-B.jpg"
+    },
+    {
+      "pair": "09",
+      "a": "page-09-A.jpg",
+      "b": "page-09-B.jpg"
+    },
+    {
+      "pair": "10",
+      "a": "page-10-A.jpg",
+      "b": "page-10-B.jpg"
+    },
+    {
+      "pair": "11",
+      "a": "page-11-A.jpg",
+      "b": "page-11-B.jpg"
+    },
+    {
+      "pair": "12",
+      "a": "page-12-A.jpg",
+      "b": "page-12-B.jpg"
+    }
+  ]
+}

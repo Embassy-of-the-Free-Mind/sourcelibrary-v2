@@ -1,5 +1,27 @@
 -- Diacritic-insensitive search for bph_works (issue #1680).
 --
+-- ⚠️ THIS FILE DOES NOT MATCH PRODUCTION. DO NOT RE-RUN IT.
+--
+-- The generated columns below are written with concat_ws(). concat_ws is
+-- STABLE, not IMMUTABLE (it can invoke arbitrary type output functions), and
+-- Postgres refuses a non-immutable generation expression — so this file as
+-- written fails with `42P17: generation expression is not immutable` and cannot
+-- have produced the live columns. Production was built with the equivalent
+-- immutable form, `COALESCE(col,'') || ' ' || …`, presumably hand-edited in the
+-- SQL editor at the time and never backported here. Verified against
+-- pg_get_expr on 2026-07-31 (PR #3481); note the same IMMUTABLE constraint is
+-- already called out for unaccent() twenty lines below.
+--
+-- Read the live definition before touching these columns — never this file:
+--   select a.attname, pg_get_expr(d.adbin, d.adrelid)
+--   from pg_attrdef d join pg_attribute a
+--     on a.attrelid = d.adrelid and a.attnum = d.adnum
+--   where d.adrelid = 'bph_works'::regclass;
+--
+-- `search_norm` in particular has since been widened to every public field;
+-- scripts/migration/expand-bph-search-norm.sql is its current definition and
+-- supersedes the one here.
+--
 -- Goal: searching "Boehme" finds "Böhme", "Goerlitz" finds "Görlitz", "Mueller"
 -- finds "Müller". Postgres `unaccent` handles the accent stripping; on top we
 -- collapse the standard German digraphs so the convention "ö ↔ oe" matches

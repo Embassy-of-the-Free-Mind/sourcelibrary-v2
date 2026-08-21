@@ -31,7 +31,7 @@ export const GET = withAdminAuth(async (request, session) => {
       searchBookIds = matchingBooks.map((b: any) => b.id);
       if (searchBookIds.length === 0) {
         return NextResponse.json({ rows: [], total: 0, summary: { total_steps: 0, total_cost: 0, books_processed: 0, pages_processed: 0 } }, {
-          headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120' },
+          headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=120' },
         });
       }
     }
@@ -74,7 +74,7 @@ export const GET = withAdminAuth(async (request, session) => {
     const rows = allRows.slice(offset, offset + limit);
 
     return NextResponse.json({ rows, total, summary }, {
-      headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=120' },
     });
   } catch (error) {
     console.error('Processing overview error:', error);

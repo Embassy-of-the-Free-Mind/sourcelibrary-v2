@@ -1,0 +1,4 @@
+book_id: 69ac5f757f20875486da50e7
+Title: Oeuvres complètes, Tome 12: Travaux mathématiques 1652-1656
+Author: Christiaan Huygens
+Source language: French

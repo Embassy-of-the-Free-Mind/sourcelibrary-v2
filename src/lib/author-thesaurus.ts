@@ -54,6 +54,15 @@ export interface AuthorThesaurusDoc {
   wikidata_id?: string;
   book_count?: number;
   merged_into?: string;   // dedup-2250 tombstone → canonical primary slug
+  /**
+   * `false` on headings that are not people — institutions, work titles,
+   * publisher series, cataloguer placeholders. Written by
+   * quarantine-non-person-authors.mjs (#2179); read by the page via
+   * `classifyNonPersonAuthor` to drop the person framing (#3483). Absent on
+   * every real person, so consumers must test `=== false`, not falsiness.
+   */
+  is_person?: boolean;
+  quarantine_reason?: string;
 }
 
 export interface AuthorEntityEnrichment {

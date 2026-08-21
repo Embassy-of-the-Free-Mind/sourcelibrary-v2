@@ -2,6 +2,7 @@
  * Gallery API Types
  * Shared between API client and route handlers
  */
+import type { DeepZoomManifest } from '@/lib/types/book';
 
 export interface BBox {
   x: number;
@@ -157,6 +158,15 @@ export interface GalleryImageDetail {
   metadata?: ImageMetadata | null;
   museumDescription?: string | null;
   bbox?: BBox;
+  /**
+   * DZI tile pyramid for this page's scan, when one exists AND the detection
+   * bbox could be placed in its coordinate space (#2714). The two fields travel
+   * together: `deepzoom` is deliberately null whenever `focusBbox` is, so a
+   * client can never open the viewer without knowing where to point it.
+   */
+  deepzoom?: DeepZoomManifest | null;
+  /** `bbox` translated into the master's coordinate space — split-aware. */
+  focusBbox?: BBox | null;
   book: {
     id: string;
     slug?: string;

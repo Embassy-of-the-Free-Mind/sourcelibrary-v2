@@ -1,0 +1,23 @@
+{
+  "work": "Eznik of Kołb, Ełc ałandoc' 220-221 (man ranked above the animals, 1826 printed p.157)",
+  "book_id": "69a5e9bb787d6e9b8d42e183",
+  "page_number": 168,
+  "script": "armenian",
+  "language": "Armenian",
+  "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.157",
+  "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik220.htm",
+  "edition": "Venice 1826",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "հասարակաց մտաւք հայեցեալ , տեսցուք ։ Ո ի վեր իցէ ։ Մա՞րդն ՝ որ անասնոյն տիրէ , թե անասո՞ւնն ՝ որ մարդոյն ի հարկի կայ ։ Եւ ոչ մխսյն ի հարկի կայ , այլ եւ կերակուր նորա է ։ Եւ գազանացն զկէսսն փախստականս եղեալս տեսանեմք , եւ զկէսսն յանտառախիտ մայրիս ամրացեալ ՝ յորժամ զբարբառ միայն մարդոյն լսիցեն ։ քանզի զահ եւ զերկիւղ մարդոյն ՝ արկեալ է արարչին ի վերայ գազանացն եւ սողնոցն եւ անասնոցն եւ թռչնոց , վասն առաւել զնա պատուելոյն . զորոյ եւ զարարածն նորանշան իմն ընծայեցուցանէ , թե ստեղծ որպէս ձեռաւք , եւ փչեաց շունչ կենդանի որպէս թե բերանով ։ Եւ այնու , զի առաւել պատուական ցուցանիցէ զնա յայտ առնէ ։ . Այլ զի Աստուած ի յաւդապատ մարմնոց ի վեր է , այն յայտնի է ճշմարտից ։ Եւ եթե վասն նորա եղեն գազանքն եւ անասունքն , որպէս փորձ իրացն իսկ ցուցանէ , զիա՞րդ էր ՝ զի յերկինս ելանեին եւ",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column",
+    "density": "light",
+    "type_size": "large",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Light×large×bitonal cell (heavy-inked Google bitonal scan, closest thing to the low-resolution axis among held matched editions). Guard ~0.11 is edition-orthography noise between the 1959 critical text and the 1826 printing, same as the existing p.69 pin. Leading 'Արդ' of the TITUS page sits on printed p.156 and was trimmed to keep the one-page rule. Printed p.157 = scan 168 (offset +11 verified at p.69/p.109/p.200/p.203). Guard-verified + visually audited 2026-07-19."
+}

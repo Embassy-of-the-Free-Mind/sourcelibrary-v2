@@ -1,0 +1,23 @@
+{
+  "work": "Philo, De opificio mundi 106-109 (Cohn p.38, hebdomad arithmology)",
+  "book_id": "69944b491ba83513779056b0",
+  "page_number": 162,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+  "edition": "Cohn-Wendland 1896 (editio maior, vols 1-3)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "θαυμαστὴν ἐχούσης ἐν τῇ φύσει τάξιν, ἐπεὶ συνέστηκεν ἐκ τριῶν καὶ τεττάρων· τὸν μὲν τρίτον ἀπὸ μονάδος, εἰ διπλασιάζοι τις, εὑρήσει τετράγωνον, τὸν δὲ τέταρτον κύβον, τὸν δ’ ἐξ ἀμφοῖν ἕβδομον κύβον ὁμοῦ καὶ τετράγωνον· ὁ μὲν οὖν ἀπὸ μονάδος τρίτος ἐν διπλασίονι λόγῳ, τέτταρα , τετράγωνός ἐστιν, ὁ δὲ τέταρτος, ὀκτώ, κύβος, ὁ δὲ ἕβδομος, τέσσαρα πρὸς τοῖς ἑξήκοντα, κύβος ὁμοῦ καὶ τετράγωνος· ὡς εἶναι τελεσφόρον ὄντως τὸν ἕβδομον ἀριθμόν, ἀμφοτέρας τὰς ἰσότητας καταγγέλλοντα τήν τ’ ἐπίπεδον διὰ τετραγώνου κατὰ τὴν πρὸς τριάδα συγγένειαν καὶ τὴν στερεὰν διὰ κύβου κατὰ τὴν πρὸς τετράδα οἰκειότητα· ἐκ τριάδος δὲ καὶ τετράδος ἑβδομάς. Ἔστι δὲ οὐ τελεσφόρος μόνον, ἀλλὰ καὶ ὡς ἔπος εἰπεῖν ἁρμονικωτάτη καὶ τρόπον τινὰ πηγὴ τοῦ καλλίστου διαγράμματος, ὃ πάσας μὲν τὰς ἁρμονίας, τὴν διὰ τεττάρων, τὴν διὰ πέντε, τὴν διὰ πασῶν, πάσας δὲ τὰς ἀναλογίας, τὴν ἀριθμητικήν, τὴν γεωμετρικήν, ἔτι δὲ τὴν ἁρμονικὴν περιέχει. τὸ δὲ πλινθίον συνέστηκεν ἐκ τῶνδε τῶν ἀριθμῶν, ἓξ ὀκτὼ ἐννέα δώδεκα· ὁ μὲν ὀκτὼ πρὸς ἓξ ἐν ἐπιτρίτῳ λόγῳ, καθ’ ὃν ἡ διὰ τεττάρων ἁρμονία ἐστίν· ὁ δὲ ἐννέα πρὸς ἓξ ἐν ἡμιολίῳ, καθ’ ὃν ἡ διὰ πέντε· ὁ δὲ δώδεκα πρὸς ἓξ ἐν διπλασίονι, καθ’ ὃν ἡ διὰ πασῶν. ἔχει δὲ ὡς ἔλεγον καὶ τὰς ἀναλογίας πάσας· ἀριθμητικὴν μὲν ἐκ τῶν ἓξ καὶ ἐννέα καὶ δώδεκα· οἷς γὰρ ὑπερέχει ὁ μέσος τοῦ πρώτου τρισίν, τούτοις ὑπερέχεται ὑπὸ τοῦ τελευταίου·",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "dense",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Heavy-apparatus cell: ~17-line apparatus with manuscript sigla, marginal section numbers (107-109) and a marginal Mangey page ref. Number-theory prose full of numeric terms — a hard hallucination test. Printed p.38 = scan 162 in vol. 1 (offset +124 verified at p.15/p.55). Guard-verified + visually audited 2026-07-19."
+}

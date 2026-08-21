@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^greek-iliad-1\\.json$",
+  "summary": [
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 221,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Iliad I.1-7",
+          "bookId": "699382dd84cf5845c644b377",
+          "pageNumber": 9,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 221,
+          "matched": 221,
+          "source": "Wikisource (el)",
+          "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0005199,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.085536,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

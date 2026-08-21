@@ -31,6 +31,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 
 // Load .env.production.local for MONGODB_URI + SQS URLs
 try {
@@ -59,7 +60,7 @@ if (!process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_SECRET_ACCESS_KEY_SOUR
   process.env.AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY_SOURCELIBRARY;
 }
 
-const SKIP_PAGE_TYPES = ['blank'];
+const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
 const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
 const QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
 const DEFAULT_MODEL = 'gemini-3-flash-preview';

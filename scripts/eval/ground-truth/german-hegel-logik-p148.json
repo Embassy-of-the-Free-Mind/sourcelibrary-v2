@@ -1,0 +1,23 @@
+{
+  "work": "Hegel, Wissenschaft der Logik I.1 (1812) — Fürsichsein: Eins und Leeres",
+  "book_id": "69afe356cf56258c93891081",
+  "page_number": 148,
+  "script": "latin",
+  "language": "German",
+  "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+  "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_logik0101_1812?p=150",
+  "edition": "Nürnberg: Schrag, 1812 (1. Auflage)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "Das Leere iſt alſo in Wahrheit nicht unmittelbar, gleichguͤltig fuͤr ſich dem Eins gegenuͤber, ſondern es iſt deſſen Sich-beziehen-auf-Anderes oder deſſen Grenze. Das Eins aber iſt ſelbſt, als das abſolute Beſtimmtſeyn, die reine Grenze, die reine Negation oder Leere. Es iſt alſo, indem es ſich zum Leeren verhaͤlt, die unendliche Beziehung auf ſich. Es ſelbſt iſt aber die reine Negation, als unmittelbar ſich ſelbſt gleich, als ſeyend; die Leere aber iſt dagegen dieſelbe Negation, als Nichtſeyn.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_prose_with_running_header",
+    "density": "dense",
+    "type_size": "normal",
+    "typeface": "fraktur",
+    "classified_by": "visual audit of the scan, 2026-07-19 (sonnet hunt agent)",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

@@ -28,6 +28,7 @@ export interface HomeStrings {
   google: string;
   googleBlockedNote: string;
   emailError: string;
+  didYouMean: (suggestion: string) => string;
   haveAccount: string;
   explore: string;
   langEnglish: string;
@@ -55,10 +56,32 @@ export interface HomeStrings {
   illustrationsLabel: string;
   browseCatalog: string;
   booksLabel: string;
+  /**
+   * Suffix on a collection card's second count: "1.234 libros · 57 en español".
+   * Never rendered on the English homepage — every book there is already in the
+   * page's language — but it lives in both dictionaries so the two editions keep
+   * one shape (the rule at the top of this file).
+   */
+  inThisLanguage: string;
   seeMore: (n: number) => string;
   collectionsWord: string;
   curatedExhibitions: string;
   allCollections: string;
+
+  // Recently translated slider
+  recentlyTranslatedHeading: string;
+  recentlyTranslatedSubtitle: string;
+
+  // "Read in Spanish" slider — rendered on /es only (HomeData.spanishBooks is
+  // empty on the English homepage), but the strings live in both dictionaries
+  // so the two editions keep one shape.
+  spanishHeading: string;
+  spanishSubtitle: string;
+
+  // Gallery masonry (homepage)
+  galleryHeading: string;
+  gallerySubtitle: string;
+  galleryViewAll: (n: number) => string;
 
   // Discover section
   discoverHeading: string;
@@ -102,7 +125,7 @@ export interface HomeStrings {
   byYear: string;
   byImages: string;
 
-  // Spanish podcast feature (rendered only on /es)
+  // Featured podcast episode (rendered on both homepages)
   podcastEyebrow: string;
   podcastListen: string;
   podcastSourcesLabel: string;
@@ -132,6 +155,7 @@ const en: HomeStrings = {
   google: 'Or continue with Google',
   googleBlockedNote: 'Google sign-in is usually blocked in in-app browsers — use email above, or open this page in Safari/Chrome.',
   emailError: 'Could not send the sign-in link. Please try again.',
+  didYouMean: (suggestion) => `Did you mean ${suggestion}?`,
   haveAccount: 'Already have an account?',
   explore: 'Explore the collection',
   langEnglish: 'English',
@@ -155,11 +179,19 @@ const en: HomeStrings = {
   illustrationsLabel: 'illustrations',
   browseCatalog: 'Browse Catalog',
   booksLabel: 'books',
+  inThisLanguage: 'in English',
   seeMore: (n) => `See ${n} more`,
   collectionsWord: 'collections',
   curatedExhibitions: 'Browse curated exhibitions',
   allCollections: 'All collections',
 
+  recentlyTranslatedHeading: 'Recently translated',
+  recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
+  spanishHeading: 'Read in Spanish',
+  spanishSubtitle: 'The works in the library that already have a Spanish edition, page by page beside the original.',
+  galleryHeading: 'Gallery',
+  gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
+  galleryViewAll: (n) => `View all ${n.toLocaleString('en-US')} illustrations`,
   discoverHeading: 'Discover',
   discoverSubtitle: 'Translated primary sources from the collection.',
   discoverEmpty: 'Browse the collection to discover translated primary sources.',
@@ -202,9 +234,11 @@ const en: HomeStrings = {
   byYear: 'year',
   byImages: 'images',
 
-  podcastEyebrow: 'Spanish podcast',
+  podcastEyebrow: 'Deep dive podcast',
   podcastListen: 'Listen to the episode',
-  podcastSourcesLabel: 'The four books in this episode',
+  // Not "the four books" — the source count varies per episode, and the label
+  // is rendered from whatever `sources` the thread actually carries.
+  podcastSourcesLabel: 'The books in this episode',
   podcastFullEpisode: 'Full episode & transcript',
 
   inSpiritOf: 'In the spirit of',
@@ -233,6 +267,7 @@ const es: HomeStrings = {
   google: 'O continúa con Google',
   googleBlockedNote: 'El acceso con Google suele estar bloqueado en navegadores internos — usa el correo de arriba, o abre esta página en Safari/Chrome.',
   emailError: 'No se pudo enviar el enlace de acceso. Inténtalo de nuevo.',
+  didYouMean: (suggestion) => `¿Quisiste decir ${suggestion}?`,
   haveAccount: '¿Ya tienes una cuenta?',
   explore: 'Explora la colección',
   langEnglish: 'English',
@@ -256,11 +291,19 @@ const es: HomeStrings = {
   illustrationsLabel: 'ilustraciones',
   browseCatalog: 'Explorar el catálogo',
   booksLabel: 'libros',
+  inThisLanguage: 'en español',
   seeMore: (n) => `Ver ${n} más`,
   collectionsWord: 'colecciones',
   curatedExhibitions: 'Explorar exposiciones comisariadas',
   allCollections: 'Todas las colecciones',
 
+  recentlyTranslatedHeading: 'Traducidas recientemente',
+  recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
+  spanishHeading: 'Leer en español',
+  spanishSubtitle: 'Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.',
+  galleryHeading: 'Galería',
+  gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
+  galleryViewAll: (n) => `Ver las ${n.toLocaleString('es-ES')} ilustraciones`,
   discoverHeading: 'Descubre',
   discoverSubtitle: 'Fuentes primarias traducidas de la colección.',
   discoverEmpty: 'Explora la colección para descubrir fuentes primarias traducidas.',
@@ -305,7 +348,7 @@ const es: HomeStrings = {
 
   podcastEyebrow: 'Pódcast en español',
   podcastListen: 'Escuchar el episodio',
-  podcastSourcesLabel: 'Los cuatro libros de este episodio',
+  podcastSourcesLabel: 'Los libros de este episodio',
   podcastFullEpisode: 'Episodio completo y transcripción',
 
   inSpiritOf: 'En el espíritu de',
@@ -346,7 +389,7 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
   literature: 'Literatura y poesía',
   herbalism: 'Herbolaria y botánica',
   'music-sound': 'Música y sonido',
-  shwep: 'Sala de lectura SHWEP',
+  'en-espanol': 'Libros en español',
 };
 
 export function collectionName(lang: HomeLang, slug: string, fallback: string): string {

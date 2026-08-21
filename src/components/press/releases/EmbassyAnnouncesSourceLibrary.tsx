@@ -336,8 +336,8 @@ export default function EmbassyAnnouncesSourceLibrary() {
             sourcelibrary.org
           </a>
           . Feedback is welcome at{' '}
-          <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
-            derek@sourcelibrary.org
+          <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+            team@sourcelibrary.org
           </a>.
         </p>
       </section>
@@ -389,8 +389,8 @@ export default function EmbassyAnnouncesSourceLibrary() {
           Derek Lomas, Program Director
         </p>
         <p className="text-sm text-secondary font-body">
-          <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
-            derek@sourcelibrary.org
+          <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+            team@sourcelibrary.org
           </a>
         </p>
         <p className="text-sm text-muted font-body mt-1">

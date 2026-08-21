@@ -134,8 +134,8 @@ export default function TermsPage() {
           </p>
           <p className="text-secondary">
             <strong>Contact us:</strong>{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+              team@sourcelibrary.org
             </a>
           </p>
           <p className="text-secondary mt-4 text-sm">
@@ -298,8 +298,8 @@ export default function TermsPage() {
           </h2>
           <p className="text-secondary">
             Questions about these terms or interested in a partnership?{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
-              derek@sourcelibrary.org
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+              team@sourcelibrary.org
             </a>
           </p>
         </section>

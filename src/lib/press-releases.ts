@@ -48,7 +48,7 @@ export const PRESS_RELEASES: PressReleaseMeta[] = [
       'The Embassy of the Free Mind announces the public beta of Source Library: an open-access library that opens with 15,000+ books in 55+ languages, 15,000+ translated into English — 6,000+ for the first time ever, roughly 7 billion words in all — each read beside a scan of the original page.',
     metaDescription:
       'The Embassy of the Free Mind launches Source Library, an open-access library of translated historical primary sources. At beta it spans 15,000+ books in 55+ languages, 15,000+ translated into English and 6,000+ first-ever English translations — roughly 7 billion words, about the size of the entire English Wikipedia — each read beside the original page.',
-    ogImage: 'https://sourcelibrary.org/og-image.png',
+    ogImage: 'https://sourcelibrary.org/og-image.jpg',
   },
   {
     slug: 'embassy-free-mind-announces-source-library',
@@ -62,7 +62,7 @@ export const PRESS_RELEASES: PressReleaseMeta[] = [
       'The original public-beta announcement: a free digital library beginning from the Bibliotheca Philosophica Hermetica, with thousands of works translated into English for the first time.',
     metaDescription:
       "The Embassy of the Free Mind announces the public beta of Source Library, the world's largest collection of translated ancient and early modern texts.",
-    ogImage: 'https://sourcelibrary.org/og-image.png',
+    ogImage: 'https://sourcelibrary.org/og-image.jpg',
   },
 ];
 

@@ -95,7 +95,7 @@ export async function GET(request: NextRequest) {
         }));
 
         return NextResponse.json({ decade: decadeNum, art: mapped, total, offset, mode: 'art' }, {
-          headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+          headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
         });
       }
 
@@ -136,7 +136,7 @@ export async function GET(request: NextRequest) {
       }));
 
       return NextResponse.json({ decade: decadeNum, books: mapped, total, offset }, {
-        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
       });
     }
 
@@ -148,7 +148,7 @@ export async function GET(request: NextRequest) {
 
     if (cached?.data) {
       return NextResponse.json(cached.data, {
-        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
       });
     }
 

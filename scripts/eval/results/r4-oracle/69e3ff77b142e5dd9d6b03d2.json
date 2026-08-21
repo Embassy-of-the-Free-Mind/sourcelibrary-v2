@@ -1,0 +1,46 @@
+{
+  "book_id": "69e3ff77b142e5dd9d6b03d2",
+  "work_identified": "Satyra Sotadica (Aloisiæ Sigeæ Toletanæ Satyra Sotadica de Arcanis Amoris et Veneris) by Nicolas Chorier — the Latin erotic dialogues published c.1660 under the pseudonym Aloisia Sigaea; seven dialogues, the seventh being 'Fescennini'",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Dialogues of Luisa Sigea (Aloisiæ Satyra Sotadica de Arcanis Amoris et Veneris). Literally Translated from the Latin of Nicolas Chorier",
+      "translator": "Anonymous (published by Isidore Liseux)",
+      "pub_year": "1890",
+      "publisher": "Isidore Liseux, Paris",
+      "completeness": "partial",
+      "source_url": "https://www.abebooks.com/first-edition/Dialogues-Luisa-Sigea-Nicolas-Chorier-Isidore/31253864253/bd"
+    },
+    {
+      "english_title": "The Dialogues of Luisa Sigea (Aloisiae Sigeae Satyra Sotadica De Arcanis Amoris Et Veneris). Literally Translated From the Latin",
+      "translator": "Anonymous",
+      "pub_year": "1930",
+      "publisher": "Parisien Society of Letters and Art, Paris",
+      "completeness": "complete",
+      "source_url": "https://www.abebooks.com/Dialogues-Luisa-Sigea-Literally-translated-Latin/8221926370/bd"
+    }
+  ],
+  "queries_run": [
+    "Nicolas Chorier \"Satyra Sotadica\" \"Aloisia Sigaea\" English translation",
+    "\"Aloisia Sigaea\" \"Dialogues of Luisa Sigea\" English translation translator year",
+    "WorldCat \"Dialogues of Luisa Sigea\" English translation 1890 complete",
+    "\"Satyra Sotadica\" \"Dialogue between a Married Lady and a Maid\" 1740 English translation partial",
+    "\"Dialogues of Luisa Sigea\" \"seventh dialogue\" complete English translation modern",
+    "\"Satyra Sotadica\" \"Parisian Society\" English translation complete seven dialogues 1920s 1930s"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.abebooks.com/first-edition/Dialogues-Luisa-Sigea-Nicolas-Chorier-Isidore/31253864253/bd", "found": "1890 Isidore Liseux Paris edition, 3 vols, 'the first English translation from the original 1660 Latin'; covers 6 of 7 dialogues"},
+    {"url": "https://www.abebooks.com/Dialogues-Luisa-Sigea-Literally-translated-Latin/8221926370/bd", "found": "c.1930 Parisien Society of Letters and Art edition described as 'the only complete edition in English ever published' with Seventh Dialogue"},
+    {"url": "https://search.worldcat.org/title/The-dialogues-of-Luisa-Sigea-(Aloisiae-Sigeae-Satyra-Sotadica-de-arcanis-Amoris-et-Veneris)/oclc/1035197180", "found": "WorldCat record for 1890 English translation; 3 volumes; British Library reproduction"},
+    {"url": "https://searchworks.stanford.edu/view/13721799", "found": "Stanford catalog confirms 1890 Liseux Paris edition, part of Archives of Sexuality and Gender series"},
+    {"url": "https://search.worldcat.org/title/dialogue-between-a-married-lady-and-a-maid-an-english-adaptation-of-part-of-the-first-five-dialogues-of-nicolas-choriers-aloisiae-sigeae-toletanae-satira-sotadica/oclc/558139600", "found": "c.1682 'A Dialogue between a Married Lady and a Maid' confirmed as 'English adaptation of part of the first five dialogues' only — partial"},
+    {"url": "https://archive.org/details/Fescennini", "found": "Mark Reynolds 2024 English translation of Fescennini (7th dialogue) described as 'first known English translation of Fescennini' — contradicts c.1930 Parisian Society completeness claim"},
+    {"url": "https://en.wikipedia.org/wiki/Nicolas_Chorier", "found": "Confirms Chorier as author, work published c.1660 under Aloisia Sigaea pseudonym; article notes English translation exists but gives no specifics"}
+  ],
+  "reasoning": "The 1890 Isidore Liseux Paris edition is a well-documented English translation from Latin (confirmed WorldCat, Stanford, multiple dealers), covering 6 of 7 dialogues. A c.1930 'Parisien Society' edition claims to add the 7th dialogue (first complete English). Reynolds 2024 on Archive.org disputes this, calling his translation 'the first known English translation of Fescennini.' Either way, prior English translations from Latin are firmly established from 1890 onward — not_first is clear."
+}

@@ -12,6 +12,11 @@
  *   node scripts/workers/sync-worker.mjs --dry-run
  *   node scripts/workers/sync-worker.mjs --counts-only
  *   node scripts/workers/sync-worker.mjs --gallery-only
+ *   node scripts/workers/sync-worker.mjs --usage-only --usage-from 2026-06-09
+ *
+ * This worker does NOT honor the pipeline pause — see the note in run(). Its
+ * phases are bookkeeping, and gating them on a spend switch froze six derived
+ * outputs for seven weeks (#3408).
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
@@ -30,6 +35,14 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const COUNTS_ONLY = args.includes('--counts-only');
 const GALLERY_ONLY = args.includes('--gallery-only');
+// Repair flags for the usage rollup (#3408). --usage-only runs just that phase;
+// --usage-from YYYY-MM-DD widens its window from the default 3 days so a gap can
+// be refilled through the SAME Supabase-paginated path the live rollup uses.
+// scripts/maintenance/backfill-usage-daily.mjs aggregates Mongo instead, which
+// has undercounted spend ~10x on batch-heavy days since the source of truth
+// moved to Supabase (#567) — don't reach for it to fix a hole.
+const USAGE_ONLY = args.includes('--usage-only');
+const USAGE_FROM = args.includes('--usage-from') ? args[args.indexOf('--usage-from') + 1] : null;
 
 console.log(`[sync-worker] Dry run: ${DRY_RUN}${COUNTS_ONLY ? ' | Counts only' : ''}${GALLERY_ONLY ? ' | Gallery only' : ''}`);
 
@@ -59,12 +72,25 @@ async function syncPageCounts(db) {
             ],
           },
         },
+        // A blank page is NOT a translated page. The translator writes the
+        // literal placeholder "[Blank page — no translatable content]" onto
+        // every blank leaf, so a naive non-empty check counted 87,777 flyleaves
+        // and endpapers as translations (99.8% of them under 120 characters).
+        //
+        // That is also what made `translation_pct` exceed 100: blank pages are
+        // subtracted from the denominator below via `pages_blank`, but were
+        // still counted here in the numerator. The Blue Qur'an reported
+        // **1000% translated** — 60 pages of which 54 were blank, over a
+        // denominator of 6. Measured 2026-08-08: every one of 300 sampled
+        // over-100% books had translated blank pages, and excluding them lands
+        // each on exactly 100%.
         pages_translated: {
           $sum: {
             $cond: [
               { $and: [
                 { $eq: [{ $type: '$translation.data' }, 'string'] },
                 { $gt: [{ $strLenCP: '$translation.data' }, 0] },
+                { $ne: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
               ] },
               1, 0,
             ],
@@ -197,26 +223,43 @@ async function syncCollectionCounts(db) {
   console.log('\n--- Sync Collection Counts ---');
   const start = Date.now();
 
+  // Resource types the art surfaces treat as non-artwork (documentary/photographic
+  // records). Kept in sync with ART_EXCLUDED_RESOURCE_TYPES in src/lib/collections-utils.ts
+  // (source of truth for the /collections/[id] artwork query) — change both together.
+  const ART_EXCLUDED_RESOURCE_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
+
   // One pass over books per counter, instead of 2 countDocuments per collection.
   // book_count uses the canonical "readable book" filter from the archived cron;
-  // artwork_count counts resource_type-bearing entries regardless of visibility.
-  const [bookCounts, artworkCounts] = await Promise.all([
+  // artwork_count must match what the public /collections/[id] page shows — VISIBLE
+  // artworks only, excluding the documentary resource types (was counting hidden
+  // artworks too, overstating card counts by ~14.6K — e.g. natural-philosophy 800 vs 1697).
+  // total_book_count = ALL visible member books (any translation state), so
+  // collection cards can show total holdings rather than the readable-only
+  // book_count. Artworks (resource_type present) stay excluded — they have
+  // their own artwork_count.
+  const [bookCounts, artworkCounts, totalBookCounts] = await Promise.all([
     db.collection('books').aggregate([
       { $match: { status: { $ne: 'deleted' }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, resource_type: { $exists: false } } },
       { $unwind: '$collections' },
       { $group: { _id: '$collections', n: { $sum: 1 } } },
     ]).toArray(),
     db.collection('books').aggregate([
-      { $match: { resource_type: { $exists: true } } },
+      { $match: { status: { $ne: 'deleted' }, visible: true, resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES } } },
       { $unwind: '$collections' },
       { $group: { _id: '$collections', n: { $sum: 1 } } },
     ]).toArray(),
+    db.collection('books').aggregate([
+      { $match: { status: { $ne: 'deleted' }, visible: true, resource_type: { $exists: false } } },
+      { $unwind: '$collections' },
+      { $group: { _id: '$collections', n: { $sum: 1 } } },
+    ], { allowDiskUse: true }).toArray(),
   ]);
   const bookMap = new Map(bookCounts.map(r => [r._id, r.n]));
   const artMap = new Map(artworkCounts.map(r => [r._id, r.n]));
+  const totalMap = new Map(totalBookCounts.map(r => [r._id, r.n]));
 
   const collections = await db.collection('collections')
-    .find({}, { projection: { _id: 1, slug: 1, book_count: 1, artwork_count: 1 } })
+    .find({}, { projection: { _id: 1, slug: 1, book_count: 1, artwork_count: 1, total_book_count: 1 } })
     .toArray();
 
   const ops = [];
@@ -224,13 +267,14 @@ async function syncCollectionCounts(db) {
   for (const col of collections) {
     const liveBookCount = bookMap.get(col.slug) || 0;
     const liveArtworkCount = artMap.get(col.slug) || 0;
-    if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount) {
+    const liveTotalBookCount = totalMap.get(col.slug) || 0;
+    if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount || (col.total_book_count || 0) !== liveTotalBookCount) {
       mismatchCount++;
       if (!DRY_RUN) {
         ops.push({
           updateOne: {
             filter: { _id: col._id },
-            update: { $set: { book_count: liveBookCount, artwork_count: liveArtworkCount, updated_at: new Date() } },
+            update: { $set: { book_count: liveBookCount, artwork_count: liveArtworkCount, total_book_count: liveTotalBookCount, updated_at: new Date() } },
           },
         });
       }
@@ -760,11 +804,21 @@ async function syncUsageDaily(db) {
     console.log('  Source: Supabase gemini_usage (paginated)');
   }
 
-  // Aggregate today and the past 2 days (covers late-arriving records)
+  // Aggregate today and the past 2 days (covers late-arriving records), or back
+  // to --usage-from when refilling a gap.
   const now = new Date();
   let daysUpdated = 0;
 
-  for (let offset = 2; offset >= 0; offset--) {
+  let startOffset = 2;
+  if (USAGE_FROM) {
+    const from = new Date(USAGE_FROM + 'T00:00:00Z');
+    if (Number.isNaN(from.getTime())) throw new Error(`--usage-from: bad date "${USAGE_FROM}"`);
+    startOffset = Math.floor((Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) - from.getTime()) / 86400000);
+    if (startOffset < 0) throw new Error(`--usage-from ${USAGE_FROM} is in the future`);
+    console.log(`  Backfilling ${startOffset + 1} days from ${USAGE_FROM}`);
+  }
+
+  for (let offset = startOffset; offset >= 0; offset--) {
     const d = new Date(now);
     d.setUTCDate(d.getUTCDate() - offset);
     const dateStr = d.toISOString().slice(0, 10);
@@ -808,12 +862,27 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause
+  // NOTE: this worker deliberately does NOT honor processing_control.paused.
+  //
+  // Every phase below is derived-data bookkeeping — page counts, collection
+  // counts, gallery materialization, author slugs, the analytics snapshot, and
+  // the gemini_usage_daily rollup. None of them call Gemini, archive a page, or
+  // otherwise spend money or advance a book through the pipeline, so the pause
+  // switch (a *spend* control, honored by archive-*/enrich/translate/orchestrator)
+  // has no reason to gate them.
+  //
+  // It used to. The pause set on 2026-06-08T22:55Z therefore froze all six
+  // outputs for seven weeks: gemini_usage_daily's last row was 2026-06-08 and
+  // system_config.analytics_usage / author_slugs were last written 2026-06-08
+  // 22:16 — the run immediately before the pause. Worse, the cost rollup reads
+  // $0.00 whether spend is genuinely zero or the aggregator is dead, so pausing
+  // the pipeline also silently blinded the instrument that would show anything
+  // bypassing the pause (bulk-reocr-local.mjs does). See #3408.
+  //
+  // If a phase here ever starts spending, gate that phase — not the worker.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (control?.paused) {
-    console.log(`[sync-worker] Pipeline paused. Exiting.`);
-    await client.close();
-    process.exit(0);
+    console.log('[sync-worker] Pipeline is paused; bookkeeping phases run anyway (no paid work here).');
   }
 
   let countsResult = {};
@@ -821,7 +890,7 @@ async function run() {
   const phaseErrors = [];
   const phasesCompleted = [];
 
-  if (!GALLERY_ONLY) {
+  if (!GALLERY_ONLY && !USAGE_ONLY) {
     try {
       countsResult = await syncPageCounts(db);
       phasesCompleted.push('counts');
@@ -839,7 +908,7 @@ async function run() {
     }
   }
 
-  if (!COUNTS_ONLY) {
+  if (!COUNTS_ONLY && !USAGE_ONLY) {
     try {
       galleryResult = await syncGalleryImages(db);
       phasesCompleted.push('gallery');
@@ -850,7 +919,7 @@ async function run() {
   }
 
   // Always sync author slugs (fast, no flag needed)
-  try {
+  if (!USAGE_ONLY) try {
     await syncAuthorSlugs(db);
     phasesCompleted.push('author_slugs');
   } catch (err) {
@@ -859,7 +928,7 @@ async function run() {
   }
 
   // Refresh analytics snapshot (cursor-based, ~3 min)
-  if (!GALLERY_ONLY) {
+  if (!GALLERY_ONLY && !USAGE_ONLY) {
     try {
       await refreshAnalyticsSnapshot(db);
       phasesCompleted.push('analytics_snapshot');

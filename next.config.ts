@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
+import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -9,6 +10,24 @@ const nextConfig: NextConfig = {
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
   experimental: {
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
+  },
+  // pdfkit must stay an unbundled runtime require: bundling it rewrites
+  // __dirname to a literal /ROOT/... path, so its constructor's
+  // readFileSync(__dirname + '/data/Helvetica.afm') throws ENOENT in
+  // production and every pdf-* download 500s ("Download failed", feedback
+  // 2026-07-21). Externalizing keeps the real node_modules/pdfkit on disk,
+  // .afm metrics and all. Local dev never catches this — node_modules is
+  // present there — so verify PDF downloads on a deploy after touching this.
+  serverExternalPackages: ['pdfkit'],
+  // Belt-and-suspenders for the pdf-translation/pdf-facsimile download formats
+  // (issue #3283): src/lib/pdf-fonts.ts reads the bundled Noto Serif TTFs via
+  // a static `path.join(process.cwd(), 'src/assets/fonts/…')`, which Vercel's
+  // build-time file tracer should already pick up automatically — this pins
+  // it explicitly in case static analysis ever misses it. The pdfkit data pin
+  // is the same insurance for the externalized package's font metrics.
+  outputFileTracingIncludes: {
+    '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
+    '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -27,6 +46,9 @@ const nextConfig: NextConfig = {
       // Internet Archive (IIIF images & downloads)
       { protocol: 'https', hostname: 'iiif.archive.org' },
       { protocol: 'https', hostname: 'archive.org' },
+      // National Diet Library, Japan (IIIF) — hotlink-walled, so images
+      // must be archived to R2; keep in sync with ARCHIVABLE_SOURCES.
+      { protocol: 'https', hostname: 'dl.ndl.go.jp' },
       // Gallica (BnF)
       { protocol: 'https', hostname: 'gallica.bnf.fr' },
       // MDZ (Bavarian State Library)
@@ -98,8 +120,10 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com https://www.googletagmanager.com https://analytics.ahrefs.com https://eu-assets.i.posthog.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              // Images: self + all configured remote image sources + data URIs for base64 thumbnails
-              "img-src 'self' data: blob: https://images.sourcelibrary.org https://*.r2.dev https://*.public.blob.vercel-storage.com https://*.amazonaws.com https://iiif.archive.org https://archive.org https://gallica.bnf.fr https://api.digitale-sammlungen.de https://www.e-rara.ch https://digi.vatlib.it https://*.bodleian.ox.ac.uk https://cudl.lib.cam.ac.uk https://diglib.hab.de https://iiif.wellcomecollection.org https://upload.wikimedia.org https://*.loc.gov https://babel.hathitrust.org https://bl.digirati.io https://images.lib.cam.ac.uk https://www.e-codices.unifr.ch https://cdm21059.contentdm.oclc.org https://iiif.universiteitleiden.nl https://image.digitalcollections.manchester.ac.uk https://digi.ub.uni-heidelberg.de https://iiif.qdl.qa https://permalinkbnd.bnportugal.gov.pt https://cdli.earth https://images.uba.uva.nl https://imagenes.patrimonionacional.es https://images.eap.bl.uk https://*.basemaps.cartocdn.com",
+              // Images: self + all configured remote image sources + data URIs for base64 thumbnails.
+              // Host list lives in src/lib/csp-img-hosts.ts (shared with getBookThumbnailUrl's
+              // renderability screen — edit it there, never inline here).
+              CSP_IMG_SRC,
               "connect-src 'self' https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
               "media-src 'self' blob: https://api.elevenlabs.io https://images.sourcelibrary.org",
               "frame-src 'self' https://translate.google.com",
@@ -305,10 +329,40 @@ const nextConfig: NextConfig = {
         destination: '/support',
         permanent: false,
       },
+      // Fundraising outreach links to sourcelibrary.org/call so the emails carry
+      // an on-domain URL rather than a raw calendar.app.google one. Points at the
+      // 15-minute Google Calendar appointment schedule (the 30-minute page is
+      // linked directly from the few drafts that ask for longer). Temporary: the
+      // schedule can be rebuilt, which mints a new booking URL.
       {
-        source: '/collections/shwep',
-        destination: '/shwep',
+        source: '/call',
+        destination: 'https://calendar.app.google/rh2H63a7JxPkcgR87',
         permanent: false,
+      },
+      // SHWEP reading room taken down (collection hidden). Keep inbound podcast
+      // links off a 404 — temporary so it can be restored.
+      {
+        source: '/shwep',
+        destination: '/collections',
+        permanent: false,
+      },
+      {
+        source: '/shwep/:path*',
+        destination: '/collections',
+        permanent: false,
+      },
+      // The themed press pages were archived (src/app/_archived/press) when the
+      // press room moved to /press-releases, but nothing was left in their place
+      // — /press and all six /press/<theme> URLs 404 for inbound links.
+      {
+        source: '/press',
+        destination: '/press-releases',
+        permanent: true,
+      },
+      {
+        source: '/press/:path*',
+        destination: '/press-releases',
+        permanent: true,
       },
       // Embassy → Reading Room → Librarian rename chain
       {

@@ -6,13 +6,14 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 export const preferredRegion = 'fra1';
 
@@ -59,12 +60,58 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const excludeLanguagesParam = searchParams.get('exclude_languages');
     const languages = expandLanguages(languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
     const excludeLanguages = expandLanguages(excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
+    // `lang` is the TEXT language of the answer — which edition of each page to
+    // search and to quote back. It is NOT `language`, which filters by the
+    // BOOK's edition language and keeps that meaning everywhere
+    // (search-filters-and-lanes.md). `?lang=es&language=Latin` is coherent: the
+    // Spanish rendering of Latin editions.
+    //
+    // Anything but `en` narrows the whole request to books that HAVE that
+    // edition. That is not a nicety — result cards on a localized surface link
+    // to `/es/book/…`, and an `/es` URL for a book with no Spanish pages 307s
+    // straight back to English (i18n.md, "an /es URL is a promise"). A result
+    // the reader cannot open in their language is worse than no result.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    const isLocalizedSearch = textLang !== 'en';
+    const editionCounter = `pages_translated_${textLang}`;
     const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');
     const year = searchParams.get('year'); // Exact year filter
     const yearFrom = searchParams.get('year_from'); // Year range start
     const yearTo = searchParams.get('year_to'); // Year range end
+    // date_from/date_to are publication-year bounds (the search UI's "Published
+    // after/before"). They used to be applied as a STRING comparison on
+    // `published` — a free-text field ("circa 1600", "[1620]", "n.d.") — where
+    // the comparison silently misfires. Normalize to the numeric `year` field,
+    // which is what every other surface filters on, and share one range between
+    // the book lane, the page lane, and the semantic lanes.
+    const parseYear = (v: string | null): number | undefined => {
+      const n = parseInt(v || '', 10);
+      return Number.isFinite(n) ? n : undefined;
+    };
+    const exactYear = parseYear(year);
+    const yearMin = parseYear(yearFrom) ?? parseYear(dateFrom);
+    const yearMax = parseYear(yearTo) ?? parseYear(dateTo);
+    const hasYearRange = exactYear !== undefined || yearMin !== undefined || yearMax !== undefined;
+    /** True when a book's year satisfies the requested range. Undated books drop out of a bounded range. */
+    const yearInRange = (y: number | null | undefined): boolean => {
+      if (!hasYearRange) return true;
+      if (typeof y !== 'number') return false;
+      if (exactYear !== undefined) return y === exactYear;
+      if (yearMin !== undefined && y < yearMin) return false;
+      if (yearMax !== undefined && y > yearMax) return false;
+      return true;
+    };
+    /** Attach the year predicate to a MongoDB book-level filter object. */
+    const applyYearFilter = (target: Record<string, unknown>) => {
+      if (exactYear !== undefined) { target.year = exactYear; return; }
+      const range: Record<string, number> = {};
+      if (yearMin !== undefined) range.$gte = yearMin;
+      if (yearMax !== undefined) range.$lte = yearMax;
+      if (Object.keys(range).length > 0) target.year = range;
+    };
     const hasDoi = searchParams.get('has_doi');
     const hasTranslation = searchParams.get('has_translation');
     const firstTranslation = searchParams.get('first_translation');
@@ -141,32 +188,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       else if (excludeLanguages.length > 0) filters.language = { $nin: excludeLanguages };
       else if (language) filters.language = language;
       if (category) filters.categories = category;
-      if (dateFrom || dateTo) {
-        filters.published = {};
-        if (dateFrom) (filters.published as Record<string, string>).$gte = dateFrom;
-        if (dateTo) (filters.published as Record<string, string>).$lte = dateTo;
-      }
-      if (year || yearFrom || yearTo) {
-        const yearFilter: Record<string, number> = {};
-        if (year) {
-          const yearNum = parseInt(year);
-          if (!isNaN(yearNum)) filters.year = yearNum;
-        } else {
-          if (yearFrom) {
-            const yearNum = parseInt(yearFrom);
-            if (!isNaN(yearNum)) yearFilter.$gte = yearNum;
-          }
-          if (yearTo) {
-            const yearNum = parseInt(yearTo);
-            if (!isNaN(yearNum)) yearFilter.$lte = yearNum;
-          }
-          if (Object.keys(yearFilter).length > 0) filters.year = yearFilter;
-        }
-      }
+      applyYearFilter(filters);
       if (hasDoi === 'true') filters.doi = { $exists: true, $ne: null };
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
       if (firstTranslation === 'true') filters.is_first_translation = true;
       if (library) filters.$or = [{ held_by: library }, { 'image_source.provider': library }];
+      if (isLocalizedSearch) filters[editionCounter] = { $gt: 0 };
       return filters;
     }
 
@@ -286,6 +313,57 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (!searchContent && !pagesOnly) return [];
 
+        // Localized keyword lane. The Atlas `pages_search` index maps
+        // `translation.data` / `ocr.data` and nothing else, so it cannot see
+        // `translations.es.data`; the Spanish text lives in Supabase for the
+        // vector lane anyway, and a GIN index over it gives real Spanish
+        // stemming that the Atlas index (lucene.standard everywhere) does not.
+        // Shaped to look like a Mongo page doc so everything downstream — the
+        // books join, the hidden-book drop, RRF, snippet extraction — is the
+        // same code the English lane runs.
+        if (isLocalizedSearch) {
+          try {
+            // Every book-level filter is resolved to an ALLOW-LIST of book ids
+            // and pushed into the RPC, rather than re-expressed as RPC
+            // parameters. `page_texts` denormalizes only `book_language` and
+            // `book_year`, so a lane that filtered on those alone would leak
+            // past category, has_doi, library, first_translation and the
+            // languages/exclude_languages arrays — a filter is only as strong
+            // as its weakest lane (search-filters-and-lanes.md), and a vector
+            // or text lane with no metadata predicate is the one people miss.
+            let allowedBookIds: string[] | undefined;
+            if (bookId) {
+              allowedBookIds = [bookId];
+            } else if (hasBookLevelFilters || tenantId) {
+              const allowed = await db.collection('books')
+                .find(buildBookFilters()).project({ id: 1 }).toArray();
+              // An empty allow-list must return NOTHING, never fall open to the
+              // whole corpus (#2760). `[]` reaches the RPC as an empty array and
+              // `book_id = ANY('{}')` matches nothing, but bail here rather than
+              // depend on that.
+              if (allowed.length === 0) return [];
+              allowedBookIds = allowed.map(b => b.id as string);
+            }
+            const rows = await lexicalPageSearchLang(query, textLang, (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS, {
+              yearMin, yearMax,
+              bookIds: allowedBookIds,
+            });
+            return rows.map(r => ({
+              id: r.page_id,
+              book_id: r.book_id,
+              page_number: r.page_number,
+              // The stored text is already wrapper-stripped by the embedding
+              // composer; extractSnippet re-cleans it harmlessly.
+              translation: { data: r.full_text || r.snippet },
+              ocr: { data: '' },
+            }));
+          } catch (err) {
+            console.warn('[search] Localized page lane failed:', err instanceof Error ? err.message : String(err));
+            degradedLanes.push('page');
+            return [];
+          }
+        }
+
         const pageSearchPromise = (async () => {
           const pageFilter: Record<string, unknown> = {};
           if (bookId) {
@@ -297,11 +375,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             else if (excludeLanguages.length > 0) bookIdFilter.language = { $nin: excludeLanguages };
             else if (language) bookIdFilter.language = language;
             if (category) bookIdFilter.categories = category;
-            if (dateFrom || dateTo) {
-              bookIdFilter.published = {};
-              if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
-              if (dateTo) (bookIdFilter.published as Record<string, string>).$lte = dateTo;
-            }
+            applyYearFilter(bookIdFilter);
             if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
 
             const filteredBooks = await db.collection('books')
@@ -367,7 +441,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             language: language || undefined,
             tenantId: tenantId || undefined,
           });
-          return books.map(b => ({
+          return books.filter(b => yearInRange(b.year)).map(b => ({
             page_id: '',
             book_id: b.book_id,
             page_number: 0,
@@ -390,7 +464,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (bookId || !searchContent) return [];
         try {
-          const pages = await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
+          const pages = await semanticPageSearchGlobal(matchQuery, 15, {
+            tenantId: tenantId || undefined,
+            textLang,
+          });
           if (pages.length === 0) return pages;
           // Drop semantic matches on non-content pages (cover/blank/illustration/etc.).
           // The Supabase embedding table has these — they pollute conceptual queries.
@@ -403,7 +480,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               .filter(d => (NON_CONTENT_PAGE_TYPES as readonly string[]).includes(d.page_type as string))
               .map(d => d.id as string),
           );
-          return pages.filter(p => !badIds.has(p.page_id));
+          // Year range applies to the semantic page lane too — its hits are
+          // rendered as book-attributed passages, so an out-of-range book
+          // arriving here reads exactly like an unfiltered result.
+          return pages.filter(p => !badIds.has(p.page_id) && yearInRange(p.book_year));
         } catch {
           degradedLanes.push('semantic_page'); // BUG 2: lane dropped out — total is now incomplete.
           return [];
@@ -552,6 +632,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
               // Tenant scope: match_books_semantic is GLOBAL (book_embeddings has
               // no tenant_id column, so the RPC can't filter), so a tenant request
               // must re-apply the tenant filter here or global books leak into the
@@ -634,6 +715,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
               // match_semantic already filters by filter_tenant_id, so this is
               // defense-in-depth — but keep it consistent with the book lane so a
               // future RPC change can't silently leak cross-tenant pages.
@@ -729,6 +811,46 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aWordHits = queryWords.filter(w => aAllText.includes(w)).length;
         const bWordHits = queryWords.filter(w => bAllText.includes(w)).length;
         if (aWordHits !== bWordHits) return bWordHits - aWordHits;
+
+        // 2c. Does the query name this book's AUTHOR? A commentary ON Aristotle
+        // is not Aristotle.
+        //
+        // Measured on "Aristotle Metaphysics": Bekker's 1831 Greek critical
+        // edition ranked 7th and Taylor's translation 9th, behind commentaries
+        // by Aquinas, Asclepius and Tartaretus. All of those carry both query
+        // words in their titles, so rung 2 tied — and the tie fell through to
+        // rung 4, "older editions rank higher", which handed the top of the page
+        // to whichever commentary happened to be oldest.
+        //
+        // Rung 4 is right BETWEEN EDITIONS OF ONE WORK, where earlier really
+        // does mean closer to the source. It says nothing ACROSS works: a 1480
+        // commentary is not a better witness to the Metaphysics than an 1831
+        // critical edition of it. This rung stops that comparison being reached
+        // in the one case where the corpus can tell the difference.
+        //
+        // It sits ABOVE the exact-phrase rung deliberately. Asclepius's volume
+        // is titled "…Commentary on Aristotle Metaphysics", so it contains the
+        // query as a literal phrase and won that rung by coincidence. Being the
+        // named author's own text is better evidence than a phrase that happens
+        // to fall contiguously in a title about them. Measured across eight
+        // queries, moving it up promoted Aristotle over both commentaries and
+        // Newton over Descartes, and changed nothing else.
+        //
+        // WHAT THIS DOES NOT FIX: rung 2 counts query words across title AND
+        // author together, so a commentary whose title names both the author and
+        // the work ("Averroes' Paraphrase of Plato's Republic", "Proclus in
+        // Politiam Platonis") scores 2 where Plato's own manuscripts score 1,
+        // and is separated before this rung is reached. Searching "Plato
+        // Republic" still returns Proclus at #2 and Averroes at #3. That needs
+        // the work/commentary distinction represented in the data rather than
+        // inferred from title strings — see the issue linked in the PR.
+        const authorHits = (r: SearchResult) => {
+          const author = (r.author || '').toLowerCase();
+          return author ? queryWords.filter((w) => author.includes(w)).length : 0;
+        };
+        const aAuthorHits = authorHits(a);
+        const bAuthorHits = authorHits(b);
+        if (aAuthorHits !== bAuthorHits) return bAuthorHits - aAuthorHits;
 
         // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
@@ -838,20 +960,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       }
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query,
-      results_count: results.length,
-      semantic_count: semanticDocs.length,
-      filters: { language, category, year, bookId, library, source: 'global' },
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      // Geo from the edge header (same source pageviews use) so search interests
-      // can be broken down by country. Forward-only — past searches have none.
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query, resultsCount: results.length, source: 'global',
+      // `tenantId` is already resolved above for scoping the query itself.
+      // Omitting it here (as the first pass did) left every "global" search
+      // unattributable even though the value was sitting in scope — the same
+      // blind spot that made the pre-existing rows unsplittable.
+      tenantId,
+      // `lang` is recorded so Spanish demand is measurable — without it a
+      // localized search is indistinguishable from an English one in the log.
+      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length, lang: textLang },
+    });
 
     logSearchQuery({
       request, identity, route: 'search', query,
@@ -895,7 +1015,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       },
     }, {
       headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300',
       },
     });
   } catch (error) {
@@ -911,7 +1031,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     }, {
       status: 500,
       headers: {
-        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+        'Cache-Control': 'public, max-age=0, s-maxage=10, stale-while-revalidate=30',
       },
     });
   }

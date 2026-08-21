@@ -4,8 +4,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { trackEvent } from '@/lib/track-event';
-import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image, GraduationCap } from 'lucide-react';
+import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Image, GraduationCap, FileType } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
+import { isImageFormat, isPremiumFormat } from '@/lib/download-formats';
 
 type ImageAccess = 'open' | 'nc-free' | 'blocked';
 
@@ -18,9 +19,11 @@ interface DownloadButtonProps {
   imageRestricted?: boolean;
   imageAccess?: ImageAccess;
   variant?: 'default' | 'header';
+  /** Hide the "Download" label + chevron — show only the icon. */
+  iconOnly?: boolean;
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default' }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(false);
@@ -64,8 +67,6 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const isImageFormat = (f: BookDownloadFormats) =>
-    f === 'images-zip' || f === 'epub-images' || f === 'epub-facsimile';
   const isNcFreeFormat = (f: BookDownloadFormats) =>
     imageAccess === 'nc-free' && isImageFormat(f);
 
@@ -80,15 +81,16 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     // at the moment of the click and lets them choose to continue.
     if (!session?.user) {
       toast('Sign in to download', {
-        description: 'Members download every format. Sign in to get started.',
+        description: 'Text formats are free once you sign in. Premium formats (facsimiles, parallel text, scholarly editions) need purchase or membership.',
         action: { label: 'Sign in', onClick: goToSignIn },
       });
       return;
     }
 
-    // Signed-in but no purchase: NC-free image formats are free; everything
-    // else still routes through the paid flow.
-    if (accessChecked && !hasAccess && !isNcFreeFormat(format)) {
+    // Text formats are free for any signed-in user (subject to a daily cap
+    // enforced server-side). Only premium formats route through the paid
+    // flow — and NC-free image formats are exempt even there.
+    if (isPremiumFormat(format) && accessChecked && !hasAccess && !isNcFreeFormat(format)) {
       handlePurchase();
       return;
     }
@@ -105,6 +107,18 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       if (response.status === 402) {
         setDownloading(null);
         handlePurchase();
+        return;
+      }
+      if (response.status === 429) {
+        setDownloading(null);
+        let message = 'Daily download limit reached (20 books/24h). For bulk or programmatic access, see /licensing.';
+        try {
+          const data = await response.json();
+          if (data?.error) message = data.error;
+        } catch {
+          // Fall back to the generic message above.
+        }
+        toast.error(message);
         return;
       }
       // Any other failure (500, gateway 504/524, …) must NOT be saved as the
@@ -124,7 +138,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       const blob = await response.blob();
       const contentDisposition = response.headers.get('Content-Disposition');
       const filenameMatch = contentDisposition?.match(/filename="(.+)"/);
-      const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : 'txt';
+      const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : format.startsWith('pdf-') ? 'pdf' : 'txt';
       const filename = filenameMatch ? filenameMatch[1] : `download-${format}.${defaultExt}`;
 
       const url = window.URL.createObjectURL(blob);
@@ -195,61 +209,88 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
         className={buttonClass}
       >
         <Download className="w-4 h-4" />
-        Download
-        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-stone-200 py-2 z-50">
+        <>
+        {/* Backdrop (mobile) — tap to dismiss */}
+        <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />
+        <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
+          {/* Header with close (mobile bottom sheet) */}
+          <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
+            <span className="text-[15px] font-semibold text-stone-900">Download</span>
+            <button type="button" onClick={() => setIsOpen(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">Close</button>
+          </div>
 
           {/* Sign-in wall — all downloads require an account */}
           {isAnonymous && (
             <div className="px-3 py-3 border-b border-stone-100">
               <button
                 onClick={goToSignIn}
-                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors"
+                className="w-full min-h-[48px] px-4 py-3.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-[15px] font-semibold transition-colors"
               >
                 Sign in to download
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                {ncImagesFree ? 'Page scans are free; other formats may require a member account.' : 'Free for members.'}
+                {ncImagesFree ? 'Text formats and page scans are free once you sign in.' : 'Text formats are free once you sign in — premium formats (facsimiles, parallel text, scholarly editions) need a member account.'}
               </p>
             </div>
           )}
 
-          {/* Quiet purchase prompt for signed-in non-members */}
+          {/* Quiet purchase prompt for signed-in non-members — text formats
+              below are already free and download directly; this only unlocks
+              the premium (image/apparatus) formats. */}
           {needsPurchase && (
             <div className="px-3 py-3 border-b border-stone-100">
               <button
                 onClick={handlePurchase}
                 disabled={purchasing}
-                className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                className="w-full py-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50"
               >
-                {purchasing ? 'Redirecting...' : 'Download this book ($5)'}
+                {purchasing ? 'Redirecting...' : 'Unlock premium formats ($5)'}
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                {ncImagesFree ? 'Page scans are free; other formats included with purchase.' : 'All formats included'}
+                {ncImagesFree ? 'Page scans are free; scholarly editions included with purchase.' : 'Text formats below are already free — this unlocks facsimiles and scholarly editions.'}
               </p>
             </div>
           )}
 
-          <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-b border-stone-100">
-            TXT
+          <div className="px-3 py-2 flex items-center justify-between border-b border-stone-100">
+            <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">TXT</span>
+            <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
           </div>
 
+          <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="translation" label="English Translation" desc="Translated text only"
-              icon={<Languages className="w-4 h-4 text-status-success" />}
+              icon={<Languages className="w-4 h-4 text-status-success shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="ocr" label="Original Text (OCR)" desc="Source language transcription"
-              icon={<FileText className="w-4 h-4 text-blue-600" />}
+              icon={<FileText className="w-4 h-4 text-blue-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
-              icon={<Layers className="w-4 h-4 text-purple-600" />}
+              icon={<Layers className="w-4 h-4 text-purple-600 shrink-0" />}
+              onDownload={handleDownload} downloading={downloading} />
+          )}
+          </div>
+
+          <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
+            PDF
+          </div>
+
+          {hasTranslations && hasImages && !imageRestricted && (
+            <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Scan facing its translation, like the reader"
+              icon={<FileType className="w-4 h-4 text-emerald-700" />}
+              onDownload={handleDownload} downloading={downloading} />
+          )}
+          {hasTranslations && (
+            <FormatOption format="pdf-translation" label="English Translation (PDF)" desc="Translated text only"
+              icon={<FileType className="w-4 h-4 text-status-success" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
 
@@ -257,41 +298,40 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             EPUB
           </div>
 
+          <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="epub-translation" label="English Translation" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-status-success" />}
+              icon={<BookOpen className="w-4 h-4 text-status-success shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="epub-ocr" label="Original Text (OCR)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-blue-600" />}
+              icon={<BookOpen className="w-4 h-4 text-blue-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
+          {/* Menu consolidation (#3920): epub-parallel and epub-parallel-fxl rows
+              removed (76 and 5 clicks/90d; both sold the same proposition as
+              epub-both, and the facing-page facsimile PDF covers the FXL desire).
+              epub-scholarly and epub-bilingual merged into ONE Scholarly row —
+              bilingual when the book has OCR, translation-only otherwise. All
+              format keys remain valid on the routes for old links and scripts. */}
           {hasTranslations && hasOcr && (
-            <FormatOption format="epub-both" label="Complete (Both)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-purple-600" />}
+            <FormatOption format="epub-both" label="Complete (Both)" desc="Original + translation, page by page"
+              icon={<BookOpen className="w-4 h-4 text-purple-600 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
-          )}
-          {hasTranslations && hasOcr && (
-            <FormatOption format="epub-parallel" label="Parallel Text" desc="Facing pages"
-              icon={<Columns className="w-4 h-4 text-accent-rust" />}
-              onDownload={handleDownload} downloading={downloading} className="border-t border-stone-100" />
           )}
           {hasTranslations && (
-            <FormatOption format="epub-scholarly" label="Scholarly Edition" desc="With introduction & apparatus"
-              icon={<GraduationCap className="w-4 h-4 text-stone-700" />}
-              onDownload={handleDownload} downloading={downloading} />
-          )}
-          {hasTranslations && hasOcr && (
-            <FormatOption format="epub-bilingual" label="Bilingual Scholarly" desc="Original + translation with apparatus"
-              icon={<GraduationCap className="w-4 h-4 text-accent-rust" />}
+            <FormatOption format={hasOcr ? 'epub-bilingual' : 'epub-scholarly'} label="Scholarly Edition"
+              desc={hasOcr ? 'Original + translation with introduction & apparatus' : 'With introduction & apparatus'}
+              icon={<GraduationCap className="w-4 h-4 text-stone-700 shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
-            <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation"
+            <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation (fixed layout)"
               icon={<Image className="w-4 h-4 text-emerald-700" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
+          </div>
 
           {hasImages && !imageRestricted && (
             <>
@@ -301,11 +341,10 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                   <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
                 )}
               </div>
+              {/* epub-images row removed (#3920) — 44 clicks/90d vs 191 for the
+                  ZIP; the key stays valid on the routes. */}
               <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
                 icon={<Image className="w-4 h-4 text-stone-600" />}
-                onDownload={handleDownload} downloading={downloading} />
-              <FormatOption format="epub-images" label="Scans as EPUB" desc="Page images packaged as an e-book"
-                icon={<BookOpen className="w-4 h-4 text-stone-600" />}
                 onDownload={handleDownload} downloading={downloading} />
             </>
           )}
@@ -322,7 +361,9 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               Downloads include source attribution and CC BY-SA 4.0 license.
             </p>
           </div>
+          <div className="sm:hidden h-[env(safe-area-inset-bottom)]" />
         </div>
+        </>
       )}
     </div>
   );
@@ -343,12 +384,12 @@ function FormatOption({
     <button
       onClick={() => onDownload(format)}
       disabled={downloading !== null}
-      className={`w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50 ${className}`}
+      className={`w-full h-full min-h-[54px] sm:min-h-0 px-3.5 py-3 flex items-center justify-start gap-2.5 hover:bg-stone-50 active:bg-stone-100 transition-colors disabled:opacity-50 rounded-lg border border-stone-200 sm:border-0 sm:rounded-none text-left ${className}`}
     >
       {icon}
-      <div className="text-left">
-        <div className="text-sm font-medium text-stone-900">{label}</div>
-        <div className="text-xs text-stone-500">{desc}</div>
+      <div className="min-w-0">
+        <div className="text-[13px] sm:text-sm font-medium text-stone-900 leading-tight">{label}</div>
+        <div className="hidden sm:block text-xs text-stone-500">{desc}</div>
       </div>
       {downloading === format && (
         <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />

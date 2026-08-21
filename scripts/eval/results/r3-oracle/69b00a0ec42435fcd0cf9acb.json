@@ -1,0 +1,69 @@
+{
+  "book_id": "69b00a0ec42435fcd0cf9acb",
+  "work_identified": "Claudii Galeni Opera Omnia Vol. 18 Pt. 2 (Kühn ed., Leipzig 1830): a Greek-Latin bilingual volume containing Galen's commentaries on Hippocratic surgical texts — confirmed to include In Hippocratis librum De Fracturis commentarii (ending at p.628) and In Hippocratis librum De Officina Medici commentarii III (starting p.629); Vol. 18A/18B numbering places this as the second half of Kühn vol. 18, after the Aphorisms commentary ends at XVIIIA 195",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Kühn 'Opera Omnia' Galen volume 18 part 2 contents treatises",
+    "Galen 'Claudii Galeni Opera Omnia' Kuhn vol 18 'pars 2' contents",
+    "Galen Kuhn Opera Omnia volume 18 part 2 archive.org 'pars altera' OR 'pt 2' Hippocrates commentary",
+    "Galen Kühn 'vol. 18' 'pt. 2' OR '18.2' treatises Hippocrates commentaries contents table",
+    "Cambridge Galen Translation series English 'In Hippocratis Aphorismos' OR 'commentary on aphorisms' complete translation",
+    "Galen 'commentary on hippocrates' 'aphorisms' English translation complete published 2000 2010 2020 2025",
+    "Galen 'In Hippocratis De Fracturis' OR 'commentary on fractures' OR 'In Hippocratis De Articulis' English translation published",
+    "Galen Commentary Hippocrates 'De Articulis' OR 'on joints' English translation complete 2000 2025",
+    "Galen 'XVIIIB' OR '18b' OR 'vol. XVIII' treatises commentaries Hippocrates '18.2'",
+    "Galen 'Commentary on Hippocrates' 'De Officina' OR 'Kat'Ihtreion' OR 'medical workshop' English translation available",
+    "Galen 'In Hippocratis De Articulis' Kühn XVIIIA XVIIIB pages English translation",
+    "Galen 'Commentary on Hippocrates' fractures joints 'medical workshop' English translation 2020 2021 2022 2023 2024 2025",
+    "archive.org Galen opera omnia kuhn 1830 volume 18 part 2 scan",
+    "Galen 'In Hippocratis De Fracturis' 'XVIII' Kühn English translation published",
+    "WorldCat Galen 'Commentary on Hippocrates' 'joints' OR 'fractures' OR 'medical workshop' English translation book 1980 2025",
+    "'graeco-arabic-studies' 'kuehn-275' OR 'kuhn-275' Galen text title",
+    "Galen 'In Hippocratis De Fracturis' OR 'Commentary on Fractures' OR 'In Hippocratis de officina' English translation published WorldCat"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.ancientmedicine.org/home/2021/7/16/galens-commentary-on-hippocrates-on-fractures",
+      "found": "Expert blogger (Galen scholar, 2021): 'it's almost impossible to find English translations of Galen's Hippocratic commentaries'; only the preface of the Fractures commentary has been translated into English on this site — no complete published translation exists"
+    },
+    {
+      "url": "https://www.tertullian.org/fathers/galen_preface_to_commentary_on_hippocrates.htm",
+      "found": "English translation of Galen's preface to Commentary on De Officina Medici (vol. 18 pp.629-632), published 2011; confirms De Officina Medici starts at p.629 of Vol. 18 Pt. 2; this is excerpt only, not a complete translation"
+    },
+    {
+      "url": "https://www.cambridge.org/core/series/cambridge-galen-translations/2DF7D0C70D317702B83CFCEA99EAAD36",
+      "found": "Cambridge Galen Translations series lists 3 published titles (Writings on Plato's Timaeus, Writings on Health, Works on Human Nature Vol.1 — Mixtures); none cover the Hippocratic surgical commentaries in Kühn vol. 18 Pt. 2"
+    },
+    {
+      "url": "https://archive.org/details/BIUSante_45674x18b",
+      "found": "BIUSante (Paris) digitized scan confirms Vol. 18b = Vol. 18 Pt. 2, approximately 1030 pages; full PDF too large to parse table of contents directly"
+    },
+    {
+      "url": "https://archive.org/details/BIUSante_45674x18a",
+      "found": "BIUSante scan confirms Vol. 18a = Vol. 18 Pt. 1; establishes the 18a/18b split"
+    },
+    {
+      "url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupname?key=Galen",
+      "found": "Online Books (UPenn) lists Galen English translations; no entries for Commentary on Fractures, Commentary on De Articulis, or Commentary on De Officina Medici"
+    },
+    {
+      "url": "https://bmcr.brynmawr.edu/2021/2021.01.26/",
+      "found": "Bryn Mawr review of De Gruyter 2020 Italian edition of Galen In Hippocratis Aphorismos VI commentaria; confirms Commentary on Aphorisms ends at XVIIIA 195 K.; only Italian (not English) translation for Aphorisms Book VI; no English translation of the Aphorisms commentary referenced"
+    },
+    {
+      "url": "https://www.graeco-arabic-studies.org/texts",
+      "found": "DCGAS corpus confirms: kuehn-275 = In Hippocratis De Fracturis; Adversus Lycum at XVIIIA 196-245; Adversus Julianum at XVIIIA 246-299; Commentary on De Articulis at XVIIIA 346-767"
+    },
+    {
+      "url": "https://www.wellcomecollection.org/works/m5w3994s",
+      "found": "Wellcome Collection entry for Kühn Opera Omnia confirms 20 volumes in 22; volume-level contents not itemized"
+    }
+  ],
+  "reasoning": "Vol. 18 Pt. 2 (Kühn 1830, ~1030pp) contains Galen's commentary on Hippocrates' De Fracturis (ending p.628) and De Officina Medici (p.629+); possibly also parts of the De Articulis commentary. None of these surgical Hippocratic commentaries has a complete published English translation. Scholar W.J. Lewis (ancientmedicine.org, 2021) explicitly states 'it's almost impossible to find English translations of Galen's Hippocratic commentaries.' The Cambridge Galen Translations series — the leading scholarly English-translation project — has not published any of these texts. Only prefaces have appeared online (not scholarly complete translations). Absence confirmed in tradition-appropriate sources: Cambridge series, Online Books (UPenn), Wellcome, BMCR."
+}

@@ -36,7 +36,27 @@ interface MetricsSnapshot {
     dwellMedianSec?: number; dwellMeanSec?: number; dwellSessions?: number;
   };
   conversion?: { uniqVisitors?: number; newSignups?: number; returningVisitors?: number; returningTotal?: number };
-  reading?: { pairs?: number; median?: number; p90?: number; oneOnly?: number; deep?: number; opens?: number } | null;
+  reading?: {
+    pairs?: number; median?: number; p90?: number; oneOnly?: number; deep?: number; opens?: number;
+    // Set when the 7d window is mostly pre-#3405 events, which carry no
+    // traffic_class and so can't be attributed to humans or crawlers.
+    contaminated?: boolean; unclassified?: number; total?: number;
+  } | null;
+  // From reading_history: signed-in members only, therefore crawler-free.
+  readingMembers?: {
+    sessions?: number; users?: number; books?: number;
+    median?: number; p75?: number; p90?: number; p99?: number; max?: number;
+    oneOnly?: number; shallow?: number; middling?: number; deep?: number; veryDeep?: number;
+    totalPages?: number; pagesOneOnly?: number; pagesDeep?: number; pagesVeryDeep?: number;
+    multiDayUsers?: number; threeDayUsers?: number; spanOver24hUsers?: number;
+    singleHourUsers?: number; multiBookUsers?: number; multiSessionUsers?: number;
+    pacedSessions?: number; fastSessions?: number; fastPages?: number; machinePacePpm?: number;
+    top1PctPageShare?: number; top10PctPageShare?: number;
+    /** Pre-2026-07-29 snapshots only. Counted `sessions > 1`, which a second
+     *  book opened in the same sitting satisfies — never a return. Rendered
+     *  under its true label when the day-based figure is absent. */
+    returningUsers?: number;
+  } | null;
   missionActions?: Record<string, number>;
   traffic?: {
     humanPvs?: number; botPvs?: number;
@@ -274,9 +294,72 @@ export default async function MetricsPage() {
         </>
       ) : null}
 
-      {s.reading ? (
+      {s.readingMembers ? (
         <>
-          <SectionHead title="Reading depth" sub="From page_read events, last 7 days. Median 1 page is normal for a reference library." />
+          <SectionHead
+            title="Reading depth — signed-in members"
+            sub={`${num(s.readingMembers.sessions)} sessions from ${num(s.readingMembers.users)} members across ${num(s.readingMembers.books)} books, last ${win} days. A session is one member on one book, activity within 30 minutes collapsed.`}
+          />
+          <div style={C.grid}>
+            <Stat value={String(s.readingMembers.median ?? 0)} label="Median pages / session"
+              sub={`p90 ${s.readingMembers.p90 ?? 0} · max ${num(s.readingMembers.max)}`}
+              def="Distinct pages a member reads in one sitting. Counted from reading_history, which is written only behind a session — no crawler can appear in it." />
+            <Stat value={pct(s.readingMembers.deep, s.readingMembers.sessions)} label="Deep read (10+ pages)"
+              sub={s.readingMembers.pagesDeep != null
+                ? `${num(s.readingMembers.deep)} sessions — but ${pct(s.readingMembers.pagesDeep, s.readingMembers.totalPages)} of all pages read`
+                : `${num(s.readingMembers.deep)} sessions · ${num(s.readingMembers.veryDeep)} read 50+`}
+              def="The engaged tail. This is the number the anonymous page_read metric got wrong by an order of magnitude before #3405. Counting sessions understates it: deep sessions are a quarter of sittings and the large majority of pages actually read." />
+            <Stat value={pct(s.readingMembers.oneOnly, s.readingMembers.sessions)} label="One page only"
+              sub={s.readingMembers.pagesOneOnly != null
+                ? `only ${pct(s.readingMembers.pagesOneOnly, s.readingMembers.totalPages)} of all pages read`
+                : undefined}
+              def="Arrived from a search result or citation and left. Expected to be substantial for a reference library — and near-weightless once you count pages instead of sessions." />
+            {s.readingMembers.multiDayUsers != null ? (
+              <Stat value={pct(s.readingMembers.multiDayUsers, s.readingMembers.users)} label="Members who came back"
+                sub={`${num(s.readingMembers.multiDayUsers)} of ${num(s.readingMembers.users)} read on more than one day`}
+                def="Read on more than one calendar day in the window. A session is one user+BOOK, so the older 'more than one session' figure counted opening a second book in the same sitting as a return — it read roughly twice as high." />
+            ) : (
+              <Stat value={pct(s.readingMembers.returningUsers, s.readingMembers.users)} label="Opened more than one book"
+                sub={`${num(s.readingMembers.returningUsers)} of ${num(s.readingMembers.users)} had >1 book-session`}
+                def="Legacy snapshot: this counted sessions, not returns, and a second book opened in the same sitting satisfies it. Not a retention figure. Newer snapshots show read-on-more-than-one-day here instead." />
+            )}
+          </div>
+          <div style={{ ...C.card, marginBottom: 12, marginTop: 12, lineHeight: 1.5 }}>
+            <strong>A ceiling, not an average.</strong> Members are self-selected and read more than
+            a passer-by, so this answers &ldquo;do our members read?&rdquo; — not &ldquo;do visitors
+            read?&rdquo; The anonymous instrument below answers the second question, and only for
+            windows that sit entirely after the #3405 fix.
+            {s.readingMembers.fastPages != null && s.readingMembers.totalPages ? (
+              <>
+                {' '}<strong>And auth-gating is not a bot gate.</strong> It keeps anonymous crawlers
+                out, not a signed-in account bulk-fetching: {num(s.readingMembers.fastSessions)} of{' '}
+                {num(s.readingMembers.pacedSessions)} timed sessions moved faster than{' '}
+                {s.readingMembers.machinePacePpm ?? 20} pages/minute, carrying{' '}
+                {pct(s.readingMembers.fastPages, s.readingMembers.totalPages)} of all pages read, and
+                the top 1% of members account for{' '}
+                {((s.readingMembers.top1PctPageShare ?? 0) * 100).toFixed(0)}% of pages. The
+                per-session percentages above survive dropping those accounts; the totals do not.
+              </>
+            ) : null}
+          </div>
+        </>
+      ) : null}
+
+      {s.reading?.contaminated ? (
+        <>
+          <SectionHead title="Reading depth — anonymous visitors" sub="Not measurable for this window — see #3405." />
+          <div style={{ ...C.card, marginBottom: 12, lineHeight: 1.5 }}>
+            {num(s.reading.unclassified)} of {num(s.reading.total)} page_read events in the last 7
+            days were written before bot classification existed. They record no user-agent, so they
+            cannot be attributed to readers or crawlers after the fact — and the events that caused
+            this outnumbered real human book-page views 34 to 1. No depth figure is shown rather
+            than a confident wrong one. This resolves itself once a full 7-day window has elapsed
+            since the fix deployed.
+          </div>
+        </>
+      ) : s.reading ? (
+        <>
+          <SectionHead title="Reading depth — anonymous visitors" sub="Human-classified page_read events, last 7 days. Keyed on a /24-truncated IP, so readers behind one NAT merge into one; treat it as coarser than the member figures above." />
           <div style={C.grid}>
             <Stat value={num(s.reading.opens)} label="Book opens" def="book_read events in the last 7 days." />
             <Stat value={String(s.reading.median ?? 0)} label="Median pages / book" sub={`p90 ${s.reading.p90 ?? 0}`}

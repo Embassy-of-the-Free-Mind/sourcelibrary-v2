@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Much of the Renaissance Has Been Translated? We Tried to Count. - Research Notes - Source Library',
   description: 'We built the first draft of a translation census — matching 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
   openGraph: {
+    images: [{ url: 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/full/0/default.jpg', alt: 'Human head as microcosm mapping mental faculties, from Fludd\'s History of the Microcosm, 1619' }],
     title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
     description: 'We matched 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/full/0/default.jpg', alt: 'Human head as microcosm mapping mental faculties, from Fludd\'s History of the Microcosm, 1619' }],
   },
   alternates: {
     canonical: '/blog/untranslated-renaissance',
@@ -439,12 +443,11 @@ export default function UntranslatedRenaissancePage() {
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
             Source Library is a project of the Embassy of the Free Mind. If you know of a translation we missed, or if you can improve one of ours, please reach out &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="untranslated-renaissance" />
     </ContentPageLayout>
   );
 }

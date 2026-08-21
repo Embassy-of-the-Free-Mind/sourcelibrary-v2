@@ -1,0 +1,249 @@
+{
+  "date": "2026-07-19",
+  "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+  ],
+  "runs": 2,
+  "only": "vulgate-genesis|aeneid-1|hero-pneumatica-60|shaarei-orah|xorenatsi-patmutiwn-2-60|dioscorides-ruel",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 916,
+      "charAccuracy": 0.9967248908296943,
+      "rows": [
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.60 (death of Artashes / Bar Kokhba digression)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 256,
+          "aligned": true,
+          "guard": 0.03125,
+          "cer": 0.0032751091703056767,
+          "charAccuracy": 0.9967248908296943,
+          "refLen": 916,
+          "matched": 913,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean–Yarut'iwnean, Tiflis 1913); passage = printed p.189",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho095.htm",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.009854,
+              "consistency": 0.5,
+              "aligned": true,
+              "charAccuracy": 0.9989082969432315,
+              "cer": 0.001091703056768559
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0010428,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.990174672489083,
+              "cer": 0.009825327510917031
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 2,
+      "aligned": 2,
+      "refChars": 1060,
+      "charAccuracy": 0.9783018867924528,
+      "rows": [
+        {
+          "work": "Dioscorides, De materia medica I.106-107, 1549 Ruel print",
+          "bookId": "69aff2b8c83500af1dbf681e",
+          "pageNumber": 155,
+          "aligned": true,
+          "guard": 0.12048192771084337,
+          "cer": 0.05227272727272727,
+          "charAccuracy": 0.9477272727272728,
+          "refLen": 440,
+          "matched": 417,
+          "source": "First1KGreek tlg0656.tlg001 (Wellmann 1907 critical text — DIFFERENT edition from our 1549 Ruel Greek-Latin print)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0656/tlg001/tlg0656.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.004958000000000001,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0007212,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9,
+              "cer": 0.1
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica I.7-8 (Teubner p.60)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 134,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 620,
+          "matched": 620,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.005742,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0006284999999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 1,
+              "cer": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Hebrew",
+      "script": "hebrew",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1153,
+      "charAccuracy": 0.9514310494362532,
+      "rows": [
+        {
+          "work": "Sha'arei Orah (Gikatilla), Gate 2 — Yovel/El Chai discourse",
+          "bookId": "699ef9f2c2bcb75dbdbaad92",
+          "pageNumber": 60,
+          "aligned": true,
+          "guard": 0.14492753623188406,
+          "cer": 0.04856895056374675,
+          "charAccuracy": 0.9514310494362532,
+          "refLen": 1153,
+          "matched": 1097,
+          "source": "Sefaria, Sha'arei Orah, Second Gate, Ninth Sefirah 71-74",
+          "source_url": "https://www.sefaria.org/Sha'arei_Orah%2C_Second_Gate%2C_Ninth_Sefirah.71-74",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.009497,
+              "consistency": 0.5,
+              "aligned": true,
+              "charAccuracy": 0.9522983521248916,
+              "cer": 0.047701647875108416
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0009708,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9184735472679966,
+              "cer": 0.08152645273200347
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 2,
+      "aligned": 2,
+      "refChars": 426,
+      "charAccuracy": 0.9976525821596244,
+      "rows": [
+        {
+          "work": "Aeneid I.1-7",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 203,
+          "aligned": true,
+          "guard": 0.03571428571428571,
+          "cer": 0.006944444444444444,
+          "charAccuracy": 0.9930555555555556,
+          "refLen": 144,
+          "matched": 143,
+          "source": "Wikisource (la), ed. with macrons; folded at compare time",
+          "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.004979000000000001,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9722222222222222,
+              "cer": 0.027777777777777776
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.00073185,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9652777777777778,
+              "cer": 0.034722222222222224
+            }
+          }
+        },
+        {
+          "work": "Vulgate Genesis 1:1-5",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 21,
+          "aligned": true,
+          "guard": 0.017543859649122806,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 282,
+          "matched": 282,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
+          "models": {
+            "gemini-3-flash-preview": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.006578,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9893617021276596,
+              "cer": 0.010638297872340425
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0006971999999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9893617021276596,
+              "cer": 0.010638297872340425
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

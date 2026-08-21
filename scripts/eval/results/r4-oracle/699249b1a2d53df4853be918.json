@@ -1,0 +1,80 @@
+{
+  "book_id": "699249b1a2d53df4853be918",
+  "work_identified": "Prose Edda (Edda Snorra Sturlusonar) by Snorri Sturluson, c.1220 — the complete prose compilation comprising Gylfaginning, Skáldskaparmál, and Háttatal; not a partial section or later derivative",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Younger Edda, also called Snorre's Edda, or the Prose Edda",
+      "translator": "Rasmus B. Anderson",
+      "pub_year": "1880",
+      "publisher": "S.C. Griggs and Company / Trübner & Co.",
+      "completeness": "complete",
+      "source_url": "https://www.worldcat.org/title/647604"
+    },
+    {
+      "english_title": "The Prose Edda of Snorri Sturluson",
+      "translator": "Arthur Gilchrist Brodeur",
+      "pub_year": "1916",
+      "publisher": "The American-Scandinavian Foundation",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/proseedda00snor"
+    },
+    {
+      "english_title": "The Prose Edda: Tales from Norse Mythology",
+      "translator": "Jean I. Young",
+      "pub_year": "1954",
+      "publisher": "Bowes & Bowes / University of California Press",
+      "completeness": "partial",
+      "source_url": "https://www.worldcat.org/title/prose-edda-of-snorri-sturluson-tales-from-norse-mythology/oclc/311169"
+    },
+    {
+      "english_title": "Edda",
+      "translator": "Anthony Faulkes",
+      "pub_year": "1987",
+      "publisher": "Everyman / J.M. Dent",
+      "completeness": "complete",
+      "source_url": "https://www.worldcat.org/title/edda/oclc/33898288"
+    },
+    {
+      "english_title": "The Prose Edda: Norse Mythology",
+      "translator": "Jesse Byock",
+      "pub_year": "2006",
+      "publisher": "Penguin Classics",
+      "completeness": "partial",
+      "source_url": "https://www.goodreads.com/book/show/24658.The_Prose_Edda"
+    }
+  ],
+  "queries_run": [
+    "Snorri Sturluson \"Prose Edda\" English translation history Brodeur Young Faulkes Byock",
+    "site:worldcat.org \"Prose Edda\" Snorri Sturluson English translation",
+    "archive.org \"Prose Edda\" Brodeur 1916 English translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.mimisbrunnr.info/edda-to-english",
+      "found": "Lists 7 English translations from 1842 (Dasent) through 2006 (Byock); Brodeur 1916 and Faulkes 1987 confirmed as complete translations"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Prose_Edda",
+      "found": "Confirms full translation history: Dasent 1842, Anderson 1880, Brodeur 1916 (complete), Young 1954, Faulkes 1987, Byock 2006"
+    },
+    {
+      "url": "https://archive.org/details/proseedda00snor",
+      "found": "Brodeur 1916 complete English translation confirmed present and freely available on Internet Archive"
+    },
+    {
+      "url": "https://www.worldcat.org/title/647604",
+      "found": "Anderson 1880 English version confirmed in WorldCat holdings"
+    },
+    {
+      "url": "https://www.worldcat.org/title/prose-edda-of-snorri-sturluson-tales-from-norse-mythology/oclc/311169",
+      "found": "Jean Young 1954 English translation confirmed in WorldCat"
+    }
+  ],
+  "reasoning": "Multiple complete modern English translations exist from the Old Norse original: Brodeur 1916 (confirmed on archive.org) and Faulkes 1987 are both complete. Anderson 1880, Young 1954, Byock 2006 add further prior coverage. Source-language rule applies: not_first."
+}

@@ -2,16 +2,18 @@ import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
 import QuickSubscribe from '@/components/donate/QuickSubscribe';
+import GiveForm from '@/components/donate/GiveForm';
 import { getReadDb } from '@/lib/mongodb';
 import type { Locale } from '@/lib/i18n';
 
-const EFM_STRIPE_URL = 'https://donate.stripe.com/9B67sLbO1bOg2GxfxP9fW08';
-const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
-const CONTACT_EMAIL = 'derek@sourcelibrary.org';
+// The two payment destinations, the NAF-form ambiguity, and the amount-carrying
+// URL params all live in src/lib/give-routes.ts now — this page and /give mount
+// the same <GiveForm>, so neither holds its own copy of a destination URL.
+const CONTACT_EMAIL = 'team@sourcelibrary.org';
 
 // Hand-coloured volvelle (perpetual calendar wheel) from the astrology collection.
 const HERO_IMAGE =
-  'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6990688d249ce014347d6e76/6990688d249ce014347d6eb2-0.jpg';
+  'https://images.sourcelibrary.org/gallery/6990688d249ce014347d6e76/6990688d249ce014347d6eb2-0.jpg';
 
 export interface SupportStats {
   totalBooks: number;
@@ -63,6 +65,7 @@ interface SupportStrings {
   intlLabel: string; intlTitle: string; intlSub: string;
   largeLabel: string;
   taxNote: string;
+  businessPre: string; businessLink: string; businessPost: string;
   whereTitle: string;
   where: { title: string; text: string }[];
   followTitle: string;
@@ -81,10 +84,11 @@ const STRINGS: Record<Locale, SupportStrings> = {
     statFirst: 'first-ever English translations',
     giveTitle: 'Make a Gift',
     giveLead: "Pick a route below to give now, or use the form and we'll follow up personally. Every gift, of any size, makes a difference.",
-    usLabel: 'US tax-deductible', usTitle: 'Donate via NAF', usSub: '501(c)(3) public charity',
+    usLabel: 'US tax-deductible', usTitle: 'Netherland-America Foundation', usSub: '501(c)(3) public charity',
     intlLabel: 'International', intlTitle: 'Donate via EFM', intlSub: 'ANBI-registered (NL)',
     largeLabel: 'Large gifts — wire, stock, or donor-advised fund',
-    taxNote: 'US donors giving through the Netherland-America Foundation receive full 501(c)(3) tax benefits. Receipts are issued automatically via Stripe or on request.',
+    taxNote: 'US donors giving through the Netherland-America Foundation (NAF) receive full 501(c)(3) tax benefits, with receipts issued by NAF. International gifts go to Stichting Het Wereldhart (Cultural ANBI), where Stripe issues the receipt automatically.',
+    businessPre: 'Business owners:', businessLink: 'giving through your company', businessPost: 'is usually cheaper than giving personally.',
     whereTitle: 'Where your support goes',
     where: [
       { title: 'Digitization', text: 'High-resolution scanning of fragile manuscripts and rare printed books.' },
@@ -107,10 +111,11 @@ const STRINGS: Record<Locale, SupportStrings> = {
     statFirst: 'primeras traducciones al inglés',
     giveTitle: 'Haz una donación',
     giveLead: 'Elige una opción abajo para donar ahora, o usa el formulario y te contactaremos personalmente. Cada donación, de cualquier tamaño, marca la diferencia.',
-    usLabel: 'Deducible en EE. UU.', usTitle: 'Donar vía NAF', usSub: 'Entidad benéfica 501(c)(3)',
+    usLabel: 'Deducible en EE. UU.', usTitle: 'Netherland-America Foundation', usSub: 'Entidad benéfica 501(c)(3)',
     intlLabel: 'Internacional', intlTitle: 'Donar vía EFM', intlSub: 'Registrada ANBI (NL)',
     largeLabel: 'Donaciones grandes — transferencia, acciones o fondo asesorado',
-    taxNote: 'Los donantes de EE. UU. que donan a través de la Netherland-America Foundation reciben beneficios fiscales 501(c)(3) completos. Los recibos se emiten automáticamente vía Stripe o a petición.',
+    taxNote: 'Los donantes de EE. UU. que donan a través de la Netherland-America Foundation (NAF) reciben beneficios fiscales 501(c)(3) completos, con recibos emitidos por la NAF. Las donaciones internacionales van a Stichting Het Wereldhart (ANBI Cultural), donde Stripe emite el recibo automáticamente.',
+    businessPre: 'Para empresas:', businessLink: 'donar a través de tu empresa', businessPost: 'suele ser más económico que donar personalmente.',
     whereTitle: 'Adónde va tu apoyo',
     where: [
       { title: 'Digitalización', text: 'Escaneo de alta resolución de manuscritos frágiles y libros impresos raros.' },
@@ -126,7 +131,13 @@ const STRINGS: Record<Locale, SupportStrings> = {
   },
 };
 
-export default function SupportView({ stats, locale = 'en' }: { stats: SupportStats; locale?: Locale }) {
+export default function SupportView({
+  stats,
+  locale = 'en',
+}: {
+  stats: SupportStats;
+  locale?: Locale;
+}) {
   const s = STRINGS[locale];
   const homeHref = locale === 'es' ? '/es' : '/';
   return (
@@ -176,26 +187,29 @@ export default function SupportView({ stats, locale = 'en' }: { stats: SupportSt
               <h2 className="text-2xl md:text-3xl text-stone-900 mb-3 leading-tight font-display">{s.giveTitle}</h2>
               <p className="text-stone-600 leading-relaxed mb-6">{s.giveLead}</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a href={DONORPERFECT_URL} target="_blank" rel="noopener noreferrer" className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
-                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.usLabel}</span>
-                  <span className="block text-sm font-semibold text-stone-900">{s.usTitle}</span>
-                  <span className="block text-xs text-stone-500 mt-1">{s.usSub}</span>
-                </a>
-                <a href={EFM_STRIPE_URL} target="_blank" rel="noopener noreferrer" className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block">
-                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.intlLabel}</span>
-                  <span className="block text-sm font-semibold text-stone-900">{s.intlTitle}</span>
-                  <span className="block text-xs text-stone-500 mt-1">{s.intlSub}</span>
-                </a>
-                <div className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 sm:col-span-2">
-                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">{s.largeLabel}</span>
-                  <a href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`} className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all">
-                    {CONTACT_EMAIL}
-                  </a>
-                </div>
-              </div>
+              {/* The same picker /give serves, so the fast path and the long
+                  path can never disagree about amounts, routes, or which NAF
+                  form is the Source Library one. This replaced a pair of cards
+                  that linked out with no amount attached, leaving the donor to
+                  meet a $0.00 field on arrival — the anchor is the strongest
+                  lever on gift size and we were forfeiting it. */}
+              {/* Hardcoded `international`, NOT resolved from the request
+                  country — this page is edge-cached for 24h by the static-pages
+                  rule in next.config.ts, so any per-visitor default would be
+                  frozen to whoever warmed the cache (measured: cf-cache-status
+                  HIT, age 1202, on a page marked force-dynamic). `/give` is the
+                  country-aware surface and is not edge-cached; here the donor
+                  gets a visible "Giving from the United States?" switch. */}
+              <GiveForm defaultRoute="international" locale={locale} surface="support" contactEmail={CONTACT_EMAIL} />
 
               <p className="mt-5 text-xs text-stone-500 leading-relaxed">{s.taxNote}</p>
+              <p className="mt-2 text-xs text-stone-500 leading-relaxed">
+                <span className="font-semibold text-stone-600">{s.businessPre}</span>{' '}
+                <Link href={locale === 'es' ? '/es/support/business' : '/support/business'} className="text-accent-rust underline hover:text-accent-gold-dark">
+                  {s.businessLink}
+                </Link>{' '}
+                {s.businessPost}
+              </p>
             </div>
 
             <DonationIntentionForm />

@@ -1,0 +1,44 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "gemma-4-31b-it"
+  ],
+  "runs": 1,
+  "only": "eznik-elc-alandoc-157",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 594,
+      "charAccuracy": 0.9764309764309764,
+      "rows": [
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 220-221 (man ranked above the animals, 1826 printed p.157)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 168,
+          "aligned": true,
+          "guard": 0.10526315789473684,
+          "cer": 0.02356902356902357,
+          "charAccuracy": 0.9764309764309764,
+          "refLen": 594,
+          "matched": 580,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.157",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik220.htm",
+          "models": {
+            "gemma-4-31b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

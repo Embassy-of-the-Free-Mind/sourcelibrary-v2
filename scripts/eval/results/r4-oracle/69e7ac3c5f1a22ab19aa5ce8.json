@@ -1,0 +1,40 @@
+{
+  "book_id": "69e7ac3c5f1a22ab19aa5ce8",
+  "work_identified": "dGe sbyor bdun pa'i nyams len (Practice of the Sevenfold Virtue-Cultivation), principal text in a monastery miscellany (thor bu) from Neyphug Monastery, Bhutan; tradition-associated with Drukpa Kagyu dge sbyor bdun pa texts (Padma Karpo / Götsangpa lineage) but held in a Nyingma monastic context; EAP310-2-2-1, 96 folios, 14 individual texts",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "BDRC \"Neyphug Monastery\" Tibetan text \"dGe sbyor bdun pa\" OR \"Thor bu\" English translation",
+    "Lotsawa House \"sevenfold virtue cultivation\" OR \"dge sbyor bdun pa\" Tibetan translation English",
+    "WorldCat \"Thor bu dGe sbyor bdun pa\" Tibetan English translation",
+    "\"Neyphug\" OR \"Neyphug Monastery\" Bhutan Tibetan manuscript English translation sevenfold practice",
+    "WorldCat \"nyams len\" \"Neyphug\" OR \"dGe sbyor bdun pa\" Tibetan English",
+    "\"dGe sbyor bdun pa\" Tibetan Buddhist sevenfold virtue practice English translation",
+    "site:worldcat.org \"dge sbyor\" OR \"ge sbyor bdun pa\" Tibetan English translation",
+    "Götsangpa \"Rgod tshang pa\" \"dge sbyor bdun pa\" English translation published",
+    "\"seven virtuous practices\" OR \"seven virtues\" Bhutan Neyphug monastery Tibetan English published translation",
+    "archive.org \"dge sbyor bdun pa\" Tibetan English",
+    "\"dge sbyor bdun pa'i nyams len\" English translation OR \"sevenfold virtue\" Tibetan English published",
+    "BDRC \"dge sbyor bdun pa\" Kagyu OR Drukpa Götsangpa OR \"rgod tshang pa\" English translation WorldCat",
+    "\"Padma Karpo\" Drukchen \"dge sbyor bdun pa\" English translation published",
+    "\"dge sbyor bdun\" English translation book scholarly published Kagyu Nyingma Bhutan",
+    "worldcat \"nyams len\" \"dge sbyor\" English translation Tibetan",
+    "\"Thor bu\" \"nyams len\" Neyphug monastery Tibetan English translation academic"
+  ],
+  "sources_consulted": [
+    {"url": "https://eap.bl.uk/archive-file/EAP310-2-2-1", "found": "Confirms source-language Tibetan manuscript at Neyphug Monastery: 96 folios, 14 individual texts, dBu can/dBu med scripts, no English translation"},
+    {"url": "https://library.bdrc.io/show/bdr:T1GS147790?uilang=en", "found": "BDRC entry for 'dge sbyor' term; no English translations of this practice text listed"},
+    {"url": "https://www.lotsawahouse.org/", "found": "No translation of dge sbyor bdun pa texts or any Neyphug Monastery materials present"},
+    {"url": "https://rywiki.tsadra.org/index.php/Götsangpa's_Works", "found": "Götsangpa composed a commentary on dge sbyor bdun pa (pp. 467-481 in collected works); no English translation found"},
+    {"url": "https://archive.org/details/bdrc-W20423", "found": "1997 Lhasa Kagyu liturgical anthology contains 'Dge sbyor bdun pa'i smon lam' in Tibetan only; no English translation"},
+    {"url": "https://pktc.org/books-and-translations-1/", "found": "Padma Karpo Translation Committee catalog: no translation of dge sbyor bdun pa among published works"},
+    {"url": "https://gdamsngagmdzod.tsadra.org/index.php/Wylie:Dge_sbyor_bdun_pa'i_nyams_len_sgang_du_bsgril_ba", "found": "gDams Ngag mDzod lists Padma Karpo's 'dge sbyor bdun pa'i nyams len sgang du bsgril ba' in Tibetan; no English translation listed"},
+    {"url": "https://eap.bl.uk/collection/EAP310-2", "found": "Full Neyphug Monastery EAP310 collection; all texts in Tibetan, digitized for preservation, no English translations produced"}
+  ],
+  "reasoning": "No English translation of 'dGe sbyor bdun pa'i nyams len' found across BDRC, Lotsawa House, gDams Ngag mDzod, archive.org, Padma Karpo Translation Committee, and WorldCat searches. Text is an obscure Bhutanese Nyingma monastery miscellany. Related Padma Karpo and Götsangpa texts on the same dge sbyor bdun pa tradition also untranslated. Thoroughness floor met; absence evidence is tradition-appropriate but text is too obscure for certainty."
+}

@@ -2,7 +2,22 @@
 
 Operational reference for pipeline monitoring, debugging, and processing. For full architecture details, see `.claude/docs/pipeline-architecture.md`.
 
-## Where Everything Runs (snapshot 2026-05 — verify if older than ~30 days)
+## Where Everything Runs
+
+> **Reality check (2026-08-08, second pass):** the LINE IS RUNNING. The
+> unified scheduler was on the crontab the whole pause (an earlier note here
+> said "not scheduled at all" — that came from grepping the crontab for the
+> word "orchestrator", which the scheduler line doesn't contain; the grep was
+> the lying instrument). With `paused: false` + `daily_budget_usd` set
+> (2026-08-08 relight), the scheduler spawns orchestrator, translate-worker,
+> enrich workers and archivers every 2 min; spend-guard gates Phases 2/4 and
+> the worker's health gate refuses looped translations (relight canary: flash
+> looped on 42% of the loop-prone manuscript cohort's fresh pages; dial
+> contained spend to <$3). Also live: `collect-batch-results.mjs` every 30
+> min (#3717), the nightly stage-coverage snapshot (04:15, /platform/admin/line).
+> Shared translation logic now lives in `scripts/lib/translate-core.mjs` (the
+> "one door": model routing, DB prompts, revision-before-overwrite, counter
+> sync — issue #3725); any new translation writer must import it.
 
 | Component | Where | How |
 |-----------|-------|-----|
@@ -32,6 +47,58 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Transliteration | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 | Summary/Index/Chapters | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 
+## The Budget Dial (#3737)
+
+Spend is a **number**, not a switch. `system_config.processing_control.daily_budget_usd`
+is the ceiling for paid dispatch; `scripts/lib/spend-guard.mjs` gates orchestrator
+Phase 2 (OCR submit) and Phase 4 (translation dispatch) against today's measured
+`gemini_usage` spend (UTC day, ObjectId-range — the `timestamp` field is a string on
+old rows). **Default-closed:** unset/null/0 means NO paid dispatch even when
+`paused: false` — flipping the old pause flag can no longer reopen unbounded spending.
+In-flight work always finishes; `--phase N --book=ID` operator runs bypass the dial
+exactly as they bypass the pause. Enrichment (Phases 6–7) isn't gated directly but its
+spend counts toward the measured total, and its volume is downstream of gated phases.
+`cost_usd` is a computed estimate and some rows lack it → the guard can UNDERCOUNT;
+treat the ceiling as a brake, not accounting. The guard logs `spend $X / $Y` every cycle.
+
+**Change the dial ONLY via `scripts/maintenance/set-dial.mjs`** (`--budget N --by "why"`,
+`--pause/--resume`, `--history`) — it snapshots the prior state to
+`system_config_revisions` (everything versions; raw one-liner \$sets on
+`processing_control` are how scopes got clobbered). `unpause-scope.mjs` writes are
+versioned the same way. Repair scripts that overwrite R2 images preserve the prior
+object under `versions/<key>.<ts>` via `scripts/lib/r2-version.mjs`.
+
+**To turn the line on (Derek):**
+1. Set the dial: `db.system_config.updateOne({_id:'processing_control'}, {$set:{daily_budget_usd: 5}})` — start at $5/day.
+2. Unpause: `{$set:{paused:false}}` (same doc).
+3. Re-add the scheduler line to the live Hetzner crontab — it already exists in `scripts/workers/crontab.production` line 20 (`*/2 * * * * … scheduler.mjs`); the live crontab lost it during the pause era.
+4. Watch `/var/log/sourcelibrary/scheduler.log` + `pipeline.log` for the `[spend-guard]` lines; first candidates processed should be `loop_quarantine_hold` books once those are re-enrolled.
+5. Failure at step 4 = no `[spend-guard]` line at all → the box hasn't pulled main yet (auto-pull ~5 min) or the crontab line didn't take (`crontab -l | grep scheduler`).
+
+## Priority Ordering (#3756)
+
+One field decides who gets processed first: **`books.processing_priority`** (number;
+absent = 0; **higher first**). It is the LEADING sort key in every paid candidate
+query — orchestrator Phase 2 (OCR submit, both passes), Phase 4 (translation
+dispatch, fresh + gap-fill), and translate-worker self-dispatch (fresh + partial) —
+with each query's previous ordering (BPH boost, first-translation flag, speed tier)
+kept as the tiebreak. The archive crons already honored the same field
+(`image-storage-architecture.md`), so one number now moves a book up the whole line.
+
+Feeder sources and their conventional weights (writers stamp the field; also record
+why in `processing_priority_breakdown`):
+
+| Source | Weight |
+|--------|--------|
+| Sponsorship (paid, promised to a donor) | 200 |
+| Reader request (feedback translation-requests) | 100 |
+| Fresh imports (existing import-script default) | 80 |
+| Curated collection membership | 50 |
+
+Legacy note: Phase 2's aggregations also honor an older `pipeline_priority` (≥1 = manual
+boost) inside their computed `_priority` — it now acts as a tiebreak below
+`processing_priority`. Prefer `processing_priority` for anything new.
+
 ## Emergency Controls
 
 - **Stop all:** Set `system_config._id: 'processing_control'` → `paused: true`
@@ -52,7 +119,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 
 ## Critical Rules
 
-- NEVER use Gemini Batch API for translation — lacks cross-page context. Use `translate-worker.mjs` (Hetzner) or Lambda FIFO (fallback).
+- **Batch-API translation: banned for bulk, sanctioned for one-off books — know why.** Sequential translation (translate-worker, Lambda FIFO) feeds each page's finished translation into the next page's prompt; that chain is what keeps cross-page sentences and terminology coherent, and the Batch API cannot provide it. The per-book route `batch-translate-async` (the `translating-a-book.md` path) IS Batch-API translation: each page is translated independently, with no previous-page context — a deliberate cost/coherence tradeoff acceptable for a single requested book, wrong for bulk reprocessing. (The Feb 18 incident — 17K wrong translations — was a separate bug: batch results matched by array index instead of `metadata.key`; that part is fixed.) So: bulk → sequential worker; one-off → batch route; never claim the two produce equivalent quality.
 - **Translation prompt source of truth is the DB `prompts` collection** (type: 'translation', is_default: true). Both workers read it once per run and cache. Never hardcode prompts in worker files. To update the prompt, update the DB — no code deploy needed.
 - **Any Hetzner worker that writes to `pages` must also update the parent book's cached counters** (`pages_ocr`, `pages_translated`, `pages_archived`). Vercel API routes do this via shared helpers, but standalone Hetzner scripts bypass them. See #497.
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first
@@ -82,3 +149,6 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - **Batch image-extraction never materialized gallery crops (2026-06-04, #2430):** `batch-collector.mjs` writes `gallery_images` rows with bbox+metadata but NO `extracted_url`/`thumbnail_url` — by design, expecting `scripts/workers/generate-thumbnails.mjs` to crop+upload later. That worker was never cronned, so once the batch path became the production extraction route (~May) 30K rows piled up (21% of gallery, 25K at q≥0.5) — invisible to the public gallery, embeddings, and collection covers, which all filter on `extracted_url`. Fix: nightly Hetzner cron 03:30 (`generate-thumbnails.mjs --limit=8000 --concurrency=6 --min-quality=0.5`, log `/var/log/sourcelibrary/generate-thumbnails.log`) + one-off backlog run. **Canary:** `db.gallery_images.countDocuments({extracted_url:null, thumbnail_url:null, gallery_quality:{$gte:0.5}})` climbing into the thousands = the cron is dead. The inline SQS path crops at write time — converging the two paths is the open follow-up in #2430.
 - **Mass "Gemini 404: job no longer exists on any key" = Vercel/Hetzner key-set drift, not lost jobs (2026-06-05):** 348 OCR batch jobs (June 4–5) were falsely marked `failed` by `batch-collector.mjs` while the jobs had SUCCEEDED on Gemini with results intact. Batch jobs are visible only to their creating key (see 2026-03-15 lesson); jobs submitted via the Vercel routes (`/api/books/[id]/batch-ocr-async`) use Vercel's env keys, the Hetzner collector polls with Hetzner's — the two `.env.production.local` files had drifted to a single shared key (`_3`). Orchestrator-submitted jobs were unaffected (same box submits + collects), which made the Vercel route look flaky. **Tell:** `status:'failed'` + `error:'Gemini 404: job no longer exists on any key'` + `recovery_checked_at` ~1 min after `created_at`, clustered on API-route submissions. **Fix:** mirrored Vercel's unique keys to Hetzner as `GEMINI_API_KEY_5/6/7`, reset the false-failed jobs to `pending`; collector then recovered 163 jobs / 3,157 pages at zero cost (truly-expired jobs re-404 harmlessly and get resubmitted by the orchestrator). **Rule: any process that collects batch results must hold a superset of every key used to submit; when rotating/adding a Gemini key on one host, mirror it to the other the same day.**
 - **FAILED_PRECONDITION on file-based OCR submit = file not ACTIVE (2026-05-30, PR #2186):** `createBatchJobFromFile()` called `batches.create` right after `files.upload` without waiting for the File API file to reach `ACTIVE`. Gemini rejects a batch referencing a still-`PROCESSING` file with `400 FAILED_PRECONDITION`. Large file-based JSONLs (big books) process slower → failed while small inline-path books succeeded; surfaced as ~24k `ocr/failed` batch_jobs + books stuck at `archive_complete`. **File API quota was NOT the cause (0 files across all keys) — don't assume quota when you see FAILED_PRECONDITION.** Fix: poll `files.get(name)` until `state==='ACTIVE'` (~60s) before `batches.create`. After deploy, reset affected books `failed → archive_complete`.
+- **Bulk OCR belongs in the orchestrator, NOT the Vercel route (2026-06-26):** For any backlog OCR, enroll books (`pipeline_auto.status='queued'`; orchestrator advances already-archived ones to `archive_complete` and archives the rest, then OCRs) — the orchestrator submits to Gemini *directly* from Hetzner. The route `POST /api/books/[id]/batch-ocr-async` downloads ALL page images synchronously before creating batches, so it **edge-timeouts on books >~300pp** (Cloudflare 524 / Vercel 500 / Next `__next_error__`); only small books (<~150pp, or a small `limit:`) submit cleanly. **Rule: don't drive bulk OCR by looping the route from a laptop — enroll and let the pipeline do it.**
+- **Route batch-OCR: client abort loses the batch; 524 does not; batch_jobs is ground truth (2026-06-26):** A client-side `AbortController` on `batch-ocr-async` cancels the Vercel function → no batch created. A Cloudflare **524** (origin keeps running) DOES create the batch server-side. The route does **not** dedupe against pending `batch_jobs`, so re-calling a book that already has pending jobs **double-submits and double-charges**. **Rule: never abort early; treat 524/500 as "verify via `batch_jobs`," and use `batch_jobs` (created in last N h, per `book_id`) as the dedup/coverage source of truth before resubmitting.**
+- **A chunk of `language:'english'` books are IA lending-locked = copyright (2026-06-26):** IA Controlled-Digital-Lending scans have the `*0000xxxx` "inlibrary" identifier; their page images 403 and they're copyright-restricted — `batch-ocr-async` returns `400 "Failed to prepare any images"` and `archive-bulk` skips them as broken-source. **They cannot/should-not be archived or OCR'd — detect (identifier `…0000<libcode>` or 403 on the image URL) and drop / re-source from an open copy.** Two more gotchas from the same sweep: (a) the route OCRs from `pages.photo`/`photo_original` (for archived books these point to `images.sourcelibrary.org` R2; "has external `photo`" ≠ "archived to R2"); (b) `pages_count − pages_ocr` **overcounts** the real OCR gap — blank/plate pages count toward `pages_count` but are intentionally never OCR'd, so filter to books <~85% OCR'd to find genuine gaps.

@@ -1,0 +1,95 @@
+{
+  "book_id": "69c1bc3e8522835be84620a8",
+  "work_identified": "Hebrew Bible (Tanakh) — Yemenite manuscript tradition (incomplete: parts of Pentateuch and four of Five Scrolls; missing end of Ecclesiastes and Lamentations)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "partial",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Holy Bible (King James Version)",
+      "translator": "King James Bible translation committee (47 scholars)",
+      "pub_year": "1611",
+      "publisher": "Robert Barker, Printer to the King",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/holy-bible-1611"
+    },
+    {
+      "english_title": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "translator": "Max Margolis (committee lead), Jewish Publication Society of America",
+      "pub_year": "1917",
+      "publisher": "Jewish Publication Society of America",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/isbn_9780827603660"
+    },
+    {
+      "english_title": "TANAKH: The Holy Scriptures (New JPS Translation)",
+      "translator": "Jewish Publication Society translation committee",
+      "pub_year": "1985",
+      "publisher": "Jewish Publication Society",
+      "completeness": "complete",
+      "source_url": "https://jps.org/books/tanakh-the-holy-scriptures-blue/"
+    },
+    {
+      "english_title": "The Hebrew Bible: A Translation with Commentary",
+      "translator": "Robert Alter",
+      "pub_year": "2019",
+      "publisher": "W. W. Norton",
+      "completeness": "complete",
+      "source_url": "https://search.worldcat.org/title/hebrew-bible-a-translation-with-commentary/oclc/1021809761"
+    },
+    {
+      "english_title": "The Holy Scriptures of the Old Testament, Hebrew and English",
+      "translator": "British and Foreign Bible Society (based on Authorized Version)",
+      "pub_year": "1903",
+      "publisher": "British and Foreign Bible Society, Berlin",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/holyscripturesof00unse"
+    }
+  ],
+  "queries_run": [
+    "English translation Hebrew Bible complete WorldCat KJV JPS Tanakh",
+    "Yemenite Hebrew Bible English translation manuscript",
+    "WorldCat \"Hebrew Bible\" English translation complete",
+    "Yemenite Bible \"Taj\" English translation scholars biblical studies",
+    "Hebrew Bible English translation KJV 1611 King James Version archive.org",
+    "\"Yemenite\" Hebrew Bible translation English \"first translation\" OR \"never translated\""
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.digitalcollections.manchester.ac.uk/view/MS-GASTER-HEBREW-02043",
+      "found": "Confirms this is an incomplete Yemenite Hebrew Bible manuscript (parts of Pentateuch, four of Five Scrolls; missing end of Ecclesiastes and Lamentations). No English translation mentioned."
+    },
+    {
+      "url": "https://archive.org/details/holy-bible-1611",
+      "found": "KJV 1611 — complete English translation of the Hebrew Bible, freely available on archive.org, translated from original Hebrew."
+    },
+    {
+      "url": "https://archive.org/details/holyscripturesof00unse",
+      "found": "1903 British & Foreign Bible Society Hebrew-English parallel Old Testament — complete bilingual edition."
+    },
+    {
+      "url": "https://archive.org/details/isbn_9780827603660",
+      "found": "JPS TANAKH on archive.org — the new JPS translation according to the traditional Hebrew text, complete."
+    },
+    {
+      "url": "https://jps.org/books/tanakh-the-holy-scriptures-blue/",
+      "found": "JPS 1985 TANAKH — complete modern English translation of the Hebrew Bible from the traditional Hebrew Masoretic text."
+    },
+    {
+      "url": "https://search.worldcat.org/title/hebrew-bible-a-translation-with-commentary/oclc/1021809761",
+      "found": "Robert Alter 2019 complete Hebrew Bible translation with commentary — landmark complete translation from source Hebrew."
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Jewish_English_Bible_translations",
+      "found": "Wikipedia article confirming multiple complete English translations of the Hebrew Bible from the original Hebrew: JPS 1917, NJPS 1985, and many others."
+    },
+    {
+      "url": "http://www.jewishencyclopedia.com/articles/15077-yemen",
+      "found": "Confirms Yemenite Hebrew Bible manuscripts (Taj) are the same Hebrew Bible canon in a distinct scribal tradition, not a distinct work."
+    }
+  ],
+  "reasoning": "The underlying work is the Hebrew Bible (Tanakh). Complete English translations from the original Hebrew source language exist since 1611 (KJV) and include JPS 1917, JPS NJPS 1985, Robert Alter 2019, and many others. Source-language rule applies directly. The Yemenite manuscript tradition preserves textual variants and a unique scribal culture but does not constitute a distinct work never Englished. Also: the manuscript is itself incomplete."
+}

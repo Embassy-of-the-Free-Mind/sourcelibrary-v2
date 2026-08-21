@@ -44,10 +44,54 @@ test/deploy outcomes, what was agreed. Skip for short or routine sessions.
 contacts, outreach, budgets, donors, sponsors — goes in the private
 `sourcelibrary-ops` repo (`~/sourcelibrary-ops`), never here.
 
-Then ask the handoff question: **does `CLAUDE.md` need a new invariant?** If this
-session hit a non-obvious failure that would bite the next person, PR the doc change
-now. Otherwise the lesson lives only in the handoff and decays.
+## 4. Reflect — both directions of the ratchet
 
-## 4. Say goodnight
+This is the point of `gnite` beyond tidying: the session is over, the lesson is fresh,
+and nobody will ever be better placed to write it down or throw it away. Ask **both**
+questions, not just the first. The first one alone is why `CLAUDE.md` grew from ~290
+lines to 827 in three months.
+
+**Up — does `CLAUDE.md` or an invariant doc need something new?** If this session hit a
+non-obvious failure that would bite the next person, PR the doc change now. Otherwise
+the lesson lives only in the handoff and decays. Decide *which tier*:
+
+- Applies no matter what you're working on → `CLAUDE.md`.
+- Fires only when you touch a subsystem → a new or existing
+  `.claude/docs/invariants/<name>.md`, with a one-line trigger entry added to the
+  routing table in `CLAUDE.md`. **If you can name the file or subsystem that triggers
+  the rule, it goes here.**
+
+**Down — is anything in `CLAUDE.md` no longer earning its place?** Do not skip this
+because nothing feels wrong; it never feels wrong. Concretely:
+
+- `wc -l CLAUDE.md` — the budget is **~250 lines**. Over it, something must be demoted
+  to `invariants/` before anything is added.
+- Did this session read a section that turned out to be **conditional**? Demote it.
+- Did it hit a rule that **contradicts** another, or a second write-up of the same
+  incident under a different aphorism? Merge them — don't append a correction beside the
+  thing it corrects.
+- Did it find a **stale stat, dead pointer, or fixed-and-closed backlog** stated as
+  current? Fix it in place, in this repo *and* in `~/.claude/CLAUDE.md` if it appears
+  there too. A rule in two files diverges; check the twin.
+- Anything dated more than ~14 days that this session actually depended on: re-measure
+  or mark it unverified.
+
+**Then sweep the private memory store.** `~/.claude/projects/<project>/memory/` is
+per-machine and gitignored, and it accretes faster than the repo does:
+
+- New entries from this session: is any of it **team knowledge**? Run
+  `/promote-lessons` to propose moving it into the repo (or the ops repo). A lesson only
+  Claude-on-this-machine knows is one laptop away from being lost.
+- `MEMORY.md` is loaded every session — keep it a one-line-per-memory index. Entries
+  that have gone cold move down into the `_index-*.md` recall tier rather than being
+  deleted.
+- Contradictions and superseded entries: delete or correct them. A wrong memory is
+  worse than a missing one, because it is trusted.
+- `/audit-memory` does this systematically when it's been a while.
+
+Keep this pass short — a couple of minutes. It is a *sweep*, not a project. If it turns
+up something big, file an issue rather than starting work.
+
+## 5. Say goodnight
 
 A short summary of where we left off and what's next. That's all.

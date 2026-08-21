@@ -13,6 +13,7 @@ import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -96,6 +97,21 @@ export async function GET(request: NextRequest) {
     const firstTranslation = searchParams.get('first_translation') === 'true';
     const hasTranslation = searchParams.get('has_translation') === 'true';
     const library = searchParams.get('library') || undefined;
+    // Publication-year range. The search page shows these inputs on every tab
+    // (and the ngram viewer deep-links into /search with a ±5y window), so a
+    // range that isn't honoured here reads as "filter set, results ignore it".
+    const parseYear = (v: string | null): number | undefined => {
+      const n = parseInt(v || '', 10);
+      return Number.isFinite(n) ? n : undefined;
+    };
+    const yearFrom = parseYear(searchParams.get('date_from'));
+    const yearTo = parseYear(searchParams.get('date_to'));
+    // Shared by every lane. Index/gallery/CLIP/artwork rows carry no year of
+    // their own, but each is attributed to a book that does — so the range is
+    // expressible everywhere, via a book-id gate or the denormalized book_year.
+    const yearRange = (yearFrom !== undefined || yearTo !== undefined)
+      ? { min: yearFrom, max: yearTo }
+      : undefined;
 
     if (!query || query.length < 2) {
       return NextResponse.json({
@@ -128,6 +144,8 @@ export async function GET(request: NextRequest) {
     if (category) searchFilters.category = category;
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
+    if (yearFrom !== undefined) searchFilters.yearFrom = yearFrom;
+    if (yearTo !== undefined) searchFilters.yearTo = yearTo;
     if (tenantContext.id) searchFilters.tenantId = tenantContext.id;
 
     // Run book, index, gallery, and visual search in parallel.
@@ -178,14 +196,14 @@ export async function GET(request: NextRequest) {
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       // Skip index/entity search for quoted phrases — autocomplete returns loose single-word noise
       isPhrase ? Promise.resolve(emptyIndex) : withTimeout(
-        searchIndex(db, matchQuery, limit, tenantContext.id || undefined).catch((err) => {
+        searchIndex(db, matchQuery, limit, tenantContext.id || undefined, yearRange).catch((err) => {
           console.error('Index search error:', err);
           return emptyIndex;
         }),
         emptyIndex, 'index',
       ),
-      withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined), emptyGallery, 'gallery'),
-      withTimeout(searchVisual(db, matchQuery, galleryLimit), emptyGallery, 'visual', 5000),
+      withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined, yearRange), emptyGallery, 'gallery'),
+      withTimeout(searchVisual(db, matchQuery, galleryLimit, yearRange), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
         semanticBookSearch(matchQuery, 12, { tenantId: tenantContext.id || undefined })
@@ -229,7 +247,7 @@ export async function GET(request: NextRequest) {
         semanticArtworkSearch(matchQuery, 4)
           // Drop hidden artworks — these RPC rows are returned to the client
           // directly (title/thumbnail), not re-resolved against Mongo below.
-          .then(raw => filterVisibleArtworks(db, raw))
+          .then(raw => filterVisibleArtworks(db, raw, yearRange))
           .then(artworks => ({
             results: artworks.map(a => ({
               book_id: a.book_id,
@@ -252,7 +270,7 @@ export async function GET(request: NextRequest) {
       // cards exist but vector search surfaced 4. This lane fuses in every artwork
       // that literally contains the term (#2735).
       withTimeout(
-        lexicalArtworkSearch(db, queryRegex, 24, tenantContext.id || undefined)
+        lexicalArtworkSearch(db, queryRegex, 24, tenantContext.id || undefined, yearRange)
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
@@ -304,7 +322,19 @@ export async function GET(request: NextRequest) {
 
     // Dedup semantic results: remove books already in keyword results
     const keywordBookIds = new Set(booksResult.results.map((b: any) => b.id));
-    const dedupedSemantic = semanticResultRaw.results.filter(s => !keywordBookIds.has(s.book_id));
+    // Semantic search has no year predicate (vector index) — post-filter it so
+    // the semantic lane obeys the same range as the keyword lane. A book with an
+    // unknown year is dropped only when a range is actually set.
+    const inYearRange = (year: number | null | undefined) => {
+      if (yearFrom === undefined && yearTo === undefined) return true;
+      if (typeof year !== 'number') return false;
+      if (yearFrom !== undefined && year < yearFrom) return false;
+      if (yearTo !== undefined && year > yearTo) return false;
+      return true;
+    };
+    const dedupedSemantic = semanticResultRaw.results
+      .filter(s => !keywordBookIds.has(s.book_id))
+      .filter(s => inYearRange(s.year));
     const semanticResult = { results: dedupedSemantic.slice(0, 6), total: dedupedSemantic.length };
 
     // Apply similarity floor to visual/semantic/artwork lanes.
@@ -419,19 +449,13 @@ export async function GET(request: NextRequest) {
       filteredArtworks.total = filteredArtworks.results.length;
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query,
-      results_count: scopedBooks.total + scopedIndex.total + scopedGallery.total + filteredVisual.total + scopedSemantic.total + filteredArtworks.total,
-      filters: { language, category, library, source: 'unified', tenantId: tenantContext.id || null },
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      // Geo from the edge header (same source pageviews use) so search interests
-      // can be broken down by country. Forward-only — past searches have none.
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query, source: 'unified',
+      resultsCount: scopedBooks.total + scopedIndex.total + scopedGallery.total + filteredVisual.total + scopedSemantic.total + filteredArtworks.total,
+      tenantId: tenantContext.id || null,
+      filters: { language, category, library },
+    });
 
     return NextResponse.json({
       query,
@@ -467,6 +491,8 @@ async function searchBooks(
     firstTranslation: searchFilters.isFirstTranslation,
     hasTranslation: searchFilters.hasTranslation,
     library,
+    yearMin: searchFilters.yearFrom,
+    yearMax: searchFilters.yearTo,
   });
 
   // Canon-weighted reranking: older editions first, original language preferred
@@ -537,7 +563,7 @@ async function searchBooks(
   };
 }
 
-async function searchIndex(db: any, query: string, limit: number, tenantId?: string) {
+async function searchIndex(db: any, query: string, limit: number, tenantId?: string, yearRange?: { min?: number; max?: number }) {
   // Skip index search for very short queries — autocomplete + fuzzy on 1-2 chars is too loose
   if (query.length < 3) return { results: [] as IndexResult[], total: 0, hasMore: false };
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -580,15 +606,27 @@ async function searchIndex(db: any, query: string, limit: number, tenantId?: str
       .toArray();
   }
 
-  // Expand each entity into per-book results (matching the IndexResult shape)
+  // Expand each entity into per-book results (matching the IndexResult shape).
+  // An index hit is an entity→book pair: the entity carries no year, but the
+  // book does, so the publication range rides the same book-id gate the tenant
+  // scoping already uses — one lookup covers both.
+  const yearMatch: Record<string, number> = {};
+  if (yearRange?.min !== undefined) yearMatch.$gte = yearRange.min;
+  if (yearRange?.max !== undefined) yearMatch.$lte = yearRange.max;
+  const hasYearRange = Object.keys(yearMatch).length > 0;
+
   let allowedBookIds: Set<string> | null = null;
-  if (tenantId) {
+  if (tenantId || hasYearRange) {
     const entityBookIds = [...new Set(
       entities.flatMap((e: any) => (e.books || []).map((b: any) => b.book_id).filter(Boolean)),
     )];
     if (entityBookIds.length > 0) {
       const allowedBooks = await db.collection('books')
-        .find({ id: { $in: entityBookIds }, tenantId }, { projection: { id: 1 } })
+        .find({
+          id: { $in: entityBookIds },
+          ...(tenantId ? { tenantId } : {}),
+          ...(hasYearRange ? { year: yearMatch } : {}),
+        }, { projection: { id: 1 } })
         .toArray();
       allowedBookIds = new Set(allowedBooks.map((b: any) => b.id));
     } else {
@@ -621,6 +659,7 @@ async function searchIndex(db: any, query: string, limit: number, tenantId?: str
       'index.generatedAt': { $exists: true },
       visible: true,
       ...(tenantId ? { tenantId } : {}),
+      ...(hasYearRange ? { year: yearMatch } : {}),
       $or: [
         { 'index.concepts.term': queryRegex },
         { 'index.people.term': queryRegex },
@@ -675,8 +714,16 @@ async function searchIndex(db: any, query: string, limit: number, tenantId?: str
   return { results, total: results.length, hasMore: results.length >= limit };
 }
 
-async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number, tenantId?: string): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number, tenantId?: string, yearRange?: { min?: number; max?: number }): Promise<{ results: GalleryResult[]; total: number }> {
   try {
+    // gallery_images denormalizes the owning book's year (book_year, present on
+    // ~83% of rows), so the range needs no join. It is NOT in the Atlas Search
+    // index mapping, so it can't ride in the compound filter — it goes in a
+    // $match placed BEFORE $limit so a narrow range doesn't starve the page.
+    const yearMatch: Record<string, number> = {};
+    if (yearRange?.min !== undefined) yearMatch.$gte = yearRange.min;
+    if (yearRange?.max !== undefined) yearMatch.$lte = yearRange.max;
+    const hasYearRange = Object.keys(yearMatch).length > 0;
     let images;
     try {
       // Use Atlas Search with autocomplete on description + fuzzy text on other fields
@@ -699,6 +746,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
             },
           },
         },
+        ...(hasYearRange ? [{ $match: { book_year: yearMatch } }] : []),
         { $limit: limit * 2 },
         { $project: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
       ], { maxTimeMS: 5000 }).toArray();
@@ -708,6 +756,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         .find(
           {
             ...(tenantId ? { tenantId } : {}),
+            ...(hasYearRange ? { book_year: yearMatch } : {}),
             gallery_quality: { $gte: 0.5 },
             book_visible: { $ne: false },
             extracted_url: { $ne: null },
@@ -732,7 +781,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
     // Drop images from hidden/removed books (takedowns, dedup hides). The
     // Atlas Search branch can't filter on book_visible, and the gallery_images
     // mirror can drift — check books.visible in Mongo, same as the artwork lanes.
-    const visibleImages = await filterVisibleArtworks(db, withImages as Array<{ book_id: string }>);
+    const visibleImages = await filterVisibleArtworks(db, withImages as Array<{ book_id: string }>, yearRange);
 
     return {
       results: visibleImages.slice(0, limit).map((img: any) => ({
@@ -755,7 +804,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
  * CLIP visual search: encode text query via CLIP, search against image embeddings.
  * Finds images by what they look like, not just their metadata.
  */
-async function searchVisual(db: any, query: string, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchVisual(db: any, query: string, limit: number, yearRange?: { min?: number; max?: number }): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     // Encode text via CLIP text encoder
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
@@ -797,7 +846,7 @@ async function searchVisual(db: any, query: string, limit: number): Promise<{ re
 
     // clip_embeddings is a snapshot with no visibility column — drop rows whose
     // book is hidden/removed in Mongo (takedowns), same as the other image lanes.
-    const deduped = (await filterVisibleArtworks(db, matches)).slice(0, limit);
+    const deduped = (await filterVisibleArtworks(db, matches, yearRange)).slice(0, limit);
 
     return {
       results: deduped.map(m => ({
@@ -829,6 +878,7 @@ async function lexicalArtworkSearch(
   queryRegex: RegExp,
   limit: number,
   tenantId?: string,
+  yearRange?: { min?: number; max?: number },
 ): Promise<Array<{
   book_id: string;
   title: string;
@@ -845,6 +895,9 @@ async function lexicalArtworkSearch(
       content_type: 'artwork',
       visible: true,
       ...(tenantId ? { tenantId } : {}),
+      ...(yearRange && (yearRange.min !== undefined || yearRange.max !== undefined)
+        ? { year: { ...(yearRange.min !== undefined ? { $gte: yearRange.min } : {}), ...(yearRange.max !== undefined ? { $lte: yearRange.max } : {}) } }
+        : {}),
       $or: [
         { display_title: queryRegex },
         { title: queryRegex },

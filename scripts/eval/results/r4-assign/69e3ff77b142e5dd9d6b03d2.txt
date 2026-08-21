@@ -1,0 +1,4 @@
+book_id: 69e3ff77b142e5dd9d6b03d2
+Title: Satyra Sotadica (Aloisia Sigaea)
+Author: Nicolas Chorier
+Source language: Latin

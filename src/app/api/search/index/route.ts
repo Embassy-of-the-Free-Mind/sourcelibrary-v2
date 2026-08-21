@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { logSearchEvent } from '@/lib/search-event-log';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 
@@ -25,6 +26,19 @@ export async function GET(request: NextRequest) {
     const query = searchParams.get('q') || '';
     const type = searchParams.get('type'); // Filter by type: keyword, concept, person, place, vocabulary, quote
     const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
+    // Publication-year range ("Published after/before" in the search UI).
+    // Index hits are entity→book pairs: the entity has no year, but the book it
+    // points at does, so the range is expressible as a book-id gate.
+    const parseYear = (v: string | null): number | undefined => {
+      const n = parseInt(v || '', 10);
+      return Number.isFinite(n) ? n : undefined;
+    };
+    const yearMin = parseYear(searchParams.get('date_from'));
+    const yearMax = parseYear(searchParams.get('date_to'));
+    const hasYearRange = yearMin !== undefined || yearMax !== undefined;
+    // Over-fetch when filtering: the lanes cap their own candidate sets, so a
+    // narrow range applied after the cap would starve the result list.
+    const candidateLimit = hasYearRange ? Math.min(limit * 4, 400) : limit;
 
     if (!query || query.length < 2) {
       return NextResponse.json({
@@ -43,11 +57,27 @@ export async function GET(request: NextRequest) {
 
     // Run entity search + quote search in parallel
     const [termResults, quoteResults] = await Promise.all([
-      wantTerms ? searchEntities(db, query, queryRegex, type, limit) : Promise.resolve([]),
-      wantQuotes ? searchQuotes(db, queryRegex, limit) : Promise.resolve([]),
+      wantTerms ? searchEntities(db, query, queryRegex, type, candidateLimit) : Promise.resolve([]),
+      wantQuotes ? searchQuotes(db, queryRegex, candidateLimit) : Promise.resolve([]),
     ]);
 
-    const results = [...termResults, ...quoteResults].slice(0, limit);
+    let merged = [...termResults, ...quoteResults];
+
+    // One books lookup gates every lane at once — cheaper than a per-lane join,
+    // and it can't be forgotten when a new lane is added below.
+    if (hasYearRange && merged.length > 0) {
+      const bookIds = [...new Set(merged.map(r => r.book_id).filter(Boolean))];
+      const yearFilter: Record<string, number> = {};
+      if (yearMin !== undefined) yearFilter.$gte = yearMin;
+      if (yearMax !== undefined) yearFilter.$lte = yearMax;
+      const inRange = await db.collection('books')
+        .find({ id: { $in: bookIds }, year: yearFilter }, { projection: { id: 1 }, maxTimeMS: 5000 })
+        .toArray();
+      const allowed = new Set<string>(inRange.map(b => b.id as string));
+      merged = merged.filter(r => allowed.has(r.book_id));
+    }
+
+    const results = merged.slice(0, limit);
 
     // Group results by type for summary
     const byType: Record<string, number> = {
@@ -57,22 +87,14 @@ export async function GET(request: NextRequest) {
       byType[r.type] = (byType[r.type] || 0) + 1;
     }
 
-    // Log search query (fire-and-forget)
-    db.collection('analytics_events').insertOne({
-      event: 'search_query',
-      query,
-      results_count: results.length,
-      filters: { type, source: 'index' },
-      timestamp: new Date(),
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
-      // Geo from the edge header (same source pageviews use) so search interests
-      // can be broken down by country. Forward-only — past searches have none.
-      country: request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown',
-      created_at: new Date(),
-    }).catch(() => {});
+    // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
+    logSearchEvent({
+      request, db, query, resultsCount: results.length, source: 'index',
+      filters: { type },
+    });
 
     const response = NextResponse.json({ query, total: results.length, byType, results });
-    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
     return response;
   } catch (error) {
     console.error('Index search error:', error);

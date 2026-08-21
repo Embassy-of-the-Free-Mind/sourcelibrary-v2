@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { getPageSource, getPageImageUrl as resolvePageImage } from '@/lib/page-image-url';
+import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -71,10 +72,19 @@ export function getBookThumbnailUrl(
   const artworkSource = (book.image_display?.includes('/artwork/') && book.image_display)
     || (book.thumbnail?.includes('/artwork/') && book.thumbnail)
     || null;
-  const raw = size === 'display'
+  let raw = size === 'display'
     ? (book.image_display || book.thumbnail || book.thumbnail_blob || null)
     : (artworkSource || book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
+  raw = raw.trim(); // a handful of stored covers carry trailing whitespace
+
+  // A stored cover the browser cannot load must read as "no cover", so cards
+  // render the typographic placeholder instead of an <Image> stuck in its
+  // shimmer state forever (the CSP block fires before React hydrates, so the
+  // onError → placeholder swap never happens). Screens against the same host
+  // list the CSP img-src is built from; notably rejects `archive.org/download/`
+  // URLs, which 302 to un-allowlisted `ia*.us.archive.org` hosts.
+  if (raw.startsWith('http') && !isBrowserRenderableImageUrl(raw)) return null;
 
   // Wikimedia Commons images: serve the upload.wikimedia.org CDN URL as-is.
   // We must NOT rewrite to commons.wikimedia.org/w/thumb.php — the site CSP

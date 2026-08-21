@@ -1,0 +1,4 @@
+book_id: 69dbcb091040d1d5e20b14b8
+Title: Invectiva in superstitiosum quendam astrologum Johannem Lichtenberger
+Author: Paulus de Middelburgo
+Source language: Latin

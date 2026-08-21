@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { anonymizeIp } from '@/lib/anonymize-ip';
+import { classifyRequest, recordDroppedEvent } from '@/lib/analytics-ingest';
 
 /**
  * Track analytics events (book reads, page reads, page edits)
@@ -11,6 +11,18 @@ import { anonymizeIp } from '@/lib/anonymize-ip';
  *   book_id: string,
  *   page_id?: string,
  * }
+ *
+ * Non-human traffic is classified and dropped here (counted in aggregate only),
+ * exactly as `/api/track` does for pageviews — see src/lib/analytics-ingest.ts
+ * and #3405. Events that ARE stored carry `traffic_class` + `user_agent` so a
+ * future contamination is diagnosable from the data instead of by inference.
+ *
+ * `host` is stored for the same reason. The apex is behind Cloudflare but the
+ * bare `sourcelibrary-v2.vercel.app` deployment host answers the whole site
+ * with no `cf-ray` at all, so every Cloudflare-layer control — the ASN blocks,
+ * the crawler gate's entire first layer — is bypassed by anyone who uses that
+ * hostname instead. Without `host` on the event there is no way to tell an
+ * edge rule that isn't working from one that is being routed around.
  */
 // Analytics is fire-and-forget — don't hold a serverless slot during DB degradation
 const DB_TIMEOUT_MS = 3000;
@@ -38,16 +50,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get client IP for deduplication (anonymized — last octet zeroed)
-    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-      || request.headers.get('x-real-ip')
-      || 'unknown';
-    const ip = anonymizeIp(rawIp);
+    // Classify at write time. The IP is anonymized (last octet zeroed) and also
+    // serves as the dedup key.
+    const { cls, isHuman, userAgent, ip, host } = classifyRequest(request);
 
     // Race all DB work against a short timeout
     const dbWork = (async () => {
       const db = await getDb();
       const now = new Date();
+
+      // Crawlers: aggregate counter only. They must not land in
+      // analytics_events (they swamped reading depth 34:1) and must not bump
+      // books/pages.read_count — that counter sorts "popular" surfaces AND
+      // picks which books get paid OCR batches, so inflating it spends money.
+      if (!isHuman) {
+        await recordDroppedEvent(db, host, cls, event);
+        return { deduplicated: false, dropped: true };
+      }
 
       // For reads, use atomic upsert to prevent race condition duplicates
       if (event === 'book_read' || event === 'page_read') {
@@ -70,6 +89,9 @@ export async function POST(request: NextRequest) {
               book_id,
               page_id: page_id || null,
               ip,
+              user_agent: userAgent,
+              traffic_class: cls,
+              host,
               timestamp: now,
               created_at: new Date(),
             }
@@ -84,6 +106,9 @@ export async function POST(request: NextRequest) {
           book_id,
           page_id: page_id || null,
           ip,
+          user_agent: userAgent,
+          traffic_class: cls,
+          host,
           timestamp: now,
           created_at: new Date(),
         });

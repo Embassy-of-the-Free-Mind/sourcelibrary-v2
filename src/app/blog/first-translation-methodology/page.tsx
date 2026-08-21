@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How We Identify First Translations - Research Notes - Source Library',
@@ -9,7 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How We Identify First Translations',
     description: 'The methodology behind Source Library\'s first-translation classification: AI enrichment, bibliographic heuristics, and human review.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg' }],
   },
   alternates: {
     canonical: '/blog/first-translation-methodology',
@@ -23,7 +26,7 @@ export default function FirstTranslationMethodologyPage() {
         <ContentHeader
           title="How We Identify First Translations"
           subtitle="The methodology behind Source Library's classification system"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg"
+          image="https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg"
           imageAlt="Title page of Symbola Aureae Mensae by Michael Maier, 1617"
         >
           <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 30 March 2026 &middot; 22 min read</p>
@@ -562,12 +565,11 @@ export default function FirstTranslationMethodologyPage() {
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed">
             Source Library is a project of the Embassy of the Free Mind. Corrections and feedback are welcome &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="first-translation-methodology" />
     </ContentPageLayout>
   );
 }

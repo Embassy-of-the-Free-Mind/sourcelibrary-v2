@@ -17,46 +17,28 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { randomBytes } from 'crypto';
+
 import { GoogleGenAI } from '@google/genai';
-import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
+import { completeBatchUsage, sumBatchResponseUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
+import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
+import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 
 /**
- * Save current page content as a revision before overwriting.
- * Lightweight inline version of src/lib/page-revisions.ts createRevision().
+ * Save current page content as a revision before overwriting — delegates to the
+ * shared helper (scripts/lib/page-revisions.mjs). This worker's inline copy
+ * predated the #3240 refinements (marker-text skip, reason, source_language,
+ * batch_job_id preference) and never received them (#3977).
  */
 async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
-  try {
-    const page = await db.collection('pages').findOne(
-      { id: pageId },
-      { projection: { book_id: 1, ocr: 1, translation: 1 } }
-    );
-    if (!page) return;
-    const fieldData = page[field];
-    if (!fieldData?.data) return; // No existing content — first write
-
-    await db.collection('page_revisions').insertOne({
-      id: randomBytes(6).toString('hex'),
-      page_id: pageId,
-      book_id: page.book_id,
-      field,
-      data: fieldData.data,
-      source: fieldData.source || 'ai',
-      model: fieldData.model,
-      language: fieldData.language,
-      prompt_version: fieldData.prompt_version,
-      edited_by: fieldData.edited_by,
-      job_id: jobId,
-      original_date: fieldData.updated_at,
-      created_at: new Date(),
-    });
-  } catch (e) {
-    // Non-fatal — don't block collection on revision failure
-    console.error(`  [revision] Failed for ${pageId}/${field}: ${e.message?.slice(0, 50)}`);
-  }
+  return saveRevisionShared(db, pageId, field, {
+    jobId,
+    reason: field === 'ocr' ? 'reocr_batch' : 'retranslate_batch',
+  });
 }
 
 // ── Config ──
@@ -101,7 +83,7 @@ const MODEL_PRICING = {
 const BATCH_DISCOUNT = 0.5;
 
 function calculateCost(model, inputTokens, outputTokens) {
-  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-2.5-flash'];
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-3-flash-preview'];
   const inputCost = (inputTokens / 1_000_000) * pricing.input * BATCH_DISCOUNT;
   const outputCost = (outputTokens / 1_000_000) * pricing.output * BATCH_DISCOUNT;
   return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
@@ -257,11 +239,59 @@ async function extractResults(sdkJob, apiKey) {
   return inline || [];
 }
 
+/**
+ * Mark a batch's submit-time gemini_usage placeholder as finished with zero
+ * spend (#3452). Used when a job ends without ever producing results — Gemini
+ * failure/cancellation, generation-guard supersession, ghost/nameless jobs.
+ *
+ * Best-effort: a usage-meter write must never fail a collection run.
+ */
+async function closeUsagePlaceholder(db, job, reason, status = 'failed') {
+  const jobIdStr = job?.id || (job?._id && String(job._id));
+  if (!jobIdStr) return;
+  try {
+    await completeBatchUsage({
+      type: job.type || 'ocr',
+      mode: 'batch',
+      model: job.model,
+      book_id: job.book_id,
+      page_count: job.page_count || job.page_ids?.length || 0,
+      input_tokens: 0,
+      output_tokens: 0,
+      cost_usd: 0,
+      status,
+      error_message: reason,
+      batch_job_id: jobIdStr,
+      // No placeholder to close means the job predates the row or was already
+      // reconciled — don't manufacture a new zero row for it.
+      insertIfMissing: false,
+    }, db);
+  } catch (err) {
+    console.warn(`  Usage placeholder close failed (${jobIdStr}): ${err.message}`);
+  }
+}
+
 // ── Process one job ──
+
+// Types this collector knows how to save. Everything else is refused (#3725).
+const KNOWN_JOB_TYPES = new Set(['ocr', 'translation', 'translate', 'image_extraction']);
 
 async function processOneJob(db, job) {
   const jobName = job.job_name || job.gemini_job_name;
   if (!jobName) return { status: 'skipped' };
+
+  // Type allowlist (#3725): the save path below treats anything that isn't
+  // 'ocr'/'image_extraction' as a translation, so a typo'd type on a new
+  // submitter would silently write model output into translation.data.
+  // Refuse to collect unknown types and mark the job so it stops re-matching.
+  if (!KNOWN_JOB_TYPES.has(job.type)) {
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
+    await db.collection('batch_jobs').updateOne(
+      { _id: job._id },
+      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
+    );
+    return { status: 'unknown_type' };
+  }
 
   const result = await getJobData(jobName);
   if (!result) return { status: 'not_found', jobName };
@@ -298,6 +328,16 @@ async function processOneJob(db, job) {
           { _id: job._id },
           { $set: { status: 'superseded', error: `OCR generation advanced after submit (job gen ${job.ocr_generation})`, updated_at: new Date() } }
         );
+        // The job DID run, so Gemini billed for it — we just discard the
+        // output. We never read the result file here, so the tokens are
+        // genuinely unknown; record that rather than leaving the row 'submitted'
+        // (#3452). An unknown marked as such is recoverable; one that looks
+        // in-flight forever is not.
+        await closeUsagePlaceholder(
+          db, job,
+          'Superseded by generation guard — results discarded, tokens not read',
+          'superseded',
+        );
         console.log(`  SUPERSEDED (generation guard): ${jobName} (book: ${job.book_id})`);
         return { status: 'superseded', bookId: job.book_id };
       }
@@ -325,6 +365,11 @@ async function processOneJob(db, job) {
     let recitationCount = 0;
     const recitationPageIds = []; // Track page IDs for per-page recitation stamping (single-page path only)
 
+    // Job totals come from the RESPONSES, not from the pages we end up saving
+    // (#3452) — Gemini bills every response, including the ones we discard.
+    const { inputTokens: totalInputTokens, outputTokens: totalOutputTokens } =
+      sumBatchResponseUsage(responses);
+
     if (isMultiPage && job.type === 'ocr') {
       for (const r of responses) {
         if (r.error) { failCount++; continue; }
@@ -332,10 +377,18 @@ async function processOneJob(db, job) {
         if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
         const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
-        const usage = r.response?.usageMetadata;
         const parsed = parseMultiPageOcr(text);
+        // One response covers N pages and reports one usageMetadata — split it
+        // evenly for the per-page stamp so pages.ocr.input_tokens doesn't claim
+        // the whole request's tokens N times over.
+        const usage = r.response?.usageMetadata;
+        const share = parsed.length || 1;
+        const pageUsage = usage ? {
+          promptTokenCount: Math.round((usage.promptTokenCount || 0) / share),
+          candidatesTokenCount: Math.round((usage.candidatesTokenCount || 0) / share),
+        } : undefined;
         for (const [pageId, ocrText] of parsed) {
-          pageResults.push({ pageId, text: ocrText, usage });
+          pageResults.push({ pageId, text: ocrText, usage: pageUsage });
         }
       }
     } else {
@@ -400,30 +453,39 @@ async function processOneJob(db, job) {
       }
     }
 
+    // Human-edit guard (#3749): pages whose ocr/translation was written or
+    // corrected by a person (source 'manual' or edited_by) are protected —
+    // batch results submitted before the edit must not clobber them.
+    let humanEditedIds = new Set();
+    let protectedCount = 0;
+    let blankRefusedCount = 0;
+
     // First pass: fix null ocr/translation subdocuments (skip for image_extraction)
     if (job.type !== 'image_extraction') {
-      const nullFixOps = pageResults.map(({ pageId }) => ({
-        updateOne: {
-          filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
-          update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
-        },
-      }));
+      const field = job.type === 'ocr' ? 'ocr' : 'translation';
+      humanEditedIds = await findHumanEditedPageIds(db, pageResults.map(r => r.pageId), field);
+
+      const nullFixOps = pageResults
+        .filter(({ pageId }) => !humanEditedIds.has(pageId))
+        .map(({ pageId }) => ({
+          updateOne: {
+            filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
+            update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
+          },
+        }));
       if (nullFixOps.length > 0) {
         await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
       }
 
       // Save revisions for pages that already have content (non-blocking, parallel)
-      const field = job.type === 'ocr' ? 'ocr' : 'translation';
       const revisionPromises = pageResults
-        .filter(r => r.text.length <= HALLUCINATION_LIMIT)
+        .filter(r => r.text.length <= HALLUCINATION_LIMIT && !humanEditedIds.has(r.pageId))
         .map(r => saveRevisionBeforeOverwrite(db, r.pageId, field, jobIdStr));
       await Promise.allSettled(revisionPromises);
     }
 
     const bulkOps = [];
     let galleryDocs = null; // Populated by image_extraction jobs
-    let totalInputTokens = 0;
-    let totalOutputTokens = 0;
 
     // OCR provenance (#2297): map page_id → the exact image URL the orchestrator
     // fetched + sent, recorded on the batch job at submit. Lets us stamp
@@ -432,22 +494,72 @@ async function processOneJob(db, job) {
     // submitted before this shipped — those pages stay pre-provenance (null).
     const sourceUrlByPage = new Map((job.page_sources || []).map(s => [s.page_id, s.source_url]));
 
+    // ── Blank-page guard (#4149) ────────────────────────────────────────────
+    // The model does not decline an unreadable leaf: it writes fluent invented
+    // prose with a full apparatus, page number included, and a fabricated page
+    // number is a fabricated citation. HALLUCINATION_LIMIT above is a
+    // runaway-LENGTH guard and misses these — only one confirmed fabrication
+    // exceeded 25k chars; the rest were 483–2,800, shorter and better-formed
+    // than plenty of real OCR. Only the page image settles it.
+    //
+    // We check the exact URL the orchestrator sent to Gemini (#2297's
+    // page_sources), so this asks "was the image the model actually saw blank?"
+    // Pre-#2297 jobs carry no page_sources and simply skip the check.
+    //
+    // Fails OPEN on every doubt — see scripts/lib/blank-page-guard.mjs.
+    const blankVerdicts = new Map();
+    if (job.type === 'ocr' && guardEnabled()) {
+      const candidates = pageResults.filter(r =>
+        !staleDropPages?.has(r.pageId) && !humanEditedIds.has(r.pageId) &&
+        r.text.length <= HALLUCINATION_LIMIT && sourceUrlByPage.get(r.pageId));
+      const GUARD_CONCURRENCY = 6;
+      for (let i = 0; i < candidates.length; i += GUARD_CONCURRENCY) {
+        const slice = candidates.slice(i, i + GUARD_CONCURRENCY);
+        const verdicts = await Promise.all(slice.map(r =>
+          shouldRefuseOcrWrite({ text: r.text, imageUrl: sourceUrlByPage.get(r.pageId) })
+            .catch(() => ({ refuse: false, reason: 'guard_threw', coverage: null, chars: 0 }))));
+        slice.forEach((r, idx) => { if (verdicts[idx].refuse) blankVerdicts.set(r.pageId, verdicts[idx]); });
+      }
+      if (blankVerdicts.size) {
+        console.log(`  BLANK-PAGE GUARD: refusing ${blankVerdicts.size} page(s) whose image has no ink (#4149)`);
+      }
+    }
+
     for (const { pageId, text, usage } of pageResults) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
+      if (humanEditedIds.has(pageId)) {
+        console.log(`  PROTECTED: page ${pageId} has a human-edited ${job.type === 'ocr' ? 'ocr' : 'translation'} — skipping (#3749)`);
+        protectedCount++;
+        continue;
+      }
       if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
 
+      // Per-page stamp only — the job totals are summed per response above.
       const inputTokens = usage?.promptTokenCount || 0;
       const outputTokens = usage?.candidatesTokenCount || 0;
-      totalInputTokens += inputTokens;
-      totalOutputTokens += outputTokens;
 
       if (job.type === 'ocr') {
+        // Refused by the blank-page guard: keep the evidence, write no OCR.
+        // A silent drop would be as bad as a silent save — nothing downstream
+        // could tell "refused" from "never processed".
+        const blank = blankVerdicts.get(pageId);
+        if (blank) {
+          if (!DRY_RUN) {
+            await recordRefusal(db, {
+              pageId, bookId: job.book_id, pageNumber: null, text,
+              model: job.model, verdict: blank, jobId: jobIdStr,
+            }).catch(e => console.warn(`  guard: could not record refusal for ${pageId}: ${e.message}`));
+          }
+          blankRefusedCount++;
+          continue;
+        }
         const pageType = extractPageType(text);
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
 
         const setObj = {
           'ocr.data': text,
+          'ocr.has_warning': /<warning[\s>]/i.test(text), // write-time sensor (see collect-batch-results)
           'ocr.updated_at': now,
           'ocr.model': job.model,
           'ocr.language': job.language,
@@ -624,10 +736,16 @@ async function processOneJob(db, job) {
     }
 
     // Update batch_jobs status — mark as 'failed' if zero pages saved
-    const finalStatus = successCount > 0 ? 'saved' : 'failed';
-    const errorDetail = successCount === 0 && recitationCount > 0
-      ? `All ${recitationCount} pages blocked by RECITATION filter`
-      : successCount === 0 ? `All ${failCount} pages failed` : undefined;
+    // (pages skipped by the human-edit guard count as handled, not failed)
+    // Pages refused by the blank-page guard (#4149) are HANDLED, not failed —
+    // same reasoning as the human-edit guard. A job of nothing but blank leaves
+    // is a job that did its work correctly; marking it 'failed' would send it
+    // back round for a retry that would fabricate the same text again.
+    const finalStatus = successCount > 0 || protectedCount > 0 || blankRefusedCount > 0 ? 'saved' : 'failed';
+    const errorDetail = finalStatus !== 'failed' ? undefined
+      : recitationCount > 0
+        ? `All ${recitationCount} pages blocked by RECITATION filter`
+        : `All ${failCount} pages failed`;
 
     const costUsd = calculateCost(job.model, totalInputTokens, totalOutputTokens);
 
@@ -639,6 +757,8 @@ async function processOneJob(db, job) {
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
+          ...(protectedCount > 0 && { protected_pages: protectedCount }),
+          ...(blankRefusedCount > 0 && { blank_refused_pages: blankRefusedCount }),
           results_collected: true,
           completed_at: now,
           updated_at: now,
@@ -650,10 +770,18 @@ async function processOneJob(db, job) {
       }
     );
 
-    // Log to Supabase gemini_usage (non-blocking).
+    // Close out the placeholder row this batch's submission wrote (#3452),
+    // rather than inserting a second row: the submit-time row is the one that
+    // reads $0.00 forever otherwise, and two rows per batch double-count pages
+    // in the dashboard_usage rollup. Falls back to an insert when there is no
+    // placeholder (re-collected or pre-#3452 batches).
     // page_count: prefer the batch's own page_count (always populated on batch_jobs).
     // successCount tracks DB matchedCount which is 0 for re-collected batches.
-    logUsageAsync({
+    // status mirrors the batch job's real outcome — reporting 'success' for a
+    // job where every page was blocked is how the meter learned to lie.
+    // Awaited, unlike the old fire-and-forget insert: the meter write is now
+    // the only record of this batch's spend, so it must not race the process.
+    await completeBatchUsage({
       type: job.type || 'ocr',
       mode: 'batch',
       model: job.model,
@@ -663,9 +791,10 @@ async function processOneJob(db, job) {
       input_tokens: totalInputTokens,
       output_tokens: totalOutputTokens,
       cost_usd: costUsd,
-      status: 'success',
+      status: finalStatus === 'saved' ? 'success' : 'failed',
+      error_message: errorDetail ?? null,
       batch_job_id: jobIdStr,
-    }, db);
+    }, db).catch(err => console.warn(`  Usage log failed: ${err.message}`));
 
     return {
       status: 'collected',
@@ -734,6 +863,10 @@ async function processOneJob(db, job) {
           updated_at: new Date(),
         } }
       );
+      // Close the submit-time usage placeholder — a job that never ran spent
+      // nothing, but the row must say so rather than sit at 'submitted'
+      // forever, indistinguishable from a batch still in flight (#3452).
+      await closeUsagePlaceholder(db, job, `Gemini state: ${state}`);
     }
     return { status: 'failed', state, bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
   }
@@ -742,39 +875,10 @@ async function processOneJob(db, job) {
 // ── Post-processing ──
 
 async function updateBookCounts(db, bookId) {
-  const [counts] = await db.collection('pages').aggregate([
-    { $match: { book_id: bookId } },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-        with_ocr: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$ocr.data', null] },
-                { $ne: ['$ocr.data', ''] },
-                { $ifNull: ['$ocr.data', false] },
-              ]},
-              1, 0,
-            ],
-          },
-        },
-        with_translation: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] },
-              ]},
-              1, 0,
-            ],
-          },
-        },
-      },
-    },
-  ]).toArray();
+  // Count VISIBLE pages only (page_number > 0) — see scripts/lib/page-counts.mjs
+  // and issue #3293. Soft-hidden pages never render and must not inflate counts.
+  const [counts] = await db.collection('pages')
+    .aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
 
   if (counts) {
     await db.collection('books').updateOne(
@@ -1257,12 +1361,15 @@ async function run() {
   }
 
   // RECITATION recovery: mark affected books for retry with a different model.
-  // The batch API with gemini-3-flash-preview triggers RECITATION on some historical
-  // texts. Three-tier escalation before a permanent block:
-  //   1. First failure  -> recitation_retry      -> orchestrator retries with gemini-2.5-flash.
-  //   2. Second failure -> recitation_retry_lite -> orchestrator retries with gemini-3.1-flash-lite
-  //                        (proven to bypass RECITATION on famous texts where 2.5-flash also fails).
-  //   3. Third failure  -> recitation_blocked    -> permanently skip (all 3 models failed).
+  // The batch API triggers RECITATION on ubiquitous canonical texts. Escalation
+  // before a permanent block (never any model below v3 — see CLAUDE.md):
+  //   1. First failure  -> recitation_retry      -> orchestrator retries with gemini-3.1-flash-lite.
+  //   2. Second failure -> recitation_retry_lite -> orchestrator retries with gemini-3-flash-preview.
+  //   3. Third failure  -> recitation_blocked    -> both Gemini tiers refuse.
+  //      Such a book is NOT hopeless: route it to the MinerU + grounded-correction
+  //      lane (mineru-ocr-worker.mjs, then ocr-correct-grounded.mjs — #3389), which
+  //      reads with an engine that has no recitation filter and then corrects the
+  //      result against the page image.
   if (recitationBooks.size > 0) {
     console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
     for (const bookId of recitationBooks) {
@@ -1289,9 +1396,9 @@ async function run() {
               $unset: { 'pipeline_auto.recitation_retry_lite': '' },
             }
           );
-          console.log(`  RECITATION permanently blocked ${bookId} -> needs_attention (all 3 models failed)`);
+          console.log(`  RECITATION blocked on both Gemini tiers ${bookId} -> needs_attention (route to MinerU + grounded correction, #3389)`);
         } else if (retriedFallback) {
-          // Second RECITATION failure: gemini-2.5-flash also blocked. Escalate to gemini-3.1-flash-lite.
+          // Second RECITATION failure: gemini-3.1-flash-lite also blocked. Escalate to gemini-3-flash-preview.
           await db.collection('books').updateOne(
             { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
             {

@@ -1,0 +1,655 @@
+<meta charset="utf-8">
+<title>An Atlas of Described Experience</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --paper:#e3e5e0; --paper-raised:#edeeea; --ink:#131719; --ink-soft:#4a5257;
+    --ink-mute:#737d82; --rule:#c3c7c1; --well:#0b0f12; --well-line:#1c2429;
+    --well-ink:#e8ecec; --well-mute:#7b878d; --focus:#3987e5;
+    --reg-testimony:#3987e5; --reg-vision:#008300; --reg-instruction:#d55181;
+    --reg-fiction:#c98500; --reg-doctrine:#8b959a;
+    --ff-display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --ff-ui:ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --ff-data:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --paper:#101416; --paper-raised:#171c1f; --ink:#e7eaea; --ink-soft:#a8b2b6;
+      --ink-mute:#7d878c; --rule:#293236; --well:#070a0c; --well-line:#1a2226;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper:#101416; --paper-raised:#171c1f; --ink:#e7eaea; --ink-soft:#a8b2b6;
+    --ink-mute:#7d878c; --rule:#293236; --well:#070a0c; --well-line:#1a2226;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--ff-ui);
+    font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1240px; margin:0 auto; padding:0 24px 72px; }
+
+  header.masthead { padding:44px 0 20px; border-bottom:1px solid var(--rule); }
+  .eyebrow { font-family:var(--ff-data); font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-mute); margin:0 0 14px; }
+  h1 { font-family:var(--ff-display); font-weight:400; font-size:clamp(30px,4.6vw,52px);
+    line-height:1.08; letter-spacing:-.015em; margin:0 0 16px; text-wrap:balance; max-width:20ch; }
+  .thesis { font-family:var(--ff-display); font-size:clamp(16px,1.9vw,20px); line-height:1.5;
+    color:var(--ink-soft); max-width:62ch; margin:0 0 8px; }
+  .caveat { font-size:13.5px; color:var(--ink-mute); max-width:66ch; margin:14px 0 0; }
+  .counts { display:flex; flex-wrap:wrap; gap:0 34px; margin:26px 0 0;
+    font-family:var(--ff-data); font-variant-numeric:tabular-nums; }
+  .counts div { display:flex; flex-direction:column; gap:2px; }
+  .counts b { font-size:23px; font-weight:500; letter-spacing:-.01em; }
+  .counts span { font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-mute); }
+
+  .controls { display:flex; flex-wrap:wrap; align-items:flex-end; gap:16px 22px;
+    padding:20px 0; border-bottom:1px solid var(--rule); }
+  .ctl { display:flex; flex-direction:column; gap:7px; }
+  .ctl > label { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-mute); }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { display:inline-flex; align-items:center; gap:7px; font:inherit; font-size:13px;
+    cursor:pointer; padding:5px 11px 5px 9px; background:var(--paper-raised);
+    border:1px solid var(--rule); color:var(--ink); }
+  .chip[aria-pressed="false"] { opacity:.42; }
+  .chip:focus-visible, select:focus-visible, input:focus-visible, button:focus-visible {
+    outline:2px solid var(--focus); outline-offset:2px; }
+  .chip .mk { width:12px; height:12px; flex:0 0 12px; }
+  select, input[type="search"] { font:inherit; font-size:13.5px; padding:6px 9px;
+    background:var(--paper-raised); color:var(--ink); border:1px solid var(--rule); min-width:150px; }
+  button.reset { font:inherit; font-size:13px; padding:6px 13px; cursor:pointer;
+    background:transparent; color:var(--ink-soft); border:1px solid var(--rule); }
+  .shown { font-family:var(--ff-data); font-size:12px; color:var(--ink-mute);
+    font-variant-numeric:tabular-nums; margin-left:auto; align-self:flex-end; padding-bottom:6px; }
+
+  .stage { display:grid; grid-template-columns:minmax(0,1fr) 336px; margin:22px 0 0; }
+  @media (max-width:900px) { .stage { grid-template-columns:minmax(0,1fr); } }
+  .well { position:relative; background:var(--well); border:1px solid var(--well-line);
+    min-height:600px; overflow:hidden; }
+  .well canvas { display:block; width:100%; height:100%; cursor:crosshair; }
+  .wellhint { position:absolute; left:12px; bottom:10px; z-index:2; pointer-events:none;
+    font-family:var(--ff-data); font-size:10.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--well-mute); }
+  .tip { position:absolute; z-index:5; pointer-events:none; max-width:300px; background:#10171b;
+    border:1px solid #2a343a; color:var(--well-ink); padding:9px 11px; font-size:13px;
+    line-height:1.45; display:none; }
+  .tip q { font-family:var(--ff-display); font-style:italic; }
+  .tip .src { display:block; margin-top:6px; font-family:var(--ff-data); font-size:10.5px;
+    letter-spacing:.07em; color:var(--well-mute); text-transform:uppercase; }
+
+  .detail { border:1px solid var(--rule); border-left:0; background:var(--paper-raised);
+    padding:20px; display:flex; flex-direction:column; gap:13px; }
+  @media (max-width:900px) { .detail { border-left:1px solid var(--rule); border-top:0; } }
+  .detail .empty { color:var(--ink-mute); font-size:13.5px; }
+  .detail blockquote { margin:0; font-family:var(--ff-display); font-size:19px; line-height:1.45; }
+  .detail .meta { font-size:13px; color:var(--ink-soft); }
+  .detail .meta b { font-weight:600; }
+  .tags { display:flex; flex-wrap:wrap; gap:5px; }
+  .tag { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 7px; border:1px solid var(--rule); color:var(--ink-soft); }
+  .tag.hot { border-color:var(--reg-fiction); color:var(--ink); }
+  .detail a.cite { font-family:var(--ff-data); font-size:11.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--ink); text-decoration-thickness:1px; text-underline-offset:4px; }
+  .glosswarn { font-size:12px; color:var(--ink-mute); border-left:2px solid var(--rule); padding-left:9px; }
+
+  section { margin:56px 0 0; }
+  h2 { font-family:var(--ff-display); font-weight:400; font-size:27px; margin:0 0 12px; letter-spacing:-.01em; }
+  section p { max-width:66ch; color:var(--ink-soft); margin:0 0 14px; }
+  .tblwrap { overflow-x:auto; border:1px solid var(--rule); }
+  table { border-collapse:collapse; width:100%; font-size:13.5px; }
+  th, td { text-align:left; padding:8px 12px; border-bottom:1px solid var(--rule); }
+  th { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-mute); font-weight:400; }
+  td.num { text-align:right; font-family:var(--ff-data); font-variant-numeric:tabular-nums; }
+  tbody tr:last-child td { border-bottom:0; }
+  .bar { display:inline-block; height:8px; vertical-align:middle; }
+  details { margin-top:14px; }
+  summary { cursor:pointer; font-family:var(--ff-data); font-size:11.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-soft); }
+  .figure { border:1px solid var(--rule); background:var(--paper-raised); padding:20px; }
+  .bignum { font-family:var(--ff-data); font-size:clamp(28px,4.4vw,46px); letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums; line-height:1; }
+  .figrow { display:flex; flex-wrap:wrap; gap:34px; align-items:flex-end; }
+  .figrow > div { display:flex; flex-direction:column; gap:6px; }
+  .figrow span.lbl { font-family:var(--ff-data); font-size:10.5px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-mute); max-width:24ch; }
+  footer { margin-top:60px; padding-top:22px; border-top:1px solid var(--rule); font-size:13px;
+    color:var(--ink-mute); max-width:68ch; }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; animation:none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Source Library · phenomenology of the historical record · second edition</p>
+  <h1>An Atlas of Described Experience</h1>
+  <p class="thesis" id="thesis"></p>
+  <p class="caveat">
+    This maps <em>descriptions</em> of consciousness, not consciousness. Every point is a verbatim
+    quotation, machine-checked character-for-character against the scanned page it came from, and
+    links to that page. Quotations that did not match exactly were discarded rather than repaired.
+  </p>
+  <div class="counts" id="counts"></div>
+</header>
+
+<div class="controls">
+  <div class="ctl">
+    <label id="reglabel">Register</label>
+    <div class="chips" id="regchips" role="group" aria-labelledby="reglabel"></div>
+  </div>
+  <div class="ctl"><label for="f-feature">Experience</label>
+    <select id="f-feature"><option value="">All</option></select></div>
+  <div class="ctl"><label for="f-trigger">Brought on by</label>
+    <select id="f-trigger"><option value="">All</option></select></div>
+  <div class="ctl"><label for="f-agent">Attributed to</label>
+    <select id="f-agent"><option value="">All</option></select></div>
+  <div class="ctl"><label for="f-aftermath">What followed</label>
+    <select id="f-aftermath"><option value="">All</option></select></div>
+  <div class="ctl"><label for="f-trad">Tradition</label>
+    <select id="f-trad"><option value="">All</option></select></div>
+  <div class="ctl"><label for="f-lang">Language</label>
+    <select id="f-lang"><option value="">All</option></select></div>
+  <div class="ctl"><label for="f-cent">Century</label>
+    <select id="f-cent"><option value="">All</option></select></div>
+  <div class="ctl"><label for="f-q">Search the quotations</label>
+    <input type="search" id="f-q" placeholder="e.g. light, abyss, opium" /></div>
+  <div class="ctl"><label>&nbsp;</label>
+    <button class="chip" id="f-contested" type="button" aria-pressed="false">Only disputed</button></div>
+  <div class="ctl"><label>&nbsp;</label><button class="reset" id="reset">Reset</button></div>
+  <div class="shown" id="shown"></div>
+</div>
+
+<div class="stage">
+  <div class="well">
+    <canvas id="cv"></canvas>
+    <div class="wellhint">Scroll to zoom · drag to pan · click a mark to hold it</div>
+    <div class="tip" id="tip"></div>
+  </div>
+  <aside class="detail" id="detail">
+    <p class="empty">Hover a mark to read its quotation. Click to hold it here, with a link to the page it was transcribed from.</p>
+  </aside>
+</div>
+
+<section>
+  <h2>How much of the library is this?</h2>
+  <p id="baselinepara"></p>
+  <div class="figure">
+    <div class="figrow" id="baselinefig"></div>
+  </div>
+  <p style="margin-top:16px">
+    That ratio is the only evidence that the probes are doing real work rather than returning
+    whatever is nearest. It also means this atlas is a core sample, not a survey: the material it
+    draws on is roughly two orders of magnitude larger than what is plotted here.
+  </p>
+</section>
+
+<section>
+  <h2>Traditions transmit different things</h2>
+  <p>
+    The clearest structure is not <em>which</em> states get described but <em>how</em>. Some reach us
+    almost entirely as instruction — a method for producing the state — and others almost entirely as
+    testimony. The split falls along tradition lines, and is visible in the map as the contemplative
+    region sitting apart from the visionary mass.
+  </p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr>
+        <th scope="col">Probe theme &amp; passages read</th>
+        <th scope="col">Instruction</th><th scope="col">Testimony</th><th scope="col">Leans</th>
+      </tr></thead>
+      <tbody id="splitbody"></tbody>
+    </table>
+  </div>
+  <p style="margin-top:14px" id="splitnote"></p>
+</section>
+
+<section>
+  <h2>What brought it on</h2>
+  <p>
+    Historical sources almost always say what preceded the state — a fast, a fever, a drug, a vigil,
+    a bereavement, a drum. Modern experimental phenomenology cannot ask this question, because it
+    holds the cause fixed by design. This is the axis the historical record has and the laboratory
+    does not.
+  </p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th scope="col">Antecedent</th><th scope="col">Passages</th>
+        <th scope="col">Share</th><th scope="col">Most common experience</th></tr></thead>
+      <tbody id="triggerbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Who was held responsible</h2>
+  <p id="agentpara"></p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th scope="col">Attributed to</th><th scope="col">Passages</th>
+        <th scope="col">Disputed</th><th scope="col">Chiefly from</th></tr></thead>
+      <tbody id="agentbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Regions of the map</h2>
+  <p>Clusters are found in the quotation embeddings and labelled afterwards by what dominates them — no region was defined in advance.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th scope="col">Region</th><th scope="col">Passages</th>
+        <th scope="col">Dominant experiences</th><th scope="col">Chiefly from</th>
+        <th scope="col">Typical antecedent</th></tr></thead>
+      <tbody id="clusterbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Every passage</h2>
+  <p>The full dataset, filtered by the controls above. Each row links to the scanned page.</p>
+  <details>
+    <summary>Open the table</summary>
+    <div class="tblwrap" style="margin-top:12px; max-height:520px; overflow-y:auto">
+      <table>
+        <thead><tr><th scope="col">Quotation</th><th scope="col">Source</th>
+          <th scope="col">Year</th><th scope="col">Register</th><th scope="col">Page</th></tr></thead>
+        <tbody id="allbody"></tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<footer id="method"></footer>
+</div>
+
+<script id="mapdata" type="application/json">__DATA__</script>
+<script>
+(function () {
+  "use strict";
+  const DATA = JSON.parse(document.getElementById('mapdata').textContent);
+  const PTS = DATA.points, META = DATA.meta, B = META.baseline || {};
+
+  const REGISTERS = [
+    { id:'testimony',        label:'Testimony',        raw:'#3987e5', shape:'circle' },
+    { id:'vision-narrative', label:'Vision narrative', raw:'#008300', shape:'triangle' },
+    { id:'instruction',      label:'Instruction',      raw:'#d55181', shape:'square' },
+    { id:'fiction',          label:'Fiction',          raw:'#c98500', shape:'diamond' },
+    { id:'doctrine',         label:'Doctrine',         raw:'#8b959a', shape:'dot' }
+  ];
+  const REG = {}; REGISTERS.forEach(r => REG[r.id] = r);
+  const pretty = s => (s || '').replace(/[_-]/g, ' ');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const nf = n => n.toLocaleString('en-US');
+
+  /* ---------- masthead ---------- */
+  const cent = META.centuries || [];
+  const centLabel = c => c < 0 ? ((Math.abs(c) + 1) + 'th c. BCE') : (c + 'th century');
+  const span = cent.length
+    ? centLabel(cent[0][0]) + ' – ' + centLabel(cent[cent.length-1][0]).replace(' century', ' c. CE')
+    : '—';
+
+  document.getElementById('thesis').textContent =
+    nf(META.count) + ' passages in which someone tried to say what an unusual state of consciousness ' +
+    'was actually like from the inside — visionary, contemplative, drugged, paralysed, bereaved, ' +
+    'dissolved — drawn from ' + nf(META.books) + ' books in ' + (META.languages||[]).length +
+    ' languages. Every language in the corpus was searched with the same 144 probes, so this is a ' +
+    'stratified sample rather than a popularity contest. Passages sit near one another when their ' +
+    'descriptions resemble one another, not when their books do.';
+
+  document.getElementById('counts').innerHTML = [
+    [nf(META.count),'passages'], [nf(META.books),'books'], [nf(META.works),'works'],
+    [(META.languages||[]).length,'languages'], [span,'spanning'],
+    [nf(META.contested||0),'disputed']
+  ].map(([v,l]) => '<div><b>' + esc(v) + '</b><span>' + esc(l) + '</span></div>').join('');
+
+  /* ---------- baseline / denominator ---------- */
+  document.getElementById('baselinepara').innerHTML =
+    'A random sample of ' + nf(B.sample) + ' pages was drawn from the corpus and put through the ' +
+    'same classifier, blind. <b>' + B.experientialPct + '%</b> of random pages describe an experience ' +
+    'from the inside, against <b>' + B.retrievedExperientialPct + '%</b> of the pages the probes ' +
+    'retrieved — an enrichment of about <b>' + B.enrichment + '×</b>. Extrapolating the baseline rate ' +
+    'across roughly ' + (B.corpusPages/1e6).toFixed(1) + ' million translated pages puts the ' +
+    'experiential material in the library somewhere between <b>' + nf(B.projectedLowK) + ',000</b> and <b>' +
+    nf(B.projectedHighK) + ',000</b> pages (95% interval on the sample).';
+
+  document.getElementById('baselinefig').innerHTML = [
+    [B.experientialPct + '%', 'of random pages are experiential'],
+    [B.retrievedExperientialPct + '%', 'of retrieved pages are experiential'],
+    [B.enrichment + '×', 'enrichment from the probe set'],
+    [nf(B.projectedLowK) + 'K–' + nf(B.projectedHighK) + 'K', 'experiential pages estimated corpus-wide'],
+    [nf(META.count), 'plotted here']
+  ].map(([n,l]) => '<div><span class="bignum">' + esc(n) + '</span><span class="lbl">' + esc(l) + '</span></div>').join('');
+
+  /* ---------- filters ---------- */
+  const state = { reg:new Set(REGISTERS.map(r=>r.id)), feature:'', trigger:'', agent:'',
+                  aftermath:'', trad:'', lang:'', cent:'', q:'', contested:false };
+
+  function markSVG(r, fill) {
+    if (r.shape==='circle')   return '<circle cx="6" cy="6" r="5" fill="'+fill+'"/>';
+    if (r.shape==='triangle') return '<polygon points="6,1 11.2,10.5 0.8,10.5" fill="'+fill+'"/>';
+    if (r.shape==='square')   return '<rect x="1.3" y="1.3" width="9.4" height="9.4" fill="'+fill+'"/>';
+    if (r.shape==='dot')      return '<circle cx="6" cy="6" r="2.6" fill="'+fill+'"/>';
+    return '<polygon points="6,0.6 11.4,6 6,11.4 0.6,6" fill="'+fill+'"/>';
+  }
+  const chips = document.getElementById('regchips');
+  REGISTERS.forEach(r => {
+    const n = PTS.filter(p => p.reg === r.id).length;
+    if (!n) return;
+    const b = document.createElement('button');
+    b.className='chip'; b.type='button'; b.setAttribute('aria-pressed','true'); b.dataset.reg=r.id;
+    b.innerHTML = '<svg class="mk" viewBox="0 0 12 12" aria-hidden="true">'+markSVG(r,r.raw)+'</svg>'+
+      esc(r.label)+' <span style="color:var(--ink-mute);font-family:var(--ff-data);font-size:11px">'+n+'</span>';
+    b.addEventListener('click', () => {
+      if (state.reg.has(r.id)) state.reg.delete(r.id); else state.reg.add(r.id);
+      if (!state.reg.size) REGISTERS.forEach(x => state.reg.add(x.id));
+      chips.querySelectorAll('.chip').forEach(el =>
+        el.setAttribute('aria-pressed', String(state.reg.has(el.dataset.reg))));
+      apply();
+    });
+    chips.appendChild(b);
+  });
+
+  function fill(id, items, labeller) {
+    const el = document.getElementById(id);
+    (items||[]).forEach(([v,n]) => {
+      if (!v || v === 'not-stated') return;
+      const o = document.createElement('option');
+      o.value = v; o.textContent = (labeller ? labeller(v) : v) + '  (' + n + ')';
+      el.appendChild(o);
+    });
+  }
+  fill('f-feature', META.features, pretty);
+  fill('f-trigger', META.triggers, pretty);
+  fill('f-agent', META.agents, pretty);
+  fill('f-aftermath', META.aftermaths, pretty);
+  fill('f-trad', META.traditions, pretty);
+  fill('f-lang', META.languages);
+  fill('f-cent', (META.centuries||[]).map(([c,n]) => [String(c), n]), c => centLabel(Number(c)));
+
+  const bind = (id, key) => document.getElementById(id)
+    .addEventListener('input', e => { state[key] = e.target.value; apply(); });
+  bind('f-feature','feature'); bind('f-trigger','trigger'); bind('f-agent','agent');
+  bind('f-aftermath','aftermath'); bind('f-trad','trad'); bind('f-lang','lang');
+  bind('f-cent','cent'); bind('f-q','q');
+
+  const contestedBtn = document.getElementById('f-contested');
+  contestedBtn.addEventListener('click', () => {
+    state.contested = !state.contested;
+    contestedBtn.setAttribute('aria-pressed', String(state.contested));
+    apply();
+  });
+  document.getElementById('reset').addEventListener('click', () => {
+    state.reg = new Set(REGISTERS.map(r=>r.id));
+    state.feature=state.trigger=state.agent=state.aftermath=state.trad=state.lang=state.cent=state.q='';
+    state.contested = false;
+    ['f-feature','f-trigger','f-agent','f-aftermath','f-trad','f-lang','f-cent','f-q']
+      .forEach(i => document.getElementById(i).value = '');
+    contestedBtn.setAttribute('aria-pressed','false');
+    chips.querySelectorAll('.chip').forEach(el => el.setAttribute('aria-pressed','true'));
+    apply();
+  });
+
+  function passes(p) {
+    if (!state.reg.has(p.reg)) return false;
+    if (state.contested && !p.ct) return false;
+    if (state.feature && (p.f||[]).indexOf(state.feature) < 0) return false;
+    if (state.trigger && p.tg !== state.trigger) return false;
+    if (state.agent && p.ag !== state.agent) return false;
+    if (state.aftermath && p.af !== state.aftermath) return false;
+    if (state.trad && p.tr !== state.trad) return false;
+    if (state.lang && p.lang !== state.lang) return false;
+    if (state.cent) { if (p.yr == null) return false;
+      if (String(Math.floor(p.yr/100)+1) !== state.cent) return false; }
+    if (state.q) {
+      const q = state.q.toLowerCase();
+      if ((p.q + ' ' + p.t + ' ' + (p.a||'')).toLowerCase().indexOf(q) < 0) return false;
+    }
+    return true;
+  }
+
+  /* ---------- canvas ---------- */
+  const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+  const tip = document.getElementById('tip'), wellEl = cv.parentElement;
+  let view = { k:1, x:0, y:0 }, W=0, H=0, dpr=1;
+  let visible = [], pinned = null, hovered = null;
+
+  function resize() {
+    const r = wellEl.getBoundingClientRect();
+    W = r.width; H = Math.max(600, r.height);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = W*dpr; cv.height = H*dpr; cv.style.height = H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+  const PAD = 44;
+  const sx = p => (PAD + (p.x/1000)*(W-PAD*2))*view.k + view.x;
+  const sy = p => (PAD + (p.y/1000)*(H-PAD*2))*view.k + view.y;
+
+  function shape(g, r, x, y, s) {
+    g.beginPath();
+    if (r.shape==='circle') g.arc(x,y,s,0,6.2832);
+    else if (r.shape==='dot') g.arc(x,y,s*0.62,0,6.2832);
+    else if (r.shape==='triangle') { g.moveTo(x,y-s*1.15); g.lineTo(x+s,y+s*.82); g.lineTo(x-s,y+s*.82); g.closePath(); }
+    else if (r.shape==='square') g.rect(x-s*.88,y-s*.88,s*1.76,s*1.76);
+    else { g.moveTo(x,y-s*1.2); g.lineTo(x+s*1.2,y); g.lineTo(x,y+s*1.2); g.lineTo(x-s*1.2,y); g.closePath(); }
+    g.fill();
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = '#141c21'; ctx.lineWidth = 1;
+    for (let i=0;i<=4;i++) {
+      const gx = (PAD+(i/4)*(W-PAD*2))*view.k+view.x, gy = (PAD+(i/4)*(H-PAD*2))*view.k+view.y;
+      ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
+    }
+    const byC = {};
+    visible.forEach(p => { (byC[p.c] = byC[p.c] || []).push(p); });
+    ctx.textAlign='center'; ctx.font='600 10px ui-monospace, Menlo, monospace';
+    const placed = [];
+    Object.keys(byC).map(c => ({c, g:byC[c]})).sort((a,b) => b.g.length - a.g.length).forEach(({c,g}) => {
+      if (g.length < 14) return;
+      const cm = META.clusters[c]; if (!cm) return;
+      const txt = pretty(cm.label).toUpperCase();
+      const mx = g.reduce((a,p)=>a+sx(p),0)/g.length, my = g.reduce((a,p)=>a+sy(p),0)/g.length;
+      const w = ctx.measureText(txt).width;
+      const box = { x0:mx-w/2-6, x1:mx+w/2+6, y0:my-15, y1:my+5 };
+      if (box.x0 < 2 || box.x1 > W-2) return;
+      if (placed.some(b => !(box.x1<b.x0 || box.x0>b.x1 || box.y1<b.y0 || box.y0>b.y1))) return;
+      placed.push(box);
+      ctx.lineWidth=3; ctx.strokeStyle='rgba(7,10,12,.92)'; ctx.strokeText(txt,mx,my);
+      ctx.fillStyle='rgba(186,199,205,.78)'; ctx.fillText(txt,mx,my);
+    });
+    const s = Math.max(2.2, 3.2*Math.sqrt(view.k));
+    visible.forEach(p => {
+      const r = REG[p.reg]; if (!r) return;
+      ctx.globalAlpha = (pinned||hovered) ? .5 : .85;
+      ctx.fillStyle = r.raw;
+      shape(ctx, r, sx(p), sy(p), s);
+    });
+    ctx.globalAlpha = 1;
+    [hovered, pinned].forEach(p => {
+      if (!p || !passes(p)) return;
+      const r = REG[p.reg]; if (!r) return;
+      const x = sx(p), y = sy(p);
+      ctx.fillStyle='#070a0c'; shape(ctx,r,x,y,s+3.4);
+      ctx.fillStyle=r.raw;     shape(ctx,r,x,y,s+1.6);
+      ctx.strokeStyle='#e8ecec'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.arc(x,y,s+7,0,6.2832); ctx.stroke();
+    });
+  }
+
+  function hit(mx,my) {
+    let best=null, bd=15*15;
+    for (const p of visible) {
+      const dx=sx(p)-mx, dy=sy(p)-my, d=dx*dx+dy*dy;
+      if (d<bd) { bd=d; best=p; }
+    }
+    return best;
+  }
+
+  const drag = { on:false, px:0, py:0 };
+  cv.addEventListener('mousemove', e => {
+    const r = cv.getBoundingClientRect();
+    const mx = e.clientX-r.left, my = e.clientY-r.top;
+    if (drag.on) { view.x += mx-drag.px; view.y += my-drag.py; drag.px=mx; drag.py=my; draw(); return; }
+    const h = hit(mx,my);
+    if (h !== hovered) { hovered = h; draw(); }
+    if (h) {
+      tip.style.display='block';
+      tip.innerHTML = '<q>'+esc(h.q.length>190 ? h.q.slice(0,190)+'…' : h.q)+'</q>'+
+        '<span class="src">'+esc(h.t.slice(0,52))+(h.yr?' · '+h.yr:'')+' · '+esc(REG[h.reg].label)+'</span>';
+      tip.style.left = Math.min(Math.max(6, mx+16), W-306)+'px';
+      tip.style.top = Math.min(my+16, H-120)+'px';
+    } else tip.style.display='none';
+  });
+  cv.addEventListener('mouseleave', () => { tip.style.display='none'; hovered=null; draw(); });
+  cv.addEventListener('mousedown', e => {
+    const r = cv.getBoundingClientRect();
+    drag.on=true; drag.px=e.clientX-r.left; drag.py=e.clientY-r.top; cv.style.cursor='grabbing';
+  });
+  window.addEventListener('mouseup', e => {
+    if (!drag.on) return;
+    drag.on=false; cv.style.cursor='crosshair';
+    const r = cv.getBoundingClientRect();
+    const mx=e.clientX-r.left, my=e.clientY-r.top;
+    if (mx>=0 && my>=0 && mx<=W && my<=H) { const h = hit(mx,my); if (h) { pinned=h; showDetail(h); draw(); } }
+  });
+  cv.addEventListener('wheel', e => {
+    e.preventDefault();
+    const r = cv.getBoundingClientRect();
+    const mx=e.clientX-r.left, my=e.clientY-r.top;
+    const nk = Math.min(14, Math.max(.75, view.k*Math.exp(-e.deltaY*.0016)));
+    const ratio = nk/view.k;
+    view.x = mx-(mx-view.x)*ratio; view.y = my-(my-view.y)*ratio; view.k = nk;
+    draw();
+  }, { passive:false });
+
+  function showDetail(p) {
+    const feats = (p.f||[]).map(f => '<span class="tag">'+esc(pretty(f))+'</span>').join('');
+    const ctx2 = [];
+    if (p.tg && p.tg!=='not-stated') ctx2.push('brought on by <b>'+esc(pretty(p.tg))+'</b>');
+    if (p.ag && p.ag!=='not-stated') ctx2.push('attributed to <b>'+esc(pretty(p.ag))+'</b>');
+    if (p.af && p.af!=='not-stated') ctx2.push('followed by <b>'+esc(pretty(p.af))+'</b>');
+    document.getElementById('detail').innerHTML =
+      '<blockquote>“'+esc(p.q)+'”</blockquote>'+
+      '<div class="meta"><b>'+esc(p.t)+'</b>'+(p.a?'<br>'+esc(p.a):'')+
+        '<br>'+[p.yr||'n.d.', p.lang, pretty(p.tr||'')].filter(Boolean).map(esc).join(' · ')+'</div>'+
+      (ctx2.length ? '<div class="meta">'+ctx2.join(' · ')+'</div>' : '')+
+      '<div class="tags"><span class="tag" style="border-color:'+REG[p.reg].raw+'">'+
+        esc(REG[p.reg].label)+(p.fp?' · first person':'')+'</span>'+
+        (p.ct ? '<span class="tag hot">source disputed</span>' : '')+feats+'</div>'+
+      (p.g ? '<p class="glosswarn">This quotation carries a translator’s gloss printed inline; the explanatory words are the translator’s, not the author’s.</p>' : '')+
+      '<a class="cite" href="'+esc(p.u)+'" target="_blank" rel="noopener">Read the page →</a>';
+  }
+
+  /* ---------- tables ---------- */
+  (function splitTable() {
+    const rows = (META.registerSplit||[]).map(r => ({
+      f:r.dim, i:r.instruction/r.n, t:r.testimony/r.n, n:r.n })).filter(r => r.n >= 25);
+    rows.sort((a,b) => (b.i-b.t)-(a.i-a.t));
+    const pct = v => Math.round(v*100)+'%';
+    document.getElementById('splitbody').innerHTML = rows.map(r => {
+      const lean = r.i > r.t ? 'instruction' : (r.t > r.i*1.5 ? 'testimony' : 'mixed');
+      return '<tr><td>'+esc(pretty(r.f))+' <span style="color:var(--ink-mute);font-family:var(--ff-data);font-size:11px">'+r.n+'</span></td>'+
+        '<td class="num">'+pct(r.i)+' <span class="bar" style="width:'+(r.i*60)+'px;background:var(--reg-instruction)"></span></td>'+
+        '<td class="num">'+pct(r.t)+' <span class="bar" style="width:'+(r.t*60)+'px;background:var(--reg-testimony)"></span></td>'+
+        '<td>'+lean+'</td></tr>';
+    }).join('');
+    document.getElementById('splitnote').textContent =
+      'Shares are computed over all ' + nf(META.classifiedTotal) + ' passages the classifier read, not ' +
+      'over the ' + nf(META.count) + ' plotted above — those are only the passages that both described ' +
+      'an experience from the inside and yielded a quotation that survived verbatim checking. ' +
+      'A questionnaire can only ever collect testimony; that is a fact about the instrument, not the mind.';
+  })();
+
+  (function triggerTable() {
+    const rows = (META.triggers||[]).filter(([t]) => t && t !== 'not-stated');
+    const total = PTS.length;
+    document.getElementById('triggerbody').innerHTML = rows.map(([t,n]) => {
+      const sub = PTS.filter(p => p.tg === t);
+      const feat = {};
+      sub.forEach(p => (p.f||[]).forEach(f => feat[f] = (feat[f]||0)+1));
+      const top = Object.entries(feat).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>pretty(x[0])).join(', ');
+      return '<tr><td>'+esc(pretty(t))+'</td><td class="num">'+n+'</td>'+
+        '<td class="num">'+Math.round(100*n/total)+'% <span class="bar" style="width:'+(70*n/total)+'px;background:var(--focus)"></span></td>'+
+        '<td>'+esc(top||'—')+'</td></tr>';
+    }).join('');
+  })();
+
+  (function agentTable() {
+    const rows = (META.agents||[]).filter(([a]) => a && a !== 'not-stated');
+    const disputedTotal = PTS.filter(p => p.ct).length;
+    document.getElementById('agentpara').innerHTML =
+      'Whether an experience came from God, a demon, a spirit, an illness or the mind itself was a live ' +
+      'forensic question with real consequences for the person who had it. The classifier recorded both ' +
+      'the attribution the text makes and whether the text registers a <em>dispute</em> about it. ' +
+      '<b>' + nf(disputedTotal) + '</b> of the plotted passages carry such a dispute.';
+    document.getElementById('agentbody').innerHTML = rows.map(([a,n]) => {
+      const sub = PTS.filter(p => p.ag === a);
+      const disp = sub.filter(p => p.ct).length;
+      const tr = {};
+      sub.forEach(p => { if (p.tr) tr[p.tr] = (tr[p.tr]||0)+1; });
+      const top = Object.entries(tr).sort((x,y)=>y[1]-x[1]).slice(0,2).map(x=>pretty(x[0])).join(', ');
+      return '<tr><td>'+esc(pretty(a))+'</td><td class="num">'+n+'</td>'+
+        '<td class="num">'+(n?Math.round(100*disp/n):0)+'%</td><td>'+esc(top||'—')+'</td></tr>';
+    }).join('');
+  })();
+
+  (function clusterTable() {
+    document.getElementById('clusterbody').innerHTML = Object.keys(META.clusters||{}).map(k => {
+      const c = META.clusters[k];
+      return '<tr><td>'+esc(pretty(c.label))+'</td><td class="num">'+c.size+'</td>'+
+        '<td>'+esc((c.features||[]).map(f=>pretty(f[0])).join(', '))+'</td>'+
+        '<td>'+esc((c.traditions||[]).map(t=>pretty(t[0])+' ('+t[1]+')').join(', '))+'</td>'+
+        '<td>'+esc((c.triggers||[]).map(t=>pretty(t[0])).join(', ')||'—')+'</td></tr>';
+    }).join('');
+  })();
+
+  document.getElementById('method').innerHTML =
+    '<p><b>How this was made.</b> Thirty-six phenomenological dimensions were written as first-person ' +
+    'probe sentences — twenty anchored to the MEQ30, 5D-ASC and Hood M-scale so the categories stay ' +
+    'comparable to modern instruments, and sixteen covering states those instruments have no items for ' +
+    'but the historical record documents heavily: felt presence, sleep paralysis, apparitions of the ' +
+    'dead, fever delirium, mystical eros, pain and childbirth, unsourced music, animal transformation, ' +
+    'mesmeric trance, sensory deprivation, fasting, inspired dictation, ecstatic dance, the double, and ' +
+    'uncanny foreknowledge. Each of the 144 probes was embedded and run against the translated corpus ' +
+    'once globally and once per language, so that Tibetan, Syriac and Chinese material was not buried ' +
+    'beneath English. Retrieved passages were classified for register, phenomenological content, ' +
+    'antecedent, aftermath and attributed agent; every quotation was checked character-for-character ' +
+    'against its page and discarded if it did not match. Passages were deduplicated at the level of the ' +
+    '<em>work</em>, so a scripture held in many editions counts once. Finally the quotations themselves ' +
+    'were embedded — not the pages — and projected with UMAP on cosine distance.</p>' +
+    '<p><b>What it still cannot tell you.</b> Retrieval was seeded by probes written in English, which ' +
+    'favours states those probes name; the sixteen new dimensions were added precisely because the first ' +
+    'edition could not see them, and there are certainly others still missing. Classification is ' +
+    'machine-made and unreviewed by a human. The distribution across centuries reflects what has been ' +
+    'digitised and translated, not when people had these experiences. Above all, similarity between ' +
+    'quotations is partly similarity between <em>translators</em> — a run of passages from one translated ' +
+    'edition may cluster on that translator’s diction rather than on anything a historical person felt.</p>';
+
+  /* ---------- apply ---------- */
+  function apply() {
+    visible = PTS.filter(passes);
+    document.getElementById('shown').textContent =
+      visible.length === PTS.length ? nf(PTS.length)+' passages' : nf(visible.length)+' of '+nf(PTS.length)+' passages';
+    document.getElementById('allbody').innerHTML = visible.slice(0,400).map(p =>
+      '<tr><td>'+esc(p.q.length>160 ? p.q.slice(0,160)+'…' : p.q)+'</td>'+
+      '<td>'+esc(p.t.slice(0,46))+'</td><td class="num">'+esc(p.yr||'—')+'</td>'+
+      '<td>'+esc(REG[p.reg].label)+'</td>'+
+      '<td><a href="'+esc(p.u)+'" target="_blank" rel="noopener">open</a></td></tr>').join('') +
+      (visible.length>400 ? '<tr><td colspan="5" style="color:var(--ink-mute)">Showing the first 400 of '+nf(visible.length)+'. Narrow the filters to see the rest.</td></tr>' : '');
+    if (pinned && !passes(pinned)) {
+      pinned = null;
+      document.getElementById('detail').innerHTML =
+        '<p class="empty">Hover a mark to read its quotation. Click to hold it here, with a link to the page it was transcribed from.</p>';
+    }
+    draw();
+  }
+  window.addEventListener('resize', resize);
+  apply(); resize();
+})();
+</script>

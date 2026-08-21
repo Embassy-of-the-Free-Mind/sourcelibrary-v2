@@ -7,7 +7,9 @@ import {
   ArrowUpDown, ArrowUp, ArrowDown, FileText, ChevronDown,
 } from 'lucide-react';
 import AuthorName from '@/components/AuthorName';
+import { isPublishedFirstTranslation } from '@/lib/book';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { ftRenderProps } from '@/lib/first-translation/render';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 
 const PER_PAGE = 60;
@@ -39,6 +41,13 @@ interface BookItem {
   published?: string | null;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  // Raw graded-verdict projections from books_catalog (#3726 Tier 3);
+  // ftRenderProps resolves them into the badge register at render time.
+  ft_verdict?: string | null;
+  ft_evidence_strength?: string | null;
+  ft_our_completeness?: string | null;
+  ft_source_screen?: string | null;
+  ft_translator_screen?: string | null;
   image_source_provider?: string | null;
 }
 
@@ -592,7 +601,57 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
         {books.length === 0 && !loading ? (
           <div className="py-20 text-center text-muted">No books match your filters.</div>
         ) : (
-          <div className="overflow-x-auto">
+          <>
+          {/* Mobile (<md): stacked list + a sort control, since a table reads
+              cramped on a phone. Desktop keeps the sortable table below. */}
+          <div className="md:hidden">
+            <div className="mb-3 flex items-center gap-2">
+              <label htmlFor="mobile-sort" className="text-xs text-muted uppercase tracking-wide">Sort</label>
+              <select
+                id="mobile-sort"
+                value={sort}
+                onChange={(e) => handleSort(e.target.value)}
+                className="text-sm border border-border-medium rounded px-2 py-1 bg-white text-primary"
+              >
+                <option value="title">Title</option>
+                <option value="year_asc">Year (oldest first)</option>
+                <option value="year_desc">Year (newest first)</option>
+                <option value="author">Author</option>
+                <option value="popular">Most read</option>
+                <option value="recent">Recently added</option>
+              </select>
+            </div>
+            <ul className="divide-y divide-border-light">
+              {books.map((book) => {
+                const href = `/book/${book.slug || book.id}`;
+                return (
+                  <li key={book.id}>
+                    <Link href={href} className="block py-3 active:bg-warm/50 transition-colors">
+                      <div className="flex items-start gap-2">
+                        <span className="text-sm font-medium text-primary line-clamp-2 flex-1" style={{ fontFamily: 'var(--font-serif)' }}>
+                          {book.display_title || book.title}
+                        </span>
+                        {isPublishedFirstTranslation(book) && (
+                          <span className="shrink-0 inline-block bg-accent-gold/15 text-accent-gold-dark text-[10px] px-1.5 py-0.5 rounded-full font-medium">
+                            {(() => { const ft = ftRenderProps(book); return firstTranslationBadge(ft.disposition, book.language ?? undefined, undefined, ft.claim); })()}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-muted mt-1 flex flex-wrap items-center gap-x-1.5">
+                        <AuthorName author={book.author} fallback="—" />
+                        <span aria-hidden>·</span>
+                        <span className="tabular-nums">{displayYear(book)}</span>
+                        {book.language && (<><span aria-hidden>·</span><span>{book.language}</span></>)}
+                        {book.pages_count ? (<><span aria-hidden>·</span><span className="tabular-nums">{book.pages_count} pp</span></>) : null}
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          {/* Desktop (md+): sortable table */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-border-medium text-xs text-muted uppercase tracking-wide">
@@ -627,9 +686,9 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                               {book.display_title || book.title}
                             </span>
                           </Link>
-                          {book.is_first_translation && (
+                          {isPublishedFirstTranslation(book) && (
                             <span className="shrink-0 inline-block bg-accent-gold/15 text-accent-gold-dark text-[10px] px-1.5 py-0.5 rounded-full font-medium">
-                              {firstTranslationBadge(book.ft_disposition, book.language ?? undefined)}
+                              {(() => { const ft = ftRenderProps(book); return firstTranslationBadge(ft.disposition, book.language ?? undefined, undefined, ft.claim); })()}
                             </span>
                           )}
                           <CopyPermalink slug={book.slug} id={book.id} />
@@ -663,6 +722,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
 

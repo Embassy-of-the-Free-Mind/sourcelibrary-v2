@@ -1,5 +1,6 @@
 import { ProcessingPrompts } from "./core";
 import type { DetectedImage } from "../page";
+import { VALID_IMAGE_TYPES } from "../../gallery-image-types";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
 export const PROMPT_VERSION = 'v6.1.2026-05';
@@ -12,8 +13,10 @@ const VALID_PAGE_TYPES = new Set([
 
 // Page types that should be skipped during translation — no meaningful text content
 // (ex-libris/bookplates are ownership marks, not book content)
+// Keep equal to SKIP_TRANSLATION_PAGE_TYPES in scripts/lib/translate-core.mjs
+// (the scripts-side canonical) — pinned by tests/unit/translate-edge-cases.test.ts.
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'exlibris', 'bookplate',
+  'blank', 'exlibris', 'bookplate', 'digitizer-notice',
 ];
 
 // Page types hidden from the reader navigation (still accessible via direct URL)
@@ -49,11 +52,9 @@ export function extractScriptType(ocrText: string): 'printed' | 'handwritten' | 
   return undefined;
 }
 
-const VALID_IMAGE_TYPES = new Set([
-  'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
-  'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score',
-  'exlibris', 'bookplate', 'unknown',
-]);
+// Vocabulary moved to `src/lib/gallery-image-types.ts` (#3419) — it was written out
+// verbatim here and in the gallery re-tag route, and the extraction write path
+// consulted neither, which is how 99 rows came to hold raw model output.
 
 /** Parse <detected-images> JSON from OCR text into typed DetectedImage[]. Returns empty array if none found. */
 export function parseDetectedImages(ocrText: string): DetectedImage[] {
@@ -160,9 +161,12 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Metadata tags (hidden from readers):**
 - <language>X</language> — the detected language of this page (REQUIRED — always identify the language, e.g. Latin, German, French, English)
-- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text, digitizer-insert, exlibris
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, musical-score, table, cover, text, digitizer-insert, exlibris
   - Use "digitizer-insert" for pages added by the digitizer (NOT part of the original book): Internet Archive credit pages, Google Books inserts, "Digitized by Google" pages, library barcode/scan sheets, digital watermark pages
   - Use "exlibris" for an ownership bookplate pasted into the book (usually on a pastedown or endpaper): an armorial or emblematic plate naming or marking the owner, often with a motto. It is provenance, not the book's content — do NOT treat its motto as body text.
+  - Use "musical-score" when the page is engraved or printed music with no running prose — staves, notation, tablature. A header, signature or a few words of underlaid text do not make it a "text" page.
+  - Use "table" when the page is substantially one tabular ruling — a calendar, an ephemeris, a numeral or abjad table, an index laid out in columns — rather than prose that happens to contain a table.
+  - Use "cover" for the binding itself (front/back board, spine) as opposed to a blank leaf inside the book.
 - <columns>N</columns> — number of text columns on this page (omit for single-column pages, include for 2+ columns)
 - <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
 - <header>X</header> — running headers/chapter titles at top of page (NEVER duplicate as heading in body)

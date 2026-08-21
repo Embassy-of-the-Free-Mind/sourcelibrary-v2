@@ -26,7 +26,7 @@ export async function GET() {
   try {
     if (cachedResult && Date.now() - cachedResult.timestamp < CACHE_TTL_MS) {
       return NextResponse.json(cachedResult.data, {
-        headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
+        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=7200' },
       });
     }
 
@@ -84,7 +84,7 @@ export async function GET() {
 
       cachedResult = { data, timestamp: Date.now() };
       return NextResponse.json(data, {
-        headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
+        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=7200' },
       });
     }
 
@@ -97,12 +97,12 @@ export async function GET() {
     const data = snapshot?.data ?? EMPTY_RESPONSE;
     cachedResult = { data, timestamp: Date.now() };
     return NextResponse.json(data, {
-      headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=7200' },
     });
   } catch (error) {
     console.error('Error fetching explore stats:', error);
     return NextResponse.json(EMPTY_RESPONSE, {
-      headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=30' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=30' },
     });
   }
 }

@@ -1,0 +1,69 @@
+{
+  "book_id": "c4aa9f54-cf66-4065-a310-9b786b4d9954",
+  "work_identified": "De Consolatione Philosophiae (Consolation of Philosophy) by Boethius, in an edition with commentary by Thomas Waleys",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Chaucer's Translation of Boethius's De Consolatione Philosophiæ (Boece)",
+      "translator": "Geoffrey Chaucer",
+      "pub_year": "c. 1385",
+      "publisher": "Middle English prose; first printed by William Thynne 1532",
+      "completeness": "complete",
+      "source_url": "https://www.gutenberg.org/files/42083/42083-h/42083-h.htm"
+    },
+    {
+      "english_title": "The Consolation of Philosophy",
+      "translator": "H.R. James",
+      "pub_year": "1897",
+      "publisher": "Elliot Stock, London",
+      "completeness": "complete",
+      "source_url": "https://www.gutenberg.org/files/14328/14328-h/14328-h.htm"
+    },
+    {
+      "english_title": "The Consolation of Philosophy",
+      "translator": "Victor Watts",
+      "pub_year": "1969",
+      "publisher": "Penguin Classics",
+      "completeness": "complete",
+      "source_url": "https://www.penguinrandomhouse.com/books/332524/the-consolation-of-philosophy-by-ancius-boethius-translated-with-an-introduction-by-victor-watts/"
+    },
+    {
+      "english_title": "The Consolation of Philosophy",
+      "translator": "P.G. Walsh",
+      "pub_year": "1999",
+      "publisher": "Oxford University Press (Oxford World's Classics)",
+      "completeness": "complete",
+      "source_url": "https://global.oup.com/academic/product/the-consolation-of-philosophy-9780199540549"
+    },
+    {
+      "english_title": "The Consolation of Philosophy",
+      "translator": "Joel C. Relihan",
+      "pub_year": "2001",
+      "publisher": "Hackett Publishing",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/On_the_Consolation_of_Philosophy"
+    }
+  ],
+  "queries_run": [
+    "Boethius \"Consolation of Philosophy\" English translation history Chaucer Queen Elizabeth",
+    "Thomas Waleys commentary \"De Consolatione Philosophiae\" Boethius English translation",
+    "Thomas Waleys Boethius commentary medieval English translation WorldCat",
+    "WorldCat \"De consolatione philosophiae\" Boethius \"Waleys\" OR \"Walys\" English translation",
+    "Boethius \"Consolation of Philosophy\" complete English translation P.G. Walsh Penguin Victor Watts H.R. James 1897"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/On_the_Consolation_of_Philosophy", "found": "Lists 12+ complete English translations from 1664–2001; also documents Old English (King Alfred ~900) and Chaucer (~1385)"},
+    {"url": "https://www.gutenberg.org/files/42083/42083-h/42083-h.htm", "found": "Chaucer's complete Middle English translation of the Consolation, c. 1385, full text online"},
+    {"url": "https://www.gutenberg.org/files/14328/14328-h/14328-h.htm", "found": "H.R. James complete English translation, 1897, full text online"},
+    {"url": "https://global.oup.com/academic/product/the-consolation-of-philosophy-9780199540549", "found": "P.G. Walsh complete English translation, Oxford World's Classics, confirmed in print"},
+    {"url": "https://www.penguinrandomhouse.com/books/332524/the-consolation-of-philosophy-by-ancius-boethius-translated-with-an-introduction-by-victor-watts/", "found": "Victor Watts complete English translation, Penguin Classics, confirmed in print"},
+    {"url": "https://historyoflogic.com/biblio/boethius-editions.htm", "found": "Lists multiple English editions (Loeb/Stewart-Rand-Tester, Walsh, Relihan); no English translation of Waleys commentary found"},
+    {"url": "https://archive.org/details/deconsolationeph00boet_0", "found": "Latin edition of De consolatione with pseudo-Thomas Aquinas/Waleys commentary — Latin only, no English translation"}
+  ],
+  "reasoning": "The Consolation is among the most-translated Latin texts: Old English (Alfred ~900), Middle English (Chaucer ~1385), Queen Elizabeth I (1593), H.R. James (1897), Watts/Penguin (1969), Walsh/Oxford (1999). Thomas Waleys's commentary is supplementary; the primary titled work is Boethius's Consolation, which has abundant complete English translations → not_first."
+}

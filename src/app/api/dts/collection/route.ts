@@ -17,6 +17,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { resolveImprintPlace, IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
 
 const BASE = 'https://sourcelibrary.org';
 const PAGE_SIZE = 50;
@@ -89,7 +90,8 @@ function bookToResource(book: Record<string, unknown>) {
   };
 
   if (book.doi) dublinCore.identifier = `doi:${book.doi}`;
-  if (book.place_published) dublinCore.spatial = book.place_published;
+  const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+  if (imprintPlace) dublinCore.spatial = imprintPlace;
   if (book.publisher) dublinCore.publisher = book.publisher;
 
   const resource: Record<string, unknown> = {
@@ -193,7 +195,7 @@ export async function GET(request: NextRequest) {
           .project({
             id: 1, slug: 1, title: 1, display_title: 1, author: 1,
             published: 1, language: 1, pages_count: 1, doi: 1,
-            place_published: 1, publisher: 1, chapters: 1, collections: 1,
+            ...IMPRINT_PLACE_PROJECTION, publisher: 1, chapters: 1, collections: 1,
           })
           .toArray(),
         db.collection('books').countDocuments(filter),
@@ -244,7 +246,7 @@ export async function GET(request: NextRequest) {
         projection: {
           id: 1, slug: 1, title: 1, display_title: 1, author: 1,
           published: 1, language: 1, pages_count: 1, doi: 1,
-          place_published: 1, publisher: 1, chapters: 1,
+          ...IMPRINT_PLACE_PROJECTION, publisher: 1, chapters: 1,
           collections: 1, license: 1,
         },
       }

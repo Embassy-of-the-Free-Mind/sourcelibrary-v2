@@ -4,11 +4,15 @@ import HeroSection from '@/components/layout/HeroSection';
 import AskTheSourceBand from '@/components/home/AskTheSourceBand';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
-import FromTheCollection from '@/components/prototype/FromTheCollection';
-import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import BookSlider, { type MiniBook } from '@/components/BookSlider';
+import GalleryMasonry from '@/components/GalleryMasonry';
+import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
+import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
+import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
+import { localePath } from '@/lib/locale-path';
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
 // Spanish `/es` route with lang="es". Keeping a single component means the two
@@ -16,8 +20,21 @@ import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 
 export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLang }) {
   const t = HOME_STRINGS[lang];
-  const { featuredItems, discoverBooks, showcase, counts, collections, blogPosts, spanishPodcast } = data;
+  // Every link on this page that HAS a twin keeps the locale; the rest (gallery,
+  // catalog, browse, podcast, blog…) are returned untouched by localePath and go
+  // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
+  const lp = (href: string) => localePath(href, lang);
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishCollection, localizedCollectionCounts } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
+  // The grid card's count line. On /es it says how many of the collection's
+  // books can actually be READ in Spanish — the same thing /es/collections
+  // tells you, and the only number on the card a Spanish visitor can act on.
+  // Empty on `/`, where every book is already in the page's language.
+  const countLabel = (slug: string, bookCount: number) => {
+    const localized = localizedCollectionCounts[slug] ?? 0;
+    const base = `${nf(bookCount)} ${t.booksLabel}`;
+    return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
+  };
 
   return (
     <div className="min-h-screen">
@@ -26,74 +43,29 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {/* Video Hero */}
       <HeroSection lang={lang} />
 
-      {/* Spanish podcast feature — the first real Spanish content a /es visitor
-          meets. Only rendered on /es, so the English homepage is unchanged. */}
-      {lang === 'es' && spanishPodcast && (
-        <section className="py-14 md:py-20" style={{ background: 'var(--bg-dark)' }}>
-          <div className="px-6 md:px-12 max-w-[1100px] mx-auto">
-            <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-12 items-center">
-              {spanishPodcast.heroImageUrl && (
-                <Link href={`/podcast/${spanishPodcast.threadId}`} className="block rounded-xl overflow-hidden bg-black/30">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`/api/image?url=${encodeURIComponent(spanishPodcast.heroImageUrl)}&w=720&q=85`}
-                    alt=""
-                    className="w-full max-h-[360px] object-contain"
-                    loading="lazy"
-                  />
-                </Link>
-              )}
-              <div>
-                <p className="text-sm uppercase tracking-[0.2em] mb-3" style={{ color: 'var(--accent-gold)' }}>
-                  {t.podcastEyebrow}
-                </p>
-                <h2 className="text-2xl md:text-3xl font-display mb-4 leading-snug" style={{ color: '#f5f0e8' }}>
-                  {spanishPodcast.title}
-                </h2>
-                <p className="text-base leading-relaxed mb-5" style={{ color: '#b8b2a8' }}>
-                  {spanishPodcast.topic}
-                </p>
-
-                <audio controls preload="none" src={spanishPodcast.audioUrl} className="w-full mb-5">
-                  <a href={spanishPodcast.audioUrl}>{t.podcastListen}</a>
-                </audio>
-
-                {spanishPodcast.sources.length > 0 && (
-                  <div className="mb-5">
-                    <p className="text-xs uppercase tracking-wider mb-2" style={{ color: '#8a8480' }}>
-                      {t.podcastSourcesLabel}
-                    </p>
-                    <ul className="space-y-1.5">
-                      {spanishPodcast.sources.map((s) => (
-                        <li key={s.bookId}>
-                          <Link
-                            href={`/book/${s.slug || s.bookId}`}
-                            className="text-[15px] hover:underline"
-                            style={{ color: '#e8e2d8' }}
-                          >
-                            <span className="font-serif">{s.title}</span>
-                            {(s.author || s.origin) && (
-                              <span style={{ color: '#8a8480' }}>
-                                {' — '}{[s.author, s.origin].filter(Boolean).join(' · ')}
-                              </span>
-                            )}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <Link
-                  href={`/podcast/${spanishPodcast.threadId}`}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-full transition-all hover:brightness-110"
-                  style={{ background: 'var(--accent-rust)', color: '#fff' }}
-                >
-                  {t.podcastFullEpisode}
-                  <span className="text-xs">&rarr;</span>
-                </Link>
+      {/* Read in Spanish — the first thing under the hero on /es, because it is
+          the one section whose BOOKS (not just chrome) are in the visitor's
+          language. One card, the same block /es/collections leads with, opening
+          the full Spanish list; the `/es` prefix on the link is the only thing
+          that decides reading language (.claude/docs/i18n.md rule 6).
+          spanishCollection is null on the English homepage, so nothing renders there. */}
+      {spanishCollection && (
+        <section className="bg-white py-10 md:py-14">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <Link
+              href={lp(`/collections/${spanishCollection.slug}`)}
+              className="group grid sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-0 overflow-hidden rounded-lg border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow]"
+            >
+              <div className="relative aspect-square sm:aspect-auto sm:min-h-[220px]">
+                <CollectionCardImage candidates={spanishCollection.imageCandidates} alt="" sizes="(max-width: 640px) 100vw, 33vw" priority />
               </div>
-            </div>
+              <div className="p-6 sm:p-8 flex flex-col justify-center">
+                <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-2">{t.spanishHeading}</p>
+                <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2 group-hover:text-accent-rust transition-colors">{spanishCollection.name}</h2>
+                <p className="text-muted leading-relaxed mb-4">{t.spanishSubtitle}</p>
+                <p className="text-sm text-secondary">{nf(spanishCollection.bookCount)} {t.booksLabel} &rarr;</p>
+              </div>
+            </Link>
           </div>
         </section>
       )}
@@ -107,9 +79,11 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.collectionsHeading}
               </h2>
               <p className="text-muted mt-2">
-                <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
+                <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
                 {' '}&middot;{' '}
-                <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
+                <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
+                {' '}&middot;{' '}
+                <Link href={lp('/search?first_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
                 {counts.artworkCount > 0 && (
                   <>
                     {' '}&middot;{' '}
@@ -137,7 +111,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             {collections.slice(0, 11).map((col, i) => (
               <Link
                 key={col.slug}
-                href={`/collections/${col.slug}`}
+                href={lp(`/collections/${col.slug}`)}
                 className="group relative rounded-xl overflow-hidden aspect-square hover:shadow-lg transition-all hover:-translate-y-0.5"
               >
                 {col.hero_image ? (
@@ -156,7 +130,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                    {col.book_count} {t.booksLabel}
+                    {countLabel(col.slug, col.book_count)}
                   </p>
                   <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                     {collectionName(lang, col.slug, col.name)}
@@ -166,7 +140,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             ))}
             {collections.length > 11 && (
               <Link
-                href="/collections"
+                href={lp('/collections')}
                 className="group relative rounded-xl overflow-hidden aspect-square bg-[#2a2520] flex items-center justify-center hover:shadow-lg transition-all hover:-translate-y-0.5"
               >
                 <div className="text-center px-4">
@@ -189,7 +163,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
             </Link>
             <Link
-              href="/collections"
+              href={lp('/collections')}
               className="text-sm text-muted hover:text-accent-rust transition-colors"
             >
               {t.allCollections} &rarr;
@@ -197,6 +171,37 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
         </div>
       </section>
+
+      {/* Recently looked at — personalized slider from the signed-in reader's
+          history, tucked right under the collections grid. Self-hides for
+          anonymous visitors and readers with no history. */}
+      <RecentlyRead lang={lang} />
+
+      {/* Recently translated — the same slider as the Mycology collection's
+          "First translations" band, auto-filled with the 15 works most recently
+          brought into a modern translation site-wide (Supabase last_translation_at).
+          Hidden if the catalog query returns nothing. */}
+      {recentlyTranslated.length > 0 && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.recentlyTranslatedHeading}
+              </h2>
+              <Link
+                href="/catalog?sort=last_translated"
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+              >
+                {t.browseCatalog} &rarr;
+              </Link>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.recentlyTranslatedSubtitle}
+            </p>
+            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
+          </div>
+        </section>
+      )}
 
       {/* Ask the source — the librarian's front door. Placed after the
           collections grid so the invitation lands once the visitor has seen
@@ -209,38 +214,45 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         <EditorialSpread
           collection={featuredItems[0].collection}
           books={featuredItems[0].books}
+          lang={lang}
         />
       )}
 
-      {/* From the Collection — image-heavy gallery showcase */}
-      <FromTheCollection items={showcase} />
-
-      {/* Discover Section */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-          <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
-            {t.discoverHeading}
-          </h2>
-          <p className="text-muted mb-10 max-w-2xl">
-            {t.discoverSubtitle}
-          </p>
-
-          {discoverBooks.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-              {discoverBooks.map((book, i) => (
-                <CollectionBookCard key={book.id} book={book as unknown as CollectionBook} priority={i < 2} />
-              ))}
+      {/* Gallery — true-height masonry (Mycology-style), capped and faded into
+          the page, filled with high-quality illustrations from across the whole
+          library. */}
+      {galleryPlates.length > 0 && (
+        <section className="bg-warm py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
+              {t.galleryHeading}
+            </h2>
+            <p className="text-muted mb-10 max-w-2xl">
+              {t.gallerySubtitle}
+            </p>
+            <div
+              className="relative max-h-[560px] sm:max-h-[1000px] lg:max-h-[1200px] overflow-hidden"
+              style={{
+                maskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
+              }}
+            >
+              <GalleryMasonry plates={galleryPlates} />
             </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted mb-4">{t.discoverEmpty}</p>
-              <Link href="/catalog" className="inline-block px-6 py-3 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors">
-                {t.browseCatalog}
-              </Link>
-            </div>
-          )}
-        </div>
-      </section>
+            {counts.illustrationCount > 0 && (
+              <div className="mt-8 flex justify-center">
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
+                >
+                  {t.galleryViewAll(counts.illustrationCount)}
+                  <span className="text-xs">&rarr;</span>
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Blog Section */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
@@ -262,44 +274,91 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {blogPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
-              >
-                {post.image && (
-                  <div className="aspect-[16/10] relative bg-warm overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div className="p-4">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${post.tagColor}`}>
-                    {post.tagKey === 'deepDive' ? t.tagDeepDive : t.tagCollection}
-                  </span>
-                  <h3 className="font-display text-lg text-primary mt-2 group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-muted mt-1.5 line-clamp-2">
-                    {post.subtitle}
-                  </p>
-                  <p className="text-xs text-faint mt-3">
-                    {post.date} &middot; {post.readTime}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <ResearchNotesSlider
+            posts={blogPosts}
+            deepDiveLabel={t.tagDeepDive}
+            collectionLabel={t.tagCollection}
+          />
         </div>
       </section>
+
+      {/* Featured podcast episode, in the page's own language.
+          Sits down here with the writing, NOT in the second slot under the hero:
+          the podcast is still experimental and the homepage's prominent space
+          belongs to the books. It remains the podcast's main entry point (the
+          header nav item was retired — see SiteHeader) alongside the footer link.
+          Renders nothing when that language has no published episode, which is
+          currently the state of several languages — an empty section is correct,
+          not a bug. */}
+      {featuredPodcast && (
+        <section className="py-14 md:py-20" style={{ background: 'var(--bg-dark)' }}>
+          <div className="px-6 md:px-12 max-w-[1100px] mx-auto">
+            <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-12 items-center">
+              {featuredPodcast.heroImageUrl && (
+                <Link href={`/podcast/${featuredPodcast.threadId}`} className="block rounded-xl overflow-hidden bg-black/30">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/api/image?url=${encodeURIComponent(featuredPodcast.heroImageUrl)}&w=720&q=85`}
+                    alt=""
+                    className="w-full max-h-[360px] object-contain"
+                    loading="lazy"
+                  />
+                </Link>
+              )}
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] mb-3" style={{ color: 'var(--accent-gold)' }}>
+                  {t.podcastEyebrow}
+                </p>
+                <h2 className="text-2xl md:text-3xl font-display mb-4 leading-snug" style={{ color: '#f5f0e8' }}>
+                  {featuredPodcast.title}
+                </h2>
+                <p className="text-base leading-relaxed mb-5" style={{ color: '#b8b2a8' }}>
+                  {featuredPodcast.topic}
+                </p>
+
+                <audio controls preload="none" src={featuredPodcast.audioUrl} className="w-full mb-5">
+                  <a href={featuredPodcast.audioUrl}>{t.podcastListen}</a>
+                </audio>
+
+                {featuredPodcast.sources.length > 0 && (
+                  <div className="mb-5">
+                    <p className="text-xs uppercase tracking-wider mb-2" style={{ color: '#8a8480' }}>
+                      {t.podcastSourcesLabel}
+                    </p>
+                    <ul className="space-y-1.5">
+                      {featuredPodcast.sources.map((s) => (
+                        <li key={s.bookId}>
+                          <Link
+                            href={lp(`/book/${s.slug || s.bookId}`)}
+                            className="text-[15px] hover:underline"
+                            style={{ color: '#e8e2d8' }}
+                          >
+                            <span className="font-serif">{s.title}</span>
+                            {(s.author || s.origin) && (
+                              <span style={{ color: '#8a8480' }}>
+                                {' — '}{[s.author, s.origin].filter(Boolean).join(' · ')}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <Link
+                  href={`/podcast/${featuredPodcast.threadId}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-full transition-all hover:brightness-110"
+                  style={{ background: 'var(--accent-rust)', color: '#fff' }}
+                >
+                  {t.podcastFullEpisode}
+                  <span className="text-xs">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* About Section */}
       <section id="about" className="bg-white py-16 md:py-24">
@@ -348,14 +407,14 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                  href="/support"
+                  href={lp('/support')}
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                   style={{ background: 'var(--accent-rust)', color: '#fff' }}
                 >
                   {t.howToSupport}
                 </Link>
                 <Link
-                  href="/auth/signin"
+                  href={lp('/auth/signin')}
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                   style={{ background: 'rgba(255,255,255,0.08)', color: '#a09a90' }}
                 >
@@ -390,7 +449,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
 
           {/* Free account nudge — for anonymous users only */}
-          <SignUpCTA variant="inline" />
+          <SignUpCTA variant="inline" lang={lang} />
         </div>
       </section>
 
@@ -403,7 +462,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           <p className="text-stone-500 text-sm mb-8">
             {t.searchStats(nf(counts.totalBooks), nf(counts.authorCount), counts.languageCount)}
           </p>
-          <form action="/search" method="get" className="relative max-w-lg mx-auto mb-6">
+          <form action={lp('/search')} method="get" className="relative max-w-lg mx-auto mb-6">
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>

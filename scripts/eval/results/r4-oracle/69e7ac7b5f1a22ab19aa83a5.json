@@ -1,0 +1,40 @@
+{
+  "book_id": "69e7ac7b5f1a22ab19aa83a5",
+  "work_identified": "bla ma dgongs 'dus (Lama Gongdu) — 'Ta' volume, Phurdrup Gonpa manuscript tradition (14-vol Bhutanese copy of Sangye Lingpa's terma cycle, EAP310), distinct from the 1981 printed 18-vol edition and the Muksang Monastery ms",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "bla ma dgongs dus English translation \"Lama Gongdu\" Tibetan terma cycle",
+    "Phurdrup Gonpa \"dGongs dus\" Tibetan Buddhist text English translation",
+    "site:lotsawahouse.org \"dgongs dus\" OR \"gongdu\" OR \"lama gongdu\"",
+    "BDRC \"bla ma dgongs 'dus\" Sangye Lingpa English translation worldcat",
+    "\"lama gongdu\" OR \"dgongs dus\" complete English translation published book Sangye Lingpa",
+    "\"Sangye Lingpa\" \"Lama Gongdu\" English published translation book academic",
+    "BDRC \"Phurdrup Gonpa\" \"dGongs dus\" \"Ta\" volume EAP310 Bhutan",
+    "\"Dakini Teachings\" Sangye Lingpa \"Lama Gongdu\" which volumes English translation contents",
+    "\"lama gongdu\" OR \"bla ma dgongs dus\" \"Ta\" volume English translation 2020 2021 2022 2023 2024 2025",
+    "\"Sangye Lingpa\" terma \"complete English translation\" \"all volumes\" OR \"volume 9\" OR \"Ta volume\"",
+    "worldcat \"bla ma dgongs\" English translation book library",
+    "Lotsawa House \"lama gongdu\" translated texts list English full list translations",
+    "site:worldcat.org \"lama gongdu\" OR \"dgongs dus\" English translation"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.lotsawahouse.org/topics/lama-gongdu/", "found": "One short daily practice text by Jamyang Khyentse Chokyi Lodro (a later author's practice, not the cycle itself); no volume translations"},
+    {"url": "https://www.lotsawahouse.org/tibetan-masters/sangye-lingpa/", "found": "Only 'Princess Mandāravā's Prayer' (one short devotional text); no Lama Gongdu volume translations"},
+    {"url": "https://www.goodreads.com/author/show/4551007.Sangye_Lingpa", "found": "Three English books (Dakini Teachings, Treasures from Juniper Ridge, From the Depths of the Heart) — all selected excerpts, none are complete volume translations of the Lama Gongdu"},
+    {"url": "https://www.rigpawiki.org/index.php?title=Lama_Gongd%C3%BC", "found": "Cycle described as 13-18 volumes; no complete English translation of the cycle or any volume mentioned"},
+    {"url": "https://rywiki.tsadra.org/index.php/Dakini_Teachings", "found": "Blocked; confirmed by search results as selected excerpts from Lama Gongdu, not a complete volume"},
+    {"url": "https://archive.org/details/bdrc-W2PD17482", "found": "Tibetan-only manuscript of bla ma dgongs 'dus (10 vols from Muksang Monastery); no English translation"},
+    {"url": "https://eap.bl.uk/collection/EAP310-3-2", "found": "Phurdrup Gonpa dGongs 'dus collection, 14 volumes (Kha, Nya confirmed; Ta implied); all Tibetan manuscripts; no translation info"},
+    {"url": "https://library.bdrc.io/show/bdr:MW18978", "found": "BUDA record for bla ma dgongs 'dus; page did not load content but no English translation found in searches"},
+    {"url": "http://www.rangjung.com/book_author/sangye-lingpa/", "found": "Sangye Lingpa described as revealer of Lama Gongdu in 13 vols; only excerpted/related books published in English"},
+    {"url": "https://eap.bl.uk/archive-file/EAP310-3-2-2", "found": "Phurdrup Gonpa dGongs 'dus Kha — confirms EAP310 volume structure"},
+    {"url": "https://eap.bl.uk/archive-file/EAP310-3-2-8", "found": "Phurdrup Gonpa dGongs 'dus Nya — confirms EAP310 volume structure"}
+  ],
+  "reasoning": "The bla ma dgongs 'dus (Lama Gongdu) is a 13-18 vol terma cycle. Lotsawa House, Rangjung Yeshe, BDRC, and general academic searches confirm no complete English translation of any volume exists. Only short practice texts and selected excerpts (Dakini Teachings) are in English. The 'Ta' vol (Phurdrup Gonpa ms, EAP310) is untranslated. WorldCat direct search blocked; evidence_strength=moderate."
+}

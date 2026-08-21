@@ -1,0 +1,36 @@
+{
+  "book_id": "6970e3619b09d309d780a26c",
+  "work_identified": "Alchimistisch Sieben-Gestirn (1675 Hamburg first ed.; 1756 Frankfurt Fleischer ed.) — German anthology of seven Latin alchemical treatises: Hermes Trismegistus 'Tractatus Aureus', pseudo-Lull 'Apertorium', pseudo-Lull 'Elucidarium', pseudo-Aristotle to Alexander, John Dastin (Daustenii) 'Rosarium', Albertus Magnus compendium, John Pontanus 'Epistola'. Compiled and translated from Latin into German by anonymous editor; distinct from the individual Latin source texts.",
+  "verdict": "first_from_source",
+  "prior_relationship": "different_source_language",
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Alchimistisch Sieben-Gestirn sieben Tractätlein Stein der Weisen English translation",
+    "\"Sieben-Gestirn\" alchemical German anthology philosopher's stone WorldCat",
+    "\"Alchimistisch Sieben-Gestirn\" OR \"Sieben Gestirn\" English translation alchemical treatises",
+    "Adam McLean \"Sieben-Gestirn\" OR \"seven stars\" German alchemy anthology Pontanus Daustenius",
+    "site:alchemywebsite.com \"Sieben-Gestirn\" OR \"sieben gestirn\" OR \"seven-star\"",
+    "VD17 \"Sieben-Gestirn\" alchemy Hamburg 1675 English translation",
+    "Johannes Daustenius alchemical English translation \"philosopher's stone\"",
+    "worldcat \"Alchimistisch Sieben-Gestirn\" English",
+    "\"Alchimistisch Sieben-Gestirn\" archive.org scan digitized",
+    "\"John Dastin\" OR \"Dastin\" alchemy \"Rosarium\" English translation published",
+    "\"Hermes Trismegistus\" \"Golden Treatise\" OR \"golden book\" philosopher stone English translation published",
+    "\"Lull\" OR \"Llull\" \"Apertorium\" OR \"Elucidarium\" alchemy English translation published"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.abebooks.com/Alchimistisch-Sieben-Gestirn-Sieben-sch%C3%B6ne-au%C3%9Ferlesene-Tract%C3%A4tlein/31669504313/bd", "found": "First ed. Hamburg 1675 (Naumann & Wolff); confirmed German only; no English translation listed"},
+    {"url": "https://digital.slub-dresden.de/werkansicht/dlf/32615/1", "found": "1756 Frankfurt Fleischer ed., 224pp; lists all 7 treatises; German only; no English translation information"},
+    {"url": "http://www.alchemywebsite.com/frm0550.html", "found": "Adam McLean's alchemy website bibliography lists Sieben-Gestirn (Hamburg 1675 / Frankfurt 1772) bibliographically; no English translation mentioned"},
+    {"url": "https://www.alchemywebsite.com/pontan_1.html", "found": "Pontanus 'Epistle on the Philosophic Fire' translated by Mike Dickman from French ms BN 19969 — separate individual translation, not from the German anthology"},
+    {"url": "https://www.alchemy-texts.com/book/the-rosary-of-john-dastin-johannis-daustenii-angli-rosarium-and-vision-allegory/", "found": "English translation of John Dastin's Rosarium exists (from Latin 1647 Geismaria ed.); not from the German Sieben-Gestirn text"},
+    {"url": "https://www.amazon.com/Alchimistisch-Sieben-gestirn-Das-Ist-Auserlesene/dp/1173719776", "found": "POD reprint of German original only; no English edition"},
+    {"url": "https://search.worldcat.org/search?q=Alchimistisch+Sieben-Gestirn&lang=en", "found": "403 forbidden — could not access WorldCat directly"},
+    {"url": "https://hermetic.com/atwood/a-suggestive-inquiry-into-the-hermetic-mystery/the-golden-treatise-of-hermes-trismegistus-concerning-the-physical-secret-of-the-philosopher-s-stone-in-seven-sections", "found": "Hermes Trismegistus 'Tractatus Aureus' translated into English by Atwood/Barrett — from Latin, not from the German anthology"}
+  ],
+  "reasoning": "The German anthology 'Sieben-Gestirn' (1675) compiles 7 Latin alchemical texts into German; no English translation of the compilation found in antiquarian catalogs, Adam McLean bibliography, SLUB Dresden, or WorldCat. The underlying Latin texts (Tractatus Aureus, Dastin Rosarium, Pontanus) have individual English translations, but those derive from the Latin originals, not this German mediation. Our translation is the first English of this specific German compilation."
+}

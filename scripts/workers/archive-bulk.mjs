@@ -25,11 +25,12 @@ const execFileAsync = promisify(execFileCb);
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import { pipeline } from 'stream/promises';
-import { createWriteStream } from 'fs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../lib/ia-access-leaves.mjs';
+import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
+import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -43,6 +44,11 @@ const DRY_RUN = hasFlag('dry-run');
 const TARGET_BOOK_ID = getArg('book-id') || null;  // one-off: archive a single book, bypassing the queue
 const JPEG_QUALITY = 85;
 const MAX_DIMENSION = 3000;
+// Pages sampled to verify the zip-leaf mapping before writing a book (#3368).
+const ALIGN_SAMPLES = parseInt(getArg('align-samples') || '3', 10);
+// Escape hatch for backfills over items already proven aligned. Never default
+// this on — the check is what stops a silent off-by-one reaching readers.
+const SKIP_ALIGN_CHECK = process.argv.includes('--skip-align-check');
 const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;  // 6h — older sl-bulk-* dirs are leaked, sweep them
 const MAX_BULK_FAILURES = 5;  // Circuit-break a book after N consecutive bulk-archive failures
 
@@ -140,19 +146,19 @@ async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
+// Stall timeout, not a total-duration cap (#3477): a multi-GB _jp2.zip on a
+// slow link legitimately outlives a fixed clock. The old 600s total survives
+// as the absolute backstop; the abort now asks "is data still arriving?".
+const FETCH_STALL_MS = parseInt(process.env.ARCHIVE_STALL_TIMEOUT_MS || '60000', 10);
+
 async function downloadToFile(url, destPath, timeoutMs = 600000) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, { signal: controller.signal, headers: { 'User-Agent': USER_AGENT } });
-    clearTimeout(timeoutId);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    await pipeline(res.body, createWriteStream(destPath));
-    return fs.statSync(destPath).size;
-  } catch (err) {
-    clearTimeout(timeoutId);
-    throw err;
-  }
+  const { res, bytes } = await fetchToFileWithStallTimeout(url, destPath, {
+    stallMs: FETCH_STALL_MS,
+    maxMs: timeoutMs,
+    headers: { 'User-Agent': USER_AGENT },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return bytes;
 }
 
 async function resolveDownloadUrl(iaId) {
@@ -194,6 +200,52 @@ function extractJp2Zip(zipPath, destDir) {
   }
   walk(destDir);
   return jp2Files.sort();
+}
+
+/**
+ * Confirm the resolved zip file for a page really is the page IIIF serves (#3368).
+ *
+ * Samples interior work items, decodes each one, and compares it by perceptual
+ * hash against a small render of the page's own IIIF URL. A book only passes if
+ * every sample that could be checked matches; anything else is refused, because
+ * writing a shifted sequence is far more expensive than skipping a book (it is
+ * invisible until a reader reports it, and by then the OCR may have been keyed
+ * to the wrong images too).
+ *
+ * @returns {Promise<{ok:boolean|null, detail:string}>} ok:null = couldn't check
+ */
+async function verifyLeafMapping(workItems) {
+  const interior = workItems.filter(w => (w.page.photo_original || w.page.photo || '').match(/\/page\/n\d+/));
+  if (interior.length < 2) return { ok: null, detail: 'too-few-checkable-pages' };
+
+  const picks = [];
+  for (let i = 1; i <= ALIGN_SAMPLES; i++) {
+    const w = interior[Math.floor(interior.length * (i / (ALIGN_SAMPLES + 1)))];
+    if (w && !picks.includes(w)) picks.push(w);
+  }
+
+  let matched = 0, checked = 0;
+  for (const w of picks) {
+    try {
+      const iiifUrl = String(w.page.photo_original || w.page.photo)
+        .replace(/\/full\/pct:\d+\//, '/full/pct:12/');
+      const res = await fetch(iiifUrl, {
+        headers: { 'User-Agent': USER_AGENT },
+        signal: AbortSignal.timeout(45_000),
+      });
+      if (!res.ok) continue;
+      const [srcHash, zipHash] = await Promise.all([
+        hashBuffer(Buffer.from(await res.arrayBuffer())),
+        jp2ToJpeg(w.srcFile).then(hashBuffer),
+      ]);
+      checked++;
+      if (hammingHex(srcHash, zipHash) <= HASH_MATCH) matched++;
+    } catch { /* no vote */ }
+  }
+
+  if (checked === 0) return { ok: null, detail: 'all-verification-fetches-failed' };
+  if (matched === checked) return { ok: true, detail: `aligned ${matched}/${checked}` };
+  return { ok: false, detail: `only ${matched}/${checked} sampled pages matched IIIF` };
 }
 
 async function jp2ToJpeg(jp2Path) {
@@ -286,20 +338,52 @@ async function processBook(book, db) {
     let skippedOutOfRange = 0;
     let skippedMissingFile = 0;
 
+    // IIIF /page/nN is NOT the same sequence as the *_jp2.zip leaf ordinals:
+    // leaves marked addToAccessFormats=false (Color/White Card, Delete) are in
+    // the zip but skipped by IIIF. Treating them as one sequence archived every
+    // page its neighbour's scan on affected items (#3368). Resolve the real
+    // mapping from the item's scandata; null means unknown, and the alignment
+    // verification below is what keeps an unknown mapping from being written.
+    let accessLeaves = null;
+    let byLeaf = null;
+    if (download.format === 'jp2') {
+      accessLeaves = await fetchAccessLeaves(iaId);
+      byLeaf = indexJp2FilesByLeaf(pageFiles);
+      if (accessLeaves) {
+        const skipped = pageFiles.length - accessLeaves.length;
+        if (skipped > 0) console.log(`    [LEAFMAP] scandata: ${accessLeaves.length} access leaves of ${pageFiles.length} files (${skipped} excluded)`);
+      } else {
+        console.log(`    [LEAFMAP] no parseable scandata — falling back to positional mapping, will verify before writing`);
+      }
+    }
+
+    // Resolve one page's IIIF leaf number to a file in the extracted zip.
+    const resolveSrcFile = leafNum => {
+      if (download.format !== 'jp2') {
+        return leafNum < pageFiles.length ? pageFiles[leafNum] : null;
+      }
+      if (accessLeaves) {
+        if (leafNum >= accessLeaves.length) return null;
+        // Prefer the filename-keyed map; a sparse zip otherwise shifts every
+        // later page when indexed positionally.
+        return byLeaf.get(accessLeaves[leafNum]) ?? null;
+      }
+      return leafNum < pageFiles.length ? pageFiles[leafNum] : null;
+    };
+
     for (const page of allPages) {
       const pageId = page.id || page._id.toString();
       if (!needsArchiveIds.has(pageId)) continue;
       const photoUrl = page.photo_original || page.photo || '';
-      // IA URLs encode the JP2 leaf as /page/nN. If the page has no photo URL
-      // or a non-IA URL, we can't map it to a JP2 file in the zip.
+      // IA URLs encode the access-sequence position as /page/nN. If the page has
+      // no photo URL or a non-IA URL, we can't map it to a file in the zip.
       const leafMatch = photoUrl.match(/\/page\/n(\d+)/);
       if (!leafMatch) { skippedNoLeaf++; continue; }
       const leafNum = parseInt(leafMatch[1]);
-      // JP2 zips for partial scans can be sparser than the page count — leaves
-      // past the zip's end have no source file. Count these so the worker
-      // doesn't silently no-op the whole book.
-      if (leafNum >= pageFiles.length) { skippedOutOfRange++; continue; }
-      const srcFile = pageFiles[leafNum];
+      const srcFile = resolveSrcFile(leafNum);
+      // Leaves past the end of the access sequence have no source file — normal
+      // for partial scans. Count them so the worker doesn't silently no-op.
+      if (!srcFile) { skippedOutOfRange++; continue; }
       if (!fs.existsSync(srcFile)) { skippedMissingFile++; continue; }
       workItems.push({ page, srcFile, format: download.format });
     }
@@ -336,6 +420,45 @@ async function processBook(book, db) {
       );
       stats.booksFailed++;
       return;
+    }
+
+    // ── Alignment verification (fail closed) — #3368 ──
+    //
+    // The scandata mapping above fixes the known cause, but the archiver must
+    // not depend on having parsed it correctly for every IA vintage: a silent
+    // off-by-one is invisible in the output and only surfaces months later as
+    // reader feedback. So before writing anything, confirm that the file we
+    // resolved for a page really is the page IIIF serves for it.
+    //
+    // Compares a decoded sample against the page's own IIIF URL by perceptual
+    // hash. Mismatch skips the whole book rather than writing a shifted
+    // sequence — same posture as the re-archive guard (#3359).
+    if (download.format === 'jp2' && workItems.length > 0 && !SKIP_ALIGN_CHECK) {
+      const verdict = await verifyLeafMapping(workItems);
+      // ok:null means verification couldn't run. That's tolerable when scandata
+      // gave us a principled mapping, but combined with the positional fallback
+      // it means writing a mapping nothing has checked — exactly how #3368 got
+      // in. Refuse that combination.
+      const unverifiableGuess = verdict.ok === null && !accessLeaves;
+      if (verdict.ok === false || unverifiableGuess) {
+        const reason = unverifiableGuess
+          ? `no scandata and mapping unverifiable (${verdict.detail}) — refusing to write an unchecked sequence`
+          : `leaf mapping failed verification (${verdict.detail}) — refusing to write a possibly shifted sequence`;
+        console.log(`    [FAIL-BOOK] ${reason}`);
+        await db.collection(booksCol).updateOne(
+          { id: book.id },
+          { $set: {
+            'archive_metadata.bulk_unsuitable': true,
+            'archive_metadata.bulk_unsuitable_at': new Date(),
+            'archive_metadata.bulk_unsuitable_reason': reason,
+            'archive_metadata.bulk_align_failed': true,
+            updated_at: new Date(),
+          }}
+        );
+        stats.booksFailed++;
+        return;
+      }
+      console.log(`    [ALIGN] ${verdict.detail}`);
     }
 
     let workIdx = 0;

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getMembership } from '@/lib/membership';
 import { getReadDb } from '@/lib/mongodb';
+import { toUserId } from '@/lib/user-id';
 
 export async function GET() {
   const session = await auth();
@@ -16,7 +17,7 @@ export async function GET() {
 
   // Check if they've joined the Society (free) — separate from financial contribution
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { 'membership.joined': 1, 'membership.joinedAt': 1 } }
   );
 

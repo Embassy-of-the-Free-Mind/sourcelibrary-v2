@@ -13,6 +13,7 @@ import sharp from 'sharp';
 import * as fs from 'fs';
 import * as path from 'path';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { makeBookDoc, makePageDoc } from './lib/book-docs.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -87,11 +88,10 @@ async function main() {
     }
 
     const now = new Date();
-    const bookDoc = {
+    const bookDoc = makeBookDoc({
       _id: bookId,
       id: bookIdStr,
       slug,
-      tenant_id: 'default',
       title: '三才圖會 鳥獸三卷-四卷',
       display_title: 'Sancai Tuhui — Birds & Beasts, Juan 91-92 (National Archives of Japan)',
       author: '王圻、王思義',
@@ -131,7 +131,7 @@ async function main() {
       description: 'Physical volume 52 of the Sancai Tuhui (三才圖會), a Ming Dynasty illustrated encyclopedia compiled by Wang Qi and Wang Siyi (1609). Contains juan 91-92 covering beasts (獸類), including both real animals and mythical creatures from the Shanhaijing. This scan is from the National Archives of Japan (内閣文庫), CC0 public domain, with minimal watermarking.',
       created_at: now,
       updated_at: now,
-    };
+    });
 
     await db.collection('books').insertOne(bookDoc);
     console.log(`Book created: ${slug} (${bookIdStr})\n`);
@@ -184,7 +184,7 @@ async function main() {
 
           // Create page record
           const pageOid = new ObjectId();
-          const pageDoc = {
+          const pageDoc = makePageDoc({
             _id: pageOid,
             id: pageOid.toHexString(),
             book_id: bookIdStr,
@@ -202,7 +202,7 @@ async function main() {
             },
             created_at: now,
             updated_at: now,
-          };
+          });
 
           await db.collection('pages').insertOne(pageDoc);
           uploaded++;

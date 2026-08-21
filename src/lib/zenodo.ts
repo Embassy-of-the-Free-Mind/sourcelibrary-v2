@@ -10,6 +10,7 @@
  */
 
 import { TranslationEdition, Book } from './types';
+import { resolveImprintPlace } from './imprint';
 
 const ZENODO_API = process.env.ZENODO_SANDBOX === 'true'
   ? 'https://sandbox.zenodo.org/api'
@@ -405,7 +406,7 @@ function buildDescription(book: Book, edition: TranslationEdition): string {
     `<li>Author: ${author}</li>`,
     `<li>Language: ${book.language}</li>`,
     book.published ? `<li>Published: ${book.published}</li>` : '',
-    book.place_published ? `<li>Place: ${book.place_published}</li>` : '',
+    resolveImprintPlace(book) ? `<li>Place: ${resolveImprintPlace(book)!.display}</li>` : '',
     book.publisher ? `<li>Publisher: ${book.publisher}</li>` : '',
     book.ustc_id ? `<li>USTC: ${book.ustc_id}</li>` : '',
     '</ul>',

@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { withAuth } from '@/lib/auth-helpers';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-export async function POST(req: NextRequest) {
+export const POST = withAuth(async (req) => {
   try {
     const { texts } = await req.json();
     if (!texts || !Array.isArray(texts) || texts.length === 0) {
@@ -27,4 +28,4 @@ export async function POST(req: NextRequest) {
     const message = e instanceof Error ? e.message : 'Unknown error';
     return NextResponse.json({ error: message }, { status: 500 });
   }
-}
+}, { minRole: 'editor' });

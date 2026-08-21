@@ -36,7 +36,7 @@ interface GalleryItem {
 interface SectionsNavProps {
   bookId: string;
   sections: SectionSummary[];
-  pages: Array<{ id: string; page_number: number }>;
+  pages: Array<{ id: string; page_number: number; page_type?: string; thumb?: string }>;
   currentPage?: number;
   illustrations?: GalleryItem[];
 }
@@ -70,7 +70,6 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
     <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
       <div className="p-4 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
         <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>Sections</h3>
-        <span className="text-xs ml-auto" style={{ color: 'var(--text-muted)' }}>{sections.length} sections</span>
       </div>
 
       <div>
@@ -78,6 +77,14 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
           const isExpanded = expandedSection === index;
           const isCurrent = currentSectionIndex === index;
           const startPageId = getPageId(section.startPage);
+
+          // Section thumbnail: prefer a plate within the section's page range,
+          // else the first non-blank page in the range.
+          const secImgs = getSectionIllustrations(section.startPage, section.endPage);
+          const plateThumb = secImgs[0]?.thumbnailUrl || secImgs[0]?.extractedUrl || secImgs[0]?.imageUrl;
+          const pageThumb = pages.find(p => p.page_number >= section.startPage && p.page_number <= section.endPage && p.page_type !== 'blank' && p.thumb)?.thumb
+            || pages.find(p => p.page_number >= section.startPage && p.page_number <= section.endPage && p.thumb)?.thumb;
+          const sectionThumb = plateThumb || pageThumb;
 
           return (
             <div
@@ -90,15 +97,22 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
               {/* Section Header */}
               <button
                 onClick={() => setExpandedSection(isExpanded ? null : index)}
-                className="w-full p-4 flex items-start gap-3 transition-colors text-left hover:opacity-80"
+                className="w-full p-4 flex items-center gap-3 transition-colors text-left hover:opacity-80"
               >
-                <div className="mt-0.5">
+                <div className="shrink-0">
                   {isExpanded ? (
                     <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                   ) : (
                     <ChevronRight className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                   )}
                 </div>
+                {sectionThumb && (
+                  <div className="shrink-0 flex items-center justify-center" style={{ minWidth: '56px' }}>
+                    {/* True page dimensions (no crop), bounded by a max box. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={sectionThumb} alt="" className="max-w-[56px] max-h-[84px] w-auto h-auto object-contain border" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }} loading="lazy" />
+                  </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-medium line-clamp-1" style={{ color: 'var(--text-primary)' }}>

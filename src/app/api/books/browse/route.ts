@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     // Build query
     let query = supabase
       .from('books_catalog')
-      .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, is_first_translation, last_translation_at, quality_score, image_source_provider', { count: 'exact' })
+      .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, is_first_translation, last_translation_at, quality_score, image_source_provider', { count: 'exact' })
       .eq('visible', true)
       .gt('pages_count', 0);
 
@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(
       { books: booksWithTenantSlug, total: count || 0, skip, limit },
-      { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } }
+      { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' } }
     );
   } catch (error) {
     console.error('[books/browse] Error:', error);

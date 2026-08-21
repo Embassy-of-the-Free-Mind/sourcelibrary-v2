@@ -1,0 +1,79 @@
+{
+  "book_id": "69e7887a4a6785cfd60d113d",
+  "work_identified": "Atisha Dipankara's Mala Divination (phreng mo) of Tara — 'jo bo rje dhi pam ka ras mdzad pa'i phreng mo'; the rosary divination prophesied by Tara to Atisha Dipankara (982-1054 CE), a short divination manual using mala beads attributed to Atisha and associated with the 21 Taras tradition",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Tibetan Text and Translation of the Divination Manual of Tara (Chapter 4, Section 2: Mala Divination, in Divining with Achi and Tara: Comparative Remarks on Tibetan Dice and Mala Divination)",
+      "translator": "Solvej Hyveled Nielsen",
+      "pub_year": "2019",
+      "publisher": "Brill, Leiden (Prognostication in History 1; ISBN 9789004401952; ed. Jan-Ulrich Sobisch)",
+      "completeness": "complete",
+      "source_url": "https://brill.com/display/book/9789004402621/BP000004.xml?language=en"
+    }
+  ],
+  "queries_run": [
+    "Atisha Dipankara \"phreng mo\" Tibetan divination text English translation",
+    "\"jo bo rje\" \"phreng mo\" Atisha mala divination Tibetan English",
+    "Atisha \"mala divination\" OR \"rosary divination\" English translation published book",
+    "BDRC \"jo bo rje dhi pam ka\" OR \"dipankara\" \"phreng mo\" Tibetan",
+    "\"Divining with Achi and Tara\" Brill mala divination Atisha chapter translation",
+    "Sobisch Nielsen \"Divining with Achi and Tara\" Brill 2019 \"mala divination\" Atisha Tara translation chapter",
+    "Lotsawa House Atisha mala divination phreng mo English translation",
+    "worldcat Atisha \"mala divination\" OR \"phreng mo\" English translation",
+    "FPMT \"Tara Mo\" Atisha English translation divination text PDF",
+    "archive.org \"mala divination\" OR \"rosary divination\" Atisha Tara Tibetan English",
+    "\"Divining with Achi and Tara\" chapter 4 contents Nielsen \"Tara\" mala divination Tibetan text translated",
+    "Drametse monastery \"phreng mo\" Atisha divination Bhutan translation English",
+    "\"Tara's divination\" Atisha \"jo bo\" mala OR phreng English translation first published complete",
+    "Brill 2019 Nielsen \"phreng mo\" \"Tara\" divination Atisha \"jo bo\" Tibetan source text attribution",
+    "\"dhi pam ka ras mdzad pa'i phreng mo\" English translation",
+    "Sobisch \"Tibetan Buddhist Divination\" \"phreng mo\" Atisha mala English translation prior",
+    "\"Tara Mo\" Atisha \"English translation\" divination published book",
+    "Lama Zopa Rinpoche \"Tara Mo\" OR \"mala divination\" Atisha English text published translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://eap.bl.uk/archive-file/EAP105-1-3-145",
+      "found": "British Library EAP confirms: this is 'jo bo rje dhi pam ka ras mdzad pa'i phreng mo' from Drametse Monastery Collection (Bhutan), EAP105 digitised manuscript"
+    },
+    {
+      "url": "https://brill.com/display/title/55025",
+      "found": "Brill publisher: Divining with Achi and Tara (Sobisch/Nielsen 2019) exists; description confirms Chapter 4 contains mala divination of Tara and its oral tradition contributed by Nielsen"
+    },
+    {
+      "url": "https://searchworks.stanford.edu/view/13438489",
+      "found": "Stanford catalog: Chapter 4 section 1 = 'Phreng Mo: A Popular Tibetan Way of Divining with a Mala'; section 2 = 'Tibetan Text and Translation of the Divination Manual of Tara' — Atisha not named in catalog subject headings but tradition attribution is widely attested"
+    },
+    {
+      "url": "https://www.worldcat.org/title/divining-with-achi-and-tara-comparative-remarks-on-tibetan-dice-and-mala-divination-tools-poetry-structures-and-ritual-dimensions/oclc/1107841118",
+      "found": "WorldCat record confirmed; Sobisch/Nielsen (2019) held in major academic libraries; Nielsen's Tara mala divination translation is the phreng mo section"
+    },
+    {
+      "url": "https://perfumedskull.com/2018/01/12/telling-the-future-some-thoughts-on-fortune-fingers-and-tibetan-rosary-divination/",
+      "found": "Blog (2018): confirms Atisha's rosary divination on BDRC; author provides only rough unpublished partial translation of beginning; says Atisha divination 'transmitted by the Great 10th century Indian Buddhist master Atisha'"
+    },
+    {
+      "url": "https://tibeto-logic.blogspot.com/2013/05/padampas-rosary-divination.html",
+      "found": "Tibeto-Logic (2013): 'brief rosary divination attributed to Atisha' from Kathmandu pecha mentioned as comparative; no full English translation"
+    },
+    {
+      "url": "https://fpmt.org/education/prayers-and-practice-materials/full-catalogue/",
+      "found": "FPMT catalogue: no Tara Mo or phreng mo listed as formally published work; Lama Zopa version is draft-only, not a complete publication"
+    },
+    {
+      "url": "https://www.lotsawahouse.org/indian-masters/atisha",
+      "found": "Lotsawa House: 13 Atisha translations; none is a divination/phreng mo text"
+    },
+    {
+      "url": "https://dgongs1.com/2024/03/27/tibetan-mo-an-interview-on-divination-with-khenchen-nyima-gyaltsen/",
+      "found": "Interview confirms Sobisch (2019) focus on Achi Mo dice divination (Drikung); but Nielsen's separate Chapter 4 on mala/phreng mo is a distinct contribution covering the Tara tradition"
+    }
+  ],
+  "reasoning": "Chapter 4 of Sobisch/Nielsen (Brill 2019) explicitly presents 'Tibetan Text and Translation of the Divination Manual of Tara' within a chapter titled phreng mo/mala divination. Multiple independent sources attest this Tara mala tradition is attributed to Atisha. FPMT Tara Mo is draft-only. Lotsawa House has no phreng mo. Confidence medium: Brill chapter not directly accessed to confirm identical recension to Drametse."
+}

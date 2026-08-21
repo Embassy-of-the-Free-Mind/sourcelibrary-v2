@@ -27,6 +27,8 @@
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { MongoClient } from 'mongodb';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = path.resolve(path.dirname(__filename), '..', '..');
@@ -73,6 +75,25 @@ function runPhase(phase) {
 }
 
 async function main() {
+  // Pause + dial gate (#3826). This cron ran nightly on the paid TIER3 key
+  // with NO pause check and NO budget check — an ungated paid path straight
+  // through the incident pause. The child backfills are idempotent, so a
+  // skipped night simply resumes later.
+  {
+    const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 2 });
+    await client.connect();
+    const db = client.db('bookstore');
+    const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+    if (control?.paused) {
+      console.log('[image-embeddings] Pipeline paused — exiting.');
+      await client.close();
+      process.exit(0);
+    }
+    const allowed = await budgetAllowsDispatch(db, 'image-embeddings-cron', { control });
+    await client.close();
+    if (!allowed) process.exit(0);
+  }
+
   const results = [];
   for (const phase of PHASES) {
     const code = await runPhase(phase);

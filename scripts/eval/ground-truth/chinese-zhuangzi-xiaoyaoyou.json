@@ -7,5 +7,14 @@
   "source": "ctext",
   "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh",
   "anchor": "北冥有魚",
-  "ocr_ground_truth": "北冥有魚，其名為鯤。鯤之大，不知其幾千里也。化而為鳥，其名為鵬。鵬之背，不知其幾千里也；怒而飛，其翼若垂天之雲。是鳥也，海運則將徙於南冥。"
+  "ocr_ground_truth": "北冥有魚，其名為鯤。鯤之大，不知其幾千里也。化而為鳥，其名為鵬。鵬之背，不知其幾千里也；怒而飛，其翼若垂天之雲。是鳥也，海運",
+  "audit_note": "Reference trimmed 2026-07-19 to end at 海運 — the pinned leaf ends there (verified on the scan); the stored OCR continues 則將徙於南冥南冥者天池也 past the page edge, i.e. the model completed the famous sentence from memory. One-page rule: score only what is printed on the pinned page.",
+  "page_class": {
+    "source_class": "woodblock",
+    "layout": "text_with_interlinear_commentary_and_marginalia",
+    "density": "medium",
+    "type_size": "mixed",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": true
+  }
 }

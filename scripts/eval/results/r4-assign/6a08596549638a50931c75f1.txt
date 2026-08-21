@@ -1,0 +1,4 @@
+book_id: 6a08596549638a50931c75f1
+Title: Epistolarum Paulli Manutii libri 12. Vno nuper addito. Eiusdem quae praefationes appellantur.
+Author: Manuzio, Aldo
+Source language: Latin

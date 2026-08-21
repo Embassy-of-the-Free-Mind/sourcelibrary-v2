@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { tokenizeAtfLine, type AtfToken } from '@/lib/cuneiform-signs';
+import SiteHeader from '@/components/layout/SiteHeader';
 import gilgameshData from '../../../../scripts/output/gilgamesh-tablets.json';
 
 export const metadata: Metadata = {
@@ -243,6 +244,7 @@ function TabletSection({ tablet }: { tablet: TabletEntry }) {
 export default function GilgameshReaderPage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-cream)' }}>
+      <SiteHeader variant="light" />
       {/* Header */}
       <header className="border-b py-10 px-6" style={{ borderColor: 'var(--border-light)' }}>
         <div className="max-w-6xl mx-auto">

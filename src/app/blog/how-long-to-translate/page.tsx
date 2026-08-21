@@ -1,16 +1,20 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Long Would It Take to Translate the Renaissance? - Research Notes - Source Library',
   description:
     'We measured the rate of new Latin translations and counted what is left. At the current pace, finishing the Latin Renaissance alone would take roughly ten thousand years.',
   openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
     title: 'How Long Would It Take to Translate the Renaissance?',
     description:
       'We did the division. At the current rate of scholarly translation, the Latin Renaissance alone would take about ten thousand years to finish.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/how-long-to-translate',
@@ -153,7 +157,6 @@ export default function HowLongToTranslatePage() {
         </p>
       </article>
 
-      <BlogComments slug="how-long-to-translate" />
     </ContentPageLayout>
   );
 }

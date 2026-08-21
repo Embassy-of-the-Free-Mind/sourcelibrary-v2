@@ -1,5 +1,7 @@
-import { BASE_URL, getLicenseUrl } from './schema-utils';
+import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
+import { jsonLdHtml } from '@/lib/json-ld';
+import { institutionalByline } from '@/lib/corporate-bylines';
 
 interface GalleryImageSchemaProps {
   imageId: string;
@@ -78,11 +80,36 @@ export default function GalleryImageSchema({
     ...(metadata?.subjects && metadata.subjects.length > 0 && {
       about: metadata.subjects.map(s => ({ '@type': 'Thing', name: s })),
     }),
-    ...(book?.author && {
-      creator: { '@type': 'Person', name: formatAuthor(book.author).name || book.author },
-    }),
+    /**
+     * `creator` on a VisualArtwork means THE ARTIST, and this is a plate
+     * extracted from a book, so `book.author` is a weak proxy at best.
+     *
+     * Fixed here: where the byline names a holding monastery or an issuing
+     * society, it is neither the artist nor a person, and claiming it made the
+     * image is the #3483 defect on a third surface. Those emit an
+     * `Organization` under `provider` — the relation we can actually support —
+     * instead of `creator`.
+     *
+     * STILL OPEN, deliberately not decided here: for a personal author,
+     * `creator` claims the book's author drew the plate. Usually untrue —
+     * Vesalius wrote the *Fabrica*, van Calcar's workshop cut the blocks — and
+     * for most early-modern books the illustrator is simply unknown. Dropping
+     * it corpus-wide is a curatorial call with SEO reach, so it is raised
+     * rather than taken. `isPartOf` already carries the book relation.
+     */
+    ...(book?.author && institutionalByline(book.author)
+      ? {
+          provider: {
+            '@type': 'Organization',
+            name: formatAuthor(book.author).name || book.author,
+          },
+        }
+      : book?.author
+        ? { creator: { '@type': 'Person', name: formatAuthor(book.author).name || book.author } }
+        : {}),
     ...(book?.published && { dateCreated: book.published }),
-    ...(license && { license: getLicenseUrl(license) }),
+    license: license ? getLicenseUrl(license) : PUBLIC_DOMAIN_MARK_URL,
+    usageInfo: `${BASE_URL}/licensing`,
     creditText: book?.image_source?.attribution || `Digitized by ${book?.image_source?.provider || 'Internet Archive'}`,
     copyrightNotice: `Public domain. Original published ${book?.published || 'before 1900'}.`,
     acquireLicensePage: book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
@@ -118,7 +145,7 @@ export default function GalleryImageSchema({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 0) }}
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
     />
   );
 }

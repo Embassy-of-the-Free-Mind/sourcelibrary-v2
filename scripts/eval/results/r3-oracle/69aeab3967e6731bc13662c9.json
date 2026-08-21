@@ -1,0 +1,52 @@
+{
+  "book_id": "69aeab3967e6731bc13662c9",
+  "work_identified": "Cristoforo Landino, Quaestiones / Disputationes Camaldulenses (ca. 1474; first printed Florence ca. 1480) — all four books: I-II on the active/contemplative life and highest good, III-IV allegorizing Virgil's Aeneid",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Cristoforo Landino's Allegorization of the Aeneid: Books III and IV of the Camaldolese Disputations",
+      "translator": "Thomas H. Stahel",
+      "pub_year": "1968",
+      "publisher": "Johns Hopkins University (PhD dissertation; reprinted University Microfilms International, 1988)",
+      "completeness": "partial",
+      "source_url": "https://openlibrary.org/books/OL19511715M/Cristoforo_Landino's_Allegorization_of_the_Aeneid"
+    }
+  ],
+  "queries_run": [
+    "Cristoforo Landino \"Quaestiones Camaldulenses\" English translation",
+    "Landino \"Camaldolese Disputations\" English translation published",
+    "Landino \"Disputationes Camaldulenses\" \"I Tatti\" Harvard English translation",
+    "\"9780674258730\" Harvard University Press Landino",
+    "worldcat Landino \"Disputationes Camaldulenses\" English translation complete",
+    "site:search.worldcat.org Landino \"Camaldulenses\" English",
+    "Stahel \"Camaldolese Disputations\" Johns Hopkins dissertation 1968 Landino English translation",
+    "Stahel \"Allegorization of the Aeneid\" Landino 1988 published book contents \"books III and IV\"",
+    "\"I Tatti Renaissance Library\" Landino catalog titles list",
+    "Landino \"Camaldulensian Disputations\" OR \"Camaldolese Disputations\" English translation book published",
+    "Landino \"Quaestiones Camaldulenses\" OR \"Disputationes Camaldulenses\" complete English translation published scholar",
+    "Landino \"Disputationes Camaldulenses\" \"first English translation\" OR \"translated into English\" OR \"English version\"",
+    "\"virtue politics\" Landino \"Disputationes Camaldulenses\" thesis British Library",
+    "Landino \"Camaldulenses\" translation English published book 2000 2010 2020 2024 2025",
+    "\"9789004389526\" Brill Landino",
+    "Landino \"Quaestiones Camaldulenses\" English \"translated by\" site:archive.org OR site:gutenberg.org OR site:hathitrust.org"
+  ],
+  "sources_consulted": [
+    {"url": "https://openlibrary.org/authors/OL421122A/Cristoforo_Landino", "found": "24 works listed; no English translation of Disputationes Camaldulenses"},
+    {"url": "https://openlibrary.org/books/OL19511715M/Cristoforo_Landino's_Allegorization_of_the_Aeneid", "found": "Stahel 1988 (UMI reprint of 1968 diss.): Latin text + English, covers Books III-IV only"},
+    {"url": "https://onlinebooks.library.upenn.edu/webbin/book/browse?type=atitle&key=Landino,+Cristoforo,+1424-1504:+Disputationes+Camaldulenses.", "found": "Only Latin manuscript facsimile listed; no English translation"},
+    {"url": "https://portail.biblissima.fr/en/ark:/43093/oedataea9f926c7a45aad578fafb448ca40c80f5e2d42b", "found": "Three early printed Latin editions (ca. 1480, ca. 1502, ca. 1507); no English translation editions"},
+    {"url": "https://catalog.hathitrust.org/Record/001757286", "found": "Latin manuscript facsimile ca. 1474; no English translation"},
+    {"url": "https://archive.org/details/bub_gb_RkoOakkhm8MC", "found": "1507 Venice Latin edition; language: Latin; no English translation"},
+    {"url": "https://www.hup.harvard.edu/series/the-i-tatti-renaissance-library", "found": "I Tatti has Landino's Poems (2008, tr. Chatfield) but NOT the Disputationes Camaldulenses"},
+    {"url": "https://brill.com/view/book/9789004389526/BP000011.xml", "found": "Bruce McNair, Cristoforo Landino: His Works and Thought (Brill 2019) — secondary scholarship, not a translation"},
+    {"url": "https://eprints.bbk.ac.uk/id/eprint/45850/", "found": "Benjamin Thomson 2021 PhD thesis (Birkbeck) — secondary scholarship on virtue politics, not a translation"},
+    {"url": "https://en.wikipedia.org/wiki/Cristoforo_Landino", "found": "No English translations of Disputationes Camaldulenses mentioned"},
+    {"url": "https://www.hup.harvard.edu/books/9780674258730", "found": "ISBN is Böninger, Niccolò di Lorenzo della Magna (2021) — history of Florentine printing; chapter mentions Landino but is not a translation"}
+  ],
+  "reasoning": "A partial English translation exists: Stahel (1968 diss./1988 UMI) covers only Books III-IV (Aeneid allegorization). Books I-II (active/contemplative life, highest good) have never appeared in English. No complete English translation found across Online Books Page, Biblissima, HathiTrust, archive.org, I Tatti catalog, BL EThOS, or Open Library. Our 4-book edition is the first complete English rendering."
+}

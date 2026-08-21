@@ -1,0 +1,65 @@
+{
+  "book_id": "69b642051c1c21a373889f10",
+  "work_identified": "De occulta philosophia libri tres (Three Books of Occult Philosophy) by Heinrich Cornelius Agrippa von Nettesheim, first published 1531/1533",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Three Books of Occult Philosophy",
+      "translator": "James Freake (J.F.)",
+      "pub_year": "1651",
+      "publisher": "R.W. for Gregory Moule, London",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/bim_early-english-books-1641-1700_three-books-of-occult-ph_agrippa-henricus-cornel_1651"
+    },
+    {
+      "english_title": "Three Books of Occult Philosophy (Llewellyn's Sourcebook Series)",
+      "translator": "James Freake (trans.), Donald Tyson (ed. and annotated)",
+      "pub_year": "1993",
+      "publisher": "Llewellyn Publications",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Three-Occult-Philosophy-Llewellyns-Sourcebook/dp/0875428320"
+    },
+    {
+      "english_title": "Three Books of Occult Philosophy",
+      "translator": "Eric Purdue",
+      "pub_year": "2021",
+      "publisher": "Inner Traditions",
+      "completeness": "complete",
+      "source_url": "https://www.simonandschuster.com/books/Three-Books-of-Occult-Philosophy/Heinrich-Cornelius-Agrippa/9781644114162"
+    }
+  ],
+  "queries_run": [
+    "Agrippa \"De occulta philosophia\" English translation WorldCat",
+    "Agrippa \"Three Books of Occult Philosophy\" English translation complete 1651",
+    "Eric Purdue Agrippa \"Three Books of Occult Philosophy\" 2021 Inner Traditions",
+    "worldcat Agrippa \"Three Books of Occult Philosophy\" 1651 James Freake complete translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Three_Books_of_Occult_Philosophy",
+      "found": "Full translation history confirmed: 1651 Freake (complete), 1898/1913/1974 Book 1 only, 1986 facsimile, 1993/2005 Tyson edition (complete), 2020 Paul Summers Young 4 vols (complete), 2021 Purdue (complete)"
+    },
+    {
+      "url": "https://archive.org/details/bim_early-english-books-1641-1700_three-books-of-occult-ph_agrippa-henricus-cornel_1651",
+      "found": "1651 complete English translation by J.F. (Freake), 625 pages, digitized from Early English Books 1641-1700 microfilm"
+    },
+    {
+      "url": "https://wellcomecollection.org/works/ftahuupv",
+      "found": "1651 complete English translation (J.F./Freake), 583 pp + preliminaries; translator probably John French or James Freake"
+    },
+    {
+      "url": "https://www.simonandschuster.com/books/Three-Books-of-Occult-Philosophy/Heinrich-Cornelius-Agrippa/9781644114162",
+      "found": "Eric Purdue complete new English translation from 1533 Latin, Inner Traditions 2021, ISBN 9781644114162, 864 pages"
+    },
+    {
+      "url": "https://search.worldcat.org/title/868520382",
+      "found": "WorldCat record for Tyson/Llewellyn edition — returned 429 Too Many Requests; supplemented by Amazon and Wikipedia records confirming completeness"
+    }
+  ],
+  "reasoning": "De occulta philosophia has been completely Englished since James Freake's 1651 London edition (archive.org/EEBO/Wellcome confirmed). Modern complete English translations: Tyson/Llewellyn 1993 and Purdue/Inner Traditions 2021. Wikipedia translation table confirms all three are full-text. not_first is certain."
+}

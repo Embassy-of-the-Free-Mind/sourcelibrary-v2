@@ -1,0 +1,66 @@
+{
+  "book_id": "69b18a95c4be2cdd0edc835c",
+  "work_identified": "Lux in Tenebris — Jan Amos Comenius's Latin anthology of the prophetic visions of Christoph Kotter, Krystyna Poniatowska, and Mikuláš Drabík (first published Amsterdam, 1657; expanded as Lux e Tenebris, 1665)",
+  "verdict": "first_modern",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Prophecies of Christopher Kotterus, Christiana Poniatovia, Nicholas Drabicius",
+      "translator": "Robert Codrington",
+      "pub_year": "1664",
+      "publisher": "Robert Pawlet, London (printed at the sign of the Bible in Chancery-lane)",
+      "completeness": "unknown",
+      "source_url": "https://quod.lib.umich.edu/e/eebo2/A70412.0001.001/1:2?rgn=div1;view=fulltext"
+    }
+  ],
+  "queries_run": [
+    "Comenius \"Lux in Tenebris\" English translation Kotter Poniatowska Drabik prophecies",
+    "Comenius \"Lux in Tenebris\" 1657 English WorldCat translation",
+    "Robert Codrington 1664 \"Prophecies of Christopher Kotterus\" English translation Comenius complete",
+    "Codrington 1664 prophecies Kotterus Poniatovia Drabicius complete translation EEBO scope content",
+    "\"Lux in Tenebris\" OR \"Lux e Tenebris\" Comenius modern English translation academic scholarly 20th 21st century",
+    "Comenius \"Lux in Tenebris\" Codrington English 1664 \"translated out of the Latin\" prophecies complete anthology",
+    "Drabik Nicolaus Drabicius WorldCat English editions translation 1976 modern reprint",
+    "WorldCat Kotter Poniatowska Drabik Comenius prophecies English editions 20th 21st century translation",
+    "Comenius prophecies Kotter Poniatovska Drabik English academic translation 20th century new modern version"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/John_Amos_Comenius",
+      "found": "Confirms Lux in Tenebris is Comenius's anthology of Kotter, Drabík, and Poniatowska visions; no English translations mentioned"
+    },
+    {
+      "url": "https://archive.org/details/luxintenebrisho00ponigoog",
+      "found": "Digitized scan of the original 1657 Latin anthology; confirmed scope covers all three prophets"
+    },
+    {
+      "url": "https://quod.lib.umich.edu/e/eebo2/A70412.0001.001/1:2?rgn=div1;view=fulltext",
+      "found": "EEBO record of Codrington 1664 English translation covering all three prophets (Kotterus, Poniatovia, Drabicius); translated from Latin of Comenius"
+    },
+    {
+      "url": "https://www.amazon.com/Prophecies-Christopher-Christiana-Poniatovia-foretelling/dp/1240945655",
+      "found": "Modern POD reprint of Codrington 1664 (ISBN 9781240945658); confirms 1664 text re-circulated as reprint, not a new translation"
+    },
+    {
+      "url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupname?key=Comenius,+Johann+Amos,+1592-1670",
+      "found": "Lists 'Lux in tenebris. English. (London: Robert Pawlet, 1664)' as the only English entry for Comenius's Lux in Tenebris"
+    },
+    {
+      "url": "https://archive.org/details/bim_eighteenth-century_lux-e-tenebris-english_komensky-jan-amos_1794",
+      "found": "1794 English 'Prophetical extracts No.IV' — confirmed partial/thematic excerpts only, not a new complete translation"
+    },
+    {
+      "url": "https://komensky.mjakub.cz/literary-works",
+      "found": "Official Comenius literary works site; mentions Lux in Tenebris but lists no English translations at all"
+    },
+    {
+      "url": "https://catalog.folger.edu/record/729876",
+      "found": "Folger Library record of Codrington 1664 (HTTP 403, metadata visible in search snippet)"
+    }
+  ],
+  "reasoning": "Robert Codrington published a 1664 English translation (EEBO A70412) of Comenius's anthology, covering all three prophets (Kotter, Poniatovska, Drabicius), translated from the Latin. WorldCat shows 22 English editions 1664–1976, all reprints of Codrington's text, not new translations. No post-1900 scholarly re-translation found. Only pre-1900 English exists → first_modern."
+}

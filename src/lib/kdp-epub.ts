@@ -1,6 +1,7 @@
 import archiver from 'archiver';
 import sharp from 'sharp';
 import type { Db } from 'mongodb';
+import { resolveImprintPlace } from '@/lib/imprint';
 import type { Book, Chapter, Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
@@ -534,6 +535,9 @@ ${section('People', idx!.people)}${section('Places', idx!.places)}${section('Con
         if (p.ocr?.model) models.add(p.ocr.model);
       }
       const provider = book.image_source?.provider_name || book.image_source?.provider;
+      // Imprint place: resolve the stated/asserted/conjectural family, not the
+      // bare import-tier column (#4043).
+      const imprintPlace = resolveImprintPlace(book)?.display;
       const colophonBody = `  <div class="colophon">
     <h1>Colophon</h1>
     <div class="colophon-section">
@@ -542,7 +546,7 @@ ${section('People', idx!.people)}${section('Places', idx!.places)}${section('Con
       <p><span class="colophon-label">Author:</span> ${escapeXml(book.author)}</p>
       <p><span class="colophon-label">Original Language:</span> ${escapeXml(book.language)}</p>
       ${book.published ? `<p><span class="colophon-label">Published:</span> ${escapeXml(book.published)}</p>` : ''}
-      ${book.place_published ? `<p><span class="colophon-label">Place:</span> ${escapeXml(book.place_published)}</p>` : ''}
+      ${imprintPlace ? `<p><span class="colophon-label">Place:</span> ${escapeXml(imprintPlace)}</p>` : ''}
       ${book.publisher ? `<p><span class="colophon-label">Printer/Publisher:</span> ${escapeXml(book.publisher)}</p>` : ''}
     </div>
     <div class="colophon-section">

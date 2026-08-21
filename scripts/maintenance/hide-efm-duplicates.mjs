@@ -158,11 +158,17 @@ async function main() {
     console.log(`\nDRY RUN — would hide ${safeToHide.length} non-EFM duplicates (skipping ${needsAttention.length} where EFM is empty).`);
     console.log('Run with --apply to execute.');
   } else {
-    const ids = safeToHide.map(p => p.nonEfm.id);
-    if (ids.length > 0) {
-      const result = await books.updateMany(
-        { id: { $in: ids } },
-        { $set: { hidden: true, visible: false, hidden_reason: 'efm_duplicate' } }
+    if (safeToHide.length > 0) {
+      // Per-pair write so each hidden copy gets a structured keeper pointer
+      // (duplicate_of, #3102) alongside the human-readable reason.
+      const result = await books.bulkWrite(
+        safeToHide.map(p => ({
+          updateOne: {
+            filter: { id: p.nonEfm.id },
+            update: { $set: { hidden: true, visible: false, hidden_reason: 'efm_duplicate', duplicate_of: p.efm.id } },
+          },
+        })),
+        { ordered: false }
       );
       console.log(`\nHid ${result.modifiedCount} non-EFM duplicate books.`);
     } else {

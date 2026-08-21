@@ -44,10 +44,37 @@ export default function UsageTab({ days }: UsageTabProps) {
   );
   if (!data) return null;
 
+  // The corpus totals come from a periodic rollup. If it is missing or was
+  // refused as too stale, `summary` is zeroes — say so instead of rendering
+  // them, because a plausible wrong number is worse than no number.
+  const snap = data.snapshot;
+  const summaryUnavailable = snap ? snap.source === 'none' : false;
+  const snapAgeHours = snap?.ageMs != null ? snap.ageMs / 3_600_000 : null;
+
   return (
     <div className="space-y-8">
+      {summaryUnavailable && (
+        <div
+          className="flex items-start gap-3 p-4 rounded-xl"
+          style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
+        >
+          <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#b45309' }} />
+          <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <strong style={{ color: 'var(--text-primary)' }}>Corpus totals unavailable.</strong>{' '}
+            The rollup that feeds them has not been written recently enough to trust, so they are not
+            shown rather than shown wrong. Everything below is queried live and is unaffected.
+          </div>
+        </div>
+      )}
+      {snap && snap.source === 'dashboard_snapshot' && snapAgeHours != null && (
+        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+          Corpus totals are from a fallback snapshot{' '}
+          {snapAgeHours < 48 ? `${Math.round(snapAgeHours)}h` : `${Math.round(snapAgeHours / 24)}d`} old.
+        </p>
+      )}
+
       {/* Summary Cards */}
-      {data.summary && (
+      {data.summary && !summaryUnavailable && (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
             <div className="flex items-center gap-2 mb-2">

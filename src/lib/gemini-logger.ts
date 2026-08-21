@@ -73,7 +73,22 @@ const BATCH_DISCOUNT = 0.5;
 
 export type GeminiCallType = 'ocr' | 'translation' | 'transliterate' | 'summary' | 'extract_images' | 'extract_chapters' | 'index' | 'ft_verification' | 'other';
 export type GeminiMode = 'realtime' | 'batch';
-export type GeminiStatus = 'success' | 'failed' | 'pending' | 'submitted';
+export type GeminiStatus = 'success' | 'failed' | 'pending' | 'submitted' | 'superseded' | 'duplicate' | 'unknown';
+
+/**
+ * Statuses on a row that carries no spend figure yet (#3452).
+ *
+ * A batch job logs a row at SUBMIT time, before tokens exist — 'submitted' from
+ * the Hetzner orchestrator, 'pending' from logBatchSubmission() below. Both mean
+ * the same thing and both must be reconciled once results land, or the meter
+ * reads $0.00 for real spend. 'duplicate' marks a historical placeholder whose
+ * spend was recorded on a separate row by the pre-#3452 collector.
+ *
+ * NEVER sum cost, tokens, or page_count over these rows — see the
+ * `dashboard_usage` view, which filters them out.
+ */
+export const PLACEHOLDER_STATUSES: GeminiStatus[] = ['submitted', 'pending'];
+export const NON_SPEND_STATUSES: GeminiStatus[] = [...PLACEHOLDER_STATUSES, 'duplicate', 'unknown'];
 /** Provenance: who/what kicked off the call. `cron` = scheduled job, `manual` = HTTP-triggered admin action, `auto_recovery` = Lambda re-runner, `worker` = unattended worker loop. */
 export type GeminiTrigger = 'cron' | 'manual' | 'auto_recovery' | 'worker' | 'unknown';
 
@@ -262,7 +277,10 @@ export async function logBatchSubmission(params: {
     mode: 'batch',
     input_tokens: 0,  // Unknown at submission time
     output_tokens: 0,
-    status: 'pending',
+    // 'submitted' matches what the Hetzner orchestrator writes. This used to
+    // say 'pending' while logBatchResult() below looked for... 'pending', and
+    // the orchestrator's rows were never matched by either (#3452).
+    status: 'submitted',
   });
 }
 
@@ -283,7 +301,7 @@ export async function logBatchResult(params: {
         .from('gemini_usage')
         .select('id, model')
         .eq('batch_job_id', params.batch_job_id)
-        .eq('status', 'pending')
+        .in('status', PLACEHOLDER_STATUSES)
         .limit(1)
         .single();
 
@@ -324,7 +342,7 @@ export async function logBatchResult(params: {
       const db = await getDb();
       const existing = await db.collection('gemini_usage').findOne({
         batch_job_id: params.batch_job_id,
-        status: 'pending',
+        status: { $in: PLACEHOLDER_STATUSES },
       });
 
       if (existing) {
@@ -365,7 +383,13 @@ export async function getUsageSummary(params: {
 
   // Note: PostgREST defaults to 1000 rows. For book-scoped queries this is fine.
   // For time-range queries across all books, use dashboard_usage view instead.
-  let query = client.from('gemini_usage').select('type, model, input_tokens, output_tokens, cost_usd').limit(50000);
+  // Placeholder rows carry zeros and (pre-#3452) a duplicate of the collected
+  // row's page_count — including them inflates call counts and can only ever
+  // drag the average cost toward zero.
+  let query = client.from('gemini_usage')
+    .select('type, model, input_tokens, output_tokens, cost_usd')
+    .not('status', 'in', `(${NON_SPEND_STATUSES.join(',')})`)
+    .limit(50000);
   if (params.startDate) query = query.gte('timestamp', params.startDate.toISOString());
   if (params.endDate) query = query.lte('timestamp', params.endDate.toISOString());
   if (params.book_id) query = query.eq('book_id', params.book_id);

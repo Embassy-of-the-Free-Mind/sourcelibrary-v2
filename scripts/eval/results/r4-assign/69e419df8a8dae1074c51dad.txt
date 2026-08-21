@@ -1,0 +1,4 @@
+book_id: 69e419df8a8dae1074c51dad
+Title: Aristophanis Comoediae (All 11 Comedies, Greek)
+Author: Aristophanes
+Source language: Greek

@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 
 export const metadata: Metadata = {
@@ -15,11 +14,15 @@ export const metadata: Metadata = {
       'Data analysis of 2,000+ historical texts receiving their first English translation through AI.',
     images: [
       {
-        url: 'https://sourcelibrary.org/og-image.png',
+        url: 'https://sourcelibrary.org/og-image.jpg',
         width: 1200,
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg' }],
   },
 };
 
@@ -86,7 +89,7 @@ const CENTURIES = [
 
 const GALLERY_IMAGES = [
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952d08677f38f6761bc5477/695906c895a91542b28bf73e-0.jpg',
+    url: 'https://images.sourcelibrary.org/gallery/6952d08677f38f6761bc5477/695906c895a91542b28bf73e-0.jpg',
     title: 'Amphitheatre of Eternal Wisdom',
     author: 'Heinrich Khunrath',
     year: 1609,
@@ -94,7 +97,7 @@ const GALLERY_IMAGES = [
     desc: 'Porta Amphitheatri — Gate of the Amphitheatre of Wisdom',
   },
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69593413b282844d7b277aaf/69593413b282844d7b277ab0-0.jpg?v=1771877346999',
+    url: 'https://images.sourcelibrary.org/gallery/69593413b282844d7b277aaf/69593413b282844d7b277ab0-0.jpg?v=1771877346999',
     title: 'Utriusque Cosmi Historia',
     author: 'Robert Fludd',
     year: 1617,
@@ -102,7 +105,7 @@ const GALLERY_IMAGES = [
     desc: 'Cosmological frontispiece — macrocosm and microcosm',
   },
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac677f38f6761bc683a/6952dac677f38f6761bc6847-0.jpg?v=1771876133767',
+    url: 'https://images.sourcelibrary.org/gallery/6952dac677f38f6761bc683a/6952dac677f38f6761bc6847-0.jpg?v=1771876133767',
     title: 'History of Both Worlds',
     author: 'Robert Fludd',
     year: 1617,
@@ -110,7 +113,7 @@ const GALLERY_IMAGES = [
     desc: 'Integra Naturae Speculum — Mirror of all Nature',
   },
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc6751-0.jpg',
+    url: 'https://images.sourcelibrary.org/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc6751-0.jpg',
     title: 'On the Symmetry of Human Bodies',
     author: 'Albrecht Dürer',
     year: 1532,
@@ -118,7 +121,7 @@ const GALLERY_IMAGES = [
     desc: 'Geometric construction of human proportion',
   },
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69906f694b3bd4d1fffd0b26/69906f6a4b3bd4d1fffd0b61-3.jpg',
+    url: 'https://images.sourcelibrary.org/gallery/69906f694b3bd4d1fffd0b26/69906f6a4b3bd4d1fffd0b61-3.jpg',
     title: 'Bodleian Library MS. Bodl. 614',
     author: 'Anonymous',
     year: 1150,
@@ -126,7 +129,7 @@ const GALLERY_IMAGES = [
     desc: 'Blemmyes — headless people of classical geography',
   },
   {
-    url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/6952e47c77f38f6761bc7ca8/6952e47c77f38f6761bc7cab-0.jpg',
+    url: 'https://images.sourcelibrary.org/gallery/6952e47c77f38f6761bc7ca8/6952e47c77f38f6761bc7cab-0.jpg',
     title: 'Alchymia',
     author: 'Andreas Libavius',
     year: 1597,
@@ -218,7 +221,7 @@ const FEATURED_BOOKS = [
     lang: 'Latin',
     pages: 69,
     slug: 'two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/thumbnails/6836f8ee811c8ab472a49e36/1.jpg',
+    thumb: 'https://images.sourcelibrary.org/thumbnails/6836f8ee811c8ab472a49e36/1.jpg',
     summary:
       'Cornelius Drebbel presents a mesmerizing synthesis of natural philosophy and spiritual alchemy, arguing that all matter is animated by a single vital force — the "fifth essence" of perpetual motion.',
   },
@@ -229,7 +232,7 @@ const FEATURED_BOOKS = [
     lang: 'Russian',
     pages: 401,
     slug: 'key-to-the-secrets-of-nature-eckartshausen',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/69099634cf28baa1b4cae779/69099653cf28baa1b4cae787.jpg',
+    thumb: 'https://images.sourcelibrary.org/cropped/69099634cf28baa1b4cae779/69099653cf28baa1b4cae787.jpg',
     summary:
       'Karl von Eckartshausen challenges the "proud scholar" to step beyond the library and encounter nature directly through inner illumination and spiritual experiment.',
   },
@@ -240,7 +243,7 @@ const FEATURED_BOOKS = [
     lang: 'Latin',
     pages: 40,
     slug: 'on-the-mysteries-ficino',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/912cf0da-035c-425b-8975-e5a195a47767/6959afa11dfc1806c080bc8c-0.jpg',
+    thumb: 'https://images.sourcelibrary.org/gallery/912cf0da-035c-425b-8975-e5a195a47767/6959afa11dfc1806c080bc8c-0.jpg',
     summary:
       'In this profound exploration, Marsilio Ficino navigates the tension between earthly desire and divine contemplation — a philosophical meditation on beauty, love, and the soul\'s ascent.',
   },
@@ -251,7 +254,7 @@ const FEATURED_BOOKS = [
     lang: 'Latin',
     pages: 1036,
     slug: 'history-of-both-worlds-macrocosm-fludd',
-    thumb: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69593413b282844d7b277aaf/1.jpg',
+    thumb: 'https://images.sourcelibrary.org/archived/69593413b282844d7b277aaf/1.jpg',
     summary:
       'The pinnacle of Paracelsian cosmology — Fludd\'s encyclopedic vision of the universe as a living organism, illustrated with 60+ engravings mapping the correspondences between macrocosm and microcosm.',
   },
@@ -978,7 +981,6 @@ export default function TwoThousandFirstTranslations() {
 
         {/* Comments */}
         <div className="mt-16">
-          <BlogComments slug="2000-first-translations" />
         </div>
       </div>
 

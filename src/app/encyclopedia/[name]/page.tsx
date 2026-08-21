@@ -1,10 +1,13 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { User, MapPin, Lightbulb, ExternalLink } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { getEntity, getSharedBooks } from './layout';
+import { bookUrl } from '@/lib/slugify';
+import { getBookThumbnailUrl } from '@/lib/utils';
+import { getEntity, getAuthoredWorks } from './layout';
 
 const TYPE_ICONS = {
   person: User,
@@ -47,22 +50,20 @@ export default async function EntityDetailPage({
     notFound();
   }
 
-  // Deduplicate books by book_id and merge page arrays
-  const booksMap = new Map<string, typeof entity.books[0]>();
-  for (const book of entity.books) {
-    if (booksMap.has(book.book_id)) {
-      const existing = booksMap.get(book.book_id)!;
-      // Merge page arrays (deduplicate page numbers too)
-      const mergedPages = Array.from(new Set([...existing.pages, ...book.pages])).sort((a, b) => a - b);
-      booksMap.set(book.book_id, { ...existing, pages: mergedPages });
-    } else {
-      booksMap.set(book.book_id, book);
-    }
-  }
-  const deduplicatedBooks = Array.from(booksMap.values());
+  // Already deduped and normalized in getEntity (src/lib/entity-books.ts).
+  const deduplicatedBooks = entity.books;
 
   const Icon = TYPE_ICONS[entity.type];
-  const connections = await getSharedBooks(decodedName);
+
+  // Books this person WROTE (vs the books that mention them, below). Only people
+  // can have authored works, so don't spend a query on places and concepts.
+  const {
+    works: authoredWorks,
+    total: authoredTotal,
+    authorSlug: canonicalAuthorSlug,
+  } = entity.type === 'person'
+    ? await getAuthoredWorks(entity._id, entity.wikidata_id, entity.name)
+    : { works: [], total: 0, authorSlug: null };
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -92,10 +93,24 @@ export default async function EntityDetailPage({
                   {formatLifespan(entity.wikidata_birth_date, entity.wikidata_death_date)}
                 </p>
               )}
+              {/*
+                Counts come from the deduped book list, so this row can't
+                contradict the "Appears in N Books" heading below. "Total
+                mentions" used to sum the smeared page arrays, which is how this
+                page came to advertise five-figure mention counts (#3361) — it
+                now counts page references we actually verified, and is omitted
+                when there are none rather than reading as a hard zero.
+              */}
               <div className="flex items-center gap-4 mt-4 text-sm text-stone-400">
                 <span>{entity.book_count} book{entity.book_count !== 1 ? 's' : ''}</span>
-                <span>&middot;</span>
-                <span>{entity.total_mentions} total mention{entity.total_mentions !== 1 ? 's' : ''}</span>
+                {entity.total_mentions > 0 && (
+                  <>
+                    <span>&middot;</span>
+                    <span>
+                      {entity.total_mentions} verified page reference{entity.total_mentions !== 1 ? 's' : ''}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -103,6 +118,68 @@ export default async function EntityDetailPage({
       </div>
 
       <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
+        {/*
+          Works BY this person come first. Everything below is about books that
+          mention them — for an author we actually hold, that was a confusing
+          lead (#3361).
+        */}
+        {authoredWorks.length > 0 && (
+          <div className="bg-white rounded-lg border border-stone-200 p-6">
+            <div className="flex items-baseline justify-between gap-4 mb-4">
+              <div>
+                <h2 className="text-lg font-semibold text-stone-900">
+                  {authoredTotal === 1
+                    ? `1 work by ${entity.name} in the library`
+                    : `${authoredTotal} works by ${entity.name} in the library`}
+                </h2>
+                {authoredTotal > authoredWorks.length && (
+                  <p className="text-sm text-stone-500 mt-0.5">
+                    Showing {authoredWorks.length} — see the author page for all {authoredTotal}.
+                  </p>
+                )}
+              </div>
+              {canonicalAuthorSlug && (
+                <Link
+                  href={`/author/${canonicalAuthorSlug}`}
+                  className="shrink-0 text-sm text-accent-rust hover:text-accent-gold-dark"
+                >
+                  Author page →
+                </Link>
+              )}
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {authoredWorks.map((work) => {
+                const thumb = getBookThumbnailUrl(work);
+                return (
+                  <Link key={work.id} href={bookUrl(work)} className="group block">
+                    <div className="relative w-full aspect-[3/4] rounded overflow-hidden bg-stone-100 border border-stone-200">
+                      {thumb ? (
+                        <Image
+                          src={thumb}
+                          alt={work.display_title || work.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 45vw, (max-width: 768px) 30vw, 22vw"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center p-2 text-center text-[10px] text-stone-400">
+                          {work.display_title || work.title}
+                        </div>
+                      )}
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-stone-900 line-clamp-2 group-hover:text-accent-rust transition-colors">
+                      {work.display_title || work.title}
+                    </p>
+                    <p className="text-xs text-stone-500 mt-0.5">
+                      {[work.year || work.published, work.language].filter(Boolean).join(' · ')}
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Description */}
         {(entity.description || (entity.type === 'place' && entity.wikidata_coordinates)) && (
           <div className="bg-white rounded-lg border border-stone-200 p-6">
@@ -153,48 +230,6 @@ export default async function EntityDetailPage({
           </div>
         )}
 
-        {/* Shared Books / Connections */}
-        {connections && connections.length > 0 && (
-          <div className="bg-white rounded-lg border border-stone-200 p-6">
-            <h2 className="text-lg font-semibold text-stone-900 mb-1">Connections</h2>
-            <p className="text-sm text-stone-500 mb-4">
-              Other entities that appear in the same books as {entity.name}.
-            </p>
-            <div className="space-y-3">
-              {connections.map((conn) => {
-                const ConnIcon = TYPE_ICONS[conn.type];
-                return (
-                  <div key={conn.name} className="flex items-start gap-3">
-                    <Link
-                      href={`/encyclopedia/${encodeURIComponent(conn.name)}`}
-                      className={`inline-flex items-center gap-1.5 shrink-0 mt-0.5 px-2 py-1 rounded-full text-sm font-medium transition-colors ${ENTITY_TYPE_STYLES[conn.type as EntityType].pillHover}`}
-                    >
-                      <ConnIcon className="w-3.5 h-3.5" />
-                      {conn.name}
-                    </Link>
-                    <div className="flex flex-wrap gap-1 min-w-0">
-                      {conn.sharedBooks.slice(0, 4).map((book) => (
-                        <Link
-                          key={book.book_id}
-                          href={`/book/${book.book_id}`}
-                          className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors truncate max-w-[200px]"
-                          title={book.book_title}
-                        >
-                          {book.book_title}
-                        </Link>
-                      ))}
-                      {conn.sharedBooks.length > 4 && (
-                        <span className="inline-block px-2 py-0.5 text-stone-400 text-xs">
-                          +{conn.sharedBooks.length - 4} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
 
         {/* Appearances */}
         <div className="bg-white rounded-lg border border-stone-200 p-6">
@@ -214,22 +249,40 @@ export default async function EntityDetailPage({
                   {book.book_title}
                 </Link>
                 <p className="text-sm text-stone-500 mt-0.5">{book.book_author}</p>
-                <div className="mt-2 flex flex-wrap gap-1">
-                  {book.pages.slice(0, 10).map((page) => (
+                {/*
+                  Page pills are citations, so only verified pages get one. A
+                  'section' entry means we know which stretch of the book
+                  discusses this entity but not the page — it links to the start
+                  of the range and says so, rather than minting a pill per page
+                  in the range (which is what made these pages ~78% wrong, #3361).
+                */}
+                {book.page_precision === 'page' && book.pages.length > 0 ? (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {book.pages.slice(0, 10).map((page) => (
+                      <Link
+                        key={page}
+                        href={`/book/${book.book_id}/page-number/${page}`}
+                        className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors"
+                      >
+                        p. {page}
+                      </Link>
+                    ))}
+                    {book.pages.length > 10 && (
+                      <span className="inline-block px-2 py-0.5 text-stone-400 text-xs">
+                        +{book.pages.length - 10} more pages
+                      </span>
+                    )}
+                  </div>
+                ) : book.page_range ? (
+                  <div className="mt-2">
                     <Link
-                      key={page}
-                      href={`/book/${book.book_id}/page-number/${page}`}
-                      className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors"
+                      href={`/book/${book.book_id}/page-number/${book.page_range.start}`}
+                      className="inline-block px-2 py-0.5 bg-stone-100 text-stone-500 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors"
                     >
-                      p. {page}
+                      discussed in pp. {book.page_range.start}–{book.page_range.end}
                     </Link>
-                  ))}
-                  {book.pages.length > 10 && (
-                    <span className="inline-block px-2 py-0.5 text-stone-400 text-xs">
-                      +{book.pages.length - 10} more pages
-                    </span>
-                  )}
-                </div>
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

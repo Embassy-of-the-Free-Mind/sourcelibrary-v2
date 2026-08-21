@@ -7,9 +7,10 @@
 
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ProseField from '@/components/ui/ProseField';
 import {
   BookOpen,
   Share2,
@@ -27,7 +28,8 @@ import {
   ChevronRight,
   Download,
   Loader2,
-  Eye
+  Eye,
+  Search
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -37,8 +39,12 @@ import { gallery, views } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import type { GalleryImageDetail, GalleryItem, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
+// Deep zoom pulls in OpenSeadragon — lazy so its weight only lands when a
+// reader actually opens the tiled viewer (#2714).
+const DeepZoomOverlay = lazy(() => import('@/components/artwork/DeepZoomOverlay'));
 import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
+import { trackEvent } from '@/lib/track-event';
 
 /** In-memory cache for prefetched gallery image API responses */
 const prefetchCache = new Map<string, Promise<GalleryImageDetail>>();
@@ -94,6 +100,7 @@ export default function ImageDetailPage({
   const [savingRotation, setSavingRotation] = useState(false);
   const [brightness, setBrightness] = useState(100);
   const [contrast, setContrast] = useState(100);
+  const [deepZoomOpen, setDeepZoomOpen] = useState(false);
   const [pageImageAspect, setPageImageAspect] = useState<string>('3/4');
   const [showInfo, setShowInfo] = useState(false);
 
@@ -269,6 +276,15 @@ export default function ImageDetailPage({
       setBookThumbnails(thumbs);
       const idx = ids.indexOf(imageId!);
       setCurrentIndex(idx >= 0 ? idx : 0);
+    }).catch((err) => {
+      if (cancelled) return;
+      // A missing/deleted collection (e.g. a stale ?gcollection= link that 404s) must
+      // not break the viewer. Drop to book scope so book-wide prev/next still works.
+      if (collectionScope && data?.book?.id) {
+        setCollectionScope(null);
+        return;
+      }
+      console.error('Failed to load gallery navigation:', err);
     });
 
     return () => { cancelled = true; };
@@ -678,6 +694,7 @@ export default function ImageDetailPage({
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
       '_blank'
     );
+    trackEvent('share', { channel: 'twitter', url, surface: 'gallery_image' });
   };
 
   const shareToPinterest = () => {
@@ -690,6 +707,7 @@ export default function ImageDetailPage({
       '_blank',
       'width=750,height=550'
     );
+    trackEvent('share', { channel: 'pinterest', url: pageUrl, surface: 'gallery_image' });
   };
 
   const shareNative = async () => {
@@ -701,6 +719,8 @@ export default function ImageDetailPage({
         text: `From "${data.book.title}"${data.book.author && data.book.author !== 'Various' ? ` by ${data.book.author}` : ''}`,
         url,
       });
+      // Only counted once the share sheet resolves — a cancel throws and is not a share.
+      trackEvent('share', { channel: 'native', url, surface: 'gallery_image' });
     } catch {
       // User cancelled or not supported
     }
@@ -862,6 +882,20 @@ export default function ImageDetailPage({
 
           {/* Brightness/contrast controls */}
           <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+            {/* Deep zoom (#2714) — only when the page has a tile pyramid AND the
+                detection could be located in the master's coordinate space. The
+                API withholds both fields together, so no focus means no button
+                and the lens magnifier stays the high-res path. */}
+            {data.deepzoom && data.focusBbox && (
+              <button
+                onClick={() => setDeepZoomOpen(true)}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/70 rounded-lg text-xs text-stone-300 hover:text-white transition-colors"
+                title="Deep zoom into this illustration"
+              >
+                <Search className="w-4 h-4" />
+                <span className="hidden sm:inline">Deep zoom</span>
+              </button>
+            )}
             {(brightness !== 100 || contrast !== 100) && (
               <button
                 onClick={() => { setBrightness(100); setContrast(100); }}
@@ -892,6 +926,18 @@ export default function ImageDetailPage({
               </div>
             </div>
           </div>
+
+          {deepZoomOpen && data.deepzoom && (
+            <Suspense fallback={null}>
+              <DeepZoomOverlay
+                manifest={data.deepzoom}
+                title={data.description}
+                caption={`${data.book.title}${data.book.year ? ` (${data.book.year})` : ''}, p.${data.pageNumber}`}
+                initialBounds={data.focusBbox}
+                onClose={() => setDeepZoomOpen(false)}
+              />
+            </Suspense>
+          )}
 
           {/* Navigation arrows */}
           {hasPrev && (
@@ -978,11 +1024,13 @@ export default function ImageDetailPage({
                   </div>
                   {isAdmin && editingDescription ? (
                     <div className="space-y-3">
-                      <textarea
+                      <ProseField
                         value={museumDescValue}
-                        onChange={(e) => setMuseumDescValue(e.target.value)}
-                        className="w-full h-28 p-3 bg-stone-700 text-stone-200 rounded text-base resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust leading-relaxed"
+                        onChange={setMuseumDescValue}
+                        savedValue={data.museumDescription || ''}
+                        help="Two or three sentences, in the museum voice."
                         placeholder="Write a 2-3 sentence museum-style description..."
+                        inputClassName="w-full h-28 p-3 bg-stone-700 text-stone-200 rounded text-base resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust leading-relaxed"
                       />
                       <div className="flex gap-2">
                         <button onClick={saveMuseumDescription} disabled={saving} className="flex-1 py-2 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>

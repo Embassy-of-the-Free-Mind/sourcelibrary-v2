@@ -82,6 +82,13 @@ scripts/_tmp_*
 scripts/output/
 /check-*.mjs
 
+# Generated publication artifacts (EPUBs, covers, extracted plate images, manifests).
+# These are large binaries built on demand from the library — never committed.
+esoteric-geometries-out/
+kdp-out/
+**/*.epub
+.geo-*.jpg
+
 # Session coordination scratch (its own README says: never commit)
 .claude/agent-comms/
 
@@ -137,3 +144,8 @@ scripts/eval/ft-reliability.workflow.js
 scripts/eval/ft-groundtruth.workflow.js
 scripts/eval/results/ft-gemini-*.json
 scripts/eval/results/ft-enum-*.json
+
+# Corpus-scale revision-agreement rows (~110MB of per-pair JSONL, regenerable
+# for free from Mongo via scripts/eval/revision-agreement-corpus.mjs).
+# The summary JSON + markdown reports beside it ARE committed.
+scripts/eval/results/revision-agreement-corpus-*.jsonl

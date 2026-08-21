@@ -1,0 +1,4 @@
+book_id: 697b079ae303c59b5d833abc
+Title: Exercitia
+Author: Tauler, Johannes
+Source language: Latin

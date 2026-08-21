@@ -1,23 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { guardPublicSubmission } from '@/lib/public-submission-guard';
+import { getClientIp } from '@/lib/rate-limit';
+
+import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
+
+/**
+ * One constant, shared with the `submit_feedback` tool schema that advertises it.
+ * Previously two literals kept in step by a comment — the same shape as the MCP
+ * server version, which was written three times and drifted to three values on
+ * the same day (#3715).
+ */
+const MAX_MESSAGE = MAX_FEEDBACK_MESSAGE;
 
 // POST /api/feedback — save feedback
 export async function POST(request: NextRequest) {
   try {
+    const limited = await guardPublicSubmission(request, 'feedback');
+    if (limited) return limited;
+
     const body = await request.json();
     const { message, page, name, email, wantsToHelp } = body;
 
-    if (!message || typeof message !== 'string' || message.trim().length < 2) {
+    if (!message || typeof message !== 'string' || message.trim().length < MIN_FEEDBACK_MESSAGE) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    if (message.length > 5000) {
-      return NextResponse.json({ error: 'Message too long' }, { status: 400 });
+    // Say WHAT the limit is and what arrived. A bare "Message too long" gives an
+    // automated caller nothing to aim at, so it has to binary-search the ceiling
+    // by trial — reported by an MCP client that lost two submissions to it
+    // (#3653). The other public write routes (share-findings,
+    // collection-proposals) already name their maxima; this one did not.
+    if (message.length > MAX_MESSAGE) {
+      return NextResponse.json({
+        error: `Message too long: ${message.length} characters received, maximum ${MAX_MESSAGE}`,
+        max_length: MAX_MESSAGE,
+        received_length: message.length,
+      }, { status: 400 });
     }
 
     const db = await getDb();
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null;
+    // cf-connecting-ip first: behind the CDN, x-forwarded-for is a Cloudflare
+    // edge node, so reading it first filed every submission under ~15 shared
+    // addresses (#3491). Same helper the limiter above keys on.
+    const ip = getClientIp(request);
     const trimmedEmail = email?.trim()?.toLowerCase() || null;
     const wantsHelp = wantsToHelp === true;
 

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg';
@@ -13,6 +12,10 @@ export const metadata: Metadata = {
     title: 'Can AI Read Classical Chinese? An OCR and Translation Benchmark',
     description: 'Measuring AI OCR and translation on the Chinese classics — against ctext.org for the characters, and against James Legge for the English.',
     images: [{ url: HERO, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: HERO }],
   },
   alternates: { canonical: '/blog/reading-classical-chinese' },
 };
@@ -230,7 +233,6 @@ export default function ReadingClassicalChinesePage() {
 
       </article>
 
-      <BlogComments slug="reading-classical-chinese" />
     </ContentPageLayout>
   );
 }

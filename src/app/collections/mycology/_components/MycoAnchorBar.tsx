@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Share2, Code2, Link2, Check } from 'lucide-react';
+import { trackEvent } from '@/lib/track-event';
 
 interface Section { id: string; label: string }
 
@@ -27,9 +28,18 @@ export default function MycoAnchorBar({ sections, slug }: { sections: Section[];
   const pageUrl = typeof window !== 'undefined' ? window.location.href.split('#')[0] : `https://sourcelibrary.org/collections/${slug}`;
   const embedSnippet = `<iframe src="https://sourcelibrary.org/collections/${slug}${embedTarget === 'collection' ? '' : `#${embedTarget}`}" width="100%" height="640" style="border:0" loading="lazy"></iframe>`;
 
-  const copy = async (text: string) => {
-    try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1500); } catch { /* noop */ }
+  // `channel` is omitted for the embed-snippet copy — that is not a share.
+  const copy = async (text: string, channel?: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      if (channel) trackEvent('share', { channel, url: pageUrl, surface: 'collection_anchor_bar' });
+      setTimeout(() => setCopied(false), 1500);
+    } catch { /* noop */ }
   };
+
+  const logShare = (channel: string) =>
+    trackEvent('share', { channel, url: pageUrl, surface: 'collection_anchor_bar' });
 
   return (
     <nav aria-label="On this page" className="border-y border-border-light bg-cream">
@@ -67,16 +77,16 @@ export default function MycoAnchorBar({ sections, slug }: { sections: Section[];
               <div className="absolute right-0 top-full mt-2 w-72 bg-white shadow-lg border border-border-light p-3 z-50">
                 <div className="flex items-center gap-2 mb-3">
                   <input readOnly value={pageUrl} className="flex-1 min-w-0 text-xs px-2 py-1.5 border border-border-light bg-warm text-secondary" />
-                  <button type="button" onClick={() => copy(pageUrl)} className="shrink-0 inline-flex items-center gap-1 text-xs px-2 py-1.5 rounded border border-border-light hover:bg-warm">
+                  <button type="button" onClick={() => copy(pageUrl, 'link')} className="shrink-0 inline-flex items-center gap-1 text-xs px-2 py-1.5 rounded border border-border-light hover:bg-warm">
                     {copied ? <Check className="w-3.5 h-3.5 text-accent-rust" /> : <Link2 className="w-3.5 h-3.5" />}{copied ? 'Copied' : 'Copy'}
                   </button>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <a className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer" href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}`}>X</a>
+                  <a className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer" onClick={() => logShare('twitter')} href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}`}>X</a>
                   <span className="text-border-medium">·</span>
-                  <a className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer" href={`https://bsky.app/intent/compose?text=${encodeURIComponent(pageUrl)}`}>Bluesky</a>
+                  <a className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer" onClick={() => logShare('bluesky')} href={`https://bsky.app/intent/compose?text=${encodeURIComponent(pageUrl)}`}>Bluesky</a>
                   <span className="text-border-medium">·</span>
-                  <a className="text-accent-rust hover:underline" href={`mailto:?body=${encodeURIComponent(pageUrl)}`}>Email</a>
+                  <a className="text-accent-rust hover:underline" onClick={() => logShare('email')} href={`mailto:?body=${encodeURIComponent(pageUrl)}`}>Email</a>
                 </div>
               </div>
             )}

@@ -1,0 +1,6297 @@
+{
+ "date": "2026-07-19T12:25:11.061Z",
+ "sample": 300,
+ "anchors": [
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0,
+   "mean_true_accuracy": 0.0636,
+   "min_true_accuracy": 0
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.0168,
+   "mean_true_accuracy": 0.5282,
+   "min_true_accuracy": 0.1272
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0091,
+   "mean_true_accuracy": 0.328,
+   "min_true_accuracy": 0.1272
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0084,
+   "mean_true_accuracy": 0.4733,
+   "min_true_accuracy": 0.1272
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0,
+   "mean_true_accuracy": 0.4646,
+   "min_true_accuracy": 0
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0,
+   "mean_true_accuracy": 0.2645,
+   "min_true_accuracy": 0
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0,
+   "mean_true_accuracy": 0.4097,
+   "min_true_accuracy": 0
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0247,
+   "mean_true_accuracy": 0.729,
+   "min_true_accuracy": 0.5289
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.2194,
+   "mean_true_accuracy": 0.8743,
+   "min_true_accuracy": 0.8194
+  },
+  {
+   "slug": "armenian-zohrab-john-1",
+   "canonical": true,
+   "script": "armenian",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.013,
+   "mean_true_accuracy": 0.6741,
+   "min_true_accuracy": 0.5289
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9309,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9098,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9232,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.9098,
+   "mean_true_accuracy": 0.9833,
+   "min_true_accuracy": 0.9667
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9722,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9801,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.9722,
+   "mean_true_accuracy": 0.9833,
+   "min_true_accuracy": 0.9667
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9722,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.9799,
+   "mean_true_accuracy": 0.9833,
+   "min_true_accuracy": 0.9667
+  },
+  {
+   "slug": "chinese-analects-xue-er",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.9702,
+   "mean_true_accuracy": 0.9833,
+   "min_true_accuracy": 0.9667
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.129,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.2258,
+   "mean_true_accuracy": 0.9915,
+   "min_true_accuracy": 0.9831
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0833,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.3438,
+   "mean_true_accuracy": 0.9915,
+   "min_true_accuracy": 0.9831
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.1071,
+   "mean_true_accuracy": 0.9915,
+   "min_true_accuracy": 0.9831
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0833,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0625,
+   "mean_true_accuracy": 0.9915,
+   "min_true_accuracy": 0.9831
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0556,
+   "mean_true_accuracy": 0.9915,
+   "min_true_accuracy": 0.9831
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.125,
+   "mean_true_accuracy": 0.9831,
+   "min_true_accuracy": 0.9831
+  },
+  {
+   "slug": "chinese-daodejing-1",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0556,
+   "mean_true_accuracy": 0.9915,
+   "min_true_accuracy": 0.9831
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.2439,
+   "mean_true_accuracy": 0.459,
+   "min_true_accuracy": 0.3934
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.2683,
+   "mean_true_accuracy": 0.7541,
+   "min_true_accuracy": 0.5246
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.1707,
+   "mean_true_accuracy": 0.7541,
+   "min_true_accuracy": 0.5246
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0732,
+   "mean_true_accuracy": 0.7377,
+   "min_true_accuracy": 0.5246
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.0513,
+   "mean_true_accuracy": 0.6885,
+   "min_true_accuracy": 0.3934
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0513,
+   "mean_true_accuracy": 0.6885,
+   "min_true_accuracy": 0.3934
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0256,
+   "mean_true_accuracy": 0.6721,
+   "min_true_accuracy": 0.3934
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.6486,
+   "mean_true_accuracy": 0.9836,
+   "min_true_accuracy": 0.9836
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.2432,
+   "mean_true_accuracy": 0.9672,
+   "min_true_accuracy": 0.9508
+  },
+  {
+   "slug": "chinese-hanfeizi-nan-yan",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.3333,
+   "mean_true_accuracy": 0.9672,
+   "min_true_accuracy": 0.9508
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.0053,
+   "mean_true_accuracy": 0.6375,
+   "min_true_accuracy": 0.275
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0545,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.3818,
+   "mean_true_accuracy": 0.975,
+   "min_true_accuracy": 0.95
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.1455,
+   "mean_true_accuracy": 0.9437,
+   "min_true_accuracy": 0.8875
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0212,
+   "mean_true_accuracy": 0.6375,
+   "min_true_accuracy": 0.275
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.0159,
+   "mean_true_accuracy": 0.6125,
+   "min_true_accuracy": 0.275
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0053,
+   "mean_true_accuracy": 0.5813,
+   "min_true_accuracy": 0.275
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.0152,
+   "mean_true_accuracy": 0.975,
+   "min_true_accuracy": 0.95
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0,
+   "mean_true_accuracy": 0.9437,
+   "min_true_accuracy": 0.8875
+  },
+  {
+   "slug": "chinese-shijing-guan-ju",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.1379,
+   "mean_true_accuracy": 0.9187,
+   "min_true_accuracy": 0.8875
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-pro-preview"
+   ],
+   "agreement": 0.4493,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.3971,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.2364,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.5455,
+   "mean_true_accuracy": 0.98,
+   "min_true_accuracy": 0.96
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.8261,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.087,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.6087,
+   "mean_true_accuracy": 0.98,
+   "min_true_accuracy": 0.96
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.0882,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.5294,
+   "mean_true_accuracy": 0.98,
+   "min_true_accuracy": 0.96
+  },
+  {
+   "slug": "chinese-xunzi-quan-xue",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.1212,
+   "mean_true_accuracy": 0.98,
+   "min_true_accuracy": 0.96
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-pro-preview"
+   ],
+   "agreement": 0.1034,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.2069,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.1034,
+   "mean_true_accuracy": 0.9902,
+   "min_true_accuracy": 0.9804
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0345,
+   "mean_true_accuracy": 0.9706,
+   "min_true_accuracy": 0.9412
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.2174,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.125,
+   "mean_true_accuracy": 0.9902,
+   "min_true_accuracy": 0.9804
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0556,
+   "mean_true_accuracy": 0.9706,
+   "min_true_accuracy": 0.9412
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.1739,
+   "mean_true_accuracy": 0.9902,
+   "min_true_accuracy": 0.9804
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0,
+   "mean_true_accuracy": 0.9706,
+   "min_true_accuracy": 0.9412
+  },
+  {
+   "slug": "chinese-zhuangzi-xiaoyaoyou",
+   "canonical": true,
+   "script": "cjk",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.0556,
+   "mean_true_accuracy": 0.9608,
+   "min_true_accuracy": 0.9412
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-pro-preview"
+   ],
+   "agreement": 0.6709,
+   "mean_true_accuracy": 0.991,
+   "min_true_accuracy": 0.9819
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.6987,
+   "mean_true_accuracy": 0.991,
+   "min_true_accuracy": 0.9819
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.7134,
+   "mean_true_accuracy": 0.991,
+   "min_true_accuracy": 0.9819
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.2025,
+   "mean_true_accuracy": 0.8756,
+   "min_true_accuracy": 0.7692
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.7532,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.6772,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.1456,
+   "mean_true_accuracy": 0.8846,
+   "min_true_accuracy": 0.7692
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.7389,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.1519,
+   "mean_true_accuracy": 0.8846,
+   "min_true_accuracy": 0.7692
+  },
+  {
+   "slug": "greek-iliad-1",
+   "canonical": true,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.2975,
+   "mean_true_accuracy": 0.8846,
+   "min_true_accuracy": 0.7692
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-pro-preview"
+   ],
+   "agreement": 0.1312,
+   "mean_true_accuracy": 0.5584,
+   "min_true_accuracy": 0.1168
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.1399,
+   "mean_true_accuracy": 0.8756,
+   "min_true_accuracy": 0.7513
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.4665,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.2478,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.211,
+   "mean_true_accuracy": 0.434,
+   "min_true_accuracy": 0.1168
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.0047,
+   "mean_true_accuracy": 0.5584,
+   "min_true_accuracy": 0.1168
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.1062,
+   "mean_true_accuracy": 0.5584,
+   "min_true_accuracy": 0.1168
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.1262,
+   "mean_true_accuracy": 0.8756,
+   "min_true_accuracy": 0.7513
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.1344,
+   "mean_true_accuracy": 0.8756,
+   "min_true_accuracy": 0.7513
+  },
+  {
+   "slug": "hebrew-genesis-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.4031,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-pro-preview"
+   ],
+   "agreement": 0.8857,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.8857,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9143,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.8378,
+   "mean_true_accuracy": 0.9879,
+   "min_true_accuracy": 0.9758
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9714,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9143,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.8108,
+   "mean_true_accuracy": 0.9879,
+   "min_true_accuracy": 0.9758
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9143,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.8378,
+   "mean_true_accuracy": 0.9879,
+   "min_true_accuracy": 0.9758
+  },
+  {
+   "slug": "hebrew-psalms-1",
+   "canonical": true,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.8378,
+   "mean_true_accuracy": 0.9879,
+   "min_true_accuracy": 0.9758
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-pro-preview"
+   ],
+   "agreement": 0.7118,
+   "mean_true_accuracy": 0.9722,
+   "min_true_accuracy": 0.9653
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.4103,
+   "mean_true_accuracy": 0.9688,
+   "min_true_accuracy": 0.9653
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.6353,
+   "mean_true_accuracy": 0.9688,
+   "min_true_accuracy": 0.9653
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.6627,
+   "mean_true_accuracy": 0.9653,
+   "min_true_accuracy": 0.9653
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.3882,
+   "mean_true_accuracy": 0.9757,
+   "min_true_accuracy": 0.9722
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.7765,
+   "mean_true_accuracy": 0.9757,
+   "min_true_accuracy": 0.9722
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.7882,
+   "mean_true_accuracy": 0.9722,
+   "min_true_accuracy": 0.9653
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.408,
+   "mean_true_accuracy": 0.9722,
+   "min_true_accuracy": 0.9722
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.3735,
+   "mean_true_accuracy": 0.9688,
+   "min_true_accuracy": 0.9653
+  },
+  {
+   "slug": "latin-aeneid-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.759,
+   "mean_true_accuracy": 0.9688,
+   "min_true_accuracy": 0.9653
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-pro-preview"
+   ],
+   "agreement": 0.151,
+   "mean_true_accuracy": 0.9592,
+   "min_true_accuracy": 0.9291
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.3691,
+   "mean_true_accuracy": 0.9876,
+   "min_true_accuracy": 0.9858
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.698,
+   "mean_true_accuracy": 0.9894,
+   "min_true_accuracy": 0.9894
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.6007,
+   "mean_true_accuracy": 0.9894,
+   "min_true_accuracy": 0.9894
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.3231,
+   "mean_true_accuracy": 0.9574,
+   "min_true_accuracy": 0.9291
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.2177,
+   "mean_true_accuracy": 0.9592,
+   "min_true_accuracy": 0.9291
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.2143,
+   "mean_true_accuracy": 0.9592,
+   "min_true_accuracy": 0.9291
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.4502,
+   "mean_true_accuracy": 0.9876,
+   "min_true_accuracy": 0.9858
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.4028,
+   "mean_true_accuracy": 0.9876,
+   "min_true_accuracy": 0.9858
+  },
+  {
+   "slug": "latin-vulgate-genesis-1",
+   "canonical": true,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "mistral-ocr-latest"
+   ],
+   "agreement": 0.7663,
+   "mean_true_accuracy": 0.9894,
+   "min_true_accuracy": 0.9894
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-70",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.964,
+   "mean_true_accuracy": 0.9741,
+   "min_true_accuracy": 0.9732
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-70",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9279,
+   "mean_true_accuracy": 0.9707,
+   "min_true_accuracy": 0.9666
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-70",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.4435,
+   "mean_true_accuracy": 0.898,
+   "min_true_accuracy": 0.8211
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-70",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9099,
+   "mean_true_accuracy": 0.9699,
+   "min_true_accuracy": 0.9666
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-70",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.4435,
+   "mean_true_accuracy": 0.8972,
+   "min_true_accuracy": 0.8211
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-70",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.4174,
+   "mean_true_accuracy": 0.8938,
+   "min_true_accuracy": 0.8211
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-60",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9345,
+   "mean_true_accuracy": 0.9984,
+   "min_true_accuracy": 0.9978
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-60",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.8873,
+   "mean_true_accuracy": 0.9973,
+   "min_true_accuracy": 0.9956
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-60",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.52,
+   "mean_true_accuracy": 0.9356,
+   "min_true_accuracy": 0.8723
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-60",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9018,
+   "mean_true_accuracy": 0.9967,
+   "min_true_accuracy": 0.9956
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-60",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.5091,
+   "mean_true_accuracy": 0.935,
+   "min_true_accuracy": 0.8723
+  },
+  {
+   "slug": "armenian-xorenatsi-patmutiwn-2-60",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.4891,
+   "mean_true_accuracy": 0.934,
+   "min_true_accuracy": 0.8723
+  },
+  {
+   "slug": "greek-dioscorides-ruel-106",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.882,
+   "mean_true_accuracy": 0.9443,
+   "min_true_accuracy": 0.9409
+  },
+  {
+   "slug": "greek-dioscorides-ruel-106",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.7377,
+   "mean_true_accuracy": 0.9057,
+   "min_true_accuracy": 0.8636
+  },
+  {
+   "slug": "greek-dioscorides-ruel-106",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0361,
+   "mean_true_accuracy": 0.9205,
+   "min_true_accuracy": 0.8932
+  },
+  {
+   "slug": "greek-dioscorides-ruel-106",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.7574,
+   "mean_true_accuracy": 0.9023,
+   "min_true_accuracy": 0.8636
+  },
+  {
+   "slug": "greek-dioscorides-ruel-106",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0426,
+   "mean_true_accuracy": 0.917,
+   "min_true_accuracy": 0.8932
+  },
+  {
+   "slug": "greek-dioscorides-ruel-106",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0301,
+   "mean_true_accuracy": 0.8784,
+   "min_true_accuracy": 0.8636
+  },
+  {
+   "slug": "greek-hero-pneumatica-60",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 1,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-hero-pneumatica-60",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9953,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-hero-pneumatica-60",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9953,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-hero-pneumatica-60",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9953,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-hero-pneumatica-60",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9953,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-hero-pneumatica-60",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9906,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-philo-opificio-45",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9922,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-philo-opificio-45",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9766,
+   "mean_true_accuracy": 0.999,
+   "min_true_accuracy": 0.9981
+  },
+  {
+   "slug": "greek-philo-opificio-45",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.987,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-philo-opificio-45",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9844,
+   "mean_true_accuracy": 0.999,
+   "min_true_accuracy": 0.9981
+  },
+  {
+   "slug": "greek-philo-opificio-45",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9792,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-philo-opificio-45",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9688,
+   "mean_true_accuracy": 0.999,
+   "min_true_accuracy": 0.9981
+  },
+  {
+   "slug": "greek-simplicius-in-phys-150",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9917,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-simplicius-in-phys-150",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9896,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-simplicius-in-phys-150",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9876,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-simplicius-in-phys-150",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9938,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-simplicius-in-phys-150",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9876,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "greek-simplicius-in-phys-150",
+   "canonical": false,
+   "script": "greek",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9896,
+   "mean_true_accuracy": 1,
+   "min_true_accuracy": 1
+  },
+  {
+   "slug": "hebrew-sefer-hayirah-blessings",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.8833,
+   "mean_true_accuracy": 0.9645,
+   "min_true_accuracy": 0.963
+  },
+  {
+   "slug": "hebrew-sefer-hayirah-blessings",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.8167,
+   "mean_true_accuracy": 0.9537,
+   "min_true_accuracy": 0.9414
+  },
+  {
+   "slug": "hebrew-sefer-hayirah-blessings",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0284,
+   "mean_true_accuracy": 0.7546,
+   "min_true_accuracy": 0.5432
+  },
+  {
+   "slug": "hebrew-sefer-hayirah-blessings",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.8,
+   "mean_true_accuracy": 0.9522,
+   "min_true_accuracy": 0.9414
+  },
+  {
+   "slug": "hebrew-sefer-hayirah-blessings",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0284,
+   "mean_true_accuracy": 0.7531,
+   "min_true_accuracy": 0.5432
+  },
+  {
+   "slug": "hebrew-sefer-hayirah-blessings",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0355,
+   "mean_true_accuracy": 0.7423,
+   "min_true_accuracy": 0.5432
+  },
+  {
+   "slug": "hebrew-shaarei-orah-gate2-yovel",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.4469,
+   "mean_true_accuracy": 0.7268,
+   "min_true_accuracy": 0.4978
+  },
+  {
+   "slug": "hebrew-shaarei-orah-gate2-yovel",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.804,
+   "mean_true_accuracy": 0.9332,
+   "min_true_accuracy": 0.9107
+  },
+  {
+   "slug": "hebrew-shaarei-orah-gate2-yovel",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.8185,
+   "mean_true_accuracy": 0.9471,
+   "min_true_accuracy": 0.9384
+  },
+  {
+   "slug": "hebrew-shaarei-orah-gate2-yovel",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.4121,
+   "mean_true_accuracy": 0.7042,
+   "min_true_accuracy": 0.4978
+  },
+  {
+   "slug": "hebrew-shaarei-orah-gate2-yovel",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.4138,
+   "mean_true_accuracy": 0.7181,
+   "min_true_accuracy": 0.4978
+  },
+  {
+   "slug": "hebrew-shaarei-orah-gate2-yovel",
+   "canonical": false,
+   "script": "hebrew",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.7241,
+   "mean_true_accuracy": 0.9245,
+   "min_true_accuracy": 0.9107
+  },
+  {
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9225,
+   "mean_true_accuracy": 0.9924,
+   "min_true_accuracy": 0.9924
+  },
+  {
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.2837,
+   "mean_true_accuracy": 0.9876,
+   "min_true_accuracy": 0.9827
+  },
+  {
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.295,
+   "mean_true_accuracy": 0.9941,
+   "min_true_accuracy": 0.9924
+  },
+  {
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.2925,
+   "mean_true_accuracy": 0.9876,
+   "min_true_accuracy": 0.9827
+  },
+  {
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.315,
+   "mean_true_accuracy": 0.9941,
+   "min_true_accuracy": 0.9924
+  },
+  {
+   "slug": "latin-hieronymus-epistola-ad-paulinum",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.8912,
+   "mean_true_accuracy": 0.9892,
+   "min_true_accuracy": 0.9827
+  },
+  {
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9238,
+   "mean_true_accuracy": 0.991,
+   "min_true_accuracy": 0.989
+  },
+  {
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9171,
+   "mean_true_accuracy": 0.985,
+   "min_true_accuracy": 0.981
+  },
+  {
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.8717,
+   "mean_true_accuracy": 0.989,
+   "min_true_accuracy": 0.989
+  },
+  {
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9238,
+   "mean_true_accuracy": 0.987,
+   "min_true_accuracy": 0.981
+  },
+  {
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.8155,
+   "mean_true_accuracy": 0.991,
+   "min_true_accuracy": 0.989
+  },
+  {
+   "slug": "latin-hieronymus-prologus-galeatus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.8115,
+   "mean_true_accuracy": 0.985,
+   "min_true_accuracy": 0.981
+  },
+  {
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.0136,
+   "mean_true_accuracy": 0.7242,
+   "min_true_accuracy": 0.4879
+  },
+  {
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.7721,
+   "mean_true_accuracy": 0.939,
+   "min_true_accuracy": 0.9176
+  },
+  {
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.7687,
+   "mean_true_accuracy": 0.9407,
+   "min_true_accuracy": 0.9209
+  },
+  {
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.0137,
+   "mean_true_accuracy": 0.7027,
+   "min_true_accuracy": 0.4879
+  },
+  {
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.0136,
+   "mean_true_accuracy": 0.7044,
+   "min_true_accuracy": 0.4879
+  },
+  {
+   "slug": "latin-vita-vergilii-donatus-auctus",
+   "canonical": false,
+   "script": "latin",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.9558,
+   "mean_true_accuracy": 0.9192,
+   "min_true_accuracy": 0.9176
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-109",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+   ],
+   "agreement": 0.9741,
+   "mean_true_accuracy": 0.9631,
+   "min_true_accuracy": 0.9598
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-109",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9224,
+   "mean_true_accuracy": 0.9648,
+   "min_true_accuracy": 0.9631
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-109",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-pro-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.431,
+   "mean_true_accuracy": 0.8719,
+   "min_true_accuracy": 0.7772
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-109",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+   ],
+   "agreement": 0.9224,
+   "mean_true_accuracy": 0.9615,
+   "min_true_accuracy": 0.9598
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-109",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3-flash-preview",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.431,
+   "mean_true_accuracy": 0.8685,
+   "min_true_accuracy": 0.7772
+  },
+  {
+   "slug": "armenian-eznik-elc-alandoc-109",
+   "canonical": false,
+   "script": "armenian",
+   "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+   ],
+   "agreement": 0.4224,
+   "mean_true_accuracy": 0.8702,
+   "min_true_accuracy": 0.7772
+  }
+ ],
+ "corpus_summary": {
+  "usable": 265,
+  "missing": 33,
+  "histogram": {
+   "0-0.5": 31,
+   "0.5-0.7": 15,
+   "0.7-0.85": 34,
+   "0.85-0.95": 47,
+   "0.95-1.01": 138
+  },
+  "regressions": 1
+ },
+ "corpus": [
+  {
+   "page_id": "69c898796c6f3cc53c85cb29",
+   "book_id": "69c898306c6f3cc53c85ca46",
+   "page_number": -121,
+   "language": "English",
+   "year": 1888,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2833,
+   "len_current": 2833,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69b419102b0edf3eaa2deb6c",
+   "book_id": "69b4190f2b0edf3eaa2deb09",
+   "page_number": -99,
+   "language": "German",
+   "year": 1690,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 630,
+   "len_current": 642,
+   "len_ratio": 1.019
+  },
+  {
+   "page_id": "6a353238c8ce407afbe04e1a",
+   "book_id": "6a353238c8ce407afbe04cfb",
+   "page_number": 287,
+   "language": "English",
+   "year": 1929,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 2481,
+   "len_current": 2498,
+   "len_ratio": 1.007
+  },
+  {
+   "page_id": "690c4465e0787282ad593d4d",
+   "book_id": "690c3ec7e0787282ad593b41",
+   "page_number": 520,
+   "language": "English",
+   "year": 1622,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.8925,
+   "len_prior": 2190,
+   "len_current": 2173,
+   "len_ratio": 0.992
+  },
+  {
+   "page_id": "69e729a1a409200ea79f0cd6",
+   "book_id": "69e729a1a409200ea79f0ca5",
+   "page_number": 49,
+   "language": "Persian",
+   "year": 1851,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.0783,
+   "len_prior": 3607,
+   "len_current": 3490,
+   "len_ratio": 0.968
+  },
+  {
+   "page_id": "69bd9f0ef6d63c919747e065",
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page_number": 403,
+   "language": "Latin",
+   "year": 1659,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8801,
+   "len_prior": 3107,
+   "len_current": 3287,
+   "len_ratio": 1.058
+  },
+  {
+   "page_id": "69520510ab34727b1f042310",
+   "book_id": "6952050fab34727b1f04216b",
+   "page_number": 421,
+   "language": "Latin",
+   "year": 1650,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.5067,
+   "len_prior": 1799,
+   "len_current": 2428,
+   "len_ratio": 1.35
+  },
+  {
+   "page_id": "69c7ae4325ec2ba5ccd7f253",
+   "book_id": "69c7ad8825ec2ba5ccd7f1fa",
+   "page_number": -67,
+   "language": "Latin",
+   "year": 1604,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9862,
+   "len_prior": 1735,
+   "len_current": 1636,
+   "len_ratio": 0.943
+  },
+  {
+   "page_id": "6a357a3f82bf3ff3f867ba82",
+   "book_id": "6a357a3f82bf3ff3f867b90c",
+   "page_number": 374,
+   "language": "Dutch",
+   "year": 1532,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.8721,
+   "len_prior": 3061,
+   "len_current": 2801,
+   "len_ratio": 0.915
+  },
+  {
+   "page_id": "69e77ab60fc6fc955e3618fc",
+   "book_id": "69e77ab60fc6fc955e3618ce",
+   "page_number": 46,
+   "language": "Tibetan",
+   "year": 1700,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.1663,
+   "len_prior": 2583,
+   "len_current": 12100,
+   "len_ratio": 4.684
+  },
+  {
+   "page_id": "694c11704ddebaaa18294af9",
+   "book_id": "694bf8d2343422769f237558",
+   "page_number": 613,
+   "language": "Latin",
+   "year": 1550,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.6471,
+   "len_prior": 309,
+   "len_current": 557,
+   "len_ratio": 1.803
+  },
+  {
+   "page_id": "69b51dee47b06ecd58187131",
+   "book_id": "69b51dee47b06ecd581870ee",
+   "page_number": 67,
+   "language": "Latin",
+   "year": 1736,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9275,
+   "len_prior": 1916,
+   "len_current": 1785,
+   "len_ratio": 0.932
+  },
+  {
+   "page_id": "69c736b46a0f3d112faf76b6",
+   "book_id": "69c735f26a0f3d112faf75cb",
+   "page_number": -79,
+   "language": "Latin",
+   "year": 1607,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.7768,
+   "len_prior": 3053,
+   "len_current": 3072,
+   "len_ratio": 1.006
+  },
+  {
+   "page_id": "69bda031f6d63c9197485462",
+   "book_id": "69bda031f6d63c9197485453",
+   "page_number": 15,
+   "language": "German",
+   "year": 1714,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 896,
+   "len_current": 896,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c855ab6c6f3cc53c853b50",
+   "book_id": "69c855526c6f3cc53c853ab7",
+   "page_number": -38,
+   "language": "German",
+   "year": 1706,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.995,
+   "len_prior": 5214,
+   "len_current": 5236,
+   "len_ratio": 1.004
+  },
+  {
+   "page_id": "69c83e566c6f3cc53c850036",
+   "book_id": "69c83e356c6f3cc53c84ff88",
+   "page_number": -104,
+   "language": "Latin",
+   "year": 1629,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9548,
+   "len_prior": 2098,
+   "len_current": 2076,
+   "len_ratio": 0.99
+  },
+  {
+   "page_id": "69b4d66f853c26e0d1562053",
+   "book_id": "69b4d66f853c26e0d1561fa2",
+   "page_number": 177,
+   "language": "Latin",
+   "year": 1595,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1537,
+   "len_current": 1537,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "6958e964813ea03889c329a3",
+   "book_id": "6958e964813ea03889c32667",
+   "page_number": 828,
+   "language": "Latin",
+   "year": 1599,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9137,
+   "len_prior": 4831,
+   "len_current": 4940,
+   "len_ratio": 1.023
+  },
+  {
+   "page_id": "69c7ae0d25ec2ba5ccd7f210",
+   "book_id": "69c7ad8825ec2ba5ccd7f1fa",
+   "page_number": -19,
+   "language": "Latin",
+   "year": 1604,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9206,
+   "len_prior": 1842,
+   "len_current": 2254,
+   "len_ratio": 1.224
+  },
+  {
+   "page_id": "69f3381e876dd827cbc5373a",
+   "book_id": "69f3381e876dd827cbc53738",
+   "page_number": 2,
+   "language": "Latin",
+   "year": 1500,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.7361,
+   "len_prior": 636,
+   "len_current": 789,
+   "len_ratio": 1.241
+  },
+  {
+   "page_id": "68d5585d110616ec557a3ac4",
+   "book_id": "68d5571a110616ec557a3708",
+   "page_number": 478,
+   "language": "Latin",
+   "year": 1533,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.582,
+   "len_prior": 2687,
+   "len_current": 2352,
+   "len_ratio": 0.875
+  },
+  {
+   "page_id": "69c884de6c6f3cc53c859a6a",
+   "book_id": "69c884876c6f3cc53c8599a5",
+   "page_number": -93,
+   "language": "French",
+   "year": 1689,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9969,
+   "len_prior": 2364,
+   "len_current": 2376,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "69520517ab34727b1f04260b",
+   "book_id": "69520516ab34727b1f04245b",
+   "page_number": 432,
+   "language": "Latin",
+   "year": 1650,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.9602,
+   "len_prior": 3662,
+   "len_current": 3955,
+   "len_ratio": 1.08
+  },
+  {
+   "page_id": "69b418ff2b0edf3eaa2de7ca",
+   "book_id": "69b418ff2b0edf3eaa2de7aa",
+   "page_number": -32,
+   "language": "English",
+   "year": 1670,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9766,
+   "len_prior": 3626,
+   "len_current": 3656,
+   "len_ratio": 1.008
+  },
+  {
+   "page_id": "69b51e09cf111105c42958a5",
+   "book_id": "69b51e09cf111105c4295678",
+   "page_number": 557,
+   "language": "Latin",
+   "year": 1816,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9837,
+   "len_prior": 1218,
+   "len_current": 1224,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "6a45298cc6d95bc278fbc969",
+   "book_id": "6a45298cc6d95bc278fbc8c3",
+   "page_number": 166,
+   "language": "Greek",
+   "year": null,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "14",
+   "current_prompt": "14",
+   "agreement": 0.5339,
+   "len_prior": 2003,
+   "len_current": 1937,
+   "len_ratio": 0.967
+  },
+  {
+   "page_id": "69c89f176c6f3cc53c85dbaa",
+   "book_id": "69c89edb6c6f3cc53c85db1d",
+   "page_number": -78,
+   "language": "Latin",
+   "year": 1675,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9253,
+   "len_prior": 2431,
+   "len_current": 2091,
+   "len_ratio": 0.86
+  },
+  {
+   "page_id": "69c82db46c6f3cc53c84d3d6",
+   "book_id": "69c82d9c6c6f3cc53c84d36a",
+   "page_number": -56,
+   "language": "German",
+   "year": 1697,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2529,
+   "len_current": 2550,
+   "len_ratio": 1.008
+  },
+  {
+   "page_id": "69aec150b87be1eef391e49d",
+   "book_id": "69aec150b87be1eef391e43e",
+   "page_number": 95,
+   "language": "English",
+   "year": 1880,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1795,
+   "len_current": 1795,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c884f36c6f3cc53c859a96",
+   "book_id": "69c884876c6f3cc53c8599a5",
+   "page_number": -110,
+   "language": "French",
+   "year": 1689,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9325,
+   "len_prior": 2373,
+   "len_current": 2394,
+   "len_ratio": 1.009
+  },
+  {
+   "page_id": "69526a50ab34727b1f046f38",
+   "book_id": "69526a50ab34727b1f046dc5",
+   "page_number": 371,
+   "language": "Greek",
+   "year": 1835,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.9011,
+   "len_prior": 4909,
+   "len_current": 5099,
+   "len_ratio": 1.039
+  },
+  {
+   "page_id": "69bd9cba6120d54bd0370bec",
+   "book_id": "69bd9cba6120d54bd0370923",
+   "page_number": 713,
+   "language": "Latin",
+   "year": 1542,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7996,
+   "len_prior": 4008,
+   "len_current": 3429,
+   "len_ratio": 0.856
+  },
+  {
+   "page_id": "69f665224054b4e094a03766",
+   "book_id": "69c877d46c6f3cc53c8580e7",
+   "page_number": 15,
+   "language": "German",
+   "year": 1770,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9877,
+   "len_prior": 1373,
+   "len_current": 1405,
+   "len_ratio": 1.023
+  },
+  {
+   "page_id": "69b51eaf9a81ef7feb3d95ad",
+   "book_id": "69b51eaf9a81ef7feb3d957d",
+   "page_number": 48,
+   "language": "Latin",
+   "year": 1772,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.2571,
+   "len_prior": 607,
+   "len_current": 648,
+   "len_ratio": 1.068
+  },
+  {
+   "page_id": "69c70b21da9771c716315f45",
+   "book_id": "69c70a26da9771c716315eb5",
+   "page_number": -45,
+   "language": "French",
+   "year": 1798,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3204,
+   "len_current": 3209,
+   "len_ratio": 1.002
+  },
+  {
+   "page_id": "69529544b184004c526a2eb6",
+   "book_id": "69529544b184004c526a2c3c",
+   "page_number": 634,
+   "language": "Latin",
+   "year": 1648,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.9934,
+   "len_prior": 1205,
+   "len_current": 1414,
+   "len_ratio": 1.173
+  },
+  {
+   "page_id": "69c7a0a892b884e4f817381b",
+   "book_id": "69c79fed92b884e4f817374f",
+   "page_number": -46,
+   "language": "Hebrew",
+   "year": 1561,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.0162,
+   "len_prior": 5786,
+   "len_current": 5509,
+   "len_ratio": 0.952
+  },
+  {
+   "page_id": "69c82db26c6f3cc53c84d3cf",
+   "book_id": "69c82d9c6c6f3cc53c84d36a",
+   "page_number": -52,
+   "language": "German",
+   "year": 1697,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2553,
+   "len_current": 2472,
+   "len_ratio": 0.968
+  },
+  {
+   "page_id": "69bd9f0ef6d63c919747df1e",
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page_number": 76,
+   "language": "Latin",
+   "year": 1659,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.0098,
+   "len_prior": 3057,
+   "len_current": 16524,
+   "len_ratio": 5.405
+  },
+  {
+   "page_id": "69c8318c7774239312844177",
+   "book_id": "69c80dd96c6f3cc53c846e1f",
+   "page_number": 1008,
+   "language": "Latin",
+   "year": 1616,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9007,
+   "len_prior": 3759,
+   "len_current": 3728,
+   "len_ratio": 0.992
+  },
+  {
+   "page_id": "69e00adf846d79f28d568120",
+   "book_id": "69e00add846d79f28d5680de",
+   "page_number": 66,
+   "language": "Burmese",
+   "year": 1886,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9966,
+   "len_prior": 2055,
+   "len_current": 2025,
+   "len_ratio": 0.985
+  },
+  {
+   "page_id": "69ef354d6c5c0455cc3f63f7",
+   "book_id": "69ef35466c5c0455cc3f63e6",
+   "page_number": -17,
+   "language": "auto-detect",
+   "year": 1700,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9927,
+   "len_prior": 3024,
+   "len_current": 3019,
+   "len_ratio": 0.998
+  },
+  {
+   "page_id": "69b4d66f853c26e0d1561fe3",
+   "book_id": "69b4d66f853c26e0d1561fa2",
+   "page_number": 65,
+   "language": "Latin",
+   "year": 1595,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1606,
+   "len_current": 1606,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69d5ad884dc55b8478de0d77",
+   "book_id": "69d5ad884dc55b8478de0cad",
+   "page_number": 202,
+   "language": "English",
+   "year": 1983,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9964,
+   "len_prior": 3984,
+   "len_current": 3942,
+   "len_ratio": 0.989
+  },
+  {
+   "page_id": "69487f16b75c15feb90b28a4",
+   "book_id": "69487f16b75c15feb90b27ef",
+   "page_number": 182,
+   "language": "Latin",
+   "year": 1609,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.7201,
+   "len_prior": 2222,
+   "len_current": 2614,
+   "len_ratio": 1.176
+  },
+  {
+   "page_id": "69c82dbf6c6f3cc53c84d40d",
+   "book_id": "69c82d9c6c6f3cc53c84d36a",
+   "page_number": -42,
+   "language": "German",
+   "year": 1697,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9901,
+   "len_prior": 2511,
+   "len_current": 2559,
+   "len_ratio": 1.019
+  },
+  {
+   "page_id": "69bd9f1cf6d63c919747f77f",
+   "book_id": "69bd9f1cf6d63c919747f65e",
+   "page_number": 289,
+   "language": "Latin",
+   "year": 1666,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8805,
+   "len_prior": 4467,
+   "len_current": 4316,
+   "len_ratio": 0.966
+  },
+  {
+   "page_id": "69f65fe49edf5e4cd6d3a580",
+   "book_id": "69c896f06c6f3cc53c85c69a",
+   "page_number": 14,
+   "language": "English",
+   "year": 1889,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 972,
+   "len_current": 949,
+   "len_ratio": 0.976
+  },
+  {
+   "page_id": "69ad7097b58946535a5b9f61",
+   "book_id": "69ad7097b58946535a5b9e75",
+   "page_number": 236,
+   "language": "English",
+   "year": 1890,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9475,
+   "len_prior": 5700,
+   "len_current": 5819,
+   "len_ratio": 1.021
+  },
+  {
+   "page_id": "69c892e76c6f3cc53c85bd7a",
+   "book_id": "69c892e26c6f3cc53c85bd6f",
+   "page_number": -8,
+   "language": "German",
+   "year": 1543,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9833,
+   "len_prior": 2071,
+   "len_current": 1964,
+   "len_ratio": 0.948
+  },
+  {
+   "page_id": "69099d39cf28baa1b4caea91",
+   "book_id": "69099ab2cf28baa1b4cae97f",
+   "page_number": -137,
+   "language": "German",
+   "year": 1712,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v4.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9737,
+   "len_prior": 2510,
+   "len_current": 2558,
+   "len_ratio": 1.019
+  },
+  {
+   "page_id": "69c896c36c6f3cc53c85c631",
+   "book_id": "69c896646c6f3cc53c85c52e",
+   "page_number": -80,
+   "language": "English",
+   "year": 1902,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2546,
+   "len_current": 2546,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69bf60d3065df5d87d778812",
+   "book_id": "69bf60d3065df5d87d77868d",
+   "page_number": 389,
+   "language": "Occitan",
+   "year": 1875,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9952,
+   "len_prior": 1723,
+   "len_current": 1723,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69d1494f1c2a66dc094b2a95",
+   "book_id": "69d1494f1c2a66dc094b2a8c",
+   "page_number": 9,
+   "language": "English",
+   "year": 1816,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "v10",
+   "agreement": 0.912,
+   "len_prior": 2035,
+   "len_current": 1912,
+   "len_ratio": 0.94
+  },
+  {
+   "page_id": "69c82dbc6c6f3cc53c84d3fb",
+   "book_id": "69c82d9c6c6f3cc53c84d36a",
+   "page_number": -33,
+   "language": "German",
+   "year": 1697,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9936,
+   "len_prior": 2578,
+   "len_current": 2553,
+   "len_ratio": 0.99
+  },
+  {
+   "page_id": "6958e96c813ea03889c32ffe",
+   "book_id": "6958e96c813ea03889c32bf7",
+   "page_number": 1031,
+   "language": "Latin",
+   "year": 1621,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9757,
+   "len_prior": 5682,
+   "len_current": 5609,
+   "len_ratio": 0.987
+  },
+  {
+   "page_id": "69758f4aad4db7f88d7e90a7",
+   "book_id": "6974b642457dd8909910b9e3",
+   "page_number": 257,
+   "language": "Latin",
+   "year": 1518,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.8479,
+   "len_prior": 3091,
+   "len_current": 3250,
+   "len_ratio": 1.051
+  },
+  {
+   "page_id": "69c88cf36c6f3cc53c85ada8",
+   "book_id": "69c88ce76c6f3cc53c85ad8f",
+   "page_number": -30,
+   "language": "English",
+   "year": 1890,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v6.2026-03",
+   "current_prompt": "v6.2026-03",
+   "agreement": 1,
+   "len_prior": 5221,
+   "len_current": 5221,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69d8ca14a09828f83ddc9991",
+   "book_id": "69d8ca14a09828f83ddc9902",
+   "page_number": 143,
+   "language": "English",
+   "year": 1788,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 312,
+   "len_current": 314,
+   "len_ratio": 1.006
+  },
+  {
+   "page_id": "69c85ee56c6f3cc53c855335",
+   "book_id": "69c85edf6c6f3cc53c85532c",
+   "page_number": -5,
+   "language": "German",
+   "year": 1700,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.877,
+   "len_prior": 1774,
+   "len_current": 1881,
+   "len_ratio": 1.06
+  },
+  {
+   "page_id": "69526a50ab34727b1f046ddc",
+   "book_id": "69526a50ab34727b1f046dc5",
+   "page_number": 23,
+   "language": "Greek",
+   "year": 1835,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.7409,
+   "len_prior": 6379,
+   "len_current": 4747,
+   "len_ratio": 0.744
+  },
+  {
+   "page_id": "6992543d59cdabeb78f1d12d",
+   "book_id": "6992543c59cdabeb78f1d0cd",
+   "page_number": 96,
+   "language": "English",
+   "year": 1923,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.2222,
+   "len_prior": 387,
+   "len_current": 395,
+   "len_ratio": 1.021
+  },
+  {
+   "page_id": "69bd9f0ef6d63c919747e1a4",
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page_number": 722,
+   "language": "Latin",
+   "year": 1659,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.875,
+   "len_prior": 3019,
+   "len_current": 3017,
+   "len_ratio": 0.999
+  },
+  {
+   "page_id": "6951549fab34727b1f0410b5",
+   "book_id": "694fd600435f95fd0c9556d1",
+   "page_number": 34,
+   "language": "Latin",
+   "year": 1557,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.4325,
+   "len_prior": 6929,
+   "len_current": 7436,
+   "len_ratio": 1.073
+  },
+  {
+   "page_id": "69bd9cba6120d54bd0370bb5",
+   "book_id": "69bd9cba6120d54bd0370923",
+   "page_number": 658,
+   "language": "Latin",
+   "year": 1542,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8929,
+   "len_prior": 3963,
+   "len_current": 3981,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "69cf7bf2878f40c5945f24d3",
+   "book_id": "69cf7bf2878f40c5945f245c",
+   "page_number": 119,
+   "language": "Greek",
+   "year": 1914,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9848,
+   "len_prior": 1442,
+   "len_current": 1429,
+   "len_ratio": 0.991
+  },
+  {
+   "page_id": "6a357a3f82bf3ff3f867ba88",
+   "book_id": "6a357a3f82bf3ff3f867b90c",
+   "page_number": 380,
+   "language": "Dutch",
+   "year": 1532,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9285,
+   "len_prior": 3945,
+   "len_current": 3930,
+   "len_ratio": 0.996
+  },
+  {
+   "page_id": "69b51e7aff09e4fe943af8e6",
+   "book_id": "69b51e7aff09e4fe943af8a9",
+   "page_number": 61,
+   "language": "French",
+   "year": 1571,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9053,
+   "len_prior": 1459,
+   "len_current": 1453,
+   "len_ratio": 0.996
+  },
+  {
+   "page_id": "69c8966f6c6f3cc53c85c543",
+   "book_id": "69c896646c6f3cc53c85c52e",
+   "page_number": -9,
+   "language": "English",
+   "year": 1902,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2914,
+   "len_current": 2933,
+   "len_ratio": 1.007
+  },
+  {
+   "page_id": "69b51e59768235dc659913ed",
+   "book_id": "69b51e59768235dc65991192",
+   "page_number": 603,
+   "language": "German",
+   "year": 1775,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9874,
+   "len_prior": 2029,
+   "len_current": 2027,
+   "len_ratio": 0.999
+  },
+  {
+   "page_id": "69af0ea4067c0c26ee26e885",
+   "book_id": "69af0ea4067c0c26ee26e677",
+   "page_number": 526,
+   "language": "Latin",
+   "year": 1596,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9525,
+   "len_prior": 8051,
+   "len_current": 7507,
+   "len_ratio": 0.932
+  },
+  {
+   "page_id": "69b419292b0edf3eaa2dee4e",
+   "book_id": "69b419292b0edf3eaa2dedf6",
+   "page_number": -88,
+   "language": "German",
+   "year": 1740,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.7949,
+   "len_prior": 2689,
+   "len_current": 2559,
+   "len_ratio": 0.952
+  },
+  {
+   "page_id": "69b419292b0edf3eaa2dee59",
+   "book_id": "69b419292b0edf3eaa2dedf6",
+   "page_number": -99,
+   "language": "German",
+   "year": 1740,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.949,
+   "len_prior": 2390,
+   "len_current": 2330,
+   "len_ratio": 0.975
+  },
+  {
+   "page_id": "69d5adbcd0bd3547a5656556",
+   "book_id": "69d5adbcd0bd3547a56563a0",
+   "page_number": 438,
+   "language": "Classical Chinese",
+   "year": 1145,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 725,
+   "len_current": 737,
+   "len_ratio": 1.017
+  },
+  {
+   "page_id": "6a20a119448aec276304d694",
+   "book_id": "6a20a119448aec276304d627",
+   "page_number": 109,
+   "language": "German",
+   "year": 1876,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9907,
+   "len_prior": 2090,
+   "len_current": 2039,
+   "len_ratio": 0.976
+  },
+  {
+   "page_id": "69520517ab34727b1f042570",
+   "book_id": "69520516ab34727b1f04245b",
+   "page_number": 277,
+   "language": "Latin",
+   "year": 1650,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.4006,
+   "len_prior": 2139,
+   "len_current": 2853,
+   "len_ratio": 1.334
+  },
+  {
+   "page_id": "69f660099edf5e4cd6d3a5f7",
+   "book_id": "69c896f06c6f3cc53c85c69a",
+   "page_number": 137,
+   "language": "English",
+   "year": 1889,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1315,
+   "len_current": 1315,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c809d36c6f3cc53c846296",
+   "book_id": "69c809cd6c6f3cc53c84627f",
+   "page_number": -4,
+   "language": "Latin",
+   "year": 1510,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.7075,
+   "len_prior": 4273,
+   "len_current": 4239,
+   "len_ratio": 0.992
+  },
+  {
+   "page_id": "699438416879ff0184cb8315",
+   "book_id": "699438416879ff0184cb8300",
+   "page_number": 21,
+   "language": "Greek",
+   "year": 1865,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "v10",
+   "agreement": 0.5296,
+   "len_prior": 3447,
+   "len_current": 3322,
+   "len_ratio": 0.964
+  },
+  {
+   "page_id": "69c56027c6df36e613a9dcc4",
+   "book_id": "69c4ec33a3a4a7c546ee6125",
+   "page_number": 128,
+   "language": "Latin",
+   "year": 1601,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.1829,
+   "len_prior": 462,
+   "len_current": 880,
+   "len_ratio": 1.905
+  },
+  {
+   "page_id": "69bd9cbf6120d54bd0370eb2",
+   "book_id": "69bd9cbf6120d54bd0370cee",
+   "page_number": 452,
+   "language": "Latin",
+   "year": 1543,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7262,
+   "len_prior": 4356,
+   "len_current": 4316,
+   "len_ratio": 0.991
+  },
+  {
+   "page_id": "69c8961e6c6f3cc53c85c496",
+   "book_id": "69c896076c6f3cc53c85c466",
+   "page_number": -22,
+   "language": "English",
+   "year": 1894,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9895,
+   "len_prior": 3663,
+   "len_current": 3720,
+   "len_ratio": 1.016
+  },
+  {
+   "page_id": "69c7fa476c6f3cc53c842a02",
+   "book_id": "69c7fa3f6c6f3cc53c8429ec",
+   "page_number": -15,
+   "language": "Latin",
+   "year": 1717,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.8866,
+   "len_prior": 1960,
+   "len_current": 1931,
+   "len_ratio": 0.985
+  },
+  {
+   "page_id": "699246c0bc722ec0ee812fd7",
+   "book_id": "699246c0bc722ec0ee812c18",
+   "page_number": 590,
+   "language": "English",
+   "year": 1850,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9658,
+   "len_prior": 4134,
+   "len_current": 4211,
+   "len_ratio": 1.019
+  },
+  {
+   "page_id": "69c8986a6c6f3cc53c85caf7",
+   "book_id": "69c898306c6f3cc53c85ca46",
+   "page_number": -93,
+   "language": "English",
+   "year": 1888,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3053,
+   "len_current": 3131,
+   "len_ratio": 1.026
+  },
+  {
+   "page_id": "6a08fd3e25e3a402b23b3d41",
+   "book_id": "6a08fd3e25e3a402b23b3ca5",
+   "page_number": 156,
+   "language": "English",
+   "year": 1592,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.7778,
+   "len_prior": 256,
+   "len_current": 263,
+   "len_ratio": 1.027
+  },
+  {
+   "page_id": "6984e2a7ae754272d5ec1fa1",
+   "book_id": "698420e4e8a1d0539ce47e1d",
+   "page_number": 976,
+   "language": "German",
+   "year": 1619,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9796,
+   "len_prior": 2326,
+   "len_current": 2322,
+   "len_ratio": 0.998
+  },
+  {
+   "page_id": "69c6ffc2da9771c716315649",
+   "book_id": "69c6fd8ada9771c7163154e1",
+   "page_number": -124,
+   "language": "German",
+   "year": 1787,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9912,
+   "len_prior": 3283,
+   "len_current": 3359,
+   "len_ratio": 1.023
+  },
+  {
+   "page_id": "69b51edbc35d928cea4f07e8",
+   "book_id": "69b51edbc35d928cea4f06ec",
+   "page_number": 252,
+   "language": "German",
+   "year": 1781,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 2978,
+   "len_current": 2978,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c7d4ae25ec2ba5ccd803f9",
+   "book_id": "69c7d03525ec2ba5ccd8031e",
+   "page_number": -113,
+   "language": "Latin",
+   "year": 1538,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7188,
+   "len_prior": 9040,
+   "len_current": 9340,
+   "len_ratio": 1.033
+  },
+  {
+   "page_id": "69c842df6c6f3cc53c850de7",
+   "book_id": "69c842a76c6f3cc53c850d2e",
+   "page_number": -85,
+   "language": "German",
+   "year": 1784,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3166,
+   "len_current": 3241,
+   "len_ratio": 1.024
+  },
+  {
+   "page_id": "6952b10077f38f6761bc2ca0",
+   "book_id": "6952b10077f38f6761bc2c1b",
+   "page_number": 133,
+   "language": "Italian",
+   "year": 1481,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.01,
+   "len_prior": 888,
+   "len_current": 6773,
+   "len_ratio": 7.627
+  },
+  {
+   "page_id": "69bd9d126120d54bd0373498",
+   "book_id": "69bd9d126120d54bd0373482",
+   "page_number": 22,
+   "language": "Latin",
+   "year": 1563,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9836,
+   "len_prior": 1060,
+   "len_current": 1065,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "6a08e36250bd891addfb6916",
+   "book_id": "6a08e36250bd891addfb6860",
+   "page_number": 182,
+   "language": "Middle English",
+   "year": 1856,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1225,
+   "len_current": 1254,
+   "len_ratio": 1.024
+  },
+  {
+   "page_id": "695924fe1cac2ce31a4a8bfc",
+   "book_id": "695924fe1cac2ce31a4a8b6b",
+   "page_number": 145,
+   "language": "Chinese",
+   "year": 1922,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.5164,
+   "len_prior": 748,
+   "len_current": 749,
+   "len_ratio": 1.001
+  },
+  {
+   "page_id": "69e010d4c47b5c9f882140d8",
+   "book_id": "69e010d4c47b5c9f88214088",
+   "page_number": 80,
+   "language": "Javanese",
+   "year": 1865,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.003,
+   "len_prior": 5604,
+   "len_current": 5824,
+   "len_ratio": 1.039
+  },
+  {
+   "page_id": "69bc80815087924c1b071a00",
+   "book_id": "69bc80815087924c1b0719e1",
+   "page_number": 31,
+   "language": "English",
+   "year": 1908,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1505,
+   "len_current": 1499,
+   "len_ratio": 0.996
+  },
+  {
+   "page_id": "69529544b184004c526a2c79",
+   "book_id": "69529544b184004c526a2c3c",
+   "page_number": 61,
+   "language": "Latin",
+   "year": 1648,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.8095,
+   "len_prior": 1115,
+   "len_current": 1341,
+   "len_ratio": 1.203
+  },
+  {
+   "page_id": "6958e0d19659a6529d577563",
+   "book_id": "6958e0d19659a6529d5772be",
+   "page_number": 677,
+   "language": "Latin",
+   "year": 1688,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7544,
+   "len_prior": 3437,
+   "len_current": 3297,
+   "len_ratio": 0.959
+  },
+  {
+   "page_id": "69f33393876dd827cbc4bacc",
+   "book_id": "69f33393876dd827cbc4ba61",
+   "page_number": 107,
+   "language": "Middle English",
+   "year": 1425,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.6534,
+   "len_prior": 1687,
+   "len_current": 2635,
+   "len_ratio": 1.562
+  },
+  {
+   "page_id": "69c80fb56c6f3cc53c84730a",
+   "book_id": "69c80dd96c6f3cc53c846e1f",
+   "page_number": 771,
+   "language": "Latin",
+   "year": 1616,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8534,
+   "len_prior": 2444,
+   "len_current": 2419,
+   "len_ratio": 0.99
+  },
+  {
+   "page_id": "69c830d277742393128440a9",
+   "book_id": "69c80dd96c6f3cc53c846e1f",
+   "page_number": 596,
+   "language": "Latin",
+   "year": 1616,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9012,
+   "len_prior": 4810,
+   "len_current": 4898,
+   "len_ratio": 1.018
+  },
+  {
+   "page_id": "6a08525b49638a50931ba0dd",
+   "book_id": "6a08525b49638a50931ba0cb",
+   "page_number": 18,
+   "language": "Latin",
+   "year": 1560,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.8689,
+   "len_prior": 1874,
+   "len_current": 2118,
+   "len_ratio": 1.13
+  },
+  {
+   "page_id": "69c88ab56c6f3cc53c85a72d",
+   "book_id": "69c88aa76c6f3cc53c85a70c",
+   "page_number": -21,
+   "language": "German",
+   "year": 1788,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9929,
+   "len_prior": 3415,
+   "len_current": 3458,
+   "len_ratio": 1.013
+  },
+  {
+   "page_id": "69c869056c6f3cc53c8567d4",
+   "book_id": "69c868986c6f3cc53c856721",
+   "page_number": -78,
+   "language": "English",
+   "year": 1807,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2408,
+   "len_current": 2469,
+   "len_ratio": 1.025
+  },
+  {
+   "page_id": "69ef2f3455d5fee247f6c9b0",
+   "book_id": "69ef2f3455d5fee247f6c924",
+   "page_number": 140,
+   "language": "Arabic",
+   "year": 1489,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.7112,
+   "len_prior": 6528,
+   "len_current": 6868,
+   "len_ratio": 1.052
+  },
+  {
+   "page_id": "69f6b43cbe462f8260d1a040",
+   "book_id": "69c8982b6c6f3cc53c85ca37",
+   "page_number": 22,
+   "language": "English",
+   "year": 1913,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.695,
+   "len_prior": 5394,
+   "len_current": 5092,
+   "len_ratio": 0.944
+  },
+  {
+   "page_id": "69c5638ef380bcbb4f585f46",
+   "book_id": "69c4ec33a3a4a7c546ee6111",
+   "page_number": 83,
+   "language": "German",
+   "year": 1791,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9624,
+   "len_prior": 1672,
+   "len_current": 1934,
+   "len_ratio": 1.157
+  },
+  {
+   "page_id": "69520510ab34727b1f042286",
+   "book_id": "6952050fab34727b1f04216b",
+   "page_number": 283,
+   "language": "Latin",
+   "year": 1650,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.034,
+   "len_prior": 1194,
+   "len_current": 1742,
+   "len_ratio": 1.459
+  },
+  {
+   "page_id": "69b3005de5d6d64d8e199304",
+   "book_id": "69b3005de5d6d64d8e1990d7",
+   "page_number": 557,
+   "language": "Latin",
+   "year": 1560,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7114,
+   "len_prior": 4995,
+   "len_current": 5018,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "69c70b6cda9771c716315f86",
+   "book_id": "69c70a26da9771c716315eb5",
+   "page_number": -73,
+   "language": "French",
+   "year": 1798,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9849,
+   "len_prior": 3769,
+   "len_current": 3735,
+   "len_ratio": 0.991
+  },
+  {
+   "page_id": "69c883886c6f3cc53c8597b6",
+   "book_id": "69c8836b6c6f3cc53c859783",
+   "page_number": -25,
+   "language": "French",
+   "year": 1803,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.988,
+   "len_prior": 2953,
+   "len_current": 2928,
+   "len_ratio": 0.992
+  },
+  {
+   "page_id": "69c810096c6f3cc53c84741d",
+   "book_id": "69c80dd96c6f3cc53c846e1f",
+   "page_number": 929,
+   "language": "Latin",
+   "year": 1616,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9138,
+   "len_prior": 5766,
+   "len_current": 5760,
+   "len_ratio": 0.999
+  },
+  {
+   "page_id": "69af43458b369f0c1210aa34",
+   "book_id": "69af43458b369f0c1210a822",
+   "page_number": 530,
+   "language": "Latin",
+   "year": 1820,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9879,
+   "len_prior": 2788,
+   "len_current": 2838,
+   "len_ratio": 1.018
+  },
+  {
+   "page_id": "69f508f45c4b933f4edada27",
+   "book_id": "69c802396c6f3cc53c844634",
+   "page_number": 6,
+   "language": "Latin",
+   "year": 1551,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.24,
+   "len_prior": 655,
+   "len_current": 473,
+   "len_ratio": 0.722
+  },
+  {
+   "page_id": "694a8047458d70b8c6439d7c",
+   "book_id": "694a8046458d70b8c6439c5f",
+   "page_number": 285,
+   "language": "Latin",
+   "year": 1570,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.9313,
+   "len_prior": 2011,
+   "len_current": 2004,
+   "len_ratio": 0.997
+  },
+  {
+   "page_id": "69e77ad40fc6fc955e362747",
+   "book_id": "69e77ad40fc6fc955e362717",
+   "page_number": 48,
+   "language": "Tibetan",
+   "year": 1700,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.075,
+   "len_prior": 2541,
+   "len_current": 11653,
+   "len_ratio": 4.586
+  },
+  {
+   "page_id": "69520177ab34727b1f041388",
+   "book_id": "69520176ab34727b1f04136b",
+   "page_number": 29,
+   "language": "Latin",
+   "year": 1617,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.7396,
+   "len_prior": 2623,
+   "len_current": 3051,
+   "len_ratio": 1.163
+  },
+  {
+   "page_id": "69c879736c6f3cc53c85849d",
+   "book_id": "69c879476c6f3cc53c858445",
+   "page_number": -35,
+   "language": "Latin",
+   "year": 1557,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9965,
+   "len_prior": 2614,
+   "len_current": 2621,
+   "len_ratio": 1.003
+  },
+  {
+   "page_id": "69f660b002f2567af2016357",
+   "book_id": "69b419052b0edf3eaa2de888",
+   "page_number": 9,
+   "language": "Latin",
+   "year": 1640,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.5472,
+   "len_prior": 3086,
+   "len_current": 2906,
+   "len_ratio": 0.942
+  },
+  {
+   "page_id": "69d665abdaca889caf9275d4",
+   "book_id": "69d665abdaca889caf927527",
+   "page_number": 173,
+   "language": "Arabic",
+   "year": 1025,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7013,
+   "len_prior": 1970,
+   "len_current": 1892,
+   "len_ratio": 0.96
+  },
+  {
+   "page_id": "69ef34926c5c0455cc3f6276",
+   "book_id": "69ef34866c5c0455cc3f6265",
+   "page_number": -19,
+   "language": "auto-detect",
+   "year": 1619,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9921,
+   "len_prior": 4488,
+   "len_current": 4487,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "6984ccdf86c4006ff0f385d9",
+   "book_id": "698420e4e8a1d0539ce47e1d",
+   "page_number": 830,
+   "language": "German",
+   "year": 1619,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9357,
+   "len_prior": 2148,
+   "len_current": 2192,
+   "len_ratio": 1.02
+  },
+  {
+   "page_id": "69f5276753b683bb98da5f34",
+   "book_id": "69c868636c6f3cc53c8566cb",
+   "page_number": 217,
+   "language": "German",
+   "year": 1784,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8209,
+   "len_prior": 1619,
+   "len_current": 1826,
+   "len_ratio": 1.128
+  },
+  {
+   "page_id": "69bd9c6b6120d54bd036ece3",
+   "book_id": "69bd9c6b6120d54bd036ecd0",
+   "page_number": 19,
+   "language": "Latin",
+   "year": 1501,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.64,
+   "len_prior": 5948,
+   "len_current": 5334,
+   "len_ratio": 0.897
+  },
+  {
+   "page_id": "69c80eb36c6f3cc53c847066",
+   "book_id": "69c80e8c6c6f3cc53c846ff7",
+   "page_number": -63,
+   "language": "German",
+   "year": 1740,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9916,
+   "len_prior": 2736,
+   "len_current": 2730,
+   "len_ratio": 0.998
+  },
+  {
+   "page_id": "69c58b450acf5b7af1a70bdc",
+   "book_id": "69c581e3354cca56a12bc609",
+   "page_number": -55,
+   "language": "German",
+   "year": 1706,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2664,
+   "len_current": 2646,
+   "len_ratio": 0.993
+  },
+  {
+   "page_id": "69c883b26c6f3cc53c859808",
+   "book_id": "69c8839e6c6f3cc53c8597e3",
+   "page_number": -16,
+   "language": "German",
+   "year": 1618,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.7316,
+   "len_prior": 4335,
+   "len_current": 3637,
+   "len_ratio": 0.839
+  },
+  {
+   "page_id": "69c7ef4ffb10016c3f389fb0",
+   "book_id": "69c7eed4fb10016c3f389f51",
+   "page_number": -104,
+   "language": "French",
+   "year": 1595,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9017,
+   "len_prior": 3307,
+   "len_current": 3206,
+   "len_ratio": 0.969
+  },
+  {
+   "page_id": "69bd9cba6120d54bd0370b49",
+   "book_id": "69bd9cba6120d54bd0370923",
+   "page_number": 550,
+   "language": "Latin",
+   "year": 1542,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9337,
+   "len_prior": 3903,
+   "len_current": 3936,
+   "len_ratio": 1.008
+  },
+  {
+   "page_id": "69bf60c0c976bc42b3c1f215",
+   "page_number": 477,
+   "language": null,
+   "year": null,
+   "prior_model": null,
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": null,
+   "current_prompt": "v10",
+   "agreement": 0,
+   "len_prior": 2333,
+   "len_current": 1877,
+   "len_ratio": 0.805
+  },
+  {
+   "page_id": "69906a0cd69de0e69806f833",
+   "book_id": "69906a0cd69de0e69806f5cc",
+   "page_number": 615,
+   "language": "German",
+   "year": 1739,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1499,
+   "len_current": 1491,
+   "len_ratio": 0.995
+  },
+  {
+   "page_id": "69c27b6ab82ba5d5beda4629",
+   "book_id": "69c27b64b82ba5d5beda460e",
+   "page_number": 27,
+   "language": "German",
+   "year": 1820,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9638,
+   "len_prior": 2552,
+   "len_current": 2596,
+   "len_ratio": 1.017
+  },
+  {
+   "page_id": "69c8551e6c6f3cc53c853a40",
+   "book_id": "69c855096c6f3cc53c853a0b",
+   "page_number": 17,
+   "language": "German",
+   "year": 1690,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v6.2026-03",
+   "current_prompt": "v6.2026-03",
+   "agreement": 0.9896,
+   "len_prior": 2306,
+   "len_current": 2303,
+   "len_ratio": 0.999
+  },
+  {
+   "page_id": "6952c9ca77f38f6761bc31d5",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page_number": 371,
+   "language": "Greek",
+   "year": 1580,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.0988,
+   "len_prior": 839,
+   "len_current": 5873,
+   "len_ratio": 7
+  },
+  {
+   "page_id": "6958e96c813ea03889c32f8d",
+   "book_id": "6958e96c813ea03889c32bf7",
+   "page_number": 918,
+   "language": "Latin",
+   "year": 1621,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9241,
+   "len_prior": 4702,
+   "len_current": 4649,
+   "len_ratio": 0.989
+  },
+  {
+   "page_id": "69f5377f6260a0647b29d545",
+   "book_id": "69c896646c6f3cc53c85c52e",
+   "page_number": 22,
+   "language": "English",
+   "year": 1902,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 676,
+   "len_current": 654,
+   "len_ratio": 0.967
+  },
+  {
+   "page_id": "6952c9ca77f38f6761bc30e3",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page_number": 129,
+   "language": "Greek",
+   "year": 1580,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.5055,
+   "len_prior": 1969,
+   "len_current": 3314,
+   "len_ratio": 1.683
+  },
+  {
+   "page_id": "69b51dceff09e4fe943a95af",
+   "book_id": "69b51dceff09e4fe943a931a",
+   "page_number": 661,
+   "language": "Latin",
+   "year": 1659,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 2203,
+   "len_current": 2210,
+   "len_ratio": 1.003
+  },
+  {
+   "page_id": "69c7f5476c6f3cc53c841b7f",
+   "book_id": "69c7f5086c6f3cc53c841ae5",
+   "page_number": -73,
+   "language": "German",
+   "year": 1523,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.7819,
+   "len_prior": 3846,
+   "len_current": 3775,
+   "len_ratio": 0.982
+  },
+  {
+   "page_id": "69c869ce6c6f3cc53c8568f3",
+   "book_id": "69c869926c6f3cc53c8568a7",
+   "page_number": -28,
+   "language": "German",
+   "year": 1547,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.8998,
+   "len_prior": 4093,
+   "len_current": 4101,
+   "len_ratio": 1.002
+  },
+  {
+   "page_id": "69e011884e6773d060855339",
+   "book_id": "69e011834e6773d0608552e8",
+   "page_number": 81,
+   "language": "Hausa",
+   "year": 1896,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.99,
+   "len_prior": 2545,
+   "len_current": 2615,
+   "len_ratio": 1.028
+  },
+  {
+   "page_id": "6a267ce36c1f37c9c4f37832",
+   "book_id": "6a267ce36c1f37c9c4f37804",
+   "page_number": 46,
+   "language": "Unknown",
+   "year": 1725,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1477,
+   "len_current": 1477,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c82dab6c6f3cc53c84d3b2",
+   "book_id": "69c82d6c6c6f3cc53c84d26f",
+   "page_number": -35,
+   "language": "German",
+   "year": 1697,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9899,
+   "len_prior": 2862,
+   "len_current": 2843,
+   "len_ratio": 0.993
+  },
+  {
+   "page_id": "69c784006a0f3d112faf9806",
+   "book_id": "69c7835c6a0f3d112faf9786",
+   "page_number": -49,
+   "language": "Latin",
+   "year": 1621,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.8767,
+   "len_prior": 6054,
+   "len_current": 5987,
+   "len_ratio": 0.989
+  },
+  {
+   "page_id": "69c5885962ff3ddc150cdf45",
+   "book_id": "69c581e3354cca56a12bc609",
+   "page_number": -41,
+   "language": "German",
+   "year": 1706,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.991,
+   "len_prior": 2694,
+   "len_current": 2618,
+   "len_ratio": 0.972
+  },
+  {
+   "page_id": "69b51e33cf111105c429845a",
+   "book_id": "69b51e33cf111105c4298439",
+   "page_number": 33,
+   "language": "Latin",
+   "year": 1506,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9505,
+   "len_prior": 4107,
+   "len_current": 4026,
+   "len_ratio": 0.98
+  },
+  {
+   "page_id": "69bd9cba6120d54bd0370ae3",
+   "book_id": "69bd9cba6120d54bd0370923",
+   "page_number": 448,
+   "language": "Latin",
+   "year": 1542,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7805,
+   "len_prior": 3956,
+   "len_current": 3584,
+   "len_ratio": 0.906
+  },
+  {
+   "page_id": "69b51ec6cf111105c42a428d",
+   "book_id": "69b51ec6cf111105c42a4269",
+   "page_number": 36,
+   "language": "Latin",
+   "year": 1706,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9456,
+   "len_prior": 2763,
+   "len_current": 2682,
+   "len_ratio": 0.971
+  },
+  {
+   "page_id": "6958e96c813ea03889c32ff3",
+   "book_id": "6958e96c813ea03889c32bf7",
+   "page_number": 1020,
+   "language": "Latin",
+   "year": 1621,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8133,
+   "len_prior": 4742,
+   "len_current": 4646,
+   "len_ratio": 0.98
+  },
+  {
+   "page_id": "69b51dfaefd8df28f2daec07",
+   "book_id": "69b51dfaefd8df28f2daeae6",
+   "page_number": 289,
+   "language": "English",
+   "year": 1782,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9665,
+   "len_prior": 2692,
+   "len_current": 2660,
+   "len_ratio": 0.988
+  },
+  {
+   "page_id": "69f69a861b4bcde537b1f49f",
+   "book_id": "69c7bee025ec2ba5ccd7fa5d",
+   "page_number": 9,
+   "language": "Dutch",
+   "year": 1665,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9635,
+   "len_prior": 1433,
+   "len_current": 1449,
+   "len_ratio": 1.011
+  },
+  {
+   "page_id": "69c70afcda9771c716315f29",
+   "book_id": "69c70a26da9771c716315eb5",
+   "page_number": -39,
+   "language": "French",
+   "year": 1798,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9958,
+   "len_prior": 3519,
+   "len_current": 3499,
+   "len_ratio": 0.994
+  },
+  {
+   "page_id": "69c869df6c6f3cc53c85690a",
+   "book_id": "69c869926c6f3cc53c8568a7",
+   "page_number": -32,
+   "language": "German",
+   "year": 1547,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9264,
+   "len_prior": 4721,
+   "len_current": 4537,
+   "len_ratio": 0.961
+  },
+  {
+   "page_id": "69c8798b6c6f3cc53c8584ce",
+   "book_id": "69c879476c6f3cc53c858445",
+   "page_number": -66,
+   "language": "Latin",
+   "year": 1557,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3031,
+   "len_current": 3052,
+   "len_ratio": 1.007
+  },
+  {
+   "page_id": "69c868e96c6f3cc53c8567a4",
+   "book_id": "69c868636c6f3cc53c8566cb",
+   "page_number": -106,
+   "language": "German",
+   "year": 1784,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3150,
+   "len_current": 3082,
+   "len_ratio": 0.978
+  },
+  {
+   "page_id": "69c86c126c6f3cc53c856bca",
+   "book_id": "69c86bfe6c6f3cc53c856bb8",
+   "page_number": -13,
+   "language": "English",
+   "year": 1894,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3204,
+   "len_current": 3204,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "6955843657e3b773024f8f7b",
+   "book_id": "6955843657e3b773024f8d7c",
+   "page_number": 511,
+   "language": "English",
+   "year": 1905,
+   "prior_model": "gemini-2.5-flash",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.9591,
+   "len_prior": 2560,
+   "len_current": 2503,
+   "len_ratio": 0.978
+  },
+  {
+   "page_id": "69b4193d2b0edf3eaa2df1ce",
+   "book_id": "69b4193d2b0edf3eaa2df1bc",
+   "page_number": -18,
+   "language": "German",
+   "year": 1740,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9783,
+   "len_prior": 1618,
+   "len_current": 1590,
+   "len_ratio": 0.983
+  },
+  {
+   "page_id": "69c854656c6f3cc53c85383e",
+   "book_id": "69c854596c6f3cc53c853821",
+   "page_number": -12,
+   "language": "German",
+   "year": 1721,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9776,
+   "len_prior": 4449,
+   "len_current": 4448,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69f504e143738569693dbfd2",
+   "book_id": "69c896866c6f3cc53c85c57b",
+   "page_number": 203,
+   "language": "English",
+   "year": 1910,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1614,
+   "len_current": 1614,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c56e9b52540f4987dbab6d",
+   "book_id": "69c4ec33a3a4a7c546ee6111",
+   "page_number": 179,
+   "language": "German",
+   "year": 1791,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9592,
+   "len_prior": 2269,
+   "len_current": 2571,
+   "len_ratio": 1.133
+  },
+  {
+   "page_id": "69e009d538e6b96e05869c2c",
+   "book_id": "69e009d438e6b96e05869c1b",
+   "page_number": 17,
+   "language": "Classical Chinese",
+   "year": 1770,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 386,
+   "len_current": 378,
+   "len_ratio": 0.979
+  },
+  {
+   "page_id": "69bf609bc976bc42b3c1ea62",
+   "book_id": "69bf609bc976bc42b3c1e9eb",
+   "page_number": 119,
+   "language": "Armenian",
+   "year": 1898,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 2901,
+   "len_current": 2901,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "6a35322ec8ce407afbe04cc0",
+   "book_id": "6a35322ec8ce407afbe04c8f",
+   "page_number": 49,
+   "language": "English",
+   "year": 1925,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1851,
+   "len_current": 1852,
+   "len_ratio": 1.001
+  },
+  {
+   "page_id": "69c5cda36e2c26619a50acf3",
+   "book_id": "69c581e3551fbd40b95eaa3c",
+   "page_number": -317,
+   "language": "Dutch",
+   "year": 1726,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9777,
+   "len_prior": 5308,
+   "len_current": 5241,
+   "len_ratio": 0.987
+  },
+  {
+   "page_id": "6a100a22f71729295096e0cc",
+   "book_id": "6a100a22f71729295096e0ac",
+   "page_number": 32,
+   "language": "Latin",
+   "year": 1762,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9962,
+   "len_prior": 2272,
+   "len_current": 2272,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69b51dc4cf111105c428fc63",
+   "book_id": "69b51dc4cf111105c428fbdf",
+   "page_number": 132,
+   "language": "Latin",
+   "year": 1642,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.997,
+   "len_prior": 3591,
+   "len_current": 3602,
+   "len_ratio": 1.003
+  },
+  {
+   "page_id": "69c864476c6f3cc53c855f1d",
+   "book_id": "69c864146c6f3cc53c855e89",
+   "page_number": -76,
+   "language": "Latin",
+   "year": 1593,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9339,
+   "len_prior": 1500,
+   "len_current": 1523,
+   "len_ratio": 1.015
+  },
+  {
+   "page_id": "69c834236c6f3cc53c84e46d",
+   "book_id": "69c8341e6c6f3cc53c84e45f",
+   "page_number": 1,
+   "language": "Latin",
+   "year": 1615,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.6875,
+   "len_prior": 902,
+   "len_current": 769,
+   "len_ratio": 0.853
+  },
+  {
+   "page_id": "69c899526c6f3cc53c85cda7",
+   "book_id": "69c8994b6c6f3cc53c85cd8a",
+   "page_number": -8,
+   "language": "German",
+   "year": 1652,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9705,
+   "len_prior": 3893,
+   "len_current": 4083,
+   "len_ratio": 1.049
+  },
+  {
+   "page_id": "69c563acc19e98b90893cedb",
+   "book_id": "69c4ec33a3a4a7c546ee6113",
+   "page_number": 134,
+   "language": "Latin",
+   "year": 1618,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.2,
+   "len_prior": 323,
+   "len_current": 1039,
+   "len_ratio": 3.217
+  },
+  {
+   "page_id": "69bf609bc976bc42b3c1ea8f",
+   "book_id": "69bf609bc976bc42b3c1e9eb",
+   "page_number": 164,
+   "language": "Armenian",
+   "year": 1898,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 2561,
+   "len_current": 2543,
+   "len_ratio": 0.993
+  },
+  {
+   "page_id": "69ef34206c5c0455cc3f60cb",
+   "book_id": "69ef34196c5c0455cc3f60b5",
+   "page_number": -26,
+   "language": "auto-detect",
+   "year": 1700,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.994,
+   "len_prior": 2597,
+   "len_current": 2615,
+   "len_ratio": 1.007
+  },
+  {
+   "page_id": "695203a6ab34727b1f041e5e",
+   "book_id": "695203a5ab34727b1f041c53",
+   "page_number": 523,
+   "language": "Latin",
+   "year": 1678,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.9846,
+   "len_prior": 1508,
+   "len_current": 1750,
+   "len_ratio": 1.16
+  },
+  {
+   "page_id": "69c8974b6c6f3cc53c85c79c",
+   "book_id": "69c8971d6c6f3cc53c85c715",
+   "page_number": -59,
+   "language": "English",
+   "year": 1903,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3171,
+   "len_current": 3188,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "69c71f26da9771c716316afa",
+   "book_id": "69c71ed5da9771c716316ac8",
+   "page_number": 37,
+   "language": "German",
+   "year": 1542,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v6.2026-03",
+   "current_prompt": "v6.2026-03",
+   "agreement": 0.8522,
+   "len_prior": 952,
+   "len_current": 998,
+   "len_ratio": 1.048
+  },
+  {
+   "page_id": "6992545159cdabeb78f1de83",
+   "book_id": "6992545159cdabeb78f1dc13",
+   "page_number": 624,
+   "language": "German",
+   "year": 1902,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 3994,
+   "len_current": 3976,
+   "len_ratio": 0.995
+  },
+  {
+   "page_id": "69c864336c6f3cc53c855ee0",
+   "book_id": "69c864146c6f3cc53c855e89",
+   "page_number": -53,
+   "language": "Latin",
+   "year": 1593,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.7364,
+   "len_prior": 1643,
+   "len_current": 1656,
+   "len_ratio": 1.008
+  },
+  {
+   "page_id": "6958e964813ea03889c32983",
+   "book_id": "6958e964813ea03889c32667",
+   "page_number": 796,
+   "language": "Latin",
+   "year": 1599,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.878,
+   "len_prior": 5342,
+   "len_current": 5237,
+   "len_ratio": 0.98
+  },
+  {
+   "page_id": "69c82d6b6c6f3cc53c84d266",
+   "book_id": "69c82d476c6f3cc53c84d1cc",
+   "page_number": -47,
+   "language": "German",
+   "year": 1663,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9886,
+   "len_prior": 4658,
+   "len_current": 4593,
+   "len_ratio": 0.986
+  },
+  {
+   "page_id": "69bf609bc976bc42b3c1eaa5",
+   "book_id": "69bf609bc976bc42b3c1e9eb",
+   "page_number": 186,
+   "language": "Armenian",
+   "year": 1898,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 2831,
+   "len_current": 2794,
+   "len_ratio": 0.987
+  },
+  {
+   "page_id": "69b41884f1200e2ab53cfce0",
+   "book_id": "69b41884f1200e2ab53cfcba",
+   "page_number": -38,
+   "language": "Latin",
+   "year": 1630,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8011,
+   "len_prior": 1645,
+   "len_current": 1697,
+   "len_ratio": 1.032
+  },
+  {
+   "page_id": "69c5450dc2610db380001819",
+   "book_id": "69c4ec33a3a4a7c546ee611d",
+   "page_number": -84,
+   "language": "Latin",
+   "year": 1688,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.8221,
+   "len_prior": 2140,
+   "len_current": 2345,
+   "len_ratio": 1.096
+  },
+  {
+   "page_id": "69b0082ae8cbd2498149ba34",
+   "book_id": "69b0081de8cbd2498149b813",
+   "page_number": 545,
+   "language": "Greek",
+   "year": 1824,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1384,
+   "len_current": 1384,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c889e96c6f3cc53c85a4da",
+   "book_id": "69c889b46c6f3cc53c85a494",
+   "page_number": 37,
+   "language": "French",
+   "year": 1913,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.3333,
+   "len_prior": 1246,
+   "len_current": 1074,
+   "len_ratio": 0.862
+  },
+  {
+   "page_id": "6951549fab34727b1f0412bf",
+   "book_id": "694fd600435f95fd0c9556d1",
+   "page_number": 556,
+   "language": "Latin",
+   "year": 1557,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.135,
+   "len_prior": 900,
+   "len_current": 7126,
+   "len_ratio": 7.918
+  },
+  {
+   "page_id": "69c82d826c6f3cc53c84d2e4",
+   "book_id": "69c82d6c6c6f3cc53c84d26f",
+   "page_number": -59,
+   "language": "German",
+   "year": 1697,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.99,
+   "len_prior": 2954,
+   "len_current": 3033,
+   "len_ratio": 1.027
+  },
+  {
+   "page_id": "6a35c9b5df59c9f0ef280398",
+   "book_id": "6a35c9b4df59c9f0ef280221",
+   "page_number": 375,
+   "language": "English",
+   "year": null,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1428,
+   "len_current": 1442,
+   "len_ratio": 1.01
+  },
+  {
+   "page_id": "69c92048acb41c329360ff3f",
+   "book_id": "69c71b82da9771c7163168b6",
+   "page_number": -451,
+   "language": "German",
+   "year": 1707,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9931,
+   "len_prior": 4103,
+   "len_current": 4123,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "69ad73455953f4eff4f33cfe",
+   "book_id": "69ad73455953f4eff4f33b90",
+   "page_number": 366,
+   "language": "English",
+   "year": 1896,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 5468,
+   "len_current": 5410,
+   "len_ratio": 0.989
+  },
+  {
+   "page_id": "69c83e4c6c6f3cc53c84fffc",
+   "book_id": "69c83e356c6f3cc53c84ff88",
+   "page_number": -74,
+   "language": "Latin",
+   "year": 1629,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1992,
+   "len_current": 1992,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69b00964c7a61612f0103e8e",
+   "book_id": "69b00962c7a61612f0103bbc",
+   "page_number": 722,
+   "language": "Greek",
+   "year": 1827,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8034,
+   "len_prior": 2257,
+   "len_current": 2314,
+   "len_ratio": 1.025
+  },
+  {
+   "page_id": "6a267b8c6c1f37c9c4f32622",
+   "book_id": "6a267b8c6c1f37c9c4f325f7",
+   "page_number": 43,
+   "language": "Latin",
+   "year": 1634,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9948,
+   "len_prior": 1881,
+   "len_current": 1882,
+   "len_ratio": 1.001
+  },
+  {
+   "page_id": "69f7191a1b677bd277dfbb76",
+   "book_id": "69c89f516c6f3cc53c85dc4c",
+   "page_number": 17,
+   "language": "Latin",
+   "year": 1664,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 1626,
+   "len_current": 1625,
+   "len_ratio": 0.999
+  },
+  {
+   "page_id": "69a6825cd5bf106c72bb8a25",
+   "book_id": "69a6825cd5bf106c72bb8a0b",
+   "page_number": 26,
+   "language": "Italian",
+   "year": 1589,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7267,
+   "len_prior": 3545,
+   "len_current": 3525,
+   "len_ratio": 0.994
+  },
+  {
+   "page_id": "69b4ccf4d5b6c3815e1a2de8",
+   "book_id": "69b4ccf4d5b6c3815e1a2da9",
+   "page_number": 63,
+   "language": "Latin",
+   "year": 1539,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9563,
+   "len_prior": 1791,
+   "len_current": 1781,
+   "len_ratio": 0.994
+  },
+  {
+   "page_id": "69f504f5f3941bf5188807e9",
+   "book_id": "69c83fc16c6f3cc53c85053b",
+   "page_number": 139,
+   "language": "German",
+   "year": 1731,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9964,
+   "len_prior": 1947,
+   "len_current": 1947,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c55ccd27ce4934f8a02b7a",
+   "book_id": "69c4ec33a3a4a7c546ee6121",
+   "page_number": -32,
+   "language": "French",
+   "year": 1767,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9582,
+   "len_prior": 2328,
+   "len_current": 2314,
+   "len_ratio": 0.994
+  },
+  {
+   "page_id": "69529544b184004c526a2f0c",
+   "book_id": "69529544b184004c526a2c3c",
+   "page_number": 720,
+   "language": "Latin",
+   "year": 1648,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.7706,
+   "len_prior": 1268,
+   "len_current": 1479,
+   "len_ratio": 1.166
+  },
+  {
+   "page_id": "6a209ede89e8715c5947b0d1",
+   "book_id": "6a209ede89e8715c5947af4b",
+   "page_number": 390,
+   "language": "German",
+   "year": 1798,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1242,
+   "len_current": 1176,
+   "len_ratio": 0.947
+  },
+  {
+   "page_id": "69b51dc9f23ccdcced309952",
+   "book_id": "69b51dc9f23ccdcced3097a7",
+   "page_number": 427,
+   "language": "Latin",
+   "year": 1651,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9962,
+   "len_prior": 2549,
+   "len_current": 2549,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69b51dfaefd8df28f2daec2a",
+   "book_id": "69b51dfaefd8df28f2daeae6",
+   "page_number": 324,
+   "language": "English",
+   "year": 1782,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9912,
+   "len_prior": 2219,
+   "len_current": 2118,
+   "len_ratio": 0.954
+  },
+  {
+   "page_id": "69b51de3261c58d63664c8a3",
+   "book_id": "69b51de3261c58d63664c791",
+   "page_number": 274,
+   "language": "Latin",
+   "year": 1714,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7468,
+   "len_prior": 2738,
+   "len_current": 2305,
+   "len_ratio": 0.842
+  },
+  {
+   "page_id": "69c8278b6c6f3cc53c84c098",
+   "book_id": "69c827306c6f3cc53c84bf6c",
+   "page_number": -53,
+   "language": "German",
+   "year": 1783,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2313,
+   "len_current": 2335,
+   "len_ratio": 1.01
+  },
+  {
+   "page_id": "69c6ed1ada9771c7163149af",
+   "book_id": "69c6ec0fda9771c7163148cc",
+   "page_number": -98,
+   "language": "German",
+   "year": 1619,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9855,
+   "len_prior": 2660,
+   "len_current": 2626,
+   "len_ratio": 0.987
+  },
+  {
+   "page_id": "69c846486c6f3cc53c85170a",
+   "book_id": "69c846296c6f3cc53c8516d9",
+   "page_number": -7,
+   "language": "Latin",
+   "year": 1522,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.2834,
+   "len_prior": 3922,
+   "len_current": 3745,
+   "len_ratio": 0.955
+  },
+  {
+   "page_id": "69c559391a0b3098e3237b93",
+   "book_id": "69c4ec33a3a4a7c546ee6125",
+   "page_number": -6,
+   "language": "Latin",
+   "year": 1601,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9624,
+   "len_prior": 3474,
+   "len_current": 3747,
+   "len_ratio": 1.079
+  },
+  {
+   "page_id": "69526a50ab34727b1f046eed",
+   "book_id": "69526a50ab34727b1f046dc5",
+   "page_number": 296,
+   "language": "Greek",
+   "year": 1835,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.875,
+   "len_prior": 4600,
+   "len_current": 5114,
+   "len_ratio": 1.112
+  },
+  {
+   "page_id": "69f6cd36a2ec50fde8a3717a",
+   "book_id": "69c82cb86c6f3cc53c84cf6e",
+   "page_number": 15,
+   "language": "Latin",
+   "year": 1562,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9563,
+   "len_prior": 1502,
+   "len_current": 1529,
+   "len_ratio": 1.018
+  },
+  {
+   "page_id": "69c814a56c6f3cc53c848294",
+   "book_id": "69c8148e6c6f3cc53c84823f",
+   "page_number": -30,
+   "language": "Dutch",
+   "year": 1667,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9875,
+   "len_prior": 3310,
+   "len_current": 3296,
+   "len_ratio": 0.996
+  },
+  {
+   "page_id": "690c38bae0787282ad5938a3",
+   "book_id": "690c3840e0787282ad59386d",
+   "page_number": -27,
+   "language": "German",
+   "year": 1617,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2766,
+   "len_current": 2772,
+   "len_ratio": 1.002
+  },
+  {
+   "page_id": "69c89cb86c6f3cc53c85d642",
+   "book_id": "69c89cb16c6f3cc53c85d634",
+   "page_number": -2,
+   "language": "French",
+   "year": 1790,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.3269,
+   "len_prior": 866,
+   "len_current": 1218,
+   "len_ratio": 1.406
+  },
+  {
+   "page_id": "69c81fa86c6f3cc53c84a610",
+   "book_id": "69c81f916c6f3cc53c84a5d1",
+   "page_number": -42,
+   "language": "German",
+   "year": 1570,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9555,
+   "len_prior": 2475,
+   "len_current": 2471,
+   "len_ratio": 0.998
+  },
+  {
+   "page_id": "69ea0f8513a685002bb8e71a",
+   "book_id": "69ea0f8513a685002bb8e6fb",
+   "page_number": 31,
+   "language": "Russian",
+   "year": 1857,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9957,
+   "len_prior": 2273,
+   "len_current": 2288,
+   "len_ratio": 1.007
+  },
+  {
+   "page_id": "69dc272039623978967d8e37",
+   "book_id": "69dc272039623978967d8df4",
+   "page_number": 67,
+   "language": "English",
+   "year": 1910,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1214,
+   "len_current": 1303,
+   "len_ratio": 1.073
+  },
+  {
+   "page_id": "6a20a11e448aec276304d9a4",
+   "book_id": "6a20a11e448aec276304d834",
+   "page_number": 368,
+   "language": "German",
+   "year": 1578,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9941,
+   "len_prior": 1400,
+   "len_current": 1408,
+   "len_ratio": 1.006
+  },
+  {
+   "page_id": "69c5ab2ab53e8e69bef794bf",
+   "book_id": "69c581e4ef9444b5fe7c4794",
+   "page_number": -297,
+   "language": "German",
+   "year": 1786,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9945,
+   "len_prior": 2784,
+   "len_current": 2781,
+   "len_ratio": 0.999
+  },
+  {
+   "page_id": "69c9336cacb41c3293611d7c",
+   "book_id": "69c648c4b2d26d717d1aaa42",
+   "page_number": -56,
+   "language": "French",
+   "year": 1787,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2247,
+   "len_current": 2234,
+   "len_ratio": 0.994
+  },
+  {
+   "page_id": "69b633b477eb44185357461c",
+   "book_id": "69b633b477eb4418535742ce",
+   "page_number": 846,
+   "language": "English",
+   "year": 1877,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9912,
+   "len_prior": 3992,
+   "len_current": 4060,
+   "len_ratio": 1.017
+  },
+  {
+   "page_id": "69c834216c6f3cc53c84e465",
+   "book_id": "69c833fa6c6f3cc53c84e3bf",
+   "page_number": -35,
+   "language": "German",
+   "year": 1700,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 3305,
+   "len_current": 3305,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69f5272753b683bb98da5efe",
+   "book_id": "69c868636c6f3cc53c8566cb",
+   "page_number": 162,
+   "language": "German",
+   "year": 1784,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.6587,
+   "len_prior": 1515,
+   "len_current": 1523,
+   "len_ratio": 1.005
+  },
+  {
+   "page_id": "69e75d23cc48e59ad74eb5c0",
+   "book_id": "69e75d23cc48e59ad74eb592",
+   "page_number": 46,
+   "language": "Japanese",
+   "year": 1840,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0,
+   "len_prior": 927,
+   "len_current": 17479,
+   "len_ratio": 18.855
+  },
+  {
+   "page_id": "69c870686c6f3cc53c8572a9",
+   "book_id": "69c86fdd6c6f3cc53c85718f",
+   "page_number": -42,
+   "language": "German",
+   "year": 1717,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9951,
+   "len_prior": 3201,
+   "len_current": 3213,
+   "len_ratio": 1.004
+  },
+  {
+   "page_id": "69c898436c6f3cc53c85ca7f",
+   "book_id": "69c898306c6f3cc53c85ca46",
+   "page_number": -19,
+   "language": "English",
+   "year": 1888,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.8866,
+   "len_prior": 2992,
+   "len_current": 2787,
+   "len_ratio": 0.931
+  },
+  {
+   "page_id": "69a6850db3d8052782b3d1a3",
+   "book_id": "69a6850db3d8052782b3d19b",
+   "page_number": 8,
+   "language": "Latin",
+   "year": 1600,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "v10",
+   "agreement": 0.9412,
+   "len_prior": 3025,
+   "len_current": 3042,
+   "len_ratio": 1.006
+  },
+  {
+   "page_id": "69c8557d6c6f3cc53c853afa",
+   "book_id": "69c855526c6f3cc53c853ab7",
+   "page_number": -28,
+   "language": "German",
+   "year": 1706,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9191,
+   "len_prior": 5409,
+   "len_current": 5103,
+   "len_ratio": 0.943
+  },
+  {
+   "page_id": "69924f3b5976b55115ffd707",
+   "book_id": "69924f3a5976b55115ffd500",
+   "page_number": 519,
+   "language": "English",
+   "year": 1898,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 3193,
+   "len_current": 3270,
+   "len_ratio": 1.024
+  },
+  {
+   "page_id": "6a357a3f82bf3ff3f867b938",
+   "book_id": "6a357a3f82bf3ff3f867b90c",
+   "page_number": 44,
+   "language": "Dutch",
+   "year": 1532,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.8782,
+   "len_prior": 3328,
+   "len_current": 3417,
+   "len_ratio": 1.027
+  },
+  {
+   "page_id": "69906a45d69de0e698070164",
+   "book_id": "69906a45d69de0e6980700d1",
+   "page_number": 147,
+   "language": "English",
+   "year": 1902,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9934,
+   "len_prior": 3241,
+   "len_current": 3264,
+   "len_ratio": 1.007
+  },
+  {
+   "page_id": "69906a45d69de0e69807024b",
+   "book_id": "69906a45d69de0e6980700d1",
+   "page_number": 378,
+   "language": "English",
+   "year": 1902,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.6786,
+   "len_prior": 618,
+   "len_current": 647,
+   "len_ratio": 1.047
+  },
+  {
+   "page_id": "69c80f9d6c6f3cc53c8472c2",
+   "book_id": "69c80dd96c6f3cc53c846e1f",
+   "page_number": 723,
+   "language": "Latin",
+   "year": 1616,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.81,
+   "len_prior": 5446,
+   "len_current": 5490,
+   "len_ratio": 1.008
+  },
+  {
+   "page_id": "69f67f94c7a6719db49937b5",
+   "book_id": "69c826cd6c6f3cc53c84be0c",
+   "page_number": 155,
+   "language": "English",
+   "year": 1661,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1456,
+   "len_current": 1489,
+   "len_ratio": 1.023
+  },
+  {
+   "page_id": "69e72bb1a409200ea79f3495",
+   "book_id": "69e72bb1a409200ea79f346c",
+   "page_number": 41,
+   "language": "Swahili",
+   "year": 1901,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.4928,
+   "len_prior": 578,
+   "len_current": 567,
+   "len_ratio": 0.981
+  },
+  {
+   "page_id": "69bd9cbf6120d54bd0370df7",
+   "book_id": "69bd9cbf6120d54bd0370cee",
+   "page_number": 265,
+   "language": "Latin",
+   "year": 1543,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8796,
+   "len_prior": 4741,
+   "len_current": 4852,
+   "len_ratio": 1.023
+  },
+  {
+   "page_id": "69aebb3439a4307877773050",
+   "book_id": "69aebb3439a4307877772f55",
+   "page_number": 251,
+   "language": "Chinese",
+   "year": 1480,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.0125,
+   "len_prior": 16500,
+   "len_current": 955,
+   "len_ratio": 0.058
+  },
+  {
+   "page_id": "69d5abb0f5e2a1273d9010f3",
+   "book_id": "69d5abb0f5e2a1273d900fd6",
+   "page_number": 155,
+   "language": "Persian",
+   "year": 1307,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9036,
+   "len_prior": 2795,
+   "len_current": 2807,
+   "len_ratio": 1.004
+  },
+  {
+   "page_id": "69c5828d5d8911f926c20e42",
+   "book_id": "69c581e3551fbd40b95eaa32",
+   "page_number": -5,
+   "language": "German",
+   "year": 1779,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.8168,
+   "len_prior": 1908,
+   "len_current": 2068,
+   "len_ratio": 1.084
+  },
+  {
+   "page_id": "69e786dc6846fc56c490f71f",
+   "book_id": "69e786dc6846fc56c490f6f2",
+   "page_number": 45,
+   "language": "Tibetan",
+   "year": 1700,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.0481,
+   "len_prior": 1972,
+   "len_current": 4506,
+   "len_ratio": 2.285
+  },
+  {
+   "page_id": "69c8202f6c6f3cc53c84a792",
+   "book_id": "69c81f916c6f3cc53c84a5d1",
+   "page_number": -154,
+   "language": "German",
+   "year": 1570,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.4073,
+   "len_prior": 2192,
+   "len_current": 2249,
+   "len_ratio": 1.026
+  },
+  {
+   "page_id": "69592a05c6f388ea5a33c545",
+   "book_id": "69592a05c6f388ea5a33c22f",
+   "page_number": 790,
+   "language": "German",
+   "year": 1616,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9697,
+   "len_prior": 947,
+   "len_current": 933,
+   "len_ratio": 0.985
+  },
+  {
+   "page_id": "6a209ed989e8715c5947af38",
+   "book_id": "6a209ed989e8715c5947ad17",
+   "page_number": 545,
+   "language": "German",
+   "year": 1861,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.3871,
+   "len_prior": 446,
+   "len_current": 521,
+   "len_ratio": 1.168
+  },
+  {
+   "page_id": "6a20a137448aec276304da31",
+   "book_id": "6a20a137448aec276304d9dd",
+   "page_number": 84,
+   "language": "German",
+   "year": 1876,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 2411,
+   "len_current": 2425,
+   "len_ratio": 1.006
+  },
+  {
+   "page_id": "69bda147f6d63c919748f3d7",
+   "book_id": "69bda147f6d63c919748f3c3",
+   "page_number": 20,
+   "language": "Latin",
+   "year": 1784,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9163,
+   "len_prior": 1959,
+   "len_current": 1921,
+   "len_ratio": 0.981
+  },
+  {
+   "page_id": "69bd9f0ef6d63c919747e1a9",
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page_number": 727,
+   "language": "Latin",
+   "year": 1659,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.9796,
+   "len_prior": 3188,
+   "len_current": 3129,
+   "len_ratio": 0.981
+  },
+  {
+   "page_id": "69c6e974da9771c716314694",
+   "book_id": "69c6e84dda9771c7163145fd",
+   "page_number": -73,
+   "language": "German",
+   "year": 1803,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9304,
+   "len_prior": 2647,
+   "len_current": 2709,
+   "len_ratio": 1.023
+  },
+  {
+   "page_id": "69bf60c0c976bc42b3c1f0fc",
+   "page_number": 196,
+   "language": null,
+   "year": null,
+   "prior_model": null,
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": null,
+   "current_prompt": "v10",
+   "agreement": 0.0037,
+   "len_prior": 1351,
+   "len_current": 2032,
+   "len_ratio": 1.504
+  },
+  {
+   "page_id": "69c6eaa6da9771c716314784",
+   "book_id": "69c6ea61da9771c716314778",
+   "page_number": -2,
+   "language": "German",
+   "year": 1703,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.1.2026-03",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.1628,
+   "len_prior": 917,
+   "len_current": 891,
+   "len_ratio": 0.972
+  },
+  {
+   "page_id": "6a00d3cc781a0eba17a3d8d3",
+   "book_id": "69c1b21ab82ba5d5bed954d6",
+   "page_number": 23,
+   "language": "German",
+   "year": 1843,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.6949,
+   "len_prior": 2974,
+   "len_current": 3039,
+   "len_ratio": 1.022
+  },
+  {
+   "page_id": "69b51e0aefd8df28f2daf732",
+   "book_id": "69b51e0aefd8df28f2daf544",
+   "page_number": 494,
+   "language": "German",
+   "year": 1817,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 1,
+   "len_prior": 2017,
+   "len_current": 2017,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "69c736b36a0f3d112faf7648",
+   "book_id": "69c735f26a0f3d112faf75cb",
+   "page_number": -8,
+   "language": "Latin",
+   "year": 1607,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.7695,
+   "len_prior": 2231,
+   "len_current": 2218,
+   "len_ratio": 0.994
+  },
+  {
+   "page_id": "69c785a66a0f3d112faf98d1",
+   "book_id": "69c7840b6a0f3d112faf98b9",
+   "page_number": -33,
+   "language": "German",
+   "year": 1786,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 2455,
+   "len_current": 2481,
+   "len_ratio": 1.011
+  },
+  {
+   "page_id": "69c641dfb463eebe7caac824",
+   "book_id": "69c64199b463eebe7caac809",
+   "page_number": -15,
+   "language": "Latin",
+   "year": 1596,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9825,
+   "len_prior": 3368,
+   "len_current": 3387,
+   "len_ratio": 1.006
+  },
+  {
+   "page_id": "69c8591f6c6f3cc53c854469",
+   "book_id": "69c857c16c6f3cc53c8540f8",
+   "page_number": -245,
+   "language": "German",
+   "year": 1719,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.8938,
+   "len_prior": 4362,
+   "len_current": 4471,
+   "len_ratio": 1.025
+  },
+  {
+   "page_id": "69520517ab34727b1f0424d0",
+   "book_id": "69520516ab34727b1f04245b",
+   "page_number": 117,
+   "language": "Latin",
+   "year": 1650,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.7383,
+   "len_prior": 2018,
+   "len_current": 2458,
+   "len_ratio": 1.218
+  },
+  {
+   "page_id": "69c7ae1a25ec2ba5ccd7f21c",
+   "book_id": "69c7ad8825ec2ba5ccd7f1fa",
+   "page_number": -39,
+   "language": "Latin",
+   "year": 1604,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 1,
+   "len_prior": 1659,
+   "len_current": 1671,
+   "len_ratio": 1.007
+  },
+  {
+   "page_id": "69ae951d14ec9b78c4ceda5d",
+   "book_id": "69ae951d14ec9b78c4ced9b0",
+   "page_number": 173,
+   "language": "English",
+   "year": 1920,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 1009,
+   "len_current": 1009,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "6952c9ca77f38f6761bc31f4",
+   "book_id": "6952c9ca77f38f6761bc3062",
+   "page_number": 402,
+   "language": "Greek",
+   "year": 1580,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.4237,
+   "len_prior": 3199,
+   "len_current": 5808,
+   "len_ratio": 1.816
+  },
+  {
+   "page_id": "69cf7c73878f40c5945f2d64",
+   "book_id": "69cf7c73878f40c5945f2cd8",
+   "page_number": 140,
+   "language": "Greek",
+   "year": 1975,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9968,
+   "len_prior": 4413,
+   "len_current": 4415,
+   "len_ratio": 1
+  },
+  {
+   "page_id": "6952b10077f38f6761bc2d1a",
+   "book_id": "6952b10077f38f6761bc2c1b",
+   "page_number": 255,
+   "language": "Italian",
+   "year": 1481,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": null,
+   "current_prompt": "v5.2026-02",
+   "agreement": 0.1138,
+   "len_prior": 5708,
+   "len_current": 5984,
+   "len_ratio": 1.048
+  },
+  {
+   "page_id": "69c6eb87da9771c71631483a",
+   "book_id": "69c6ea61da9771c716314778",
+   "page_number": -71,
+   "language": "German",
+   "year": 1703,
+   "prior_model": "gemini-3-flash-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "spread-v2+ocr-v10",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9908,
+   "len_prior": 3902,
+   "len_current": 3977,
+   "len_ratio": 1.019
+  },
+  {
+   "page_id": "69c55b394e5e4efd1bd704fc",
+   "book_id": "69c4ec33a3a4a7c546ee6113",
+   "page_number": 37,
+   "language": "Latin",
+   "year": 1618,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3-flash-preview",
+   "prior_prompt": "v5.2026-02",
+   "current_prompt": "spread-v2+ocr-v10",
+   "agreement": 0.9489,
+   "len_prior": 3038,
+   "len_current": 3320,
+   "len_ratio": 1.093
+  },
+  {
+   "page_id": "69ae9ce802bcb0b4376e4db5",
+   "book_id": "69ae9ce802bcb0b4376e4ae1",
+   "page_number": 724,
+   "language": "English",
+   "year": 1912,
+   "prior_model": "gemini-3.1-flash-lite",
+   "current_model": "gemini-3.1-flash-lite",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 1,
+   "len_prior": 2544,
+   "len_current": 2524,
+   "len_ratio": 0.992
+  },
+  {
+   "page_id": "69e961ab2beefe2f6f72c605",
+   "book_id": "69e961ab2beefe2f6f72c3b6",
+   "page_number": 591,
+   "language": "English",
+   "year": 1599,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "12",
+   "current_prompt": "12",
+   "agreement": 0.9925,
+   "len_prior": 5387,
+   "len_current": 5481,
+   "len_ratio": 1.017
+  },
+  {
+   "page_id": "699201597c226bdd25f98bc3",
+   "book_id": "699201597c226bdd25f989ad",
+   "page_number": 534,
+   "language": "French",
+   "year": 1625,
+   "prior_model": "gemini-3.1-flash-lite-preview",
+   "current_model": "gemini-3.1-flash-lite-preview",
+   "prior_prompt": "v10",
+   "current_prompt": "v10",
+   "agreement": 0.7862,
+   "len_prior": 1166,
+   "len_current": 1183,
+   "len_ratio": 1.015
+  }
+ ]
+}

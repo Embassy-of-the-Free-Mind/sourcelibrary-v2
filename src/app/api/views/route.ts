@@ -17,7 +17,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { anonymizeIp } from '@/lib/anonymize-ip';
+import { clientIpFromHeaders } from '@/lib/analytics-ingest';
 import { classifyTraffic } from '@/lib/traffic-classification';
 
 const VALID_TYPES = ['image', 'page', 'book'] as const;
@@ -83,8 +83,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-    const ip = anonymizeIp(rawIp);
+    // Must be the CALLER, not the CDN: this address dedupes view increments,
+    // so a Cloudflare edge IP collapses every reader behind that node into one
+    // and silently suppresses real views. read_count also orders the paid
+    // re-OCR queues, so a wrong denominator here spends money in the wrong place.
+    const ip = clientIpFromHeaders(request.headers);
     if (isDuplicate(ip, `${target_type}:${target_id}`)) {
       return NextResponse.json({ success: true });
     }

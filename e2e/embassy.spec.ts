@@ -23,29 +23,37 @@ test.describe('Librarian', () => {
     await expect(page.getByText('The Librarian searches the collection')).toBeVisible();
   });
 
+  // The suggestion chips are NOT stable content. LibrarianClient redraws the
+  // set twice after first paint (`pickSuggestions`): once on mount, and again
+  // when the public-threads fetch resolves and blends in real visitor
+  // questions. So neither the wording of a chip nor its presence in the set
+  // survives long enough to assert on — both produced the #3358 flake:
+  //
+  //   1. locating chips by keyword (/Agrippa|Kabbalah|.../) — the redraw picks
+  //      4 of ~30 suggestions at random, so a keyword can vanish entirely and
+  //      the click times out;
+  //   2. capturing a chip's text and asserting the textarea matches THAT text
+  //      — the redraw can swap the chip between the read and the click.
+  //
+  // Both are fixed by locating chips structurally and asserting the behaviour.
+  const chips = (page: import('@playwright/test').Page) =>
+    page.getByTestId('suggestion-chip');
+
   test('shows suggestion chips', async ({ page }) => {
-    // Suggestions may vary — just verify at least 2 are visible
-    const suggestions = page.locator('button', {
-      hasText: /world soul|philosopher|Agrippa|Kabbalah|Emerald|Ficino|alchemist/i,
-    });
-    await expect(suggestions.first()).toBeVisible();
-    expect(await suggestions.count()).toBeGreaterThanOrEqual(1);
+    await expect(chips(page).first()).toBeVisible();
+    expect(await chips(page).count()).toBeGreaterThanOrEqual(1);
   });
 
   test('clicking suggestion populates input', async ({ page }) => {
-    // Click whichever suggestion is visible
-    const suggestions = page.locator('button', {
-      hasText: /world soul|philosopher|Agrippa|Kabbalah|Emerald|Ficino|alchemist/i,
-    });
-    await expect(suggestions.first()).toBeVisible();
-    const text = await suggestions.first().textContent();
-    await suggestions.first().click();
+    await expect(chips(page).first()).toBeVisible();
+
     const textarea = page.locator('textarea');
-    // After clicking, the textarea should contain part of the suggestion text
-    if (text) {
-      const keyword = text.split(/\s+/).find(w => w.length > 4) || text.slice(0, 10);
-      await expect(textarea).toHaveValue(new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
-    }
+    await expect(textarea).toHaveValue('');
+    await chips(page).first().click();
+
+    // Empty → a whole question (4+ words). WHICH question is deliberately not
+    // asserted; see the note above.
+    await expect(textarea).toHaveValue(/\S+(\s+\S+){3,}/);
   });
 
   test('anonymous visitors can use the Librarian input', async ({ page }) => {
@@ -55,11 +63,26 @@ test.describe('Librarian', () => {
     // than a hard disabled-input gate.
     await expect(page.locator('textarea')).toBeEnabled();
     await expect(page.locator('textarea')).toHaveAttribute('placeholder', 'Ask the Librarian...');
-    await expect(page.getByText('to save your conversations and keep them private')).toBeVisible();
+    // Assert the nudge STRUCTURALLY — the sign-in link plus the fact that it
+    // sits below the composer — not on its wording. #4007 reworded this line
+    // ("to save your conversations and keep them private" → "to keep your
+    // conversations and come back to them later") and broke the test the next
+    // morning; the behaviour under test (a soft prompt, not a hard gate) never
+    // changed. What matters is that anonymous visitors get a link, not a wall.
+    // Match the composer nudge by its exact href, not by role+name: the header
+    // UserMenu also renders a "Sign in" link (bare /auth/signin), so a name
+    // locator would pass even if the nudge below the input disappeared.
+    await expect(
+      page.locator('a[href="/auth/signin?callbackUrl=/librarian"]')
+    ).toBeVisible();
   });
 
   test('shows Recent tab', async ({ page }) => {
-    await expect(page.locator('button', { hasText: 'Recent' })).toBeVisible();
+    // `exact: true` is load-bearing. #4007 made conversations listed by
+    // default, which renders a "Listed (shown in Recent, never under your
+    // name)" toggle above the composer — a second button containing the word
+    // "Recent", so the old substring locator became a strict-mode violation.
+    await expect(page.getByRole('button', { name: 'Recent', exact: true })).toBeVisible();
   });
 });
 

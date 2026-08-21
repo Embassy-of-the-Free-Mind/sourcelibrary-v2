@@ -1,0 +1,4 @@
+book_id: 69dfede68d34461cbe7f4df4
+Title: Ko-i Genji Monogatari (校異源氏物語), Vol. 1
+Author: Murasaki Shikibu
+Source language: Japanese

@@ -1,0 +1,36 @@
+{
+  "book_id": "69b525d89658af9164709eea",
+  "work_identified": "Lutzenburgensis montuosissimi ac saltuosissimi Ducatus vera et compendiosa descriptio nunquam antehac visa — Latin chorographic description of the Duchy of Luxembourg by Matthias Quad, published by Jan Bussemacher, Cologne (1589/1592); map-plate with accompanying Latin descriptive text on verso",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Matthias Quad \"Lutzenburge\" OR \"Luxembourg\" Latin description English translation",
+    "Matthias Quad \"Lutzenburge[n]sis\" OR \"Luzenburgensis\" descriptio chorography English",
+    "WorldCat Matthias Quad Luxembourg duchy description translation",
+    "Matthias Quad 1592 atlas chorographic Luxembourg \"Duchy\" VD16 OR ESTC English translation history",
+    "\"Matthias Quad\" Luxembourg VD16 \"descriptio\" atlas text translation history cartography",
+    "Matthias Quad Luxembourg 1589 1592 \"text on verso\" OR \"verso text\" Latin description chorography",
+    "Matthias Quad 1592 \"Geographisch Handtbuch\" Luxembourg chorographic description text verso English translation scholars",
+    "Quad Matthias \"Lutzenburge\" OR \"Lützenburg\" atlas map description English translation 21st century OR 20th century",
+    "\"Geographisch Handtbuch\" OR \"Fasciculus Geographicus\" Quad English translation Luxembourg text",
+    "Quad \"Luxembourg\" OR \"Luxemburg\" atlas chorography history description scholarly English 2000 2010 2020 2025",
+    "VD16 \"Matthias Quad\" OR \"Lutzenburge\" Luxembourg description 1592 1589 bibliographic",
+    "\"Matthias Quad\" English translation atlas geography text scholarly publication",
+    "history Luxembourg Duchy early modern primary sources English translation geography 16th century \"Quad\" OR \"Bussemacher\" scholarly"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.vintage-maps.com/en/antique-maps/europe/luxembourg/quad-luxembourg-1592::12638", "found": "1592 Luxembourg map by Quad/Bussemacher; 'rare and early edition without text on verso'; no English translation mentioned"},
+    {"url": "https://en.wikipedia.org/wiki/Matthias_Quad", "found": "Quad's works listed in Latin/German only; no English translations of any work noted"},
+    {"url": "https://www.deutsche-biographie.de/sfz75355.html", "found": "Major works listed in Latin/German; no English translations of any Quad work mentioned"},
+    {"url": "https://eudocs.lib.byu.edu/index.php/History_of_Luxembourg:_Primary_Documents", "found": "Luxembourg primary sources index; no Quad work present; no English Quad translations found"},
+    {"url": "https://www.raremaps.com/gallery/detail/55374/lutzenburgensis-montuosissimi-ac-saltuosissimi-ducatus-vera-quad-bussemacher", "found": "1589 edition listing of same title; no English translation mentioned (403 on fetch)"},
+    {"url": "https://www.geographicus.com/P/ctgy&Category_Code=quad", "found": "Quad works listed (maps/atlases); no Luxembourg text or English translations"},
+    {"url": "https://search.worldcat.org/search?q=au%3AQuad+Matthias", "found": "WorldCat rate-limited (429); no English-language Quad editions surfaced in any adjacent source"}
+  ],
+  "reasoning": "Quad's Latin chorographic Luxembourg description (c.1589/1592, Bussemacher, Cologne) is a minor atlas piece from an obscure cartographer. No English translation found in Deutsche Biographie, cartography scholarship, antique-map dealer catalogs, BYU Luxembourg primary-sources index, or general scholarly searches. WorldCat rate-limited but no English-language Quad editions surfaced in any adjacent source."
+}

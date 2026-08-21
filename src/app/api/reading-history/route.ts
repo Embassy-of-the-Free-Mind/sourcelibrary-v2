@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { withAuth } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getDb } from '@/lib/mongodb';
+import { sanitizeReferrer } from '@/lib/reading-history-referrer';
 
 const DB_TIMEOUT_MS = 3000;
 const SESSION_GAP_MS = 30 * 60 * 1000; // 30 minutes
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest) {
 
     const userId = session.user.id;
     const now = new Date();
+    const cleanReferrer = sanitizeReferrer(referrer);
 
     const dbWork = (async () => {
       const db = await getDb();
@@ -93,7 +95,11 @@ export async function POST(request: NextRequest) {
           started_at: now,
           updated_at: now,
           tenantId,
-          ...(referrer ? { referrer } : {}),
+          // Only ever set on the row that OPENS a session, so this records the
+          // surface the reader entered the book from rather than the last page
+          // they turned. Empty on every row written before 2026-07-29 — the
+          // client did not send it until then.
+          ...(cleanReferrer ? { referrer: cleanReferrer } : {}),
         });
       }
     })();

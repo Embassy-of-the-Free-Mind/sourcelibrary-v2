@@ -1,0 +1,67 @@
+{
+  "book_id": "69907d97aee9f4aa5859304e",
+  "work_identified": "Hillājadīpikā by Nṛsiṃha (born 1549, son of Rāma Daivajña) — a 16th-century Sanskrit text on the Hillāja concept within the Tajika tradition of annual astrology (varṣaphala); known from two manuscripts only: NGMPP microfilm A1398/16 (3 fols., incomplete) and Wellcome Indic α 838 (11 fols., complete but damaged)",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Hillaja Deepika Tajika Sanskrit astrology English translation",
+    "\"Hillaya Deepika\" OR \"Hillaja Deepika\" Sanskrit astrology",
+    "WorldCat \"Hillaja Deepika\" OR \"Hillaya Deepika\" Sanskrit jyotisha",
+    "Tajika Sanskrit texts English translation jyotisha Hillaja \"annual astrology\"",
+    "archive.org \"Hillaja Deepika\" Sanskrit manuscript jyotisha",
+    "\"Hillaja\" \"Deepika\" Tajika jyotisha English translation annual horoscopy",
+    "GRETIL \"Hillaja\" OR \"Hillaya\" Sanskrit text jyotisha Tajika",
+    "Tajika jyotisha texts complete list manuscripts \"Hillaja\" \"Khattakhutta\" \"Yavana\" English translation",
+    "Martin Gansten Tajika annual astrology \"Hillaja\" texts bibliography Brill",
+    "\"Hillajadipika\" OR \"Hillājadīpikā\" Sanskrit Tajika Nrisimha English translation",
+    "Nrisimha astrologer 1549 \"Hillaja\" OR \"Hillajadipika\" Sanskrit Tajika translation English",
+    "Wellcome \"Hillajadipika\" OR \"Hillājadīpikā\" Nrsimha Sanskrit manuscript translation",
+    "Tajika astrology \"Hillājadīpikā\" published translation English books Hindi",
+    "\"Hillajadipika\" English translation published book jyotisha",
+    "site:books.google.com \"Hillajadipika\" OR \"Hillaya Deepika\" Sanskrit English"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/hayanaratna-the-jewel-of-annual-astrology/d/doc1501011.html",
+      "found": "Hillājadīpikā (abbrev. HD) by Nṛsiṃha listed in bibliography of Martin Gansten's Hayanaratna (Brill 2020); sources are manuscript-only — NGMPP A1398/16 (3 fols.) and Wellcome Indic α 838 (11 fols.); no published edition or English translation cited"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Tajika_Jyotish",
+      "found": "Lists Tajika tradition and texts (Tajika Neelakanthi, Hayanaratna); no mention of Hillājadīpikā as a translated or published text"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Tajika_Neelakanthi",
+      "found": "Only English translation referenced is Madhugantagnja (1976 Varanasi, partial) and K.S. Charak (1996); Hillājadīpikā not mentioned"
+    },
+    {
+      "url": "https://hinduonline.co/Scriptures/Jyotishya/Jyotishya.html",
+      "found": "Lists Tajika Neelakanti and texts with 'Deepika' (Muhoorta Deepika, Phaladeepika); no Hillaja/Hillaya Deepika present"
+    },
+    {
+      "url": "https://gretil.sub.uni-goettingen.de/gretilbk.htm",
+      "found": "No entry for Hillājadīpikā in GRETIL jyotisha holdings"
+    },
+    {
+      "url": "https://archive.org/search?query=hillaja+deepika",
+      "found": "No results for 'hillaja deepika' on Internet Archive"
+    },
+    {
+      "url": "https://www.academia.edu/43648521/Samarasi%E1%B9%83ha_and_the_Early_Transmission_of_T%C4%81jika_Astrology",
+      "found": "Scholarly article on early Tajika transmission; Hillāja identified as fictitious name (Sanskritization of Persian hīlāj); Nṛsiṃha identified as author of Hillājadīpikā"
+    },
+    {
+      "url": "https://www.wisdomlib.org/definition/tajaka",
+      "found": "Confirms Hillāja is one of five fictitious traditional authorities in Tajika; no text titled Hillājadīpikā has been translated to English"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/hayanaratna-the-jewel-of-annual-astrology/d/doc1500866.html",
+      "found": "History of Tajika tradition; Hillājadīpikā referenced only as a Sanskrit manuscript source consulted in preparing the Hayanaratna critical edition"
+    }
+  ],
+  "reasoning": "Hillājadīpikā (Nṛsiṃha, 16th c.) is an extremely obscure Tajika annual-astrology text surviving in only 2 damaged manuscripts. The authoritative English Tajika scholarship (Gansten/Brill 2020) cites it as manuscript-only with no published edition or translation in any language. Exhaustive search across WorldCat proxy, archive.org, GRETIL, HathiTrust, and academic Tajika literature found no English prior. Verdict: first_no_prior."
+}

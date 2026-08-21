@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getDb, forceReconnect } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { retryWithBackoff } from '@/lib/health-alerting';
 
 export const maxDuration = 30;
 export const preferredRegion = 'fra1';
@@ -31,19 +32,31 @@ export async function GET(request: NextRequest) {
   const t0 = Date.now();
 
   // 1. DB connectivity + latency
+  //
+  // Retried with backoff and a forced reconnect. This probe runs only once an
+  // hour, so a streak gate (as on /api/health/auth) would delay a real
+  // DB-is-down page by an hour — too slow. Absorbing the blip inside the single
+  // request is the right guard here instead. On 2026-07-31 a dropped Atlas TLS
+  // handshake made this report `status: down` while the site served readers
+  // normally and accounts were being created; the connection was fine seconds
+  // later, so one retry with a real delay would have caught it.
   let db;
   try {
-    db = await getDb();
-    const t1 = Date.now();
-    await db.command({ ping: 1 });
-    const pingMs = Date.now() - t1;
+    let pingMs = 0;
+    db = await retryWithBackoff(async attempt => {
+      const handle = attempt === 0 ? await getDb() : await forceReconnect();
+      const t1 = Date.now();
+      await handle.command({ ping: 1 });
+      pingMs = Date.now() - t1;
+      return handle;
+    });
     latencies.db_ping = pingMs;
     if (pingMs > THRESHOLDS.ping) {
       issues.push({ check: 'ping', detail: `${pingMs}ms (threshold: ${THRESHOLDS.ping}ms)`, severity: 'critical' });
     }
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e);
-    issues.push({ check: 'db_connect', detail: msg, severity: 'critical' });
+    issues.push({ check: 'db_connect', detail: `${msg} (after retries)`, severity: 'critical' });
     // Can't do any more checks without DB
     await sendAlertIfNeeded(null, issues);
     return NextResponse.json({ status: 'down', issues, duration_ms: Date.now() - t0 }, { status: 503 });

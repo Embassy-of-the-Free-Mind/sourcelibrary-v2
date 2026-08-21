@@ -85,7 +85,98 @@ export const KNOWN_SOURCE_LANGUAGES = new Set([
   'egy', // Egyptian
   'ta',  // Tamil
   'de', 'nl', 'fr', 'it', 'es', // modern European (parity with existing rows)
+  // Catalan. Added 2026-08-08 after a verified prior was quarantined for it:
+  // McKenny 2024 translates Ramon Llull's *Llibre de contemplació* from the
+  // Catalan, and Llull is a major author in this corpus — the omission sat
+  // beside Spanish, French and Italian and looked like an oversight rather than
+  // a judgement. The quarantine worked exactly as designed (kept the row and the
+  // reason instead of dropping it), which is how the gap surfaced at all.
+  'ca',  // Catalan
+  // Long-tail sources that appear in hand-verified rows. Added with #3460 so a
+  // real verified prior is never lost to an over-narrow whitelist — every one of
+  // these was observed in `source: 'claude_subagent_verify'` production rows.
+  'enm', // Middle English
+  'nah', // Nahuatl
+  'myz', // Mandaic
+  'cy',  // Welsh
+  'hai', // Haida
+  'en',  // English (a same-language "source" is a data smell, but keep it visible)
 ]);
+
+/**
+ * Canonical surface-form → ISO bucket map.
+ *
+ * SINGLE SOURCE OF TRUTH. `scripts/eval/ft-catalog-match.mjs` imports this for
+ * BOTH sides of its SOURCE_LANG guard. Before #3460 the matcher mapped only the
+ * *book* side through an equivalent private table and compared it against the
+ * raw catalog string, so any row whose `source_language` was a display name
+ * ("Sanskrit", "Greek") could never match a book whose language resolved to an
+ * ISO code ("sa", "grc"). That silently disabled all 305 hand-verified
+ * `claude_subagent_verify` rows — including 213 of the catalogue's 385
+ * `completeness: 'complete'` rows, i.e. 55% of the only rows strong enough to
+ * defeat a first-translation claim.
+ */
+const SOURCE_LANGUAGE_ALIASES = {
+  latin: 'la', la: 'la',
+  greek: 'grc', 'ancient greek': 'grc', 'classical greek': 'grc', grc: 'grc',
+  hebrew: 'he', 'biblical hebrew': 'he', 'mishnaic hebrew': 'he', he: 'he',
+  aramaic: 'arc', 'jewish aramaic': 'arc', 'imperial aramaic': 'arc', arc: 'arc',
+  arabic: 'ar', ar: 'ar',
+  sanskrit: 'sa', sa: 'sa', san: 'sa',
+  pali: 'pli', pli: 'pli', pi: 'pli',
+  tibetan: 'bo', bo: 'bo',
+  chinese: 'zh', 'classical chinese': 'zh', 'literary chinese': 'zh',
+  'old chinese': 'zh', zh: 'zh', lzh: 'zh', zho: 'zh',
+  syriac: 'syc', syc: 'syc',
+  armenian: 'hy', hy: 'hy',
+  akkadian: 'akk', akk: 'akk',
+  sumerian: 'sux', sux: 'sux',
+  japanese: 'ja', ja: 'ja',
+  korean: 'ko', ko: 'ko',
+  persian: 'fa', fa: 'fa',
+  avestan: 'ave', ave: 'ave',
+  egyptian: 'egy', egy: 'egy', demotic: 'egy',
+  tamil: 'ta', ta: 'ta',
+  german: 'de', de: 'de',
+  dutch: 'nl', nl: 'nl',
+  french: 'fr', fr: 'fr',
+  italian: 'it', it: 'it',
+  spanish: 'es', es: 'es',
+  catalan: 'ca', ca: 'ca', valencian: 'ca',
+  'middle english': 'enm', enm: 'enm',
+  nahuatl: 'nah', nah: 'nah',
+  mandaic: 'myz', myz: 'myz',
+  welsh: 'cy', cy: 'cy',
+  haida: 'hai', hai: 'hai',
+  english: 'en', en: 'en',
+};
+
+/**
+ * Resolve any surface form of a source language to its ISO bucket.
+ *
+ * Handles the three shapes hand-written rows actually use:
+ *   "Sanskrit"                          → 'sa'
+ *   "Mandaic (via Lidzbarski's German)" → 'myz'   (parenthetical dropped)
+ *   "Latin/German", "Latin-Dutch"       → 'la'    (first segment wins)
+ *
+ * The first-segment rule matches the convention already used on the book side:
+ * for a bilingual text the leading language is the one being translated FROM.
+ * Callers that need the untruncated original should keep `source_language_raw`.
+ *
+ * @param {string} raw
+ * @returns {string|null} ISO bucket, or null when unmappable
+ */
+export function toSourceIso(raw) {
+  if (!raw) return null;
+  // Drop parentheticals ("Mandaic (via Lidzbarski's German)") and lowercase.
+  const base = String(raw).replace(/\([^)]*\)/g, ' ').toLowerCase().trim();
+  if (!base) return null;
+  if (SOURCE_LANGUAGE_ALIASES[base]) return SOURCE_LANGUAGE_ALIASES[base];
+  // Compound "A/B", "A-B", "A, B" → the leading segment is the source.
+  const first = base.split(/[\/,]|\s-\s|-/)[0].trim();
+  if (SOURCE_LANGUAGE_ALIASES[first]) return SOURCE_LANGUAGE_ALIASES[first];
+  return null;
+}
 
 /**
  * Build a single `translation_catalogs` document from a raw record.
@@ -110,11 +201,15 @@ export const KNOWN_SOURCE_LANGUAGES = new Set([
 export function buildCatalogDoc(rec) {
   const source = (rec.source || '').trim();
   if (!source) throw new Error('buildCatalogDoc: missing source');
-  const sourceLanguage = (rec.source_language || '').trim();
-  if (!KNOWN_SOURCE_LANGUAGES.has(sourceLanguage)) {
+  const sourceLanguageRaw = (rec.source_language || '').trim();
+  // Accept display names ("Sanskrit") as well as ISO codes, but STORE the ISO
+  // bucket — the SOURCE_LANG guard compares buckets, so a display name stored
+  // verbatim is a row that can never match (#3460).
+  const sourceLanguage = toSourceIso(sourceLanguageRaw);
+  if (!sourceLanguage || !KNOWN_SOURCE_LANGUAGES.has(sourceLanguage)) {
     throw new Error(
-      `buildCatalogDoc: invalid source_language "${sourceLanguage}" for "${rec.english_title || rec.author}" `
-      + `(must be one of ${[...KNOWN_SOURCE_LANGUAGES].join(',')})`,
+      `buildCatalogDoc: invalid source_language "${sourceLanguageRaw}" for "${rec.english_title || rec.author}" `
+      + `(must resolve to one of ${[...KNOWN_SOURCE_LANGUAGES].join(',')})`,
     );
   }
 
@@ -151,6 +246,10 @@ export function buildCatalogDoc(rec) {
     series: series || undefined,
     completeness,
     source_language: sourceLanguage,
+    // Keep the untruncated original so a compound ("Nahuatl/Latin") or a
+    // qualified form ("Mandaic (via Lidzbarski's German)") is never lost to the
+    // first-segment rule in toSourceIso().
+    source_language_raw: sourceLanguageRaw !== sourceLanguage ? sourceLanguageRaw : undefined,
     source_language_provenance: 'ingest_explicit',
     source_url: rec.source_url || undefined,
   };

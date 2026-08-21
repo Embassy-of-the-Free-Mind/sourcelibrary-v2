@@ -6,6 +6,10 @@ export const maxDuration = 60;
 
 // Reset a split page back to its original state
 // This removes the crop from the original and deletes the split sibling
+//
+// Gated at `editor` (#3511). It hard-deletes the sibling page and renumbers
+// every page in the book, with no tenant filter and no revision — the most
+// destructive of the reader-defaulted page routes.
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: pageId } = await context.params;
@@ -86,4 +90,4 @@ export const POST = withAuth(async (request, session, context) => {
       { status: 500 }
     );
   }
-});
+}, { minRole: 'editor' });

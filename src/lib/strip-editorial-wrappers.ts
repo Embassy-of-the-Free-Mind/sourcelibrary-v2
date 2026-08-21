@@ -31,9 +31,34 @@
  */
 
 // Translation-side page-description blocks ∪ OCR-side page-level metadata
-// envelope. All *describe* the page; none are verbatim source text.
+// envelope ∪ AI image descriptions. All *describe* the page; none are verbatim
+// source text. `image-desc` is an AI-written account of a plate/diagram (e.g.
+// "a complex nine-pointed star (enneagram)…" on Morestel p.39) — quoting it
+// fabricates a citation to words that aren't in the source. The reader keeps
+// these as captions via NotesRenderer's own <image-desc> handling; only the
+// quote/search/text/IIIF surfaces route through here, so stripping it here does
+// not touch the reader.
 const EDITORIAL_WRAPPERS =
-  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning';
+  // `lang` is the OCR-prompt alias of `language` (src/lib/types/prompt.ts emits
+  // `<lang>`); without it, `<lang>Hindustani</lang>` survives into quotable text.
+  // Listed after `language` so the longer alternative wins the alternation.
+  'meta|summary|keywords|vocab|language|lang|scan-quality|script|page-type|columns|warning|image-desc'
+  // The EPIGRAPHY/ARTIFACT schema, used by tablet, papyrus and manuscript-fragment
+  // records. `<condition>` in particular is a paragraph of English prose about the
+  // OBJECT ("The image shows multiple fragments (K.2421, K.2511, K.16765) from the
+  // British Museum collection..."), which is editorial description, not the text on
+  // the page — quoting it fabricates a citation exactly as `<meta>` did (#2232).
+  //
+  // Deliberately NOT included: `<transliteration>`, which holds the real
+  // line-by-line reading of the artifact and IS the page's text; and `<notes>` /
+  // `<confidence>`, whose contents were not verified, so they are left alone rather
+  // than guessed at.
+  //
+  // SCOPE, measured 2026-08-03: 5 pages across 4 books (Ur III Administrative
+  // Tablet, Code of Hammurabi, Neo-Assyrian Medical Prescriptions, Manishtusu
+  // Obelisk) — zero hits in a random 30,240-page sample. Small, but a fabricated
+  // citation is a fabricated citation.
+  + '|condition|period|surface|genre';
 
 /**
  * Flatten GFM markdown tables to plain text.
@@ -69,6 +94,16 @@ function flattenMarkdownTables(text: string): string {
  * Deliberately conservative: emphasis must hug non-whitespace (real markdown
  * rule) so spaced-out literal asterisks survive, and underscore emphasis is left
  * alone — "_" appears too often as a literal in OCR/transliteration to strip safely.
+ *
+ * BOUNDED interiors, not lazy-unbounded (2026-07-18): the emphasis/centered
+ * patterns originally used `[^*]*?` / `.+?` interiors. On junk pages (the
+ * ~50k-word single-page ingest dumps, which can also carry thousands of stray
+ * asterisks) every unpaired `*` triggered an O(line)-scan and the whole call
+ * went quadratic — the ngram batch build sat 2h at 111% CPU inside this
+ * function on one page, and the same text served through a reader/quote route
+ * would spin that request. Real emphasis and ->centered<- spans are short and
+ * never cross a line, so interiors are capped at 300 chars and excluded from
+ * matching newlines; longer spans keep their literal markers (harmless).
  */
 function stripMarkdownMarkers(text: string): string {
   return text
@@ -78,11 +113,11 @@ function stripMarkdownMarkers(text: string): string {
     // are left alone to honour the "never touch _" guarantee below.
     .replace(/^[ \t]*(?:-{3,}|\*{3,})[ \t]*$/gm, '')
     // ->centered<- markers (content kept).
-    .replace(/->\s*(.+?)\s*<-/g, '$1')
+    .replace(/->[ \t]*(\S(?:[^\n]{0,300}?\S)?)[ \t]*<-/g, '$1')
     // Paired bold/italic asterisks (content must start & end non-space).
-    .replace(/\*\*\*(\S(?:[^*]*?\S)?)\*\*\*/g, '$1')
-    .replace(/\*\*(\S(?:[^*]*?\S)?)\*\*/g, '$1')
-    .replace(/\*(\S(?:[^*]*?\S)?)\*/g, '$1')
+    .replace(/\*\*\*(\S(?:[^*\n]{0,300}?\S)?)\*\*\*/g, '$1')
+    .replace(/\*\*(\S(?:[^*\n]{0,300}?\S)?)\*\*/g, '$1')
+    .replace(/\*(\S(?:[^*\n]{0,300}?\S)?)\*/g, '$1')
     // Collapse blank lines left by removed headings/rules.
     .replace(/\n[ \t]*\n[ \t]*\n+/g, '\n\n');
 }
@@ -175,20 +210,61 @@ export function cleanOcrArtifacts(text: string): string {
     .replace(/\\infty(?![a-z])/gi, '∞');
 }
 
-export function stripEditorialWrappers(text: string): string {
+/**
+ * Options for {@link stripEditorialWrappers}.
+ */
+export interface StripEditorialWrappersOptions {
+  /**
+   * Keep GFM markdown tables intact instead of flattening them to plain text.
+   *
+   * Default `false` — flattening is right for the snippet/quote/search surfaces
+   * this function was originally written for, where a table would otherwise leak
+   * as raw pipe-soup (see {@link flattenMarkdownTables}).
+   *
+   * Pass `true` from surfaces that deliver a page's WHOLE text for reuse rather
+   * than an excerpt of it — the PDF/EPUB exporters, the bulk content API, and
+   * the corpus snapshot. There, flattening silently destroys the table's
+   * structure: the cell values survive but the column they belonged to does not,
+   * so a 16-column calendar table becomes unrecoverable runs of bare digits.
+   * Wrapper stripping (the #2232 quote-integrity guarantee) is unaffected either
+   * way — only the table markup differs.
+   */
+  keepTables?: boolean;
+}
+
+export function stripEditorialWrappers(
+  text: string,
+  opts?: StripEditorialWrappersOptions,
+): string {
   if (!text) return text;
+  const flattenTables = opts?.keepTables
+    ? (s: string) => s
+    : flattenMarkdownTables;
   // cleanOcrArtifacts runs LAST so lacuna/LaTeX cleanup applies to the final
   // plain text (after table flattening + marker stripping). Every snippet/quote
   // surface routes through here, so they all inherit the OCR safety net.
+  //
+  // Both remaining steps are table-safe when `keepTables` is set: the thematic-
+  // break rule in stripMarkdownMarkers only matches a line of BARE dashes (a
+  // `| :--- |` separator carries pipes, so it never matches), and the dash-run
+  // rule in cleanOcrArtifacts already guards on an adjacent `|`.
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
-      flattenMarkdownTables(
+      flattenTables(
         text
           // Paired blocks, content and all (multiline). Backreference keeps it from
           // swallowing text between two different wrapper types.
-          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+          //
+          // The `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag. The OCR prompt
+          // emits them — `<image-desc size="medium" type="emblem" significance="high">`
+          // appears on 0.77% of page-fields — and without this the pair never matched:
+          // the AI's description of a plate survived as quotable text while the generic
+          // tag-strip below removed its closing tag, leaving editorial prose
+          // indistinguishable from the page's own words. That is the #2232 misquote
+          // class. Never tighten this back to a bare `<tag>`.
+          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
           // Any orphan opening/closing wrapper tag left by malformed AI output.
-          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})>`, 'gi'), ' '),
+          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' '),
       ),
     ),
   );

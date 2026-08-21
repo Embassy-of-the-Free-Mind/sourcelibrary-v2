@@ -1,0 +1,4 @@
+book_id: 6992cf4cf5b4f75c1a4c887b
+Title: 植物名實圖考(二十二)
+Author: 吳其濬
+Source language: Chinese

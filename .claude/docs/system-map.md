@@ -169,7 +169,8 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | `analytics_events`, `analytics_pageviews` | User behavior (migrating to Supabase) |
 | `pipeline_snapshots`, `pipeline_health_daily` | Pipeline metrics (mirrored to Supabase) |
 | `cron_runs` | Cron execution logs (mirrored to Supabase) |
-| `audit_log` | Admin action trail |
+| `audit_log` | Admin action trail (prunable telemetry — in prune-telemetry.mjs scope) |
+| `book_events` | PERMANENT per-book history (e.g. `image_resolution_upgrade` with OCR-input provenance, #3191/#3186) — never prune. Books flagged for re-OCR carry `books.reocr_candidate` |
 | `application_errors` | Error logging |
 
 ### Research & Experiments

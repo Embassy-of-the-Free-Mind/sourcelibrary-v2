@@ -38,18 +38,20 @@ export default async function IndexCatalogChip({
     ? `${status.editionCount} edition${status.editionCount === 1 ? '' : 's'}${span ? `, ${span}` : ''}`
     : null;
 
-  // Amber for expurgation (you may read it, minus passages); rust for outright ban.
+  // A calm bibliographic note, not an alert box — muted rust on the cream panel
+  // (a slightly warmer amber for expurgation vs an outright ban).
   const tone = expurgationOnly
-    ? 'border-amber-300/70 bg-amber-50/60 text-amber-900'
-    : 'border-rose-300/70 bg-rose-50/50 text-rose-900';
+    ? { border: '#e6ddc8', background: '#faf6ec', color: '#6f5a22' }
+    : { border: '#e6d7d1', background: '#fbf6f3', color: '#7a3a2f' };
 
   return (
     <Link
       href={`/collections/${status.collectionSlug}`}
-      className={`group mt-3 flex items-start gap-2.5 rounded-md border ${tone} px-3 py-2 no-underline transition-colors hover:bg-opacity-80`}
+      className="group mt-4 flex items-start gap-2.5 rounded-md border px-3 py-2 no-underline transition-colors"
+      style={tone}
       title="View the Index Librorum Prohibitorum catalogue"
     >
-      <svg viewBox="0 0 20 20" aria-hidden className="mt-0.5 h-4 w-4 flex-none opacity-70" fill="currentColor">
+      <svg viewBox="0 0 20 20" aria-hidden className="mt-0.5 h-4 w-4 flex-none opacity-60" fill="currentColor">
         <path fillRule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM4.7 5.4l9.9 9.9a6.5 6.5 0 01-9.9-9.9zm1.4-1.1a6.5 6.5 0 019.6 8.4L6.1 4.3z" clipRule="evenodd" />
       </svg>
       <span className="text-sm leading-snug">

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { searchBooksCatalog } from '@/lib/books-catalog';
 import { getDb } from '@/lib/mongodb';
 import { logSearchQuery } from '@/lib/search-log';
 
@@ -39,6 +40,12 @@ export async function GET(request: NextRequest) {
   const yearMin = searchParams.get('year_min') ? parseInt(searchParams.get('year_min')!, 10) : undefined;
   const yearMax = searchParams.get('year_max') ? parseInt(searchParams.get('year_max')!, 10) : undefined;
   const maxPerBook = searchParams.get('max_per_book') ? parseInt(searchParams.get('max_per_book')!, 10) : undefined;
+  // Which TEXT store to search (#4095) — `en` reads `page_translations`,
+  // anything else reads the language-keyed `page_texts`. Page level only: book
+  // summaries have one embedding, in English, so `level=book` cannot honour it
+  // and says so rather than pretending.
+  const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+  const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
 
   if (!query || query.length < 2) {
     return NextResponse.json({ results: [], query: '' });
@@ -49,7 +56,7 @@ export async function GET(request: NextRequest) {
 
   if (level === 'page') {
     try {
-      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, languages, excludeLanguages, yearMin, yearMax, maxPerBook });
+      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, languages, excludeLanguages, yearMin, yearMax, maxPerBook, textLang });
       const bookIds = [...new Set(pages.map(p => p.book_id))];
       let slugMap: Record<string, string> = {};
       // Books hidden from the public reader (visible:false OR hidden:true). Embeddings
@@ -79,7 +86,7 @@ export async function GET(request: NextRequest) {
       logSearchQuery({
         request, route: 'search.semantic.page', query: query!,
         total: enriched.length, ms: Date.now() - _searchStart, ok: true,
-        filters: { language, languages, exclude_languages: excludeLanguages, year_min: yearMin, year_max: yearMax, max_per_book: maxPerBook },
+        filters: { language, languages, exclude_languages: excludeLanguages, year_min: yearMin, year_max: yearMax, max_per_book: maxPerBook, lang: textLang },
       });
       return NextResponse.json({
         results: enriched,
@@ -87,8 +94,10 @@ export async function GET(request: NextRequest) {
         total: enriched.length,
         mode: 'semantic',
         level: 'page',
+        // Which text store answered. Snippets are in THIS language.
+        lang: textLang,
       }, {
-        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
       });
     } catch (error) {
       console.error('[semantic-search] page-level error:', error);
@@ -150,18 +159,66 @@ export async function GET(request: NextRequest) {
         slug: thumbnailMap[b.book_id]?.slug || b.book_id,
       }));
 
+    // Lexical fallback for named-entity / single-token queries (#3141).
+    // Pure vector search returns nothing for a bare surname, proper noun, or
+    // title fragment ("hartmann", "Voynich", "fludd") — the embedding of a name
+    // has no conceptual neighbours above the floor, so this endpoint reported 0
+    // results despite us holding many editions (31 daily-agent "hartmann" hits,
+    // all zero). When semantic recall is empty, fall back to lexical trigram
+    // search on title/author/display_title so these queries surface the held
+    // editions. searchBooksCatalog already gates on visible:true && pages_count>0,
+    // so the hidden-book concern the semantic lane guards against doesn't apply.
+    let results: typeof enriched = enriched;
+    let mode: 'semantic' | 'lexical' = 'semantic';
+    if (enriched.length === 0) {
+      try {
+        const lexical = await searchBooksCatalog(searchQuery, { limit, language });
+        const filtered = lexical.filter(b => {
+          const y = typeof b.year === 'number' ? b.year : undefined;
+          if (yearMin !== undefined && (y === undefined || y < yearMin)) return false;
+          if (yearMax !== undefined && (y === undefined || y > yearMax)) return false;
+          return true;
+        });
+        if (filtered.length > 0) {
+          mode = 'lexical';
+          results = filtered.map(b => ({
+            book_id: b.id,
+            title: b.title,
+            author: b.author,
+            year: typeof b.year === 'number' ? b.year : null,
+            language: b.language,
+            summary_text: b.summary_text,
+            metadata: undefined,
+            // Exact lexical match on title/author — rank as high confidence so
+            // callers that sort by similarity keep these at the top.
+            similarity: 1,
+            thumbnail: b.thumbnail || null,
+            thumbnail_blob: b.thumbnail_blob || null,
+            slug: b.slug || b.id,
+          })) as unknown as typeof enriched;
+        }
+      } catch (e) {
+        console.warn('[semantic-search] lexical fallback failed:', e instanceof Error ? e.message : String(e));
+      }
+    }
+
     logSearchQuery({
       request, route: 'search.semantic.book', query: query!,
-      total: enriched.length, ms: Date.now() - _searchStart, ok: true,
-      filters: { language, year_min: yearMin, year_max: yearMax },
+      total: results.length, ms: Date.now() - _searchStart, ok: true,
+      filters: { language, year_min: yearMin, year_max: yearMax, mode },
     });
     return NextResponse.json({
-      results: enriched,
+      results,
       query,
-      total: enriched.length,
-      mode: 'semantic',
+      total: results.length,
+      mode,
+      // Book-level embeddings are one per book, composed from the English
+      // summary and index. There is no localized store to point `lang` at, so
+      // say `en` plainly rather than echo a request we did not honour.
+      lang: 'en',
+      ...(textLang !== 'en' ? { lang_note: `Book-level semantic search has only English embeddings; use level=page for ${textLang} passages.` } : {}),
     }, {
-      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
     });
   } catch (error) {
     console.error('[semantic-search] Error:', error);

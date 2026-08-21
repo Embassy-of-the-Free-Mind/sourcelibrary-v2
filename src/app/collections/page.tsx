@@ -3,7 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { sortCollections, sanitizeThumbnail, collectionCountLabel, coverOverride } from '@/lib/collections-utils';
+import { sortCollections, sanitizeThumbnail, collectionCountLabel, coverOverride, PINNED_COLLECTION_SLUGS } from '@/lib/collections-utils';
 import { toGalleryCardUrl } from '@/lib/utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
@@ -38,6 +38,7 @@ interface CollectionDoc {
   color: string;
   order: number;
   book_count: number;
+  total_book_count?: number;
   artwork_count?: number;
   type?: 'category' | 'curated';
   published?: boolean;
@@ -112,8 +113,9 @@ const CURATED_PATHWAYS = [
   'kepler-fludd-debate',
   'neoplatonism',
   'the-cosmos',
-  'indic-traditions',
-  'chinese-classics',
+  // 'indic-traditions' / 'chinese-classics' removed — their parent wings
+  // (South Asia / East Asia) are now Core Collections, so they're reachable as
+  // sub-collections there rather than duplicated as loose top-level pathways.
   'great-manuscripts',
   'herbalism',
   'jungs-library',
@@ -213,7 +215,7 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-[11px] mb-1 hidden sm:block">
-          {collectionCountLabel(col.book_count, col.artwork_count)}
+          {collectionCountLabel(col.total_book_count ?? col.book_count, col.artwork_count)}
           {col.children_count ? ` · ${col.children_count} sub-collections` : ''}
         </p>
         <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
@@ -281,15 +283,16 @@ export default async function CollectionsPage() {
         />
       }
     >
-      {/* Each section streams on its own so the fast Curated Pathways query
-          isn't blocked behind the heavy timeline aggregation over all books. */}
-      <Suspense fallback={<SectionSkeleton heading="Curated Pathways" sub="Thematic journeys through the collection" />}>
-        <CuratedPathwaysSection />
+      {/* Core Collections (the major subject wings) lead; Curated Pathways
+          (narrower thematic journeys + special collections) follow. Each
+          section streams on its own. */}
+      <Suspense fallback={<SectionSkeleton heading="Core Collections" sub="The major subject wings of the library" />}>
+        <CoreCollectionsSection />
       </Suspense>
 
       <div className="mt-12">
-        <Suspense fallback={<SectionSkeleton heading="Core Collections" sub="The main wings of the library" />}>
-          <CoreCollectionsSection />
+        <Suspense fallback={<SectionSkeleton heading="Curated Pathways" sub="Thematic journeys and special collections" />}>
+          <CuratedPathwaysSection />
         </Suspense>
       </div>
 
@@ -301,41 +304,54 @@ export default async function CollectionsPage() {
   );
 }
 
-async function CuratedPathwaysSection() {
-  const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
-  const pathways = await fetchCuratedPathways(tenantId);
-  if (pathways.length === 0) return null;
-
-  return (
-    <div>
-      <div className="mb-4">
-        <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
-        <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
-      </div>
-      <ShowMorePathways initialCount={INITIAL_PATHWAYS} totalCount={pathways.length}>
-        {pathways.map((col, i) => (
-          <CuratedCard key={col.slug} col={col} tenantSlug={tenantSlug} priority={i < 4} />
-        ))}
-      </ShowMorePathways>
-    </div>
-  );
-}
-
 async function CoreCollectionsSection() {
   const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
-  const categories = await fetchCollections(tenantId);
+  const all = await fetchCollections(tenantId);
+  // Core = the major subject wings only (PINNED). sortCollections already puts
+  // the pinned wings first and in curated order.
+  const wings = all.filter((col) => PINNED_COLLECTION_SLUGS.includes(col.slug));
 
   return (
     <div>
       <div className="mb-4">
         <h2 className="font-display text-2xl text-primary">Core Collections</h2>
-        <p className="text-stone-500 mt-1 text-sm">The main wings of the library</p>
+        <p className="text-stone-500 mt-1 text-sm">The major subject wings of the library</p>
       </div>
       <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {categories.map((col) => (
+        {wings.map((col) => (
           <CollectionCard key={col.slug} col={col} tenantSlug={tenantSlug} />
         ))}
       </div>
+    </div>
+  );
+}
+
+async function CuratedPathwaysSection() {
+  const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(await headers());
+  const [pathways, all] = await Promise.all([
+    fetchCuratedPathways(tenantId),
+    fetchCollections(tenantId),
+  ]);
+  // Pathways = the hand-picked thematic journeys (sub-collections), then the
+  // remaining top-level collections that aren't Core wings (special/niche
+  // collections like The Sibyls, Dissenters & Prophets, An Account of the Plant).
+  // Nothing top-level is orphaned: every collection is either a wing or here.
+  const seen = new Set(pathways.map((p) => p.slug));
+  const specials = all.filter((col) => !PINNED_COLLECTION_SLUGS.includes(col.slug) && !seen.has(col.slug));
+  const items = [...pathways, ...specials];
+  if (items.length === 0) return null;
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
+        <p className="text-stone-500 mt-1 text-sm">Thematic journeys and special collections</p>
+      </div>
+      <ShowMorePathways initialCount={INITIAL_PATHWAYS} totalCount={items.length}>
+        {items.map((col, i) => (
+          <CuratedCard key={col.slug} col={col} tenantSlug={tenantSlug} priority={i < 4} />
+        ))}
+      </ShowMorePathways>
     </div>
   );
 }

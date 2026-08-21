@@ -1,0 +1,38 @@
+{
+  "book_id": "6990523c8d19cbc90d9d5d0f",
+  "work_identified": "Compendio dell'arte essorcistica by Girolamo Menghi (Italian, 1576/1586/1601) — a vernacular Italian treatise on the art and theory of exorcism; distinct from his Latin Flagellum daemonum (1577)",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Girolamo Menghi \"Compendio dell'arte essorcistica\" English translation",
+    "Menghi exorcism manual English translation \"Compendio\" worldcat",
+    "\"Devil's Scourge\" Menghi Paxia \"Compendio\" OR \"Flagellum\" translation source text",
+    "Girolamo Menghi works \"Compendio\" \"Flagellum\" different works OR same work relationship Italian exorcism",
+    "\"Devil's Scourge\" Menghi Paxia review 2002 \"Compendio\" OR \"compendium\" OR \"Italian\" source",
+    "Menghi exorcism Compendio \"first English translation\" 2002 Paxia exorcism complete partial",
+    "Menghi \"Compendio\" exorcism \"translated into English\" OR \"English translation\" scholars witchcraft history",
+    "worldcat Menghi \"Compendio dell'arte essorcistica\" English translation",
+    "\"Compendio dell'arte essorcistica\" English translation complete partial scholar academic review",
+    "\"Flagellum daemonum\" \"seven rites\" OR \"seven exorcisms\" English Paxia translation",
+    "\"Compendio dell'arte essorcistica\" \"no English\" OR \"not translated\" OR \"untranslated\" language English",
+    "Girolamo Menghi exorcism English translation \"Compendio\" OR \"complete\" witchcraft demonology scholarly book review 2002 2003",
+    "Menghi exorcism Compendio Paxia \"Devil's Scourge\" seven exorcisms accounts Italian vernacular translation review"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/b32988497", "found": "Italian-only: Compendio (Venice, 1601), no English edition metadata"},
+    {"url": "https://occult-world.com/menghi-girolamo/", "found": "Confirmed Compendio and Flagellum daemonum are separate works; the 2002 Weiser book 'The Devil's Scourge' appears to be a translation of Flagellum daemonum"},
+    {"url": "https://demonology.en-academic.com/391/Menghi,_Girolamo", "found": "Lists 4 distinct Menghi works including Compendio (1576) and Flagellum (1576) as separate publications; 'The Devil's Scourge' (2002) in Further Reading"},
+    {"url": "https://www.ereticopedia.org/girolamo-menghi", "found": "Compendio (Bologna, 1576) and Flagellum (Bologna, 1577) are distinct works; no English translations of either mentioned"},
+    {"url": "https://www.goodreads.com/book/show/1121039.Devil_s_Scourge", "found": "Paxia 2002 Weiser: 'complete English translation of a sixteenth century manual' — does not name which Menghi work"},
+    {"url": "https://www.bertolamifineart.com/uk/auction-0321/exorcism-menghi-girolamo-compendium-of-the-art-of-exorcism-in-macerata-119366", "found": "Confirms Compendio is the Italian text; first (Latin) work in same binding is different"},
+    {"url": "https://search.worldcat.org/title/devils-scourge-exorcism-during-the-italian-renaissance/oclc/47971531", "found": "WorldCat record for Paxia 2002 (403 error on direct access; OCLC 47971531 confirmed via search)"},
+    {"url": "https://www.amazon.com/Devils-Scourge-Exorcism-Renaissance-Italy/dp/157863265X", "found": "HTTP 500; description says 'complete English translation of a sixteenth century manual'; 7 exorcisms"},
+    {"url": "https://digitalcommons.lib.uconn.edu/dissertations/AAI9924304/", "found": "UConn dissertation on Menghi's Remedia; no English translation of Compendio mentioned"}
+  ],
+  "reasoning": "No English translation of the Compendio found. The only prior English Menghi exorcism text is Paxia 2002 ('The Devil's Scourge'), which translates the FLAGELLUM DAEMONUM (Latin, 'seven rites') not the Compendio (Italian treatise). Title 'Devil's Scourge'=Flagellum Daemonum literally; seven exorcisms match Flagellum's structure. Confidence medium: WorldCat partially blocked; Paxia source-text not confirmed from primary source."
+}

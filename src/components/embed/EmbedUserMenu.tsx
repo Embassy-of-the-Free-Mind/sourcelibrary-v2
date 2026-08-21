@@ -3,7 +3,8 @@
 import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Settings, Search, X } from 'lucide-react';
+import { Settings, Search, X, LogIn } from 'lucide-react';
+import { buildSignInHref, isTenantSubdomain } from '@/lib/tenant-signin-url';
 
 // On tenant subdomains, /auth/* and /account are caught by the proxy.ts
 // rewrite (it sends every non-/embed/, non-/api/, non-/_next/ path to
@@ -11,9 +12,6 @@ import { Settings, Search, X } from 'lucide-react';
 // from the user's POV "nothing happens". Route those off to the main
 // host instead. Cookies are shared on .sourcelibrary.org so the session
 // carries back (see CLAUDE.md "Authentication across subdomains").
-function isTenantSubdomain(host: string): boolean {
-  return host.endsWith('.sourcelibrary.org') && host !== 'sourcelibrary.org';
-}
 
 function navigateToAccount() {
   if (typeof window === 'undefined') return;
@@ -22,6 +20,18 @@ function navigateToAccount() {
   } else {
     window.location.assign('/account');
   }
+}
+
+// Sign-in has no route on a tenant host, so this crosses to the apex and
+// carries a callbackUrl back to the exact page the visitor was reading.
+// The return hop is only permitted because auth.ts allows cross-subdomain
+// redirects (src/lib/auth-redirect.ts) — without that half, NextAuth drops
+// them on the main site instead.
+function navigateToSignIn() {
+  if (typeof window === 'undefined') return;
+  window.location.assign(
+    buildSignInHref(window.location.hostname, window.location.href)
+  );
 }
 
 /**
@@ -34,12 +44,20 @@ function navigateToAccount() {
  *    (BPH) who finds the default presentation off-putting for scholarly use:
  *    "Default with bells and whistles, possible to chose without".
  *
- * 2. Auth — avatar + Account/Sign out for authenticated visitors. No sign-in
- *    affordance is shown to anonymous visitors in the embed (the partner
- *    reading room is a closed, sign-in-free surface). The main SiteHeader is
- *    stripped on embed routes so partner subdomains (bph.sourcelibrary.org, …)
- *    look like the partner's own site; this control is the only sign-out
- *    affordance for those already signed in.
+ * 2. Auth — avatar + Account/Sign out for authenticated visitors, and a
+ *    Sign in item for anonymous ones. The main SiteHeader is stripped on
+ *    embed routes so partner subdomains (bph.sourcelibrary.org, …) look like
+ *    the partner's own site; this control is therefore the ONLY way in or
+ *    out of a session on those hosts.
+ *
+ *    The reading room used to show anonymous visitors no sign-in affordance
+ *    at all, on the reasoning that a partner reading room is a closed,
+ *    sign-in-free surface. That is right for readers and wrong for the BPH's
+ *    cataloguers, whose whole job lives on that subdomain: with no entry
+ *    point they simply could not get in, and reported it as "I cannot find
+ *    where to sign in" (#3468). Sign-in lives inside the dropdown rather
+ *    than on the trigger button, so readers still see an unadorned reading
+ *    room and only someone looking for an account finds one.
  *
  * Cookies are scoped to the current host (no Domain attr) so each subdomain
  * keeps independent preferences — a scholar can run BPH in scholar mode
@@ -237,8 +255,8 @@ export default function EmbedUserMenu() {
       )}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm hover:bg-white transition-colors"
-        aria-label={session ? 'Account & view options' : 'View options'}
+        className="flex items-center justify-center w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm border border-border-light shadow-sm cursor-pointer hover:bg-white transition-colors"
+        aria-label={session ? 'Account & view options' : 'Sign in & view options'}
       >
         {session ? (
           session.user?.image && !imgError ? (
@@ -285,9 +303,24 @@ export default function EmbedUserMenu() {
             </label>
           </div>
 
-          {/* Signed-in users keep Account + Sign out. Anonymous visitors are
-              shown no sign-in affordance in the embed — the menu is just the
-              view options for them. */}
+          {/* Anonymous visitors get a way in. This is the only one on a
+              partner subdomain — the SiteHeader is stripped there — so
+              removing it strands the BPH cataloguers (#3468). */}
+          {!session && (
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                navigateToSignIn();
+              }}
+              className="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-secondary hover:bg-cream/60"
+            >
+              <LogIn className="w-4 h-4 shrink-0" aria-hidden="true" />
+              Sign in
+            </button>
+          )}
+
+          {/* Signed-in users keep Account + Sign out. */}
           {session && (
             <>
               <div className="px-3 py-2 border-b border-border-light/60">

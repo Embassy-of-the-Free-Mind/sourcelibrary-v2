@@ -1,0 +1,23 @@
+{
+  "work": "Boltzmann, Vorlesungen über Gastheorie II (1898) — molecular limits",
+  "book_id": "6990540738e1fdee57b365c1",
+  "page_number": 128,
+  "script": "latin",
+  "language": "German",
+  "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+  "source_url": "https://www.deutschestextarchiv.de/book/view/boltzmann_gastheorie02_1898?p=130",
+  "edition": "Leipzig: J. A. Barth, 1898 (1. Auflage)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "Unter dieser Annahme müssen wir aber auch Uebereinstimmung mit der Erfahrung erhalten, wenn wir die Limite berechnen, der sich die Gesetze der Erscheinungen bei stets ins Unendliche wachsender Anzahl und abnehmender Grösse der Moleküle nähern. Bei Berechnung der letzteren Limite haben wir aber in der That wieder zwei Grössen, die unabhängig von einander beliebig klein gemacht werden können: die Grösse der Volumelemente, und die Dimensionen der Moleküle, und wir können bei jeder gegebenen Kleinheit der ersteren letztere noch so klein wählen, dass jedes Volumelement noch sehr viele Moleküle enthält, deren Eigenschaften in gegebenen engen Grenzen eingeschlossen sind.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_prose_with_running_header",
+    "density": "light",
+    "type_size": "normal",
+    "typeface": "antiqua",
+    "classified_by": "visual audit of the scan, 2026-07-19 (sonnet hunt agent)",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}

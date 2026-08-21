@@ -16,6 +16,9 @@ import { resolveTenantId } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
 import { getRequestBaseUrl } from '@/lib/shortlinks';
+import { auth } from '@/lib/auth';
+import { effectiveCatalogRole, normalizeCatalogRole, canEditCatalog } from '@/lib/catalog-role';
+import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
 
 // Cold-start with several BPH-only Supabase/Mongo loaders can exceed the
 // Vercel default function budget (10s) under Atlas load, surfacing as
@@ -229,6 +232,21 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
             ])
             : [{} as Record<string, { id: string; slug: string }>, 0];
 
+    // Editor toolbar on the catalogue index. The links (/catalog/new, /review,
+    // /team, /workspace) are BPH-only routes that notFound() elsewhere, so this
+    // is gated on isBph rather than on having any catalogue. Resolving the role
+    // costs a session read; the page is already dynamic via searchParams, so it
+    // changes nothing about caching. Renders nothing for visitors.
+    const catalogSession = isBph ? await auth() : null;
+    const catalogRole = catalogSession?.user
+        ? await effectiveCatalogRole(
+            catalogSession.user.email,
+            normalizeCatalogRole((catalogSession.user as { role?: unknown }).role),
+            tenant,
+          )
+        : null;
+    const showCatalogTools = isBph && !!catalogRole && canEditCatalog(catalogRole);
+
     const basePath = `/embed/${tenant}`;
 
     // Tenant doc copy wins over partner-derived copy. Otherwise a tenant like
@@ -269,6 +287,11 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
     return (
         <>
             <EmbedNavigationReporter />
+            {showCatalogTools && catalogRole && (
+                <div className="max-w-7xl mx-auto px-6 pt-4">
+                    <CatalogEditorNav role={catalogRole} />
+                </div>
+            )}
             <SharedLibraryView {...viewProps} />
         </>
     );

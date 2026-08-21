@@ -1,0 +1,36 @@
+{
+  "book_id": "6992ceef673ee1e40e321c54",
+  "work_identified": "武備志 (Wubei Zhi) by Mao Yuanyi (1621), volume 89 of 240 — falls in the Zhen Lian Zhi (陣練制, Record of Formations and Training) section, the 40th chapter of that 41-chapter section, covering troop formations, drill methods, and weapons training",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "partial",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Wubei Zhi 武備志 Mao Yuanyi English translation complete",
+    "武備志 \"Wubei Zhi\" English translation WorldCat",
+    "\"Wubei Zhi\" \"Zhen Lian Zhi\" formations training English translation scholarly",
+    "\"Wubei Zhi\" OR \"Wu bei zhi\" English translation scholar sinology partial",
+    "Mao Yuanyi Wubei Zhi partial English translation Needham Lorge Andrade Ming military",
+    "\"wu bei zhi\" OR \"wubei zhi\" \"translated\" OR \"translation\" English book 2020 2021 2022 2023 2024 2025",
+    "Wubei Zhi 武備志 volume 89 \"formations\" OR \"training\" translated academic journal article",
+    "site:archive.org \"wu bei zhi\" OR \"wubei zhi\"",
+    "worldcat \"wu bei zhi\" english language translation holdings",
+    "\"Wubei Zhi\" OR \"武備志\" complete English translation book published academic press"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Wubei_Zhi", "found": "Comprehensive overview of Wubei Zhi; five-section structure detailed; no English translations of the text mentioned"},
+    {"url": "https://ctext.org/wiki.pl?if=en&remap=gb&res=180980", "found": "CTEXT entry for Wubei Zhi; Chinese source text only; vol 89 listed at pages 202-203 with no subject detail; no English translations"},
+    {"url": "https://ctext.org/datawiki.pl?if=en&res=372240", "found": "Wubei Zhi data page on CTEXT; 240 volumes, five sections confirmed; no English translations listed"},
+    {"url": "https://search.worldcat.org/title/wu-bei-zhi/oclc/68325618", "found": "WorldCat record exists but returned 403; search results show only Chinese-language editions"},
+    {"url": "https://tplafightingwords.com/2019/02/01/the-24-stances-of-mao-yuanyi/", "found": "Blog partial English of 24 sword stances (Chao Xian Shi Fa) from unspecified Wubei Zhi volume — not vol. 89, not a scholarly prior"},
+    {"url": "https://tplafightingwords.com/2021/09/02/shield-wubei-zhi-%E7%89%8C%EF%BC%9A%E6%AD%A6%E5%82%99%E5%BF%97/", "found": "Blog partial English of shield techniques from unspecified Wubei Zhi volume — not vol. 89, not a scholarly prior"},
+    {"url": "https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0383399", "found": "UBC thesis on Wubei Zhi as encyclopedic practice; no English translation of the text"},
+    {"url": "https://www.tandfonline.com/doi/abs/10.1080/0147037X.2019.1648088", "found": "Ming Studies 2019 article on Mao Yuanyi logistics; discusses the text in English but does not translate vol. 89 content"},
+    {"url": "https://www.loc.gov/item/2004633695/", "found": "Library of Congress holds the Wubei Zhi in Chinese; no English translation record"},
+    {"url": "https://archive.org/search?query=wu+bei+zhi+english", "found": "Archive.org search returned no English translations of the Wubei Zhi"}
+  ],
+  "reasoning": "No complete or partial prior English translation of Wubei Zhi vol. 89 (Zhen Lian Zhi section) found. No complete English translation of the 240-vol. work exists. Scattered blog excerpts of isolated martial arts techniques from unidentified volumes are not scholarly priors and do not cover vol. 89's content. WorldCat (403), CTEXT, Wikipedia, LoC, and sinological scholarship all confirm absence. Evidence moderate: direct WorldCat fetch failed."
+}

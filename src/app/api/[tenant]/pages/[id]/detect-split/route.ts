@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { withAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { images } from '@/lib/api-client';
@@ -6,12 +7,9 @@ import { resolveTenantId } from '@/lib/tenant-context';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ tenant: string; id: string }> }
-) {
+export const POST = withAuth(async (request, _session, context) => {
   try {
-    const { tenant, id } = await params;
+    const { tenant, id } = await context.params;
     const db = await getDb();
     
     // Resolve tenant slug to UUID
@@ -116,4 +114,4 @@ Coordinates as 0-1000 scale.`,
       { status: 500 }
     );
   }
-}
+}, { minRole: 'editor' });

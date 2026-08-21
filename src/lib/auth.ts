@@ -2,11 +2,37 @@ import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import Email from 'next-auth/providers/nodemailer';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import { toUserId } from './user-id';
 import clientPromise from './mongodb-client';
 import { Resend } from 'resend';
 import { activatePendingMembership } from './memberships';
+import { recordAuthEvent } from './auth-events';
+import { resolvePostSignInRedirect } from './auth-redirect';
 
 const dbName = process.env.MONGODB_DB || 'bookstore';
+
+// The Resend audience every signed-up reader is added to. Exported so the
+// welcome form can backfill firstName/lastName on the same contact — magic-link
+// signups have no name at createUser time, which is when the contact is made.
+export const RESEND_AUDIENCE_ID = '62145526-c584-4230-81f1-a62387c49055';
+
+/**
+ * Inbound request headers, or null when there is no request scope.
+ *
+ * The NextAuth `events` and `sendVerificationRequest` hooks receive no request
+ * object, so `next/headers` is the only way to classify the caller. It throws
+ * outside a request (background invocation, tests) — hence the dynamic import
+ * and the swallow. Returning null is deliberate: `buildAuthEvent` then stores a
+ * null traffic_class rather than inventing one.
+ */
+async function safeHeaders(): Promise<Headers | null> {
+  try {
+    const { headers } = await import('next/headers');
+    return await headers();
+  } catch {
+    return null;
+  }
+}
 
 // --- Role system ---
 // Replaces the old admin | curator | inner_circle | reader system.
@@ -155,6 +181,20 @@ if (process.env.RESEND_API_KEY) {
             </div>
           `,
         });
+        // Record the SEND, not just the eventual sign-in. A `magic_link_sent`
+        // with no matching `signin` is the signature of a broken magic-link
+        // flow (a bad provider peer range, a dead SMTP key, prefetch burning
+        // the token) — and it is visible without anyone signing in by hand to
+        // check. That is precisely the question left open by #3431.
+        try {
+          const client = await clientPromise;
+          await recordAuthEvent(client.db(dbName), {
+            kind: 'magic_link_sent',
+            provider: 'nodemailer',
+            email,
+            headers: await safeHeaders(),
+          });
+        } catch { /* never let telemetry break a sign-in */ }
       } catch (error) {
         console.error('[auth] Failed to send verification email:', error);
         throw new Error('Failed to send verification email');
@@ -233,11 +273,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user.email && process.env.RESEND_API_KEY) {
         try {
           const resend = new Resend(process.env.RESEND_API_KEY);
-          const AUDIENCE_ID = '62145526-c584-4230-81f1-a62387c49055';
 
           await Promise.allSettled([
             resend.contacts.create({
-              audienceId: AUDIENCE_ID,
+              audienceId: RESEND_AUDIENCE_ID,
               email: user.email,
               firstName: user.name?.split(' ')[0] || undefined,
               lastName: user.name?.split(' ').slice(1).join(' ') || undefined,
@@ -258,7 +297,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // not on every JWT validation / page load — so it measures returning
     // members who re-authenticate, e.g. after their session expires). Pairs
     // with createdAt so we can tell new sign-ups from returning ones.
-    async signIn({ user }) {
+    async signIn({ user, account, isNewUser }) {
       if (!user?.email) return;
       try {
         const client = await clientPromise;
@@ -267,12 +306,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           { email: user.email.toLowerCase() },
           { $set: { lastLogin: new Date() }, $inc: { loginCount: 1 } }
         );
+        // Append the event too. lastLogin is overwritten each time and records
+        // no provider, so it cannot answer "how many sign-ins today" or "did
+        // the magic-link path work" — see src/lib/auth-events.ts.
+        await recordAuthEvent(db, {
+          kind: 'signin',
+          provider: account?.provider,
+          email: user.email,
+          isNewUser,
+          headers: await safeHeaders(),
+        });
       } catch (error) {
         console.error('[auth] Failed to stamp lastLogin:', error);
       }
     },
   },
   callbacks: {
+    // Send people back where they started, including across the subdomain
+    // boundary. Sign-in exists only on the apex, so a BPH cataloguer signing
+    // in from bph.sourcelibrary.org needs a cross-origin return trip that
+    // NextAuth's default callback refuses. Restricted to *.sourcelibrary.org
+    // over https — see src/lib/auth-redirect.ts for the allowlist rationale.
+    async redirect({ url, baseUrl }) {
+      return resolvePostSignInRedirect(url, baseUrl);
+    },
     // Enforce signup restrictions based on tenant allowSignup setting
     async signIn({ user, account }) {
       if (!user?.email) return true;
@@ -388,9 +445,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const client = await clientPromise;
           const db = client.db(dbName);
+          // token.id is the adapter's string form of the user _id, but the
+          // MongoDBAdapter stores _id as an ObjectId — querying with the raw
+          // string silently matches nothing. That made needsWelcome and
+          // membership permanently falsy (see the empty catch below, which hid
+          // it): 3,850 of 3,854 users never saw the welcome interstitial.
           const dbUser = await db.collection('users').findOne(
-            { _id: token.id as any },
-            { projection: { 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
+            { _id: toUserId(token.id as string) as any },
+            { projection: { name: 1, 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
           );
           if (dbUser?.membership?.active) {
             token.membership = dbUser.membership.plan || 'ficino';
@@ -400,12 +462,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             token.membership = null;
           }
 
+          // Pick up a name saved after sign-in (magic-link users have none until
+          // they fill in /welcome) so the session greets them without a re-login.
+          if (dbUser?.name) token.name = dbUser.name;
+
           // needsWelcome is true only when welcomedAt is explicitly null (set on createUser).
           // Pre-feature users have no welcomedAt field at all — treat as already welcomed.
           (token as any).needsWelcome = dbUser && 'welcomedAt' in dbUser && dbUser.welcomedAt === null;
-        } catch {
-          // Don't block auth if membership check fails
+        } catch (error) {
+          // Don't block auth if the lookup fails — but never swallow it silently
+          // again; the previous bare catch is why the _id type mismatch above
+          // went unnoticed from the day it shipped.
+          console.error('[auth] User lookup failed (membership/needsWelcome):', error);
         }
+      }
+
+      // The welcome form has just saved and says so explicitly. The DB read
+      // above already reaches the same conclusion when it succeeds — this is the
+      // fallback for when it doesn't, because the cost of a stale true here is
+      // not a missing badge but a reader who cannot leave /welcome. Outside the
+      // try/catch on purpose: a failed lookup must not be able to re-trap them.
+      if (trigger === 'update' && (session as any)?.welcomed === true) {
+        (token as any).needsWelcome = false;
       }
 
       // Phase 1: resolve tenant-scoped role when the client triggers a session update

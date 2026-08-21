@@ -3,6 +3,12 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import EntitySchema from '@/components/seo/EntitySchema';
+import {
+  dedupeEntityBooks,
+  entityCounters,
+  normalizeEntityBook,
+  type EntityBookRef,
+} from '@/lib/entity-books';
 
 // ISR: 24h background revalidation
 export const revalidate = 86400;
@@ -16,68 +22,119 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export interface SharedConnection {
-  name: string;
-  type: 'person' | 'place' | 'concept';
-  sharedBooks: Array<{ book_id: string; book_title: string }>;
+/**
+ * The "Connections" panel that used to live here is REMOVED (2026-08-21).
+ *
+ * `getSharedBooks` ranked co-occurring entities by their GLOBAL `book_count`
+ * and took the top 20 before ever looking at how much they overlap with the
+ * subject. Any entity in more than a handful of books therefore co-occurs with
+ * the corpus's most frequent entities, so the panel rendered the SAME twenty
+ * names — Rome, Egypt, Aristotle, Plato, Italy, Moses, Jerusalem … — on every
+ * page, whether the subject appeared in 14 books or 825. Measured 2026-08-21:
+ * "Active Intellect", "Philosopher's Stone", "Kabbalah", "Rosicrucian" and
+ * "Mercury" all returned an identical list. It read as a semantic relation and
+ * carried zero information.
+ *
+ * If this comes back, rank by ASSOCIATION (PMI / lift — shared books over what
+ * chance would predict from each entity's own book_count), not by raw
+ * frequency, and compute the overlap BEFORE the limit. See issue in the PR.
+ */
+
+export interface AuthoredWork {
+  id: string;
+  slug?: string;
+  title: string;
+  display_title?: string;
+  author?: string;
+  year?: number;
+  published?: string;
+  language?: string;
+  pages_count?: number;
+  thumbnail?: string | null;
+  thumbnail_blob?: string | null;
+  image_display?: string | null;
+  image_thumb?: string | null;
 }
 
-// Shared books data — which related entities appear in which of the same books
-export const getSharedBooks = cache(async (name: string): Promise<SharedConnection[] | null> => {
+/**
+ * Books this person WROTE that the library holds — distinct from the books that
+ * merely mention them, which is what the rest of this page is about.
+ *
+ * The page previously showed "Appears in 117 Books" for Matthiolus and none of
+ * the 4 editions of his own Dioscorides commentary that we hold, with no link to
+ * his author page. A reader arriving on a famous author's entry expects his
+ * works first (#3361).
+ *
+ * Resolution is by FOREIGN KEY only — `books.author_id` → `authors._id` (the
+ * canonical thesaurus, see CLAUDE.md) and the transitional
+ * `books.author_entity_id`. Deliberately NOT by name or alias: books store
+ * "Pietro Andrea Mattioli" while the entity is named "Matthiolus", so a name
+ * match returns nothing here, and matching the alias list would attach wrong
+ * books to an author — the same false-claim shape as a fabricated page cite,
+ * since `entity_aliases` carries generic epithets.
+ */
+export const getAuthoredWorks = cache(async (
+  entityId: string,
+  wikidataId?: string,
+  entityName?: string
+): Promise<{ works: AuthoredWork[]; total: number; authorSlug: string | null }> => {
   try {
     const db = await getReadDb();
-    // Try exact match first (uses index, 2ms), then the aliases array (the timeline
-    // links figures by their canonical Wikidata name, e.g. "Apuleius", while the
-    // entity is stored under a surface name, e.g. "Apuleius of Madaura" — both share
-    // the same aliases[]), then case-insensitive regex on name (20s full scan) as a
-    // last resort.
-    const entity = await db.collection('entities').findOne(
-      { name },
-      { sort: { book_count: -1 } }
-    ) ?? await db.collection('entities').findOne(
-      { aliases: name },
-      { sort: { book_count: -1 } }
-    ) ?? await db.collection('entities').findOne(
-      { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
-      { sort: { book_count: -1 } }
+
+    const orClauses: Record<string, unknown>[] = [{ author_entity_id: entityId }];
+
+    // Canonical authors layer: match on a shared authority id, never on a name.
+    // `authors._id` is the canonical author SLUG (a string), not an ObjectId.
+    const authorDoc = await db.collection<{ _id: string; wikidata_id?: string }>('authors').findOne(
+      {
+        $or: [
+          ...(wikidataId ? [{ wikidata_id: wikidataId }] : []),
+          ...(entityName ? [{ _id: entityName.toLowerCase().replace(/\s+/g, '-') }] : []),
+        ],
+      },
+      { projection: { _id: 1 } }
     );
-    if (!entity?.books?.length) return null;
+    // `authors._id` IS the canonical author slug, so it's the safe link target —
+    // deriving one from the entity name can point at a 404 (books here are filed
+    // under "Pietro Andrea Mattioli", the entity is "Matthiolus").
+    const authorSlug: string | null = typeof authorDoc?._id === 'string' ? authorDoc._id : null;
+    if (authorDoc?._id) orClauses.push({ author_id: authorDoc._id });
 
-    const centerBooks = entity.books as Array<{ book_id: string; book_title: string }>;
-    const centerBookIds = centerBooks.map(b => b.book_id);
-    const bookTitleMap = new Map(centerBooks.map(b => [b.book_id, b.book_title]));
+    // Canonical "live" filter — same as every public surface.
+    const query = { $or: orClauses, visible: true, pages_count: { $gt: 0 } };
 
-    const related = await db.collection('entities')
-      .find({
-        _id: { $ne: entity._id },
-        'books.book_id': { $in: centerBookIds },
-      })
-      .sort({ book_count: -1 })
-      .limit(20)
-      .project({ name: 1, type: 1, 'books.book_id': 1 })
+    // Count separately from the capped fetch: the heading must state the real
+    // holding, not the size of the page's grid. Aristotle has more than the 24
+    // we render, and "24 works in the library" would be a made-up total.
+    const total = await db.collection('books').countDocuments(query);
+
+    const works = await db.collection('books')
+      .find(
+        query,
+        {
+          projection: {
+            id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
+            published: 1, language: 1, pages_count: 1,
+            thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
+          },
+        }
+      )
+      .sort({ year: 1 })
+      .limit(24)
       .toArray();
 
-    if (related.length === 0) return null;
-
-    const centerSet = new Set(centerBookIds);
-    const connections: SharedConnection[] = related.map(r => {
-      const relBookIds = (r.books as Array<{ book_id: string }>).map(b => b.book_id);
-      const shared = relBookIds
-        .filter(id => centerSet.has(id))
-        .map(id => ({ book_id: id, book_title: bookTitleMap.get(id) || 'Unknown' }));
-      return {
-        name: r.name as string,
-        type: r.type as 'person' | 'place' | 'concept',
-        sharedBooks: shared,
-      };
-    });
-
-    // Sort by number of shared books desc, then alphabetically
-    connections.sort((a, b) => b.sharedBooks.length - a.sharedBooks.length || a.name.localeCompare(b.name));
-
-    return connections.filter(c => c.sharedBooks.length > 0).slice(0, 15);
+    // One book can match on both keys; dedupe on the public id.
+    const seen = new Set<string>();
+    const unique: AuthoredWork[] = [];
+    for (const w of works) {
+      const id = w.id as string;
+      if (!id || seen.has(id)) continue;
+      seen.add(id);
+      unique.push(w as unknown as AuthoredWork);
+    }
+    return { works: unique, total, authorSlug };
   } catch {
-    return null;
+    return { works: [], total: 0, authorSlug: null };
   }
 });
 
@@ -107,6 +164,10 @@ export const getEntity = cache(async (name: string) => {
     const birthDate = entity.wikidata_birth_date as string | undefined;
     const deathDate = entity.wikidata_death_date as string | undefined;
 
+    const books = dedupeEntityBooks(
+      ((entity.books || []) as EntityBookRef[]).map(normalizeEntityBook)
+    );
+
     // Fetch related entities (same books)
     const bookIds = entity.books?.map((b: { book_id: string }) => b.book_id) || [];
     const related = bookIds.length > 0
@@ -132,9 +193,13 @@ export const getEntity = cache(async (name: string) => {
       wikidata_birth_date: birthDate,
       wikidata_death_date: deathDate,
       wikidata_coordinates: entity.wikidata_coordinates as { lat: number; lng: number } | undefined,
-      books: (entity.books || []) as Array<{ book_id: string; book_title: string; book_author: string; pages: number[] }>,
-      total_mentions: (entity.total_mentions || 0) as number,
-      book_count: (entity.book_count || 0) as number,
+      // Dedupe + normalize on read. Legacy rows have duplicate entries per book
+      // and an unverified `pages` array (the old smeared batch range), so both
+      // the list and the counters are derived here rather than trusted from the
+      // stored fields — otherwise the hero count contradicts the body heading
+      // and the page renders fabricated `p. N` citations (#3361).
+      books,
+      ...entityCounters(books),
       related: related.map(r => ({
         _id: (r._id as ObjectId).toString(),
         name: r.name as string,
@@ -180,6 +245,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       canonical: `/encyclopedia/${encodeURIComponent(decodedName)}`,
     },
     openGraph: {
+      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
       title: decodedName,
       description,
       type: 'article',

@@ -14,6 +14,15 @@ const quickFixSchema = z.object({
   }),
 });
 
+/**
+ * PATCH /api/pages/[id]/quick-fix — splice an insert/delete/replace into a
+ * page's OCR or translation text at a character offset.
+ *
+ * Gated at `editor` (#3511). This route looks up the page by `id` alone, with
+ * no tenant filter, so before the gate any signed-in account could rewrite any
+ * page in the corpus from the main domain — the broadest of the page-write
+ * routes, and the one furthest from its UI gate.
+ */
 export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
@@ -77,4 +86,4 @@ export const PATCH = withAuth(async (request, session, context) => {
     console.error('Error applying quick fix:', error);
     return NextResponse.json({ error: 'Failed to apply fix' }, { status: 500 });
   }
-});
+}, { minRole: 'editor' });

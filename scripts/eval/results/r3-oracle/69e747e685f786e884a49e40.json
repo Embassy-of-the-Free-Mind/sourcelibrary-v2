@@ -1,0 +1,48 @@
+{
+  "book_id": "69e747e685f786e884a49e40",
+  "work_identified": "Edda Sæmundar hinns Fróða (Poetic Edda / Elder Edda) — the collection of Old Norse mythological and heroic poems traditionally attributed to Sæmundr fróði, ed. Rasmus Rask",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Edda Sæmundar hinns Froða: The Edda of Sæmund the Learned",
+      "translator": "Benjamin Thorpe",
+      "pub_year": "1866",
+      "publisher": "Trübner & Co.",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/eddasmundarhinn00thorgoog"
+    },
+    {
+      "english_title": "The Poetic Edda",
+      "translator": "Henry Adams Bellows",
+      "pub_year": "1923",
+      "publisher": "The American-Scandinavian Foundation",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/poeticedda00belluoft"
+    },
+    {
+      "english_title": "The Poetic Edda",
+      "translator": "Carolyne Larrington",
+      "pub_year": "1996",
+      "publisher": "Oxford University Press (Oxford World's Classics)",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Poetic-Edda-Oxford-Worlds-Classics/dp/0199538387"
+    }
+  ],
+  "queries_run": [
+    "Poetic Edda Elder Edda English translation WorldCat",
+    "Benjamin Thorpe \"Sæmundar Edda\" OR \"Poetic Edda\" English translation 1866 archive.org",
+    "Henry Adams Bellows \"Poetic Edda\" English translation 1923 complete"
+  ],
+  "sources_consulted": [
+    {"url": "https://archive.org/details/eddasmundarhinn00thorgoog", "found": "Thorpe 1866 English translation confirmed: 'Edda Sæmundar hinns Frôða: the Edda of Sæmund the Learned', Trübner & Co., digitized from Oxford University"},
+    {"url": "https://archive.org/details/poeticedda00belluoft", "found": "Bellows 1923 complete English translation confirmed on archive.org: 'The Poetic Edda', American-Scandinavian Foundation"},
+    {"url": "https://en.wikipedia.org/wiki/Poetic_Edda", "found": "Wikipedia lists 15+ English translations from A.S. Cottle 1797 through Edward Pettit 2023, including Thorpe 1866, Bellows 1923, Larrington 1996"},
+    {"url": "https://www.mimisbrunnr.info/eddic-to-english-benjamin-thorpe-1866", "found": "Scholarly Germanic Studies catalogue entry confirming Thorpe 1866 as English translation of Sæmundar Edda"}
+  ],
+  "reasoning": "The Poetic Edda (Edda Sæmundar hinns Fróða) is among the most-translated Old Norse texts. Complete English translations confirmed from Thorpe (1866, archive.org), Bellows (1923, American-Scandinavian Foundation), Larrington (1996, Oxford World's Classics); Wikipedia lists 15+ total from 1797 onward. Source-language rule: not_first."
+}

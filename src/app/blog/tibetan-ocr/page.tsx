@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Buddhist Manuscripts - Source Library',
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
     title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Manuscripts',
     description: 'Testing Claude and Gemini on handwritten Tibetan from five Bhutanese monasteries. Modal Consistency Rate, cross-model agreement, and comparison to human translation.',
     images: [{ url: 'https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg' }],
   },
   alternates: {
     canonical: '/blog/tibetan-ocr',
@@ -334,7 +337,6 @@ export default function TibetanOcrPage() {
 
       </article>
 
-      <BlogComments slug="tibetan-ocr" />
 
     </ContentPageLayout>
   );

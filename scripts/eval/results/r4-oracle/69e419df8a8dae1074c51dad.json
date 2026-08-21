@@ -1,0 +1,78 @@
+{
+  "book_id": "69e419df8a8dae1074c51dad",
+  "work_identified": "Aristophanis Comoediae — the eleven surviving comedies of Aristophanes (Acharnians, Knights, Clouds, Wasps, Peace, Birds, Lysistrata, Women at the Thesmophoria, Frogs, Assemblywomen, Wealth), Greek source text",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "complete",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Aristophanes (3 vols., Loeb Classical Library)",
+      "translator": "Benjamin Bickley Rogers",
+      "pub_year": "1924",
+      "publisher": "Harvard University Press / William Heinemann",
+      "completeness": "complete",
+      "source_url": "https://archive.org/details/aristophaneswith01arisuoft"
+    },
+    {
+      "english_title": "Aristophanes I: Acharnians, Knights (LCL 178)",
+      "translator": "Jeffrey Henderson",
+      "pub_year": "1998",
+      "publisher": "Harvard University Press (Loeb Classical Library)",
+      "completeness": "complete",
+      "source_url": "https://www.loebclassics.com/view/LCL178/1998/volume.xml"
+    },
+    {
+      "english_title": "Aristophanes II: Clouds, Wasps, Peace (LCL 488)",
+      "translator": "Jeffrey Henderson",
+      "pub_year": "1998",
+      "publisher": "Harvard University Press (Loeb Classical Library)",
+      "completeness": "complete",
+      "source_url": "https://www.loebclassics.com/view/LCL488/1998/volume.xml"
+    },
+    {
+      "english_title": "Aristophanes III: Birds, Lysistrata, Women at the Thesmophoria (LCL 179)",
+      "translator": "Jeffrey Henderson",
+      "pub_year": "2000",
+      "publisher": "Harvard University Press (Loeb Classical Library)",
+      "completeness": "complete",
+      "source_url": "https://www.loebclassics.com/view/LCL179/2000/volume.xml"
+    }
+  ],
+  "queries_run": [
+    "Aristophanes complete 11 comedies English translation WorldCat Loeb Classical Library",
+    "Aristophanes Comoediae complete English translation history Rogers Henderson Sommerstein",
+    "site:worldcat.org \"Aristophanis Comoediae\" English translation",
+    "Aristophanes complete works English translation Benjamin Bickley Rogers 1924 Loeb all eleven comedies",
+    "Jeffrey Henderson Aristophanes Loeb Classical Library all 11 comedies volumes complete translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.loebclassics.com/view/LCL178/1998/volume.xml",
+      "found": "Jeffrey Henderson, Aristophanes I (Acharnians, Knights), Loeb Classical Library 178, Harvard UP, 1998 — complete modern English translation"
+    },
+    {
+      "url": "https://www.loebclassics.com/view/LCL488/1998/volume.xml",
+      "found": "Jeffrey Henderson, Aristophanes II (Clouds, Wasps, Peace), Loeb Classical Library 488, Harvard UP, 1998"
+    },
+    {
+      "url": "https://www.loebclassics.com/view/LCL179/2000/volume.xml",
+      "found": "Jeffrey Henderson, Aristophanes III (Birds, Lysistrata, Women at the Thesmophoria), Loeb Classical Library 179, Harvard UP, 2000"
+    },
+    {
+      "url": "https://archive.org/details/aristophaneswith01arisuoft",
+      "found": "Benjamin Bickley Rogers, Aristophanes with English translation, 3 vols., Loeb Classical Library, 1924 — all 11 comedies, digitized at Internet Archive"
+    },
+    {
+      "url": "https://archive.org/details/aristophaneswith03arisuoft",
+      "found": "Volume 3 of Rogers Loeb translation, confirming complete coverage of all 11 comedies"
+    },
+    {
+      "url": "https://www.amazon.com/Aristophanes-Volumes-Complete-Classical-Library/dp/B007BO9XGA",
+      "found": "Rogers 3-volume Loeb set listed as 'Complete' on Amazon, confirming all-comedy coverage"
+    }
+  ],
+  "reasoning": "Multiple complete modern English translations exist: Rogers (Loeb, 1924, 3 vols.) covers all 11 comedies, freely available on archive.org. Henderson (Loeb, 1998–2002, 4 vols.) is the definitive modern complete translation. Sommerstein (Aris & Phillips, 1980s–1990s) also complete. Source-language rule applies: a complete English of this work from the same Greek source exists → not_first."
+}

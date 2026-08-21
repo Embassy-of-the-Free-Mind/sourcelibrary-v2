@@ -36,19 +36,31 @@ export const PINNED_COLLECTION_SLUGS = [
   // Row 5 — remaining
   'psychology',
   'history-political-thought',
+  // Row 6 — regional wings (major domains, promoted out of the misc top-level bucket)
+  'east-asia',
+  'south-asia',
 ];
 
 /** Pin specific collections first, shuffle the rest. */
-export function sortCollections<T extends { slug: string }>(collections: T[]): T[] {
+export function sortCollections<T extends { slug: string; children_count?: number }>(collections: T[]): T[] {
   const pinned = PINNED_COLLECTION_SLUGS
     .map(s => collections.find(c => c.slug === s))
     .filter(Boolean) as T[];
   const rest = collections.filter(c => !PINNED_COLLECTION_SLUGS.includes(c.slug));
-  for (let i = rest.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [rest[i], rest[j]] = [rest[j], rest[i]];
-  }
-  return [...pinned, ...rest];
+  const shuffle = (arr: T[]) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+  // Collections with sub-collections are richer entry points — lift them ahead of
+  // the thin single-topic collections in the (otherwise randomised) tail. Pinned
+  // curation still leads. When children_count is absent (e.g. homepage grid) this
+  // is a no-op and the tail is simply shuffled.
+  const withSubs = shuffle(rest.filter(c => (c.children_count ?? 0) > 0));
+  const withoutSubs = shuffle(rest.filter(c => !(c.children_count ?? 0)));
+  return [...pinned, ...withSubs, ...withoutSubs];
 }
 
 // ---------- Thumbnail sanitization ----------
@@ -106,9 +118,15 @@ export function bookTitle(book: { display_title?: string; title: string }): stri
 /**
  * Format a human-readable count label for a collection.
  * Shows "X texts · Y artworks", "X texts", "Y artworks", or empty string.
+ *
+ * `collectionType` matters: a `visual_art` collection's page renders artworks and
+ * nothing else, so its book counters describe texts the reader can never reach from
+ * it. Advertising them is a promise the page does not keep — `school-of-athens`
+ * claimed 518 texts over a page showing 30 works. Pass the type and the text half
+ * is dropped.
  */
-export function collectionCountLabel(bookCount?: number, artworkCount?: number): string {
-  const b = bookCount || 0;
+export function collectionCountLabel(bookCount?: number, artworkCount?: number, collectionType?: string): string {
+  const b = collectionType === 'visual_art' ? 0 : (bookCount || 0);
   const a = artworkCount || 0;
   if (b > 0 && a > 0) {
     return `${b.toLocaleString()} texts · ${a.toLocaleString()} artworks`;

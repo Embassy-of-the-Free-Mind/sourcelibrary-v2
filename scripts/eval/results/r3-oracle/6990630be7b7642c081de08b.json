@@ -1,0 +1,74 @@
+{
+  "book_id": "6990630be7b7642c081de08b",
+  "work_identified": "Sefer ha-Zohar (The Zohar) — principal Kabbalistic compendium attributed to Moses de León, composed chiefly in Aramaic; our item is the Cremona 1558 editio princeps (one-volume printing)",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Zohar",
+      "translator": "Harry Sperling, Maurice Simon, Paul P. Levertoff",
+      "pub_year": "1931",
+      "publisher": "Soncino Press",
+      "completeness": "complete",
+      "source_url": "https://en.wikipedia.org/wiki/Zohar"
+    },
+    {
+      "english_title": "The Zohar: Pritzker Edition",
+      "translator": "Daniel C. Matt, Joel Hecker, Nathan Wolski",
+      "pub_year": "2004",
+      "publisher": "Stanford University Press",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Zohar-Pritzker-Complete-12-Set/dp/B002A7QOCY"
+    },
+    {
+      "english_title": "The Zohar (23-volume unabridged set)",
+      "translator": "Michael Berg",
+      "pub_year": "2003",
+      "publisher": "Kabbalah Centre International",
+      "completeness": "complete",
+      "source_url": "https://search.worldcat.org/title/The-Zohar-:-the-first-ever-unabridged-English-translation-with-commentary/oclc/541525107"
+    }
+  ],
+  "queries_run": [
+    "Zohar complete English translation Daniel Matt Pritzker Edition Stanford University Press",
+    "Zohar English translation Sperling Soncino 1931 Sefer ha-Zohar",
+    "WorldCat \"Zohar\" English translation complete",
+    "Zohar Pritzker Edition complete 12 volumes 2004 2017 Daniel Matt Hebrew Aramaic English",
+    "Sefer ha-Zohar Cremona 1558 edition first printed Aramaic Hebrew first translation English prior"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Zohar",
+      "found": "Lists 6+ English translations including Soncino 5-vol (Sperling/Simon/Levertoff, 1931-34, complete), Pritzker Edition 12-vol (Matt/Hecker/Wolski, 2004-2017, complete), Berg 23-vol (2003, complete)"
+    },
+    {
+      "url": "https://www.sup.org/books/series/zohar-pritzker-edition",
+      "found": "Stanford UP series page for 12-vol Pritzker Edition (2004-2017) — HTTP 403; details confirmed via search snippets"
+    },
+    {
+      "url": "https://search.worldcat.org/title/The-Zohar-:-the-first-ever-unabridged-English-translation-with-commentary/oclc/541525107",
+      "found": "WorldCat record for Berg 23-vol complete English Zohar (Kabbalah Centre, 2003) — HTTP 403; confirmed via search snippets"
+    },
+    {
+      "url": "https://newbooksnetwork.com/daniel-matt-et-al-the-zohar-pritzker-edition",
+      "found": "Confirms Daniel Matt et al., The Zohar: Pritzker Edition (Stanford UP, 2004-2017)"
+    },
+    {
+      "url": "https://www.amazon.com/Zohar-Pritzker-Complete-12-Set/dp/B002A7QOCY",
+      "found": "Amazon listing for complete 12-volume Pritzker Edition set by Daniel C. Matt et al."
+    },
+    {
+      "url": "https://beithazohar.com/en/print-and-edit-the-sefer-ha-zohar-jean-baumgarten/",
+      "found": "Confirms Cremona 1558 as one-volume editio princeps printing of the Zohar alongside Mantua 1558-60"
+    },
+    {
+      "url": "https://hebrewcollege.edu/blog/reclaiming-the-zohar-in-celebration-of-the-pritzker-zohar-translation-and-commentary/",
+      "found": "Hebrew College article celebrating Pritzker Zohar completion; confirms 12-vol complete translation"
+    }
+  ],
+  "reasoning": "The Zohar has multiple complete modern English translations: Soncino 5-vol (Sperling/Simon/Levertoff, 1931-34) and Stanford UP 12-vol Pritzker Edition (Matt/Hecker/Wolski, 2004-2017). Source-language rule: complete modern English exists from same Aramaic source → not_first. Evidence confirmed in Wikipedia, WorldCat snippets, Stanford UP."
+}

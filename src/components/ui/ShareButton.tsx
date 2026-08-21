@@ -51,6 +51,7 @@ interface ShareButtonProps {
   variant?: 'icon' | 'button' | 'menu';
   label?: string;          // Optional text label next to icon (icon variant only)
   className?: string;
+  dropUp?: boolean;        // Open the desktop menu above the button (for bottom-anchored placements)
 }
 
 export default function ShareButton({
@@ -64,6 +65,7 @@ export default function ShareButton({
   variant = 'icon',
   label,
   className = '',
+  dropUp = false,
 }: ShareButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -186,8 +188,8 @@ export default function ShareButton({
               className="fixed inset-0 z-[9998] sm:bg-transparent bg-black/30"
               onClick={() => setShowMenu(false)}
             />
-            {/* Desktop: absolute dropdown. Mobile: fixed bottom sheet */}
-            <div className="fixed inset-x-0 bottom-0 sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-1 z-[9999] bg-white sm:rounded-lg rounded-t-xl shadow-lg border border-stone-200 py-1 sm:min-w-[160px] !text-stone-900">
+            {/* Desktop: absolute dropdown (below the button, or above with dropUp). Mobile: fixed bottom sheet */}
+            <div className={`fixed inset-x-0 bottom-0 sm:absolute sm:inset-auto sm:right-0 ${dropUp ? 'sm:bottom-full sm:mb-1' : 'sm:top-full sm:mt-1'} z-[9999] bg-white sm:rounded-lg rounded-t-xl shadow-lg border border-stone-200 py-1 sm:min-w-[160px] !text-stone-900`}>
               <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto my-2" />
               <button
                 onClick={shareToTwitter}

@@ -17,6 +17,7 @@
 // Cron (Hetzner, daily): see scripts/workers/crontab.production.
 
 import { withMongo } from '../lib/mongo.mjs';
+import { computeReadingDepth, computeMemberReadingDepth } from '../lib/reading-depth.mjs';
 
 const DAYS = (() => { const i = process.argv.indexOf('--days'); return i > -1 ? Number(process.argv[i + 1]) : 30; })();
 const norm = (e) => (e || '').trim().toLowerCase();
@@ -141,27 +142,21 @@ await withMongo(async (db) => {
   const multiDay = byDays.filter((x) => x._id > 1).reduce((s, x) => s + x.n, 0);
 
   // ─── READING DEPTH (page_read events, 7d) ─────────────────────────────────
+  // Shared with engagement-metrics.mjs via scripts/lib/reading-depth.mjs so a
+  // correction can't land in one and miss the other. This snapshot feeds
+  // /platform/admin/metrics AND the weekly digest, so a wrong number here is a
+  // number that gets emailed.
   const ev = db.collection('analytics_events');
   let reading = null;
+  let readingMembers = null;
   try {
-    const depth = await ev.aggregate([
-      { $match: { event: 'page_read', timestamp: { $gt: d7 }, book_id: { $ne: null } } },
-      { $group: { _id: { ip: '$ip', b: '$book_id' }, pages: { $addToSet: '$page_id' } } },
-      { $project: { n: { $size: '$pages' } } },
-      { $group: { _id: '$n', sessions: { $sum: 1 } } }, { $sort: { _id: 1 } },
-    ], { allowDiskUse: true }).toArray();
-    const flat = []; for (const d of depth) for (let i = 0; i < d.sessions; i++) flat.push(d._id);
-    flat.sort((a, b) => a - b);
-    const rn = flat.length;
-    reading = {
-      pairs: rn,
-      median: flat[Math.floor(rn / 2)] || 0,
-      p90: flat[Math.floor(rn * 0.9)] || 0,
-      oneOnly: depth.find((d) => d._id === 1)?.sessions || 0,
-      deep: depth.filter((d) => d._id >= 10).reduce((s, d) => s + d.sessions, 0),
-      opens: await ev.countDocuments({ event: 'book_read', timestamp: { $gt: d7 } }),
-    };
+    reading = await computeReadingDepth(db, d7);
   } catch { /* events collection may be sparse */ }
+  // Signed-in twin over the full window — no crawler can be in it, so this is
+  // reportable today rather than after the anonymous instrument's window fills.
+  try {
+    readingMembers = await computeMemberReadingDepth(db, SINCE);
+  } catch { /* reading_history may be absent */ }
 
   // ─── MISSION ACTIONS ──────────────────────────────────────────────────────
   let missionActions = {};
@@ -196,19 +191,30 @@ await withMongo(async (db) => {
   const pvLast7 = dailyPageviews.filter((r) => r.date >= day(7)).reduce((s, r) => s + r.hits, 0);
   const pvPrev7 = dailyPageviews.filter((r) => r.date >= day(14) && r.date < day(7)).reduce((s, r) => s + r.hits, 0);
 
-  // Resolve top book slugs/ids to titles.
-  const topBookKeys = topN(bookHits, 15);
+  // Resolve top book slugs/ids to titles. Pageview keys are whatever the URL
+  // path used: slug, Mongo _id hex, or the string `id` field — which is a
+  // DIFFERENT 24-hex value than _id, so hex keys need both lookups. Then merge
+  // rows that resolve to the same underlying book (one book viewed via both
+  // its slug and an id otherwise appears twice with its hits split).
+  const topBookKeys = topN(bookHits, 30);
   const { ObjectId } = await import('mongodb');
-  const slugLike = [], idLike = [];
-  for (const [s] of topBookKeys) { if (/^[a-f0-9]{24}$/i.test(s)) { try { idLike.push(new ObjectId(s)); } catch {} } else slugLike.push(s); }
-  const proj = { projection: { slug: 1, title: 1, author: 1, language: 1 } };
+  const slugLike = [], hexLike = [];
+  for (const [s] of topBookKeys) { if (/^[a-f0-9]{24}$/i.test(s)) hexLike.push(s); else slugLike.push(s); }
+  const oidLike = hexLike.map((s) => { try { return new ObjectId(s); } catch { return null; } }).filter(Boolean);
+  const proj = { projection: { slug: 1, id: 1, title: 1, author: 1, language: 1 } };
   const bMeta = new Map();
   for (const b of slugLike.length ? await db.collection('books').find({ slug: { $in: slugLike } }, proj).toArray() : []) bMeta.set(b.slug, b);
-  for (const b of idLike.length ? await db.collection('books').find({ _id: { $in: idLike } }, proj).toArray() : []) bMeta.set(b._id.toString(), b);
-  const topBooks = topBookKeys.map(([key, hits]) => {
-    const m = bMeta.get(key) || {};
-    return { key, hits, title: (m.title || key).slice(0, 70), author: (Array.isArray(m.author) ? m.author[0] : m.author || '') || '', language: m.language || '' };
-  });
+  for (const b of oidLike.length ? await db.collection('books').find({ _id: { $in: oidLike } }, proj).toArray() : []) bMeta.set(b._id.toString(), b);
+  for (const b of hexLike.length ? await db.collection('books').find({ id: { $in: hexLike } }, proj).toArray() : []) { if (b.id) bMeta.set(b.id, b); }
+  const mergedBooks = new Map(); // canonical _id (or unresolved raw key) -> row
+  for (const [key, hits] of topBookKeys) {
+    const m = bMeta.get(key);
+    const canon = m ? m._id.toString() : key;
+    const row = mergedBooks.get(canon);
+    if (row) { row.hits += hits; continue; }
+    mergedBooks.set(canon, { key: m?.slug || key, hits, title: (m?.title || key).slice(0, 70), author: (Array.isArray(m?.author) ? m.author[0] : m?.author || '') || '', language: m?.language || '' });
+  }
+  const topBooks = [...mergedBooks.values()].sort((a, b) => b.hits - a.hits).slice(0, 15);
   const topCollections = topN(collectionHits, 10).map(([slug, hits]) => ({ slug, hits }));
   const topReferrers = topN(referrers, 12).map(([referrer, hits]) => ({ referrer, hits }));
   const topCountries = topN(countries, 12).map(([country, hits]) => ({ country, hits }));
@@ -311,6 +317,7 @@ await withMongo(async (db) => {
       returningVisitors: multiDay, returningTotal: totalFp,
     },
     reading,
+    readingMembers,
     missionActions,
     traffic: { humanPvs, botPvs, dailyPageviews, topBooks, topCollections, topReferrers, topCountries },
     search,

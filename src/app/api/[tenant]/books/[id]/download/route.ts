@@ -1,21 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
-import { canDownload, classifyImageAccess, PRICES } from '@/lib/purchases';
+import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
 import { isBookReadable } from '@/lib/book-access';
+import { isInnerCircle } from '@/lib/auth-helpers';
+import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
+import { checkAndRecordDownload } from '@/lib/download-cap';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
-import sharp from 'sharp';
+import sharp, { type CreateText, type TextAlign } from 'sharp';
 import { writeFileSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { getBookIndex } from '@/lib/book-index';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { Readable } from 'stream';
+import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
+import { markdownToHtml } from '@/lib/export-markdown-html';
+import {
+  fetchAndCompressImage,
+  pageExportImageUrl,
+  hasExportImage,
+  fetchPageImagesOrdered,
+  streamPageImagesOrdered,
+  fetchFacsimilePdfImage,
+  generateImagesZipStream,
+} from '@/lib/export-page-images';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
+
+// Image-heavy formats (facsimile/images EPUBs, images-zip) fetch + recompress
+// one image per page; give the function room beyond the default window. This
+// route ran on the default window until #3909 while its twin had 300s.
+export const maxDuration = 300;
 
 // Index entry structure (from book index collection)
 interface ConceptEntry {
@@ -155,89 +176,21 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   return lines.join('\n');
 }
 
-// Convert markdown-like text to basic HTML for EPUB
-function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
-  // First, remove image markdown syntax (can't embed in simple EPUB)
-  let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
-
-  // Remove any standalone URLs
-  html = html.replace(/https?:\/\/[^\s\)]+/g, '');
-
-  // Strip notes/margin/gloss entirely when requested (scholarly EPUB — they clutter the reading flow)
-  if (opts?.stripNotes) {
-    html = html.replace(/<note>[\s\S]*?<\/note>/gi, '');
-    html = html.replace(/<margin>[\s\S]*?<\/margin>/gi, '');
-    html = html.replace(/<gloss>[\s\S]*?<\/gloss>/gi, '');
-    html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
-  }
-
-  // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
-  // These are our custom tags that should become actual HTML elements
-  html = html.replace(/<note>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
-  html = html.replace(/<margin>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
-  html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
-  html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
-  html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
-  // Strip <insert> tags (keep content) and <column-break/> markers
-  html = html.replace(/<insert>([\s\S]*?)<\/insert>/gi, '$1');
-  html = html.replace(/<column-break\s*\/?>/gi, '');
-  // Strip ->...<- centering markers (OCR convention for centered text)
-  html = html.replace(/->/g, '').replace(/<-/g, '');
-  // Remove metadata tags (hidden)
-  html = html.replace(/<(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>[\s\S]*?<\/(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>/gi, '');
-  html = html.replace(/<(?:column-break|page-break)\s*\/?>/gi, '');
-
-  // Escape HTML entities
-  html = html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
-  // Convert placeholders to inline styled elements (no line breaks)
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<span class="margin">[$1]</span>');
-  html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
-  html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
-  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
-
-  // Convert legacy [[notes: ...]] to inline
-  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-
-  // Convert headers (must be done before paragraph wrapping)
-  html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
-  html = html.replace(/^## (.+)$/gm, '\n<h2>$1</h2>\n');
-  html = html.replace(/^# (.+)$/gm, '\n<h1>$1</h1>\n');
-
-  // Convert bold and italic
-  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-  // Split by double newlines to create paragraphs
-  const blocks = html.split(/\n\n+/);
-
-  // Process each block
-  html = blocks.map(block => {
-    block = block.trim();
-    if (!block) return '';
-    // Don't wrap headers in paragraphs
-    if (block.startsWith('<h')) {
-      return block;
-    }
-    // Replace single newlines with breaks within paragraphs
-    block = block.replace(/\n/g, '<br/>');
-    return `<p>${block}</p>`;
-  }).filter(b => b).join('\n');
-
-  // Clean up empty paragraphs and whitespace issues
-  html = html.replace(/<p>\s*<\/p>/g, '');
-  html = html.replace(/<p><br\/><\/p>/g, '');
-
-  return html || '<p></p>';
-}
-
 // Custom CSS for EPUB styling
 const EPUB_CSS = `
+table.page-table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.85em;
+  width: 100%;
+}
+table.page-table th, table.page-table td {
+  border: 1px solid #ccc;
+  padding: 0.25em 0.4em;
+  text-align: left;
+  vertical-align: top;
+}
+table.page-table th { background: #f2f0ec; font-weight: bold; }
 body {
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.6;
@@ -275,6 +228,37 @@ p {
   border-top: 1px solid #ddd;
   font-size: 0.8em;
   color: #666;
+}
+`;
+
+// Reflowable parallel-text CSS (#3284) — extends EPUB_CSS conventions with a
+// visually distinct but 100% reflowable block for the original-language
+// text. No fixed dimensions, no overflow:hidden, no absolute positioning:
+// this is what makes it render correctly in every EPUB reader, unlike the
+// fixed-layout LOEB_CSS below (which requires FXL support the majority of
+// readers — Adobe Digital Editions, most Android apps, older Kobo firmware —
+// don't reliably implement, and which epubcheck cannot catch because FXL
+// metadata compliance is orthogonal to reader-side rendering behavior).
+const PARALLEL_FLOW_CSS = EPUB_CSS + `
+.original-block {
+  background: #fdfcf6;
+  border-left: 3px solid #8b0000;
+  padding: 0.8em 1em;
+  margin: 0 0 1.2em 0;
+}
+.translation-block {
+  padding: 0.2em 0 0 0;
+}
+.lang-label {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  font-size: 0.75em;
+  color: #8b0000;
+  margin: 0 0 0.5em 0;
+}
+.translation-block .lang-label {
+  color: #555;
 }
 `;
 
@@ -444,6 +428,107 @@ async function generateEpubDownload(
     lang: format === 'epub-ocr' ? book.language : 'en',
     tocTitle: 'Contents',
     css: EPUB_CSS,
+    date: now,
+  }, chapters);
+
+  return epubBuffer;
+}
+
+// Reflowable parallel-text EPUB (#3284): standard reflowable EPUB, one
+// chapter per page, with a visually distinct original-language block
+// followed by the translation block — both stacked in normal document flow,
+// never absolutely positioned or fixed-dimension. This is the format behind
+// the "epub-parallel" download key so every reader (including the many that
+// don't implement EPUB3 fixed-layout) gets a working parallel text. The
+// true facing-page (Loeb-style) fixed-layout edition moved to a separate key,
+// "epub-parallel-fxl", generated by generateLoebEpubDownload() below.
+async function generateParallelFlowEpubDownload(
+  book: Book,
+  pages: Page[]
+): Promise<Buffer> {
+  const now = new Date().toISOString().split('T')[0];
+  const bookTitle = book.display_title || book.title;
+
+  // Build description
+  let description = `A digitized and translated text from the Source Library collection.`;
+  if (book.summary) {
+    const summaryText = typeof book.summary === 'string' ? book.summary : book.summary.data;
+    if (summaryText) {
+      description = summaryText.substring(0, 500);
+    }
+  }
+
+  const chapters: { title: string; content: string }[] = [];
+
+  // Front matter
+  const frontMatter = `
+    <h1>${bookTitle}</h1>
+    <p><strong>Author:</strong> ${book.author}</p>
+    <p><strong>Original Language:</strong> ${book.language}</p>
+    ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
+    <p><strong>Content:</strong> Parallel Text Edition — original and translation interleaved page by page</p>
+    <div class="colophon">
+      <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
+      <p><strong>Downloaded:</strong> ${now}</p>
+      <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+      <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    </div>
+  `;
+  chapters.push({ title: 'Title Page', content: frontMatter });
+
+  // One chapter per page — original block (if present) then translation
+  // block (if present). Pages missing either text include only what exists.
+  for (const page of pages) {
+    if (!page) continue;
+
+    const hasOcr = !!(page.ocr && page.ocr.data);
+    const hasTranslation = !!(page.translation && page.translation.data);
+    if (!hasOcr && !hasTranslation) continue;
+
+    let content = `<div class="page-header">Page ${page.page_number}</div>`;
+
+    if (hasOcr && page.ocr) {
+      content += `<div class="original-block">
+        <p class="lang-label">Original &middot; ${book.language}</p>
+        ${markdownToHtml(page.ocr.data)}
+      </div>`;
+    }
+
+    if (hasTranslation && page.translation) {
+      content += `<div class="translation-block">
+        <p class="lang-label">English</p>
+        ${markdownToHtml(markForExport(page.translation.data, book.id))}
+      </div>`;
+    }
+
+    chapters.push({
+      title: `Page ${page.page_number}`,
+      content,
+    });
+  }
+
+  // Colophon
+  const colophon = `
+    <h1>About This Edition</h1>
+    <p>This parallel text edition was prepared by the <strong>Source Library</strong>, presenting the original ${book.language} text and its English translation together, page by page.</p>
+    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
+    <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+    <p><em>This edition carries a Trithemian imprimatur — an invisible provenance mark
+    in the tradition of the printer's device, asserting that this translation was produced
+    by Source Library. It does not identify you or track your usage.</em></p>
+  `;
+  chapters.push({ title: 'About This Edition', content: colophon });
+
+  // Generate EPUB
+  const epubBuffer = await epub({
+    title: `${bookTitle} (Parallel Text)`,
+    author: book.author,
+    publisher: 'Source Library',
+    description: description,
+    lang: 'en',
+    tocTitle: 'Contents',
+    css: PARALLEL_FLOW_CSS,
     date: now,
   }, chapters);
 
@@ -803,37 +888,6 @@ function getTextSizeClass(text: string): string {
 }
 
 // Image dimensions for fixed-layout EPUB
-const IMAGE_WIDTH = 600;
-const IMAGE_HEIGHT = 900;
-
-// Fetch and process image for EPUB embedding
-// Uses minimal processing: grayscale + normalize (auto contrast)
-async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
-  try {
-    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
-
-    // Process with sharp: resize, grayscale, normalize, compress
-    const processed = await sharp(buffer)
-      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
-        fit: 'inside',
-        withoutEnlargement: true
-      })
-      .grayscale()
-      .normalize()  // Auto contrast stretch
-      .jpeg({
-        quality: 75,
-        mozjpeg: true
-      })
-      .toBuffer();
-
-    console.log(`Image processed: ${url.slice(-30)} -> ${(processed.length / 1024).toFixed(1)}KB`);
-    return processed;
-  } catch (error) {
-    console.error(`Failed to fetch/process image: ${url}`, error);
-    return null;
-  }
-}
-
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -843,8 +897,10 @@ async function generateFacsimileEpubDownload(
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
 
-  // Collect pages with photo and translation
-  const validPages = pages.filter(p => p.translation?.data && (p.photo || p.compressed_photo));
+  // Collect pages with photo and translation. Resolves through the canonical
+  // resolver — reading `photo` directly exports the uncropped spread on
+  // split-from-spread pages, i.e. the wrong image, silently (#3909).
+  const validPages = pages.filter(p => p.translation?.data && hasExportImage(p));
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1016,14 +1072,11 @@ p:first-of-type { text-indent: 0; }
     `, 'Title Page', 'page-right');
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch and compress all images first (async)
+    // Fetch with BOUNDED concurrency. This was an unbounded Promise.all over
+    // every page — hundreds of simultaneous image fetches on a large book
+    // (#3909); the global route has used the bounded helper since #3597.
     console.log(`Fetching ${validPages.length} images for facsimile EPUB...`);
-    const imagePromises = validPages.map(async (page) => {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-      return { page, imageBuffer };
-    });
-    const pageImages = await Promise.all(imagePromises);
+    const pageImages = await fetchPageImagesOrdered(validPages);
 
     // Add images and content pages
     for (const { page, imageBuffer } of pageImages) {
@@ -1100,36 +1153,6 @@ p:first-of-type { text-indent: 0; }
   });
 }
 
-// Generate ZIP of all page images
-async function generateImagesZip(
-  book: Book,
-  pages: Page[]
-): Promise<Buffer> {
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
-
-  return new Promise(async (resolve, reject) => {
-    const chunks: Buffer[] = [];
-    const archive = archiver('zip', { zlib: { level: 6 } });
-
-    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
-    archive.on('end', () => resolve(Buffer.concat(chunks)));
-    archive.on('error', reject);
-
-    // Fetch and add each image
-    console.log(`Fetching ${validPages.length} images for ZIP...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-      if (imageBuffer) {
-        const paddedNum = String(page.page_number).padStart(4, '0');
-        archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
-      }
-    }
-
-    archive.finalize();
-  });
-}
-
 // Generate images-only EPUB (no translation, just the processed page images)
 async function generateImagesOnlyEpubDownload(
   book: Book,
@@ -1139,7 +1162,7 @@ async function generateImagesOnlyEpubDownload(
   const bookTitle = book.display_title || book.title;
   const bookId = `urn:uuid:${book.id}`;
 
-  const validPages = pages.filter(p => p.photo || p.compressed_photo);
+  const validPages = pages.filter(hasExportImage);
 
   return new Promise(async (resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -1252,12 +1275,11 @@ body { background: #1a1a1a; display: flex; align-items: center; justify-content:
 </html>`;
     archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    // Fetch images and create pages
+    // Fetch images (bounded concurrency — the serial loop here took >100s on
+    // a ~126-page book and Cloudflare 524'd the response) and create pages
     console.log(`Fetching ${validPages.length} images for images-only EPUB...`);
-    for (const page of validPages) {
-      const imageUrl = page.compressed_photo || page.photo;
-      const imageBuffer = await fetchAndCompressImage(imageUrl);
-
+    const pageImages = await fetchPageImagesOrdered(validPages);
+    for (const { page, imageBuffer } of pageImages) {
       if (imageBuffer) {
         archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
       }
@@ -1539,8 +1561,8 @@ async function renderCoverText(
   if (opts?.letterSpacing) attrs.push(`letter_spacing="${Math.round(opts.letterSpacing * 1024)}"`);
   const markup = `<span ${attrs.join(' ')}>${content}</span>`;
 
-  const textInput: sharp.CreateText = {
-    text: markup, width: maxWidth, align: 'centre' as sharp.TextAlign, rgba: true, dpi: 72,
+  const textInput: CreateText = {
+    text: markup, width: maxWidth, align: 'centre' as TextAlign, rgba: true, dpi: 72,
     font: fontfile ? `Cormorant Garamond ${fontSize}` : `serif ${fontSize}`,
     ...(fontfile ? { fontfile } : {}),
   };
@@ -2351,9 +2373,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Valid formats: TXT, EPUB, and ZIP
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'epub-scholarly', 'epub-bilingual', 'images-zip'];
-    if (!validFormats.includes(format)) {
+    // Valid formats: TXT, EPUB, ZIP, and PDF — tier membership (free text vs.
+    // premium) lives in src/lib/download-formats.ts, the single source of
+    // truth shared with the global route and DownloadButton.tsx.
+    if (!isValidDownloadFormat(format)) {
       return NextResponse.json(
         { error: 'Invalid format' },
         { status: 400 }
@@ -2376,13 +2399,23 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const editionId = searchParams.get('edition_id');
 
     const isEpub = format.startsWith('epub-');
-    const isLoeb = format === 'epub-parallel';
+    // "epub-parallel" is the reflowable parallel-text edition (works in every
+    // reader). "epub-parallel-fxl" is the true facing-page, fixed-layout
+    // (Loeb-style) edition — kept as a separate opt-in key after #3284, since
+    // FXL requires reader support most EPUB apps don't reliably provide.
+    const isParallelFlow = format === 'epub-parallel';
+    const isLoebFxl = format === 'epub-parallel-fxl';
     const isFacsimile = format === 'epub-facsimile';
     const isImagesOnly = format === 'epub-images';
     const isScholarly = format === 'epub-scholarly';
     const isBilingual = format === 'epub-bilingual';
     const isImagesZip = format === 'images-zip';
-    const imageFormat = isFacsimile || isImagesOnly || isImagesZip;
+    const isPdfTranslation = format === 'pdf-translation';
+    const isPdfFacsimile = format === 'pdf-facsimile';
+    // pdf-facsimile embeds page scans, so it's gated like the other image
+    // formats (blocked/nc-free license classification). pdf-translation is
+    // text-only and follows the plain paid gate below.
+    const imageFormat = isFacsimile || isImagesOnly || isImagesZip || isPdfFacsimile;
 
     // Image access classifier:
     //  - 'blocked' (modern unknown-license non-BPH) → 403, no path forward.
@@ -2402,15 +2435,39 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
     }
 
-    // Member-or-purchased gate for paid formats. NC-free image formats bypass
-    // this (charging for an NC scan would cross the commercial line).
-    if (process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    // Member-or-purchased gate applies ONLY to premium formats (#3290). NC-free
+    // image formats bypass this too (charging for an NC scan would cross the
+    // commercial line).
+    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
           { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
           { status: 402 },
         );
+      }
+    }
+
+    // Daily free-tier cap (#3290): free text formats are ungated by price but
+    // capped at 20 distinct books/24h per account, to keep the free tier from
+    // becoming a bulk-export path. Members, per-book purchasers, and
+    // editor/admin sessions are exempt. Runs after the sign-in/402/403 gates
+    // and before any expensive generation work below.
+    if (!isPremiumFormat(format)) {
+      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+      const isExemptEditor = await isInnerCircle();
+      const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
+      if (!isMember && !isExemptEditor && !isPurchased) {
+        const cap = await checkAndRecordDownload(userId, id);
+        if (!cap.allowed) {
+          return NextResponse.json(
+            {
+              error: 'Daily download limit reached (20 books/24h). For bulk or programmatic access, see https://sourcelibrary.org/licensing',
+              limit_reached: true,
+            },
+            { status: 429 },
+          );
+        }
       }
     }
 
@@ -2442,14 +2499,38 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
     // Handle images ZIP download
     if (isImagesZip) {
-      const zipBuffer = await generateImagesZip(
-        book as unknown as Book,
-        pages as unknown as Page[]
-      );
-      return new Response(new Uint8Array(zipBuffer), {
+      // Streamed, not buffered: a buffered zip emits zero bytes for the whole
+      // build, and a big book crossed Cloudflare's ~100s origin window and died
+      // as a 524 that readers saved as a corrupt .zip (#3909).
+      const archive = generateImagesZipStream(pages as unknown as Page[]);
+      return new Response(Readable.toWeb(archive) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/zip',
           'Content-Disposition': `attachment; filename="${safeTitle}-images.zip"`,
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
+
+    // Handle PDF downloads (pdf-translation, pdf-facsimile). Streamed — the
+    // PDFDocument is a Readable and content is appended asynchronously after
+    // this Response starts, so a big book can't buffer past Cloudflare's
+    // ~100s origin window and die as a 524 saved as a corrupt file.
+    if (isPdfTranslation || isPdfFacsimile) {
+      const doc = isPdfFacsimile
+        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+            hasImage: p => !!pageExportImageUrl(p as Page),
+            streamImages: ps => streamPageImagesOrdered(ps as Page[], fetchFacsimilePdfImage),
+          })
+        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+          });
+      const suffix = isPdfFacsimile ? 'facsimile' : 'translation';
+      return new Response(Readable.toWeb(doc) as unknown as ReadableStream, {
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `attachment; filename="${safeTitle}-${suffix}.pdf"`,
           'Cache-Control': 'no-cache',
         },
       });
@@ -2473,13 +2554,21 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           pages as unknown as Page[]
         );
         filename = `${safeTitle}-facsimile.epub`;
-      } else if (isLoeb) {
-        // Generate Loeb-style parallel text EPUB
-        epubBuffer = await generateLoebEpubDownload(
+      } else if (isParallelFlow) {
+        // Generate reflowable parallel text EPUB (#3284) — works in every
+        // EPUB reader, not just FXL-capable ones.
+        epubBuffer = await generateParallelFlowEpubDownload(
           book as unknown as Book,
           pages as unknown as Page[]
         );
         filename = `${safeTitle}-parallel.epub`;
+      } else if (isLoebFxl) {
+        // Generate Loeb-style facing-page, fixed-layout parallel text EPUB
+        epubBuffer = await generateLoebEpubDownload(
+          book as unknown as Book,
+          pages as unknown as Page[]
+        );
+        filename = `${safeTitle}-parallel-fxl.epub`;
       } else if (isScholarly || isBilingual) {
         // Generate scholarly EPUB with front/back matter (optionally bilingual)
         // Fetch additional data: edition, index, summary
@@ -2499,11 +2588,20 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           edition = editions[0] || null;
         }
 
-        // Get book index from dedicated collection (or inline fallback)
-        const indexData = await db.collection('book_indexes').findOne(
-          { book_id: (book as unknown as Book).id, tenantId },
-          { projection: { _id: 0, book_id: 0, tenantId: 0 } }
-        );
+        // Get book index via the shared accessor (dedicated collection, with the
+        // legacy inline `book.index` fallback).
+        //
+        // This was an inline `findOne({ book_id, tenantId })`, and `book_indexes`
+        // documents carry NO tenantId — 0 of 18,273 corpus-wide (measured
+        // 2026-08-11) — so the filter matched nothing and the scholarly EPUB has
+        // shipped without its index on every tenant subdomain since the route was
+        // written. It failed silently because a missing index is indistinguishable
+        // from a book that has none.
+        //
+        // Dropping the filter does not widen access: `book` above was already
+        // fetched with `{ id, tenantId }`, so tenant ownership is established
+        // before we get here, and `book_indexes` is keyed 1:1 on that book_id.
+        const indexData = await getBookIndex((book as unknown as Book).id);
         if (indexData) {
           const idx = indexData as unknown as {
             vocabulary?: ConceptEntry[];

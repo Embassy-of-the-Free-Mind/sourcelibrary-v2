@@ -1,0 +1,61 @@
+{
+  "book_id": "69e7ac425f1a22ab19aa607c",
+  "work_identified": "Thor bu (miscellany) from the collected works (bka' 'bum) of Pema Lingpa (Pad gling, 1450–1521), Neyphug Monastery redaction, Bhutan — the miscellaneous-writings volume of the Neyphug-held Pad gling bka' 'bum",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Pema Lingpa \"bka' 'bum\" English translation \"collected works\"",
+    "Pema Lingpa \"thor bu\" English translation Neyphug Bhutan",
+    "Pema Lingpa collected works English translation WorldCat",
+    "Pema Lingpa English translation site:lotsawahouse.org",
+    "Pema Lingpa \"treasury of lives\" Bhutan terton biography",
+    "site:tbrc.org \"Pema Lingpa\" OR \"Padma Gling Pa\" thor bu neyphug",
+    "BDRC \"Pad gling bka' 'bum\" Neyphug \"thor bu\" English translation",
+    "\"Pad gling bka' 'bum\" \"thor bu\" site:library.bdrc.io OR site:bdrc.io",
+    "\"Neyphug\" monastery Bhutan \"Pema Lingpa\" texts English publication",
+    "worldcat.org \"Pema Lingpa\" \"thor bu\" OR \"miscellany\" English",
+    "\"Pema Lingpa\" \"pad gling\" translation English \"Sarah Harding\" OR \"Keith Dowman\" OR \"Erik Pema Kunsang\"",
+    "EAP310 \"Pad gling bka' 'bum\" Neyphug thor bu British Library Endangered Archives",
+    "\"Neyphug\" \"thor bu\" \"pad gling\" Tibetan manuscript Bhutan translation English",
+    "\"Life and Revelations of Pema Lingpa\" \"Sarah Harding\" contents chapters what translated",
+    "Pema Lingpa \"gsung thor bu\" OR \"miscellaneous writings\" English translation published",
+    "Pema Lingpa bka' 'bum volumes translated English complete Harding beyond biography",
+    "\"Pad gling bka' 'bum\" English translation complete 2000 2010 2020 scholar"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.lotsawahouse.org/tibetan-masters/pema-lingpa/",
+      "found": "Only 2 Pema Lingpa texts in English: a guru yoga by Jamyang Khyentse Chokyi Lodro (2021) and Yeshe Tsogyal's Prayer; no thor bu or bka' 'bum miscellany translated"
+    },
+    {
+      "url": "https://treasuryoflives.org/biographies/view/Pema-Lingpa/3000",
+      "found": "Biographical entry; no mention of English translation of the thor bu or bka' 'bum miscellany (403 on fetch; confirmed via search result summary)"
+    },
+    {
+      "url": "https://eap.bl.uk/project/EAP310",
+      "found": "British Library EAP310 project digitized Neyphug, Thadrak and Tshamdrak monastery manuscripts including multiple thor bu volumes; no English translations produced — preservation/digitization only"
+    },
+    {
+      "url": "https://eap.bl.uk/archive-file/EAP310-2-2-9",
+      "found": "EAP310 archive file 'Neyphug Thor bu bDe mchog sogs' — a different Neyphug thor bu (Cakrasamvara cycle); confirms the thor bu as a distinct manuscript unit, not translated"
+    },
+    {
+      "url": "https://www.shambhala.com/the-life-and-revelations-of-pema-lingpa-2380.html",
+      "found": "Sarah Harding (2003/2005, Snow Lion) translates Pema Lingpa biography + Lama Jewel Ocean terma cycle; no thor bu / miscellany section covered"
+    },
+    {
+      "url": "https://archive.org/details/dli.ernet.288272",
+      "found": "Collected Works of Pema Lingpa Vol. 2 — Tibetan only, no English translation, scanned from Namgyal Institute of Tibetology"
+    },
+    {
+      "url": "https://library.bdrc.io/",
+      "found": "BDRC search attempted; search interface returns no page content (JS-rendered); no indexed English translation of Pad gling bka' 'bum thor bu found via Google site-search"
+    }
+  ],
+  "reasoning": "Lotsawa House (primary hub for Tibetan-English translations) has only 2 brief Pema Lingpa texts, neither a thor bu. Harding 2003 translates biography and Lama Jewel Ocean cycle, not the miscellany. EAP310 digitized Neyphug manuscripts for preservation only — no English translations produced. No prior English translation of the Pad gling bka' 'bum thor bu found in any tradition-appropriate source."
+}

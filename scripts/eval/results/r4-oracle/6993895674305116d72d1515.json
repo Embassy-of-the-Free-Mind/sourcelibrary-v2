@@ -1,0 +1,60 @@
+{
+  "book_id": "6993895674305116d72d1515",
+  "work_identified": "Corpus of Aristotle and Theophrastus (Aldine editio princeps, Venice 1495–1498; multi-work Greek container comprising Aristotle's surviving writings and Theophrastus's botanical, philosophical, and character works)",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Complete Works of Aristotle: The Revised Oxford Translation",
+      "translator": "Jonathan Barnes (ed.)",
+      "pub_year": "1984",
+      "publisher": "Princeton University Press / Bollingen Series",
+      "completeness": "complete",
+      "source_url": "https://press.princeton.edu/books/hardcover/9780691016504/the-complete-works-of-aristotle-volume-one"
+    },
+    {
+      "english_title": "Enquiry into Plants (Historia Plantarum), 2 vols.",
+      "translator": "Arthur F. Hort",
+      "pub_year": "1916",
+      "publisher": "Loeb Classical Library (Harvard University Press), LCL 70 & 79",
+      "completeness": "complete",
+      "source_url": "https://www.loebclassics.com/view/LCL070/1916/volume.xml"
+    },
+    {
+      "english_title": "De Causis Plantarum, 3 vols.",
+      "translator": "Benedict Einarson and George K.K. Link",
+      "pub_year": "1976",
+      "publisher": "Loeb Classical Library (Harvard University Press), LCL 471, 473, 475",
+      "completeness": "complete",
+      "source_url": "https://www.loebclassics.com/view/LCL471/1976/volume.xml"
+    },
+    {
+      "english_title": "The Characters of Theophrastus",
+      "translator": "R.C. Jebb",
+      "pub_year": "1870",
+      "publisher": "Macmillan",
+      "completeness": "complete",
+      "source_url": "https://catalog.hathitrust.org/Record/011408163"
+    }
+  ],
+  "queries_run": [
+    "Aristotle complete works English translation Loeb Barnes Princeton",
+    "Theophrastus English translation \"enquiry into plants\" \"de causis plantarum\" Loeb complete",
+    "Aldine press Aristotle Theophrastus 1495 Venice corpus Greek edition contents",
+    "Theophrastus Characters English translation complete works",
+    "WorldCat \"Aristotle\" \"Theophrastus\" Aldine 1495 Greek edition English translation prior"
+  ],
+  "sources_consulted": [
+    {"url": "https://press.princeton.edu/books/hardcover/9780691016504/the-complete-works-of-aristotle-volume-one", "found": "Complete Works of Aristotle, ed. Jonathan Barnes, Princeton UP 1984 — complete 2-vol English translation of all surviving Aristotle; original Oxford translation ran 1912–1954"},
+    {"url": "https://www.loebclassics.com/view/LCL070/1916/volume.xml", "found": "Theophrastus Enquiry into Plants, Loeb LCL 70 & 79, trans. Arthur Hort 1916 — complete English translation in 2 vols"},
+    {"url": "https://www.loebclassics.com/view/LCL471/1976/volume.xml", "found": "Theophrastus De Causis Plantarum, Loeb LCL 471/473/475, trans. Einarson & Link 1976–1990 — complete English translation in 3 vols"},
+    {"url": "https://catalog.hathitrust.org/Record/011408163", "found": "Characters of Theophrastus, trans. R.C. Jebb 1870 — complete English translation; many subsequent translations including Mensch 2019"},
+    {"url": "https://historyofinformation.com/detail.php?id=2791", "found": "Aldine Aristotle (1495–1498): 5 vols containing Aristotle + Theophrastus (vol. 2 largely Theophrastus) + Alexander of Aphrodisias + Porphyrius + Philo"},
+    {"url": "https://archive.org/details/completeworksofa0000aris", "found": "Oxford translation of complete Aristotle confirmed on Internet Archive"}
+  ],
+  "reasoning": "Aristotle's complete works fully translated into English (Oxford translation 1912–1954; Barnes/Princeton 1984). Theophrastus's works fully translated: Enquiry into Plants (Hort, Loeb, 1916), De Causis Plantarum (Einarson & Link, Loeb, 1976–1990), Characters (Jebb 1870; Mensch 2019). Source-language rule: complete modern English exists from same Greek → not_first."
+}

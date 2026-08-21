@@ -32,6 +32,7 @@ import { pipeline } from 'stream/promises';
 import { createWriteStream } from 'fs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -432,11 +433,10 @@ async function main() {
         ? (rasterizedPages?.[0]?.thumbUrl || rasterizedPages?.[0]?.displayUrl || '')
         : getThumbUrl(0);
 
-      const bookDoc = {
+      const bookDoc = makeBookDoc({
         _id: bookId,
         id: bookIdStr,
         slug,
-        tenant_id: 'default',
         title: entry.title,
         display_title: null,
         author: entry.author,
@@ -487,7 +487,7 @@ async function main() {
         normalized_author: normalizeAuthor(entry.author),
         created_at: new Date(),
         updated_at: new Date(),
-      };
+      });
 
       await db.collection('books').insertOne(bookDoc);
 
@@ -498,10 +498,9 @@ async function main() {
         for (let start = 0; start < rasterizedPages.length; start += CHUNK) {
           const pageDocs = rasterizedPages.slice(start, start + CHUNK).map(rp => {
             const pageId = new ObjectId();
-            return {
+            return makePageDoc({
               _id: pageId,
               id: pageId.toHexString(),
-              tenant_id: 'default',
               book_id: bookIdStr,
               page_number: rp.pageNumber,
               photo: rp.displayUrl,
@@ -515,7 +514,7 @@ async function main() {
               archive_metadata: { archived_at: new Date(), source: 'pdf_rasterized' },
               created_at: new Date(),
               updated_at: new Date(),
-            };
+            });
           });
           await db.collection('pages').insertMany(pageDocs, { ordered: false });
         }
@@ -524,10 +523,9 @@ async function main() {
           const pageDocs = [];
           for (let p = start; p < Math.min(start + CHUNK, pageCount); p++) {
             const pageId = new ObjectId();
-            pageDocs.push({
+            pageDocs.push(makePageDoc({
               _id: pageId,
               id: pageId.toHexString(),
-              tenant_id: 'default',
               book_id: bookIdStr,
               page_number: p + 1,
               photo: getPageUrl(p),
@@ -535,7 +533,7 @@ async function main() {
               photo_original: getPageUrl(p),
               created_at: new Date(),
               updated_at: new Date(),
-            });
+            }));
           }
           await db.collection('pages').insertMany(pageDocs, { ordered: false });
         }

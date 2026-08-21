@@ -1,0 +1,1029 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "deepseek-ocr-replicate"
+  ],
+  "runs": 2,
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 8,
+      "aligned": 8,
+      "refChars": 5732,
+      "charAccuracy": 0.9766224703419399,
+      "rows": [
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 142-143 (those who curse Satan yet do his will, 1826 printed p.109)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 120,
+          "aligned": true,
+          "guard": 0.13157894736842105,
+          "cer": 0.038525963149078725,
+          "charAccuracy": 0.9614740368509213,
+          "refLen": 597,
+          "matched": 574,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.109",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik142.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.018754732248525,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 220-221 (man ranked above the animals, 1826 printed p.157)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 168,
+          "aligned": true,
+          "guard": 0.10526315789473684,
+          "cer": 0.02356902356902357,
+          "charAccuracy": 0.9764309764309764,
+          "refLen": 594,
+          "matched": 580,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.157",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik220.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.018963209911425,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 293 (against the pagan pantheon; mind, soul and the One, 1826 printed p.203)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 214,
+          "aligned": true,
+          "guard": 0.0660377358490566,
+          "cer": 0.015332197614991482,
+          "charAccuracy": 0.9846678023850085,
+          "refLen": 587,
+          "matched": 578,
+          "source": "TITUS etext (Mariès-Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.203",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik293.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.019003918680825002,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.938671209540034,
+              "cer": 0.06132879045996593
+            }
+          }
+        },
+        {
+          "work": "Eznik of Kołb, Ełc ałandoc' 70-71 (tamed-animals argument)",
+          "bookId": "69a5e9bb787d6e9b8d42e183",
+          "pageNumber": 80,
+          "aligned": true,
+          "guard": 0.16326530612244897,
+          "cer": 0.028428093645484948,
+          "charAccuracy": 0.9715719063545151,
+          "refLen": 598,
+          "matched": 581,
+          "source": "TITUS etext (Mariès–Mercier 1959 critical text, PO 28/3) with embedded page markers of the Venice 1826 printing we hold; passage = 1826 printed p.69",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/eznik/eznik070.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.020179623768525,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.13 (Croesus and Artashes, printed p.125)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 192,
+          "aligned": true,
+          "guard": 0.031746031746031744,
+          "cer": 0.004010695187165776,
+          "charAccuracy": 0.9959893048128342,
+          "refLen": 748,
+          "matched": 745,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.125",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho049.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.06648026484450001,
+              "consistency": 0.5,
+              "aligned": true,
+              "charAccuracy": 0.9745989304812834,
+              "cer": 0.02540106951871658
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.60 (death of Artashes / Bar Kokhba digression)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 256,
+          "aligned": true,
+          "guard": 0.03125,
+          "cer": 0.0032751091703056767,
+          "charAccuracy": 0.9967248908296943,
+          "refLen": 916,
+          "matched": 913,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean–Yarut'iwnean, Tiflis 1913); passage = printed p.189",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho095.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.06350405381384999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9181222707423581,
+              "cer": 0.08187772925764192
+            }
+          }
+        },
+        {
+          "work": "Movses Xorenac'i, Patmut'iwn Hayoc' III.35 (fall of Artagers, deportations under Shapuh, printed p.300)",
+          "bookId": "69944861185a84ef595aae5b",
+          "pageNumber": 367,
+          "aligned": true,
+          "guard": 0.041176470588235294,
+          "cer": 0.008,
+          "charAccuracy": 0.992,
+          "refLen": 1000,
+          "matched": 992,
+          "source": "TITUS etext keyed from the SAME edition we hold (Abełean-Yarut'iwnean, Tiflis 1913); passage = printed p.300",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho161.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.08233119436229999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.962,
+              "cer": 0.038
+            }
+          }
+        },
+        {
+          "work": "Zohrab NT, John 1:1-14",
+          "bookId": "69a5eae5d507939f0352d3c8",
+          "pageNumber": 724,
+          "aligned": true,
+          "guard": 0.13548387096774195,
+          "cer": 0.08236994219653179,
+          "charAccuracy": 0.9176300578034682,
+          "refLen": 692,
+          "matched": 635,
+          "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.5100119114395499,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Chinese",
+      "script": "cjk",
+      "passages": 6,
+      "aligned": 6,
+      "refChars": 331,
+      "charAccuracy": 0.9969788519637462,
+      "rows": [
+        {
+          "work": "Analects 1.1",
+          "bookId": "69e8b24d2ff2a8dc09e77295",
+          "pageNumber": 156,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 30,
+          "matched": 30,
+          "source": "ctext",
+          "source_url": "https://ctext.org/analects/xue-er/zh",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.028681500485624997,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Daodejing ch.1",
+          "bookId": "69935b692c63944063133f67",
+          "pageNumber": 13,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 59,
+          "matched": 59,
+          "source": "ctext",
+          "source_url": "https://ctext.org/dao-de-jing/zh",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 1,
+              "refused": 0,
+              "costUsd": 0.002255986477875,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Han Feizi (Nan Yan)",
+          "bookId": "69e8b2742ff2a8dc09e77bdb",
+          "pageNumber": 549,
+          "aligned": true,
+          "guard": 0.01639344262295082,
+          "cer": 0.01639344262295082,
+          "charAccuracy": 0.9836065573770492,
+          "refLen": 61,
+          "matched": 60,
+          "source": "ctext",
+          "source_url": "https://ctext.org/hanfeizi/nan-yan/zh",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Book of Odes (Guan Ju)",
+          "bookId": "69d5ae594dc55b8478de1380",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 80,
+          "matched": 80,
+          "source": "ctext",
+          "source_url": "https://ctext.org/book-of-poetry/guan-ju/zh",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Xunzi (Quan Xue)",
+          "bookId": "69e8b26b2ff2a8dc09e77afc",
+          "pageNumber": 34,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 50,
+          "matched": 50,
+          "source": "ctext",
+          "source_url": "https://ctext.org/xunzi/quan-xue/zh",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Zhuangzi 1",
+          "bookId": "69e72c60a409200ea79f46f6",
+          "pageNumber": 46,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 51,
+          "matched": 51,
+          "source": "ctext",
+          "source_url": "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "German",
+      "script": "latin",
+      "passages": 5,
+      "aligned": 5,
+      "refChars": 3028,
+      "charAccuracy": 0.9966974900924703,
+      "rows": [
+        {
+          "work": "Boltzmann, Vorlesungen über Gastheorie II (1898) — molecular limits",
+          "bookId": "6990540738e1fdee57b365c1",
+          "pageNumber": 128,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 576,
+          "matched": 576,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/boltzmann_gastheorie02_1898?p=130",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hegel, Wissenschaft der Logik I.1 (1812) — Fürsichsein: Eins und Leeres",
+          "bookId": "69afe356cf56258c93891081",
+          "pageNumber": 148,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 403,
+          "matched": 403,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_logik0101_1812?p=150",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hegel, Phänomenologie des Geistes — Ethical Order (duty to the dead), 1832 Werke printing",
+          "bookId": "69e8b2ee2ff2a8dc09e790fc",
+          "pageNumber": 351,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 306,
+          "matched": 306,
+          "source": "Deutsches Textarchiv TEI of the 1807 FIRST edition — our copy is the 1832 Werke edition (cross-edition reference)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_phaenomenologie_1807?p=500",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Herder, Abhandlung über den Ursprung der Sprache (1772) — faculties of mind",
+          "bookId": "69ade7eeda7f32a00bedaa7c",
+          "pageNumber": 50,
+          "aligned": true,
+          "guard": 0.06875,
+          "cer": 0.011210762331838564,
+          "charAccuracy": 0.9887892376681614,
+          "refLen": 892,
+          "matched": 882,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/herder_abhandlung_1772?p=50",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Humboldt, Kosmos Bd. 1 (1845) — meteor streams",
+          "bookId": "698fb77b6b95eeda7d2d1eaf",
+          "pageNumber": 151,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 851,
+          "matched": 851,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/humboldt_kosmos01_1845?p=150",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 12,
+      "aligned": 12,
+      "refChars": 9828,
+      "charAccuracy": 0.9949124949124949,
+      "rows": [
+        {
+          "work": "Dioscorides, De materia medica I.106-107, 1549 Ruel print",
+          "bookId": "69aff2b8c83500af1dbf681e",
+          "pageNumber": 155,
+          "aligned": true,
+          "guard": 0.12048192771084337,
+          "cer": 0.05227272727272727,
+          "charAccuracy": 0.9477272727272728,
+          "refLen": 440,
+          "matched": 417,
+          "source": "First1KGreek tlg0656.tlg001 (Wellmann 1907 critical text — DIFFERENT edition from our 1549 Ruel Greek-Latin print)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0656/tlg001/tlg0656.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.025511867761574998,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica I.38-39 transition (Teubner p.178, temple-door mechanisms)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 252,
+          "aligned": true,
+          "guard": 0.03664921465968586,
+          "cer": 0.021400778210116732,
+          "charAccuracy": 0.9785992217898832,
+          "refLen": 1028,
+          "matched": 1006,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.026651635803974998,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9698443579766537,
+              "cer": 0.030155642023346304
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica II (Teubner p.266, self-feeding lamp construction)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 340,
+          "aligned": true,
+          "guard": 0.015789473684210527,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 966,
+          "matched": 966,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.04342590546547499,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9813664596273292,
+              "cer": 0.018633540372670808
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica II (Teubner p.306, boiler with blowing figure)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 380,
+          "aligned": true,
+          "guard": 0.02030456852791878,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 996,
+          "matched": 996,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.032983360248150004,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9748995983935743,
+              "cer": 0.025100401606425703
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica I.7-8 (Teubner p.60)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 134,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 620,
+          "matched": 620,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.039789292716225,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9903225806451613,
+              "cer": 0.00967741935483871
+            }
+          }
+        },
+        {
+          "work": "Iliad I.1-7",
+          "bookId": "699382dd84cf5845c644b377",
+          "pageNumber": 9,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 221,
+          "matched": 221,
+          "source": "Wikisource (el)",
+          "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.05659944636644999,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 106-109 (Cohn p.38, hebdomad arithmology)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 162,
+          "aligned": true,
+          "guard": 0.009389671361502348,
+          "cer": 0.0018726591760299626,
+          "charAccuracy": 0.99812734082397,
+          "refLen": 1068,
+          "matched": 1066,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.050465572888575,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9868913857677902,
+              "cer": 0.013108614232209739
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 45-47 (Cohn p.15, first part)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 139,
+          "aligned": true,
+          "guard": 0.01020408163265306,
+          "cer": 0.0019193857965451055,
+          "charAccuracy": 0.9980806142034548,
+          "refLen": 521,
+          "matched": 520,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896; our book is Cohn's 1889 editio minor, same editor's text)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.047493115220849993,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9712092130518234,
+              "cer": 0.028790786948176585
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 157-159 (Cohn p.55, the serpent as symbol of pleasure)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 179,
+          "aligned": true,
+          "guard": 0.01744186046511628,
+          "cer": 0.0009587727708533077,
+          "charAccuracy": 0.9990412272291467,
+          "refLen": 1043,
+          "matched": 1042,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.05344958603594999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9865771812080537,
+              "cer": 0.013422818791946308
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. (CAG IX p.150)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 186,
+          "aligned": true,
+          "guard": 0.005555555555555556,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 874,
+          "matched": 874,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.05841465451965,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.994279176201373,
+              "cer": 0.005720823798627002
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. II 2 ad 194a15 (CAG IX p.300, Empedocles/Democritus on form)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 336,
+          "aligned": true,
+          "guard": 0.009259259259259259,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 1063,
+          "matched": 1063,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.05569247624655,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.993414863593603,
+              "cer": 0.00658513640639699
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. III 6 ad 206b33-207a18 (CAG IX p.500, on the infinite)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 536,
+          "aligned": true,
+          "guard": 0.025510204081632654,
+          "cer": 0.0010121457489878543,
+          "charAccuracy": 0.9989878542510121,
+          "refLen": 988,
+          "matched": 987,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.053320944556425,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.992914979757085,
+              "cer": 0.00708502024291498
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Hebrew",
+      "script": "hebrew",
+      "passages": 4,
+      "aligned": 4,
+      "refChars": 1922,
+      "charAccuracy": 0.9646201873048907,
+      "rows": [
+        {
+          "work": "Genesis 1:1-5 (Bereshit)",
+          "bookId": "6952e4bc77f38f6761bc7db1",
+          "pageNumber": 45,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 197,
+          "matched": 197,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Genesis.1",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.052684530574649995,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Psalms 1 (Tehillim)",
+          "bookId": "69e7518610ee9075bcdcde12",
+          "pageNumber": 8,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 248,
+          "matched": 248,
+          "source": "Sefaria (Masoretic, Miqra according to the Masorah)",
+          "source_url": "https://www.sefaria.org/Psalms.1",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.1729967997654,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Sefer HaYirah (Rabbenu Yonah) — blessings before enjoyment",
+          "bookId": "69b52593cced70d8e6d72941",
+          "pageNumber": 20,
+          "aligned": true,
+          "guard": 0.1686746987951807,
+          "cer": 0.037037037037037035,
+          "charAccuracy": 0.962962962962963,
+          "refLen": 324,
+          "matched": 312,
+          "source": "Sefaria, Sefer HaYirah 119-123",
+          "source_url": "https://www.sefaria.org/Sefer_HaYirah.119-123",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.02372752770375,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Sha'arei Orah (Gikatilla), Gate 2 — Yovel/El Chai discourse",
+          "bookId": "699ef9f2c2bcb75dbdbaad92",
+          "pageNumber": 60,
+          "aligned": true,
+          "guard": 0.14492753623188406,
+          "cer": 0.04856895056374675,
+          "charAccuracy": 0.9514310494362532,
+          "refLen": 1153,
+          "matched": 1097,
+          "source": "Sefaria, Sha'arei Orah, Second Gate, Ninth Sefirah 71-74",
+          "source_url": "https://www.sefaria.org/Sha'arei_Orah%2C_Second_Gate%2C_Ninth_Sefirah.71-74",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.12086291923875,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 5,
+      "aligned": 5,
+      "refChars": 3261,
+      "charAccuracy": 0.9868138607789022,
+      "rows": [
+        {
+          "work": "Aeneid I.1-7",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 203,
+          "aligned": true,
+          "guard": 0.03571428571428571,
+          "cer": 0.006944444444444444,
+          "charAccuracy": 0.9930555555555556,
+          "refLen": 144,
+          "matched": 143,
+          "source": "Wikisource (la), ed. with macrons; folded at compare time",
+          "source_url": "https://la.wikisource.org/wiki/Aeneis/Liber_I",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.030221400926925,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9444444444444444,
+              "cer": 0.05555555555555555
+            }
+          }
+        },
+        {
+          "work": "Hieronymus, Epistola ad Paulinum (Ep. 53), 1566 Louvain Vulgate",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 16,
+          "aligned": true,
+          "guard": 0.034482758620689655,
+          "cer": 0.0021598272138228943,
+          "charAccuracy": 0.9978401727861771,
+          "refLen": 926,
+          "matched": 924,
+          "source": "Latin Wikisource, Vulgata Clementina — Hieronymus Paulino",
+          "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Hieronymus_Paulino",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.08562043066785,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9611231101511879,
+              "cer": 0.038876889848812095
+            }
+          }
+        },
+        {
+          "work": "Hieronymus, Prologus Galeatus, 1566 Louvain Vulgate",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 15,
+          "aligned": true,
+          "guard": 0.057692307692307696,
+          "cer": 0.005005005005005005,
+          "charAccuracy": 0.994994994994995,
+          "refLen": 999,
+          "matched": 994,
+          "source": "Latin Wikisource, Vulgata Clementina — Prologus Galeatus",
+          "source_url": "https://la.wikisource.org/wiki/Vulgata_Clementina/Prologus_Galeatus,_sive_in_libros_Regum_praefatio",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.517060025191125,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Vita Vergilii (Donatus auctus), 1580 Meyen Virgil",
+          "bookId": "6a084d9715c643eb1af3f59e",
+          "pageNumber": 22,
+          "aligned": true,
+          "guard": 0.10067114093959731,
+          "cer": 0.038461538461538464,
+          "charAccuracy": 0.9615384615384616,
+          "refLen": 910,
+          "matched": 875,
+          "source": "Living Poets (Durham University), Donatus auctus critical text after Brugnoli–Stok, Vitae Vergilianae antiquae (1997)",
+          "source_url": "https://livingpoets.dur.ac.uk/w/index.php/Draft:Donatus_auctus",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.025236680275949996,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Vulgate Genesis 1:1-5",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 21,
+          "aligned": true,
+          "guard": 0.017543859649122806,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 282,
+          "matched": 282,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01001.htm",
+          "models": {
+            "deepseek-ocr-replicate": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.03031961517195,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

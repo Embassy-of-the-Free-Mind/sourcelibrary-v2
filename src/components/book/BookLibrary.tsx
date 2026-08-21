@@ -30,6 +30,7 @@ export interface CollectionForGrid {
   subtitle: string;
   description: string;
   book_count: number;
+  total_book_count?: number;
   artwork_count?: number;
   hero_image: string | null;
   languages?: string[];
@@ -471,7 +472,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                       <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
-                            {collectionCountLabel(col.book_count, col.artwork_count)}
+                            {collectionCountLabel(col.total_book_count ?? col.book_count, col.artwork_count)}
                           </span>
                           {topLangs && (
                             <span className="text-xs text-white/50">{topLangs}</span>

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Singularity Was Published in 1486 - Research Notes - Source Library',
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
     title: 'The Singularity Was Published in 1486',
     description: 'Pico della Mirandola, Gustav Fechner, and Johannes Kepler wrote the source code for transhumanism, panpsychism, and the cosmic mind. The original texts, newly translated.',
     images: [{ url: 'https://images.sourcelibrary.org/archived/6fc11c7d-782a-47c3-a855-f3b4415e797b/10.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6fc11c7d-782a-47c3-a855-f3b4415e797b/10.jpg' }],
   },
   alternates: {
     canonical: '/blog/singularity-1486',
@@ -565,7 +568,6 @@ export default function Singularity1486Page() {
         </p>
       </article>
 
-      <BlogComments slug="singularity-1486" />
     </ContentPageLayout>
   );
 }

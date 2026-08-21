@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { clientIpFromHeaders } from '@/lib/analytics-ingest';
 
 /**
  * Auto-log 404 page hits.
@@ -17,7 +18,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const ip = clientIpFromHeaders(request.headers);
     const ua = request.headers.get('user-agent') || '';
 
     const dbWork = (async () => {

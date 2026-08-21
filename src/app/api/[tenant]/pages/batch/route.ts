@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { markPageForReader } from '@/lib/provenance';
 
 export const preferredRegion = 'fra1';
 
@@ -48,11 +49,12 @@ export async function POST(
       { projection: { detected_images: 0 } }
     ).toArray();
 
-    // Strip MongoDB _id
-    const cleaned = pages.map(({ _id, ...rest }) => rest);
+    // Strip MongoDB _id; weave the reader-path provenance mark into each
+    // translation (deterministic, cache-safe — mirrors the global twin).
+    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(rest));
 
     return NextResponse.json({ pages: cleaned }, {
-      headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' },
+      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' },
     });
   } catch (error) {
     console.error('Batch pages error:', error);

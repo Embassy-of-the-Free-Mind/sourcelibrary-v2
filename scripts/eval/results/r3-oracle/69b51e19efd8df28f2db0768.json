@@ -1,0 +1,67 @@
+{
+  "book_id": "69b51e19efd8df28f2db0768",
+  "work_identified": "Asclepius (primus) — De immortalitate Animae — the Hermetic text forming the subject of Rosseli's Vol. 6. NOTE: Rosseli's own 16th-century Latin commentary bundled in this edition has no known English translation; the prior translations below are of the Asclepius text itself, which is the primary claimed work.",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "partial",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Hermes Mercurius Trismegistus his Divine Pymander in seventeen books, together with his second book called Asclepius, containing fifteen chapters with a commentary",
+      "translator": "John Everard",
+      "pub_year": "1650",
+      "publisher": "G. Whittington, London",
+      "completeness": "complete",
+      "source_url": "https://www.worldcat.org/title/hermes-mercurius-trismegistus-his-divine-pymander-in-seventeen-books-together-with-his-second-book-called-asclepius-containing-fifteen-chapters-with-a-commentary/oclc/12610234"
+    },
+    {
+      "english_title": "Hermetica: The Greek Corpus Hermeticum and the Latin Asclepius in a New English Translation, with Notes and Introduction",
+      "translator": "Brian P. Copenhaver",
+      "pub_year": "1992",
+      "publisher": "Cambridge University Press",
+      "completeness": "complete",
+      "source_url": "https://www.cambridge.org/core/books/hermetica/A2779DE70B173114CC8669BEB3CF507D"
+    }
+  ],
+  "queries_run": [
+    "Hannibal Rosseli \"Pymander Mercurii Trismegisti\" commentary English translation",
+    "Hannibal Rosselli Pymander Asclepius Latin commentary volume 6 translation",
+    "Rosseli Pymander commentary WorldCat English translation Asclepius \"immortality of the soul\"",
+    "Asclepius Hermes Trismegistus English translations history Everard Copenhaver Walter Scott",
+    "\"Hannibal Rosselli\" OR \"Hannibal Rosseli\" commentary \"English translation\" OR \"translated into English\"",
+    "Copenhaver 1992 \"Hermetica\" Cambridge \"Latin Asclepius\" English translation complete"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.worldcat.org/title/hermes-mercurius-trismegistus-his-divine-pymander-in-seventeen-books-together-with-his-second-book-called-asclepius-containing-fifteen-chapters-with-a-commentary/oclc/12610234",
+      "found": "WorldCat: Everard 1650 English translation of Divine Pymander plus Asclepius confirmed"
+    },
+    {
+      "url": "https://quod.lib.umich.edu/e/eebo/A43420.0001.001/1:2?rgn=div1&view=fulltext",
+      "found": "EEBO/Michigan Library: Everard Asclepius with commentary cited; 403 on direct fetch but URL is authoritative institutional record"
+    },
+    {
+      "url": "https://www.cambridge.org/core/books/hermetica/A2779DE70B173114CC8669BEB3CF507D",
+      "found": "Cambridge UP: Copenhaver 1992 Hermetica — explicitly 'the Greek Corpus Hermeticum and the Latin Asclepius in a New English Translation'"
+    },
+    {
+      "url": "https://www.cambridge.org/core/journals/classical-review/article/abs/new-translation-of-the-hermetica-brian-p-copenhaver-hermetica-the-greek-corpus-hermeticum-and-the-latin-asclepius-in-a-new-english-translation-with-notes-and-introduction-pp-lxxxiii-320-cambridge-cambridge-university-press-1992-45/A53F30836C4E16E6CDD270D135FC83C1",
+      "found": "Classical Review confirms Copenhaver 1992 is the canonical English translation of both Corpus Hermeticum and Latin Asclepius"
+    },
+    {
+      "url": "https://archive.org/details/bub_gb_HP9Ybpz2zFYC",
+      "found": "Archive.org: Rosseli Pymander cum Commento Vol.1 confirmed; search results confirm Vol.6 covers primus Asclepii (De immortalitate Animae)"
+    },
+    {
+      "url": "https://www.worldcat.org/title/divinus-pymander-hermetis-mercurii-trismegisti-cum-commentariis-rpf-hannibalis-rosseli-tomus-primus-sextus/oclc/491281743",
+      "found": "WorldCat: 6-volume Rosseli Pymander commentary set — 403 on direct fetch"
+    },
+    {
+      "url": "https://doaj.org/article/2dc1b4e0d4b042b1a08a1e5bc2f9bfcd",
+      "found": "DOAJ article on Rosselli as Cracow Academy professor — 403 on direct fetch; no English translation of his commentary mentioned in search snippet"
+    }
+  ],
+  "reasoning": "Vol.6 of Rosseli's Pymander commentary covers primus Asclepii (De immortalitate Animae). The underlying Hermetic work — the Asclepius — has complete modern English translations: Everard (1650, includes full Asclepius) and Copenhaver (1992, CUP, explicitly translates 'the Latin Asclepius'). Source-language rule: prior complete English of this work exists → not_first. Rosseli's own 16th-c. commentary has no known English translation, but the primary titled work is the Asclepius."
+}

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { toUserId } from '@/lib/user-id';
 
 /**
  * GET /api/ficino/discussions — list discussion threads (members only)
@@ -14,7 +15,7 @@ export async function GET() {
 
   const db = await getDb();
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { membership: 1 } }
   );
 
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
 
   const db = await getDb();
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { membership: 1, name: 1 } }
   );
 

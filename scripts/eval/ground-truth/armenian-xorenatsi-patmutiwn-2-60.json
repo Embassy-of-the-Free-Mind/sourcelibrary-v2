@@ -1,0 +1,22 @@
+{
+  "work": "Movses Xorenac'i, Patmut'iwn Hayoc' II.60 (death of Artashes / Bar Kokhba digression)",
+  "book_id": "69944861185a84ef595aae5b",
+  "page_number": 256,
+  "script": "armenian",
+  "language": "Armenian",
+  "source": "TITUS etext keyed from the SAME edition we hold (Abełean–Yarut'iwnean, Tiflis 1913); passage = printed p.189",
+  "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/mokhor/mokho095.htm",
+  "edition": "Abełean–Yarut'iwnean, Tiflis 1913",
+  "non_canonical": true,
+  "memorization_risk": "medium",
+  "ocr_ground_truth": "Յաղագս մահուանն Արտաշիսի ։ Գեղեցիկ իմն պատմէ եւ Արիսոն Փեղղացի յաղագս մահուանն Արտաշիսի ։ Քանզի ի ժամանակին որպէս ապստամբեցին Հրեայք յԱդրիանոսէ Հռոմայեցւոց թագաւորէ , եւ եՏուն պատերազմ ընդ Րուփոսի եպարքոսի , առաջնորդութեամբ առն ուրումն աւազակի , որում անուն էր Բարքոբայ , այս ինքն աստեղ որդի , որ էր գործովք չարագործ եւ սպանող , բայց անուամբ իւրով մեծաբանեալ պարծէր , որպէս թէ յերկնից ծագեաց նոցա փրկիչ , իբր նեղելոց եւ գերեաց ։ Եւ այնքան սաստկացոյց զմարտն , մինչեւ ի նա հայելով ի բաց կացին ի հարկելոյ Հռոմայեցւոց Ասորիք եւ Միջագետք եւ Պարսք ամենայն . քանզի էր եւ լուեալ , եթէ եմուտ յԱդրիանոս ախտ ուրկութեան ։ Բայց մերն Արտաշէս ոչ երկմտեաց ի նմանէ ։ Եւ եղեւ ընդ նոյն ժամնակս հասանել Ադրիանոսի ի Պաղեստինէ եւ սատակել զապստամբսն պաշարմամբ ի քաղաքի մի փքր , հուպ յերուսաղէմ . Վասն որոյ եւ ամենայն ազգին Հրէից հրամայեաց մերժել ի հայրենի աշխարհէն , որ եւ ոչ ի բազում հեռաստանէ հայեսցեն յԵրուսաղէմ ։ Եւ ինքն շինէր զԵրուսաղէմ , զաւերեալն ի Վեսպասիանոսէ եւ ի Տիտոսէ եւ յիւրմէ . եւ անուանեաց Հեղիայ յիւր անուն , որպէս եւ կոչէրն իսկ Ադրիանոս ՝ արեգակն ։ Բնակեցոյց ի նմա հեթանոսս եւ քրիստոնեայս , որոց եպիսկոպոս էր Մարկոս ոմն ։ Ընդ այն ժամանակս առաքեաց",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_with_critical_apparatus",
+    "density": "medium",
+    "type_size": "medium",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "medium"
+  }
+}

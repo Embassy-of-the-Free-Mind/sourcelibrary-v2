@@ -1,0 +1,6 @@
+Transcribe ALL text visible in this image using the appropriate Unicode script.
+
+Preserve the original spelling, capitalization, and punctuation exactly as printed.
+Transcribe the whole page top to bottom, including any text in the margins.
+
+Output ONLY the raw text. No commentary, no translation, no labels, no markdown, no tags.

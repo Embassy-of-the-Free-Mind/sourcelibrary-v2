@@ -1,0 +1,4 @@
+book_id: 698255f20fdc0a098b59a3c0
+Title: 't Nieuwe Jerusalem
+Author: Teellinck, Willem
+Source language: Dutch

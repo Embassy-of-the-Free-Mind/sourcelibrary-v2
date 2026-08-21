@@ -17,6 +17,15 @@ After fixing a bug, resolving an incident, or discovering an important pattern, 
    - Cross-cutting/general → `memory/lessons-learned.md`
    - If it's a critical safety rule → also add to `MEMORY.md` (keep under 200 lines)
 
+   **If it rises to an invariant** — a rule whose violation already cost real damage —
+   pick the tier deliberately:
+   - Applies *regardless of what you're working on* → `CLAUDE.md` (budget: ~250 lines;
+     over it, demote something to `invariants/` first).
+   - Fires only when someone touches a particular subsystem → a new or existing
+     `.claude/docs/invariants/<name>.md`, **plus** a one-line trigger entry in
+     `CLAUDE.md`'s routing table. If you can name the file or subsystem that triggers
+     the rule, it belongs here — this is the common case.
+
 2. **Check for contradictions.** Read the target memory file and check:
    - Does this contradict an existing entry? → Update the old entry, don't duplicate.
    - Does this make an existing entry obsolete? → Remove or update it.

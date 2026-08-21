@@ -1,0 +1,23 @@
+{
+  "work": "Hero of Alexandria, Pneumatica I.38-39 transition (Teubner p.178, temple-door mechanisms)",
+  "book_id": "695aa97dbe4023bd34bd6715",
+  "page_number": 252,
+  "script": "greek",
+  "language": "Greek",
+  "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+  "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+  "edition": "Schmidt, Teubner 1899, vol. 1",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ἕτερα δὲ ἁλυσείδια ἐπειληθέντα πρὸς τοὺς στροφεῖς τὰ ἐναντία τοῖς πρότερον εἰς ἓν ἀποδεθέντα διὰ τροχίλου εἰς βάρος μολιβοῦν ἀποδεδέσθω, διʼ οὗ καταρρέποντος ἀποκεκλεισμέναι ἔσονται αἰ θύραι. ὁ δὲ Κ ΛΜ σίφων τὸ ἐκτὸς σκέλος ἐχέτω φέρον εἰς τὸ κρεμαστὸν ἀγγεῖον. ἐμβεβλήσθω δὲ διά τινος τρυπήματος τοῦ Π ὕδωρ εἰς τὴν σφαῖραν, ὥστε διʼ ἡμίσους γενέσθαι, ὃ μετὰ τὴν ἔγχυσιν ἐστεγνώσθω. συμβήσεται οὖν τοῦ πυρὸς θυμιαθέντος θερμαινόμενον τὸν ἐν τῷ βωμίσκῳ ἀέρα χεῖσθαι εἰς πλείονα τόπον. οὗτος δὲ διὰ τοῦ ΗΖ σωλῆνος εἰς τὴν σφαῖραν χωρῶν ἐκθλίψει τὸ ἐν αὐτῇ ὑγρὸν διὰ τοῦ Κ ΛΜ σίφωνος εἰς τὸ κρεμαστὸν ἀγγεῖον, ὃ δὴ καταβαρῆσαν ἐπισπάσεται τὰ ἁλυσείδια καὶ ἀνοίξει τὰς θύρας. πάλιν δὴ σβεθλίψει σθέντος τοῦ πυρὸς ὁ μὲν λεπτυνθεὶς ἀὴρ ἐκχωρήσει διὰ τῶν ἀραιωμάτων τοῦ τεύχους τῆς σφαίρας. ὁ δὲ καμπύλος σίφων ἐπισπάσεται τὸ ὑγρὸν τὸ ἐκ τοῦ κρεμαστοῦ ἀγγείου, ὥστε ἀναπληρῶσαι τὸν τῶν ἐκκριθέντων ἀραιωμάτων τόπον. ἔσται γὰρ αὐτοῦ τὸ ἄκρον βαπτιζόμενον εἰς τὸ ἐν τῷ κρεμαστῷ ἀγγείῳ ὕδωρ. κουφισθέντος δὲ τοῦ ἀγγείου πάλιν τὸ ἐκκρεμάμενον βάρος καταρρέψαν κλείσει τὰς θύρας. ἔνιοι δὲ ἀντὶ ὕδατος ὑδραργύρῳ χρῶνται, ἐπειδήπερ βαρύτερός ἐστι τοῦ ὕδατος καὶ εὐκόπως ὑπὸ τῆς θερμότητος λύεται. ΧΧΧΙΧ. Ἔστι δὲ καὶ ἄλλως θυσίας γινομένης τὰς θύρας ἀνοίγεσθαι.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column",
+    "density": "light",
+    "type_size": "large",
+    "classified_by": "visual audit of the scan, 2026-07-19",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  },
+  "_note": "Light cell: wide-leaded Teubner face, NO apparatus on this page, ends with the XXXIX chapter heading + its alternative-recension note ('Caput XXXIX secundum b'). Greek on even printed pages only (facing German); printed p.178 = scan 252 (offset +74 verified at p.60/p.266/p.306). Guard-verified + visually audited 2026-07-19."
+}

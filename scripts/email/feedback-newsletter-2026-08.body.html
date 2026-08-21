@@ -1,0 +1,183 @@
+<!--
+  Newsletter body — "Can I get your feedback?" (August 2026).
+
+  Paste into /admin/email → Compose → Manual. Written for the 520px shell in
+  src/lib/email-templates.ts (wrapInEmailShell), which supplies the logo, the
+  <h1> from the subject line, and the unsubscribe footer — so this file has no
+  header, no title, and no footer of its own.
+
+  Render a preview with:
+    node scripts/email/render-newsletter-preview.mjs \
+      scripts/email/feedback-newsletter-2026-08.body.html \
+      "Can I get your feedback?" /tmp/preview.html
+
+  ─────────────────────────────────────────────────────────────────────────────
+  THIS IS DEREK'S AUTHORED COPY. Do not reword it.
+
+  The prose came from Derek on 2026-08-01 and is reproduced verbatim. The ONLY
+  changes made were four unambiguous typos: eevery→every, foooter→footer,
+  trust worth→trustworthy, roviding→providing. Voice, structure, punctuation
+  and sentence order are his, including the fragments ("Yet.") and the
+  exclamation marks, which are doing real work.
+
+  An earlier draft of this letter was written by Claude and replaced wholesale
+  by Derek's version. Do not reinstate it, and do not "tighten" this one. See
+  memory feedback_dont_change_authored_copy: authored marketing copy is used as
+  written or sent back for a decision, never silently improved.
+
+  ONE block is marked ADDED BY CLAUDE below — the in-reader translation prompt.
+  It is a proposal in Derek's voice and is his to cut.
+
+  ASKING FOR TESTIMONIALS (added 2026-08-07, Derek's request). The closing
+  paragraph now also invites praise, and asks PERMISSION in the same breath.
+  The permission clause is not padding: quoting a reader on the site without it
+  would be using someone's private note as marketing, and this letter's whole
+  standing is that we read what people send us in good faith. An opt-in also
+  makes the quotes usable — a testimonial you have to go back and ask about is
+  one you will not publish.
+
+  Derek cut three things on 2026-08-04, all deliberate, do not reinstate:
+    · "Can you trust it? ... Don't trust any translation ..." — his own line,
+      and the most quotable in the letter. He dropped it anyway. If it ever
+      comes back it should come back from him.
+    · the "what are you researching" ask (Claude's), and its "hit reply" closer.
+  They were replaced by one line: "Or just reply and tell me your feedback."
+  The letter now carries a single ask and one soft invitation to reply.
+  ─────────────────────────────────────────────────────────────────────────────
+
+  BOOK COUNT — resolved 2026-08-01; re-measured 2026-08-10 at send time and
+  updated to 22,069 (homepage_stats.totalBooks, refreshed that morning), per
+  the "re-measure every number" rule below. Derek chose 19,420, which was the figure the
+  homepage itself shows: books that are visible AND have readable pages. 34,040
+  are visible in total, but 14,620 of those have no pages yet, so the larger
+  number would have overstated what a reader can actually open. It is a literal
+  count, not a "20,000+" style claim, so it goes stale — re-measure before
+  reusing it in another letter.
+
+  SCREENSHOTS live in public/email/feedback-2026-08/. footer.jpg deliberately
+  shows the callout button AND the footer link in one frame, because the letter
+  points at both.
+
+  callout.jpg was RE-SHOT on 2026-08-04 after the heading changed to "Share
+  your feedback." Shot against live production, not a DOM edited to look like
+  the future — the site ships first, then the picture is taken. If that band is
+  ever reworded again, this image is the one that goes stale.
+
+  footer.jpg is cropped to the FOOTER ALONE. It used to include the "built in
+  the open" callout above it, which duplicated callout.jpg and — worse — pinned
+  a second copy of a heading that can change. Keep the two images disjoint so
+  editing that band never silently staleness-rots this one.
+
+  footer.jpg carries a drawn outline around the FOOTER link only — it is a
+  faint rust-coloured link among a dozen others and readers slid past it. The
+  callout button above it is a solid black button and needs no help. The outline
+  is an annotation added in the browser for the screenshot; it does not exist on
+  the site.
+
+  modal.jpg holds a REAL reader report, verbatim, on the real page it was sent
+  from: "I'm seeing chapter 4 on the image page and chapter 5 in the text",
+  Pseudodoxia Epidemica p.221, 2026-07-26. Those fourteen words surfaced the
+  bulk-JP2 leaf offset (#3368) — 261 books serving every scan one leaf behind
+  its own text, ~105,000 pages, four months. The first version of this
+  screenshot used a plausible-sounding message Claude invented, which is a poor
+  thing to do in a letter about accuracy; Derek caught it. If you re-shoot this
+  image, use a real message from the feedback collection, not a written one.
+-->
+
+<!-- The Spanish version is a hosted PAGE, not a second send. We do not
+     language-segment the audience: 83 volunteers state Spanish, but guessing
+     wrong sends a Spanish letter to an English reader, and one small link costs
+     nothing. Same pattern as the welcome letter (send-user-broadcast.mjs).
+     Rebuild the page after ANY copy change here:
+       node scripts/email/build-es-page.mjs -->
+<p style="margin: 0 0 24px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px;">
+  <a href="https://sourcelibrary.org/email/feedback-2026-08/es.html" style="color: #9e4a3a; text-decoration: none;">Leer en español &rarr;</a>
+</p>
+
+<p style="margin: 0 0 20px;">
+  Hello Source Library friends,
+</p>
+
+<p style="margin: 0 0 20px;">
+  Can I get your feedback?
+</p>
+
+<p style="margin: 0 0 20px;">
+  I&rsquo;ve had the most fun time building the Source Library, but I haven&rsquo;t
+  had the time to read all of the 22,069 books in there. If you come across something
+  that could be improved, no matter how small, please let me know. It might be in the
+  UI or it might be the content of the translation or maybe some of our book data is
+  wrong.
+</p>
+
+<p style="margin: 0 0 28px;">
+  I want you to know that I personally read the feedback on the Source Library every
+  day. You are welcome to email me!
+</p>
+
+<p style="margin: 0 0 16px;">
+  I also want to make sure everyone knows how to leave feedback in the site. You see,
+  down on the bottom of every page there is a button to leave feedback.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/callout.jpg"
+     alt="A band at the foot of the page headed 'Share your feedback' — if you spot an error, have a suggestion, or just want to say hello, we'd love to hear from you — with a black Give Feedback button."
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 20px; border: 1px solid #e8e4dc;" />
+
+<p style="margin: 0 0 16px;">
+  And then, further down, here&hellip; and even here, on the footer.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/footer.jpg"
+     alt="The dark site footer, with a Give Feedback link outlined in the Participate column beside Libraries, Contribute, Support and Developers."
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 20px; border: 1px solid #e8e4dc;" />
+
+<p style="margin: 0 0 16px;">
+  That way, I know what page or service you are leaving the feedback on.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/modal.jpg"
+     alt="The Send feedback dialog on a book page, holding a real reader report — &quot;I&#39;m seeing chapter 4 on the image page and chapter 5 in the text&quot; — with a note at the bottom reading &quot;Sent from /book/pseudodoxia-epidemica-...&quot; and a Send button."
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 28px; border: 1px solid #e8e4dc;" />
+
+<!-- ADDED BY CLAUDE — the in-reader translation prompt. Derek's letter says
+     feedback "might be the content of the translation", and this is the control
+     built for exactly that, so it seemed worth showing. Cut freely. -->
+<p style="margin: 0 0 16px;">
+  And if it is the translation you want to flag, there is a quieter one right under
+  the English text while you are reading. That one already knows which book and which
+  page you are on.
+</p>
+
+<img src="https://sourcelibrary.org/email/feedback-2026-08/reader.jpg"
+     alt="The reading view: Robert Fludd's 1617 engraved title page on the left, its English translation on the right, and an open feedback box beneath the translation reading 'What did you notice?'"
+     width="472"
+     style="width: 100%; max-width: 472px; height: auto; display: block; margin: 0 0 28px; border: 1px solid #e8e4dc;" />
+<!-- /ADDED BY CLAUDE -->
+
+<p style="margin: 0 0 28px;">
+  I really want to engage the reading community. Not everyone is interested in reading
+  texts that are hundreds of years old&hellip; yet! I&rsquo;d love to make the reading
+  experience as pleasant and trustworthy as possible.
+</p>
+
+<p style="margin: 0 0 28px;">
+  Or just reply and tell me your feedback. I&rsquo;d love to know what you find useful
+  and what you think needs improvement. And if there is something you like, tell me
+  that too &mdash; I may want to quote a reader or two on the site, so let me know if
+  you are happy for me to use your words.
+</p>
+
+<p style="margin: 0 0 32px; text-align: center;">
+  <a href="https://sourcelibrary.org"
+     style="display: inline-block; background: #1a1612; color: #fdfcf9; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px;">
+    Open the library
+  </a>
+</p>
+
+<p style="margin: 0; color: #5c554d;">
+  &mdash; Derek
+</p>

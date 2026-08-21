@@ -1,0 +1,88 @@
+{
+  "book_id": "69e7abf35f1a22ab19aa0d6e",
+  "work_identified": "Kanjur 'Dul ba Ka — Neyphug Monastery manuscript Kangyur, Vinaya vol. 1 (Ka), containing Mūlasarvāstivāda Vinayavastu chapters 1–5 complete and the opening of chapter 6 (Toh 1-1 through Toh 1-6 beginning in Degé numbering; folios 1.a–311.a of 'dul ba, ka). Neyphug is a distinct Bhutanese manuscript tradition (Bhutan, c. 1550–1900, 'Them spangs ma group') but carries the same canonical Vinayavastu text.",
+  "verdict": "not_first",
+  "prior_relationship": "same_work_diff_edition",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "The Chapter on Going Forth (Pravrajyāvastu)",
+      "translator": "Robert Miller",
+      "pub_year": "2018",
+      "publisher": "84000: Translating the Words of the Buddha",
+      "completeness": "complete",
+      "source_url": "https://84000.co/translation/toh1-1"
+    },
+    {
+      "english_title": "The Chapter on the Restoration Rite (Posadhasthāpanavastu)",
+      "translator": "84000 translation team",
+      "pub_year": "2024",
+      "publisher": "84000: Translating the Words of the Buddha",
+      "completeness": "complete",
+      "source_url": "https://84000.co/translation/toh1-2"
+    },
+    {
+      "english_title": "The Chapter on Lifting Restrictions (Pravāraṇāvastu)",
+      "translator": "84000 translation team",
+      "pub_year": "2024",
+      "publisher": "84000: Translating the Words of the Buddha",
+      "completeness": "complete",
+      "source_url": "https://84000.co/translation/toh1-3"
+    },
+    {
+      "english_title": "The Chapter on the Rains (Varṣāvastu)",
+      "translator": "84000 translation team",
+      "pub_year": "2024",
+      "publisher": "84000: Translating the Words of the Buddha",
+      "completeness": "complete",
+      "source_url": "https://84000.co/translation/toh1-4"
+    },
+    {
+      "english_title": "The Chapter on Leather (Carmavastu)",
+      "translator": "84000 translation team",
+      "pub_year": "2024",
+      "publisher": "84000: Translating the Words of the Buddha",
+      "completeness": "complete",
+      "source_url": "https://84000.co/translation/toh1-5"
+    },
+    {
+      "english_title": "The Chapter on Medicines (Bhaiṣajyavastu)",
+      "translator": "84000 translation team",
+      "pub_year": "2024",
+      "publisher": "84000: Translating the Words of the Buddha",
+      "completeness": "complete",
+      "source_url": "https://84000.co/translation/toh1-6"
+    }
+  ],
+  "queries_run": [
+    "84000 translating Buddhism Vinaya \"Dul ba Ka\" Kangyur English translation published",
+    "Kangyur \"Dul ba\" Ka volume Vinaya texts contents rKTs catalog",
+    "84000 Toh 1 \"Vinayavastu\" Mūlasarvāstivāda Vinaya English translation published status",
+    "BDRC \"Neyphug\" monastery Kangyur Kanjur Tibetan edition catalog",
+    "Neyphug monastery Kangyur edition \"gnas phug\" Tibetan Buddhist canon",
+    "Dege Kangyur \"Dul ba\" volumes Ka Kha Ga Nga chapters vinayavastu folio distribution",
+    "84000 \"Vinayavastu\" Toh 1 \"going forth\" \"Bhaisajyavastu\" chapters published 2024 2025",
+    "BDRC \"Neyphug\" Kanjur \"dul ba ka\" OR \"W1KG22862\" OR \"W3CN7\" BDRC work ID Vinaya",
+    "Neyphug Kanjur \"dul ba ka\" volume Vinaya EAP310 British Library endangered archives",
+    "EAP310 \"Kanjur\" \"Dul ba Ka\" OR \"dul ba ka\" Neyphug British Library site:eap.bl.uk",
+    "84000 \"Chapter on Leather\" \"Carmavastu\" Toh 1-5 translator year published \"dul ba\"",
+    "\"Pravrajyavastu\" English translation Tibetan OR Sanskrit pre-2000 scholars Clarke Schopen",
+    "WorldCat \"Vinayavastu\" \"Chapters on Monastic Discipline\" \"going forth\" English translation Tibetan 84000",
+    "84000 \"Chapter on Going Forth\" \"Pravrajyavastu\" translator citation year published complete"
+  ],
+  "sources_consulted": [
+    {"url": "https://84000.co/canon-sections/discipline", "found": "84000 has published chapters 1–6 of Toh 1 (Vinayavastu) in English; chapters 7–17 still in progress"},
+    {"url": "https://84000.co/translation/toh1-1", "found": "The Chapter on Going Forth (Pravrajyāvastu, Toh 1-1), tr. Robert Miller, 84000 2018; Degé 'dul ba, ka, folios 1.a–131.a"},
+    {"url": "https://84000.co/translation/toh1-5", "found": "The Chapter on Leather (Carmavastu, Toh 1-5); Degé 'dul ba, ka, folios 251.a–277.b — within Ka"},
+    {"url": "https://84000.co/translation/toh1-6", "found": "The Chapter on Medicines (Bhaiṣajyavastu, Toh 1-6); begins in 'dul ba, ka, folios 277.b–311.a; continues into Kha and Ga"},
+    {"url": "https://eap.bl.uk/collection/EAP310-2-1", "found": "Neyphug Kanjur has 13 volumes of 'Dul ba; Ka is Vinayavastu vol. 1"},
+    {"url": "https://eap.bl.uk/archive-file/EAP310-2-1-64", "found": "Kanjur 'Dul ba Cha at Neyphug confirmed as Vinayavibhanga section"},
+    {"url": "https://www.academia.edu/34488075/", "found": "Neyphug's unique textual features are in the Bhikṣuṇī Vinayavibhanga (NYA vol), not in Ka (Vinayavastu)"},
+    {"url": "https://philpapers.org/rec/VOGTTO", "found": "Claus Vogel 1970 partial English of Pravrajyāvastu sections; Vogel & Wille published more sections 1992–2002"},
+    {"url": "https://en.wikipedia.org/wiki/Kangyur", "found": "Vinayavastu (Toh 1) spans 4 volumes: Ka, Kha, Ga, Nga in Degé Kangyur"}
+  ],
+  "reasoning": "'Dul ba Ka = Degé vols 1–311a = Vinayavastu chs 1–5 complete + ch 6 opening. 84000 has published all 6 chapters (Toh 1-1 through 1-6) in complete English. Neyphug's unique features are in the Bhikṣuṇī Vibhanga (NYA vol), not Ka. Source-language rule: prior complete English from Degé edition of the same canonical text = not_first."
+}

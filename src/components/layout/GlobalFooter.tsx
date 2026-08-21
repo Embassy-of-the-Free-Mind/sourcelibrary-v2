@@ -8,52 +8,10 @@ import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import FeedbackCallout from '@/components/feedback/FeedbackCallout';
 import ReaderPresence from '@/components/presence/ReaderPresence';
 import { clearConsent } from '@/lib/consent';
-import { useLocale, FOOTER_STRINGS, type FooterStrings } from '@/lib/i18n';
-
-// Labels are resolved per-locale from FOOTER_STRINGS via `key`; hrefs are
-// constant and point at the English pages (deep pages have no `/es` route).
-type FooterLinkKey = Exclude<keyof FooterStrings, 'colLibrary' | 'colAbout' | 'colParticipate'>;
-
-const NAV_COLUMNS: ReadonlyArray<{
-  titleKey: keyof FooterStrings;
-  links: ReadonlyArray<{ key: FooterLinkKey; href: string }>;
-}> = [
-  {
-    titleKey: 'colLibrary',
-    links: [
-      { key: 'browseBooks', href: '/' },
-      { key: 'browseAZ', href: '/browse' },
-      { key: 'gallery', href: '/gallery' },
-      { key: 'collections', href: '/collections' },
-      { key: 'explore', href: '/explore' },
-      { key: 'search', href: '/search' },
-    ],
-  },
-  {
-    titleKey: 'colAbout',
-    links: [
-      { key: 'about', href: '/about' },
-      { key: 'vision', href: '/vision' },
-      { key: 'census', href: '/census' },
-      { key: 'progress', href: '/about/progress' },
-      { key: 'researchNotes', href: '/blog' },
-      { key: 'privacy', href: '/privacy' },
-      { key: 'cookieSettings', href: '#cookie-settings' },
-      { key: 'terms', href: '/terms' },
-      { key: 'copyright', href: '/dmca' },
-    ],
-  },
-  {
-    titleKey: 'colParticipate',
-    links: [
-      { key: 'libraries', href: '/libraries' },
-      { key: 'contribute', href: '/contribute' },
-      { key: 'support', href: '/support' },
-      { key: 'sponsorship', href: '/sponsors' },
-      { key: 'developers', href: '/developers' },
-    ],
-  },
-];
+import { trackEvent } from '@/lib/track-event';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { visibleFooterNavColumns } from '@/lib/footer-nav';
+import { useLocale, useLocalePath, FOOTER_STRINGS } from '@/lib/i18n';
 
 type Partner = {
   name: string;
@@ -75,7 +33,24 @@ const PARTNERS: Partner[] = [
 export default function GlobalFooter() {
   const pathname = usePathname();
   const t = FOOTER_STRINGS[useLocale()];
+  // Footer labels were localized before the pages were; now that `/collections`,
+  // `/support` and `/auth/signin` have twins, the LINKS follow too. localePath
+  // is registry-guarded, so everything else still points at its English page.
+  const localePath = useLocalePath();
   const [hasFavorites, setHasFavorites] = useState(false);
+  // Global-only surfaces 404 on partner subdomains (the list and its rationale
+  // live in src/lib/tenant-global-paths.ts — #3364, #3370). SiteHeader has
+  // filtered on that list since #3364; the footer never did, so on
+  // bph.sourcelibrary.org it shipped ten links that all returned 404 —
+  // /about, /vision, /census, /research, /blog, /contribute, /support,
+  // /sponsors, /libraries and /about/progress. That is the failure the
+  // one-list rule exists to prevent: blocking a route the nav links to just
+  // moves the leak into a dead link.
+  //
+  // Same shared `useEmbedContext` signal the header uses, not a second
+  // hostname check (#3367). Resolved after mount, so the static HTML the
+  // global site serves is unchanged and only a tenant visitor sees links drop.
+  const navColumns = visibleFooterNavColumns(useIsEmbedded());
 
   useEffect(() => {
     try {
@@ -97,14 +72,14 @@ export default function GlobalFooter() {
 
         {/* Zone 1: Brand + Mission */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-b border-white/[0.08]">
-          <Link href="/" className="group">
+          <Link href={localePath('/')} className="group">
             <Image
               src="/brand/png/logo-compact--white-on-transparent--96h.png"
               alt="Source Library"
               width={300}
               height={96}
               sizes="auto"
-              className="h-12 sm:h-16 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+              className="h-16 sm:h-20 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
               unoptimized
             />
           </Link>
@@ -113,10 +88,18 @@ export default function GlobalFooter() {
           </Link>
         </div>
 
-        {/* Zone 2: Navigation Columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 py-10 border-b border-white/[0.08]">
-          {NAV_COLUMNS.map((col) => (
-            <div key={col.titleKey}>
+        {/* Zone 2: Navigation Columns. Mobile: 2 columns — Library + Participate
+            stacked on the left, About on the right. Desktop: the usual 3-up. */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-8 sm:gap-12 py-10 border-b border-white/[0.08]">
+          {navColumns.map((col) => (
+            <div
+              key={col.titleKey}
+              className={
+                col.titleKey === 'colLibrary' ? 'col-start-1 row-start-1 sm:col-auto sm:row-auto'
+                : col.titleKey === 'colAbout' ? 'col-start-2 row-start-1 row-span-2 sm:col-auto sm:row-auto'
+                : 'col-start-1 row-start-2 sm:col-auto sm:row-auto'
+              }
+            >
               <h3 className="text-accent-gold text-xs font-semibold uppercase tracking-[0.15em] mb-4">
                 {t[col.titleKey]}
               </h3>
@@ -125,7 +108,14 @@ export default function GlobalFooter() {
                   <li key={link.href}>
                     {link.key === 'support' ? (
                       <Link
-                        href={link.href}
+                        href={localePath(link.href)}
+                        // Instrumented alongside the header pill so the two paths
+                        // are comparable. Before the pill existed this footer link
+                        // was the ONLY route to giving, and it drew 60 of 330,698
+                        // pageviews in 30 days — the baseline the pill is meant to
+                        // beat. Attributing the split needs an event at each
+                        // control; the referrer cannot tell them apart.
+                        onClick={() => trackEvent('give_nav_click', { source: 'footer', url: link.href })}
                         className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
                       >
                         {t[link.key]}
@@ -142,7 +132,7 @@ export default function GlobalFooter() {
                       </button>
                     ) : (
                       <Link
-                        href={link.href}
+                        href={localePath(link.href)}
                         className="text-sm text-white/50 hover:text-white transition-colors"
                       >
                         {t[link.key]}

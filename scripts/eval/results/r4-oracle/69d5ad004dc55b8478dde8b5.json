@@ -1,0 +1,63 @@
+{
+  "book_id": "69d5ad004dc55b8478dde8b5",
+  "work_identified": "Torah Mikraot Gedolot (Vilna/Romm edition) — Hebrew Pentateuch text with classic rabbinic commentaries (Rashi, Targum Onkelos, Ibn Ezra, Ramban/Nachmanides, Rashbam, Sforno, and others)",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Mikraot Gedolot: A New English Translation (5-volume Torah set)",
+      "translator": "A.J. Rosenberg",
+      "pub_year": "1993",
+      "publisher": "Judaica Press",
+      "completeness": "complete",
+      "source_url": "https://www.amazon.com/Genesis-English-Translation-Mikraot-Gedolot/dp/1880582082"
+    },
+    {
+      "english_title": "The Commentators' Bible: The Rubin JPS Miqra'ot Gedolot (5-volume Torah set)",
+      "translator": "Michael Carasik",
+      "pub_year": "2005",
+      "publisher": "Jewish Publication Society",
+      "completeness": "complete",
+      "source_url": "https://jps.org/books/the-commentators-bible-5-volume-set/"
+    }
+  ],
+  "queries_run": [
+    "Mikraot Gedolot English translation complete Torah commentaries Rashi Ibn Ezra Ramban",
+    "WorldCat \"Mikraot Gedolot\" English translation site:worldcat.org",
+    "Sefaria \"Mikraot Gedolot\" complete English commentaries online",
+    "Judaica Press \"Mikraot Gedolot\" English translation A.J. Rosenberg Torah complete five books",
+    "JPS \"Commentators' Bible\" Carasik Miqraot Gedolot Torah volumes published year complete",
+    "Judaica Press \"Mikraot Gedolot\" Rosenberg Leviticus Numbers Deuteronomy English complete publication year"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Mikraot_Gedolot",
+      "found": "Confirmed work identity; limited coverage of English translations but confirms Mikraot Gedolot = Rabbinic Bible format with Rashi, Targum, Ibn Ezra, Ramban, Rashbam, Sforno"
+    },
+    {
+      "url": "https://www.worldcat.org/title/commentators-bible-the-rubin-jps-miqraot-gedolot-mikraot-gedolot/oclc/57349069",
+      "found": "WorldCat record exists for JPS Commentators' Bible Miqra'ot Gedolot (403 on direct fetch, but OCLC record confirmed via search snippet)"
+    },
+    {
+      "url": "https://www.amazon.com/Genesis-English-Translation-Mikraot-Gedolot/dp/1880582082",
+      "found": "Judaica Press Mikraot Gedolot Genesis vol by A.J. Rosenberg, 1993 — explicitly branded 'Mikraot Gedolot' English translation"
+    },
+    {
+      "url": "https://www.amazon.com/Mikraot-Gedolot-Chumash-5-Volumes/dp/B088QJB2VW",
+      "found": "Confirmed 5-volume complete Mikraot Gedolot Chumash set in English available on Amazon"
+    },
+    {
+      "url": "https://jps.org/books/the-commentators-bible-5-volume-set/",
+      "found": "JPS 5-volume Commentators' Bible (Miqra'ot Gedolot) complete Torah set confirmed: Genesis, Exodus, Leviticus, Numbers, Deuteronomy; translator Michael Carasik; includes English of Rashi, Ibn Ezra, Nachmanides, Rashbam, Abarbanel, Kimhi"
+    },
+    {
+      "url": "https://www.sefaria.org/topics/mikraot-gedolot",
+      "found": "Sefaria hosts Mikraot Gedolot content with English translations of Torah text and major commentaries (Rashi, Ibn Ezra, Ramban, etc.) available online"
+    }
+  ],
+  "reasoning": "Torah Mikraot Gedolot has ≥2 complete modern English translations: (1) A.J. Rosenberg, Judaica Press 'Mikraot Gedolot' 5-vol Torah set (1993+); (2) Michael Carasik, 'The Commentators' Bible: Rubin JPS Miqra'ot Gedolot' 5-vol set (JPS, ~2005+). Both cover all 5 Torah books with English of the biblical text + major commentaries (Rashi, Ibn Ezra, Ramban, Rashbam, etc.). → not_first."
+}

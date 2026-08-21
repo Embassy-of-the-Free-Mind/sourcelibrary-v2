@@ -1,0 +1,67 @@
+{
+  "book_id": "69aff08c57adc49dbfc424ac",
+  "work_identified": "Letter from Šamaš-ṭāb to Ilak-niʾid (ETCSL 3.3.08 / SEpM 17) — Old Babylonian Sumerian literary letter / school exercise text",
+  "verdict": "not_first",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Letter from Šamaš-ṭāb to Ilak-niʾid (ETCSL t.3.3.08)",
+      "translator": "Black, Cunningham, et al. (ETCSL); adapted by senior editor Graham Cunningham",
+      "pub_year": "2001",
+      "publisher": "Electronic Text Corpus of Sumerian Literature, University of Oxford",
+      "completeness": "complete",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/cgi-bin/etcsl.cgi?text=t.3.3.08"
+    },
+    {
+      "english_title": "Sumerian Letters: Two Collections from the Old Babylonian Schools",
+      "translator": "Fadhil A. Ali",
+      "pub_year": "1964",
+      "publisher": "Ph.D. dissertation, University of Pennsylvania, Philadelphia",
+      "completeness": "complete",
+      "source_url": "https://etcsl.orinst.ox.ac.uk/cgi-bin/etcsl.cgi?text=c.3.3.08"
+    }
+  ],
+  "queries_run": [
+    "ETCSL \"Šamaš-ṭāb\" OR \"Šamaš-tab\" \"Ilak-niʾid\" OR \"Ilak-niid\" Sumerian letter English translation",
+    "ETCSL \"Shamash-tab\" OR \"Shamas-tab\" \"Ilak\" Sumerian letter corpus 3.x translation",
+    "Ali 1964 \"Sumerian letters\" translation \"Šamaš-ṭāb\" OR \"letter corpus\" Old Babylonian",
+    "Michalowski \"Letters from Early Mesopotamia\" 1993 2001 \"Šamaš-ṭāb\" OR \"Ilak\" Sumerian letter",
+    "ETCSL 3.3.08 \"Šamaš-ṭāb\" \"Ilak-ni\" translation publication prior English",
+    "Sumerian \"literary letters\" \"Old Babylonian\" English translation published anthology Nippur school",
+    "ETCSL \"Graham Cunningham\" OR \"Jeremy Black\" \"Šamaš-ṭāb\" translation editor English",
+    "ETCSL \"The Literature of Ancient Sumer\" Black Cunningham Robson Zolyomi 2004 translation letters",
+    "ETCSL project when first published 1998 2000 completion date literary letters translation",
+    "worldcat.org \"Sumerian letters\" Ali 1964 dissertation \"University of Pennsylvania\" translation"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/cgi-bin/etcsl.cgi?text=t.3.3.08",
+      "found": "Complete English translation of the letter online; senior editor GC (Graham Cunningham) adapted Oct–Nov 2005; text published by ETCSL since 2001"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/cgi-bin/etcsl.cgi?text=c.3.3.08",
+      "found": "Transliteration page; bibliography cites Ali (1964) for 'composite text, score transliteration, translation, handcopy, commentary' on this exact text"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/bibliography.htm",
+      "found": "Ali 1964 confirmed: 'Sumerian Letters: Two Collections from the Old Babylonian Schools,' PhD diss., University of Pennsylvania"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/edition2/etcslfullcat.php?expandall=Expand+all",
+      "found": "ETCSL full catalogue confirms text 3.3.08 = Letter from Šamaš-ṭāb to Ilak-niʾid, under 'Other letters and letter-prayers'"
+    },
+    {
+      "url": "https://zenodo.org/records/2599791",
+      "found": "Pascal Attinger, SEpM 17: Šamaš-ṭāb-Ilak-niʾid (3.3.8) — French translation, 2013/2019; not English"
+    },
+    {
+      "url": "https://etcsl.orinst.ox.ac.uk/datelist.htm",
+      "found": "ETCSL literary letters (section 3) added September 2001; confirms prior English online publication date"
+    }
+  ],
+  "reasoning": "ETCSL (Oxford) has published a complete English translation of this Sumerian letter (t.3.3.08) online since 2001, by Black, Cunningham et al. Ali (1964) also translated it in his UPenn dissertation, explicitly cited by ETCSL for this text with 'translation.' Two independent English priors confirmed."
+}

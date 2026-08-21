@@ -1,0 +1,4 @@
+book_id: 69aea4b60fefd7831dcda548
+Title: Qu'est-ce que la propriété?
+Author: Pierre-Joseph Proudhon
+Source language: French

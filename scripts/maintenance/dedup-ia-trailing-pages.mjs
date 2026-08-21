@@ -19,7 +19,9 @@
  *        (per the atlas-search convention: hidden/deduped pages live at
  *        page_number ≤ 0). The page immediately before the run is preserved as
  *        the visible keep page.
- *     4. Decrement book.pages_count by run_len. Don't touch pageCount.
+ *     4. Decrement book.pages_count by run_len. (The camelCase `pageCount`
+ *        twin this once avoided was retired in #3969 — nothing read it, and on
+ *        186 books it held a stale PRE-SPLIT count, roughly half the truth.)
  *
  * Why byte-size and not dhash:
  *   IA's trash pages are generated from the same template — they hit R2
@@ -89,7 +91,7 @@ async function main() {
   if (PROVIDER) query['image_source.provider'] = PROVIDER;
 
   const cursor = db.collection('books').find(query, {
-    projection: { id: 1, title: 1, slug: 1, pages_count: 1, pageCount: 1 },
+    projection: { id: 1, title: 1, slug: 1, pages_count: 1 },
   }).sort({ pages_count: -1 });
   if (BOOK_LIMIT > 0) cursor.limit(BOOK_LIMIT);
   const books = await cursor.toArray();

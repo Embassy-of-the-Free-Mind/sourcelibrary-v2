@@ -1,0 +1,78 @@
+name: MCP directory contract
+
+# Guards the properties the Anthropic connector directory validator reads, so we
+# are never silently de-listed a second time. The connector was listed in late
+# April 2026, dropped in mid-May with no notification, and not republished until
+# 2026-08-04. The two defects fixed in between — tool titles only under the
+# deprecated `annotations.title`, and an advertise-but-don't-enforce OAuth
+# surface — were both invisible from inside the codebase. See
+# scripts/audit/mcp-directory-contract.mjs.
+#
+# Two jobs, because the checks have different targets:
+#
+#   self-test  — negative controls for every shape predicate, no network. Cheap
+#                and deterministic, so it runs on every PR and blocks merge. It
+#                proves the audit can still FAIL; a guard nobody has watched go
+#                red is decoration (.claude/docs/invariants/tests-that-are-not-guards.md).
+#   live       — speaks MCP to production. Nightly and on merge to main, not on
+#                PRs: pre-merge, prod is by definition the wrong target, since it
+#                still carries whatever the PR is about to change.
+#
+# A preview deploy IS a valid target though — nothing here keys on the production
+# hostname — so before merging anything under src/app/api/mcp/**, run it against
+# your own preview and catch the regression a day early:
+#
+#   npm run audit:mcp -- https://sourcelibrary-v2-git-<branch>-…vercel.app
+#
+# (workflow_dispatch takes the same URL if you'd rather run it from Actions.)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/app/api/mcp/**'
+      - 'server.json'
+      - 'scripts/audit/mcp-directory-contract*'
+      - '.github/workflows/mcp-directory-contract.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/app/api/mcp/**'
+      - 'server.json'
+      - 'scripts/audit/mcp-directory-contract*'
+  schedule:
+    # 06:00 UTC daily — after any overnight deploy has settled.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Base URL to audit'
+        required: false
+        default: 'https://sourcelibrary.org'
+
+jobs:
+  self-test:
+    name: Negative controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Every predicate must reject the defect it exists to catch
+        run: npm run audit:mcp:self-test
+
+  live:
+    name: Live contract audit
+    # Skipped on PRs: see the header. Runs nightly, on merge to main, and on demand.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Audit the deployed connector
+        run: npm run audit:mcp -- "${{ github.event.inputs.target || 'https://sourcelibrary.org' }}"

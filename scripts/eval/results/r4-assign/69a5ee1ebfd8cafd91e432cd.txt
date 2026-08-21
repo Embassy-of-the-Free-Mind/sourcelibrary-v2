@@ -1,0 +1,4 @@
+book_id: 69a5ee1ebfd8cafd91e432cd
+Title: Sancti Ephraem Syri Opera Omnia vol. 3
+Author: Ephrem the Syrian
+Source language: Syriac

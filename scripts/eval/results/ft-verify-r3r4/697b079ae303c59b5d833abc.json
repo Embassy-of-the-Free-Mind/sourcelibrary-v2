@@ -1,0 +1,47 @@
+{
+  "book_id": "697b079ae303c59b5d833abc",
+  "action": "demote",
+  "action_valid": true,
+  "basis": "complete_modern_prior",
+  "prior": {
+    "translator": "A.P.J. Cruikshank, D.D.",
+    "year": "1906",
+    "completeness": "complete — 55 chapters from Ch.1 (Confession) through Ch.55 (Prayer for conformity), covering the full Exercitia",
+    "url": "https://archive.org/details/meditationsonlif00tauluoft"
+  },
+  "queries_run": [
+    "Cruikshank \"Meditations on the Life and Passion of Our Lord Jesus Christ\" 1875 Tauler translation",
+    "Cruikshank \"Meditations on the Life and Passion\" 1906 4th edition Latin exercises Tauler",
+    "\"Piissima Exercitia\" OR \"Exercitia de vita et passione\" Tauler English translation Cruikshank 1906",
+    "Tauler \"Meditations on the Life and Passion\" Cruikshank 1906 \"Art and Book\" OR \"Art & Book\" 4th edition",
+    "WorldCat \"Meditations on the life and passion\" Tauler Cruikshank 1906 \"fourth edition\" complete",
+    "site:archive.org \"Meditations on the life and passion\" Tauler Cruikshank 1906"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/meditationsonlif00tauluoft",
+      "found": "1906 edition, Art & Book Company London, confirmed post-1900"
+    },
+    {
+      "url": "https://catholicebooks.wordpress.com/2025/04/06/free-ebook-meditations-on-the-life-and-passion-of-our-lord-jesus-christ-by-johannes-tauler/",
+      "found": "Explicitly labels this '4th edition (London: Art & Book Company, 1906)', translator A.P.J. Cruikshank D.D., attributed to pseudo-Tauler"
+    },
+    {
+      "url": "https://ccel.org/ccel/tauler/meditations/meditations.toc.html",
+      "found": "55 complete chapters from Ch.1 (Confession) to Ch.55 (Prayer for conformity) — full translation confirmed"
+    },
+    {
+      "url": "https://onlinebooks.library.upenn.edu/webbin/book/lookupname?key=Tauler,+Johannes,+approximately+1300-1361",
+      "found": "Lists both 1875 and 1906 editions of the Cruikshank translation"
+    },
+    {
+      "url": "https://catalog.hathitrust.org/Record/012308038",
+      "found": "HathiTrust catalog record for Cruikshank translation"
+    },
+    {
+      "url": "https://www.amazon.com/Passione-Salvatoris-Christi-Piissima-Exercitia/dp/1020599960",
+      "found": "Latin source title confirmed as 'De Vita Et Passione Salvatoris Nostri Jesu Christi Piissima Exercitia' — same work as our Exercitia"
+    }
+  ],
+  "reasoning": "Cruikshank's translation is (a) the same work — Latin source 'De Vita Et Passione Salvatoris Nostri Jesu Christi Piissima Exercitia' (pseudo-Tauler) directly matches; (b) complete — CCEL ToC shows all 55 chapters; (c) modern — 4th ed. 1906 Art & Book Co. London confirmed by Catholic eBooks Project and Internet Archive. Demote is valid."
+}

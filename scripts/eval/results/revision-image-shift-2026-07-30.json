@@ -1,0 +1,1025 @@
+{
+  "date": "2026-07-30T23:33:00.800Z",
+  "sample": 6000,
+  "pairs": 3339,
+  "same": 1997,
+  "diff": 1342,
+  "books": 366,
+  "affected": 112,
+  "systematic": 88,
+  "signatures": [
+    {
+      "book_id": "69b6e5d0f8a84d859cddaf05",
+      "n": 18,
+      "shifted": 18,
+      "offsets": {
+        "1": 18
+      }
+    },
+    {
+      "book_id": "69bd9f4bf6d63c91974800b0",
+      "n": 80,
+      "shifted": 80,
+      "offsets": {
+        "1": 76,
+        "3": 1,
+        "8": 1,
+        "10": 1,
+        "201": 1
+      }
+    },
+    {
+      "book_id": "69b656ed18b87551bfce4c17",
+      "n": 9,
+      "shifted": 9,
+      "offsets": {
+        "1": 9
+      }
+    },
+    {
+      "book_id": "69d006cf7d7491182a2325da",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 1,
+        "-415": 4,
+        "-96": 6,
+        "-400": 1
+      }
+    },
+    {
+      "book_id": "69b69ab0080b19f98fcff173",
+      "n": 10,
+      "shifted": 10,
+      "offsets": {
+        "1": 10
+      }
+    },
+    {
+      "book_id": "69af0a0d724769085e857a0a",
+      "n": 10,
+      "shifted": 10,
+      "offsets": {
+        "-36": 4,
+        "-24": 5,
+        "-13": 1
+      }
+    },
+    {
+      "book_id": "69bd9e0b6120d54bd037b199",
+      "n": 11,
+      "shifted": 11,
+      "offsets": {
+        "1": 10,
+        "-9": 1
+      }
+    },
+    {
+      "book_id": "69b659d618b87551bfcfe578",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 4
+      }
+    },
+    {
+      "book_id": "69b6ca4b31b7f0d07f50b5d8",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 11,
+        "-69": 1
+      }
+    },
+    {
+      "book_id": "69bda161f6d63c919748fc0f",
+      "n": 10,
+      "shifted": 10,
+      "offsets": {
+        "1": 10
+      }
+    },
+    {
+      "book_id": "69bd9d966120d54bd0377bd4",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 11,
+        "11": 1
+      }
+    },
+    {
+      "book_id": "69b6b0fa96dc15d4a16cfb67",
+      "n": 16,
+      "shifted": 15,
+      "offsets": {
+        "1": 14,
+        "50": 1
+      }
+    },
+    {
+      "book_id": "69b69d32080b19f98fd0ac3e",
+      "n": 46,
+      "shifted": 46,
+      "offsets": {
+        "1": 46
+      }
+    },
+    {
+      "book_id": "69b6b43296dc15d4a16dd8db",
+      "n": 20,
+      "shifted": 20,
+      "offsets": {
+        "1": 20
+      }
+    },
+    {
+      "book_id": "69b67cff24677234712502ea",
+      "n": 26,
+      "shifted": 26,
+      "offsets": {
+        "1": 26
+      }
+    },
+    {
+      "book_id": "69b64e8e18b87551bfc8a08b",
+      "n": 14,
+      "shifted": 14,
+      "offsets": {
+        "1": 14
+      }
+    },
+    {
+      "book_id": "69bda12df6d63c919748e824",
+      "n": 10,
+      "shifted": 10,
+      "offsets": {
+        "1": 9,
+        "101": 1
+      }
+    },
+    {
+      "book_id": "69bd9e496120d54bd037c4c1",
+      "n": 17,
+      "shifted": 17,
+      "offsets": {
+        "1": 17
+      }
+    },
+    {
+      "book_id": "69bd9c976120d54bd036fc7c",
+      "n": 11,
+      "shifted": 11,
+      "offsets": {
+        "1": 11
+      }
+    },
+    {
+      "book_id": "69bda08af6d63c91974888d0",
+      "n": 16,
+      "shifted": 16,
+      "offsets": {
+        "1": 13,
+        "5": 1,
+        "41": 1,
+        "101": 1
+      }
+    },
+    {
+      "book_id": "69b686f170c69d645a747431",
+      "n": 8,
+      "shifted": 8,
+      "offsets": {
+        "1": 8
+      }
+    },
+    {
+      "book_id": "69b6c2618566c838146599f0",
+      "n": 14,
+      "shifted": 14,
+      "offsets": {
+        "1": 14
+      }
+    },
+    {
+      "book_id": "69bd9d1f6120d54bd037384b",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 11,
+        "-184": 1
+      }
+    },
+    {
+      "book_id": "69bda143f6d63c919748f149",
+      "n": 11,
+      "shifted": 11,
+      "offsets": {
+        "1": 10,
+        "-495": 1
+      }
+    },
+    {
+      "book_id": "69b6fec53c7947b468d92d14",
+      "n": 21,
+      "shifted": 21,
+      "offsets": {
+        "1": 21
+      }
+    },
+    {
+      "book_id": "69b640d81c1c21a37387f583",
+      "n": 14,
+      "shifted": 14,
+      "offsets": {
+        "1": 11,
+        "3": 1,
+        "111": 1,
+        "-5": 1
+      }
+    },
+    {
+      "book_id": "69b642051c1c21a373889f10",
+      "n": 15,
+      "shifted": 15,
+      "offsets": {
+        "1": 10,
+        "201": 1,
+        "401": 1,
+        "-2": 1,
+        "-99": 1,
+        "-1": 1
+      }
+    },
+    {
+      "book_id": "69b6a4f5080b19f98fd2144e",
+      "n": 16,
+      "shifted": 14,
+      "offsets": {
+        "1": 14
+      }
+    },
+    {
+      "book_id": "69b68b4353f0f937bfd5a537",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 10,
+        "37": 1,
+        "-99": 1
+      }
+    },
+    {
+      "book_id": "69b656f218b87551bfce50ff",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "1": 3
+      }
+    },
+    {
+      "book_id": "69bd9ecdf6d63c919747ccec",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "1": 5
+      }
+    },
+    {
+      "book_id": "69bda047f6d63c9197485cc0",
+      "n": 10,
+      "shifted": 10,
+      "offsets": {
+        "1": 9,
+        "-1": 1
+      }
+    },
+    {
+      "book_id": "69b69d87080b19f98fd0c378",
+      "n": 11,
+      "shifted": 11,
+      "offsets": {
+        "1": 10,
+        "21": 1
+      }
+    },
+    {
+      "book_id": "69b68df3080b19f98fcd0d46",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 4
+      }
+    },
+    {
+      "book_id": "69b6a360080b19f98fd1a07c",
+      "n": 19,
+      "shifted": 19,
+      "offsets": {
+        "1": 17,
+        "-89": 1,
+        "-44": 1
+      }
+    },
+    {
+      "book_id": "69bda135f6d63c919748ec78",
+      "n": 11,
+      "shifted": 11,
+      "offsets": {
+        "1": 10,
+        "8": 1
+      }
+    },
+    {
+      "book_id": "69b6424e1c1c21a37388beb1",
+      "n": 11,
+      "shifted": 10,
+      "offsets": {
+        "1": 10
+      }
+    },
+    {
+      "book_id": "69b64f1318b87551bfc9053b",
+      "n": 7,
+      "shifted": 7,
+      "offsets": {
+        "1": 7
+      }
+    },
+    {
+      "book_id": "69b63b471c1c21a37384addc",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 12
+      }
+    },
+    {
+      "book_id": "69bd9c6b6120d54bd036ecd0",
+      "n": 11,
+      "shifted": 10,
+      "offsets": {
+        "1": 4,
+        "2": 1,
+        "7": 1,
+        "51": 1,
+        "86": 1,
+        "359": 1,
+        "-19": 1
+      }
+    },
+    {
+      "book_id": "69bd9d7f6120d54bd03773f3",
+      "n": 6,
+      "shifted": 6,
+      "offsets": {
+        "1": 5,
+        "101": 1
+      }
+    },
+    {
+      "book_id": "69b6ed9c3c7947b468d3a64d",
+      "n": 22,
+      "shifted": 22,
+      "offsets": {
+        "1": 19,
+        "12": 1,
+        "101": 1,
+        "-86": 1
+      }
+    },
+    {
+      "book_id": "69bd9da16120d54bd03787c3",
+      "n": 23,
+      "shifted": 22,
+      "offsets": {
+        "1": 18,
+        "2": 1,
+        "-29": 1,
+        "-93": 1,
+        "-199": 1
+      }
+    },
+    {
+      "book_id": "69b651a418b87551bfcab4f6",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "1": 5
+      }
+    },
+    {
+      "book_id": "69b64f6518b87551bfc93e15",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 11,
+        "7": 1
+      }
+    },
+    {
+      "book_id": "69bd9eaef6d63c919747befa",
+      "n": 15,
+      "shifted": 15,
+      "offsets": {
+        "1": 15
+      }
+    },
+    {
+      "book_id": "69b66811b3f4fc044156658d",
+      "n": 17,
+      "shifted": 17,
+      "offsets": {
+        "1": 16,
+        "335": 1
+      }
+    },
+    {
+      "book_id": "69b65c8218b87551bfd1483c",
+      "n": 8,
+      "shifted": 8,
+      "offsets": {
+        "1": 7,
+        "-3": 1
+      }
+    },
+    {
+      "book_id": "69bd9d056120d54bd0372a3a",
+      "n": 20,
+      "shifted": 20,
+      "offsets": {
+        "1": 18,
+        "101": 1,
+        "-99": 1
+      }
+    },
+    {
+      "book_id": "69d0debc6a2800e56ff7f427",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 11,
+        "-51": 1
+      }
+    },
+    {
+      "book_id": "69b63f841c1c21a373871849",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "1": 5
+      }
+    },
+    {
+      "book_id": "69b656e118b87551bfce481e",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "1": 5
+      }
+    },
+    {
+      "book_id": "69bd9eb7f6d63c919747c751",
+      "n": 13,
+      "shifted": 13,
+      "offsets": {
+        "1": 11,
+        "2": 1,
+        "91": 1
+      }
+    },
+    {
+      "book_id": "69b686d470c69d645a746941",
+      "n": 29,
+      "shifted": 29,
+      "offsets": {
+        "1": 25,
+        "3": 1,
+        "5": 1,
+        "11": 1,
+        "401": 1
+      }
+    },
+    {
+      "book_id": "69bda15df6d63c919748fa18",
+      "n": 14,
+      "shifted": 13,
+      "offsets": {
+        "1": 12,
+        "9": 1
+      }
+    },
+    {
+      "book_id": "69b63f741c1c21a3738708c8",
+      "n": 18,
+      "shifted": 18,
+      "offsets": {
+        "1": 18
+      }
+    },
+    {
+      "book_id": "69bd9ebff6d63c919747ca7c",
+      "n": 17,
+      "shifted": 17,
+      "offsets": {
+        "1": 15,
+        "8": 1,
+        "61": 1
+      }
+    },
+    {
+      "book_id": "69b65ef6b3f4fc0441525693",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "1": 2,
+        "2": 1
+      }
+    },
+    {
+      "book_id": "69b6aeff6e2b8bd5c3cb3406",
+      "n": 19,
+      "shifted": 19,
+      "offsets": {
+        "1": 15,
+        "6": 1,
+        "9": 1,
+        "121": 1,
+        "-99": 1
+      }
+    },
+    {
+      "book_id": "69b63f941c1c21a373872217",
+      "n": 8,
+      "shifted": 8,
+      "offsets": {
+        "1": 7,
+        "7": 1
+      }
+    },
+    {
+      "book_id": "69b64e7118b87551bfc88abe",
+      "n": 19,
+      "shifted": 19,
+      "offsets": {
+        "1": 18,
+        "51": 1
+      }
+    },
+    {
+      "book_id": "69b64f9a18b87551bfc96234",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 3,
+        "11": 1
+      }
+    },
+    {
+      "book_id": "69bd9cb16120d54bd03705ed",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 12
+      }
+    },
+    {
+      "book_id": "69bd9de56120d54bd0379fce",
+      "n": 10,
+      "shifted": 10,
+      "offsets": {
+        "1": 10
+      }
+    },
+    {
+      "book_id": "69d003fc0f4d028b337a0aec",
+      "n": 6,
+      "shifted": 6,
+      "offsets": {
+        "1": 6
+      }
+    },
+    {
+      "book_id": "69bd9e106120d54bd037b2d8",
+      "n": 10,
+      "shifted": 10,
+      "offsets": {
+        "1": 10
+      }
+    },
+    {
+      "book_id": "69b69a2d080b19f98fcfd899",
+      "n": 13,
+      "shifted": 13,
+      "offsets": {
+        "1": 12,
+        "301": 1
+      }
+    },
+    {
+      "book_id": "69bf60b8c976bc42b3c1ee8f",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "9": 1,
+        "32": 1,
+        "52": 1
+      }
+    },
+    {
+      "book_id": "69bd9daa6120d54bd0378ada",
+      "n": 17,
+      "shifted": 17,
+      "offsets": {
+        "1": 17
+      }
+    },
+    {
+      "book_id": "69b69a47080b19f98fcfdd83",
+      "n": 22,
+      "shifted": 22,
+      "offsets": {
+        "1": 21,
+        "15": 1
+      }
+    },
+    {
+      "book_id": "69b6aec0dc00a90e322b2b25",
+      "n": 24,
+      "shifted": 24,
+      "offsets": {
+        "1": 15,
+        "3": 3,
+        "61": 1,
+        "533": 1,
+        "601": 1,
+        "-99": 1,
+        "-199": 1,
+        "-1": 1
+      }
+    },
+    {
+      "book_id": "69bd958ad9007d72ade0c625",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "-132": 4
+      }
+    },
+    {
+      "book_id": "69b686f470c69d645a74750f",
+      "n": 8,
+      "shifted": 8,
+      "offsets": {
+        "1": 7,
+        "543": 1
+      }
+    },
+    {
+      "book_id": "69b6586a18b87551bfcf37ee",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "1": 3
+      }
+    },
+    {
+      "book_id": "69bd9581d9007d72ade0c407",
+      "n": 6,
+      "shifted": 6,
+      "offsets": {
+        "2": 1,
+        "165": 1,
+        "-9": 4
+      }
+    },
+    {
+      "book_id": "69b6597618b87551bfcfb4d3",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "1": 3,
+        "205": 1,
+        "356": 1
+      }
+    },
+    {
+      "book_id": "69b69a89080b19f98fcfeb4c",
+      "n": 14,
+      "shifted": 14,
+      "offsets": {
+        "1": 9,
+        "3": 1,
+        "21": 1,
+        "-199": 2,
+        "-59": 1
+      }
+    },
+    {
+      "book_id": "69cfa93f80eb0ccd3e739280",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "-70": 1,
+        "-7": 1,
+        "-88": 3
+      }
+    },
+    {
+      "book_id": "69d0067f1bdebf0e5fb68876",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "-3": 2,
+        "-11": 1,
+        "-8": 1
+      }
+    },
+    {
+      "book_id": "690986dccf28baa1b4cae0e3",
+      "n": 9,
+      "shifted": 8,
+      "offsets": {
+        "-1": 8
+      }
+    },
+    {
+      "book_id": "69d006b37d7491182a2323b7",
+      "n": 7,
+      "shifted": 7,
+      "offsets": {
+        "61": 1,
+        "234": 1,
+        "-124": 4,
+        "-151": 1
+      }
+    },
+    {
+      "book_id": "69bd9e386120d54bd037c020",
+      "n": 22,
+      "shifted": 22,
+      "offsets": {
+        "1": 18,
+        "3": 1,
+        "13": 1,
+        "61": 1,
+        "101": 1
+      }
+    },
+    {
+      "book_id": "69b6b40f96dc15d4a16dd4bc",
+      "n": 8,
+      "shifted": 8,
+      "offsets": {
+        "1": 8
+      }
+    },
+    {
+      "book_id": "69b643331c1c21a37389536b",
+      "n": 12,
+      "shifted": 12,
+      "offsets": {
+        "1": 12
+      }
+    },
+    {
+      "book_id": "69b636621c1c21a37382c700",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "78": 1,
+        "-22": 1,
+        "-138": 1
+      }
+    },
+    {
+      "book_id": "69b68c2c2368e1fad321fe5a",
+      "n": 16,
+      "shifted": 16,
+      "offsets": {
+        "1": 16
+      }
+    },
+    {
+      "book_id": "69b65fd6b3f4fc044152c073",
+      "n": 7,
+      "shifted": 7,
+      "offsets": {
+        "1": 5,
+        "7": 1,
+        "-99": 1
+      }
+    },
+    {
+      "book_id": "69bda0a2f6d63c9197489271",
+      "n": 13,
+      "shifted": 13,
+      "offsets": {
+        "1": 13
+      }
+    },
+    {
+      "book_id": "69b6e791f8a84d859cde1de2",
+      "n": 17,
+      "shifted": 17,
+      "offsets": {
+        "1": 16,
+        "101": 1
+      }
+    },
+    {
+      "book_id": "69d007417d7491182a232894",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "-455": 3
+      }
+    },
+    {
+      "book_id": "69bd9e336120d54bd037bf37",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 4
+      }
+    },
+    {
+      "book_id": "69bda107f6d63c919748ca14",
+      "n": 11,
+      "shifted": 11,
+      "offsets": {
+        "1": 10,
+        "7": 1
+      }
+    },
+    {
+      "book_id": "69bd93a22d11455793b3fae6",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "21": 3,
+        "-2": 1
+      }
+    },
+    {
+      "book_id": "69bd9e5a6120d54bd037ca07",
+      "n": 9,
+      "shifted": 9,
+      "offsets": {
+        "1": 9
+      }
+    },
+    {
+      "book_id": "69b6542618b87551bfcc6072",
+      "n": 7,
+      "shifted": 7,
+      "offsets": {
+        "1": 7
+      }
+    },
+    {
+      "book_id": "69bf60c0c976bc42b3c1f038",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "46": 1,
+        "100": 1,
+        "112": 1
+      }
+    },
+    {
+      "book_id": "69b69911080b19f98fcf9909",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 4
+      }
+    },
+    {
+      "book_id": "69b6a35d080b19f98fd19dd2",
+      "n": 15,
+      "shifted": 14,
+      "offsets": {
+        "1": 14
+      }
+    },
+    {
+      "book_id": "69b658e118b87551bfcf6dd5",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "1": 5
+      }
+    },
+    {
+      "book_id": "69b66170b3f4fc044153be41",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 4
+      }
+    },
+    {
+      "book_id": "69b656d218b87551bfce36aa",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "1": 3
+      }
+    },
+    {
+      "book_id": "69b65f00b3f4fc0441525a34",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 3,
+        "-199": 1
+      }
+    },
+    {
+      "book_id": "69b65e5eb3f4fc0441520d28",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "1": 3
+      }
+    },
+    {
+      "book_id": "69b6ed303c7947b468d34b3e",
+      "n": 7,
+      "shifted": 7,
+      "offsets": {
+        "1": 7
+      }
+    },
+    {
+      "book_id": "69aec7942bb3df12d9b41b5c",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "-8": 1,
+        "-32": 1,
+        "-23": 1
+      }
+    },
+    {
+      "book_id": "69bda054f6d63c91974860a6",
+      "n": 7,
+      "shifted": 7,
+      "offsets": {
+        "1": 7
+      }
+    },
+    {
+      "book_id": "69b656c218b87551bfce3160",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 4
+      }
+    },
+    {
+      "book_id": "69b685e770c69d645a73e13e",
+      "n": 7,
+      "shifted": 7,
+      "offsets": {
+        "1": 7
+      }
+    },
+    {
+      "book_id": "69bd9dd66120d54bd0379890",
+      "n": 6,
+      "shifted": 6,
+      "offsets": {
+        "1": 6
+      }
+    },
+    {
+      "book_id": "69b65efeb3f4fc04415259a8",
+      "n": 5,
+      "shifted": 5,
+      "offsets": {
+        "1": 5
+      }
+    },
+    {
+      "book_id": "69b6554418b87551bfcd33b7",
+      "n": 3,
+      "shifted": 3,
+      "offsets": {
+        "1": 2,
+        "3": 1
+      }
+    },
+    {
+      "book_id": "69b65de4b3f4fc044151d918",
+      "n": 4,
+      "shifted": 4,
+      "offsets": {
+        "1": 2,
+        "45": 1,
+        "-19": 1
+      }
+    }
+  ]
+}

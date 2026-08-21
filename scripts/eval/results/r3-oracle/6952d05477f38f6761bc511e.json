@@ -1,0 +1,49 @@
+{
+  "book_id": "6952d05477f38f6761bc511e",
+  "work_identified": "Basilica chymica by Oswald Croll (1609 Latin original) — comprising the Admonitory Preface, the pharmacopoeia of chemical remedies, and the Treatise of Signatures of Internal Things",
+  "verdict": "first_modern",
+  "prior_relationship": "same_text",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Bazilica chymica, & Praxis chymiatricæ, or, Royal and practical chymistry : in three treatises",
+      "translator": "a lover of chymistry (anonymous); augmented by John Hartman",
+      "pub_year": "1670",
+      "publisher": "Printed for John Starkey and Thomas Passinger, London",
+      "completeness": "complete",
+      "source_url": "https://wellcomecollection.org/works/dv6s9674"
+    },
+    {
+      "english_title": "Philosophy reformed & improved in four profound tractates (first tractate only = Croll's Admonitory Preface)",
+      "translator": "H. Pinnell",
+      "pub_year": "1657",
+      "publisher": "M.S. for Lodowick Lloyd, London",
+      "completeness": "partial",
+      "source_url": "https://ota.bodleian.ox.ac.uk/repository/xmlui/bitstream/handle/20.500.12024/A74670/A74670.html?sequence=5"
+    }
+  ],
+  "queries_run": [
+    "Oswald Croll \"Basilica chymica\" English translation",
+    "Croll \"Basilica chymica\" Pinnell 1657 English translation complete",
+    "Oswald Croll \"Basilica chymica\" modern English translation 20th century",
+    "Croll \"Basilica chymica\" 1670 English \"Bazilica chymica\" complete translation scope contents",
+    "\"Basilica chymica\" English translation history chemistry scholarship WorldCat",
+    "Croll \"Basilica chymica\" \"Philosophy reformed\" Pinnell 1657 \"admonitory preface\" partial complete",
+    "Croll \"Basilica chymica\" translation 21st century academic scholarly modern English",
+    "Oswald Croll \"Basilica chymica\" English translation after 1900 academic press dissertation"
+  ],
+  "sources_consulted": [
+    {"url": "https://wellcomecollection.org/concepts/qphpj5ya", "found": "Wellcome concept page for Basilica chymica English; confirms 1670 edition as the English translation"},
+    {"url": "https://wellcomecollection.org/works/dv6s9674", "found": "1670 English translation 'Bazilica chymica & Praxis chymiatricæ' by 'a lover of chymistry', published John Starkey & Thomas Passinger, London"},
+    {"url": "https://search.worldcat.org/title/Bazilica-chymica-and-Praxis-chymiatric-or-Royal-and-practical-chymistry-:-in-three-treatises-:-wherein-all-those-excellent-medicines-and-chymical-preparations-are-fully-discovered-from-whence-all-our-modern-chymists-have-drawn-their-choicest-remedies-:-being-a-translation-of-Oswald-Crollius-his-Royal-chymistry-augmented-and-inlarged-by-John-Hartman-:-to-which-is-added-his-Treatise-of-signatures-of-internal-things-or-A-true-and-lively-anatomy-of-the-greater-and-lesser-world-:-as-also-the-practice-of-chymistry-of-John-Hartman-M.D.-augmented-and-inlarged-by-his-son/oclc/1051147876", "found": "WorldCat OCLC 1051147876: 1670 English translation confirmed, held at Yale; three-part compound with separate title pages 1669/1670"},
+    {"url": "https://quod.lib.umich.edu/e/eebo2/A35064.0001.001?view=toc", "found": "EEBO2 record: 1670 Bazilica chymica English, including pharmacopoeia and Treatise of signatures (full content of Basilica chymica)"},
+    {"url": "https://ota.bodleian.ox.ac.uk/repository/xmlui/bitstream/handle/20.500.12024/A74670/A74670.html?sequence=5", "found": "Bodleian TCP: Pinnell 1657 'Philosophy reformed' = first tractate only (Admonitory Preface), not the full Basilica chymica"},
+    {"url": "https://alchemyandchemistry.edwardworthlibrary.ie/alchemy/paracelsus-and-the-paracelsians/", "found": "Worth collected 1670 English translation; notes second half (pharmacopoeia) drove publishing success; no modern translation mentioned"},
+    {"url": "https://archive.org/details/bim_early-english-books-1641-1700_bazilica-chymica-prax_crollius-oswald_1670", "found": "Archive.org: 1670 edition digitized from microfilm; limited metadata returned"},
+    {"url": "https://en.wikipedia.org/wiki/Oswald_Croll", "found": "Wikipedia on Croll: no mention of modern English translation of Basilica chymica"}
+  ],
+  "reasoning": "A complete English translation of the Basilica chymica ('Bazilica chymica, & Praxis chymiatricæ') exists from 1670 (pre-1900), covering both the main pharmacopoeia and Treatise of Signatures. The 1657 Pinnell is partial (Admonitory Preface only). No modern (post-1900) English translation found across WorldCat, archive.org, or history-of-chemistry scholarship. Verdict: first_modern."
+}

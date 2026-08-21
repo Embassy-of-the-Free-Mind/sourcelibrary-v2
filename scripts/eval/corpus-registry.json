@@ -1,93 +1,129 @@
 {
   "latin": {
     "label": "Latin Texts",
-    "script": "default",
-    "filter": { "language": "Latin" },
+    "script": "latin",
+    "filter": {
+      "language": "Latin"
+    },
     "default_sample": 15,
     "notes": "5,261 books with OCR. Printed Latin — easiest baseline."
   },
   "german": {
     "label": "German Texts (incl. Fraktur)",
     "script": "default",
-    "filter": { "language": "German" },
+    "filter": {
+      "language": "German"
+    },
     "default_sample": 15,
     "notes": "1,851 books. Mix of Fraktur and Roman typefaces."
   },
   "tibetan": {
     "label": "Tibetan Buddhist Manuscripts",
     "script": "tibetan",
-    "filter": { "language": "Tibetan" },
+    "filter": {
+      "language": "Tibetan"
+    },
     "default_sample": 20,
     "notes": "1,109 books. dbu can + dbu med scripts. EAP/BDRC/IIIF sources."
   },
   "greek": {
     "label": "Ancient Greek Texts",
-    "script": "default",
-    "filter": { "language": "Greek" },
+    "script": "greek",
+    "filter": {
+      "language": "Greek"
+    },
     "default_sample": 15,
     "notes": "781 books. Aldine and early printed editions."
   },
   "french": {
     "label": "French Texts",
     "script": "default",
-    "filter": { "language": "French" },
+    "filter": {
+      "language": "French"
+    },
     "default_sample": 15,
     "notes": "701 books. Printed French, early modern."
   },
   "chinese": {
     "label": "Classical Chinese",
     "script": "cjk",
-    "filter": { "language": "Chinese" },
+    "filter": {
+      "language": "Chinese"
+    },
     "default_sample": 15,
     "notes": "662 books. Woodblock-printed classical Chinese."
   },
   "sanskrit": {
     "label": "Sanskrit (Devanagari)",
     "script": "default",
-    "filter": { "language": "Sanskrit" },
+    "filter": {
+      "language": "Sanskrit"
+    },
     "default_sample": 15,
     "notes": "429 books. Printed Devanagari editions."
   },
   "hebrew": {
     "label": "Hebrew Texts",
     "script": "hebrew",
-    "filter": { "language": "Hebrew" },
+    "filter": {
+      "language": "Hebrew"
+    },
     "default_sample": 15,
     "notes": "187 books. Hebrew + Rashi script. Known failure mode for some models."
   },
   "arabic": {
     "label": "Arabic Texts",
     "script": "arabic",
-    "filter": { "language": "Arabic" },
+    "filter": {
+      "language": "Arabic"
+    },
     "default_sample": 15,
     "notes": "132 books. Printed Naskh."
   },
   "japanese": {
     "label": "Japanese Texts",
     "script": "cjk",
-    "filter": { "language": "Japanese" },
+    "filter": {
+      "language": "Japanese"
+    },
     "default_sample": 15,
     "notes": "77 books. Woodblock and printed Japanese."
   },
   "bph": {
     "label": "BPH Manuscripts (Embassy of the Free Mind)",
     "script": "default",
-    "filter": { "image_source.provider": "bph" },
+    "filter": {
+      "image_source.provider": "bph"
+    },
     "default_sample": 15,
     "notes": "2,254 books. High-quality scans from Bibliotheca Philosophica Hermetica."
   },
   "javanese-mss": {
     "label": "Javanese Kraton Manuscripts (aksara Jawa, handwritten)",
     "script": "default",
-    "filter": { "language": "Javanese", "collections": "javanese-kraton" },
+    "filter": {
+      "language": "Javanese",
+      "collections": "javanese-kraton"
+    },
     "default_sample": 10,
     "notes": "BL Yogyakarta Kraton manuscripts (Babad bedhah, Serat Selarasa) @ 4000px. HIGH OCR risk — the Tibetan analog: unfamiliar handwritten script, must benchmark before scaling. Should route to full Flash, never lite."
   },
   "javanese-dutch": {
     "label": "Dutch colonial-era Java scholarship (printed, b-nice)",
     "script": "default",
-    "filter": { "language": "Dutch", "collections": "javanese-kraton" },
+    "filter": {
+      "language": "Dutch",
+      "collections": "javanese-kraton"
+    },
     "default_sample": 10,
     "notes": "b-nice Pustaka Nusantara (Krom, etc.). Printed Latin baseline — low OCR risk; flash-lite likely fine. Watch transliteration diacritics (ṣ ṛ ḍ ñ)."
+  },
+  "armenian": {
+    "name": "Armenian",
+    "script": "armenian",
+    "description": "Classical Armenian (grabar) printed editions",
+    "query": {
+      "language": "Armenian"
+    }
   }
 }

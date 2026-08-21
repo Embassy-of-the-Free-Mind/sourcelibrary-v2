@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import PipelineDiagram, { type StageData } from '@/components/pipeline/PipelineDiagram';
 import { getReadDb } from '@/lib/mongodb';
+import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
 
 export const metadata: Metadata = {
   title: 'Pipeline Architecture | Source Library',
@@ -55,16 +56,22 @@ async function getPipelineStats() {
           { $sort: { count: -1 } },
         ], { maxTimeMS })
         .toArray(),
-      db.collection('system_config').findOne(
-        { _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId }
-      ),
+      // Age-guarded: this is a public page, and it published the 2026-04-01
+      // page totals (2.6M OCR / 1.7M translated against a real 5.3M / 4.9M)
+      // for as long as the snapshot went unwritten.
+      readFreshDashboardSnapshot(db),
     ]);
 
-    const snap = snapshot?.data as Record<string, Record<string, number>> | undefined;
-    const pageAgg = [{ pages: snap?.coverage?.ocr_pages ?? 0, ocr: snap?.coverage?.ocr_pages ?? 0, translated: snap?.coverage?.translated_pages ?? 0 }];
-    const totalBooks = snap?.canon?.total_books ?? 0;
-
-    const agg = pageAgg[0] || { pages: 0, ocr: 0, translated: 0 };
+    const snap = snapshot?.data;
+    // `pages` is total pages, not OCR'd pages — the two were conflated here, so
+    // the page reported an OCR figure under a "total pages" label and could
+    // never show coverage below 100%.
+    const agg = {
+      pages: snap?.canon.total_pages ?? 0,
+      ocr: snap?.coverage.ocr_pages ?? 0,
+      translated: snap?.coverage.translated_pages ?? 0,
+    };
+    const totalBooks = snap?.canon.total_books ?? 0;
 
     // Group by stage
     const stageGroups: Record<string, { total: number; substages: { status: string; count: number }[] }> = {};

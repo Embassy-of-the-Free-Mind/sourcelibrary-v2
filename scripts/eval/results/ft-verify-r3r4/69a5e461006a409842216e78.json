@@ -1,0 +1,44 @@
+{
+  "book_id": "69a5e461006a409842216e78",
+  "action": "demote",
+  "action_valid": true,
+  "basis": "complete_modern_prior_same_work",
+  "prior": {
+    "translator": "Robert Doran",
+    "year": "1992",
+    "completeness": "complete",
+    "url": "https://www.amazon.com/Lives-Simeon-Stylites-Cistercian-Studies/dp/0879075120"
+  },
+  "queries_run": [
+    "Codex Vaticanus Syriacus 160 contents Syriac Life Symeon Stylite",
+    "Frederick Lent 1915 Life of Symeon Stylites JAOS translation complete",
+    "Robert Doran 1992 Cistercian Symeon Stylites Syriac Life English translation",
+    "Vaticanus Syriacus 160 recension Syriac Life Symeon different Bedjan translation",
+    "Syriac Life Symeon Stylite two recensions shorter longer Assemani Vatican Bedjan English translation",
+    "Doran Lives of Simeon Stylites 1992 Syriac Life Vatican British Museum Bedjan Assemani",
+    "Symeon Stylite Syriac Life first complete English shorter recension"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.tertullian.org/fathers/simeon_stylites_vita_00_intro.htm",
+      "found": "Lent 1915 translated the LONGER Bedjan recension (B.M. Add. 14484), not the Vatican shorter recension. Two independent recensions confirmed: Bedjan (longer) and Assemani/Vatican Syr. 160 (shorter). Neither derives from the other."
+    },
+    {
+      "url": "https://www.academia.edu/15259220/The_Context_of_Production_of_the_Vatican_Manuscript_of_the_Syriac_Life_of_Symeon_the_Stylite",
+      "found": "Vat. Syr. 160 confirmed as containing the shorter Assemani recension; produced 473 AD by Simeon of Marimîn and archdeacon Cyrus at Telneshe."
+    },
+    {
+      "url": "https://www.amazon.com/Lives-Simeon-Stylites-Cistercian-Studies/dp/0879075120",
+      "found": "Doran 1992 Cistercian Studies 112 includes the Syriac Life alongside Theodoret and Antonius vitae."
+    },
+    {
+      "url": "https://medievalsourcesbibliography.org/sources.php?id=2146116425",
+      "found": "Doran Syriac Life translation is based on the Vatican manuscript (dated 473 AD) using Assemani edition as source text."
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Simeon_Stylites",
+      "found": "All three lives translated into English by Doran; Syriac life also by Lent. Syriac source dates to 473 (= Vat. Syr. 160)."
+    }
+  ],
+  "reasoning": "Vat. Syr. 160 holds the SHORTER Assemani recension of the Syriac Life. Lent 1915 translated the LONGER Bedjan recension (different text, NOT a prior). Doran 1992 (Cistercian Studies 112) explicitly translated from the Vatican manuscript / Assemani edition — the same shorter recension in our codex. Complete modern English prior confirmed via Doran. Stage-1 claim about Lent is wrong recension, but Doran is valid; demote stands."
+}

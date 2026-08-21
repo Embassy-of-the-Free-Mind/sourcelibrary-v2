@@ -1,0 +1,21 @@
+{
+  "book_id": "69f3383f876dd827cbc5389c",
+  "work_identified": "Miniatures and initial letters: manuscript, [ca. 1500] — detached illuminated miniatures and decorated initial letters from a medieval/early Renaissance manuscript; purely visual art, no translatable prose",
+  "verdict": "not_applicable",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "none",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Matteo \"Miniatures and initial letters\" manuscript 1500 illuminated",
+    "\"Miniatures and initial letters\" manuscript 1500 Matteo archive.org worldcat zxx",
+    "worldcat \"miniatures and initial letters\" manuscript Matteo 1500 illuminated art"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Miniature_(illuminated_manuscript)", "found": "Confirms miniatures are pictorial/decorative illustrations in manuscripts, not translatable prose"},
+    {"url": "https://en.wikipedia.org/wiki/Illuminated_manuscript", "found": "Confirms initial letters are decorative/calligraphic elements, not prose text"}
+  ],
+  "reasoning": "Source language zxx = 'no linguistic content' (ISO 639-2). Title describes detached illuminated miniatures and decorated initial letters from a ca. 1500 manuscript — purely pictorial/decorative art objects with no translatable prose. Contract: not_applicable for wordless visual art."
+}

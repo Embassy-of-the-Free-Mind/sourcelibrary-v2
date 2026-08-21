@@ -1,20 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
-import { canDownload, classifyImageAccess, PRICES } from '@/lib/purchases';
+import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
 import { isBookReadable } from '@/lib/book-access';
+import { isInnerCircle } from '@/lib/auth-helpers';
+import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
+import { checkAndRecordDownload } from '@/lib/download-cap';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
-import sharp from 'sharp';
+import sharp, { type CreateText, type TextAlign } from 'sharp';
 import { writeFileSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { getTranslation } from '@/lib/page-translations';
 import { getBookIndex } from '@/lib/book-index';
-import { getPageImageUrl } from '@/lib/page-image-url';
 import { Readable } from 'stream';
+import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
+import { markdownToHtml } from '@/lib/export-markdown-html';
+import {
+  fetchAndCompressImage,
+  pageExportImageUrl,
+  hasExportImage,
+  fetchPageImagesOrdered,
+  streamPageImagesOrdered,
+  fetchFacsimilePdfImage,
+  generateImagesZipStream,
+} from '@/lib/export-page-images';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -161,89 +175,21 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   return lines.join('\n');
 }
 
-// Convert markdown-like text to basic HTML for EPUB
-function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): string {
-  // First, remove image markdown syntax (can't embed in simple EPUB)
-  let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
-
-  // Remove any standalone URLs
-  html = html.replace(/https?:\/\/[^\s\)]+/g, '');
-
-  // Strip notes/margin/gloss entirely when requested (scholarly EPUB — they clutter the reading flow)
-  if (opts?.stripNotes) {
-    html = html.replace(/<note>[\s\S]*?<\/note>/gi, '');
-    html = html.replace(/<margin>[\s\S]*?<\/margin>/gi, '');
-    html = html.replace(/<gloss>[\s\S]*?<\/gloss>/gi, '');
-    html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
-  }
-
-  // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
-  // These are our custom tags that should become actual HTML elements
-  html = html.replace(/<note>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
-  html = html.replace(/<margin>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
-  html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
-  html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
-  html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
-  // Strip <insert> tags (keep content) and <column-break/> markers
-  html = html.replace(/<insert>([\s\S]*?)<\/insert>/gi, '$1');
-  html = html.replace(/<column-break\s*\/?>/gi, '');
-  // Strip ->...<- centering markers (OCR convention for centered text)
-  html = html.replace(/->/g, '').replace(/<-/g, '');
-  // Remove metadata tags (hidden)
-  html = html.replace(/<(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>[\s\S]*?<\/(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>/gi, '');
-  html = html.replace(/<(?:column-break|page-break)\s*\/?>/gi, '');
-
-  // Escape HTML entities
-  html = html
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
-  // Convert placeholders to inline styled elements (no line breaks)
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<span class="margin">[$1]</span>');
-  html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
-  html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
-  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
-
-  // Convert legacy [[notes: ...]] to inline
-  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-
-  // Convert headers (must be done before paragraph wrapping)
-  html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
-  html = html.replace(/^## (.+)$/gm, '\n<h2>$1</h2>\n');
-  html = html.replace(/^# (.+)$/gm, '\n<h1>$1</h1>\n');
-
-  // Convert bold and italic
-  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-  // Split by double newlines to create paragraphs
-  const blocks = html.split(/\n\n+/);
-
-  // Process each block
-  html = blocks.map(block => {
-    block = block.trim();
-    if (!block) return '';
-    // Don't wrap headers in paragraphs
-    if (block.startsWith('<h')) {
-      return block;
-    }
-    // Replace single newlines with breaks within paragraphs
-    block = block.replace(/\n/g, '<br/>');
-    return `<p>${block}</p>`;
-  }).filter(b => b).join('\n');
-
-  // Clean up empty paragraphs and whitespace issues
-  html = html.replace(/<p>\s*<\/p>/g, '');
-  html = html.replace(/<p><br\/><\/p>/g, '');
-
-  return html || '<p></p>';
-}
-
 // Custom CSS for EPUB styling
 const EPUB_CSS = `
+table.page-table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.85em;
+  width: 100%;
+}
+table.page-table th, table.page-table td {
+  border: 1px solid #ccc;
+  padding: 0.25em 0.4em;
+  text-align: left;
+  vertical-align: top;
+}
+table.page-table th { background: #f2f0ec; font-weight: bold; }
 body {
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.6;
@@ -281,6 +227,37 @@ p {
   border-top: 1px solid #ddd;
   font-size: 0.8em;
   color: #666;
+}
+`;
+
+// Reflowable parallel-text CSS (#3284) — extends EPUB_CSS conventions with a
+// visually distinct but 100% reflowable block for the original-language
+// text. No fixed dimensions, no overflow:hidden, no absolute positioning:
+// this is what makes it render correctly in every EPUB reader, unlike the
+// fixed-layout LOEB_CSS below (which requires FXL support the majority of
+// readers — Adobe Digital Editions, most Android apps, older Kobo firmware —
+// don't reliably implement, and which epubcheck cannot catch because FXL
+// metadata compliance is orthogonal to reader-side rendering behavior).
+const PARALLEL_FLOW_CSS = EPUB_CSS + `
+.original-block {
+  background: #fdfcf6;
+  border-left: 3px solid #8b0000;
+  padding: 0.8em 1em;
+  margin: 0 0 1.2em 0;
+}
+.translation-block {
+  padding: 0.2em 0 0 0;
+}
+.lang-label {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  font-size: 0.75em;
+  color: #8b0000;
+  margin: 0 0 0.5em 0;
+}
+.translation-block .lang-label {
+  color: #555;
 }
 `;
 
@@ -450,6 +427,107 @@ async function generateEpubDownload(
     lang: format === 'epub-ocr' ? book.language : 'en',
     tocTitle: 'Contents',
     css: EPUB_CSS,
+    date: now,
+  }, chapters);
+
+  return epubBuffer;
+}
+
+// Reflowable parallel-text EPUB (#3284): standard reflowable EPUB, one
+// chapter per page, with a visually distinct original-language block
+// followed by the translation block — both stacked in normal document flow,
+// never absolutely positioned or fixed-dimension. This is the format behind
+// the "epub-parallel" download key so every reader (including the many that
+// don't implement EPUB3 fixed-layout) gets a working parallel text. The
+// true facing-page (Loeb-style) fixed-layout edition moved to a separate key,
+// "epub-parallel-fxl", generated by generateLoebEpubDownload() below.
+async function generateParallelFlowEpubDownload(
+  book: Book,
+  pages: Page[]
+): Promise<Buffer> {
+  const now = new Date().toISOString().split('T')[0];
+  const bookTitle = book.display_title || book.title;
+
+  // Build description
+  let description = `A digitized and translated text from the Source Library collection.`;
+  if (book.summary) {
+    const summaryText = typeof book.summary === 'string' ? book.summary : book.summary.data;
+    if (summaryText) {
+      description = summaryText.substring(0, 500);
+    }
+  }
+
+  const chapters: { title: string; content: string }[] = [];
+
+  // Front matter
+  const frontMatter = `
+    <h1>${bookTitle}</h1>
+    <p><strong>Author:</strong> ${book.author}</p>
+    <p><strong>Original Language:</strong> ${book.language}</p>
+    ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
+    <p><strong>Content:</strong> Parallel Text Edition — original and translation interleaved page by page</p>
+    <div class="colophon">
+      <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
+      <p><strong>Downloaded:</strong> ${now}</p>
+      <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+      <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    </div>
+  `;
+  chapters.push({ title: 'Title Page', content: frontMatter });
+
+  // One chapter per page — original block (if present) then translation
+  // block (if present). Pages missing either text include only what exists.
+  for (const page of pages) {
+    if (!page) continue;
+
+    const hasOcr = !!(page.ocr && page.ocr.data);
+    const hasTranslation = !!(page.translation && page.translation.data);
+    if (!hasOcr && !hasTranslation) continue;
+
+    let content = `<div class="page-header">Page ${page.page_number}</div>`;
+
+    if (hasOcr && page.ocr) {
+      content += `<div class="original-block">
+        <p class="lang-label">Original &middot; ${book.language}</p>
+        ${markdownToHtml(page.ocr.data)}
+      </div>`;
+    }
+
+    if (hasTranslation && page.translation) {
+      content += `<div class="translation-block">
+        <p class="lang-label">English</p>
+        ${markdownToHtml(markForExport(page.translation.data, book.id))}
+      </div>`;
+    }
+
+    chapters.push({
+      title: `Page ${page.page_number}`,
+      content,
+    });
+  }
+
+  // Colophon
+  const colophon = `
+    <h1>About This Edition</h1>
+    <p>This parallel text edition was prepared by the <strong>Source Library</strong>, presenting the original ${book.language} text and its English translation together, page by page.</p>
+    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
+    <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+    <p><em>This edition carries a Trithemian imprimatur — an invisible provenance mark
+    in the tradition of the printer's device, asserting that this translation was produced
+    by Source Library. It does not identify you or track your usage.</em></p>
+  `;
+  chapters.push({ title: 'About This Edition', content: colophon });
+
+  // Generate EPUB
+  const epubBuffer = await epub({
+    title: `${bookTitle} (Parallel Text)`,
+    author: book.author,
+    publisher: 'Source Library',
+    description: description,
+    lang: 'en',
+    tocTitle: 'Contents',
+    css: PARALLEL_FLOW_CSS,
     date: now,
   }, chapters);
 
@@ -809,71 +887,6 @@ function getTextSizeClass(text: string): string {
 }
 
 // Image dimensions for fixed-layout EPUB
-const IMAGE_WIDTH = 600;
-const IMAGE_HEIGHT = 900;
-
-// Fetch and process image for EPUB embedding
-// Uses minimal processing: grayscale + normalize (auto contrast)
-async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
-  try {
-    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
-
-    // Process with sharp: resize, grayscale, normalize, compress
-    const processed = await sharp(buffer)
-      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
-        fit: 'inside',
-        withoutEnlargement: true
-      })
-      .grayscale()
-      .normalize()  // Auto contrast stretch
-      .jpeg({
-        quality: 75,
-        mozjpeg: true
-      })
-      .toBuffer();
-
-    console.log(`Image processed: ${url.slice(-30)} -> ${(processed.length / 1024).toFixed(1)}KB`);
-    return processed;
-  } catch (error) {
-    console.error(`Failed to fetch/process image: ${url}`, error);
-    return null;
-  }
-}
-
-// Resolve a page's export image via the canonical resolver (R2 display variant
-// first — `photo` is the SOURCE-provider URL, often a slow Internet Archive
-// fetch, and on split-from-spread pages it is the wrong image entirely).
-// Falls back to the legacy field priority this route used historically.
-function pageExportImageUrl(page: Page): string | null {
-  const legacy = (page as { compressed_photo?: string }).compressed_photo || page.photo || null;
-  const resolved = getPageImageUrl(page, 'display') || legacy;
-  if (!resolved) return null;
-  return resolved.startsWith('/') ? `${BASE_URL}${resolved}` : resolved;
-}
-
-// Prefetch page images with BOUNDED concurrency, preserving page order.
-// Serial fetching made a ~126-page book take >100s of response silence, so
-// Cloudflare cut the connection (HTTP 524) and readers saved the CF error
-// page as a corrupt .zip/.epub (footer feedback, 2026-07-02). Unbounded
-// Promise.all is the opposite failure: hundreds of concurrent image fetches.
-async function fetchPageImagesOrdered(
-  validPages: Page[],
-  concurrency = 8,
-): Promise<{ page: Page; imageBuffer: Buffer | null }[]> {
-  const results: { page: Page; imageBuffer: Buffer | null }[] = new Array(validPages.length);
-  let next = 0;
-  async function worker() {
-    while (next < validPages.length) {
-      const i = next++;
-      const page = validPages[i];
-      const url = pageExportImageUrl(page);
-      results[i] = { page, imageBuffer: url ? await fetchAndCompressImage(url) : null };
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(concurrency, validPages.length) }, worker));
-  return results;
-}
-
 // Generate facsimile EPUB: original page image on left, translation on right
 async function generateFacsimileEpubDownload(
   book: Book,
@@ -1134,45 +1147,6 @@ p:first-of-type { text-indent: 0; }
 
     archive.finalize();
   });
-}
-
-// Generate ZIP of all page images
-// Returns a live archiver stream so the response starts flowing immediately.
-// Buffering the whole zip meant zero bytes for the full build time; big books
-// crossed Cloudflare's ~100s origin window and died with a 524.
-function generateImagesZipStream(book: Book, pages: Page[]): archiver.Archiver {
-  const validPages = pages.filter(p => pageExportImageUrl(p));
-  const archive = archiver('zip', { zlib: { level: 6 } });
-
-  (async () => {
-    console.log(`Fetching ${validPages.length} images for ZIP (streaming)...`);
-    // Sliding window: ~8 fetches in flight, appended strictly in page order.
-    const inFlight: (Promise<Buffer | null> | undefined)[] = new Array(validPages.length);
-    let started = 0;
-    const startNext = () => {
-      if (started >= validPages.length) return;
-      const i = started++;
-      const url = pageExportImageUrl(validPages[i]);
-      inFlight[i] = url ? fetchAndCompressImage(url) : Promise.resolve(null);
-    };
-    for (let k = 0; k < Math.min(8, validPages.length); k++) startNext();
-
-    for (let i = 0; i < validPages.length; i++) {
-      const imageBuffer = await inFlight[i];
-      inFlight[i] = undefined;
-      startNext();
-      if (imageBuffer) {
-        const paddedNum = String(validPages[i].page_number).padStart(4, '0');
-        archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
-      }
-    }
-    await archive.finalize();
-  })().catch(err => {
-    console.error('images-zip stream failed:', err);
-    archive.destroy(err instanceof Error ? err : new Error(String(err)));
-  });
-
-  return archive;
 }
 
 // Generate images-only EPUB (no translation, just the processed page images)
@@ -1583,8 +1557,8 @@ async function renderCoverText(
   if (opts?.letterSpacing) attrs.push(`letter_spacing="${Math.round(opts.letterSpacing * 1024)}"`);
   const markup = `<span ${attrs.join(' ')}>${content}</span>`;
 
-  const textInput: sharp.CreateText = {
-    text: markup, width: maxWidth, align: 'centre' as sharp.TextAlign, rgba: true, dpi: 72,
+  const textInput: CreateText = {
+    text: markup, width: maxWidth, align: 'centre' as TextAlign, rgba: true, dpi: 72,
     font: fontfile ? `Cormorant Garamond ${fontSize}` : `serif ${fontSize}`,
     ...(fontfile ? { fontfile } : {}),
   };
@@ -2389,9 +2363,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const { searchParams } = new URL(request.url);
     const format = searchParams.get('format') || 'translation';
 
-    // Valid formats: TXT, EPUB, and ZIP
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'epub-scholarly', 'epub-bilingual', 'images-zip'];
-    if (!validFormats.includes(format)) {
+    // Valid formats: TXT, EPUB, ZIP, and PDF — tier membership (free text vs.
+    // premium) lives in src/lib/download-formats.ts, the single source of
+    // truth shared with the tenant route and DownloadButton.tsx.
+    if (!isValidDownloadFormat(format)) {
       return NextResponse.json(
         { error: 'Invalid format' },
         { status: 400 }
@@ -2412,13 +2387,23 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const editionId = searchParams.get('edition_id');
 
     const isEpub = format.startsWith('epub-');
-    const isLoeb = format === 'epub-parallel';
+    // "epub-parallel" is the reflowable parallel-text edition (works in every
+    // reader). "epub-parallel-fxl" is the true facing-page, fixed-layout
+    // (Loeb-style) edition — kept as a separate opt-in key after #3284, since
+    // FXL requires reader support most EPUB apps don't reliably provide.
+    const isParallelFlow = format === 'epub-parallel';
+    const isLoebFxl = format === 'epub-parallel-fxl';
     const isFacsimile = format === 'epub-facsimile';
     const isImagesOnly = format === 'epub-images';
     const isScholarly = format === 'epub-scholarly';
     const isBilingual = format === 'epub-bilingual';
     const isImagesZip = format === 'images-zip';
-    const imageFormat = isFacsimile || isImagesOnly || isImagesZip;
+    const isPdfTranslation = format === 'pdf-translation';
+    const isPdfFacsimile = format === 'pdf-facsimile';
+    // pdf-facsimile embeds page scans, so it's gated like the other image
+    // formats (blocked/nc-free license classification). pdf-translation is
+    // text-only and follows the plain paid gate below.
+    const imageFormat = isFacsimile || isImagesOnly || isImagesZip || isPdfFacsimile;
 
     let imageAccess: 'open' | 'nc-free' | 'blocked' = 'open';
     if (imageFormat) {
@@ -2434,14 +2419,39 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
     }
 
-    // NC-free image formats skip the paid gate (charging would cross the NC line).
-    if (process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    // Paid gate applies ONLY to premium formats (#3290) — free text formats
+    // never hit this. NC-free image formats skip it too (charging would
+    // cross the NC line).
+    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
           { error: 'Purchase required', price: PRICES.book.label, type: 'book', itemId: id },
           { status: 402 },
         );
+      }
+    }
+
+    // Daily free-tier cap (#3290): free text formats are ungated by price but
+    // capped at 20 distinct books/24h per account, to keep the free tier from
+    // becoming a bulk-export path. Members, per-book purchasers, and
+    // editor/admin sessions are exempt. Runs after the sign-in/402/403 gates
+    // and before any expensive generation work below.
+    if (!isPremiumFormat(format)) {
+      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+      const isExemptEditor = await isInnerCircle();
+      const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
+      if (!isMember && !isExemptEditor && !isPurchased) {
+        const cap = await checkAndRecordDownload(userId, id);
+        if (!cap.allowed) {
+          return NextResponse.json(
+            {
+              error: 'Daily download limit reached (20 books/24h). For bulk or programmatic access, see https://sourcelibrary.org/licensing',
+              limit_reached: true,
+            },
+            { status: 429 },
+          );
+        }
       }
     }
 
@@ -2465,23 +2475,73 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       .sort({ page_number: 1 })
       .toArray();
 
+    // Export a non-English edition (#4095) by SUBSTITUTING it into
+    // `page.translation` right here, once, instead of threading a language
+    // through fifteen format generators (PDF, EPUB in six variants, TXT,
+    // markdown, the facing-page builders). Every downstream reader keeps
+    // reading `page.translation.data` and gets the requested edition, with its
+    // own model/source metadata attached — which is what an export should
+    // record. Pages with no text in that language keep their English
+    // translation rather than dropping out: an export with holes in it is
+    // worse than one that is mostly Spanish, and `lang_coverage` in the
+    // response header says how many of each there are.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const exportLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    let localizedPages = 0;
+    if (exportLang !== 'en') {
+      for (const p of pages) {
+        const localized = getTranslation(p as never, exportLang);
+        if (localized?.data) { p.translation = localized; localizedPages++; }
+      }
+      // A file download has no room for a coverage field, so record it here:
+      // `/api/books/{id}/text?lang=<iso>` reports `lang_coverage` for the same
+      // book if a caller needs the number before exporting.
+      console.info(`[download] ${id} format=${format} lang=${exportLang}: ${localizedPages}/${pages.length} pages in ${exportLang}, the rest fall back to English`);
+    }
+
     // Create safe filename base
-    const safeTitle = (book.display_title || book.title || 'untitled')
+    // The language belongs in the FILENAME. A downloaded file leaves the site
+    // and is read months later out of a folder; `plato-es-translation.pdf` says
+    // what it is and `plato-translation.pdf` does not.
+    const langSuffix = exportLang !== 'en' ? `-${exportLang}` : '';
+    const safeTitle = ((book.display_title || book.title || 'untitled')
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '')
-      .substring(0, 50);
+      .substring(0, 50)) + langSuffix;
 
     // Handle images ZIP download
     if (isImagesZip) {
-      const archive = generateImagesZipStream(
-        book as unknown as Book,
-        pages as unknown as Page[]
-      );
+      const archive = generateImagesZipStream(pages as unknown as Page[]);
       return new Response(Readable.toWeb(archive) as unknown as ReadableStream, {
         headers: {
           'Content-Type': 'application/zip',
           'Content-Disposition': `attachment; filename="${safeTitle}-images.zip"`,
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
+
+    // Handle PDF downloads (pdf-translation, pdf-facsimile). Streamed exactly
+    // like images-zip above: the PDFDocument is a Readable, and content is
+    // appended asynchronously after this Response starts — buffering the
+    // whole PDF first would cross Cloudflare's ~100s origin window on a big
+    // book and die as a 524 saved as a corrupt file.
+    if (isPdfTranslation || isPdfFacsimile) {
+      const doc = isPdfFacsimile
+        ? generatePdfFacsimileStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+            hasImage: p => !!pageExportImageUrl(p as Page),
+            streamImages: ps => streamPageImagesOrdered(ps as Page[], fetchFacsimilePdfImage),
+          })
+        : generatePdfTranslationStream(book as unknown as Book, pages as unknown as Page[], {
+            baseUrl: BASE_URL,
+          });
+      const suffix = isPdfFacsimile ? 'facsimile' : 'translation';
+      return new Response(Readable.toWeb(doc) as unknown as ReadableStream, {
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `attachment; filename="${safeTitle}-${suffix}.pdf"`,
           'Cache-Control': 'no-cache',
         },
       });
@@ -2505,13 +2565,21 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           pages as unknown as Page[]
         );
         filename = `${safeTitle}-facsimile.epub`;
-      } else if (isLoeb) {
-        // Generate Loeb-style parallel text EPUB
-        epubBuffer = await generateLoebEpubDownload(
+      } else if (isParallelFlow) {
+        // Generate reflowable parallel text EPUB (#3284) — works in every
+        // EPUB reader, not just FXL-capable ones.
+        epubBuffer = await generateParallelFlowEpubDownload(
           book as unknown as Book,
           pages as unknown as Page[]
         );
         filename = `${safeTitle}-parallel.epub`;
+      } else if (isLoebFxl) {
+        // Generate Loeb-style facing-page, fixed-layout parallel text EPUB
+        epubBuffer = await generateLoebEpubDownload(
+          book as unknown as Book,
+          pages as unknown as Page[]
+        );
+        filename = `${safeTitle}-parallel-fxl.epub`;
       } else if (isScholarly || isBilingual) {
         // Generate scholarly EPUB with front/back matter (optionally bilingual)
         // Fetch additional data: edition, index, summary

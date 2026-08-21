@@ -1,0 +1,43 @@
+{
+  "book_id": "69c1bae08522835be845b1f6",
+  "work_identified": "Karaite festival prayer book for Passover and Shavuot (Seder Tefillot le-Pesaḥ + Seder Tefillot le-Shavuot), Hebrew and Judeo-Arabic, MS Gaster Hebrew 146, Jerusalem c.1667/8",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "none",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Karaite prayer book Passover Shavuot English translation",
+    "Nemoy \"Karaite Anthology\" contents prayer liturgy translation",
+    "Karaite siddur machzor English translation published",
+    "Karaite Passover Haggadah English translation Nehemia Gordon published",
+    "Karaite prayer book Passover Shavuot Hebrew Judeo-Arabic manuscript English translation WorldCat",
+    "Gaster Hebrew MS 146 Manchester Karaite prayer book Passover Shavuot description translation",
+    "Karaite liturgy Passover Shavuot complete English translation scholarly published book",
+    "Karaite Jews America publications \"Shavuot\" OR \"Pentecost\" prayer service English",
+    "Karaite \"prayer book\" \"Shavuot\" OR \"Feast of Weeks\" English translation book published",
+    "\"Karaite\" \"Seder Tefillot\" OR \"Seder ha-Tefillot\" Passover Shavuot English translation OR \"translated\"",
+    "Karaite festival prayer service Shavuot English text academic publication translation",
+    "\"Karaite\" \"festival prayer\" OR \"holiday prayer\" English published Brill Yale scholarly book",
+    "Karaite prayer book holiday services English translation published Nehemia Gordon OR \"Karaite Jews of America\"",
+    "site:archive.org \"karaite\" \"holiday\" OR \"festival\" prayer English translation",
+    "Karaite festival prayer Passover synagogue service liturgy English scholarly translation published journal"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.digitalcollections.manchester.ac.uk/view/MS-GASTER-HEBREW-00146", "found": "MS Gaster Hebrew 146: 17th-c. Karaite prayer book for Passover (ff.1a-96b) and Shavuot (ff.97a-137b) in Hebrew + Judeo-Arabic liturgical instructions; produced Jerusalem c.1667/8; no English translation mentioned"},
+    {"url": "https://openn.library.upenn.edu/Data/0021/html/GasterHebrewMss146.html", "found": "Catalog: confirms Seder Tefillot le-Pesaḥ and Seder Tefillot le-Shavuot; manuscript incomplete; no English translation referenced"},
+    {"url": "https://www.karaite-korner.org/haggadah.shtml", "found": "Karaite Passover Haggadah (Egyptian + Russian versions) in English by Nehemia Gordon — Passover seder/home ritual only, not the full synagogue prayer service, no Shavuot content"},
+    {"url": "https://www.amazon.com/Karaite-Jewish-Passover-Haggadah/dp/0996965718", "found": "Server error (HTTP 500) — could not retrieve"},
+    {"url": "https://www.karaites.org/shabbat-prayer-book.html", "found": "KJA publishes only Shabbat prayer book; no Shavuot or Passover prayer service publications listed"},
+    {"url": "https://www.karaites.org/reading-room.html", "found": "KJA Reading Room: Mikdash Me'at (halakhic, not liturgical) and educational materials; no English holiday prayer service listed"},
+    {"url": "https://archive.org/details/SiddurTefilotHaQaraimKaraitePrayerBookNehemiaGordon2002", "found": "Gordon's siddur (2002): weekdays and Sabbath prayers only; holiday services not covered"},
+    {"url": "https://archive.org/details/karaite-prayer-book-part-two-chelek-sheini-holiday-services-vilna-ed.-1892", "found": "Karaite holiday services prayer book (Vilna 1892) — Hebrew only, no English translation"},
+    {"url": "https://archive.org/details/karaiteliturgyit0000gold", "found": "Goldberg, 'Karaite Liturgy and Its Relation to Synagogue Worship' (1957, Manchester UP) — scholarly analysis in English; not a prayer book translation"},
+    {"url": "https://yalebooks.yale.edu/book/9780300039290/karaite-anthology/", "found": "Nemoy, Karaite Anthology (Yale, 1952) — selected excerpts from early literature including some liturgy; not a complete prayer book translation"},
+    {"url": "https://opensiddur.org/shared/compilations/liturgical/siddurim/karaite-prayer/", "found": "HTTP 403 — could not retrieve; known to index Gordon's weekday/Sabbath siddur only"},
+    {"url": "https://archive.org/search?query=karaite+prayer+shavuot&mediatype=texts", "found": "No English translation of Karaite Shavuot prayer service found on archive.org"}
+  ],
+  "reasoning": "No complete English translation of this composite Karaite festival prayer book (Passover synagogue liturgy + Shavuot liturgy + Judeo-Arabic instructions) found. The Karaite Passover Haggadah exists in English (Gordon/KJA) but is the home seder ritual, not the synagogue Seder Tefillot in this MS. No Karaite Shavuot prayer service found in English. Nemoy's Anthology has excerpts only. Karaite holiday prayer books on archive.org are Hebrew-only."
+}

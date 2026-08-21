@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Invisible Hand Has a History - Research Notes - Source Library',
@@ -9,7 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Invisible Hand Has a History',
     description: 'Before Adam Smith, Florentine merchants, Salamanca theologians, and Cambridge Platonists built the intellectual foundations of market theory.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/7.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/7.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/7.jpg' }],
   },
   alternates: {
     canonical: '/blog/invisible-hand',
@@ -23,7 +26,7 @@ export default function InvisibleHandPage() {
         <ContentHeader
           title="The Invisible Hand Has a History"
           subtitle="Tracing Market Theory from Aristotle to Bastiat in Original Editions"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/7.jpg"
+          image="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/7.jpg"
           imageAlt="Title page of Atalanta Fugiens by Michael Maier"
         >
           <p className="text-stone-400 text-sm mt-4">15 February 2026 &middot; 20 min read</p>
@@ -52,7 +55,7 @@ export default function InvisibleHandPage() {
           <Link href="/gallery/image/69520c46ab34727b1f044158-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/api/crop-image?url=https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/23.jpg&x=0.118&y=0.198&w=0.765&h=0.492"
+              src="/api/crop-image?url=https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/23.jpg&x=0.118&y=0.198&w=0.765&h=0.492"
               alt="Mother Earth or Nature with a globe as her torso, from Atalanta Fugiens (1618)"
               className="w-full max-w-lg mx-auto rounded-lg shadow-md"
             />
@@ -216,7 +219,7 @@ export default function InvisibleHandPage() {
           <Link href="/gallery/image/695203a6ab34727b1f041db8-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/api/crop-image?url=https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695203a5ab34727b1f041c53/357.jpg&x=0.118&y=0.279&w=0.448&h=0.433"
+              src="/api/crop-image?url=https://images.sourcelibrary.org/archived/695203a5ab34727b1f041c53/357.jpg&x=0.118&y=0.279&w=0.448&h=0.433"
               alt="Seascape with sailing ship and coastal city, from Musaeum Hermeticum (1678)"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
@@ -313,7 +316,7 @@ export default function InvisibleHandPage() {
           <Link href="/gallery/image/695004c2f426a210d1097f34-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/api/crop-image?url=https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a0461b95-c56a-463a-beed-a6a2fb11cec2/102.jpg&x=0.06&y=0.07&w=0.88&h=0.84"
+              src="/api/crop-image?url=https://images.sourcelibrary.org/archived/a0461b95-c56a-463a-beed-a6a2fb11cec2/102.jpg&x=0.06&y=0.07&w=0.88&h=0.84"
               alt="Fortuna overcoming Virtue, emblem from Alciato's Emblemata (1621)"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
@@ -417,7 +420,6 @@ export default function InvisibleHandPage() {
         </div>
       </article>
 
-      <BlogComments slug="invisible-hand" />
     </ContentPageLayout>
   );
 }

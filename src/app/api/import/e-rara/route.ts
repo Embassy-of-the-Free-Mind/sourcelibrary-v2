@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
+import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
@@ -177,6 +178,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     const author = normalizeMarcAuthor(authorOverride) ?? normalizeMarcAuthor(metadata.creator);
     const authorForLookup = author ?? 'Unknown';
     const published = publishedOverride || metadata.date || 'Unknown';
+    const numericYear = publishedToYear(published);
     const language = languageOverride || metadata.language || 'Unknown';
 
     // Map language codes to full names
@@ -250,6 +252,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       author,
       language: languageFull,
       published,
+      ...(numericYear !== null ? { year: numericYear } : {}),
       categories: categories || [],
       ...(work_id ? { work_id } : {}),
       erara_id: numericId,

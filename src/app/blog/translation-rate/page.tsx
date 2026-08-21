@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Many Renaissance Books Get Translated Each Year? - Research Notes - Source Library',
   description: 'We queried 23,700+ records from the UNESCO Index Translationum, Library of Congress, and 20+ other translation catalogs to measure the annual rate of new English translations of early modern texts. The answer is smaller than anyone guesses.',
   openGraph: {
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg', alt: 'Arts and Crafts frontispiece from the Book of Divine Consolation of Angela of Foligno, 1909' }],
     title: 'How Many Renaissance Books Get Translated Each Year?',
     description: 'We queried 13,862 records from the UNESCO Index Translationum and 11 other translation catalogs. The answer is smaller than anyone guesses.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg', alt: 'Arts and Crafts frontispiece from the Book of Divine Consolation of Angela of Foligno, 1909' }],
   },
   alternates: {
     canonical: '/blog/translation-rate',
@@ -454,12 +458,11 @@ export default function TranslationRatePage() {
             (1.57M records). Analysis scripts are in{' '}
             <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2" className="text-accent-rust hover:text-accent-rust underline">our repo</a>.
             If you know of translation catalogs we&apos;re missing, please reach out &mdash;{' '}
-            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
+            <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>
       </article>
 
-      <BlogComments slug="translation-rate" />
     </ContentPageLayout>
   );
 }

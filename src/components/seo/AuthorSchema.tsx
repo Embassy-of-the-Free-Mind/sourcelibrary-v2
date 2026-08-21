@@ -1,4 +1,5 @@
 import { BASE_URL } from './schema-utils';
+import { jsonLdHtml } from '@/lib/json-ld';
 
 interface AuthorSchemaProps {
   authorName: string;
@@ -15,12 +16,23 @@ interface AuthorSchemaProps {
   portraitUrl?: string | null;
   workCount: number;
   sampleWorks?: Array<{ id: string; slug?: string; title: string; published?: string }>;
+  /**
+   * What the heading actually is (#3483). `Person` is the default and covers
+   * every real author. `Organization` is for institutions credited as authors.
+   * `none` emits no entity node at all — for work titles, publisher series and
+   * cataloguer placeholders, where asserting either type would be false.
+   */
+  entityType?: 'Person' | 'Organization' | 'none';
 }
 
 /**
  * Schema.org JSON-LD for /author/[name] pages.
  * Emits ProfilePage → Person with VIAF/Wikidata/Wikipedia/LCNAF sameAs links,
  * sample works as authorOf, and a BreadcrumbList.
+ *
+ * For a non-person heading the mainEntity becomes an Organization, or is
+ * dropped entirely and the page described as a CollectionPage — a listing of
+ * records, which is all it honestly is.
  */
 export default function AuthorSchema({
   authorName,
@@ -37,6 +49,7 @@ export default function AuthorSchema({
   portraitUrl,
   workCount,
   sampleWorks,
+  entityType = 'Person',
 }: AuthorSchemaProps) {
   const pageUrl = `${BASE_URL}/author/${authorSlug}`;
 
@@ -53,15 +66,18 @@ export default function AuthorSchema({
   if (lcnafId) identifiers.push({ '@type': 'PropertyValue', propertyID: 'lcnaf', value: lcnafId });
   if (gndId) identifiers.push({ '@type': 'PropertyValue', propertyID: 'gnd', value: gndId });
 
+  // Life dates and a portrait are claims about a human being; an Organization
+  // gets neither, even when the underlying entity row happens to carry them.
+  const isPerson = entityType === 'Person';
   const person: Record<string, unknown> = {
-    '@type': 'Person',
+    '@type': isPerson ? 'Person' : 'Organization',
     '@id': `${pageUrl}#person`,
     name: authorName,
     ...(description && { description }),
     ...(aliases && aliases.length > 0 && { alternateName: aliases }),
-    ...(birthDate && { birthDate }),
-    ...(deathDate && { deathDate }),
-    ...(portraitUrl && { image: portraitUrl }),
+    ...(isPerson && birthDate && { birthDate }),
+    ...(isPerson && deathDate && { deathDate }),
+    ...(isPerson && portraitUrl && { image: portraitUrl }),
     ...(sameAs.length > 0 && { sameAs }),
     ...(identifiers.length > 0 && { identifier: identifiers }),
   };
@@ -75,13 +91,16 @@ export default function AuthorSchema({
     }));
   }
 
+  // ProfilePage asserts the page is about a person or organisation. When it is
+  // about neither — a work title, a series, "Anonymous" — it is a CollectionPage
+  // with no mainEntity, because there is no entity to point at.
   const profilePage = {
-    '@type': 'ProfilePage',
+    '@type': entityType === 'none' ? 'CollectionPage' : 'ProfilePage',
     '@id': pageUrl,
     url: pageUrl,
     name: `${authorName} — Source Library`,
     ...(description && { description }),
-    mainEntity: { '@id': `${pageUrl}#person` },
+    ...(entityType !== 'none' && { mainEntity: { '@id': `${pageUrl}#person` } }),
   };
 
   const breadcrumbList = {
@@ -94,13 +113,15 @@ export default function AuthorSchema({
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@graph': [profilePage, person, breadcrumbList],
+    '@graph': entityType === 'none'
+      ? [profilePage, breadcrumbList]
+      : [profilePage, person, breadcrumbList],
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 0) }}
+      dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
     />
   );
 }

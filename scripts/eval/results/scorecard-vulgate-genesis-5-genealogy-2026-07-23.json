@@ -1,0 +1,84 @@
+{
+  "date": "2026-07-23",
+  "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5",
+    "mistral-ocr-latest"
+  ],
+  "runs": 3,
+  "only": "vulgate-genesis-5-genealogy",
+  "summary": [
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 1022,
+      "charAccuracy": 1,
+      "rows": [
+        {
+          "work": "Vulgate Genesis 5:3-18 (Sethite genealogy), 1566 Louvain Vulgate",
+          "bookId": "6a26b84361b3857ed05a5221",
+          "pageNumber": 25,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 1022,
+          "matched": 1022,
+          "source": "Clementine Vulgate (drbo.org)",
+          "source_url": "https://www.drbo.org/lvb/chapter/01005.htm",
+          "models": {
+            "gemini-3.1-pro-preview": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.04704,
+              "consistency": 0.3333333333333333,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3-flash-preview": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0049429999999999995,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0010662,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9686888454011742,
+              "cer": 0.03131115459882583
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.098916,
+              "consistency": 0.5,
+              "aligned": true,
+              "charAccuracy": 0.9863013698630136,
+              "cer": 0.0136986301369863
+            },
+            "mistral-ocr-latest": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.008,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9863013698630136,
+              "cer": 0.0136986301369863
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "book_id": "699249e7a2d53df4853c0e9c",
+  "work_identified": "The Ancient History of the Maori, His Mythology and Traditions, Vol. 1 — John White's 1887 government-commissioned bilingual compilation of Maori oral traditions (Horouta canoe, creation narratives, cosmogony); published simultaneously in English and Maori, with Maori source texts in separately-paginated sections within the same volume.",
+  "verdict": "not_applicable",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "strong",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [],
+  "queries_run": [
+    "John White \"Ancient History of the Maori\" 1887 bilingual Maori English translation volumes",
+    "John White \"Ancient History of the Maori\" WorldCat description language content",
+    "\"Ancient History of the Maori\" White \"English translation\" facing pages \"Maori text\" bilingual structure vol 1",
+    "WorldCat \"ancient history of the maori\" John White 1887 language \"English and Maori\"",
+    "site:worldcat.org \"ancient history of the maori\" white"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://archive.org/details/ancienthistoryof01whit",
+      "found": "Metadata confirms: 'Text in English and Maori, the Maori having separate pagination and special title-pages' — bilingual publication, 384 pages, Vol. 1 of 6"
+    },
+    {
+      "url": "https://archive.org/details/ancienthistorym00whitgoog",
+      "found": "Second IA copy confirms same bilingual structure — English main text, Maori source texts separately paginated with own title-pages"
+    },
+    {
+      "url": "https://www.cambridge.org/core/books/ancient-history-of-the-maori-his-mythology-and-traditions/8738556E4DA6A2B5A63AE0A1A8C2DF1F",
+      "found": "Cambridge reprint description: 'Maori texts with English translations and commentary' — White himself provided the English translations as the original compiler"
+    },
+    {
+      "url": "https://nzetc.victoria.ac.nz/tm/scholarly/tei-corpus-WhiAnci.html",
+      "found": "NZETC digitized all 6 volumes; confirms 1887-1890 bilingual NZ government publication"
+    },
+    {
+      "url": "https://catalog.hathitrust.org/Record/007704556",
+      "found": "HathiTrust catalog record for the complete bilingual 6-volume set, 1887-1890"
+    },
+    {
+      "url": "https://worldhistorycommons.org/ancient-history-maori",
+      "found": "Confirms publication is in English with Maori terms integrated parenthetically; oral traditions 'translated into English for publication' by White"
+    }
+  ],
+  "reasoning": "White's 1887 publication is inherently bilingual: his English translations are the main text; Maori source texts have separate pagination in the same volume. Our item IS this bilingual edition; source_language=Maori reflects the oral-tradition source language, not a text awaiting English rendering. The first-English-translation claim is ill-posed — White's own English translation has been present in this volume since 1887."
+}

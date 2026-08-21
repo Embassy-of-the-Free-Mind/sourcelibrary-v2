@@ -128,20 +128,24 @@ const STATIC_PAGES = [
 
 // Dynamic pages with known-good sample slugs — cover every dynamic route template
 const DYNAMIC_PAGES = [
-  // /book/[id] — multiple books to catch template bugs
+  // /book/[id] — multiple books to catch template bugs.
+  // NOTE: these are exact current slugs; books get re-slugged by dedup/merge,
+  // so if one starts 404ing it's stale test data, not a broken reader — refresh
+  // the slug (search the API, follow the /book/<id> 301) rather than "restoring"
+  // content. (Two slugs replaced 2026-07-21 for exactly this reason, #3109.)
   '/book/the-hermetic-museum-various-sendivogius',
-  '/book/theatrum-chemicum-zetzner',
-  '/book/de-occulta-philosophia-agrippa',
+  '/book/theatrum-chemicum-vol-vi-ed',
+  '/book/three-books-of-occult-philosophy-nettesheim-2',
 
   // /collections/[id] — broad sample across collection types
   '/collections/alchemy',
   '/collections/classical-philosophy',
   '/collections/hermetica',
   '/collections/kabbalah',
-  '/collections/rosicrucianism',
+  '/collections/secret-societies',
   '/collections/astrology',
   '/collections/natural-philosophy',
-  '/collections/theurgy',
+  '/collections/mysticism',
 
   // /browse/authors/[letter]
   '/browse/authors/A',
@@ -399,7 +403,7 @@ test.describe('Link follower', () => {
 
     const baseUrl = (page as any)._browserContext._options?.baseURL
       || process.env.BASE_URL
-      || 'https://sourcelibrary-v2.vercel.app';
+      || '';
 
     const visited = new Set<string>();
     const discovered = new Set<string>();

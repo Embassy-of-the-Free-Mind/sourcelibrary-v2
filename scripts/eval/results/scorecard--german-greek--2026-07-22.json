@@ -1,0 +1,438 @@
+{
+  "date": "2026-07-22",
+  "models": [
+    "scw:gemma-3-27b-it"
+  ],
+  "runs": 3,
+  "only": "^(german|greek)",
+  "summary": [
+    {
+      "language": "German",
+      "script": "latin",
+      "passages": 5,
+      "aligned": 5,
+      "refChars": 3028,
+      "charAccuracy": 0.9966974900924703,
+      "rows": [
+        {
+          "work": "Boltzmann, Vorlesungen über Gastheorie II (1898) — molecular limits",
+          "bookId": "6990540738e1fdee57b365c1",
+          "pageNumber": 128,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 576,
+          "matched": 576,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/boltzmann_gastheorie02_1898?p=130",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hegel, Wissenschaft der Logik I.1 (1812) — Fürsichsein: Eins und Leeres",
+          "bookId": "69afe356cf56258c93891081",
+          "pageNumber": 148,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 403,
+          "matched": 403,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_logik0101_1812?p=150",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hegel, Phänomenologie des Geistes — Ethical Order (duty to the dead), 1832 Werke printing",
+          "bookId": "69e8b2ee2ff2a8dc09e790fc",
+          "pageNumber": 351,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 306,
+          "matched": 306,
+          "source": "Deutsches Textarchiv TEI of the 1807 FIRST edition — our copy is the 1832 Werke edition (cross-edition reference)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/hegel_phaenomenologie_1807?p=500",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Herder, Abhandlung über den Ursprung der Sprache (1772) — faculties of mind",
+          "bookId": "69ade7eeda7f32a00bedaa7c",
+          "pageNumber": 50,
+          "aligned": true,
+          "guard": 0.06875,
+          "cer": 0.011210762331838564,
+          "charAccuracy": 0.9887892376681614,
+          "refLen": 892,
+          "matched": 882,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/herder_abhandlung_1772?p=50",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Humboldt, Kosmos Bd. 1 (1845) — meteor streams",
+          "bookId": "698fb77b6b95eeda7d2d1eaf",
+          "pageNumber": 151,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 851,
+          "matched": 851,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/humboldt_kosmos01_1845?p=150",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 12,
+      "aligned": 12,
+      "refChars": 9828,
+      "charAccuracy": 0.9949124949124949,
+      "rows": [
+        {
+          "work": "Dioscorides, De materia medica I.106-107, 1549 Ruel print",
+          "bookId": "69aff2b8c83500af1dbf681e",
+          "pageNumber": 155,
+          "aligned": true,
+          "guard": 0.12048192771084337,
+          "cer": 0.05227272727272727,
+          "charAccuracy": 0.9477272727272728,
+          "refLen": 440,
+          "matched": 417,
+          "source": "First1KGreek tlg0656.tlg001 (Wellmann 1907 critical text — DIFFERENT edition from our 1549 Ruel Greek-Latin print)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0656/tlg001/tlg0656.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica I.38-39 transition (Teubner p.178, temple-door mechanisms)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 252,
+          "aligned": true,
+          "guard": 0.03664921465968586,
+          "cer": 0.021400778210116732,
+          "charAccuracy": 0.9785992217898832,
+          "refLen": 1028,
+          "matched": 1006,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica II (Teubner p.266, self-feeding lamp construction)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 340,
+          "aligned": true,
+          "guard": 0.015789473684210527,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 966,
+          "matched": 966,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica II (Teubner p.306, boiler with blowing figure)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 380,
+          "aligned": true,
+          "guard": 0.02030456852791878,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 996,
+          "matched": 996,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Hero of Alexandria, Pneumatica I.7-8 (Teubner p.60)",
+          "bookId": "695aa97dbe4023bd34bd6715",
+          "pageNumber": 134,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 620,
+          "matched": 620,
+          "source": "First1KGreek tlg0559.tlg001, transcribed from the SAME edition we hold (Schmidt, Teubner 1899)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0559/tlg001/tlg0559.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Iliad I.1-7",
+          "bookId": "699382dd84cf5845c644b377",
+          "pageNumber": 9,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 221,
+          "matched": 221,
+          "source": "Wikisource (el)",
+          "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%91",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 106-109 (Cohn p.38, hebdomad arithmology)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 162,
+          "aligned": true,
+          "guard": 0.009389671361502348,
+          "cer": 0.0018726591760299626,
+          "charAccuracy": 0.99812734082397,
+          "refLen": 1068,
+          "matched": 1066,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 45-47 (Cohn p.15, first part)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 139,
+          "aligned": true,
+          "guard": 0.01020408163265306,
+          "cer": 0.0019193857965451055,
+          "charAccuracy": 0.9980806142034548,
+          "refLen": 521,
+          "matched": 520,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896; our book is Cohn's 1889 editio minor, same editor's text)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Philo, De opificio mundi 157-159 (Cohn p.55, the serpent as symbol of pleasure)",
+          "bookId": "69944b491ba83513779056b0",
+          "pageNumber": 179,
+          "aligned": true,
+          "guard": 0.01744186046511628,
+          "cer": 0.0009587727708533077,
+          "charAccuracy": 0.9990412272291467,
+          "refLen": 1043,
+          "matched": 1042,
+          "source": "First1KGreek tlg0018.tlg001 (Cohn-Wendland 1896)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg0018/tlg001/tlg0018.tlg001.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. (CAG IX p.150)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 186,
+          "aligned": true,
+          "guard": 0.005555555555555556,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 874,
+          "matched": 874,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. II 2 ad 194a15 (CAG IX p.300, Empedocles/Democritus on form)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 336,
+          "aligned": true,
+          "guard": 0.009259259259259259,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 1063,
+          "matched": 1063,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Simplicius, In Phys. comm. III 6 ad 206b33-207a18 (CAG IX p.500, on the infinite)",
+          "bookId": "695580c057e3b773024f5e03",
+          "pageNumber": 536,
+          "aligned": true,
+          "guard": 0.025510204081632654,
+          "cer": 0.0010121457489878543,
+          "charAccuracy": 0.9989878542510121,
+          "refLen": 988,
+          "matched": 987,
+          "source": "First1KGreek tlg4013.tlg004, transcribed from the SAME edition we hold (Diels, CAG 9, 1882)",
+          "source_url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/data/tlg4013/tlg004/tlg4013.tlg004.1st1K-grc1.xml",
+          "models": {
+            "scw:gemma-3-27b-it": {
+              "runs": 0,
+              "refused": 0,
+              "costUsd": 0,
+              "consistency": null,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

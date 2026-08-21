@@ -63,9 +63,12 @@ const LATIN_SCRIPT_LANGUAGES: ReadonlySet<string> = new Set([
   'albanian', 'sq', 'sqi', 'alb',
   'turkish', 'tr', 'tur',
   // Latinized Asian
+  // NOTE: Malay is deliberately absent. Our Malay holdings are mostly Jawi
+  // (Arabic-script) manuscripts from Leiden — flash-lite garbles them into
+  // confident nonsense (2026-07-18 Hikayat Tanah Hitu pilot, same failure
+  // mode as the Tibetan case above). Malay must route to full flash.
   'indonesian', 'id', 'ind',
   'vietnamese', 'vi', 'vie',
-  'malay', 'ms', 'msa',
   'tagalog', 'tl', 'tgl', 'filipino',
   // African (Latin-script)
   'swahili', 'sw', 'swa',

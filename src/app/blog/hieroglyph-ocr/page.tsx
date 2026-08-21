@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Can AI Read Hieroglyphs? (No.) - Research Notes - Source Library',
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
     title: 'Can AI Read Hieroglyphs? (No.)',
     description: 'Four approaches to AI hieroglyphic OCR. Four failures. What the results reveal about the limits of visual language models.',
     images: [{ url: 'https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg', width: 1000, height: 1400 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg' }],
   },
   alternates: {
     canonical: '/blog/hieroglyph-ocr',
@@ -517,7 +520,6 @@ export default function HieroglyphOcrPage() {
 
       </article>
 
-      <BlogComments slug="hieroglyph-ocr" />
     </ContentPageLayout>
   );
 }

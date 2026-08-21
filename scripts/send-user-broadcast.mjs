@@ -40,11 +40,26 @@
  * opened/clicked (engagement). Only sends AFTER the subdomain went live carry
  * click data.
  *
- * SENT LEDGER (audiences already emailed — exclude all of these from new
- * cohorts; tracking was OFF for the first three so they have no click data):
+ * SENT LEDGER — the audiences below were DELETED from Resend on 2026-08-10
+ * to free contact quota (their welcome-backlog job was done; Cohort 7 cleared
+ * it). The IDs are dead. Full contact exports live in the private ops repo:
+ * ~/sourcelibrary-ops/email-campaign/audience-exports/2026-08-10/. If a new
+ * cohort is ever built, exclude the union of THOSE FILES, not these audiences.
+ * (Historical record — tracking was OFF for the first three, no click data):
  *   - 725ada69-...  Batch 1            200  subj "A new Renaissance — by translating the first"
  *   - 33bc889e-...  Recent Week        200  subj "...has never been read"  (wrong word, shipped)
  *   - 7137b7fe-...  Cohort 2           200  subj "...has never been translated"
+ *   - c8f7b2ac-...  Cohort 3                sent 2026-06-22
+ *   - aa32ca61-...  Cohort 4                sent 2026-06-23
+ *   - ddbd412f-...  Cohort 5                sent 2026-06-24
+ *   - a730380e-...  Cohort 6          1154  sent 2026-06-28
+ *   - 39acebdd-...  Cohort 7          1084  sent 2026-07-21  (broadcast bce47345)
+ *   (3,638 distinct people emailed in total as of 2026-07-21; 4 unsubscribes.)
+ *
+ * NOTE: a standing "Source Library Newsletter" audience (5dd84247-...) is
+ * refreshed daily by scripts/workers/refresh-newsletter-audience.mjs and is the
+ * right target for recurring letters. The cohort machinery here is only for
+ * giving the WELCOME letter to people who have never received it.
  *
  * Env: RESEND_API_KEY (--sync/--test/--send). Source via
  *   set -a; source .env.production.local; set +a
@@ -79,8 +94,8 @@ const subjectFor = (n) => process.env.EMAIL_SUBJECT || SUBJECTS[(n || 1) - 1] ||
 // no nudity (safe for a cold send), and the tail-devouring serpent = renewal.
 const HERO_IMG = 'https://images.sourcelibrary.org/artwork/art-ouroboros.jpg';
 const HERO_LINK = 'https://sourcelibrary.org/book/ouroboros';
-const HERO_CAPTION = 'The Ouroboros — an 18th-century Arabic alchemical manuscript, one of 110,000 illustrations in the library.';
-const PREHEADER = 'More than 2,400 of you have joined since our beta launch — a thank-you, and a small favor.';
+const heroCaption = () => `The Ouroboros — an 18th-century Arabic alchemical manuscript, one of ${en(STATS.illustrations)} illustrations in the library.`;
+const preheader = () => `More than ${en(STATS.accounts)} of you have joined since our beta launch — a thank-you, and a small favor.`;
 // Round, dark-mode-safe brand badge (brown circle + white mark on R2). Self-
 // contained colour so it reads on both light and dark inboxes, and it's a
 // circle (not a square that would show an ugly box in dark mode).
@@ -92,6 +107,53 @@ const BADGE_IMG = 'https://images.sourcelibrary.org/brand/email-badge-black.png'
 // "Leer en español" link to this page. Rebuild after copy changes: --build-es-page.
 const SPANISH_PAGE_URL = 'https://images.sourcelibrary.org/email/bienvenida-es.html';
 const REPLY_MAILTO = 'mailto:derek@sourcelibrary.org';
+// CAN-SPAM §7704(a)(5) requires a valid physical postal address in every
+// commercial email. Sends before 2026-07-20 carried none. This is the Embassy
+// of the Free Mind (Huis met de Hoofden), Source Library's host institution.
+const POSTAL_ADDRESS = 'Source Library &middot; c/o Embassy of the Free Mind &middot; Keizersgracht 123-4, 1015 CJ Amsterdam, Netherlands';
+
+// ---- live stats -------------------------------------------------------
+// Every number in this email used to be hardcoded, and every one of them went
+// stale between sends (the signup count drifted 2,000 -> 2,400 -> 3,600, and
+// each correction depended on a human noticing first). These are now read from
+// the database at render time and rounded DOWN, so a claim can only ever
+// understate. Defaults are the verified values on 2026-07-21 and are used only
+// if the DB read fails, in which case we warn loudly rather than send silently.
+const STATS = {
+  accounts: 3600,          // users collection
+  readersPerMonth: 20000,  // 30d distinct ip+ua in analytics_pageviews
+  firstTranslations: 6000, // homepage_stats.firstTranslationCount
+  translated: 17000,       // homepage_stats.translatedToEnglish
+  illustrations: 206000,   // homepage_stats.illustrationCount
+};
+const floorTo = (n, step) => Math.floor(n / step) * step;
+const roundTo = (n, step) => Math.round(n / step) * step;
+const en = (n) => n.toLocaleString('en-US'); // 17,000
+const es = (n) => n.toLocaleString('de-DE'); // 17.000
+
+async function loadLiveStats() {
+  const { db, cleanup } = await getScriptClient({ timeoutMs: 60000 });
+  try {
+    const accounts = await db.collection('users').countDocuments({});
+    const cfg = await db.collection('system_config').findOne({ _id: 'homepage_stats' });
+    const mau = (await db.collection('analytics_pageviews').aggregate([
+      { $match: { timestamp: { $gt: new Date(Date.now() - 30 * 864e5) } } },
+      { $group: { _id: { ip: '$ip', ua: { $substr: ['$userAgent', 0, 60] } } } },
+      { $count: 'n' },
+    ]).toArray())[0]?.n || 0;
+    if (!accounts || !cfg || !mau) throw new Error('incomplete stats read');
+    STATS.accounts = floorTo(accounts, 100);
+    STATS.readersPerMonth = floorTo(mau, 5000);
+    STATS.firstTranslations = roundTo(cfg.firstTranslationCount, 1000);
+    STATS.translated = floorTo(cfg.translatedToEnglish, 1000);
+    STATS.illustrations = floorTo(cfg.illustrationCount, 1000);
+    console.log(`Live stats: ${en(STATS.accounts)} accounts | ${en(STATS.readersPerMonth)} readers/mo | ${en(STATS.firstTranslations)} first translations | ${en(STATS.translated)} translated | ${en(STATS.illustrations)} illustrations`);
+  } catch (e) {
+    console.warn(`WARNING: live-stats read failed (${e.message}). Falling back to the 2026-07-21 defaults baked into STATS — verify them before sending.`);
+  } finally {
+    cleanup();
+  }
+}
 
 // Fludd "most popular book" payoff image at the bottom. The Divine Monochord
 // (a divine hand tuning the string of the universe), quality 1.0, from Fludd's
@@ -155,7 +217,7 @@ function renderHtml({ ia, yt, ig = IG_URL }) {
 <html>
   <body style="margin:0;padding:0;background:#f6f5f2;">
     <!-- preheader: the gray preview line after the subject in the inbox -->
-    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#f6f5f2;font-size:1px;line-height:1px;">${PREHEADER}</div>
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#f6f5f2;font-size:1px;line-height:1px;">${preheader()}</div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f5f2;">
       <tr><td align="center" style="padding:32px 16px;">
         <table role="presentation" width="100%" style="max-width:560px;background:#ffffff;border-radius:8px;padding:36px 32px;font-family:Georgia,'Times New Roman',serif;color:#1a1a1a;line-height:1.6;font-size:16px;">
@@ -169,9 +231,9 @@ function renderHtml({ ia, yt, ig = IG_URL }) {
 
             <p style="margin:0 0 18px;">Hey friend,</p>
 
-            <p style="margin:0 0 18px;">Since we launched, more than 2,400 people have signed up &mdash; hundreds in a single day at our peak. Amazing&hellip; and welcome!</p>
+            <p style="margin:0 0 18px;">Since we launched, more than ${en(STATS.readersPerMonth)} people a month have come to read here &mdash; and you're one of the first ${en(STATS.accounts)} to make an account. Amazing&hellip; and welcome!</p>
 
-            <p style="margin:0 0 18px;">One of our most-read books is by <a href="${FLUDD_LINK}" style="color:#9e4a3a;">Robert Fludd</a> &mdash; and it is gorgeous. It's one of about 6,000 books we've translated for the first time in history. In total, we've translated over 15,000 books in Latin, Chinese, Sanskrit, Tibetan, etc. I hope you'll find amazing discoveries in our library of lost knowledge. If you do, please share it with me and your friends!</p>
+            <p style="margin:0 0 18px;">One of our most-read books is by <a href="${FLUDD_LINK}" style="color:#9e4a3a;">Robert Fludd</a> &mdash; and it is gorgeous. It's one of about ${en(STATS.firstTranslations)} books we've translated for the first time in history. In total, we've translated over ${en(STATS.translated)} books in Latin, Chinese, Sanskrit, Tibetan, etc. I hope you'll find amazing discoveries in our library of lost knowledge. If you do, please share it with me and your friends!</p>
 
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px;">
               <tr><td style="background:#f5f0e8;border-left:4px solid #9e4a3a;border-radius:4px;padding:16px 20px;">
@@ -188,7 +250,7 @@ function renderHtml({ ia, yt, ig = IG_URL }) {
             <p style="margin:0 0 16px;">&mdash; Derek</p>
 
             <p style="margin:0 0 24px;font-size:14px;color:#666;">Derek Lomas, PhD &middot; Founder, Source Library &middot; I read every reply, so feel free to just say hi.<br>
-              Source Library is a non-profit initiative of the <a href="https://sourcelibrary.org" style="color:#9e4a3a;">Embassy of the Free Mind</a>.</p>
+              Source Library is a non-profit initiative of the <a href="https://embassyofthefreemind.com" style="color:#9e4a3a;">Embassy of the Free Mind</a>.</p>
 
             <p style="margin:0 0 22px;font-size:15px;color:#555;">BTW &mdash; you can also watch the <a href="${yt || 'https://sourcelibrary.org'}" style="color:#9e4a3a;">talk from our launch here</a>.</p>
 
@@ -203,7 +265,7 @@ function renderHtml({ ia, yt, ig = IG_URL }) {
               <a href="${ig}" style="color:#9e4a3a;">Instagram</a> &nbsp;&middot;&nbsp;
               <a href="${ia}" style="color:#9e4a3a;">The article</a> &nbsp;&middot;&nbsp;
               <a href="${yt || 'https://sourcelibrary.org'}" style="color:#9e4a3a;">Launch video</a></p>
-            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.</p>
+            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.<br>${POSTAL_ADDRESS}</p>
           </td></tr>
         </table>
       </td></tr>
@@ -234,9 +296,9 @@ function renderEsPage({ ia, yt, ig = IG_URL }) {
 
             <p style="margin:0 0 18px;">Hola:</p>
 
-            <p style="margin:0 0 18px;">Desde que lanzamos la beta de Source Library, casi 2.000 personas se han registrado. El viernes pasado se registraron 600 en un solo día. Incre&iacute;ble&hellip; &iexcl;y bienvenido!</p>
+            <p style="margin:0 0 18px;">Desde que lanzamos Source Library, m&aacute;s de ${es(STATS.readersPerMonth)} personas al mes vienen a leer aqu&iacute;, y t&uacute; eres una de las primeras ${es(STATS.accounts)} en crear una cuenta. Incre&iacute;ble&hellip; &iexcl;y bienvenido!</p>
 
-            <p style="margin:0 0 18px;">Uno de nuestros libros m&aacute;s le&iacute;dos es de <a href="${FLUDD_PAGE_LINK}" style="color:#9e4a3a;">Robert Fludd</a>, y es una maravilla. Es uno de los cerca de 6.000 libros que hemos traducido por primera vez en la historia. En total, hemos traducido m&aacute;s de 15.000 libros en lat&iacute;n, chino, s&aacute;nscrito, tibetano, etc. Espero que encuentres descubrimientos asombrosos en nuestra biblioteca de conocimiento perdido. Si es as&iacute;, &iexcl;comp&aacute;rtela conmigo y con tus amigos!</p>
+            <p style="margin:0 0 18px;">Uno de nuestros libros m&aacute;s le&iacute;dos es de <a href="${FLUDD_PAGE_LINK}" style="color:#9e4a3a;">Robert Fludd</a>, y es una maravilla. Es uno de los cerca de ${es(STATS.firstTranslations)} libros que hemos traducido por primera vez en la historia. En total, hemos traducido m&aacute;s de ${es(STATS.translated)} libros en lat&iacute;n, chino, s&aacute;nscrito, tibetano, etc. Espero que encuentres descubrimientos asombrosos en nuestra biblioteca de conocimiento perdido. Si es as&iacute;, &iexcl;comp&aacute;rtela conmigo y con tus amigos!</p>
 
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px;">
               <tr><td style="background:#f5f0e8;border-left:4px solid #9e4a3a;border-radius:4px;padding:16px 20px;">
@@ -290,7 +352,7 @@ function renderConcise({ ia, yt, ig = IG_URL }) {
   return `<!doctype html>
 <html>
   <body style="margin:0;padding:0;background:#f6f5f2;">
-    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#f6f5f2;font-size:1px;line-height:1px;">${PREHEADER}</div>
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#f6f5f2;font-size:1px;line-height:1px;">${preheader()}</div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f5f2;">
       <tr><td align="center" style="padding:32px 16px;">
         <table role="presentation" width="100%" style="max-width:560px;background:#ffffff;border-radius:8px;padding:36px 32px;font-family:Georgia,'Times New Roman',serif;color:#1a1a1a;line-height:1.6;font-size:16px;">
@@ -312,7 +374,7 @@ function renderConcise({ ia, yt, ig = IG_URL }) {
             <p style="margin:0 0 24px;">&mdash; Derek</p>
 
             <hr style="border:none;border-top:1px solid #e6e3dd;margin:0 0 14px;">
-            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.</p>
+            <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#8a8780;">You're receiving this because you created an account at sourcelibrary.org. <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#8a8780;">Unsubscribe</a>.<br>${POSTAL_ADDRESS}</p>
           </td></tr>
         </table>
       </td></tr>
@@ -377,6 +439,10 @@ async function syncContacts(resend, audienceId, emails) {
 
 // ---- main -------------------------------------------------------------
 (async () => {
+  // Read every number in the copy from the DB before anything renders. Must
+  // run first: --preview, --test, --send and --build-es-page all render.
+  await loadLiveStats();
+
   // Build + upload the Spanish landing page to R2 (no Mongo, no email).
   if (doBuildEsPage) {
     if (!iaUrl) { console.error('--build-es-page needs --ia-url (and ideally --youtube-url).'); process.exit(1); }

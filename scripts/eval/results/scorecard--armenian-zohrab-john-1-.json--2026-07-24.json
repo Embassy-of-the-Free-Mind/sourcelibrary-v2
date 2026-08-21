@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "models": [
+    "gemini-3.1-flash-lite",
+    "claude-sonnet-5"
+  ],
+  "runs": 2,
+  "only": "^armenian-zohrab-john-1\\.json$",
+  "summary": [
+    {
+      "language": "Armenian",
+      "script": "armenian",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 692,
+      "charAccuracy": 0.9176300578034682,
+      "rows": [
+        {
+          "work": "Zohrab NT, John 1:1-14",
+          "bookId": "69a5eae5d507939f0352d3c8",
+          "pageNumber": 724,
+          "aligned": true,
+          "guard": 0.13548387096774195,
+          "cer": 0.08236994219653179,
+          "charAccuracy": 0.9176300578034682,
+          "refLen": 692,
+          "matched": 635,
+          "source": "TITUS etext of Zōhrapean, Astowacašownč' matean, Venetik 1805",
+          "source_url": "https://titus.uni-frankfurt.de/texte/etcs/arm/zohrab/armnt/armnt069.htm",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.0017273999999999998,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            },
+            "claude-sonnet-5": {
+              "runs": 2,
+              "refused": 0,
+              "costUsd": 0.17643,
+              "consistency": 0.5,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

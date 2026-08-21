@@ -2,6 +2,17 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
+import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
+import { retiredCollectionMessage } from '@/lib/retired-collections';
+import {
+  shouldRedirectToCanonical,
+  canonicalUrl,
+  aliasPolicyForHost,
+  isPreviewGatedPath,
+  previewGateResponse,
+} from '@/lib/alias-host-scope';
+import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -96,7 +107,7 @@ ability to shape what gets digitized next.
 Previous texts in our collection have been cited in academic
 papers, museum exhibitions, and AI research.
 
-  Contact: derek@sourcelibrary.org
+  Contact: team@sourcelibrary.org
   Subject: "AI Partnership — [Your Company]"
   Website: https://sourcelibrary.org
   API docs: https://sourcelibrary.org/llms.txt
@@ -111,7 +122,16 @@ We respond within 24 hours. Let's build something remarkable.
  * Real browsers send Accept-Language and Sec-Fetch-Mode headers.
  * Missing both is a strong signal of automated traffic.
  */
-function looksLikeBot(request: NextRequest): boolean {
+// Read-only content APIs the reader fans out to as a human turns pages
+// (BookPagesSection's "load more", per-page trace alignment, etc.). These are
+// already protected at the app layer — the anti-bulk budget (api-budget.ts) and
+// the bot page-gate (bot-gate.ts, 20% cap) — so the crude header heuristic below
+// only ever produced false positives here.
+function isContentReadPath(pathname: string): boolean {
+  return pathname.startsWith('/api/books/') || pathname.startsWith('/api/pages/');
+}
+
+export function looksLikeBot(request: NextRequest): boolean {
   const ua = request.headers.get('user-agent') || '';
 
   // No UA at all — definitely not a browser
@@ -123,7 +143,16 @@ function looksLikeBot(request: NextRequest): boolean {
   // Explicit bot/crawler/spider UA strings
   if (/bot|crawl|spider|scrape|fetch|http|wget|curl|python|java\/|php\//i.test(ua)) return true;
 
-  // Missing both Accept-Language and Sec-Fetch-Mode — no browser omits both
+  // Missing both Accept-Language and Sec-Fetch-Mode — a decent bot signal, but
+  // privacy browsers, in-app webviews, and some corporate proxies strip these
+  // from real people too. On read-only content GETs that heuristic clamped real
+  // readers to ~2 pages (the reader's per-page /api fan-out trips the 10-req/60s
+  // soft limiter below), so skip it there — those paths are already app-layer
+  // protected. Keep it for writes and every other endpoint.
+  const isContentRead =
+    request.method === 'GET' && isContentReadPath(request.nextUrl.pathname);
+  if (isContentRead) return false;
+
   const hasAcceptLang = !!request.headers.get('accept-language');
   const hasSecFetch = !!request.headers.get('sec-fetch-mode');
   if (!hasAcceptLang && !hasSecFetch) return true;
@@ -135,10 +164,16 @@ function looksLikeBot(request: NextRequest): boolean {
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
 function getClientIp(request: NextRequest): string {
+  // cf-connecting-ip FIRST. Vercel rewrites x-forwarded-for with whatever
+  // connected to Vercel, which behind the CDN is a Cloudflare edge node — so
+  // the old order keyed this limiter on ~15 shared addresses. Every bot behind
+  // one edge node drew from the same 10-req/60s bucket while a bot on a quiet
+  // node ran free: over-blocking and under-blocking at once, from one wrong
+  // header. Same defect as PR #3487, in the proxy's own limiter.
   return (
+    request.headers.get('cf-connecting-ip') ||
     (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
     request.headers.get('x-real-ip') ||
-    request.headers.get('cf-connecting-ip') ||
     'unknown'
   );
 }
@@ -176,10 +211,17 @@ function logBotAccess(request: NextRequest, action: string) {
     const path = request.nextUrl.pathname;
     if (path.startsWith('/api/analytics') || path.startsWith('/api/cron')) return;
 
+    // Forward the edge-provided country so the unknown-bot sampler can cluster
+    // opaque bots by origin (a coarse residential-vs-datacenter proxy until we
+    // have real ASN enrichment).
+    const country = request.headers.get('cf-ipcountry')
+      || request.headers.get('x-vercel-ip-country')
+      || '';
+
     fetch(`${origin}/api/analytics/bots`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userAgent: ua, path, action, ip }),
+      body: JSON.stringify({ userAgent: ua, path, action, ip, country }),
     }).catch(() => {}); // swallow errors
   } catch {
     // never throw from logging
@@ -197,6 +239,12 @@ const TENANT_SUBDOMAINS: Record<string, string> = {
   'bhutan.sourcelibrary.org': 'bhutan',
   // 'ritman.sourcelibrary.org': 'ritman',
 };
+
+// Global-only surfaces (the list, and why, live in src/lib/tenant-global-paths.ts).
+// Enforced here rather than in the pages because those routes are ISR
+// (`revalidate = 86400`); reading headers() in them to detect the host would
+// force dynamic rendering and drop the cache — same reasoning as the book-page
+// redirects further down.
 
 // --- Tenant resolution helpers (module-level) ---
 // Pulled out of proxy() so they can be reused by resolveTenantFromRequest and
@@ -531,10 +579,13 @@ function getCorsHeaders(origin: string): Record<string, string> {
   };
 }
 
-// OG share card rotation. The four named variants live under public/.
-// Day-of-year mod 4 picks one — every link share gets a different look as
-// the week progresses, but a given calendar day is deterministic so the
-// crawler caches stay consistent within a day.
+// OG share card rotation. The four named variants live under public/, in one
+// set per locale: og-image-{variant}.jpg (English) and og-image-es-{variant}.jpg
+// (Spanish). Day-of-year mod 4 picks one — every link share gets a different
+// look as the week progresses, but a given calendar day is deterministic so the
+// crawler caches stay consistent within a day. The stable URLs the metadata
+// points at are /og-image.jpg and /og-image-es.jpg (see src/lib/og-locale.ts);
+// both are rewritten here.
 const OG_VARIANTS = ['cosmological', 'zodiac', 'illuminated', 'arcani'] as const;
 
 function pickOgVariantForToday(now: Date = new Date()): string {
@@ -542,14 +593,95 @@ function pickOgVariantForToday(now: Date = new Date()): string {
   return OG_VARIANTS[dayOfYear % OG_VARIANTS.length];
 }
 
+/**
+ * Fire-and-forget non-human request counter. Deliberately not awaited: a
+ * measurement must never delay or fail a page. `recordAgentRequest` swallows
+ * its own errors; the extra `.catch` guards the classify step too.
+ */
+function countAgentRequest(request: NextRequest, outcome: 'served' | 'refused'): void {
+  try {
+    const rec = classifyAgentRequest(request, outcome);
+    if (!rec) return; // human — already counted by the /api/track beacon
+    void recordAgentRequest(resolveHostForAgentCount(request), rec).catch(() => {});
+  } catch {
+    // never surfaces
+  }
+}
+
+function resolveHostForAgentCount(request: NextRequest): string {
+  return (request.headers.get('x-forwarded-host') || request.headers.get('host') || 'sourcelibrary.org')
+    .split(',')[0]
+    .trim()
+    .toLowerCase()
+    .replace(/:\d+$/, '')
+    .replace(/^www\./, '');
+}
+
+/**
+ * Does this /book/<segment> look like an id rather than a slug?
+ * Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
+ * Custom ids are shorter hex strings with at least one hex letter (a-f).
+ * Pure numeric strings (e.g. "13") are not valid ids and should 404 normally.
+ * Shared by the /book/<id> and /book/<id>/page/<pageId> canonical redirects.
+ */
+function looksLikeBookId(segment: string): boolean {
+  return /^[0-9a-f]{24}$/.test(segment)
+    || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Rewrite /og-image.jpg → /og-image-{variant}.jpg based on day of year.
+  // Refused datacenter networks, checked before anything else so it applies on
+  // every hostname and every route. Cloudflare blocks the same ASN, but a
+  // Cloudflare rule covers one zone and this project also answers on hosts
+  // outside it — which is exactly where the fleet was reading from.
+  // See src/lib/blocked-networks.ts.
+  if (isBlockedNetwork(getClientIp(request))) {
+    return new NextResponse(BLOCKED_NETWORK_RESPONSE, {
+      status: 403,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow',
+      },
+    });
+  }
+
+  // Preview deployments sit outside Cloudflare and their URLs are public
+  // (the Vercel bot posts them on every PR of this public repo), so book
+  // content there is withheld from anonymous callers. A session cookie or an
+  // Authorization header passes — branch review by a signed-in dev, and any
+  // credentialed script, keep working. Placed HERE, before the embed-CORS
+  // branch, because that branch passes /api/books straight through on a
+  // forgeable Origin header. See alias-host-scope.ts for why this is a loud
+  // 403 and not a redirect.
+  if (
+    aliasPolicyForHost(request.headers.get('host') || '') === 'preview' &&
+    isPreviewGatedPath(pathname)
+  ) {
+    const hasSession =
+      request.cookies.has('__Secure-authjs.session-token') ||
+      request.cookies.has('authjs.session-token');
+    const hasAuthHeader = Boolean(request.headers.get('authorization'));
+    if (!hasSession && !hasAuthHeader) {
+      return new NextResponse(previewGateResponse(pathname), {
+        status: 403,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+  }
+
+  // Rewrite /og-image.jpg → /og-image-{variant}.jpg (and the Spanish twin
+  // /og-image-es.jpg → /og-image-es-{variant}.jpg) based on day of year.
   // Must come before any DB work since this fires on every OG crawl.
-  if (pathname === '/og-image.jpg') {
+  if (pathname === '/og-image.jpg' || pathname === '/og-image-es.jpg') {
+    const localePrefix = pathname === '/og-image-es.jpg' ? 'es-' : '';
     const url = request.nextUrl.clone();
-    url.pathname = `/og-image-${pickOgVariantForToday()}.jpg`;
+    url.pathname = `/og-image-${localePrefix}${pickOgVariantForToday()}.jpg`;
     return NextResponse.rewrite(url);
   }
 
@@ -587,6 +719,26 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.host = 'sourcelibrary.org';
     return NextResponse.redirect(url, 301);
+  }
+
+  // --- Alias-host scoping ---
+  // ficinosociety.org is an alias on this same project, and SOCIETY_DOMAINS
+  // below only ever ADDED routes to it (/ → /ficino-society, /discussions,
+  // /members). Everything else fell through, so the entire library was served
+  // from a hostname that resolves straight to Vercel with no Cloudflare in
+  // front — which is where the AS132203 fleet was actually reading (3,791 of
+  // ~6,276 page_read events, vs zero for the fleet on sourcelibrary.org).
+  //
+  // Runs BEFORE any library-specific routing, so an alias host is scoped once,
+  // up front, rather than after book/author/provider rules have had a go at it.
+  // See src/lib/alias-host-scope.ts.
+  //
+  // The bare Vercel production alias (`sourcelibrary-v2.vercel.app`) is the
+  // same hole and is scoped here too, with its own narrower allowlist — see
+  // alias-host-scope.ts for why it cannot just 308 everything.
+  const aliasPolicy = aliasPolicyForHost(host);
+  if (aliasPolicy && shouldRedirectToCanonical(pathname, aliasPolicy)) {
+    return NextResponse.redirect(canonicalUrl(pathname, request.nextUrl.search), 308);
   }
 
   // --- Canonical author URL redirect (#2250) ---
@@ -651,6 +803,39 @@ export async function proxy(request: NextRequest) {
   // tenant context travels via the x-tenant-* headers stamped by the
   // resolution block lower in this file.
   const tenant = TENANT_SUBDOMAINS[host.toLowerCase()];
+
+  // Withdrawn collections answer 410 Gone, not 404. Handled here rather than in
+  // the page because a Next.js page cannot set the status, and `notFound()`
+  // would keep telling crawlers to come back. Applies on every host — a
+  // withdrawal is a withdrawal in a partner reading room too.
+  const retired = retiredCollectionMessage(pathname);
+  if (retired) {
+    return new NextResponse(retired, {
+      status: 410,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow',
+        'Cache-Control': 'public, max-age=3600',
+      },
+    });
+  }
+
+  // Corpus-wide surfaces don't exist inside a partner reading room (#3364).
+  // Checked before the rewrite block, which skips /api/* — the listed API twins
+  // are the unscoped data sources behind these pages and must be refused too.
+  if (tenant && isGlobalOnlyTenantPath(pathname)) {
+    return new NextResponse(
+      'Not found on this collection. This page indexes the whole Source Library; a partner reading room only serves its own holdings.',
+      {
+        status: 404,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+        },
+      }
+    );
+  }
+
   if (tenant && !pathname.startsWith('/embed/') && !pathname.startsWith('/_next/') && !pathname.startsWith('/api/')) {
     const url = request.nextUrl.clone();
     let needsRewrite = false;
@@ -723,10 +908,17 @@ export async function proxy(request: NextRequest) {
   // --- Bot enforcement (before any other logic) ---
   const ua = request.headers.get('user-agent') || '';
 
+  // Count non-human traffic server-side. The `/api/track` beacon cannot see
+  // bots (they run no JavaScript), which is why `analytics_traffic_class` read
+  // `ai_agent: 2` over 30 days while OpenAI's agents were pulling whole books.
+  // Recorded here, at the only point where the evidence exists. #3519
+  countAgentRequest(request, 'served');
+
   // Hard block: bots explicitly forbidden in robots.txt — except on the
   // policy/licensing docs, which robots.txt grants to every reserved crawler.
   if (BLOCKED_BOT_RE.test(ua) && !isBotReadablePath(pathname)) {
     logBotAccess(request, 'blocked');
+    countAgentRequest(request, 'refused');
     return new NextResponse(BOT_RESPONSE, {
       status: 403,
       headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
@@ -753,15 +945,11 @@ export async function proxy(request: NextRequest) {
       }
     }
 
-    // Non-slug IDs → redirect to canonical slug URL.
-    // Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
-    // Custom IDs are shorter hex strings with at least one hex letter (a-f).
-    // Pure numeric strings (e.g. "13") are not valid IDs and should 404 normally.
+    // Non-slug IDs → redirect to canonical slug URL (see looksLikeBookId).
     // `ns=1` means the book-slug resolver already ran and decided there's no
     // redirect target (no-slug book or 404) — skip re-rewriting so /book/[id]
     // renders in place. Without this guard, bouncing back here would loop.
-    const looksLikeId = /^[0-9a-f]{24}$/.test(segment) || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
-    if (looksLikeId && !request.nextUrl.searchParams.has('ns')) {
+    if (looksLikeBookId(segment) && !request.nextUrl.searchParams.has('ns')) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
       url.search = '';
@@ -794,6 +982,30 @@ export async function proxy(request: NextRequest) {
     headers.set('x-redirect-book', segment);
     headers.set('x-redirect-page', pageNum);
     return NextResponse.rewrite(url, { request: { headers } });
+  }
+
+  // Reader page URLs that address the book by *id* instead of its slug
+  // (/book/6a58f512…/page/6a58f512…). Exactly the canonicalisation the
+  // /book/<id> block above already does, one level down: the reader route
+  // resolves either form, so these are not broken — they just publish an
+  // unreadable URL into citations, chat messages and the address bar for the
+  // rest of the book. Resolved through the same book-slug resolver, which now
+  // carries the /page/<pageId> tail and the query string (?highlight=, ?v=)
+  // through the 301. Runs AFTER the page-number block so /book/<id>/page/5
+  // still resolves number → page id in one hop.
+  const readerIdMatch = pathname.match(/^\/book\/([^/]+)\/page\/([^/]+)$/);
+  if (readerIdMatch && !request.nextUrl.searchParams.has('ns')) {
+    const [, segment, pageId] = readerIdMatch;
+    if (looksLikeBookId(segment)) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/api/redirect/book-slug';
+      url.search = '';
+      const headers = new Headers(request.headers);
+      headers.set('x-redirect-book', segment);
+      headers.set('x-redirect-page-id', pageId);
+      headers.set('x-redirect-search', request.nextUrl.search);
+      return NextResponse.rewrite(url, { request: { headers } });
+    }
   }
 
   // --- Bot rate limiting (soft) ---
@@ -840,6 +1052,7 @@ export async function proxy(request: NextRequest) {
         return NextResponse.rewrite(url);
       }
     }
+
   }
 
   // --- Tenant slug resolution ---
@@ -959,8 +1172,9 @@ export const config = {
   // Match all paths except static files
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)',
-    // OG share-card daily rotation — middleware must see this path even
-    // though it ends in .jpg (the default matcher above excludes dotted paths).
+    // OG share-card daily rotation — middleware must see these paths even
+    // though they end in .jpg (the default matcher above excludes dotted paths).
     '/og-image.jpg',
+    '/og-image-es.jpg',
   ],
 };

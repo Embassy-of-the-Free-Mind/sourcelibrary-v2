@@ -196,7 +196,7 @@ let cachedResult: { data: unknown; timestamp: number } | null = null;
 
 // GET /api/categories — powered by Supabase books_catalog (or MongoDB for tenant-scoped)
 export async function GET(request: NextRequest) {
-  const headers = { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' };
+  const headers = { 'Cache-Control': 'public, max-age=0, s-maxage=1800, stale-while-revalidate=3600' };
 
   try {
     // Tenant-scoped: bypass Supabase (no tenant_id column) and aggregate from MongoDB

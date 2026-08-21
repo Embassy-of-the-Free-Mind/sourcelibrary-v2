@@ -1,0 +1,45 @@
+{
+  "book_id": "6992cd6743713c66ea6363c5",
+  "work_identified": "三才圖會 (Sancai Tuhui) vol. 25 of 106, compiled by Wang Qi & Wang Siyi, 1609; falls within the 人物 (People/Biographies) category — People vol. 5 of 14 — of this Ming dynasty illustrated encyclopaedia of heaven, earth, and humanity",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "complete",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "high",
+  "prior_translations_found": [
+    {
+      "english_title": "Heaven and Earth: 120 Album Leaves from a Ming Encyclopedia: San-ts'ai t'u-hui, 1610",
+      "translator": "John A. Goodall (selection and annotation)",
+      "pub_year": "1979",
+      "publisher": "Lund Humphries, London",
+      "completeness": "partial",
+      "source_url": "https://searchworks.stanford.edu/view/768776"
+    }
+  ],
+  "queries_run": [
+    "Sancai Tuhui 'San cai tu hui' English translation 三才圖會",
+    "三才圖會 Wang Qi 1609 encyclopedia English translation worldcat",
+    "'Sancai Tuhui' sinology scholarship encyclopedia translation",
+    "Goodall 'Heaven and Earth' 'San-ts'ai t'u-hui' 'Ming Encyclopedia' 1979 Shambhala",
+    "'Sancai Tuhui' volume 25 category content juan 人物 地理",
+    "'三才图会' OR '三才圖會' English translation complete partial scholarly sinology",
+    "worldcat 'san cai tu hui' OR 'sancai tuhui' english",
+    "'三才圖會' 人物 biographies English translation Ming dynasty encyclopedia",
+    "Goodall 'Heaven and Earth' 1979 Sancai Tuhui contents annotation translation",
+    "'Sancai Tuhui' OR 'San-ts'ai t'u-hui' English translation chapter volume partial excerpt academic",
+    "archive.org 'sancai tuhui' OR 'san cai tu hui' english translation",
+    "Ming dynasty 'illustrated encyclopedia' 1609 'Wang Qi' English translated volume people biography"
+  ],
+  "sources_consulted": [
+    {"url": "https://en.wikipedia.org/wiki/Sancai_Tuhui", "found": "106-vol. encyclopedia overview; no complete English translation of any volume mentioned"},
+    {"url": "https://ctext.org/wiki.pl?if=en&chapter=512153", "found": "TOC: Heaven 4 vols, Geography 16 vols, People 14 vols; vol.26='人物六卷' confirms vol.25 is People vol.5; no English translations"},
+    {"url": "https://ctext.org/wiki.pl?if=en&res=218633&remap=gb", "found": "Original Chinese text only; no English translations listed"},
+    {"url": "https://searchworks.stanford.edu/view/768776", "found": "Goodall 1979 confirmed as 'selected and annotated' album leaves—120 plates, not a systematic volume translation"},
+    {"url": "https://ucsd.libguides.com/c.php?g=565107&p=3892403", "found": "Only English work listed is Goodall, described as 'a translation of PART of Sancai tuhui'; no volume-level translations"},
+    {"url": "https://www.bolerium.com/pages/books/264630/john-a-goodall-selection-and-annotation/heaven-and-earth-album-leaves-from-a-ming-encyclopedia-san-tsai-tu-hui-1610", "found": "Goodall confirmed as 'selection and annotation' of 120 album leaves from across the whole work"},
+    {"url": "https://www.britannica.com/topic/Sancai-tuhui", "found": "Described as important Ming encyclopedia; no English translation mentioned"},
+    {"url": "https://archive.org/search?query=sancai+tuhui+english", "found": "No English translations of Sancai Tuhui found; only Chinese-language volumes digitized"}
+  ],
+  "reasoning": "No complete English translation of Sancai Tuhui vol. 25 or any systematic section exists. Goodall 1979 covers 120 selected illustrations across all 106 vols (partial/excerpt); vol. 25 in People section is almost certainly unrepresented. No sinological guide or library catalog records any volume-level English translation. Our vol. 25 is the first complete English of this People-section content."
+}

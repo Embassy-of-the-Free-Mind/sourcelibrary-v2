@@ -161,13 +161,71 @@ export function isFirstTranslation(book: FirstTranslationBook): boolean {
 }
 
 /**
+ * The share of a book's readable pages that carry an English translation.
+ *
+ * Denominator is the canonical "readable" definition already used by
+ * `system_config.homepage_stats.translatedToEnglish` — `pages_ocr` minus
+ * blanks — because a page with no OCR was never a page anyone could translate.
+ * Falls back to `pages_count` when OCR counts are absent.
+ *
+ * Returns `null` when no denominator can be established. Callers must treat
+ * null as "unknown", never as zero: a book with missing page counts has not
+ * been shown to be thin, and demoting on absent data is the #17 hazard in
+ * miniature.
+ */
+export interface TranslationCoverageBook {
+  pages_translated?: number | null;
+  pages_ocr?: number | null;
+  pages_blank?: number | null;
+  pages_count?: number | null;
+}
+
+export function translationCoverage(book: TranslationCoverageBook): number | null {
+  const translated = book.pages_translated ?? 0;
+  const ocr = book.pages_ocr ?? 0;
+  const blank = book.pages_blank ?? 0;
+  const readable = ocr - blank;
+  const denominator = readable > 0 ? readable : (book.pages_count ?? 0);
+  if (denominator <= 0) return null;
+  // Translated can exceed the denominator on odd page inventories; clamp so a
+  // ratio is always interpretable as a share.
+  return Math.min(translated / denominator, 1);
+}
+
+/**
+ * The coverage floor at which "First Translation" describes something a reader
+ * can actually read. Same 90% the homepage's `translatedToEnglish` stat uses —
+ * this is deliberately NOT a new threshold (see the collection-spec rule: no
+ * new primitives where an existing one answers the question).
+ */
+export const FIRST_TRANSLATION_READABLE_MIN = 0.9;
+
+/**
+ * Is enough of this book translated for the badge to mean what it says?
+ *
+ * Unknown coverage returns `true` — the badge's existing `pages_translated > 0`
+ * gate still applies upstream, and we do not withdraw a claim because page
+ * counts are missing.
+ */
+export function isTranslationReadable(book: TranslationCoverageBook): boolean {
+  const coverage = translationCoverage(book);
+  if (coverage === null) return true;
+  return coverage >= FIRST_TRANSLATION_READABLE_MIN;
+}
+
+/**
  * Whether this book counts toward the PUBLIC "N first translations" headline.
  *
- * Stricter than {@link isFirstTranslation}: a claim only counts if it badges
- * AND its evidence is not weak. This carves out:
+ * Stricter than {@link isFirstTranslation} in two ways: a claim only counts if
+ * it badges, its evidence is not weak, AND enough of it is actually translated
+ * to read. This carves out:
  *   - weak-evidence claims (catalog-blind absence — "effectively unsearched"),
  *   - the legacy disposition shim (always weak until re-resolved by a real
- *     tier), which is most of today's non-Western confirmed_first pool.
+ *     tier), which is most of today's non-Western confirmed_first pool,
+ *   - barely-translated books (#3435): 244 badged books are under 10%
+ *     translated, so counting them asserts a readable English edition that
+ *     does not exist yet. The bibliographic claim survives; only the headline
+ *     and the unqualified badge label are withheld.
  *
  * Use this — not isFirstTranslation — for the headline count and the
  * "N ± M" estimate. `unverifiable` is not in the first-family so it is already
@@ -175,6 +233,7 @@ export function isFirstTranslation(book: FirstTranslationBook): boolean {
  */
 export function isPublicFirst(book: FirstTranslationBook): boolean {
   if (!isFirstTranslation(book)) return false;
+  if (!isTranslationReadable(book)) return false;
   const ft = resolveFirstTranslation(book)!;
   return ft.evidence_strength !== 'weak';
 }

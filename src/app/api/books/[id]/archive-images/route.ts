@@ -10,7 +10,53 @@ import sharp from 'sharp';
 export const maxDuration = 300;
 
 // Regex pattern to match pages from external sources that can be archived
-const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/;
+const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|dl\.ndl\.go\.jp/;
+
+/**
+ * Recount archived pages and write the cached counter back onto the book (#3712).
+ *
+ * `books.pages_archived` is what selectors key on — `archive-erara.mjs` picks work with
+ * `pages_archived: { $not: { $gte: 1 } }` and `archiving-watchdog.mjs` buckets a book as
+ * "progressing" only when the counter is > 0. A book archived entirely through this route
+ * used to leave the counter at 0 with every page on R2, so it stayed permanently eligible
+ * for re-archiving and a re-run re-downloaded every page from the source.
+ *
+ * Recount rather than increment: the route is called repeatedly with `limit`, and it
+ * routinely returns Cloudflare 524s (the edge times out at ~100s while the function works
+ * on to its 300s maxDuration), so callers retry work that in fact completed. An increment
+ * would drift on every one of those retries.
+ *
+ * Matches the counting predicate used by `scripts/workers/archive-bulk.mjs` — a non-empty
+ * string, not merely a present field.
+ */
+async function syncArchivedCounter(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+  pagesCount: number | undefined,
+): Promise<number> {
+  const archivedCount = await db.collection('pages').countDocuments(
+    { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
+    { maxTimeMS: 10000 },
+  );
+
+  const update: Record<string, unknown> = {
+    pages_archived: archivedCount,
+    updated_at: new Date(),
+  };
+
+  // Only claim a status when we know the denominator. A book with no pages_count
+  // would otherwise be marked complete on the first archived page.
+  if (typeof pagesCount === 'number' && pagesCount > 0) {
+    const archiveStatus = archivedCount >= pagesCount ? 'archive_complete' : 'archive_partial';
+    update.archive_status = archiveStatus;
+    if (archiveStatus === 'archive_complete') {
+      update.archive_completed_at = new Date();
+    }
+  }
+
+  await db.collection('books').updateOne({ id: bookId }, { $set: update });
+  return archivedCount;
+}
 
 /**
  * POST /api/books/[id]/archive-images
@@ -18,6 +64,10 @@ const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlun
  * Download images from external sources and upload to Vercel Blob.
  * Supports: Internet Archive, Gallica (BnF), MDZ (Bavarian State Library)
  * This makes images available even when source sites are down.
+ *
+ * Note: this route writes `archived_photo` but no `display_photo`, so a book archived
+ * only through here has no R2 display variant and the reader falls back to the source
+ * URL. That is expected — the Hetzner/local workers generate the display variants.
  */
 export const POST = withAuth(async (request, session, context) => {
   try {
@@ -59,10 +109,11 @@ export const POST = withAuth(async (request, session, context) => {
 
     if (pagesToArchive.length === 0) {
       const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
-      const archivedPages = await db.collection('pages').countDocuments({
-        book_id: bookId,
-        archived_photo: { $exists: true, $ne: null }
-      });
+      // Sync here too, not just after a successful batch: a book that was fully archived
+      // by an earlier call (or by a call the edge timed out on) lands in exactly this
+      // branch, and this is what lets a stale counter self-heal instead of keeping the
+      // book selectable for re-archiving forever.
+      const archivedPages = await syncArchivedCounter(db, bookId, book.pages_count ?? totalPages);
 
       return NextResponse.json({
         message: 'No pages need archiving',
@@ -194,12 +245,10 @@ export const POST = withAuth(async (request, session, context) => {
       }
     }
 
-    // Get updated counts
+    // Get updated counts, and record the archived count on the book so selectors and the
+    // watchdog can see this route's work (#3712).
     const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
-    const archivedPages = await db.collection('pages').countDocuments({
-      book_id: bookId,
-      archived_photo: { $exists: true, $ne: null }
-    });
+    const archivedPages = await syncArchivedCounter(db, bookId, book.pages_count ?? totalPages);
     const remainingCount = await db.collection('pages').countDocuments({
       book_id: bookId,
       archived_photo: { $exists: false },
@@ -223,7 +272,7 @@ export const POST = withAuth(async (request, session, context) => {
       remaining: remainingCount,
       totalPages,
       archivedPages,
-      percentArchived: Math.round((archivedPages / totalPages) * 100),
+      percentArchived: totalPages > 0 ? Math.round((archivedPages / totalPages) * 100) : 0,
       usage: {
         bytesUploaded: totalBytesUploaded,
         megabytesUploaded: Math.round(totalBytesUploaded / (1024 * 1024) * 100) / 100,

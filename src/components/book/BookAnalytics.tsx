@@ -8,6 +8,8 @@ import { getTenantSlug } from '@/lib/api-client/client';
 interface BookAnalyticsProps {
   bookId: string;
   className?: string;
+  /** Show only the eye icon (hide the view count). */
+  iconOnly?: boolean;
 }
 
 interface BookStats {
@@ -15,7 +17,7 @@ interface BookStats {
   edits?: number;
 }
 
-export default function BookAnalytics({ bookId, className }: BookAnalyticsProps) {
+export default function BookAnalytics({ bookId, className, iconOnly = false }: BookAnalyticsProps) {
   const [stats, setStats] = useState<BookStats | null>(null);
 
   useEffect(() => {
@@ -40,13 +42,15 @@ export default function BookAnalytics({ bookId, className }: BookAnalyticsProps)
 
   const colorClass = className || 'text-stone-400';
 
-  // Show placeholder while loading to prevent layout shift
+  // Reserve the exact final footprint while loading (a fixed-width, non-pulsing
+  // count slot) so the number appearing doesn't shift the row — the pulsing bar
+  // read as "jumpy". The value fades in when it arrives.
   if (!stats) {
     return (
       <div className={`flex items-center gap-4 text-sm ${colorClass}`}>
         <div className="flex items-center gap-1.5">
-          <Eye className="w-4 h-4 opacity-50" />
-          <span className="w-8 h-4 bg-current/20 rounded animate-pulse" />
+          <Eye className="w-4 h-4" />
+          {!iconOnly && <span className="inline-block min-w-[1.75rem] tabular-nums" aria-hidden>&nbsp;</span>}
         </div>
       </div>
     );
@@ -56,7 +60,7 @@ export default function BookAnalytics({ bookId, className }: BookAnalyticsProps)
     <div className={`flex items-center gap-4 text-sm ${colorClass}`}>
       <div className="flex items-center gap-1.5" title="Times viewed">
         <Eye className="w-4 h-4" />
-        <span>{stats.reads}</span>
+        {!iconOnly && <span className="inline-block min-w-[1.75rem] tabular-nums animate-[fadeIn_260ms_ease-out]">{stats.reads}</span>}
       </div>
       {(stats.edits ?? 0) > 0 && (
         <div className="flex items-center gap-1.5" title="Edits made">

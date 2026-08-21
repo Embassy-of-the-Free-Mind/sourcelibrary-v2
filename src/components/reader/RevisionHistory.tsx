@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { History, RotateCcw, X, ChevronDown, Pencil } from 'lucide-react';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 import type { PageRevision } from '@/lib/page-revisions';
 
 interface RevisionHistoryProps {
@@ -28,6 +29,18 @@ function formatDate(date: string | Date) {
 function truncate(text: string, len: number) {
   if (text.length <= len) return text;
   return text.slice(0, len) + '...';
+}
+
+// Friendly display names for the per-page AI model badge. Gemini ids fall through
+// to the old gemini-/‑preview stripping; Claude ids get a clean short name.
+const MODEL_LABELS: Record<string, string> = {
+  'claude-opus-4-8': 'Opus 4.8',
+  'claude-opus-4-8[1m]': 'Opus 4.8',
+  'claude-sonnet-5': 'Sonnet 5',
+  'claude-haiku-4-5': 'Haiku 4.5',
+};
+function formatModel(model: string) {
+  return MODEL_LABELS[model] ?? model.replace('gemini-', '').replace('-preview', '');
 }
 
 function SourceBadge({ source }: { source: string }) {
@@ -125,7 +138,7 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
             <SourceBadge source={currentSource || 'ai'} />
             {model && (
               <span style={{ color: 'var(--text-faint)' }}>
-                {model.replace('gemini-', '').replace('-preview', '')}
+                {formatModel(model)}
               </span>
             )}
           </>
@@ -192,7 +205,7 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
                       <SourceBadge source={rev.source} />
                       {rev.model && (
                         <span className="text-[10px] truncate" style={{ color: 'var(--text-faint)' }}>
-                          {rev.model.replace('gemini-', '').replace('-preview', '')}
+                          {formatModel(rev.model)}
                         </span>
                       )}
                       {rev.edited_by && (
@@ -226,15 +239,22 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
                         <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
                           {rev.data.length.toLocaleString('en-US')} chars
                         </span>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleRestore(rev.id); }}
-                          disabled={restoring === rev.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[10px] font-medium transition-colors hover:bg-accent-gold/8"
-                          style={{ color: 'var(--accent-rust)' }}
-                        >
-                          <RotateCcw className={`w-3 h-3 ${restoring === rev.id ? 'animate-spin' : ''}`} />
-                          {restoring === rev.id ? 'Restoring...' : 'Restore'}
-                        </button>
+                        {/* Reading the history is open to everyone — it is provenance,
+                            and seeing how a page was corrected is part of the point.
+                            Restoring rewrites the page, so it matches the editor gate
+                            on the route behind it (#3511). Before this the button
+                            rendered for every visitor and simply failed on click. */}
+                        <AuthCheck role="inner_circle">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleRestore(rev.id); }}
+                            disabled={restoring === rev.id}
+                            className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[10px] font-medium transition-colors hover:bg-accent-gold/8"
+                            style={{ color: 'var(--accent-rust)' }}
+                          >
+                            <RotateCcw className={`w-3 h-3 ${restoring === rev.id ? 'animate-spin' : ''}`} />
+                            {restoring === rev.id ? 'Restoring...' : 'Restore'}
+                          </button>
+                        </AuthCheck>
                       </div>
                     </div>
                   )}

@@ -1,0 +1,4 @@
+book_id: 69dbc9511040d1d5e20a2023
+Title: De officiis (Comm: Omnibonus Leonicenus). Ed: Raphael Regius. Add: Laelius, sive de amicitia (Comm: Omnibonus Leonicenus); Cato maior, sive de senectute (Comm: Martinus Phileticus); Paradoxa Stoicorum
+Author: Cicero, Marcus Tullius
+Source language: Latin

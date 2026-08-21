@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
-import { anonymizeIp } from '@/lib/anonymize-ip';
+import { classifyRequest, recordDroppedEvent } from '@/lib/analytics-ingest';
 
 /**
  * Track analytics events (book reads, page reads, page edits)
@@ -12,6 +12,10 @@ import { anonymizeIp } from '@/lib/anonymize-ip';
  *   book_id: string,
  *   page_id?: string,
  * }
+ *
+ * Tenant twin of /api/analytics/track — same write-time bot classification
+ * (#3405). Partner reading rooms are crawled too, and a tenant's own reading
+ * stats are exactly the kind of number that gets quoted to a partner.
  */
 // Analytics is fire-and-forget — don't hold a serverless slot during DB degradation
 const DB_TIMEOUT_MS = 3000;
@@ -47,16 +51,19 @@ export async function POST(
       );
     }
 
-    // Get client IP for deduplication (anonymized — last octet zeroed)
-    const rawIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-      || request.headers.get('x-real-ip')
-      || 'unknown';
-    const ip = anonymizeIp(rawIp);
+    // Classify at write time; the anonymized IP doubles as the dedup key.
+    const { cls, isHuman, userAgent, ip, host } = classifyRequest(request);
 
     // Race all DB work against a short timeout
     const dbWork = (async () => {
       const db = await getDb();
       const now = new Date();
+
+      // Crawlers: aggregate counter only — no event row, no read_count bump.
+      if (!isHuman) {
+        await recordDroppedEvent(db, host, cls, event);
+        return { deduplicated: false, dropped: true };
+      }
 
       // For reads, use atomic upsert to prevent race condition duplicates
       if (event === 'book_read' || event === 'page_read') {
@@ -80,6 +87,9 @@ export async function POST(
               book_id,
               page_id: page_id || null,
               ip,
+              user_agent: userAgent,
+              traffic_class: cls,
+              host,
               tenantId,
               timestamp: now,
               created_at: new Date(),
@@ -95,6 +105,9 @@ export async function POST(
           book_id,
           page_id: page_id || null,
           ip,
+          user_agent: userAgent,
+          traffic_class: cls,
+          host,
           tenantId,
           timestamp: now,
           created_at: new Date(),

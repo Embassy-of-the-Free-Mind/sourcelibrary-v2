@@ -1,0 +1,4 @@
+book_id: 6992cfad27dcac3f8ca1b967
+Title: 海國圖志(28)
+Author: 魏源
+Source language: Chinese

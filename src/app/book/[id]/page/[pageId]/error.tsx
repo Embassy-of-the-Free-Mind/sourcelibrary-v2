@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, ArrowLeft } from 'lucide-react';
+import { reportError } from '@/components/providers/ErrorReporter';
 
 export default function PageEditorError({
   error,
@@ -11,8 +12,18 @@ export default function PageEditorError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  // Report to application_errors. Route-level error boundaries are NOT caught by
+  // the global ErrorReporter boundary (Next.js handles them first), so without
+  // this the reader's single most visible failure was invisible in the logs —
+  // the browser-translation crash ran for months unmeasured.
   useEffect(() => {
-    console.error('Page editor error:', error);
+    console.error('Reader page error:', error);
+    reportError({
+      message: error.message || 'Reader page error',
+      stack: error.stack,
+      source: 'reader_error_boundary',
+      componentStack: error.digest ? `digest:${error.digest}` : undefined,
+    });
   }, [error]);
 
   return (
@@ -22,10 +33,10 @@ export default function PageEditorError({
           <AlertTriangle className="w-8 h-8 text-accent-rust" />
         </div>
         <h2 className="text-xl font-semibold text-stone-900 mb-2">
-          Unable to load page editor
+          This page didn&apos;t load
         </h2>
         <p className="text-stone-600 mb-6">
-          Something went wrong while loading this page. Your edits are safe.
+          Something went wrong while opening this page of the book. Try again — nothing is lost.
         </p>
         {process.env.NODE_ENV === 'development' && (
           <pre className="text-left text-xs bg-stone-100 p-4 rounded-lg mb-6 overflow-auto max-h-32 text-red-700">

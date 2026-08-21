@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { getHomeData } from '@/lib/home-data';
 import HomeView from '@/components/home/HomeView';
+import { FEED_TYPES } from '@/lib/feed-links';
+import { siteOgImage } from '@/lib/og-locale';
 
 // Spanish-language edition of the homepage — a real, server-rendered, indexable
 // route (not a client string swap), sharing the same data + body as `/`.
@@ -18,17 +20,43 @@ export const metadata: Metadata = {
       es: '/es',
       'x-default': '/',
     },
+    // See src/lib/feed-links.ts — declaring `languages` here replaces the
+    // layout's whole `alternates`, feed links included.
+    types: FEED_TYPES,
   },
   openGraph: {
+    images: [siteOgImage('es')],
     title: 'Source Library — Fuentes antiguas traducidas con IA',
     description:
       'La mayor biblioteca de acceso abierto de fuentes primarias traducidas. Alquimia, hermética, filosofía y ciencia, accesibles para todos.',
+    siteName: 'Source Library',
+    type: 'website',
     locale: 'es_ES',
     url: 'https://sourcelibrary.org/es',
+  },
+  // Declaring `openGraph` replaces the layout's block whole — and X/Twitter and
+  // WhatsApp fall back to `twitter:image` when they find one, which is how the
+  // English card kept showing on /es pages. Both blocks must be Spanish.
+  twitter: {
+    card: 'summary_large_image',
+    site: '@SourceLibrary_',
+    title: 'Source Library — Fuentes antiguas traducidas con IA',
+    description:
+      'La mayor biblioteca de acceso abierto de fuentes primarias traducidas. Alquimia, hermética, filosofía y ciencia, accesibles para todos.',
+    images: [siteOgImage('es')],
   },
 };
 
 export default async function HomePageEs() {
-  const data = await getHomeData();
-  return <HomeView data={data} lang="es" />;
+  const data = await getHomeData('es');
+  return (
+    <>
+      {/* Reading language is the URL prefix and nothing else: links out of this
+          page keep `/es` where a twin route exists (localePath), and no
+          preference is stored anywhere. #4112 removed the localStorage flag that
+          used to follow the reader off the prefix — do not reintroduce it in any
+          form (.claude/docs/i18n.md rule 6). */}
+      <HomeView data={data} lang="es" />
+    </>
+  );
 }

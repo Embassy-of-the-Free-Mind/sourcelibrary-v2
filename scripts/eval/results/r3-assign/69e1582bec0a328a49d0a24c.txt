@@ -1,0 +1,4 @@
+book_id: 69e1582bec0a328a49d0a24c
+Title: The Report of Wenamun
+Author: el-Hibe (papyrus scroll)
+Source language: Egyptian hieroglyphs

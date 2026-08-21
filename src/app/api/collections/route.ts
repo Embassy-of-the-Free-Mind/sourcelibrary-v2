@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { createCollection } from '@/lib/create-collection';
 
 export const maxDuration = 30;
 
@@ -144,81 +145,22 @@ export const POST = withAuth(async (request) => {
     const body = await request.json();
     const { slug, name, subtitle, description, color, order, bookIds } = body;
 
-    if (!slug || !name) {
-      return NextResponse.json({ error: 'slug and name are required' }, { status: 400 });
-    }
-
-    const db = await getDb();
-
-    // Check if collection already exists
-    const existing = await db.collection('collections').findOne({ slug });
-    if (existing) {
-      return NextResponse.json({ error: `Collection "${slug}" already exists` }, { status: 409 });
-    }
-
-    // Find books by ObjectId or string id
-    const bookObjectIds = (bookIds || []).map((id: string) => {
-      try { return new ObjectId(id); } catch { return null; }
-    }).filter(Boolean);
-
-    const books = await db.collection('books').find({
-      $or: [
-        { _id: { $in: bookObjectIds } },
-        { id: { $in: bookIds || [] } },
-      ],
-    }, { projection: { _id: 1, id: 1, title: 1, language: 1 } }).toArray();
-
-    // Tag books with collection slug
-    const bookMongoIds = books.map(b => b._id);
-    if (bookMongoIds.length > 0) {
-      await db.collection('books').updateMany(
-        { _id: { $in: bookMongoIds } },
-        { $addToSet: { collections: slug } }
-      );
-    }
-
-    // Compute language breakdown
-    const langCounts: Record<string, number> = {};
-    for (const b of books) {
-      const lang = b.language || 'Unknown';
-      langCounts[lang] = (langCounts[lang] || 0) + 1;
-    }
-    const languages = Object.entries(langCounts)
-      .map(([lang, count]) => ({ lang, count }))
-      .sort((a, b) => b.count - a.count);
-
-    // Count visible books (same filter as detail page)
-    const bookCount = await db.collection('books').countDocuments({
-      collections: slug,
-      visible: true,
-      pages_count: { $gt: 0 },
-    });
-
-    // Create collection record
-    const now = new Date();
-    const collectionDoc = {
-      slug,
-      name,
-      subtitle: subtitle || '',
-      description: description || '',
-      color: color || 'gold',
-      order: order ?? 99,
-      book_count: bookCount,
-      languages,
-      featured_images: [],
-      created_at: now,
-      updated_at: now,
-    };
-
-    await db.collection('collections').insertOne(collectionDoc);
+    const result = await createCollection({ slug, name, subtitle, description, color, order, bookIds });
 
     return NextResponse.json({
       success: true,
-      collection: collectionDoc,
-      books_tagged: books.length,
-      books_found: books.map(b => ({ id: b.id, title: b.title })),
+      collection: result.collection,
+      books_tagged: result.booksTagged,
+      books_found: result.booksFound,
     });
   } catch (error) {
+    const code = (error as { code?: string })?.code;
+    if (code === 'invalid') {
+      return NextResponse.json({ error: 'slug and name are required' }, { status: 400 });
+    }
+    if (code === 'exists') {
+      return NextResponse.json({ error: (error as Error).message }, { status: 409 });
+    }
     console.error('Collection create error:', error);
     return NextResponse.json(
       { error: 'Failed to create collection' },

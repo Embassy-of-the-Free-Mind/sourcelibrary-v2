@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Facing Page vs Interlinear: How Should Ancient Texts Be Read? - Source Library',
@@ -278,7 +277,6 @@ export default function InterlinearExperimentPage() {
 
       </article>
 
-      <BlogComments slug="interlinear-experiment" />
     </ContentPageLayout>
   );
 }

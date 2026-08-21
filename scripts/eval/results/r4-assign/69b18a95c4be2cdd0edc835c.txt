@@ -1,0 +1,4 @@
+book_id: 69b18a95c4be2cdd0edc835c
+Title: Lux in Tenebris
+Author: Jan Amos Comenius; Christoph Kotter; Krystyna Poniatowska
+Source language: Latin

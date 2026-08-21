@@ -32,6 +32,28 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'n', rating: 'blank',            label: '∅ blank',            color: '#6b7280', hint: 'Effectively blank page' },
     { key: 'u', rating: 'unclear',          label: '? unclear',          color: '#9ca3af', hint: "Can't tell" },
   ],
+  // UI copy, not book pages. The item is a translated interface string and the
+  // question is whether the Spanish says what the English says and reads like a
+  // person wrote it. No image, no page — see review-candidates.ts, which cares
+  // only about `queue`.
+  'spanish-copy': [
+    { key: 'k', rating: 'natural',  label: '\u2713 natural',  color: '#10b981', hint: 'Correct, and reads like Spanish' },
+    { key: 'a', rating: 'awkward',  label: '~ awkward',  color: '#f59e0b', hint: 'Understandable but stiff, or the wrong register' },
+    { key: 'j', rating: 'wrong',    label: '\u2717 wrong',    color: '#ef4444', hint: 'Says something the English does not, or is a mistranslation' },
+    { key: 'u', rating: 'unclear',  label: '? unclear',  color: '#6b7280', hint: "Can't tell without seeing where it appears" },
+  ],
+  // The generic queue: an item is a URL and a question, the answer is prose.
+  // Adding a task type becomes inserting rows, not writing a component.
+  //
+  // The two verdict buttons are NOT decoration next to the note box. Collecting
+  // only comments means you cannot tell "someone checked this and it was fine"
+  // from "nobody has looked yet" — you hear about problems and never learn
+  // coverage. One click is what makes the queue drain visibly.
+  'page-check': [
+    { key: 'k', rating: 'fine',    label: '\u2713 looks right', color: '#10b981', hint: 'I looked, nothing wrong' },
+    { key: 'j', rating: 'problem', label: '\u2717 found something', color: '#ef4444', hint: 'Something is off \u2014 please say what in the box' },
+    { key: 'u', rating: 'unclear', label: '? unclear', color: '#6b7280', hint: "Couldn't tell, or the page wouldn't load" },
+  ],
   // Wikipedia contribution events. Not a rating queue — used as an event log
   // for the /contribute/wikipedia playbook (claim → post → response → merged).
   // No keyboard shortcuts; events come from explicit button clicks.
@@ -46,6 +68,22 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
   ],
 };
 
+/**
+ * A volunteer_id has TWO valid shapes: the signed-in account id (NextAuth
+ * MongoDBAdapter ObjectId string — 24 hex chars, what useReviewQueue sends
+ * since ratings became account-attributed) or the anonymous per-browser uuid
+ * (36 chars, the signed-out fallback). The submit route validated only the
+ * uuid shape, so every signed-in submission 400'd — zero ratings landed
+ * between 2026-08-05 and 2026-08-19 while volunteers saw "Submit failed".
+ * Every route that checks a volunteer_id must use this, not its own regex.
+ */
+export function isValidVolunteerId(id: string): boolean {
+  return (
+    /^[0-9a-fA-F]{24}$/.test(id) ||
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
+  );
+}
+
 export function isValidRating(queue: string, rating: string): boolean {
   return QUEUE_RATINGS[queue]?.some(r => r.rating === rating) ?? false;
 }
@@ -54,7 +92,7 @@ export function getRatingOptions(queue: string): RatingOption[] {
   return QUEUE_RATINGS[queue] ?? [];
 }
 
-export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'wikipedia'] as const;
+export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'wikipedia'] as const;
 export type QueueKey = (typeof QUEUE_KEYS)[number];
 
 // Wikipedia event ordering: defines what's a "later" status. Used to roll up

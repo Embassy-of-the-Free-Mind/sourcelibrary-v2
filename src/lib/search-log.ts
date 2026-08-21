@@ -18,6 +18,8 @@ import type { NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getClientIp } from '@/lib/rate-limit';
 import type { ApiIdentity } from '@/lib/api-auth';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { resolveHostFromHeaders } from '@/lib/analytics-ingest';
 
 const COLLECTION = 'search_queries';
 const MAX_QUERY_LEN = 500;
@@ -91,6 +93,16 @@ async function writeEntry(input: LogSearchQueryInput) {
     else if (Array.isArray(v)) filters[k] = v.slice(0, 10).map(x => String(x).slice(0, 100));
   }
 
+  // Tenant + host are derived here rather than threaded through every caller.
+  // This log had NEITHER field, which made its four months of rows structurally
+  // unattributable: a partner subdomain's `/search?q=…` is rewritten by
+  // proxy.ts to `/embed/<tenant>/search`, which re-exports the main SearchPage
+  // and therefore lands in `/api/search` — indistinguishable from a main-site
+  // search. A usage report consequently labelled the whole table "main site
+  // only", which it never was. Deriving inside the writer means a new caller
+  // cannot forget it (see src/lib/search-event-log.ts for the sibling rule).
+  const tenant = getTenantContextFromRequest(input.request.headers);
+
   await db.collection(COLLECTION).insertOne({
     ts: new Date(),
     route: input.route,
@@ -101,6 +113,9 @@ async function writeEntry(input: LogSearchQueryInput) {
     identity_kind: input.identity?.kind || 'anon',
     user_id: input.identity?.userId || null,
     api_key_id: input.identity?.apiKeyId || null,
+    tenant_id: tenant?.id || null,
+    tenant_slug: tenant?.slug || null,
+    host: resolveHostFromHeaders(input.request.headers),
     ip_hash: hashIp(ip),
     user_agent: (input.request.headers.get('user-agent') || '').slice(0, 200),
     filters,

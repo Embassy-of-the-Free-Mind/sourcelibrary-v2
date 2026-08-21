@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Reading the Stars: Astrological Diagrams from Nine Centuries — Blog — Source Library',
@@ -10,7 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Reading the Stars: Astrological Diagrams from Nine Centuries',
     description: 'A visual tour from the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics — the original diagrams that mapped humanity\'s relationship to the heavens.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg' }],
   },
   alternates: {
     canonical: '/blog/astrological-diagrams',
@@ -71,7 +74,7 @@ export default function AstrologicalDiagramsPage() {
         <ContentHeader
           title="Reading the Stars"
           subtitle="Astrological Diagrams from Nine Centuries of the Heavens"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg"
+          image="https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg"
           imageAlt="Integra Naturae Speculum by Robert Fludd, 1617"
         >
           <p className="text-stone-400 text-sm mt-4">21 February 2026 &middot; 20 min read</p>
@@ -206,7 +209,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906313e7b7642c081de828/8.jpg"
+                src="https://images.sourcelibrary.org/archived/69906313e7b7642c081de828/8.jpg"
                 alt="Astrological horoscope chart from Ptolemy's Quadripartitum, 1484 — twelve houses in square format"
                 width={800}
                 height={1000}
@@ -221,7 +224,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906313e7b7642c081de828/22.jpg"
+                src="https://images.sourcelibrary.org/archived/69906313e7b7642c081de828/22.jpg"
                 alt="Circular zodiac diagram from Ptolemy's Quadripartitum — twelve signs and their geometric aspects"
                 width={800}
                 height={1000}
@@ -258,7 +261,7 @@ export default function AstrologicalDiagramsPage() {
           <figure className="order-2 md:order-1">
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69905e3c2fd6a039938a1980/5.jpg"
+                src="https://images.sourcelibrary.org/archived/69905e3c2fd6a039938a1980/5.jpg"
                 alt="Page from Abu Ma'shar's Introductorium in Astronomiam, Venice 1489"
                 width={800}
                 height={1100}
@@ -307,7 +310,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906e6d8a353648e1ecfd91/15.jpg"
+                src="https://images.sourcelibrary.org/archived/69906e6d8a353648e1ecfd91/15.jpg"
                 alt="Page from John Dunstable's Judicial Astrology and Astronomy, c. 1440"
                 width={800}
                 height={1100}
@@ -334,7 +337,7 @@ export default function AstrologicalDiagramsPage() {
         <figure className="mb-8">
           <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-lg bg-stone-100 max-w-2xl mx-auto">
             <Image
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/694b3b5b58a47807cc735dce/34.jpg"
+              src="https://images.sourcelibrary.org/archived/694b3b5b58a47807cc735dce/34.jpg"
               alt="Heliocentric diagram from Copernicus's De revolutionibus orbium coelestium, 1543 — the Sun at the centre of nested planetary orbits"
               width={900}
               height={1100}
@@ -399,7 +402,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952d12e77f38f6761bc5bec/2.jpg"
+                src="https://images.sourcelibrary.org/archived/6952d12e77f38f6761bc5bec/2.jpg"
                 alt="Atlas or Hercules bearing an armillary sphere — bookplate engraving from Kepler's Harmonices Mundi, 1619"
                 width={800}
                 height={1100}
@@ -414,7 +417,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952d12e77f38f6761bc5bec/74.jpg"
+                src="https://images.sourcelibrary.org/archived/6952d12e77f38f6761bc5bec/74.jpg"
                 alt="Five Platonic solids from Kepler's Harmonices Mundi — the cosmic figures inscribing the planetary orbits"
                 width={800}
                 height={1100}
@@ -467,7 +470,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/5.jpg"
+                src="https://images.sourcelibrary.org/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/5.jpg"
                 alt="Allegorical frontispiece from Athanasius Kircher's Ars Magna Lucis et Umbrae, 1671"
                 width={600}
                 height={900}
@@ -481,7 +484,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/2.jpg"
+                src="https://images.sourcelibrary.org/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/2.jpg"
                 alt="Atlas bearing an armillary sphere from Kircher's Ars Magna Lucis et Umbrae"
                 width={600}
                 height={900}
@@ -495,7 +498,7 @@ export default function AstrologicalDiagramsPage() {
           <figure>
             <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/366.jpg"
+                src="https://images.sourcelibrary.org/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/366.jpg"
                 alt="Circular star map with zodiac constellations from Kircher's Ars Magna Lucis et Umbrae — Sciathericon stellarum fixarum"
                 width={600}
                 height={900}
@@ -594,7 +597,6 @@ export default function AstrologicalDiagramsPage() {
 
       </article>
 
-      <BlogComments slug="astrological-diagrams" />
     </ContentPageLayout>
   );
 }

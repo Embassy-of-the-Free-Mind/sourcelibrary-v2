@@ -52,6 +52,8 @@ function transformBook(book) {
     pages_count: book.pages_count || 0,
     pages_ocr: book.pages_ocr || 0,
     pages_translated: book.pages_translated || 0,
+    // #4166 — paired with `pages_translated_es: 1` in the projection below.
+    pages_translated_es: book.pages_translated_es || 0,
     pages_blank: book.pages_blank || 0,
     is_first_translation: book.is_first_translation === true,
     visible: book.visible === true,
@@ -83,6 +85,11 @@ function transformBook(book) {
     source_work_dates: Array.isArray(book.source_work_dates) ? book.source_work_dates : null,
     ft_disposition: book.translation_verification?.disposition || null,
     ft_reasoning: book.translation_verification?.reasoning || null,
+    ft_verdict: book.first_translation?.verdict || null,
+    ft_evidence_strength: book.first_translation?.evidence_strength || null,
+    ft_our_completeness: book.first_translation?.our_completeness || null,
+    ft_source_screen: book.source_language_screen?.verdict || null,
+    ft_translator_screen: book.translator_author_screen?.verdict || null,
     description: book.ai_metadata?.description || book.description || null,
     subject_keywords: Array.isArray(book.subject_keywords) ? book.subject_keywords : null,
     translation_pct: (() => {
@@ -102,7 +109,7 @@ const projection = {
   id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
   read_count: 1, pages_blank: 1,
-  pages_count: 1, pages_ocr: 1, pages_translated: 1,
+  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1,
   is_first_translation: 1, visible: 1, quality_score: 1,
   last_translation_at: 1, updated_at: 1, created_at: 1,
   categories: 1, collections: 1, collection_relevance: 1,
@@ -120,6 +127,11 @@ const projection = {
   resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1,
   source_work_dates: 1,
   'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
+  // Graded FT verdict + screens (#3726 Tier 3) — pure projections; the render
+  // decision lives in src/lib/first-translation/render.ts, never here.
+  'first_translation.verdict': 1, 'first_translation.evidence_strength': 1,
+  'first_translation.our_completeness': 1,
+  'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1,
   'ai_metadata.description': 1, description: 1, subject_keywords: 1,
 };
 

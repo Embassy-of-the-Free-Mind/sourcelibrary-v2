@@ -1,0 +1,46 @@
+{
+  "book_id": "6953a82777f38f6761bd0aad",
+  "work_identified": "Armenian recension of the Commentary on the Apocalypse of John attributed to Andrew of Caesarea and Arethas of Caesarea (Cappadocia) — a distinct composite Armenian text combining both commentators, attested in the Jerusalem 1855 print; distinct from Andrew's Greek commentary alone (Constantinou 2011) and from Nerses of Lambron's 12th-c. Armenian adaptation (Thomson 2007)",
+  "verdict": "first_from_source",
+  "prior_relationship": "different_source_language",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Commentary on the Apocalypse",
+      "translator": "Eugenia Scarvelis Constantinou",
+      "pub_year": "2011",
+      "publisher": "Catholic University of America Press (Fathers of the Church, vol. 123)",
+      "completeness": "complete",
+      "source_url": "https://www.cuapress.org/9780813228112/commentary-on-the-apocalypse/"
+    }
+  ],
+  "queries_run": [
+    "Andrew of Caesarea Commentary Apocalypse Armenian version English translation",
+    "Arethas Cappadocia Commentary Apocalypse John English translation",
+    "Andrew of Caesarea Commentary Apocalypse Armenian recension distinct translation scholarship",
+    "Andrew Arethas Caesarea Commentary Apocalypse Armenian version Jerusalem 1855 distinct recension difference Greek",
+    "Constantinou \"Fathers of the Church\" 123 Andrew Caesarea \"translation of\" Greek Armenian scope content",
+    "\"Commentary on the Apocalypse\" Armenian recension \"first translation\" OR \"translated from Armenian\"",
+    "WorldCat \"Andrew of Caesarea\" OR \"Arethas\" commentary Apocalypse Armenian English",
+    "Andrew Arethas Caesarea Apocalypse Armenian text English translation scholarly publication",
+    "Nerses Lambron Commentary Apocalypse English translation Armenian",
+    "Thomson \"Nerses of Lambron\" commentary Revelation Armenian Andrew Caesarea translation distinction recension",
+    "Weinrich \"Greek Commentaries on Revelation\" Oecumenius Andrew Caesarea Arethas table of contents",
+    "Arethas Caesarea Commentary Revelation Apocalypse English translation published"
+  ],
+  "sources_consulted": [
+    {"url": "https://www.cuapress.org/9780813228112/commentary-on-the-apocalypse/", "found": "Constantinou 2011 English translation of Andrew's Greek Commentary (Fathers of the Church 123); sourced from Greek, not Armenian"},
+    {"url": "https://en.wikipedia.org/wiki/Andreas_of_Caesarea", "found": "Commentary preserved in ~100 Greek MSS, also translated into Armenian, Georgian, Church Slavonic; no English translation of Armenian version mentioned"},
+    {"url": "https://francisgumerlock.com/more-ancient-apocalypse-commentaries-in-translation/", "found": "English translations listed: Constantinou (Andrew Greek→English 2011), Weinrich (Oecumenius+Andrew Greek→English, IVP); no Armenian recension English translation listed; Nerses of Lambron noted as a 12th-c. Armenian adaptation"},
+    {"url": "https://www.amazon.com/Greek-Commentaries-Revelation-Ancient-Christian/dp/0830829083", "found": "Weinrich IVP Ancient Christian Texts covers Oecumenius and Andrew of Caesarea only (Greek); Arethas not included"},
+    {"url": "https://kerux.com/doc/2601R1.asp", "found": "Review of Thomson 2007 translation of Nerses of Lambron's 12th-c. Armenian adaptation — Nerses adapted Andrew selectively, adding his own material; this is distinct from the direct Armenian translation of Andrew+Arethas"},
+    {"url": "https://www.amazon.com/Nerses-Lambron-Commentary-Revelation-Saint/dp/9042918667", "found": "Thomson (Peeters 2007) translated Nerses of Lambron's 12th-c. reworking of Andrew from Armenian; different text from the Armenian recension attributed to Andrew+Arethas"},
+    {"url": "https://preteristarchives.org/arethas-of-caesarea/", "found": "Arethas of Caesarea wrote commentary on Apocalypse c.913 based on Andrew; no published complete English translation of Arethas found"},
+    {"url": "https://silouanthompson.net/2013/06/andrew-of-caesarea-and-the-apocalypse-in-the-ancient-church-of-the-east/", "found": "Constantinou dissertation covers Andrew's Greek commentary and its reception; Armenian Church noted as recipient tradition; no English translation of the Armenian recension mentioned"},
+    {"url": "https://search.worldcat.org/title/The-Armenian-version-of-Revelation-Apocalypse-of-John-:/oclc/1303838", "found": "Conybeare edition of the Armenian text of Revelation (biblical text), not Andrew/Arethas commentary; no commentary English translation found here"}
+  ],
+  "reasoning": "Andrew's Greek Commentary was Englished by Constantinou (CUA 2011) — the underlying work. The Armenian recension attributed to 'Andrew AND Arethas' is a distinct composite text (Andrew's 7th-c. + Arethas's 10th-c. material combined in Armenian form). Nerses of Lambron's Armenian adaptation (Thomson 2007) is a 12th-c. reworking, not this text. No English translation of this specific Armenian recension found in any source searched."
+}

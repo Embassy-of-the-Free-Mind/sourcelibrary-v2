@@ -1,0 +1,69 @@
+{
+  "book_id": "69ac5f757f20875486da50e7",
+  "work_identified": "Oeuvres complètes de Christiaan Huygens, Tome XII: Travaux de mathématiques pures 1652–1656 (Société Hollandaise des Sciences edition, 1910) — a multi-work collection of Huygens's pure mathematical papers from 1652–1656, including De Circuli Magnitudine Inventa (1654), Exetasis Cyclometriae, quadrature theorems, Inventio tangentis in Conchoide, and associated correspondence",
+  "verdict": "first_complete",
+  "prior_relationship": "partial",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [
+    {
+      "english_title": "Huygens: De Circuli Magnitudine Inventa (1654)",
+      "translator": "J.L. Berggren, Jonathan M. Borwein, Peter B. Borwein",
+      "pub_year": "2004",
+      "publisher": "Springer (Pi: A Source Book, 3rd ed., appendix)",
+      "completeness": "partial",
+      "source_url": "https://link.springer.com/chapter/10.1007/978-1-4757-4217-6_12"
+    }
+  ],
+  "queries_run": [
+    "Huygens \"Oeuvres complètes\" \"Tome 12\" English translation \"Travaux mathématiques\"",
+    "Christiaan Huygens complete works English translation mathematics 1652-1656",
+    "Huygens \"De Motu Corporum\" \"De Ratiociniis\" English translation WorldCat",
+    "Huygens \"Oeuvres complètes\" English translation collected works history mathematics",
+    "Huygens \"Travaux mathématiques pures 1652-1656\" contents \"De Circuli\" table of contents",
+    "Huygens \"Oeuvres complètes\" \"Tome XIV\" \"Tome XII\" probability \"De Ratiociniis\" which volume",
+    "Huygens \"De Circuli Magnitudine Inventa\" English translation history mathematics translated",
+    "WorldCat Huygens \"Oeuvres complètes\" volume 12 English translation site:worldcat.org",
+    "Huygens mathematical works English translation \"Source Book\" OR \"A Source Book in Mathematics\" OR Struik Birkhoff",
+    "Struik \"source book in mathematics\" Huygens \"De Circuli\" OR \"circuli magnitudine\" English excerpt included",
+    "Ian Bruce Huygens mathematical works English translation \"De Circuli\" OR \"Travaux mathématiques\" 1652",
+    "\"Pi: A Source Book\" Berggren Borwein Huygens \"De Circuli Magnitudine\" English translation contents",
+    "\"Pi A Source Book\" \"new translations\" Huygens Viete appendix \"De Circuli\" English",
+    "Huygens \"Oeuvres complètes\" \"Tome XII\" OR \"tome 12\" English translation published available",
+    "Huygens mathematical works 1652 1656 English translation \"complete works\" OR \"collected works\"",
+    "Huygens \"travaux de mathématiques\" 1652 1656 \"tome 12\" OR \"volume XII\" no English translation never translated"
+  ],
+  "sources_consulted": [
+    {
+      "url": "https://www.dbnl.org/tekst/huyg003oeuv12_01/huyg003oeuv12_01_0036.php",
+      "found": "Table of subjects for Tome XII: confirms multiple distinct works including De Circuli Magnitudine Inventa, Exetasis Cyclometriae, quadrature theorems, tangent constructions, and other mathematical papers from 1652–1656"
+    },
+    {
+      "url": "https://www.dbnl.org/tekst/huyg003oeuv12_01/huyg003oeuv12_01_0018.php",
+      "found": "Section XVIII (1 Sept 1653): 'Inventio tangentis in Conchoide' — confirms Tome XII contains many individual mathematical pieces, not just one treatise"
+    },
+    {
+      "url": "https://link.springer.com/chapter/10.1007/978-1-4757-4217-6_12",
+      "found": "Chapter 12 of Pi: A Source Book (Berggren, Borwein, Borwein, Springer 2004): English translation of De Circuli Magnitudine Inventa (1654) in appendix — only this one component work of Tome XII appears in English"
+    },
+    {
+      "url": "https://www.17centurymaths.com/contents/huygenscontents.html",
+      "found": "Ian Bruce's 17centurymaths.com: only Horologium Oscillatorium and De Ratiociniis translated; no translation of De Circuli or other Tome XII works"
+    },
+    {
+      "url": "https://archive.org/details/oeuvrescomplte04huyg",
+      "found": "Oeuvres complètes on Internet Archive: language French, 22-volume set 1888–1950, no English translations listed"
+    },
+    {
+      "url": "https://gallica.bnf.fr/ark:/12148/bpt6k778605/f5",
+      "found": "Gallica: Tome XII (Travaux de mathématiques pures 1652–1656) available in French/Latin; no English translation noted"
+    },
+    {
+      "url": "https://www.dbnl.org/tekst/huyg003oeuv14_01/huyg003oeuv14_01_0001.php",
+      "found": "Confirmed De Ratiociniis in Ludo Aleae is in Tome XIV, not Tome XII — rules out probability-work English translations as applying to this volume"
+    }
+  ],
+  "reasoning": "Tome XII is a multi-work collection; no complete English translation exists. De Circuli Magnitudine Inventa (its major treatise) appears in English in Pi: A Source Book (Berggren/Borwein, Springer 2004, appendix), making this a partial prior. All other Tome XII works — Exetasis Cyclometriae, quadrature theorems, tangent constructions, 1652–1656 correspondence — remain untranslated."
+}

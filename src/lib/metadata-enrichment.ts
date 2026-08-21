@@ -14,7 +14,7 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/ge
 import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 import { logAuditEvent } from './audit-logger';
 import { logMetadataChange } from './book-changelog';
-import { generateUniqueBookSlug } from './slugify';
+import { generateUniqueBookSlug, isPlaceholderSlug } from './slugify';
 
 const MODEL = 'gemini-3-flash-preview';
 const MAX_OCR_PAGES = 25;
@@ -484,7 +484,10 @@ export async function enrichBookMetadata(
   // Regenerate slug if display_title was just set and current slug is bad
   if (updates.display_title) {
     const currentSlug = (book.slug as string) || '';
-    if (!currentSlug || currentSlug === 'undefined' || currentSlug.startsWith('untitled')) {
+    // isPlaceholderSlug also catches the leading-hyphen class (/book/-10),
+    // which this check used to miss — those books have a display_title now,
+    // which is exactly the input needed to build a real slug.
+    if (isPlaceholderSlug(currentSlug)) {
       const newSlug = await generateUniqueBookSlug(
         db, book.title as string, (updates.author || book.author) as string, updates.display_title as string
       );

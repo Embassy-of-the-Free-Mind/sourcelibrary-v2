@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
@@ -20,15 +21,32 @@ async function getStats() {
     const db = await getReadDb();
     // Use fast queries: estimatedDocumentCount + dashboard_snapshot (avoid distinct + countDocuments)
     const [snapshot, totalPages, galleryCount] = await Promise.all([
-      db.collection('system_config').findOne({ _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId }),
+      // Age-guarded. This page recruits volunteers with "N texts", and it spent
+      // 138 days advertising 13,713 against a real 22,069 because it read the
+      // snapshot document straight and the snapshot had no writer.
+      readFreshDashboardSnapshot(db),
       db.collection('pages').estimatedDocumentCount(),
       db.collection('gallery_images').estimatedDocumentCount(),
     ]);
-    const snap = snapshot?.data as Record<string, Record<string, number>> | undefined;
-    const totalBooks = snap?.canon?.total_books ?? 0;
+
+    // On a stale or missing snapshot, count directly rather than render a zero.
+    // This is an ISR path (revalidate = 6h), not the request path, so the two
+    // counts are affordable — and a wrong small number here reads as "the
+    // library is tiny", which is the opposite of what the page is for.
+    const canon = snapshot?.data.canon;
+    const [totalBooks, translatedCount] = canon
+      ? [canon.total_books, canon.readable_books]
+      : await Promise.all([
+        db.collection('books').countDocuments({ visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 30000 }),
+        db.collection('books').countDocuments(
+          { visible: true, pages_count: { $gt: 0 }, is_fully_translated: true },
+          { maxTimeMS: 30000 },
+        ),
+      ]);
+
     return {
       totalBooks,
-      translatedCount: snap?.canon?.readable_books ?? totalBooks,
+      translatedCount: translatedCount || totalBooks,
       totalPages,
       galleryCount,
       languageCount: 90, // approximate — avoids slow distinct() on 28K docs
@@ -56,6 +74,10 @@ async function getGalleryImages() {
 }
 
 function formatNumber(n: number): string {
+  // Millions first. Without this branch 19,132,100 rendered as "19132.1k" on a
+  // live page asking strangers to help — the thousands rule kept applying long
+  // after it stopped making sense.
+  if (n >= 1_000_000) return `${Math.floor(n / 100_000) / 10}M`;
   if (n >= 1000) return `${Math.floor(n / 100) / 10}k`;
   return n.toString();
 }
@@ -123,11 +145,18 @@ export default async function ParticipatePage() {
           The easiest way to start
         </h2>
         <div className="max-w-3xl">
+          {/* This section promised "an edit button on every page. No account needed."
+              No route has ever provided that: every page-text write is gated at
+              editor, and the Read/Edit toggle only renders for editors (#3511).
+              Flagging a problem really is open to everyone, so that is what it
+              now says. */}
           <p className="text-lg text-secondary leading-relaxed mb-4">
-            Open any book. Read the AI translation next to the original page image. If something is wrong, click edit and fix it. That&apos;s it.
+            Open any book. Read the AI translation next to the original page image. If something looks wrong, say so &mdash; every page has a &ldquo;Notice a translation issue?&rdquo; link that takes a note straight to us. No account needed.
           </p>
           <p className="text-secondary leading-relaxed mb-6">
-            Every book has an edit button on every page. No account needed. The languages we most need help with:{' '}
+            To correct the text yourself, write to{' '}
+            <a href="mailto:team@sourcelibrary.org?subject=Editing access" className="text-accent-rust hover:underline">team@sourcelibrary.org</a>
+            {' '}and we&apos;ll give your account editing access. The languages we most need help with:{' '}
             <span className="text-primary font-medium">Latin</span>,{' '}
             <span className="text-primary font-medium">German</span>,{' '}
             <span className="text-primary font-medium">Arabic</span>,{' '}
@@ -195,7 +224,11 @@ export default async function ParticipatePage() {
             </p>
           </Link>
 
-          <Link href="/gallery" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/40 hover:shadow-sm transition-all text-center">
+          {/* Points at the rating QUEUE, not the public gallery. This card
+              described /review/gallery-quality but linked to /gallery — which
+              has no rating control — so the one card on the site that pointed
+              at volunteer work sent people somewhere they could not do it. */}
+          <Link href="/review/gallery-quality" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/40 hover:shadow-sm transition-all text-center">
             <div className="w-9 h-9 mx-auto mb-2 rounded-lg bg-accent-rust/10 flex items-center justify-center">
               <svg className="w-5 h-5 text-accent-rust" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
@@ -203,7 +236,7 @@ export default async function ParticipatePage() {
             </div>
             <h3 className="text-sm font-semibold text-primary mb-0.5 group-hover:text-accent-rust transition-colors">Rate illustrations</h3>
             <p className="text-xs text-muted leading-snug">
-              Browse the gallery and rate image quality. Your ratings help curate the collection.
+              A few seconds each: does this plate belong in the gallery? Keyboard-driven, and credited to you.
             </p>
           </Link>
 
@@ -219,7 +252,7 @@ export default async function ParticipatePage() {
             </p>
           </Link>
 
-          <a href="mailto:derek@sourcelibrary.org?subject=Study group idea" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-violet/40 hover:shadow-sm transition-all text-center">
+          <a href="mailto:team@sourcelibrary.org?subject=Study group idea" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-violet/40 hover:shadow-sm transition-all text-center">
             <div className="w-9 h-9 mx-auto mb-2 rounded-lg bg-accent-violet/10 flex items-center justify-center">
               <svg className="w-5 h-5 text-accent-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
@@ -312,10 +345,10 @@ export default async function ParticipatePage() {
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <a
-              href="mailto:derek@sourcelibrary.org"
+              href="mailto:team@sourcelibrary.org"
               className="inline-flex items-center gap-2 text-lg text-primary font-medium hover:text-accent-rust transition-colors"
             >
-              derek@sourcelibrary.org
+              team@sourcelibrary.org
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>

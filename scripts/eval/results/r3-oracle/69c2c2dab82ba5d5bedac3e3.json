@@ -1,0 +1,36 @@
+{
+  "book_id": "69c2c2dab82ba5d5bedac3e3",
+  "work_identified": "Annalen der Loge zur Einigkeit, der Englischen Provinzial-Loge, sowie der Provinzial- und Directorial-Loge des Eclectischen Bundes zu Frankfurt a/M., 1742-1811 — Georg Franz Burkhard Kloss (1842); institutional annals of a Frankfurt Masonic lodge covering its founding as an English Provincial Lodge through 1811",
+  "verdict": "first_no_prior",
+  "prior_relationship": null,
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "Georg Kloss \"Annalen der Loge zur Einigkeit\" English translation",
+    "Kloss \"Annalen der Loge\" Frankfurt Masonic lodge English translation WorldCat",
+    "worldcat.org \"Annalen der Loge zur Einigkeit\" Kloss English",
+    "\"Annals of the Lodge\" \"zur Einigkeit\" OR \"zur Einigkeit\" Kloss Freemasonry Frankfurt English",
+    "Kloss \"Annalen der Loge zur Einigkeit\" 1842 translation English Masonic history Eclectic Union",
+    "Georg Kloss bibliography Masonic history works English translation list",
+    "Georg Kloss \"Annalen der Loge\" Freemasonry Frankfurt site:archive.org",
+    "\"Annals of the Lodge zur Einigkeit\" OR \"Annals of Lodge zur Einigkeit\" English translation Freemasonry",
+    "\"Annals of the Lodge of Unity\" OR \"Annals of the Lodge zur Einigkeit\" Freemasonry Frankfurt Kloss",
+    "Karl Demeter \"Frankfurter Loge zur Einigkeit\" English OR \"Frankfurt lodge\" \"zur Einigkeit\" English history book",
+    "Masonic Eclectic Union Frankfurt history \"English translation\" OR \"translated into English\" OR \"first English\""
+  ],
+  "sources_consulted": [
+    {"url": "https://www.freimaurer-wiki.de/index.php/En:_Freemasonry_in_the_German_Empire", "found": "English-language Masonic history page references Kloss's Annalen as 'an invaluable mine of Masonic lore' but cites only the German 1842 original; no English translation mentioned"},
+    {"url": "https://en.wikisource.org/wiki/Author:Georg_Kloss", "found": "Lists Kloss's major works including Annalen der Loge zur Einigkeit; all in German, no English translations on Wikisource"},
+    {"url": "https://www.digitale-sammlungen.de/en/details/bsb10446364", "found": "Munich Digitization Center record: German original only, no translation noted"},
+    {"url": "https://www.freimaurer-wiki.de/index.php/Zur_Einigkeit", "found": "Authoritative German Masonic history resource on the lodge; only the German 1842 edition cited"},
+    {"url": "https://database.factgrid.de/wiki/Item:Q11161", "found": "Lodge zur Einigkeit page cites Kloss 1842 (German) and Demeter 1967 (German); no English translation"},
+    {"url": "https://en.wikipedia.org/wiki/Georg_Kloss", "found": "Wikipedia article on Kloss lists major works; none noted as translated to English"},
+    {"url": "https://openlibrary.org/search?q=Annalen+der+Loge+zur+Einigkeit+Kloss", "found": "3 editions found (1842 original, 1972 reprint, 2018 POD reprints); all German, no English edition"},
+    {"url": "https://www.amazon.com/Annalen-Einigkeit-Englischen-Provincial-Loge-Provincial/dp/1179077482", "found": "Amazon listing explicitly labeled 'German Edition' — POD reprint of German text only"},
+    {"url": "https://books.google.com/books/about/Annalen_der_Loge_zur_Einigkeit_der_Engli.html?id=a2RfAAAAcAAJ", "found": "Google Books record: German original, no English translation listed"}
+  ],
+  "reasoning": "Kloss's 1842 Annalen is a specialized institutional chronicle of a Frankfurt Masonic lodge. Thorough searches across Open Library (3 German-only editions), Wikisource, freimaurer-wiki, Munich Digital Library, Wikipedia, Google Books, Amazon, and targeted English-translation queries found zero English edition. WorldCat was inaccessible (HTTP 403). Kloss's other major works were likewise never Englished. Bounded absence across tradition-appropriate Masonic scholarship sources."
+}

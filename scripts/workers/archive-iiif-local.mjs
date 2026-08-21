@@ -17,6 +17,30 @@
  * Safe to run repeatedly; idempotent (skips pages that already have
  * archived_photo). Mac-only by intent — do NOT cron on Hetzner.
  *
+ * ── Why --any-status ────────────────────────────────────────────────────────
+ * Selecting on pipeline_auto.status:'archiving' matches the pipeline QUEUE, not
+ * the archive BACKLOG, and the two had drifted apart completely: measured
+ * 2026-08-04, 21 books sat at 'archiving' (harvard + gallica only) while
+ * 5.07M pages across ~19,500 books were unarchived. So this worker reported
+ * "0 unarchived pages across 0 books" and idled, with ~4.1M archivable pages
+ * (iiif + bsb) sitting in states it never looked at — chapters_complete alone
+ * held 1.9M. Sampling confirmed ~100% of those remaining pages carry a photo
+ * URL on a recognised host, i.e. it is real work, not pages excused as
+ * non-archivable.
+ *
+ * --any-status widens selection to the same backlog predicate archive-harvard
+ * and archive-bulk already use. The reason it could not be a one-line query
+ * change is the status write below: this worker advances finished books to
+ * 'archive_complete', which for a book at 'chapters_complete' is a DOWNGRADE
+ * that would re-run paid OCR/translation/chapters over the whole book. Hence
+ * mayAdvanceToArchiveComplete() — archiving is recorded for every book, but
+ * status only ever moves forward.
+ *
+ * Archiving costs no Gemini spend, so this is safe to run under the global
+ * pause with --ignore-pause (that is what the flag is for). It does NOT enroll
+ * anything: books with no pipeline_auto stay un-enrolled, so widening this
+ * worker cannot start paid work by itself.
+ *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/workers/archive-iiif-local.mjs --dry-run
  *   ... node scripts/workers/archive-iiif-local.mjs --limit=3000 --concurrency=4 --rate=3
@@ -25,6 +49,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
+import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -37,6 +62,39 @@ const PROVIDERS = (getArg('providers') || 'iiif,e-codices').split(',');
 const MAX_FAILS = parseInt(getArg('max-fails') || '25', 10);     // circuit-breaker threshold
 const TIMEOUT_MS = parseInt(getArg('timeout') || '60', 10) * 1000; // per-download timeout
 const DRY_RUN = hasFlag('dry-run');
+// Select books by ARCHIVE BACKLOG (pages_archived < pages_count) instead of by
+// pipeline_auto.status:'archiving'. See the "Why --any-status" note in the header.
+const ANY_STATUS = hasFlag('any-status');
+
+// Canonical pipeline order, mirroring PIPELINE_STATUS_ORDER in
+// scripts/workers/enrichment-snapshot.mjs. Used ONLY to decide whether advancing a
+// book to 'archive_complete' would move it BACKWARD.
+const PIPELINE_STATUS_ORDER = [
+  'queued', 'archiving', 'archive_complete', 'ocr_submitted', 'ocr_complete',
+  'metadata_enriched', 'translate_submitted', 'translate_complete',
+  'enriching', 'enriched', 'chapters', 'chapters_complete',
+  'images_submitted', 'images_complete', 'complete',
+];
+const ARCHIVE_COMPLETE_IDX = PIPELINE_STATUS_ORDER.indexOf('archive_complete');
+
+/**
+ * May this book be advanced to 'archive_complete'?
+ *
+ * Only when it is not already PAST that point. Downgrading a book that has
+ * finished OCR/translation/chapters would make the orchestrator re-run those
+ * paid Gemini phases over the whole book — the single most expensive mistake
+ * available here, and the reason --any-status could not simply widen the query.
+ *
+ * Terminal//holding states ('needs_attention', 'failed', 'parked', quarantine…)
+ * are deliberately NOT advanced either: they are not positions on the happy path,
+ * and something put them there on purpose.
+ */
+function mayAdvanceToArchiveComplete(currentStatus) {
+  if (!currentStatus) return true;              // never enrolled — safe to mark
+  const idx = PIPELINE_STATUS_ORDER.indexOf(currentStatus);
+  if (idx === -1) return false;                 // unknown/terminal — leave alone
+  return idx <= ARCHIVE_COMPLETE_IDX;
+}
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -77,22 +135,25 @@ async function waitForToken() {
   }
 }
 
+// Stall timeout, not a total-duration cap (#3477): the old TIMEOUT_MS-from-start
+// abort selected for the largest page in a book. --timeout now sets the stall
+// window; the lib's 15-min maxMs is the backstop.
 async function downloadImage(url, maxRetries = 3) {
   for (let attempt = 0; ; attempt++) {
-    const ctrl = new AbortController();
-    const timeout = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
     try {
-      const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT }, signal: ctrl.signal });
-      clearTimeout(timeout);
+      const { res, buffer } = await fetchWithStallTimeout(url, {
+        stallMs: TIMEOUT_MS,
+        headers: { 'User-Agent': USER_AGENT },
+      });
       if (res.status === 429 || res.status >= 500) {
         if (attempt < maxRetries) { await new Promise(r => setTimeout(r, 4000 * Math.pow(2, attempt))); continue; }
         throw new Error(`HTTP ${res.status} after ${maxRetries + 1} attempts`);
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return Buffer.from(await res.arrayBuffer());
+      return buffer;
     } catch (err) {
-      clearTimeout(timeout);
-      const transient = err.name === 'AbortError' || /ECONNRESET|ETIMEDOUT|EAI_AGAIN|socket|network/i.test(err.message || '');
+      // 'fetch aborted' is the stall/backstop abort — retried, as AbortError was before.
+      const transient = err.name === 'AbortError' || /fetch aborted|ECONNRESET|ETIMEDOUT|EAI_AGAIN|socket|network/i.test(err.message || '');
       if (attempt < maxRetries && transient) { await new Promise(r => setTimeout(r, 4000 * Math.pow(2, attempt))); continue; }
       throw err;
     }
@@ -115,12 +176,25 @@ async function main() {
     await client.close(); return;
   }
 
+  // Default: the pipeline queue (books parked at 'archiving').
+  // --any-status: the whole archive backlog for these providers, whatever pipeline
+  // state the book is in. Same predicate archive-harvard.mjs and archive-bulk.mjs
+  // already use. Safe because mayAdvanceToArchiveComplete() refuses to move an
+  // advanced book backward — see that function.
+  const bookFilter = ANY_STATUS
+    ? {
+        'image_source.provider': { $in: PROVIDERS },
+        pages_count: { $gt: 0 },
+        $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
+      }
+    : {
+        'pipeline_auto.status': 'archiving',
+        'image_source.provider': { $in: PROVIDERS },
+        pages_count: { $gt: 0 },
+      };
+
   const books = await db.collection('books')
-    .find({
-      'pipeline_auto.status': 'archiving',
-      'image_source.provider': { $in: PROVIDERS },
-      pages_count: { $gt: 0 },
-    }, { projection: { id: 1, title: 1, pages_count: 1, pages_archived: 1 } })
+    .find(bookFilter, { projection: { id: 1, title: 1, pages_count: 1, pages_archived: 1, 'pipeline_auto.status': 1 } })
     .sort({ pages_archived: -1 })   // finish nearly-done books first → status advances sooner
     .limit(4000)
     .maxTimeMS(30_000)
@@ -209,9 +283,10 @@ async function main() {
   await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
 
   // Sync pages_archived and advance fully-archived books to archive_complete.
-  let synced = 0, advanced = 0;
+  let synced = 0, advanced = 0, advanceSkipped = 0;
   for (const bookId of touchedBookIds) {
-    const book = await db.collection('books').findOne({ id: bookId }, { projection: { pages_count: 1 } });
+    const book = await db.collection('books').findOne(
+      { id: bookId }, { projection: { pages_count: 1, 'pipeline_auto.status': 1 } });
     const archivedCount = await db.collection('pages').countDocuments(
       { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] }, $expr: { $not: { $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: '^failed:' } } } },
       { maxTimeMS: 10000 }
@@ -224,14 +299,23 @@ async function main() {
       $or: [{ archived_photo: { $exists: false } }, { archived_photo: null }, { archived_photo: '' }],
     }).catch(() => -1);
     if (remaining === 0 && book?.pages_count > 0) {
-      set['pipeline_auto.status'] = 'archive_complete';
-      set['pipeline_auto.last_updated'] = new Date();
-      advanced++;
+      // Forward-only. A book already past archiving keeps its status: writing
+      // 'archive_complete' over 'chapters_complete' would send it back through
+      // paid OCR/translation/chapters. Its pages_archived is still updated above —
+      // the archiving work is recorded either way, only the status is left alone.
+      if (mayAdvanceToArchiveComplete(book?.pipeline_auto?.status)) {
+        set['pipeline_auto.status'] = 'archive_complete';
+        set['pipeline_auto.last_updated'] = new Date();
+        advanced++;
+      } else {
+        advanceSkipped++;
+      }
     }
     await db.collection('books').updateOne({ id: bookId }, { $set: set });
     synced++;
   }
-  console.log(`[archive-iiif] synced ${synced} books, advanced ${advanced} to archive_complete`);
+  console.log(`[archive-iiif] synced ${synced} books, advanced ${advanced} to archive_complete` +
+    (advanceSkipped ? `, left ${advanceSkipped} already-past-archiving books at their current status` : ''));
 
   const duration = ((Date.now() - start) / 1000).toFixed(1);
   console.log(`[archive-iiif] Done in ${duration}s: ${archived} archived (${(totalBytes / 1048576).toFixed(0)} MB), ${failed} failed`);

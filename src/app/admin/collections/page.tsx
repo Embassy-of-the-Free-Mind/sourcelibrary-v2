@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ProseField from '@/components/ui/ProseField';
 import {
   ArrowLeft,
   Check,
@@ -726,15 +727,14 @@ export default function AdminCollectionsPage() {
                             />
                           </div>
 
-                          <div>
-                            <label className="block text-xs font-medium text-stone-500 mb-1">Description</label>
-                            <textarea
-                              value={editDescription}
-                              onChange={(e) => setEditDescription(e.target.value)}
-                              rows={3}
-                              className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold"
-                            />
-                          </div>
+                          <ProseField
+                            label="Description"
+                            help="Blank lines become paragraphs on the collection page."
+                            value={editDescription}
+                            onChange={setEditDescription}
+                            rows={3}
+                            inputClassName="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold"
+                          />
 
                           <div className="flex items-center gap-6">
                             <label className="flex items-center gap-2 text-sm">

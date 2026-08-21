@@ -1,0 +1,44 @@
+{
+  "date": "2026-07-23",
+  "models": [
+    "claude-sonnet-5"
+  ],
+  "runs": 3,
+  "only": "iliad-13-idomeneus",
+  "summary": [
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 1,
+      "aligned": 1,
+      "refChars": 876,
+      "charAccuracy": 0.9908675799086758,
+      "rows": [
+        {
+          "work": "Iliad XIII.493-517 (Idomeneus aristeia), MS Rouse 358",
+          "bookId": "699382dd84cf5845c644b377",
+          "pageNumber": 365,
+          "aligned": true,
+          "guard": 0.04216867469879518,
+          "cer": 0.0091324200913242,
+          "charAccuracy": 0.9908675799086758,
+          "refLen": 876,
+          "matched": 868,
+          "source": "Wikisource (el)",
+          "source_url": "https://el.wikisource.org/wiki/%CE%99%CE%BB%CE%B9%CE%AC%CF%82/%CE%9D",
+          "models": {
+            "claude-sonnet-5": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.174894,
+              "consistency": 0.3333333333333333,
+              "aligned": true,
+              "charAccuracy": 0.9623287671232876,
+              "cer": 0.03767123287671233
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

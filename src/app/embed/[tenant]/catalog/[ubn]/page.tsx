@@ -1,17 +1,23 @@
 import type { Metadata } from 'next';
-import { BookMarked, ExternalLink, BookOpen, Pencil, Search } from 'lucide-react';
+import { headers } from 'next/headers';
+import { BookMarked, ExternalLink, BookOpen, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
 // tenantBookUrl removed - using inline URL construction with embed path
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import { getPartnerBySlug } from '@/lib/library-partners';
+import { buildSignInHref } from '@/lib/tenant-signin-url';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import type { BphContributor } from '@/lib/bph-catalog';
+import { normalizeStateShelfMark } from '@/lib/bph-state-shelfmark';
 import { AISection } from '@/components/embed/AISection';
+import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
 import CatalogueUnavailable from '@/components/embed/CatalogueUnavailable';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
+import { catalogKeyColumn } from '@/lib/bph-catalog-key';
 
 // Catalogue entry routing
 // - BPH (providerKey === 'bph'): legacy `bph_works` table + bespoke fields
@@ -39,6 +45,23 @@ function normalizeUbn(raw: string): string {
   }
 }
 
+/**
+ * 2,012 catalogue rows have NO ubn at all — every one of the 110 `Fot`
+ * photographs and 442 of the `M ` manuscripts among them. Memorix simply does
+ * not issue a UBN for those record types. Since this route keyed on `ubn`, and
+ * the browser's `detailUrl()` returns null without one, those records had no
+ * address anywhere on the site: they rendered as plain text in the catalogue and
+ * could not be opened. Reported twice by BPH staff — José Bouman 2026-07-31
+ * ("not possible to click on titles with a shelf mark M (+number), nor on those
+ * with shelfmark Fot (+ number)") and Natalie Koch 2026-08-05 ("the manuscript
+ * records aren't clickable yet").
+ *
+ * They all carry a `uuid`, so the route accepts either key. A UBN is a short
+ * digit string and a uuid is 8-4-4-4-12 hex, so the two can never be confused.
+ */
+// Rule + collision proof live in src/lib/bph-catalog-key.ts, pinned by
+// tests/unit/bph-catalog-key.test.ts.
+
 interface FieldProvenance {
   source: string;
   evidence?: string;
@@ -46,7 +69,12 @@ interface FieldProvenance {
 }
 
 interface BphWorkRow {
-  ubn: string;
+  ubn: string | null;
+  // Present on every row; the only key the 2,012 UBN-less records have.
+  uuid: string | null;
+  // Manuscript records carry their title here rather than in `title`, which is
+  // null on all 812 of them. Without this fallback they render "(untitled)".
+  full_title: string | null;
   title: string | null;
   parallel_title: string | null;
   uniform_title: string | null;
@@ -80,6 +108,9 @@ interface BphWorkRow {
   // Memorix "Internal remarks" — cataloguers' working notes. Rendered ONLY
   // for editor+ roles; must never appear on the public page (José B., #3105).
   internal_remarks: string | null;
+  // Where this copy has been exhibited. Staff-only on the same terms as
+  // internal_remarks above (José B., 2026-07-29).
+  exhibition_history: string | null;
   number_of_copies: number | null;
   object_size_cm: string | null;
   bibliographic_format: string | null;
@@ -128,17 +159,31 @@ interface SlBook {
 }
 
 async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
+  const row = await fetchWorkBy(catalogKeyColumn(ubn), ubn);
+  if (row) return row;
+  // Second chance on the primary key. `bph_works.id` is a DIFFERENT uuid from
+  // `bph_works.uuid`, and until 2026-08-13 the workspace worklist built its
+  // sample links from `id` — so every link a librarian copied or bookmarked out
+  // of "Needs your attention" addresses a key `catalogKeyColumn` sends to the
+  // `uuid` column, where it matches nothing (José Bouman, 2026-08-12). The RPC
+  // now emits `uuid`, but those older links are already out in the world.
+  if (catalogKeyColumn(ubn) === 'uuid') return fetchWorkBy('id', ubn);
+  return null;
+}
+
+async function fetchWorkBy(col: 'ubn' | 'uuid' | 'id', ubn: string): Promise<BphWorkRow | null> {
   // Try with the external-link columns first; if the column doesn't exist yet
   // (migration not applied on this environment), retry without them so the
   // page still renders.
   const select = `
-      ubn, title, parallel_title, uniform_title,
+      ubn, uuid, full_title,
+      title, parallel_title, uniform_title,
       author, variant_author, pseudonym, editor, variant_editor,
       author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
-      bibliography, remarks, internal_remarks, number_of_copies, object_size_cm, bibliographic_format,
+      bibliography, remarks, internal_remarks, exhibition_history, number_of_copies, object_size_cm, bibliographic_format,
       binding, bound_with,
       provenance, collection, impressum_original, contributors,
       ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
@@ -149,7 +194,7 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
   // then external-link columns, then author-authority columns. Each migration
   // runs independently per environment — the page renders if any are missing.
   const fallbackSelect = select
-    .replace('remarks, internal_remarks,', 'remarks,')
+    .replace('remarks, internal_remarks, exhibition_history,', 'remarks,')
     .replace('provenance, collection, impressum_original, contributors,', 'provenance,')
     .replace(
       'sl_external_book_id, sl_external_slug, sl_external_source,\n      ',
@@ -159,15 +204,15 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
     'author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,\n      ',
     '',
   );
-  const first = await supabase.from('bph_works').select(select).eq('ubn', ubn).maybeSingle();
+  const first = await supabase.from('bph_works').select(select).eq(col, ubn).maybeSingle();
   if (first.error) {
     const msg = (first.error.message || '').toLowerCase();
     if (msg.includes('does not exist') || msg.includes('could not find')) {
-      const retry = await supabase.from('bph_works').select(fallbackSelect).eq('ubn', ubn).maybeSingle();
+      const retry = await supabase.from('bph_works').select(fallbackSelect).eq(col, ubn).maybeSingle();
       if (retry.error) {
         const retryMsg = (retry.error.message || '').toLowerCase();
         if (retryMsg.includes('does not exist') || retryMsg.includes('could not find')) {
-          const retry2 = await supabase.from('bph_works').select(fallbackNoAuthority).eq('ubn', ubn).maybeSingle();
+          const retry2 = await supabase.from('bph_works').select(fallbackNoAuthority).eq(col, ubn).maybeSingle();
           return (retry2.data as BphWorkRow | null) ?? null;
         }
         return null;
@@ -311,47 +356,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const work = await fetchWork(ubn);
   if (!work) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
-  const title = work.title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
+  const title = work.title || work.full_title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
   const author = work.author || work.variant_author || '';
   const description = `BPH catalogue entry. ${author ? author + '. ' : ''}${work.year ? `(${work.year}). ` : ''}Shelf mark: ${work.shelf_mark || '—'}.`;
   return { title: `${title} - BPH catalogue`, description };
-}
-
-function normalizeRoleSafe(role: unknown): Role {
-  if (
-    role === 'superadmin' ||
-    role === 'admin' ||
-    role === 'editor' ||
-    role === 'contributor' ||
-    role === 'reader'
-  ) {
-    return role;
-  }
-  if (role === 'inner_circle' || role === 'curator') return 'editor';
-  return 'reader';
-}
-
-async function effectiveCatalogRole(
-  email: string | null | undefined,
-  platformRole: Role,
-  tenantSlug: string,
-): Promise<Role> {
-  if (!email) return platformRole;
-  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['editor']) return platformRole;
-  try {
-    const db = await getDb();
-    const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
-    if (!tenant) return platformRole;
-    const membership = await db.collection('memberships').findOne({
-      email: email.toLowerCase(),
-      tenantId: tenant.id,
-      status: 'active',
-    });
-    const tenantRole = normalizeRoleSafe(membership?.role);
-    return ROLE_LEVEL[tenantRole] >= ROLE_LEVEL[platformRole] ? tenantRole : platformRole;
-  } catch {
-    return platformRole;
-  }
 }
 
 export default async function CatalogEntryPage({ params }: Props) {
@@ -383,10 +391,24 @@ export default async function CatalogEntryPage({ params }: Props) {
     );
   }
 
-  const platformRole = normalizeRoleSafe((session?.user as { role?: unknown } | undefined)?.role);
+  // Sign-in link for signed-out visitors. Built from the REQUEST host, never
+  // from the public pathname: the proxy rewrites bph.sourcelibrary.org/catalog/X
+  // to /embed/bph/catalog/X internally, so the path we render under is not the
+  // one the visitor's browser shows. Sending them back to the internal path
+  // would strand them on a URL the tenant host doesn't serve. (Gating on
+  // usePathname() is the same mistake that broke #3383.)
+  const requestHeaders = await headers();
+  const requestHost = requestHeaders.get('host') || '';
+  // UBN-less records (manuscripts, photographs) are addressed by uuid.
+  const publicPath = `/catalog/${encodeURIComponent(work.ubn || work.uuid || ubn)}`;
+  const signInHref = buildSignInHref(
+    requestHost,
+    requestHost ? `https://${requestHost}${publicPath}` : publicPath
+  );
+
+  const platformRole = normalizeCatalogRole((session?.user as { role?: unknown } | undefined)?.role);
   const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
   const showEditButton = ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
-  const showReviewLink = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'];
   const editLabel = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit catalogue entry' : 'Propose a change';
 
   // If the work has no BPH-native digitisation but does have a cross-provider
@@ -395,7 +417,9 @@ export default async function CatalogEntryPage({ params }: Props) {
     ? await fetchExternalBook(work.sl_external_book_id)
     : null;
 
-  const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
+  // Manuscripts keep their title in full_title; `title` is null on all 812.
+  const displayTitle = work.title || work.full_title || work.parallel_title || work.uniform_title
+    || (work.shelf_mark ? `(untitled — ${work.shelf_mark})` : `(untitled — ${work.ubn || work.uuid})`);
   const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook
@@ -423,51 +447,7 @@ export default async function CatalogEntryPage({ params }: Props) {
             New search
           </a>
         </div>
-        {showEditButton && (
-          <div className="flex justify-end flex-wrap gap-2 mb-2">
-            <a
-              href={`/catalog/${encodeURIComponent(work.ubn)}/history`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-            >
-              History
-            </a>
-            {showReviewLink && (
-              <>
-                <a
-                  href="/catalog/new"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-                >
-                  + New record
-                </a>
-                <a
-                  href="/catalog/review"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-                >
-                  Review queue
-                </a>
-                <a
-                  href="/catalog/team"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-                >
-                  Team
-                </a>
-              </>
-            )}
-            <a
-              href="/catalog/help"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-            >
-              Help
-            </a>
-            <a
-              href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
-            >
-              <Pencil className="w-3.5 h-3.5" />
-              {editLabel}
-            </a>
-          </div>
-        )}
+        <CatalogEditorNav role={role} ubn={work.ubn || work.uuid || ubn} editLabel={editLabel} />
         {/* Identity */}
         <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
           {displayTitle}
@@ -744,7 +724,7 @@ export default async function CatalogEntryPage({ params }: Props) {
         <Section title="Location at the BPH">
           <Field label="Present location" value={work.present_location} />
           <Field label="Shelf mark" value={work.shelf_mark} mono />
-          <Field label="State Collection shelf mark" value={work.state_shelf_mark?.trim().toLowerCase() === 'neen' ? null : work.state_shelf_mark} mono />
+          <Field label="State Collection shelf mark" value={normalizeStateShelfMark(work.state_shelf_mark)} mono />
           <Field label="Provenance" value={work.provenance} />
           <Field label="Collection" value={work.collection} />
         </Section>
@@ -756,7 +736,10 @@ export default async function CatalogEntryPage({ params }: Props) {
               Safe to role-gate here: this page is fully dynamic (private,
               no-store), so an editor's render is never cached for others. */}
           {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] && (
-            <Field label="Internal remarks (staff only)" value={work.internal_remarks} />
+            <>
+              <Field label="Internal remarks (staff only)" value={work.internal_remarks} />
+              <Field label="Exhibition history (staff only)" value={work.exhibition_history} />
+            </>
           )}
         </Section>
 
@@ -784,12 +767,27 @@ export default async function CatalogEntryPage({ params }: Props) {
             <>
               {' '}
               <a
-                href={`/catalog/${encodeURIComponent(work.ubn)}/edit`}
+                href={`/catalog/${encodeURIComponent(work.ubn || work.uuid || ubn)}/edit`}
                 className="text-accent-rust hover:underline"
               >
                 {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit this entry' : 'Propose a change'}
               </a>
               .
+            </>
+          ) : null}
+          {/* Cataloguers arrive here signed out and, with the SiteHeader
+              stripped on tenant hosts, previously had nothing to click —
+              the record simply rendered read-only with no hint that editing
+              existed or that they needed a session (#3468). The gear menu
+              carries a Sign in item too, but nobody looking to catalogue
+              thinks to open a settings icon. */}
+          {!session ? (
+            <>
+              {' '}
+              <a href={signInHref} className="text-accent-rust hover:underline">
+                Sign in to edit
+              </a>
+              {' — for BPH cataloguers.'}
             </>
           ) : null}
         </p>

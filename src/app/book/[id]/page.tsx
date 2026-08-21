@@ -1,14 +1,18 @@
 import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
+import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { resolveImprintPlace } from '@/lib/imprint';
+import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
+import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
-import { getBookDetail } from '@/lib/books-catalog';
+import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
@@ -17,14 +21,19 @@ import BookPagesSection from '@/components/book/BookPagesSection';
 import EarlyAccessGate from '@/components/book/EarlyAccessGate';
 import BookDedication from '@/components/book/BookDedication';
 import BookHistory from '@/components/book/BookHistory';
+import BookTimeline, { type TimelineEvent } from '@/components/book/BookTimeline';
+import PublicBookHistory from '@/components/book/PublicBookHistory';
 import BookIndex from '@/components/book/BookIndex';
 import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
+import EnsureCover from '@/components/book/EnsureCover';
+import { isJunkRepresentativePage, isRenderableCoverUrl, selectScoredCoverPage } from '@/lib/cover-fields';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
 import OriginalEditionNotice from '@/components/book/OriginalEditionNotice';
+import TranslatedSiblingNotice from '@/components/book/TranslatedSiblingNotice';
 import RelatedEditions from '@/components/book/RelatedEditions';
 import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
@@ -40,18 +49,46 @@ import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
+import { BookShare } from '@/components/ui/ShareButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
+import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
+import {
+  classifyFirstTranslationClaim,
+  type ScreenedBook,
+} from '@/lib/first-translation/candidate';
+import { firstTranslationClause } from '@/lib/first-translation-labels';
+import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
+import HeroVariants from '@/components/book/HeroVariants';
+import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
+import AboutVariants from '@/components/book/AboutVariants';
+import BookBiblioPanel from '@/components/book/BookBiblioPanel';
+import PlusToggle from '@/components/book/PlusToggle';
+import BookLibrarySection, { type LibrarySectionData } from '@/components/book/BookLibrarySection';
+import { getPartnerByProvider } from '@/lib/library-partners';
+import { getRelatedBooks } from '@/lib/related-books';
+import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
+import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
+import { getPageImageUrl } from '@/lib/page-image-url';
+import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
+import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
+import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
+import { localePath, type Locale } from '@/lib/locale-path';
+import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
+import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
+import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
+import { markPageForReader } from '@/lib/provenance';
 
 // ISR: serve cached HTML, revalidate in background every 24h.
 // Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
@@ -79,6 +116,12 @@ interface PageProps {
   // editor-gated /book/[id]/preview route. The public ISR route leaves this
   // false so hidden books 404 uniformly (cache-safe — no per-user branch).
   allowHidden?: boolean;
+  // Which language this URL is. Set by the thin `/es/book/[id]` twin, which
+  // re-exports this page — ONE page, two URLs, so the two can never diverge
+  // (#4082). It decides the chrome dictionary, which title/summary/chapter
+  // text is shown, and the prefix every internal link keeps. Defaults to the
+  // English route. See .claude/docs/i18n.md.
+  lang?: Locale;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -191,7 +234,7 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
 
 
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, lang = 'en' }: PageProps): Promise<Metadata> {
   const { id } = await params;
   let book: Book | null;
   try {
@@ -207,7 +250,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: 'Book Not Found - Source Library',
       robots: { index: false, follow: false },
-      alternates: { canonical: `/book/${id}` },
+      alternates: { canonical: localePath(`/book/${id}`, lang) },
     };
   }
 
@@ -218,12 +261,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: 'Book Not Found - Source Library',
       robots: { index: false, follow: false },
-      alternates: { canonical: `/book/${id}` },
+      alternates: { canonical: localePath(`/book/${id}`, lang) },
     };
   }
 
-  const title = book.display_title || book.title;
-  const ogTitle = book.published ? `${title} (${book.published})` : title;
   // Byline for citations / meta tags. Falls back to editor for edited volumes,
   // magazines and anthologies where the catalogue has no single author. Keep
   // formatAuthor() in the chain to strip bibliographic brackets etc.
@@ -232,13 +273,104 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? formatAuthor(byline.displayName).name || byline.displayName
     : formatAuthor(book.author).name || book.author;
   const bylineLabel = byline.isEditor ? `${bylineName} (ed.)` : bylineName;
-  const year = book.published ? ` (${book.published})` : '';
-  // Build description front-loading title+byline+date, truncated to 155 chars for SEO
-  let description = `${title} by ${bylineLabel}${year} — read the full English translation online.`;
-  if (description.length > 155) {
-    description = `${title} by ${bylineLabel}${year}`.slice(0, 152) + '...';
+  // `published` is FREE TEXT and ~23% of it is not a year — QuickStatements
+  // tails, "Unknown", century labels. buildSeoTitle/buildSeoDescription
+  // interpolate `year` raw, so sanitize before it reaches them (#3307).
+  const displayYear = displayPublished(book.published);
+
+  // SEO/AI-O title + description rules — see src/lib/book-seo.ts.
+  // Lead with the original-language title (book.title, the catalogue/citation
+  // standard); byline is already life-date-stripped by formatAuthor.
+  const seoTitle = buildSeoTitle({ originalTitle: book.title, authorLabel: bylineLabel, year: displayYear });
+  const ogTitle = seoTitle;
+  // Unique description from the real per-book summary, with an HONEST translation
+  // claim (never the old blanket "English translation" that mislabelled originals).
+  // The cached lookup (esp. the Supabase catalog fast-path) doesn't carry the
+  // summary, so the description would fall back to a template. Read the summary
+  // fields directly from Atlas when they're absent so descriptions are unique.
+  const bookRec = book as unknown as { id?: string; index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } | string };
+  let summaryText: string | null = bookRec.index?.bookSummary?.brief
+    || bookRec.reading_summary?.overview
+    || (typeof bookRec.summary === 'string' ? bookRec.summary : bookRec.summary?.data)
+    || null;
+  if (!summaryText && bookRec.id) {
+    try {
+      const sdb = await getReadDb();
+      const s = await sdb.collection('books').findOne(
+        { id: bookRec.id },
+        { projection: { _id: 0, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1, 'summary.data': 1 } },
+      ) as { index?: { bookSummary?: { brief?: string } }; reading_summary?: { overview?: string }; summary?: { data?: string } } | null;
+      summaryText = s?.index?.bookSummary?.brief || s?.reading_summary?.overview || s?.summary?.data || null;
+    } catch { /* keep null → factual template fallback */ }
   }
+  // The claim's register for the meta description (#3459).
+  //
+  // ⚠️ `getCachedBookLookup` serves the Supabase `books_catalog` row in the
+  // common case (it is ~50ms against Atlas's 1-5s), and that row carries
+  // `is_first_translation` and `ft_disposition` but NOT
+  // `first_translation.evidence_strength` or the screens. Classifying the thin
+  // payload directly returns `candidate` for EVERY book — including the 627 that
+  // earned the assertion — because "the field is absent" is indistinguishable
+  // from "the evidence is weak". That is the invariant this area keeps breaking:
+  // "we could not ask" must stay separate from "we asked and found nothing".
+  //
+  // So when the payload cannot answer, ASK — one projected lookup, and only for
+  // the ~17% of visible books that carry the flag at all. A failure falls back
+  // to `candidate`, which drops the "First" prefix rather than asserting it.
+  let ftClaimForSeo = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const seoPayloadCanAnswer = (book as { first_translation?: unknown }).first_translation !== undefined;
+  if (!seoPayloadCanAnswer && book.is_first_translation && bookRec.id) {
+    try {
+      const sdb = await getReadDb();
+      const ev = await sdb.collection('books').findOne(
+        { id: bookRec.id },
+        {
+          projection: {
+            _id: 0, visible: 1, language: 1, pages_translated: 1,
+            first_translation: 1, translation_verification: 1,
+            source_language_screen: 1, translator_author_screen: 1,
+          },
+          maxTimeMS: 3000,
+        },
+      );
+      if (ev) ftClaimForSeo = classifyFirstTranslationClaim(ev as unknown as ScreenedBook).claim;
+    } catch { /* keep `candidate` — understate, never overstate */ }
+  }
+
+  const description = buildSeoDescription({
+    originalTitle: book.title,
+    authorLabel: bylineLabel,
+    year: displayYear,
+    language: book.language,
+    summary: summaryText,
+    firstTranslationClaim: ftClaimForSeo,
+    pagesTranslated: book.pages_translated,
+  });
   const bookUrl = `/book/${book.slug || book.id}`;
+
+  // ---- Localized twin (`/es/book/…`) --------------------------------------
+  // Same record, different indexable page. The gloss and the Spanish summary
+  // live in the one language-keyed `localized` map; the Supabase catalog
+  // fast-path does not carry it, so ask Atlas rather than silently emitting an
+  // English title under a Spanish URL. On a miss the ORIGINAL title is shown
+  // (localizedTitle's fallback), never the English gloss.
+  let localizedMeta: { title?: string; summary?: string } | undefined;
+  if (lang !== 'en') {
+    let map = (book as unknown as { localized?: Record<string, { title?: string; summary?: string }> }).localized;
+    if (!map && bookRec.id) {
+      try {
+        const ldb = await getReadDb();
+        const doc = await ldb.collection('books').findOne(
+          { id: bookRec.id },
+          { projection: { _id: 0, localized: 1 }, maxTimeMS: 3000 },
+        ) as { localized?: Record<string, { title?: string; summary?: string }> } | null;
+        map = doc?.localized;
+        if (map) (book as unknown as { localized?: unknown }).localized = map;
+      } catch { /* fall back to the original title */ }
+    }
+    localizedMeta = map?.[lang];
+  }
+  const localizedTitleText = lang === 'en' ? null : localizedTitle(book, lang);
 
   // Get publication date for OG tags
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
@@ -251,18 +383,41 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? new Date(book.updated_at).toISOString()
     : undefined;
 
+  /**
+   * Does the byline name someone who WROTE this book?
+   *
+   * A holding monastery and an issuing Bible society do not, and three
+   * separate emitters below each make an authorship claim in a different
+   * vocabulary — `citation_author` (Google Scholar), `og:article:author`, and
+   * `DC.creator`. Fixing the schema.org JSON-LD alone left all three still
+   * asserting that Thadrak Temple wrote the Tantra collection across ~470
+   * books, which is the same defect in three more places (#3483).
+   *
+   * Where the body did not write the book we emit NOTHING in the authorship
+   * slot rather than a hedged value: these fields have no way to express
+   * "held by" or "issued by", and a wrong claim is worse than a missing one.
+   * The name is still on the page, in the title, and in schema.org as an
+   * `Organization`, so nothing becomes less findable.
+   */
+  const bylineIsAuthor = bylineClaimsAuthorship(book.author);
+
   // Google Scholar meta tags for academic discoverability
   // https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
   //
   // citation_author covers both authors and editors for compilations — Google
   // Scholar doesn't have a separate citation_editor tag, but the `(ed.)`
   // suffix is the standard convention and is preserved through search results.
+  // It has no tag for a holder or an issuer either, hence the omission above.
   const scholarMeta: Record<string, string | string[]> = {
     'citation_title': book.title,
-    'citation_author': bylineLabel,
+    ...(bylineIsAuthor && { 'citation_author': bylineLabel }),
     'citation_fulltext_html_url': `https://sourcelibrary.org${bookUrl}`,
   };
-  if (book.published) scholarMeta['citation_publication_date'] = book.published;
+  // Only a bare year may be asserted here. A century or range is real knowledge
+  // but not a publication date, and this field cannot express the hedge —
+  // emitting nothing beats fabricating a precision the source never had.
+  const citeYear = citationYear(book.published);
+  if (citeYear) scholarMeta['citation_publication_date'] = citeYear;
   if (book.language) scholarMeta['citation_language'] = book.language;
   if (book.publisher) scholarMeta['citation_publisher'] = book.publisher;
   if (book.doi) scholarMeta['citation_doi'] = book.doi;
@@ -281,33 +436,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     || pagesOcr > 3
     || (pagesOcr > 0 && (pagesTranslated ?? 0) > 0);
 
+  // On the localized twin the page IS a different document: its own canonical,
+  // hreflang pair, title and description. The Google Scholar `citation_*` block
+  // and the DTS ld+json stay on the English page only — that is the citable
+  // edition, and emitting them twice would mint a second scholarly record for
+  // one book.
+  const isTwin = lang !== 'en';
+  const twinUrl = `/${lang}${bookUrl}`;
+  const localizedDescription = localizedMeta?.summary?.slice(0, 200) || description;
+
   return {
-    title: `${title} - Source Library`,
-    description,
+    title: isTwin && localizedTitleText ? `${localizedTitleText} | Source Library` : seoTitle,
+    description: isTwin ? localizedDescription : description,
     ...(!shouldIndex && { robots: { index: false, follow: true } }),
-    alternates: {
-      canonical: bookUrl,
-      types: {
-        'application/ld+json': `https://sourcelibrary.org/api/dts/collection?id=${book.id}`,
+    alternates: isTwin
+      ? { canonical: twinUrl, languages: { en: bookUrl, [lang]: twinUrl, 'x-default': bookUrl } }
+      : {
+        canonical: bookUrl,
+        languages: { en: bookUrl, 'x-default': bookUrl },
+        types: {
+          'application/ld+json': `https://sourcelibrary.org/api/dts/collection?id=${book.id}`,
+        },
       },
-    },
-    other: scholarMeta,
+    ...(isTwin ? {} : { other: scholarMeta }),
     openGraph: {
-      title: ogTitle,
-      description,
+      title: isTwin && localizedTitleText ? localizedTitleText : ogTitle,
+      description: isTwin ? localizedDescription : description,
       type: 'article',
       siteName: 'Source Library',
-      locale: 'en_US',
-      url: bookUrl,
+      locale: isTwin ? 'es_ES' : 'en_US',
+      url: isTwin ? twinUrl : bookUrl,
       // OG image generated by opengraph-image.tsx (branded 1200x630 card)
       ...(publishedDate && { publishedTime: publishedDate }),
       ...(modifiedDate && { modifiedTime: modifiedDate }),
-      authors: [bylineLabel],
+      // og `authors` becomes <meta property="article:author"> — an authorship
+      // claim, so it is omitted for a holder or an issuer. See bylineIsAuthor.
+      ...(bylineIsAuthor && { authors: [bylineLabel] }),
     },
     twitter: {
       card: 'summary_large_image',
-      title: ogTitle,
-      description,
+      title: isTwin && localizedTitleText ? localizedTitleText : ogTitle,
+      description: isTwin ? localizedDescription : description,
       // Twitter image generated by opengraph-image.tsx
     },
   };
@@ -329,7 +498,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -382,8 +551,12 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
     }, tenantId).catch(() => null)
     : Promise.resolve(null); // Already have full book from Atlas
 
+  // The work's Translation Card, if one exists (#3881). Best-effort: a miss
+  // or an error renders the legacy panel, never an error state.
+  const cardPromise = loadCard(db, (quickBook as { work_id?: string }).work_id).catch(() => null);
+
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
+  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
     fullBookPromise,
     // Use page_number >= 0 to skip archived-spread pages (negative numbers).
     // This uses the {book_id, page_number} compound index efficiently.
@@ -409,6 +582,13 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           display_brightness: 1,
           page_type: 1,
           split_from_spread: 1,
+          // First 1200 chars of the OCR — the metadata envelope plus the model's
+          // page description. Enough to recognise digitiser boilerplate and
+          // library/owner stamps that `page_type` misses (see
+          // `isJunkRepresentativePage`), without pulling whole pages of text.
+          // 1200 is the cover scorer's window (`scorePageForCover`) — keep in
+          // step with ensure-cover's projection.
+          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] },
         },
         maxTimeMS: 5000,
       })
@@ -445,6 +625,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
         .toArray()
         .catch(() => [])
       : Promise.resolve([]),
+    cardPromise,
   ]);
 
   // Use the full Atlas book when available (has editions, translation_verification, etc.)
@@ -527,7 +708,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
 
   const serializedEntity = authorEntity ? JSON.parse(JSON.stringify(authorEntity)) : null;
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
 }
 
 // Skeleton for book info while loading
@@ -568,7 +749,12 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed = false, allowHidden = false }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; previewProposed?: boolean; allowHidden?: boolean }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, previewProposed = false, allowHidden = false, lang = 'en' }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; previewProposed?: boolean; allowHidden?: boolean; lang?: Locale }) {
+  // Chrome words for this URL's language, and the link prefix that keeps a
+  // reader on it. `lp` is registry-guarded (src/lib/i18n.ts): a path with no
+  // Spanish twin comes back unprefixed rather than pointing at a 404.
+  const t = BOOK_STRINGS[lang];
+  const lp = (href: string) => localePath(href, lang);
   let data;
   try {
     data = await getBook(id, tenantId, tenantSlug);
@@ -578,9 +764,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center max-w-md px-6">
-          <h2 className="text-2xl font-display text-primary mb-3">Temporarily Unavailable</h2>
-          <p className="text-secondary mb-6">This book is taking longer than expected to load. Please try again in a moment.</p>
-          <Link href={`/${tenantSlug || ''}`} className="text-accent-rust hover:underline">Return to Library</Link>
+          <h2 className="text-2xl font-display text-primary mb-3">{t.temporarilyUnavailable}</h2>
+          <p className="text-secondary mb-6">{t.temporarilyUnavailableBody}</p>
+          <Link href={lp(`/${tenantSlug || ''}`)} className="text-accent-rust hover:underline">{t.returnToLibrary}</Link>
         </div>
       </div>
     );
@@ -590,7 +776,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
+
+  // What we can honestly SAY about this book's first-translation status (#3459).
+  // The flag decides whether a claim appears at all; this decides its register —
+  // `confirmed` asserts, anything weaker reports the search we ran instead.
+  // Computed once so the publication timeline, the stat line and the evidence
+  // panel cannot drift apart.
+  const ftClaim = classifyFirstTranslationClaim(book as unknown as ScreenedBook).claim;
+  const ftClause = firstTranslationClause(ftClaim);
 
   // Hidden books (visible:false) are not public — defense in depth alongside
   // the early gate in BookDetailPage. allowHidden is set only by the dynamic,
@@ -629,7 +823,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
         maxTimeMS: 5000,
       })
       .sort({ page_number: 1 }).limit(1000).toArray();
-    return <TextReader book={book as any} pages={JSON.parse(JSON.stringify(textPages))} collections={bookCollections} />;
+    // Text-only works serve their whole translation in one server render, so
+    // each page carries the reader-path provenance mark (deterministic,
+    // ISR-safe; runs once per revalidation, not per request).
+    const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
+      .map((p) => markPageForReader(p, book.id));
+    return <TextReader book={book as any} pages={markedTextPages as any} collections={bookCollections} />;
   }
 
   // Empty shell books (0 pages from failed imports) should 404
@@ -678,6 +877,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
   const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
   const totalPages = book.pages_count || pages.length;
+  const pagesBlank = (book as unknown as { pages_blank?: number }).pages_blank ?? 0;
+  const ocrPct = totalPages > 0 ? Math.min(100, Math.round((ocrCount / totalPages) * 100)) : 0;
+  const readablePages = Math.max(1, ocrCount - pagesBlank);
+  const translatedPct = Math.min(100, Math.round((translatedCount / readablePages) * 100));
   const imageCount = galleryImageCount || galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
@@ -690,7 +893,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   //  - 'blocked': modern + unknown license + non-BPH → withheld entirely
   const imgLicense = (book as any).image_source?.license || 'unknown';
   const imgProvider = (book as any).image_source?.provider;
-  const yearPublished = (book as unknown as { year_published?: number }).year_published;
+  // `year`, NOT `year_published` (#4131). Every read in this file named a field
+  // that ZERO of 104,690 books have, so all of them silently evaluated to
+  // undefined: the pre-1930 image release below never fired once, and the
+  // DublinCoreMeta `year=` prop — the date library crawlers harvest — was empty
+  // on every book page, in both of this component's returns. `books.published`
+  // is the free-text twin and must not be parsed here (#3718); `year` is the
+  // numeric field, present on 49,959 books.
+  const yearPublished = (book as unknown as { year?: number }).year;
   const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
   const imageAccess: 'open' | 'nc-free' | 'blocked' =
     imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
@@ -709,11 +919,894 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   const readingSummary = previewProposed && candidate?.abstract
     ? candidate.abstract
     : (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
-  const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
+  const rawSummaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
+  // The generated summary usually opens by restating the book's title
+  // ("<Title> is a scholarly commentary by …"). Drop that leading restatement
+  // so the About text starts with the actual description. Only triggers when
+  // the text genuinely starts with the book's title, and never over-strips.
+  const summaryText = (() => {
+    const text = rawSummaryText;
+    if (!text) return text;
+    const titles = [book.title, book.display_title].filter((t): t is string => !!t && t.length >= 8);
+    const startsWithTitle = titles.some(t => text.toLowerCase().startsWith(t.toLowerCase().slice(0, Math.min(t.length, 40))));
+    if (!startsWithTitle) return text;
+    const m = text.slice(0, 320).match(/\b(?:is|was|are|were|remains|represents|provides|serves|contains|documents|comprises|constitutes)\b\s+/i);
+    if (!m || m.index === undefined) return text;
+    const rest = text.slice(m.index + m[0].length).replace(/^["'“(\s]+/, '');
+    if (rest.length < 24) return text;
+    return rest.charAt(0).toUpperCase() + rest.slice(1);
+  })();
   const hasSummary = !!summaryText;
   const showProposedBanner = previewProposed && !!candidate?.brief;
   const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
   const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+
+  // ============================================================================
+  // Book page v2 layout (non-embed only). Tenant/embed reading rooms keep the
+  // proven layout below to preserve the Tenant Subdomain Lockdown invariants.
+  // ============================================================================
+  if (!isEmbedded) {
+    const heroByline = getEffectiveByline(book);
+    const bookSlug = book.slug || book.id;
+    // What this URL's language SHOWS. Title: the gloss for `lang`, falling back
+    // to the original (never the English gloss under Spanish chrome — rule 4).
+    // Summary and chapter titles come from the same one language-keyed map;
+    // where a book has none, the English text is shown and LABELLED rather than
+    // machine-translated at render time.
+    const shownTitle = localizedTitle(book, lang);
+    const titleBeneath = originalTitleIfDifferent(book, lang);
+    const localizedBook = lang === 'en' ? undefined : (book as unknown as { localized?: Record<string, { summary?: string; chapters?: string[] }> }).localized?.[lang];
+    const localizedChapters = localizedBook?.chapters;
+    const localizedSummary = localizedBook?.summary;
+    // Hero cover: prefer the stored cover only when it's on a host the CSP allows
+    // (rehosted R2 / blob / Wikimedia). Freshly-imported books keep a raw
+    // source URL (archive.org, …) that the browser blocks — in that case fall
+    // back to the first non-blank page scan (the title page), which is rehosted
+    // and shows the actual scan at its true dimensions.
+    const storedCover = getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined;
+    const coverRenderable = isRenderableCoverUrl(storedCover);
+    // Best cover-scan candidate: OCR-scored (same scorer as pipeline Phase
+    // 8.9 — decorated title pages and frontispieces win, blanks / stamps /
+    // scanner's-hand shots are rejected), falling back to the type-priority
+    // rule when nothing scores confidently. `selectScoredCoverPage` is shared
+    // with /api/books/[id]/ensure-cover so the page we SHOW here is the page
+    // that gets SAVED as the cover.
+    const coverPage = selectScoredCoverPage(pages, book.title)?.page;
+    const coverDisplay = coverRenderable ? storedCover : (coverPage ? (getPageImageUrl(coverPage as Parameters<typeof getPageImageUrl>[0], 'display') ?? undefined) : undefined) || storedCover;
+    // Printed table-of-contents page (design's "Original printed contents" card).
+    const tocPage = pages.find(p => p.page_type === 'toc');
+    // Page types we never want to surface as a "representative" page: blanks,
+    // digitizer inserts, and — importantly — the scanner calibration / colour-
+    // card / cradle shots that cluster in the front matter of many scans.
+    const KNOWN_JUNK_PAGE_TYPES = new Set(['blank', 'digitizer-insert', 'archived-spread', 'scanner_metadata', 'scanner-metadata', 'color-card', 'colorcard', 'color_card', 'target', 'endpaper', 'cover', 'spine', 'frontcover', 'backcover']);
+    const ptype = (p: { page_type?: string }) => (p.page_type || '').toLowerCase();
+    // Pick a representative *interior content* page, robust to books whose pages
+    // aren't type-classified. Order: deep body text → a classified illustration
+    // → a position-based mid-book page (skips the front-matter/calibration
+    // cluster). Never the cover, never a known-junk type.
+    // `isJunkRepresentativePage` additionally reads the page's own OCR, so a
+    // digitiser plate mistyped as `frontispiece` (the Internet Archive "funding
+    // from Microsoft" leaf) is excluded here rather than being promoted by the
+    // illustration branch below.
+    //
+    // If that leaves NOTHING, fall back to the type-filtered list rather than
+    // rendering no image: a single-leaf broadside whose one page carries a
+    // marginal shelfmark is still the work itself, and an empty column is worse
+    // than an imperfect page. (Measured: 1 book in 800 takes this branch.)
+    const interiorCandidatesByType = pages.filter(p => p.id !== coverPage?.id && !KNOWN_JUNK_PAGE_TYPES.has(ptype(p)));
+    const interiorCandidatesClean = interiorCandidatesByType.filter(
+      p => !isJunkRepresentativePage(p as { page_type?: string | null; ocr_head?: string | null }),
+    );
+    const interiorCandidates = interiorCandidatesClean.length ? interiorCandidatesClean : interiorCandidatesByType;
+    const midOf = <T,>(arr: T[]): T | undefined => (arr.length ? arr[Math.floor(arr.length / 2)] : undefined);
+    // The text fallback must show a page of the WORK, not its apparatus. Blanks
+    // are already gone with KNOWN_JUNK_PAGE_TYPES; these are the front-matter
+    // types that survive it and read as "this book has nothing to show".
+    const APPARATUS_PAGE_TYPES = new Set(['title-page', 'toc', 'contents', 'table-of-contents']);
+    const textCandidates = interiorCandidates.filter(p => !APPARATUS_PAGE_TYPES.has(ptype(p)));
+    const interiorTextPage = (() => {
+      const deep = textCandidates.filter(p => ptype(p) === 'text' && (p.page_number ?? 0) >= 10);
+      if (deep.length) return midOf(deep);
+      const anyText = textCandidates.filter(p => ptype(p) === 'text');
+      if (anyText.length) return midOf(anyText);
+      // No usable classification — take a page from the middle of the book,
+      // skipping the first several scans where calibration/blank pages live.
+      const start = Math.min(8, Math.floor(textCandidates.length / 4));
+      const pool = textCandidates.slice(start);
+      return midOf(pool.length ? pool : textCandidates);
+    })();
+    const interiorIllusPage = interiorCandidates.find(p => ['frontispiece', 'plate', 'illustration'].includes(ptype(p)));
+    // Single page scans used as the hero background fallback when the tiled
+    // mosaic can't be built. 'display' (not 'thumb') so a single page blown up
+    // full-bleed stays crisp.
+    const heroPageThumbs = pages
+      .filter(p => p.page_type !== 'blank')
+      .slice(0, 40)
+      .map(p => getPageImageUrl(p as Parameters<typeof getPageImageUrl>[0], 'display'))
+      .filter((u): u is string => !!u);
+    const galleryPlates: Plate[] = galleryImages.map((img): Plate | null => {
+      const src = img.thumbnail_url || img.extracted_url || img.image_url;
+      if (!src) return null;
+      const pageId = img.id.match(/^(.+)[:\-]\d+$/)?.[1];
+      const href = pageId ? lp(`/book/${bookSlug}/page/${pageId}`) : `/gallery/image/${img.id}`;
+      return { src, fallback: img.extracted_url || img.image_url, href, label: img.description };
+    }).filter((p): p is Plate => p !== null);
+    const readHref = (() => {
+      if (pages.length === 0) return null;
+      const firstChapterPageNumber = book.chapters?.length
+        ? (book.chapters as { pageNumber?: number }[])[0]?.pageNumber
+        : null;
+      if (typeof firstChapterPageNumber === 'number') return lp(`/book/${bookSlug}/page-number/${firstChapterPageNumber}`);
+      const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
+      const readPage = pages[skipTo] || pages[0];
+      return readPage ? lp(`/book/${bookSlug}/page/${readPage.id}`) : null;
+    })();
+    const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
+    // The related rail only shows books with a CSP-renderable cover (rehosted to
+    // R2 / blob / Wikimedia); archive.org covers are blocked and render broken.
+    const renderableCover = (u?: string | null) => /(images\.sourcelibrary\.org|public\.blob\.vercel-storage\.com|upload\.wikimedia\.org)/.test(String(u || ''));
+    // Related books: a weighted, multi-signal recommender — author + subject +
+    // location × time-period lead, a shared collection is only a minor nudge
+    // (it used to dominate). See src/lib/related-books.ts.
+    const relatedYear = Number(String(book.published ?? '').match(/\d{3,4}/)?.[0])
+      || (book as unknown as { year?: number }).year
+      || null;
+    const tagRelated: CatalogBook[] = embedPolicy.showBookRelatedBooks
+      ? await getRelatedBooks({
+          id: book.id,
+          author: book.author,
+          categories: book.categories,
+          collections: (book as unknown as { collections?: string[] }).collections,
+          language: book.language,
+          year: relatedYear,
+          place: resolveImprintPlace(book)?.display, // family resolver, #4043
+        }, renderableCover, 12).catch(() => [] as CatalogBook[])
+      : [] as CatalogBook[];
+    const hasRelated = tagRelated.length > 0;
+
+    // "Part of the collection" section — the contributing digital library/source
+    // this book came from (Biblioteca Philosophica Hermetica, Internet Archive,
+    // …), with its own stats. Resolved from image_source.provider via the static
+    // LIBRARY_PARTNERS registry; skipped in embed/tenant views.
+    const librarySection: LibrarySectionData | null = await (async () => {
+      const provider = (book as unknown as { image_source?: { provider?: string } }).image_source?.provider;
+      const partner = provider ? getPartnerByProvider(provider) : undefined;
+      if (!partner || !embedPolicy.showBookRelatedBooks) return null;
+      // Each query is timeout-guarded and independently caught so a slow/failing
+      // one (e.g. an exact count over a huge provider like Internet Archive)
+      // never nulls the whole section — we degrade a stat, not the feature.
+      const guard = <T,>(p: Promise<T>, fallback: T): Promise<T> =>
+        Promise.race([p, new Promise<T>((res) => setTimeout(() => res(fallback), 3500))]).catch(() => fallback);
+      // Sample (fast, estimated) gates the section and gives cover art. Exact
+      // counts are fetched separately and fall back to the estimate if slow — so
+      // the numbers are real (not the planner's round "1,001" estimate) without
+      // ever hiding the section on a big provider.
+      const all = await guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 24 }), { books: [] as CatalogBook[], total: 0 });
+      if (all.total < 2) return null; // not worth a "collection" callout for a lone book
+      const [exactBooks, translated, languages] = await Promise.all([
+        guard(browseBooks({ provider: partner.providerKey, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: all.total, books: [] as CatalogBook[] }),
+        guard(browseBooks({ provider: partner.providerKey, hasTranslation: true, limit: 1, exactCount: true } as Parameters<typeof browseBooks>[0]), { total: 0, books: [] as CatalogBook[] }),
+        guard(getLanguageCounts({ provider: partner.providerKey }), [] as Array<{ lang: string; count: number }>),
+      ]);
+      const covers = all.books
+        .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
+        .slice(0, 14)
+        .map(bk => ({ slug: (bk.slug || bk.id) as string, title: bk.display_title || bk.title, thumbnail: bk.thumbnail || bk.thumbnail_blob || undefined }));
+      const image = partner.heroImageOverride || covers.find(c => c.thumbnail)?.thumbnail;
+      return {
+        slug: partner.slug,
+        name: partner.name,
+        shortName: partner.shortName,
+        url: partner.url,
+        description: partner.description,
+        color: partner.color,
+        image,
+        logo: partner.logo,
+        stats: { books: exactBooks.total || all.total, languages: languages.length, translated: translated.total },
+        covers,
+      };
+    })();
+
+    // Publisher / place only — the DATE is surfaced separately as a labelled
+    // chip (heroDate) so it's clear, not buried at the end of the impressum.
+    const impressum = (() => {
+      const place = resolveImprintPlace(book)?.display; // family resolver, #4043
+      const publisher = book.publisher?.trim();
+      return [place, publisher].filter(Boolean).join(': ');
+    })();
+    // Book author as a plain string (for de-duping the composition line below).
+    const bookAuthorName = (() => {
+      const a = book.author as unknown;
+      if (typeof a === 'string') return a.trim();
+      if (a && typeof a === 'object' && 'name' in a) return String((a as { name?: string }).name || '').trim();
+      return '';
+    })();
+    // The clearest single date for the hero, shown as its own labelled chip:
+    // the print/publication year when we have a real one, otherwise the
+    // composition ("written") date. Non-informative values ("Unknown", n.d.)
+    // are dropped rather than shown.
+    const compDateDisplay = book.source_work_dates?.find(l => l.type === 'composition')?.date_display?.trim();
+    const NONINFO_DATE = /^\s*(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)?\s*$/i;
+    const heroDate = (() => {
+      const pub = book.published ? String(book.published).trim() : '';
+      if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: pub };
+      if (compDateDisplay) return { label: t.written, value: compDateDisplay };
+      return null;
+    })();
+    // Meta line: publisher/place, plus the source-work line ONLY when its author
+    // differs from the byline (e.g. a translation crediting the original author
+    // + date). For same-author originals the date already lives in the chip.
+    const heroMetaLine = (() => {
+      const parts: string[] = [];
+      if (impressum) parts.push(impressum);
+      const comp = book.source_work_dates?.find(l => l.type === 'composition');
+      const trans = book.source_work_dates?.find(l => l.type === 'translation');
+      if (comp) {
+        const sameAuthor = !!comp.author && !!bookAuthorName && comp.author.trim() === bookAuthorName;
+        if (!sameAuthor) parts.push(`${comp.author || ''} ${comp.date_display}`.trim());
+      } else if (trans) {
+        parts.push(`${trans.author || ''} trans. ${trans.date_display}`.trim());
+      }
+      return parts.filter(Boolean).join(' · ');
+    })();
+    // Subject tags — moved out of the hero, shown below the About text.
+    const subjectTags = (book as unknown as { subject_keywords?: string[] }).subject_keywords?.filter(Boolean) ?? [];
+    // A single *representative* visual for the About section. We want an image
+    // that speaks to the BOOK's content — a plate, diagram, or frontispiece —
+    // not provenance marks (a previous owner's bookplate / ex-libris), library
+    // stamps, blanks, or scanner calibration targets. Selection order:
+    //   1. Best curated gallery plate (quality ≥0.7) that isn't a provenance
+    //      mark — gallery images are already sorted best-first.
+    //   2. A classified illustration page from the book interior.
+    //   3. A mid-book content page (skips front-matter calibration/blanks).
+    // The cover is always excluded (handled by interiorCandidates / coverPage).
+    const PROVENANCE_RE = /\b(book\s?plate|ex[\s-]?libris|from the library of|library of|armorial|ownership|owner'?s|stamp|inscription|donor|gift of|presented by|bequest|shelf\s?mark|call\s?number|barcode|catalog(?:ue)? card|colou?r\s?(?:card|chart|target|checker)|calibration)\b/i;
+    // Decorative page ornaments — a tailpiece / headpiece / vignette / printer's
+    // device is never a good "About" feature (it's a page-edge ornament, not a
+    // content illustration). Excluding them also dodges a known pre-#2707
+    // hallucination class: the captioner reading organic shapes (e.g. a
+    // Sphaerocarpos liverwort plate) as an "allegorical tailpiece with putti".
+    const DECORATIVE_RE = /\b(tail-?piece|head-?piece|vignette|cul-de-lampe|scrollwork|acanthus scroll|grotesque mask|printer'?s (?:device|mark|ornament)|decorative (?:border|initial|element|motif|device|ornament)|ornamental (?:border|initial|device)|fleuron|colophon device)\b/i;
+    const isRepresentativePlate = (desc?: string) => !desc || (!PROVENANCE_RE.test(desc) && !DECORATIVE_RE.test(desc));
+    // The side plate must never be the same image as the hero cover.
+    const coverSrcKey = (coverDisplay || '').split('?')[0];
+    const notCover = (src?: string | null) => !!src && src.split('?')[0] !== coverSrcKey;
+    // An editor-chosen About visual (BookAboutPicker) overrides the auto-pick.
+    const aboutOverride = (book as unknown as { about_visual?: { src?: string; href?: string; caption?: string } | null }).about_visual;
+    const sideVisual = (aboutOverride && aboutOverride.src)
+      ? { src: aboutOverride.src, href: lp(aboutOverride.href || `/book/${bookSlug}`), caption: aboutOverride.caption }
+      : (() => {
+      // Only use a gallery plate if a non-provenance one exists; otherwise fall
+      // through to a real interior page rather than showing a bookplate.
+      const plate = galleryImages.find(g => isRepresentativePlate(g.description) && notCover(g.thumbnail_url || g.extracted_url || g.image_url));
+      if (plate) {
+        // Hi-res first: the extracted crop / full image, not the small thumbnail.
+        const src = plate.extracted_url || plate.image_url || plate.thumbnail_url;
+        if (src) {
+          const pageId = plate.id.match(/^(.+)[:\-]\d+$/)?.[1];
+          return { src, href: pageId ? lp(`/book/${bookSlug}/page/${pageId}`) : `/gallery/image/${plate.id}`, caption: plate.description };
+        }
+      }
+      // Show a picture if the book has one WORTH showing, else a page of the
+      // text. An illustration only reaches this point after clearing
+      // `isJunkRepresentativePage`, which reads the page's own OCR and removes
+      // the class that made illustrations untrustworthy here: digitiser plates
+      // (the Internet Archive "funding from Microsoft" leaf, classified
+      // `frontispiece`), library bookplates, and photographs of the binding.
+      // With those gone a real frontispiece or plate is the better visual, and
+      // it is the only visual available to the ~6.2K books stalled in the
+      // paused pipeline, which have no extracted gallery images at all.
+      for (const pg of [interiorIllusPage, interiorTextPage]) {
+        if (!pg) continue;
+        const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
+        if (src && notCover(src)) return { src, href: lp(`/book/${bookSlug}/page/${pg.id}`), caption: pg.page_number ? t.pageAbbrev(pg.page_number) : undefined };
+      }
+      return null;
+    })();
+
+    // Reading guide / Contents / Bibliographic info / Book history dropdowns —
+    // rendered below the About text (inside the About left column) so they sit
+    // right under the text + tags, not in a separate row.
+    const readingGuideText = bookSummaryObj?.detailed || readingSummary || '';
+    const hasReadingGuide = !!readingGuideText.trim();
+
+    // ---- Book history timeline: the meaningful dates we actually hold. ----
+    const fmtMonthYear = (d: string | Date) => {
+      const dt = new Date(d);
+      return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    };
+    const rawTimeline: Array<TimelineEvent & { ts: number }> = [];
+    // Original (historical) publication / composition — always first. Prefer the
+    // composition date_display (e.g. "c. 6th century CE") over the printed
+    // `published` field, and skip non-informative values ("Unknown", n.d., …).
+    const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
+    const histDate = (compDate || (book.published ? String(book.published) : '')).trim();
+    const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
+    if (histInformative) {
+      // Publisher/place only make sense for a printed impressum, not an ancient
+      // composition date.
+      const detail = compDate ? undefined : ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined);
+      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: t.published, detail });
+    }
+    // An earlier English translation published elsewhere (credit the scholar).
+    // A verified `prior_translation` credit carries the richest info; otherwise
+    // fall back to the best piece of translation-verification evidence so the
+    // entry still gets a year + translator when we have them.
+    const yearTs = (y?: string | number | null) => {
+      const s = String(y ?? '').trim();
+      const m = s.match(/(\d{3,4})/);
+      return m ? Date.UTC(Number(m[1]), 0, 1) : -0.5;
+    };
+    const timelinePrior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
+      ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
+      : null;
+    const timelineVerification = (book as unknown as { translation_verification?: TranslationVerification }).translation_verification;
+    const timelineExistingEvidence = !timelinePrior && timelineVerification?.disposition === 'translation_found'
+      ? (timelineVerification.validated_translations?.[0] || timelineVerification.translations_found?.[0] || timelineVerification.translations?.[0])
+      : undefined;
+    if (timelinePrior) {
+      rawTimeline.push({
+        ts: yearTs(timelinePrior.year),
+        key: 'prior-translation',
+        dateText: timelinePrior.year ? String(timelinePrior.year) : t.tlEarlier,
+        label: t.tlEarlierEnglishTranslation,
+        detail: (
+          <>
+            {priorTranslationSentence(timelinePrior)}
+            {embedPolicy.showExternalLinks && (
+              <>{' '}<a href={timelinePrior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(timelinePrior)} →</a></>
+            )}
+          </>
+        ),
+      });
+    } else if (timelineExistingEvidence) {
+      const ev = timelineExistingEvidence;
+      const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
+      const summary = ev.english_title
+        ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
+        : (bits || t.tlEarlierTranslationExists);
+      rawTimeline.push({
+        ts: yearTs(ev.pub_year),
+        key: 'existing-translation',
+        dateText: ev.pub_year ? String(ev.pub_year) : t.tlEarlier,
+        label: t.tlEarlierEnglishTranslation,
+        detail: (
+          <>
+            {summary}
+            {ev.url && embedPolicy.showExternalLinks && (
+              <>{' '}<a href={ev.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{t.view}</a></>
+            )}
+          </>
+        ),
+      });
+    }
+    // English editions / translations published on Source Library.
+    const publishedEditions = ((book.editions as TranslationEdition[] | undefined) || [])
+      .filter((e) => e.status === 'published' && e.published_at)
+      .sort((a, b) => +new Date(a.published_at!) - +new Date(b.published_at!));
+    publishedEditions.forEach((e, i) => {
+      const my = fmtMonthYear(e.published_at!);
+      if (!my) return;
+      const doiHref = e.doi ? (e.doi_url || `https://doi.org/${e.doi}`) : null;
+      rawTimeline.push({
+        ts: +new Date(e.published_at!),
+        key: `edition-${i}`,
+        dateText: my,
+        label: i === 0
+          ? (ftClaim === 'confirmed'
+            ? t.tlFirstEnglishPublished
+            : t.tlEnglishEditionPublished)
+          : t.tlNewEditionPublished,
+        detail: (
+          <>
+            {t.tlAiTranslationBy}{' '}
+            <span style={{ color: '#2b2620', fontWeight: 500 }}>Source Library</span>.
+            {(e.version || doiHref) && (
+              <span className="block mt-1" style={{ color: '#948d80' }}>
+                {e.version ? t.tlVersion(e.version) : null}
+                {doiHref ? (
+                  <>{e.version ? ' · ' : ''}<a href={doiHref} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>DOI ↗</a></>
+                ) : null}
+              </span>
+            )}
+          </>
+        ),
+      });
+    });
+    // Digitized by the source library (Internet Archive, a partner, …) — its own
+    // entry with the original scan/publication date when we captured it. This
+    // predates our own "Added to Source Library" moment.
+    const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+    const catalogMeta = (book as unknown as { catalog_metadata?: { scan_date?: string; public_date?: string } }).catalog_metadata;
+    const digitizedRaw = catalogMeta?.scan_date || catalogMeta?.public_date;
+    if (digitizedRaw) {
+      const dd = new Date(digitizedRaw);
+      const my = isNaN(dd.getTime()) ? '' : fmtMonthYear(dd);
+      if (my) {
+        rawTimeline.push({
+          ts: +dd,
+          key: 'digitized',
+          dateText: my,
+          label: digitizer ? t.tlDigitizedBy(digitizer) : t.tlDigitized,
+        });
+      }
+    }
+    // Joined Source Library. The trimmed public processing log sits here for
+    // everyone; the full cost/model-bearing log + editions tooling stay nested
+    // and staff-only.
+    if (book.created_at) {
+      const my = fmtMonthYear(book.created_at);
+      if (my) rawTimeline.push({
+        ts: +new Date(book.created_at),
+        key: 'added',
+        dateText: my,
+        label: t.tlAddedToSourceLibrary,
+        // No digitizer sub-line here — without a digitization DATE it reads as if
+        // the item was digitized on the "added" date, which is wrong. The
+        // digitizer is credited in the Bibliographic panel + Pages subtitle.
+        detail: undefined,
+        extra: (
+          <div className="space-y-3">
+            <PublicBookHistory bookId={book.id} />
+            <AuthCheck role="inner_circle">
+              <div className="space-y-3">
+                {!!book.editions?.length && <EditionsPanel bookId={book.id} editions={book.editions as TranslationEdition[]} />}
+                <BookHistory bookId={book.id} />
+              </div>
+            </AuthCheck>
+          </div>
+        ),
+      });
+    }
+    const timelineEvents: TimelineEvent[] = rawTimeline
+      .sort((a, b) => a.ts - b.ts)
+      .map(({ ts: _ts, ...e }) => e);
+
+    const readingDropdowns = (
+      <>
+        {hasReadingGuide && (
+          <AISection kind="reading-guide" className="card reveal-in">
+            <details className="group sl-collapse">
+              <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+                <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.readingGuide}</h3>
+                <PlusToggle />
+              </summary>
+              <div className="px-4 pb-4 md:px-6 md:pb-6">
+                {lang !== 'en' && <p className="mb-3 text-sm" style={{ color: '#948d80' }}>{t.englishText}</p>}
+                <ExpandableGuide bookId={book.id} detailedSummary={readingGuideText} defaultExpanded hideIllustrations />
+              </div>
+            </details>
+          </AISection>
+        )}
+        {/* Book's own contents — only when there's a TOC scan or chapters */}
+        {(!!book.chapters?.length || !!tocPage) && (
+        <details id="contents" className="card group scroll-mt-24 sl-collapse reveal-in">
+          <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+            <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.contents}</h3>
+            <PlusToggle />
+          </summary>
+          <div className="px-4 pb-4 md:px-6 md:pb-6">
+            {/* Contents — as printed (top of the section) */}
+            {tocPage && (() => {
+              const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
+              return (
+                <Link href={lp(`/book/${bookSlug}/page/${tocPage.id}`)} className="flex items-center gap-4 border px-4 py-3 mb-5 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fdfbf6' }}>
+                  <div className="w-[38px] h-[48px] flex-shrink-0 overflow-hidden border" style={{ borderColor: '#d8d0bf', background: '#fff' }}>
+                    {tocThumb && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={tocThumb} alt="" className="w-full h-full object-cover" loading="lazy" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13.5px] font-semibold" style={{ color: '#2b2620' }}>{t.contentsAsPrinted}</div>
+                    <div className="text-[12.5px]" style={{ color: '#948d80' }}>{t.pageAbbrev(tocPage.page_number)}</div>
+                  </div>
+                  <span className="text-[13px] font-medium whitespace-nowrap" style={{ color: '#a5503d' }}>{t.viewScan}</span>
+                </Link>
+              );
+            })()}
+
+            {book.chapters?.length ? (
+              <div className="border-t" style={{ borderColor: '#e6e0d3' }}>
+                {(book.chapters as Array<{ title: string; titleEn?: string; pageNumber?: number; level?: number }>).map((ch, i) => (
+                  <Link
+                    key={i}
+                    href={lp(typeof ch.pageNumber === 'number' ? `/book/${bookSlug}/page-number/${ch.pageNumber}` : `/book/${bookSlug}`)}
+                    className="flex items-baseline justify-between gap-4 py-2 border-b transition-colors hover:bg-[#f4efe6]"
+                    style={{ borderColor: '#ece6da', paddingLeft: `${(ch.level || 0) * 14}px` }}
+                  >
+                    <span className="font-display text-[14.5px] leading-snug" style={{ color: '#4a443b' }}>{localizedChapters?.[i] || ch.titleEn || ch.title}</span>
+                    {typeof ch.pageNumber === 'number' ? <span className="font-mono text-[12px] whitespace-nowrap" style={{ color: '#a09884' }}>{t.pageAbbrev(ch.pageNumber)}</span> : null}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </details>
+        )}
+
+        {/* Index — below Contents, same dropdown treatment as the others */}
+        {(() => {
+          const allEntries = (book as unknown as { index?: { entries?: Array<{ term: string; pages: number[]; type: 'vocab' | 'term' | 'keyword' }> } }).index?.entries;
+          if (!allEntries || allEntries.length === 0) return null;
+          const entries = allEntries.filter(e => e.pages.length >= 2);
+          if (entries.length === 0) return null;
+          return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
+        })()}
+
+        {/* Bibliographic information — the source's own record only. */}
+        <details className="card group sl-collapse reveal-in">
+          <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
+            <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{t.bibliographicInformation}</h3>
+            <PlusToggle />
+          </summary>
+          <div className="px-4 pb-4 md:px-6 md:pb-6">
+            {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+              <TranslationCardPanel
+                card={translationCard}
+                book={book as { pages_translated?: number | null }}
+                showExternalLinks={embedPolicy.showExternalLinks}
+              />
+            ) : (
+              // A catalog states its own coverage: a translated, non-English
+              // book with neither a card nor a book-grain verdict has simply
+              // not been researched — say so, or silence reads as "checked,
+              // nothing found" (#3881).
+              !translationCard
+              && !(book as { first_translation?: { verdict?: string } }).first_translation?.verdict
+              && !book.is_first_translation
+              && (book.pages_translated ?? 0) > 0
+              && book.language
+              && !['English', 'english', 'en', 'eng'].includes(book.language)
+              && <TranslationHistoryUnresearched />
+            )}
+            <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
+            {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
+              <Suspense fallback={null}><RelatedEditions
+                bookId={book.id}
+                workId={(book as unknown as { work_id?: string }).work_id!}
+                language={(book as unknown as { language?: string }).language}
+                editionKey={(book as unknown as { edition_key?: string }).edition_key}
+                editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
+                locale={lang}
+              /></Suspense>
+            )}
+            {embedPolicy.showIndexCatalogStatus && (
+              <Suspense fallback={null}><IndexCatalogChip bookIds={[(book as unknown as { _id?: string })._id, book.id]} authorEntityId={(book as unknown as { author_entity_id?: string }).author_entity_id ?? null} /></Suspense>
+            )}
+          </div>
+        </details>
+
+        {/* Book history — a single public timeline of the book's meaningful
+            dates. It now subsumes the old "Editions & translations" block
+            (editions + prior translations appear as timeline entries) and nests
+            the staff processing log + editions tooling under "Added to Source
+            Library". */}
+        <div className="reveal-in"><BookTimeline events={timelineEvents} title={t.bookHistory} /></div>
+
+        {/* Search this book — styled like a dropdown card but always open; the
+            card grows to show results (max-height + scroll) as you type. */}
+        <div className="card p-4 md:p-6 reveal-in">
+          <h3 className="font-display font-medium text-[17px] md:text-[22px] mb-4" style={{ color: '#2b2620' }}>{t.searchThisBook}</h3>
+          <SearchPanel bookId={book.id} inline theme="light" placeholder={t.searchPlaceholder} />
+        </div>
+      </>
+    );
+
+    return (
+      <>
+        <EmbedNavigationReporter book={book.slug || book.id} />
+        <SchemaOrgMetadata book={book} pageCount={totalPages} translatedCount={translatedCount} currentEdition={currentEdition} />
+        <DublinCoreMeta
+          title={book.title}
+          displayTitle={book.display_title}
+          author={book.author}
+          language={book.language}
+          year={yearPublished}
+          description={book.ai_metadata?.description as string | undefined}
+          categories={book.categories}
+          keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
+          publisher={book.dublin_core?.dc_publisher || book.image_source?.provider_name}
+          rights={book.dublin_core?.dc_rights}
+          identifier={`https://sourcelibrary.org/book/${book.slug || book.id}`}
+          source={book.image_source?.source_url}
+          pageCount={totalPages}
+          doi={book.doi}
+          ustcSn={(book as unknown as { ustc_sn?: string }).ustc_sn}
+        />
+
+        {/* This book is showing a page-scan in place of a stored cover. Persist
+            that pick once, so the catalogue / sliders / search stop rendering a
+            blank placeholder for it. The route re-derives and verifies the URL
+            server-side, so it is safe to fire whenever we fell back. */}
+        {!coverRenderable && coverPage && <EnsureCover bookId={book.id} />}
+
+        {/* ===================== HERO ===================== */}
+        <HeroVariants
+          pageThumbs={heroPageThumbs}
+          /* Warmed books point straight at the cached R2 URL (fast CDN hit).
+             Only un-warmed books go through the API route, which lazily
+             composites + caches on first view. This skips a Vercel-function +
+             Mongo + 302 hop on every load of a popular book. */
+          mosaicUrl={
+            (book as unknown as { hero_mosaic_url?: string; hero_mosaic_version?: number }).hero_mosaic_url &&
+            (book as unknown as { hero_mosaic_version?: number }).hero_mosaic_version === HERO_MOSAIC_VERSION
+              ? (book as unknown as { hero_mosaic_url?: string }).hero_mosaic_url
+              : `/api/books/${book.id}/hero-mosaic`
+          }
+          actions={(
+            /* Mobile-only: pinned to the foot of the hero (desktop keeps these
+               inline in the meta below). Read sits under the text; the icon bar
+               is pushed into the last 1/3 so it lines up under the cover. */
+            <div className="flex items-center">
+              {embedPolicy.showBookReadCta && readHref && (
+                <Link href={readHref} className="inline-flex items-center gap-2 px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
+                  <BookOpen className="w-4 h-4" />{t.readThisBook}
+                </Link>
+              )}
+              <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
+                {[
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
+                  <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
+                ].map((el, i) => (
+                  <div key={i} className="h-10 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.55)', borderColor: 'rgba(245,240,232,0.2)' }}>{el}</div>
+                ))}
+              </div>
+            </div>
+          )}
+          cover={(
+            /* Editors (inner_circle) get a "Change cover" affordance over the
+               hero cover — opens the page picker + writes via buildCoverUpdate.
+               Everyone else just sees the cover. */
+            <CoverImagePicker
+              bookId={book.id}
+              currentThumbnail={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'display') ?? undefined}
+              currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
+              bookTitle={book.display_title || book.title}
+              bookAuthor={book.author}
+              bookYear={book.published}
+              pages={pages}
+              trigger={
+                <div className="flex flex-col items-center md:items-start">
+                  {coverDisplay ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={coverDisplay}
+                      alt={book.display_title || book.title}
+                      className="block w-full h-auto max-h-[420px] md:w-auto md:h-[500px] md:max-h-none md:max-w-[min(46vw,560px)] object-contain object-left"
+                      style={{ filter: 'drop-shadow(0 34px 48px rgba(0,0,0,0.62))' }}
+                    />
+                  ) : (
+                    <div className="w-full md:w-[300px] aspect-[3/4] flex items-center justify-center text-center text-sm px-4" style={{ background: '#f6f3ea', border: '1px solid #d3ccbc', color: '#7a7365' }}>
+                      {book.display_title || book.title}
+                    </div>
+                  )}
+                </div>
+              }
+            />
+          )}
+          meta={(
+            <div className="min-w-0" style={{ color: '#f7f2ea' }}>
+              {(heroByline.role === 'author' || heroByline.role === 'editor') && (
+                <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
+                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
+                    <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
+                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
+                    </Link>
+                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
+                  {/* The name stays clickable and searchable — a byline is how a
+                      reader REACHES a book, and for the Bhutanese manuscript
+                      volumes the monastery is the only handle they have. What
+                      changes is that the page no longer implies it WROTE the
+                      book. See src/lib/corporate-bylines.ts. */}
+                  {heroByline.institutional && heroByline.institutional.qualifier && (
+                    <span className="normal-case tracking-normal font-normal opacity-70"> · {heroByline.institutional.qualifier}</span>
+                  )}
+                </div>
+              )}
+              <h1 className="font-display font-medium text-lg sm:text-2xl md:text-[52px] leading-[1.14] md:leading-[1.04] tracking-[-0.01em] mb-3 md:mb-4 break-words" style={{ color: '#f7f2ea' }}>
+                {shownTitle}
+              </h1>
+              {titleBeneath && (() => {
+                const original = cleanOriginalTitle(titleBeneath);
+                if (!original) return null;
+                const latin = !isNonLatinScript(original);
+                return (
+                  <div className={`text-[12px] md:text-[15px] mb-1 md:mb-1 leading-snug ${latin ? 'italic' : ''}`} style={{ color: 'rgba(248,244,238,0.85)' }}>{original}</div>
+                );
+              })()}
+              {heroMetaLine && <div className="text-[11.5px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
+
+              {/* Chips — borderless / padless inline items */}
+              {(() => {
+                const chip = "inline-flex items-center gap-1.5 text-[10.5px] md:text-[13.5px]";
+                const chipIcon = "inline-block w-3.5 h-3.5 md:w-4 md:h-4 opacity-70";
+                return (
+                  <div className="flex flex-wrap gap-x-3 md:gap-x-4 gap-y-1 md:gap-y-1.5 mt-3 md:mt-4">
+                    {heroDate && (
+                      <span className={chip} style={{ color: 'rgba(245,240,232,0.92)' }} title={`${heroDate.label} ${heroDate.value}`}>
+                        <Calendar className={chipIcon} /><span style={{ opacity: 0.72 }}>{heroDate.label}</span>&nbsp;{heroDate.value}
+                      </span>
+                    )}
+                    {book.language && (
+                      <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }}>
+                        <Globe className={chipIcon} />{languageName(book.language, lang)}
+                      </span>
+                    )}
+                    <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={t.scansTooltip}>
+                      <FileText className={chipIcon} />{t.scans(totalPages)}
+                    </span>
+                    {imageCount > 0 && (
+                      <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors hover:opacity-80`} style={{ color: 'rgba(245,240,232,0.88)' }}>
+                        <Images className={chipIcon} />{t.images(imageCount)}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })()}
+              {/* OCR / Translated status — coloured, with the tick/percentage to
+                  the left of the label. "First translation" reads as plain text
+                  to the right of Translated (full history lives in Editions &
+                  translations). */}
+              {/* Untranscribed books say so. This row used to render only when
+                  ocrPct > 0, so the 704 visible books with NO OCR showed no
+                  status at all — and a missing badge reads as "nothing wrong",
+                  not "no text here". The reader then clicked "Read this book"
+                  into a pane that had nothing to show. */}
+              {ocrPct === 0 && (
+                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-4 text-[10.5px] md:text-[13.5px] font-medium">
+                  <span title={t.notTranscribedTooltip(totalPages)} style={{ color: 'rgba(245,240,232,0.55)' }}>
+                    {t.notTranscribed}
+                  </span>
+                </div>
+              )}
+              {ocrPct > 0 && (
+                <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 mt-3 md:mt-4 text-[10.5px] md:text-[13.5px] font-medium">
+                  <span title={t.ocrTooltip(ocrCount, totalPages)} style={{ color: '#8fbfe6' }}>
+                    {ocrPct >= 100 ? '✓' : `${ocrPct}%`} {t.ocr}
+                  </span>
+                  {translatedPct > 0 && (
+                    <span title={t.translatedTooltip(translatedCount)} style={{ color: '#86c98f' }}>
+                      {translatedPct >= 100 ? '✓' : `${translatedPct}%`} {t.translated}
+                    </span>
+                  )}
+                  {!!book.is_first_translation && translatedCount > 0 && ftClause && (
+                    <span
+                      title={
+                        ftClaim === 'confirmed'
+                          ? t.firstTranslationTooltip
+                          : t.noPriorTranslationTooltip
+                      }
+                      style={{ color: ftClaim === 'confirmed' ? '#e0b46a' : '#948d80' }}
+                    >
+                      {ftClaim === 'confirmed' ? t.firstTranslation : t.noPriorTranslation}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Actions — desktop only (mobile shows them pinned to the hero
+                  foot via the `actions` prop). */}
+              <div className="hidden md:flex flex-wrap items-center gap-2.5 mt-6">
+                {embedPolicy.showBookReadCta && readHref && (
+                  <Link href={readHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
+                    <BookOpen className="w-[18px] h-[18px]" />{t.readThisBook}
+                  </Link>
+                )}
+                <div className="hidden md:flex flex-wrap items-center gap-1 px-1.5 py-1" style={{ background: 'rgba(12,9,6,0.82)', border: '1px solid rgba(245,240,232,0.16)' }}>
+                  <AuthCheck role="admin">
+                    {isComplete ? (
+                      <PublishEditionButton bookId={book.id} bookTitle={book.display_title || book.title} translatedCount={translatedCount} totalPages={pages.length} currentEdition={currentEdition} />
+                    ) : (
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
+                    )}
+                  </AuthCheck>
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
+                  <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
+                  <div className="flex items-center gap-2.5 px-2 py-1.5">
+                    <BookAnalytics bookId={book.id} className="!text-stone-200" />
+                    <LikeButton targetType="book" targetId={book.id} size="sm" showCount={true} className="!text-stone-200" />
+                  </div>
+                </div>
+              </div>
+
+              {/* NOTE: the old staff-only "✎ Edit" link here pointed at
+                  /book/[id]/edit, which doesn't exist (dead 404), and popping in
+                  after the auth check re-centered the vertically-centred hero —
+                  the cover/title "jump". Removed. Editing is via the "Edit"
+                  button in the Bibliographic information panel (BookEditModal). */}
+            </div>
+          )}
+        />
+
+        {/* ===================== ABOUT · READING GUIDE · CONTENTS ===================== */}
+        {/* Always render the two-column About section: prose (when present) + the
+            dropdowns on the left, an interesting non-cover plate on the right. */}
+        <div className="reveal-in">
+          <AboutVariants
+            heading={t.summary}
+            content={
+              localizedSummary
+                // A translated summary is prose in the reader's language; entity
+                // links are built from the ENGLISH index terms and would not
+                // match it, so it renders plain.
+                ? localizedSummary
+                : hasSummary
+                  ? (
+                    <>
+                      {linkEntities(summaryText!, summaryEntities)}
+                      {lang !== 'en' && <span className="block mt-3 text-sm" style={{ color: '#948d80' }}>{t.summaryIsEnglish}</span>}
+                    </>
+                  )
+                  : null
+            }
+            visual={sideVisual}
+            tags={hasSummary || !!localizedSummary ? subjectTags : []}
+            belowContent={readingDropdowns}
+            bookId={book.id}
+            bookSlug={bookSlug}
+            pages={pages}
+            plates={galleryImages.map(p => ({ id: p.id, thumbnail_url: p.thumbnail_url, extracted_url: p.extracted_url, image_url: p.image_url, description: p.description }))}
+          />
+        </div>
+
+        {/* ===================== PAGES ===================== */}
+        <section id="pages" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="pt-14 pb-16 scroll-mt-4">
+          <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
+            {(() => {
+              const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+              const pagesSubtitle = digitizer
+                ? t.pagesDigitizedBy(digitizer)
+                : t.pagesInReadingOrder;
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} />;
+              const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
+              if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
+                return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
+              }
+              return pagesEl;
+            })()}
+          </main>
+        </section>
+
+        {/* ===================== ILLUSTRATIONS (masonry) ===================== */}
+        {galleryPlates.length > 0 && (
+          <section id="illustrations" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="border-t border-[#e6e0d3] py-14 scroll-mt-4">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
+              <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>{t.illustrations}</h2>
+              <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>{t.illustrationsNote}</p>
+              <GalleryMasonry plates={galleryPlates} />
+              {imageCount > galleryPlates.length && (
+                <div className="mt-8 text-center">
+                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
+                    <Images className="w-4 h-4" />
+                    {t.viewAllIllustrations(imageCount)}
+                  </Link>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+
+        {/* ===================== PART OF THE COLLECTION (library/source) ===================== */}
+        {librarySection && <div className="reveal-in"><BookLibrarySection data={librarySection} /></div>}
+
+        {/* ===================== RELATED BOOKS ===================== */}
+        {hasRelated && (
+          <section id="related" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="py-14 border-t border-[#e6e0d3] scroll-mt-4">
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
+              <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>{t.relatedBooks}</h2>
+              <p className="text-sm md:text-[15px] mb-5" style={{ color: '#8a8170' }}>{t.relatedBooksNote}</p>
+              <BookSlider books={tagRelated as unknown as MiniBook[]} lang={lang} />
+            </div>
+          </section>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -731,7 +1824,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
         displayTitle={book.display_title}
         author={book.author}
         language={book.language}
-        year={(book as unknown as { year_published?: number }).year_published}
+        year={yearPublished}
         description={book.ai_metadata?.description as string | undefined}
         categories={book.categories}
         keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
@@ -799,7 +1892,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                   format as BphCatalogBrowser.formatImpressum so the book page
                   and catalogue rows line up. */}
               {(() => {
-                const place = book.place_published?.trim();
+                const place = resolveImprintPlace(book)?.display; // family resolver, #4043
                 const publisher = book.publisher?.trim();
                 const year = book.published ? String(book.published).trim() : '';
                 const placePub = [place, publisher].filter(Boolean).join(': ');
@@ -888,13 +1981,27 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 )}
               </div>
 
-              {/* #2564/#2639: graded verdict + grounded evidence, with legacy fallback.
-                  Renders the "First Translation" or "Existing translations" badge,
-                  or null when neither applies. */}
-              <FirstTranslationEvidence
-                book={book as never}
-                showExternalLinks={embedPolicy.showExternalLinks}
-              />
+              {/* The Translation Card (#3881): when this book's work has a
+                  clean, reviewed card, the card IS the first-translation
+                  surface — one sentence + cited entries. One decision point:
+                  card renders → legacy panel does not (no side-by-side
+                  contradiction). No card / unclean card → exactly the legacy
+                  render this page had before. */}
+              {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+                <TranslationCardPanel
+                  card={translationCard}
+                  book={book as { pages_translated?: number | null }}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              ) : (
+                /* #2564/#2639: graded verdict + grounded evidence, with legacy fallback.
+                    Renders the "First Translation" or "Existing translations" badge,
+                    or null when neither applies. */
+                <FirstTranslationEvidence
+                  book={book as never}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              )}
 
               {/* Dedication */}
               <div className="mt-3">
@@ -917,6 +2024,25 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 </Suspense>
               )}
 
+              {/* Sibling-edition routing (#3033) — an effectively-untranslated
+                  edition of a work we hold translated should point the reader
+                  at the translated sibling, not read as a dead end. Skipped for
+                  books that are themselves English translations (they're
+                  already readable). Tenant-gated like RelatedEditions. */}
+              {embedPolicy.showRelatedEditions &&
+                (book as any).work_id &&
+                totalPages > 0 &&
+                translatedCount / totalPages < 0.05 &&
+                !['modern-translation', 'period-translation'].includes((book as any).text_role) && (
+                  <Suspense fallback={null}>
+                    <TranslatedSiblingNotice
+                      bookId={book.id}
+                      workId={(book as any).work_id}
+                      showCrossLink={embedPolicy.showRelatedEditions}
+                    />
+                  </Suspense>
+                )}
+
               {/* Read This Book — first chapter > endpaper-skip fallback */}
               {embedPolicy.showBookReadCta && (() => {
                 if (pages.length === 0) return null;
@@ -934,11 +2060,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                   return (
                     <div className="mt-5">
                       <Link
-                        href={`/book/${bookSlug}/page-number/${firstChapterPageNumber}`}
+                        href={lp(`/book/${bookSlug}/page-number/${firstChapterPageNumber}`)}
                         className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                       >
                         <BookOpen className="w-5 h-5" />
-                        Read This Book
+                        {t.readThisBook}
                       </Link>
                     </div>
                   );
@@ -949,11 +2075,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                 return (
                   <div className="mt-5">
                     <Link
-                      href={`/book/${bookSlug}/page/${readPage.id}`}
+                      href={lp(`/book/${bookSlug}/page/${readPage.id}`)}
                       className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                     >
                       <BookOpen className="w-5 h-5" />
-                      Read This Book
+                      {t.readThisBook}
                     </Link>
                   </div>
                 );
@@ -989,7 +2115,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                       author={book.author}
                       year={book.published}
                       publisher={book.publisher}
-                      placePublished={book.place_published}
+                      placePublished={resolveImprintPlace(book)?.display}
                       format={book.format}
                       ustcId={book.ustc_id}
                       language={book.language}
@@ -1007,6 +2133,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
                       imageRestricted={imageRestricted}
                       imageAccess={imageAccess}
                       variant="header"
+                    />
+                    <BookShare
+                      bookId={book.slug || book.id}
+                      title={book.display_title || book.title}
+                      author={book.author || ''}
+                      year={book.published}
+                      doi={book.doi}
+                      tenantSlug={tenantSlug || undefined}
+                      className="text-stone-300 hover:text-white hover:bg-white/10"
                     />
                     <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
                     <div className="flex items-center gap-2.5 px-2 py-1.5">
@@ -1036,7 +2171,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
               >
                 {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
-                    <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                    <RelatedEditions
+                      bookId={book.id}
+                      workId={(book as unknown as { work_id?: string }).work_id!}
+                      language={(book as unknown as { language?: string }).language}
+                      editionKey={(book as unknown as { edition_key?: string }).edition_key}
+                      editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
+                    />
                   </Suspense>
                 )}
                 {embedPolicy.showIndexCatalogStatus && (
@@ -1265,11 +2406,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
           if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
             return (
               <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>
-                <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+                <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
               </EarlyAccessGate>
             );
           }
-          return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+          return <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
         <AuthCheck role="inner_circle">
           <BookHistory bookId={book.id} />
@@ -1279,7 +2420,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, previewProposed
   );
 }
 
-export default async function BookDetailPage({ params, tenantContext, previewProposed = false, allowHidden = false }: PageProps) {
+export default async function BookDetailPage({ params, tenantContext, previewProposed = false, allowHidden = false, lang = 'en' }: PageProps) {
   const { id } = await params;
   const ctx = tenantContext ?? null;
   const embedPolicy = getEmbedUiPolicy(ctx);
@@ -1311,9 +2452,80 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     notFound();
   }
 
+  // Artworks have their own canonical route. /book/<slug> renders them too
+  // (BookInfo branches to <ArtworkInfo> on resource_type), so every artwork had
+  // TWO fully-rendering URLs, each emitting a self-referential canonical — the
+  // duplicate-content shape Google penalises. Send the /book form to /artwork.
+  //
+  // Deliberately NOT applied when embedded: `/embed/[tenant]/book/[slug]` re-exports
+  // this component, and there is no `/embed/[tenant]/artwork` route — redirecting a
+  // partner subdomain's reader out of its embed shell breaks the tenant lockdown.
+  // Editor preview routes (previewProposed/allowHidden) are excluded for the same
+  // reason: /artwork has no preview twin, so a redirect would 404 the editor.
+  // A localized URL is a PROMISE that the page is in that language. A book with
+  // no Spanish edition has no Spanish page — send the reader to the English one
+  // rather than dressing an English record in a Spanish address and declaring it
+  // to Google as the Spanish version (which is what ~37.7K of these URLs did).
+  //
+  // Enforced HERE, at the route, so no card, slider or hand-written link can
+  // mint one by forgetting. Link sites still point straight at /book/… for
+  // these books, to save the hop — but they are an optimization, not the rule.
+  //
+  // 307, not 308: the condition is temporary by construction. The day the book
+  // is translated its /es URL must start working, and a 308 would sit poisoned
+  // in browser caches. The ISR entry self-heals within its revalidate window.
+  //
+  // `hasLocalizedEdition` returns null when the payload cannot answer. Since
+  // #4166 the Supabase catalog fast-path carries both inputs, so this rarely
+  // fires — keep it anyway, for payloads that predate the column or come from
+  // a narrower select. Ask Atlas then, and on a failed lookup do NOTHING:
+  // reading absence as "no
+  // Spanish edition" would redirect a genuinely Spanish book away.
+  if (lang !== 'en') {
+    const canonicalSlug = (earlyBook as { slug?: string }).slug;
+    let hasEdition = hasLocalizedEdition(earlyBook as unknown as Record<string, unknown>, lang);
+    if (hasEdition === null) {
+      const bookId = (earlyBook as { id?: string }).id ?? id;
+      const doc = await getReadDb()
+        .then((db) => db.collection('books').findOne(
+          { id: bookId },
+          // BOTH inputs, always: a book can be in Spanish by translation
+          // (the counter) or by having been written in it (`language`).
+          // Projecting only the counter reads every Spanish original as
+          // "no Spanish edition" and 307s it away.
+          { projection: { _id: 0, pages_translated_es: 1, language: 1 }, maxTimeMS: 3000 },
+        ))
+        .catch(() => null);
+      // A doc we READ with the counter explicitly projected is authoritative:
+      // the field being absent there means the book has no Spanish pages, not
+      // that we could not tell. Only a failed lookup (doc === null) stays
+      // unknown. Getting this backwards makes the gate silently never fire.
+      hasEdition = doc ? (hasLocalizedEdition(doc as unknown as Record<string, unknown>, lang) ?? false) : null;
+    }
+    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}`);
+
+    // The proxy canonicalises /book/<id> → /book/<slug>, but its matcher is
+    // English-only (`^/book/([^/]+)$`), so the localized twin does it here. Safe
+    // on a streamed page only because nothing has rendered yet — redirect() is a
+    // no-op after the first flush (#4036).
+    if (canonicalSlug && id !== canonicalSlug) permanentRedirect(`/${lang}/book/${canonicalSlug}`);
+  }
+
+  if (!isEmbedded && !previewProposed && !allowHidden) {
+    const artSlug = artworkRedirectSlug(earlyBook as unknown as { content_type?: string; resource_type?: string; slug?: string });
+    // 308, not 307: this is a canonicalization, so search engines must transfer
+    // authority to /artwork rather than keep indexing both. redirect() defaults to
+    // a temporary 307, which consolidates nothing — the whole point of the change.
+    if (artSlug) permanentRedirect(`/artwork/${artSlug}`);
+  }
+
   return (
-    <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
-      {!isEmbedded && <ConditionalSiteHeader variant="light" />}
+    <div className={isEmbedded ? "" : "min-h-screen bg-cream"} lang={lang === 'en' ? undefined : lang}>
+      {/* Migrates a legacy `?lang=es` link to the `/es` twin and sweeps the
+          retired reading-language localStorage key. The language of a page is
+          its URL prefix; nothing is recorded. See src/lib/reading-language.ts. */}
+      {lang === 'en' && <ReadingLanguagePreference />}
+      {!isEmbedded && <ConditionalSiteHeader variant="dark" />}
 
       {/* Tenant reading rooms (EFM/BPH iframe + subdomains) get a breadcrumb
           back to the full catalogue. Rendered outside the Suspense boundary so
@@ -1326,14 +2538,20 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
         <>
           <BookInfoSkeleton />
           <main className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h2 className="text-xl font-semibold text-stone-900 mb-6">Pages</h2>
+            <h2 className="text-xl font-semibold text-stone-900 mb-6">{BOOK_STRINGS[lang].pagesHeading}</h2>
             <PagesGridSkeleton />
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} previewProposed={previewProposed} allowHidden={allowHidden} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} previewProposed={previewProposed} allowHidden={allowHidden} lang={lang} />
       </Suspense>
-      {!isEmbedded && <SignUpCTA />}
+      {!isEmbedded && (
+        <SignUpCTA
+          bgImageUrl="https://images.sourcelibrary.org/artwork/woman-of-the-apocalypse-hortus-deliciarum.jpg"
+          bgAttribution={{ text: 'Woman of the Apocalypse, Hortus Deliciarum (12th c.)', href: '/collections/visions-ecstasies' }}
+          lang={lang}
+        />
+      )}
     </div>
   );
 }

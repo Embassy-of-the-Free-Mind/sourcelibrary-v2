@@ -540,8 +540,8 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
 
       <div className="text-sm text-muted text-center pb-8">
         Questions? Contact{' '}
-        <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
-          derek@sourcelibrary.org
+        <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
+          team@sourcelibrary.org
         </a>
       </div>
     </div>

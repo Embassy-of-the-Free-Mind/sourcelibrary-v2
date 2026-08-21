@@ -13,10 +13,13 @@ interface NavItem {
 
 const adminLinks: NavItem[] = [
   { href: '/admin', label: 'Dashboard', exact: true },
+  { href: '/admin/canon', label: 'Canon' },
+  { href: '/curation/identity-review', label: 'Identity review' },
   { href: '/admin/pipeline', label: 'Pipeline' },
   { href: '/admin/processing', label: 'Processing' },
   { href: '/admin/realtime', label: 'Realtime' },
   { href: '/admin/collections', label: 'Collections' },
+  { href: '/admin/collection-proposals', label: 'Proposals' },
   { href: '/admin/duplicates', label: 'Duplicates' },
   { href: '/admin/catalog-coverage', label: 'Catalogue' },
   { href: '/admin/r2-coverage', label: 'R2 Storage' },
@@ -31,9 +34,11 @@ const adminLinks: NavItem[] = [
   },
   { href: '/admin/kdp', label: 'Publishing' },
   { href: '/admin/users', label: 'Users' },
+  { href: '/admin/introductions', label: 'Introductions' },
   { href: '/admin/members', label: 'Members' },
   { href: '/admin/api-keys', label: 'API Keys' },
   { href: '/analytics', label: 'Analytics' },
+  { href: '/admin/bots', label: 'Bots' },
   { href: '/admin/errors', label: 'Errors' },
   { href: '/admin/system-map', label: 'System Map' },
 ];

@@ -12,6 +12,10 @@
  *   --artworks-only    Only embed artworks (resource_type exists)
  *   --covers-only      Only embed book covers
  *   --gallery-only     Only embed gallery images from image extraction
+ *   --fix-gallery-crops  Re-embed gallery rows whose stored image is not the
+ *                        illustration crop (extracted_url). Historical rows were
+ *                        embedded from the FULL PAGE scan, which buries the artwork
+ *                        in page text and breaks photo->image matching (#3193).
  *   --limit N          Process at most N items
  *   --dry-run          Count what would be embedded, don't embed
  *   --clip-url URL     CLIP server URL (default: http://localhost:3457)
@@ -26,6 +30,7 @@ const CLIP_URL = process.env.CLIP_URL || process.argv.find(a => a.startsWith('--
 const ARTWORKS_ONLY = process.argv.includes('--artworks-only');
 const COVERS_ONLY = process.argv.includes('--covers-only');
 const GALLERY_ONLY = process.argv.includes('--gallery-only');
+const FIX_GALLERY_CROPS = process.argv.includes('--fix-gallery-crops');
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0') || 0;
 
@@ -72,9 +77,10 @@ async function main() {
   await pgClient.connect();
   await pgClient.query('SET ROLE postgres');
 
-  // Get existing embeddings to skip
-  const { rows: existing } = await pgClient.query('SELECT id FROM clip_embeddings');
-  const existingIds = new Set(existing.map(r => r.id));
+  // Get existing embeddings to skip (id -> embedded image_url, for crop-fix detection)
+  const { rows: existing } = await pgClient.query('SELECT id, image_url FROM clip_embeddings');
+  const existingUrl = new Map(existing.map(r => [r.id, r.image_url]));
+  const existingIds = new Set(existingUrl.keys());
   console.log(`Existing embeddings: ${existingIds.size}`);
 
   // Collect items to embed
@@ -159,7 +165,7 @@ async function main() {
       });
     }
     console.log(`Book covers to embed: ${coverItems.length}`);
-    items.push(...coverItems);
+    for (const it of coverItems) items.push(it);
   }
 
   // Phase 3: Gallery images from image extraction pipeline
@@ -169,7 +175,7 @@ async function main() {
       {
         projection: {
           id: 1, book_id: 1, book_title: 1, book_author: 1,
-          image_url: 1, type: 1, description: 1,
+          image_url: 1, extracted_url: 1, thumbnail_url: 1, type: 1, description: 1,
         },
       },
     ).toArray();
@@ -177,22 +183,29 @@ async function main() {
     const galleryItems = [];
     for (const g of galleryImages) {
       const id = `gallery-${g.id}`;
-      if (existingIds.has(id)) continue;
-      if (!g.image_url) continue;
+      // Embed the illustration CROP, never the full page scan — a full-page
+      // embedding is dominated by the surrounding text and can't match a
+      // photo of the artwork alone (#3193).
+      const embedUrl = g.extracted_url || g.image_url;
+      if (!embedUrl) continue;
+      if (existingIds.has(id)) {
+        // Skip unless we're repairing rows embedded from the wrong (full-page) URL
+        if (!FIX_GALLERY_CROPS || existingUrl.get(id) === embedUrl) continue;
+      }
 
       galleryItems.push({
         id,
         source_type: 'gallery_image',
         book_id: g.book_id,
-        image_url: g.image_url,
+        image_url: embedUrl,
         title: g.description || g.book_title,
         author: g.book_author,
         resource_type: g.type || null,
-        thumbnail_url: g.image_url,
+        thumbnail_url: g.thumbnail_url || embedUrl,
       });
     }
     console.log(`Gallery images to embed: ${galleryItems.length}`);
-    items.push(...galleryItems);
+    for (const it of galleryItems) items.push(it);
   }
 
   const total = LIMIT > 0 ? Math.min(items.length, LIMIT) : items.length;
@@ -208,6 +221,10 @@ async function main() {
   // Process in batches
   let embedded = 0;
   let failed = 0;
+  // Keep a bounded sample of WHY things failed, not just how many. Capped so a
+  // run where everything fails cannot itself become the problem.
+  const FAILED_SAMPLE_CAP = 10;
+  const failedSamples = [];
   const pendingRows = [];
 
   for (let i = 0; i < total; i += BATCH_SIZE) {
@@ -239,6 +256,17 @@ async function main() {
           embedded++;
         } else {
           failed++;
+          // SAY WHY. This branch used to be a bare `failed++`, which threw away
+          // the server's reason — so on 2026-08-21 a run where every source URL
+          // 404'd surfaced as "0 embedded, 60 failed" and read like a broken
+          // embedder. It cost an hour of eliminating the CLIP server, the batch
+          // size and the Postgres write before the actual cause (1,596 gallery
+          // rows carrying a dead `extracted_url` at /artwork/<slug>.jpg) showed
+          // up. A counter cannot distinguish a dead source from a dead service;
+          // the reason can. #4185.
+          if (failedSamples.length < FAILED_SAMPLE_CAP) {
+            failedSamples.push({ id: item.id, url: item.image_url, reason: result.error || 'no embedding returned' });
+          }
         }
       }
 
@@ -262,6 +290,20 @@ async function main() {
   }
 
   console.log(`\n\nDone: ${embedded} embedded, ${failed} failed`);
+
+  if (failedSamples.length) {
+    console.log(`\nWhy they failed (first ${failedSamples.length} of ${failed}):`);
+    for (const f of failedSamples) console.log(`  ${f.reason} — ${f.url}`);
+    // A run that embeds NOTHING is a different event from one that loses a few
+    // pages, and it is almost never the embedder: the CLIP server and the batch
+    // size are the first things anyone suspects and the last things at fault.
+    if (embedded === 0 && failed > 0) {
+      console.log(
+        `\nEVERY image failed. Check the SOURCE before the service — HEAD one of the URLs above.\n` +
+        `1,596 gallery rows are known to carry a dead extracted_url at /artwork/<slug>.jpg (#4185).`,
+      );
+    }
+  }
 
   await pgClient.end();
   await mongo.close();

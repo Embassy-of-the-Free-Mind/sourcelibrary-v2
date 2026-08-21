@@ -77,8 +77,11 @@ export interface PriorEvidenceSummary {
  *  - 'catalog'          catalog/registry lookup: translation_verification tool
  *                       sweep (legacy_tv), ft_reverify_proposal catalog_counts
  *                       (legacy_rp — queries the SAME OL/GB/IA catalogs, so it is
- *                       correlated WITH this family, not its own), and the real
- *                       grounded gemini adjudicator (gemini_verifier w/ queries[]).
+ *                       correlated WITH this family, not its own), the real
+ *                       grounded gemini adjudicator (gemini_verifier w/ queries[]),
+ *                       and the deterministic translation_catalogs matchers
+ *                       (tier0_linked, tier1_catalog, constituent_catalog_match —
+ *                       all reading the same registry, so one correlated vote).
  *  - 'agent'            independent cross-model agent (Claude Tier-2 = tier2_agent).
  *  - 'human'            human specialist.
  *  - 'unknown'          unclassifiable.
@@ -100,7 +103,11 @@ export function attemptFamily(a: FirstTranslationAttempt): AttemptFamily {
     // Real grounded adjudicator (has queries) → catalog; bare/legacy → model_knowledge.
     return (a.queries?.length ?? 0) > 0 ? 'catalog' : 'model_knowledge';
   }
-  if (a.method === 'tier0_linked' || a.method === 'tier1_catalog') return 'catalog';
+  if (
+    a.method === 'tier0_linked'
+    || a.method === 'tier1_catalog'
+    || a.method === 'constituent_catalog_match' // deterministic registry match, constituent-scoped (#3785)
+  ) return 'catalog';
   return 'unknown';
 }
 
@@ -133,10 +140,13 @@ export function summarizePriorEvidence(
     attempts.filter((a) => a.result === 'found').map((a) => attemptFamily(a)),
   ).size;
 
+  // Gate on FAMILIES, not raw methods (#3785 drift 7): two same-family "none"s
+  // (e.g. gemini_verifier + gemini_grounded_search, both 'catalog') are one
+  // correlated vote, not independent absence.
   let recommendation: PriorEvidenceSummary['recommendation'];
   if (priorFound) recommendation = 'reuse_prior';
-  else if (independentAbsenceMethods >= 2) recommendation = 'absence_strong';
-  else if (independentAbsenceMethods === 1) recommendation = 'absence_weak';
+  else if (independentAbsenceFamilies >= 2) recommendation = 'absence_strong';
+  else if (independentAbsenceFamilies >= 1) recommendation = 'absence_weak';
   else recommendation = 'unverified';
 
   return {

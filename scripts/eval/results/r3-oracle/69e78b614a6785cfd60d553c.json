@@ -1,0 +1,38 @@
+{
+  "book_id": "69e78b614a6785cfd60d553c",
+  "work_identified": "dkar chag chen mo rnam thar bka' rgya ma — the Great Catalogue and Biography of/for Zhang Yudrakpa's Bka' rgya ma (sealed/esoteric teachings) collection; a prefatory catalogue and hagiographical text accompanying the Bka' rgya ma corpus of Zhang g.yu brag pa 'Gro ba'i mgong po (Lama Zhang, 1123–1193), Tshalpa Kagyu; manuscript at Ogyen Choling / Ugyenchhoeling Museum, Bhutan",
+  "verdict": "first_no_prior",
+  "prior_relationship": "null",
+  "our_completeness": "unknown",
+  "evidence_strength": "moderate",
+  "match_key": "author_title",
+  "confidence": "medium",
+  "prior_translations_found": [],
+  "queries_run": [
+    "BDRC \"dkar chag chen mo\" \"rnam thar\" \"bka' rgya ma\" Ogyen Choling Bhutan English translation",
+    "\"dkar chag chen mo rnam thar bka' rgya ma\" English translation Tibetan",
+    "Ogyen Choling Collection Bhutan Tibetan manuscript \"rnam thar\" \"bka' rgya ma\" English",
+    "BDRC library \"dkar chag chen mo\" \"bka' rgya ma\" Ogyen Choling Bhutan",
+    "\"bka' rgya ma\" Zhang Yudrakpa English translation WorldCat",
+    "worldcat.org \"bka' rgya ma\" Zhang Yudrakpa English translation",
+    "\"Zhang Yudrakpa\" \"bka rgya ma\" English translation published",
+    "\"bka' rgya ma\" \"dkar chag\" OR \"rnam thar\" Zhang Yudrakpa Tibetan catalogue biography English translation",
+    "Ogyen Choling \"bka' rgya ma\" Tibetan English translation published scholarly",
+    "\"Lama Zhang\" bka' rgya ma \"English translation\" OR \"translated by\" scholarly publication",
+    "\"highly esoteric experiential writings\" \"Bka' rgya ma\" English translation publisher year",
+    "Dan Martin \"Zhang\" \"bka' rgya ma\" JIABS 1992 English translation mahamudra \"twelfth century\"",
+    "\"Zhang Yudrakpa\" OR \"Lama Zhang\" \"bka rgya ma\" \"dkar chag\" English translation biography catalogue",
+    "\"dkar chag chen mo\" \"rnam thar bka' rgya ma\" English OR \"bka' rgya ma\" Ugyenchhoeling translation English scholarly"
+  ],
+  "sources_consulted": [
+    {"url": "https://images.mandala.library.virginia.edu/image/first-folios-buddhist-textdkar-chag-chen-mo-rnam-thar-bka-rgya-ma", "found": "Confirms text is a Kagyu manuscript by Zhang g.yu brag pa at Ugyenchhoeling Museum, Bhutan (2016 photographs); no English translation mentioned"},
+    {"url": "https://eap.bl.uk/project/EAP105", "found": "British Library EAP105 digitised Ogyen Choling manuscripts including rnam thar and ritual texts; no English translations of this specific text"},
+    {"url": "https://www.lotsawahouse.org/tibetan-masters/lama-zhang-tsondru-drakpa/", "found": "Only one poem by Lama Zhang translated ('Twelve and a Half Crippled Verses'); no catalogue/biography text translated"},
+    {"url": "https://library.bdrc.io/show/bdr:T1GS108153", "found": "BDRC entry for bka' rgya ma; Tibetan only; no English translation listed"},
+    {"url": "https://www.worldcat.org/identities/lccn-n82232228/", "found": "WorldCat identities for Zhang Yudrakpa; 1981 Tibetan bka' rgya ma reproduction from Ogyen Choling (16 libraries); ambiguous AI-generated claim of '1 English translation' — no verifiable translator/year/publisher found"},
+    {"url": "https://archive.org/details/bdrc-W26673", "found": "Collected Works of Zhang Yudrakpa, 9 vols, Kathmandu 2004; Tibetan only"},
+    {"url": "https://journals.ub.uni-heidelberg.de/index.php/jiabs/article/view/8802", "found": "Dan Martin (1992) 'Path of Ultimate Profundity: Great Seal Instructions of Zhang' JIABS 15:2 pp.243-319 — partial English translation of Lam mchog mthar thug (a TEACHING text within the bka' rgya ma), not the dkar chag/rnam thar catalogue-biography"},
+    {"url": "https://tibeto-logic.blogspot.com/2012/01/new-works-on-works-of-lama-zhang.html", "found": "Dan Martin's bibliographic catalogue of Zhang's works; no mention of English translation of the dkar chag chen mo rnam thar"}
+  ],
+  "reasoning": "This is the Great Catalogue and Biography (dkar chag chen mo + rnam thar) prefacing Zhang Yudrakpa's Bka' rgya ma esoteric teachings — a distinct text from the teachings themselves. No English translation found in BDRC, Lotsawa House (only 1 minor poem), Mandala/BL EAP, or archive.org. Dan Martin (1992) translated Mahamudra TEACHINGS from the bka' rgya ma, not this catalogue/biography. WorldCat '1 library English' claim unverifiable (no translator/year), likely a journal-article record, and covers the teaching texts not this cataloguing work."
+}

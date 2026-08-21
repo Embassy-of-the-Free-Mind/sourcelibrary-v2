@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { toUserId } from '@/lib/user-id';
 
 /**
  * POST /api/ficino/discussions/[id]/replies — reply to a discussion thread
@@ -17,7 +18,7 @@ export async function POST(
 
   const db = await getDb();
   const user = await db.collection('users').findOne(
-    { _id: session.user.id as any },
+    { _id: toUserId(session.user.id) as any },
     { projection: { membership: 1, name: 1 } }
   );
 

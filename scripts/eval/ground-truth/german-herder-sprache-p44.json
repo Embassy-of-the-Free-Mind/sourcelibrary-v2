@@ -1,0 +1,23 @@
+{
+  "work": "Herder, Abhandlung über den Ursprung der Sprache (1772) — faculties of mind",
+  "book_id": "69ade7eeda7f32a00bedaa7c",
+  "page_number": 50,
+  "script": "latin",
+  "language": "German",
+  "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography view)",
+  "source_url": "https://www.deutschestextarchiv.de/book/view/herder_abhandlung_1772?p=50",
+  "edition": "Berlin: Christian Friedrich Voß, 1772 (1. Auflage)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "Kraft in die Seele hinein gedacht, die dem Menſchen als eine Zugabe vor allen Thieren zu eigen geworden, und die alſo auch, wie die vierte Stuffe einer Leiter nach den drei unterſten, allein betrachtet werden muͤſſe; und das iſt freilich, es moͤgen es ſo große Philoſophen ſagen, als da wollen, Philoſophiſcher Unſinn. Alle Kraͤfte unſrer und der Thierſeelen ſind nichts als Metaphyſiſche Abſtraktionen, Wuͤrkungen! ſie werden abgetheilt, weil ſie von unſerm ſchwachen Geiſte nicht auf einmal betrachtet werden konnten: ſie ſtehen in Kapiteln, nicht, weil ſie ſo Kapitelweiſe in der Natur wuͤrkten, ſondern ein Lehrling ſie ſich vieleicht ſo am beſten entwickelt. Daß wir gewiſſe ihrer Verrichtungen unter gewiſſe Hauptnamen gebracht haben z. E. Witz, Scharfſinn, Phantaſie, Vernunft, iſt nicht, als wenn je eine einzige Handlung des Geiſtes moͤglich waͤre, wo der Witz oder die Vernunft allein wuͤrkt: ſondern nur, weil wir in dieſer Handlung am meiſten von der Abſtraktion entdecken, die wir Witz oder Vernunft nennen, z. E. Vergleichung oder Deutlichmachung der Jdeen.",
+  "page_class": {
+    "source_class": "print",
+    "layout": "single_column_prose",
+    "density": "dense",
+    "type_size": "normal",
+    "typeface": "fraktur",
+    "classified_by": "visual audit of the scan, 2026-07-19 (sonnet hunt agent)",
+    "canonical_text": false,
+    "memorization_risk": "low"
+  }
+}
