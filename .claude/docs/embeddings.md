@@ -1,6 +1,6 @@
 # Embeddings
 
-Source Library has **five embedding stores** in Supabase, indexing different things at different granularities. All live in the `secondrenaissance` project (ID `ykhxaecbbxaaqlujuzde`). No embeddings live in Mongo Atlas — Atlas holds the source of truth for content; Supabase holds derived vectors.
+Source Library has **six embedding stores** in Supabase, indexing different things at different granularities. All live in the `secondrenaissance` project (ID `ykhxaecbbxaaqlujuzde`). No embeddings live in Mongo Atlas — Atlas holds the source of truth for content; Supabase holds derived vectors.
 
 ## The five stores
 
@@ -11,8 +11,59 @@ Source Library has **five embedding stores** in Supabase, indexing different thi
 | `artwork_embeddings` | **3072 (halfvec)** | `gemini-embedding-2-preview` | One row per artwork (title + author + summary + subjects + figures + symbols) | `scripts/migration/backfill-artwork-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_artworks_semantic` | `src/lib/semantic-search.ts` artwork retrieval |
 | `gallery_text_embeddings` | 768 (vector) | `gemini-embedding-2-preview` | One row per gallery image (museum description text) | `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` | `src/lib/embeddings.ts`, `src/app/api/gallery/{route,similar/route}.ts` |
 | `clip_embeddings` | 512 (vector) | CLIP visual | One row per image (artwork covers, gallery extractions) | `scripts/backfill-clip-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` (CLIP text→image) | gallery similar-image queries |
+| `page_texts` | 768 (vector) | `gemini-embedding-2-preview` | One row per translated page **per language** (`page_id, lang`) | `scripts/workers/embed-page-texts.mjs --lang=<iso>` (bulk) + `es-translate-worker.mjs` (inline) | `match_page_texts`, `match_page_texts_in_books`, `search_page_texts` (lexical) | Spanish/localized page search: `/api/search?lang=es`, `/api/books/:id/search?lang=es` |
 
 Approximate current row counts (May 2026): pages ~3.9M, books 33,828, artworks 19,731, gallery_text 116,641, clip 151,957.
+
+## `page_texts` — the language-keyed store (#4095)
+
+`page_translations` holds ONE translation per page, and that translation is
+English. Every other language lives in `page_texts`, keyed `(page_id, lang)` —
+the vector-layer form of the rule in `.claude/docs/i18n.md`: **one
+language-keyed shape per layer, never per-language columns or tables.** The next
+language is a key, not a feature.
+
+- **Why a sibling table and not a `lang` column on `page_translations`.** That
+  table is 4.5M rows behind four read paths (`match_semantic`,
+  `match_pages_in_books`, the librarian, `/api/search`). Widening its primary
+  key means migrating all of it and rebuilding an HNSW index those paths depend
+  on, to gain 38K Spanish rows. The sibling costs the English path nothing; the
+  English rows can move in later as a separately-verified step.
+- **The vector index is PARTIAL, one per language** (`page_texts_embedding_es_idx`).
+  HNSW returns the globally nearest N and filters afterwards, so a shared index
+  plus `WHERE lang = 'es'` would strip results to zero whenever the true
+  neighbours are in another language — the same cross-lingual bug fixed in
+  `match_semantic` in May 2026. A partial index makes it structurally
+  impossible. **Adding a language means running
+  `scripts/migration/add-page-texts-table.mjs --lang=<iso>` again**; until you
+  do, that language is searched by sequential scan (correct, just slower).
+- **There is a lexical lane too**, which the English store does not have here:
+  a `tsv` column, a GIN index, and `search_page_texts`. English keyword search
+  is Atlas (`pages_search`, mapping `translation.data`/`ocr.data`,
+  `dynamic: false`); reaching `translations.es.data` would mean rebuilding that
+  index over 18.9M pages on shared search capacity for 38K rows. Postgres full
+  text over the copy we already hold is free and gives real per-language
+  stemming, which `lucene.standard` does not. Which stemmer a language gets is
+  decided once, in the SQL function `page_text_config`, called by BOTH the
+  write-side trigger and the read-side RPC — so index and query cannot disagree.
+- **No OCR fallback.** `pageEmbeddingInput` falls back to the original text so
+  an untranslated page still gets a vector. `pageTextForLang` does NOT: a row in
+  `lang = 'es'` is a promise that the text IS Spanish, and falling back would
+  put Latin into the Spanish lane, where it would be retrieved for Spanish
+  queries and quoted as the Spanish edition.
+- **Staleness is checked on every run, not behind a flag.** The Spanish
+  audit→repair loop (`scripts/audit/es-edition-quality.mjs` → the worker's
+  `--strict --pages=@report` mode) REWRITES pages, and the row carries the
+  snippet that gets quoted as well as the vector — so a stale row serves text
+  that is no longer in the book.
+- **Coverage:** `scripts/audit/page-texts-coverage.mjs --lang=es` compares the
+  counter, the readable pages and the embedded rows, and reports the writer's
+  age rather than only the row count (`measurement-instruments.md`).
+
+The row shape and the upsert live with the English ones in
+`scripts/lib/page-embedding-text.mjs`; the per-book writer is
+`scripts/lib/embed-book-page-texts.mjs`. Four writers, one composer — for the
+reason that module exists.
 
 ## Why three different dimensions
 

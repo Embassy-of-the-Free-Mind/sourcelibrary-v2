@@ -24,12 +24,21 @@
  *
  * Cost ≈ $0.0007/page (flash-lite). Respects the processing_control pause flag.
  *
+ * After each book it also embeds the new Spanish text into Supabase
+ * `page_texts` (#4095), which is what makes the pages FINDABLE — a Spanish page
+ * that exists but is not embedded is invisible to Spanish search, and, as the
+ * English page vectors proved in Aug 2026, an unembedded book and a book with
+ * no match return the same empty list. Keeping the writer inside the worker is
+ * the fix for that class: `--no-embed` opts out (needs SUPABASE_DB_URL).
+ *
  *   node --env-file=.env.production.local scripts/workers/es-translate-worker.mjs \
- *        [--top=50] [--book=<id>[,<id>]] [--max-pages=20000] [--dry-run]
+ *        [--top=50] [--book=<id>[,<id>]] [--max-pages=20000] [--dry-run] [--no-embed]
  */
 import { MongoClient } from 'mongodb';
+import pg from 'pg';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { embedBookPageTexts } from '../lib/embed-book-page-texts.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => { const m = args.find(a => a.startsWith(`--${n}=`)); return m ? m.split('=')[1] : d; };
@@ -45,6 +54,7 @@ const PAGE_IDS = PAGES_ARG
 // --order=reads (default: most-read first) | pages (shortest first — more books visible sooner)
 const ORDER = getArg('order', 'reads') === 'pages' ? { pages_translated: 1, read_count: -1 } : { read_count: -1 };
 const DRY_RUN = args.includes('--dry-run');
+const NO_EMBED = args.includes('--no-embed');
 const CONC = 6;
 const MODEL = 'gemini-3.1-flash-lite';
 const PROMPT_VERSION = 'es-pivot-v2';
@@ -132,6 +142,30 @@ async function recount(db, bookId) {
   return n;
 }
 
+/**
+ * Open the Supabase connection used to embed each finished book, or null when
+ * embedding is off or unconfigured. Deliberately NOT fatal: a missing
+ * SUPABASE_DB_URL should not stop translation — but it must SAY so, because a
+ * silent skip here is precisely how the English page vectors went two months
+ * dark without anything downstream noticing.
+ */
+async function openEmbedClient() {
+  if (NO_EMBED || DRY_RUN) return null;
+  if (!process.env.SUPABASE_DB_URL) {
+    console.warn('[ES] SUPABASE_DB_URL missing — translating WITHOUT embedding; the new Spanish pages will not be findable until scripts/workers/embed-page-texts.mjs --lang=es is run.');
+    return null;
+  }
+  try {
+    const c = new pg.Client({ connectionString: process.env.SUPABASE_DB_URL, ssl: { rejectUnauthorized: false } });
+    await c.connect();
+    await c.query('SET statement_timeout = 60000');
+    return c;
+  } catch (e) {
+    console.warn(`[ES] Supabase unavailable (${e.message}) — translating WITHOUT embedding; run embed-page-texts.mjs --lang=es afterwards.`);
+    return null;
+  }
+}
+
 async function main() {
   const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 8 });
   await client.connect();
@@ -145,6 +179,9 @@ async function main() {
     console.log('[ES] processing_control paused — exiting (pass --ignore-pause to run the EN→ES pivot anyway)');
     await client.close(); return;
   }
+
+  const embedPg = await openEmbedClient();
+  const embedKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 
   // Popular-first: the most-read books with an English translation, skipping
   // those whose Spanish counter already covers their translated pages.
@@ -203,10 +240,26 @@ async function main() {
     await Promise.all(Array.from({ length: CONC }, worker));
     const n = await recount(db, b.id);
     console.log(`[ES] ${label} — done: es=${n}/${b.pages_translated}`);
+
+    if (embedPg && bookDone > 0) {
+      try {
+        // Re-fetch the book: embedBookPageTexts denormalizes author/language/
+        // year onto every row and the projection above carries none of them.
+        const full = await db.collection('books').findOne(
+          { id: b.id }, { projection: { id: 1, title: 1, author: 1, language: 1, year: 1 } });
+        // Staleness is checked inside, so a re-translated page's vector and
+        // snippet are replaced rather than left pointing at the old text.
+        const r = await embedBookPageTexts({ db, pg: embedPg, book: full, lang: 'es', apiKey: embedKey });
+        console.log(`[ES] ${label} — embedded ${r.embedded} page(s)${r.restaled ? ` (${r.restaled} re-embedded after re-translation)` : ''}`);
+      } catch (e) {
+        console.error(`[ES] ${label} — EMBED FAILED: ${e.message} (pages are translated but not yet findable; re-run embed-page-texts.mjs --lang=es --book=${b.id})`);
+      }
+    }
   }
 
   const cost = usage.input / 1e6 * 0.25 + usage.output / 1e6 * 1.5;
   console.log(`[ES] done — ${pagesDone} pages translated, ${skipped} skipped; ${usage.calls} calls, ${usage.input} in / ${usage.output} out tokens ≈ $${cost.toFixed(2)} (list price)`);
+  await embedPg?.end().catch(() => {});
   await client.close();
 }
 

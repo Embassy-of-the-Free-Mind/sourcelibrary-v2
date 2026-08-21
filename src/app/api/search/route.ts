@@ -6,7 +6,7 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
@@ -60,6 +60,21 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const excludeLanguagesParam = searchParams.get('exclude_languages');
     const languages = expandLanguages(languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
     const excludeLanguages = expandLanguages(excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
+    // `lang` is the TEXT language of the answer — which edition of each page to
+    // search and to quote back. It is NOT `language`, which filters by the
+    // BOOK's edition language and keeps that meaning everywhere
+    // (search-filters-and-lanes.md). `?lang=es&language=Latin` is coherent: the
+    // Spanish rendering of Latin editions.
+    //
+    // Anything but `en` narrows the whole request to books that HAVE that
+    // edition. That is not a nicety — result cards on a localized surface link
+    // to `/es/book/…`, and an `/es` URL for a book with no Spanish pages 307s
+    // straight back to English (i18n.md, "an /es URL is a promise"). A result
+    // the reader cannot open in their language is worse than no result.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    const isLocalizedSearch = textLang !== 'en';
+    const editionCounter = `pages_translated_${textLang}`;
     const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');
@@ -178,6 +193,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
       if (firstTranslation === 'true') filters.is_first_translation = true;
       if (library) filters.$or = [{ held_by: library }, { 'image_source.provider': library }];
+      if (isLocalizedSearch) filters[editionCounter] = { $gt: 0 };
       return filters;
     }
 
@@ -297,6 +313,37 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (!searchContent && !pagesOnly) return [];
 
+        // Localized keyword lane. The Atlas `pages_search` index maps
+        // `translation.data` / `ocr.data` and nothing else, so it cannot see
+        // `translations.es.data`; the Spanish text lives in Supabase for the
+        // vector lane anyway, and a GIN index over it gives real Spanish
+        // stemming that the Atlas index (lucene.standard everywhere) does not.
+        // Shaped to look like a Mongo page doc so everything downstream — the
+        // books join, the hidden-book drop, RRF, snippet extraction — is the
+        // same code the English lane runs.
+        if (isLocalizedSearch) {
+          try {
+            const rows = await lexicalPageSearchLang(query, textLang, (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS, {
+              language: language || undefined,
+              yearMin, yearMax,
+              bookIds: bookId ? [bookId] : undefined,
+            });
+            return rows.map(r => ({
+              id: r.page_id,
+              book_id: r.book_id,
+              page_number: r.page_number,
+              // The stored text is already wrapper-stripped by the embedding
+              // composer; extractSnippet re-cleans it harmlessly.
+              translation: { data: r.full_text || r.snippet },
+              ocr: { data: '' },
+            }));
+          } catch (err) {
+            console.warn('[search] Localized page lane failed:', err instanceof Error ? err.message : String(err));
+            degradedLanes.push('page');
+            return [];
+          }
+        }
+
         const pageSearchPromise = (async () => {
           const pageFilter: Record<string, unknown> = {};
           if (bookId) {
@@ -397,7 +444,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (bookId || !searchContent) return [];
         try {
-          const pages = await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
+          const pages = await semanticPageSearchGlobal(matchQuery, 15, {
+            tenantId: tenantId || undefined,
+            textLang,
+          });
           if (pages.length === 0) return pages;
           // Drop semantic matches on non-content pages (cover/blank/illustration/etc.).
           // The Supabase embedding table has these — they pollute conceptual queries.
@@ -562,6 +612,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
               // Tenant scope: match_books_semantic is GLOBAL (book_embeddings has
               // no tenant_id column, so the RPC can't filter), so a tenant request
               // must re-apply the tenant filter here or global books leak into the
@@ -644,6 +695,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
               // match_semantic already filters by filter_tenant_id, so this is
               // defense-in-depth — but keep it consistent with the book lane so a
               // future RPC change can't silently leak cross-tenant pages.
@@ -896,7 +948,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       // unattributable even though the value was sitting in scope — the same
       // blind spot that made the pre-existing rows unsplittable.
       tenantId,
-      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length },
+      // `lang` is recorded so Spanish demand is measurable — without it a
+      // localized search is indistinguishable from an English one in the log.
+      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length, lang: textLang },
     });
 
     logSearchQuery({
