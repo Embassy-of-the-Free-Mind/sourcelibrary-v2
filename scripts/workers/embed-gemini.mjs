@@ -17,9 +17,11 @@
  * 100x smaller. --incremental and --missing-only are cheap because they touch
  * few pages; --full is not. ASK BEFORE A FULL PASS.
  *
- * Note the budget dial this script consults (budgetAllowsDispatch) cannot SEE
- * embedding spend — nothing here logs to gemini_usage (#4162) — so it brakes on
- * OCR/translation spend only.
+ * Since #4162 this worker RECORDS what it spends: gemini_usage rows with
+ * type 'embedding', flushed every FLUSH_EVERY_TEXTS so a full pass writes ~780
+ * rows rather than 78,000 (the spend guard fails closed above 40,000/day).
+ * Tokens are estimated from characters — batchEmbedContents returns no
+ * usageMetadata. See scripts/lib/embedding-usage.mjs.
  *
  * Time: ~5-6 days for full 3M-page backfill (~13 texts/sec sustained).
  *
@@ -49,6 +51,7 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -130,6 +133,24 @@ async function getPgClient() {
 
 let rateLimitBackoff = 0;
 
+// Embedding spend, accumulated and flushed periodically (#4162). This worker
+// streams pages rather than walking books, so there is no per-book boundary to
+// flush on; FLUSH_EVERY_TEXTS bounds the row count instead (~780 rows for a
+// full 3.9M-page pass, against the spend guard's 40,000-row/day ceiling — one
+// row per 50-text batch would have been 78,000 and read as over-budget).
+const embedUsage = newEmbedUsage();
+let usageRows = 0;         // gemini_usage rows written this run
+let usageTotalChars = 0;   // characters recorded, for the closing summary
+
+async function flushEmbedUsage(force = false) {
+  if (!force && embedUsage.texts < FLUSH_EVERY_TEXTS) return;
+  const chars = embedUsage.chars;
+  if (!chars) return;
+  await logEmbeddingUsage(embedUsage, { model: MODEL, endpoint: 'worker/embed-gemini' });
+  usageRows += 1;
+  usageTotalChars += chars;
+}
+
 async function embedBatch(texts) {
   const requests = texts.map(t => ({
     model: `models/${MODEL}`,
@@ -162,6 +183,9 @@ async function embedBatch(texts) {
   if (!data.embeddings || data.embeddings.length !== texts.length) {
     throw new Error(`Expected ${texts.length} embeddings, got ${data.embeddings?.length || 0}`);
   }
+  // Counted only on success — a 429 retried above was not billed for a result.
+  addEmbedUsage(embedUsage, texts);
+  await flushEmbedUsage();
   return data.embeddings.map(e => e.values);
 }
 
@@ -503,10 +527,15 @@ for await (const page of cursor) {
 
 if (batch.length > 0) await processBatch(batch);
 
+// Record the tail. Without this, everything since the last flush is spend that
+// happened and was never written down — the exact hole #4162 is about.
+await flushEmbedUsage(true);
+
 await mongoClient.close();
 if (pgClient) await pgClient.end();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 console.log(`\nDone: ${embedded.toLocaleString()} embedded, ${skipped} skipped, ${errors} errors, ${elapsed}s`);
+console.log(`Embedding spend recorded: ~$${estimateUsd(usageTotalChars).toFixed(2)} across ${usageRows} gemini_usage row(s) (estimated from characters — see scripts/lib/embedding-usage.mjs)`);
 
 // After a large full backfill, rebuild the HNSW index if it's missing
 if (FULL_MODE && embedded > 10000) {

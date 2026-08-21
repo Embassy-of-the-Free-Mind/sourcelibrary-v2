@@ -28,6 +28,7 @@ import {
   embedTexts,
   EMBED_MODEL,
 } from './page-embedding-text.mjs';
+import { newEmbedUsage, logEmbeddingUsage } from './embedding-usage.mjs';
 
 const EMBED_BATCH_SIZE = 50;   // Gemini batchEmbedContents caps at 100; 50 matches the English worker
 const UPSERT_BATCH_SIZE = 10;  // HNSW index updates are expensive — keep writes small
@@ -105,10 +106,14 @@ export async function embedBookPageTexts({ db, pg, book, lang, apiKey, force = f
   if (work.length === 0) return { embedded: 0, restaled: 0, missing, alreadyPresent };
 
   let embedded = 0;
+  // Spend is recorded once per book (#4162): one row per 50-text batch would be
+  // tens of thousands of rows on a large run, which the spend guard reads as
+  // over-budget and fails closed on.
+  const usage = newEmbedUsage();
   for (let i = 0; i < work.length; i += EMBED_BATCH_SIZE) {
     const batch = work.slice(i, i + EMBED_BATCH_SIZE);
     // Embed the capped text, STORE the full text — see pageTextForLang.
-    const vectors = await embedTexts(batch.map((w) => w.embedText), apiKey);
+    const vectors = await embedTexts(batch.map((w) => w.embedText), apiKey, { usage });
     const rows = batch.map((w, j) => buildPageTextRow({
       page: w.page, book, lang, text: w.text, embedding: vectors[j],
     }));
@@ -119,6 +124,10 @@ export async function embedBookPageTexts({ db, pg, book, lang, apiKey, force = f
     }
     embedded += rows.length;
   }
+
+  // After the loop, so a book that throws part-way still records what it spent
+  // before throwing — the caller catches per book and continues.
+  await logEmbeddingUsage(usage, { model: EMBED_MODEL, bookId: book.id, endpoint: `worker/embed-page-texts:${lang}`, db });
 
   return { embedded, restaled, missing, alreadyPresent };
 }
