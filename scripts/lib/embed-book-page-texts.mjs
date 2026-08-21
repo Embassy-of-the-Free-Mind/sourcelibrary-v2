@@ -107,7 +107,8 @@ export async function embedBookPageTexts({ db, pg, book, lang, apiKey, force = f
   let embedded = 0;
   for (let i = 0; i < work.length; i += EMBED_BATCH_SIZE) {
     const batch = work.slice(i, i + EMBED_BATCH_SIZE);
-    const vectors = await embedTexts(batch.map((w) => w.text), apiKey);
+    // Embed the capped text, STORE the full text — see pageTextForLang.
+    const vectors = await embedTexts(batch.map((w) => w.embedText), apiKey);
     const rows = batch.map((w, j) => buildPageTextRow({
       page: w.page, book, lang, text: w.text, embedding: vectors[j],
     }));
