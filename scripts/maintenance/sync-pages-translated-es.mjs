@@ -98,7 +98,11 @@ for (const b of existing) {
   changed++;
   console.log(`${dryRun ? '[dry] ' : ''}${b.id}  ${prev} → ${next} / ${b.pages_count ?? '?'}  ${(b.title || '').slice(0, 60)}`);
   if (dryRun) continue;
-  const r = await books.updateOne({ id: b.id }, { $set: { pages_translated_es: next } });
+  // `updated_at` is load-bearing, not cosmetic: the Supabase catalog sync is
+  // incremental on `updated_at`, and books_catalog now mirrors this counter
+  // (#4166). A counter changed here without the bump would never reach the
+  // mirror, so a /es card would keep linking to the English page (#3445).
+  const r = await books.updateOne({ id: b.id }, { $set: { pages_translated_es: next, updated_at: new Date() } });
   if (r.modifiedCount !== 1) console.warn(`  ! updateOne for ${b.id} modified ${r.modifiedCount}`);
   await recordSweepAction(db, {
     sweep: 'sync-pages-translated-es',

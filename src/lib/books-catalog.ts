@@ -38,6 +38,14 @@ export interface CatalogBook {
   pages_count: number;
   pages_ocr: number;
   pages_translated: number;
+  /**
+   * Pages carrying a Spanish edition (#4166). Mirrors `books.pages_translated_es`.
+   * Read it only through `hasLocalizedEdition()` — a book WRITTEN in Spanish has
+   * no translated pages and would score zero here (#4120). Without this field a
+   * catalog-fed `CollectionBookCard` cannot tell a Spanish-readable book from an
+   * English-only one and links every card to its English page.
+   */
+  pages_translated_es: number;
   pages_blank: number;
   photo: string | null;
   thumbnail: string | null;
@@ -86,7 +94,10 @@ export interface CatalogBookDetail extends CatalogBook {
   updated_at: string | null;
 }
 
-const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
+// Exported so tests can assert the localization counter is in it (#4166) —
+// a card cannot tell a Spanish-readable book from an English-only one without
+// a field the query never asked for.
+export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
