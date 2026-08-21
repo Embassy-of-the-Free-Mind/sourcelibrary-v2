@@ -25,8 +25,17 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts, spanishShowpiece } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts, spanishShowpiece } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
+  // The grid card's count line. On /es it says how many of the collection's
+  // books can actually be READ in Spanish — the same thing /es/collections
+  // tells you, and the only number on the card a Spanish visitor can act on.
+  // Empty on `/`, where every book is already in the page's language.
+  const countLabel = (slug: string, bookCount: number) => {
+    const localized = localizedCollectionCounts[slug] ?? 0;
+    const base = `${nf(bookCount)} ${t.booksLabel}`;
+    return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
+  };
   const spanishFirsts = spanishBooks.filter(isPublishedFirstTranslation).slice(0, 6);
 
   return (
@@ -38,8 +47,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
 
       {/* Read in Spanish — the first thing under the hero on /es, because it is
           the one section whose BOOKS (not just chrome) are in the visitor's
-          language. Most-read first; the reader opens these in Spanish because
-          /es stores the reading-language preference (ReadingLanguagePreference).
+          language. Most-read first; each card's href carries the `/es` prefix,
+          which is the ONLY thing that decides reading language (#4112 removed
+          the localStorage preference that used to follow the reader off the
+          prefix — see .claude/docs/i18n.md rule 6).
           spanishBooks is empty on the English homepage, so nothing renders there. */}
       {spanishBooks.length > 0 && (
         <section className="bg-white py-16 md:py-24">
@@ -227,7 +238,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                    {col.book_count} {t.booksLabel}
+                    {countLabel(col.slug, col.book_count)}
                   </p>
                   <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                     {collectionName(lang, col.slug, col.name)}

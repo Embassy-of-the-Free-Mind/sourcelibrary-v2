@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { useLocale, localeHref, hasLocalizedTwin, localePath, canonicalPath, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { trackEvent } from '@/lib/track-event';
@@ -19,12 +19,17 @@ interface NavLink {
 }
 
 // Labels are resolved per-locale from NAV_STRINGS so the nav stays in one place
-// as languages are added. Hrefs are constant EXCEPT where a Spanish twin route
-// exists (`/es/collections`, see LOCALIZED_PREFIXES in i18n.ts) — the thin-i18n
-// bargain means every other item still points at the English page.
+// as languages are added. Hrefs are written in their ENGLISH (canonical) form
+// and localized at the end of this function by `localePath`, which is guarded by
+// the route registry in locale-path.ts: an item with a twin gets the `/es`
+// prefix, an item without one is returned untouched and lands on its English
+// page. Doing it per-item by hand is what left `/librarian` pointing at the
+// English librarian from the Spanish header while `/collections` was localized
+// by a ternary two lines above it — the registry knows about `/es/librarian`,
+// the hand-written ternary did not.
 function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
-  return [
-    { label: t.collections, href: locale === 'es' ? '/es/collections' : '/collections', activePrefix: locale === 'es' ? '/es/collections' : '/collections' },
+  const links: NavLink[] = [
+    { label: t.collections, href: '/collections', activePrefix: '/collections' },
     { label: t.gallery, href: '/gallery' },
     {
       label: t.browse,
@@ -52,6 +57,17 @@ function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
     // where that traffic is meant to come from. Episodes also stay reachable
     // from their librarian threads and the footer.
   ];
+
+  if (locale === 'en') return links;
+  // `activePrefix` must move with the href, or the Spanish nav highlights
+  // nothing: the pathname is `/es/collections` and the prefix would say
+  // `/collections`.
+  return links.map((link) => ({
+    ...link,
+    href: localePath(link.href, locale),
+    ...(link.activePrefix ? { activePrefix: localePath(link.activePrefix, locale) } : {}),
+    ...(link.children ? { children: link.children.map((c) => ({ ...c, href: localePath(c.href, locale) })) } : {}),
+  }));
 }
 
 interface Breadcrumb {
@@ -112,11 +128,15 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // a global-only path; `/works` under Browse is the first that does, and an
   // unfiltered child would put a proxy-404 link in a partner's own header —
   // the one thing the shared list exists to prevent.
+  //
+  // The hrefs arriving here are already locale-prefixed, so the global-only test
+  // runs on the CANONICAL path: `/es/explore` is the same global-only surface as
+  // `/explore` and a prefix-blind lookup would miss it.
   const NAV_LINKS = buildNavLinks(t, locale)
-    .filter(link => !(isTenantHost && isGlobalOnlyNavHref(link.href)))
+    .filter(link => !(isTenantHost && isGlobalOnlyNavHref(canonicalPath(link.href))))
     .map(link =>
       link.children && isTenantHost
-        ? { ...link, children: link.children.filter(child => !isGlobalOnlyNavHref(child.href)) }
+        ? { ...link, children: link.children.filter(child => !isGlobalOnlyNavHref(canonicalPath(child.href))) }
         : link
     );
   // The Support button is deliberately NOT in buildNavLinks: it is an action,

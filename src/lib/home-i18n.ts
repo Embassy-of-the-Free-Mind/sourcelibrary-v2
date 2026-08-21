@@ -56,6 +56,13 @@ export interface HomeStrings {
   illustrationsLabel: string;
   browseCatalog: string;
   booksLabel: string;
+  /**
+   * Suffix on a collection card's second count: "1.234 libros · 57 en español".
+   * Never rendered on the English homepage — every book there is already in the
+   * page's language — but it lives in both dictionaries so the two editions keep
+   * one shape (the rule at the top of this file).
+   */
+  inThisLanguage: string;
   seeMore: (n: number) => string;
   collectionsWord: string;
   curatedExhibitions: string;
@@ -191,6 +198,7 @@ const en: HomeStrings = {
   illustrationsLabel: 'illustrations',
   browseCatalog: 'Browse Catalog',
   booksLabel: 'books',
+  inThisLanguage: 'in English',
   seeMore: (n) => `See ${n} more`,
   collectionsWord: 'collections',
   curatedExhibitions: 'Browse curated exhibitions',
@@ -318,6 +326,7 @@ const es: HomeStrings = {
   illustrationsLabel: 'ilustraciones',
   browseCatalog: 'Explorar el catálogo',
   booksLabel: 'libros',
+  inThisLanguage: 'en español',
   seeMore: (n) => `Ver ${n} más`,
   collectionsWord: 'colecciones',
   curatedExhibitions: 'Explorar exposiciones comisariadas',
