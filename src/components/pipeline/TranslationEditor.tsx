@@ -76,7 +76,8 @@ function hasNonLatinScript(language?: string): boolean {
 
 // Inline book search bar for the page reader footer
 function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?: string }) {
-  const rs = READER_STRINGS[useLocale()];
+  const locale = useLocale();
+  const rs = READER_STRINGS[locale];
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -91,7 +92,10 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
     debounceRef.current = setTimeout(async () => {
       setIsSearching(true);
       try {
-        const res = await fetch(`/api/books/${bookId}/search?q=${encodeURIComponent(query.trim())}`);
+        // Search the edition the reader is actually reading. Under `/es` the
+        // input, the placeholder and the page text are Spanish; without this
+        // the results came back from the English text (#4095).
+        const res = await fetch(`/api/books/${bookId}/search?q=${encodeURIComponent(query.trim())}&lang=${locale}`);
         if (res.ok) {
           const data = await res.json();
           setResults(data.results || []);
@@ -100,7 +104,7 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
       finally { setIsSearching(false); }
     }, 300);
     return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
-  }, [query, bookId]);
+  }, [query, bookId, locale]);
 
   // Close on click outside
   useEffect(() => {

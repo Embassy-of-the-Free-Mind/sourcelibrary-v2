@@ -21,6 +21,18 @@ filter renders as *on* while out-of-range results sit at the top.
   lexical), collections.
 - **`/api/search` (Books tab):** four lanes — Supabase trigram books, Atlas
   pages, `semanticBookSearch`, `semanticPageSearchGlobal`.
+- **`?lang=<iso>` swaps the TEXT store, not the filter.** With `lang=es` the
+  keyword page lane becomes Postgres full-text over Supabase `page_texts`
+  (`search_page_texts`) instead of Atlas, and the semantic page lane becomes
+  `match_page_texts` instead of `match_semantic` — because the Atlas
+  `pages_search` index maps `translation.data`/`ocr.data` and cannot see
+  `translations.es.data` (#4095). `language` / `languages` /
+  `exclude_languages` keep their meaning throughout: they filter the BOOK's
+  edition language. `?lang=es&language=Latin` is a coherent query.
+  **A localized request also narrows every lane to books that HAVE that
+  edition** (`pages_translated_<iso> > 0`) — its result cards link to
+  `/es/book/…`, and an `/es` URL for a book with no Spanish pages 307s back to
+  English, so an unfiltered hit is a result the reader cannot open.
 - **Vector lanes carry no metadata predicate** and their hits merge in as
   book/passage results. They must be post-filtered in JS or they leak past every
   filter. This is the one people miss.
