@@ -44,7 +44,7 @@ export function localeFromPathname(pathname: string | null | undefined): Locale 
 // but on a page with no twin the ES link falls back to the Spanish homepage
 // (`/es`) as a front door rather than dead-ending on a 404 — the thin-i18n
 // bargain (deep pages rely on the browser's own translate).
-export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin']);
+export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin', '/librarian']);
 
 // Path SHAPES with a Spanish twin. One pattern per `src/app/es/**` route —
 // deliberately exact, not a bare `/book` prefix: `/book/<id>` and
