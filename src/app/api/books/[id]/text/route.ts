@@ -427,7 +427,7 @@ export const GET = withApiAuth(async (
           title: localizedChapterRange.title,
           pageStart: localizedChapterRange.from,
           pageEnd: localizedChapterRange.to,
-          note: `Chapter text is materialized in English only; this ${requestedLang} response is assembled from the chapter's page range.`,
+          note: `Chapter text is materialized in English only; this "${requestedLang}" response is assembled from the chapter's page range.`,
         },
       } : {}),
       total_pages: book.pages_count || pages.length,

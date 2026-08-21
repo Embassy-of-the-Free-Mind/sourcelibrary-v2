@@ -168,7 +168,7 @@ async function searchPassages(args: Record<string, unknown>) {
     offset,
     lang: textLang,
     ...(textLang !== 'en' ? {
-      lang_note: `Searched the ${textLang} edition. Only books that HAVE a ${textLang} edition can appear — this is a narrower corpus than the default English search, not a smaller result set for the same books.`,
+      lang_note: `Searched the "${textLang}" edition. Only books that HAVE an edition in that language can appear — this is a narrower corpus than the default English search, not a smaller result set for the same books.`,
     } : {}),
     // BUG 2: surface the backend's lane-timeout signal so callers know the count
     // may be incomplete when a search lane degraded. Only present when true.
@@ -513,10 +513,10 @@ const TRANSLATED_ORIGINAL_TIP =
 // English prose to a Spanish reader as "the Spanish edition" — the quote API
 // puts the fact in `quote.lang`, and this makes an agent read it.
 const LANG_FALLBACK_TIP = (requested: string) =>
-  `EDITION NOTICE — no ${requested} text exists for this page, so the English translation was served ` +
-  `(see quote.lang). Do not present it as the ${requested} edition. Most books have no ${requested} ` +
-  `edition at all: call get_book and read \`editions\` to see which languages a book can be read in, ` +
-  `or list_books with has_edition to browse only the ones that have it.`;
+  `EDITION NOTICE — this page has no text in "${requested}", so the English translation was served ` +
+  `(see quote.lang). Do not present it as the "${requested}" edition. Most books have no edition in ` +
+  `that language at all: call get_book and read \`editions\` to see which languages a book can be read ` +
+  `in, or list_books with has_edition to browse only the ones that have it.`;
 
 /** Set when the served edition is not the one that was asked for. */
 function langFallback(result: Record<string, unknown>, requested: string): boolean {
