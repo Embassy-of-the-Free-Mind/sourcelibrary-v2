@@ -52,6 +52,16 @@ describe('pageTextForLang — a language-keyed row promises that language', () =
     expect(pageTextForLang(page, 'fr')).toBeNull();
   });
 
+  it('stores the FULL page text but embeds only the model\'s window', () => {
+    // The row does two jobs. Truncating the stored text to the embedding cap
+    // would make the tail of a long page unsearchable in the lexical lane and
+    // unreachable by a snippet — measured at 3.2% of Spanish pages.
+    const long = 'á'.repeat(12000);
+    const got = pageTextForLang({ id: 'p1', book_id: 'b1', page_number: 1, translations: { es: { data: long } } }, 'es');
+    expect(got?.text.length).toBe(12000);
+    expect(got?.embedText.length).toBe(8000);
+  });
+
   it('prefers the map over the legacy field when both are present', () => {
     const page = {
       id: 'p1', book_id: 'b1', page_number: 4,

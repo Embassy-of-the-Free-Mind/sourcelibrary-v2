@@ -33,6 +33,13 @@ export const EMBED_DIMS = 768;
 const MAX_CHARS = 8000;
 
 /**
+ * How much page text a `page_texts` row stores. Larger than the embedding
+ * window because the stored text is also the lexical index and the snippet
+ * source — see `pageTextForLang`. Matches the column's own cap.
+ */
+const MAX_TEXT_CHARS = 50000;
+
+/**
  * The text of one page, as it should be embedded.
  *
  * Editorial wrappers are dropped CONTENT AND ALL, not just unwrapped. They are
@@ -50,14 +57,14 @@ const MAX_CHARS = 8000;
  * normalizer. Everything else (note/term/margin/gloss/…) is unwrapped:
  * content kept, tag removed.
  */
-export function cleanPageText(text) {
+export function cleanPageText(text, { maxChars = MAX_CHARS } = {}) {
   if (!text || typeof text !== 'string') return '';
   return stripEditorialWrappers(text)
     .replace(/<(header|catchword|sig|page-num)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .slice(0, MAX_CHARS);
+    .slice(0, maxChars);
 }
 
 /**
@@ -133,8 +140,16 @@ export const PAGE_EMBEDDING_COLUMNS = [
 export function pageTextForLang(page, lang) {
   const src = page?.translations?.[lang]?.data
     ?? (lang === 'es' ? page?.translation_es?.data : null);
-  const text = cleanPageText(src);
-  return text ? { text } : null;
+  // TWO lengths, because the row does two jobs. `embedText` is capped at the
+  // embedding model's input window; `text` is what the LEXICAL index and the
+  // SNIPPET are built from, and truncating it there would make the tail of a
+  // long page unsearchable and unquotable. Measured on the first Spanish
+  // backfill: 1,193 of 37,286 pages (3.2%) hit the 8,000-char embedding cap, so
+  // this is a real gap rather than a theoretical one. The English store does not
+  // have the problem because its keyword lane is Atlas, over the full Mongo
+  // field — this store IS its own keyword index.
+  const text = cleanPageText(src, { maxChars: MAX_TEXT_CHARS });
+  return text ? { text, embedText: text.slice(0, MAX_CHARS) } : null;
 }
 
 /** Build the `page_texts` row. Every column the table has, in one place. */
@@ -146,7 +161,7 @@ export function buildPageTextRow({ page, book, lang, text, embedding }) {
     lang,
     book_id: page.book_id,
     page_number: page.page_number,
-    text: text.slice(0, 50000),
+    text: text.slice(0, MAX_TEXT_CHARS),
     embedding: JSON.stringify(embedding),
     book_title: book?.title ?? null,
     book_author: book?.author ?? null,

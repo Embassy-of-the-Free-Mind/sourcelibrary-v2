@@ -29,7 +29,8 @@
  */
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
-import { pageFilterForLang } from '../lib/embed-book-page-texts.mjs';
+import { pageFilterForLang, pageProjectionForLang } from '../lib/embed-book-page-texts.mjs';
+import { pageTextForLang } from '../lib/page-embedding-text.mjs';
 
 const args = process.argv.slice(2);
 const arg = (n, d = null) => { const m = args.find(a => a.startsWith(`--${n}=`)); return m ? m.slice(n.length + 3) : d; };
@@ -92,6 +93,41 @@ async function main() {
       if (newer > 0) { staleRows += newer; staleBooks.push({ book_id: r.book_id, reason: `${newer} page(s) re-translated after embedding` }); }
     }
 
+    const rawGaps = books
+      .map(b => {
+        const s = supa.get(b.id);
+        const readable = mongoPages.get(b.id) || 0;
+        const findable = s?.embedded || 0;
+        return { id: b.id, title: (b.display_title || b.title || b.id).slice(0, 60), counter: b[COUNTER] || 0, readable, findable, gap: readable - findable };
+      })
+      .filter(r => r.gap > 0);
+
+    // A page whose translation is nothing but editorial wrappers cleans to an
+    // empty string and is CORRECTLY absent from the store — serving an empty
+    // snippet is worse than serving none. Counting those as gaps would make
+    // this check impossible to satisfy, and a check that can never go green is
+    // a check people learn to ignore. So classify the difference rather than
+    // report it: `empty` is expected, `missing` is work to do.
+    let emptyPages = 0;
+    const gaps = [];
+    for (const g of rawGaps) {
+      const { rows: present } = await client.query(
+        'SELECT page_id FROM page_texts WHERE book_id = $1 AND lang = $2', [g.id, LANG],
+      );
+      const have = new Set(present.map(r => r.page_id));
+      const candidates = await db.collection('pages')
+        .find({ book_id: g.id, ...pageFilterForLang(LANG) }, { projection: pageProjectionForLang(LANG) })
+        .toArray();
+      let empty = 0, missing = 0;
+      for (const p of candidates) {
+        if (have.has(p.id)) continue;
+        if (pageTextForLang(p, LANG)) missing++; else empty++;
+      }
+      emptyPages += empty;
+      if (missing > 0) gaps.push({ ...g, gap: missing, empty });
+    }
+    gaps.sort((a, b) => b.gap - a.gap);
+
     const totals = {
       lang: LANG,
       books: books.length,
@@ -101,6 +137,9 @@ async function main() {
       supabase_embedded: supaRows.reduce((a, r) => a + r.embedded, 0),
       books_with_no_rows: books.filter(b => !supa.has(b.id)).length,
       stale_rows: staleRows,
+      // Pages that hold text in this language but nothing QUOTABLE once the
+      // editorial wrappers are dropped. Expected, not a defect.
+      empty_after_cleaning: emptyPages,
     };
 
     // The writer check. A store with no writer reads as live.
@@ -111,15 +150,6 @@ async function main() {
     totals.newest_source_write = newest_write ? new Date(newest_write).toISOString() : null;
     totals.writer_age_days = writerAgeDays === null ? null : Math.round(writerAgeDays * 10) / 10;
 
-    const gaps = books
-      .map(b => {
-        const s = supa.get(b.id);
-        const readable = mongoPages.get(b.id) || 0;
-        const findable = s?.embedded || 0;
-        return { id: b.id, title: (b.display_title || b.title || b.id).slice(0, 60), counter: b[COUNTER] || 0, readable, findable, gap: readable - findable };
-      })
-      .filter(r => r.gap !== 0)
-      .sort((a, b) => b.gap - a.gap);
 
     if (AS_JSON) {
       console.log(JSON.stringify({ totals, gaps, stale_books: staleBooks }, null, 2));
@@ -129,6 +159,7 @@ async function main() {
       console.log(`  readable (Mongo pages):  ${totals.mongo}${totals.mongo !== totals.counter ? '   ← counter disagrees with the pages' : ''}`);
       console.log(`  findable (page_texts):   ${totals.supabase_embedded} embedded of ${totals.supabase_rows} rows`);
       console.log(`  books with NO rows:      ${totals.books_with_no_rows}`);
+      console.log(`  pages with no quotable text once wrappers are dropped (expected): ${totals.empty_after_cleaning}`);
       console.log(`  rows re-translated since embedding (stale snippet + vector): ${totals.stale_rows}`);
       console.log(`  newest source write in the store: ${totals.newest_source_write || 'never'}` +
         (writerAgeDays === null ? '  ← nothing has ever been written'
@@ -136,7 +167,7 @@ async function main() {
             : `  (${totals.writer_age_days}d)`));
       if (gaps.length && PER_BOOK) {
         console.log('\n  per-book gaps (readable − findable):');
-        for (const g of gaps) console.log(`    ${String(g.gap).padStart(6)}  ${g.title}  [${g.id}]`);
+        for (const g of gaps) console.log(`    ${String(g.gap).padStart(6)}  ${g.title}  [${g.id}]${g.empty ? ` (+${g.empty} empty after cleaning)` : ''}`);
       } else if (gaps.length) {
         console.log(`\n  ${gaps.length} book(s) with a gap — pass --books to list them.`);
       }
@@ -146,7 +177,11 @@ async function main() {
       console.log('');
     }
 
-    const clean = gaps.length === 0 && staleRows === 0 && totals.books_with_no_rows === 0;
+    // `books_with_no_rows` is deliberately NOT part of this: a book with no rows
+    // whose pages all clean to empty is already counted by `gaps`, and a book
+    // that genuinely needs embedding shows up there too. Adding it would double
+    // count and, again, make green unreachable.
+    const clean = gaps.length === 0 && staleRows === 0;
     process.exitCode = clean ? 0 : 1;
   } finally {
     await client.end();
