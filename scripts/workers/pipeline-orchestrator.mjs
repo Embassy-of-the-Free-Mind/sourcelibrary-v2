@@ -25,6 +25,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
+import { shouldRefuseOcrWrite, recordRefusal } from '../lib/blank-page-guard.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
@@ -3195,6 +3196,24 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               const data = await response.json();
               const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
               const usage = data.usageMetadata || {};
+
+              // Blank-page guard (#4149): refuse a transcription claim over a
+              // leaf with no ink. Two of the five books confirmed fabricating
+              // came through THIS path. It costs nothing here — `item.image.data`
+              // is the very base64 just posted to Gemini, so no refetch.
+              // Fails open on every doubt; see scripts/lib/blank-page-guard.mjs.
+              if (text) {
+                const blank = await shouldRefuseOcrWrite({ text, imageBuffer: image?.data })
+                  .catch(() => ({ refuse: false }));
+                if (blank.refuse) {
+                  console.log(`  BLANK-PAGE GUARD: refusing page ${pageId} — image ink ${(blank.coverage * 100).toFixed(3)}% vs ${blank.chars} chars claimed (#4149)`);
+                  await recordRefusal(db, {
+                    pageId, bookId: book.id, pageNumber: null, text,
+                    model: previewModel, verdict: blank, jobId: null,
+                  });
+                  return;
+                }
+              }
 
               if (text) {
                 await saveRevisionBeforeOverwrite(db, pageId, 'ocr');

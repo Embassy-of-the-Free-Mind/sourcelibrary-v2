@@ -39,17 +39,17 @@ export function localeFromPathname(pathname: string | null | undefined): Locale 
 // ---------- Locale switching (sitewide EN/ES toggle, #2763) ----------
 
 // EN base paths that have a real Spanish (`/es…`) twin route. Keep this in sync
-// with the `src/app/es/**` route folders: the homepage plus the acquisition
-// funnel (`/support`, `/auth/signin`). The header toggle is shown on EVERY page,
+// with the `src/app/es/**` route folders: the homepage, the acquisition funnel
+// (`/support`, `/auth/signin`), the Librarian, and search. The header toggle is shown on EVERY page,
 // but on a page with no twin the ES link falls back to the Spanish homepage
 // (`/es`) as a front door rather than dead-ending on a 404 — the thin-i18n
 // bargain (deep pages rely on the browser's own translate).
-export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin', '/librarian']);
+export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin', '/librarian', '/search']);
 
 // Path SHAPES with a Spanish twin. One pattern per `src/app/es/**` route —
 // deliberately exact, not a bare `/book` prefix: `/book/<id>` and
 // `/book/<id>/page/<pageId>` have twins while `/book/<id>/overview`,
-// `/guide`, `/search`, `/qa`, … do NOT, and a prefix match would send a
+// `/book/<id>/guide`, `/qa`, … do NOT, and a prefix match would send a
 // Spanish reader to `/es/book/x/overview`, which no route serves. A missing
 // pattern costs an English page; a wrong one costs a 404.
 //
@@ -113,8 +113,8 @@ export function localeHref(target: Locale, pathname: string | null | undefined):
  *
  * Rule 5 of `.claude/docs/i18n.md`: the locale is the URL prefix and it stays —
  * but only where a twin route actually exists. The registry above
- * (`LOCALIZED_PATHS` / `LOCALIZED_PREFIXES`) is the single source of truth, so
- * a path with no twin (`/gallery`, `/search`, `/author/…`) is returned
+ * (`LOCALIZED_PATHS` / `LOCALIZED_PATTERNS`) is the single source of truth, so
+ * a path with no twin (`/gallery`, `/catalog`, `/author/…`) is returned
  * UNTOUCHED rather than pointed at a 404. That asymmetry is deliberate: a
  * Spanish reader following an unprefixed link lands on an English page, which
  * is honest; following a prefixed one would land on nothing.
