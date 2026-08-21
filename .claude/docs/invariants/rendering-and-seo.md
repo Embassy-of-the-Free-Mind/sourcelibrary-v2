@@ -61,3 +61,27 @@ Two consequences that bit three surfaces in one day (2026-07-15, PRs #3149/#3151
 Rule: **any page that defines `openGraph` must set `images` explicitly and mirror them in a `twitter` block.** Exempt: routes with a file-convention `opengraph-image.tsx` (book, author, category detail, reader pages, gallery images) — the convention feeds the twitter card automatically.
 
 **The exemption is per ROUTE SEGMENT, and a locale twin is a different segment.** `opengraph-image.tsx` under `/book/[id]` does nothing for `/es/book/[id]`: the twin needs its own file, or it falls back to the site card. And the card ART is language-bearing — the headline is baked into the JPEG — so a Spanish page under the English card announces itself in English at the only moment a reader is deciding whether to click. Both halves shipped that way for months (#4162) even though the rule above was already written down, because `/es/collections` set `openGraph` without `images` and nobody looked at what WhatsApp actually rendered. Per-locale cards: `siteOgImage(lang)` in `src/lib/og-locale.ts`, renderers in `src/lib/og-book-card.tsx` / `og-page-card.tsx`, full rules in `.claude/docs/i18n.md` ("The share card is part of the page"). **Verifying means fetching the page and reading the two meta tags** — `curl … | grep 'og:image\|twitter:image'` — not reading the metadata object. Tenant/embed routes are deliberately image-less pending tenant-scoped cards. New blog notes copy the openGraph+twitter pattern from any existing post; their "Last revised" footer dates come from `src/generated/blog-revisions.json` (regenerated from git history by `deploy-prod.sh` — see `scripts/maintenance/generate-blog-revisions.mjs`).
+
+## A font imported by a shared route is downloaded on every page of that route
+
+`next/font` preloads by default. The reader route (`/book/[id]/page/[pageId]`) is one
+module serving ~80K books, so importing a face there to use on *fifteen* of them shipped
+a `<link rel=preload>` — and the font file — to every reader page in the library. The
+symptom is invisible in review: the page looks right, the CSS is scoped correctly, and
+only the network tab shows 30 KB of 1496 letterforms loading for a Sanskrit manuscript.
+
+**Set `preload: false` on any face that only some pages of a shared route actually
+reference.** The `@font-face` still ships in the route's CSS; the browser fetches the
+file only when a rendered element matches the family — which, with `display: swap`, is
+what you want. Applies equally to a face used behind a feature flag or a user preference.
+
+Reference: `src/lib/fonts/aldine.ts` (Aldine Aetna, the facsimile fount used by the books
+listed in `src/lib/fonts/aldine-fount.ts`).
+
+**Corollary — a per-book display choice is a claim about the book.** Setting a book's
+text in a facsimile fount asserts it was printed in that type. Verify against a page
+image before adding an id; do not infer from date, printer or collection membership.
+`aldine-fount.ts` records the books deliberately *excluded* and why (Griffo's 1499 recut
+is a different fount from his 1495 roman, and looks close enough to fool a date-based
+guess) — keep that list, it is what stops the next sweep re-adding them.
+
