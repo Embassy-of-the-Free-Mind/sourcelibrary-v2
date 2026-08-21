@@ -36,6 +36,14 @@ export interface SearchResult {
 }
 
 export interface SearchFilters {
+  /**
+   * TEXT language of the answer — an ISO code picking which edition of each
+   * page to search and quote back (`page_texts.lang`). Distinct from
+   * `language`, which filters by the BOOK's edition language. Anything but
+   * `en` also narrows the request to books that HAVE that edition, so every
+   * result is openable in it (#4095, invariants/search-filters-and-lanes.md).
+   */
+  lang?: string;
   language?: string;
   library?: string;
   date_from?: string;

@@ -328,9 +328,9 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
 
           {/* Desktop search icon */}
           <Link
-            href="/search"
+            href={localePath('/search', locale)}
             className={`hidden lg:flex items-center justify-center w-8 h-8 rounded-lg transition-colors ${
-              pathname === '/search'
+              canonicalPath(pathname) === '/search'
                 ? (isWhiteText ? 'text-white bg-white/10' : 'text-primary bg-warm')
                 : (isWhiteText ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-secondary hover:text-primary hover:bg-warm/50')
             }`}
@@ -399,7 +399,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 })}
                 <div className="border-t border-border-light my-1.5" />
                 <Link
-                  href="/search"
+                  href={localePath('/search', locale)}
                   className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-warm/50 transition-colors"
                 >
                   {t.search}

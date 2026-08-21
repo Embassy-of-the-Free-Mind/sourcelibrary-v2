@@ -81,9 +81,9 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               <p className="text-muted mt-2">
                 <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
                 {' '}&middot;{' '}
-                <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
+                <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
                 {' '}&middot;{' '}
-                <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
+                <Link href={lp('/search?first_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
                 {counts.artworkCount > 0 && (
                   <>
                     {' '}&middot;{' '}
@@ -462,7 +462,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           <p className="text-stone-500 text-sm mb-8">
             {t.searchStats(nf(counts.totalBooks), nf(counts.authorCount), counts.languageCount)}
           </p>
-          <form action="/search" method="get" className="relative max-w-lg mx-auto mb-6">
+          <form action={lp('/search')} method="get" className="relative max-w-lg mx-auto mb-6">
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
