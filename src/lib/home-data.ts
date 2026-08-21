@@ -10,8 +10,6 @@ import { type HomeLang } from '@/lib/home-i18n';
 import { isNativeEdition, localizedEditionFilter, type LocalizedBookMap } from '@/lib/localized';
 import { spanishReaderHref } from '@/lib/es-collections';
 import type { Locale } from '@/lib/locale-path';
-import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { stripAiAnnotations } from '@/lib/notes-off';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -750,82 +748,6 @@ async function getSpanishCounts(): Promise<SpanishCounts | null> {
   };
 }
 
-// ---------- The bilingual showpiece (the /es band's "see it, don't tell it") ----------
-
-/**
- * One page of one book, shown as its image beside a sentence of the original
- * and the same sentence in Spanish. The EXCERPTS ARE CURATED HERE, but they are
- * only ever rendered after being found, verbatim, in the live page text — so
- * the block can never quote words that are not on the page (the #2232 rule),
- * and a re-OCR or re-translation that changes the sentence hides the block
- * instead of misquoting. Swap the showpiece by editing this constant after
- * reading the page in the reader.
- */
-const SPANISH_SHOWPIECE = {
-  bookId: '69593413b282844d7b277aaf', // Fludd, Utriusque Cosmi Historia, Tomus Primus (1617)
-  pageNumber: 51, // "FIAT" — the creation engraving, Tractatus I, Lib. II, cap. III
-  original: 'Difficilis videtur cognitio dispositionis dierum ante Solis creationem factæ, cùm inter ipsos quoque Patres Theologos differentia haud exigua de dierum illorum natura oriatur.',
-  spanish: 'La comprensión de la disposición de los días establecidos antes de la creación del Sol parece difícil, puesto que entre los mismos Padres Teológicos surge no poca diferencia de opinión respecto a la naturaleza de esos días.',
-};
-
-export interface SpanishShowpiece {
-  title: string;
-  author?: string;
-  year?: number;
-  language?: string;
-  pageNumber: number;
-  imageUrl: string;
-  original: string;
-  spanish: string;
-  /** The Spanish reader, open on this very page. */
-  href: string;
-}
-
-// Whitespace-, case-, and markup-insensitive containment: the stored text has
-// a drop-cap ("DIfficilis"), bold markers around names, and line breaks where
-// the excerpt has spaces. Inline <note> glosses are removed before comparing
-// because they sit mid-sentence and are not the page's words.
-function normalizeForMatch(text: string): string {
-  return stripEditorialWrappers(stripAiAnnotations(text))
-    .replace(/[*_]/g, '')
-    .replace(/\s+/g, ' ')
-    .toLowerCase();
-}
-
-async function getSpanishShowpiece(): Promise<SpanishShowpiece | null> {
-  const db = await getReadDb();
-  const { bookId, pageNumber, original, spanish } = SPANISH_SHOWPIECE;
-  const [book, page] = await Promise.all([
-    db.collection('books').findOne(
-      { id: bookId, visible: true },
-      { projection: { _id: 0, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, localized: 1 }, maxTimeMS: 8000 },
-    ),
-    db.collection('pages').findOne(
-      { book_id: bookId, page_number: pageNumber },
-      { projection: { _id: 0, display_photo: 1, archived_photo: 1, 'ocr.data': 1, 'translations.es.data': 1 }, maxTimeMS: 8000 },
-    ),
-  ]);
-  if (!book || !page) return null;
-  const imageUrl = (page.display_photo || page.archived_photo) as string | undefined;
-  const ocr = page.ocr?.data as string | undefined;
-  const es = page.translations?.es?.data as string | undefined;
-  if (!imageUrl || !ocr || !es) return null;
-  if (!normalizeForMatch(ocr).includes(normalizeForMatch(original))) return null;
-  if (!normalizeForMatch(es).includes(normalizeForMatch(spanish))) return null;
-  const localizedTitle = (book.localized as LocalizedBookMap | undefined)?.es?.title;
-  return {
-    title: localizedTitle || book.display_title || book.title,
-    author: book.author,
-    year: book.year,
-    language: book.language,
-    pageNumber,
-    imageUrl,
-    original,
-    spanish,
-    href: `${spanishReaderHref({ slug: book.slug, id: bookId })}/page-number/${pageNumber}`,
-  };
-}
-
 /**
  * How many books in each collection can be read in `lang` — the "· 57 en
  * español" half of the homepage grid's count line.
@@ -942,8 +864,6 @@ export interface HomeData {
    * every book is already in the page's language and the line would be noise.
    */
   localizedCollectionCounts: Record<string, number>;
-  /** One verified page, original beside its Spanish. Null off /es or when the excerpt no longer matches. */
-  spanishShowpiece: SpanishShowpiece | null;
 }
 
 // `lang` selects the podcast episode's language and the Spanish-edition band,
@@ -951,7 +871,7 @@ export interface HomeData {
 // keeps the two homepages structurally identical (see the note at the top of
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts, spanishShowpiece] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -964,8 +884,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     lang === 'en'
       ? Promise.resolve({} as Record<string, number>)
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
-    lang === 'es' ? withTimeout(getSpanishShowpiece(), 8000, null) : Promise.resolve(null),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts, spanishShowpiece };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts };
 }
