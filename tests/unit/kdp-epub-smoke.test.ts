@@ -1,5 +1,19 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import JSZip from 'jszip';
+import sharp from 'sharp';
+
+// Count upstream scan fetches so the dedup below is measured, not assumed.
+const fetchState = vi.hoisted(() => ({ urls: [] as string[] }));
+vi.mock('@/lib/api-client', () => ({
+  images: {
+    fetchBuffer: async (url: string) => {
+      fetchState.urls.push(url);
+      return await sharp({
+        create: { width: 12, height: 16, channels: 3, background: { r: 200, g: 200, b: 200 } },
+      }).jpeg().toBuffer();
+    },
+  },
+}));
 import { generateKdpEpub } from '@/lib/kdp-epub';
 import type { Book, Page } from '@/lib/types';
 
@@ -70,5 +84,49 @@ describe('generateKdpEpub', () => {
     expect(opf).toContain('properties="nav"');
     expect(opf).not.toContain('pre-paginated');
     expect(opf).toContain('<dc:language>en</dc:language>');
+  });
+});
+
+
+// Two detections on ONE page resolve to the same page scan. Before the url-keyed
+// dedup this fetched twice, embedded two identical JPEGs, and rendered the plate
+// twice in a row in the chapter.
+describe('generateKdpEpub illustrations', () => {
+  it('embeds one image per unique scan url and captions it with every detection', async () => {
+    fetchState.urls.length = 0;
+
+    const galleryDb = {
+      collection: () => ({
+        find: () => ({
+          sort: () => ({
+            limit: () => ({
+              toArray: async () => [
+                { book_id: 'test-book', page_number: 1, detection_index: 0, type: 'engraving', gallery_quality: 0.9, museum_description: 'An alchemical furnace.' },
+                { book_id: 'test-book', page_number: 1, detection_index: 1, type: 'emblem', gallery_quality: 0.85, museum_description: 'A crowned serpent.' },
+              ],
+            }),
+          }),
+        }),
+      }),
+    } as unknown as Parameters<typeof generateKdpEpub>[2];
+
+    const illustratedPages = [
+      { ...pages[0], cropped_photo: 'https://example.invalid/scan/page-1.jpg' },
+      pages[1],
+    ] as unknown as Page[];
+
+    const buf = await generateKdpEpub(book, illustratedPages, galleryDb);
+    const zip = await JSZip.loadAsync(buf);
+    const names = Object.keys(zip.files);
+
+    // One fetch, one embedded asset — not one per detection.
+    expect(fetchState.urls).toEqual(['https://example.invalid/scan/page-1.jpg']);
+    expect(names.filter(n => n.startsWith('OEBPS/images/'))).toHaveLength(1);
+
+    // One <figure>, carrying both detections' descriptions.
+    const chapter = await zip.file('OEBPS/chapter-0.xhtml')!.async('string');
+    expect(chapter.match(/<figure class="illustration">/g) || []).toHaveLength(1);
+    expect(chapter).toContain('An alchemical furnace.');
+    expect(chapter).toContain('A crowned serpent.');
   });
 });

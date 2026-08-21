@@ -14,6 +14,9 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org'
 // typically a few dozen at most, but cap the worst case so an outlier book can't
 // blow past the bundle route's maxDuration.
 const MAX_ILLUSTRATIONS = 60;
+// Wall-clock ceiling for the serial figure fetches, well inside the bundle
+// route's maxDuration (300s) so cover + assembly still have room.
+const FIGURE_FETCH_BUDGET_MS = 180_000;
 const ILLUSTRATION_MIN_QUALITY = 0.7;
 
 export interface KdpEpubOptions {
@@ -195,10 +198,30 @@ function pageScanUrl(page: Page | undefined): string | null {
   return page.cropped_photo || page.archived_photo || page.photo || null;
 }
 
+/**
+ * Caption for one embedded image. Several detections can collapse onto a single
+ * page scan, so join their distinct descriptions rather than showing only the
+ * first — the reader is looking at the whole page.
+ */
+function captionForFigure(
+  pageIllustrations: GalleryImage[],
+  figId: string,
+  figIdByDetection: Map<string, string>
+): string {
+  const parts: string[] = [];
+  for (const img of pageIllustrations) {
+    if (figIdByDetection.get(`${img.page_number}-${img.detection_index}`) !== figId) continue;
+    const text = (img.museum_description || img.description || '').trim();
+    if (text && !parts.includes(text)) parts.push(text);
+  }
+  const joined = parts.join(' \u00b7 ');
+  return joined.length > 220 ? joined.slice(0, 219) + '\u2026' : joined;
+}
+
 /** Fetch + downscale an illustration/facsimile image to a Kindle-friendly JPEG. */
 async function fetchFigureImage(url: string): Promise<Buffer | null> {
   try {
-    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
+    const buffer = await images.fetchBuffer(url, { timeout: 25000 });
     return await sharp(buffer)
       .resize(1000, 1500, { fit: 'inside', withoutEnlargement: true })
       .jpeg({ quality: 82, mozjpeg: true })
@@ -451,17 +474,44 @@ ${entries}
       }
 
       // ── Fetch illustration image assets (bounded set) ──
+      // A figure is the full page scan (it frames better than a tight crop), so
+      // every detection on a given page resolves to the SAME url. Key the asset
+      // by url, not by detection, or a page holding two plates is fetched twice,
+      // embedded twice, and rendered twice in a row.
       const figureBuffers = new Map<string, Buffer>();
+      const figIdByUrl = new Map<string, string>();
+      const figIdByDetection = new Map<string, string>();
+      // Serial fetches against upstream scan hosts are the one unbounded cost in
+      // here; the route only has maxDuration to spend. Stop fetching at the
+      // budget and say what was dropped rather than letting the whole bundle
+      // time out with no output at all.
+      const figureDeadline = Date.now() + FIGURE_FETCH_BUDGET_MS;
+      let figuresSkipped = 0;
       for (const img of galleryImages) {
-        const figId = `illus-${img.page_number}-${img.detection_index}`;
+        const detectionKey = `${img.page_number}-${img.detection_index}`;
         const url = pageScanUrl(pages.find(p => p.page_number === img.page_number)) || img.extracted_url || img.image_url;
         if (!url) continue;
+        const alreadyFetched = figIdByUrl.get(url);
+        if (alreadyFetched) {
+          figIdByDetection.set(detectionKey, alreadyFetched);
+          continue;
+        }
+        if (Date.now() > figureDeadline) {
+          figuresSkipped++;
+          continue;
+        }
+        const figId = `illus-${img.page_number}-${img.detection_index}`;
         const buf = await fetchFigureImage(url);
         if (buf) {
+          figIdByUrl.set(url, figId);
+          figIdByDetection.set(detectionKey, figId);
           figureBuffers.set(figId, buf);
           manifest.push(`<item id="${figId}" href="images/${figId}.jpg" media-type="image/jpeg"/>`);
           archive.append(buf, { name: `OEBPS/images/${figId}.jpg` });
         }
+      }
+      if (figuresSkipped > 0) {
+        console.warn(`[kdp-epub] figure budget exhausted for ${book.id}: ${figuresSkipped} illustration(s) omitted`);
       }
 
       // ── Chapters (nested under "Translation") ──
@@ -469,10 +519,15 @@ ${entries}
       for (const [i, group] of chapterGroups.entries()) {
         let body = `  <div class="chapter">\n  <h2 class="chapter-title">${escapeXml(group.title)}</h2>\n`;
         for (const page of group.pages) {
-          for (const img of illustrationsByPage.get(page.page_number) || []) {
-            const figId = `illus-${img.page_number}-${img.detection_index}`;
-            if (!figureBuffers.has(figId)) continue;
-            const caption = escapeXml((img.museum_description || img.description || '').slice(0, 220));
+          const pageIllustrations = illustrationsByPage.get(page.page_number) || [];
+          const emittedFigures = new Set<string>();
+          for (const img of pageIllustrations) {
+            const figId = figIdByDetection.get(`${img.page_number}-${img.detection_index}`);
+            if (!figId || !figureBuffers.has(figId) || emittedFigures.has(figId)) continue;
+            emittedFigures.add(figId);
+            // One image can carry several detections; caption it with all of
+            // them, since the reader sees the whole page, not one crop.
+            const caption = escapeXml(captionForFigure(pageIllustrations, figId, figIdByDetection));
             body += `  <figure class="illustration"><img src="images/${figId}.jpg" alt="${caption}"/>${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>\n`;
           }
           const html = translationToHtml(page.translation!.data, book.id);

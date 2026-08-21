@@ -17,6 +17,8 @@ const CENTER_X = COVER_WIDTH / 2;
 
 // Only illustrations at/above this quality are considered as cover art.
 const COVER_MIN_QUALITY = 0.75;
+// Wide enough that the type bias, not the truncation, decides the cover.
+const COVER_CANDIDATE_POOL = 200;
 
 /** Minimal shape of a page needed to resolve its scan URL. */
 interface CoverPage {
@@ -69,8 +71,15 @@ export async function pickKdpCoverImageUrl(
         gallery_quality: { $gte: COVER_MIN_QUALITY },
         type: { $nin: ['decorative'] },
       })
+      // Sorting by gallery_quality and truncating BEFORE the type bias is
+      // applied would change the winner: eligible quality spans 0.25 (0.75-1.0)
+      // while the bias spans 0.35 (+0.15 frontispiece to -0.2 diagram), so a
+      // frontispiece at the bottom of the range can outscore a diagram at the
+      // top. The pool therefore has to be wide enough to hold every eligible
+      // plate, not just the highest-quality handful.
+      .project({ gallery_quality: 1, type: 1, page_number: 1, extracted_url: 1, image_url: 1 })
       .sort({ gallery_quality: -1 })
-      .limit(20)
+      .limit(COVER_CANDIDATE_POOL)
       .toArray() as unknown as CoverGalleryImage[];
   } catch (e) {
     console.error('[kdp-cover] gallery lookup failed', e);
