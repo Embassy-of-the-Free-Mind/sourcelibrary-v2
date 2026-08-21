@@ -20,6 +20,7 @@ import { logAiUsage } from '@/lib/log-ai-usage';
 import { supabase } from '@/lib/supabase';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { authorSlug } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
@@ -643,6 +644,7 @@ interface BrowseRow {
   display_title?: string;
   localized?: LocalizedBookMap | null;
   author?: string;
+  author_id?: string;
   year?: number;
   published?: string;
   language?: string;
@@ -822,9 +824,9 @@ async function executeBrowseCatalog(args: BrowseArgs, lang: Locale): Promise<{
     db.collection('books').countDocuments(filter, { maxTimeMS: 20000 }),
     db.collection('books').find(filter, {
       projection: {
-        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, localized: 1, author: 1, year: 1,
-        published: 1, language: 1, pages_count: 1, pages_translated: 1, pages_translated_es: 1,
-        is_first_translation: 1,
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, localized: 1, author: 1, author_id: 1,
+        year: 1, published: 1, language: 1, pages_count: 1, pages_translated: 1,
+        pages_translated_es: 1, is_first_translation: 1,
       },
       sort: BROWSE_SORTS[sortKey],
       limit,
@@ -876,7 +878,14 @@ function formatBrowseRows(rows: BrowseRow[], lang: Locale): string {
     }
     const bits = [b.language, `${pages} pp`, readable];
     if (b.is_first_translation) bits.push('first translation');
-    return `- "${shown}"${original} by ${b.author || 'Unknown'}${year ? ` (${year})` : ''} — ${bits.filter(Boolean).join(', ')} — ${base}/book/${b.slug || b.id}`;
+    // The resolvable author link, same rule as `search`: prefer the thesaurus
+    // id, else the slug of the stored name — and ALWAYS unprefixed, because
+    // /author/<slug> has no localized twin. A Spanish turn that got only a name
+    // here invented `/es/author/alfonso-x-el-sabio`, which 404s twice over.
+    const authorPart = b.author
+      ? `[${b.author}](https://sourcelibrary.org/author/${b.author_id || authorSlug(b.author)})`
+      : 'Unknown';
+    return `- "${shown}"${original} by ${authorPart}${year ? ` (${year})` : ''} — ${bits.filter(Boolean).join(', ')} — ${base}/book/${b.slug || b.id}`;
   }).join('\n');
 }
 
