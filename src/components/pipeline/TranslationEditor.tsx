@@ -196,7 +196,7 @@ interface TranslationEditorProps {
   /**
    * EN/ES reading-language links, built by the caller (PageEditorClient) because
    * the target URLs are locale paths, not editor state. Rendered inside the
-   * reader header rather than as a band above it (#4116); null when the book has
+   * reader header rather than as a band above it (#4124); null when the book has
    * no Spanish edition, or on a tenant/embed/pinned-version surface.
    */
   languageSwitch?: ReactNode;
@@ -503,7 +503,7 @@ export default function TranslationEditor({
   // The panel TOGGLE names the panel; the panel's own header names the language
   // it holds (translationLangLabel, above). Labelling the toggle with the target
   // language put a control reading "Español" a few pixels from the EN/ES
-  // reading-language links (#4116) — two language-shaped controls side by side,
+  // reading-language links (#4124) — two language-shaped controls side by side,
   // only one of which changes the language. On an English-language book the
   // panel is not a translation at all (the OCR panel holds the diplomatic
   // transcription, this one the modernization), so it keeps its own name.
