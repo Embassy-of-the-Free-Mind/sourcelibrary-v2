@@ -84,6 +84,45 @@ const DISTINCT_VARIANTS = new Set([
 /** Prefixes that are period markers, not separate languages. */
 const VARIANT_PREFIX = /^(ancient|modern|classical|koine|medieval|mediaeval|late|early|vulgar|new)\s+/;
 
+/**
+ * Historical stages that are distinct languages for CATALOGUING but the same
+ * language for "is this book bilingual?".
+ *
+ * This exists because of a measured artifact: on the first full corpus run,
+ * "Chinese + Classical Chinese" was 2,387 of 6,230 apparently-bilingual books —
+ * 38% of the finding — and every one was the OCR model emitting two labels for
+ * one text, not a facing-page edition. Same trap for the Korean hanmun corpus,
+ * where pages alternate between "Chinese" and "Classical Chinese" tags.
+ *
+ * Keep the names distinct (a reader looking for Old English does not want
+ * modern English) but compare by family before claiming a second language.
+ */
+const FAMILY: Record<string, string> = {
+  'Classical Chinese': 'Chinese', 'Literary Chinese': 'Chinese',
+  'Old English': 'English', 'Middle English': 'English',
+  'Old French': 'French', 'Middle French': 'French',
+  'Middle High German': 'German', 'Old High German': 'German',
+  'Early New High German': 'German',
+  'Biblical Hebrew': 'Hebrew', 'Samaritan Hebrew': 'Hebrew',
+  'Old Church Slavonic': 'Church Slavonic',
+};
+
+/**
+ * The family a canonical language name belongs to, for equivalence tests.
+ * Returns the name itself when it heads its own family.
+ */
+export function languageFamily(name: string | null | undefined): string | null {
+  if (!name) return null;
+  return FAMILY[name] || name;
+}
+
+/** True when two canonical names are the same language for bilingual purposes. */
+export function sameLanguageFamily(a: string | null | undefined, b: string | null | undefined): boolean {
+  const fa = languageFamily(a);
+  const fb = languageFamily(b);
+  return !!fa && !!fb && fa === fb;
+}
+
 /** Title-case a word, including across hyphens: "judeo-arabic" -> "Judeo-Arabic". */
 const TITLE = (s: string) =>
   s.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join('-');

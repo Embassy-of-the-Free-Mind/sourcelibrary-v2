@@ -69,6 +69,37 @@ const DISTINCT_VARIANTS = new Set([
 /** Prefixes that are period markers, not separate languages. */
 const VARIANT_PREFIX = /^(ancient|modern|classical|koine|medieval|mediaeval|late|early|vulgar|new)\s+/;
 
+/**
+ * Historical stages that are distinct languages for CATALOGUING but the same
+ * language for "is this book bilingual?".
+ *
+ * Measured artifact this fixes: on the first full corpus run,
+ * "Chinese + Classical Chinese" was 2,387 of 6,230 apparently-bilingual books —
+ * the OCR model emitting two labels for one text, not a facing-page edition.
+ */
+const FAMILY = {
+  'Classical Chinese': 'Chinese', 'Literary Chinese': 'Chinese',
+  'Old English': 'English', 'Middle English': 'English',
+  'Old French': 'French', 'Middle French': 'French',
+  'Middle High German': 'German', 'Old High German': 'German',
+  'Early New High German': 'German',
+  'Biblical Hebrew': 'Hebrew', 'Samaritan Hebrew': 'Hebrew',
+  'Old Church Slavonic': 'Church Slavonic',
+};
+
+/** The family a canonical language name belongs to, for equivalence tests. */
+export function languageFamily(name) {
+  if (!name) return null;
+  return FAMILY[name] || name;
+}
+
+/** True when two canonical names are the same language for bilingual purposes. */
+export function sameLanguageFamily(a, b) {
+  const fa = languageFamily(a);
+  const fb = languageFamily(b);
+  return !!fa && !!fb && fa === fb;
+}
+
 /** Title-case a word, including across hyphens: "judeo-arabic" -> "Judeo-Arabic". */
 const TITLE = (s) =>
   s.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join('-');

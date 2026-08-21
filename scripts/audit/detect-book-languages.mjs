@@ -47,7 +47,7 @@
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import path from 'node:path';
-import { normalizeLanguageToken, parseLanguageField } from '../lib/language-normalize.mjs';
+import { normalizeLanguageToken, parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
 
 const arg = (name, dflt) => {
   const hit = process.argv.find((a) => a.startsWith(`--${name}=`));
@@ -126,13 +126,34 @@ function verdict(book, prof) {
 
   const top = prof.shares[0];
   const above = prof.shares.filter((s) => s.share >= THRESHOLD);
-  const aboveSet = new Set(above.map((s) => s.lang));
+
+  // Compare by FAMILY, not by name. "Chinese" and "Classical Chinese" are
+  // distinct catalogue values and the same language for this question; without
+  // this, 2,387 of 6,230 apparently-bilingual books were one text tagged two
+  // ways by the OCR model (measured on the first full run, 2026-08-21).
+  const famOf = (l) => languageFamily(l);
+  const cataloguedFams = new Set(catalogued.map(famOf));
+  const aboveFams = new Set(above.map((s) => famOf(s.lang)));
   /** Catalogue languages the pages actually support. */
-  const supported = catalogued.filter((l) => aboveSet.has(l));
+  const supported = catalogued.filter((l) => aboveFams.has(famOf(l)));
   /** Catalogue languages the pages do NOT support at this threshold. */
-  const unsupported = catalogued.filter((l) => !aboveSet.has(l));
-  /** Measured languages the catalogue never mentions. */
-  const extra = above.filter((s) => !cataloguedSet.has(s.lang)).map((s) => s.lang);
+  const unsupported = catalogued.filter((l) => !aboveFams.has(famOf(l)));
+  /**
+   * Measured languages the catalogue never mentions — one per family, highest
+   * share first, so a book is not credited with "Chinese AND Classical Chinese".
+   */
+  const seenFams = new Set(cataloguedFams);
+  const extra = [];
+  for (const s of above) {
+    const f = famOf(s.lang);
+    if (seenFams.has(f)) continue;
+    seenFams.add(f);
+    extra.push(s.lang);
+  }
+  /** Variant spellings of a catalogued language, reported but never counted as a second language. */
+  const variants = above
+    .filter((s) => cataloguedFams.has(famOf(s.lang)) && !cataloguedSet.has(s.lang))
+    .map((s) => s.lang);
 
   // Order: supported catalogue languages first, in catalogue order, so the
   // `languages[0] === language` invariant survives for scalar values; then the
@@ -157,8 +178,9 @@ function verdict(book, prof) {
     changed,
     // Catalogued language is present but is NOT the dominant one — pinning it at
     // languages[0] puts a minority language first (both Lascaris copies do this).
-    primary_shifted: supported.length > 0 && !cataloguedSet.has(top.lang),
+    primary_shifted: supported.length > 0 && !cataloguedFams.has(languageFamily(top.lang)),
     unsupported: unsupported.length ? unsupported : null,
+    variants: variants.length ? variants : null,
   };
 }
 

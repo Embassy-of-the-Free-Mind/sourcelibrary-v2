@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeLanguageToken, parseLanguageField } from '@/lib/language-normalize';
+import { normalizeLanguageToken, parseLanguageField, languageFamily, sameLanguageFamily } from '@/lib/language-normalize';
 import * as twin from '../../scripts/lib/language-normalize.mjs';
 
 /**
@@ -69,6 +69,43 @@ describe('language-normalize TS/mjs parity', () => {
       expect(twin.parseLanguageField(f), `field: ${JSON.stringify(f)}`)
         .toEqual(parseLanguageField(f));
     }
+  });
+
+  it('languageFamily agrees on every fixture', () => {
+    for (const t of TOKENS) {
+      const canon = normalizeLanguageToken(t);
+      expect(twin.languageFamily(canon), `family: ${JSON.stringify(canon)}`)
+        .toEqual(languageFamily(canon));
+    }
+  });
+});
+
+describe('language families', () => {
+  /**
+   * The artifact this guards: on the first full corpus run,
+   * "Chinese + Classical Chinese" was 2,387 of 6,230 apparently-bilingual books
+   * — 38% of the headline finding — and every one was the OCR model emitting
+   * two labels for a single text. Same trap on the Korean hanmun corpus.
+   */
+  it('treats historical stages as one language for bilingual purposes', () => {
+    expect(sameLanguageFamily('Chinese', 'Classical Chinese')).toBe(true);
+    expect(sameLanguageFamily('English', 'Old English')).toBe(true);
+    expect(sameLanguageFamily('German', 'Middle High German')).toBe(true);
+    expect(sameLanguageFamily('Hebrew', 'Biblical Hebrew')).toBe(true);
+  });
+
+  it('still keeps the names distinct for cataloguing', () => {
+    expect(normalizeLanguageToken('Classical Chinese')).toBe('Classical Chinese');
+    expect(normalizeLanguageToken('Old English')).toBe('Old English');
+    expect(languageFamily('Classical Chinese')).toBe('Chinese');
+    expect(languageFamily('Latin')).toBe('Latin');
+  });
+
+  it('does not merge genuinely different languages', () => {
+    expect(sameLanguageFamily('Latin', 'Greek')).toBe(false);
+    expect(sameLanguageFamily('Chinese', 'Korean')).toBe(false);
+    expect(sameLanguageFamily('German', 'Dutch')).toBe(false);
+    expect(sameLanguageFamily('Hebrew', 'Aramaic')).toBe(false);
   });
 });
 
