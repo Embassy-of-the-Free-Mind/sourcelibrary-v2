@@ -267,7 +267,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
 
   useEffect(() => {
     let cancelled = false;
-    booksApi.get(bookId).then((b) => {
+    booksApi.get(bookId, { pages: 'nav' }).then((b) => {
       if (cancelled) return;
       const book = b as unknown as {
         reading_summary?: { overview?: string; themes?: string[] };
@@ -558,9 +558,6 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
           </button>
         ))}
       </div>
-      <p className="px-4 pt-4 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-        Every link points at this exact page, so whoever opens it lands where you were reading.
-      </p>
     </div>
   );
 }
@@ -584,7 +581,7 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
   // download gates need come from the full record, same as the Info panel.
   useEffect(() => {
     let cancelled = false;
-    booksApi.get(book.id)
+    booksApi.get(book.id, { pages: 'nav' })
       .then(b => { if (!cancelled) setFull(b as unknown as Record<string, unknown>); })
       .catch(() => { /* the page-level download still works without it */ });
     return () => { cancelled = true; };
@@ -688,10 +685,6 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
             imageRestricted={imageAccess === 'blocked'}
             imageAccess={imageAccess}
           />
-          <p className="mt-3 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            Transcription and translation as plain text, EPUB or PDF; facsimile and
-            parallel-text editions carry the page images.
-          </p>
         </div>
       ) : (
         <div className="px-4 py-2"><Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} /></div>
@@ -873,7 +866,12 @@ function MarksKey() {
         aria-label="What the marks in the text mean"
         title="What the marks mean"
         className={PANE_ICON_CHIP}
-        style={{ color: 'var(--text-faint)', borderColor: 'var(--border-light)' }}
+        style={{
+          // The key to the marks wears the marks' own colour, and sits beside
+          // the Notes chip it belongs to.
+          color: 'var(--accent-gold-dark)',
+          borderColor: 'color-mix(in srgb, var(--accent-gold) 45%, transparent)',
+        }}
       >
         <Info size={13} />
       </button>
@@ -1065,7 +1063,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
   const [fullBook, setFullBook] = useState<Record<string, unknown> | null>(null);
   useEffect(() => {
     let cancelled = false;
-    booksApi.get(book.id)
+    booksApi.get(book.id, { pages: 'nav' })
       .then(b => { if (!cancelled) setFullBook(b as unknown as Record<string, unknown>); })
       .catch(() => { /* fall back to nav fields */ });
     return () => { cancelled = true; };
@@ -1313,8 +1311,12 @@ function ScanControls({
 }) {
   // Same chip as Trace / Notes / Copy in the text panes, so one row of pane
   // controls reads as one family rather than icons beside buttons.
-  const btn = `${PANE_ICON_CHIP} disabled:opacity-30`;
-  const btnStyle = { color: 'var(--text-muted)', borderColor: 'var(--border-light)' } as const;
+  // The scan bed is the darkest surface in the reader, so an outlined chip
+  // drew a pale box around every control. These carry a faint fill and no
+  // border instead — same size and spacing as the text panes' chips, so the
+  // family holds without the outline fighting the ground.
+  const btn = `${PANE_ICON_CHIP} disabled:opacity-30 hover:bg-black/[0.06]`;
+  const btnStyle = { color: 'var(--text-muted)', borderColor: 'transparent' } as const;
   return (
     <div className="flex items-center gap-0.5">
       <button type="button" aria-label="Zoom out" disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
@@ -1325,8 +1327,8 @@ function ScanControls({
         type="button"
         onClick={onZoomReset}
         disabled={zoom === 1}
-        className="min-w-[46px] px-1 h-[26px] border font-sans text-[11px] tabular-nums transition-colors disabled:cursor-default"
-        style={{ color: 'var(--text-muted)', borderColor: 'var(--border-light)' }}
+        className="min-w-[46px] px-1 h-[26px] font-sans text-[11px] tabular-nums transition-colors disabled:cursor-default hover:bg-black/[0.06]"
+        style={{ color: 'var(--text-muted)' }}
         title="Reset zoom"
       >
         {Math.round(zoom * 100)}%
@@ -1841,9 +1843,6 @@ function PanelContent({
           {copied ? <Check size={13} /> : null}
           {copied ? 'Copied' : 'Copy citation'}
         </button>
-        <p className="mt-4 pt-3 border-t font-sans text-[12px] leading-relaxed" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
-          The link points at this exact page, so readers land where you quoted.
-        </p>
       </div>
     );
   }

@@ -17,7 +17,10 @@ export function onInk(opacity: number): string {
 
 /** Pane surfaces, composed from the existing palette via color-mix. */
 export const SURFACE = {
-  scanBed: 'color-mix(in srgb, var(--bg-warm) 90%, var(--bg-dark))',
+  // Was 90/10 against the ink, which read as a grey slab under a bright
+  // facsimile. Lighter, so the scan is the darkest thing in its own pane and
+  // the bed reads as a mount rather than a shadow.
+  scanBed: 'color-mix(in srgb, var(--bg-warm) 96%, var(--bg-dark))',
   ocr: 'color-mix(in srgb, var(--bg-cream) 45%, var(--bg-warm))',
   translation: 'var(--bg-cream)',
   panel: 'var(--bg-warm)',

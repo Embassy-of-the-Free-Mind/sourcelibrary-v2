@@ -92,7 +92,7 @@ export async function POST(
     // OCR characters, up to nearly three minutes on a long page. Cached serves
     // above are free and stay ungated; generation is capped per IP for
     // anonymous callers, exactly as the alignment route caps trace mode.
-    const gate = await anonActionGate(request, { name: 'transliterate', limit: 40 });
+    const gate = await anonActionGate(request, { name: 'transliterate', limit: 15 });
     if (!gate.allowed) {
       return NextResponse.json(
         { error: 'Transliteration limit reached. Sign in (free) to keep going.', retry_after: gate.retryAfter },
