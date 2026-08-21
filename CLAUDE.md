@@ -176,6 +176,9 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
 - Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 
+**Handing something to a model**
+- Adding or changing a Librarian / MCP tool, or the text one returns → `agent-tool-results.md` (**a ranker cannot answer "how many"**, and a URL you leave out is one the model will invent — two 404s came out of the first live turn)
+
 **Writing a sweep, an import, or a new field**
 - Adding a field to `books`/`pages`, writing a maintenance sweep, or touching `book-docs.mjs`/`sweep-log.mjs`/`field-sprawl.mjs` → `field-sprawl.md` (**a sweep records a ROW, not a COLUMN**; consolidation without enforcement re-polluted 4.16M rows in 3 months)
 
