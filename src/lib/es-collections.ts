@@ -189,6 +189,34 @@ const esPinRank = (slug: string) => {
   return i === -1 ? ES_PINNED.length : i;
 };
 
+/** What the /es homepage card needs from the `en-espanol` collection — and nothing more. */
+export interface EsSpanishCollectionCard {
+  slug: string;
+  name: string;
+  bookCount: number;
+  imageCandidates: string[];
+}
+
+/**
+ * The `en-espanol` collection as a single card: one findOne, no book scan.
+ * `getEsCollection` walks the whole branch (books, parent, children, counts)
+ * and is far too much for a homepage band that only links to the page.
+ */
+export async function getEsSpanishCollectionCard(): Promise<EsSpanishCollectionCard | null> {
+  const db = await getReadDb();
+  const doc = await db.collection('collections').findOne(
+    { slug: 'en-espanol', ...PUBLIC_COLLECTION },
+    { projection: { _id: 0, slug: 1, name: 1, localized: 1, book_count: 1, total_book_count: 1, featured_images: 1, hero_image: 1 }, maxTimeMS: 8000 },
+  );
+  if (!doc) return null;
+  return {
+    slug: doc.slug as string,
+    name: spanishCopy(doc).name,
+    bookCount: (doc.total_book_count ?? doc.book_count ?? 0) as number,
+    imageCandidates: imageCandidates(doc.featured_images, doc.slug as string, doc.hero_image),
+  };
+}
+
 export async function getEsCollectionList(): Promise<EsCollectionSummary[]> {
   const db = await getReadDb();
   // Which collections hold Spanish editions, and how many — indexed by the small
