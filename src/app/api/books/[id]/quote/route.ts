@@ -185,7 +185,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         text_source: quotable.source,
         lang: quotable.lang,
         ...(requestedLang !== quotable.lang
-          ? { lang_note: `No ${requestedLang} edition of this page; the text above is the English translation (lang: "${quotable.lang}"). Do not present it as the ${requestedLang} edition.` }
+          ? { lang_note: `This page has no text in "${requestedLang}", so the English translation was served (lang: "${quotable.lang}"). Do not present it as the "${requestedLang}" edition.` }
           : {}),
         ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
         page: pageNumber,
