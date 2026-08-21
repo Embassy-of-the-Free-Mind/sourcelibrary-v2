@@ -105,6 +105,52 @@ different languages.
 
 **Use it to generate candidates. Never copy it into `languages[]`.**
 
+## Compare by FAMILY, not by name — or the artifact eats the finding
+
+A language name and a language *identity* are not the same thing, and the gap
+between them is where language detectors go wrong. Two measured examples from
+the first full run of the detector (#4117, 2026-08-21), both of which produced
+confident, wrong headline numbers before they were caught:
+
+1. **Compound catalogue values.** 96 of the 229 distinct live `books.language`
+   values are list-shaped strings. Normalising the catalogue value with a
+   single-token function makes every one of them match nothing, so they all land
+   in "contradicts the catalogue". Comenius's *Orbis Sensualium Pictus*
+   (catalogued `Latin/English`, measured English 93% / Latin 91%) is catalogued
+   **correctly** and was reported as a mislabel. All five apparent mislabels in
+   the first 200-book slice were this artifact. **Parse the catalogue value as a
+   list before comparing it to anything.**
+2. **Historical stages of one language.** The first full run reported 6,230
+   bilingual books; **2,387 of them — 38% — were "Chinese + Classical Chinese"**,
+   the OCR model emitting two labels for a single text, page to page. The Korean
+   *hanmun* corpus has the same shape and supplied 196 of the 1,053 apparent
+   mislabels: Joseon scholarly works catalogued Korean whose pages are Classical
+   Chinese, which is what that literature *is*.
+
+`languageFamily()` / `sameLanguageFamily()` in `language-normalize` exist for
+case 2. Historical stages stay **distinct as catalogue values** — a reader
+looking for Old English does not want modern English — and count as **one
+language** when asking whether a book is bilingual. Families today: Chinese
+(+ Classical, Literary), English (+ Old, Middle), French (+ Old, Middle),
+German (+ Middle High, Old High, Early New High), Hebrew (+ Biblical,
+Samaritan), Church Slavonic (+ Old).
+
+**The general rule, worth more than either instance:** when a detector fires and
+the output looks like a data problem, suspect the detector's own vocabulary
+first. Both of the above read as corpus defects and were defects in the
+comparison. Before reporting a rate, take the largest single cluster in your
+findings and look at it by hand — an artifact is almost always the *biggest*
+group, because it is systematic and the real thing is not.
+
+## The Korean/hanmun class must never be auto-flipped
+
+A book catalogued `Korean` whose pages are Classical Chinese is not mislabelled.
+Provenance, tradition and readership are Korean; the script on the page is
+literary Chinese. The same holds for Sanskrit in Tibetan works and for Latin in
+early modern vernacular scholarship. These belong in `languages[]` as an
+addition, never as a replacement of `language`, and they are the standing reason
+the detector's `contradict` bucket is a review queue and not a patch.
+
 ## Four vocabularies, none authoritative
 
 - `src/lib/language-utils.ts` — `CODE_TO_NAME` / `CODE3_TO_NAME` / `expandLanguages` (read path)
@@ -143,6 +189,10 @@ answer is a sweep-log row or an existing flag — not `language_<yourthing>`.
 5. OCR/translation routing reads the **per-page** tag, never `languages[0]` —
    a bilingual page set must not inherit one model choice from a book-level field.
 6. New language field ⇒ demote something or use a row. Check the 18 above first.
+7. Parse the catalogue value as a **list** and compare by **family** before
+   claiming any book disagrees with its own record.
+8. Before quoting a rate from a language detector, hand-check its largest
+   cluster. Twice now that cluster has been the instrument, not the corpus.
 
 ## Open issues
 
