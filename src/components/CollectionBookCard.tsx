@@ -12,8 +12,8 @@ import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
 import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
-import { useLocalePath, type Locale } from '@/lib/i18n';
-import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap } from '@/lib/localized';
+import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
+import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 
 export interface CollectionBook {
   bookId?: string;
@@ -131,6 +131,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   // in Spanish, and a book without one has no Spanish page to point at.
   // localePath is registry-guarded on top of that, so /artwork/… is untouched.
   const localePath = useLocalePath();
+  const urlLocale = useLocale();
 
   const isArtwork = !!book.resource_type;
   const pageCount = book.pages_count || book.pages || 0;
@@ -139,8 +140,19 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
   const slug = book.slug || book.id || book.bookId || '';
 
-  const hasSpanishEdition = (book.pages_translated_es ?? 0) > 0;
-  const localized = (href: string) => (hasSpanishEdition ? localePath(href) : href);
+  // "Does this book exist in the surface language?" — asked through the shared
+  // helper, never by reading a counter here. A book WRITTEN in Spanish is a
+  // Spanish edition with no translated pages at all (#4120), so the old
+  // `pages_translated_es > 0` test sent Cogolludo, Landa and Scherzer from an
+  // /es grid straight to their ENGLISH page. `hasLocalizedEdition` returns null
+  // when `language` was not projected and it genuinely cannot tell; treat that
+  // as "no" so an /es URL is never a promise we can't keep.
+  // Asked against the URL's locale, not the `lang` PROP: `localePath` prefixes
+  // with whatever the URL says, so testing the prop would let a card that was
+  // rendered without `lang` on an /es page prefix every book — including ones
+  // with no Spanish page at all. Both sides of the guard read the same locale.
+  const hasLocalizedTwin = hasLocalizedEdition(book as unknown as Record<string, unknown>, urlLocale) === true;
+  const localized = (href: string) => (hasLocalizedTwin ? localePath(href) : href);
   const bookHref = localized(embedHref(`${bookUrlPrefix || ''}/book/${encodeURIComponent(slug)}`));
   const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);
 

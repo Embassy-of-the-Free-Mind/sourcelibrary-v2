@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useLocale } from '@/lib/i18n';
+import { useLocale, localePath } from '@/lib/i18n';
 
 interface UserMenuProps {
   variant?: 'hero' | 'default';
@@ -41,7 +41,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
 
     return (
       <Link
-        href={locale === 'es' ? '/es/auth/signin' : '/auth/signin'}
+        href={localePath('/auth/signin', locale)}
         className={`text-sm font-medium transition-colors hover:opacity-80 ${textColor}`}
         style={textStyle}
       >
@@ -153,7 +153,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
               Reading History
             </Link>
             <Link
-              href="/support"
+              href={localePath('/support', locale)}
               className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: 'var(--text-primary)' }}
               onClick={() => setIsOpen(false)}
