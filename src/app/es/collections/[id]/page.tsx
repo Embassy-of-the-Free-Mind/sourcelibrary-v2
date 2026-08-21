@@ -6,6 +6,7 @@ import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import { getEsCollection } from '@/lib/es-collections';
+import { isNativeEdition } from '@/lib/localized';
 import collectionRedirects from '@/lib/collection-redirects.json';
 
 // Spanish edition of /collections/[id] — see src/lib/es-collections.ts for why
@@ -39,6 +40,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const nf = (n: number) => n.toLocaleString('es-ES');
 
+/** Mirrors hasEsEdition in es-collections.ts — the one rule, read on the page. */
+const readableInSpanish = (b: { pages_translated_es?: number; language?: string }) =>
+  (b.pages_translated_es ?? 0) > 0 || isNativeEdition(b as unknown as Record<string, unknown>, 'es');
+
 export default async function EsCollectionPage({ params }: Props) {
   const { id } = await params;
   const redirectTarget = (collectionRedirects as Record<string, string>)[id];
@@ -47,8 +52,14 @@ export default async function EsCollectionPage({ params }: Props) {
   const col = await getEsCollection(id);
   if (!col) notFound();
 
-  const spanishBooks = col.books.filter((b) => (b.pages_translated_es ?? 0) > 0);
-  const otherBooks = col.books.filter((b) => !((b.pages_translated_es ?? 0) > 0));
+  // Readable in Spanish EITHER WAY — translated into it, or written in it. The
+  // counter alone put Cogolludo, Landa and Scherzer under "these read in their
+  // original language and in English", which is exactly backwards: their
+  // original language IS Spanish. `href` already decides this correctly upstream
+  // (getEsCollection), so before this the card linked into the Spanish reader
+  // while sitting under the English-only heading.
+  const spanishBooks = col.books.filter(readableInSpanish);
+  const otherBooks = col.books.filter((b) => !readableInSpanish(b));
   const isSpanishCollection = id === 'en-espanol';
 
   return (
