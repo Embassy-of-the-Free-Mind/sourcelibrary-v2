@@ -54,19 +54,8 @@ import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
+import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 
-// Languages that use non-Latin scripts and benefit from transliteration
-const NON_LATIN_LANGUAGES = new Set([
-  'greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
-  'syriac', 'chinese', 'japanese', 'korean', 'sanskrit',
-  'armenian', 'georgian', 'ethiopic', 'coptic', 'tibetan',
-  'russian', 'church slavonic'
-]);
-
-function hasNonLatinScript(language?: string): boolean {
-  if (!language) return false;
-  return NON_LATIN_LANGUAGES.has(language.toLowerCase());
-}
 
 // Helper to format edit source info
 // EditSourceBadge removed — source info folded into RevisionHistory trigger

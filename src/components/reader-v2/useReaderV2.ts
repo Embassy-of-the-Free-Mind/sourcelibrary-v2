@@ -27,6 +27,8 @@ export interface ViewState {
   scan: boolean;
   ocr: boolean;
   en: boolean;
+  /** Romanised transliteration — only offered for non-Latin scripts. */
+  translit: boolean;
 }
 
 const SETTINGS_KEY = 'sl-reader-v2-settings';

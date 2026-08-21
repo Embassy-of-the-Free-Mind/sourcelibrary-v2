@@ -11,6 +11,7 @@ import { getPageThumbUrl } from '@/lib/utils';
 import { pages as pagesApi, likes as likesApi, books as booksApi } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { Book, Page } from '@/lib/types';
+import type { ReaderSettings } from './useReaderV2';
 import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
+import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import {
@@ -635,6 +637,78 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
       ) : (
         <div className="px-4 py-2"><Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} /></div>
       )}
+    </div>
+  );
+}
+
+
+/** Copy an already-plain string, for panes whose text needs no unwrapping. */
+function CopyPlainButton({ text, label }: { text: string; label: string }) {
+  const [copied, setCopied] = useState(false);
+  if (!text) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        navigator.clipboard?.writeText(text.trim());
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1400);
+      }}
+      aria-label={label}
+      title={copied ? 'Copied' : label}
+      className="w-[30px] h-[30px] flex items-center justify-center transition-colors hover:bg-black/5"
+      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)' }}
+    >
+      {copied ? <Check size={15} /> : <Copy size={15} />}
+    </button>
+  );
+}
+
+/**
+ * Romanised transcription. Sits between the original script and the English:
+ * it is the same words as the transcription, in letters a reader can sound
+ * out, which is what makes it useful to read alongside rather than instead.
+ */
+function TranslitBody({ text, loading, error, settings, baseSize }: {
+  text: string; loading: boolean; error: boolean;
+  settings: ReaderSettings; baseSize: number;
+}) {
+  if (loading) {
+    return (
+      <p className="flex items-center gap-2 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
+        <Loader2 size={14} className="animate-spin" /> Romanising this page…
+      </p>
+    );
+  }
+  if (error) {
+    return (
+      <p className="font-sans text-[13px]" style={{ color: 'var(--status-error)' }} role="alert">
+        The transliteration could not be generated for this page.
+      </p>
+    );
+  }
+  if (!text) {
+    return (
+      <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
+        No transliteration for this page yet.
+      </p>
+    );
+  }
+  const fontSize = Math.round(baseSize * settings.textScale * 10) / 10;
+  return (
+    <div
+      className="prose-manuscript"
+      data-reader-v2-typeface={settings.typeface}
+      style={{
+        ['--reader-font-size' as string]: `${fontSize}px`,
+        ['--reader-line-height' as string]: settings.lineHeight,
+        maxWidth: `${{ narrow: 55, comfortable: 70, wide: 86 }[settings.lineWidth]}ch`,
+        marginInline: 'auto',
+        color: 'var(--text-primary)',
+        whiteSpace: 'pre-wrap',
+      }}
+    >
+      {text}
     </div>
   );
 }
@@ -1411,6 +1485,9 @@ function PanelContent({
       ['scan', 'Original scan', 'The page as it was photographed'],
       ['ocr', `${r.book.language || 'Original'} transcription`, 'The printed text, read by machine'],
       ['en', 'English translation', 'Translated with AI assistance'],
+      ...(hasNonLatinScript(r.book.language) && r.currentPage.ocr?.data
+        ? [['translit', 'Romanised transcription', 'The same words in Latin letters'] as [keyof ReaderState['views'], string, string]]
+        : []),
     ];
     const shown = PANES.filter(([k]) => r.views[k]).length;
     return (
@@ -1507,7 +1584,7 @@ function PanelContent({
 }
 
 export default function Reader2C({ initialBook, initialPage, initialPageList }: Reader2CProps) {
-  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: true });
+  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: true, translit: false });
   const browserTranslated = useBrowserTranslation();
 
   const [leftPanel, setLeftPanel] = useState<LeftPanel>(null);
@@ -1565,6 +1642,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // English book has nothing to trace between.
   const [traceOn, setTraceOn] = useState(false);
   const [traceStatus, setTraceStatus] = useState<TraceStatus>('idle');
+
+  // Romanisation of the transcription, for scripts most readers cannot sound
+  // out. Cached on the page when it exists; generated on demand the first
+  // time the pane is opened, which is why it is opt-in rather than default-on.
+  const [translit, setTranslit] = useState('');
+  const [translitLoading, setTranslitLoading] = useState(false);
+  const [translitError, setTranslitError] = useState(false);
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       try { if (window.localStorage.getItem(STRIP_KEY) === '0') setStripVisible(false); } catch { /* private mode */ }
@@ -1841,6 +1925,25 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     && r.views.ocr && r.views.en;
   const traceActive = traceOn && traceEligible;
 
+  const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
+
+  // Cached transliterations arrive with the page; anything else is generated
+  // the first time the pane is open on that page, and only then.
+  useEffect(() => {
+    const cached = (r.currentPage as unknown as { transliteration?: { data?: string } }).transliteration?.data;
+    setTranslitError(false);
+    if (cached) { setTranslit(cached); return; }
+    setTranslit('');
+    if (!r.views.translit || !translitEligible) return;
+    let cancelled = false;
+    setTranslitLoading(true);
+    pagesApi.transliterate(r.currentPageId)
+      .then(res => { if (!cancelled) setTranslit(res.transliteration || ''); })
+      .catch(() => { if (!cancelled) setTranslitError(true); })
+      .finally(() => { if (!cancelled) setTranslitLoading(false); });
+    return () => { cancelled = true; };
+  }, [r.currentPageId, r.currentPage, r.views.translit, translitEligible]);
+
   // Quoted matter: show the block only where both passes found one. Where they
   // disagree, both panes fall back to running prose, so the two sides never
   // disagree on the page in front of the reader. Render-time only — nothing is
@@ -2092,9 +2195,29 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   className="flex-1 min-h-0 overflow-y-auto px-[30px] py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
                 >
-                  <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />
+                  <div key={r.currentPageId} className="rv2-page-in">
+                    <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />
+                  </div>
                 </div>
               )}
+            </section>
+          )}
+          {r.views.translit && translitEligible && (
+            <section
+              data-reader-section="transliteration"
+              className="flex-1 min-w-0 flex flex-col border-r"
+              style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)' }}
+            >
+              <PaneHeader right={
+                <CopyPlainButton text={translit} label="Copy the transliteration" />
+              }>
+                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Romanised</CapsLabel>
+                <AiChip short />
+              </PaneHeader>
+              <div data-reader-panel className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]" style={{ overscrollBehavior: 'contain' }}>
+                <TranslitBody text={translit} loading={translitLoading} error={translitError}
+                  settings={r.settings} baseSize={16.5} />
+              </div>
             </section>
           )}
           {r.views.en && (
@@ -2123,7 +2246,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
                 >
-                  <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
+                  <div key={r.currentPageId} className="rv2-page-in">
+                    <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
+                  </div>
                 </div>
               )}
             </section>
@@ -2253,6 +2378,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-8">
                 <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={15.5} />
+              </div>
+            </section>
+          )}
+          {r.views.translit && translitEligible && (
+            <section data-reader-section="transliteration" className="border-t" style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)' }}>
+              <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
+                <div className="flex items-center gap-2">
+                  <CapsLabel style={{ color: 'var(--text-muted)' }}>Romanised</CapsLabel>
+                  <AiChip short />
+                </div>
+                <CopyPlainButton text={translit} label="Copy the transliteration" />
+              </div>
+              <div data-reader-panel className="px-[22px] pt-4 pb-6">
+                <TranslitBody text={translit} loading={translitLoading} error={translitError}
+                  settings={r.settings} baseSize={15.5} />
               </div>
             </section>
           )}
