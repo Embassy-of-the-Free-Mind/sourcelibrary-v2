@@ -14,6 +14,8 @@ import { markPageForReader } from '@/lib/provenance';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle } from '@/lib/localized';
+import { aldineVariables } from '@/lib/fonts/aldine';
+import { isAldineFount } from '@/lib/fonts/aldine-fount';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -149,11 +151,19 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      <PageEditorClient
-        initialBook={book}
-        initialPage={markedPage}
-        initialPageList={serializedNavPages}
-      />
+      {/* Books we hold a facsimile fount for are read in their own type (#4083).
+          `display: contents` so this wrapper carries the font variables and the
+          scoping class without adding a box to the reader's flex layout. */}
+      <div
+        className={isAldineFount(book.id) ? `aldine-fount ${aldineVariables}` : undefined}
+        style={isAldineFount(book.id) ? { display: 'contents' } : undefined}
+      >
+        <PageEditorClient
+          initialBook={book}
+          initialPage={markedPage}
+          initialPageList={serializedNavPages}
+        />
+      </div>
       {musicTranscriptions.length > 0 && (
         <HymnPlayer transcriptions={musicTranscriptions} />
       )}
