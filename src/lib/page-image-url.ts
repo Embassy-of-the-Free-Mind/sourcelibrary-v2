@@ -25,6 +25,7 @@
  * archive pipeline runs opj_decompress → JPEG on R2. 100% of stored URLs are .jpg.
  */
 import { isUsableImageUrl, isArchiveFailed } from '@/lib/utils';
+import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
 
 export type ImageSize = 'thumb' | 'display' | 'original' | 'hires';
 
@@ -61,6 +62,27 @@ const UNSAFE_FORMAT = /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i;
  */
 function isBrowserSafe(url: string): boolean {
   return !UNSAFE_FORMAT.test(url);
+}
+
+/**
+ * A candidate URL is only worth returning to an <img> if the browser will
+ * actually fetch it: right format AND on a host the CSP `img-src` allows.
+ *
+ * The host half is what was missing until 2026-08-21. `media.getty.edu` was
+ * absent from CSP_IMG_HOSTS, so all 2,506 Florentine Codex pages resolved to a
+ * Getty `image_thumb` that every browser refused — page grid, cover picker and
+ * the reader itself showed a broken image, while curl got a clean 200 from
+ * every one of those URLs. The book-cover resolver (`getBookThumbnailUrl`) had
+ * screened against this same list since 2026-08-04; the page resolver never
+ * did. Screening here means an un-allowlisted host degrades to the next
+ * candidate (a same-origin R2 variant, or the /api/image proxy) instead of
+ * rendering nothing.
+ *
+ * Same-origin URLs (`/api/image?…`) never reach here — they are built, not
+ * chosen, and `'self'` always passes.
+ */
+function isRenderableCandidate(url: string | null | undefined): url is string {
+  return isUsableImageUrl(url) && isBrowserSafe(url) && isBrowserRenderableImageUrl(url);
 }
 
 /**
@@ -167,10 +189,10 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
   // Skip for old-era split pages: their display_photo / image_thumb are resizes
   // of the UNcropped image, so using them would show more than the cropped half.
   if (!hasCroppedHalf) {
-    if (size === 'display' && isUsableImageUrl(page.display_photo)) return page.display_photo;
+    if (size === 'display' && isRenderableCandidate(page.display_photo)) return page.display_photo;
     if (size === 'thumb') {
-      if (isUsableImageUrl(page.image_thumb)) return page.image_thumb;
-      if (isUsableImageUrl(page.thumbnail_blob)) return page.thumbnail_blob;
+      if (isRenderableCandidate(page.image_thumb)) return page.image_thumb;
+      if (isRenderableCandidate(page.thumbnail_blob)) return page.thumbnail_blob;
     }
     const derived = deriveVariant(page.photo, size);
     if (derived) return derived;
@@ -180,11 +202,13 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
   const base = getPageSource(page);
   if (!base || !isBrowserSafe(base)) {
     // Source unusable for display; last-resort browser-safe thumbnail field.
-    if (size === 'thumb' && isUsableImageUrl(page.thumbnail)) return page.thumbnail;
+    if (size === 'thumb' && isRenderableCandidate(page.thumbnail)) return page.thumbnail;
     return null;
   }
+  // IIIF-native resize is free but lands on the provider's host — only worth it
+  // when the CSP allows that host. Otherwise proxy (same-origin, always loads).
   const iiif = iiifResize(base, width);
-  if (iiif) return iiif;
+  if (iiif && isBrowserRenderableImageUrl(iiif)) return iiif;
   return proxyUrl(base, width, quality);
 }
 
@@ -195,7 +219,7 @@ function resolveHires(page: PageImageFields): string | null {
   const crop = cropRegion(page);
   if (!crop) {
     const iiif = iiifResize(base, HIRES_WIDTH);
-    if (iiif) return iiif;
+    if (iiif && isBrowserRenderableImageUrl(iiif)) return iiif;
   }
   return proxyUrl(base, HIRES_WIDTH, 85, crop);
 }

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getPageImageUrl, getPageSource, type PageImageFields } from '@/lib/page-image-url';
+import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
 import { getPageSource as getPageSourceJs } from '../../scripts/lib/page-image-url.mjs';
 
 const R2 = 'https://images.sourcelibrary.org';
@@ -148,5 +149,54 @@ describe('TS and scripts JS twin agree on getPageSource', () => {
     for (const [name, page] of Object.entries(fixtures)) {
       expect(getPageSourceJs(page), name).toBe(getPageSource(page));
     }
+  });
+});
+
+/**
+ * Browser-renderability invariant (2026-08-21).
+ *
+ * `media.getty.edu` was never added to CSP_IMG_HOSTS, so all 2,506 Florentine
+ * Codex pages resolved `image_thumb` to a Getty URL the browser refused —
+ * broken images in the page grid, the cover picker AND the reader, while curl
+ * got a clean 200 from every one of them. A stored URL is only useful if the
+ * browser will load it, so the resolver screens candidates against the same
+ * list the CSP is built from and falls through to a host that works.
+ */
+describe('CSP renderability invariant', () => {
+  const renderable = (url: string) => url.startsWith('/') || isBrowserRenderableImageUrl(url);
+
+  it('every thumb/display/hires URL is one the browser may load', () => {
+    for (const [name, page] of Object.entries(fixtures)) {
+      for (const size of ['thumb', 'display', 'hires'] as const) {
+        const url = getPageImageUrl(page, size);
+        if (url) expect(renderable(url), `${name}/${size}: ${url}`).toBe(true);
+      }
+    }
+  });
+
+  it('a stored thumb on a CSP-blocked host falls through instead of breaking', () => {
+    // The exact Florentine Codex shape: provider thumb, R2 fallbacks alongside.
+    const blockedHost: PageImageFields = {
+      image_thumb: 'https://blocked.example.org/iiif/x/full/150,/0/default.jpg',
+      photo: 'https://blocked.example.org/iiif/x/full/1200,/0/default.jpg',
+      thumbnail_blob: `${R2}/pages/${BOOK}/0001-thumb.jpg`,
+      archived_photo: `${R2}/archived/${BOOK}/1.jpg`,
+    };
+    expect(getPageImageUrl(blockedHost, 'thumb')).toBe(`${R2}/pages/${BOOK}/0001-thumb.jpg`);
+
+    // No R2 fallback at all → the same-origin proxy, never the blocked host.
+    const noFallback: PageImageFields = {
+      image_thumb: 'https://blocked.example.org/iiif/x/full/150,/0/default.jpg',
+      photo: 'https://blocked.example.org/iiif/x/full/1200,/0/default.jpg',
+    };
+    for (const size of ['thumb', 'display', 'hires'] as const) {
+      expect(getPageImageUrl(noFallback, size), size).toMatch(/^\/api\/image\?/);
+    }
+  });
+
+  it('an allowlisted IIIF host still gets the free origin-side resize', () => {
+    // digi.vatlib.it is in CSP_IMG_HOSTS — must NOT be pushed onto our proxy.
+    expect(getPageImageUrl(fixtures.iiif, 'thumb')).toContain('digi.vatlib.it');
+    expect(getPageImageUrl(fixtures.iiif, 'thumb')).not.toContain('/api/image');
   });
 });
