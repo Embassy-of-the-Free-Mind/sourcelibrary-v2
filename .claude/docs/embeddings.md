@@ -138,5 +138,25 @@ genuinely negligible (a few hundred pages at a time); **bulk backfills and any
 `--force` re-embed are not**, and the difference is the number of pages, not the
 mechanism.
 
+**Embedding spend is now RECORDED** (#4162). Both page embedders accumulate
+characters and write `gemini_usage` rows with `type: 'embedding'` via
+`scripts/lib/embedding-usage.mjs`, so `budgetAllowsDispatch` can finally see it
+and it shows up in any report built on that table. Two things to know about
+those rows:
+
+- **Tokens are estimated, not billed.** `batchEmbedContents` returns no
+  `usageMetadata`, so the row converts characters at the measured 4.29
+  chars/token. `cost_usd` in this table is already documented as computed rather
+  than billed truth, so this is consistent with its neighbours — and far better
+  than the zero that was there before.
+- **Rows are aggregated deliberately**: one per book for the per-book writers,
+  one per 5,000 texts for the streaming `embed-gemini`. One row per 50-text
+  batch would be ~78,000 rows for a full English pass, and the spend guard
+  treats >40,000 rows in a day as over-budget and **fails closed** — logging
+  spend must not be able to halt the pipeline.
+
+The image-side backfills (artwork / gallery / CLIP) still do not log; they are
+smaller and were out of scope for #4162.
+
 The artwork / gallery / CLIP cron runs on Tier 3 because it batches across many tables
 and would otherwise risk hitting rate limits at burst times.

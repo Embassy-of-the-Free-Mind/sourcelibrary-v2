@@ -15,6 +15,9 @@ export interface MiniBook {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  /** Feeds hasLocalizedEdition() in the card — drop it and every /es card links
+   *  to its English page (#4166). Keep it on anything you map into MiniBook. */
+  pages_translated_es?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
   thumbnail?: string;

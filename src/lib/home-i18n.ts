@@ -77,12 +77,6 @@ export interface HomeStrings {
   // so the two editions keep one shape.
   spanishHeading: string;
   spanishSubtitle: string;
-  spanishViewAll: string;
-  // The inline count line under the Spanish band heading. Numbers arrive locale-formatted.
-  spanishStatPages: string;
-  spanishStatBooks: string;
-  spanishStatFirsts: string;
-  spanishStatLanguages: string;
 
   // Gallery masonry (homepage)
   galleryHeading: string;
@@ -194,12 +188,7 @@ const en: HomeStrings = {
   recentlyTranslatedHeading: 'Recently translated',
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
   spanishHeading: 'Read in Spanish',
-  spanishSubtitle: 'The most-read works in the library, with a Spanish edition you can open page by page beside the original.',
-  spanishViewAll: 'All books in Spanish',
-  spanishStatPages: 'pages translated',
-  spanishStatBooks: 'books in Spanish',
-  spanishStatFirsts: 'first translations',
-  spanishStatLanguages: 'source languages',
+  spanishSubtitle: 'The works in the library that already have a Spanish edition, page by page beside the original.',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
   galleryViewAll: (n) => `View all ${n.toLocaleString('en-US')} illustrations`,
@@ -311,12 +300,7 @@ const es: HomeStrings = {
   recentlyTranslatedHeading: 'Traducidas recientemente',
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
   spanishHeading: 'Leer en español',
-  spanishSubtitle: 'Las obras más leídas de la biblioteca, con una edición en español que puedes abrir página a página junto al original.',
-  spanishViewAll: 'Todos los libros en español',
-  spanishStatPages: 'páginas traducidas',
-  spanishStatBooks: 'libros en español',
-  spanishStatFirsts: 'primeras traducciones',
-  spanishStatLanguages: 'lenguas de origen',
+  spanishSubtitle: 'Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
   galleryViewAll: (n) => `Ver las ${n.toLocaleString('es-ES')} ilustraciones`,
