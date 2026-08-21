@@ -1,11 +1,16 @@
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
+import { TENANT_ROOT_PATHS } from '@/lib/tenant-roots';
 
 /**
  * Tenant slugs that own real URL space (partner subdomains with scoped UI).
  * The proxy's path-based tenant resolution is gated on this set; it must
  * never overlap with the provider-prefix strip below.
+ *
+ * The constant itself now lives in `@/lib/tenant-roots` — a leaf module the
+ * browser can import without pulling in `LIBRARY_PARTNERS` and its logo data.
+ * Re-exported here so existing server-side import sites keep working.
  */
-export const TENANT_ROOT_PATHS = new Set(['bph', 'kloss-collection', 'bhutan']);
+export { TENANT_ROOT_PATHS };
 
 /**
  * Contributing-library slugs that must never claim URL space. Content lives
