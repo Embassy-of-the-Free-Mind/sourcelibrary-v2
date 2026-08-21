@@ -84,7 +84,15 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
     findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
-      .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })
+      // Image fields are part of the nav list because the reader's filmstrip
+      // draws a thumbnail per page. Without them getPageThumbUrl has nothing
+      // to resolve and every slot renders empty — books with no pre-sized
+      // image_thumb (only an archived original) fail hardest, since their
+      // thumb has to be derived from the source.
+      .project({
+        _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1,
+        image_thumb: 1, thumbnail_blob: 1, display_photo: 1, archived_photo: 1, photo: 1,
+      })
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()

@@ -2026,25 +2026,30 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <Logo white compact />
           {/* Title and byline sit on one line rather than stacking, so the bar
               stays a single row of chrome */}
+          {/* The title is the way back to the book, so it wears the affordance
+              of one: a back chevron, and an underline that answers the hover.
+              It was a bare label that happened to be clickable. */}
           <a
             href={`/book/${r.bookPath}`}
-            className="min-w-0 max-w-[52%] no-underline group flex items-baseline gap-2.5 px-1.5 py-1 ml-1 transition-colors hover:bg-[rgba(253,252,249,0.08)]"
-            title="Back to the book page"
+            className="min-w-0 max-w-[46%] no-underline group flex items-center gap-2 px-2 py-1 ml-1 border transition-colors hover:bg-[rgba(253,252,249,0.10)]"
+            style={{ borderColor: 'transparent' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = onInk(0.22); }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; }}
+            title="Back to the book"
           >
-            <span className="font-body text-[15.5px] leading-none truncate shrink min-w-0" style={{ color: '#fdfcf9' }}>
-              {r.book.display_title || r.book.title}
-            </span>
-            <span className="font-sans text-[11.5px] leading-none truncate shrink-0 max-w-[45%]" style={{ color: onInk(0.5) }}>
-              {bookByline(r.book)}
+            <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.55) }} />
+            <span className="min-w-0 flex items-baseline gap-2.5">
+              <span
+                className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
+                style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
+              >
+                {r.book.display_title || r.book.title}
+              </span>
+              <span className="font-sans text-[11.5px] leading-none truncate shrink-0 max-w-[42%]" style={{ color: onInk(0.5) }}>
+                {bookByline(r.book)}
+              </span>
             </span>
           </a>
-          <div className="flex-1" />
-          {saveError && (
-            <span className="font-sans text-[12px] max-w-[260px] truncate" style={{ color: '#e8a793' }} role="alert">
-              {saveError}
-            </span>
-          )}
-          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
           <div className="flex items-stretch">
             <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
               <button type="button" aria-label="Previous page" onClick={r.goPrev}
@@ -2111,6 +2116,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </button>
             </div>
           ) : null}
+          <div className="flex-1" />
+          {saveError && (
+            <span className="font-sans text-[12px] max-w-[260px] truncate" style={{ color: '#e8a793' }} role="alert">
+              {saveError}
+            </span>
+          )}
+          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
           <div className="ml-1 shrink-0 whitespace-nowrap">
             <UserMenu variant="hero" />
           </div>
