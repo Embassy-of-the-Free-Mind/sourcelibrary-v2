@@ -357,7 +357,6 @@ export interface ReaderStrings {
   close: string;
   pageAbbrev: (n: number) => string;
   // reading language
-  readIn: string;
   readingLanguage: string;
   pageNavigation: string;
   metaPageOf: (n: number, title: string) => string;
@@ -438,7 +437,6 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     close: 'Close',
     pageAbbrev: (n) => `p.\u00A0${n}`,
 
-    readIn: 'Read in:',
     readingLanguage: 'Reading language',
     pageNavigation: 'Page navigation',
     metaPageOf: (n, title) => `Page ${n} of "${title}"`,
@@ -517,7 +515,6 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     close: 'Cerrar',
     pageAbbrev: (n) => `pág.\u00A0${n}`,
 
-    readIn: 'Leer en:',
     readingLanguage: 'Idioma de lectura',
     pageNavigation: 'Navegación por páginas',
     metaPageOf: (n, title) => `Página ${n} de «${title}»`,
