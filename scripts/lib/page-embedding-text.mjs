@@ -127,19 +127,33 @@ export const PAGE_EMBEDDING_COLUMNS = [
  * The text of one page in ONE language, cleaned, or null if that language has
  * no translation for the page.
  *
- * Note there is NO OCR fallback, unlike `pageEmbeddingInput`. The English store
- * falls back to the original text so an untranslated page still gets a vector;
- * a language-keyed store must not, because a row in `lang = 'es'` is a promise
- * that the text IS Spanish. Falling back would put German or Latin into the
- * Spanish lane, where it would be retrieved for Spanish queries and quoted as
- * the Spanish edition. Absence is the honest answer.
+ * There is NO blanket OCR fallback, unlike `pageEmbeddingInput`. The English
+ * store falls back to the original text so an untranslated page still gets a
+ * vector; a language-keyed store must not, because a row in `lang = 'es'` is a
+ * promise that the text IS Spanish. Falling back would put German or Latin into
+ * the Spanish lane, where it would be retrieved for Spanish queries and quoted
+ * as the Spanish edition. Absence is the honest answer.
+ *
+ * `opts.nativeEdition` is the ONE case that reasoning permits (#4146). When the
+ * book was WRITTEN in `lang`, its OCR text already is that language, so reading
+ * it keeps the promise rather than breaking it — and such a book has no
+ * `translations.<lang>` and never will, because nobody pivots Spanish into
+ * Spanish. Without this, 68 live books and 19,464 pages of Spanish sat visible
+ * on /es and unfindable by Spanish search, which is the shape where an
+ * unembedded book and a book with no matches return the same empty list.
+ *
+ * Callers must derive the flag from the BOOK's language via
+ * `NATIVE_EDITION_LANGUAGE` (src/lib/localized.ts) — never guess it per page,
+ * and never set it for a bilingual edition, where only part of the page is the
+ * language and the promise would be half-kept.
  *
  * The legacy `pages.translation_es` field is folded in for `es`, matching
  * `src/lib/page-translations.ts` — the map wins when both are present.
  */
-export function pageTextForLang(page, lang) {
+export function pageTextForLang(page, lang, { nativeEdition = false } = {}) {
   const src = page?.translations?.[lang]?.data
-    ?? (lang === 'es' ? page?.translation_es?.data : null);
+    ?? (lang === 'es' ? page?.translation_es?.data : null)
+    ?? (nativeEdition ? page?.ocr?.data : null);
   // TWO lengths, because the row does two jobs. `embedText` is capped at the
   // embedding model's input window; `text` is what the LEXICAL index and the
   // SNIPPET are built from, and truncating it there would make the tail of a
@@ -155,7 +169,10 @@ export function pageTextForLang(page, lang) {
 /** Build the `page_texts` row. Every column the table has, in one place. */
 export function buildPageTextRow({ page, book, lang, text, embedding }) {
   const t = page?.translations?.[lang] ?? (lang === 'es' ? page?.translation_es : null);
-  const mongoTs = t?.updated_at || page.updated_at;
+  // For a native edition the text came from OCR, so the staleness watermark has
+  // to track the OCR's timestamp — keying on a translation that will never
+  // exist would freeze the row and a re-OCR would never re-embed it.
+  const mongoTs = t?.updated_at || page.ocr?.updated_at || page.updated_at;
   return {
     page_id: page.id,
     lang,

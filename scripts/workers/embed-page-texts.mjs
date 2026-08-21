@@ -11,7 +11,14 @@
  * which is the right granularity when a language covers ~100 of them, and
  * shares the composer and the row shape via `page-embedding-text.mjs`.
  *
- * Selection: every book whose `pages_translated_<lang>` counter is above zero.
+ * Selection: every book READABLE in the language — translated into it
+ * (`pages_translated_<lang> > 0`) or WRITTEN in it (#4146). The second half
+ * matters more than it sounds: a Spanish original has no counter and never
+ * will, so a counter-only rule skipped 68 live books holding 19,464 pages,
+ * which were visible on /es and unfindable by Spanish search. Its text comes
+ * from `pages.ocr` — safe for a language-keyed store ONLY because the book is
+ * already that language; see `pageTextForLang`.
+ *
  * Staleness is always checked (see embed-book-page-texts.mjs); `--force`
  * re-embeds regardless.
  *
@@ -35,6 +42,7 @@
 
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
+import { NATIVE_EDITION_LANGUAGE, isNativeEditionLanguage } from '../lib/native-edition-language.mjs';
 import { embedBookPageTexts } from '../lib/embed-book-page-texts.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 
@@ -85,23 +93,40 @@ async function main() {
   await client.query('SET statement_timeout = 60000'); // PgBouncer rejects startup params — SET after connect
 
   try {
-    const match = BOOK ? { id: { $in: BOOK.split(',') } } : { [COUNTER]: { $gt: 0 } };
+    // Books readable in LANG: translated into it (the counter) OR written in it
+    // (#4146). Selecting on the counter alone skipped 68 live Spanish originals
+    // holding 19,464 pages — visible on /es and unfindable by Spanish search,
+    // which is indistinguishable from having no matches. A native edition also
+    // needs `pages_ocr > 0`, since its text IS the OCR.
+    const nativePattern = NATIVE_EDITION_LANGUAGE[LANG];
+    const clauses = [{ [COUNTER]: { $gt: 0 } }];
+    // Only for a language we have a native pattern for; otherwise the counter
+    // remains the whole rule, exactly as before.
+    if (nativePattern) clauses.push({ language: nativePattern, visible: true, pages_ocr: { $gt: 0 } });
+    const match = BOOK ? { id: { $in: BOOK.split(',') } } : { $or: clauses };
     // Select first, order second — sorting before the limit once picked the
     // shortest books in the library rather than the intended set (2026-08-20).
     let books = await db.collection('books')
-      .find(match, { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, [COUNTER]: 1 } })
+      .find(match, { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, pages_ocr: 1, [COUNTER]: 1 } })
       .toArray();
-    books.sort((a, b) => (a[COUNTER] || 0) - (b[COUNTER] || 0));
+
+    // How many pages this book contributes. A native edition has NO counter and
+    // never will, so counting it as 0 would understate the bill on exactly the
+    // books #4146 adds — and this file's own rule is to say the number before
+    // spending it, not after.
+    const pageLoad = (b) => (b[COUNTER] || 0) || (isNativeEditionLanguage(b.language, LANG) ? (b.pages_ocr || 0) : 0);
+
+    books.sort((a, b) => pageLoad(a) - pageLoad(b));
     if (LIMIT) books = books.slice(0, LIMIT);
 
-    const expected = books.reduce((a, b) => a + (b[COUNTER] || 0), 0);
+    const expected = books.reduce((a, b) => a + pageLoad(b), 0);
     // Say the number BEFORE spending it. This worker was written believing the
     // model was free-tier, and a full pass plus a --force repeat cost ~$11.65
     // before anyone was asked (#4095). An estimate printed after the fact is
     // an apology; printed first, it is a decision.
     const estUsd = expected * AVG_EMBED_CHARS / CHARS_PER_TOKEN / 1e6 * USD_PER_1M_TOKENS;
     console.log(
-      `[${LANG}] ${books.length} book(s), ${expected} pages by the ${COUNTER} counter` +
+      `[${LANG}] ${books.length} book(s), ${expected} pages (counter, or OCR pages for a native edition)` +
       `${DRY_RUN ? ' — DRY RUN' : ''}${FORCE ? ' — FORCE (re-embeds pages that are already current)' : ''}\n` +
       `[${LANG}] estimated cost ≈ $${estUsd.toFixed(2)} (paid tier, $${USD_PER_1M_TOKENS}/1M tokens at ${CHARS_PER_TOKEN} chars/token)`,
     );
@@ -128,7 +153,7 @@ async function main() {
         const { rows: [{ n }] } = await client.query(
           'SELECT count(*)::int AS n FROM page_texts WHERE book_id = $1 AND lang = $2', [book.id, LANG],
         );
-        console.log(`[${LANG}] ${label} — counter ${book[COUNTER] || 0}, already in page_texts: ${n}`);
+        console.log(`[${LANG}] ${label} — expects ${pageLoad(book)}${isNativeEditionLanguage(book.language, LANG) ? " (native, from OCR)" : ""}, already in page_texts: ${n}`);
         continue;
       }
       let r;

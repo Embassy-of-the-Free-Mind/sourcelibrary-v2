@@ -28,6 +28,7 @@ import {
   embedTexts,
   EMBED_MODEL,
 } from './page-embedding-text.mjs';
+import { isNativeEditionLanguage } from './native-edition-language.mjs';
 
 const EMBED_BATCH_SIZE = 50;   // Gemini batchEmbedContents caps at 100; 50 matches the English worker
 const UPSERT_BATCH_SIZE = 10;  // HNSW index updates are expensive — keep writes small
@@ -38,16 +39,27 @@ export function pageProjectionForLang(lang) {
     id: 1, book_id: 1, page_number: 1, updated_at: 1,
     [`translations.${lang}.data`]: 1,
     [`translations.${lang}.updated_at`]: 1,
+    // A native edition's text IS the OCR (#4146) — projected always, because the
+    // watermark in buildPageTextRow reads ocr.updated_at for those rows.
+    'ocr.data': 1, 'ocr.updated_at': 1,
     ...(lang === 'es' ? { 'translation_es.data': 1, 'translation_es.updated_at': 1 } : {}),
   };
 }
 
-/** Mongo filter selecting pages that HAVE text in `lang`. */
-export function pageFilterForLang(lang) {
+/**
+ * Mongo filter selecting pages that HAVE text in `lang`.
+ *
+ * `nativeEdition` widens it to OCR — for a book WRITTEN in the language there is
+ * no translation to select on, so the counter-shaped filter matched nothing and
+ * the book was skipped entirely (#4146).
+ */
+export function pageFilterForLang(lang, { nativeEdition = false } = {}) {
   const has = (p) => ({ [`${p}.data`]: { $type: 'string', $ne: '' } });
-  return lang === 'es'
-    ? { $or: [has('translations.es'), has('translation_es')] }
-    : has(`translations.${lang}`);
+  const clauses = lang === 'es'
+    ? [has('translations.es'), has('translation_es')]
+    : [has(`translations.${lang}`)];
+  if (nativeEdition) clauses.push(has('ocr'));
+  return clauses.length === 1 ? clauses[0] : { $or: clauses };
 }
 
 /**
@@ -66,7 +78,13 @@ export async function embedBookPageTexts({ db, pg, book, lang, apiKey, force = f
   if (!lang) throw new Error('embedBookPageTexts: lang is required');
   if (!apiKey) throw new Error('embedBookPageTexts: apiKey is required');
 
-  const filter = { book_id: book.id, ...pageFilterForLang(lang) };
+  // Was this book WRITTEN in `lang`? Then its OCR is already that language and
+  // is the only text it will ever have in it (#4146). Derived from the BOOK, once
+  // — never guessed per page, and deliberately false for bilingual editions,
+  // where only part of the page is the language.
+  const nativeEdition = isNativeEditionLanguage(book.language, lang);
+
+  const filter = { book_id: book.id, ...pageFilterForLang(lang, { nativeEdition }) };
   if (pageIds?.length) filter.id = { $in: pageIds };
 
   const pages = await db.collection('pages')
@@ -87,12 +105,16 @@ export async function embedBookPageTexts({ db, pg, book, lang, apiKey, force = f
   const work = [];
   let missing = 0, alreadyPresent = 0, restaled = 0;
   for (const page of pages) {
-    const input = pageTextForLang(page, lang);
+    const input = pageTextForLang(page, lang, { nativeEdition });
     if (!input) { missing++; continue; }
     if (present.has(page.id)) {
       const stored = present.get(page.id);
       const source = page.translations?.[lang]?.updated_at
         ?? (lang === 'es' ? page.translation_es?.updated_at : null)
+        // A native edition's text came from OCR, so a re-OCR is what makes its
+        // row stale; keying on a translation that will never exist would freeze
+        // the vector against text the book no longer has.
+        ?? (nativeEdition ? page.ocr?.updated_at : null)
         ?? page.updated_at;
       // A row with NO watermark predates the watermark column; treat it as
       // stale rather than trusting it — `null` is "unknown", not "current".
