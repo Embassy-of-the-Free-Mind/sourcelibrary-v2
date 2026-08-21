@@ -9,7 +9,8 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { type HomeData, SPANISH_COLLECTION_SLUG } from '@/lib/home-data';
+import { type HomeData } from '@/lib/home-data';
+import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 import { localePath } from '@/lib/locale-path';
 
@@ -23,7 +24,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts, localizedCollectionCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishCollection, localizedCollectionCounts } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The grid card's count line. On /es it says how many of the collection's
   // books can actually be READ in Spanish — the same thing /es/collections
@@ -44,52 +45,27 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
 
       {/* Read in Spanish — the first thing under the hero on /es, because it is
           the one section whose BOOKS (not just chrome) are in the visitor's
-          language. Most-read first; each card's href carries the `/es` prefix,
-          which is the ONLY thing that decides reading language (#4112 removed
-          the localStorage preference that used to follow the reader off the
-          prefix — see .claude/docs/i18n.md rule 6).
-          spanishBooks is empty on the English homepage, so nothing renders there. */}
-      {spanishBooks.length > 0 && (
-        <section className="bg-white py-16 md:py-24">
+          language. One card, the same block /es/collections leads with, opening
+          the full Spanish list; the `/es` prefix on the link is the only thing
+          that decides reading language (.claude/docs/i18n.md rule 6).
+          spanishCollection is null on the English homepage, so nothing renders there. */}
+      {spanishCollection && (
+        <section className="bg-white py-10 md:py-14">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-            <div className="flex items-end justify-between gap-4 mb-3">
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
-                {t.spanishHeading}
-              </h2>
-              <Link
-                href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)}
-                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
-              >
-                {t.spanishViewAll} &rarr;
-              </Link>
-            </div>
-            <p className="text-muted mb-2 max-w-2xl">
-              {t.spanishSubtitle}
-            </p>
-            {/* Say the size, the way the Collections header below does: one
-                inline line of counts. Pages and books are the work done; the
-                firsts and the source languages are why it matters. */}
-            {spanishCounts && (
-              <p className="text-sm text-muted/80 mb-6">
-                {nf(spanishCounts.pages)} {t.spanishStatPages}
-                {' '}&middot;{' '}
-                {nf(spanishCounts.books + spanishCounts.nativeBooks)} {t.spanishStatBooks}
-                {spanishCounts.firstTranslations > 0 && (
-                  <>
-                    {' '}&middot;{' '}
-                    {nf(spanishCounts.firstTranslations)} {t.spanishStatFirsts}
-                  </>
-                )}
-                {' '}&middot;{' '}
-                {nf(spanishCounts.sourceLanguages)} {t.spanishStatLanguages}
-              </p>
-            )}
-            <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} />
-            <div className="mt-6 sm:hidden">
-              <Link href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)} className="text-sm text-accent-rust hover:underline">
-                {t.spanishViewAll} &rarr;
-              </Link>
-            </div>
+            <Link
+              href={lp(`/collections/${spanishCollection.slug}`)}
+              className="group grid sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-0 overflow-hidden rounded-lg border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow]"
+            >
+              <div className="relative aspect-square sm:aspect-auto sm:min-h-[220px]">
+                <CollectionCardImage candidates={spanishCollection.imageCandidates} alt="" sizes="(max-width: 640px) 100vw, 33vw" priority />
+              </div>
+              <div className="p-6 sm:p-8 flex flex-col justify-center">
+                <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-2">{t.spanishHeading}</p>
+                <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2 group-hover:text-accent-rust transition-colors">{spanishCollection.name}</h2>
+                <p className="text-muted leading-relaxed mb-4">{t.spanishSubtitle}</p>
+                <p className="text-sm text-secondary">{nf(spanishCollection.bookCount)} {t.booksLabel} &rarr;</p>
+              </div>
+            </Link>
           </div>
         </section>
       )}
