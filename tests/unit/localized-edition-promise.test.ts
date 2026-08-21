@@ -47,7 +47,9 @@ describe('hasLocalizedEdition', () => {
   });
 
   it('returns null — never false — when the payload cannot answer', () => {
-    // The counter is a Mongo field; the Supabase catalog fast-path lacks it.
+    // A payload can still arrive with neither signal — a hand-built card object,
+    // a narrowed API select. (The Supabase catalog USED to be that payload; it
+    // carries the counter since #4166, which is why the /es rails now resolve.)
     // Reading that absence as "no Spanish edition" would 307 a genuinely
     // Spanish book to English, and a caller that does `=== false` silently
     // never fires. Both mistakes were made and caught by measurement.

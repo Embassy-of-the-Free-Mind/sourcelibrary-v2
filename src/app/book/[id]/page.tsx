@@ -2475,9 +2475,11 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // is translated its /es URL must start working, and a 308 would sit poisoned
   // in browser caches. The ISR entry self-heals within its revalidate window.
   //
-  // `hasLocalizedEdition` returns null when the payload cannot answer — the
-  // counter is a Mongo field and the Supabase catalog fast-path lacks it. Ask
-  // Atlas then, and on a failed lookup do NOTHING: reading absence as "no
+  // `hasLocalizedEdition` returns null when the payload cannot answer. Since
+  // #4166 the Supabase catalog fast-path carries both inputs, so this rarely
+  // fires — keep it anyway, for payloads that predate the column or come from
+  // a narrower select. Ask Atlas then, and on a failed lookup do NOTHING:
+  // reading absence as "no
   // Spanish edition" would redirect a genuinely Spanish book away.
   if (lang !== 'en') {
     const canonicalSlug = (earlyBook as { slug?: string }).slug;
