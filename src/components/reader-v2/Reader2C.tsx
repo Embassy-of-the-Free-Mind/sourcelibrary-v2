@@ -378,13 +378,16 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
                   aria-expanded={open}
                   className="w-full text-left py-3 flex items-start gap-3 transition-colors hover:bg-[var(--bg-white)]"
                 >
+                  {/* Bounded box, true proportions, no crop — a wide manuscript
+                      would otherwise show a blank sliver of leaf. */}
                   <span
-                    className="shrink-0 w-[38px] h-[50px] overflow-hidden border flex items-center justify-center"
-                    style={{ borderColor: 'var(--border-light)', background: 'var(--bg-white)' }}
+                    className="shrink-0 w-[46px] flex items-start justify-center"
                   >
                     {thumb && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={thumb} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                      <img src={thumb} alt="" loading="lazy" decoding="async"
+                        className="max-w-[46px] max-h-[62px] w-auto h-auto object-contain border"
+                        style={{ borderColor: 'var(--border-light)', background: 'var(--bg-white)' }} />
                     )}
                   </span>
                   <span className="flex-1 min-w-0">
@@ -1340,6 +1343,21 @@ function Filmstrip({
   // Arrows match the thumbnail image exactly and share its top edge; the row
   // is top-aligned so the page-number line below can't push them down.
   const thumbH = compact ? 50 : 54;
+
+  // Slots keep one height and take their width from the page's real
+  // proportions, measured once off a loaded thumbnail. A palm-leaf manuscript
+  // is 150x34, and forcing that into a portrait box cropped it to a blank
+  // sliver — every page in the book looked identical and empty. Wide books now
+  // show fewer, wider pages in the same bar. Clamped so one freak scan can't
+  // make a slot the width of the screen.
+  const [aspect, setAspect] = useState(0.78);
+  const onThumbLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const { naturalWidth: w, naturalHeight: h } = e.currentTarget;
+    if (!w || !h) return;
+    const a = Math.min(6, Math.max(0.25, w / h));
+    setAspect(prev => (Math.abs(prev - a) > 0.02 ? a : prev));
+  }, []);
+  const thumbW = Math.round(thumbH * aspect);
   return (
     <div
       className="flex items-start gap-1 h-full pt-2 rv2-strip-in"
@@ -1368,31 +1386,27 @@ function Filmstrip({
               title={`Page ${p.page_number}`}
               aria-current={isCurrent ? 'page' : undefined}
             >
-              {/* A ring drawn OUTSIDE the page, in brand rust, so the current
-                  page is findable at a glance in a strip of near-identical
-                  grey thumbnails. The scroller carries padding to match: it
-                  clips anything outside its box, which is what ate the top
-                  edge of this ring when it was an outline on a flush thumb. */}
+              {/* A diffuse rust halo rather than a ring. Most pages are pale
+                  on a dark bar, so a cream or white edge vanishes into the
+                  page itself; a glow reads against both. The scroller carries
+                  padding to match, since it clips anything drawn outside it. */}
               <span
-                className="block overflow-hidden"
+                className="block overflow-hidden transition-[box-shadow] duration-200"
                 style={{
-                  width: compact ? 38 : 42,
-                  height: compact ? 50 : 54,
+                  width: thumbW,
+                  height: thumbH,
                   background: isCurrent ? '#fdfcf9' : 'rgba(245,240,232,0.30)',
-                  boxShadow: isCurrent ? '0 0 0 3px #c2412c, 0 0 0 5px rgba(194,65,44,0.28)' : 'none',
+                  boxShadow: isCurrent
+                    ? '0 0 0 1px rgba(194,65,44,0.65), 0 0 18px 4px rgba(194,65,44,0.45)'
+                    : 'none',
                 }}
               >
                 {thumb && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={thumb} alt="" loading="lazy" decoding="async"
-                    className="w-full h-full object-cover" draggable={false}
-                    style={{
-                      // The neighbours recede so the current page is the only
-                      // one at full strength: the ring alone was not enough to
-                      // find it in a row of near-identical grey pages.
-                      opacity: isCurrent ? 1 : 0.42,
-                      filter: isCurrent ? 'none' : 'grayscale(0.5)',
-                    }} />
+                    onLoad={onThumbLoad}
+                    className="w-full h-full object-cover transition-opacity duration-200" draggable={false}
+                    style={{ opacity: isCurrent ? 1 : 0.72 }} />
                 )}
               </span>
               <span
