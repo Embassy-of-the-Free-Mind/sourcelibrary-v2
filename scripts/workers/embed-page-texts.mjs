@@ -107,9 +107,9 @@ async function main() {
     );
 
     // The same brake embed-gemini.mjs uses. A paid bulk writer that does not
-    // consult the dial is a hole in it — and note the dial cannot SEE embedding
-    // spend, because neither embedder logs to gemini_usage, so it is measuring
-    // OCR and translation only. Treat it as a floor, not a full accounting.
+    // consult the dial is a hole in it. Since #4162 this worker also RECORDS
+    // what it spends (one gemini_usage row per book), so the dial accounts for
+    // embedding rather than only braking on OCR and translation.
     if (!DRY_RUN) {
       const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
       if (!await budgetAllowsDispatch(db, `embed-page-texts:${LANG}`, { control })) {

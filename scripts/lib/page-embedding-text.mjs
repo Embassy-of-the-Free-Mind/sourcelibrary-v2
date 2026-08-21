@@ -25,6 +25,7 @@
  */
 
 import { stripEditorialWrappers } from './strip-editorial-wrappers.mjs';
+import { addEmbedUsage } from './embedding-usage.mjs';
 
 export const EMBED_MODEL = 'gemini-embedding-2-preview';
 export const EMBED_DIMS = 768;
@@ -206,7 +207,7 @@ export function pageTextUpsertValues(row) {
  * Embed a batch of texts. Retries on 429 with a growing backoff, because the
  * caller is usually a long-running loop that should slow down rather than die.
  */
-export async function embedTexts(texts, apiKey, { signal } = {}) {
+export async function embedTexts(texts, apiKey, { signal, usage } = {}) {
   if (!texts.length) return [];
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:batchEmbedContents?key=${apiKey}`;
   const body = JSON.stringify({
@@ -237,6 +238,9 @@ export async function embedTexts(texts, apiKey, { signal } = {}) {
     if (!data.embeddings || data.embeddings.length !== texts.length) {
       throw new Error(`Expected ${texts.length} embeddings, got ${data.embeddings?.length || 0}`);
     }
+    // Counted only on SUCCESS. A 429 that retried was not billed for a result,
+    // and a throw above never produced one.
+    addEmbedUsage(usage, texts);
     return data.embeddings.map((e) => e.values);
   }
   throw new Error('Gemini rate limit did not clear after 6 attempts');
