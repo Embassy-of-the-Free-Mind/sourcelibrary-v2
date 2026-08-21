@@ -323,10 +323,30 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // same code the English lane runs.
         if (isLocalizedSearch) {
           try {
+            // Every book-level filter is resolved to an ALLOW-LIST of book ids
+            // and pushed into the RPC, rather than re-expressed as RPC
+            // parameters. `page_texts` denormalizes only `book_language` and
+            // `book_year`, so a lane that filtered on those alone would leak
+            // past category, has_doi, library, first_translation and the
+            // languages/exclude_languages arrays — a filter is only as strong
+            // as its weakest lane (search-filters-and-lanes.md), and a vector
+            // or text lane with no metadata predicate is the one people miss.
+            let allowedBookIds: string[] | undefined;
+            if (bookId) {
+              allowedBookIds = [bookId];
+            } else if (hasBookLevelFilters || tenantId) {
+              const allowed = await db.collection('books')
+                .find(buildBookFilters()).project({ id: 1 }).toArray();
+              // An empty allow-list must return NOTHING, never fall open to the
+              // whole corpus (#2760). `[]` reaches the RPC as an empty array and
+              // `book_id = ANY('{}')` matches nothing, but bail here rather than
+              // depend on that.
+              if (allowed.length === 0) return [];
+              allowedBookIds = allowed.map(b => b.id as string);
+            }
             const rows = await lexicalPageSearchLang(query, textLang, (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS, {
-              language: language || undefined,
               yearMin, yearMax,
-              bookIds: bookId ? [bookId] : undefined,
+              bookIds: allowedBookIds,
             });
             return rows.map(r => ({
               id: r.page_id,
