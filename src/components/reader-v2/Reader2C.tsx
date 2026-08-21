@@ -6,10 +6,9 @@ import UserMenu from '@/components/layout/UserMenu';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
-import { useIdentity } from '@/hooks/useIdentity';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { getPageThumbUrl } from '@/lib/utils';
-import { pages as pagesApi, likes as likesApi, books as booksApi, analytics } from '@/lib/api-client';
+import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
@@ -18,7 +17,7 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download,
+  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Clock,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
@@ -27,6 +26,7 @@ import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import RevisionHistoryPanel from './RevisionHistoryPanel';
+import SavePanel from './SavePanel';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote,
@@ -49,16 +49,17 @@ const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 82%, var(--bg-dark) 4
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'more' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
+  save: 'Save',
   contents: 'Contents',
   search: 'Search this book',
   guide: 'Reading guide',
   librarian: 'Ask the librarian',
   info: 'Edition & page info',
   cite: 'Cite this page',
-  share: 'Save & share',
+  share: 'Share',
   settings: 'Reading settings',
   views: 'Scan, text & translation',
   downloads: 'Download',
@@ -77,7 +78,7 @@ const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
   librarian: 'Answers from AI, grounded in this page and the book around it.',
   info: 'What this page is, and the edition it was scanned from.',
   cite: 'A citation that points at this exact page.',
-  share: 'Save this page to your library, or send it on.',
+  share: 'Copy a link to this page, or post it.',
   settings: 'How the text is set. Your choices are remembered on this device.',
   views: 'Which panes are showing.',
   downloads: 'Take this page, or the whole book, away with you.',
@@ -90,7 +91,7 @@ const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
   ['librarian', 'Ask the librarian', 'Questions about this page or the book'],
   ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
   ['guide', 'Reading guide', 'Overview, themes, sections'],
-  ['share', 'Save & share', 'Save this page, copy the link, post it'],
+  ['share', 'Share', 'Copy a link to this page, or post it'],
   ['downloads', 'Download', 'This page, or the whole book, in several formats'],
   ['history', 'Revision history', 'Every recorded change to this page'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
@@ -179,6 +180,7 @@ function MobileToolbar({
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
     ['views', 'Views', <Columns3 key="i" size={19} />],
     ['search', 'Search', <Search key="i" size={19} />],
+    ['save', 'Save', <Heart key="i" size={19} />],
   ];
   return (
     <div
@@ -459,39 +461,14 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
 }
 
 /**
- * Save & share. Liking is the site's "save to my library" (visitor identity,
- * optimistic count), and the share targets mirror the site's ShareButton so a
- * post from the reader looks like a post from anywhere else, and reports the
- * same `share` analytics event.
+ * Share. Copy a link, or post it.
+ * Sharing only. Saving moved to its own panel, so this one is links and
+ * posts; the share targets mirror the site's ShareButton, so a post from the
+ * reader looks like a post from anywhere else and reports the same `share`
+ * analytics event.
  */
 function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }) {
-  const identity = useIdentity();
-  const [liked, setLiked] = useState(false);
-  const [count, setCount] = useState(0);
   const [copied, setCopied] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!identity.id || identity.loading) return;
-    let cancelled = false;
-    likesApi.getStatus(JSON.stringify([{ type: 'page', id: page.id }]), identity.id)
-      .then(data => {
-        if (cancelled) return;
-        const row = (data as { results?: Record<string, { count: number; liked: boolean }> }).results?.[`page:${page.id}`];
-        if (row) { setCount(row.count); setLiked(row.liked); }
-      })
-      .catch(() => { /* cosmetic */ });
-    return () => { cancelled = true; };
-  }, [page.id, identity.id, identity.loading]);
-
-  const toggleLike = () => {
-    if (!identity.id) return;
-    const next = !liked;
-    setLiked(next);
-    setCount(c => Math.max(0, c + (next ? 1 : -1)));
-    likesApi.toggle('page', page.id, identity.id)
-      .then(res => { setLiked(res.liked); setCount(res.count); })
-      .catch(() => { setLiked(!next); setCount(c => Math.max(0, c + (next ? -1 : 1))); });
-  };
 
   const title = book.display_title || book.title;
   const citation = `${book.author ? `${book.author}, ` : ''}${title}${page.page_number != null ? `, p. ${page.page_number}` : ''}`;
@@ -519,15 +496,6 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
-      <button type="button" onClick={toggleLike} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
-        <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
-          <Heart size={16} fill={liked ? 'var(--accent-rust)' : 'none'} style={{ color: liked ? 'var(--accent-rust)' : 'var(--text-muted)' }} />
-          {liked ? 'Saved to your library' : 'Save this page'}
-        </span>
-        {count > 0 && (
-          <span className="font-sans text-[12px] tabular-nums" style={{ color: 'var(--text-faint)' }}>{count}</span>
-        )}
-      </button>
 
       <button type="button" onClick={() => copy('link', url)} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
@@ -936,6 +904,21 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
  * PANEL_ROW  — a full-width row in a list (More, Save & share, Download, Views).
  * PANEL_BTN  — a discrete action (copy a citation, read a section, ask a question).
  */
+/** One glyph per tool, so a grid of names is still scannable. */
+const MORE_ICONS: Record<string, React.ReactNode> = {
+  views: <Columns3 size={16} />,
+  contents: <List size={16} />,
+  librarian: <MessageCircle size={16} />,
+  settings: <span className="font-body text-[15px] leading-none">AA</span>,
+  guide: <BookOpen size={16} />,
+  share: <Share2 size={16} />,
+  downloads: <Download size={16} />,
+  info: <Info size={16} />,
+  cite: <Quote size={16} />,
+  history: <Clock size={16} />,
+  save: <Heart size={16} />,
+};
+
 const PANEL_ROW = 'w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
 const PANEL_BTN = 'inline-flex items-center gap-2 h-9 px-3 border font-sans text-[12.5px] transition-opacity hover:opacity-85';
 /** Filled, like a selected chip in Reading settings — a panel action is a
@@ -976,11 +959,14 @@ function TraceStatusLine({ status, showHint }: { status: TraceStatus; showHint: 
           : null;
   if (!text) return null;
   return (
+    // Absolutely placed: as a block element it pushed the whole page of text
+    // down when it appeared and back up when it went, which on a facsimile is
+    // the text moving under your eye for a status message.
     <div
-      className="shrink-0 px-4 py-1.5 flex items-center gap-2 border-b font-sans text-[11.5px]"
+      className="absolute left-0 right-0 top-0 z-20 px-4 py-1.5 flex items-center gap-2 border-b font-sans text-[11.5px] rv2-pop"
       style={{
         borderColor: 'var(--border-light)',
-        background: 'rgba(74, 111, 165, 0.08)',
+        background: 'color-mix(in srgb, #4a6fa5 10%, var(--bg-cream))',
         color: TRACE_BLUE,
       }}
       role="status"
@@ -1178,8 +1164,15 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
   const [error, setError] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Land on the START of the newest answer. Scrolling to the bottom of the
+  // thread dropped the reader at the end of a long reply, mid-sentence.
+  const lastAnswerRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
+    if (busy) { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight }); return; }
+    const el = lastAnswerRef.current;
+    if (el && scrollRef.current) {
+      scrollRef.current.scrollTo({ top: el.offsetTop - 12, behavior: 'smooth' });
+    }
   }, [messages, busy]);
 
   const ask = async (question: string) => {
@@ -1216,7 +1209,9 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
     // Before the first question the composer follows the suggestions instead of
     // sitting at the far bottom of an empty panel, where a tall desktop drawer
     // put it below the fold and the field read as missing.
-    <div className="flex flex-col min-h-0 flex-1">
+    // Empty thread: the field comes first and the suggestions sit under it, so
+    // the thing you type in is the first thing you meet.
+    <div className={`flex min-h-0 flex-1 ${empty ? 'flex-col-reverse justify-end' : 'flex-col'}`}>
       <div
         ref={scrollRef}
         className={`overflow-y-auto px-4 pt-3 pb-3 ${empty ? 'shrink-0' : 'flex-1 min-h-0'}`}
@@ -1224,9 +1219,6 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
       >
         {empty && (
           <>
-            <p className="font-sans text-[12.5px] leading-relaxed mb-3" style={{ color: 'var(--text-muted)' }}>
-              Ask about this page, the book, its author, or any concept in the text.
-            </p>
             <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>Or start here</CapsLabel>
             <div className="flex flex-col gap-1.5">
               {LIBRARIAN_SUGGESTIONS.map(s => (
@@ -1250,7 +1242,12 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
               {m.content}
             </p>
           ) : (
-            <p key={i} className="font-body text-[14px] leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--text-secondary)' }}>
+            <p
+              key={i}
+              ref={i === messages.length - 1 ? lastAnswerRef : undefined}
+              className="font-body text-[14px] leading-relaxed whitespace-pre-wrap"
+              style={{ color: 'var(--text-secondary)' }}
+            >
               {m.content}
             </p>
           )
@@ -1287,9 +1284,7 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
           </button>
         </div>
       </form>
-      {/* Takes the slack an empty conversation leaves, so the composer stays
-          put under the suggestions rather than being pushed to the bottom */}
-      {empty && <div className="flex-1 min-h-0" />}
+
     </div>
   );
 }
@@ -1528,7 +1523,7 @@ function BookSearchPanel({
             type="search"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Search this book…"
+            placeholder="Search…"
             className="flex-1 bg-transparent outline-none focus:outline-none font-sans text-[16px] lg:text-[13px]"
             style={{ color: 'var(--text-primary)' }}
             aria-label="Search this book"
@@ -1696,42 +1691,48 @@ function PanelContent({
   shareUrl: string;
 }) {
   if (panel === 'more') {
+    // A grid of names, not a list of explanations. Descriptions belong on the
+    // panel you land on — reading seven of them to choose one is the clunk.
+    const tile = 'flex flex-col items-start justify-end gap-1 h-[74px] px-3 pb-2.5 pt-3 border text-left transition-[background,border-color] duration-150 active:bg-[var(--bg-white)]';
     return (
-      <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-3" style={{ overscrollBehavior: 'contain' }}>
-        {MORE_TOOLS.map(([key, label, hint]) => (
-          <button
-            key={key}
-            type="button"
-            onClick={() => onSelectPanel(key)}
-            className={PANEL_ROW}
-            style={{ borderColor: 'var(--border-light)' }}
-          >
-            <span className="min-w-0">
-              <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>{label}</span>
-              <span className="block font-sans text-[11.5px] truncate" style={{ color: 'var(--text-faint)' }}>{hint}</span>
-            </span>
-            <ChevronRightSmall size={15} style={{ color: 'var(--text-faint)' }} />
-          </button>
-        ))}
-        {/* Editor-and-above only, same gate as the desktop rail */}
-        <AuthCheck role="inner_circle">
-          <button
-            type="button"
-            onClick={() => { onClose(); onToggleEdit(); }}
-            className={PANEL_ROW}
-            style={{ borderColor: 'var(--border-light)' }}
-          >
-            <span className="min-w-0">
-              <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>
+      <div className="flex-1 min-h-0 overflow-y-auto px-3 pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
+        <div className="grid grid-cols-2 gap-2">
+          {MORE_TOOLS.map(([key, label], i) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => onSelectPanel(key)}
+              className={`${tile} rv2-tile-in`}
+              style={{
+                borderColor: 'var(--border-light)',
+                background: 'var(--bg-white)',
+                color: 'var(--text-primary)',
+                animationDelay: `${i * 22}ms`,
+              }}
+            >
+              <span style={{ color: 'var(--text-faint)' }}>{MORE_ICONS[key]}</span>
+              <span className="font-sans text-[13px] leading-tight">{label}</span>
+            </button>
+          ))}
+          <AuthCheck role="inner_circle">
+            <button
+              type="button"
+              onClick={() => { onClose(); onToggleEdit(); }}
+              className={`${tile} rv2-tile-in w-full`}
+              style={{
+                borderColor: 'var(--border-light)',
+                background: 'var(--bg-white)',
+                color: 'var(--text-primary)',
+                animationDelay: `${MORE_TOOLS.length * 22}ms`,
+              }}
+            >
+              <span style={{ color: 'var(--text-faint)' }}><Pencil size={16} /></span>
+              <span className="font-sans text-[13px] leading-tight">
                 {editing ? 'Stop editing' : 'Edit this page'}
               </span>
-              <span className="block font-sans text-[11.5px] truncate" style={{ color: 'var(--text-faint)' }}>
-                Correct the transcription or translation
-              </span>
-            </span>
-            <Pencil size={15} style={{ color: 'var(--text-faint)' }} />
-          </button>
-        </AuthCheck>
+            </button>
+          </AuthCheck>
+        </div>
       </div>
     );
   }
@@ -1792,6 +1793,9 @@ function PanelContent({
         })}
       </div>
     );
+  }
+  if (panel === 'save') {
+    return <SavePanel page={r.currentPage} book={r.book} url={shareUrl} />;
   }
   if (panel === 'history') {
     return <RevisionHistoryPanel page={r.currentPage} book={r.book} />;
@@ -2283,13 +2287,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     shareUrl,
   };
 
+  /**
+   * The editor honours the reading settings. It used to hard-code its own
+   * face, size and leading, so an editor who had set the text how they wanted
+   * to READ it lost all of that the moment they started correcting it — and
+   * they are checking their edit against the scan in the pane beside it.
+   */
   const editorTextarea = (field: 'ocr' | 'translation') => (
     <textarea
       value={field === 'ocr' ? draft.ocr : draft.translation}
       onChange={e => setDraftField(field, e.target.value)}
       spellCheck={false}
-      className="w-full h-full resize-none outline-none font-body text-[15px] leading-[1.6] p-6"
-      style={{ background: 'var(--bg-white)', color: 'var(--text-primary)', border: 'none' }}
+      className={`w-full h-full resize-none outline-none p-6 ${r.settings.typeface === 'sans' ? 'font-sans' : 'font-body'}`}
+      style={{
+        background: 'var(--bg-white)',
+        color: 'var(--text-primary)',
+        border: 'none',
+        fontSize: `${Math.round((field === 'ocr' ? 17.5 : 18.5) * r.settings.textScale * 10) / 10}px`,
+        lineHeight: r.settings.lineHeight,
+        maxWidth: `${{ narrow: 55, comfortable: 70, wide: 86 }[r.settings.lineWidth]}ch`,
+      }}
       aria-label={field === 'ocr' ? 'Edit transcription' : 'Edit translation'}
     />
   );
@@ -2396,7 +2413,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 style={{ background: 'var(--accent-rust)', color: '#fdfcf9' }}
               >
                 {saving ? <Loader2 size={13} className="animate-spin" /> : <Check size={13} />}
-                {dirty ? 'Save changes' : 'Done'}
+                {/* Always "Save": a button labelled Done beside an unsaved
+                    edit invites you to leave without saving it. */}
+                {saving ? 'Saving…' : 'Save'}
               </button>
             </div>
           ) : null}
@@ -2418,6 +2437,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ background: INK, borderRight: `1px solid ${onInk(0.12)}` }}
           aria-label="Reader tools"
         >
+          <RailButton label="Save" active={leftPanel === 'save'} onClick={() => togglePanel('save')} icon={<Heart size={17} />} />
           <RailButton label="Contents" active={leftPanel === 'contents'} onClick={() => togglePanel('contents')} icon={<List size={17} />} />
           <RailButton label="Search" active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
           <RailButton label="Guide" active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
@@ -2498,7 +2518,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {r.views.ocr && (
             <section
               data-reader-section="ocr"
-              className="flex-1 min-w-0 flex flex-col border-r"
+              className="relative flex-1 min-w-0 flex flex-col border-r"
               style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}
             >
               <PaneHeader right={!editing ? (
@@ -2537,7 +2557,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {r.views.translit && translitEligible && (
             <section
               data-reader-section="transliteration"
-              className="flex-1 min-w-0 flex flex-col border-r"
+              className="relative flex-1 min-w-0 flex flex-col border-r"
               style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)' }}
             >
               <PaneHeader right={
@@ -2570,7 +2590,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </section>
           )}
           {r.views.en && (
-            <section data-reader-section="translation" className="flex-1 min-w-0 flex flex-col" style={{ background: SURFACE.translation }}>
+            <section data-reader-section="translation" className="relative flex-1 min-w-0 flex flex-col" style={{ background: SURFACE.translation }}>
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
                   {traceEligible && (
@@ -2714,7 +2734,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             </section>
           )}
           {r.views.ocr && (
-            <section data-reader-section="ocr" className="border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
+            <section data-reader-section="ocr" className="relative border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
                 <div className="flex items-center gap-1">
@@ -2727,12 +2747,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-8">
-                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={15.5} />
+                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />
               </div>
             </section>
           )}
           {r.views.translit && translitEligible && (
-            <section data-reader-section="transliteration" className="border-t" style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)' }}>
+            <section data-reader-section="transliteration" className="relative border-t" style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <div className="flex items-center gap-2">
                   <CapsLabel style={{ color: 'var(--text-muted)' }}>Romanised</CapsLabel>
@@ -2742,13 +2762,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
                 <TranslitBody text={translit} loading={translitLoading} error={translitError}
-                  settings={r.settings} baseSize={15.5}
+                  settings={r.settings} baseSize={16}
                   ocrLength={r.currentPage.ocr?.data?.length ?? 0} />
               </div>
             </section>
           )}
           {r.views.en && (
-            <section data-reader-section="translation" className="border-t" style={{ background: SURFACE.translation, borderColor: 'var(--border-medium)' }}>
+            <section data-reader-section="translation" className="relative border-t" style={{ background: SURFACE.translation, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <div className="flex items-center gap-2">
                   <CapsLabel style={{ color: 'var(--text-muted)' }}>English</CapsLabel>
@@ -2764,7 +2784,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
-                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={16.5} />
+                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />
               </div>
             </section>
           )}

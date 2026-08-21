@@ -324,7 +324,9 @@ body:has([data-reader-v2]) {
    search field autofocuses, so it appeared the moment the panel opened). The
    fields carry their focus state on the wrapper border instead. */
 [data-reader-v2] input:focus,
-[data-reader-v2] input:focus-visible {
+[data-reader-v2] input:focus-visible,
+[data-reader-v2] textarea:focus,
+[data-reader-v2] textarea:focus-visible {
   outline: none;
 }
 
@@ -403,9 +405,17 @@ body:has([data-reader-v2]) {
   to   { opacity: 1; transform: none; }
 }
 .rv2-panel-body-in { animation: rv2-panel-body-in 200ms ease-out 60ms both; }
+
+/* Tiles in the mobile More grid arrive in sequence rather than all at once,
+   which is what made a grid of seven read as a slab appearing. */
+@keyframes rv2-tile-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.rv2-tile-in { animation: rv2-tile-in 220ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
 @media (prefers-reduced-motion: reduce) {
   .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in,
-  .rv2-page-in, .rv2-panel-body-in { animation: none; }
+  .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in { animation: none; }
 }
 
 
