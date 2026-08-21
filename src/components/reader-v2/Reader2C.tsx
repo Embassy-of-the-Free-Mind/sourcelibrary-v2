@@ -25,6 +25,7 @@ import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
+import RevisionHistoryPanel from './RevisionHistoryPanel';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote,
@@ -47,7 +48,7 @@ const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 82%, var(--bg-dark) 4
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'more' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   contents: 'Contents',
@@ -60,6 +61,7 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   settings: 'Reading settings',
   views: 'Scan, text & translation',
   downloads: 'Download',
+  history: 'Revision history',
   more: 'More',
 };
 
@@ -78,6 +80,7 @@ const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
   settings: 'How the text is set. Your choices are remembered on this device.',
   views: 'Which panes are showing.',
   downloads: 'Take this page, or the whole book, away with you.',
+  history: 'Every recorded change to this page\u2019s transcription and translation.',
 };
 
 /** The tools that live behind "More" on mobile, in the order they're offered. */
@@ -88,6 +91,7 @@ const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
   ['guide', 'Reading guide', 'Overview, themes, sections'],
   ['share', 'Save & share', 'Save this page, copy the link, post it'],
   ['downloads', 'Download', 'This page, or the whole book, in several formats'],
+  ['history', 'Revision history', 'Every recorded change to this page'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
   ['cite', 'Cite this page', 'A citation that points at this exact page'],
 ];
@@ -1673,6 +1677,9 @@ function PanelContent({
         })}
       </div>
     );
+  }
+  if (panel === 'history') {
+    return <RevisionHistoryPanel page={r.currentPage} book={r.book} />;
   }
   if (panel === 'downloads') {
     return <DownloadsPanel page={r.currentPage} book={r.book} />;
