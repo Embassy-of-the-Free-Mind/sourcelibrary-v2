@@ -99,6 +99,13 @@ export function guardEnabled() {
 export async function shouldRefuseOcrWrite({
   text,
   imageUrl,
+  /**
+   * The image bytes, when the caller already has them — a Buffer, or the
+   * base64 string the orchestrator holds after `fetchImageBase64`. Supplying
+   * this skips the fetch entirely, which is what makes the guard free on the
+   * preview path: those bytes are the very ones posted to Gemini.
+   */
+  imageBuffer,
   inkMax = DEFAULT_INK_MAX,
   minBody = DEFAULT_MIN_BODY,
   fetchImpl = fetch,
@@ -109,10 +116,20 @@ export async function shouldRefuseOcrWrite({
   if (body.length < minBody) {
     return { refuse: false, reason: 'no_substantial_claim', coverage: null, chars: body.length };
   }
-  if (!imageUrl) return { refuse: false, reason: 'no_image_url', coverage: null, chars: body.length };
 
   let buf;
-  try {
+  if (imageBuffer) {
+    try {
+      buf = Buffer.isBuffer(imageBuffer) ? imageBuffer : Buffer.from(String(imageBuffer), 'base64');
+    } catch {
+      return { refuse: false, reason: 'bad_image_buffer', coverage: null, chars: body.length };
+    }
+    if (!buf.length) return { refuse: false, reason: 'empty_image_buffer', coverage: null, chars: body.length };
+  }
+
+  if (!buf && !imageUrl) return { refuse: false, reason: 'no_image_url', coverage: null, chars: body.length };
+
+  if (!buf) try {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
     try {

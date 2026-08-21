@@ -103,6 +103,37 @@ describe('shouldRefuseOcrWrite — the veto', () => {
   });
 });
 
+describe('shouldRefuseOcrWrite — the imageBuffer path', () => {
+  // The orchestrator's preview path already holds the base64 it posted to
+  // Gemini, so the guard is free there. These pin that it behaves identically
+  // to the fetch path and never falls back to a network call.
+  const explode = (async () => { throw new Error('must not fetch when bytes are supplied'); }) as never;
+
+  it('refuses a claim over blank bytes, without fetching', async () => {
+    const v = await shouldRefuseOcrWrite({
+      text: FABRICATION, minBody: 100,
+      imageBuffer: (await png(252)).toString('base64'), fetchImpl: explode,
+    });
+    expect(v.refuse).toBe(true);
+  });
+
+  it('allows a claim over inked bytes, without fetching', async () => {
+    const v = await shouldRefuseOcrWrite({
+      text: FABRICATION, minBody: 100,
+      imageBuffer: await inkedPng(), fetchImpl: explode,
+    });
+    expect(v.refuse).toBe(false);
+    expect(v.reason).toBe('has_ink');
+  });
+
+  it('fails open on empty or unusable bytes', async () => {
+    expect((await shouldRefuseOcrWrite({ text: FABRICATION, minBody: 100, imageBuffer: '' , imageUrl: '' })).refuse).toBe(false);
+    const v = await shouldRefuseOcrWrite({ text: FABRICATION, minBody: 100, imageBuffer: Buffer.from('nope'), fetchImpl: explode });
+    expect(v.refuse).toBe(false);
+    expect(v.reason).toMatch(/^decode_failed/);
+  });
+});
+
 describe('shouldRefuseOcrWrite — fails OPEN on every doubt', () => {
   it('allows when the image cannot be fetched', async () => {
     const v = await shouldRefuseOcrWrite({
