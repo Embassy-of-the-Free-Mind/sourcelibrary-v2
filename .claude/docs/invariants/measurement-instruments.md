@@ -306,6 +306,19 @@ reads all three:
 - **Verify a detector by making it fail.** The only proof the wiring works is
   running it with the input removed and seeing red. A green scheduled run proves
   nothing about a detector whose failure mode is silence.
+- **And check WHAT it counted, not just that it ran.** The rule above catches a
+  detector that cannot run. It does not catch the worse case: one that runs
+  perfectly, exits `0`, and is measuring a corpus that excludes the failure.
+  `page-texts-coverage.mjs` exists to catch "an unembedded book and a book with
+  no matches return the same empty list", and it selected books by
+  `pages_translated_es > 0` — which is `0` for a book *written* in Spanish and
+  always will be. So all 68 native books sat outside its own denominator and it
+  reported clean over 19,489 unfindable pages (#4146/#4186). Making it fail
+  would have passed: break a book **in** its scope and it goes red, which proves
+  nothing about the books outside. **The tell is the scope line, not the exit
+  code** — 107 books before the fix, 175 after. Print the denominator and read
+  it. Any time a read rule widens, the detectors watching it are writers too:
+  re-run each and confirm its SCOPE moved.
 
 **Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
 an *error message* rather than a *measurement*. Read the body before believing the
