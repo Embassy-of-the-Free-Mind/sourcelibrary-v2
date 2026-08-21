@@ -155,6 +155,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Reusing a text helper on a new surface; exports (PDF, `/text`, corpus snapshot); `<page-type>` → `text-helpers-and-exports.md`
 - `gallery_quality` / `scan_quality`, image crops, deep-zoom bbox remapping → `image-quality-and-bboxes.md`
 - Detectors over page images, spread splitting, corpus-wide image repair sweeps → `image-classifiers-and-splits.md`
+- An image-URL resolver, a new provider host, or "images broken but curl returns 200" → `image-host-allowlists.md`
 
 **Routing, access & the edge**
 - `src/proxy.ts`, `src/app/embed/**`, `src/app/[tenant]/**`, any URL on a partner subdomain → `tenant-lockdown.md`
