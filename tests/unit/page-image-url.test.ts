@@ -165,7 +165,10 @@ describe('TS and scripts JS twin agree on getPageSource', () => {
 describe('CSP renderability invariant', () => {
   const renderable = (url: string) => url.startsWith('/') || isBrowserRenderableImageUrl(url);
 
-  it('every thumb/display/hires URL is one the browser may load', () => {
+  it('every corpus-shaped fixture resolves to a URL the browser may load', () => {
+    // Not a universal law — see the both-lists-blocked case below, where the
+    // only usable URL is one the browser refuses. It IS a law for every page
+    // shape that exists in the corpus, which is what this asserts.
     for (const [name, page] of Object.entries(fixtures)) {
       for (const size of ['thumb', 'display', 'hires'] as const) {
         const url = getPageImageUrl(page, size);
@@ -174,7 +177,7 @@ describe('CSP renderability invariant', () => {
     }
   });
 
-  it('a stored thumb on a CSP-blocked host falls through instead of breaking', () => {
+  it('a stored thumb on a CSP-blocked host falls through to the R2 variant', () => {
     // The exact Florentine Codex shape: provider thumb, R2 fallbacks alongside.
     const blockedHost: PageImageFields = {
       image_thumb: 'https://blocked.example.org/iiif/x/full/150,/0/default.jpg',
@@ -183,15 +186,30 @@ describe('CSP renderability invariant', () => {
       archived_photo: `${R2}/archived/${BOOK}/1.jpg`,
     };
     expect(getPageImageUrl(blockedHost, 'thumb')).toBe(`${R2}/pages/${BOOK}/0001-thumb.jpg`);
+  });
 
-    // No R2 fallback at all → the same-origin proxy, never the blocked host.
-    const noFallback: PageImageFields = {
-      image_thumb: 'https://blocked.example.org/iiif/x/full/150,/0/default.jpg',
-      photo: 'https://blocked.example.org/iiif/x/full/1200,/0/default.jpg',
+  it('CSP-blocked but proxy-fetchable → the same-origin proxy', () => {
+    // images.metmuseum.org is in the /api/image allowlist but not in img-src,
+    // so the proxy is the one route that renders.
+    const proxyable: PageImageFields = {
+      image_thumb: 'https://images.metmuseum.org/CRDImages/x/thumb.jpg',
+      photo: 'https://images.metmuseum.org/CRDImages/x/original.jpg',
     };
     for (const size of ['thumb', 'display', 'hires'] as const) {
-      expect(getPageImageUrl(noFallback, size), size).toMatch(/^\/api\/image\?/);
+      expect(getPageImageUrl(proxyable, size), size).toMatch(/^\/api\/image\?/);
     }
+  });
+
+  it('blocked by BOTH lists → keeps the bounded stored URL, never null', () => {
+    // Nothing can render this in a browser, but a server-side consumer
+    // (pageExportImageUrl → fetch) still can, so it must not be discarded.
+    const nowhere: PageImageFields = {
+      image_thumb: 'https://blocked.example.org/iiif/x/full/150,/0/default.jpg',
+      display_photo: 'https://blocked.example.org/iiif/x/full/1200,/0/default.jpg',
+      photo: 'https://blocked.example.org/iiif/x/original.jpg',
+    };
+    expect(getPageImageUrl(nowhere, 'thumb')).toBe('https://blocked.example.org/iiif/x/full/150,/0/default.jpg');
+    expect(getPageImageUrl(nowhere, 'display')).toBe('https://blocked.example.org/iiif/x/full/1200,/0/default.jpg');
   });
 
   it('an allowlisted IIIF host still gets the free origin-side resize', () => {
