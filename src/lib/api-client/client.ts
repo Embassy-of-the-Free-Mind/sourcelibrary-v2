@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { PREFIXED_LOCALES } from '@/lib/locale-path';
 
 // Global routes that are not tenant slugs; keep in sync with proxy routing rules.
 const NON_TENANT_SEGMENTS = new Set([
@@ -17,6 +18,16 @@ const NON_TENANT_SEGMENTS = new Set([
 
 export function getTenantSlugFromPathname(pathname: string): string | null {
   const segments = pathname.split('/').filter(Boolean);
+  // A locale prefix is NOT a tenant. `/es/book/x` is the Spanish rendering of a
+  // GLOBAL route, so every client call it fires must go to `/api/books/...`,
+  // not `/api/es/books/...` — a tenant-scoped URL whose slug resolves to
+  // nothing, which the API answers with a flat 404 ("Book not found" in the
+  // cover picker, "Tenant not found" in analytics). Strip the prefix and let
+  // the rest of the resolution run unchanged; a real tenant page under a
+  // locale (`/es/bph/...`) still resolves to `bph`.
+  if (segments[0] && (PREFIXED_LOCALES as string[]).includes(segments[0])) {
+    segments.shift();
+  }
   // Handle /embed/{tenant}/... paths (tenant subdomains rewrite to /embed/bph/...)
   if (segments[0] === 'embed' && segments[1]) {
     const embedTenant = segments[1];
