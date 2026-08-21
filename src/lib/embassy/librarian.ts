@@ -753,7 +753,10 @@ async function executeBrowseCatalog(args: BrowseArgs, lang: Locale): Promise<{
     }
     labels.push(`printed in ${matched.length > 0 ? matched.join(' / ') : languageInput}`);
     if (variants.length > 0) {
-      notes.push(`Counted only books catalogued exactly as "${matched[0]}". Related shelves NOT in this total: ${variants.map(v => `${v.language} (${v.count})`).join(', ')}.`);
+      // "Latin" has 22 compound shelves; the whole list is noise in a prompt.
+      const shown = variants.slice(0, 6).map(v => `${v.language} (${v.count})`).join(', ');
+      const rest = variants.length > 6 ? `, and ${variants.length - 6} more` : '';
+      notes.push(`Counted only books catalogued exactly as "${matched[0]}". Related shelves NOT in this total: ${shown}${rest}.`);
     }
   }
 
@@ -854,6 +857,10 @@ async function executeBrowseCatalog(args: BrowseArgs, lang: Locale): Promise<{
  */
 function formatBrowseRows(rows: BrowseRow[], lang: Locale): string {
   const base = siteBase(lang);
+  // Clamped: the per-language counters can exceed pages_count (a split spread
+  // translates into more rows than the book counts pages), and "149% in
+  // Spanish" is not a number to hand a reader.
+  const pct = (done: number, total: number) => (total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0);
   return rows.map(b => {
     const shown = localizedTitle(b, lang);
     const original = b.title && b.title !== shown ? ` [original title: ${b.title}]` : '';
@@ -861,14 +868,11 @@ function formatBrowseRows(rows: BrowseRow[], lang: Locale): string {
     const pages = b.pages_count || 0;
     let readable: string;
     if (lang === 'en') {
-      const pct = pages > 0 ? Math.round(((b.pages_translated || 0) / pages) * 100) : 0;
-      readable = `${pct}% in English`;
+      readable = `${pct(b.pages_translated || 0, pages)}% in English`;
     } else if (isNativeEdition(b as unknown as Record<string, unknown>, lang)) {
       readable = `original ${LANG_NAMES[lang]} edition`;
     } else {
-      const counter = lang === 'es' ? (b.pages_translated_es || 0) : 0;
-      const pct = pages > 0 ? Math.round((counter / pages) * 100) : 0;
-      readable = `${pct}% in ${LANG_NAMES[lang]}`;
+      readable = `${pct(lang === 'es' ? (b.pages_translated_es || 0) : 0, pages)}% in ${LANG_NAMES[lang]}`;
     }
     const bits = [b.language, `${pages} pp`, readable];
     if (b.is_first_translation) bits.push('first translation');
