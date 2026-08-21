@@ -62,6 +62,10 @@ const INK_MAX = Number(arg('ink', '0.004'));
 const MIN_BODY = Number(arg('min-body', '300'));
 const MAX_IMAGES = Number(arg('max-images', '400'));
 const NO_IMAGES = flag('no-images');
+/** Also screen on the weak signals alone. Useful for tuning, useless for rates. */
+const INCLUDE_WEAK = flag('include-weak');
+/** Seed for choosing WHICH flagged pages get measured when the cap bites. */
+const SEED = Number(arg('seed', '4149'));
 
 /** Metadata elements whose CONTENTS are not transcription. */
 const META = ['language', 'page-type', 'script', 'quality', 'scan-quality', 'image-desc',
@@ -132,20 +136,32 @@ function screen(book, docs) {
   for (const r of rows) {
     if (r.text.length < MIN_BODY) continue;
     const reasons = [];
-    // 1. the same long opening appears on three or more pages
+
+    // PRIMARY signal. Measured over 600 page images (2026-08-21): this is the
+    // only one that predicts anything — 4 confirmed of 188 measured (2.1%).
+    // A blank leaf gets a language the book does not otherwise contain, because
+    // the fabrication is drawn from the model's prior, not from the book.
+    let primary = false;
+    if (r.langs.length && bookLangs.size && r.langs.every((l) => !bookLangs.has(l))) {
+      const share = tagged ? Math.min(...r.langs.map((l) => (counts.get(l) || 0) / tagged)) : 1;
+      if (share <= 0.20) { reasons.push('language_absent_from_catalogue'); primary = true; }
+    }
+
+    // SUPPORTING signals. Neither fires usefully on its own — measured
+    // 0 confirmed of 316 for repeated openings and 0 of 135 for minority
+    // language. They earn their place by sharpening a primary hit (all four
+    // confirmed pages in the first sweep also repeated an opening), so they are
+    // recorded but never trigger a download by themselves. Flagging on them
+    // alone produced 8,533 useless candidates in 1,000 books — legitimate
+    // running heads, indexes and catalogue entries repeat openings constantly.
     const rep = byPrefix.get(r.text.slice(0, 60).toLowerCase()) || [];
     if (rep.length >= 3) reasons.push(`repeated_opening_x${rep.length}`);
-    // 2. the declared language is a tiny minority of this book
     if (r.langs.length && tagged) {
       const share = Math.min(...r.langs.map((l) => (counts.get(l) || 0) / tagged));
       if (share <= 0.06) reasons.push(`minority_language_${(share * 100).toFixed(1)}pct`);
     }
-    // 3. the declared language is not one the catalogue knows about at all
-    if (r.langs.length && bookLangs.size && r.langs.every((l) => !bookLangs.has(l))) {
-      const share = r.langs.length && tagged ? Math.min(...r.langs.map((l) => (counts.get(l) || 0) / tagged)) : 1;
-      if (share <= 0.20) reasons.push('language_absent_from_catalogue');
-    }
-    if (reasons.length) flagged.push({ ...r, reasons });
+
+    if (primary || (INCLUDE_WEAK && reasons.length)) flagged.push({ ...r, reasons, primary });
   }
   return { flagged, tagged, counts };
 }
@@ -175,16 +191,32 @@ async function main() {
       ], { maxTimeMS: 180000 }).toArray();
 
   const sink = fs.createWriteStream(OUT, { flags: 'w' });
-  let screened = 0, photographed = 0, confirmed = 0;
+  let photographed = 0, confirmed = 0;
 
+  // Screen EVERY book first, then choose which flagged pages to photograph.
+  // Measuring in encounter order until the cap bites measures import order, not
+  // the corpus: the first sweep's 600 images all came from the earliest books,
+  // so its per-signal precision could not be read as a rate. Shuffle with a
+  // fixed seed instead, so the cap yields a reproducible random subsample.
+  const allFlagged = [];
   for (const b of list) {
     const docs = await pages.find({ book_id: b.id, 'ocr.data': { $type: 'string' } },
       { projection: { page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, display_photo: 1, archived_photo: 1, photo: 1 } })
       .maxTimeMS(90000).toArray();
-    const { flagged } = screen(b, docs);
-    screened += flagged.length;
+    for (const f of screen(b, docs).flagged) allFlagged.push({ ...f, book: b });
+  }
+  const screened = allFlagged.length;
 
-    for (const f of flagged) {
+  let s = SEED >>> 0;
+  const rand = () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+  for (let i = allFlagged.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [allFlagged[i], allFlagged[j]] = [allFlagged[j], allFlagged[i]];
+  }
+
+  {
+    for (const f of allFlagged) {
+      const b = f.book;
       let ink = null;
       if (!NO_IMAGES && f.img && photographed < MAX_IMAGES) {
         try {
