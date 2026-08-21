@@ -27,7 +27,7 @@ import { markForExport } from '@/lib/provenance';
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
 import { getTranslation } from '@/lib/page-translations';
 
-export type QuoteTextSource = 'translation' | 'ocr_original';
+export type QuoteTextSource = 'translation' | 'ocr_original' | 'source_column';
 
 export interface QuotableText {
   /** Wrapper-stripped, verbatim, ready to be put inside quotation marks. */
@@ -56,6 +56,34 @@ export const OCR_ORIGINAL_NOTE =
   + 'include_image.';
 
 /**
+ * What a caller has to be told when the localized text is the leaf's OWN column
+ * rather than a translation we made.
+ *
+ * A parallel-text manuscript carries two languages side by side, and where one
+ * of them is the language asked for, the honest answer is that column — not a
+ * machine pivot standing in front of it. But the two are indistinguishable once
+ * they are in the same field, and the difference is the whole citation: these
+ * words are Ximénez's of 1701 and Sahagún's of 1577, and their period spelling
+ * ("ensuberbescas", "baxa la cabeça") is theirs, not OCR error to be tidied
+ * away. Spelled out because agents act on these sentences.
+ */
+export const SOURCE_COLUMN_NOTE =
+  'This text is not our translation. It is the column of the leaf that is already written in this '
+  + 'language — a bilingual manuscript with the languages in parallel columns — transcribed from the '
+  + 'scan by AI, uncorrected, preserving period spelling and scribal abbreviation. Attribute the '
+  + 'wording to the historical translator or scribe named in the book record, never to Source '
+  + 'Library, and do not modernise it when quoting. Where the exact wording carries weight, check it '
+  + 'against the leaf with include_image.';
+
+/**
+ * `pages.translations.<iso>.source` written by
+ * `scripts/maintenance/extract-source-columns.mjs`. Twin of
+ * `SOURCE_COLUMN_PROVENANCE` in `scripts/lib/source-column.mjs` — a plain string
+ * on both sides; the writer is a node script and cannot import this module.
+ */
+export const SOURCE_COLUMN_PROVENANCE = 'source-column';
+
+/**
  * The quotable text of a page, or null when the page holds nothing citable.
  *
  * Emptiness is measured AFTER wrapper stripping on purpose: a page whose
@@ -69,9 +97,15 @@ export function resolveQuoteText(page: Page, bookId: string, lang: string = 'en'
   // common case and a caller that cannot see it has no way to know whether the
   // words it is about to quote are the ones a Spanish reader sees.
   if (lang && lang !== 'en') {
-    const localized = getTranslation(page, lang)?.data;
-    const cleaned = localized ? stripEditorialWrappers(localized).trim() : '';
-    if (cleaned) return { text: markForExport(cleaned, bookId), source: 'translation', lang };
+    const localized = getTranslation(page, lang);
+    const cleaned = localized?.data ? stripEditorialWrappers(localized.data).trim() : '';
+    if (cleaned) {
+      // Same field, two different claims about authorship. `source-column` means
+      // the words are the leaf's own — see SOURCE_COLUMN_NOTE.
+      const source: QuoteTextSource =
+        localized?.source === SOURCE_COLUMN_PROVENANCE ? 'source_column' : 'translation';
+      return { text: markForExport(cleaned, bookId), source, lang };
+    }
   }
 
   const translation = page.translation?.data

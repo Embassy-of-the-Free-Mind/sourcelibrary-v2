@@ -551,6 +551,25 @@ function ocrOriginalQuote(result: Record<string, unknown>): boolean {
   return quote?.text_source === 'ocr_original';
 }
 
+// The requested edition IS on the leaf — a bilingual manuscript whose parallel
+// column is already in that language. The words are the historical translator's
+// (Ximenez's Spanish of 1701, Sahagun's of 1577), not ours, and their period
+// spelling is evidence rather than OCR noise. Without this an agent presents a
+// sixteenth-century source as "the Spanish translation" and tidies the spelling
+// on the way, which is a misattribution the reader cannot see.
+const SOURCE_COLUMN_TIP =
+  'This text is NOT our translation. This is a bilingual manuscript, and the column of the leaf you ' +
+  'asked for is already in this language — transcribed from the scan, uncorrected. Attribute the ' +
+  'wording to the historical translator or scribe named in the book record (see `author`), never to ' +
+  'Source Library, and quote the period spelling as it stands rather than modernising it; if you do ' +
+  'modernise, say that the modernisation is yours. `transcription_note` on the quote states the same. ' +
+  'Where the exact wording carries weight, call again with include_image: true and read the leaf.';
+
+function sourceColumnQuote(result: Record<string, unknown>): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  return quote?.text_source === 'source_column';
+}
+
 /**
  * The verbatim text of a quote response, whichever field holds it. Reading
  * `translation` alone made continuity unfireable on English-original pages —
@@ -606,6 +625,7 @@ async function getQuote(args: Record<string, unknown>) {
   const hint = continuityHint(continuity, Number(args.page));
 
   const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
+  if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
   if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
@@ -684,6 +704,7 @@ async function getQuotes(args: Record<string, unknown>) {
   const tips: string[] = [];
   if (anyTranslationText || !anyOcrOriginal) tips.push(QUOTE_TIP);
   if (anyOcrOriginal) tips.push(OCR_ORIGINAL_TIP);
+  if (settled.some((x) => sourceColumnQuote(x as Record<string, unknown>))) tips.push(SOURCE_COLUMN_TIP);
   if (anyRomanized) tips.push(ROMANIZED_TIP);
   // A batch can be mixed — the Spanish worker's length guard skipped ~30 pages
   // across 17 books — so one fallback in the range is enough to warn about.

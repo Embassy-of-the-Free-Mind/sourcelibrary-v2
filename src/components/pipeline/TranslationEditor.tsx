@@ -861,6 +861,17 @@ export default function TranslationEditor({
   const isNonLatin = hasNonLatinScript(book.language);
   const hasTransliteration = !!(page.transliteration?.data || transliterationText);
   const hasGermanSource = !!page.translation?.german_source;
+  /**
+   * How many columns the TRANSLATION panel should render in.
+   *
+   * `page.columns` describes the LEAF, and NotesRenderer uses it as a fallback:
+   * with no `<column-break/>` in the text it splits at the paragraph midpoint to
+   * mirror the scan. That is wrong for a source-column edition, where the text
+   * IS one column of a two-column page — rendering it as two would tell the
+   * reader the leaf carried two columns of Spanish when it carried one of
+   * Spanish beside one of Nahuatl or K'iche'.
+   */
+  const translationColumns = page.translation?.source === 'source-column' ? 1 : page.columns;
   const shouldShowRequestTranslation = shouldShowTranslationRequestCta({
     ocrText,
     translationText,
@@ -2153,7 +2164,7 @@ export default function TranslationEditor({
                               {MANUSCRIPT_OCR_FLAG.label}
                             </summary>
                             <div className="prose-manuscript leading-relaxed mt-3" style={{ color: 'var(--text-muted)' }}>
-                              <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                              <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={translationColumns} pageType={page.page_type} />
                             </div>
                           </details>
                         )}
@@ -2164,7 +2175,7 @@ export default function TranslationEditor({
                         // Convert <section-intro> tags to <note> tags so NotesRenderer styles them as green editorial notes
                         const processedText = modernizedText
                           .replace(/<section-intro>([\s\S]*?)<\/section-intro>/g, '\n\n<note>$1</note>\n\n');
-                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={page.columns} pageType={page.page_type} />;
+                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={translationColumns} pageType={page.page_type} />;
                       })()
                     ) : translationText ? (
                       <>
@@ -2177,7 +2188,7 @@ export default function TranslationEditor({
                           bookYear={book.published}
                           doi={book.doi}
                         >
-                          <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                          <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={translationColumns} pageType={page.page_type} />
                         </HighlightSelection>
                         <TranslationFeedbackPrompt
                           bookId={book.id}
