@@ -1207,6 +1207,8 @@ Searching: the search index is English, so write your **search queries in Englis
 
 Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.
 
+What the library HOLDS in ${name} — "how many books do you have in ${name}", "show me everything in ${name}" — goes to **browse_catalog**, never to \`search\`, which only ranks passages and would answer a shelf of hundreds with the handful it happened to match. Two different questions live here and the tool takes both: \`readable_in: "${lang}"\` is what a reader means (books written in ${name} PLUS the ones we have translated into it), while \`language: "${name}"\` is the narrower "printed in ${name}". Prefer \`readable_in\`, and say which one you counted.
+
 Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).
 
 `;
