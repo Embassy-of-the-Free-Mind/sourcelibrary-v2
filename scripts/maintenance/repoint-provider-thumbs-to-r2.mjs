@@ -18,125 +18,153 @@
  *     where a miss is silent and total
  *   - R2 egress is free; we are already paying to store these objects
  *
+ * SHAPE — why this is two phases with a checkpoint
+ * ------------------------------------------------
+ * The first version issued ONE query: every page of every live book, with a
+ * 22,073-element `$in` and a `$expr` regex, over 18.9M documents. It ran ~10
+ * minutes and then died on `MongoNetworkError: read ECONNRESET` before printing
+ * a line — so a 5,490-row write depended on a ten-minute unindexed scan not
+ * being interrupted. (Nothing was written; verified via `sweep_log` and probe
+ * pages.) That is the corpus-walk rule: a walk needs a checkpoint FIRST.
+ *
+ * Phase A discovers the candidate BOOK ids once and caches them to disk. It
+ * drops the giant `$in` (intersecting with the live set afterwards in memory is
+ * free) and uses a plain `$not` operator rather than `$expr`. Phase B then works
+ * book by book — each query indexed on `book_id`, each book checkpointed — so an
+ * interruption costs one book, not the run.
+ *
  * SAFETY
  * ------
  * - Only touches pages whose `thumbnail_blob` is already an R2 URL. Never
  *   invents a key, never derives one — see the #3362 rule that a page key must
- *   contain its own book_id; this script copies an existing verified value and
- *   asserts book scope before writing.
- * - HEAD-checks a sample of the R2 targets before any write, so we cannot
- *   repoint at a 404. `--verify-all` checks every one.
- * - Preserves the old value in `field_provenance.image_thumb.previous` so the
- *   change is reversible.
+ *   contain its own book_id; this copies an existing verified value and asserts
+ *   book scope before writing.
+ * - HEAD-checks the R2 targets before any write, so we cannot repoint at a 404.
+ * - Preserves the old value in `field_provenance.image_thumb.previous`.
  * - Records one `sweep_log` ROW per book, not a new column (field-sprawl rule).
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/repoint-provider-thumbs-to-r2.mjs
- *   node --env-file=.env.production.local scripts/maintenance/repoint-provider-thumbs-to-r2.mjs --verify-all
  *   node --env-file=.env.production.local scripts/maintenance/repoint-provider-thumbs-to-r2.mjs --apply
+ *   … --refresh-books   discard the cached book list and re-discover
  */
 import { MongoClient } from 'mongodb';
+import fs from 'node:fs';
+import path from 'node:path';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const APPLY = process.argv.includes('--apply');
-const VERIFY_ALL = process.argv.includes('--verify-all');
-const SAMPLE = Number((process.argv.find(a => a.startsWith('--sample=')) || '').split('=')[1] || 40);
+const REFRESH = process.argv.includes('--refresh-books');
 const R2_HOST = 'images.sourcelibrary.org';
-const R2_RE = /^https:\/\/images\.sourcelibrary\.org\//;
+const R2_PREFIX = `https://${R2_HOST}/`;
+const OUT_DIR = 'scripts/output';
+const BOOKS_CACHE = path.join(OUT_DIR, 'repoint-thumb-books.json');
+const CHECKPOINT = path.join(OUT_DIR, 'repoint-thumb-books.checkpoint');
 
-const client = new MongoClient(process.env.MONGODB_URI);
+fs.mkdirSync(OUT_DIR, { recursive: true });
+
+const client = new MongoClient(process.env.MONGODB_URI, {
+  socketTimeoutMS: 0,          // the discovery scan legitimately runs for minutes
+  serverSelectionTimeoutMS: 30000,
+  retryReads: true,
+  retryWrites: true,
+});
 await client.connect();
 const db = client.db('bookstore');
 const books = db.collection('books');
 const pages = db.collection('pages');
 
-const liveIds = (await books
-  .find({ visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 1 }, maxTimeMS: 300000 })
-  .toArray()).map(b => b._id.toString());
+// ---- Phase A: which books have a provider-hosted thumb? -------------------
+let bookIds;
+if (!REFRESH && fs.existsSync(BOOKS_CACHE)) {
+  bookIds = JSON.parse(fs.readFileSync(BOOKS_CACHE, 'utf8'));
+  console.log(`phase A: ${bookIds.length} candidate books (cached — --refresh-books to redo)`);
+} else {
+  console.log('phase A: scanning for pages whose image_thumb is not on R2 (minutes, once)…');
+  const rows = await pages.aggregate([
+    // Plain operators, no $expr and no 22K-element $in — both were why the
+    // single-query version could not finish reliably.
+    { $match: { image_thumb: { $type: 'string', $ne: '', $not: new RegExp(R2_HOST.replace(/\./g, '\\.')) } } },
+    { $group: { _id: '$book_id' } },
+  ], { allowDiskUse: true, maxTimeMS: 3600000 }).toArray();
 
-const candidates = await pages.find(
-  {
-    book_id: { $in: liveIds },
-    page_number: { $gte: 0 },
-    image_thumb: { $type: 'string', $ne: '' },
-    thumbnail_blob: { $regex: `^https://${R2_HOST.replace(/\./g, '\\.')}/` },
-    $expr: { $not: { $regexMatch: { input: '$image_thumb', regex: R2_HOST.replace(/\./g, '\\.') } } },
-  },
-  { projection: { book_id: 1, page_number: 1, image_thumb: 1, thumbnail_blob: 1 }, maxTimeMS: 900000 },
-).toArray();
+  const liveIds = new Set((await books
+    .find({ visible: true, pages_count: { $gt: 0 } }, { projection: { _id: 1 }, maxTimeMS: 300000 })
+    .toArray()).map(b => b._id.toString()));
 
-console.log(`candidates: ${candidates.length} pages`);
-if (!candidates.length) { await client.close(); process.exit(0); }
-
-// A page key must contain its own book_id (#3362). The value we are copying was
-// written by the archiver, but assert it rather than trust it.
-const misscoped = candidates.filter(p => !p.thumbnail_blob.includes(p.book_id));
-if (misscoped.length) {
-  console.error(`REFUSING: ${misscoped.length} thumbnail_blob values are not scoped to their own book_id.`);
-  console.error(misscoped.slice(0, 5).map(p => `  ${p.book_id} -> ${p.thumbnail_blob}`).join('\n'));
-  process.exit(1);
+  bookIds = rows.map(r => r._id).filter(id => id && liveIds.has(id));
+  fs.writeFileSync(BOOKS_CACHE, JSON.stringify(bookIds, null, 1));
+  console.log(`phase A: ${rows.length} books with a provider thumb, ${bookIds.length} of them live -> ${BOOKS_CACHE}`);
 }
+if (!bookIds.length) { console.log('nothing to do.'); await client.close(); process.exit(0); }
 
-const byBook = new Map();
-for (const p of candidates) {
-  const host = (() => { try { return new URL(p.image_thumb).hostname; } catch { return '(malformed)'; } })();
-  if (!byBook.has(p.book_id)) byBook.set(p.book_id, { pages: 0, hosts: new Set() });
-  const e = byBook.get(p.book_id);
-  e.pages++; e.hosts.add(host);
-}
-console.log(`across ${byBook.size} books\n`);
+const done = new Set(fs.existsSync(CHECKPOINT)
+  ? fs.readFileSync(CHECKPOINT, 'utf8').split('\n').filter(Boolean)
+  : []);
+if (done.size) console.log(`resuming: ${done.size} book(s) already processed`);
+
+// ---- Phase B: per book — indexed, verified, checkpointed ------------------
+let totalCandidates = 0, totalWritten = 0, totalSkipped = 0;
 const hostTotals = {};
-for (const p of candidates) {
-  const h = (() => { try { return new URL(p.image_thumb).hostname; } catch { return '(malformed)'; } })();
-  hostTotals[h] = (hostTotals[h] || 0) + 1;
-}
-for (const [h, n] of Object.entries(hostTotals).sort((a, b) => b[1] - a[1])) {
-  console.log(`  ${h.padEnd(26)} ${String(n).padStart(6)} pages`);
-}
 
-// --- verify the R2 targets actually exist before repointing at them --------
-const toCheck = VERIFY_ALL
-  ? candidates
-  : candidates.filter((_, i) => i % Math.max(1, Math.floor(candidates.length / SAMPLE)) === 0).slice(0, SAMPLE);
-console.log(`\nHEAD-checking ${toCheck.length} R2 target(s)${VERIFY_ALL ? ' (all)' : ' (sample)'}…`);
-// Bounded concurrency + progress. Serially and silently, --verify-all looks
-// indistinguishable from a hang for several minutes, which is how the first
-// run of this script got killed before it printed anything.
-let bad = 0, done = 0;
-const CONCURRENCY = 16;
-async function headWorker(queue) {
-  while (queue.length) {
-    const p = queue.pop();
-    const res = await fetch(p.thumbnail_blob, { method: 'HEAD' }).catch(() => null);
-    if (!res || !res.ok) { bad++; console.error(`  MISSING ${res?.status ?? 'ERR'}  ${p.thumbnail_blob}`); }
-    if (++done % 250 === 0 || done === toCheck.length) {
-      console.log(`  ${done}/${toCheck.length} checked, ${bad} missing`);
-    }
+for (const bookId of bookIds) {
+  if (done.has(bookId)) continue;
+
+  const candidates = await pages.find(
+    {
+      book_id: bookId,                       // indexed
+      page_number: { $gte: 0 },
+      image_thumb: { $type: 'string', $ne: '', $not: new RegExp(R2_HOST.replace(/\./g, '\\.')) },
+      thumbnail_blob: { $regex: `^${R2_PREFIX.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}` },
+    },
+    { projection: { book_id: 1, page_number: 1, image_thumb: 1, thumbnail_blob: 1 }, maxTimeMS: 120000 },
+  ).toArray();
+
+  if (!candidates.length) {
+    fs.appendFileSync(CHECKPOINT, `${bookId}\n`);
+    continue;
   }
-}
-{
-  const queue = [...toCheck];
-  await Promise.all(Array.from({ length: Math.min(CONCURRENCY, queue.length) }, () => headWorker(queue)));
-}
-if (bad) {
-  console.error(`\nREFUSING: ${bad}/${toCheck.length} R2 targets did not return 200.`);
-  console.error('Repointing at a 404 would turn a blocked image into a missing one.');
-  process.exit(1);
-}
-console.log(`  all ${toCheck.length} returned 200`);
+  totalCandidates += candidates.length;
 
-if (!APPLY) {
-  console.log('\nDRY RUN — pass --apply to write. Nothing changed.');
-  console.log('Old values are preserved in field_provenance.image_thumb.previous when applied.');
-  await client.close();
-  process.exit(0);
-}
+  // A page key must contain its own book_id (#3362). The value was written by
+  // the archiver, but assert rather than trust.
+  const misscoped = candidates.filter(p => !p.thumbnail_blob.includes(p.book_id));
+  if (misscoped.length) {
+    console.error(`REFUSING (${bookId}): ${misscoped.length} thumbnail_blob values not scoped to their own book_id`);
+    console.error(misscoped.slice(0, 3).map(p => `  ${p.thumbnail_blob}`).join('\n'));
+    process.exit(1);
+  }
 
-let written = 0;
-const BATCH = 500;
-for (let i = 0; i < candidates.length; i += BATCH) {
-  const slice = candidates.slice(i, i + BATCH);
-  const ops = slice.map(p => ({
+  for (const p of candidates) {
+    const h = (() => { try { return new URL(p.image_thumb).hostname; } catch { return '(malformed)'; } })();
+    hostTotals[h] = (hostTotals[h] || 0) + 1;
+  }
+
+  // Verify the R2 targets for THIS book before touching it. 16-way concurrent:
+  // serially and silently this looked like a hang and got the first run killed.
+  let bad = 0;
+  const queue = [...candidates];
+  await Promise.all(Array.from({ length: Math.min(16, queue.length) }, async () => {
+    while (queue.length) {
+      const p = queue.pop();
+      const res = await fetch(p.thumbnail_blob, { method: 'HEAD' }).catch(() => null);
+      if (!res || !res.ok) { bad++; console.error(`  MISSING ${res?.status ?? 'ERR'} ${p.thumbnail_blob}`); }
+    }
+  }));
+  if (bad) {
+    // Repointing at a 404 would turn a blocked image into a missing one.
+    console.error(`SKIPPING ${bookId}: ${bad}/${candidates.length} R2 targets did not return 200`);
+    totalSkipped += candidates.length;
+    continue; // deliberately NOT checkpointed — this book needs a look
+  }
+
+  if (!APPLY) {
+    console.log(`  [dry] ${bookId}  ${candidates.length} pages ready`);
+    fs.appendFileSync(CHECKPOINT, `${bookId}\n`);
+    continue;
+  }
+
+  const res = await pages.bulkWrite(candidates.map(p => ({
     updateOne: {
       filter: { _id: p._id },
       update: {
@@ -151,26 +179,26 @@ for (let i = 0; i < candidates.length; i += BATCH) {
         },
       },
     },
-  }));
-  const res = await pages.bulkWrite(ops, { ordered: false });
-  written += res.modifiedCount;
-  console.log(`  ${Math.min(i + BATCH, candidates.length)}/${candidates.length} — modified ${written}`);
-}
+  })), { ordered: false });
 
-for (const [bookId, e] of byBook) {
+  totalWritten += res.modifiedCount;
   await recordSweepAction(db, {
     sweep: 'repoint-provider-thumbs-to-r2',
     book_id: bookId,
     action: 'repointed-thumbs',
-    detail: { pages: e.pages, from_hosts: [...e.hosts], to: R2_HOST },
+    detail: { pages: res.modifiedCount, to: R2_HOST },
   });
+  fs.appendFileSync(CHECKPOINT, `${bookId}\n`);
+  console.log(`  ${bookId}  modified ${res.modifiedCount}/${candidates.length}  (running total ${totalWritten})`);
 }
 
-const left = await pages.countDocuments({
-  book_id: { $in: liveIds }, page_number: { $gte: 0 },
-  image_thumb: { $type: 'string', $ne: '' },
-  $expr: { $not: { $regexMatch: { input: '$image_thumb', regex: R2_HOST.replace(/\./g, '\\.') } } },
-});
-console.log(`\nmodified ${written} pages. Provider-hosted thumbs still on live books: ${left}`);
-console.log('(any remainder has no R2 alternative and needs archiving first)');
+console.log(`\ncandidates seen: ${totalCandidates}`);
+for (const [h, n] of Object.entries(hostTotals).sort((a, b) => b[1] - a[1])) {
+  console.log(`  ${h.padEnd(26)} ${String(n).padStart(6)} pages`);
+}
+if (totalSkipped) console.log(`skipped (R2 target missing): ${totalSkipped}`);
+console.log(APPLY
+  ? `\nmodified ${totalWritten} pages. Old values kept in field_provenance.image_thumb.previous.`
+  : '\nDRY RUN — pass --apply to write. Nothing changed.');
+console.log(`checkpoint: ${CHECKPOINT} (delete to re-run from the start)`);
 await client.close();
