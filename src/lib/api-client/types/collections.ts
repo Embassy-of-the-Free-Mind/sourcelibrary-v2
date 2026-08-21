@@ -1,3 +1,5 @@
+import type { LocalizedCollectionMap } from '@/lib/localized';
+
 /** Curated highlight entry for a book within a collection */
 export interface CuratedHighlight {
   book_id: string;
@@ -20,6 +22,14 @@ export interface CollectionImageRef {
 export interface Collection {
   slug: string;
   name: string;
+  /**
+   * Per-language copy — `{ es: { name, subtitle, description } }`. Read it
+   * through `localizedCollection()` (src/lib/localized.ts), never by indexing
+   * the map: a surface that reads `localized.es.name` will half-localize the
+   * next language (i18n.md rule 3). `/api/collections` projects nothing away,
+   * so this arrives whenever the document has it.
+   */
+  localized?: LocalizedCollectionMap | null;
   subtitle: string;
   description: string;
   expanded_description?: string;
