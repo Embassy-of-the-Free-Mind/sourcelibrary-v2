@@ -30,6 +30,7 @@ import RevisionHistoryPanel from './RevisionHistoryPanel';
 import SavePanel from './SavePanel';
 import PinnedVersionBanner from './PinnedVersion';
 import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishButton } from './ReaderSpanishToggle';
+import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote,
@@ -2222,12 +2223,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Spanish is another rendering of the same pane, not a fifth column: nobody
   // reads one page in two translations at once. Never offered while a citation
   // pins a version — the pin is on a specific English text.
-  const spanishAvailable = pinnedTranslation == null && spanishEligible(r.currentPage);
+  // Marcianus gr. Z. 299 only: on folios a concordance can align, Berthelot &
+  // Ruelle's 1887 critical edition is the text of record and the manuscript's
+  // own OCR is demoted. That OCR self-agrees at about 0.62 run to run with
+  // documented hallucinations on this hand, so showing it as the transcription
+  // is not a missing feature, it is the reader asserting something false.
+  const paired = usePairedEdition(r.book.id, r.currentPage.id, r.currentPage.page_number);
+
+  const spanishAvailable = pinnedTranslation == null && !paired && spanishEligible(r.currentPage);
   const showingSpanish = r.settings.translationLang === 'es' && spanishAvailable;
 
   // Trace aligns the transcription against the ENGLISH translation, so it has
   // nothing to align while the pane is showing Spanish.
-  const traceEligible = !isEnglishBook && !editing && !showingSpanish
+  const traceEligible = !isEnglishBook && !editing && !showingSpanish && !paired
     && !!r.currentPage.ocr?.data && !!r.currentPage.translation?.data
     && r.views.ocr && r.views.en;
   const traceActive = traceOn && traceEligible;
@@ -2544,8 +2552,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               ) : undefined}>
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
-                  {r.book.language || 'Original'} · OCR
+                  {paired ? 'Greek · Berthelot' : `${r.book.language || 'Original'} · OCR`}
                 </CapsLabel>
+                {paired && <PairedBadgeRow paired={paired} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -2560,7 +2569,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />
+                    {paired
+                      ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={17.5} />
+                      : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />}
                   </div>
                 </div>
               )}
@@ -2615,12 +2626,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     : <CopyTextButton page={r.currentPage} kind="translation" />}
                 </div>
               ) : undefined}>
-                <TranslationLanguageHeader
-                  lang={r.settings.translationLang}
-                  onChange={(l) => r.updateSettings({ translationLang: l })}
-                  spanishAvailable={spanishAvailable}
-                  editing={editing}
-                />
+                {paired ? (
+                  <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English · Berthelot</CapsLabel>
+                ) : (
+                  <TranslationLanguageHeader
+                    lang={r.settings.translationLang}
+                    onChange={(l) => r.updateSettings({ translationLang: l })}
+                    spanishAvailable={spanishAvailable}
+                    editing={editing}
+                  />
+                )}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -2635,7 +2650,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    {showingSpanish
+                    {paired
+                      ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
+                      : showingSpanish
                       ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
                   </div>
@@ -2778,7 +2795,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {r.views.ocr && (
             <section data-reader-section="ocr" className="relative border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
-                <CapsLabel style={{ color: 'var(--text-muted)' }}>{r.book.language || 'Original'} · OCR</CapsLabel>
+                <CapsLabel style={{ color: 'var(--text-muted)' }}>
+                  {paired ? 'Greek · Berthelot' : `${r.book.language || 'Original'} · OCR`}
+                </CapsLabel>
+                {paired && <PairedBadgeRow paired={paired} />}
                 <div className="flex items-center gap-1">
                   {traceEligible && (
                     <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
@@ -2789,7 +2809,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-8">
-                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />
+                {paired
+                      ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
+                      : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />}
               </div>
             </section>
           )}
@@ -2832,7 +2854,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
-                {showingSpanish
+                {paired
+                  ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
+                  : showingSpanish
                   ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
                   : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
               </div>
