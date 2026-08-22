@@ -2413,12 +2413,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </button>
             </div>
           ) : null}
-          <div className="flex-1" />
-          {saveError && (
-            <span className="font-sans text-[12px] max-w-[260px] truncate" style={{ color: '#e8a793' }} role="alert">
-              {saveError}
-            </span>
-          )}
           <a
             href={embedHref(`/book/${r.bookPath}`)}
             className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
@@ -2438,6 +2432,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </span>
             </span>
           </a>
+          <div className="flex-1" />
+          {saveError && (
+            <span className="font-sans text-[12px] max-w-[260px] truncate" style={{ color: '#e8a793' }} role="alert">
+              {saveError}
+            </span>
+          )}
           <div className="ml-1 shrink-0 whitespace-nowrap">
             <UserMenu variant="hero" />
           </div>
