@@ -2674,9 +2674,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
       <div className="lg:hidden flex flex-col h-[100dvh]">
+        {/* Clipping is only needed while the bar is collapsing. Left on, it
+            cut off the account menu, which opens downward out of the header. */}
         <header
-          className="shrink-0 overflow-hidden transition-[height] duration-200 ease-out"
-          style={{ background: INK, color: '#fdfcf9', height: barHidden ? 0 : 52 }}
+          className="shrink-0 transition-[height] duration-200 ease-out relative z-30"
+          style={{
+            background: INK,
+            color: '#fdfcf9',
+            height: barHidden ? 0 : 52,
+            overflow: barHidden ? 'hidden' : 'visible',
+          }}
         >
           <div className="flex items-center gap-2.5 h-[52px] px-3">
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
@@ -2701,7 +2708,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           key={browserTranslated ? `m-translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
           className="flex-1 min-h-0 overflow-y-auto flex flex-col"
-          style={{ overscrollBehavior: 'contain', background: lastSurface }}
+          style={{
+            overscrollBehavior: 'contain',
+            background: lastSurface,
+            // Proximity snap, so the end of a page settles on the pager rather
+            // than overshooting it and bouncing. Proximity, not mandatory:
+            // reading the page must never feel like it is being steered.
+            scrollSnapType: 'y proximity',
+            scrollPaddingBottom: 0,
+            WebkitOverflowScrolling: 'touch',
+          }}
           onScroll={onMobileScroll}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
@@ -2798,7 +2814,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               The spacer above keeps it flush with the toolbar. */}
           <div
             className="shrink-0 flex items-center justify-between border-t px-2"
-            style={{ borderColor: 'var(--border-medium)', background: SURFACE.panel }}
+            style={{
+              borderColor: 'var(--border-medium)',
+              background: SURFACE.panel,
+              scrollSnapAlign: 'end',
+              scrollSnapStop: 'always',
+            }}
           >
             <button
               type="button"
