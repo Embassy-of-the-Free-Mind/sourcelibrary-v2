@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
+import SaveToListButton from '@/components/ui/SaveToListButton';
 import AiBadge, { formatModelName } from '@/components/ui/AiBadge';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { gallery, views } from '@/lib/api-client';
@@ -790,6 +791,15 @@ export default function ImageDetailPage({
                   <Eye className="w-4 h-4" />
                   {data!.viewCount!.toLocaleString()}
                 </span>
+              )}
+              {imageId && (
+                <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0">
+                  <SaveToListButton
+                    targetType="image"
+                    targetId={imageId}
+                    size="md"
+                  />
+                </div>
               )}
               {imageId && (
                 <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0">
