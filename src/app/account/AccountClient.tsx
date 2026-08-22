@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { BookOpen, Heart, LogOut, Crown, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import SiteHeader from '@/components/layout/SiteHeader';
+import ProfilePhotoEditor from '@/components/account/ProfilePhotoEditor';
 
 interface AccountClientProps {
   user: {
@@ -134,33 +135,21 @@ export default function AccountClient({ user }: AccountClientProps) {
           className="rounded-xl p-6 mb-6"
           style={{ background: 'white', border: '1px solid var(--border-light)' }}
         >
-          <div className="flex items-center gap-4 mb-4">
-            {user.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={user.image}
-                alt={user.name || 'Profile'}
-                className="w-14 h-14 rounded-full"
-              />
-            ) : (
-              <div
-                className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-medium"
-                style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
-              >
-                {user.name?.charAt(0)?.toUpperCase() || '?'}
-              </div>
-            )}
-            <div>
+          <div className="flex items-center gap-4 mb-4 flex-wrap">
+            <div className="flex-1 min-w-0 order-2">
               {user.name && (
-                <p className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
+                <p className="text-lg font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {user.name}
                 </p>
               )}
               {user.email && (
-                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                <p className="text-sm truncate" style={{ color: 'var(--text-muted)' }}>
                   {user.email}
                 </p>
               )}
+            </div>
+            <div className="order-1">
+              <ProfilePhotoEditor name={user.name} initialImage={user.image} />
             </div>
           </div>
         </div>
