@@ -159,6 +159,18 @@ const nextConfig: NextConfig = {
         has: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'no-store' }],
       },
+      // No *.vercel.app host may be indexed. alias-host-scope.ts already 308s
+      // (bare production alias) or 403s (previews, anonymous content) the
+      // library itself, but the allowlisted residue — /, the /embed/* landing
+      // pages, UI shells — was indexable, and Google indexed it: GSC shows
+      // 667k phantom "external links" from vercel.app and duplicate copies of
+      // the site competing with sourcelibrary.org. Canonical + tenant domains
+      // are unaffected; this matches only Vercel infrastructure hostnames.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: '.*\\.vercel\\.app' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
