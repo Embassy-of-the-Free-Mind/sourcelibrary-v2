@@ -5,6 +5,7 @@ import NotesRenderer from '@/components/reader/NotesRenderer';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import type { Book, Page } from '@/lib/types';
 import type { ReaderSettings } from './useReaderV2';
+import { PaneEmptyState } from './PaneEmptyState';
 
 // Shared presentational pieces for the v2 reader design previews. All values
 // map to existing Source Library tokens (globals.css) — no new primitives.
@@ -97,16 +98,12 @@ export function ReaderProse({
   const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
   const lang = kind === 'ocr' ? book.language : 'English';
 
+  // An empty pane is several different situations wearing one sentence: a page
+  // nobody has transcribed, a page transcribed but not translated, a blank
+  // flyleaf. They call for different words and, for one of them, a way to ask
+  // for the translation.
   if (!text) {
-    return (
-      <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
-        {kind === 'ocr'
-          ? 'No transcription yet for this page.'
-          : page.page_type === 'blank'
-            ? 'Blank page.'
-            : 'No translation yet for this page.'}
-      </p>
-    );
+    return <PaneEmptyState page={page} book={book} kind={kind} />;
   }
 
   const fontSize = Math.round(baseSize * settings.textScale * 10) / 10;
