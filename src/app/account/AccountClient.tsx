@@ -3,7 +3,7 @@
 import { signOut, useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BookOpen, Heart, LogOut, Crown, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, Bookmark, Crown, Heart, LogOut, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ProfilePhotoEditor from '@/components/account/ProfilePhotoEditor';
@@ -14,6 +14,23 @@ interface AccountClientProps {
     email: string | null;
     image: string | null;
   };
+}
+
+// Shared field styling — 16px font is deliberate (inputs under 16px make
+// mobile Safari zoom the page on focus).
+const inputStyle = {
+  fontSize: '16px',
+  background: 'var(--bg-cream)',
+  border: '1px solid var(--border-light)',
+  color: 'var(--text-primary)',
+} as const;
+
+function Eyebrow({ children, className = 'text-accent-rust' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p className={`text-xs font-medium uppercase tracking-[0.18em] mb-2 ${className}`}>
+      {children}
+    </p>
+  );
 }
 
 export default function AccountClient({ user }: AccountClientProps) {
@@ -122,278 +139,316 @@ export default function AccountClient({ user }: AccountClientProps) {
     }
   };
 
+  const libraryTiles = [
+    {
+      href: '/favorites',
+      icon: Heart,
+      iconClass: 'text-accent-rust',
+      tint: 'bg-accent-rust/8',
+      title: 'Favorites',
+      blurb: 'Books, pages & images you’ve liked',
+    },
+    {
+      href: '/lists',
+      icon: Bookmark,
+      iconClass: 'text-accent-gold',
+      tint: 'bg-accent-gold/10',
+      title: 'Lists',
+      blurb: 'Collections of your own making',
+    },
+    {
+      href: '/reading-history',
+      icon: BookOpen,
+      iconClass: 'text-accent-sage',
+      tint: 'bg-accent-sage/12',
+      title: 'Reading history',
+      blurb: 'Pick up where you left off',
+    },
+  ];
+
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="light" />
-      <div className="max-w-xl mx-auto px-4 py-16">
-        <h1 className="text-2xl font-serif font-medium mb-8" style={{ color: 'var(--text-primary)' }}>
-          Account
-        </h1>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20">
 
-        {/* Profile card */}
-        <div
-          className="rounded-xl p-6 mb-6"
-          style={{ background: 'white', border: '1px solid var(--border-light)' }}
-        >
-          <div className="flex items-center gap-4 mb-4 flex-wrap">
-            <div className="flex-1 min-w-0 order-2">
-              {user.name && (
-                <p className="text-lg font-medium truncate" style={{ color: 'var(--text-primary)' }}>
-                  {user.name}
-                </p>
-              )}
-              {user.email && (
-                <p className="text-sm truncate" style={{ color: 'var(--text-muted)' }}>
-                  {user.email}
-                </p>
-              )}
-            </div>
-            <div className="order-1">
-              <ProfilePhotoEditor name={user.name} initialImage={user.image} />
-            </div>
+        {/* ── Identity ─────────────────────────────────────────── */}
+        <header className="flex items-center gap-5 sm:gap-7">
+          <ProfilePhotoEditor name={user.name} initialImage={user.image} size="lg" />
+          <div className="min-w-0">
+            <Eyebrow>Your account</Eyebrow>
+            <h1
+              className="font-serif text-3xl sm:text-4xl leading-tight truncate"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {user.name || 'Reader'}
+            </h1>
+            {user.email && (
+              <p className="text-sm mt-1 truncate" style={{ color: 'var(--text-muted)' }}>
+                {user.email}
+              </p>
+            )}
+            {isMember && (
+              <span className="inline-flex items-center gap-1.5 mt-2.5 px-2.5 py-1 text-xs font-medium bg-accent-sage/12 text-accent-sage-dark">
+                <Crown className="w-3.5 h-3.5" aria-hidden="true" />
+                Supporting Member{expiresAt ? ` · renews ${expiresAt}` : ''}
+              </span>
+            )}
           </div>
-        </div>
+        </header>
 
-        {/* Reader profile — editable answers to the /welcome questions */}
-        <div
-          id="reader-profile"
-          className="rounded-xl p-6 mb-6 scroll-mt-24"
-          style={{ background: 'white', border: '1px solid var(--border-light)' }}
-        >
-          <h2 className="text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
-            Reader profile
-          </h2>
-          <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+        {/* ── Your library ─────────────────────────────────────── */}
+        <section className="mt-12 sm:mt-14">
+          <Eyebrow className="text-accent-gold">Your library</Eyebrow>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {libraryTiles.map(tile => (
+              <Link
+                key={tile.href}
+                href={tile.href}
+                className="group flex sm:flex-col items-center sm:items-start gap-3 p-4 sm:p-5 transition-all hover:shadow-md"
+                style={{ background: 'white', border: '1px solid var(--border-light)' }}
+              >
+                <span className={`flex items-center justify-center w-9 h-9 shrink-0 ${tile.tint}`}>
+                  <tile.icon className={`w-4.5 h-4.5 ${tile.iconClass}`} aria-hidden="true" />
+                </span>
+                <span className="flex-1 min-w-0">
+                  <span className="flex items-center gap-1 font-medium text-[15px]" style={{ color: 'var(--text-primary)' }}>
+                    {tile.title}
+                    <ArrowRight
+                      className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                      style={{ color: 'var(--text-muted)' }}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span className="block text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                    {tile.blurb}
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Reader profile ───────────────────────────────────── */}
+        <section id="reader-profile" className="mt-12 sm:mt-14 scroll-mt-24">
+          <Eyebrow>Reader profile</Eyebrow>
+          <p className="text-sm mb-4 max-w-md" style={{ color: 'var(--text-muted)' }}>
             What you told us when you joined. Change it whenever you like — every field is optional.
           </p>
 
-          {!readerLoaded ? (
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading…</p>
-          ) : (
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="reader-name" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
-                  Your name
-                </label>
-                <input
-                  id="reader-name"
-                  type="text"
-                  value={readerName}
-                  onChange={e => setReaderName(e.target.value)}
-                  autoComplete="name"
-                  maxLength={100}
-                  placeholder="Your name"
-                  className="w-full px-3 py-2 rounded-lg text-sm"
-                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="reader-about" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
-                  Who you are, and what interests you about Source Library
-                </label>
-                <textarea
-                  id="reader-about"
-                  rows={4}
-                  value={aboutYou}
-                  onChange={e => setAboutYou(e.target.value)}
-                  maxLength={4000}
-                  placeholder="Your background, the authors or traditions you're drawn to, questions you're chasing…"
-                  className="w-full px-3 py-2 rounded-lg text-sm resize-y"
-                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="reader-language" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
-                  The language you prefer to read in
-                </label>
-                <input
-                  id="reader-language"
-                  type="text"
-                  value={preferredLanguage}
-                  onChange={e => setPreferredLanguage(e.target.value)}
-                  maxLength={60}
-                  placeholder="e.g. English, Spanish, Portuguese, Chinese…"
-                  className="w-full px-3 py-2 rounded-lg text-sm"
-                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="reader-help" className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
-                  How you&rsquo;d like to help, if at all
-                </label>
-                <textarea
-                  id="reader-help"
-                  rows={3}
-                  value={helpDescription}
-                  onChange={e => setHelpDescription(e.target.value)}
-                  maxLength={2000}
-                  placeholder="Reviewing translations, annotating texts, suggesting books, writing, coding, study groups — or just here to read."
-                  className="w-full px-3 py-2 rounded-lg text-sm resize-y"
-                  style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
-                />
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  onClick={saveReaderProfile}
-                  disabled={savingReader}
-                  className="px-4 py-1.5 rounded-lg text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
-                  style={{ background: 'var(--text-primary)', color: 'white' }}
-                >
-                  {savingReader ? 'Saving...' : 'Save'}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Membership */}
-        {isMember ? (
-          <>
-          <div
-            className="rounded-xl p-6 mb-6"
-            style={{ background: 'var(--bg-warm)', border: '1px solid var(--accent-sage)' }}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Crown className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+          <div className="p-5 sm:p-6" style={{ background: 'white', border: '1px solid var(--border-light)' }}>
+            {!readerLoaded ? (
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading…</p>
+            ) : (
+              <div className="space-y-5">
                 <div>
-                  <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Supporting Member</p>
-                  {expiresAt && <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Renews {expiresAt}</p>}
-                </div>
-              </div>
-              <button
-                onClick={openBillingPortal}
-                disabled={managingBilling}
-                className="text-sm hover:opacity-70 transition-opacity disabled:opacity-50"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {managingBilling ? 'Opening...' : 'Manage'}
-              </button>
-            </div>
-          </div>
-
-          {/* Member profile for the members page */}
-          {profileLoaded && (
-            <div
-              className="rounded-xl p-6 mb-6"
-              style={{ background: 'white', border: '1px solid var(--border-light)' }}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-                  Members page profile
-                </h2>
-                <Link
-                  href="/support"
-                  className="text-sm hover:opacity-70 transition-opacity flex items-center gap-1"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  <Users className="w-3.5 h-3.5" />
-                  Support page
-                </Link>
-              </div>
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
-                    Display name
+                  <label htmlFor="reader-name" className="block text-xs mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                    Your name
                   </label>
                   <input
+                    id="reader-name"
                     type="text"
-                    value={displayName}
-                    onChange={e => setDisplayName(e.target.value)}
-                    placeholder={user.name || 'Your name'}
+                    value={readerName}
+                    onChange={e => setReaderName(e.target.value)}
+                    autoComplete="name"
                     maxLength={100}
-                    className="w-full px-3 py-2 rounded-lg text-sm"
-                    style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
+                    placeholder="Your name"
+                    className="w-full px-3 py-2"
+                    style={inputStyle}
                   />
                 </div>
+
                 <div>
-                  <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
-                    One-line bio <span className="opacity-50">(optional)</span>
+                  <label htmlFor="reader-about" className="block text-xs mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                    Who you are, and what interests you about Source Library
+                  </label>
+                  <textarea
+                    id="reader-about"
+                    rows={4}
+                    value={aboutYou}
+                    onChange={e => setAboutYou(e.target.value)}
+                    maxLength={4000}
+                    placeholder="Your background, the authors or traditions you're drawn to, questions you're chasing…"
+                    className="w-full px-3 py-2 resize-y"
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="reader-language" className="block text-xs mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                    The language you prefer to read in
                   </label>
                   <input
+                    id="reader-language"
                     type="text"
-                    value={bio}
-                    onChange={e => setBio(e.target.value)}
-                    placeholder="Scholar, collector, curious reader..."
-                    maxLength={200}
-                    className="w-full px-3 py-2 rounded-lg text-sm"
-                    style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)', color: 'var(--text-primary)' }}
+                    value={preferredLanguage}
+                    onChange={e => setPreferredLanguage(e.target.value)}
+                    maxLength={60}
+                    placeholder="e.g. English, Spanish, Portuguese, Chinese…"
+                    className="w-full px-3 py-2"
+                    style={inputStyle}
                   />
                 </div>
-                <div className="flex items-center justify-between">
-                  <label className="flex items-center gap-2 text-sm cursor-pointer" style={{ color: 'var(--text-secondary)' }}>
-                    <input
-                      type="checkbox"
-                      checked={visible}
-                      onChange={e => setVisible(e.target.checked)}
-                      className="rounded"
-                    />
-                    Show me on the members page
+
+                <div>
+                  <label htmlFor="reader-help" className="block text-xs mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                    How you&rsquo;d like to help, if at all
                   </label>
+                  <textarea
+                    id="reader-help"
+                    rows={3}
+                    value={helpDescription}
+                    onChange={e => setHelpDescription(e.target.value)}
+                    maxLength={2000}
+                    placeholder="Reviewing translations, annotating texts, suggesting books, writing, coding, study groups — or just here to read."
+                    className="w-full px-3 py-2 resize-y"
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div className="flex justify-end pt-1">
                   <button
-                    onClick={saveProfile}
-                    disabled={savingProfile}
-                    className="px-4 py-1.5 rounded-lg text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
+                    onClick={saveReaderProfile}
+                    disabled={savingReader}
+                    className="px-5 py-2 text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
                     style={{ background: 'var(--text-primary)', color: 'white' }}
                   >
-                    {savingProfile ? 'Saving...' : 'Save'}
+                    {savingReader ? 'Saving…' : 'Save'}
                   </button>
                 </div>
               </div>
+            )}
+          </div>
+        </section>
+
+        {/* ── Membership ───────────────────────────────────────── */}
+        <section className="mt-12 sm:mt-14">
+          <Eyebrow className="text-accent-sage-dark">Membership</Eyebrow>
+
+          {isMember ? (
+            <div style={{ background: 'white', border: '1px solid var(--border-light)' }}>
+              <div className="flex items-center justify-between gap-4 p-5 sm:p-6">
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="flex items-center justify-center w-9 h-9 shrink-0 bg-accent-sage/12">
+                    <Crown className="w-4.5 h-4.5 text-accent-sage" aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Supporting Member</p>
+                    {expiresAt && <p className="text-sm truncate" style={{ color: 'var(--text-muted)' }}>Renews {expiresAt}</p>}
+                  </div>
+                </div>
+                <button
+                  onClick={openBillingPortal}
+                  disabled={managingBilling}
+                  className="text-sm shrink-0 hover:opacity-70 transition-opacity disabled:opacity-50 underline underline-offset-4"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  {managingBilling ? 'Opening…' : 'Manage billing'}
+                </button>
+              </div>
+
+              {/* Member profile for the members page */}
+              {profileLoaded && (
+                <div className="p-5 sm:p-6" style={{ borderTop: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      Members page profile
+                    </h2>
+                    <Link
+                      href="/support"
+                      className="text-sm hover:opacity-70 transition-opacity flex items-center gap-1"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
+                      <Users className="w-3.5 h-3.5" aria-hidden="true" />
+                      Support page
+                    </Link>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                        Display name
+                      </label>
+                      <input
+                        type="text"
+                        value={displayName}
+                        onChange={e => setDisplayName(e.target.value)}
+                        placeholder={user.name || 'Your name'}
+                        maxLength={100}
+                        className="w-full px-3 py-2"
+                        style={inputStyle}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs mb-1.5" style={{ color: 'var(--text-muted)' }}>
+                        One-line bio <span className="opacity-50">(optional)</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={bio}
+                        onChange={e => setBio(e.target.value)}
+                        placeholder="Scholar, collector, curious reader..."
+                        maxLength={200}
+                        className="w-full px-3 py-2"
+                        style={inputStyle}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <label className="flex items-center gap-2 text-sm cursor-pointer" style={{ color: 'var(--text-secondary)' }}>
+                        <input
+                          type="checkbox"
+                          checked={visible}
+                          onChange={e => setVisible(e.target.checked)}
+                        />
+                        Show me on the members page
+                      </label>
+                      <button
+                        onClick={saveProfile}
+                        disabled={savingProfile}
+                        className="px-5 py-2 text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
+                        style={{ background: 'var(--text-primary)', color: 'white' }}
+                      >
+                        {savingProfile ? 'Saving…' : 'Save'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
+          ) : (
+            <Link
+              href="/support"
+              className="group flex items-center justify-between gap-4 p-5 sm:p-6 transition-opacity hover:opacity-95"
+              style={{ background: 'var(--accent-rust)', color: 'white' }}
+            >
+              <span>
+                <span className="block font-serif text-xl">Support the Library</span>
+                <span className="block text-sm opacity-80 mt-1">
+                  Help fund the digitization and translation of ancient texts
+                </span>
+              </span>
+              <ArrowRight className="w-5 h-5 shrink-0 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
           )}
-          </>
-        ) : (
-          <Link
-            href="/support"
-            className="block rounded-xl p-6 mb-6 hover:opacity-90 transition-opacity"
-            style={{ background: 'var(--accent-rust)', color: 'white' }}
-          >
-            <p className="font-medium">Support the Library</p>
-            <p className="text-sm opacity-80">Help fund the digitization and translation of ancient texts</p>
-          </Link>
-        )}
+        </section>
 
-        {/* Quick links */}
+        {/* ── Sign out ─────────────────────────────────────────── */}
         <div
-          className="rounded-xl divide-y mb-6"
-          style={{ background: 'white', border: '1px solid var(--border-light)', borderColor: 'var(--border-light)' }}
+          className="flex items-center justify-between gap-4 mt-14 pt-6"
+          style={{ borderTop: '1px solid var(--border-light)' }}
         >
-          <Link
-            href="/reading-history"
-            className="flex items-center gap-3 px-6 py-4 hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--text-primary)' }}
+          {user.email ? (
+            <p className="text-xs truncate" style={{ color: 'var(--text-faint)' }}>
+              Signed in as {user.email}
+            </p>
+          ) : <span />}
+          <button
+            onClick={() => signOut({ callbackUrl: '/' })}
+            className="flex items-center gap-2 text-sm shrink-0 hover:opacity-70 transition-opacity"
+            style={{ color: 'var(--accent-rust)' }}
           >
-            <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
-            <span>Reading History</span>
-          </Link>
-          <Link
-            href="/favorites"
-            className="flex items-center gap-3 px-6 py-4 hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            <Heart className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
-            <span>Favorites</span>
-          </Link>
+            <LogOut className="w-4 h-4" aria-hidden="true" />
+            Sign out
+          </button>
         </div>
-
-        {/* Sign out */}
-        <button
-          onClick={() => signOut({ callbackUrl: '/' })}
-          className="flex items-center gap-3 w-full px-6 py-4 rounded-xl hover:opacity-70 transition-opacity"
-          style={{
-            background: 'white',
-            border: '1px solid var(--border-light)',
-            color: 'var(--accent-rust)',
-          }}
-        >
-          <LogOut className="w-5 h-5" />
-          <span>Sign out</span>
-        </button>
       </div>
     </div>
   );
