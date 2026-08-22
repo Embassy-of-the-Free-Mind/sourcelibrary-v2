@@ -2340,30 +2340,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
           {!isEmbedded && <Logo white compact />}
-          {/* Title and byline sit on one line rather than stacking, so the bar
-              stays a single row of chrome */}
-          {/* The title is the way back to the book, so it wears the affordance
-              of one: a back chevron, and an underline that answers the hover.
-              It was a bare label that happened to be clickable. */}
-          <a
-            href={embedHref(`/book/${r.bookPath}`)}
-            className="min-w-0 flex-1 max-w-[52%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 ml-1 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-            style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
-            title="Back to the book"
-          >
-            <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
-            <span className="min-w-0 flex-1 flex items-baseline gap-2.5">
-              <span
-                className="font-body text-[15.5px] leading-none truncate shrink-0 max-w-[58%] group-hover:underline"
-                style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
-              >
-                {r.book.display_title || r.book.title}
-              </span>
-              <span className="font-sans text-[11.5px] leading-none truncate min-w-0" style={{ color: onInk(0.5) }}>
-                {bookByline(r.book)}
-              </span>
-            </span>
-          </a>
+          {/* Left to right: what you are looking at, where you are in the
+              book, then the book itself as the way out of it. The controls a
+              reader touches sit nearest the rail their hand is already on;
+              the title is the least-used of the three and takes the slack. */}
+          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
           <div className="flex items-stretch">
             <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
               <button type="button" aria-label="Previous page" onClick={r.goPrev}
@@ -2438,7 +2419,25 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               {saveError}
             </span>
           )}
-          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
+          <a
+            href={embedHref(`/book/${r.bookPath}`)}
+            className="min-w-0 flex-1 h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+            style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
+            title="Back to the book"
+          >
+            <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
+            <span className="min-w-0 flex-1 flex items-baseline gap-2.5">
+              <span
+                className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
+                style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
+              >
+                {r.book.display_title || r.book.title}
+              </span>
+              <span className="font-sans text-[11.5px] leading-none truncate min-w-0" style={{ color: onInk(0.5) }}>
+                {bookByline(r.book)}
+              </span>
+            </span>
+          </a>
           <div className="ml-1 shrink-0 whitespace-nowrap">
             <UserMenu variant="hero" />
           </div>
