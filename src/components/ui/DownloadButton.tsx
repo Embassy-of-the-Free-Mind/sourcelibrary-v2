@@ -21,12 +21,19 @@ interface DownloadButtonProps {
   variant?: 'default' | 'header';
   /** Hide the "Download" label + chevron — show only the icon. */
   iconOnly?: boolean;
+  /**
+   * Render the format list inline, with no trigger button and no popup. For
+   * surfaces that ARE the download surface — the reader's Download drawer is
+   * already a panel you opened on purpose, so making you press a button to
+   * reveal a menu inside it is one gesture too many.
+   */
+  inline?: boolean;
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false, inline = false }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(inline);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [hasAccess, setHasAccess] = useState(false);
   const [accessChecked, setAccessChecked] = useState(false);
@@ -203,20 +210,24 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     : "flex items-center gap-2 px-4 py-2 bg-accent-gold/80 hover:bg-accent-rust text-white rounded-lg font-medium text-sm transition-colors";
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={buttonClass}
-      >
-        <Download className="w-4 h-4" />
-        {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
-      </button>
+    <div className={inline ? '' : 'relative'} ref={dropdownRef}>
+      {!inline && (
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={buttonClass}
+        >
+          <Download className="w-4 h-4" />
+          {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
+        </button>
+      )}
 
       {isOpen && (
         <>
         {/* Backdrop (mobile) — tap to dismiss */}
-        <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />
-        <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
+        {!inline && <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />}
+        <div className={inline
+          ? 'w-full bg-transparent border-0 shadow-none py-0'
+          : 'fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]'}>
           {/* Header with close (mobile bottom sheet) */}
           <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
             <span className="text-[15px] font-semibold text-stone-900">Download</span>

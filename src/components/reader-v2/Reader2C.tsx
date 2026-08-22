@@ -233,10 +233,6 @@ interface GuideData {
   sections?: GuideSection[];
 }
 
-/** What the guide is, shown when a book has none yet (and in brief when it does). */
-const GUIDE_BLURB = 'A reading guide is our own summary layer over the book: an overview, the themes it keeps returning to, and a short summary of each section with the page it starts on.';
-const GUIDE_BLURB_2 = 'It is not the printed table of contents. The contents list what the printer set down; the guide describes what the text actually covers, in modern English, and points you to where each part begins.';
-const GUIDE_BLURB_3 = 'Guides come from an AI-assisted enrichment pass that runs after a book is transcribed and translated, so they appear once enough of the book has been through that pipeline.';
 
 /** Reading guide, from book.reading_summary / index.bookSummary — fetched on open. */
 function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }: {
@@ -305,17 +301,8 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
   if (!guide) {
     return (
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
-        <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
-          {GUIDE_BLURB}
-        </p>
-        <p className="font-body text-[14px] leading-relaxed mb-3" style={{ color: 'var(--text-secondary)' }}>
-          {GUIDE_BLURB_2}
-        </p>
-        <p className="font-body text-[14px] leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
-          {GUIDE_BLURB_3}
-        </p>
         <p className="font-sans text-[13px] mb-3" style={{ color: 'var(--text-primary)' }}>
-          This book does not have one yet.
+          This book does not have a reading guide yet.
         </p>
         {requested ? (
           <p className="font-sans text-[13px]" style={{ color: 'var(--accent-sage-dark)' }} role="status">
@@ -648,8 +635,9 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
 
       <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>The whole book</CapsLabel>
       {full ? (
-        <div className="px-4">
+        <div>
           <DownloadButton
+            inline
             bookId={book.id}
             bookTitle={book.display_title || book.title}
             hasTranslations={hasTranslations}
@@ -1035,6 +1023,12 @@ function extractPageSummary(page: Page): string | null {
 }
 
 /** Edition & page info — page summary + bibliographic record, fetched on open. */
+/**
+ * Everything this panel can answer from what the reader already has is drawn
+ * at once. The fetch only adds the imprint, format, page count and USTC id, so
+ * it fills in behind an already-readable panel rather than holding the whole
+ * thing behind a spinner while it waits.
+ */
 function InfoPanel({ page, book }: { page: Page; book: Book }) {
   const [fullBook, setFullBook] = useState<Record<string, unknown> | null>(null);
   useEffect(() => {
@@ -1071,9 +1065,6 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
         </div>
       )}
       <CapsLabel className="block mt-1 mb-2.5" style={{ color: 'var(--text-muted)' }}>This edition</CapsLabel>
-      {!fullBook && (
-        <div className="py-2"><Loader2 size={14} className="animate-spin" style={{ color: 'var(--text-muted)' }} /></div>
-      )}
       <dl>
         {rows.filter(([, v]) => v).map(([label, value]) => (
           <div key={label} className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
@@ -1680,43 +1671,42 @@ function PanelContent({
   shareUrl: string;
 }) {
   if (panel === 'more') {
-    // A grid of names, not a list of explanations. Descriptions belong on the
-    // panel you land on — reading seven of them to choose one is the clunk.
-    const tile = 'flex flex-col items-start justify-end gap-1 h-[58px] px-3 py-2.5 border text-left transition-[background,border-color] duration-150 active:bg-[var(--bg-white)]';
+    // A quiet list, not a wall of boxes. Ten bordered white tiles on a warm
+    // ground read as ten competing buttons; a single hairline-separated column
+    // reads as a menu, which is what it is. Rows are full-width tap targets
+    // and arrive in sequence so opening More is one movement.
+    const row = 'w-full text-left flex items-center justify-between gap-3 h-[46px] font-sans text-[14px] transition-colors active:bg-[var(--bg-white)]';
     return (
-      <div className="flex-1 min-h-0 overflow-y-auto px-3 pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
-        <div className="grid grid-cols-2 gap-2">
+      <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-5" style={{ overscrollBehavior: 'contain' }}>
+        <div className="flex flex-col">
           {MORE_TOOLS.map(([key, label], i) => (
             <button
               key={key}
               type="button"
               onClick={() => onSelectPanel(key)}
-              className={`${tile} rv2-tile-in`}
+              className={`${row} rv2-tile-in border-b`}
               style={{
                 borderColor: 'var(--border-light)',
-                background: 'var(--bg-white)',
                 color: 'var(--text-primary)',
-                animationDelay: `${i * 22}ms`,
+                animationDelay: `${i * 18}ms`,
               }}
             >
-              <span className="font-sans text-[13px] leading-tight">{label}</span>
+              {label}
+              <ChevronRightSmall size={15} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
             </button>
           ))}
           <AuthCheck role="inner_circle">
             <button
               type="button"
               onClick={() => { onClose(); onToggleEdit(); }}
-              className={`${tile} rv2-tile-in w-full`}
+              className={`${row} rv2-tile-in`}
               style={{
-                borderColor: 'var(--border-light)',
-                background: 'var(--bg-white)',
                 color: 'var(--text-primary)',
-                animationDelay: `${MORE_TOOLS.length * 22}ms`,
+                animationDelay: `${MORE_TOOLS.length * 18}ms`,
               }}
             >
-              <span className="font-sans text-[13px] leading-tight">
-                {editing ? 'Stop editing' : 'Edit this page'}
-              </span>
+              {editing ? 'Stop editing' : 'Edit this page'}
+              <Pencil size={14} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
             </button>
           </AuthCheck>
         </div>
@@ -2754,11 +2744,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{
             overscrollBehavior: 'contain',
             background: lastSurface,
-            // Proximity snap, so the end of a page settles on the pager rather
-            // than overshooting it and bouncing. Proximity, not mandatory:
-            // reading the page must never feel like it is being steered.
-            scrollSnapType: 'y proximity',
-            scrollPaddingBottom: 0,
+            // No scroll-snap here. A proximity snap on the pager made the
+            // scroller grab at the finger near the foot of every page, which
+            // reads as sticking — worse than the overshoot it was meant to fix.
             WebkitOverflowScrolling: 'touch',
           }}
           onScroll={onMobileScroll}
@@ -2869,14 +2857,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
           {/* End of the scroll: page turn where the reading actually ends
               (swiping left/right anywhere in this scroller does the same).
-              The spacer above keeps it flush with the toolbar. */}
+              It is the last thing in the scroller, and the strip and toolbar
+              sit under the scroller's bottom edge, so it needs its own room
+              or it arrives half-covered exactly when you reach for it. */}
           <div
-            className="shrink-0 flex items-center justify-between border-t px-2"
+            className="shrink-0 flex items-center justify-between border-t px-2 mb-3"
             style={{
               borderColor: 'var(--border-medium)',
               background: SURFACE.panel,
-              scrollSnapAlign: 'end',
-              scrollSnapStop: 'always',
             }}
           >
             <button
