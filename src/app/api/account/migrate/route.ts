@@ -41,8 +41,15 @@ export async function POST(request: NextRequest) {
 
     const likesMigrated = likesResult.modifiedCount;
 
+    // Migrate anonymous lists the same way — owner_id moves to the account id.
+    // List ids stay stable, so saved /lists/{id} URLs keep working.
+    const listsResult = await db.collection('user_lists').updateMany(
+      { owner_id: visitor_id },
+      { $set: { owner_id: userId } }
+    );
+
     return NextResponse.json({
-      migrated: { likes: likesMigrated },
+      migrated: { likes: likesMigrated, lists: listsResult.modifiedCount },
     });
   } catch (error) {
     console.error('Migration error:', error);
