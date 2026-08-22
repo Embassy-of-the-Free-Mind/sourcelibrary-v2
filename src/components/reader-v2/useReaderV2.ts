@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Book, Page } from '@/lib/types';
 import { pages as pagesApi, readingHistory } from '@/lib/api-client';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 // Shared state model for the v2 reader design previews (2a "Quiet Desk" and
 // 2c "Study Desk"). Owns: current page + cache + prefetch, page navigation
@@ -65,6 +66,7 @@ export function useReaderV2(
 ) {
   const book = initialBook;
   const pageList = initialPageList;
+  const embedHref = useEmbedHref();
   const [currentPageId, setCurrentPageId] = useState(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const [pageLoading, setPageLoading] = useState(false);
@@ -155,8 +157,11 @@ export function useReaderV2(
     const suffix = typeof window !== 'undefined' && /\/v2[ac]\/?$/.test(window.location.pathname)
       ? `/v${variant}`
       : '';
-    return `/book/${bookPath}/page/${pageId}${suffix}`;
-  }, [bookPath, variant]);
+    // Embedded readers live under /embed/<tenant>/…; writing a bare /book/…
+    // URL there navigates the iframe out of the reading room it belongs to.
+    // useEmbedHref is a no-op off an embed route, so this is safe everywhere.
+    return embedHref(`/book/${bookPath}/page/${pageId}${suffix}`);
+  }, [bookPath, variant, embedHref]);
 
   // ── navigation ─────────────────────────────────────────────────────────
   const goToPage = useCallback((pageId: string) => {
@@ -227,6 +232,25 @@ export function useReaderV2(
 
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  /**
+   * Land on something to read. A reader arriving from a search result or a
+   * shared link at a cover or flyleaf sees a blank page and nothing else;
+   * every other book reader skips forward to the first real page.
+   */
+  const skippedBlank = useRef(false);
+  useEffect(() => {
+    if (skippedBlank.current) return;
+    skippedBlank.current = true;
+    if (initialPage.page_type !== 'blank') return;
+    const firstReal = pageList.findIndex(p => p.page_type !== 'blank');
+    const here = pageList.findIndex(p => p.id === initialPage.id);
+    if (firstReal > 0 && here >= 0 && here < firstReal) {
+      setCurrentPageId(pageList[firstReal].id);
+      window.history.replaceState(null, '', pageUrl(pageList[firstReal].id));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // ── keyboard ───────────────────────────────────────────────────────────
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -236,8 +260,28 @@ export function useReaderV2(
       else if (e.key === 'ArrowLeft') { goPrev(); }
       else if (e.key === 'Escape') { setSettingsOpen(false); }
     }
+    // Cmd/Ctrl +, -, 0 resize the reading text rather than the browser. Kept
+    // separate from the plain-key handler above because these must fire even
+    // while focus is in a field.
+    function onZoomKey(e: KeyboardEvent) {
+      if (!e.metaKey && !e.ctrlKey) return;
+      if (e.key === '=' || e.key === '+') {
+        e.preventDefault();
+        setSettings(prev => ({ ...prev, textScale: Math.min(2, Math.round(prev.textScale * 1.1 * 100) / 100) }));
+      } else if (e.key === '-') {
+        e.preventDefault();
+        setSettings(prev => ({ ...prev, textScale: Math.max(0.7, Math.round(prev.textScale / 1.1 * 100) / 100) }));
+      } else if (e.key === '0') {
+        e.preventDefault();
+        setSettings(prev => ({ ...prev, textScale: 1 }));
+      }
+    }
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('keydown', onZoomKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('keydown', onZoomKey);
+    };
   }, [goNext, goPrev]);
 
   // Editing (or a refresh) hands back an updated page: sync cache + state.

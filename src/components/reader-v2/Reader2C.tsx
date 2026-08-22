@@ -7,6 +7,7 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageThumbUrl } from '@/lib/utils';
 import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
@@ -1900,6 +1901,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const [stripVisible, setStripVisible] = useState(true);
   const [lightbox, setLightbox] = useState(false);
   const isEmbedded = useIsEmbedded();
+  // Back-to-the-book must stay inside an embedded reading room.
+  const embedHref = useEmbedHref();
 
   // A citation can pin a published edition (?v=). When one is pinned the
   // translation pane must show the text AS CITED, not the current text —
@@ -2343,7 +2346,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               of one: a back chevron, and an underline that answers the hover.
               It was a bare label that happened to be clickable. */}
           <a
-            href={`/book/${r.bookPath}`}
+            href={embedHref(`/book/${r.bookPath}`)}
             className="min-w-0 flex-1 max-w-[52%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 ml-1 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
             style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
             title="Back to the book"
@@ -2714,7 +2717,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </span>
             )}
             <a
-              href={`/book/${r.bookPath}`}
+              href={embedHref(`/book/${r.bookPath}`)}
               className="flex-1 min-w-0 no-underline"
               title="Back to the book page"
             >
