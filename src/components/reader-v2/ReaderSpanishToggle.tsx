@@ -7,7 +7,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranslation } from '@/lib/page-translations';
 import type { Page } from '@/lib/types';
 import type { ReaderSettings } from './useReaderV2';
-import { CapsLabel, AiChip } from './ReaderV2Bits';
+import { CapsLabel } from './ReaderV2Bits';
 
 /**
  * Spanish reading pane, restoring the old reader's EN/ES toggle (Source
@@ -116,6 +116,13 @@ export function SpanishProse({
  * classNames below are copied literally rather than imported — same
  * `--text-primary`/`--bg-cream`/`--border-medium` tokens, no new primitive).
  */
+/**
+ * The translation pane's label: it says what the pane IS ("Translation"), and
+ * the language is a choice next to it rather than the label itself. English is
+ * the default; Spanish appears in the list only on pages that have one.
+ *
+ * No AI mark here. The pane already carries one, and it was rendering twice.
+ */
 export function TranslationLanguageHeader({
   lang, onChange, spanishAvailable, editing = false,
 }: {
@@ -126,29 +133,27 @@ export function TranslationLanguageHeader({
 }) {
   return (
     <>
+      <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Translation</CapsLabel>
       {spanishAvailable ? (
-        <div className="flex overflow-hidden" style={{ border: '1px solid var(--border-medium)' }} role="group" aria-label="Reading language">
-          {(['en', 'es'] as const).map((code) => (
-            <button
-              key={code}
-              type="button"
-              onClick={() => onChange(code)}
-              aria-pressed={lang === code}
-              className="px-2 py-[3px] font-sans text-[10.5px] font-medium uppercase tracking-[0.1em] leading-none transition-colors border-l first:border-l-0"
-              style={{
-                borderColor: 'var(--border-medium)',
-                background: lang === code ? 'var(--text-primary)' : 'transparent',
-                color: lang === code ? 'var(--bg-cream)' : 'var(--text-muted)',
-              }}
-            >
-              {code === 'en' ? 'EN' : 'ES'}
-            </button>
-          ))}
-        </div>
+        <label className="inline-flex items-center">
+          <span className="sr-only">Reading language</span>
+          <select
+            value={lang}
+            onChange={(e) => onChange(e.target.value as 'en' | 'es')}
+            className="font-sans text-[11px] h-[22px] pl-1.5 pr-5 border appearance-none cursor-pointer"
+            style={{
+              borderColor: 'var(--border-light)',
+              color: 'var(--text-secondary)',
+              background: `var(--bg-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'><path d='M2 4l3 3 3-3' fill='none' stroke='%236b6560' stroke-width='1.2'/></svg>") no-repeat right 4px center`,
+            }}
+          >
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </label>
       ) : (
-        <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English</CapsLabel>
+        <span className="font-sans text-[11px]" style={{ color: 'var(--text-faint)' }}>English</span>
       )}
-      <AiChip short />
       {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
     </>
   );

@@ -2622,7 +2622,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   spanishAvailable={spanishAvailable}
                   editing={editing}
                 />
-                <AiChip short />
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -2821,7 +2820,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     spanishAvailable={spanishAvailable}
                     editing={editing}
                   />
-                  <AiChip short />
                 </div>
                 <div className="flex items-center gap-1">
                   {traceEligible && (
