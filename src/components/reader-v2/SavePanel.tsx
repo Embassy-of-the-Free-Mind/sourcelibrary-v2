@@ -137,7 +137,6 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
         </div>
       )}
 
-      <CapsLabel className="block px-4 pb-2" style={{ color: 'var(--text-faint)' }}>Save</CapsLabel>
 
       <button
         type="button"

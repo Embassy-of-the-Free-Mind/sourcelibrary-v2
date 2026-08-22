@@ -17,7 +17,7 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Clock,
+  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
@@ -27,6 +27,7 @@ import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import RevisionHistoryPanel from './RevisionHistoryPanel';
 import SavePanel from './SavePanel';
+import PinnedVersionBanner from './PinnedVersion';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote,
@@ -904,21 +905,6 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
  * PANEL_ROW  — a full-width row in a list (More, Save & share, Download, Views).
  * PANEL_BTN  — a discrete action (copy a citation, read a section, ask a question).
  */
-/** One glyph per tool, so a grid of names is still scannable. */
-const MORE_ICONS: Record<string, React.ReactNode> = {
-  views: <Columns3 size={16} />,
-  contents: <List size={16} />,
-  librarian: <MessageCircle size={16} />,
-  settings: <span className="font-body text-[15px] leading-none">AA</span>,
-  guide: <BookOpen size={16} />,
-  share: <Share2 size={16} />,
-  downloads: <Download size={16} />,
-  info: <Info size={16} />,
-  cite: <Quote size={16} />,
-  history: <Clock size={16} />,
-  save: <Heart size={16} />,
-};
-
 const PANEL_ROW = 'w-full text-left px-4 min-h-[56px] py-2.5 flex items-center justify-between gap-3 border-b transition-colors hover:bg-[var(--bg-white)]';
 const PANEL_BTN = 'inline-flex items-center gap-2 h-9 px-3 border font-sans text-[12.5px] transition-opacity hover:opacity-85';
 /** Filled, like a selected chip in Reading settings — a panel action is a
@@ -1693,7 +1679,7 @@ function PanelContent({
   if (panel === 'more') {
     // A grid of names, not a list of explanations. Descriptions belong on the
     // panel you land on — reading seven of them to choose one is the clunk.
-    const tile = 'flex flex-col items-start justify-end gap-1 h-[74px] px-3 pb-2.5 pt-3 border text-left transition-[background,border-color] duration-150 active:bg-[var(--bg-white)]';
+    const tile = 'flex flex-col items-start justify-end gap-1 h-[58px] px-3 py-2.5 border text-left transition-[background,border-color] duration-150 active:bg-[var(--bg-white)]';
     return (
       <div className="flex-1 min-h-0 overflow-y-auto px-3 pt-2 pb-4" style={{ overscrollBehavior: 'contain' }}>
         <div className="grid grid-cols-2 gap-2">
@@ -1710,7 +1696,6 @@ function PanelContent({
                 animationDelay: `${i * 22}ms`,
               }}
             >
-              <span style={{ color: 'var(--text-faint)' }}>{MORE_ICONS[key]}</span>
               <span className="font-sans text-[13px] leading-tight">{label}</span>
             </button>
           ))}
@@ -1726,7 +1711,6 @@ function PanelContent({
                 animationDelay: `${MORE_TOOLS.length * 22}ms`,
               }}
             >
-              <span style={{ color: 'var(--text-faint)' }}><Pencil size={16} /></span>
               <span className="font-sans text-[13px] leading-tight">
                 {editing ? 'Stop editing' : 'Edit this page'}
               </span>
@@ -1915,6 +1899,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const [stripVisible, setStripVisible] = useState(true);
   const [lightbox, setLightbox] = useState(false);
   const isEmbedded = useIsEmbedded();
+
+  // A citation can pin a published edition (?v=). When one is pinned the
+  // translation pane must show the text AS CITED, not the current text —
+  // silently serving the live translation under a pinned URL is the reader
+  // lying about what it is showing.
+  const [pinnedTranslation, setPinnedTranslation] = useState<string | null>(null);
+  const displayPage = pinnedTranslation != null
+    ? { ...r.currentPage, translation: { ...(r.currentPage.translation ?? {}), data: pinnedTranslation } } as Page
+    : r.currentPage;
 
   // page_read feeds analytics_events, which the admin book-insights and
   // metrics dashboards read for reading depth. Swapping the reader dropped it,
@@ -2316,6 +2309,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       <Suspense fallback={null}>
         <SearchHighlighter />
       </Suspense>
+      <Suspense fallback={null}>
+        <PinnedVersionBanner
+          bookId={r.book.id}
+          pageId={r.currentPageId}
+          onPinnedTranslation={setPinnedTranslation}
+        />
+      </Suspense>
       {/* ── Desktop (lg+): fixed frame, panes scroll ─────────────────────── */}
       <div
         className="hidden lg:grid h-[100dvh]"
@@ -2617,7 +2617,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
+                    <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
                   </div>
                 </div>
               )}
@@ -2687,7 +2687,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         >
           <div className="flex items-center gap-2.5 h-[52px] px-3">
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
-            {!isEmbedded && <Logo white mini />}
+            {/* Sized to match the account avatar beside it — the two circles
+                sit at opposite ends of the same bar and read as a pair. */}
+            {!isEmbedded && (
+              <span className="shrink-0 flex items-center justify-center [&_svg]:w-8 [&_svg]:h-8">
+                <Logo white mini />
+              </span>
+            )}
             <a
               href={`/book/${r.bookPath}`}
               className="flex-1 min-w-0 no-underline"
@@ -2800,7 +2806,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
-                <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />
+                <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />
               </div>
             </section>
           )}
@@ -2868,22 +2874,25 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             }}
           >
             <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
-              {/* Back out of a tool opened from More. It was a bare chevron the
-                  size of an icon; on a phone it needs a label and an edge. */}
-              {MORE_TOOLS.some(([k]) => k === leftPanel) && (
-                <button
-                  type="button"
-                  onClick={() => setLeftPanel('more')}
-                  className={`mb-2 -ml-1 ${PANEL_BTN}`}
-                  style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
-                >
-                  <ChevronLeft size={15} /> More
-                </button>
-              )}
-              <div className="flex items-start justify-between gap-2">
-                <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
+              {/* One fixed row: back (when there is somewhere to go back to),
+                  title, close. Close holds the top-right corner whatever else
+                  is in the row — it used to shift down whenever a back button
+                  appeared above it. */}
+              <div className="flex items-center gap-1.5 min-h-[28px]">
+                {MORE_TOOLS.some(([k]) => k === leftPanel) && (
+                  <button
+                    type="button"
+                    aria-label="Back to More"
+                    onClick={() => setLeftPanel('more')}
+                    className="w-7 h-7 -ml-1.5 shrink-0 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    <ChevronLeft size={17} />
+                  </button>
+                )}
+                <CapsLabel className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
                 <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
-                  className="w-9 h-9 -mt-2 -mr-2 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
+                  className="w-8 h-8 -mr-2 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
               </div>
               {leftPanelBlurb && (
                 <p className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
