@@ -19,7 +19,7 @@ export type ListTargetType = LikeTargetType;
 export interface UserList {
   /** App-level id (hex string), the URL identity — not the Mongo _id. */
   id: string;
-  /** session user id for signed-in owners, localStorage v_… id for anonymous. */
+  /** NextAuth session user id — lists are signed-in only. */
   owner_id: string;
   title: string;
   description: string;

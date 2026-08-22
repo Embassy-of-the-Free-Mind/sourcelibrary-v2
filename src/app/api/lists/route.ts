@@ -2,18 +2,18 @@
  * User lists API
  *
  * GET  /api/lists — the caller's own lists, newest-updated first.
- *   Query: visitor_id (anonymous identity fallback),
- *          containing=<type>:<id> (optional — adds a `contains` flag per list,
- *          for the add-to-list modal), covers=true (optional — adds up to 4
- *          item thumbnails per list, for the /lists page).
- * POST /api/lists — create a list. Body: { title, description?, visibility?,
- *   visitor_id? }. Visibility DEFAULTS TO 'private' (safe-defaults.md — a
- *   default that publishes must be opt-in; here nothing publishes unless the
- *   owner flips it).
+ *   Query: containing=<type>:<id> (optional — adds a `contains` flag per
+ *          list, for the add-to-list modal), covers=true (optional — adds up
+ *          to 4 item thumbnails per list, for the /lists page).
+ * POST /api/lists — create a list. Body: { title, description?, visibility? }.
+ *   Visibility DEFAULTS TO 'private' (safe-defaults.md — a default that
+ *   publishes must be opt-in; here nothing publishes unless the owner flips
+ *   it).
  *
- * Identity mirrors /api/likes: authenticated user id wins, anonymous callers
- * use their localStorage visitor id. Owner-only data (this whole surface) is
- * therefore never cacheable — every response is Cache-Control: private.
+ * SIGNED-IN ONLY (unlike likes): a list is durable curation, so it lives on
+ * an account, not on a device-local visitor id. Anonymous callers get 401 and
+ * the UI shows the sign-in prompt instead. Owner-only data is never
+ * cacheable — every response is Cache-Control: private.
  *
  * Deliberately NO /api/[tenant]/lists twin: lists link to global /book and
  * /gallery URLs, which are leaks on partner subdomains (tenant-lockdown.md
@@ -39,11 +39,11 @@ const PRIVATE_CACHE = { 'Cache-Control': 'private, no-store' };
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
-    const { searchParams } = new URL(request.url);
-    const ownerId = session?.user?.id || searchParams.get('visitor_id');
+    const ownerId = session?.user?.id;
     if (!ownerId) {
-      return NextResponse.json({ lists: [] }, { headers: PRIVATE_CACHE });
+      return NextResponse.json({ error: 'Sign in to use lists' }, { status: 401 });
     }
+    const { searchParams } = new URL(request.url);
 
     const db = await getDb();
     const lists = await db.collection('user_lists')
@@ -112,11 +112,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await auth();
-    const body = await request.json().catch(() => ({}));
-    const ownerId: string | undefined = session?.user?.id || body.visitor_id;
+    const ownerId = session?.user?.id;
     if (!ownerId) {
-      return NextResponse.json({ error: 'visitor_id required when not signed in' }, { status: 400 });
+      return NextResponse.json({ error: 'Sign in to use lists' }, { status: 401 });
     }
+    const body = await request.json().catch(() => ({}));
 
     const title = String(body.title || '').trim().slice(0, LIST_TITLE_MAX);
     if (!title) {

@@ -9,37 +9,36 @@ import { lists, type ListSummary } from '@/lib/api-client/lists';
 import { useIdentity } from '@/hooks/useIdentity';
 
 // Your lists — playlist-style collections of books, pages, and images.
-// Client page: anonymous visitors have lists too (localStorage identity), so
-// this can't be resolved server-side.
+// Signed-in only: anonymous visitors get a sign-in invitation instead.
 
 export default function ListsPage() {
   const identity = useIdentity();
+  const signedIn = identity.type === 'authenticated';
   const [myLists, setMyLists] = useState<ListSummary[] | null>(null);
   const [creating, setCreating] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [showCreate, setShowCreate] = useState(false);
 
   const load = useCallback(async () => {
-    if (!identity.id) return;
     try {
-      const data = await lists.getMine({ visitorId: identity.id, covers: true });
+      const data = await lists.getMine({ covers: true });
       setMyLists(data.lists);
     } catch {
       setMyLists([]);
     }
-  }, [identity.id]);
+  }, []);
 
   useEffect(() => {
-    if (identity.loading) return;
+    if (identity.loading || !signedIn) return;
     load();
-  }, [identity.loading, load]);
+  }, [identity.loading, signedIn, load]);
 
   const createList = async () => {
     const title = newTitle.trim();
-    if (!title || creating || !identity.id) return;
+    if (!title || creating) return;
     setCreating(true);
     try {
-      await lists.create({ title, visitorId: identity.id });
+      await lists.create({ title });
       setNewTitle('');
       setShowCreate(false);
       await load();
@@ -49,6 +48,30 @@ export default function ListsPage() {
       setCreating(false);
     }
   };
+
+  if (!identity.loading && !signedIn) {
+    return (
+      <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
+        <SiteHeader variant="light" />
+        <div className="max-w-xl mx-auto px-4 py-24 text-center">
+          <Bookmark className="w-10 h-10 mx-auto mb-4" style={{ color: 'var(--text-faint)' }} aria-hidden="true" />
+          <h1 className="text-2xl font-serif font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
+            Your lists
+          </h1>
+          <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+            Collect books, pages, and images into lists of your own. Sign in to start one.
+          </p>
+          <Link
+            href="/auth/signin?callbackUrl=/lists"
+            className="inline-block px-5 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-90"
+            style={{ background: 'var(--text-primary)', color: 'white' }}
+          >
+            Sign in
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>

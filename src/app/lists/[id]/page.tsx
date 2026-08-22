@@ -34,7 +34,7 @@ export default function ListDetailPage() {
 
   const load = useCallback(async () => {
     try {
-      const data = await lists.get(listId, identity.id || undefined);
+      const data = await lists.get(listId);
       setList(data.list);
       setItems(data.items);
     } catch {
@@ -42,20 +42,22 @@ export default function ListDetailPage() {
     } finally {
       setLoaded(true);
     }
-  }, [listId, identity.id]);
+  }, [listId]);
 
   useEffect(() => {
+    // Wait for the session to settle so the owner view doesn't first render
+    // as the public (or 404) view and then flip.
     if (identity.loading || !listId) return;
     load();
   }, [identity.loading, listId, load]);
 
   const saveEdits = async () => {
-    if (!list || saving || !identity.id) return;
+    if (!list || saving) return;
     const title = editTitle.trim();
     if (!title) return;
     setSaving(true);
     try {
-      const res = await lists.update(list.id, { title, description: editDescription.trim() }, identity.id);
+      const res = await lists.update(list.id, { title, description: editDescription.trim() });
       setList(res.list);
       setEditing(false);
     } catch {
@@ -66,13 +68,12 @@ export default function ListDetailPage() {
   };
 
   const toggleVisibility = async () => {
-    if (!list || saving || !identity.id) return;
+    if (!list || saving) return;
     setSaving(true);
     try {
       const res = await lists.update(
         list.id,
-        { visibility: list.visibility === 'public' ? 'private' : 'public' },
-        identity.id
+        { visibility: list.visibility === 'public' ? 'private' : 'public' }
       );
       setList(res.list);
       toast.success(res.list.visibility === 'public'
@@ -86,7 +87,7 @@ export default function ListDetailPage() {
   };
 
   const removeItem = async (item: EnrichedListItem) => {
-    if (!list || !identity.id || busyItem) return;
+    if (!list || busyItem) return;
     const key = `${item.target_type}:${item.target_id}`;
     setBusyItem(key);
     try {
@@ -95,7 +96,6 @@ export default function ListDetailPage() {
         action: 'remove',
         targetType: item.target_type,
         targetId: item.target_id,
-        visitorId: identity.id,
       });
       setItems(prev => prev.filter(i => `${i.target_type}:${i.target_id}` !== key));
       setList(prev => prev ? { ...prev, items_count: res.items_count } : prev);
@@ -107,10 +107,10 @@ export default function ListDetailPage() {
   };
 
   const deleteList = async () => {
-    if (!list || !identity.id) return;
+    if (!list) return;
     if (!window.confirm(`Delete “${list.title}”? This cannot be undone.`)) return;
     try {
-      await lists.remove(list.id, identity.id);
+      await lists.remove(list.id);
       toast.success('List deleted');
       router.push('/lists');
     } catch {

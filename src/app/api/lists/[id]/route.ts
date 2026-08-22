@@ -25,16 +25,15 @@ import type { UserList, UserListItem } from '@/lib/types/lists';
 
 const PRIVATE_CACHE = { 'Cache-Control': 'private, no-store' };
 
-async function callerOwnerId(request: NextRequest, bodyVisitorId?: unknown): Promise<string | null> {
+// Lists are signed-in only — the owner is always the session user. Public
+// lists stay readable by anyone (including signed-out visitors) via GET.
+async function callerOwnerId(): Promise<string | null> {
   const session = await auth();
-  if (session?.user?.id) return session.user.id;
-  if (typeof bodyVisitorId === 'string' && bodyVisitorId) return bodyVisitorId;
-  const { searchParams } = new URL(request.url);
-  return searchParams.get('visitor_id');
+  return session?.user?.id || null;
 }
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -45,7 +44,7 @@ export async function GET(
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
 
-    const ownerId = await callerOwnerId(request);
+    const ownerId = await callerOwnerId();
     const isOwner = !!ownerId && list.owner_id === ownerId;
     if (list.visibility !== 'public' && !isOwner) {
       // 404, not 403 — don't confirm a private list exists
@@ -68,11 +67,11 @@ export async function GET(
   }
 }
 
-async function requireOwnedList(request: NextRequest, id: string, bodyVisitorId?: unknown) {
+async function requireOwnedList(id: string) {
   const db = await getDb();
   const list = await db.collection('user_lists').findOne({ id });
   if (!list) return { db, list: null, error: NextResponse.json({ error: 'Not found' }, { status: 404 }) };
-  const ownerId = await callerOwnerId(request, bodyVisitorId);
+  const ownerId = await callerOwnerId();
   if (!ownerId || list.owner_id !== ownerId) {
     // Same 404-shape as GET for non-owners of private lists; owners of public
     // lists are the only callers who could see a 403, and hiding intent there
@@ -89,7 +88,7 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json().catch(() => ({}));
-    const { db, list, error } = await requireOwnedList(request, id, body.visitor_id);
+    const { db, list, error } = await requireOwnedList(id);
     if (!list) return error;
 
     const update: Record<string, unknown> = { updated_at: new Date() };
@@ -132,7 +131,7 @@ export async function POST(
       return NextResponse.json({ error: 'Unsupported action' }, { status: 400 });
     }
 
-    const { db, list, error } = await requireOwnedList(request, id, body.visitor_id);
+    const { db, list, error } = await requireOwnedList(id);
     if (!list) return error;
 
     await db.collection('user_list_items').deleteMany({ list_id: id });
