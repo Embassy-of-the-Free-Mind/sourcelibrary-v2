@@ -2421,7 +2421,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           )}
           <a
             href={embedHref(`/book/${r.bookPath}`)}
-            className="min-w-0 flex-1 h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+            className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
             style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
             title="Back to the book"
           >
