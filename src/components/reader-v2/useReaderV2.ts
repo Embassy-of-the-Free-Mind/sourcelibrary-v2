@@ -21,6 +21,8 @@ export interface ReaderSettings {
   typeface: 'serif' | 'sans';
   lineHeight: number;
   glosses: boolean;
+  /** Which translation to read, when a page carries more than one. */
+  translationLang: 'en' | 'es';
 }
 
 export interface ViewState {
@@ -40,6 +42,7 @@ export const DEFAULT_SETTINGS: ReaderSettings = {
   typeface: 'serif',
   lineHeight: 1.7,
   glosses: true,
+  translationLang: 'en',
 };
 
 function loadStored<T>(key: string, fallback: T): T {

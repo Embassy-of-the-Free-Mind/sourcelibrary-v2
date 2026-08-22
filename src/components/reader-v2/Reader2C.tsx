@@ -28,6 +28,7 @@ import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls
 import RevisionHistoryPanel from './RevisionHistoryPanel';
 import SavePanel from './SavePanel';
 import PinnedVersionBanner from './PinnedVersion';
+import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishButton } from './ReaderSpanishToggle';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote,
@@ -2215,12 +2216,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Trace aligns the transcription against the English, so it needs both panes
   // showing, both texts present, and a book that isn't already in English.
   const isEnglishBook = (r.book.language || '').toLowerCase().startsWith('english');
-  const traceEligible = !isEnglishBook && !editing
+  // Spanish is another rendering of the same pane, not a fifth column: nobody
+  // reads one page in two translations at once. Never offered while a citation
+  // pins a version — the pin is on a specific English text.
+  const spanishAvailable = pinnedTranslation == null && spanishEligible(r.currentPage);
+  const showingSpanish = r.settings.translationLang === 'es' && spanishAvailable;
+
+  // Trace aligns the transcription against the ENGLISH translation, so it has
+  // nothing to align while the pane is showing Spanish.
+  const traceEligible = !isEnglishBook && !editing && !showingSpanish
     && !!r.currentPage.ocr?.data && !!r.currentPage.translation?.data
     && r.views.ocr && r.views.en;
   const traceActive = traceOn && traceEligible;
 
   const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
+
 
   // The text of a neighbouring page is already prefetched, but its scan is
   // not, so a page turn showed the words instantly and then waited on the
@@ -2598,10 +2608,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
-                  <CopyTextButton page={r.currentPage} kind="translation" />
+                  {showingSpanish
+                    ? <CopySpanishButton page={r.currentPage} />
+                    : <CopyTextButton page={r.currentPage} kind="translation" />}
                 </div>
               ) : undefined}>
-                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English</CapsLabel>
+                <TranslationLanguageHeader
+                  lang={r.settings.translationLang}
+                  onChange={(l) => r.updateSettings({ translationLang: l })}
+                  spanishAvailable={spanishAvailable}
+                  editing={editing}
+                />
                 <AiChip short />
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
@@ -2617,7 +2634,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />
+                    {showingSpanish
+                      ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
+                      : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
                   </div>
                 </div>
               )}
@@ -2793,7 +2812,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section data-reader-section="translation" className="relative border-t" style={{ background: SURFACE.translation, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <div className="flex items-center gap-2">
-                  <CapsLabel style={{ color: 'var(--text-muted)' }}>English</CapsLabel>
+                  <TranslationLanguageHeader
+                    lang={r.settings.translationLang}
+                    onChange={(l) => r.updateSettings({ translationLang: l })}
+                    spanishAvailable={spanishAvailable}
+                    editing={editing}
+                  />
                   <AiChip short />
                 </div>
                 <div className="flex items-center gap-1">
@@ -2802,11 +2826,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
-                  <CopyTextButton page={r.currentPage} kind="translation" />
+                  {showingSpanish
+                    ? <CopySpanishButton page={r.currentPage} />
+                    : <CopyTextButton page={r.currentPage} kind="translation" />}
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
-                <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />
+                {showingSpanish
+                  ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
+                  : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
               </div>
             </section>
           )}
