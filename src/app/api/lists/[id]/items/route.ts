@@ -1,8 +1,9 @@
 /**
  * List items API
  *
- * POST /api/lists/[id]/items — add or remove one item, owner only.
- *   Body: { action: 'add' | 'remove', target_type, target_id, visitor_id? }
+ * POST /api/lists/[id]/items — add or remove one item, owner only
+ *   (signed-in only, like all list writes).
+ *   Body: { action: 'add' | 'remove', target_type, target_id }
  *
  * Add validates the target actually exists (same lookup the likes toggle
  * does), enforces the per-list cap, and is idempotent — re-adding an item the
@@ -23,13 +24,12 @@ export async function POST(
   try {
     const { id } = await params;
     const session = await auth();
-    const body = await request.json().catch(() => ({}));
-    const ownerId: string | undefined = session?.user?.id || body.visitor_id;
-    const { action, target_type, target_id } = body;
-
+    const ownerId = session?.user?.id;
     if (!ownerId) {
-      return NextResponse.json({ error: 'visitor_id required when not signed in' }, { status: 400 });
+      return NextResponse.json({ error: 'Sign in to use lists' }, { status: 401 });
     }
+    const body = await request.json().catch(() => ({}));
+    const { action, target_type, target_id } = body;
     if (action !== 'add' && action !== 'remove') {
       return NextResponse.json({ error: "action must be 'add' or 'remove'" }, { status: 400 });
     }

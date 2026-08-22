@@ -2,10 +2,9 @@
  * User lists — server-side helpers shared by the /api/lists routes.
  *
  * Storage: `user_lists` + `user_list_items` (separate collections by design —
- * field-sprawl.md forbids growing users/books). Identity mirrors likes: a
- * list's owner_id is the session user id when signed in, else the client's
- * localStorage v_… visitor id, so anonymous lists work and migrate to the
- * account on first sign-in (/api/account/migrate).
+ * field-sprawl.md forbids growing users/books). Lists are SIGNED-IN ONLY:
+ * owner_id is always a NextAuth session user id. (Likes stay dual-identity;
+ * lists are durable curation and live on an account.)
  *
  * Visibility: 'private' (default) or 'public'. Public list pages render the
  * list's content only — never the owner's name (safe-defaults.md).

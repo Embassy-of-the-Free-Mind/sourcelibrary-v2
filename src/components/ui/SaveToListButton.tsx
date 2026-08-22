@@ -8,10 +8,11 @@ import { lists, type ListSummary } from '@/lib/api-client/lists';
 import type { ListTargetType } from '@/lib/types/lists';
 import { useIdentity } from '@/hooks/useIdentity';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import AuthPrompt from '@/components/auth/AuthPrompt';
 
-// "Save to a list" — the playlist-style counterpart to LikeButton. Anonymous
-// visitors can build lists too (same dual identity as likes; lists migrate to
-// the account on first sign-in via /api/account/migrate).
+// "Save to a list" — the playlist-style counterpart to LikeButton. Signed-in
+// only: a list is durable curation, so it lives on an account. Anonymous
+// visitors who click the bookmark get the sign-in prompt instead of the modal.
 //
 // Deliberately NOT mounted on embed/tenant surfaces: list pages link to
 // global /book and /gallery URLs, which leak off partner subdomains
@@ -48,15 +49,27 @@ export default function SaveToListButton({
   const [inAnyList, setInAnyList] = useState(false);
   const [creating, setCreating] = useState(false);
   const [newTitle, setNewTitle] = useState('');
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const newTitleRef = useRef<HTMLInputElement>(null);
+  const promptRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
 
+  // Close the sign-in prompt on outside click (mirrors LikeButton)
+  useEffect(() => {
+    if (!showAuthPrompt) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (promptRef.current && !promptRef.current.contains(event.target as Node)) {
+        setShowAuthPrompt(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showAuthPrompt]);
+
   const loadLists = useCallback(async () => {
-    if (!identity.id) return;
     try {
       const data = await lists.getMine({
-        visitorId: identity.id,
         containing: { type: targetType, id: targetId },
       });
       setMyLists(data.lists);
@@ -64,7 +77,7 @@ export default function SaveToListButton({
     } catch {
       setMyLists([]);
     }
-  }, [identity.id, targetType, targetId]);
+  }, [targetType, targetId]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -75,7 +88,7 @@ export default function SaveToListButton({
   }, [isOpen, loadLists]);
 
   const toggleList = async (list: ListSummary) => {
-    if (busyListId || !identity.id) return;
+    if (busyListId) return;
     setBusyListId(list.id);
     const action = list.contains ? 'remove' : 'add';
     try {
@@ -84,7 +97,6 @@ export default function SaveToListButton({
         action,
         targetType,
         targetId,
-        visitorId: identity.id,
       });
       setMyLists(prev => {
         const next = (prev || []).map(l =>
@@ -102,18 +114,17 @@ export default function SaveToListButton({
 
   const createList = async () => {
     const title = newTitle.trim();
-    if (!title || creating || !identity.id) return;
+    if (!title || creating) return;
     setCreating(true);
     try {
       // New lists are PRIVATE by default; the list page has the visibility
       // control, labeled with what public actually means.
-      const res = await lists.create({ title, visitorId: identity.id });
+      const res = await lists.create({ title });
       await lists.toggleItem({
         listId: res.list.id,
         action: 'add',
         targetType,
         targetId,
-        visitorId: identity.id,
       });
       setNewTitle('');
       await loadLists();
@@ -141,9 +152,15 @@ export default function SaveToListButton({
   }
 
   return (
-    <>
+    <div className="relative inline-flex">
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          if (identity.type !== 'authenticated') {
+            setShowAuthPrompt(true);
+            return;
+          }
+          setIsOpen(true);
+        }}
         className={`inline-flex items-center gap-1 group transition-all duration-200 cursor-pointer ${className}`}
         title="Save to a list"
         aria-label="Save to a list"
@@ -161,6 +178,15 @@ export default function SaveToListButton({
           </span>
         )}
       </button>
+
+      {showAuthPrompt && (
+        <div ref={promptRef} className="absolute top-full right-0 mt-2 z-50">
+          <AuthPrompt
+            message="Sign in to save items to your lists"
+            onClose={() => setShowAuthPrompt(false)}
+          />
+        </div>
+      )}
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setIsOpen(false)}>
@@ -257,6 +283,6 @@ export default function SaveToListButton({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
