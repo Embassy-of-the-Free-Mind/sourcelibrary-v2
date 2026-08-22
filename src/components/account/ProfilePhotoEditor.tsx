@@ -20,13 +20,22 @@ import type { GalleryItem } from '@/lib/api-client/types/gallery';
 // the actual cropping (see /api/me/avatar).
 
 const VIEW = 280; // crop viewport, css px
-const MAX_ZOOM = 5;
+// The reader must be able to frame a SMALL detail — a face, a drop cap, one
+// flower — because the avatar renders at 40–96px and a whole-page crop reads
+// as a speck. So the zoom ceiling is derived from the source resolution: zoom
+// in until the crop covers ~MIN_DETAIL_PX of source (the server output is
+// 512px, so below ~200px source it's upscale mush anyway), with a hard cap.
+const MIN_DETAIL_PX = 200;
+const ZOOM_CAP = 24;
+const ZOOM_FLOOR_MAX = 4; // even tiny sources allow a little zoom
 
 interface LikedPageItem {
   id: string;
   pageNumber: number;
   bookTitle: string;
   thumbnail?: string;
+  /** Full-resolution source for cropping (thumbnail may be 150px). */
+  image_full?: string;
 }
 
 interface PickableImage {
@@ -123,13 +132,14 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
     const likedPromise = (!query.trim() && identity.id)
       ? likes.getMine<LikedPageItem>({ type: 'page', visitorId: identity.id })
           .then(res => (res.items || [])
-            .filter(p => isBrowserRenderableImageUrl(p.thumbnail))
             .map(p => ({
               key: `p-${p.id}`,
               thumb: p.thumbnail as string,
-              source: p.thumbnail as string,
+              // Crop from the full-resolution image, not the 150px thumb
+              source: (p.image_full || p.thumbnail) as string,
               label: `${p.bookTitle} — p. ${p.pageNumber}`,
-            })))
+            }))
+            .filter(p => isBrowserRenderableImageUrl(p.thumb) && isBrowserRenderableImageUrl(p.source)))
           .catch(() => [] as PickableImage[])
       : Promise.resolve([] as PickableImage[]);
 
@@ -175,6 +185,14 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
   // baseScale makes the shorter image side exactly fill the viewport (cover).
   // zoom multiplies it. center is in normalized source coords, clamped so the
   // viewport never shows past the image edge.
+  //
+  // maxZoom scales with the source: a 3000px page scan can zoom to ~15× so a
+  // single ornament fills the frame; a 300px thumb stays near 1.5×.
+  const maxZoom = useMemo(() => {
+    if (!natural) return ZOOM_FLOOR_MAX;
+    return Math.max(ZOOM_FLOOR_MAX, Math.min(ZOOM_CAP, Math.min(natural.w, natural.h) / MIN_DETAIL_PX));
+  }, [natural]);
+
   const geometry = useMemo(() => {
     if (!natural) return null;
     const baseScale = VIEW / Math.min(natural.w, natural.h);
@@ -218,6 +236,23 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
     setCenter(clampCenter(dragRef.current.cx - dx, dragRef.current.cy - dy));
   };
   const onPointerUp = () => { dragRef.current = null; };
+
+  // Scroll-wheel / trackpad zoom over the viewport — much finer control than
+  // the slider when hunting for a small detail. Attached natively (non-passive)
+  // because React registers onWheel passively, which makes preventDefault a
+  // no-op and the page scrolls under the modal instead.
+  const viewportRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const factor = Math.exp(-e.deltaY * 0.0015);
+      setZoom(z => Math.min(maxZoom, Math.max(1, z * factor)));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [maxZoom, cropSource]);
 
   const savePhoto = async () => {
     if (!cropSource || !bbox) return;
@@ -369,6 +404,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
                 <div
                   className="relative overflow-hidden touch-none select-none cursor-move shrink-0"
                   style={{ width: VIEW, height: VIEW, background: 'var(--bg-warm)' }}
+                  ref={viewportRef}
                   onPointerDown={onPointerDown}
                   onPointerMove={onPointerMove}
                   onPointerUp={onPointerUp}
@@ -408,16 +444,16 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
                   <input
                     type="range"
                     min={1}
-                    max={MAX_ZOOM}
+                    max={maxZoom}
                     step={0.01}
-                    value={zoom}
+                    value={Math.min(zoom, maxZoom)}
                     onChange={e => setZoom(parseFloat(e.target.value))}
                     className="flex-1"
                     aria-label="Zoom"
                   />
                 </label>
                 <p className="text-sm -mt-2" style={{ color: 'var(--text-muted)' }}>
-                  Drag to reposition
+                  Drag to reposition · scroll to zoom in on a small detail
                 </p>
 
                 <div className="flex items-center justify-between w-full pt-1">
