@@ -7,7 +7,7 @@ import type { Locale } from '@/lib/locale-path';
  * Chrome strings for the redesigned reader (`reader-v2`, currently
  * `Reader2C.tsx` and the small files mounted beside it: `ReaderV2Bits.tsx`,
  * `SavePanel.tsx`, `PaneEmptyState.tsx`, `RevisionHistoryPanel.tsx`,
- * `PinnedVersion.tsx`, `ContinueReading.tsx`, `ReaderSettingsControls.tsx`).
+ * `PinnedVersion.tsx`, `ReaderSettingsControls.tsx`).
  *
  * Every component listed above reads this catalogue directly: it calls
  * `useLocale()` for the locale in the URL and `getReaderStrings(lang)` for the
@@ -434,13 +434,6 @@ export interface ReaderStrings {
     signOut: string;
   };
 
-  /** "You left off on page N" banner. */
-  continueReading: {
-    /** "You left off on page N." */
-    leftOff: (pageNumber: number) => string;
-    continueLabel: string;
-    dismiss: string;
-  };
 
   /** Citation-pinned (`?v=`) edition banner. */
   pinnedEdition: {
@@ -778,11 +771,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       siteLanguage: 'Site language',
       signOut: 'Sign out',
     },
-    continueReading: {
-      leftOff: (pageNumber) => `You left off on page ${pageNumber}.`,
-      continueLabel: 'Continue',
-      dismiss: 'Dismiss',
-    },
     pinnedEdition: {
       citedVersion: 'Cited version',
       resolving: 'Resolving the cited edition…',
@@ -1117,11 +1105,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       sendFeedback: 'Enviar comentarios',
       siteLanguage: 'Idioma del sitio',
       signOut: 'Cerrar sesión',
-    },
-    continueReading: {
-      leftOff: (pageNumber) => `Lo dejaste en la página ${pageNumber}.`,
-      continueLabel: 'Continuar',
-      dismiss: 'Descartar',
     },
     pinnedEdition: {
       citedVersion: 'Versión citada',
