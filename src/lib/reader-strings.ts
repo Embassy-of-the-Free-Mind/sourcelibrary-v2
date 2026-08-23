@@ -63,6 +63,7 @@ export interface ReaderStrings {
     views: string;
     pages: string;
     settings: string;
+    feedback: string;
     more: string;
     menu: string;
     readerToolsAria: string;
@@ -96,6 +97,7 @@ export interface ReaderStrings {
       views: string;
       downloads: string;
       history: string;
+      feedback: string;
       more: string;
     };
     blurbs: {
@@ -138,6 +140,8 @@ export interface ReaderStrings {
     historyBlurb: string;
     settings: string;
     settingsBlurb: string;
+    feedback: string;
+    feedbackBlurb: string;
     menu: string;
     menuBlurb: string;
   };
@@ -365,6 +369,22 @@ export interface ReaderStrings {
     wholeBook: string;
   };
 
+  /** Feedback panel — a note to us about this page or the reader itself. */
+  feedback: {
+    blurb: string;
+    placeholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    emailNote: string;
+    send: string;
+    sending: string;
+    thanks: string;
+    failed: string;
+    tooShort: string;
+    /** Reminds the reader which page the note will carry. */
+    aboutPage: (pageNumber: number | string) => string;
+  };
+
   /** Revision history panel (public; the Restore action itself stays
    *  editor-only/English — see the file header note). */
   history: {
@@ -472,6 +492,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       views: 'Views',
       pages: 'Pages',
       settings: 'Settings',
+      feedback: 'Feedback',
       more: 'More',
       menu: 'Menu',
       readerToolsAria: 'Reader tools',
@@ -502,6 +523,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         views: 'Scan, text & translation',
         downloads: 'Download',
         history: 'Revision history',
+        feedback: 'Send feedback',
         more: 'More',
       },
       blurbs: {
@@ -539,6 +561,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       historyBlurb: 'Every recorded change to this page',
       settings: 'Reading settings',
       settingsBlurb: 'Theme, text size, typeface, notes',
+      feedback: 'Send feedback',
+      feedbackBlurb: 'Tell us about this page or the reader',
       menu: 'Menu',
       menuBlurb: 'The rest of the library, and your account',
     },
@@ -712,6 +736,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       downloadFailed: 'That download failed. Try again.',
       wholeBook: 'The whole book',
     },
+    feedback: {
+      blurb: 'Anything wrong, missing, or worth knowing about this page or the reader itself.',
+      placeholder: 'What did you notice?',
+      emailLabel: 'Email',
+      emailPlaceholder: 'you@example.com',
+      emailNote: 'Only if you would like a reply. We will not use it for anything else.',
+      send: 'Send',
+      sending: 'Sending…',
+      thanks: 'Thank you. This has reached us, along with the page you were on.',
+      failed: 'That did not send. Try again in a moment.',
+      tooShort: 'Tell us a little more first.',
+      aboutPage: (pageNumber) => `Your note will say you were on p. ${pageNumber}.`,
+    },
     history: {
       title: 'Revision history',
       loading: 'Loading revision history…',
@@ -800,6 +837,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       views: 'Vistas',
       pages: 'Páginas',
       settings: 'Ajustes',
+      feedback: 'Comentarios',
       more: 'Más',
       menu: 'Menú',
       readerToolsAria: 'Herramientas del lector',
@@ -830,6 +868,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         views: 'Escaneo, texto y traducción',
         downloads: 'Descargar',
         history: 'Historial de revisiones',
+        feedback: 'Enviar comentarios',
         more: 'Más',
       },
       blurbs: {
@@ -867,6 +906,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       historyBlurb: 'Todos los cambios registrados en esta página',
       settings: 'Ajustes de lectura',
       settingsBlurb: 'Tema, tamaño de letra, tipografía, notas',
+      feedback: 'Enviar comentarios',
+      feedbackBlurb: 'Cuéntanos algo sobre esta página o sobre el lector',
       menu: 'Menú',
       menuBlurb: 'El resto de la biblioteca, y tu cuenta',
     },
@@ -1046,6 +1087,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       signInToDownload: 'Inicia sesión para descargar esta página.',
       downloadFailed: 'La descarga falló. Inténtalo de nuevo.',
       wholeBook: 'El libro entero',
+    },
+    feedback: {
+      blurb: 'Cualquier cosa que esté mal, que falte o que convenga saber sobre esta página o sobre el lector.',
+      placeholder: '¿Qué has visto?',
+      emailLabel: 'Correo electrónico',
+      emailPlaceholder: 'tu@ejemplo.com',
+      emailNote: 'Solo si quieres que te respondamos. No lo usaremos para nada más.',
+      send: 'Enviar',
+      sending: 'Enviando…',
+      thanks: 'Gracias. Nos ha llegado, junto con la página en la que estabas.',
+      failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
+      tooShort: 'Cuéntanos un poco más primero.',
+      aboutPage: (pageNumber) => `Tu mensaje indicará que estabas en la p. ${pageNumber}.`,
     },
     history: {
       title: 'Historial de revisiones',
