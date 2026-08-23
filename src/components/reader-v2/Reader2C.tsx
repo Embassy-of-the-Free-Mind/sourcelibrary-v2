@@ -692,7 +692,11 @@ function SearchHighlighter() {
  * collapsing address bar cannot push the last row under the fold, and only
  * the middle column scrolls.
  */
-function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
+function ReaderSiteMenu({ onClose, spanishAvailable }: {
+  onClose: () => void;
+  /** Whether THIS page has Spanish text, not merely a Spanish interface. */
+  spanishAvailable: boolean;
+}) {
   const { data: session } = useSession();
   const pathname = usePathname();
   const strings = getReaderStrings(useLocale());
@@ -859,8 +863,15 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
             </div>
           </div>
 
-          {/* The reader has a Spanish twin, so switching keeps you on the page
-              you are reading instead of dropping you at the homepage. */}
+          {/* Offered only where this page actually exists in Spanish.
+              "If it isn't Spanish, it's not /es" is the site's rule, and it is
+              the right one: a Spanish URL wrapping English text is a duplicate
+              of the English page for a crawler and a broken promise for a
+              reader. Hiding the control is what makes the rule painless —
+              nothing bounces, because nothing is offered that cannot be kept.
+              109 books of 22,073 have Spanish text today; the control appears
+              on those, and on the rest the site stays in one language. */}
+          {(spanishAvailable || isSpanishSite) && (
           <div className="rv2-menu-item pt-7" style={{ animationDelay: '290ms' }}>
             <CapsLabel className="block pb-2.5" style={{ color: 'var(--text-faint)' }}>{t.siteLanguage}</CapsLabel>
             <div className="flex gap-2">
@@ -882,6 +893,7 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
               })}
             </div>
           </div>
+          )}
         </div>
       </div>
       </div>
@@ -2666,7 +2678,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           exists to hold one collection; a menu offering Explore, Works and
           Support sends the reader to URLs the tenant host 404s, and out of the
           room entirely. The old reader had no site chrome here at all. */}
-      {siteMenuOpen && !isEmbedded && <ReaderSiteMenu onClose={() => setSiteMenuOpen(false)} />}
+      {siteMenuOpen && !isEmbedded && (
+        <ReaderSiteMenu
+          onClose={() => setSiteMenuOpen(false)}
+          spanishAvailable={spanishEligible(r.currentPage)}
+        />
+      )}
       <Suspense fallback={null}>
         <SearchHighlighter />
       </Suspense>
