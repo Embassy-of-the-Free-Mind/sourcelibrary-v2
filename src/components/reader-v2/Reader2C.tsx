@@ -1,6 +1,8 @@
 'use client';
 
 import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -18,7 +20,7 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download,
+  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Menu, LogOut, LifeBuoy, MessageSquare,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
@@ -53,10 +55,11 @@ const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 88%, var(--bg-dark) 8
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'menu' | 'more' | null;
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   save: 'Save',
+  menu: 'Account & more',
   contents: 'Contents',
   search: 'Search this book',
   guide: 'Reading guide',
@@ -100,6 +103,7 @@ const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
   ['history', 'Revision history', 'Every recorded change to this page'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
   ['cite', 'Cite this page', 'A citation that points at this exact page'],
+  ['menu', 'Account & more', 'Your account, support and feedback'],
 ];
 
 interface Reader2CProps {
@@ -300,8 +304,8 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
   }
   if (!guide) {
     return (
-      <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
-        <p className="font-sans text-[13px] mb-3" style={{ color: 'var(--text-primary)' }}>
+      <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
+        <p className="font-sans text-[13px] leading-relaxed mb-4" style={{ color: 'var(--text-primary)' }}>
           This book does not have a reading guide yet.
         </p>
         {requested ? (
@@ -664,6 +668,55 @@ function SearchHighlighter() {
   return null;
 }
 
+
+/**
+ * The account, and the two site-level actions the reader's own chrome hides:
+ * Support and Feedback. On a phone the avatar alone was both a small target
+ * and the only route to any of this.
+ *
+ * No language switch here. The site's EN/ES toggle only appears where a real
+ * Spanish twin of the page exists (#2763); a reader page has none, so the
+ * control would carry you to the /es homepage and lose your place. It belongs
+ * here once page-level locale routing exists, not before.
+ */
+function ReaderAccountMenu() {
+  const { data: session } = useSession();
+  const signedIn = !!session?.user;
+  const row = 'w-full text-left flex items-center justify-between gap-3 h-[48px] font-sans text-[14px] border-b transition-colors active:bg-[var(--bg-white)]';
+  const rowStyle = { borderColor: 'var(--border-light)', color: 'var(--text-primary)' } as const;
+
+  return (
+    <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-2 pb-5" style={{ overscrollBehavior: 'contain' }}>
+      {signedIn ? (
+        <>
+          <p className="font-sans text-[12px] pb-2" style={{ color: 'var(--text-faint)' }}>
+            {session?.user?.email}
+          </p>
+          <Link href="/account" className={`${row} no-underline`} style={rowStyle}>Your account</Link>
+          <Link href="/favorites" className={`${row} no-underline`} style={rowStyle}>Saved pages</Link>
+          <Link href="/reading-history" className={`${row} no-underline`} style={rowStyle}>Reading history</Link>
+        </>
+      ) : (
+        <Link href="/auth/signin" className={`${row} no-underline`} style={rowStyle}>Sign in</Link>
+      )}
+      <Link href="/support" className={`${row} no-underline`} style={rowStyle}>
+        Support Source Library
+        <LifeBuoy size={15} style={{ color: 'var(--text-faint)' }} />
+      </Link>
+      <Link href="/feedback" className={`${row} no-underline`} style={rowStyle}>
+        Send feedback
+        <MessageSquare size={15} style={{ color: 'var(--text-faint)' }} />
+      </Link>
+      {signedIn && (
+        <button type="button" onClick={() => signOut({ callbackUrl: '/' })} className={row} style={{ ...rowStyle, borderColor: 'transparent' }}>
+          Sign out
+          <LogOut size={15} style={{ color: 'var(--text-faint)' }} />
+        </button>
+      )}
+    </div>
+  );
+}
+
 /** Copy an already-plain string, for panes whose text needs no unwrapping. */
 function CopyPlainButton({ text, label }: { text: string; label: string }) {
   const [copied, setCopied] = useState(false);
@@ -679,7 +732,7 @@ function CopyPlainButton({ text, label }: { text: string; label: string }) {
       aria-label={label}
       title={copied ? 'Copied' : label}
       className={PANE_ICON_CHIP}
-      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)', borderColor: 'var(--border-light)' }}
+      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)' }}
     >
       {copied ? <Check size={14} /> : <Copy size={14} />}
     </button>
@@ -827,12 +880,7 @@ function MarksKey() {
         aria-label="What the marks in the text mean"
         title="What the marks mean"
         className={PANE_ICON_CHIP}
-        style={{
-          // The key to the marks wears the marks' own colour, and sits beside
-          // the Notes chip it belongs to.
-          color: 'var(--accent-gold-dark)',
-          borderColor: 'color-mix(in srgb, var(--accent-gold) 45%, transparent)',
-        }}
+        style={{ color: 'var(--accent-gold-dark)' }}
       >
         <Info size={13} />
       </button>
@@ -920,7 +968,7 @@ const TRACE_LEARNED_KEY = 'sl-reader-v2-traced';
  * two different kinds of thing sitting in the same row.
  */
 const PANE_CHIP = 'h-[26px] px-2 flex items-center gap-1 border font-sans text-[11px] font-medium uppercase tracking-[0.1em] transition-colors';
-const PANE_ICON_CHIP = 'h-[26px] w-[28px] flex items-center justify-center border transition-colors';
+const PANE_ICON_CHIP = 'h-[26px] w-[28px] flex items-center justify-center transition-colors hover:bg-black/[0.05]';
 
 /** What tracing is doing right now, said plainly under the pane header. */
 function TraceStatusLine({ status, showHint }: { status: TraceStatus; showHint: boolean }) {
@@ -1008,7 +1056,7 @@ function CopyTextButton({ page, kind }: { page: Page; kind: 'ocr' | 'translation
       aria-label={label}
       title={copied ? 'Copied' : label}
       className={PANE_ICON_CHIP}
-      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)', borderColor: 'var(--border-light)' }}
+      style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)' }}
     >
       {copied ? <Check size={14} /> : <Copy size={14} />}
     </button>
@@ -1293,8 +1341,8 @@ function ScanControls({
   // drew a pale box around every control. These carry a faint fill and no
   // border instead — same size and spacing as the text panes' chips, so the
   // family holds without the outline fighting the ground.
-  const btn = `${PANE_ICON_CHIP} disabled:opacity-30 hover:bg-black/[0.06]`;
-  const btnStyle = { color: 'var(--text-muted)', borderColor: 'transparent' } as const;
+  const btn = `${PANE_ICON_CHIP} disabled:opacity-30`;
+  const btnStyle = { color: 'var(--text-muted)' } as const;
   return (
     <div className="flex items-center gap-0.5">
       <button type="button" aria-label="Zoom out" disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
@@ -1778,6 +1826,9 @@ function PanelContent({
       </div>
     );
   }
+  if (panel === 'menu') {
+    return <ReaderAccountMenu />;
+  }
   if (panel === 'save') {
     return <SavePanel page={r.currentPage} book={r.book} url={shareUrl} />;
   }
@@ -2119,7 +2170,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const [sheetHeight, setSheetHeight] = useState<number | null>(null);
   useLayoutEffect(() => {
     if (!leftPanel || isDesktop) { setSheetHeight(null); return; }
-    const cap = Math.round(window.innerHeight * (keyboardInset > 0 ? 0.58 : 0.72));
+    // With the keyboard up the usable viewport is what is LEFT above it, not
+    // the window — sizing against the window made the sheet climb the screen.
+    const visible = Math.max(200, window.innerHeight - keyboardInset);
+    const cap = Math.round(visible * (keyboardInset > 0 ? 0.82 : 0.72));
     // Lists and conversations always want the full sheet; the short, fixed
     // panels size to their own content so they don't sit in a half-empty box.
     if (SHEET_FILLS.has(leftPanel)) { setSheetHeight(cap); return; }
@@ -2379,51 +2433,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               book, then the book itself as the way out of it. The controls a
               reader touches sit nearest the rail their hand is already on;
               the title is the least-used of the three and takes the slack. */}
-          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
-          <div className="flex items-stretch">
-            <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
-              <button type="button" aria-label="Previous page" onClick={r.goPrev}
-                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-                style={{ color: onInk(0.72) }}>
-                <ChevronLeft size={15} />
-              </button>
-              {jumpOpen ? (
-                <input
-                  ref={jumpRef}
-                  value={jumpValue}
-                  onChange={e => setJumpValue(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
-                      const n = parseInt(jumpValue, 10);
-                      if (!Number.isNaN(n)) r.goToPageNumber(n);
-                      setJumpOpen(false); setJumpValue('');
-                    }
-                  }}
-                  onBlur={() => setJumpOpen(false)}
-                  placeholder={String(pageNum)}
-                  className="w-14 text-center font-sans text-[12.5px] bg-transparent outline-none"
-                  style={{ color: '#fdfcf9' }}
-                  inputMode="numeric"
-                  aria-label="Jump to page"
-                />
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setJumpOpen(true)}
-                  className="px-2 font-sans text-[12.5px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.08)]"
-                  title="Jump to page"
-                  style={{ color: onInk(0.9) }}
-                >
-                  p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
-                </button>
-              )}
-              <button type="button" aria-label="Next page" onClick={r.goNext}
-                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-                style={{ color: onInk(0.72) }}>
-                <ChevronRight size={15} />
-              </button>
-            </div>
-          </div>
           {editing ? (
             <div className="flex items-center gap-1.5">
               <button
@@ -2473,6 +2482,53 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               {saveError}
             </span>
           )}
+          {/* Right end: what you are looking at, then where you are, set apart
+              from each other so they read as two controls rather than one. */}
+          <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
+          <div className="flex items-stretch ml-2">
+            <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
+              <button type="button" aria-label="Previous page" onClick={r.goPrev}
+                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+                style={{ color: onInk(0.72) }}>
+                <ChevronLeft size={15} />
+              </button>
+              {jumpOpen ? (
+                <input
+                  ref={jumpRef}
+                  value={jumpValue}
+                  onChange={e => setJumpValue(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      const n = parseInt(jumpValue, 10);
+                      if (!Number.isNaN(n)) r.goToPageNumber(n);
+                      setJumpOpen(false); setJumpValue('');
+                    }
+                  }}
+                  onBlur={() => setJumpOpen(false)}
+                  placeholder={String(pageNum)}
+                  className="w-14 text-center font-sans text-[12.5px] bg-transparent outline-none"
+                  style={{ color: '#fdfcf9' }}
+                  inputMode="numeric"
+                  aria-label="Jump to page"
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setJumpOpen(true)}
+                  className="px-2 font-sans text-[12.5px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.08)]"
+                  title="Jump to page"
+                  style={{ color: onInk(0.9) }}
+                >
+                  p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
+                </button>
+              )}
+              <button type="button" aria-label="Next page" onClick={r.goNext}
+                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+                style={{ color: onInk(0.72) }}>
+                <ChevronRight size={15} />
+              </button>
+            </div>
+          </div>
           <div className="ml-1 shrink-0 whitespace-nowrap">
             <UserMenu variant="hero" />
           </div>
@@ -2741,7 +2797,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         {/* Clipping is only needed while the bar is collapsing. Left on, it
             cut off the account menu, which opens downward out of the header. */}
         <header
-          className="shrink-0 transition-[height] duration-200 ease-out relative z-30"
+          className="shrink-0 transition-[height] duration-200 ease-out relative z-[60]"
           style={{
             background: INK,
             color: '#fdfcf9',
@@ -2777,7 +2833,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {r.book.display_title || r.book.title}
               </div>
             </a>
-            <UserMenu variant="hero" />
+            {/* One button rather than a bare avatar: the account, Support and
+                Feedback all live behind it, which is where a phone expects
+                them and where they stop competing with the reading controls. */}
+            <button
+              type="button"
+              onClick={() => togglePanel('menu')}
+              aria-label="Account and more"
+              className="w-9 h-9 shrink-0 flex items-center justify-center transition-colors"
+              style={{ color: onInk(0.85) }}
+            >
+              <Menu size={19} />
+            </button>
           </div>
         </header>
 
@@ -2906,7 +2973,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               sit under the scroller's bottom edge, so it needs its own room
               or it arrives half-covered exactly when you reach for it. */}
           <div
-            className="shrink-0 flex items-center justify-between border-t px-2 mb-3"
+            className="shrink-0 flex items-center justify-between border-t px-2"
             style={{
               borderColor: 'var(--border-medium)',
               background: SURFACE.panel,
@@ -2953,7 +3020,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 ? keyboardInset
                 : MOBILE_TOOLBAR_H + (stripVisible ? 96 : 0),
               height: sheetHeight ?? undefined,
-              maxHeight: keyboardInset > 0 ? '58dvh' : '72dvh',
+              maxHeight: keyboardInset > 0 ? undefined : '72dvh',
               background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
