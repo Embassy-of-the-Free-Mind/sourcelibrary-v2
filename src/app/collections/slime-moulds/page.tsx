@@ -47,6 +47,28 @@ const OG_DESC = 'Neither plant, animal, nor fungus. The books that spent two cen
 // the collection, so the authored copy below can never sit under another title.
 const FEATURED_SLUG_PREFIX = 'sluzowce-mycetozoa-monografia';
 
+/*
+ * Plate relevance. Most books here are general mycological or botanical works
+ * that carry a handful of myxomycete plates among hundreds of others, so taking
+ * every plate fills the gallery with jasmine, daisies and title-page cartouches.
+ *
+ * A book whose own title names the group is on-topic throughout and passes
+ * wholesale; every other book is filtered to plates whose description actually
+ * names a slime mould. Keying off the title rather than a hardcoded id list
+ * means a book added later sorts itself, and errs toward filtering.
+ */
+const MYXO_TITLE_RX = /myxomycet|mycetozo|myxogastr|schleimpilz|śluzowce|sluzowce|pilzthiere|slime mou?ld/i;
+// ...unless the title also names the other groups the book surveys. de Bary's
+// "Morphologie und Physiologie der Pilze, Flechten und Myxomyceten" names the
+// group but devotes most of its plates to Agaricus, Peronospora and lichens.
+// Word boundaries matter: they must not fire on Schleimpilze or Pilzthiere.
+const SURVEY_TITLE_RX = /\b(pilze|flechten|fungorum|fungi|champignons|plantarum|schwämme|kräuter)\b/i;
+const isWhollyMyxo = (title: string) => MYXO_TITLE_RX.test(title) && !SURVEY_TITLE_RX.test(title);
+// Genus names and group names as they appear in plate descriptions. "Mucor" is
+// left out on purpose: Linnaeus parked slime moulds there, but the surviving
+// genus is a true fungus and it matches de Bary's Mucor Mucedo conidiophores.
+const MYXO_DESC_RX = 'myxomycet|mycetozo|myxogastr|schleimpilz|slime|plasmodi|lycogala|trichia|stemonitis|arcyria|physarum|cribraria|didymium|aethalium|fuligo|reticularia|tubulina|perichaena|diderma|badhamia|comatricha|lamproderma|leocarpus|craterium|spumaria';
+
 export const metadata: Metadata = {
   title: OG_TITLE,
   description: OG_DESC,
@@ -126,20 +148,46 @@ async function getSlimeMouldData() {
 
   const [firstRaw, sourceRaw, ftCount, total, yearAgg, bookIdDocs] = await Promise.all([
     withTimeout(books.find({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
-    withTimeout(books.find({ collections: SLUG, visible: true, pages_count: { $gt: 0 }, is_first_translation: { $ne: true } }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(12).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
+    // Every readable book, first translations included. Mycology excludes them
+    // here because its slider is a sample of 40-odd titles; this collection is
+    // small and the first translations are the reason it exists, so hiding them
+    // from the grid left it showing two books and claiming there were seven.
+    withTimeout(books.find({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(24).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(books.countDocuments({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { maxTimeMS: 8000 }), 8000, 0),
-    withTimeout(Promise.resolve(collection.book_count as number | undefined).then((c) => c ?? books.countDocuments({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 8000 })), 8000, 0),
+    // Count what a reader can actually open, not collection.book_count — that
+    // includes books still working through OCR and translation.
+    withTimeout(books.countDocuments({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 8000 }), 8000, 0),
     withTimeout(books.aggregate([{ $match: { collections: SLUG, visible: true, year: { $type: 'number', $gt: 0 } } }, { $group: { _id: null, min: { $min: '$year' }, max: { $max: '$year' } } }], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
-    withTimeout(books.find({ collections: SLUG, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+    withTimeout(books.find({ collections: SLUG, visible: true }, { projection: { id: 1, title: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
   ]);
 
+  // Split the collection into books that are wholly about the group and books
+  // that merely contain it, then apply the relevance rule to the second set.
+  const onTopic = bookIdDocs.filter((d) => isWhollyMyxo(String(d.title || ''))).map((d) => d.id as string);
+  const mixed = bookIdDocs.filter((d) => !isWhollyMyxo(String(d.title || ''))).map((d) => d.id as string);
+  const galleryFilter = {
+    gallery_quality: { $gte: 0.5 },
+    $or: [
+      { book_id: { $in: onTopic.slice(0, 200) } },
+      {
+        book_id: { $in: mixed.slice(0, 200) },
+        $or: [
+          { description: { $regex: MYXO_DESC_RX, $options: 'i' } },
+          { museum_description: { $regex: MYXO_DESC_RX, $options: 'i' } },
+        ],
+      },
+    ],
+  };
   const bookIds = bookIdDocs.map((d) => d.id as string);
-  const galleryRaw = bookIds.length
-    ? await withTimeout(db.collection('gallery_images').find(
-      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
-      { projection: { _id: 0 }, maxTimeMS: 5000 },
-    ).sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, [])
-    : [];
+  const [galleryRaw, galleryCount] = bookIds.length
+    ? await Promise.all([
+      withTimeout(db.collection('gallery_images').find(galleryFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
+        .sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+      // Real total. The array above is capped at 60, so its length is a fetch
+      // limit, not a count, and reporting it as one was simply wrong.
+      withTimeout(db.collection('gallery_images').countDocuments(galleryFilter, { maxTimeMS: 5000 }), 5000, 0),
+    ])
+    : [[] as Record<string, unknown>[], 0];
 
   const firstTranslations = firstRaw.map(toMini);
   const sourceWorks = sourceRaw.map(toMini);
@@ -158,7 +206,7 @@ async function getSlimeMouldData() {
 
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
-    firstTranslations, sourceWorks, ftCount, total,
+    firstTranslations, sourceWorks, ftCount, total, galleryCount,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
     languages, gallery, featured, featuredPages, parent,
   };
@@ -248,9 +296,9 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
-  const galleryTotal = gallery.length;
+  const galleryTotal = galleryCount;
   const galleryPlates = gallery
     .filter((g) => imgUrl(g))
     .slice(0, 20)
@@ -282,7 +330,7 @@ export default async function SlimeMouldsCollectionPage() {
       href: galleryPlates[0]?.href,
     }
     : null;
-  const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
+  const worksMore = Math.max(0, total - sourceWorks.length);
   const sections = ([
     'introduction',
     firstTranslations.length > 0 && 'translations',
@@ -445,7 +493,7 @@ export default async function SlimeMouldsCollectionPage() {
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
                   {galleryTotal > 0 && (
-                    <Link href={`/gallery?collection=${SLUG}`} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                    <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
                   )}
                 </div>
               </div>
@@ -472,7 +520,7 @@ export default async function SlimeMouldsCollectionPage() {
               <GalleryMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href={`/gallery?collection=${SLUG}`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
+              <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>
@@ -504,23 +552,29 @@ export default async function SlimeMouldsCollectionPage() {
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
-            <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} whitespace-nowrap`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
+            <span className="text-sm text-muted whitespace-nowrap">{total} readable now</span>
           </div>
-          <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Showing {Math.min(sourceWorks.length, 10)} of {total.toLocaleString('en-US')} · original source texts first, translations are gathered in the slider above.</p>
+          <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Every work in the collection that can be read now, oldest first. Books still being transcribed and translated appear here as they are finished.</p>
           {sourceWorks.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {sourceWorks.slice(0, 10).map((b) => <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} />)}
+              {sourceWorks.map((b) => <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} />)}
             </div>
           ) : (
             <p className="text-sm text-muted">No source-text works to show.</p>
           )}
-          <div className="mt-8 border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more works in this collection</p>
-              <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
+          {/* Only shown when the grid is genuinely holding works back. The grid
+              lists everything readable, so on a collection this size it usually
+              is not, and the old copy claimed five hidden works that did not
+              exist. */}
+          {worksMore > 0 && (
+            <div className="mt-8 border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more work{worksMore === 1 ? '' : 's'} in this collection</p>
+                <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
+              </div>
+              <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
             </div>
-            <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
-          </div>
+          )}
         </div>
       </section>
 
