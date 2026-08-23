@@ -3,6 +3,7 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { localeHref } from '@/lib/i18n';
 import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
@@ -95,16 +96,21 @@ const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
 };
 
 /** The tools that live behind "More" on mobile, in the order they're offered. */
+/**
+ * Same three groups as the desktop rail, in the same order: find your way
+ * through the book, ask something of it, then do something with this page.
+ * Views, Pages, Share and Save are not here — they hold toolbar slots.
+ */
 const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
-  ['search', 'Search this book', 'Find a word in the transcribed text'],
   ['contents', 'Contents', 'The book’s own table of contents, as printed'],
-  ['librarian', 'Ask the librarian', 'Questions about this page or the book'],
-  ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
   ['guide', 'Reading guide', 'Overview, themes, sections'],
-  ['downloads', 'Download', 'This page, or the whole book, in several formats'],
-  ['history', 'Revision history', 'Every recorded change to this page'],
-  ['info', 'Edition & page info', 'This page, and the edition it comes from'],
+  ['search', 'Search this book', 'Find a word in the transcribed text'],
+  ['librarian', 'Ask the librarian', 'Questions about this page or the book'],
   ['cite', 'Cite this page', 'A citation that points at this exact page'],
+  ['downloads', 'Download', 'This page, or the whole book, in several formats'],
+  ['info', 'Edition & page info', 'This page, and the edition it comes from'],
+  ['history', 'Revision history', 'Every recorded change to this page'],
+  ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
   ['menu', 'Menu', 'The rest of the library, and your account'],
 ];
 
@@ -727,14 +733,11 @@ function ReaderAccountMenu() {
         <MessageSquare size={15} style={{ color: 'var(--text-faint)' }} />
       </Link>
 
-      {/* Site language. A reader page has no Spanish twin, so localeHref sends
-          ES to the Spanish homepage rather than a Spanish version of this page
-          — the honest thing is to say so on the control instead of letting it
-          look like it will keep your place. It stops being a caveat the day
-          page-level locale routing lands. */}
+      {/* The reader now has a Spanish twin, so switching keeps you on this
+          page instead of dropping you at the homepage. */}
       <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>Site language</CapsLabel>
       <div className="flex gap-2 pt-1">
-        {([['English', '/'], ['Español', '/es']] as Array<[string, string]>).map(([label, href]) => {
+        {([['English', localeHref('en', pathname)], ['Español', localeHref('es', pathname)]] as Array<[string, string]>).map(([label, href]) => {
           const active = (label === 'Español') === isSpanishSite;
           return (
             <Link
@@ -750,9 +753,7 @@ function ReaderAccountMenu() {
           );
         })}
       </div>
-      <p className="mt-2 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
-        Switching language leaves this book and opens the Source Library home page.
-      </p>
+
       {signedIn && (
         <button type="button" onClick={() => signOut({ callbackUrl: '/' })} className={row} style={{ ...rowStyle, borderColor: 'transparent' }}>
           Sign out
@@ -2586,15 +2587,24 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ background: INK, borderRight: `1px solid ${onInk(0.12)}` }}
           aria-label="Reader tools"
         >
-          <RailButton label="Save" active={leftPanel === 'save'} onClick={() => togglePanel('save')} icon={<Heart size={17} />} />
+          {/* Three groups, in the order a reader meets them: find your way
+              through the book, ask something of it, then do something with the
+              page you are on. Settings is last because you set it once. */}
           <RailButton label="Contents" active={leftPanel === 'contents'} onClick={() => togglePanel('contents')} icon={<List size={17} />} />
-          <RailButton label="Search" active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
           <RailButton label="Guide" active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
+          <RailButton label="Search" active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
           <RailButton label="Librarian" active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
-          <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
-          <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
+
+          <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
+
+          <RailButton label="Save" active={leftPanel === 'save'} onClick={() => togglePanel('save')} icon={<Heart size={17} />} />
           <RailButton label="Share" active={leftPanel === 'share'} onClick={() => togglePanel('share')} icon={<Share2 size={17} />} />
+          <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
           <RailButton label="Download" active={leftPanel === 'downloads'} onClick={() => togglePanel('downloads')} icon={<Download size={17} />} />
+          <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
+
+          <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
+
           <RailButton label="Settings" active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
           {/* Editing is editor-and-above only, so the affordance is gated the
               same way the current reader gates its Read/Edit toggle. */}
