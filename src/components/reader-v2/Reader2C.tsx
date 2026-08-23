@@ -49,7 +49,7 @@ const STRIP_KEY = 'sl-reader-v2c-strip';
 /** Mobile toolbar height — one row of four tools. */
 const MOBILE_TOOLBAR_H = 52;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
-const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 82%, var(--bg-dark) 4%)';
+const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 88%, var(--bg-dark) 8%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
@@ -78,7 +78,7 @@ const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
 const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
   contents: 'The book’s own table of contents, as printed.',
   search: 'Searches the transcribed text and the descriptions of the illustrations.',
-  guide: 'Our summary of the book, written by AI over the transcription. Not the printed contents.',
+  guide: 'Our summary of the book, written by AI over the transcription.',
   librarian: 'Answers from AI, grounded in this page and the book around it.',
   info: 'What this page is, and the edition it was scanned from.',
   cite: 'A citation that points at this exact page.',
@@ -91,11 +91,11 @@ const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
 
 /** The tools that live behind "More" on mobile, in the order they're offered. */
 const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
+  ['search', 'Search this book', 'Find a word in the transcribed text'],
   ['contents', 'Contents', 'The book’s own table of contents, as printed'],
   ['librarian', 'Ask the librarian', 'Questions about this page or the book'],
   ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
   ['guide', 'Reading guide', 'Overview, themes, sections'],
-  ['share', 'Share', 'Copy a link to this page, or post it'],
   ['downloads', 'Download', 'This page, or the whole book, in several formats'],
   ['history', 'Revision history', 'Every recorded change to this page'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
@@ -183,7 +183,7 @@ function MobileToolbar({
   // guide — is one tap behind More, so nothing here competes for the thumb.
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
     ['views', 'Views', <Columns3 key="i" size={19} />],
-    ['search', 'Search', <Search key="i" size={19} />],
+    ['share', 'Share', <Share2 key="i" size={19} />],
     ['save', 'Save', <Heart key="i" size={19} />],
   ];
   return (
@@ -1653,12 +1653,12 @@ type ReaderState = ReturnType<typeof useReaderV2>;
  * breakpoints can never drift apart.
  */
 function PanelContent({
-  panel, r, citation, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
+  panel, r, citationParts, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
   editing, onToggleEdit, shareUrl,
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
-  citation: string;
+  citationParts: { author: string; title: string; year: string; locator: string; source: string; url: string };
   copied: boolean;
   onCopyCitation: () => void;
   librarianMessages: LibrarianMessage[];
@@ -1723,8 +1723,13 @@ function PanelContent({
             onSelect={(pid) => { onClose(); if (pid) r.goToPage(pid); }}
           />
         ) : (
-          <p className="px-4 py-3 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
-            No table of contents for this book yet.
+          <p className="px-4 py-3 font-sans text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            {/* A book with no printed contents and a book whose contents nobody
+                has keyed in yet are different facts, and the reader should not
+                have to guess which one it is looking at. */}
+            {r.currentPage.page_number != null && r.totalPages > 0
+              ? 'This edition’s table of contents has not been transcribed yet. Use the reading guide or the page strip to move around.'
+              : 'This book has no table of contents.'}
           </p>
         )}
       </div>
@@ -1813,9 +1818,23 @@ function PanelContent({
   if (panel === 'cite') {
     return (
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-3 pb-4" style={{ overscrollBehavior: 'contain' }}>
-        <p className="font-body text-[14px] leading-relaxed mb-3 break-words" style={{ color: 'var(--text-secondary)' }}>
-          {citation}
-        </p>
+        <div className="mb-3 pl-3 border-l-2" style={{ borderColor: 'var(--border-medium)' }}>
+          {citationParts.author && (
+            <p className="font-body text-[14px] leading-snug" style={{ color: 'var(--text-primary)' }}>
+              {citationParts.author}
+            </p>
+          )}
+          <p className="font-body text-[14.5px] leading-snug" style={{ color: 'var(--text-primary)' }}>
+            <em>{citationParts.title}</em>
+            {citationParts.year && <span style={{ color: 'var(--text-muted)' }}> {citationParts.year}</span>}
+          </p>
+          <p className="font-sans text-[12px] mt-1" style={{ color: 'var(--text-secondary)' }}>
+            {[citationParts.locator, citationParts.source].filter(Boolean).join(' · ')}
+          </p>
+          <p className="font-sans text-[11.5px] mt-1.5 break-all" style={{ color: 'var(--text-faint)' }}>
+            {citationParts.url}
+          </p>
+        </div>
         <button
           type="button"
           onClick={onCopyCitation}
@@ -2128,7 +2147,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     if (!el) return;
     const y = el.scrollTop;
     const delta = y - lastScrollY.current;
-    if (y < 48) setBarHidden(false);
+    // At the foot of the page the pager appears, and that is exactly when a
+    // reader wants the whole set of ways out — next, previous, or back to the
+    // book — so the bar comes back with it rather than staying hidden.
+    const atFoot = el.scrollHeight - (y + el.clientHeight) < 80;
+    if (y < 48 || atFoot) setBarHidden(false);
     else if (delta > 6) setBarHidden(true);
     else if (delta < -6) setBarHidden(false);
     lastScrollY.current = y;
@@ -2174,13 +2197,25 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     }
   }, [r.currentPageId, stripVisible]);
 
-  const citation = (() => {
-    const title = r.book.display_title || r.book.title;
-    const author = r.book.author ? `${r.book.author}. ` : '';
-    const year = r.book.published ? ` (${r.book.published})` : '';
-    const pn = r.currentPage?.page_number;
-    return `${author}${title}${year}, p. ${pn}. Source Library. https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
-  })();
+  // One string to copy, and its parts to show. A citation read as a wall of
+  // text on screen while being perfectly correct on the clipboard; setting the
+  // title, the locator and the URL apart makes it checkable at a glance
+  // without changing a character of what gets pasted.
+  const citationParts = {
+    author: r.book.author ? `${r.book.author}.` : '',
+    title: r.book.display_title || r.book.title,
+    year: r.book.published ? `(${r.book.published})` : '',
+    locator: r.currentPage?.page_number != null ? `p. ${r.currentPage.page_number}` : '',
+    source: 'Source Library',
+    url: `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`,
+  };
+  const citation = [
+    citationParts.author,
+    `${citationParts.title}${citationParts.year ? ` ${citationParts.year}` : ''},`,
+    `${citationParts.locator}.`,
+    `${citationParts.source}.`,
+    citationParts.url,
+  ].filter(Boolean).join(' ');
 
   const copyCitation = useCallback(() => {
     navigator.clipboard?.writeText(citation).then(() => {
@@ -2280,7 +2315,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     && hasBlockquote(ocrText) !== hasBlockquote(transText);
 
   const panelProps = {
-    r, citation, copied,
+    r, citationParts, copied,
     onCopyCitation: copyCitation,
     librarianMessages,
     onLibrarianMessages: setLibrarianMessages,
@@ -2711,8 +2746,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             height: barHidden ? 0 : 52,
             overflow: barHidden ? 'hidden' : 'visible',
           }}
+          aria-hidden={barHidden}
         >
-          <div className="flex items-center gap-2.5 h-[52px] px-3">
+          {/* The row fades with the bar rather than being revealed by it.
+              Animating only the height meant the contents were already painted
+              at full strength in a 4px-tall box, so the avatar — the tallest
+              thing in the row — appeared first and the rest caught up. */}
+          <div
+            className="flex items-center gap-2.5 h-[52px] px-3 transition-opacity duration-150"
+            style={{ opacity: barHidden ? 0 : 1 }}
+          >
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
             {/* Sized to match the account avatar beside it — the two circles
                 sit at opposite ends of the same bar and read as a pair. */}

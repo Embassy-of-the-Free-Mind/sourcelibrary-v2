@@ -162,18 +162,24 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
         <HymnPlayer transcriptions={musicTranscriptions} />
       )}
       {/* Server-rendered nav links so crawlers can walk book → pages even
-          when client-component SSR changes (#2266). Sits below the h-screen
-          reader; the in-reader controls remain the primary navigation. */}
+          when client-component SSR changes (#2266).
+          
+          Screen-reader-only, NOT merely below the fold. The reader owns one
+          viewport, so on a phone this block appeared under it as a stray row
+          of links — a stale page number and an "All N pages" beside the real
+          pager, shoving the toolbar up the screen. It stays in the DOM and in
+          the accessibility tree, which is all #2266 needed; sighted readers
+          have the pager, the filmstrip and Contents for the same job. */}
       {!(ctx?.isEmbedded) && (() => {
         const idx = serializedNavPages.findIndex(p => p.id === pageId);
         const prev = idx > 0 ? serializedNavPages[idx - 1] : null;
         const next = idx >= 0 && idx < serializedNavPages.length - 1 ? serializedNavPages[idx + 1] : null;
         return (
-          <nav aria-label="Page navigation" className="max-w-[1500px] mx-auto px-4 sm:px-6 py-4 text-sm text-stone-500 flex flex-wrap items-center gap-x-5 gap-y-1">
-            {prev && <a href={`/book/${bookPath}/page/${prev.id}`} className="hover:text-stone-700">← Page {prev.page_number}</a>}
-            <a href={`/book/${bookPath}`} className="hover:text-stone-700">{book.display_title || book.title}</a>
-            <a href={`/book/${bookPath}/overview`} className="hover:text-stone-700">All {serializedNavPages.length} pages</a>
-            {next && <a href={`/book/${bookPath}/page/${next.id}`} className="hover:text-stone-700">Page {next.page_number} →</a>}
+          <nav aria-label="Page navigation" className="sr-only">
+            {prev && <a href={`/book/${bookPath}/page/${prev.id}`}>Page {prev.page_number}</a>}
+            <a href={`/book/${bookPath}`}>{book.display_title || book.title}</a>
+            <a href={`/book/${bookPath}/overview`}>All {serializedNavPages.length} pages</a>
+            {next && <a href={`/book/${bookPath}/page/${next.id}`}>Page {next.page_number}</a>}
           </nav>
         );
       })()}

@@ -24,7 +24,11 @@ export const SURFACE = {
   scanBed: 'color-mix(in srgb, var(--bg-warm) 96%, var(--bg-dark))',
   ocr: 'color-mix(in srgb, var(--bg-cream) 45%, var(--bg-warm))',
   translation: 'var(--bg-cream)',
-  panel: 'var(--bg-warm)',
+  // The panels are chrome, the panes are the book. They were both warm paper,
+  // so an open drawer beside a scan read as more content. Panels sit on white
+  // now and the header tint above them is deeper — the drawer should look like
+  // something laid over the page, not part of it.
+  panel: 'var(--bg-white)',
   popover: 'var(--bg-white)',
 } as const;
 

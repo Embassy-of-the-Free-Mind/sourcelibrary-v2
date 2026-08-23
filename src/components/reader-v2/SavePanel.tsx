@@ -146,15 +146,11 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
         style={{ borderColor: 'var(--border-light)' }}
       >
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
-          {!statusLoaded ? (
-            <Loader2 size={16} className="animate-spin" style={{ color: 'var(--text-muted)' }} />
-          ) : (
-            <Heart
-              size={16}
-              fill={pageLike.liked ? 'var(--accent-rust)' : 'none'}
-              style={{ color: pageLike.liked ? 'var(--accent-rust)' : 'var(--text-muted)' }}
-            />
-          )}
+          <Heart
+            size={16}
+            fill={statusLoaded && pageLike.liked ? 'var(--accent-rust)' : 'none'}
+            style={{ color: statusLoaded && pageLike.liked ? 'var(--accent-rust)' : 'var(--text-muted)' }}
+          />
           {pageLike.liked ? 'Saved to your library' : 'Save this page'}
         </span>
         {pageLike.count > 0 && (

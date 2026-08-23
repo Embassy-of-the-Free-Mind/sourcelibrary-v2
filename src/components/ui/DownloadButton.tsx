@@ -269,7 +269,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           <div className="px-3 py-2 flex items-center justify-between border-b border-stone-100">
             <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">TXT</span>
-            <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
+            <span className="text-[10px] font-medium text-stone-500 uppercase tracking-wide">Free with sign-in</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
@@ -296,7 +296,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Scan facing its translation, like the reader"
-              icon={<FileType className="w-4 h-4 text-emerald-700" />}
+              icon={<FileType className="w-4 h-4 text-stone-600" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && (
@@ -339,7 +339,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           )}
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation (fixed layout)"
-              icon={<Image className="w-4 h-4 text-emerald-700" />}
+              icon={<Image className="w-4 h-4 text-stone-600" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           </div>
@@ -349,7 +349,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               <div className="px-3 py-2 border-t border-stone-100 mt-2 flex items-center justify-between">
                 <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">Page Scans</span>
                 {ncImagesFree && (
-                  <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
+                  <span className="text-[10px] font-medium text-stone-500 uppercase tracking-wide">Free with sign-in</span>
                 )}
               </div>
               {/* epub-images row removed (#3920) — 44 clicks/90d vs 191 for the
@@ -362,7 +362,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           {hasImages && imageRestricted && (
             <div className="px-3 py-2 border-t border-stone-100 mt-2">
               <p className="text-xs text-stone-400">
-                Image downloads unavailable &mdash; the source institution has not released the scans under a redistributable license. View images on the book page.
+                Image downloads are unavailable: the source institution has not released these scans under a redistributable licence. The images are on the book page.
               </p>
             </div>
           )}
