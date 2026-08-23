@@ -276,7 +276,9 @@ export default async function SlimeMouldsCollectionPage() {
   const introPlate = introSrc && imgUrl(introSrc)
     ? {
       src: (thumbUrl(introSrc) || imgUrl(introSrc)) as string,
-      label: introBook ? `${bookTitle(introBook)}${introBook.year ? `, ${introBook.year}` : ''}` : introSrc.book_title,
+      // Original title, not the English display title — the mycology page credits
+      // its plates the same way ("Selecta Fungorum Carpologia — Tulasne, 1863").
+      label: introBook ? `${introBook.title}${introBook.year ? `, ${introBook.year}` : ''}` : introSrc.book_title,
       href: galleryPlates[0]?.href,
     }
     : null;
