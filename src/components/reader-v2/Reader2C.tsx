@@ -9,6 +9,7 @@ import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
+import { FeedbackPanel } from './FeedbackPanel';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
@@ -59,7 +60,7 @@ const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'feedback' | 'more' | null;
 
 /**
  * Drawer titles and the one line under each — saying what the tool actually
@@ -84,7 +85,7 @@ function panelBlurb(t: ReaderStrings, panel: Exclude<LeftPanel, null>): string |
 const MORE_TOOLS = [
   'cite', 'downloads', 'info', 'history',
   'contents', 'guide', 'search', 'librarian',
-  'settings',
+  'settings', 'feedback',
 ] as const;
 
 interface Reader2CProps {
@@ -2129,6 +2130,9 @@ function PanelContent({
   if (panel === 'info') {
     return <InfoPanel page={r.currentPage} book={r.book} />;
   }
+  if (panel === 'feedback') {
+    return <FeedbackPanel page={r.currentPage} book={r.book} url={shareUrl} />;
+  }
   if (panel === 'share') {
     return <SharePanel page={r.currentPage} book={r.book} url={shareUrl} />;
   }
@@ -2883,6 +2887,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
 
           <RailButton label={t.toolbar.settings} active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
+          <RailButton label={t.toolbar.feedback} active={leftPanel === 'feedback'} onClick={() => togglePanel('feedback')} icon={<MessageSquare size={17} />} />
           {/* Editing is editor-and-above only, so the affordance is gated the
               same way the current reader gates its Read/Edit toggle. */}
           <AuthCheck role="inner_circle">
