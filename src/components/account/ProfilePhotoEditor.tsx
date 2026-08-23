@@ -48,9 +48,19 @@ interface PickableImage {
 interface ProfilePhotoEditorProps {
   name: string | null;
   initialImage: string | null;
+  /** Avatar display size — 'md' (56px) for compact rows, 'lg' (96px) for the account header. */
+  size?: 'md' | 'lg';
+  /** 'dark' renders the trigger controls for a dark hero background. The modal stays light. */
+  theme?: 'light' | 'dark';
 }
 
-export default function ProfilePhotoEditor({ name, initialImage }: ProfilePhotoEditorProps) {
+const AVATAR_SIZES = {
+  md: { circle: 'w-14 h-14', initial: 'text-lg', camera: 'w-5 h-5' },
+  lg: { circle: 'w-24 h-24', initial: 'text-3xl', camera: 'w-6 h-6' },
+} as const;
+
+export default function ProfilePhotoEditor({ name, initialImage, size = 'md', theme = 'light' }: ProfilePhotoEditorProps) {
+  const dark = theme === 'dark';
   const router = useRouter();
   const { update } = useSession();
   const identity = useIdentity();
@@ -325,14 +335,16 @@ export default function ProfilePhotoEditor({ name, initialImage }: ProfilePhotoE
               src={current}
               alt={name || 'Profile'}
               data-avatar="true"
-              className="w-14 h-14 rounded-full object-cover"
+              className={`${AVATAR_SIZES[size].circle} rounded-full object-cover`}
               onError={() => setImgError(true)}
             />
           ) : (
             <div
               data-avatar="true"
-              className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-medium"
-              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+              className={`${AVATAR_SIZES[size].circle} rounded-full flex items-center justify-center ${AVATAR_SIZES[size].initial} font-serif`}
+              style={dark
+                ? { background: 'rgba(245,240,232,0.12)', color: '#e7e0d4' }
+                : { background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
             >
               {name?.charAt(0)?.toUpperCase() || '?'}
             </div>
@@ -342,14 +354,14 @@ export default function ProfilePhotoEditor({ name, initialImage }: ProfilePhotoE
             className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
             style={{ background: 'rgba(0,0,0,0.4)' }}
           >
-            <Camera className="w-5 h-5 text-white" aria-hidden="true" />
+            <Camera className={`${AVATAR_SIZES[size].camera} text-white`} aria-hidden="true" />
           </span>
         </button>
         <div className="flex flex-col gap-0.5 text-sm">
           <button
             onClick={() => { setIsOpen(true); setTab(current ? 'upload' : 'library'); }}
             className="text-left hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--text-secondary)' }}
+            style={{ color: dark ? '#d6cfc2' : 'var(--text-secondary)' }}
           >
             {current ? 'Change photo' : 'Add a profile photo'}
           </button>
@@ -358,7 +370,7 @@ export default function ProfilePhotoEditor({ name, initialImage }: ProfilePhotoE
               onClick={removePhoto}
               disabled={saving}
               className="text-left hover:opacity-70 transition-opacity disabled:opacity-50"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: dark ? '#8f887c' : 'var(--text-muted)' }}
             >
               Remove
             </button>
