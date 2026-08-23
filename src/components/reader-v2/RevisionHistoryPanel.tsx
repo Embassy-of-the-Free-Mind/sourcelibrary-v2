@@ -211,6 +211,7 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
   const [rows, setRows] = useState<Row[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [restoringId, setRestoringId] = useState<string | null>(null);
+  const [restoreError, setRestoreError] = useState<string | null>(null);
   const [showMaintenance, setShowMaintenance] = useState(false);
 
   useEffect(() => {
@@ -239,6 +240,7 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
 
   async function handleRestore(row: Row) {
     setRestoringId(row.id);
+    setRestoreError(null);
     try {
       const res = await fetch(`/api/pages/${page.id}/revisions/${row.id}/restore`, {
         method: 'POST',
@@ -247,9 +249,13 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
       });
       if (res.ok) {
         window.location.reload();
+        return;
       }
+      // A 403 from an expired editor session looked exactly like clicking the
+      // wrong row: the spinner stopped and nothing else happened.
+      setRestoreError(res.status === 403 ? t.restoreForbidden : t.restoreFailed);
     } catch {
-      // ignore — button just stops spinning
+      setRestoreError(t.restoreFailed);
     } finally {
       setRestoringId(null);
     }
@@ -314,6 +320,12 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
             restoring={restoringId === row.id}
           />
         ))
+      )}
+
+      {restoreError && (
+        <p className="px-4 py-2 font-sans text-[12.5px]" style={{ color: 'var(--status-error)' }} role="alert">
+          {restoreError}
+        </p>
       )}
 
       {maintenanceRows.length > 0 && (

@@ -36,6 +36,17 @@ export interface ViewState {
 
 const SETTINGS_KEY = 'sl-reader-v2-settings';
 
+/**
+ * Write settings through on the way to state. The Cmd +/-/0 text-zoom keys
+ * used to call setSettings directly and so never reached storage, which made
+ * the size look like it forgot itself between visits — except when an
+ * unrelated settings change happened to flush it.
+ */
+function persistSettings(next: ReaderSettings): ReaderSettings {
+  try { window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(next)); } catch { /* private mode */ }
+  return next;
+}
+
 export const DEFAULT_SETTINGS: ReaderSettings = {
   theme: 'light',
   textScale: 1,
@@ -75,6 +86,7 @@ export function useReaderV2(
   const [currentPageId, setCurrentPageId] = useState(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const [pageLoading, setPageLoading] = useState(false);
+  const [pageError, setPageError] = useState(false);
 
   const bookPath = book.slug || book.id;
 
@@ -128,10 +140,14 @@ export function useReaderV2(
       setCurrentPage(cached);
     } else {
       setPageLoading(true);
+      setPageError(false);
       fetchPage(currentPageId).then((p) => {
         if (cancelled) return;
         setPageLoading(false);
-        if (p) setCurrentPage(p);
+        // A null here means the fetch 404'd, 429'd or timed out. Leaving
+        // currentPage alone renders the PREVIOUS page's scan and text under the
+        // new page's URL, with nothing saying anything went wrong.
+        if (p) setCurrentPage(p); else setPageError(true);
       });
     }
     const idx = pageList.findIndex(p => p.id === currentPageId);
@@ -141,10 +157,15 @@ export function useReaderV2(
 
   // Reading history beacon (same contract as the production reader)
   useEffect(() => {
-    if (!currentPage?.page_number) return;
+    // currentPageId moves synchronously on a page turn; currentPage arrives a
+    // commit later. Recording before they agree stored the new page's id
+    // against the PREVIOUS page's number, which is what made "continue where
+    // you left off" offer a page one off from where you stopped.
+    if (currentPage?.id !== currentPageId) return;
+    if (currentPage.page_number == null) return;
     const referrer = typeof document !== 'undefined' ? document.referrer : '';
     readingHistory.record(book.id, currentPageId, currentPage.page_number, referrer || undefined);
-  }, [book.id, currentPageId, currentPage?.page_number]);
+  }, [book.id, currentPageId, currentPage?.id, currentPage?.page_number]);
 
   /**
    * The URL a page turn writes.
@@ -159,13 +180,21 @@ export function useReaderV2(
    * actually mounted under.
    */
   const pageUrl = useCallback((pageId: string) => {
-    const suffix = typeof window !== 'undefined' && /\/v2[ac]\/?$/.test(window.location.pathname)
-      ? `/v${variant}`
-      : '';
+    const here = typeof window !== 'undefined' ? window.location.pathname : '';
+    const suffix = /\/v2[ac]\/?$/.test(here) ? `/v${variant}` : '';
+    // The locale prefix is part of the route, not decoration. Dropping it
+    // rewrote /es/book/… to /book/… on the first page turn, which flipped the
+    // whole interface and the translation pane back to English mid-read and
+    // made the shared URL the English one.
+    const prefix = /^\/es(\/|$)/.test(here) ? '/es' : '';
+    // Query carries the citation pin (?v=) and the search mark (?highlight=).
+    // Rebuilding a bare path dropped both on the first turn, so a pinned
+    // citation quietly became live text with the banner gone.
+    const query = typeof window !== 'undefined' ? window.location.search : '';
     // Embedded readers live under /embed/<tenant>/…; writing a bare /book/…
     // URL there navigates the iframe out of the reading room it belongs to.
     // useEmbedHref is a no-op off an embed route, so this is safe everywhere.
-    return embedHref(`/book/${bookPath}/page/${pageId}${suffix}`);
+    return embedHref(`${prefix}/book/${bookPath}/page/${pageId}${suffix}${query}`);
   }, [bookPath, variant, embedHref]);
 
   // ── navigation ─────────────────────────────────────────────────────────
@@ -196,8 +225,18 @@ export function useReaderV2(
     goToPage(pageList[index].id);
   }, [pageList, goToPage]);
 
-  const goNext = useCallback(() => goToIndex(currentIndex + 1), [goToIndex, currentIndex]);
-  const goPrev = useCallback(() => goToIndex(currentIndex - 1), [goToIndex, currentIndex]);
+  // currentIndex is -1 on a page the nav list excludes (archived spreads,
+  // digitizer inserts, negative page numbers — 182k pages in the corpus).
+  // Without this guard goNext() fell through to goToIndex(0) and jumped the
+  // reader to page 1 of the book.
+  const goNext = useCallback(
+    () => { if (currentIndex >= 0) goToIndex(currentIndex + 1); },
+    [goToIndex, currentIndex],
+  );
+  const goPrev = useCallback(
+    () => { if (currentIndex >= 0) goToIndex(currentIndex - 1); },
+    [goToIndex, currentIndex],
+  );
 
   // Jump by the printed page number shown in the stepper
   const goToPageNumber = useCallback((num: number) => {
@@ -233,11 +272,7 @@ export function useReaderV2(
     setSettings(spanishSite && !stored ? { ...base, translationLang: 'es' } : base);
   }, [spanishSite]);
   const updateSettings = useCallback((patch: Partial<ReaderSettings>) => {
-    setSettings(prev => {
-      const next = { ...prev, ...patch };
-      try { window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(next)); } catch { /* private mode */ }
-      return next;
-    });
+    setSettings(prev => persistSettings({ ...prev, ...patch }));
   }, []);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -265,7 +300,12 @@ export function useReaderV2(
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+      // SELECT was missing: the reading-language dropdown is one, so pressing
+      // Left/Right to change language also turned the page underneath it.
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA'
+        || target.tagName === 'SELECT' || target.isContentEditable) return;
+      // A dialog owning the screen owns the arrow keys with it.
+      if (document.querySelector('[data-reader-modal-open]')) return;
       if (e.key === 'ArrowRight') { goNext(); }
       else if (e.key === 'ArrowLeft') { goPrev(); }
       else if (e.key === 'Escape') { setSettingsOpen(false); }
@@ -277,13 +317,13 @@ export function useReaderV2(
       if (!e.metaKey && !e.ctrlKey) return;
       if (e.key === '=' || e.key === '+') {
         e.preventDefault();
-        setSettings(prev => ({ ...prev, textScale: Math.min(2, Math.round(prev.textScale * 1.1 * 100) / 100) }));
+        setSettings(prev => persistSettings({ ...prev, textScale: Math.min(2, Math.round(prev.textScale * 1.1 * 100) / 100) }));
       } else if (e.key === '-') {
         e.preventDefault();
-        setSettings(prev => ({ ...prev, textScale: Math.max(0.7, Math.round(prev.textScale / 1.1 * 100) / 100) }));
+        setSettings(prev => persistSettings({ ...prev, textScale: Math.max(0.7, Math.round(prev.textScale / 1.1 * 100) / 100) }));
       } else if (e.key === '0') {
         e.preventDefault();
-        setSettings(prev => ({ ...prev, textScale: 1 }));
+        setSettings(prev => persistSettings({ ...prev, textScale: 1 }));
       }
     }
     window.addEventListener('keydown', onKey);
@@ -328,7 +368,7 @@ export function useReaderV2(
 
   return {
     book, bookPath, pageList, currentPage, currentPageId, currentIndex, totalPages,
-    pageLoading, progress,
+    pageLoading, pageError, progress,
     goToPage, goToIndex, goNext, goPrev, goToPageNumber, syncCurrentPage, fetchPage, applyPageUpdate,
     views, toggleView,
     settings, updateSettings, settingsOpen, setSettingsOpen,

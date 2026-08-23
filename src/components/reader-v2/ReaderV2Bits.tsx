@@ -33,16 +33,25 @@ export const SURFACE = {
   popover: 'var(--bg-white)',
 } as const;
 
-export function CapsLabel({ children, className = '', style }: {
+export function CapsLabel({ children, className = '', style, as, id }: {
   children: React.ReactNode; className?: string; style?: React.CSSProperties;
+  /**
+   * Render as a heading where the label really is one. The reader shipped with
+   * no h1-h6 anywhere, so heading navigation — the main way a screen-reader
+   * user orients on a page — returned nothing at all. The look is unchanged.
+   */
+  as?: 'span' | 'h1' | 'h2';
+  id?: string;
 }) {
+  const Tag = as || 'span';
   return (
-    <span
+    <Tag
+      id={id}
       className={`font-sans text-[10.5px] font-medium uppercase tracking-[0.15em] ${className}`}
       style={style}
     >
       {children}
-    </span>
+    </Tag>
   );
 }
 
@@ -548,6 +557,52 @@ export function barControlStyle(on = false) {
     background: on ? onInk(0.16) : onInk(0.06),
     color: on ? '#fdfcf9' : onInk(0.62),
   } as const;
+}
+
+/**
+ * Modal plumbing shared by the reader's two dialogs (the site menu and the
+ * full-screen scan). Both declared `aria-modal="true"` and did none of what
+ * that promises: focus stayed on a button the dialog had just hidden from
+ * assistive technology, Tab walked out into the reader behind, and closing
+ * dropped focus on `<body>` so a keyboard reader lost their place entirely.
+ *
+ * Also stamps `data-reader-modal-open` on the document, which is how the
+ * hook's arrow-key handler knows not to turn the page underneath an open
+ * dialog.
+ */
+export function useDialogFocus(
+  ref: React.RefObject<HTMLElement | null>,
+  onClose: () => void,
+) {
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    const root = ref.current;
+    const sel = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+    // Focus the first control rather than the container: a container with
+    // tabindex reads as an empty group before the reader hears anything useful.
+    root?.querySelector<HTMLElement>(sel)?.focus();
+
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') { e.preventDefault(); onClose(); return; }
+      if (e.key !== 'Tab' || !root) return;
+      const items = Array.from(root.querySelectorAll<HTMLElement>(sel))
+        .filter(el => el.offsetParent !== null || el === document.activeElement);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    document.documentElement.setAttribute('data-reader-modal-open', '');
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.documentElement.removeAttribute('data-reader-modal-open');
+      opener?.focus?.();
+    };
+  }, [ref, onClose]);
 }
 
 /** Adjoining multi-toggle group on the ink bar (Scan / OCR / English). */

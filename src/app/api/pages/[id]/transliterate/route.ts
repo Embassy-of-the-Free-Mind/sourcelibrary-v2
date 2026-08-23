@@ -54,7 +54,12 @@ export async function POST(
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
 
-    const { regenerate = false, model = TRANSLITERATION_MODEL } = body;
+    const { regenerate = false } = body;
+    // The caller does not get to name the model. It used to, and the value went
+    // straight to getGenerativeModel(), so anyone inside the anonymous budget
+    // below could spend it on the most expensive model on offer instead of the
+    // cheap one this job is costed for.
+    const model = TRANSLITERATION_MODEL;
 
     // Fetch the page
     const page = await db.collection('pages').findOne({ id });
@@ -92,7 +97,7 @@ export async function POST(
     // OCR characters, up to nearly three minutes on a long page. Cached serves
     // above are free and stay ungated; generation is capped per IP for
     // anonymous callers, exactly as the alignment route caps trace mode.
-    const gate = await anonActionGate(request, { name: 'transliterate', limit: 15 });
+    const gate = await anonActionGate(request, { name: 'transliterate', limit: 15, allowBotBypass: false });
     if (!gate.allowed) {
       return NextResponse.json(
         { error: 'Transliteration limit reached. Sign in (free) to keep going.', retry_after: gate.retryAfter },

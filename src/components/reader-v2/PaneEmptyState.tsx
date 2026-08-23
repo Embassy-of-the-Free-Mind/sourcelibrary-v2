@@ -63,6 +63,7 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
   const t = getReaderStrings(useLocale()).paneEmpty;
   const [requested, setRequested] = useState(false);
   const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const sessionEmail = (sessionData?.user as { email?: string } | undefined)?.email || null;
   const ocrText = page.ocr?.data || '';
@@ -115,7 +116,7 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
     if (sending || requested) return; // one request per pane mount — no spamming the queue
     setSending(true);
     try {
-      await fetch('/api/feedback', {
+      const res = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -124,11 +125,13 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
           email: sessionEmail && sessionEmail.includes('@') ? sessionEmail : null,
         }),
       });
+      if (!res.ok) throw new Error(String(res.status));
+      setRequested(true);
     } catch {
-      /* best effort, matches old reader's behaviour */
+      // Only claim it was queued when it was.
+      setFailed(true);
     }
     setSending(false);
-    setRequested(true);
   };
 
   const headerBody = t.readyToTranslateBody;
@@ -163,9 +166,16 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
             }
           >
             {!requested && showCta ? (
-              <button onClick={requestTranslation} disabled={sending} className={actionButtonClass} style={actionButtonStyle}>
-                {sending ? t.sending : t.requestTranslation}
-              </button>
+              <>
+                <button onClick={requestTranslation} disabled={sending} className={actionButtonClass} style={actionButtonStyle}>
+                  {sending ? t.sending : t.requestTranslation}
+                </button>
+                {failed && (
+                  <span className="block font-sans text-[12.5px] mt-2" style={{ color: 'var(--status-error)' }} role="alert">
+                    {t.requestFailed}
+                  </span>
+                )}
+              </>
             ) : null}
           </EmptyPane>
         </AuthCheck>

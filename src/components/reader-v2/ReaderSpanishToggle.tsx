@@ -140,7 +140,11 @@ export function TranslationLanguageHeader({
           <select
             value={lang}
             onChange={(e) => onChange(e.target.value as 'en' | 'es')}
-            className="font-sans text-[11px] h-[22px] pl-1.5 pr-5 border appearance-none cursor-pointer"
+            /* 16px on phones. iOS Safari zooms the whole viewport when a form
+               control under 16px takes focus, and a select is a form control —
+               the search and librarian inputs already do this, this one was
+               missed. */
+            className="font-sans text-[16px] lg:text-[11px] h-[26px] lg:h-[22px] pl-1.5 pr-5 border appearance-none cursor-pointer"
             style={{
               borderColor: 'var(--border-light)',
               color: 'var(--text-secondary)',

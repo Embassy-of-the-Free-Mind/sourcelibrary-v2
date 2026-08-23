@@ -223,7 +223,10 @@ function PinnedBanner({
       >
         <CapsLabel style={{ color: onInk(0.55) }}>{t.citedVersion}</CapsLabel>
         <span>{t.unresolvable(v)}</span>
-        <a href={currentPageUrl} className="underline font-medium" style={{ color: 'var(--accent-rust)' }}>
+        {/* Not --accent-rust: this banner sits on --bg-dark, where rust measures
+            2.99:1 — the least legible thing in a row whose ordinary text is at
+            12.8:1, and it is the only route back to the current text. */}
+        <a href={currentPageUrl} className="underline font-medium" style={{ color: '#d98a74' }}>
           {t.continueReadingLink}
         </a>
       </div>
@@ -253,7 +256,10 @@ function PinnedBanner({
         </span>
       )}
       {(pageMissingFromEdition || !edition.isCurrentVersion) && (
-        <a href={currentPageUrl} className="underline font-medium" style={{ color: 'var(--accent-rust)' }}>
+        /* Not --accent-rust: this banner sits on --bg-dark, where rust measures
+           2.99:1 — the least legible thing in a row whose ordinary text is at
+           12.8:1, and it is the only route back to the current text. */
+        <a href={currentPageUrl} className="underline font-medium" style={{ color: '#d98a74' }}>
           {t.viewCurrentEdition}
         </a>
       )}

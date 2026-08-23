@@ -221,8 +221,12 @@ export function SettingsSwitch({ on, onToggle, label }: {
       onClick={onToggle}
       className="relative w-[42px] h-[24px] shrink-0 border transition-colors"
       style={{
-        borderColor: on ? 'var(--text-primary)' : 'var(--border-medium)',
-        background: on ? 'var(--text-primary)' : 'var(--bg-warm)',
+        // Off used to be --border-medium on --bg-warm inside a --bg-warm
+        // panel: a 1.37:1 border around a 1.00:1 fill, i.e. an off switch you
+        // could only find by its knob. The boundary of a control has to clear
+        // 3:1, and it is the only thing carrying the state.
+        borderColor: on ? 'var(--text-primary)' : 'var(--text-muted)',
+        background: on ? 'var(--text-primary)' : 'var(--bg-cream)',
       }}
     >
       <span
@@ -230,7 +234,7 @@ export function SettingsSwitch({ on, onToggle, label }: {
         style={{
           left: on ? 21 : 2,
           background: '#fdfcf9',
-          border: `1px solid ${on ? 'var(--text-primary)' : 'var(--border-medium)'}`,
+          border: `1px solid ${on ? 'var(--text-primary)' : 'var(--text-muted)'}`,
         }}
       />
     </button>

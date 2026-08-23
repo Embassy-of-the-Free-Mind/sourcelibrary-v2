@@ -241,6 +241,8 @@ export interface ReaderStrings {
     noGuideYet: string;
     requestGuide: string;
     requestGuideThanks: string;
+    /** The request POST failed, so nothing was queued. */
+    requestFailed: string;
     showLess: string;
     readFullOverview: (more: number) => string;
     sections: string;
@@ -252,6 +254,8 @@ export interface ReaderStrings {
     placeholder: string;
     inputAria: string;
     noMatches: string;
+    /** The search itself failed (rate limited, offline), as opposed to finding nothing. */
+    failed: string;
     /** `${total} pages match` / singular */
     pagesMatch: (total: number) => string;
     pageLabel: (n: number) => string;
@@ -324,6 +328,8 @@ export interface ReaderStrings {
     readyToTranslateBody: string;
     signInToRequest: string;
     requestTranslation: string;
+    /** The request POST failed, so nothing was queued. */
+    requestFailed: string;
     sending: string;
     requested: string;
     thanksWillEmail: string;
@@ -362,6 +368,9 @@ export interface ReaderStrings {
   /** Revision history panel (public; the Restore action itself stays
    *  editor-only/English — see the file header note). */
   history: {
+    /** A restore that came back 403, and one that failed some other way. */
+    restoreForbidden: string;
+    restoreFailed: string;
     title: string;
     loading: string;
     loadFailed: string;
@@ -616,6 +625,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       noGuideYet: 'This book does not have a reading guide yet.',
       requestGuide: 'Request a reading guide',
       requestGuideThanks: 'Thanks. This book is queued for a guide, and it will appear here once the pass runs.',
+      requestFailed: 'That request did not go through. Try again in a moment.',
       showLess: 'Show less',
       readFullOverview: (more) => `Read the full overview (${more} more)`,
       sections: 'Sections',
@@ -625,6 +635,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       placeholder: 'Search…',
       inputAria: 'Search this book',
       noMatches: 'No matches in this book',
+      failed: 'Search is unavailable right now. Try again in a moment.',
       pagesMatch: (total) => `${total} ${total === 1 ? 'page matches' : 'pages match'}`,
       pageLabel: (n) => `Page ${n}`,
     },
@@ -679,6 +690,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
+      requestFailed: 'That request did not go through. Try again in a moment.',
       sending: 'Sending…',
       requested: 'Requested',
       thanksWillEmail: 'Thanks — we’ll email you when this page is translated.',
@@ -717,6 +729,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       showMaintenance: (n) => `Show ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
       hideMaintenance: (n) => `Hide ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
       maintenanceNote: 'Corpus repairs and library-wide sweeps that happened to touch this page — not fresh readings of the scan.',
+      restoreForbidden: 'You are not signed in as an editor any more. Sign in again to restore this version.',
+      restoreFailed: 'That version could not be restored. Try again in a moment.',
       today: (time) => `Today ${time}`,
       yesterday: 'Yesterday',
       daysAgo: (n) => `${n}d ago`,
@@ -951,6 +965,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       noGuideYet: 'Este libro todavía no tiene una guía de lectura.',
       requestGuide: 'Solicitar una guía de lectura',
       requestGuideThanks: 'Gracias. Este libro está en la cola para recibir una guía, y aparecerá aquí en cuanto se procese.',
+      requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
       showLess: 'Mostrar menos',
       readFullOverview: (more) => `Leer el resumen completo (${more} más)`,
       sections: 'Secciones',
@@ -960,6 +975,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       placeholder: 'Buscar…',
       inputAria: 'Buscar en este libro',
       noMatches: 'Sin resultados en este libro',
+      failed: 'La búsqueda no está disponible ahora mismo. Inténtalo de nuevo en un momento.',
       pagesMatch: (total) => `${total} ${total === 1 ? 'página coincide' : 'páginas coinciden'}`,
       pageLabel: (n) => `Página ${n}`,
     },
@@ -1014,6 +1030,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
+      requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',
       sending: 'Enviando…',
       requested: 'Solicitada',
       thanksWillEmail: 'Gracias. Te escribiremos cuando esta página esté traducida.',
@@ -1052,6 +1069,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       showMaintenance: (n) => `Mostrar ${n} ${n === 1 ? 'revisión' : 'revisiones'} de mantenimiento masivo`,
       hideMaintenance: (n) => `Ocultar ${n} ${n === 1 ? 'revisión' : 'revisiones'} de mantenimiento masivo`,
       maintenanceNote: 'Reparaciones del corpus y barridos de toda la biblioteca que pasaron por esta página, no lecturas nuevas del escaneo.',
+      restoreForbidden: 'Ya no tienes la sesión de editor iniciada. Vuelve a entrar para restaurar esta versión.',
+      restoreFailed: 'No se ha podido restaurar esa versión. Inténtalo de nuevo en un momento.',
       today: (time) => `Hoy ${time}`,
       yesterday: 'Ayer',
       daysAgo: (n) => `hace ${n} d`,

@@ -38,7 +38,7 @@ import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishBu
 import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
-  resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle,
+  resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
   SURFACE, themeAttr, bookByline,
 } from './ReaderV2Bits';
 
@@ -231,6 +231,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
   const [loading, setLoading] = useState(true);
   const [guide, setGuide] = useState<GuideData | null>(null);
   const [requested, setRequested] = useState(false);
+  const [requestFailed, setRequestFailed] = useState(false);
   const [requesting, setRequesting] = useState(false);
   const [openSection, setOpenSection] = useState<number | null>(null);
   const [overviewOpen, setOverviewOpen] = useState(false);
@@ -241,7 +242,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
   const requestGuide = async () => {
     setRequesting(true);
     try {
-      await fetch('/api/feedback', {
+      const res = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -249,9 +250,14 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
           page: `/book/${bookPath}`,
         }),
       });
-    } catch { /* best effort, same as the translation request */ }
+      if (!res.ok) throw new Error(String(res.status));
+      setRequested(true);
+    } catch {
+      // Telling a reader "thanks, we'll prioritise this" when the POST failed
+      // means the request was never queued and nobody will ever know.
+      setRequestFailed(true);
+    }
     setRequesting(false);
-    setRequested(true);
   };
 
   useEffect(() => {
@@ -305,6 +311,11 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
             {requesting ? <Loader2 size={13} className="animate-spin" /> : <Bell size={13} />}
             {t.requestGuide}
           </button>
+        )}
+        {requestFailed && (
+          <p className="font-sans text-[12.5px] mt-2" style={{ color: 'var(--status-error)' }} role="alert">
+            {t.requestFailed}
+          </p>
         )}
       </div>
     );
@@ -690,17 +701,14 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
   const signedIn = !!session?.user;
   const [imgError, setImgError] = useState(false);
 
-  // Escape closes, and the page behind stops scrolling while it is open.
+  // Escape, focus trap and focus return all live in useDialogFocus.
+  const menuRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(menuRef, onClose);
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [onClose]);
+    return () => { document.body.style.overflow = prev; };
+  }, []);
 
   const destinations: Array<[string, string]> = [
     [t.collections, '/collections'],
@@ -733,6 +741,7 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
         aria-hidden="true"
       />
       <div
+        ref={menuRef}
         className={'rv2-menu-ground z-[70] flex flex-col overflow-hidden fixed inset-0 h-[100svh] '
           + 'lg:inset-auto lg:h-auto lg:top-[62px] lg:right-3 lg:w-[380px] lg:max-h-[calc(100svh-74px)] '
           + 'lg:border lg:shadow-[0_18px_48px_-16px_rgba(20,16,12,0.55)]'}
@@ -1021,7 +1030,9 @@ const MARK_LEGEND: Array<{
 }> = [
   {
     label: 'markGlossOrTerm', desc: 'markGlossOrTermDesc',
-    fg: 'var(--accent-violet)', bg: 'color-mix(in srgb, var(--accent-violet) 10%, transparent)',
+    // The -dark variant, like every other swatch here. The raw hue is the
+    // only one never lightened for night, where it measured 3.00:1.
+    fg: 'var(--accent-violet-dark)', bg: 'color-mix(in srgb, var(--accent-violet-dark) 10%, transparent)',
   },
   {
     label: 'markOnThePage', desc: 'markOnThePageDesc',
@@ -1610,20 +1621,24 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
     });
   }, [page.id]);
 
+  const boxRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(boxRef, onClose);
   useEffect(() => {
+    // Arrows only. Escape belongs to useDialogFocus, and stopPropagation never
+    // worked here anyway: the hook's handler is on the same window node, so
+    // both fired and every arrow press wrote two history entries.
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') { e.stopPropagation(); onClose(); }
-      else if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowRight') onNext();
       else if (e.key === 'ArrowLeft') onPrev();
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onClose, onNext, onPrev]);
+  }, [onNext, onPrev]);
 
   const navBtn = 'w-10 h-10 flex items-center justify-center transition-colors disabled:opacity-25 hover:bg-[rgba(253,252,249,0.12)]';
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col rv2-pop" style={{ background: '#14110d' }} role="dialog" aria-modal="true" aria-label={t.scanFullScreen}>
+    <div ref={boxRef} className="fixed inset-0 z-[100] flex flex-col rv2-pop" style={{ background: '#14110d' }} role="dialog" aria-modal="true" aria-label={t.scanFullScreen}>
       <div className="shrink-0 flex items-center gap-2 px-3 h-[52px]" style={{ borderBottom: `1px solid ${onInk(0.12)}` }}>
         <button type="button" onClick={onClose} aria-label={t.backToTheReader}
           className="flex items-center gap-1.5 pl-1.5 pr-3 h-9 font-sans text-[13px] transition-colors hover:bg-[rgba(253,252,249,0.12)]"
@@ -1703,6 +1718,7 @@ function BookSearchPanel({
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
   const [total, setTotal] = useState<number | null>(null);
   const [searching, setSearching] = useState(false);
+  const [failed, setFailed] = useState(false);
   const t = getReaderStrings(useLocale()).search;
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -1712,19 +1728,37 @@ function BookSearchPanel({
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     if (!query.trim()) { setResults([]); setTotal(null); return; }
+    // The timer was cancelled on every keystroke but the request it had
+    // already fired was not, so two queries could be in flight and the slower
+    // one won. The list then showed results for a prefix while the field said
+    // something else, and the highlight matched neither.
+    const ac = new AbortController();
     debounceRef.current = setTimeout(async () => {
       setSearching(true);
+      setFailed(false);
       try {
-        const res = await fetch(`/api/books/${bookId}/search?q=${encodeURIComponent(query.trim())}`);
+        const res = await fetch(
+          `/api/books/${bookId}/search?q=${encodeURIComponent(query.trim())}`,
+          { signal: ac.signal },
+        );
         if (res.ok) {
           const data = await res.json();
           setResults(data.results || []);
           setTotal(typeof data.total === 'number' ? data.total : (data.results || []).length);
+        } else {
+          // Rate limited or down. Saying nothing left stale results on screen
+          // and no count, which reads as the panel ignoring you.
+          setResults([]); setTotal(null); setFailed(true);
         }
-      } catch { /* transient */ }
-      finally { setSearching(false); }
+      } catch (e) {
+        if ((e as Error)?.name !== 'AbortError') { setResults([]); setTotal(null); setFailed(true); }
+      }
+      finally { if (!ac.signal.aborted) setSearching(false); }
     }, 350);
-    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      ac.abort();
+    };
   }, [query, bookId]);
 
   return (
@@ -1752,11 +1786,16 @@ function BookSearchPanel({
             aria-label={t.inputAria}
           />
         </div>
-        {total !== null && !searching && (
-          <p className="font-sans text-[11.5px] mt-2" style={{ color: 'var(--text-muted)' }} aria-live="polite">
-            {total === 0 ? t.noMatches : t.pagesMatch(total)}
-          </p>
-        )}
+        {/* Rendered always, empty while idle. A live region created and filled
+            in the same commit is announced unreliably by screen readers. */}
+        <p
+          className="font-sans text-[11.5px] mt-2 empty:mt-0"
+          style={{ color: failed ? 'var(--status-error)' : 'var(--text-muted)' }}
+          aria-live="polite"
+          role="status"
+        >
+          {failed ? t.failed : (total !== null && !searching ? (total === 0 ? t.noMatches : t.pagesMatch(total)) : '')}
+        </p>
       </div>
       <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
         {results.map(r => (
@@ -1898,7 +1937,7 @@ type ReaderState = ReturnType<typeof useReaderV2>;
  */
 function PanelContent({
   panel, r, citationParts, copied, onCopyCitation, librarianMessages, onLibrarianMessages, onClose, onSelectPanel,
-  editing, onToggleEdit, shareUrl,
+  shareUrl,
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
@@ -1910,8 +1949,6 @@ function PanelContent({
   onClose: () => void;
   /** Mobile "More" menu hands off to another panel */
   onSelectPanel: (p: Exclude<LeftPanel, null>) => void;
-  editing: boolean;
-  onToggleEdit: () => void;
   shareUrl: string;
 }) {
   const t = getReaderStrings(useLocale());
@@ -1940,20 +1977,12 @@ function PanelContent({
               <ChevronRightSmall size={15} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
             </button>
           ))}
-          <AuthCheck role="inner_circle">
-            <button
-              type="button"
-              onClick={() => { onClose(); onToggleEdit(); }}
-              className={`${row} rv2-tile-in`}
-              style={{
-                color: 'var(--text-primary)',
-                animationDelay: `${MORE_TOOLS.length * 18}ms`,
-              }}
-            >
-              {editing ? 'Stop editing' : 'Edit this page'}
-              <Pencil size={14} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
-            </button>
-          </AuthCheck>
+          {/* The edit row is gone. This sheet is the mobile More menu, and the
+              editor textarea and the Cancel/Save bar exist only in the desktop
+              tree — so on a phone the row set `editing` and nothing appeared:
+              no editor, no save, just a pane header reading "Editing" and the
+              Trace chip gone, with no way back except finding the row again.
+              Desktop editors reach the same toggle from the rail. */}
         </div>
       </div>
     );
@@ -2552,14 +2581,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Cached transliterations arrive with the page; anything else is generated
   // the first time the pane is open on that page, and only then.
   useEffect(() => {
-    const cached = (r.currentPage as unknown as { transliteration?: { data?: string } }).transliteration?.data;
+    // Keyed on the loaded page, and bailing until it agrees with the id we are
+    // navigating to. The effect used to read the cache off the STALE page
+    // while requesting the NEW one, so a single page turn could fire two paid
+    // transliterations for the same page, and the client-side cancel flag
+    // stopped neither of them costing money.
+    const page = r.currentPage;
+    if (page.id !== r.currentPageId) return;
+    const cached = (page as unknown as { transliteration?: { data?: string } }).transliteration?.data;
     setTranslitError(false);
     if (cached) { setTranslit(cached); return; }
     setTranslit('');
     if (!r.views.translit || !translitEligible) return;
     let cancelled = false;
     setTranslitLoading(true);
-    pagesApi.transliterate(r.currentPageId)
+    pagesApi.transliterate(page.id)
       .then(res => { if (!cancelled) setTranslit(res.transliteration || ''); })
       .catch(() => { if (!cancelled) setTranslitError(true); })
       .finally(() => { if (!cancelled) setTranslitLoading(false); });
@@ -2607,6 +2643,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         lineHeight: r.settings.lineHeight,
         maxWidth: `${{ narrow: 55, comfortable: 70, wide: 86 }[r.settings.lineWidth]}ch`,
       }}
+      data-reader-editor
       aria-label={field === 'ocr' ? 'Edit transcription' : 'Edit translation'}
     />
   );
@@ -2805,8 +2842,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           </div>
         </nav>
 
-        {/* Panes */}
-        <div
+        {/* Panes. A <main> because the root layout's skip link targets the
+            reader as a whole, which meant "skip to main content" skipped
+            nothing — the mobile column already had one, the desktop grid did
+            not. */}
+        <main
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
           className="relative flex min-h-0"
@@ -2836,7 +2876,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   />
                 }
               >
-                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.originalScan}</CapsLabel>
+                <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.originalScan}</CapsLabel>
               </PaneHeader>
               <div className={`flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
                 <ScanViewer
@@ -2867,7 +2907,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <CopyTextButton page={r.currentPage} kind="ocr" />
                 </div>
               ) : undefined}>
-                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
+                <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
                   {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
                 </CapsLabel>
                 {paired && <PairedBadgeRow paired={paired} />}
@@ -2909,7 +2949,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   <CopyPlainButton text={translit} label={t.panes.copyTransliteration} />
                 </div>
               }>
-                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.romanisedHeader}</CapsLabel>
+                <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.romanisedHeader}</CapsLabel>
                 <AiChip short />
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -2943,7 +2983,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               ) : undefined}>
                 {paired ? (
-                  <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English · Berthelot</CapsLabel>
+                  <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English · Berthelot</CapsLabel>
                 ) : (
                   <TranslationLanguageHeader
                     lang={r.settings.translationLang}
@@ -2980,6 +3020,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {/* Left slide-out panel (Contents / Search / Settings) */}
           {leftPanel && isDesktop && (
             <div
+              role="dialog"
+              aria-labelledby="rv2-panel-title"
               className="absolute top-0 left-0 bottom-0 border-r z-40 flex flex-col rv2-slide-in-left"
               style={{
                 width: leftPanelWidth,
@@ -2991,7 +3033,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   passes under, rather than the first row of the list. */}
               <div className="shrink-0 px-4 pt-3.5 pb-3 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
                 <div className="flex items-start justify-between gap-3">
-                  <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
+                  <CapsLabel as="h2" id="rv2-panel-title" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
                   <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
                     className="w-7 h-7 -mt-1.5 -mr-1.5 shrink-0 flex items-center justify-center transition-colors text-[var(--text-faint)] hover:text-[var(--text-primary)]"><X size={15} /></button>
                 </div>
@@ -3004,12 +3046,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <PanelContent panel={leftPanel} {...panelProps} />
             </div>
           )}
-        </div>
+        </main>
 
         {/* Filmstrip — page control, collapses smoothly */}
         <div
           className="col-start-2 min-w-0 overflow-hidden transition-[height] duration-300 ease-out"
-          style={{ height: stripVisible ? 92 : 0 }}
+          /* visibility, not just height: a zero-height overflow-hidden box
+             still holds focusable children, so a collapsed strip left every
+             page in the book in the tab order — hundreds of invisible stops.
+             visibility still animates, so the collapse is unchanged. */
+          style={{ height: stripVisible ? 92 : 0, visibility: stripVisible ? 'visible' : 'hidden' }}
         >
           <div className="h-[92px]">
             <Filmstrip
@@ -3036,8 +3082,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             color: '#fdfcf9',
             height: barHidden ? 0 : 52,
             overflow: barHidden ? 'hidden' : 'visible',
+            // Same reason as the filmstrips: a 0-height bar still held a
+            // focusable back-link and menu button, and aria-hidden over them
+            // made that worse rather than better.
+            visibility: barHidden ? 'hidden' : 'visible',
           }}
-          aria-hidden={barHidden}
         >
           {/* The row fades with the bar rather than being revealed by it.
               Animating only the height meant the contents were already painted
@@ -3257,6 +3306,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
+            role="dialog"
+            aria-labelledby="rv2-sheet-title"
           >
             <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
               {/* One fixed row: back (when there is somewhere to go back to),
@@ -3275,7 +3326,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     <ChevronLeft size={17} />
                   </button>
                 )}
-                <CapsLabel className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
+                <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
                 <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
                   className="w-8 h-8 -mr-2 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
               </div>
@@ -3294,8 +3345,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             is where the delay came from — the toggle now animates instead. */}
         <div
           className="shrink-0 overflow-hidden transition-[height] duration-200 ease-out"
-          style={{ height: stripVisible && keyboardInset === 0 ? 96 : 0 }}
-          aria-hidden={!stripVisible}
+          /* See the desktop strip above. aria-hidden is gone with it: it was
+             wrapping focusable buttons, which hands a screen-reader user focus
+             on something it has just told them is not there. */
+          style={{
+            height: stripVisible && keyboardInset === 0 ? 96 : 0,
+            visibility: stripVisible && keyboardInset === 0 ? 'visible' : 'hidden',
+          }}
         >
           <div className="h-[96px]">
             <Filmstrip
