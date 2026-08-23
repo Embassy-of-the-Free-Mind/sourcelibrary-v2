@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react';
 import { History, RotateCcw, ChevronDown, Loader2 } from 'lucide-react';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
+import type { Locale } from '@/lib/locale-path';
 import { CapsLabel } from './ReaderV2Bits';
 import type { PageRevision } from '@/lib/page-revisions';
 import type { Book, Page } from '@/lib/types';
@@ -30,15 +33,15 @@ function formatModel(model: string) {
   return MODEL_LABELS[model] ?? model.replace('gemini-', '').replace('-preview', '');
 }
 
-function formatDate(date: string | Date) {
+function formatDate(date: string | Date, lang: Locale, t: ReaderStrings['history']) {
   const d = new Date(date);
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  if (diffDays === 0) return 'Today ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays}d ago`;
-  return d.toLocaleDateString([], { month: 'short', day: 'numeric', year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined });
+  if (diffDays === 0) return t.today(d.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }));
+  if (diffDays === 1) return t.yesterday;
+  if (diffDays < 7) return t.daysAgo(diffDays);
+  return d.toLocaleDateString(lang, { month: 'short', day: 'numeric', year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined });
 }
 
 function truncate(text: string, len: number) {
@@ -90,18 +93,19 @@ interface Row extends PageRevision {
 }
 
 function SourceBadge({ source }: { source: string }) {
+  const t = getReaderStrings(useLocale()).history;
   const styles: Record<string, { bg: string; color: string; label: string }> = {
-    ai: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
-    batch_api: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'Batch' },
-    batch_api_recovery: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'Batch' },
-    pipeline_preview: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
-    realtime_api_sequential: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
-    mineru: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
-    manual: { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage-dark)', label: 'Manual' },
-    'manual-backfill': { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage-dark)', label: 'Manual' },
-    contributor: { bg: 'rgba(201, 168, 108, 0.15)', color: 'var(--accent-gold-dark)', label: 'Contrib' },
+    ai: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: t.sourceAi },
+    batch_api: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: t.sourceBatch },
+    batch_api_recovery: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: t.sourceBatch },
+    pipeline_preview: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: t.sourceAi },
+    realtime_api_sequential: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: t.sourceAi },
+    mineru: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: t.sourceAi },
+    manual: { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage-dark)', label: t.sourceManual },
+    'manual-backfill': { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage-dark)', label: t.sourceManual },
+    contributor: { bg: 'rgba(201, 168, 108, 0.15)', color: 'var(--accent-gold-dark)', label: t.sourceContributor },
   };
-  const s = styles[source] || { bg: 'var(--border-light)', color: 'var(--text-muted)', label: 'Maintenance' };
+  const s = styles[source] || { bg: 'var(--border-light)', color: 'var(--text-muted)', label: t.sourceMaintenance };
   return (
     <span className="px-1.5 py-0.5 rounded text-[10px] font-medium" style={{ background: s.bg, color: s.color }}>
       {s.label}
@@ -110,12 +114,13 @@ function SourceBadge({ source }: { source: string }) {
 }
 
 function FieldBadge({ field }: { field: 'ocr' | 'translation' }) {
+  const t = getReaderStrings(useLocale()).history;
   return (
     <span
       className="font-sans text-[10px] font-medium uppercase tracking-[0.08em] px-1.5 py-0.5"
       style={{ color: 'var(--text-muted)', border: '1px solid var(--border-medium)' }}
     >
-      {field === 'ocr' ? 'Transcript' : 'Translation'}
+      {field === 'ocr' ? t.fieldTranscript : t.fieldTranslation}
     </span>
   );
 }
@@ -127,6 +132,8 @@ function RevisionRow({ row, expanded, onToggle, onRestore, restoring }: {
   onRestore: (row: Row) => void;
   restoring: boolean;
 }) {
+  const lang = useLocale();
+  const t = getReaderStrings(lang).history;
   return (
     <div className="border-b" style={{ borderColor: 'var(--border-light)' }}>
       <button
@@ -150,7 +157,7 @@ function RevisionRow({ row, expanded, onToggle, onRestore, restoring }: {
         </div>
         <div className="flex items-center gap-1.5 flex-shrink-0">
           <span className="font-sans text-[10.5px]" style={{ color: 'var(--text-faint)' }}>
-            {formatDate(row.original_date || row.created_at)}
+            {formatDate(row.original_date || row.created_at, lang, t)}
           </span>
           <ChevronDown
             className={`w-3 h-3 transition-transform ${expanded ? 'rotate-180' : ''}`}
@@ -169,7 +176,7 @@ function RevisionRow({ row, expanded, onToggle, onRestore, restoring }: {
           </div>
           <div className="flex items-center justify-between">
             <span className="font-sans text-[10.5px]" style={{ color: 'var(--text-faint)' }}>
-              {(row.data || '').length.toLocaleString('en-US')} chars
+              {(row.data || '').length.toLocaleString(lang)} {t.chars}
             </span>
             {/* Reading history is open to everyone (it's provenance). Restoring
                 rewrites the page, so it's gated the same as the route behind it
@@ -198,6 +205,7 @@ function RevisionRow({ row, expanded, onToggle, onRestore, restoring }: {
 // (InfoPanel, LibrarianPanel, DownloadsPanel) for a consistent mount signature.
 export default function RevisionHistoryPanel({ page, book: _book }: { page: Page; book: Book }) {
   void _book;
+  const t = getReaderStrings(useLocale()).history;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [rows, setRows] = useState<Row[]>([]);
@@ -252,7 +260,7 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
       <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-6" style={{ overscrollBehavior: 'contain' }}>
         <div className="px-4 py-6 flex items-center gap-2 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
           <Loader2 size={14} className="animate-spin" />
-          Loading revision history…
+          {t.loading}
         </div>
       </div>
     );
@@ -262,7 +270,7 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
     return (
       <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-6" style={{ overscrollBehavior: 'contain' }}>
         <p className="px-4 py-6 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
-          Couldn&apos;t load revision history for this page. Try again in a moment.
+          {t.loadFailed}
         </p>
       </div>
     );
@@ -276,10 +284,10 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
       <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-6" style={{ overscrollBehavior: 'contain' }}>
         <div className="px-4 pb-2 flex items-center gap-1.5">
           <History size={13} style={{ color: 'var(--text-faint)' }} />
-          <CapsLabel style={{ color: 'var(--text-faint)' }}>Revision history</CapsLabel>
+          <CapsLabel style={{ color: 'var(--text-faint)' }}>{t.title}</CapsLabel>
         </div>
         <p className="px-4 py-4 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
-          No recorded revisions for this page.
+          {t.noRevisions}
         </p>
       </div>
     );
@@ -288,12 +296,12 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
   return (
     <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-6" style={{ overscrollBehavior: 'contain' }}>
       <CapsLabel className="block px-4 pb-2" style={{ color: 'var(--text-faint)' }}>
-        Revision history{pipelineRows.length > 0 && ` (${pipelineRows.length})`}
+        {t.title}{pipelineRows.length > 0 && ` (${pipelineRows.length})`}
       </CapsLabel>
 
       {pipelineRows.length === 0 ? (
         <p className="px-4 py-3 font-sans text-[12.5px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-          No recorded revisions for this page. {maintenanceRows.length > 0 && 'Only bulk-maintenance activity, below.'}
+          {t.noRevisions} {maintenanceRows.length > 0 && t.onlyMaintenance}
         </p>
       ) : (
         pipelineRows.map(row => (
@@ -316,7 +324,7 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
             className="w-full px-4 py-2 flex items-center justify-between text-left"
           >
             <span className="font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
-              {showMaintenance ? 'Hide' : 'Show'} {maintenanceRows.length} bulk-maintenance {maintenanceRows.length === 1 ? 'revision' : 'revisions'}
+              {showMaintenance ? t.hideMaintenance(maintenanceRows.length) : t.showMaintenance(maintenanceRows.length)}
             </span>
             <ChevronDown
               className={`w-3 h-3 transition-transform ${showMaintenance ? 'rotate-180' : ''}`}
@@ -324,7 +332,7 @@ export default function RevisionHistoryPanel({ page, book: _book }: { page: Page
             />
           </button>
           <p className="px-4 pb-2 font-sans text-[11px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            Corpus repairs and library-wide sweeps that happened to touch this page — not fresh readings of the scan.
+            {t.maintenanceNote}
           </p>
           {showMaintenance && maintenanceRows.map(row => (
             <RevisionRow

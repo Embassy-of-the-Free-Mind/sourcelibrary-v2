@@ -2,6 +2,8 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings } from '@/lib/reader-strings';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import type { Book, Page } from '@/lib/types';
 import type { ReaderSettings } from './useReaderV2';
@@ -49,13 +51,14 @@ export function CapsLabel({ children, className = '', style }: {
  * bordered chips, where it read as a button you could press.
  */
 export function AiChip({ short = false }: { short?: boolean }) {
+  const t = getReaderStrings(useLocale()).panes;
   return (
     <span
       className="font-sans text-[10px] font-medium uppercase tracking-[0.12em]"
       style={{ color: 'var(--text-faint)' }}
-      title="Produced with AI assistance"
+      title={t.aiTitle}
     >
-      {short ? 'AI' : 'AI translated'}
+      {short ? t.aiShort : t.aiTranslated}
     </span>
   );
 }
@@ -190,6 +193,7 @@ export function ScanViewer({
   scrollRef?: React.RefObject<HTMLDivElement | null>;
   onScroll?: () => void;
 }) {
+  const t = getReaderStrings(useLocale()).panes;
   const { display, native } = resolveScanUrls(page);
   const localRef = useRef<HTMLDivElement>(null);
   const containerRef = scrollRef ?? localRef;
@@ -418,7 +422,7 @@ export function ScanViewer({
     if (e.pointerType !== 'mouse') setLens(null);
   };
 
-  const alt = `Scan of page ${page.page_number} of ${book.display_title || book.title}`;
+  const alt = t.scanAlt(page.page_number, book.display_title || book.title);
   if (!display) {
     return (
       <div className="h-full w-full flex items-center justify-center">
@@ -530,14 +534,15 @@ export function ViewToggleGroup({
   /** Offer the romanisation chip — only for books in a non-Latin script. */
   showTranslit?: boolean;
 }) {
+  const t = getReaderStrings(useLocale()).panes;
   const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
-    { key: 'scan', label: 'Scan' },
-    { key: 'ocr', label: 'OCR' },
-    ...(showTranslit ? [{ key: 'translit' as const, label: 'Roman' }] : []),
-    { key: 'en', label: 'English' },
+    { key: 'scan', label: t.viewScan },
+    { key: 'ocr', label: t.viewOcr },
+    ...(showTranslit ? [{ key: 'translit' as const, label: t.viewRoman }] : []),
+    { key: 'en', label: t.viewEnglish },
   ];
   return (
-    <div className="flex" role="group" aria-label="Visible panes">
+    <div className="flex" role="group" aria-label={t.visiblePanesAria}>
       {items.map((it, i) => {
         const on = views[it.key];
         return (

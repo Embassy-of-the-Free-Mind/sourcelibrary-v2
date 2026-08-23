@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useStableSession } from '@/hooks/useStableSession';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings } from '@/lib/reader-strings';
 import type { Book, Page } from '@/lib/types';
 import { CapsLabel } from './ReaderV2Bits';
 
@@ -58,6 +60,7 @@ function EmptyPane({
 export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; kind: 'ocr' | 'translation' }) {
   const { data: sessionData } = useStableSession();
   const pathname = usePathname();
+  const t = getReaderStrings(useLocale()).paneEmpty;
   const [requested, setRequested] = useState(false);
   const [sending, setSending] = useState(false);
 
@@ -73,8 +76,8 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
         role="inner_circle"
         fallback={
           <EmptyPane
-            label="Not transcribed yet"
-            body="The scan is here and free to read, but this page has no transcription yet, so there is nothing to translate from."
+            label={t.notTranscribed}
+            body={t.notTranscribedBody}
           />
         }
       >
@@ -90,7 +93,7 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
   if (page.page_type === 'blank') {
     return (
       <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
-        Blank page.
+        {t.blankPage}
       </p>
     );
   }
@@ -128,7 +131,7 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
     setRequested(true);
   };
 
-  const headerBody = `OCR is complete for this page. It has not been translated into English yet.`;
+  const headerBody = t.readyToTranslateBody;
 
   return (
     <AuthCheck
@@ -136,32 +139,32 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
       fallback={
         <AuthCheck
           fallback={
-            <EmptyPane label="Ready to translate" body={headerBody}>
+            <EmptyPane label={t.readyToTranslate} body={headerBody}>
               {showCta ? (
                 <a
                   href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname || `/book/${book.id}/page/${page.id}`)}&reason=translation-request`}
                   className={actionButtonClass}
                   style={actionButtonStyle}
                 >
-                  Sign in to request a translation
+                  {t.signInToRequest}
                 </a>
               ) : null}
             </EmptyPane>
           }
         >
           <EmptyPane
-            label={requested ? 'Requested' : 'Ready to translate'}
+            label={requested ? t.requested : t.readyToTranslate}
             body={
               requested
                 ? sessionEmail
-                  ? "Thanks — we'll email you when this page is translated."
-                  : "Thanks — we'll prioritize this book."
+                  ? t.thanksWillEmail
+                  : t.thanksWillPrioritise
                 : headerBody
             }
           >
             {!requested && showCta ? (
               <button onClick={requestTranslation} disabled={sending} className={actionButtonClass} style={actionButtonStyle}>
-                {sending ? 'Sending…' : 'Request translation'}
+                {sending ? t.sending : t.requestTranslation}
               </button>
             ) : null}
           </EmptyPane>
@@ -174,8 +177,14 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
         refresh-on-completion) that lives in TranslationEditor, which we
         cannot verify from a standalone new file without touching it. Point
         at the existing, working pipeline page instead of a dead end.
+
+        English throughout, like the rest of the editor tooling — this branch
+        renders for inner_circle and above only (.claude/docs/i18n.md).
       */}
-      <EmptyPane label="Ready to translate" body={headerBody}>
+      <EmptyPane
+        label="Ready to translate"
+        body="OCR is complete for this page. It has not been translated into English yet."
+      >
         <a href={`/book/${book.id}/pipeline`} className={actionButtonClass} style={actionButtonStyle}>
           Open pipeline
         </a>

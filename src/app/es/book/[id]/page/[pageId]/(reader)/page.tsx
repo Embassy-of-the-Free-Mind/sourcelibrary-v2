@@ -5,10 +5,10 @@ import BasePage from '@/app/book/[id]/page/[pageId]/(reader)/page';
  * the crawler nav below the reader keeps the `/es` prefix on the links that
  * have a twin (prev/next page) and leaves the ones that don't (book detail,
  * overview) pointed at English — see the `lp()` helper added to the base
- * page for this. `Reader2C` itself is a client component; once it consumes
- * `src/lib/reader-strings.ts` it should read its own locale from the URL via
- * `useLocale()` (src/lib/i18n.ts), the same as every other localized client
- * component on the site, so nothing here needs to thread `lang` into it.
+ * page for this. `Reader2C` itself is a client component and reads its own
+ * locale from the URL via `useLocale()` (src/lib/i18n.ts), then its chrome
+ * from `src/lib/reader-strings.ts` — the same as every other localized client
+ * component on the site — so nothing here threads `lang` into it.
  */
 
 // Segment config must be a static literal (Next parses it at build time) —

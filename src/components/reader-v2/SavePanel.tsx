@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Heart, BookOpen, FileText, ArrowRight, Loader2 } from 'lucide-react';
 import { likes as likesApi } from '@/lib/api-client';
 import { useIdentity } from '@/hooks/useIdentity';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings } from '@/lib/reader-strings';
 import type { Book, Page } from '@/lib/types';
 import { CapsLabel } from './ReaderV2Bits';
 
@@ -59,6 +61,7 @@ const ACTION_BTN_STYLE = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- see note above
 export default function SavePanel({ page, book, url }: SavePanelProps) {
   const identity = useIdentity();
+  const t = getReaderStrings(useLocale()).save;
 
   const [pageLike, setPageLike] = useState<LikeState>({ liked: false, count: 0 });
   const [bookLike, setBookLike] = useState<LikeState>({ liked: false, count: 0 });
@@ -117,7 +120,7 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
       })
       .catch(() => {
         setState(state); // revert
-        setError('Save failed. Try again.');
+        setError(t.saveFailed);
       })
       .finally(() => setBusy(false));
   };
@@ -129,10 +132,10 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
       {showSignInNudge && (
         <div className="px-4 pt-1 pb-3">
           <p className="font-sans text-[12px] leading-relaxed mb-2" style={{ color: 'var(--text-faint)' }}>
-            Saves work without an account, on this device only.
+            {t.anonymousNotice}
           </p>
           <Link href="/auth/signin" className={ACTION_BTN} style={ACTION_BTN_STYLE}>
-            Sign in to keep them everywhere
+            {t.signInToKeep}
           </Link>
         </div>
       )}
@@ -151,7 +154,7 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
             fill={statusLoaded && pageLike.liked ? 'var(--accent-rust)' : 'none'}
             style={{ color: statusLoaded && pageLike.liked ? 'var(--accent-rust)' : 'var(--text-muted)' }}
           />
-          {pageLike.liked ? 'Saved to your library' : 'Save this page'}
+          {pageLike.liked ? t.savedPage : t.savePage}
         </span>
         {pageLike.count > 0 && (
           <span className="font-sans text-[12px] tabular-nums" style={{ color: 'var(--text-faint)' }}>{pageLike.count}</span>
@@ -175,7 +178,7 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
               style={{ color: bookLike.liked ? 'var(--accent-rust)' : 'var(--text-muted)' }}
             />
           )}
-          {bookLike.liked ? `Saved “${book.display_title || book.title}”` : 'Save the whole book'}
+          {bookLike.liked ? t.savedBook(book.display_title || book.title) : t.saveBook}
         </span>
         {bookLike.count > 0 && (
           <span className="font-sans text-[12px] tabular-nums" style={{ color: 'var(--text-faint)' }}>{bookLike.count}</span>
@@ -186,11 +189,11 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
         <p className="px-4 pt-2 font-sans text-[12px]" style={{ color: 'var(--status-error)' }}>{error}</p>
       )}
 
-      <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>Your library</CapsLabel>
+      <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.yourLibrary}</CapsLabel>
       <Link href="/favorites" className={ROW} style={{ borderColor: 'var(--border-light)' }}>
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
           <FileText size={16} style={{ color: 'var(--text-muted)' }} />
-          Everything you’ve saved
+          {t.everythingSaved}
         </span>
         <ArrowRight size={14} style={{ color: 'var(--text-faint)' }} />
       </Link>

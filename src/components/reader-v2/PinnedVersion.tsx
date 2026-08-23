@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings } from '@/lib/reader-strings';
 import { CapsLabel, onInk } from './ReaderV2Bits';
 
 // ─── Citation-pinned reading (?v=) ───────────────────────────────────────────
@@ -187,6 +189,8 @@ function PinnedBanner({
   error: PinnedVersionError;
   currentPageUrl: string;
 }) {
+  const lang = useLocale();
+  const t = getReaderStrings(lang).pinnedEdition;
   const wrapperStyle: React.CSSProperties = {
     background: 'var(--bg-dark)',
     color: onInk(0.85),
@@ -200,8 +204,8 @@ function PinnedBanner({
         style={wrapperStyle}
         role="status"
       >
-        <CapsLabel style={{ color: onInk(0.55) }}>Cited version</CapsLabel>
-        <span>Resolving the cited edition&hellip;</span>
+        <CapsLabel style={{ color: onInk(0.55) }}>{t.citedVersion}</CapsLabel>
+        <span>{t.resolving}</span>
       </div>
     );
   }
@@ -217,19 +221,17 @@ function PinnedBanner({
         style={wrapperStyle}
         role="alert"
       >
-        <CapsLabel style={{ color: onInk(0.55) }}>Cited version</CapsLabel>
-        <span>
-          This link cites edition v{v}, but it could not be resolved. Showing the current text.
-        </span>
+        <CapsLabel style={{ color: onInk(0.55) }}>{t.citedVersion}</CapsLabel>
+        <span>{t.unresolvable(v)}</span>
         <a href={currentPageUrl} className="underline font-medium" style={{ color: 'var(--accent-rust)' }}>
-          Continue reading &rarr;
+          {t.continueReadingLink}
         </a>
       </div>
     );
   }
 
   const label = edition.versionLabel ? `${edition.versionLabel} (v${edition.version})` : `v${edition.version}`;
-  const date = new Date(edition.publishedAt).toLocaleDateString('en-US', {
+  const date = new Date(edition.publishedAt).toLocaleDateString(lang, {
     year: 'numeric', month: 'long', day: 'numeric',
   });
   const pageMissingFromEdition = error === 'not_found';
@@ -240,18 +242,19 @@ function PinnedBanner({
       style={wrapperStyle}
       role="status"
     >
-      <CapsLabel style={{ color: onInk(0.55) }}>Cited version</CapsLabel>
+      <CapsLabel style={{ color: onInk(0.55) }}>{t.citedVersion}</CapsLabel>
       {pageMissingFromEdition ? (
-        <span>This page was not part of edition {label}, published {date} &mdash; showing the current text.</span>
+        <span>{t.pageNotInEdition(label, date)}</span>
       ) : (
         <span>
-          You are reading edition {label}, published {date}
-          {!edition.isCurrentVersion && ' — the translation has since been revised'}.
+          {edition.isCurrentVersion
+            ? t.readingEdition(label, date)
+            : t.readingEditionRevised(label, date)}
         </span>
       )}
       {(pageMissingFromEdition || !edition.isCurrentVersion) && (
         <a href={currentPageUrl} className="underline font-medium" style={{ color: 'var(--accent-rust)' }}>
-          View current edition &rarr;
+          {t.viewCurrentEdition}
         </a>
       )}
       {edition.doiUrl && (

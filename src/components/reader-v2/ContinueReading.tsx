@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { X } from 'lucide-react';
 import { readingHistory } from '@/lib/api-client';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings } from '@/lib/reader-strings';
 
 // Offers to resume where a signed-in reader left off in THIS book, the first
 // time they land on a page that isn't (near) their last-read one.
@@ -45,6 +47,7 @@ const ADJACENT_PAGE_THRESHOLD = 1;
 
 export function ContinueReading({ bookId, currentPageId, currentPageNumber, onGo }: ContinueReadingProps) {
   const { status } = useSession();
+  const t = getReaderStrings(useLocale()).continueReading;
   const [lastRead, setLastRead] = useState<LastRead | null>(null);
   // Tracks which page-visit the prompt was dismissed on, so it stays hidden
   // for that page but can come back if the reader navigates elsewhere and
@@ -91,7 +94,7 @@ export function ContinueReading({ bookId, currentPageId, currentPageNumber, onGo
       role="status"
     >
       <span className="flex-1 min-w-0">
-        You left off on page {lastRead.pageNumber}.
+        {t.leftOff(lastRead.pageNumber)}
       </span>
       <button
         type="button"
@@ -99,12 +102,12 @@ export function ContinueReading({ bookId, currentPageId, currentPageNumber, onGo
         className="font-medium underline decoration-1 underline-offset-2 hover:opacity-75 transition-opacity"
         style={{ color: 'var(--text-primary)' }}
       >
-        Continue
+        {t.continueLabel}
       </button>
       <button
         type="button"
         onClick={() => setDismissedFor(currentPageId)}
-        aria-label="Dismiss"
+        aria-label={t.dismiss}
         className="flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity"
         style={{ color: 'var(--text-muted)' }}
       >

@@ -9,10 +9,11 @@ import type { Locale } from '@/lib/locale-path';
  * `SavePanel.tsx`, `PaneEmptyState.tsx`, `RevisionHistoryPanel.tsx`,
  * `PinnedVersion.tsx`, `ContinueReading.tsx`, `ReaderSettingsControls.tsx`).
  *
- * This is groundwork only — nothing here is wired up yet. `Reader2C.tsx` is
- * owned by another session on this worktree and is deliberately NOT edited
- * here; see the accompanying report for the exact prop/hook shape it should
- * grow to consume this catalogue.
+ * Every component listed above reads this catalogue directly: it calls
+ * `useLocale()` for the locale in the URL and `getReaderStrings(lang)` for the
+ * chrome, so nothing is threaded through props or context. A new string in any
+ * of those files gets a key here in BOTH languages, or it ships English to a
+ * Spanish reader.
  *
  * Shape and precedent:
  * - Follows the site's established pattern (`NAV_STRINGS` in `src/lib/i18n.ts`,
@@ -61,11 +62,16 @@ export interface ReaderStrings {
     info: string;
     views: string;
     pages: string;
+    settings: string;
     more: string;
     menu: string;
     readerToolsAria: string;
     previousPage: string;
     nextPage: string;
+    /** Foot-of-page pager on mobile, where the slot is a word, not a tooltip. */
+    previous: string;
+    next: string;
+    close: string;
     jumpToPage: string;
     backToTheBook: string;
     backToTheBookPage: string;
@@ -105,6 +111,10 @@ export interface ReaderStrings {
       downloads: string;
       history: string;
     };
+    /** `Close {title}` on the drawer's own dismiss button. */
+    closeAria: (title: string) => string;
+    /** Mobile only: a tool opened from More can step back to it. */
+    backToMore: string;
   };
 
   /** MORE_TOOLS on mobile: label + one-line blurb, same ten tools as `panels`
@@ -143,6 +153,18 @@ export interface ReaderStrings {
     showPane: (label: string) => string;
     lastPaneShowing: string;
 
+    /** Stands in for the book's language when the record has none, in the
+     *  pane header and the Views row (`Original · OCR`). */
+    originalFallback: string;
+    /** Pane header over the romanisation column — shorter than the Views row. */
+    romanisedHeader: string;
+    /** The AI label on the romanisation pane, and its tooltip. */
+    aiTranslated: string;
+    aiShort: string;
+    aiTitle: string;
+    /** Alt text for the facsimile itself. */
+    scanAlt: (pageNumber: number, title: string) => string;
+
     /** Views panel row titles + hints (Scan, OCR, English, Romanised). */
     originalScan: string;
     originalScanHint: string;
@@ -166,6 +188,9 @@ export interface ReaderStrings {
     hideNotes: string;
     trace: string;
     turnTracingOff: string;
+    /** Stands in for the book's language inside `traceHint` when the record
+     *  has none — it reads mid-sentence, so it carries its own article. */
+    traceFallbackLanguage: string;
     /** `Trace: click any phrase to see it in the {language}` */
     traceHint: (language: string) => string;
     traceAligning: string;
@@ -173,11 +198,22 @@ export interface ReaderStrings {
     traceRateLimited: string;
     traceClickHint: string;
 
+    /** Romanisation pane: the wait, and the two states with no text. */
+    romanising: string;
+    /** Reads after the elapsed seconds, so it starts lower-case. */
+    romanisingLonger: string;
+    romanisingEstimate: (seconds: number) => string;
+    translitFailed: string;
+    translitNone: string;
+
     copyTranscription: string;
     copyTranslation: string;
+    copyTransliteration: string;
     copied: string;
 
     marksMeaning: string;
+    /** The same idea in a tooltip's worth of room. */
+    marksMeaningShort: string;
     marksInText: string;
     markGlossOrTerm: string;
     markGlossOrTermDesc: string;
@@ -218,6 +254,10 @@ export interface ReaderStrings {
   /** Ask-the-librarian panel. */
   librarian: {
     suggestions: string[];
+    /** Sits over the suggestions, under the field they are an alternative to. */
+    orStartHere: string;
+    /** `Ask about p. {n}…` in the composer. */
+    askAboutPage: (pageNumber: number | string) => string;
     inputAria: string;
     ask: string;
     consulting: string;
@@ -260,6 +300,28 @@ export interface ReaderStrings {
     copyLink: string;
     copyLinkWithReference: string;
     postTo: string;
+    /** The only share target that is a common noun — the rest are brand names
+     *  and stay as they are written everywhere else. */
+    email: string;
+  };
+
+  /**
+   * A text pane with nothing in it (PaneEmptyState). The editor states there
+   * ("Complete OCR first", "Open pipeline") stay in English with the rest of
+   * the editor tooling — see the file header.
+   */
+  paneEmpty: {
+    notTranscribed: string;
+    notTranscribedBody: string;
+    blankPage: string;
+    readyToTranslate: string;
+    readyToTranslateBody: string;
+    signInToRequest: string;
+    requestTranslation: string;
+    sending: string;
+    requested: string;
+    thanksWillEmail: string;
+    thanksWillPrioritise: string;
   };
 
   /** Save panel (likes, not folders — see SavePanel.tsx's own comment). */
@@ -304,6 +366,10 @@ export interface ReaderStrings {
     showMaintenance: (n: number) => string;
     hideMaintenance: (n: number) => string;
     maintenanceNote: string;
+    /** Relative dates on a revision row. `today` takes an already-formatted time. */
+    today: (time: string) => string;
+    yesterday: string;
+    daysAgo: (n: number) => string;
     sourceAi: string;
     sourceBatch: string;
     sourceManual: string;
@@ -372,7 +438,13 @@ export interface ReaderStrings {
     pageNotInEdition: (label: string, date: string) => string;
     /** "You are reading edition {label}, published {date}" */
     readingEdition: (label: string, date: string) => string;
-    revisedSince: string;
+    /**
+     * The same line for an edition the translation has moved on from. One
+     * whole sentence per locale rather than a suffix glued on at render time:
+     * the clause that joins them is punctuation, and punctuation is not the
+     * same in both languages.
+     */
+    readingEditionRevised: (label: string, date: string) => string;
     viewCurrentEdition: string;
   };
 }
@@ -391,11 +463,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       info: 'Info',
       views: 'Views',
       pages: 'Pages',
+      settings: 'Settings',
       more: 'More',
       menu: 'Menu',
       readerToolsAria: 'Reader tools',
       previousPage: 'Previous page',
       nextPage: 'Next page',
+      previous: 'Previous',
+      next: 'Next',
+      close: 'Close',
       jumpToPage: 'Jump to page',
       backToTheBook: 'Back to the book',
       backToTheBookPage: 'Back to the book page',
@@ -433,6 +509,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         downloads: 'Take this page, or the whole book, away with you.',
         history: 'Every recorded change to this page’s transcription and translation.',
       },
+      closeAria: (title) => `Close ${title.toLowerCase()}`,
+      backToMore: 'Back to More',
     },
     moreMenu: {
       contents: 'Contents',
@@ -465,6 +543,13 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       showPane: (label) => `Show the ${label.toLowerCase()}`,
       lastPaneShowing: 'The last pane showing',
 
+      originalFallback: 'Original',
+      romanisedHeader: 'Romanised',
+      aiTranslated: 'AI translated',
+      aiShort: 'AI',
+      aiTitle: 'Produced with AI assistance',
+      scanAlt: (pageNumber, title) => `Scan of page ${pageNumber} of ${title}`,
+
       originalScan: 'Original scan',
       originalScanHint: 'The page as it was photographed',
       transcriptionOf: (language) => `${language} transcription`,
@@ -486,17 +571,26 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       hideNotes: 'Hide inline notes and glosses',
       trace: 'Trace',
       turnTracingOff: 'Turn tracing off',
+      traceFallbackLanguage: 'original',
       traceHint: (language) => `Trace: click any phrase to see it in the ${language}`,
       traceAligning: 'Aligning this page with the translation…',
       traceUnavailable: 'Tracing is not available for this page.',
       traceRateLimited: 'Tracing limit reached. Sign in (free) to keep going.',
       traceClickHint: 'Click any phrase to see it in the other pane.',
 
+      romanising: 'Romanising this page…',
+      romanisingLonger: 'longer than usual for a page this size',
+      romanisingEstimate: (seconds) => `usually about ${seconds}s for this much text`,
+      translitFailed: 'The transliteration could not be generated for this page.',
+      translitNone: 'No transliteration for this page yet.',
+
       copyTranscription: 'Copy the transcription',
       copyTranslation: 'Copy the translation',
+      copyTransliteration: 'Copy the transliteration',
       copied: 'Copied',
 
       marksMeaning: 'What the marks in the text mean',
+      marksMeaningShort: 'What the marks mean',
       marksInText: 'Marks in the text',
       markGlossOrTerm: 'Gloss or term',
       markGlossOrTermDesc: 'A word explained, or a technical term identified.',
@@ -532,6 +626,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Who was the author?',
         'Explain the key concepts here',
       ],
+      orStartHere: 'Or start here',
+      askAboutPage: (pageNumber) => `Ask about p. ${pageNumber}…`,
       inputAria: 'Ask the librarian',
       ask: 'Ask',
       consulting: 'Consulting the text…',
@@ -565,6 +661,20 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       copyLink: 'Copy link to this page',
       copyLinkWithReference: 'Copy link with reference',
       postTo: 'Post to',
+      email: 'Email',
+    },
+    paneEmpty: {
+      notTranscribed: 'Not transcribed yet',
+      notTranscribedBody: 'The scan is here and free to read, but this page has no transcription yet, so there is nothing to translate from.',
+      blankPage: 'Blank page.',
+      readyToTranslate: 'Ready to translate',
+      readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
+      signInToRequest: 'Sign in to request a translation',
+      requestTranslation: 'Request translation',
+      sending: 'Sending…',
+      requested: 'Requested',
+      thanksWillEmail: 'Thanks — we’ll email you when this page is translated.',
+      thanksWillPrioritise: 'Thanks — we’ll prioritize this book.',
     },
     save: {
       anonymousNotice: 'Saves work without an account, on this device only.',
@@ -599,6 +709,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       showMaintenance: (n) => `Show ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
       hideMaintenance: (n) => `Hide ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
       maintenanceNote: 'Corpus repairs and library-wide sweeps that happened to touch this page — not fresh readings of the scan.',
+      today: (time) => `Today ${time}`,
+      yesterday: 'Yesterday',
+      daysAgo: (n) => `${n}d ago`,
       sourceAi: 'AI',
       sourceBatch: 'Batch',
       sourceManual: 'Manual',
@@ -654,8 +767,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       unresolvable: (v) => `This link cites edition v${v}, but it could not be resolved. Showing the current text.`,
       continueReadingLink: 'Continue reading →',
       pageNotInEdition: (label, date) => `This page was not part of edition ${label}, published ${date} — showing the current text.`,
-      readingEdition: (label, date) => `You are reading edition ${label}, published ${date}`,
-      revisedSince: 'the translation has since been revised',
+      readingEdition: (label, date) => `You are reading edition ${label}, published ${date}.`,
+      readingEditionRevised: (label, date) => `You are reading edition ${label}, published ${date} — the translation has since been revised.`,
       viewCurrentEdition: 'View current edition →',
     },
   },
@@ -664,7 +777,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       contents: 'Contenido',
       guide: 'Guía',
       search: 'Buscar',
-      librarian: 'Bibliotecario',
+      // NOT 'Bibliotecario' (the word the site nav and this catalogue's own
+      // `accountMenu` use): a rail label sits in a 48px slot at 8.5px, and
+      // thirteen characters wrap onto a second line. The rail names the
+      // action, the drawer it opens still says "Preguntar al bibliotecario".
+      librarian: 'Preguntar',
       save: 'Guardar',
       share: 'Compartir',
       cite: 'Citar',
@@ -672,11 +789,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       info: 'Info',
       views: 'Vistas',
       pages: 'Páginas',
+      settings: 'Ajustes',
       more: 'Más',
       menu: 'Menú',
       readerToolsAria: 'Herramientas del lector',
       previousPage: 'Página anterior',
       nextPage: 'Página siguiente',
+      previous: 'Anterior',
+      next: 'Siguiente',
+      close: 'Cerrar',
       jumpToPage: 'Ir a una página',
       backToTheBook: 'Volver al libro',
       backToTheBookPage: 'Volver a la página del libro',
@@ -714,6 +835,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         downloads: 'Llévate esta página, o el libro entero.',
         history: 'Todos los cambios registrados en la transcripción y la traducción de esta página.',
       },
+      closeAria: (title) => `Cerrar ${title.toLowerCase()}`,
+      backToMore: 'Volver a Más',
     },
     moreMenu: {
       contents: 'Contenido',
@@ -748,6 +871,13 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       showPane: (label) => `Mostrar ${label.toLowerCase()}`,
       lastPaneShowing: 'El único panel visible',
 
+      originalFallback: 'Original',
+      romanisedHeader: 'Romanizada',
+      aiTranslated: 'Traducido por IA',
+      aiShort: 'IA',
+      aiTitle: 'Generado con ayuda de IA',
+      scanAlt: (pageNumber, title) => `Escaneo de la página ${pageNumber} de ${title}`,
+
       originalScan: 'Escaneo original',
       originalScanHint: 'La página tal como fue fotografiada',
       transcriptionOf: (language) => `Transcripción (${language})`,
@@ -774,17 +904,26 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       // for exactly this action.
       trace: 'Cotejar',
       turnTracingOff: 'Desactivar el cotejo',
+      traceFallbackLanguage: 'el original',
       traceHint: (language) => `Cotejar: haz clic en cualquier frase para verla en ${language}`,
       traceAligning: 'Alineando esta página con la traducción…',
       traceUnavailable: 'El cotejo no está disponible para esta página.',
       traceRateLimited: 'Has alcanzado el límite de cotejos. Inicia sesión (gratis) para continuar.',
       traceClickHint: 'Haz clic en cualquier frase para verla en el otro panel.',
 
+      romanising: 'Romanizando esta página…',
+      romanisingLonger: 'más de lo habitual para una página de este tamaño',
+      romanisingEstimate: (seconds) => `normalmente unos ${seconds} s para esta cantidad de texto`,
+      translitFailed: 'No se pudo generar la transliteración de esta página.',
+      translitNone: 'Todavía no hay transliteración de esta página.',
+
       copyTranscription: 'Copiar la transcripción',
       copyTranslation: 'Copiar la traducción',
+      copyTransliteration: 'Copiar la transliteración',
       copied: 'Copiado',
 
       marksMeaning: 'Qué significan las marcas del texto',
+      marksMeaningShort: 'Qué significan las marcas',
       marksInText: 'Marcas en el texto',
       markGlossOrTerm: 'Glosa o término',
       markGlossOrTermDesc: 'Una palabra explicada, o un término técnico señalado.',
@@ -820,10 +959,12 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         '¿Quién fue el autor?',
         'Explica los conceptos clave aquí',
       ],
+      orStartHere: 'O empieza por aquí',
+      askAboutPage: (pageNumber) => `Pregunta sobre la p. ${pageNumber}…`,
       inputAria: 'Preguntar al bibliotecario',
       ask: 'Preguntar',
       consulting: 'Consultando el texto…',
-      askErrorInline: 'El bibliotecario no pudo responder en este momento — inténtalo de nuevo.',
+      askErrorInline: 'El bibliotecario no ha podido responder ahora mismo. Inténtalo de nuevo.',
     },
     info: {
       thisPage: 'Esta página',
@@ -853,6 +994,20 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       copyLink: 'Copiar el enlace a esta página',
       copyLinkWithReference: 'Copiar el enlace con la referencia',
       postTo: 'Publicar en',
+      email: 'Correo',
+    },
+    paneEmpty: {
+      notTranscribed: 'Aún sin transcribir',
+      notTranscribedBody: 'El escaneo está aquí y se puede leer libremente, pero esta página todavía no tiene transcripción, así que no hay nada de donde traducir.',
+      blankPage: 'Página en blanco.',
+      readyToTranslate: 'Lista para traducir',
+      readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',
+      signInToRequest: 'Inicia sesión para pedir una traducción',
+      requestTranslation: 'Pedir la traducción',
+      sending: 'Enviando…',
+      requested: 'Solicitada',
+      thanksWillEmail: 'Gracias. Te escribiremos cuando esta página esté traducida.',
+      thanksWillPrioritise: 'Gracias. Daremos prioridad a este libro.',
     },
     save: {
       anonymousNotice: 'Puedes guardar sin una cuenta; se guarda solo en este dispositivo.',
@@ -886,7 +1041,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       chars: 'caracteres',
       showMaintenance: (n) => `Mostrar ${n} ${n === 1 ? 'revisión' : 'revisiones'} de mantenimiento masivo`,
       hideMaintenance: (n) => `Ocultar ${n} ${n === 1 ? 'revisión' : 'revisiones'} de mantenimiento masivo`,
-      maintenanceNote: 'Reparaciones del corpus y barridos de toda la biblioteca que pasaron por esta página — no lecturas nuevas del escaneo.',
+      maintenanceNote: 'Reparaciones del corpus y barridos de toda la biblioteca que pasaron por esta página, no lecturas nuevas del escaneo.',
+      today: (time) => `Hoy ${time}`,
+      yesterday: 'Ayer',
+      daysAgo: (n) => `hace ${n} d`,
       sourceAi: 'IA',
       sourceBatch: 'Lote',
       sourceManual: 'Manual',
@@ -941,9 +1099,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       resolving: 'Resolviendo la edición citada…',
       unresolvable: (v) => `Este enlace cita la edición v${v}, pero no se pudo resolver. Mostrando el texto actual.`,
       continueReadingLink: 'Seguir leyendo →',
-      pageNotInEdition: (label, date) => `Esta página no formaba parte de la edición ${label}, publicada el ${date} — mostrando el texto actual.`,
-      readingEdition: (label, date) => `Estás leyendo la edición ${label}, publicada el ${date}`,
-      revisedSince: 'la traducción se ha revisado desde entonces',
+      pageNotInEdition: (label, date) => `Esta página no formaba parte de la edición ${label}, publicada el ${date}; se muestra el texto actual.`,
+      readingEdition: (label, date) => `Estás leyendo la edición ${label}, publicada el ${date}.`,
+      readingEditionRevised: (label, date) => `Estás leyendo la edición ${label}, publicada el ${date}; la traducción se ha revisado desde entonces.`,
       viewCurrentEdition: 'Ver la edición actual →',
     },
   },

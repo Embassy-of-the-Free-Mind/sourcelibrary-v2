@@ -3,7 +3,8 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { localeHref } from '@/lib/i18n';
+import { localeHref, useLocale } from '@/lib/i18n';
+import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
@@ -60,59 +61,28 @@ const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'gu
 
 type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'menu' | 'more' | null;
 
-const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
-  save: 'Save',
-  menu: 'Menu',
-  contents: 'Contents',
-  search: 'Search this book',
-  guide: 'Reading guide',
-  librarian: 'Ask the librarian',
-  info: 'Edition & page info',
-  cite: 'Cite this page',
-  share: 'Share',
-  settings: 'Reading settings',
-  views: 'Scan, text & translation',
-  downloads: 'Download',
-  history: 'Revision history',
-  more: 'More',
-};
-
 /**
- * One line under each drawer title saying what the tool actually reads, so a
- * reader knows whether it is the book's own words or ours before they trust it.
+ * Drawer titles and the one line under each — saying what the tool actually
+ * reads, so a reader knows whether it is the book's own words or ours before
+ * they trust it — both live in the string catalogue, keyed by panel:
+ * `t.panels.titles[panel]` and `t.panels.blurbs[panel]` (the blurb map is
+ * deliberately partial — Save, Menu and More explain themselves).
  */
-const LEFT_PANEL_BLURBS: Partial<Record<Exclude<LeftPanel, null>, string>> = {
-  contents: 'The book’s own table of contents, as printed.',
-  search: 'Searches the transcribed text and the descriptions of the illustrations.',
-  guide: 'Our summary of the book, written by AI over the transcription.',
-  librarian: 'Answers from AI, grounded in this page and the book around it.',
-  info: 'What this page is, and the edition it was scanned from.',
-  cite: 'A citation that points at this exact page.',
-  share: 'Copy a link to this page, or post it.',
-  settings: 'How the text is set. Your choices are remembered on this device.',
-  views: 'Which panes are showing.',
-  downloads: 'Take this page, or the whole book, away with you.',
-  history: 'Every recorded change to this page\u2019s transcription and translation.',
-};
+function panelBlurb(t: ReaderStrings, panel: Exclude<LeftPanel, null>): string | undefined {
+  return (t.panels.blurbs as Record<string, string | undefined>)[panel];
+}
 
-/** The tools that live behind "More" on mobile, in the order they're offered. */
 /**
- * Same three groups as the desktop rail, in the same order: find your way
+ * The tools that live behind "More" on mobile, in the order they're offered:
+ * the same three groups as the desktop rail, in the same order — find your way
  * through the book, ask something of it, then do something with this page.
- * Views, Pages, Share and Save are not here — they hold toolbar slots.
+ * Views, Pages, Share and Save are not here — they hold toolbar slots. Labels
+ * come from `t.moreMenu`, which is keyed by exactly these names.
  */
-const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
-  ['contents', 'Contents', 'The book’s own table of contents, as printed'],
-  ['guide', 'Reading guide', 'Overview, themes, sections'],
-  ['search', 'Search this book', 'Find a word in the transcribed text'],
-  ['librarian', 'Ask the librarian', 'Questions about this page or the book'],
-  ['cite', 'Cite this page', 'A citation that points at this exact page'],
-  ['downloads', 'Download', 'This page, or the whole book, in several formats'],
-  ['info', 'Edition & page info', 'This page, and the edition it comes from'],
-  ['history', 'Revision history', 'Every recorded change to this page'],
-  ['settings', 'Reading settings', 'Theme, text size, typeface, notes'],
-  ['menu', 'Menu', 'The rest of the library, and your account'],
-];
+const MORE_TOOLS = [
+  'contents', 'guide', 'search', 'librarian', 'cite',
+  'downloads', 'info', 'history', 'settings', 'menu',
+] as const;
 
 interface Reader2CProps {
   initialBook: Book;
@@ -190,23 +160,24 @@ function MobileToolbar({
   stripVisible: boolean;
   onToggleStrip: () => void;
 }) {
+  const t = getReaderStrings(useLocale()).toolbar;
   // Four slots. Pages, the pane picker and Search are what a reader reaches
   // for constantly; everything else — contents, the librarian, settings, the
   // guide — is one tap behind More, so nothing here competes for the thumb.
   const tools: Array<[Exclude<LeftPanel, null>, string, React.ReactNode]> = [
-    ['views', 'Views', <Columns3 key="i" size={19} />],
-    ['share', 'Share', <Share2 key="i" size={19} />],
-    ['save', 'Save', <Heart key="i" size={19} />],
+    ['views', t.views, <Columns3 key="i" size={19} />],
+    ['share', t.share, <Share2 key="i" size={19} />],
+    ['save', t.save, <Heart key="i" size={19} />],
   ];
   return (
     <div
       className="flex items-center w-full"
       style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}`, height: MOBILE_TOOLBAR_H }}
       role="toolbar"
-      aria-label="Reader tools"
+      aria-label={t.readerToolsAria}
     >
       <ToolButton
-        label="Pages"
+        label={t.pages}
         icon={<GalleryHorizontal size={19} />}
         active={stripVisible}
         onClick={onToggleStrip}
@@ -221,9 +192,9 @@ function MobileToolbar({
         />
       ))}
       <ToolButton
-        label="More"
+        label={t.more}
         icon={<MoreHorizontal size={19} />}
-        active={panel === 'more' || MORE_TOOLS.some(([k]) => k === panel)}
+        active={panel === 'more' || MORE_TOOLS.some(k => k === panel)}
         onClick={() => onTogglePanel('more')}
       />
     </div>
@@ -261,6 +232,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
   const [requesting, setRequesting] = useState(false);
   const [openSection, setOpenSection] = useState<number | null>(null);
   const [overviewOpen, setOverviewOpen] = useState(false);
+  const t = getReaderStrings(useLocale()).guide;
 
   // Requests ride the same queue as every other reader request (translation,
   // corrections): the feedback collection, which is triaged into issues.
@@ -314,11 +286,11 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
     return (
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-4 pb-6" style={{ overscrollBehavior: 'contain' }}>
         <p className="font-sans text-[13px] leading-relaxed mb-4" style={{ color: 'var(--text-primary)' }}>
-          This book does not have a reading guide yet.
+          {t.noGuideYet}
         </p>
         {requested ? (
           <p className="font-sans text-[13px]" style={{ color: 'var(--accent-sage-dark)' }} role="status">
-            Thanks. This book is queued for a guide, and it will appear here once the pass runs.
+            {t.requestGuideThanks}
           </p>
         ) : (
           <button
@@ -329,7 +301,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
             style={PANEL_BTN_STYLE}
           >
             {requesting ? <Loader2 size={13} className="animate-spin" /> : <Bell size={13} />}
-            Request a reading guide
+            {t.requestGuide}
           </button>
         )}
       </div>
@@ -354,7 +326,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
               className="mt-1.5 font-sans text-[12px] underline underline-offset-2 transition-colors hover:text-[var(--text-primary)]"
               style={{ color: 'var(--text-muted)' }}
             >
-              {overviewOpen ? 'Show less' : `Read the full overview (${overviewParas.length - 1} more)`}
+              {overviewOpen ? t.showLess : t.readFullOverview(overviewParas.length - 1)}
             </button>
           )}
         </div>
@@ -371,7 +343,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
       )}
       {!!guide.sections?.length && (
         <>
-          <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>Sections</CapsLabel>
+          <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>{t.sections}</CapsLabel>
           {guide.sections.map((s, i) => {
             const open = openSection === i;
             // Same thumbnail rule as the book page's sections list: the first
@@ -450,7 +422,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
                       className={`mt-3 ${PANEL_BTN}`}
                       style={PANEL_BTN_STYLE}
                     >
-                      Read this section →
+                      {t.readThisSection}
                     </button>
                   </div>
                 )}
@@ -472,6 +444,7 @@ function GuidePanel({ bookId, bookPath, bookTitle, pageList, onGoToPageNumber }:
  */
 function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }) {
   const [copied, setCopied] = useState<string | null>(null);
+  const t = getReaderStrings(useLocale()).share;
 
   const title = book.display_title || book.title;
   const citation = `${book.author ? `${book.author}, ` : ''}${title}${page.page_number != null ? `, p. ${page.page_number}` : ''}`;
@@ -486,15 +459,19 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
     window.open(href, '_blank', 'width=550,height=440');
   };
 
-  const targets: Array<[string, string]> = [
+  // [analytics channel, visible label, href]. The channel is a fixed English
+  // key so the `share` event means the same thing on every locale; only the
+  // label follows the reader, and only one of these is a word rather than a
+  // brand name.
+  const targets: Array<[string, string, string]> = [
     // Email first: it is how a page from a library actually gets sent to a
     // colleague. X was first only because it happened to be written first.
-    ['Email', `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${citation}\n\n${url}`)}`],
-    ['WhatsApp', `https://wa.me/?text=${encodeURIComponent(`${citation}\n${url}`)}`],
-    ['Bluesky', `https://bsky.app/intent/compose?text=${encodeURIComponent(`${citation}\n\n${url}`)}`],
-    ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`],
-    ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`],
-    ['X', `https://twitter.com/intent/tweet?text=${encodeURIComponent(citation)}&url=${encodeURIComponent(url)}`],
+    ['email', t.email, `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${citation}\n\n${url}`)}`],
+    ['whatsapp', 'WhatsApp', `https://wa.me/?text=${encodeURIComponent(`${citation}\n${url}`)}`],
+    ['bluesky', 'Bluesky', `https://bsky.app/intent/compose?text=${encodeURIComponent(`${citation}\n\n${url}`)}`],
+    ['linkedin', 'LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`],
+    ['facebook', 'Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`],
+    ['x', 'X', `https://twitter.com/intent/tweet?text=${encodeURIComponent(citation)}&url=${encodeURIComponent(url)}`],
   ];
 
   const rowCls = PANEL_ROW;
@@ -505,7 +482,7 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
       <button type="button" onClick={() => copy('link', url)} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
           <LinkIcon size={16} style={{ color: 'var(--text-muted)' }} />
-          Copy link to this page
+          {t.copyLink}
         </span>
         {copied === 'link' && <Check size={14} style={{ color: 'var(--accent-rust)' }} />}
       </button>
@@ -513,18 +490,18 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
       <button type="button" onClick={() => copy('ref', `${citation}. ${url}`)} className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
         <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
           <Quote size={16} style={{ color: 'var(--text-muted)' }} />
-          Copy link with reference
+          {t.copyLinkWithReference}
         </span>
         {copied === 'ref' && <Check size={14} style={{ color: 'var(--accent-rust)' }} />}
       </button>
 
-      <CapsLabel className="block px-4 pt-4 pb-2" style={{ color: 'var(--text-faint)' }}>Post to</CapsLabel>
+      <CapsLabel className="block px-4 pt-4 pb-2" style={{ color: 'var(--text-faint)' }}>{t.postTo}</CapsLabel>
       <div className="grid grid-cols-2 gap-1.5 px-4">
-        {targets.map(([label, href]) => (
+        {targets.map(([channel, label, href]) => (
           <button
-            key={label}
+            key={channel}
             type="button"
-            onClick={() => open(href, label.toLowerCase())}
+            onClick={() => open(href, channel)}
             className="min-h-[44px] px-3 border font-sans text-[13px] text-left transition-colors hover:bg-[var(--bg-white)]"
             style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
           >
@@ -546,6 +523,7 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
  * one thing that is page-shaped: the scan in front of you.
  */
 function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
+  const t = getReaderStrings(useLocale()).downloads;
   const [full, setFull] = useState<Record<string, unknown> | null>(null);
   const [pkgBusy, setPkgBusy] = useState(false);
   const [pkgError, setPkgError] = useState<string | null>(null);
@@ -580,22 +558,22 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto pt-2 pb-6" style={{ overscrollBehavior: 'contain' }}>
-      <CapsLabel className="block px-4 pb-2" style={{ color: 'var(--text-faint)' }}>This page</CapsLabel>
+      <CapsLabel className="block px-4 pb-2" style={{ color: 'var(--text-faint)' }}>{t.thisPage}</CapsLabel>
       {scanUrl ? (
         <a href={scanUrl} download="" className={rowCls} style={{ borderColor: 'var(--border-light)' }}>
           <span className="min-w-0">
             <span className="block font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
-              The scan of p. {page.page_number}
+              {t.scanOfPage(page.page_number)}
             </span>
             <span className="block font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
-              JPEG, at the resolution it was archived
+              {t.scanFormatNote}
             </span>
           </span>
           <Download size={16} style={{ color: 'var(--text-muted)' }} />
         </a>
       ) : (
         <p className="px-4 pb-3 font-sans text-[12.5px]" style={{ color: 'var(--text-muted)' }}>
-          No scan is archived for this page.
+          {t.noScanArchived}
         </p>
       )}
 
@@ -610,10 +588,10 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
             if (!res.ok) {
               const body = await res.json().catch(() => null);
               setPkgError(res.status === 429
-                ? (body?.error || 'Daily download limit reached.')
+                ? (body?.error || t.dailyLimitReached)
                 : res.status === 401
-                  ? 'Sign in to download this page.'
-                  : 'That download failed. Try again.');
+                  ? t.signInToDownload
+                  : t.downloadFailed);
               return;
             }
             const blob = await res.blob();
@@ -625,7 +603,7 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
             document.body.appendChild(a); a.click();
             a.remove(); URL.revokeObjectURL(url);
           } catch {
-            setPkgError('That download failed. Try again.');
+            setPkgError(t.downloadFailed);
           } finally {
             setPkgBusy(false);
           }
@@ -636,10 +614,10 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
       >
         <span className="min-w-0 text-left">
           <span className="block font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
-            This page, complete
+            {t.thisPageComplete}
           </span>
           <span className="block font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
-            {pkgError || 'Scan, transcription, translation and citation, zipped'}
+            {pkgError || t.thisPageCompleteNote}
           </span>
         </span>
         {pkgBusy
@@ -647,7 +625,7 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
           : <Download size={16} style={{ color: 'var(--text-muted)' }} />}
       </button>
 
-      <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>The whole book</CapsLabel>
+      <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.wholeBook}</CapsLabel>
       {full ? (
         <div>
           <DownloadButton
@@ -692,6 +670,7 @@ function SearchHighlighter() {
 function ReaderAccountMenu() {
   const { data: session } = useSession();
   const pathname = usePathname();
+  const t = getReaderStrings(useLocale()).accountMenu;
   const isSpanishSite = !!pathname?.startsWith('/es');
   const signedIn = !!session?.user;
   const row = 'w-full text-left flex items-center justify-between gap-3 h-[48px] font-sans text-[14px] border-b transition-colors active:bg-[var(--bg-white)]';
@@ -701,41 +680,41 @@ function ReaderAccountMenu() {
     <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-2 pb-5" style={{ overscrollBehavior: 'contain' }}>
       {/* The library itself. The reader replaces the site header, so without
           these the rest of Source Library is unreachable from a book. */}
-      <CapsLabel className="block pb-2" style={{ color: 'var(--text-faint)' }}>Library</CapsLabel>
+      <CapsLabel className="block pb-2" style={{ color: 'var(--text-faint)' }}>{t.library}</CapsLabel>
       {([
-        ['Collections', '/collections'],
-        ['Gallery', '/gallery'],
-        ['Browse', '/browse'],
-        ['Catalogue', '/catalog'],
-        ['Works', '/works'],
-        ['Explore', '/explore'],
-        ['Librarian', '/librarian'],
+        [t.collections, '/collections'],
+        [t.gallery, '/gallery'],
+        [t.browse, '/browse'],
+        [t.catalogue, '/catalog'],
+        [t.works, '/works'],
+        [t.explore, '/explore'],
+        [t.librarian, '/librarian'],
       ] as Array<[string, string]>).map(([label, href]) => (
         <Link key={href} href={href} className={`${row} no-underline`} style={rowStyle}>{label}</Link>
       ))}
 
-      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>You</CapsLabel>
+      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.you}</CapsLabel>
       {signedIn ? (
         <>
-          <Link href="/account" className={`${row} no-underline`} style={rowStyle}>Your account</Link>
-          <Link href="/favorites" className={`${row} no-underline`} style={rowStyle}>Saved pages</Link>
-          <Link href="/reading-history" className={`${row} no-underline`} style={rowStyle}>Reading history</Link>
+          <Link href="/account" className={`${row} no-underline`} style={rowStyle}>{t.yourAccount}</Link>
+          <Link href="/favorites" className={`${row} no-underline`} style={rowStyle}>{t.savedPages}</Link>
+          <Link href="/reading-history" className={`${row} no-underline`} style={rowStyle}>{t.readingHistory}</Link>
         </>
       ) : (
-        <Link href="/auth/signin" className={`${row} no-underline`} style={rowStyle}>Sign in</Link>
+        <Link href="/auth/signin" className={`${row} no-underline`} style={rowStyle}>{t.signIn}</Link>
       )}
       <Link href="/support" className={`${row} no-underline`} style={rowStyle}>
-        Support Source Library
+        {t.supportSourceLibrary}
         <LifeBuoy size={15} style={{ color: 'var(--text-faint)' }} />
       </Link>
       <Link href="/feedback" className={`${row} no-underline`} style={rowStyle}>
-        Send feedback
+        {t.sendFeedback}
         <MessageSquare size={15} style={{ color: 'var(--text-faint)' }} />
       </Link>
 
       {/* The reader now has a Spanish twin, so switching keeps you on this
           page instead of dropping you at the homepage. */}
-      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>Site language</CapsLabel>
+      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.siteLanguage}</CapsLabel>
       <div className="flex gap-2 pt-1">
         {([['English', localeHref('en', pathname)], ['Español', localeHref('es', pathname)]] as Array<[string, string]>).map(([label, href]) => {
           const active = (label === 'Español') === isSpanishSite;
@@ -756,7 +735,7 @@ function ReaderAccountMenu() {
 
       {signedIn && (
         <button type="button" onClick={() => signOut({ callbackUrl: '/' })} className={row} style={{ ...rowStyle, borderColor: 'transparent' }}>
-          Sign out
+          {t.signOut}
           <LogOut size={15} style={{ color: 'var(--text-faint)' }} />
         </button>
       )}
@@ -767,6 +746,7 @@ function ReaderAccountMenu() {
 /** Copy an already-plain string, for panes whose text needs no unwrapping. */
 function CopyPlainButton({ text, label }: { text: string; label: string }) {
   const [copied, setCopied] = useState(false);
+  const t = getReaderStrings(useLocale()).panes;
   if (!text) return null;
   return (
     <button
@@ -777,7 +757,7 @@ function CopyPlainButton({ text, label }: { text: string; label: string }) {
         setTimeout(() => setCopied(false), 1400);
       }}
       aria-label={label}
-      title={copied ? 'Copied' : label}
+      title={copied ? t.copied : label}
       className={PANE_ICON_CHIP}
       style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)' }}
     >
@@ -798,6 +778,7 @@ function CopyPlainButton({ text, label }: { text: string; label: string }) {
  * the honest number, and it keeps running past the estimate.
  */
 function TranslitProgress({ ocrLength }: { ocrLength: number }) {
+  const t = getReaderStrings(useLocale()).panes;
   const estimateMs = Math.max(5000, 12000 + 5.6 * ocrLength);
   const [elapsed, setElapsed] = useState(0);
   useEffect(() => {
@@ -827,13 +808,14 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
       </svg>
       <span className="min-w-0">
         <span className="block font-sans text-[13px]" style={{ color: 'var(--text-secondary)' }}>
-          Romanising this page…
+          {t.romanising}
         </span>
         <span className="block font-sans text-[11.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
           {Math.round(elapsed / 1000)}s
+          {' · '}
           {overrun
-            ? ' · longer than usual for a page this size'
-            : ` · usually about ${Math.round(estimateMs / 1000)}s for this much text`}
+            ? t.romanisingLonger
+            : t.romanisingEstimate(Math.round(estimateMs / 1000))}
         </span>
       </span>
     </div>
@@ -851,18 +833,19 @@ function TranslitBody({ text, loading, error, settings, baseSize, ocrLength }: {
   /** Drives the wait estimate — the call scales with how much text there is. */
   ocrLength: number;
 }) {
+  const t = getReaderStrings(useLocale()).panes;
   if (loading) return <TranslitProgress ocrLength={ocrLength} />;
   if (error) {
     return (
       <p className="font-sans text-[13px]" style={{ color: 'var(--status-error)' }} role="alert">
-        The transliteration could not be generated for this page.
+        {t.translitFailed}
       </p>
     );
   }
   if (!text) {
     return (
       <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
-        No transliteration for this page yet.
+        {t.translitNone}
       </p>
     );
   }
@@ -892,14 +875,26 @@ function TranslitBody({ text, loading, error, settings, baseSize, ocrLength }: {
   );
 }
 
-/** What each coloured mark in the text means. */
-const MARK_LEGEND: Array<[string, string, string, string]> = [
-  ['Gloss or term', 'A word explained, or a technical term identified.',
-    'var(--accent-violet)', 'color-mix(in srgb, var(--accent-violet) 10%, transparent)'],
-  ['On the page', 'A marginal note or a later hand, present on the original.',
-    'var(--accent-sage-dark)', 'color-mix(in srgb, var(--accent-sage) 14%, transparent)'],
-  ['Our note', 'Added here by an editor, not on the original.',
-    'var(--accent-gold-dark)', 'color-mix(in srgb, var(--accent-gold) 16%, transparent)'],
+/** What each coloured mark in the text means — the colours here, the words in
+ *  the string catalogue under the matching `mark*` keys. */
+const MARK_LEGEND: Array<{
+  label: 'markGlossOrTerm' | 'markOnThePage' | 'markOurNote';
+  desc: 'markGlossOrTermDesc' | 'markOnThePageDesc' | 'markOurNoteDesc';
+  fg: string;
+  bg: string;
+}> = [
+  {
+    label: 'markGlossOrTerm', desc: 'markGlossOrTermDesc',
+    fg: 'var(--accent-violet)', bg: 'color-mix(in srgb, var(--accent-violet) 10%, transparent)',
+  },
+  {
+    label: 'markOnThePage', desc: 'markOnThePageDesc',
+    fg: 'var(--accent-sage-dark)', bg: 'color-mix(in srgb, var(--accent-sage) 14%, transparent)',
+  },
+  {
+    label: 'markOurNote', desc: 'markOurNoteDesc',
+    fg: 'var(--accent-gold-dark)', bg: 'color-mix(in srgb, var(--accent-gold) 16%, transparent)',
+  },
 ];
 
 /**
@@ -909,6 +904,7 @@ const MARK_LEGEND: Array<[string, string, string, string]> = [
  */
 function MarksKey() {
   const [open, setOpen] = useState(false);
+  const t = getReaderStrings(useLocale()).panes;
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
@@ -924,8 +920,8 @@ function MarksKey() {
         type="button"
         onClick={() => setOpen(v => !v)}
         aria-expanded={open}
-        aria-label="What the marks in the text mean"
-        title="What the marks mean"
+        aria-label={t.marksMeaning}
+        title={t.marksMeaningShort}
         className={PANE_ICON_CHIP}
         style={{ color: 'var(--accent-gold-dark)' }}
       >
@@ -939,21 +935,21 @@ function MarksKey() {
             boxShadow: '0 28px 60px -18px rgba(30,20,8,0.45)',
           }}
           role="dialog"
-          aria-label="What the marks mean"
+          aria-label={t.marksMeaningShort}
         >
-          <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>Marks in the text</CapsLabel>
+          <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>{t.marksInText}</CapsLabel>
           <dl className="flex flex-col gap-2">
-            {MARK_LEGEND.map(([label, desc, fg, bg]) => (
-              <div key={label}>
+            {MARK_LEGEND.map(mark => (
+              <div key={mark.label}>
                 <dt>
-                  <span className="font-sans text-[11.5px] px-1.5 py-0.5" style={{ color: fg, background: bg }}>{label}</span>
+                  <span className="font-sans text-[11.5px] px-1.5 py-0.5" style={{ color: mark.fg, background: mark.bg }}>{t[mark.label]}</span>
                 </dt>
-                <dd className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-muted)' }}>{desc}</dd>
+                <dd className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-muted)' }}>{t[mark.desc]}</dd>
               </div>
             ))}
           </dl>
           <p className="mt-2.5 pt-2 border-t font-sans text-[11px]" style={{ borderColor: 'var(--border-light)', color: 'var(--text-faint)' }}>
-            Notes hides all of them.
+            {t.marksHiddenByNotes}
           </p>
         </div>
       )}
@@ -963,6 +959,7 @@ function MarksKey() {
 
 /** Pane-level Notes toggle — inline editorial notes/glosses apply per text pane. */
 function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
+  const t = getReaderStrings(useLocale()).panes;
   return (
     <button
       type="button"
@@ -977,9 +974,9 @@ function NotesToggle({ on, onToggle }: { on: boolean; onToggle: () => void }) {
         background: on ? 'color-mix(in srgb, var(--accent-gold) 15%, transparent)' : 'transparent',
         borderColor: on ? 'color-mix(in srgb, var(--accent-gold) 45%, transparent)' : 'transparent',
       }}
-      title={on ? 'Hide inline notes and glosses' : 'Show inline notes and glosses'}
+      title={on ? t.hideNotes : t.showNotes}
     >
-      Notes
+      {t.notes}
     </button>
   );
 }
@@ -1019,17 +1016,18 @@ const PANE_ICON_CHIP = 'h-[26px] w-[28px] flex items-center justify-center trans
 
 /** What tracing is doing right now, said plainly under the pane header. */
 function TraceStatusLine({ status, showHint }: { status: TraceStatus; showHint: boolean }) {
+  const t = getReaderStrings(useLocale()).panes;
   // The "click any phrase" hint is teaching, not status: it shows until the
   // reader has actually traced something once, then never again on this
   // device. The other three are conditions they may need to act on.
   const text = status === 'loading'
-    ? 'Aligning this page with the translation…'
+    ? t.traceAligning
     : status === 'unavailable'
-      ? 'Tracing is not available for this page.'
+      ? t.traceUnavailable
       : status === 'rate_limited'
-        ? 'Tracing limit reached. Sign in (free) to keep going.'
+        ? t.traceRateLimited
         : status === 'ready' && showHint
-          ? 'Click any phrase to see it in the other pane.'
+          ? t.traceClickHint
           : null;
   if (!text) return null;
   return (
@@ -1059,6 +1057,7 @@ function TraceStatusLine({ status, showHint }: { status: TraceStatus; showHint: 
 function TraceToggle({ on, onToggle, language }: {
   on: boolean; onToggle: () => void; language?: string;
 }) {
+  const t = getReaderStrings(useLocale()).panes;
   return (
     <button
       type="button"
@@ -1074,10 +1073,10 @@ function TraceToggle({ on, onToggle, language }: {
         borderColor: on ? 'rgba(74, 111, 165, 0.45)' : 'transparent',
       }}
       title={on
-        ? 'Turn tracing off'
-        : `Trace: click any phrase to see it in the ${language || 'original'}`}
+        ? t.turnTracingOff
+        : t.traceHint(language || t.traceFallbackLanguage)}
     >
-      Trace
+      {t.trace}
     </button>
   );
 }
@@ -1089,9 +1088,10 @@ function TraceToggle({ on, onToggle, language }: {
  */
 function CopyTextButton({ page, kind }: { page: Page; kind: 'ocr' | 'translation' }) {
   const [copied, setCopied] = useState(false);
+  const t = getReaderStrings(useLocale()).panes;
   const text = (kind === 'ocr' ? page.ocr?.data : page.translation?.data) || '';
   if (!text) return null;
-  const label = kind === 'ocr' ? 'Copy the transcription' : 'Copy the translation';
+  const label = kind === 'ocr' ? t.copyTranscription : t.copyTranslation;
   return (
     <button
       type="button"
@@ -1101,7 +1101,7 @@ function CopyTextButton({ page, kind }: { page: Page; kind: 'ocr' | 'translation
         setTimeout(() => setCopied(false), 1400);
       }}
       aria-label={label}
-      title={copied ? 'Copied' : label}
+      title={copied ? t.copied : label}
       className={PANE_ICON_CHIP}
       style={{ color: copied ? 'var(--accent-sage-dark)' : 'var(--text-faint)' }}
     >
@@ -1127,6 +1127,7 @@ function extractPageSummary(page: Page): string | null {
  * thing behind a spinner while it waits.
  */
 function InfoPanel({ page, book }: { page: Page; book: Book }) {
+  const t = getReaderStrings(useLocale()).info;
   const [fullBook, setFullBook] = useState<Record<string, unknown> | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -1138,36 +1139,39 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
 
   const summary = extractPageSummary(page);
   const b = { ...(fullBook || {}), ...book } as Record<string, unknown>;
-  const rows: Array<[string, string | undefined]> = [
-    ['Title', b.title as string],
-    ['English', (b.display_title as string) !== (b.title as string) ? (b.display_title as string) : undefined],
-    ['Author', b.author as string],
-    ['Language', b.language as string],
-    ['Place', (fullBook?.place_published as string) || undefined],
-    ['Publisher', (fullBook?.publisher as string) || undefined],
-    ['Published', b.published as string],
-    ['Format', (fullBook?.format as string) || undefined],
-    ['Pages', fullBook?.pages_count ? String(fullBook.pages_count) : undefined],
-    ['USTC', (fullBook?.ustc_id as string) || undefined],
+  // `isTitle` rather than a label comparison: the label is translated, so
+  // matching on the word would set the wrong row in italics on /es.
+  const rows: Array<{ label: string; value: string | undefined; isTitle?: boolean }> = [
+    { label: t.fieldTitle, value: b.title as string, isTitle: true },
+    { label: t.fieldEnglish, value: (b.display_title as string) !== (b.title as string) ? (b.display_title as string) : undefined },
+    { label: t.fieldAuthor, value: b.author as string },
+    { label: t.fieldLanguage, value: b.language as string },
+    { label: t.fieldPlace, value: (fullBook?.place_published as string) || undefined },
+    { label: t.fieldPublisher, value: (fullBook?.publisher as string) || undefined },
+    { label: t.fieldPublished, value: b.published as string },
+    { label: t.fieldFormat, value: (fullBook?.format as string) || undefined },
+    { label: t.fieldPages, value: fullBook?.pages_count ? String(fullBook.pages_count) : undefined },
+    // A catalogue identifier, not a word — the same in every language.
+    { label: 'USTC', value: (fullBook?.ustc_id as string) || undefined },
   ];
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-3 pb-6" style={{ overscrollBehavior: 'contain' }}>
       {summary && (
         <div className="mb-4 p-3 border" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-white)' }}>
-          <CapsLabel className="block mb-1.5" style={{ color: 'var(--accent-gold-dark)' }}>This page</CapsLabel>
+          <CapsLabel className="block mb-1.5" style={{ color: 'var(--accent-gold-dark)' }}>{t.thisPage}</CapsLabel>
           <p className="font-body text-[13.5px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             {summary}
           </p>
         </div>
       )}
-      <CapsLabel className="block mt-1 mb-2.5" style={{ color: 'var(--text-muted)' }}>This edition</CapsLabel>
+      <CapsLabel className="block mt-1 mb-2.5" style={{ color: 'var(--text-muted)' }}>{t.thisEdition}</CapsLabel>
       <dl>
-        {rows.filter(([, v]) => v).map(([label, value]) => (
-          <div key={label} className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
-            <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{label}</dt>
+        {rows.filter(row => row.value).map(row => (
+          <div key={row.label} className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
+            <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{row.label}</dt>
             <dd style={{ color: 'var(--text-secondary)' }}>
-              {label === 'Title' ? <em className="font-body">{value}</em> : value}
+              {row.isTitle ? <em className="font-body">{row.value}</em> : row.value}
             </dd>
           </div>
         ))}
@@ -1185,35 +1189,33 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
           of the bibliographic record — not tucked in a pane menu. */}
       {(page.ocr?.model || page.translation?.model) && (
         <>
-          <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>How this page was made</CapsLabel>
+          <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>{t.howPageWasMade}</CapsLabel>
           <dl>
             <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
-              <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>Scan</dt>
+              <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldScan}</dt>
               <dd style={{ color: 'var(--text-secondary)' }}>
-                Photographed from the printed edition
-                {page.page_number != null ? `, p. ${page.page_number}` : ''}
+                {t.scannedFrom(page.page_number ?? undefined)}
               </dd>
             </div>
             {page.ocr?.model && (
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
-                <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>Transcript</dt>
+                <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  Read from the scan by {page.ocr.model}
+                  {t.transcribedBy(page.ocr.model)}
                 </dd>
               </div>
             )}
             {page.translation?.model && (
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
-                <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>English</dt>
+                <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldEnglish}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  Translated from the transcript by {page.translation.model}
+                  {t.translatedBy(page.translation.model)}
                 </dd>
               </div>
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            Machine transcription and translation carry errors. The scan is the source, so read it
-            alongside the text wherever a reading matters.
+            {t.machineNotice}
           </p>
         </>
       )}
@@ -1222,12 +1224,6 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
 }
 
 export interface LibrarianMessage { role: 'user' | 'assistant'; content: string }
-
-const LIBRARIAN_SUGGESTIONS = [
-  'What is this page about?',
-  'Who was the author?',
-  'Explain the key concepts here',
-];
 
 /** Ask the librarian — questions about this page, book, author, or a concept. */
 function LibrarianPanel({ page, book, messages, onMessages }: {
@@ -1239,6 +1235,7 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
+  const t = getReaderStrings(useLocale()).librarian;
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Land on the START of the newest answer. Scrolling to the bottom of the
@@ -1296,9 +1293,9 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
       >
         {empty && (
           <>
-            <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>Or start here</CapsLabel>
+            <CapsLabel className="block mb-2" style={{ color: 'var(--text-faint)' }}>{t.orStartHere}</CapsLabel>
             <div className="flex flex-col gap-1.5">
-              {LIBRARIAN_SUGGESTIONS.map(s => (
+              {t.suggestions.map(s => (
                 <button key={s} type="button" onClick={() => ask(s)}
                   className={`group justify-between w-full ${PANEL_BTN}`}
                   style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>
@@ -1331,12 +1328,12 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
         ))}
         {busy && (
           <div className="flex items-center gap-2 mt-3 font-sans text-[12px]" style={{ color: 'var(--text-muted)' }}>
-            <Loader2 size={13} className="animate-spin" /> Consulting the text…
+            <Loader2 size={13} className="animate-spin" /> {t.consulting}
           </div>
         )}
         {error && (
           <p className="mt-2 font-sans text-[12px]" style={{ color: 'var(--status-error)' }} role="alert">
-            The librarian couldn&apos;t answer just now — try again.
+            {t.askErrorInline}
           </p>
         )}
       </div>
@@ -1349,15 +1346,15 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder={`Ask about p. ${page.page_number}…`}
+            placeholder={t.askAboutPage(page.page_number)}
             className="flex-1 bg-transparent outline-none focus:outline-none font-sans text-[16px] lg:text-[13px]"
             style={{ color: 'var(--text-primary)' }}
-            aria-label="Ask the librarian"
+            aria-label={t.inputAria}
           />
           <button type="submit" disabled={busy || !input.trim()}
             className="font-sans text-[12px] disabled:opacity-40"
             style={{ color: 'var(--accent-rust)' }}>
-            Ask
+            {t.ask}
           </button>
         </div>
       </form>
@@ -1382,6 +1379,9 @@ function ScanControls({
   /** Open the scan full screen, at the resolution it was archived at */
   onExpand?: () => void;
 }) {
+  const strings = getReaderStrings(useLocale());
+  const t = strings.panes;
+  const tb = strings.toolbar;
   // Same chip as Trace / Notes / Copy in the text panes, so one row of pane
   // controls reads as one family rather than icons beside buttons.
   // The scan bed is the darkest surface in the reader, so an outlined chip
@@ -1392,7 +1392,7 @@ function ScanControls({
   const btnStyle = { color: 'var(--text-muted)' } as const;
   return (
     <div className="flex items-center gap-0.5">
-      <button type="button" aria-label="Zoom out" disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
+      <button type="button" aria-label={t.zoomOut} disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
         className={btn} style={btnStyle}>
         <ZoomOut size={14} />
       </button>
@@ -1402,11 +1402,11 @@ function ScanControls({
         disabled={zoom === 1}
         className="min-w-[46px] px-1 h-[26px] font-sans text-[11px] tabular-nums transition-colors disabled:cursor-default hover:bg-black/[0.06]"
         style={{ color: 'var(--text-muted)' }}
-        title="Reset zoom"
+        title={t.resetZoom}
       >
         {Math.round(zoom * 100)}%
       </button>
-      <button type="button" aria-label="Zoom in" disabled={zoom >= SCAN_ZOOM_STEPS[SCAN_ZOOM_STEPS.length - 1]}
+      <button type="button" aria-label={t.zoomIn} disabled={zoom >= SCAN_ZOOM_STEPS[SCAN_ZOOM_STEPS.length - 1]}
         onClick={() => onZoomStep(1)} className={btn} style={btnStyle}>
         <ZoomIn size={14} />
       </button>
@@ -1415,13 +1415,13 @@ function ScanControls({
         type="button"
         onClick={onToggleLens}
         aria-pressed={lensOn}
-        aria-label="Reading lens"
+        aria-label={t.readingLens}
         disabled={zoom > 1}
         className={btn}
         style={lensOn
           ? { color: 'var(--accent-sage-dark)', background: 'color-mix(in srgb, var(--accent-sage) 15%, transparent)', borderColor: 'color-mix(in srgb, var(--accent-sage) 45%, transparent)' }
           : btnStyle}
-        title={zoom > 1 ? 'Reading lens (available at 100%)' : lensOn ? 'Turn the reading lens off' : 'Reading lens: magnify the spot under the pointer'}
+        title={zoom > 1 ? t.readingLensUnavailable : lensOn ? t.readingLensOff : t.readingLens}
       >
         <ScanSearch size={14} />
       </button>
@@ -1429,8 +1429,8 @@ function ScanControls({
         <button
           type="button"
           onClick={onExpand}
-          aria-label="View the scan full screen"
-          title="View the scan full screen"
+          aria-label={tb.viewScanFullScreen}
+          title={tb.viewScanFullScreen}
           className={btn}
           style={btnStyle}
         >
@@ -1455,6 +1455,8 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
   hasPrev: boolean;
   hasNext: boolean;
 }) {
+  const strings = getReaderStrings(useLocale());
+  const t = strings.toolbar;
   // Zoom resets per page, keyed rather than set from an effect.
   const [zoomByPage, setZoomByPage] = useState<{ id: string; zoom: number }>({ id: page.id, zoom: 1 });
   const zoom = zoomByPage.id === page.id ? zoomByPage.zoom : 1;
@@ -1478,12 +1480,12 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
   const navBtn = 'w-10 h-10 flex items-center justify-center transition-colors disabled:opacity-25 hover:bg-[rgba(253,252,249,0.12)]';
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col rv2-pop" style={{ background: '#14110d' }} role="dialog" aria-modal="true" aria-label="Scan, full screen">
+    <div className="fixed inset-0 z-[100] flex flex-col rv2-pop" style={{ background: '#14110d' }} role="dialog" aria-modal="true" aria-label={t.scanFullScreen}>
       <div className="shrink-0 flex items-center gap-2 px-3 h-[52px]" style={{ borderBottom: `1px solid ${onInk(0.12)}` }}>
-        <button type="button" onClick={onClose} aria-label="Back to the reader"
+        <button type="button" onClick={onClose} aria-label={t.backToTheReader}
           className="flex items-center gap-1.5 pl-1.5 pr-3 h-9 font-sans text-[13px] transition-colors hover:bg-[rgba(253,252,249,0.12)]"
           style={{ color: onInk(0.85) }}>
-          <ChevronLeft size={17} /> Back to the reader
+          <ChevronLeft size={17} /> {t.backToTheReader}
         </button>
         <div className="flex-1" />
         <span className="font-sans text-[12.5px] truncate max-w-[40%]" style={{ color: onInk(0.5) }}>
@@ -1492,24 +1494,24 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
         <span className="font-sans text-[12.5px] tabular-nums" style={{ color: onInk(0.75) }}>
           p. {page.page_number}
         </span>
-        <button type="button" onClick={onPrev} disabled={!hasPrev} aria-label="Previous page"
+        <button type="button" onClick={onPrev} disabled={!hasPrev} aria-label={t.previousPage}
           className={navBtn} style={{ color: onInk(0.75) }}><ChevronLeft size={17} /></button>
-        <button type="button" onClick={onNext} disabled={!hasNext} aria-label="Next page"
+        <button type="button" onClick={onNext} disabled={!hasNext} aria-label={t.nextPage}
           className={navBtn} style={{ color: onInk(0.75) }}><ChevronRight size={17} /></button>
-        <button type="button" onClick={onClose} aria-label="Close"
+        <button type="button" onClick={onClose} aria-label={t.close}
           className={navBtn} style={{ color: onInk(0.75) }}><X size={17} /></button>
       </div>
       <div className="flex-1 min-h-0 px-3 py-3">
         <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes />
       </div>
       <div className="shrink-0 flex items-center justify-center gap-1 h-[46px]" style={{ borderTop: `1px solid ${onInk(0.12)}` }}>
-        <button type="button" aria-label="Zoom out" disabled={zoom <= 1}
+        <button type="button" aria-label={strings.panes.zoomOut} disabled={zoom <= 1}
           onClick={() => setZoom(z => SCAN_ZOOM_STEPS[Math.max(0, SCAN_ZOOM_STEPS.indexOf(z) - 1)] ?? 1)}
           className={navBtn} style={{ color: onInk(0.7) }}><ZoomOut size={16} /></button>
         <button type="button" onClick={() => setZoom(1)} disabled={zoom === 1}
           className="min-w-[56px] h-10 font-sans text-[12px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.12)] disabled:cursor-default"
           style={{ color: onInk(0.7) }}>{Math.round(zoom * 100)}%</button>
-        <button type="button" aria-label="Zoom in" disabled={zoom >= SCAN_ZOOM_MAX}
+        <button type="button" aria-label={strings.panes.zoomIn} disabled={zoom >= SCAN_ZOOM_MAX}
           onClick={() => setZoom(z => SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, SCAN_ZOOM_STEPS.indexOf(z) + 1)] ?? z)}
           className={navBtn} style={{ color: onInk(0.7) }}><ZoomIn size={16} /></button>
       </div>
@@ -1558,6 +1560,7 @@ function BookSearchPanel({
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
   const [total, setTotal] = useState<number | null>(null);
   const [searching, setSearching] = useState(false);
+  const t = getReaderStrings(useLocale()).search;
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -1600,15 +1603,15 @@ function BookSearchPanel({
             type="search"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Search…"
+            placeholder={t.placeholder}
             className="flex-1 bg-transparent outline-none focus:outline-none font-sans text-[16px] lg:text-[13px]"
             style={{ color: 'var(--text-primary)' }}
-            aria-label="Search this book"
+            aria-label={t.inputAria}
           />
         </div>
         {total !== null && !searching && (
           <p className="font-sans text-[11.5px] mt-2" style={{ color: 'var(--text-muted)' }} aria-live="polite">
-            {total === 0 ? 'No matches in this book' : `${total} ${total === 1 ? 'page matches' : 'pages match'}`}
+            {total === 0 ? t.noMatches : t.pagesMatch(total)}
           </p>
         )}
       </div>
@@ -1622,7 +1625,7 @@ function BookSearchPanel({
             style={{ borderColor: 'var(--border-light)' }}
           >
             <span className="flex items-center justify-between gap-2 mb-1">
-              <CapsLabel style={{ color: 'var(--text-faint)' }}>Page {r.pageNumber}</CapsLabel>
+              <CapsLabel style={{ color: 'var(--text-faint)' }}>{t.pageLabel(r.pageNumber)}</CapsLabel>
               <ChevronRightSmall
                 size={13}
                 className="opacity-0 group-hover:opacity-100 transition-opacity"
@@ -1652,6 +1655,7 @@ function Filmstrip({
   onNext: () => void;
   onGoTo: (pageId: string) => void;
 }) {
+  const strings = getReaderStrings(useLocale());
   // Arrows match the thumbnail image exactly and share its top edge; the row
   // is top-aligned so the page-number line below can't push them down.
   const thumbH = compact ? 50 : 54;
@@ -1675,7 +1679,7 @@ function Filmstrip({
       className="flex items-start gap-1 h-full pt-2 rv2-strip-in"
       style={{ background: INK, borderTop: `1px solid ${onInk(0.12)}` }}
     >
-      <button type="button" aria-label="Previous page" onClick={onPrev}
+      <button type="button" aria-label={strings.toolbar.previousPage} onClick={onPrev}
         className="shrink-0 flex items-center justify-center mx-1.5 mt-1 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
         style={{ width: compact ? 34 : 30, height: thumbH, background: onInk(0.08), color: onInk(0.8) }}>
         <ChevronLeft size={15} />
@@ -1695,7 +1699,7 @@ function Filmstrip({
               data-strip-page={p.id}
               onClick={() => onGoTo(p.id)}
               className="shrink-0 flex flex-col items-center gap-1"
-              title={`Page ${p.page_number}`}
+              title={strings.search.pageLabel(p.page_number)}
               aria-current={isCurrent ? 'page' : undefined}
             >
               {/* A diffuse rust halo rather than a ring. Most pages are pale
@@ -1733,7 +1737,7 @@ function Filmstrip({
           );
         })}
       </div>
-      <button type="button" aria-label="Next page" onClick={onNext}
+      <button type="button" aria-label={strings.toolbar.nextPage} onClick={onNext}
         className="shrink-0 flex items-center justify-center mx-1.5 mt-1 transition-colors hover:bg-[rgba(253,252,249,0.16)]"
         style={{ width: compact ? 34 : 30, height: thumbH, background: onInk(0.08), color: onInk(0.8) }}>
         <ChevronRight size={15} />
@@ -1767,6 +1771,7 @@ function PanelContent({
   onToggleEdit: () => void;
   shareUrl: string;
 }) {
+  const t = getReaderStrings(useLocale());
   if (panel === 'more') {
     // A quiet list, not a wall of boxes. Ten bordered white tiles on a warm
     // ground read as ten competing buttons; a single hairline-separated column
@@ -1776,7 +1781,7 @@ function PanelContent({
     return (
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-5" style={{ overscrollBehavior: 'contain' }}>
         <div className="flex flex-col">
-          {MORE_TOOLS.map(([key, label], i) => (
+          {MORE_TOOLS.map((key, i) => (
             <button
               key={key}
               type="button"
@@ -1788,7 +1793,7 @@ function PanelContent({
                 animationDelay: `${i * 18}ms`,
               }}
             >
-              {label}
+              {t.moreMenu[key]}
               <ChevronRightSmall size={15} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
             </button>
           ))}
@@ -1825,8 +1830,8 @@ function PanelContent({
                 has keyed in yet are different facts, and the reader should not
                 have to guess which one it is looking at. */}
             {r.currentPage.page_number != null && r.totalPages > 0
-              ? 'This edition’s table of contents has not been transcribed yet. Use the reading guide or the page strip to move around.'
-              : 'This book has no table of contents.'}
+              ? t.contents.noContentsTranscribed
+              : t.contents.noContentsAtAll}
           </p>
         )}
       </div>
@@ -1834,11 +1839,11 @@ function PanelContent({
   }
   if (panel === 'views') {
     const PANES: Array<[keyof ReaderState['views'], string, string]> = [
-      ['scan', 'Original scan', 'The page as it was photographed'],
-      ['ocr', `${r.book.language || 'Original'} transcription`, 'The printed text, read by machine'],
-      ['en', 'English translation', 'Translated with AI assistance'],
+      ['scan', t.panes.originalScan, t.panes.originalScanHint],
+      ['ocr', t.panes.transcriptionOf(r.book.language || t.panes.originalFallback), t.panes.transcriptionHint],
+      ['en', t.panes.englishTranslation, t.panes.englishTranslationHint],
       ...(hasNonLatinScript(r.book.language) && r.currentPage.ocr?.data
-        ? [['translit', 'Romanised transcription', 'The same words in Latin letters'] as [keyof ReaderState['views'], string, string]]
+        ? [['translit', t.panes.romanisedTranscription, t.panes.romanisedTranscriptionHint] as [keyof ReaderState['views'], string, string]]
         : []),
     ];
     const shown = PANES.filter(([k]) => r.views[k]).length;
@@ -1857,14 +1862,14 @@ function PanelContent({
               <span className="min-w-0">
                 <span className="block font-sans text-[14px]" style={{ color: 'var(--text-primary)' }}>{label}</span>
                 <span className="block font-sans text-[11.5px]" style={{ color: 'var(--text-faint)' }}>
-                  {locked ? 'The last pane showing' : hint}
+                  {locked ? t.panes.lastPaneShowing : hint}
                 </span>
               </span>
               <span className={locked ? 'opacity-40' : undefined}>
                 <SettingsSwitch
                   on={on}
                   onToggle={() => { if (!locked) r.toggleView(key); }}
-                  label={`Show the ${label.toLowerCase()}`}
+                  label={t.panes.showPane(label)}
                 />
               </span>
             </div>
@@ -1942,7 +1947,7 @@ function PanelContent({
           style={PANEL_BTN_STYLE}
         >
           {copied ? <Check size={13} /> : null}
-          {copied ? 'Copied' : 'Copy citation'}
+          {copied ? t.cite.copied : t.cite.copyCitation}
         </button>
       </div>
     );
@@ -1958,6 +1963,7 @@ function PanelContent({
 export default function Reader2C({ initialBook, initialPage, initialPageList }: Reader2CProps) {
   const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: true, translit: false });
   const browserTranslated = useBrowserTranslation();
+  const t = getReaderStrings(useLocale());
 
   const [leftPanel, setLeftPanel] = useState<LeftPanel>(null);
   const togglePanel = useCallback((p: Exclude<LeftPanel, null>) => {
@@ -2333,8 +2339,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     ? `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`
     : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
 
-  const leftPanelTitle = leftPanel ? LEFT_PANEL_TITLES[leftPanel] : '';
-  const leftPanelBlurb = leftPanel ? LEFT_PANEL_BLURBS[leftPanel] : undefined;
+  const leftPanelTitle = leftPanel ? t.panels.titles[leftPanel] : '';
+  const leftPanelBlurb = leftPanel ? panelBlurb(t, leftPanel) : undefined;
   // One width for every drawer — the widest any of them needed. A rail whose
   // panel jumps between two widths as you move down it reads as a wobble.
   const leftPanelWidth = 340;
@@ -2508,7 +2514,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             href={embedHref(`/book/${r.bookPath}`)}
             className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
             style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
-            title="Back to the book"
+            title={t.toolbar.backToTheBook}
           >
             <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
             <span className="min-w-0 flex-1 flex items-baseline gap-2.5">
@@ -2534,7 +2540,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
           <div className="flex items-stretch ml-2">
             <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
-              <button type="button" aria-label="Previous page" onClick={r.goPrev}
+              <button type="button" aria-label={t.toolbar.previousPage} onClick={r.goPrev}
                 className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
                 style={{ color: onInk(0.72) }}>
                 <ChevronLeft size={15} />
@@ -2556,20 +2562,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   className="w-14 text-center font-sans text-[12.5px] bg-transparent outline-none"
                   style={{ color: '#fdfcf9' }}
                   inputMode="numeric"
-                  aria-label="Jump to page"
+                  aria-label={t.toolbar.jumpToPage}
                 />
               ) : (
                 <button
                   type="button"
                   onClick={() => setJumpOpen(true)}
                   className="px-2 font-sans text-[12.5px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.08)]"
-                  title="Jump to page"
+                  title={t.toolbar.jumpToPage}
                   style={{ color: onInk(0.9) }}
                 >
                   p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
                 </button>
               )}
-              <button type="button" aria-label="Next page" onClick={r.goNext}
+              <button type="button" aria-label={t.toolbar.nextPage} onClick={r.goNext}
                 className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
                 style={{ color: onInk(0.72) }}>
                 <ChevronRight size={15} />
@@ -2585,27 +2591,27 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <nav
           className="row-span-2 flex flex-col items-center pt-3 gap-1"
           style={{ background: INK, borderRight: `1px solid ${onInk(0.12)}` }}
-          aria-label="Reader tools"
+          aria-label={t.toolbar.readerToolsAria}
         >
           {/* Three groups, in the order a reader meets them: find your way
               through the book, ask something of it, then do something with the
               page you are on. Settings is last because you set it once. */}
-          <RailButton label="Contents" active={leftPanel === 'contents'} onClick={() => togglePanel('contents')} icon={<List size={17} />} />
-          <RailButton label="Guide" active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
-          <RailButton label="Search" active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
-          <RailButton label="Librarian" active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
+          <RailButton label={t.toolbar.contents} active={leftPanel === 'contents'} onClick={() => togglePanel('contents')} icon={<List size={17} />} />
+          <RailButton label={t.toolbar.guide} active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
+          <RailButton label={t.toolbar.search} active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
+          <RailButton label={t.toolbar.librarian} active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
 
           <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
 
-          <RailButton label="Save" active={leftPanel === 'save'} onClick={() => togglePanel('save')} icon={<Heart size={17} />} />
-          <RailButton label="Share" active={leftPanel === 'share'} onClick={() => togglePanel('share')} icon={<Share2 size={17} />} />
-          <RailButton label="Cite" active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
-          <RailButton label="Download" active={leftPanel === 'downloads'} onClick={() => togglePanel('downloads')} icon={<Download size={17} />} />
-          <RailButton label="Info" active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
+          <RailButton label={t.toolbar.save} active={leftPanel === 'save'} onClick={() => togglePanel('save')} icon={<Heart size={17} />} />
+          <RailButton label={t.toolbar.share} active={leftPanel === 'share'} onClick={() => togglePanel('share')} icon={<Share2 size={17} />} />
+          <RailButton label={t.toolbar.cite} active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
+          <RailButton label={t.toolbar.download} active={leftPanel === 'downloads'} onClick={() => togglePanel('downloads')} icon={<Download size={17} />} />
+          <RailButton label={t.toolbar.info} active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
 
           <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
 
-          <RailButton label="Settings" active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
+          <RailButton label={t.toolbar.settings} active={leftPanel === 'settings'} onClick={() => togglePanel('settings')} icon={AaGlyph} />
           {/* Editing is editor-and-above only, so the affordance is gated the
               same way the current reader gates its Read/Edit toggle. */}
           <AuthCheck role="inner_circle">
@@ -2623,7 +2629,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               type="button"
               onClick={toggleStrip}
               aria-pressed={stripVisible}
-              title="Pages"
+              title={t.toolbar.pages}
               className="w-12 h-[54px] flex flex-col items-center justify-center gap-1 transition-colors"
               style={{
                 color: stripVisible ? '#fdfcf9' : onInk(0.62),
@@ -2631,7 +2637,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               }}
             >
               <GalleryHorizontal size={17} />
-              <span className="font-sans text-[8.5px] tracking-[0.06em]">Pages</span>
+              <span className="font-sans text-[8.5px] tracking-[0.06em]">{t.toolbar.pages}</span>
             </button>
           </div>
         </nav>
@@ -2667,7 +2673,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   />
                 }
               >
-                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Original scan</CapsLabel>
+                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.originalScan}</CapsLabel>
               </PaneHeader>
               <div className={`flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
                 <ScanViewer
@@ -2699,7 +2705,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               ) : undefined}>
                 <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
-                  {paired ? 'Greek · Berthelot' : `${r.book.language || 'Original'} · OCR`}
+                  {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
                 </CapsLabel>
                 {paired && <PairedBadgeRow paired={paired} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
@@ -2737,10 +2743,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
-                  <CopyPlainButton text={translit} label="Copy the transliteration" />
+                  <CopyPlainButton text={translit} label={t.panes.copyTransliteration} />
                 </div>
               }>
-                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Romanised</CapsLabel>
+                <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.romanisedHeader}</CapsLabel>
                 <AiChip short />
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -2823,7 +2829,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div className="shrink-0 px-4 pt-3.5 pb-3 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
                 <div className="flex items-start justify-between gap-3">
                   <CapsLabel style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
-                  <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
+                  <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
                     className="w-7 h-7 -mt-1.5 -mr-1.5 shrink-0 flex items-center justify-center transition-colors text-[var(--text-faint)] hover:text-[var(--text-primary)]"><X size={15} /></button>
                 </div>
                 {leftPanelBlurb && (
@@ -2889,7 +2895,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <a
               href={embedHref(`/book/${r.bookPath}`)}
               className="flex-1 min-w-0 no-underline"
-              title="Back to the book page"
+              title={t.toolbar.backToTheBookPage}
             >
               {/* Title only: the author lives on the book page, and the phone
                   bar has no room to stack two lines */}
@@ -2903,7 +2909,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <button
               type="button"
               onClick={() => togglePanel('menu')}
-              aria-label="Menu"
+              aria-label={t.toolbar.menu}
               className="w-9 h-9 shrink-0 flex items-center justify-center transition-colors"
               style={{ color: onInk(0.85) }}
             >
@@ -2933,7 +2939,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {r.views.scan && (
             <section style={{ background: SURFACE.scanBed }}>
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
-                <CapsLabel style={{ color: 'var(--text-muted)' }}>Original scan</CapsLabel>
+                <CapsLabel style={{ color: 'var(--text-muted)' }}>{t.panes.originalScan}</CapsLabel>
                 <ScanControls
                   zoom={scanZoom}
                   onZoomStep={zoomStep}
@@ -2960,7 +2966,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section data-reader-section="ocr" className="relative border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>
-                  {paired ? 'Greek · Berthelot' : `${r.book.language || 'Original'} · OCR`}
+                  {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
                 </CapsLabel>
                 {paired && <PairedBadgeRow paired={paired} />}
                 <div className="flex items-center gap-1">
@@ -2983,10 +2989,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section data-reader-section="transliteration" className="relative border-t" style={{ background: SURFACE.popover, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <div className="flex items-center gap-2">
-                  <CapsLabel style={{ color: 'var(--text-muted)' }}>Romanised</CapsLabel>
+                  <CapsLabel style={{ color: 'var(--text-muted)' }}>{t.panes.romanisedHeader}</CapsLabel>
                   <AiChip short />
                 </div>
-                <CopyPlainButton text={translit} label="Copy the transliteration" />
+                <CopyPlainButton text={translit} label={t.panes.copyTransliteration} />
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
                 <TranslitBody text={translit} loading={translitLoading} error={translitError}
@@ -3047,11 +3053,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               type="button"
               onClick={r.goPrev}
               disabled={!prevPage}
-              aria-label="Previous page"
+              aria-label={t.toolbar.previousPage}
               className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"
               style={{ color: 'var(--text-secondary)' }}
             >
-              <ChevronLeft size={16} /> Previous
+              <ChevronLeft size={16} /> {t.toolbar.previous}
             </button>
             {r.currentPage?.page_number != null && (
               <span className="font-sans text-[12.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
@@ -3062,11 +3068,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               type="button"
               onClick={r.goNext}
               disabled={!nextPage}
-              aria-label="Next page"
+              aria-label={t.toolbar.nextPage}
               className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"
               style={{ color: 'var(--accent-rust)' }}
             >
-              Next <ChevronRight size={16} />
+              {t.toolbar.next} <ChevronRight size={16} />
             </button>
           </div>
         </main>
@@ -3095,10 +3101,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   is in the row — it used to shift down whenever a back button
                   appeared above it. */}
               <div className="flex items-center gap-1.5 min-h-[28px]">
-                {MORE_TOOLS.some(([k]) => k === leftPanel) && (
+                {MORE_TOOLS.some(k => k === leftPanel) && (
                   <button
                     type="button"
-                    aria-label="Back to More"
+                    aria-label={t.panels.backToMore}
                     onClick={() => setLeftPanel('more')}
                     className="w-7 h-7 -ml-1.5 shrink-0 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
                     style={{ color: 'var(--text-muted)' }}
@@ -3107,7 +3113,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </button>
                 )}
                 <CapsLabel className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
-                <button type="button" aria-label={`Close ${leftPanelTitle.toLowerCase()}`} onClick={() => setLeftPanel(null)}
+                <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
                   className="w-8 h-8 -mr-2 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
               </div>
               {leftPanelBlurb && (
