@@ -4,6 +4,7 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import Reader2C from '@/components/reader-v2/Reader2C';
+import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
@@ -153,17 +154,34 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      {/* Reader redesign (branch worktree-reader-redesign-2a-2c): the real
-          reader route renders the new reader, so browsing the preview
-          deployment behaves exactly like the site — every page you reach by
-          normal navigation is the redesign. Swap this back to
-          PageEditorClient to A/B against the old reader. Everything around it
-          (JSON-LD, embed reporting, the crawler nav below) is untouched. */}
-      <Reader2C
-        initialBook={book}
-        initialPage={markedPage}
-        initialPageList={serializedNavPages}
-      />
+      {/* The redesign ships on sourcelibrary.org. Partner reading rooms —
+          BPH, EFM, every /embed/** iframe and tenant subdomain — stay on the
+          old reader for now.
+          
+          Not caution for its own sake: the new reader's Cite and Share build
+          absolute URLs against sourcelibrary.org rather than the host page, so
+          a scholar citing a page inside a partner's site would be handed a URL
+          pointing away from it. That is the same class of mistake as the site
+          menu offering Explore and Works on a tenant host. Partners embed us
+          on their own pages and did not ask for a redesign this week; they can
+          have it when the embed-aware URL building is done and verified on a
+          real tenant.
+          
+          Everything around this (JSON-LD, embed reporting, the crawler nav
+          below) is shared by both and untouched. */}
+      {ctx?.isEmbedded ? (
+        <PageEditorClient
+          initialBook={book}
+          initialPage={markedPage}
+          initialPageList={serializedNavPages}
+        />
+      ) : (
+        <Reader2C
+          initialBook={book}
+          initialPage={markedPage}
+          initialPageList={serializedNavPages}
+        />
+      )}
       {musicTranscriptions.length > 0 && (
         <HymnPlayer transcriptions={musicTranscriptions} />
       )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, useLocale } from '@/lib/i18n';
@@ -951,7 +951,7 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
   const overrun = elapsed > estimateMs;
 
   return (
-    <div className="flex items-start gap-3" role="status" aria-live="polite">
+    <div className="flex items-start gap-3">
       <svg width="32" height="32" viewBox="0 0 32 32" className="shrink-0 -rotate-90" aria-hidden="true">
         <circle cx="16" cy="16" r={R} fill="none" strokeWidth="2.5" style={{ stroke: 'var(--border-light)' }} />
         <circle
@@ -965,10 +965,20 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
         />
       </svg>
       <span className="min-w-0">
-        <span className="block font-sans text-[13px]" style={{ color: 'var(--text-secondary)' }}>
+        {/* Only the label is live. The counter beside it changes five times a
+            second for up to two minutes, and the whole block used to sit
+            inside one polite region — about six hundred interruptions per
+            page, which makes a screen reader unusable for exactly as long as
+            the reader is waiting. The seconds are for eyes; the announcement
+            is "Romanising", once. */}
+        <span className="block font-sans text-[13px]" style={{ color: 'var(--text-secondary)' }} role="status" aria-live="polite">
           {t.romanising}
         </span>
-        <span className="block font-sans text-[11.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
+        <span
+          className="block font-sans text-[11.5px] tabular-nums"
+          style={{ color: 'var(--text-faint)' }}
+          aria-hidden="true"
+        >
           {Math.round(elapsed / 1000)}s
           {' · '}
           {overrun
@@ -1872,6 +1882,10 @@ function Filmstrip({
     setAspect(prev => (Math.abs(prev - a) > 0.02 ? a : prev));
   }, []);
   const thumbW = Math.round(thumbH * aspect);
+  const thumbs = useMemo(
+    () => pageList.map(p => ({ p, thumb: getPageThumbUrl(p as unknown as Record<string, unknown>) })),
+    [pageList],
+  );
   return (
     <div
       className="flex items-start gap-1 h-full pt-2 rv2-strip-in"
@@ -1887,9 +1901,13 @@ function Filmstrip({
         className="flex-1 flex items-start gap-2.5 overflow-x-auto px-2 py-1"
         style={{ overscrollBehavior: 'contain', scrollbarWidth: 'none' }}
       >
-        {pageList.map((p) => {
+        {/* Thumbnail URLs are resolved once per page list rather than on
+            every render. Reader2C re-renders on every panel toggle, every
+            settings change and every scroll that flips the bar, and this map
+            ran getPageThumbUrl for all 4,198 pages of the largest book each
+            time. */}
+        {thumbs.map(({ p, thumb }) => {
           const isCurrent = p.id === currentPageId;
-          const thumb = getPageThumbUrl(p as unknown as Record<string, unknown>);
           return (
             <button
               key={p.id}
@@ -3109,6 +3127,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ height: stripVisible ? 92 : 0, visibility: stripVisible ? 'visible' : 'hidden' }}
         >
           <div className="h-[92px]">
+            {/* isDesktop, not CSS. Both layouts live in the DOM with one
+                hidden by `hidden lg:grid` / `lg:hidden`, and display:none
+                hides a subtree without unmounting it — so the strip rendered
+                EVERY page of the book twice, thumbnail URLs and all, and
+                re-rendered both copies on every panel toggle and every scroll
+                that flipped the bar. 463 public books exceed 1,000 pages and
+                the largest is 4,198, which is ~8,400 buttons and images for
+                one reader. */}
+            {isDesktop && (
             <Filmstrip
               pageList={r.pageList}
               currentPageId={r.currentPageId}
@@ -3118,6 +3145,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               onNext={r.goNext}
               onGoTo={r.goToPage}
             />
+            )}
           </div>
         </div>
       </div>
@@ -3407,15 +3435,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           }}
         >
           <div className="h-[96px]">
-            <Filmstrip
-              pageList={r.pageList}
-              currentPageId={r.currentPageId}
-              compact
-              innerRef={stripMobileRef}
-              onPrev={r.goPrev}
-              onNext={r.goNext}
-              onGoTo={r.goToPage}
-            />
+            {/* See the desktop strip: one layout at a time, not two. */}
+            {!isDesktop && (
+              <Filmstrip
+                pageList={r.pageList}
+                currentPageId={r.currentPageId}
+                compact
+                innerRef={stripMobileRef}
+                onPrev={r.goPrev}
+                onNext={r.goNext}
+                onGoTo={r.goToPage}
+              />
+            )}
           </div>
         </div>
 
