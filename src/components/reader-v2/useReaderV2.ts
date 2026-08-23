@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Book, Page } from '@/lib/types';
 import { pages as pagesApi, readingHistory } from '@/lib/api-client';
 import { useEmbedHref } from '@/lib/EmbedContext';
+import { getPageDisplayUrl } from '@/lib/utils';
 
 // Shared state model for the v2 reader design previews (2a "Quiet Desk" and
 // 2c "Study Desk"). Owns: current page + cache + prefetch, page navigation
@@ -179,7 +180,7 @@ export function useReaderV2(
    * turn was citing the wrong thing. Keep whatever suffix the reader was
    * actually mounted under.
    */
-  const pageUrl = useCallback((pageId: string) => {
+  const pageUrl = useCallback((pageId: string, params?: Record<string, string>) => {
     const here = typeof window !== 'undefined' ? window.location.pathname : '';
     const suffix = /\/v2[ac]\/?$/.test(here) ? `/v${variant}` : '';
     // The locale prefix is part of the route, not decoration. Dropping it
@@ -190,7 +191,12 @@ export function useReaderV2(
     // Query carries the citation pin (?v=) and the search mark (?highlight=).
     // Rebuilding a bare path dropped both on the first turn, so a pinned
     // citation quietly became live text with the banner gone.
-    const query = typeof window !== 'undefined' ? window.location.search : '';
+    const sp = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    // An explicit param replaces what was there; ?highlight= from a search
+    // result should not stack up with the last one.
+    if (params) for (const [k, v] of Object.entries(params)) sp.set(k, v);
+    const qs = sp.toString();
+    const query = qs ? `?${qs}` : '';
     // Embedded readers live under /embed/<tenant>/…; writing a bare /book/…
     // URL there navigates the iframe out of the reading room it belongs to.
     // useEmbedHref is a no-op off an embed route, so this is safe everywhere.
@@ -198,10 +204,10 @@ export function useReaderV2(
   }, [bookPath, variant, embedHref]);
 
   // ── navigation ─────────────────────────────────────────────────────────
-  const goToPage = useCallback((pageId: string) => {
+  const goToPage = useCallback((pageId: string, params?: Record<string, string>) => {
     if (!pageId || pageId === currentPageId) return;
     setCurrentPageId(pageId);
-    window.history.pushState(null, '', pageUrl(pageId));
+    window.history.pushState(null, '', pageUrl(pageId, params));
     // Embedded readers mirror navigation to the host frame; without this the
     // partner page's own URL freezes on whatever page the iframe opened at.
     if (window.self !== window.top) {
@@ -248,7 +254,17 @@ export function useReaderV2(
   const viewsKey = `sl-reader-v2-views-${variant}`;
   const [views, setViews] = useState<ViewState>(defaultViews);
   useEffect(() => {
-    setViews(loadStored(viewsKey, defaultViews));
+    const stored = loadStored(viewsKey, defaultViews);
+    // Views are stored globally, not per book, so a reader who last turned off
+    // OCR and translation arrives at an image-less book (6,743 pages, the CDLI
+    // tablets among them) with scan on, nothing to show in it, and a blank
+    // reader. Fall back to whatever this page actually has.
+    const hasScan = !!getPageDisplayUrl(initialPage as unknown as Record<string, unknown>);
+    if (!hasScan && !stored.ocr && !stored.en) {
+      setViews({ ...stored, scan: false, ocr: true, en: true });
+      return;
+    }
+    setViews(stored);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const toggleView = useCallback((key: keyof ViewState) => {

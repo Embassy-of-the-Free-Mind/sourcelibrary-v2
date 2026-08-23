@@ -110,6 +110,7 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
     modernizedText: page.modernized?.data,
     bookPagesTranslated: book.pages_translated,
     bookPagesCount: book.pages_count,
+    bookLanguage: book.language,
   });
 
   const requestTranslation = async () => {

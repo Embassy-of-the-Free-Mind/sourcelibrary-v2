@@ -5,6 +5,7 @@ import NotesRenderer from '@/components/reader/NotesRenderer';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
+import { getPageImageUrl } from '@/lib/page-image-url';
 import type { Book, Page } from '@/lib/types';
 import type { ReaderSettings } from './useReaderV2';
 import { PaneEmptyState } from './PaneEmptyState';
@@ -157,8 +158,12 @@ export interface ScanUrls {
 export function resolveScanUrls(page: Page): ScanUrls {
   const display = getPageDisplayUrl(page as unknown as Record<string, unknown>);
   const thumb = getPageThumbUrl(page as unknown as Record<string, unknown>);
-  const archived = (page as unknown as { archived_photo?: string }).archived_photo;
-  const native = archived && !archived.startsWith('failed:') ? archived : display;
+  // Not raw archived_photo. That is the unprocessed original, so on a book
+  // whose pages were split from spreads it is the WHOLE SPREAD: the scan
+  // silently swapped to the neighbouring page's image past 1.5x zoom, in the
+  // lightbox and in the download. getPageImageUrl('hires') applies the crop
+  // and the bounded proxy the rest of the site uses.
+  const native = getPageImageUrl(page as unknown as Record<string, unknown>, 'hires') || display;
   return { display, thumb, native };
 }
 

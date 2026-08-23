@@ -1716,7 +1716,7 @@ function BookSearchPanel({
   bookId, onGoTo,
 }: {
   bookId: string;
-  onGoTo: (pageId: string) => void;
+  onGoTo: (pageId: string, query?: string) => void;
 }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
@@ -1806,7 +1806,7 @@ function BookSearchPanel({
           <button
             key={r.pageId}
             type="button"
-            onClick={() => onGoTo(r.pageId)}
+            onClick={() => onGoTo(r.pageId, query.trim())}
             className="group w-full text-left px-4 py-3 border-b transition-colors hover:bg-[var(--bg-white)]"
             style={{ borderColor: 'var(--border-light)' }}
           >
@@ -2064,7 +2064,15 @@ function PanelContent({
     return <DownloadsPanel page={r.currentPage} book={r.book} />;
   }
   if (panel === 'search') {
-    return <BookSearchPanel bookId={r.book.id} onGoTo={(pid) => { onClose(); r.goToPage(pid); }} />;
+    // ?highlight= is what marks the term and scrolls to it on arrival. Without
+    // it a search result dropped you on the right page with nothing indicating
+    // why, which is most of what an in-book search is for.
+    return (
+      <BookSearchPanel
+        bookId={r.book.id}
+        onGoTo={(pid, q) => { onClose(); r.goToPage(pid, q ? { highlight: q } : undefined); }}
+      />
+    );
   }
   if (panel === 'guide') {
     return (
@@ -2654,7 +2662,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   return (
     <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)} className="flex flex-col h-[100dvh]">
-      {siteMenuOpen && <ReaderSiteMenu onClose={() => setSiteMenuOpen(false)} />}
+      {/* Never in an embed or on a tenant subdomain. A partner reading room
+          exists to hold one collection; a menu offering Explore, Works and
+          Support sends the reader to URLs the tenant host 404s, and out of the
+          room entirely. The old reader had no site chrome here at all. */}
+      {siteMenuOpen && !isEmbedded && <ReaderSiteMenu onClose={() => setSiteMenuOpen(false)} />}
       <Suspense fallback={null}>
         <SearchHighlighter />
       </Suspense>
@@ -2794,6 +2806,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {/* One menu, not two. The avatar used to open a second, smaller
               menu here while the phone had the hamburger, so the account sat
               somewhere different depending on the width of the window. */}
+          {!isEmbedded && (
           <button
             type="button"
             onClick={() => setSiteMenuOpen(true)}
@@ -2803,6 +2816,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           >
             <Menu size={19} />
           </button>
+          )}
         </header>
 
         {/* Tool rail */}
@@ -3138,15 +3152,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             {/* One button rather than a bare avatar: the account, Support and
                 Feedback all live behind it, which is where a phone expects
                 them and where they stop competing with the reading controls. */}
-            <button
-              type="button"
-              onClick={() => setSiteMenuOpen(true)}
-              aria-label={t.toolbar.menu}
-              className="w-11 h-11 -mr-1 shrink-0 flex items-center justify-center transition-colors"
-              style={{ color: onInk(0.85) }}
-            >
-              <Menu size={19} />
-            </button>
+            {!isEmbedded && (
+              <button
+                type="button"
+                onClick={() => setSiteMenuOpen(true)}
+                aria-label={t.toolbar.menu}
+                className="w-11 h-11 -mr-1 shrink-0 flex items-center justify-center transition-colors"
+                style={{ color: onInk(0.85) }}
+              >
+                <Menu size={19} />
+              </button>
+            )}
           </div>
         </header>
 
