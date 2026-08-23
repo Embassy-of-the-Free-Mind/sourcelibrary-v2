@@ -63,15 +63,19 @@ await db.collection('collections').updateOne(
   { upsert: true },
 );
 
+// updated_at must move with the tag. The Supabase books_catalog sync is
+// incremental on updated_at (scripts/workers/supabase-sync.mjs getLastTimestamp),
+// so a bare $addToSet leaves the new collection invisible to /catalog and the
+// collections API — the books stay behind the watermark forever.
 const tagged = await db.collection('books').updateMany(
   { id: { $in: BOOK_IDS } },
-  { $addToSet: { collections: SLUG } },
+  { $addToSet: { collections: SLUG }, $currentDate: { updated_at: true } },
 );
 
 // Panckow is a herbal that the paused classifier had filed under astrology.
 // Two writes: Mongo rejects $pull and $addToSet on the same path in one update.
 await db.collection('books').updateOne({ id: '6a42724628e9db2e39c131da' }, { $addToSet: { collections: 'mycology' } });
-const untagged = await db.collection('books').updateOne({ id: '6a42724628e9db2e39c131da' }, { $pull: { collections: 'astrology' } });
+const untagged = await db.collection('books').updateOne({ id: '6a42724628e9db2e39c131da' }, { $pull: { collections: 'astrology' }, $currentDate: { updated_at: true } });
 
 const count = await db.collection('books').countDocuments({ collections: SLUG });
 await db.collection('collections').updateOne({ slug: SLUG }, { $set: { book_count: count } });
