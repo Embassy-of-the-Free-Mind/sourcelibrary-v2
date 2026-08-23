@@ -1080,11 +1080,26 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
     .reveal-in {
       animation: reveal-in-kf linear both;
       animation-timeline: view();
-      animation-range: entry 2% entry 36%;
+      /* A short fixed distance, not a percentage of the element.
+      
+         `entry 36%` is 36% of the way through the element ENTERING, measured
+         against the element's OWN height — so on a section taller than the
+         viewport it finished long after the section had taken over the
+         screen. Measured on the book page: 237px of a section sitting at 0.74
+         opacity, and at its most transparent 0.22 with 57px showing. That is
+         not a reveal, it is a half-drawn page.
+         
+         70px is the same short distance for every section, so the fade is
+         over while the section is still a sliver at the bottom edge. Same
+         page after: at worst 50px at 0.79, and the most transparent moment
+         shows 17px. You never arrive at something that is still fading. */
+      animation-range: entry 0 entry 70px;
     }
   }
 }
 @keyframes reveal-in-kf {
-  from { opacity: 0; transform: translateY(24px); }
+  /* 14px, not 24: the rise now happens over 70px of scroll rather than a
+     third of the section, and a long throw in a short range reads as a jump. */
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
