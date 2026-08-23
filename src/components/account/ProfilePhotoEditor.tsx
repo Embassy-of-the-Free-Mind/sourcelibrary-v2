@@ -50,6 +50,8 @@ interface ProfilePhotoEditorProps {
   initialImage: string | null;
   /** Avatar display size — 'md' (56px) for compact rows, 'lg' (96px) for the account header. */
   size?: 'md' | 'lg';
+  /** 'dark' renders the trigger controls for a dark hero background. The modal stays light. */
+  theme?: 'light' | 'dark';
 }
 
 const AVATAR_SIZES = {
@@ -57,7 +59,8 @@ const AVATAR_SIZES = {
   lg: { circle: 'w-24 h-24', initial: 'text-3xl', camera: 'w-6 h-6' },
 } as const;
 
-export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: ProfilePhotoEditorProps) {
+export default function ProfilePhotoEditor({ name, initialImage, size = 'md', theme = 'light' }: ProfilePhotoEditorProps) {
+  const dark = theme === 'dark';
   const router = useRouter();
   const { update } = useSession();
   const identity = useIdentity();
@@ -339,7 +342,9 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
             <div
               data-avatar="true"
               className={`${AVATAR_SIZES[size].circle} rounded-full flex items-center justify-center ${AVATAR_SIZES[size].initial} font-serif`}
-              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+              style={dark
+                ? { background: 'rgba(245,240,232,0.12)', color: '#e7e0d4' }
+                : { background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
             >
               {name?.charAt(0)?.toUpperCase() || '?'}
             </div>
@@ -356,7 +361,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
           <button
             onClick={() => { setIsOpen(true); setTab(current ? 'upload' : 'library'); }}
             className="text-left hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--text-secondary)' }}
+            style={{ color: dark ? '#d6cfc2' : 'var(--text-secondary)' }}
           >
             {current ? 'Change photo' : 'Add a profile photo'}
           </button>
@@ -365,7 +370,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md' }: 
               onClick={removePhoto}
               disabled={saving}
               className="text-left hover:opacity-70 transition-opacity disabled:opacity-50"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: dark ? '#8f887c' : 'var(--text-muted)' }}
             >
               Remove
             </button>
