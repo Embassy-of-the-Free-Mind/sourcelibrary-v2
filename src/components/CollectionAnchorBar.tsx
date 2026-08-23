@@ -11,7 +11,7 @@ interface Section { id: string; label: string }
  * to a "Jump to ▾" dropdown on tablet/mobile. Share and Embed open popovers
  * (copy-link + targets / section selector + iframe snippet). Existing tokens only.
  */
-export default function MycoAnchorBar({ sections, slug }: { sections: Section[]; slug: string }) {
+export default function CollectionAnchorBar({ sections, slug }: { sections: Section[]; slug: string }) {
   const [open, setOpen] = useState<null | 'jump' | 'share' | 'embed'>(null);
   const [copied, setCopied] = useState(false);
   const [embedTarget, setEmbedTarget] = useState('collection');

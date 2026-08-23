@@ -13,63 +13,73 @@ import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-uti
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { tenantBookUrl } from '@/lib/slugify';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
-import MycoSlider, { type MiniBook } from './_components/MycoSlider';
-import MycoMasonry from './_components/MycoMasonry';
+import BookSlider, { type MiniBook } from '@/components/BookSlider';
+import GalleryMasonry from '@/components/GalleryMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
-import QuoteBlock from './_components/QuoteBlock';
-import { getImageFraming } from '@/lib/image-framing';
 import LibrarianSearch from '@/components/LibrarianSearch';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 /*
- * Mycology collection page — REDESIGN. Dedicated route so the shared
- * collections/[id] template (every other collection) stays untouched. Built per
- * .claude/docs/collection-page-redesign-spec.md + the supplied mock, strictly on
- * existing Source Library tokens/components (no new design primitives).
+ * Slime Moulds collection page. Same skeleton as collections/mycology (built per
+ * .claude/docs/collection-page-redesign-spec.md), pointed at the slime-moulds
+ * slug. No new design primitives — every value resolves to an existing token.
+ *
+ * Two sections are deliberately absent until the pipeline has produced their
+ * material: the quote band (needs real translated passages — nothing is written
+ * here that the books do not say) and the intro plate (needs an extracted
+ * illustration). The gallery and first-translations sections already render
+ * conditionally and will fill in on their own.
  */
 
 export const revalidate = 86400;
 export const dynamic = 'force-dynamic';
 
-const SLUG = 'mycology';
+const SLUG = 'slime-moulds';
 // Primary action = dark button (existing --bg-dark token), never the violet btn-primary.
 const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity';
 const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
-const OG_TITLE = 'Fungi & Mycology — Source Library';
-const OG_DESC = 'Fungi built the soil that built our world. These are the books that first studied them — original source texts and first English translations on Source Library.';
+const OG_TITLE = 'Slime Moulds — Source Library';
+const OG_DESC = 'Neither plant, animal, nor fungus. The books that spent two centuries arguing about what the slime moulds are, from Panckow in 1654 to the first monograph of 1875.';
+// The book pinned as the featured work. Rendered only when it is actually in
+// the collection, so the authored copy below can never sit under another title.
+const FEATURED_SLUG_PREFIX = 'sluzowce-mycetozoa-monografia';
 
 export const metadata: Metadata = {
   title: OG_TITLE,
   description: OG_DESC,
-  alternates: { canonical: '/collections/mycology' },
+  alternates: { canonical: '/collections/slime-moulds' },
   openGraph: {
     title: OG_TITLE,
     description: OG_DESC,
-    url: '/collections/mycology',
+    url: '/collections/slime-moulds',
     siteName: 'Source Library',
     type: 'website',
-    images: [{ url: '/collections/mycology/og.jpg', width: 1200, height: 800, alt: OG_TITLE }],
+    // No hand-made og.jpg for this collection: reuse the live hero collage, which
+    // is built from the collection's own plates and stays current on its own.
+    images: [{ url: '/api/collections/slime-moulds/hero-collage', width: 1400, height: 900, alt: OG_TITLE }],
   },
   twitter: {
     card: 'summary_large_image',
     title: OG_TITLE,
     description: OG_DESC,
-    images: ['/collections/mycology/og.jpg'],
+    images: ['/api/collections/slime-moulds/hero-collage'],
   },
 };
 
-const SECTIONS = [
-  { id: 'introduction', label: 'Introduction' },
-  { id: 'translations', label: 'First translations' },
-  { id: 'featured', label: 'Featured' },
-  { id: 'gallery', label: 'Gallery' },
-  { id: 'librarian', label: 'Librarian' },
-  { id: 'works', label: 'Works' },
-  { id: 'involved', label: 'Get involved' },
-];
+// Anchors are built from what actually renders — several sections only appear
+// once the pipeline has finished with these books.
+const SECTION_LABELS: Record<string, string> = {
+  introduction: 'Introduction',
+  translations: 'First translations',
+  featured: 'Featured',
+  gallery: 'Gallery',
+  librarian: 'Librarian',
+  works: 'Works',
+  involved: 'Get involved',
+};
 
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
@@ -106,7 +116,7 @@ function thumbUrl(img: GalleryImg): string | undefined {
   return full ? full.replace(/(\.[a-z0-9]+)(\?.*)?$/i, '-thumb$1$2') : undefined;
 }
 
-async function getMycologyData() {
+async function getSlimeMouldData() {
   const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
   if (!db) throw new Error('DB connection timeout');
 
@@ -134,7 +144,10 @@ async function getMycologyData() {
   const firstTranslations = firstRaw.map(toMini);
   const sourceWorks = sourceRaw.map(toMini);
   const gallery = JSON.parse(JSON.stringify(galleryRaw)) as GalleryImg[];
-  const featured = [...firstTranslations].sort((a, b) => ((b.pages_translated as number) ?? 0) - ((a.pages_translated as number) ?? 0))[0] || null;
+  // Rostafiński is the centrepiece of this collection, so it is pinned rather
+  // than picked by translated-page count. Null until it is visible.
+  const featured = [...firstTranslations, ...sourceWorks]
+    .find((b) => String(b.slug || '').startsWith(FEATURED_SLUG_PREFIX)) || null;
   const [featuredPages, parentDoc] = await Promise.all([
     featured ? getFeaturedPagePreviews(db, featured.id, getBookThumbnailUrl(featured)) : Promise.resolve([] as PagePreview[]),
     collection.parent ? withTimeout(db.collection('collections').findOne({ slug: collection.parent as string }, { projection: { _id: 0, slug: 1, name: 1 } }), 5000, null) : Promise.resolve(null),
@@ -227,21 +240,16 @@ async function getFeaturedPagePreviews(
   return out;
 }
 
-export default async function MycologyCollectionPage() {
+export default async function SlimeMouldsCollectionPage() {
   let data;
-  try { data = await getMycologyData(); } catch (err) {
-    console.error('[Mycology page] data fetch failed:', err instanceof Error ? err.message : err);
+  try { data = await getSlimeMouldData(); } catch (err) {
+    console.error('[Slime moulds page] data fetch failed:', err instanceof Error ? err.message : err);
     throw err;
   }
   if (!data) notFound();
 
   const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
-  const quoteFraming = await getImageFraming('mycology-quote-bg');
-
-  // Quote background: the Battarra title-page engraving (lynx, owl, mushrooms),
-  // cropped to the illustration with the Greek-motto banner removed.
-  const quoteBg = '/collections/mycology/quote-bg.webp';
   const galleryTotal = gallery.length;
   const galleryPlates = gallery
     .filter((g) => imgUrl(g))
@@ -258,7 +266,20 @@ export default async function MycologyCollectionPage() {
         label: g.museum_description || g.description || g.book_title,
       };
     });
+  // Best available plate, used as the introduction figure. Caption is the source
+  // book, not the AI description, so it reads as a credit line.
+  const introSrc = gallery[0];
+  const introPlate = introSrc && imgUrl(introSrc)
+    ? { src: (thumbUrl(introSrc) || imgUrl(introSrc)) as string, label: introSrc.book_title, href: galleryPlates[0]?.href }
+    : null;
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
+  const sections = ([
+    'introduction',
+    firstTranslations.length > 0 && 'translations',
+    featured && 'featured',
+    gallery.length > 0 && 'gallery',
+    'librarian', 'works', 'involved',
+  ].filter(Boolean) as string[]).map((id) => ({ id, label: SECTION_LABELS[id] }));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
   return (
@@ -290,8 +311,8 @@ export default async function MycologyCollectionPage() {
               </>
             )}
           </nav>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Fungi &amp; Mycology</h1>
-          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Fungi built the soil that built our world. These are the books that first studied them.</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Slime Moulds</h1>
+          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Neither plant, animal, nor fungus. These are the books that spent two centuries arguing about it.</p>
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{total.toLocaleString('en-US')} works</span>
             {ftCount > 0 && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>}
@@ -302,7 +323,7 @@ export default async function MycologyCollectionPage() {
       </section>
 
       {/* ===== Anchor row (client: jump collapse + Share/Embed popovers) ===== */}
-      <CollectionAnchorBar sections={SECTIONS} slug={SLUG} />
+      <CollectionAnchorBar sections={sections} slug={SLUG} />
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
@@ -311,25 +332,31 @@ export default async function MycologyCollectionPage() {
             <div className="font-body flex-1 min-w-0">
               {/* Lead — larger; fills the available width beside the video. */}
               <p className="text-xl sm:text-3xl text-primary leading-snug mb-6">
-                Fungi feed forests and ferment bread, heal and poison, and break the dead back down into the soil that feeds the living. People gathered and used them for centuries before anyone could say what they even were: not quite plant, not quite animal, but a kingdom of their own.
+                A slime mould spends most of its life as a single crawling cell, and ends it standing still, dried into something that looks exactly like a very small fungus. Naturalists kept finding the second half and filing it with the mushrooms. The first half is what took two hundred years to see.
               </p>
               <p className="text-secondary leading-relaxed mb-4 max-w-2xl">
-                The books that worked this out run from pocket field guides to vast scientific surveys. Sterbeeck wrote the first work devoted entirely to mushrooms; Bulliard had each species painted from life, in plates still prized for their accuracy; Persoon and Fries built the orderings the whole field still rests on. Much of this writing survives only in Latin, French, and German, reachable until now mainly through citation while the pages themselves sat unread.
+                Thomas Panckow put one in his herbal in 1654 and called it the fungus that grows quickly, which was the most anyone could honestly say about it. Micheli figured them in 1729, Persoon gave them genus names that are still in use, and Fries gathered them into an order he called the Myxogastres. Every one of those books treats them as fungi.
               </p>
               <p className="text-secondary leading-relaxed max-w-2xl">
-                Read directly, these works show a science built from close looking. A plate Bulliard coloured by hand can be set beside the mushroom in your hand, a poisoning described in an old treatise matched to the species that caused it, the long work of separating the edible from the deadly followed across two centuries of patient observation.
+                Anton de Bary broke that in 1859 by watching one develop from the start rather than collecting it at the end. What he found crawling and feeding did not behave like a plant or a fungus, so he moved the whole group out and named it Mycetozoa, the fungus animals. His student Józef Rostafiński then wrote the first monograph of the group, in Polish, in 1875. It reached most of the field second hand, through Arthur Lister&rsquo;s English rearrangement of 1894, and the pages themselves went largely unread.
               </p>
             </div>
-            {/* Intro plate — Tulasne frontispiece engraving (transparent ground, no frame). */}
-            <figure className="w-full md:w-[min(33%,53.333vh)] shrink-0 m-0 mx-auto md:mx-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/collections/mycology/intro-plate.webp" alt="A microscope amid fungi, plants, and books — frontispiece engraving" loading="lazy" decoding="async" className="w-full h-auto" />
-              <figcaption className="mt-2 text-xs text-muted text-center">
-                <Link href="/gallery/image/69d8ca9ea09828f83ddcbbbe-0" className="hover:text-primary transition-colors">
-                  Selecta Fungorum Carpologia — L.-R. &amp; C. Tulasne, 1863
-                </Link>
-              </figcaption>
-            </figure>
+            {/* Intro plate. Mycology uses a hand-picked engraving; this collection has
+                none extracted yet, so the highest-quality plate the gallery has is used
+                and the figure is simply absent until there is one. */}
+            {introPlate && (
+              <figure className="w-full md:w-[min(33%,53.333vh)] shrink-0 m-0 mx-auto md:mx-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={introPlate.src} alt={introPlate.label || 'Plate from the collection'} loading="lazy" decoding="async" className="w-full h-auto" />
+                {introPlate.label && (
+                  <figcaption className="mt-2 text-xs text-muted text-center">
+                    {introPlate.href ? (
+                      <Link href={introPlate.href} className="hover:text-primary transition-colors">{introPlate.label}</Link>
+                    ) : introPlate.label}
+                  </figcaption>
+                )}
+              </figure>
+            )}
           </div>
         </div>
       </section>
@@ -343,7 +370,7 @@ export default async function MycologyCollectionPage() {
               <span className="text-sm text-muted whitespace-nowrap">{firstTranslations.length} {firstTranslations.length === 1 ? 'title' : 'titles'}</span>
             </div>
             <p className="text-sm text-muted mb-2 max-w-2xl leading-relaxed">Works appearing in a modern, readable translation for the first time.</p>
-            <MycoSlider books={firstTranslations} />
+            <BookSlider books={firstTranslations} />
           </div>
         </section>
       )}
@@ -380,13 +407,13 @@ export default async function MycologyCollectionPage() {
               {/* Content (desktop: right column) */}
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent-rust mb-3">Featured</p>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-primary leading-[1.06] mb-3" style={{ fontFamily: 'var(--font-serif)' }}>Histoire des Champignons de la France</h2>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-primary leading-[1.06] mb-3" style={{ fontFamily: 'var(--font-serif)' }}>Śluzowce (Mycetozoa). Monografia</h2>
                 <p className="text-sm text-muted mb-6">
-                  <span className="italic">by Pierre Bulliard</span>
-                  <span className="font-mono text-[11px] uppercase tracking-wider"> · 1780&ndash;1791{featured.language ? ` · ${featured.language}` : ''}</span>
+                  <span className="italic">by Józef Tomasz Rostafiński</span>
+                  <span className="text-[11px] uppercase tracking-wider"> · 1875{featured.language ? ` · ${featured.language}` : ''}</span>
                 </p>
-                <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">An illustrated flora of the fungi of France, issued in parts from 1780 and gathered into volumes in 1791, with more than six hundred plates engraved and coloured by hand from living specimens.</p>
-                <p className="text-secondary leading-relaxed font-body mb-8 max-w-prose">Among the first works to render fungi in full, accurate colour, it remained a standard reference for identification well into the following century.</p>
+                <p className="text-secondary leading-relaxed font-body mb-3 max-w-prose">The first monograph of the slime moulds, written by de Bary&rsquo;s student and published in Paris by the Kórnik Library in 1875. It set out the classification and the species descriptions that myxomycete taxonomy still rests on.</p>
+                <p className="text-secondary leading-relaxed font-body mb-8 max-w-prose">It was written in Polish, a language almost none of its readership had, and reached the field mainly through Arthur Lister&rsquo;s English monograph of 1894, which rearranged it. This is the text itself.</p>
 
                 {/* Inside the book — horizontal preview row (desktop; on mobile the
                     previews sit beside the cover above). */}
@@ -407,7 +434,9 @@ export default async function MycologyCollectionPage() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
-                  <Link href={`/gallery?collection=${SLUG}`} className={BTN_OUTLINE}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  {galleryTotal > 0 && (
+                    <Link href={`/gallery?collection=${SLUG}`} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -430,7 +459,7 @@ export default async function MycologyCollectionPage() {
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 80%, transparent)',
               }}
             >
-              <MycoMasonry plates={galleryPlates} />
+              <GalleryMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
               <Link href={`/gallery?collection=${SLUG}`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
@@ -455,7 +484,7 @@ export default async function MycologyCollectionPage() {
             <p className="text-secondary leading-relaxed font-body mb-7">
               The librarian reads the full transcribed text and the description of every illustration in each book that has been digitised here. Ask a question in plain language and it points you to the exact page, passage, or plate that answers it.
             </p>
-            <LibrarianSearch placeholder="Ask a question about mycology…" />
+            <LibrarianSearch placeholder="Ask a question about slime moulds…" />
           </div>
         </div>
       </section>
@@ -477,7 +506,7 @@ export default async function MycologyCollectionPage() {
           )}
           <div className="mt-8 border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more works in mycology</p>
+              <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more works in this collection</p>
               <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
             </div>
             <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
@@ -485,67 +514,9 @@ export default async function MycologyCollectionPage() {
         </div>
       </section>
 
-      {/* ===== Quote band — cycles through sourced passages from the collection.
-          Text pulled from the books' own OCR + translations (per-book search API). */}
-      <QuoteBlock
-        bgUrl={quoteBg}
-        framing={quoteFraming}
-        imageCredit={{
-          text: 'Image: Battarra, Fungorum Agri Ariminensis Historia, 1755.',
-          href: '/gallery/image/69d8ca06a09828f83ddc973f-0',
-        }}
-        quotes={[
-          {
-            translated: 'There is diverse sort: their water is the rain, their mother the oak-tree, the nurse. … Here comes this clear star, that parts the evil from the good: the life from the death, the poison from the medicine, the darkness from the light.',
-            original: "Daer is diverse soort: hun waeder is den reghen; hun moeder, Eycken-boom, de voester. … Hier comt dees clare STER, die scheydt het quaet uyt goet: het leven uyt de doodt, 't vergif uyt medecyn, het duyster uyt het licht.",
-            language: 'Dutch',
-            attribution: 'Sterbeeck, Theatrum Fungorum, 1675',
-            href: '/book/theatrum-fungorum-oft-het-toonsel-der-campernoelien-9371',
-          },
-          {
-            translated: 'Who does not see how thin the seed of fungi must be, that it can readily fly through the air, as the seeds of capillary plants are wont to do?',
-            original: 'Quis enim non videt quam tenue esse debeat Fungorum semen, ut facili negotio concipi possit per aerem volitare, ut Capillarium plantarum semina solent?',
-            language: 'Latin',
-            attribution: 'Battarra, Fungorum Agri Ariminensis Historia, 1755',
-            href: '/book/fungorum-agri-ariminensis-historia-973a',
-          },
-          {
-            translated: 'If those who claim that all mushrooms are engendered only by corruption, that they have no seeds, no constant characters by which one can distinguish them, had taken the trouble to study their organization, to follow them in their growth, and to compare them, they would undoubtedly blush at their error.',
-            original: "Si ceux qui prétendent que tous les champignons ne sont engendrés que par la corruption, qu'ils n'ont point de semences, point de caractères constans auxquels on puisse les distinguer, eussent pris la peine d'en étudier l'organisation, de les suivre dans leur accroissement, de les comparer, ils rougiroient sans doute de leur erreur.",
-            language: 'French',
-            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
-            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
-          },
-          {
-            translated: 'This mushroom produces almost the same effect among these peoples as opium among the Turks: at the dose of one, a delirium sometimes cheerful; at two, a sort of drunkenness or furious delirium; and finally at three or four, death, or a state that approaches it.',
-            original: "Ce champignon produit à peu-près le même effet chez ces peuples, que l'opium chez les Turcs, c'est-à-dire, qu'à la dose d'un seul, il produit un délire quelquefois gai; à la dose de deux, une sorte d'ivresse ou de délire furieux; et enfin à la dose de trois ou quatre, la mort ou un état qui en approche.",
-            language: 'French',
-            attribution: 'Paulet, Treatise on Mushrooms, 1793',
-            href: '/book/trait-des-champignons-9e05',
-          },
-          {
-            translated: 'When will one begin to have a just idea of the utility of mushrooms? It will only be when a certain number of people spread across the various regions of the earth have cultivated this part of natural history, which is still in its cradle.',
-            original: "Quand est-ce que l'on commencera à se faire une idée juste sur l'utilité des champignons? Ce ne sera que lorsqu'un certain nombre de personnes répandues dans les diverses contrées de la terre auront cultivé cette partie de l'histoire naturelle encore au berceau.",
-            language: 'French',
-            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
-            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
-          },
-          {
-            translated: 'If one still sees only very few people giving themselves to the study of mushrooms, it is because, to make the study of plants easy, already so attractive in itself, much has been done, while nothing has yet been done to smooth out the difficulties with which the study of mushrooms is bristling.',
-            original: "Si l'on ne voit encore que très-peu de personnes se livrer à l'étude des champignons, c'est que pour rendre facile l'étude des plantes, déjà si attrayante par elle-même, on a fait beaucoup, tandis qu'on n'a rien fait encore pour applanir les difficultés dont l'étude des champignons est hérissée.",
-            language: 'French',
-            attribution: 'Bulliard, Histoire des Champignons de la France, 1791',
-            href: '/book/histoire-des-champignons-de-la-france-vol-1-9a51',
-          },
-          {
-            translated: 'I in no way approve of cooks using fungi to season the pies they call Pasticci, into which butter, Parmesan, and spices enter; for it often happens, even at Rimini, that guests are badly sickened by food of this kind.',
-            original: 'Denique nulla ratione probamus Coquos uti Fungis ad Offas, quas Pasticci vocant, condiendas, in quibus Butyrum, Caseum parmense, & Aromata ingrediuntur; saepe enim accidit etiam Arimini, ut hujusmodi cibis male convivae vexati sint.',
-            language: 'Latin',
-            attribution: 'Battarra, Fungorum Agri Ariminensis Historia, 1755',
-            href: '/book/fungorum-agri-ariminensis-historia-973a',
-          },
-        ]}
-      />
+      {/* No quote band yet: it needs real passages from these books' own OCR and
+          translations, and the pipeline has not produced them. Add it once the
+          translations land rather than filling it with anything else. */}
 
       {/* ===== Get involved ===== */}
       <section id="involved" className="bg-cream scroll-mt-4">
