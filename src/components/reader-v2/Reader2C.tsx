@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import UserMenu from '@/components/layout/UserMenu';
@@ -30,6 +31,7 @@ import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import RevisionHistoryPanel from './RevisionHistoryPanel';
 import SavePanel from './SavePanel';
+import { ContinueReading } from './ContinueReading';
 import PinnedVersionBanner from './PinnedVersion';
 import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishButton } from './ReaderSpanishToggle';
 import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
@@ -51,7 +53,7 @@ const STRIP_KEY = 'sl-reader-v2c-strip';
 /** Mobile toolbar height — one row of four tools. */
 const MOBILE_TOOLBAR_H = 52;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
-const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 88%, var(--bg-dark) 8%)';
+const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
@@ -59,7 +61,7 @@ type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite'
 
 const LEFT_PANEL_TITLES: Record<Exclude<LeftPanel, null>, string> = {
   save: 'Save',
-  menu: 'Account & more',
+  menu: 'Menu',
   contents: 'Contents',
   search: 'Search this book',
   guide: 'Reading guide',
@@ -103,7 +105,7 @@ const MORE_TOOLS: Array<[Exclude<LeftPanel, null>, string, string]> = [
   ['history', 'Revision history', 'Every recorded change to this page'],
   ['info', 'Edition & page info', 'This page, and the edition it comes from'],
   ['cite', 'Cite this page', 'A citation that points at this exact page'],
-  ['menu', 'Account & more', 'Your account, support and feedback'],
+  ['menu', 'Menu', 'The rest of the library, and your account'],
 ];
 
 interface Reader2CProps {
@@ -479,12 +481,14 @@ function SharePanel({ page, book, url }: { page: Page; book: Book; url: string }
   };
 
   const targets: Array<[string, string]> = [
-    ['X', `https://twitter.com/intent/tweet?text=${encodeURIComponent(citation)}&url=${encodeURIComponent(url)}`],
-    ['Bluesky', `https://bsky.app/intent/compose?text=${encodeURIComponent(`${citation}\n\n${url}`)}`],
-    ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`],
-    ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`],
-    ['WhatsApp', `https://wa.me/?text=${encodeURIComponent(`${citation}\n${url}`)}`],
+    // Email first: it is how a page from a library actually gets sent to a
+    // colleague. X was first only because it happened to be written first.
     ['Email', `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${citation}\n\n${url}`)}`],
+    ['WhatsApp', `https://wa.me/?text=${encodeURIComponent(`${citation}\n${url}`)}`],
+    ['Bluesky', `https://bsky.app/intent/compose?text=${encodeURIComponent(`${citation}\n\n${url}`)}`],
+    ['LinkedIn', `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`],
+    ['Facebook', `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`],
+    ['X', `https://twitter.com/intent/tweet?text=${encodeURIComponent(citation)}&url=${encodeURIComponent(url)}`],
   ];
 
   const rowCls = PANEL_ROW;
@@ -681,17 +685,32 @@ function SearchHighlighter() {
  */
 function ReaderAccountMenu() {
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const isSpanishSite = !!pathname?.startsWith('/es');
   const signedIn = !!session?.user;
   const row = 'w-full text-left flex items-center justify-between gap-3 h-[48px] font-sans text-[14px] border-b transition-colors active:bg-[var(--bg-white)]';
   const rowStyle = { borderColor: 'var(--border-light)', color: 'var(--text-primary)' } as const;
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-2 pb-5" style={{ overscrollBehavior: 'contain' }}>
+      {/* The library itself. The reader replaces the site header, so without
+          these the rest of Source Library is unreachable from a book. */}
+      <CapsLabel className="block pb-2" style={{ color: 'var(--text-faint)' }}>Library</CapsLabel>
+      {([
+        ['Collections', '/collections'],
+        ['Gallery', '/gallery'],
+        ['Browse', '/browse'],
+        ['Catalogue', '/catalog'],
+        ['Works', '/works'],
+        ['Explore', '/explore'],
+        ['Librarian', '/librarian'],
+      ] as Array<[string, string]>).map(([label, href]) => (
+        <Link key={href} href={href} className={`${row} no-underline`} style={rowStyle}>{label}</Link>
+      ))}
+
+      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>You</CapsLabel>
       {signedIn ? (
         <>
-          <p className="font-sans text-[12px] pb-2" style={{ color: 'var(--text-faint)' }}>
-            {session?.user?.email}
-          </p>
           <Link href="/account" className={`${row} no-underline`} style={rowStyle}>Your account</Link>
           <Link href="/favorites" className={`${row} no-underline`} style={rowStyle}>Saved pages</Link>
           <Link href="/reading-history" className={`${row} no-underline`} style={rowStyle}>Reading history</Link>
@@ -707,6 +726,33 @@ function ReaderAccountMenu() {
         Send feedback
         <MessageSquare size={15} style={{ color: 'var(--text-faint)' }} />
       </Link>
+
+      {/* Site language. A reader page has no Spanish twin, so localeHref sends
+          ES to the Spanish homepage rather than a Spanish version of this page
+          — the honest thing is to say so on the control instead of letting it
+          look like it will keep your place. It stops being a caveat the day
+          page-level locale routing lands. */}
+      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>Site language</CapsLabel>
+      <div className="flex gap-2 pt-1">
+        {([['English', '/'], ['Español', '/es']] as Array<[string, string]>).map(([label, href]) => {
+          const active = (label === 'Español') === isSpanishSite;
+          return (
+            <Link
+              key={href}
+              href={href}
+              className="flex-1 h-9 flex items-center justify-center border font-sans text-[12.5px] no-underline transition-colors"
+              style={active
+                ? { background: 'var(--text-primary)', color: 'var(--bg-cream)', borderColor: 'var(--text-primary)' }
+                : { borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+            >
+              {label}
+            </Link>
+          );
+        })}
+      </div>
+      <p className="mt-2 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
+        Switching language leaves this book and opens the Source Library home page.
+      </p>
       {signedIn && (
         <button type="button" onClick={() => signOut({ callbackUrl: '/' })} className={row} style={{ ...rowStyle, borderColor: 'transparent' }}>
           Sign out
@@ -2586,6 +2632,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           data-reader-panels-container
           className="relative flex min-h-0"
         >
+          {/* Book-level, so it sits over the whole reading area rather than
+              once per pane. */}
+          <ContinueReading
+            bookId={r.book.id}
+            currentPageId={r.currentPageId}
+            currentPageNumber={r.currentPage.page_number}
+            onGo={(pageId) => r.goToPage(pageId)}
+          />
           {r.views.scan && (
             <section
               className="flex-1 min-w-0 flex flex-col border-r"
@@ -2839,7 +2893,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <button
               type="button"
               onClick={() => togglePanel('menu')}
-              aria-label="Account and more"
+              aria-label="Menu"
               className="w-9 h-9 shrink-0 flex items-center justify-center transition-colors"
               style={{ color: onInk(0.85) }}
             >

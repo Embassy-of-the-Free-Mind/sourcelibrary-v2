@@ -67,6 +67,11 @@ export function useReaderV2(
   const book = initialBook;
   const pageList = initialPageList;
   const embedHref = useEmbedHref();
+
+  // A reader on the Spanish site should be offered the Spanish translation
+  // first. Only as an initial default: once they choose in the pane, the
+  // stored preference wins, because the choice is theirs to keep.
+  const spanishSite = typeof window !== 'undefined' && window.location.pathname.startsWith('/es');
   const [currentPageId, setCurrentPageId] = useState(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const [pageLoading, setPageLoading] = useState(false);
@@ -220,8 +225,13 @@ export function useReaderV2(
   // ── settings ───────────────────────────────────────────────────────────
   const [settings, setSettings] = useState<ReaderSettings>(DEFAULT_SETTINGS);
   useEffect(() => {
-    setSettings(loadStored(SETTINGS_KEY, DEFAULT_SETTINGS));
-  }, []);
+    const stored = window.localStorage.getItem(SETTINGS_KEY);
+    const base = loadStored(SETTINGS_KEY, DEFAULT_SETTINGS);
+    // On the Spanish site, open in Spanish — but only for a reader who has
+    // never chosen. Once they have picked a language in the pane their stored
+    // choice wins, because the choice is theirs to keep.
+    setSettings(spanishSite && !stored ? { ...base, translationLang: 'es' } : base);
+  }, [spanishSite]);
   const updateSettings = useCallback((patch: Partial<ReaderSettings>) => {
     setSettings(prev => {
       const next = { ...prev, ...patch };
