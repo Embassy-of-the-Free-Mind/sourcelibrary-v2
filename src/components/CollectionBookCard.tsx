@@ -30,7 +30,6 @@ export interface CollectionBook {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
-  /** Pages with a Spanish edition — shows the "Español" tag when > 0. */
   pages_translated_es?: number;
   /** Per-language title glosses — see src/lib/localized.ts. */
   localized?: LocalizedBookMap | null;
@@ -53,7 +52,6 @@ export interface CollectionBookCardLabels {
   translated: string;
   editedBy: string;
   /** Tag shown when the book has a Spanish edition. */
-  spanishEdition: string;
 }
 
 export const CARD_LABELS_EN: CollectionBookCardLabels = {
@@ -62,7 +60,6 @@ export const CARD_LABELS_EN: CollectionBookCardLabels = {
   ocr: 'OCR',
   translated: 'Translated',
   editedBy: 'edited by',
-  spanishEdition: 'Español',
 };
 
 export const CARD_LABELS_ES: CollectionBookCardLabels = {
@@ -71,7 +68,6 @@ export const CARD_LABELS_ES: CollectionBookCardLabels = {
   ocr: 'OCR',
   translated: 'Traducido',
   editedBy: 'editado por',
-  spanishEdition: 'En español',
 };
 
 const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES };
@@ -200,14 +196,16 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           />
         )}
 
-        {/* Tags — dark-glass First Translation (+ DOI), square per book design.md */}
-        {(isPublishedFirstTranslation(book) || book.has_doi || (book.pages_translated_es ?? 0) > 0) && (
+        {/* Tags — dark-glass First Translation (+ DOI), square per book design.md
+        
+            No "Español" tag. A tag on a cover has to earn its place against
+            the one that matters, and this one said nothing to either reader:
+            on the English site it announces an edition you are not looking
+            at, and on /es the page already sorts into "in Spanish" and
+            "not yet", so the heading above the grid has said it. Stacked over
+            First Translation it read as the more important of the two. */}
+        {(isPublishedFirstTranslation(book) || book.has_doi) && (
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
-            {(book.pages_translated_es ?? 0) > 0 && (
-              <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }} lang="es">
-                {labels.spanishEdition}
-              </span>
-            )}
             {isPublishedFirstTranslation(book) && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
                 {labels.firstTranslation}
