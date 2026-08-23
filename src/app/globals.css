@@ -18,17 +18,27 @@
   --text-primary: #1a1612;
   --text-secondary: #444;
   --text-muted: #6b6560;  /* was #888, now 5.2:1 on #fdfcf9 */
-  --text-faint: #8a8480;  /* was #aaa, now 4.5:1 on #fdfcf9 */
+  /* Measured: #8a8480 is 3.76:1 on cream at the 10.5px this is actually used
+     at, not the 4.5:1 the old comment claimed — that was checked at a larger
+     size. Darkened to clear 4.5:1 at the sizes the reader really uses. */
+  --text-faint: #79736f;
 
   /* Accent colors */
   --accent-rust: #9e4a3a;
+  /* Trace and annotation each need a value per theme for the same reason the
+     accents above do: night flips which direction "more contrast" points. */
+  --trace-blue: #496da3;
+  --annotation-teal: #3e7a6e;
   --accent-gold: #c9a86c;
   --accent-sage: #8b9a7d;
   --accent-violet: #7c5db5;
+  /* Text-on-light variant, matching the sage/gold pattern. Its absence is why
+     the revision badges were being drawn in the raw hue and failing. */
+  --accent-violet-dark: #6b4ea3;
 
   /* Dark accent variants — for text on light backgrounds (higher contrast) */
   --accent-sage-dark: #5e6d52;
-  --accent-gold-dark: #9e7c3c;
+  --accent-gold-dark: #8d6f35;
 
   /* Borders */
   --border-light: #e8e4dc;
@@ -252,6 +262,8 @@ h1, h2, h3, h4 {
    design primitives): sepia warms the paper tokens, night inverts around
    --bg-dark (#1a1612). */
 [data-reader-theme='sepia'] {
+  --trace-blue: #3f6096;
+  --annotation-teal: #356b60;
   --bg-cream: #f6eeda;
   --bg-white: #fbf4e4;
   --bg-warm: #efe4cb;
@@ -277,6 +289,10 @@ h1, h2, h3, h4 {
      here for the same reason the two above are lightened. It stays readable
      as a fill too (cream text on #cf7f6a). */
   --accent-rust: #cf7f6a;
+  --accent-violet-dark: #b49ae0;
+  --trace-blue: #8fb0e0;
+  --annotation-teal: #7bc0b1;
+  --status-error: #e88f8f;
 }
 
 /* Night-mode compatibility for hardcoded light-utility classes used inside the

@@ -95,7 +95,7 @@ const SIDES: Side[] = ['ocr', 'translation', 'transliteration'];
  * TraceAlignment keeps its own blue local rather than adding a global token
  * for a single feature.
  */
-const ANNOTATION_COLOR = '#3f7d70';
+const ANNOTATION_COLOR = 'var(--annotation-teal)';
 const ANNOTATION_WASH = 'rgba(63, 125, 112, 0.16)';
 const ANNOTATION_WASH_ACTIVE = 'rgba(63, 125, 112, 0.32)';
 

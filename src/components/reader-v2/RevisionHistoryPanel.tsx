@@ -91,14 +91,14 @@ interface Row extends PageRevision {
 
 function SourceBadge({ source }: { source: string }) {
   const styles: Record<string, { bg: string; color: string; label: string }> = {
-    ai: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)', label: 'AI' },
-    batch_api: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)', label: 'Batch' },
-    batch_api_recovery: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)', label: 'Batch' },
-    pipeline_preview: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)', label: 'AI' },
-    realtime_api_sequential: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)', label: 'AI' },
-    mineru: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)', label: 'AI' },
-    manual: { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)', label: 'Manual' },
-    'manual-backfill': { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)', label: 'Manual' },
+    ai: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
+    batch_api: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'Batch' },
+    batch_api_recovery: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'Batch' },
+    pipeline_preview: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
+    realtime_api_sequential: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
+    mineru: { bg: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet-dark)', label: 'AI' },
+    manual: { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage-dark)', label: 'Manual' },
+    'manual-backfill': { bg: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage-dark)', label: 'Manual' },
     contributor: { bg: 'rgba(201, 168, 108, 0.15)', color: 'var(--accent-gold-dark)', label: 'Contrib' },
   };
   const s = styles[source] || { bg: 'var(--border-light)', color: 'var(--text-muted)', label: 'Maintenance' };

@@ -907,7 +907,9 @@ const PANEL_BTN_STYLE = {
 } as const;
 
 /** The trace colour, shared by the toggle, its status line and its highlight. */
-const TRACE_BLUE = '#4a6fa5';
+// Themed, not a literal: a single hex cannot clear light, sepia and night,
+// because night flips which direction more contrast points. Measured.
+const TRACE_BLUE = 'var(--trace-blue)';
 /** Set once the reader has traced something, so the hint stops repeating. */
 const TRACE_LEARNED_KEY = 'sl-reader-v2-traced';
 
@@ -1628,7 +1630,7 @@ function Filmstrip({
                 className="font-sans text-[9.5px] tabular-nums px-1"
                 style={isCurrent
                   ? { color: '#fdfcf9', background: '#c2412c', fontWeight: 600 }
-                  : { color: onInk(0.38) }}
+                  : { color: onInk(0.58) }}
               >
                 {p.page_number}
               </span>
@@ -2412,7 +2414,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   title="Jump to page"
                   style={{ color: onInk(0.9) }}
                 >
-                  p. {pageNum}<span style={{ color: onInk(0.45) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
+                  p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
                 </button>
               )}
               <button type="button" aria-label="Next page" onClick={r.goNext}

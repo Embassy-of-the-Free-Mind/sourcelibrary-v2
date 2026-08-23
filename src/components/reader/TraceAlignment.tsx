@@ -389,14 +389,14 @@ export default function TraceAlignment({ bookId, pageId, active, onStatusChange 
           an editorial mark. Blue is used by nothing else in the reading panes. */}
       <style>{`
         ::highlight(${HIGHLIGHT_PRIMARY}) {
-          background-color: rgba(74, 111, 165, 0.20);
+          background-color: color-mix(in srgb, var(--trace-blue, #4a6fa5) 22%, transparent);
         }
         /* The counterpart is distinguished by a stronger wash, not by an
            underline as well. Underlining a whole sentence of translation on
            top of a highlight was two marks doing one job. */
         ::highlight(${HIGHLIGHT_COUNTERPART}),
         ::highlight(${HIGHLIGHT_COUNTERPART_2}) {
-          background-color: rgba(74, 111, 165, 0.34);
+          background-color: color-mix(in srgb, var(--trace-blue, #4a6fa5) 36%, transparent);
         }
       `}</style>
       {sheet && (
