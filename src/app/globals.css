@@ -429,9 +429,24 @@ body:has([data-reader-v2]) {
   to   { opacity: 1; transform: none; }
 }
 .rv2-tile-in { animation: rv2-tile-in 220ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+/* Full-screen site menu. The ground arrives first and flat, then the
+   destinations settle onto it one after another — the sequence is what stops
+   a page-sized black rectangle from reading as a jump cut. */
+@keyframes rv2-menu-ground {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.rv2-menu-ground { animation: rv2-menu-ground 160ms ease-out both; }
+@keyframes rv2-menu-item {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: none; }
+}
+.rv2-menu-item { animation: rv2-menu-item 320ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
 @media (prefers-reduced-motion: reduce) {
   .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in,
-  .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in { animation: none; }
+  .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in,
+  .rv2-menu-ground, .rv2-menu-item { animation: none; }
 }
 
 

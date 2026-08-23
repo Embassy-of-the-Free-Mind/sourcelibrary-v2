@@ -275,17 +275,17 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="translation" label="English Translation" desc="Translated text only"
-              icon={<Languages className="w-4 h-4 text-status-success shrink-0" />}
+              icon={<Languages className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="ocr" label="Original Text (OCR)" desc="Source language transcription"
-              icon={<FileText className="w-4 h-4 text-blue-600 shrink-0" />}
+              icon={<FileText className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
-              icon={<Layers className="w-4 h-4 text-purple-600 shrink-0" />}
+              icon={<Layers className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           </div>
@@ -296,12 +296,12 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Scan facing its translation, like the reader"
-              icon={<FileType className="w-4 h-4 text-stone-600" />}
+              icon={<FileType className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && (
             <FormatOption format="pdf-translation" label="English Translation (PDF)" desc="Translated text only"
-              icon={<FileType className="w-4 h-4 text-status-success" />}
+              icon={<FileType className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
 
@@ -312,12 +312,12 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="epub-translation" label="English Translation" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-status-success shrink-0" />}
+              icon={<BookOpen className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="epub-ocr" label="Original Text (OCR)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-blue-600 shrink-0" />}
+              icon={<BookOpen className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {/* Menu consolidation (#3920): epub-parallel and epub-parallel-fxl rows
@@ -328,18 +328,18 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               format keys remain valid on the routes for old links and scripts. */}
           {hasTranslations && hasOcr && (
             <FormatOption format="epub-both" label="Complete (Both)" desc="Original + translation, page by page"
-              icon={<BookOpen className="w-4 h-4 text-purple-600 shrink-0" />}
+              icon={<BookOpen className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && (
             <FormatOption format={hasOcr ? 'epub-bilingual' : 'epub-scholarly'} label="Scholarly Edition"
               desc={hasOcr ? 'Original + translation with introduction & apparatus' : 'With introduction & apparatus'}
-              icon={<GraduationCap className="w-4 h-4 text-stone-700 shrink-0" />}
+              icon={<GraduationCap className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation (fixed layout)"
-              icon={<Image className="w-4 h-4 text-stone-600" />}
+              icon={<Image className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           </div>
@@ -355,7 +355,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               {/* epub-images row removed (#3920) — 44 clicks/90d vs 191 for the
                   ZIP; the key stays valid on the routes. */}
               <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
-                icon={<Image className="w-4 h-4 text-stone-600" />}
+                icon={<Image className="w-4 h-4 text-[var(--text-secondary)]" />}
                 onDownload={handleDownload} downloading={downloading} />
             </>
           )}

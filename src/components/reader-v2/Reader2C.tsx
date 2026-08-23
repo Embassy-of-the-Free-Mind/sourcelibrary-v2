@@ -7,7 +7,6 @@ import { localeHref, useLocale } from '@/lib/i18n';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
-import UserMenu from '@/components/layout/UserMenu';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
@@ -59,7 +58,7 @@ const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5
 /** Mobile sheets that always take the full height — lists and conversations. */
 const SHEET_FILLS = new Set<Exclude<LeftPanel, null>>(['contents', 'search', 'guide', 'librarian']);
 
-type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'menu' | 'more' | null;
+type LeftPanel = 'contents' | 'search' | 'guide' | 'librarian' | 'info' | 'cite' | 'share' | 'settings' | 'views' | 'downloads' | 'history' | 'save' | 'more' | null;
 
 /**
  * Drawer titles and the one line under each — saying what the tool actually
@@ -76,12 +75,14 @@ function panelBlurb(t: ReaderStrings, panel: Exclude<LeftPanel, null>): string |
  * The tools that live behind "More" on mobile, in the order they're offered:
  * the same three groups as the desktop rail, in the same order — find your way
  * through the book, ask something of it, then do something with this page.
- * Views, Pages, Share and Save are not here — they hold toolbar slots. Labels
- * come from `t.moreMenu`, which is keyed by exactly these names.
+ * Views, Pages, Share and Save are not here: they hold toolbar slots. Nor is
+ * the site menu, which is about leaving this book rather than reading it and
+ * opens full-screen from the bar instead. Labels come from `t.moreMenu`,
+ * which is keyed by exactly these names.
  */
 const MORE_TOOLS = [
   'contents', 'guide', 'search', 'librarian', 'cite',
-  'downloads', 'info', 'history', 'settings', 'menu',
+  'downloads', 'info', 'history', 'settings',
 ] as const;
 
 interface Reader2CProps {
@@ -658,87 +659,159 @@ function SearchHighlighter() {
 
 
 /**
- * The account, and the two site-level actions the reader's own chrome hides:
- * Support and Feedback. On a phone the avatar alone was both a small target
- * and the only route to any of this.
+ * The way out of the book: everywhere else in Source Library, plus the
+ * account, support and feedback.
  *
- * No language switch here. The site's EN/ES toggle only appears where a real
- * Spanish twin of the page exists (#2763); a reader page has none, so the
- * control would carry you to the /es homepage and lose your place. It belongs
- * here once page-level locale routing exists, not before.
+ * It takes the whole screen rather than sharing the frame with the page. The
+ * reader's panels all answer questions about the book you are in, so a site
+ * menu sitting in the same slot read as one more of them; full-screen says
+ * plainly that this is about leaving. It is also the only menu on the reader,
+ * which is why the desktop bar has a hamburger where the avatar used to be.
  */
-function ReaderAccountMenu() {
+function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const t = getReaderStrings(useLocale()).accountMenu;
+  const strings = getReaderStrings(useLocale());
+  const t = strings.accountMenu;
   const isSpanishSite = !!pathname?.startsWith('/es');
   const signedIn = !!session?.user;
-  const row = 'w-full text-left flex items-center justify-between gap-3 h-[48px] font-sans text-[14px] border-b transition-colors active:bg-[var(--bg-white)]';
-  const rowStyle = { borderColor: 'var(--border-light)', color: 'var(--text-primary)' } as const;
+
+  // Escape closes, and the page behind stops scrolling while it is open.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  const destinations: Array<[string, string]> = [
+    [t.collections, '/collections'],
+    [t.gallery, '/gallery'],
+    [t.browse, '/browse'],
+    [t.catalogue, '/catalog'],
+    [t.works, '/works'],
+    [t.explore, '/explore'],
+    [t.librarian, '/librarian'],
+  ];
+
+  // Every link is written through localeHref, so the menu keeps you on the
+  // language you are reading in. Hard-coding '/collections' here is how a
+  // Spanish reader gets silently dropped back onto the English site.
+  const href = (path: string) => localeHref(isSpanishSite ? 'es' : 'en', path);
+
+  const minorRow = 'no-underline font-sans text-[13.5px] leading-none py-2.5 transition-opacity hover:opacity-100';
+  const minorStyle = { color: onInk(0.66) } as const;
 
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-2 pb-5" style={{ overscrollBehavior: 'contain' }}>
-      {/* The library itself. The reader replaces the site header, so without
-          these the rest of Source Library is unreachable from a book. */}
-      <CapsLabel className="block pb-2" style={{ color: 'var(--text-faint)' }}>{t.library}</CapsLabel>
-      {([
-        [t.collections, '/collections'],
-        [t.gallery, '/gallery'],
-        [t.browse, '/browse'],
-        [t.catalogue, '/catalog'],
-        [t.works, '/works'],
-        [t.explore, '/explore'],
-        [t.librarian, '/librarian'],
-      ] as Array<[string, string]>).map(([label, href]) => (
-        <Link key={href} href={href} className={`${row} no-underline`} style={rowStyle}>{label}</Link>
-      ))}
+    <div
+      className="fixed inset-0 z-[70] rv2-menu-ground overflow-y-auto"
+      style={{ background: INK, color: '#fdfcf9' }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t.library}
+    >
+      <div className="min-h-full flex flex-col">
+        <div className="flex items-center justify-between h-[52px] lg:h-[58px] px-3 lg:px-4 shrink-0">
+          <span className="flex items-center [&_svg]:w-8 [&_svg]:h-8 lg:[&_svg]:w-auto lg:[&_svg]:h-auto">
+            <Logo white compact />
+          </span>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={strings.toolbar.close}
+            className="w-10 h-10 -mr-1.5 flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.1)]"
+            style={{ color: onInk(0.85) }}
+          >
+            <X size={20} />
+          </button>
+        </div>
 
-      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.you}</CapsLabel>
-      {signedIn ? (
-        <>
-          <Link href="/account" className={`${row} no-underline`} style={rowStyle}>{t.yourAccount}</Link>
-          <Link href="/favorites" className={`${row} no-underline`} style={rowStyle}>{t.savedPages}</Link>
-          <Link href="/reading-history" className={`${row} no-underline`} style={rowStyle}>{t.readingHistory}</Link>
-        </>
-      ) : (
-        <Link href="/auth/signin" className={`${row} no-underline`} style={rowStyle}>{t.signIn}</Link>
-      )}
-      <Link href="/support" className={`${row} no-underline`} style={rowStyle}>
-        {t.supportSourceLibrary}
-        <LifeBuoy size={15} style={{ color: 'var(--text-faint)' }} />
-      </Link>
-      <Link href="/feedback" className={`${row} no-underline`} style={rowStyle}>
-        {t.sendFeedback}
-        <MessageSquare size={15} style={{ color: 'var(--text-faint)' }} />
-      </Link>
+        <div className="flex-1 w-full max-w-[52rem] mx-auto px-6 lg:px-10 pt-6 lg:pt-12 pb-12">
+          {/* The library, set at reading size. These are the only things on
+              the screen, so they get to be the size they actually are. */}
+          <nav className="flex flex-col items-start">
+            {destinations.map(([label, path], i) => (
+              <Link
+                key={path}
+                href={href(path)}
+                onClick={onClose}
+                className="rv2-menu-item no-underline font-body text-[30px] lg:text-[38px] leading-[1.32] transition-colors hover:text-[#fdfcf9]"
+                style={{ color: onInk(0.82), animationDelay: `${60 + i * 34}ms` }}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
 
-      {/* The reader now has a Spanish twin, so switching keeps you on this
-          page instead of dropping you at the homepage. */}
-      <CapsLabel className="block pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.siteLanguage}</CapsLabel>
-      <div className="flex gap-2 pt-1">
-        {([['English', localeHref('en', pathname)], ['Español', localeHref('es', pathname)]] as Array<[string, string]>).map(([label, href]) => {
-          const active = (label === 'Español') === isSpanishSite;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className="flex-1 h-9 flex items-center justify-center border font-sans text-[12.5px] no-underline transition-colors"
-              style={active
-                ? { background: 'var(--text-primary)', color: 'var(--bg-cream)', borderColor: 'var(--text-primary)' }
-                : { borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
-            >
-              {label}
+          <span
+            className="rv2-menu-item block w-full my-8 lg:my-10"
+            style={{ borderTop: `1px solid ${onInk(0.16)}`, animationDelay: '300ms' }}
+            aria-hidden="true"
+          />
+
+          {/* Everything below the rule is about you rather than the library,
+              and is set small so the two never compete. */}
+          <div
+            className="rv2-menu-item flex flex-col items-start"
+            style={{ animationDelay: '330ms' }}
+          >
+            <CapsLabel className="block pb-3" style={{ color: onInk(0.42) }}>{t.you}</CapsLabel>
+            {signedIn ? (
+              <>
+                <Link href={href('/account')} onClick={onClose} className={minorRow} style={minorStyle}>{t.yourAccount}</Link>
+                <Link href={href('/favorites')} onClick={onClose} className={minorRow} style={minorStyle}>{t.savedPages}</Link>
+                <Link href={href('/reading-history')} onClick={onClose} className={minorRow} style={minorStyle}>{t.readingHistory}</Link>
+              </>
+            ) : (
+              <Link href={href('/auth/signin')} onClick={onClose} className={minorRow} style={minorStyle}>{t.signIn}</Link>
+            )}
+            <Link href={href('/support')} onClick={onClose} className={`${minorRow} flex items-center gap-2`} style={minorStyle}>
+              <LifeBuoy size={14} />{t.supportSourceLibrary}
             </Link>
-          );
-        })}
-      </div>
+            <Link href={href('/feedback')} onClick={onClose} className={`${minorRow} flex items-center gap-2`} style={minorStyle}>
+              <MessageSquare size={14} />{t.sendFeedback}
+            </Link>
+            {signedIn && (
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className={`${minorRow} flex items-center gap-2`}
+                style={minorStyle}
+              >
+                <LogOut size={14} />{t.signOut}
+              </button>
+            )}
+          </div>
 
-      {signedIn && (
-        <button type="button" onClick={() => signOut({ callbackUrl: '/' })} className={row} style={{ ...rowStyle, borderColor: 'transparent' }}>
-          {t.signOut}
-          <LogOut size={15} style={{ color: 'var(--text-faint)' }} />
-        </button>
-      )}
+          {/* The reader has a Spanish twin, so switching keeps you on the page
+              you are reading instead of dropping you at the homepage. */}
+          <div className="rv2-menu-item pt-9" style={{ animationDelay: '370ms' }}>
+            <CapsLabel className="block pb-3" style={{ color: onInk(0.42) }}>{t.siteLanguage}</CapsLabel>
+            <div className="flex gap-2">
+              {([['English', localeHref('en', pathname)], ['Español', localeHref('es', pathname)]] as Array<[string, string]>).map(([label, target]) => {
+                const active = (label === 'Español') === isSpanishSite;
+                return (
+                  <Link
+                    key={target}
+                    href={target}
+                    onClick={onClose}
+                    className="h-9 px-5 flex items-center justify-center border font-sans text-[12.5px] no-underline transition-colors"
+                    style={active
+                      ? { background: '#fdfcf9', color: INK, borderColor: '#fdfcf9' }
+                      : { borderColor: onInk(0.26), color: onInk(0.72) }}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -1878,9 +1951,6 @@ function PanelContent({
       </div>
     );
   }
-  if (panel === 'menu') {
-    return <ReaderAccountMenu />;
-  }
   if (panel === 'save') {
     return <SavePanel page={r.currentPage} book={r.book} url={shareUrl} />;
   }
@@ -1969,6 +2039,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const togglePanel = useCallback((p: Exclude<LeftPanel, null>) => {
     setLeftPanel(prev => (prev === p ? null : p));
   }, []);
+
+  // The site menu is not a reader panel. The panels answer questions about
+  // this book; this one is how you leave it, so it takes the whole screen
+  // instead of sharing the frame with the page you are reading.
+  const [siteMenuOpen, setSiteMenuOpen] = useState(false);
 
   const [copied, setCopied] = useState(false);
 
@@ -2461,6 +2536,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   return (
     <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)}>
+      {siteMenuOpen && <ReaderSiteMenu onClose={() => setSiteMenuOpen(false)} />}
       <Suspense fallback={null}>
         <SearchHighlighter />
       </Suspense>
@@ -2482,10 +2558,30 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
           {!isEmbedded && <Logo white compact />}
-          {/* Left to right: what you are looking at, where you are in the
-              book, then the book itself as the way out of it. The controls a
-              reader touches sit nearest the rail their hand is already on;
-              the title is the least-used of the three and takes the slack. */}
+          {/* Left to right: the book you are in and, while editing it, the
+              two buttons that end the edit. Everything on the right end is
+              about the page rather than the book. Cancel and Save sit beside
+              the title because that is where the edit began, and because a
+              save button next to the view toggles reads as saving a view. */}
+          <a
+            href={embedHref(`/book/${r.bookPath}`)}
+            className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+            style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
+            title={t.toolbar.backToTheBook}
+          >
+            <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
+            <span className="min-w-0 flex-1 flex items-baseline gap-2.5">
+              <span
+                className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
+                style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
+              >
+                {r.book.display_title || r.book.title}
+              </span>
+              <span className="font-sans text-[11.5px] leading-none truncate min-w-0" style={{ color: onInk(0.5) }}>
+                {bookByline(r.book)}
+              </span>
+            </span>
+          </a>
           {editing ? (
             <div className="flex items-center gap-1.5">
               <button
@@ -2510,25 +2606,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </button>
             </div>
           ) : null}
-          <a
-            href={embedHref(`/book/${r.bookPath}`)}
-            className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-            style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
-            title={t.toolbar.backToTheBook}
-          >
-            <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
-            <span className="min-w-0 flex-1 flex items-baseline gap-2.5">
-              <span
-                className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
-                style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
-              >
-                {r.book.display_title || r.book.title}
-              </span>
-              <span className="font-sans text-[11.5px] leading-none truncate min-w-0" style={{ color: onInk(0.5) }}>
-                {bookByline(r.book)}
-              </span>
-            </span>
-          </a>
           <div className="flex-1" />
           {saveError && (
             <span className="font-sans text-[12px] max-w-[260px] truncate" style={{ color: '#e8a793' }} role="alert">
@@ -2582,9 +2659,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               </button>
             </div>
           </div>
-          <div className="ml-1 shrink-0 whitespace-nowrap">
-            <UserMenu variant="hero" />
-          </div>
+          {/* One menu, not two. The avatar used to open a second, smaller
+              menu here while the phone had the hamburger, so the account sat
+              somewhere different depending on the width of the window. */}
+          <button
+            type="button"
+            onClick={() => setSiteMenuOpen(true)}
+            aria-label={t.toolbar.menu}
+            className="ml-2 w-9 h-9 shrink-0 flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+            style={{ color: onInk(0.85) }}
+          >
+            <Menu size={19} />
+          </button>
         </header>
 
         {/* Tool rail */}
@@ -2908,7 +2994,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 them and where they stop competing with the reading controls. */}
             <button
               type="button"
-              onClick={() => togglePanel('menu')}
+              onClick={() => setSiteMenuOpen(true)}
               aria-label={t.toolbar.menu}
               className="w-9 h-9 shrink-0 flex items-center justify-center transition-colors"
               style={{ color: onInk(0.85) }}
