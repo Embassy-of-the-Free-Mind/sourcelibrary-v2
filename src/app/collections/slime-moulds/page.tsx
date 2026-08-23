@@ -347,7 +347,9 @@ export default async function SlimeMouldsCollectionPage() {
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden min-h-[66vh] flex items-end" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
-        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.08} oversize={0.1} />
+        {/* The collage is filtered to actual slime mould plates; the route falls
+            back to the collection's full plate set while too few are extracted. */}
+        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage?match=${encodeURIComponent(MYXO_DESC_RX)}`} loading="eager" strength={0.08} oversize={0.1} />
         {/* Mobile: vertical tint — strongest at the bottom (text), light at top. */}
         <div className="absolute inset-0 md:hidden bg-gradient-to-t from-dark/85 via-dark/45 to-dark/5" />
         {/* Desktop: the book hero's tint, so the two read as one system —

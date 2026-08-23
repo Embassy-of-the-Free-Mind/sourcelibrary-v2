@@ -13,13 +13,15 @@ export const revalidate = 86400;
 const COLS = 7, COLW = 200, H = 900, W = COLS * COLW;
 const BG = '#1a1612';
 const FETCH_LIMIT = 48;
+// Below this many matches a filtered collage looks broken, so we fall back.
+const MIN_COLLAGE = 14;
 
 async function solid(maxAge: number): Promise<Response> {
   const out = await sharp({ create: { width: W, height: H, channels: 3, background: BG } }).webp({ quality: 60 }).toBuffer();
   return new Response(new Uint8Array(out), { headers: { 'Content-Type': 'image/webp', 'Cache-Control': `public, max-age=${maxAge}` } });
 }
 
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   try {
     const db = await getReadDb();
@@ -27,10 +29,30 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     const bookIds = bookDocs.map((d) => d.id as string);
     if (!bookIds.length) return solid(3600);
 
-    const imgs = await db.collection('gallery_images').find(
-      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
-      { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1 }, maxTimeMS: 5000 },
-    ).sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
+    // Optional ?match=<regex> narrows the collage to plates whose description
+    // matches — a collection about one subject inside broader books (slime
+    // moulds inside general mycology) otherwise gets a hero full of the wrong
+    // plates. Falls back to the unfiltered set when the match is too thin to
+    // fill a collage, so the hero degrades to "broadly right" rather than to a
+    // handful of images tiled over seven columns.
+    const match = req.nextUrl.searchParams.get('match');
+    const base = { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } };
+    const proj = { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1 }, maxTimeMS: 5000 };
+    let imgs: Record<string, unknown>[] = [];
+    if (match) {
+      const rx = match.slice(0, 600);
+      imgs = await db.collection('gallery_images').find({
+        ...base,
+        $or: [
+          { description: { $regex: rx, $options: 'i' } },
+          { museum_description: { $regex: rx, $options: 'i' } },
+        ],
+      }, proj).sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
+    }
+    if (imgs.length < MIN_COLLAGE) {
+      imgs = await db.collection('gallery_images').find(base, proj)
+        .sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
+    }
     const urls = imgs.map((g) => (g.thumbnail_url || g.extracted_url || g.image_url) as string | undefined).filter((u): u is string => Boolean(u));
     if (!urls.length) return solid(3600);
 
