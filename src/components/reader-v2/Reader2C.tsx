@@ -729,7 +729,8 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
     ?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
     || session?.user?.email?.[0]?.toUpperCase() || '?';
 
-  const minorLink = 'no-underline font-sans text-[12.5px] leading-none transition-colors hover:text-[var(--text-primary)]';
+  // py-2.5 rather than leading-none alone: these were 13px-tall touch targets.
+  const minorLink = 'no-underline font-sans text-[12.5px] leading-none py-2.5 transition-colors hover:text-[var(--text-primary)]';
 
   return (
     <>
@@ -1680,11 +1681,14 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
 function PaneHeader({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
   return (
     <div
-      className="h-[38px] shrink-0 flex items-center justify-between px-4 border-b"
+      className="h-[38px] shrink-0 flex items-center justify-between gap-2 px-4 border-b"
       style={{ borderColor: 'var(--border-medium)' }}
     >
-      <div className="flex items-center gap-2 min-w-0">{children}</div>
-      {right}
+      {/* The label truncates and the controls never shrink. Without both, the
+          two groups met and overprinted between 1024 and ~1150, so the header
+          read "TRANSLATION ETRACEnglish". */}
+      <div className="flex items-center gap-2 min-w-0 [&>*]:truncate">{children}</div>
+      <div className="shrink-0 flex items-center">{right}</div>
     </div>
   );
 }
@@ -2649,22 +2653,33 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   );
 
   return (
-    <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)}>
+    <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)} className="flex flex-col h-[100dvh]">
       {siteMenuOpen && <ReaderSiteMenu onClose={() => setSiteMenuOpen(false)} />}
       <Suspense fallback={null}>
         <SearchHighlighter />
       </Suspense>
-      <Suspense fallback={null}>
-        <PinnedVersionBanner
-          bookId={r.book.id}
-          pageId={r.currentPageId}
-          onPinnedTranslation={setPinnedTranslation}
-        />
-      </Suspense>
+      {/* shrink-0, and the frames below take the remainder. As an in-flow
+          sibling of two h-[100dvh] blocks it pushed the reader down by its own
+          height, so on a phone the entire bottom toolbar sat below the fold of
+          a document that cannot scroll. */}
+      <div className="shrink-0">
+        <Suspense fallback={null}>
+          <PinnedVersionBanner
+            bookId={r.book.id}
+            pageId={r.currentPageId}
+            onPinnedTranslation={setPinnedTranslation}
+          />
+        </Suspense>
+      </div>
       {/* ── Desktop (lg+): fixed frame, panes scroll ─────────────────────── */}
       <div
-        className="hidden lg:grid h-[100dvh]"
-        style={{ gridTemplateColumns: '66px 1fr', gridTemplateRows: '58px 1fr auto' }}
+        className="hidden lg:grid flex-1 min-h-0"
+        /* minmax(0, 1fr), not 1fr: a bare fr track floors at min-content, so a
+           single wide table in a text pane (star tables in the Arabic corpus)
+           stretched the track to 700px a pane and pushed the header, the view
+           toggles, the pager and the whole translation pane past the right
+           edge — with html overflow hidden, unreachable. */
+        style={{ gridTemplateColumns: '66px minmax(0, 1fr)', gridTemplateRows: '58px minmax(0, 1fr) auto' }}
       >
         {/* Top bar — full width, single identity lockup top-left */}
         <header
@@ -2691,7 +2706,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 {r.book.display_title || r.book.title}
               </span>
-              <span className="font-sans text-[11.5px] leading-none truncate min-w-0" style={{ color: onInk(0.5) }}>
+              {/* Hidden below xl rather than truncated: at 1024 a long title
+                  left it exactly one character wide, which reads as a bug. */}
+              <span className="hidden xl:inline font-sans text-[11.5px] leading-none truncate min-w-0" style={{ color: onInk(0.5) }}>
                 {bookByline(r.book)}
               </span>
             </span>
@@ -2729,7 +2746,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {/* Right end: what you are looking at, then where you are, set apart
               from each other so they read as two controls rather than one. */}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
-          <div className="flex items-stretch ml-2">
+          <div className="flex items-stretch ml-2 shrink-0">
             <div className="flex items-stretch">
               <button type="button" aria-label={t.toolbar.previousPage} onClick={r.goPrev}
                 className={`${BAR_CONTROL} w-8`} style={barControlStyle()}>
@@ -2749,7 +2766,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   }}
                   onBlur={() => setJumpOpen(false)}
                   placeholder={String(pageNum)}
-                  className={`${BAR_CONTROL} w-16 text-center tabular-nums -mx-px`}
+                  /* 16px until lg: 1024 is iPad-portrait width, which is a
+                     touch device on the desktop layout, and iOS zooms the
+                     viewport for any control under 16px. */
+                  className={`${BAR_CONTROL} w-16 text-center tabular-nums -mx-px text-[16px] lg:text-[13px]`}
                   style={{ ...barControlStyle(true), color: '#fdfcf9' }}
                   inputMode="numeric"
                   aria-label={t.toolbar.jumpToPage}
@@ -3072,7 +3092,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       </div>
 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
-      <div className="lg:hidden flex flex-col h-[100dvh]">
+      <div className="lg:hidden flex flex-col flex-1 min-h-0">
         {/* Clipping is only needed while the bar is collapsing. Left on, it
             cut off the account menu, which opens downward out of the header. */}
         <header
@@ -3122,7 +3142,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               type="button"
               onClick={() => setSiteMenuOpen(true)}
               aria-label={t.toolbar.menu}
-              className="w-9 h-9 shrink-0 flex items-center justify-center transition-colors"
+              className="w-11 h-11 -mr-1 shrink-0 flex items-center justify-center transition-colors"
               style={{ color: onInk(0.85) }}
             >
               <Menu size={19} />
@@ -3320,7 +3340,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     type="button"
                     aria-label={t.panels.backToMore}
                     onClick={() => setLeftPanel('more')}
-                    className="w-7 h-7 -ml-1.5 shrink-0 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                    className="w-11 h-11 -ml-3 shrink-0 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
                     style={{ color: 'var(--text-muted)' }}
                   >
                     <ChevronLeft size={17} />
@@ -3328,7 +3348,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 )}
                 <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
                 <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
-                  className="w-8 h-8 -mr-2 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
+                  className="w-11 h-11 -mr-3 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
               </div>
               {leftPanelBlurb && (
                 <p className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>

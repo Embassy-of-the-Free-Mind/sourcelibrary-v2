@@ -545,7 +545,7 @@ export function ScanViewer({
  * are legible without any of them shouting.
  */
 export const BAR_CONTROL =
-  'h-9 flex items-center justify-center border font-sans text-[13px] '
+  'h-9 flex items-center justify-center border font-sans text-[13px] whitespace-nowrap '
   + 'transition-[background-color,border-color,color] duration-150 ease-out '
   + 'hover:bg-[rgba(253,252,249,0.13)] hover:text-[#fdfcf9] hover:border-[rgba(253,252,249,0.28)] '
   + 'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[rgba(253,252,249,0.5)] focus-visible:ring-offset-0';

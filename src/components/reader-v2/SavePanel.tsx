@@ -178,7 +178,11 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
               style={{ color: bookLike.liked ? 'var(--accent-rust)' : 'var(--text-muted)' }}
             />
           )}
-          {bookLike.liked ? t.savedBook(book.display_title || book.title) : t.saveBook}
+          {/* Clamped: the longest title in the corpus is 1330 characters, which
+              is about forty lines in a 340px drawer. */}
+          <span className="line-clamp-2">
+            {bookLike.liked ? t.savedBook(book.display_title || book.title) : t.saveBook}
+          </span>
         </span>
         {bookLike.count > 0 && (
           <span className="font-sans text-[12px] tabular-nums" style={{ color: 'var(--text-faint)' }}>{bookLike.count}</span>

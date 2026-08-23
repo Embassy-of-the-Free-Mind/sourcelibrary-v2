@@ -8,7 +8,7 @@
  * losing its transliteration pane in one reader but not the other.
  */
 const NON_LATIN_LANGUAGES = new Set([
-  'greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
+  'greek', 'ancient greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
   'syriac', 'chinese', 'japanese', 'korean', 'sanskrit',
   'armenian', 'georgian', 'ethiopic', 'coptic', 'tibetan',
   'russian', 'church slavonic',
