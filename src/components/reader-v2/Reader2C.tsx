@@ -9,6 +9,8 @@ import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
+import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
+import type { DeepZoomManifest } from '@/lib/types/book';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useEmbedHref } from '@/lib/EmbedContext';
@@ -2598,6 +2600,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const traceDisabledReason = traceShown && showingSpanish ? t.panes.traceEnglishOnly : undefined;
 
   const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
+  const deepzoomManifest = (r.currentPage as unknown as { deepzoom?: DeepZoomManifest }).deepzoom;
 
 
   // The text of a neighbouring page is already prefetched, but its scan is
@@ -2947,7 +2950,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.originalScan}</CapsLabel>
               </PaneHeader>
-              <div className={`flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
+              {/* `relative` because PageDeepZoomButton positions its control
+                  and its inline viewer against the nearest positioned parent:
+                  the tiled canvas fills this box, over the scan, while the
+                  translation stays readable beside it. */}
+              <div className={`relative flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
                 <ScanViewer
                   page={r.currentPage}
                   book={r.book}
@@ -2957,6 +2964,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
                 />
+                {/* Tiled deep zoom, where the page has a tile pyramid. The
+                    lightbox tops out at a 4000px render; this serves tiles, so
+                    a reader can go to the native resolution of the scan and
+                    only download the region they are looking at. 2,562 pages
+                    across 180 books have a manifest. */}
+                {deepzoomManifest && (
+                  <PageDeepZoomButton
+                    manifest={deepzoomManifest}
+                    title={`${r.book.display_title || r.book.title} — ${t.search.pageLabel(r.currentPage.page_number)}`}
+                  />
+                )}
               </div>
             </section>
           )}
@@ -3245,13 +3263,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               {/* Zoom/pan and the lens need the touch stream, so keep those
                   gestures from also turning the page */}
               <div
-                className="px-4 py-4"
+                className="relative px-4 py-4"
                 style={{ height: 'min(66dvh, 520px)' }}
                 onTouchStart={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
                 onTouchMove={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
                 onTouchEnd={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
               >
                 <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn} />
+                {/* On a phone this opens the fullscreen viewer directly —
+                    inline pan/zoom fights the swipe between pages. */}
+                {deepzoomManifest && (
+                  <PageDeepZoomButton
+                    manifest={deepzoomManifest}
+                    title={`${r.book.display_title || r.book.title} — ${t.search.pageLabel(r.currentPage.page_number)}`}
+                  />
+                )}
               </div>
             </section>
           )}
