@@ -1190,16 +1190,24 @@ function TraceStatusLine({ status, showHint }: { status: TraceStatus; showHint: 
  * other. Same shape as the Notes toggle it sits beside, because they are the
  * same kind of thing — a way of reading, switched on for as long as you want it.
  */
-function TraceToggle({ on, onToggle, language }: {
+function TraceToggle({ on, onToggle, language, disabledReason }: {
   on: boolean; onToggle: () => void; language?: string;
+  /**
+   * Shown instead of the hint when the control cannot work here. The chip
+   * stays rendered: it used to vanish on switching to Spanish, which reads as
+   * the feature breaking rather than as it not applying.
+   */
+  disabledReason?: string;
 }) {
   const t = getReaderStrings(useLocale()).panes;
+  const disabled = !!disabledReason;
   return (
     <button
       type="button"
       onClick={onToggle}
       aria-pressed={on}
-      className={PANE_CHIP}
+      disabled={disabled}
+      className={`${PANE_CHIP} disabled:cursor-default disabled:opacity-45`}
       style={{
         // The colour of the highlight it paints. It was gold, which is the
         // editorial-note colour — so Trace and Notes were the same chip, and a
@@ -1208,9 +1216,8 @@ function TraceToggle({ on, onToggle, language }: {
         background: on ? 'rgba(74, 111, 165, 0.12)' : 'transparent',
         borderColor: on ? 'rgba(74, 111, 165, 0.45)' : 'transparent',
       }}
-      title={on
-        ? t.turnTracingOff
-        : t.traceHint(language || t.traceFallbackLanguage)}
+      title={disabledReason
+        ?? (on ? t.turnTracingOff : t.traceHint(language || t.traceFallbackLanguage))}
     >
       {t.trace}
     </button>
@@ -2507,10 +2514,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   // Trace aligns the transcription against the ENGLISH translation, so it has
   // nothing to align while the pane is showing Spanish.
-  const traceEligible = !isEnglishBook && !editing && !showingSpanish && !paired
+  // Two gates, because they mean different things. `traceShown` is whether
+  // the control belongs on this page at all; `traceEligible` is whether it can
+  // do anything right now. Spanish separates them: the alignment record holds
+  // verbatim English spans, so there is nothing to find in a Spanish pane, but
+  // hiding the chip made a working feature look broken.
+  const traceShown = !isEnglishBook && !editing && !paired
     && !!r.currentPage.ocr?.data && !!r.currentPage.translation?.data
     && r.views.ocr && r.views.en;
+  const traceEligible = traceShown && !showingSpanish;
   const traceActive = traceOn && traceEligible;
+  const traceDisabledReason = traceShown && showingSpanish ? t.panes.traceEnglishOnly : undefined;
 
   const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
 
@@ -2845,8 +2859,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             >
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
-                  {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
+                  {traceShown && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} disabledReason={traceDisabledReason} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
@@ -2887,8 +2901,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             >
               <PaneHeader right={
                 <div className="flex items-center gap-1">
-                  {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
+                  {traceShown && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} disabledReason={traceDisabledReason} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
@@ -2918,8 +2932,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section data-reader-section="translation" className="relative flex-1 min-w-0 flex flex-col" style={{ background: SURFACE.translation }}>
               <PaneHeader right={!editing ? (
                 <div className="flex items-center gap-1">
-                  {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
+                  {traceShown && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} disabledReason={traceDisabledReason} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
@@ -3119,8 +3133,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </CapsLabel>
                 {paired && <PairedBadgeRow paired={paired} />}
                 <div className="flex items-center gap-1">
-                  {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
+                  {traceShown && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} disabledReason={traceDisabledReason} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
@@ -3162,8 +3176,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   />
                 </div>
                 <div className="flex items-center gap-1">
-                  {traceEligible && (
-                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} />
+                  {traceShown && (
+                    <TraceToggle on={traceOn} onToggle={() => setTraceOn(v => !v)} language={r.book.language} disabledReason={traceDisabledReason} />
                   )}
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}

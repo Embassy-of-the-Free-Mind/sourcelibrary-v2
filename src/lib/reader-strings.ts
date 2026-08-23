@@ -195,6 +195,12 @@ export interface ReaderStrings {
     traceHint: (language: string) => string;
     traceAligning: string;
     traceUnavailable: string;
+    /** Why the chip is there but dead while the Spanish translation is shown:
+     *  the alignment record holds English spans only. */
+    traceEnglishOnly: string;
+    /** Placeholder on a page whose whole text is an AI description, with the
+     *  Notes toggle off. Takes the page type, already labelled. */
+    descriptionHidden: (pageTypeLabel: string) => string;
     traceRateLimited: string;
     traceClickHint: string;
 
@@ -575,6 +581,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       traceHint: (language) => `Trace: click any phrase to see it in the ${language}`,
       traceAligning: 'Aligning this page with the translation…',
       traceUnavailable: 'Tracing is not available for this page.',
+      traceEnglishOnly: 'Tracing compares the original with the English translation. Switch back to English to use it.',
+      descriptionHidden: (pageTypeLabel: string) => `${pageTypeLabel} page. Turn Notes on to read the description.`,
       traceRateLimited: 'Tracing limit reached. Sign in (free) to keep going.',
       traceClickHint: 'Click any phrase to see it in the other pane.',
 
@@ -908,6 +916,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       traceHint: (language) => `Cotejar: haz clic en cualquier frase para verla en ${language}`,
       traceAligning: 'Alineando esta página con la traducción…',
       traceUnavailable: 'El cotejo no está disponible para esta página.',
+      traceEnglishOnly: 'El cotejo compara el original con la traducción al inglés. Vuelve al inglés para usarlo.',
+      descriptionHidden: (pageTypeLabel: string) => `Página de ${pageTypeLabel.toLowerCase()}. Activa las notas para leer la descripción.`,
       traceRateLimited: 'Has alcanzado el límite de cotejos. Inicia sesión (gratis) para continuar.',
       traceClickHint: 'Haz clic en cualquier frase para verla en el otro panel.',
 
