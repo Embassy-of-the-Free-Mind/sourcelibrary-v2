@@ -104,7 +104,9 @@ export default function AccountClient({ user }: AccountClientProps) {
   }, [identity.loading, identity.id]);
 
   // Lists tile: count + cover collage. Raw fetch so this page doesn't depend
-  // on the lists feature being deployed — a 404 just leaves the tile plain.
+  // on the lists feature being deployed — the tile only RENDERS when the
+  // endpoint answers, so shipping this page before the lists feature shows
+  // two tiles, and the third appears on its own when lists go live.
   useEffect(() => {
     fetch('/api/lists?covers=true')
       .then(r => (r.ok ? r.json() : null))
@@ -250,7 +252,7 @@ export default function AccountClient({ user }: AccountClientProps) {
           <h2 className="font-serif text-2xl md:text-3xl mb-6" style={{ color: 'var(--text-primary)' }}>
             Your library
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className={`grid grid-cols-1 gap-4 ${listsInfo ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
             <Link
               href="/favorites"
               className="group p-5 md:p-6 transition-all hover:shadow-md"
@@ -276,30 +278,32 @@ export default function AccountClient({ user }: AccountClientProps) {
               </p>
             </Link>
 
-            <Link
-              href="/lists"
-              className="group p-5 md:p-6 transition-all hover:shadow-md"
-              style={{ background: 'white', border: '1px solid var(--border-light)' }}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <Bookmark className="w-5 h-5 text-accent-gold-dark" aria-hidden="true" />
-                {listsInfo && listsInfo.covers.length > 0 && (
-                  <span className="flex -space-x-2">
-                    {listsInfo.covers.map((url, i) => (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img key={i} src={url} alt="" aria-hidden="true" data-avatar="true" className="w-7 h-7 rounded-full object-cover" style={{ border: '2px solid white' }} loading="lazy" />
-                    ))}
-                  </span>
-                )}
-              </div>
-              <p className="font-medium text-[15px] flex items-center gap-1" style={{ color: 'var(--text-primary)' }}>
-                Lists{listsInfo && listsInfo.count > 0 ? ` · ${listsInfo.count}` : ''}
-                <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" aria-hidden="true" />
-              </p>
-              <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                Collections of your own making
-              </p>
-            </Link>
+            {listsInfo && (
+              <Link
+                href="/lists"
+                className="group p-5 md:p-6 transition-all hover:shadow-md"
+                style={{ background: 'white', border: '1px solid var(--border-light)' }}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <Bookmark className="w-5 h-5 text-accent-gold-dark" aria-hidden="true" />
+                  {listsInfo.covers.length > 0 && (
+                    <span className="flex -space-x-2">
+                      {listsInfo.covers.map((url, i) => (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img key={i} src={url} alt="" aria-hidden="true" data-avatar="true" className="w-7 h-7 rounded-full object-cover" style={{ border: '2px solid white' }} loading="lazy" />
+                      ))}
+                    </span>
+                  )}
+                </div>
+                <p className="font-medium text-[15px] flex items-center gap-1" style={{ color: 'var(--text-primary)' }}>
+                  Lists{listsInfo.count > 0 ? ` · ${listsInfo.count}` : ''}
+                  <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" aria-hidden="true" />
+                </p>
+                <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                  Collections of your own making
+                </p>
+              </Link>
+            )}
 
             <Link
               href="/reading-history"
