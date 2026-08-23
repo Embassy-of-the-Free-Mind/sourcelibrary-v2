@@ -121,7 +121,7 @@ export default function ListDetailPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="light" />
-      <div className="max-w-[var(--container-standard)] mx-auto px-4 py-12">
+      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-12">
         {!loaded ? (
           <div className="flex justify-center py-20">
             <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--text-muted)' }} aria-hidden="true" />
@@ -183,7 +183,7 @@ export default function ListDetailPage() {
             ) : (
               <div className="mb-8">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h1 className="text-2xl font-serif font-medium" style={{ color: 'var(--text-primary)' }}>
+                  <h1 className="font-serif text-3xl md:text-4xl tracking-tight" style={{ color: 'var(--text-primary)' }}>
                     {list.title}
                   </h1>
                   {list.is_owner && (

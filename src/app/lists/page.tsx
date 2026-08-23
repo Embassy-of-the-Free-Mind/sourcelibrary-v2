@@ -55,7 +55,7 @@ export default function ListsPage() {
         <SiteHeader variant="light" />
         <div className="max-w-xl mx-auto px-4 py-24 text-center">
           <Bookmark className="w-10 h-10 mx-auto mb-4" style={{ color: 'var(--text-faint)' }} aria-hidden="true" />
-          <h1 className="text-2xl font-serif font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="font-serif text-3xl md:text-4xl tracking-tight mb-2" style={{ color: 'var(--text-primary)' }}>
             Your lists
           </h1>
           <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
@@ -76,9 +76,9 @@ export default function ListsPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="light" />
-      <div className="max-w-[var(--container-standard)] mx-auto px-4 py-12">
+      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-12">
         <div className="flex items-center justify-between gap-4 mb-2">
-          <h1 className="text-2xl font-serif font-medium" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="font-serif text-3xl md:text-4xl tracking-tight" style={{ color: 'var(--text-primary)' }}>
             Your lists
           </h1>
           <button
