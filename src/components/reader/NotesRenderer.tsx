@@ -10,6 +10,8 @@ import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings } from '@/lib/reader-strings';
 import { applyNotesOff } from '@/lib/notes-off';
 import AiBadge from '@/components/ui/AiBadge';
 
@@ -936,6 +938,8 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
     return null;
   }, [processedText, columns]);
 
+  const readerStrings = getReaderStrings(useLocale()).panes;
+
   // Determine text direction from language prop or extracted metadata
   const effectiveLanguage = language || metadata.language;
   const isRTL = isRTLLanguage(effectiveLanguage);
@@ -953,7 +957,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   if (isDescriptionOnly && !showNotes) {
     return (
       <div className={`text-[var(--text-muted)] italic text-sm ${className}`}>
-        {formatPageTypeLabel(metadata.pageType || pageType || 'Image')} page — toggle Notes to see description
+        {readerStrings.descriptionHidden(formatPageTypeLabel(metadata.pageType || pageType || 'Image'))}
       </div>
     );
   }
