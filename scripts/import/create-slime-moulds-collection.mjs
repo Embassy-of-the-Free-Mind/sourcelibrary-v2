@@ -25,6 +25,12 @@ const BOOK_IDS = [
   '69d8ca4ea09828f83ddca72d', // Persoon, Synopsis Methodica Fungorum, 1801
   '69d8ca77a09828f83ddcb132', // Fries, Systema Mycologicum, Vol 3
   '6a601adc744548430e8ee345', // de Bary, Morphologie und Physiologie der Pilze, 1866
+  // Second wave: the untranslated monographs and the plate-bearing English ones.
+  '6a8b7898ddf894921a433f42', // Schrader, Nova Genera Plantarum, 1797 (Latin, coloured plates)
+  '6a8b76ef313cdd0126cb79af', // Zopf, Die Pilzthiere oder Schleimpilze, 1885 (German)
+  '6a8b78a1ddf894921a433f76', // Cooke, The Myxomycetes of Great Britain, 1877 (English)
+  '6a8b78abddf894921a43401a', // Massee, Monograph of the Myxogastres, 1892 (English)
+  '6a8b76f6313cdd0126cb7a75', // Lister, A Monograph of the Mycetozoa, 1894 (English)
 ];
 
 const COLLECTION = {
