@@ -7,9 +7,15 @@ interface LogoProps {
   compact?: boolean;
   /** Extra-compact: icon only on mobile, text on sm+ (used in reader header) */
   mini?: boolean;
+  /**
+   * Keep the wordmark at every width. For surfaces that have the room and
+   * need the full identity: the reader's full-screen site menu is the whole
+   * screen, so the three rings alone read as an unlabelled dot.
+   */
+  alwaysWordmark?: boolean;
 }
 
-export default function Logo({ white, compact, mini }: LogoProps) {
+export default function Logo({ white, compact, mini, alwaysWordmark }: LogoProps) {
   const strokeColor = white ? 'white' : 'currentColor';
 
   const iconSize = mini
@@ -31,7 +37,9 @@ export default function Logo({ white, compact, mini }: LogoProps) {
   // leaving just the three rings on phones/tablets. Reader feedback: the logo
   // read as "smooshed" and "should collapse to just the circles" (#3085).
   // The marketing/site header keeps its wordmark from `sm` up.
-  const wordmarkVisibility = mini ? 'hidden lg:inline' : 'hidden sm:inline';
+  const wordmarkVisibility = alwaysWordmark
+    ? 'inline'
+    : mini ? 'hidden lg:inline' : 'hidden sm:inline';
 
   return (
     <Link

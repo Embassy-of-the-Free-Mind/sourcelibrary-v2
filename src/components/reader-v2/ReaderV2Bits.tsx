@@ -524,6 +524,32 @@ export function ScanViewer({
   );
 }
 
+/**
+ * One button vocabulary for every control on the ink bar: the book title, the
+ * view toggles, the pager. They had drifted into three different treatments
+ * (two heights, two border strengths, hover on some and not others), which is
+ * why a row of controls that do comparable things did not read as a set.
+ *
+ * The shape is fixed here and the state is the only thing that varies. Idle
+ * sits back, hover brings the fill and the label up together, and the pressed
+ * state goes brighter still with a full-strength border, so the three levels
+ * are legible without any of them shouting.
+ */
+export const BAR_CONTROL =
+  'h-9 flex items-center justify-center border font-sans text-[13px] '
+  + 'transition-[background-color,border-color,color] duration-150 ease-out '
+  + 'hover:bg-[rgba(253,252,249,0.13)] hover:text-[#fdfcf9] hover:border-[rgba(253,252,249,0.28)] '
+  + 'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[rgba(253,252,249,0.5)] focus-visible:ring-offset-0';
+
+/** Idle and pressed fills for `BAR_CONTROL`. */
+export function barControlStyle(on = false) {
+  return {
+    borderColor: on ? onInk(0.32) : onInk(0.16),
+    background: on ? onInk(0.16) : onInk(0.06),
+    color: on ? '#fdfcf9' : onInk(0.62),
+  } as const;
+}
+
 /** Adjoining multi-toggle group on the ink bar (Scan / OCR / English). */
 export function ViewToggleGroup({
   views, onToggle, compact = false, showTranslit = false,
@@ -551,15 +577,8 @@ export function ViewToggleGroup({
             type="button"
             aria-pressed={on}
             onClick={() => onToggle(it.key)}
-            // Height is explicit so the group lines up with the pager beside
-            // it; padding-derived heights drifted apart by a pixel or two.
-            className={`font-sans text-[13px] flex items-center justify-center border transition-colors ${compact ? 'px-2.5 h-[36px]' : 'px-3 h-[36px]'}`}
-            style={{
-              borderColor: on ? onInk(0.3) : onInk(0.16),
-              background: on ? onInk(0.14) : 'transparent',
-              color: on ? '#fdfcf9' : onInk(0.5),
-              marginLeft: i === 0 ? 0 : -1,
-            }}
+            className={`${BAR_CONTROL} ${compact ? 'px-2.5' : 'px-3'}`}
+            style={{ ...barControlStyle(on), marginLeft: i === 0 ? 0 : -1 }}
           >
             {it.label}
           </button>

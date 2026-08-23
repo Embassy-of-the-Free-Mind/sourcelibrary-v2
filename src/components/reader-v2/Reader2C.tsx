@@ -38,7 +38,7 @@ import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishBu
 import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
 import {
   CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
-  resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote,
+  resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle,
   SURFACE, themeAttr, bookByline,
 } from './ReaderV2Bits';
 
@@ -663,21 +663,23 @@ function SearchHighlighter() {
  * The way out of the book: everywhere else in Source Library, plus the
  * account, support and feedback.
  *
- * It takes the whole screen rather than sharing the frame with the page. The
- * reader's panels all answer questions about the book you are in, so a site
- * menu sitting in the same slot read as one more of them; full-screen says
- * plainly that this is about leaving. It is also the only menu on the reader,
- * which is why the desktop bar has a hamburger where the avatar used to be.
+ * Two shapes, one component. On a phone it takes the whole screen, because
+ * there is no room to show a menu and the page at once and full-screen says
+ * plainly that this is about leaving. On a desktop the bar is right there
+ * above it, so it is a panel hanging off the hamburger and the reader stays
+ * visible behind it. It is the only menu on the reader either way, which is
+ * why the desktop bar has a hamburger where the avatar used to be.
  *
  * It is set in the SITE's surface rather than the reader's ink. Everything
  * dark on this page is the book; the moment you are looking at the library
  * instead, the ground should be the library's. The tokens are the reader's
- * own, so a night-mode reader gets a dark menu without a cream flash.
+ * own, so a night-mode reader gets a dark menu without a cream flash. The
+ * phone's own header stays ink, so opening the menu does not flash the one
+ * dark band on the screen to cream and back.
  *
- * Height is fixed to the viewport (`100svh`, not `100vh`, so a phone's
- * collapsing address bar cannot push the last row under the fold) and only
- * the middle column scrolls. The destinations go two-up above `sm` because a
- * seven-item column was taller than it had any reason to be.
+ * The full-screen shape is pinned to `100svh`, not `100vh`, so a phone's
+ * collapsing address bar cannot push the last row under the fold, and only
+ * the middle column scrolls.
  */
 function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
   const { data: session } = useSession();
@@ -722,37 +724,52 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
   const minorLink = 'no-underline font-sans text-[12.5px] leading-none transition-colors hover:text-[var(--text-primary)]';
 
   return (
-    <div
-      className="fixed inset-0 z-[70] rv2-menu-ground flex flex-col overflow-hidden"
-      style={{ height: '100svh', background: 'var(--bg-cream)', color: 'var(--text-primary)' }}
-      role="dialog"
-      aria-modal="true"
-      aria-label={t.library}
-    >
+    <>
+      {/* Desktop only: the reader is still there behind the panel, so a click
+          anywhere on it closes rather than doing something to the page. */}
       <div
-        className="shrink-0 flex items-center justify-between h-[52px] lg:h-[58px] px-3 lg:px-4"
-        style={{ borderBottom: '1px solid var(--border-light)' }}
+        className="hidden lg:block fixed inset-0 z-[69]"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        className={'rv2-menu-ground z-[70] flex flex-col overflow-hidden fixed inset-0 h-[100svh] '
+          + 'lg:inset-auto lg:h-auto lg:top-[62px] lg:right-3 lg:w-[380px] lg:max-h-[calc(100svh-74px)] '
+          + 'lg:border lg:shadow-[0_18px_48px_-16px_rgba(20,16,12,0.55)]'}
+        style={{
+          background: 'var(--bg-cream)',
+          color: 'var(--text-primary)',
+          borderColor: 'var(--border-medium)',
+        }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.library}
       >
-        <span className="flex items-center [&_svg]:w-8 [&_svg]:h-8 lg:[&_svg]:w-auto lg:[&_svg]:h-auto">
-          <Logo compact />
-        </span>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label={strings.toolbar.close}
-          className="w-10 h-10 -mr-1.5 flex items-center justify-center transition-colors hover:bg-[var(--bg-warm)]"
-          style={{ color: 'var(--text-secondary)' }}
+        {/* Phone header only. It stays ink so the bar it replaces does not
+            flash from dark to cream while the menu opens; on desktop the real
+            bar is untouched above the panel and this would duplicate it. */}
+        <div
+          className="lg:hidden shrink-0 flex items-center justify-between h-[52px] pl-3 pr-1.5"
+          style={{ background: INK, color: '#fdfcf9' }}
         >
-          <X size={20} />
-        </button>
-      </div>
+          <Logo white compact alwaysWordmark />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={strings.toolbar.close}
+            className="w-10 h-10 flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
+            style={{ color: onInk(0.85) }}
+          >
+            <X size={20} />
+          </button>
+        </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
-        <div className="w-full max-w-[44rem] mx-auto px-5 lg:px-8 pt-6 lg:pt-9 pb-10">
+        <div className="w-full max-w-[44rem] mx-auto px-5 lg:px-5 pt-6 lg:pt-5 pb-10 lg:pb-6">
           <CapsLabel className="block pb-1" style={{ color: 'var(--text-faint)' }}>{t.library}</CapsLabel>
           {/* Two columns above sm. Hairlines rather than gaps, which is how
               every other list on the site separates its rows. */}
-          <nav className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-10">
+          <nav className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-1">
             {destinations.map(([label, path], i) => (
               <Link
                 key={path}
@@ -857,7 +874,8 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -2610,8 +2628,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               save button next to the view toggles reads as saving a view. */}
           <a
             href={embedHref(`/book/${r.bookPath}`)}
-            className="min-w-0 max-w-[46%] h-[36px] no-underline group flex items-center gap-2 pl-1.5 pr-3 border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-            style={{ borderColor: onInk(0.14), background: onInk(0.06) }}
+            className={`${BAR_CONTROL} min-w-0 max-w-[46%] no-underline group !justify-start gap-2 pl-1.5 pr-3`}
+            style={barControlStyle()}
             title={t.toolbar.backToTheBook}
           >
             <ChevronLeft size={15} className="shrink-0" style={{ color: onInk(0.72) }} />
@@ -2632,8 +2650,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <button
                 type="button"
                 onClick={cancelEdits}
-                className="px-3 py-[7px] font-sans text-[13px] border transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-                style={{ borderColor: onInk(0.14), color: onInk(0.72) }}
+                className={`${BAR_CONTROL} px-3`}
+                style={barControlStyle()}
               >
                 Cancel
               </button>
@@ -2641,8 +2659,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 type="button"
                 onClick={saveEdits}
                 disabled={saving}
-                className="flex items-center gap-2 px-3 py-[7px] font-sans text-[13px] disabled:opacity-60"
-                style={{ background: 'var(--accent-rust)', color: '#fdfcf9' }}
+                className={`${BAR_CONTROL} gap-2 px-3 disabled:opacity-60 hover:!bg-[var(--accent-rust)] hover:brightness-110`}
+                style={{ background: 'var(--accent-rust)', color: '#fdfcf9', borderColor: 'var(--accent-rust)' }}
               >
                 {saving ? <Loader2 size={13} className="animate-spin" /> : <Check size={13} />}
                 {/* Always "Save": a button labelled Done beside an unsaved
@@ -2661,10 +2679,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               from each other so they read as two controls rather than one. */}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
           <div className="flex items-stretch ml-2">
-            <div className="flex items-stretch border" style={{ borderColor: onInk(0.14), background: onInk(0.06) }}>
+            <div className="flex items-stretch">
               <button type="button" aria-label={t.toolbar.previousPage} onClick={r.goPrev}
-                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-                style={{ color: onInk(0.72) }}>
+                className={`${BAR_CONTROL} w-8`} style={barControlStyle()}>
                 <ChevronLeft size={15} />
               </button>
               {jumpOpen ? (
@@ -2681,8 +2698,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   }}
                   onBlur={() => setJumpOpen(false)}
                   placeholder={String(pageNum)}
-                  className="w-14 text-center font-sans text-[12.5px] bg-transparent outline-none"
-                  style={{ color: '#fdfcf9' }}
+                  className={`${BAR_CONTROL} w-16 text-center tabular-nums -mx-px`}
+                  style={{ ...barControlStyle(true), color: '#fdfcf9' }}
                   inputMode="numeric"
                   aria-label={t.toolbar.jumpToPage}
                 />
@@ -2690,16 +2707,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <button
                   type="button"
                   onClick={() => setJumpOpen(true)}
-                  className="px-2 font-sans text-[12.5px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.08)]"
+                  className={`${BAR_CONTROL} px-2.5 tabular-nums -mx-px`}
                   title={t.toolbar.jumpToPage}
-                  style={{ color: onInk(0.9) }}
+                  style={{ ...barControlStyle(), color: '#fdfcf9' }}
                 >
                   p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
                 </button>
               )}
               <button type="button" aria-label={t.toolbar.nextPage} onClick={r.goNext}
-                className="w-8 h-[34px] flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-                style={{ color: onInk(0.72) }}>
+                className={`${BAR_CONTROL} w-8`} style={barControlStyle()}>
                 <ChevronRight size={15} />
               </button>
             </div>
@@ -2711,8 +2727,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             type="button"
             onClick={() => setSiteMenuOpen(true)}
             aria-label={t.toolbar.menu}
-            className="ml-2 w-9 h-9 shrink-0 flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.12)]"
-            style={{ color: onInk(0.85) }}
+            className={`${BAR_CONTROL} ml-2 w-9 shrink-0`}
+            style={barControlStyle()}
           >
             <Menu size={19} />
           </button>
