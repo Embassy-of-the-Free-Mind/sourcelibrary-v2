@@ -26,6 +26,7 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
+import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -457,6 +458,7 @@ async function processOneJob(db, job) {
     // batch results submitted before the edit must not clobber them.
     let humanEditedIds = new Set();
     let protectedCount = 0;
+    let blankRefusedCount = 0;
 
     // First pass: fix null ocr/translation subdocuments (skip for image_extraction)
     if (job.type !== 'image_extraction') {
@@ -492,6 +494,37 @@ async function processOneJob(db, job) {
     // submitted before this shipped — those pages stay pre-provenance (null).
     const sourceUrlByPage = new Map((job.page_sources || []).map(s => [s.page_id, s.source_url]));
 
+    // ── Blank-page guard (#4149) ────────────────────────────────────────────
+    // The model does not decline an unreadable leaf: it writes fluent invented
+    // prose with a full apparatus, page number included, and a fabricated page
+    // number is a fabricated citation. HALLUCINATION_LIMIT above is a
+    // runaway-LENGTH guard and misses these — only one confirmed fabrication
+    // exceeded 25k chars; the rest were 483–2,800, shorter and better-formed
+    // than plenty of real OCR. Only the page image settles it.
+    //
+    // We check the exact URL the orchestrator sent to Gemini (#2297's
+    // page_sources), so this asks "was the image the model actually saw blank?"
+    // Pre-#2297 jobs carry no page_sources and simply skip the check.
+    //
+    // Fails OPEN on every doubt — see scripts/lib/blank-page-guard.mjs.
+    const blankVerdicts = new Map();
+    if (job.type === 'ocr' && guardEnabled()) {
+      const candidates = pageResults.filter(r =>
+        !staleDropPages?.has(r.pageId) && !humanEditedIds.has(r.pageId) &&
+        r.text.length <= HALLUCINATION_LIMIT && sourceUrlByPage.get(r.pageId));
+      const GUARD_CONCURRENCY = 6;
+      for (let i = 0; i < candidates.length; i += GUARD_CONCURRENCY) {
+        const slice = candidates.slice(i, i + GUARD_CONCURRENCY);
+        const verdicts = await Promise.all(slice.map(r =>
+          shouldRefuseOcrWrite({ text: r.text, imageUrl: sourceUrlByPage.get(r.pageId) })
+            .catch(() => ({ refuse: false, reason: 'guard_threw', coverage: null, chars: 0 }))));
+        slice.forEach((r, idx) => { if (verdicts[idx].refuse) blankVerdicts.set(r.pageId, verdicts[idx]); });
+      }
+      if (blankVerdicts.size) {
+        console.log(`  BLANK-PAGE GUARD: refusing ${blankVerdicts.size} page(s) whose image has no ink (#4149)`);
+      }
+    }
+
     for (const { pageId, text, usage } of pageResults) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (humanEditedIds.has(pageId)) {
@@ -506,6 +539,20 @@ async function processOneJob(db, job) {
       const outputTokens = usage?.candidatesTokenCount || 0;
 
       if (job.type === 'ocr') {
+        // Refused by the blank-page guard: keep the evidence, write no OCR.
+        // A silent drop would be as bad as a silent save — nothing downstream
+        // could tell "refused" from "never processed".
+        const blank = blankVerdicts.get(pageId);
+        if (blank) {
+          if (!DRY_RUN) {
+            await recordRefusal(db, {
+              pageId, bookId: job.book_id, pageNumber: null, text,
+              model: job.model, verdict: blank, jobId: jobIdStr,
+            }).catch(e => console.warn(`  guard: could not record refusal for ${pageId}: ${e.message}`));
+          }
+          blankRefusedCount++;
+          continue;
+        }
         const pageType = extractPageType(text);
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
@@ -690,7 +737,11 @@ async function processOneJob(db, job) {
 
     // Update batch_jobs status — mark as 'failed' if zero pages saved
     // (pages skipped by the human-edit guard count as handled, not failed)
-    const finalStatus = successCount > 0 || protectedCount > 0 ? 'saved' : 'failed';
+    // Pages refused by the blank-page guard (#4149) are HANDLED, not failed —
+    // same reasoning as the human-edit guard. A job of nothing but blank leaves
+    // is a job that did its work correctly; marking it 'failed' would send it
+    // back round for a retry that would fabricate the same text again.
+    const finalStatus = successCount > 0 || protectedCount > 0 || blankRefusedCount > 0 ? 'saved' : 'failed';
     const errorDetail = finalStatus !== 'failed' ? undefined
       : recitationCount > 0
         ? `All ${recitationCount} pages blocked by RECITATION filter`
@@ -707,6 +758,7 @@ async function processOneJob(db, job) {
           completed_pages: successCount,
           failed_pages: failCount,
           ...(protectedCount > 0 && { protected_pages: protectedCount }),
+          ...(blankRefusedCount > 0 && { blank_refused_pages: blankRefusedCount }),
           results_collected: true,
           completed_at: now,
           updated_at: now,

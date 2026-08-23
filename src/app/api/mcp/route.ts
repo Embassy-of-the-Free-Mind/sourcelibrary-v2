@@ -3,6 +3,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
+import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
@@ -125,11 +126,16 @@ async function searchPassages(args: Record<string, unknown>) {
   if (args.year_from) params.set('year_from', String(args.year_from));
   if (args.year_to) params.set('year_to', String(args.year_to));
   if (args.book_id) params.set('book_id', String(args.book_id));
+  const textLang = langArg(args);
+  if (textLang !== 'en') params.set('lang', textLang);
 
   const result = await apiGet('/search', params) as Record<string, unknown>;
   const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
     const snippetType = r.snippet_type as string | undefined;
-    const snippetLanguage = snippetType === 'ocr' ? r.language : 'English';
+    // The snippet's language: the leaf's own for an OCR hit, otherwise the
+    // edition that was searched. Hard-coding "English" here was correct while
+    // one translation existed per page; it is not any more (#4095).
+    const snippetLanguage = snippetType === 'ocr' ? r.language : (textLang === 'en' ? 'English' : textLang);
     return {
       book_id: r.book_id,
       title: r.display_title || r.title,
@@ -160,6 +166,10 @@ async function searchPassages(args: Record<string, unknown>) {
     total_matches: result.total,
     returned: passages.length,
     offset,
+    lang: textLang,
+    ...(textLang !== 'en' ? {
+      lang_note: `Searched the "${textLang}" edition. Only books that HAVE an edition in that language can appear — this is a narrower corpus than the default English search, not a smaller result set for the same books.`,
+    } : {}),
     // BUG 2: surface the backend's lane-timeout signal so callers know the count
     // may be incomplete when a search lane degraded. Only present when true.
     ...(result.partial ? { partial: true } : {}),
@@ -182,6 +192,8 @@ async function searchConcept(args: Record<string, unknown>) {
   if (args.year_from) params.set('year_min', String(args.year_from));
   if (args.year_to) params.set('year_max', String(args.year_to));
   if (args.max_per_book) params.set('max_per_book', String(args.max_per_book));
+  const conceptLang = langArg(args);
+  if (conceptLang !== 'en') params.set('lang', conceptLang);
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
   const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
@@ -190,7 +202,7 @@ async function searchConcept(args: Record<string, unknown>) {
     author: r.book_author,
     // Edition language, not the work's — see the note in searchPassages (#3942).
     language: r.book_language,
-    snippet_language: 'English',
+    snippet_language: conceptLang === 'en' ? 'English' : conceptLang,
     published: r.book_year,
     page: r.page_number,
     snippet: stripProvenanceMarks(r.snippet as string),
@@ -209,13 +221,30 @@ async function searchConcept(args: Record<string, unknown>) {
     // not return a separate corpus count), so keep it equal to returned.
     total_matches: passages.length,
     returned: passages.length,
+    lang: (result.lang as string) ?? conceptLang,
+    ...(result.lang_note ? { lang_note: result.lang_note } : {}),
     passages,
     tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording. Semantic search always returns English translation text (snippet_language: "English"). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
 }
 
+/**
+ * The `lang` argument, normalised (#4095).
+ *
+ * An ISO code names which EDITION of the text to read — Spanish covers 103
+ * books of 22,000, so every tool that takes it also has to say which edition it
+ * actually served. `en` and anything malformed collapse to English, the default
+ * store, rather than erroring: a bad language code should not fail a search.
+ */
+function langArg(args: Record<string, unknown>): string {
+  const raw = String(args.lang || '').trim().toLowerCase();
+  return /^[a-z]{2,3}$/.test(raw) ? raw : 'en';
+}
+
 async function searchWithinBook(args: Record<string, unknown>) {
+  const lang = langArg(args);
   const params = new URLSearchParams({ q: String(args.query) });
+  if (lang !== 'en') params.set('lang', lang);
   const result = await apiGet(`/books/${args.book_id}/search`, params) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => {
     const matches = r.matches as Array<Record<string, unknown>>;
@@ -245,6 +274,9 @@ async function searchWithinBook(args: Record<string, unknown>) {
   const coverage = result.semantic_coverage as { status?: string; caveat?: string } | undefined;
   return {
     book_id: args.book_id, query: result.query, total: result.total, returned: result.returned,
+    // Which edition of the book's text was searched, and which the snippets are
+    // in. Always present so a caller never has to infer it.
+    lang: result.lang ?? 'en',
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
@@ -257,6 +289,11 @@ async function listBooks(args: Record<string, unknown>) {
   if (args.search) params.set('search', String(args.search));
   if (args.language) params.set('language', String(args.language));
   if (args.category) params.set('category', String(args.category));
+  // `has_edition` filters by a language the book can be READ in; `language`
+  // filters by the language printed on its leaves. A Latin book with a Spanish
+  // edition matches both.
+  const hasEdition = String(args.has_edition || '').trim().toLowerCase();
+  if (/^[a-z]{2,3}$/.test(hasEdition) && hasEdition !== 'en') params.set('has_edition', hasEdition);
   if (args.sort) params.set('sort', String(args.sort));
   if (args.limit) params.set('limit', String(Math.min(Number(args.limit), 200)));
   if (args.skip) params.set('skip', String(args.skip));
@@ -265,9 +302,20 @@ async function listBooks(args: Record<string, unknown>) {
   const books = (result.books as Array<Record<string, unknown>>)?.map((b) => ({
     id: b.id, title: b.display_title || b.title, author: b.author, language: b.language,
     published: b.published, pages_count: b.pages_count, pages_translated: b.pages_translated,
-    translation_percent: b.translation_percent, url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
+    translation_percent: b.translation_percent,
+    ...(params.get('has_edition') ? {
+      [`pages_translated_${params.get('has_edition')}`]: b[`pages_translated_${params.get('has_edition')}`],
+      // The reader URL for that edition, which only exists because the filter
+      // guarantees the book has pages in it.
+      url_localized: `https://sourcelibrary.org/${params.get('has_edition')}/book/${b.slug || b.id}`,
+    } : {}),
+    url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
   }));
-  return { total: result.total, showing: books?.length || 0, books };
+  return {
+    total: result.total, showing: books?.length || 0,
+    ...(params.get('has_edition') ? { has_edition: params.get('has_edition') } : {}),
+    books,
+  };
 }
 
 async function getBook(args: Record<string, unknown>) {
@@ -290,6 +338,11 @@ async function getBook(args: Record<string, unknown>) {
     ...languageApparatusFields(result as LanguageApparatusSource),
     categories: result.categories, pages_count: result.pages_count,
     pages_translated: result.pages_translated, doi: result.doi,
+    // Which languages this book can be READ in, and how many pages each covers
+    // (#4095). Always present; `{ en: 357 }` on most books, `{ en: 357, es: 357 }`
+    // where a localized edition exists. Pass the code as `lang` to get_quote /
+    // get_book_text / search_within_book to read that edition.
+    editions: editionsForBook(result),
     reading_summary: result.reading_summary, chapters: result.chapters,
     work_id: result.work_id,
     // What the volume's own running heads say it holds, with page spans. This
@@ -371,6 +424,8 @@ async function getBookText(args: Record<string, unknown>) {
   if (args.content) params.set('content', String(args.content));
   if (args.from !== undefined) params.set('from', String(args.from));
   if (args.to !== undefined) params.set('to', String(args.to));
+  const textLang = langArg(args);
+  if (textLang !== 'en') params.set('lang', textLang);
   const format = String(args.format || 'json');
   params.set('format', format);
 
@@ -453,6 +508,23 @@ const TRANSLATED_ORIGINAL_TIP =
   'translator, and do not present this passage as evidence of what the author wrote in their own ' +
   'tongue. To find an original-language witness, call list_editions with this book_id.';
 
+// The requested edition did not exist for this page and English was served
+// instead (#4095). Loud, because the failure it prevents is a caller presenting
+// English prose to a Spanish reader as "the Spanish edition" — the quote API
+// puts the fact in `quote.lang`, and this makes an agent read it.
+const LANG_FALLBACK_TIP = (requested: string) =>
+  `EDITION NOTICE — this page has no text in "${requested}", so the English translation was served ` +
+  `(see quote.lang). Do not present it as the "${requested}" edition. Most books have no edition in ` +
+  `that language at all: call get_book and read \`editions\` to see which languages a book can be read ` +
+  `in, or list_books with has_edition to browse only the ones that have it.`;
+
+/** Set when the served edition is not the one that was asked for. */
+function langFallback(result: Record<string, unknown>, requested: string): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  const served = typeof quote?.lang === 'string' ? quote.lang : 'en';
+  return requested !== 'en' && served !== requested;
+}
+
 function translationNote(result: Record<string, unknown>): string | null {
   const quote = result.quote as Record<string, unknown> | undefined;
   const note = quote?.translation_note;
@@ -501,6 +573,8 @@ async function getQuote(args: Record<string, unknown>) {
   // Opt-in scan of the cited leaf (#3937): the response then carries
   // quote.page_image_url and the MCP layer attaches the image inline.
   if (args.include_image === true) params.set('include_image', 'true');
+  const quoteLang = langArg(args);
+  if (quoteLang !== 'en') params.set('lang', quoteLang);
 
   const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
 
@@ -534,6 +608,7 @@ async function getQuote(args: Record<string, unknown>) {
   const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
   if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
+  if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
 
   return {
     ...withCitationLink(result),
@@ -547,6 +622,7 @@ async function getQuote(args: Record<string, unknown>) {
 // single book by explicit list (pages:[...]) or inclusive range (from/to).
 async function getQuotes(args: Record<string, unknown>) {
   const bookId = String(args.book_id);
+  const batchLang = langArg(args);
   let pageNums: number[] = [];
   if (Array.isArray(args.pages)) {
     pageNums = (args.pages as unknown[]).map(Number).filter((n) => Number.isFinite(n));
@@ -566,6 +642,7 @@ async function getQuotes(args: Record<string, unknown>) {
       try {
         const quoteParams = new URLSearchParams({ page: String(page) });
         if (args.include_image === true) quoteParams.set('include_image', 'true');
+        if (batchLang !== 'en') quoteParams.set('lang', batchLang);
         const result = await apiGet(`/books/${bookId}/quote`, quoteParams) as Record<string, unknown>;
         // Same continuity signal get_quote returns. This is the tool where it
         // matters MOST — a batch is how a caller assembles a multi-page dossier,
@@ -608,6 +685,9 @@ async function getQuotes(args: Record<string, unknown>) {
   if (anyTranslationText || !anyOcrOriginal) tips.push(QUOTE_TIP);
   if (anyOcrOriginal) tips.push(OCR_ORIGINAL_TIP);
   if (anyRomanized) tips.push(ROMANIZED_TIP);
+  // A batch can be mixed — the Spanish worker's length guard skipped ~30 pages
+  // across 17 books — so one fallback in the range is enough to warn about.
+  if (settled.some((x) => langFallback(x as Record<string, unknown>, batchLang))) tips.push(LANG_FALLBACK_TIP(batchLang));
   if (anyTranslated) tips.push(TRANSLATED_ORIGINAL_TIP);
 
   return {
@@ -822,6 +902,7 @@ const TOOLS: Tool[] = [
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
         offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
       },
@@ -843,6 +924,7 @@ const TOOLS: Tool[] = [
         year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
         year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
         max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
       },
       required: ['query'],
@@ -858,6 +940,7 @@ const TOOLS: Tool[] = [
       properties: {
         book_id: { type: 'string', description: 'The book ID to search within' },
         query: { type: 'string', description: 'Search query' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
       },
       required: ['book_id', 'query'],
     },
@@ -872,6 +955,7 @@ const TOOLS: Tool[] = [
       properties: {
         search: { type: 'string', description: 'Filter by title or author' },
         language: { type: 'string' }, category: { type: 'string' },
+        has_edition: { type: 'string', description: 'ISO code — return only books READABLE in that language, e.g. "es". Different from `language`, which is the language printed on the leaves of the scan: a Latin book with a Spanish edition matches language="Latin" AND has_edition="es". Each result then also carries url_localized.' },
         sort: { type: 'string', enum: ['recent-translation', 'recent', 'title-asc', 'title-desc'] },
         limit: { type: 'number', description: 'Max results (default 100, max 200)' },
       },
@@ -880,7 +964,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where they differ the response also carries `work_language`, `text_role` (original / period-translation / modern-translation) and a `translation_note` — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the edition is in the work\'s own language. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where they differ the response also carries `work_language`, `text_role` (original / period-translation / modern-translation) and a `translation_note` — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the edition is in the work\'s own language. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided. EDITIONS: `editions` says which languages this book can be READ in and how many pages each covers ({ en: 357 } on most books, { en: 357, es: 357 } where a localized edition exists). Pass a code as `lang` to get_quote, get_quotes, get_book_text or search_within_book to read that edition; without it you get English.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -903,6 +987,7 @@ const TOOLS: Tool[] = [
         from: { type: 'number', description: 'Start page number (inclusive). Use with to for explicit page ranges.' },
         to: { type: 'number', description: 'End page number (inclusive). Recommended chunk size: 50 pages. If the response has truncated=true, use the next from/to from truncation_note.' },
         format: { type: 'string', enum: ['json', 'plain'], description: 'json (default, structured with per-page fields) or plain (concatenated text with page markers)' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Resolved PER PAGE: a page with no text in that language comes back as English, labelled `translation_lang: "en"` (json) or `[Translation — en]` (plain), and the response carries lang_coverage. Chapter text is materialized in English only, so `chapter` with a non-English `lang` is served from the chapter\'s page range instead.' },
       },
       required: ['book_id'],
     },
@@ -919,6 +1004,7 @@ const TOOLS: Tool[] = [
         page: { type: 'number', description: 'Page number' },
         context: { type: 'boolean', description: 'Also return the full text of the previous and next pages, so a sentence spanning the page break can be read whole. Set this when continuity.continues_from_previous or continues_on_next came back true on an earlier call, or whenever you are about to quote near a page edge.' },
         include_image: { type: 'boolean', description: 'Also return the scan of the cited leaf as an inline image (display size, ≤1200px). Set this when the user would benefit from SEEING the page — an illustrated leaf, a title page, a diagram, disputed OCR — or asks to see it. The image arrives as an MCP image block you can view and the user sees rendered.' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to quote, e.g. "es". Default "en". `quote.lang` on every response says which edition was actually served — where no such edition exists the English translation comes back with lang: "en" and a lang_note, and it must not be presented as the requested edition. The citation link follows the edition served.' },
       },
       required: ['book_id', 'page'],
     },
@@ -949,6 +1035,7 @@ const TOOLS: Tool[] = [
         from: { type: 'number', description: 'Start page (inclusive) of a range. Use with to.' },
         to: { type: 'number', description: 'End page (inclusive) of a range. Use with from.' },
         include_image: { type: 'boolean', description: 'Also return page scans as inline images (display size). The first 5 pages of the batch get inline image blocks; every entry still carries its page_image_url in the JSON.' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to quote, e.g. "es". Default "en". Resolved per page — one batch can mix editions, so read `quote.lang` on each entry rather than assuming the whole dossier is in one language.' },
       },
       required: ['book_id'],
     },

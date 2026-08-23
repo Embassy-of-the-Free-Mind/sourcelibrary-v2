@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
-import { semanticPageSearchScoped } from '@/lib/semantic-search';
+import { semanticPageSearchScoped, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isBookReadable } from '@/lib/book-access';
@@ -99,6 +99,14 @@ export async function GET(
     const { id: bookId } = await params;
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q');
+    // Which EDITION of the page text to search and quote. `en` (the default)
+    // is Mongo's `translation.data` + `ocr.data` via Atlas; anything else is
+    // the language-keyed `page_texts` store (#4095). The reader's own search
+    // bar is already Spanish under `/es` — searching English text behind a
+    // Spanish input is the mismatch this closes.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    const isLocalized = textLang !== 'en';
     const tenantContext = getTenantContextFromRequest(request.headers);
 
     if (tenantContext.slug && !tenantContext.id) {
@@ -140,6 +148,47 @@ export async function GET(
     const [keywordResults, semanticResults] = await Promise.all([
       // --- Keyword search (Atlas Search with regex fallback) ---
       (async (): Promise<SearchResult[]> => {
+        // Localized keyword leg. Atlas's `pages_search` index maps
+        // `translation.data` / `ocr.data` only, so it cannot see
+        // `translations.es.data`; the Spanish text is already in Supabase with
+        // a Spanish-stemmed GIN index, which is a better lexical match for it
+        // than lucene.standard would have been anyway. Front-matter demotion
+        // still reads the ENGLISH OCR — front matter is a property of the
+        // physical page, not of the language it is read in.
+        if (isLocalized) {
+          try {
+            const hits = await lexicalPageSearchLang(matchQuery, textLang, CANDIDATE_POOL, { bookIds: [bookId] });
+            if (hits.length === 0) return [];
+            const meta = await db.collection('pages')
+              .find({ id: { $in: hits.map(h => h.page_id) } }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } })
+              .toArray();
+            const ocrById = new Map(meta.map(d => [d.id as string, (d.ocr as { data?: string } | undefined)?.data]));
+            const badIds = new Set(
+              meta.filter(d => (NON_CONTENT_PAGE_TYPES as readonly string[]).includes(d.page_type as string))
+                .map(d => d.id as string),
+            );
+            const out: SearchResult[] = [];
+            for (const h of hits) {
+              if (badIds.has(h.page_id)) continue;
+              const text = h.full_text || h.snippet;
+              const matches = generateSnippet(text, matchQuery).map(m => ({ ...m, field: 'translation' as const }));
+              if (matches.length === 0) continue;
+              out.push({ pageId: h.page_id, pageNumber: h.page_number, matches, ...frontMatterVerdict(ocrById.get(h.page_id)) });
+              // ts_rank_cd, normalised against this leg's own best hit below —
+              // the same treatment Atlas's BM25 gets, for the same reason: the
+              // two scales have no common unit.
+              rawKeywordScore.set(h.page_id, h.score);
+              scoreText.set(h.page_id, cleanText(text));
+            }
+            return out;
+          } catch (e) {
+            // Loud, not silent: an empty result here is indistinguishable from
+            // "the book says nothing about that" unless we say which happened.
+            console.warn(`[book-search] localized keyword leg failed (${textLang}):`, e instanceof Error ? e.message : String(e));
+            return [];
+          }
+        }
+
         let pages: Record<string, unknown>[];
         let usedAtlas = false;
 
@@ -278,7 +327,7 @@ export async function GET(
       // --- Semantic search (conceptual matches via page embeddings) ---
       (async (): Promise<SearchResult[]> => {
         try {
-          const pages = await semanticPageSearchScoped(trimmedQuery, [bookId], 10);
+          const pages = await semanticPageSearchScoped(trimmedQuery, [bookId], 10, { textLang });
           const filtered = pages.filter(p => p.snippet && p.snippet.length > 20);
           if (filtered.length === 0) return [];
           // Look up page_type to drop boilerplate (title-page, blank, illustration, etc.)
@@ -386,8 +435,12 @@ export async function GET(
     // for an absent passage, and checking unconditionally would put a Supabase
     // round-trip on every search that is already working. See
     // src/lib/semantic-coverage.ts for the measurement that motivated this.
+    // Coverage is measured against `page_translations`, the English store, so
+    // it can only speak for an English request. Reporting it for a Spanish one
+    // would answer a question nobody asked — and a "full" verdict there would
+    // be actively misleading about the Spanish index.
     let coverage: SemanticCoverage | undefined;
-    if (semanticResults.length === 0) {
+    if (semanticResults.length === 0 && !isLocalized) {
       coverage = await semanticCoverage(
         (gateBook?.id as string) || bookId,
         (gateBook?.pages_translated as number) || 0,
@@ -406,11 +459,14 @@ export async function GET(
     logSearchEvent({
       request, db, query: trimmedQuery, resultsCount: results.length, source: 'book_search',
       tenantId: tenantContext.id || null,
-      filters: { book_id: bookId },
+      filters: { book_id: bookId, lang: textLang },
     });
 
     return NextResponse.json({
       query: trimmedQuery,
+      // Which edition answered. Never leave this to be inferred: a caller that
+      // asked for `es` and silently got English text has no way to tell.
+      lang: textLang,
       // total is what MATCHED, not what is being returned — a caller that sees
       // 50 and assumes that is everything will stop looking too early.
       total: totalMatched,

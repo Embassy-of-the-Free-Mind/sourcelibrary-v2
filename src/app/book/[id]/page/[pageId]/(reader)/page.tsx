@@ -13,6 +13,10 @@ import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { markPageForReader } from '@/lib/provenance';
 import { localePath, type Locale } from '@/lib/locale-path';
+import { READER_STRINGS } from '@/lib/book-i18n';
+import { localizedTitle } from '@/lib/localized';
+import { aldineVariables } from '@/lib/fonts/aldine';
+import { isAldineFount } from '@/lib/fonts/aldine-fount';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -62,16 +66,18 @@ interface PageProps {
 // Book projection: only fields needed by the reader
 const BOOK_NAV_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
+  // The one language-keyed map: the reader header shows `localized.<lang>.title`
+  // and the chapter dropdown `localized.<lang>.chapters`. Leaving it out of this
+  // projection is why the Spanish reader showed a German title over Spanish text.
+  localized: 1,
+  // Gates whether this book may have a localized reader URL at all — see the
+  // redirect below. Always read from Atlas here, so it can never be absent.
+  pages_translated_es: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
 };
 
 export default async function PageEditorPage({ params, allowHidden = false, lang = 'en' }: PageProps & { allowHidden?: boolean; lang?: Locale }) {
-  // Only used server-side, for the crawler-nav links and JSON-LD URL below —
-  // Reader2C itself is a client component and reads its own locale from the
-  // URL via useLocale() (see src/lib/i18n.ts), so no prop threading into it
-  // is needed here.
-  const lp = (href: string) => localePath(href, lang);
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const db = await getReadDb();
@@ -137,7 +143,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const bookPath = book.slug || scopedBookId;
   // JSON-LD is built from the UNMARKED page: the SEO excerpt stays free of
   // zero-width characters so search snippet matching is untouched.
-  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org${lp(`/book/${bookPath}/page/${pageId}`)}`);
+  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org${localePath(`/book/${bookPath}/page/${pageId}`, lang)}`);
 
   // The flight payload the reader (and anything scraping this URL) receives
   // carries the invisible provenance imprimatur in the translation. It is
@@ -156,32 +162,34 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
       {/* The redesign ships on sourcelibrary.org. Partner reading rooms —
           BPH, EFM, every /embed/** iframe and tenant subdomain — stay on the
-          old reader for now.
+          old reader until BPH have seen it and approved it. Not caution for
+          its own sake: the new reader's Cite and Share build absolute URLs
+          against sourcelibrary.org rather than the host page, so a scholar
+          citing a page inside a partner's site would be handed a URL pointing
+          away from it.
           
-          Not caution for its own sake: the new reader's Cite and Share build
-          absolute URLs against sourcelibrary.org rather than the host page, so
-          a scholar citing a page inside a partner's site would be handed a URL
-          pointing away from it. That is the same class of mistake as the site
-          menu offering Explore and Works on a tenant host. Partners embed us
-          on their own pages and did not ask for a redesign this week; they can
-          have it when the embed-aware URL building is done and verified on a
-          real tenant.
-          
-          Everything around this (JSON-LD, embed reporting, the crawler nav
-          below) is shared by both and untouched. */}
-      {ctx?.isEmbedded ? (
-        <PageEditorClient
-          initialBook={book}
-          initialPage={markedPage}
-          initialPageList={serializedNavPages}
-        />
-      ) : (
-        <Reader2C
-          initialBook={book}
-          initialPage={markedPage}
-          initialPageList={serializedNavPages}
-        />
-      )}
+          Books we hold a facsimile fount for are read in their own type
+          (#4083); `display: contents` so this wrapper carries the font
+          variables without adding a box to either reader's flex layout. Both
+          readers get it — the fount is a reading feature, not a chrome one. */}
+      <div
+        className={isAldineFount(book.id) ? `aldine-fount ${aldineVariables}` : undefined}
+        style={isAldineFount(book.id) ? { display: 'contents' } : undefined}
+      >
+        {ctx?.isEmbedded ? (
+          <PageEditorClient
+            initialBook={book}
+            initialPage={markedPage}
+            initialPageList={serializedNavPages}
+          />
+        ) : (
+          <Reader2C
+            initialBook={book}
+            initialPage={markedPage}
+            initialPageList={serializedNavPages}
+          />
+        )}
+      </div>
       {musicTranscriptions.length > 0 && (
         <HymnPlayer transcriptions={musicTranscriptions} />
       )}
@@ -195,20 +203,22 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
           the accessibility tree, which is all #2266 needed; sighted readers
           have the pager, the filmstrip and Contents for the same job. */}
       {!(ctx?.isEmbedded) && (() => {
+        const rs = READER_STRINGS[lang];
         const idx = serializedNavPages.findIndex(p => p.id === pageId);
         const prev = idx > 0 ? serializedNavPages[idx - 1] : null;
         const next = idx >= 0 && idx < serializedNavPages.length - 1 ? serializedNavPages[idx + 1] : null;
+        // Screen-reader-only, NOT merely below the fold. The redesigned reader
+        // owns one viewport, so on a phone this block appeared under it as a
+        // stray row of links — a stale page number and an "All N pages" beside
+        // the real pager, shoving the toolbar up the screen. It stays in the
+        // DOM and in the accessibility tree, which is all #2266 needed; sighted
+        // readers have the pager, the filmstrip and Contents for the same job.
         return (
-          <nav aria-label="Page navigation" className="sr-only">
-            {/* prev/next share this route's own SHAPE, so it has a /es twin
-                (LOCALIZED_PATTERNS in src/lib/locale-path.ts) — lp() keeps
-                them on /es. The book detail page and its /overview do NOT
-                have a twin in this worktree, so lp() deliberately leaves
-                them pointed at the English page rather than a 404. */}
-            {prev && <a href={lp(`/book/${bookPath}/page/${prev.id}`)}>Page {prev.page_number}</a>}
-            <a href={`/book/${bookPath}`}>{book.display_title || book.title}</a>
-            <a href={`/book/${bookPath}/overview`}>All {serializedNavPages.length} pages</a>
-            {next && <a href={lp(`/book/${bookPath}/page/${next.id}`)}>Page {next.page_number}</a>}
+          <nav aria-label={rs.pageNavigation} className="sr-only">
+            {prev && <a href={localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
+            <a href={localePath(`/book/${bookPath}`, lang)}>{localizedTitle(book, lang)}</a>
+            <a href={`/book/${bookPath}/overview`}>{rs.allPagesLink(serializedNavPages.length)}</a>
+            {next && <a href={localePath(`/book/${bookPath}/page/${next.id}`, lang)}>{rs.nextPageLink(next.page_number)}</a>}
           </nav>
         );
       })()}

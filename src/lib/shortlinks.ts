@@ -177,8 +177,14 @@ export function decodeShortlink(code: string): { bookId: string; pageNumber: num
  * @param baseUrl - Optional base URL (e.g. "https://bph.sourcelibrary.org") used for tenant subdomains.
  *                  Defaults to https://sourcelibrary.org so existing API consumers are unchanged.
  */
-export function getShortUrl(bookId: string, pageNumber: number, pageId?: string, baseUrl?: string): string {
+export function getShortUrl(bookId: string, pageNumber: number, pageId?: string, baseUrl?: string, lang?: string): string {
   const base = (baseUrl || 'https://sourcelibrary.org').replace(/\/+$/, '');
+  // The CODE stays canonical — it encodes a book and a page and nothing else,
+  // which is what makes a shortlink safe to print in a footnote. The reading
+  // language rides as a query parameter that `/q/[code]` honours, so the same
+  // citation resolves to the Spanish reader for a Spanish reader without
+  // minting a second, divergent identifier for the same leaf (#4095).
+  const langQ = lang && lang !== 'en' ? `?lang=${encodeURIComponent(lang)}` : '';
   // Both ObjectIds and UUIDs encode statelessly (#3940); the page number still
   // has to fit the 2 bytes both schemes reserve for it.
   if (
@@ -186,15 +192,16 @@ export function getShortUrl(bookId: string, pageNumber: number, pageId?: string,
     Number.isInteger(pageNumber) && pageNumber >= 1 && pageNumber <= 65535
   ) {
     const code = encodeShortlink(bookId, pageNumber);
-    return `${base}/q/${code}`;
+    return `${base}/q/${code}${langQ}`;
   }
   // Fallback to the regular URL for anything else (other ID formats, or a page
   // number outside the encodable range).
+  const prefix = lang && lang !== 'en' ? `/${lang}` : '';
   if (pageId) {
-    return `${base}/book/${bookId}/page/${pageId}`;
+    return `${base}${prefix}/book/${bookId}/page/${pageId}`;
   }
   // Last resort: link to book page (user can navigate to specific page)
-  return `${base}/book/${bookId}#page-${pageNumber}`;
+  return `${base}${prefix}/book/${bookId}#page-${pageNumber}`;
 }
 
 /**

@@ -1,14 +1,11 @@
 import BasePage from '@/app/book/[id]/page/[pageId]/(reader)/page';
 
 /**
- * Spanish twin of the reader page. Identical server render with `lang='es'`:
- * the crawler nav below the reader keeps the `/es` prefix on the links that
- * have a twin (prev/next page) and leaves the ones that don't (book detail,
- * overview) pointed at English — see the `lp()` helper added to the base
- * page for this. `Reader2C` itself is a client component and reads its own
- * locale from the URL via `useLocale()` (src/lib/i18n.ts), then its chrome
- * from `src/lib/reader-strings.ts` — the same as every other localized client
- * component on the site — so nothing here threads `lang` into it.
+ * Spanish twin of the reader page (#4082). Identical server render with
+ * `lang='es'`: the crawler nav below the reader keeps the `/es` prefix and
+ * names the book by its Spanish title. The reader itself is a client
+ * component and takes its language from the pathname (`useLocale()`), which is
+ * also how every page flip keeps `/es`. See .claude/docs/i18n.md rule 5.
  */
 
 // Segment config must be a static literal (Next parses it at build time) —

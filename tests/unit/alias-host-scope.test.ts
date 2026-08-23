@@ -105,6 +105,26 @@ describe('proxy() on preview deployments', () => {
     }
   });
 
+  it('gates the LOCALIZED twin of a content path, not just the English one', async () => {
+    // `/es/book/x` is the same book as `/book/x`. The gate matched the raw
+    // pathname, so from the day the Spanish twin shipped every preview served
+    // the whole record to anonymous callers while the English URL 403'd.
+    // Matching on the locale-stripped path also covers a future `/fr`.
+    for (const p of ['/es/book/some-slug', '/es/book/some-slug/page/abc', '/es/book/some-slug/page-number/9']) {
+      const res = await proxy(req(`${PREVIEW}${p}`));
+      expect(res?.status, p).toBe(403);
+      expect(res?.headers.get('location'), p).toBeNull();
+    }
+  });
+
+  it('does not gate a localized NON-content path', async () => {
+    // The stripping must not turn every /es page into book content.
+    for (const p of ['/es', '/es/collections', '/es/support']) {
+      const res = await proxy(req(`${PREVIEW}${p}`));
+      expect(res?.status, p).not.toBe(403);
+    }
+  });
+
   it('lets a signed-in dev review the branch', async () => {
     const res = await proxy(
       req(`${PREVIEW}/book/some-slug`, { cookie: '__Secure-authjs.session-token=tok' })

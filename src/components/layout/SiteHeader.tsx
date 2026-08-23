@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import { Search, ChevronDown } from 'lucide-react';
-import { useLocale, localeHref, hasLocalizedTwin, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
+import { useLocale, localeHref, hasLocalizedTwin, localePath, canonicalPath, NAV_STRINGS, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { trackEvent } from '@/lib/track-event';
@@ -18,11 +18,18 @@ interface NavLink {
   children?: { label: string; href: string }[];
 }
 
-// Hrefs are constant; labels are resolved per-locale from NAV_STRINGS so the
-// nav stays in one place as languages are added.
-function buildNavLinks(t: NavStrings): NavLink[] {
-  return [
-    { label: t.collections, href: '/collections' },
+// Labels are resolved per-locale from NAV_STRINGS so the nav stays in one place
+// as languages are added. Hrefs are written in their ENGLISH (canonical) form
+// and localized at the end of this function by `localePath`, which is guarded by
+// the route registry in locale-path.ts: an item with a twin gets the `/es`
+// prefix, an item without one is returned untouched and lands on its English
+// page. Doing it per-item by hand is what left `/librarian` pointing at the
+// English librarian from the Spanish header while `/collections` was localized
+// by a ternary two lines above it — the registry knows about `/es/librarian`,
+// the hand-written ternary did not.
+function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
+  const links: NavLink[] = [
+    { label: t.collections, href: '/collections', activePrefix: '/collections' },
     { label: t.gallery, href: '/gallery' },
     {
       label: t.browse,
@@ -50,6 +57,17 @@ function buildNavLinks(t: NavStrings): NavLink[] {
     // where that traffic is meant to come from. Episodes also stay reachable
     // from their librarian threads and the footer.
   ];
+
+  if (locale === 'en') return links;
+  // `activePrefix` must move with the href, or the Spanish nav highlights
+  // nothing: the pathname is `/es/collections` and the prefix would say
+  // `/collections`.
+  return links.map((link) => ({
+    ...link,
+    href: localePath(link.href, locale),
+    ...(link.activePrefix ? { activePrefix: localePath(link.activePrefix, locale) } : {}),
+    ...(link.children ? { children: link.children.map((c) => ({ ...c, href: localePath(c.href, locale) })) } : {}),
+  }));
 }
 
 interface Breadcrumb {
@@ -110,11 +128,15 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // a global-only path; `/works` under Browse is the first that does, and an
   // unfiltered child would put a proxy-404 link in a partner's own header —
   // the one thing the shared list exists to prevent.
-  const NAV_LINKS = buildNavLinks(t)
-    .filter(link => !(isTenantHost && isGlobalOnlyNavHref(link.href)))
+  //
+  // The hrefs arriving here are already locale-prefixed, so the global-only test
+  // runs on the CANONICAL path: `/es/explore` is the same global-only surface as
+  // `/explore` and a prefix-blind lookup would miss it.
+  const NAV_LINKS = buildNavLinks(t, locale)
+    .filter(link => !(isTenantHost && isGlobalOnlyNavHref(canonicalPath(link.href))))
     .map(link =>
       link.children && isTenantHost
-        ? { ...link, children: link.children.filter(child => !isGlobalOnlyNavHref(child.href)) }
+        ? { ...link, children: link.children.filter(child => !isGlobalOnlyNavHref(canonicalPath(child.href))) }
         : link
     );
   // The Support button is deliberately NOT in buildNavLinks: it is an action,
@@ -180,7 +202,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     >
       <div className="flex items-center justify-between px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
         <div className="flex items-center gap-3">
-          <Logo white={isWhiteText} compact={!!breadcrumbs} />
+          <Logo white={isWhiteText} compact={!!breadcrumbs} lang={locale} />
           {breadcrumbs?.map((crumb) => (
             <span key={crumb.href} className="flex items-center gap-3">
               <span className={isWhiteText ? 'text-white/40 hidden sm:inline' : 'text-stone-400 hidden sm:inline'}>/</span>
@@ -306,9 +328,9 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
 
           {/* Desktop search icon */}
           <Link
-            href="/search"
+            href={localePath('/search', locale)}
             className={`hidden lg:flex items-center justify-center w-8 h-8 rounded-lg transition-colors ${
-              pathname === '/search'
+              canonicalPath(pathname) === '/search'
                 ? (isWhiteText ? 'text-white bg-white/10' : 'text-primary bg-warm')
                 : (isWhiteText ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-secondary hover:text-primary hover:bg-warm/50')
             }`}
@@ -377,7 +399,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                 })}
                 <div className="border-t border-border-light my-1.5" />
                 <Link
-                  href="/search"
+                  href={localePath('/search', locale)}
                   className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-warm/50 transition-colors"
                 >
                   {t.search}

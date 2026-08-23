@@ -14,6 +14,7 @@ type PlateLite = { id: string; thumbnail_url?: string; extracted_url?: string; i
  * tags below, and the reading-guide / contents dropdowns under that.
  */
 export default function AboutVariants({
+  heading = 'About this book',
   content,
   visual,
   tags = [],
@@ -23,6 +24,8 @@ export default function AboutVariants({
   pages,
   plates,
 }: {
+  /** Section heading — localized by the page (see src/lib/book-i18n.ts). */
+  heading?: string;
   /** About prose. When null, the heading + prose are omitted and only the
    *  dropdowns render in the left column (the plate still shows on the right). */
   content?: ReactNode | null;
@@ -52,7 +55,7 @@ export default function AboutVariants({
           <div className="order-2 md:order-1 md:col-span-3">
             {content != null && (
               <>
-                <h2 className="hidden md:block font-display font-medium text-[22px] md:text-[28px] mb-3 md:mb-4" style={{ color: '#2b2620' }}>About this book</h2>
+                <h2 className="hidden md:block font-display font-medium text-[22px] md:text-[28px] mb-3 md:mb-4" style={{ color: '#2b2620' }}>{heading}</h2>
                 <div className="font-display text-[15px] md:text-[21px] leading-[1.6] md:leading-[1.62]" style={{ color: '#2b2620' }}>{content}</div>
                 {tagRow}
               </>

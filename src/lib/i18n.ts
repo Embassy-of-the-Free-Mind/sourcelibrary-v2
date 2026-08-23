@@ -1,30 +1,11 @@
 import { usePathname } from 'next/navigation';
-import {
-  type Locale, localeFromPathname, localePath,
-} from '@/lib/locale-path';
+import { localeFromPathname, localePath, type Locale } from '@/lib/locale-path';
 
-// Lightweight locale primitive shared across the site shell (header, footer,
-// etc.). Locale is derived from the URL prefix (`/es`, `/es/...`) rather than a
-// cookie or Accept-Language header, so it never branches edge-cached HTML and
-// every localized route is its own indexable page. Client components read it
-// with useLocale(); server components pass their known locale explicitly.
-//
-// The pure primitives (Locale, localeFromPathname, canonicalPath, localeHref,
-// localePath, the LOCALIZED_PATHS/LOCALIZED_PATTERNS registry) live in
-// `src/lib/locale-path.ts`, which imports nothing from React — so a server
-// component (e.g. the reader's crawler-nav links, built server-side) can
-// import them directly. THIS module additionally imports `usePathname`, so
-// importing it from a server component is an error in Next 16; server code
-// should import `@/lib/locale-path` instead. Everything from that module is
-// re-exported below so existing client-side imports of `@/lib/i18n` keep
-// working unchanged.
-//
-// To add a language: add it to Locale + SUPPORTED_LOCALES + the prefix check
-// in locale-path.ts, add its route shapes to LOCALIZED_PATTERNS, and fill in
-// the dictionaries (NAV_STRINGS here, HOME_STRINGS in home-i18n.ts,
-// READER_UI_STRINGS in reader-strings.ts). Keep the prefixes disjoint from
-// tenant slugs.
-
+// The site-shell locale layer: the pure primitives (re-exported from
+// `locale-path.ts` so every existing `@/lib/i18n` import keeps working) plus
+// the two hooks that read the CURRENT url. Server components must import from
+// `@/lib/locale-path` instead — this module pulls in `usePathname`, and Next 16
+// rejects that in a server component.
 export * from '@/lib/locale-path';
 
 /** Client hook: current locale from the URL. */
@@ -32,7 +13,11 @@ export function useLocale(): Locale {
   return localeFromPathname(usePathname());
 }
 
-/** Client hook: keep an internal link on the current locale. */
+/**
+ * Client hook: `localePath` bound to the locale of the page being rendered.
+ * A client component that builds `/book/...` links can call this instead of
+ * taking a `lang` prop — the URL already says which language it is.
+ */
 export function useLocalePath(): (href: string) => string {
   const lang = useLocale();
   return (href: string) => localePath(href, lang);

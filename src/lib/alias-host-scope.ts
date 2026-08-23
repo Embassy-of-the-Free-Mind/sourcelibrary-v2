@@ -1,3 +1,5 @@
+import { canonicalPath } from '@/lib/locale-path';
+
 /**
  * Scoping non-canonical hosts to the surface they exist for.
  *
@@ -145,31 +147,20 @@ export function aliasPolicyForHost(host: string): AliasPolicy | null {
 }
 
 /**
- * Locale prefixes that sit in front of a gated path without changing what the
- * path serves. `/es/book/x/page/y` is the same book text as `/book/x/page/y`,
- * so it has to be gated as the same thing.
+ * Is this a content path the preview policy withholds from anonymous callers?
  *
- * Matching the raw pathname left the Spanish twin serving the whole corpus to
- * anonymous callers on every preview, from the day `/es/book` shipped: `/book`
- * returned 403 and `/es/book` returned 200 with the page text in it. This repo
- * is public and the Vercel bot posts preview URLs on the PR, so that door is
- * enumerable by anyone reading along.
+ * Matched on the LOCALE-STRIPPED path: `/es/book/x` is the same book as
+ * `/book/x` and must be gated identically. Matching the raw pathname left the
+ * Spanish twin wide open on every preview from the day `/es/book` shipped —
+ * `/book/dawn-rising-boehme` 403'd and `/es/book/dawn-rising-boehme` returned
+ * the whole record. Because it strips ANY prefixed locale, a future `/fr` is
+ * covered the moment the locale is registered, with no edit here.
  */
-const LOCALE_PREFIXES = ['/es'];
-
-/** Strip a leading locale segment, so the gate sees the path being served. */
-function withoutLocale(pathname: string): string {
-  for (const l of LOCALE_PREFIXES) {
-    if (pathname === l) return '/';
-    if (pathname.startsWith(l + '/')) return pathname.slice(l.length);
-  }
-  return pathname;
-}
-
-/** Is this a content path the preview policy withholds from anonymous callers? */
 export function isPreviewGatedPath(pathname: string): boolean {
-  const p = withoutLocale(pathname);
-  return PREVIEW_GATED_PREFIXES.some((g) => p === g || p.startsWith(g + '/'));
+  const canonical = canonicalPath(pathname);
+  return PREVIEW_GATED_PREFIXES.some(
+    (p) => canonical === p || canonical.startsWith(p + '/'),
+  );
 }
 
 /** Plain-text body for the anonymous-on-preview refusal. */

@@ -56,6 +56,13 @@ export interface HomeStrings {
   illustrationsLabel: string;
   browseCatalog: string;
   booksLabel: string;
+  /**
+   * Suffix on a collection card's second count: "1.234 libros · 57 en español".
+   * Never rendered on the English homepage — every book there is already in the
+   * page's language — but it lives in both dictionaries so the two editions keep
+   * one shape (the rule at the top of this file).
+   */
+  inThisLanguage: string;
   seeMore: (n: number) => string;
   collectionsWord: string;
   curatedExhibitions: string;
@@ -64,6 +71,12 @@ export interface HomeStrings {
   // Recently translated slider
   recentlyTranslatedHeading: string;
   recentlyTranslatedSubtitle: string;
+
+  // "Read in Spanish" slider — rendered on /es only (HomeData.spanishBooks is
+  // empty on the English homepage), but the strings live in both dictionaries
+  // so the two editions keep one shape.
+  spanishHeading: string;
+  spanishSubtitle: string;
 
   // Gallery masonry (homepage)
   galleryHeading: string;
@@ -166,6 +179,7 @@ const en: HomeStrings = {
   illustrationsLabel: 'illustrations',
   browseCatalog: 'Browse Catalog',
   booksLabel: 'books',
+  inThisLanguage: 'in English',
   seeMore: (n) => `See ${n} more`,
   collectionsWord: 'collections',
   curatedExhibitions: 'Browse curated exhibitions',
@@ -173,6 +187,8 @@ const en: HomeStrings = {
 
   recentlyTranslatedHeading: 'Recently translated',
   recentlyTranslatedSubtitle: 'The latest works Source Library has brought into a modern, readable translation.',
+  spanishHeading: 'Read in Spanish',
+  spanishSubtitle: 'The works in the library that already have a Spanish edition, page by page beside the original.',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
   galleryViewAll: (n) => `View all ${n.toLocaleString('en-US')} illustrations`,
@@ -275,6 +291,7 @@ const es: HomeStrings = {
   illustrationsLabel: 'ilustraciones',
   browseCatalog: 'Explorar el catálogo',
   booksLabel: 'libros',
+  inThisLanguage: 'en español',
   seeMore: (n) => `Ver ${n} más`,
   collectionsWord: 'colecciones',
   curatedExhibitions: 'Explorar exposiciones comisariadas',
@@ -282,6 +299,8 @@ const es: HomeStrings = {
 
   recentlyTranslatedHeading: 'Traducidas recientemente',
   recentlyTranslatedSubtitle: 'Las obras más recientes que Source Library ha traducido a una versión moderna y legible.',
+  spanishHeading: 'Leer en español',
+  spanishSubtitle: 'Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
   galleryViewAll: (n) => `Ver las ${n.toLocaleString('es-ES')} ilustraciones`,
@@ -370,6 +389,7 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
   literature: 'Literatura y poesía',
   herbalism: 'Herbolaria y botánica',
   'music-sound': 'Música y sonido',
+  'en-espanol': 'Libros en español',
 };
 
 export function collectionName(lang: HomeLang, slug: string, fallback: string): string {
