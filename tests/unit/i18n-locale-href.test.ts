@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { canonicalPath, localeHref, localeFromPathname, LOCALIZED_PATHS } from '@/lib/i18n';
+import { canonicalPath, localeHref, localeFromPathname, localePath, LOCALIZED_PATHS, hasLocalizedTwin } from '@/lib/i18n';
 
 describe('canonicalPath', () => {
   it('drops the /es prefix', () => {
@@ -56,5 +56,33 @@ describe('localeFromPathname (unchanged, guarded here)', () => {
     expect(localeFromPathname('/es/support')).toBe('es');
     expect(localeFromPathname('/')).toBe('en');
     expect(localeFromPathname('/esoterica')).toBe('en');
+  });
+});
+
+describe('reader route shape (LOCALIZED_PATTERNS, groundwork for reader-v2 ES chrome)', () => {
+  it('hasLocalizedTwin is true on a reader page', () => {
+    expect(hasLocalizedTwin('/book/foo-bar/page/abc123')).toBe(true);
+    expect(hasLocalizedTwin('/es/book/foo-bar/page/abc123')).toBe(true);
+  });
+
+  it('localeHref keeps the reader on the same page instead of bouncing home', () => {
+    expect(localeHref('es', '/book/foo-bar/page/abc123')).toBe('/es/book/foo-bar/page/abc123');
+    expect(localeHref('en', '/es/book/foo-bar/page/abc123')).toBe('/book/foo-bar/page/abc123');
+  });
+
+  it('does not match adjacent, non-twinned book routes (prefix match would be wrong)', () => {
+    expect(hasLocalizedTwin('/book/foo-bar')).toBe(false);
+    expect(hasLocalizedTwin('/book/foo-bar/overview')).toBe(false);
+    expect(hasLocalizedTwin('/book/foo-bar/page/abc123/preview')).toBe(false);
+    expect(localeHref('es', '/book/foo-bar/overview')).toBe('/es');
+  });
+
+  it('localePath prefixes a reader href but leaves a twin-less one untouched', () => {
+    expect(localePath('/book/foo-bar/page/next-page', 'es')).toBe('/es/book/foo-bar/page/next-page');
+    expect(localePath('/book/foo-bar/overview', 'es')).toBe('/book/foo-bar/overview');
+    expect(localePath('/book/foo-bar/page/next-page', 'en')).toBe('/book/foo-bar/page/next-page');
+    // Already-prefixed and root pass through / normalize as documented.
+    expect(localePath('/es/book/foo-bar/page/next-page', 'es')).toBe('/es/book/foo-bar/page/next-page');
+    expect(localePath('/', 'es')).toBe('/es');
   });
 });

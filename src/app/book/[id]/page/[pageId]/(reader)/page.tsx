@@ -11,6 +11,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { markPageForReader } from '@/lib/provenance';
+import { localePath, type Locale } from '@/lib/locale-path';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -64,7 +65,12 @@ const BOOK_NAV_PROJECTION = {
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
 };
 
-export default async function PageEditorPage({ params, allowHidden = false }: PageProps & { allowHidden?: boolean }) {
+export default async function PageEditorPage({ params, allowHidden = false, lang = 'en' }: PageProps & { allowHidden?: boolean; lang?: Locale }) {
+  // Only used server-side, for the crawler-nav links and JSON-LD URL below —
+  // Reader2C itself is a client component and reads its own locale from the
+  // URL via useLocale() (see src/lib/i18n.ts), so no prop threading into it
+  // is needed here.
+  const lp = (href: string) => localePath(href, lang);
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const db = await getReadDb();
@@ -130,7 +136,7 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
   const bookPath = book.slug || scopedBookId;
   // JSON-LD is built from the UNMARKED page: the SEO excerpt stays free of
   // zero-width characters so search snippet matching is untouched.
-  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org/book/${bookPath}/page/${pageId}`);
+  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org${lp(`/book/${bookPath}/page/${pageId}`)}`);
 
   // The flight payload the reader (and anything scraping this URL) receives
   // carries the invisible provenance imprimatur in the translation. It is
@@ -176,10 +182,15 @@ export default async function PageEditorPage({ params, allowHidden = false }: Pa
         const next = idx >= 0 && idx < serializedNavPages.length - 1 ? serializedNavPages[idx + 1] : null;
         return (
           <nav aria-label="Page navigation" className="sr-only">
-            {prev && <a href={`/book/${bookPath}/page/${prev.id}`}>Page {prev.page_number}</a>}
+            {/* prev/next share this route's own SHAPE, so it has a /es twin
+                (LOCALIZED_PATTERNS in src/lib/locale-path.ts) — lp() keeps
+                them on /es. The book detail page and its /overview do NOT
+                have a twin in this worktree, so lp() deliberately leaves
+                them pointed at the English page rather than a 404. */}
+            {prev && <a href={lp(`/book/${bookPath}/page/${prev.id}`)}>Page {prev.page_number}</a>}
             <a href={`/book/${bookPath}`}>{book.display_title || book.title}</a>
             <a href={`/book/${bookPath}/overview`}>All {serializedNavPages.length} pages</a>
-            {next && <a href={`/book/${bookPath}/page/${next.id}`}>Page {next.page_number}</a>}
+            {next && <a href={lp(`/book/${bookPath}/page/${next.id}`)}>Page {next.page_number}</a>}
           </nav>
         );
       })()}
