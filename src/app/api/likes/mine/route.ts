@@ -149,6 +149,10 @@ export async function GET(request: NextRequest) {
             bookAuthor: book?.author,
             bookYear: book?.year,
             thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+            // Full-resolution source (no 150px thumbnail first) — used as the
+            // crop source by the profile-photo picker, where a thumbnail
+            // upscaled to 512px turns to mush.
+            image_full: page.archived_photo || page.cropped_photo || page.photo || page.thumbnail_blob,
             excerpt: text.slice(0, 200) + (text.length > 200 ? '...' : ''),
             likeCount: countMap.get(id) || 1,
           };

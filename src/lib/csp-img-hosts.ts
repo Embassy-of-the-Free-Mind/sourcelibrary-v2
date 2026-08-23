@@ -18,6 +18,10 @@
 
 export const CSP_IMG_HOSTS = [
   'https://images.sourcelibrary.org',
+  // Google OAuth profile photos (users.image for Google sign-ins). Every
+  // avatar surface (UserMenu, /account, WelcomeForm) fell back to initials
+  // because this host was CSP-blocked — UserMenu.tsx documents the symptom.
+  'https://lh3.googleusercontent.com',
   'https://*.r2.dev',
   'https://*.public.blob.vercel-storage.com',
   'https://*.amazonaws.com',
