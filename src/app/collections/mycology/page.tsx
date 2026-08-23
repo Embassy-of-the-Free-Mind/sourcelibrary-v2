@@ -125,13 +125,17 @@ async function getMycologyData() {
 
   const bookIds = bookIdDocs.map((d) => d.id as string);
   const galleryFilter = { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } };
+  // The count must mirror what /api/gallery actually serves — it also drops
+  // images with no extracted crop or missing source photo — or the "view all N"
+  // link promises more than the page it lands on shows.
+  const galleryCountFilter = { ...galleryFilter, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } };
   const [galleryRaw, galleryCount] = bookIds.length
     ? await Promise.all([
       withTimeout(db.collection('gallery_images').find(galleryFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
         .sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
       // The array above is capped at 60. Reporting its length as the plate count
       // told readers this collection had 60 plates when it has thousands.
-      withTimeout(db.collection('gallery_images').countDocuments(galleryFilter, { maxTimeMS: 5000 }), 5000, 0),
+      withTimeout(db.collection('gallery_images').countDocuments(galleryCountFilter, { maxTimeMS: 5000 }), 5000, 0),
     ])
     : [[] as Record<string, unknown>[], 0];
 

@@ -179,15 +179,23 @@ async function getSlimeMouldData() {
     ],
   };
   const bookIds = bookIdDocs.map((d) => d.id as string);
-  const [galleryRaw, galleryCount] = bookIds.length
+  const [galleryRaw, galleryCount, galleryAllCount] = bookIds.length
     ? await Promise.all([
       withTimeout(db.collection('gallery_images').find(galleryFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
         .sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
-      // Real total. The array above is capped at 60, so its length is a fetch
-      // limit, not a count, and reporting it as one was simply wrong.
-      withTimeout(db.collection('gallery_images').countDocuments(galleryFilter, { maxTimeMS: 5000 }), 5000, 0),
+      // Two counts, because they answer different questions. The section shows
+      // only the myxomycete plates; the browse link goes to /gallery, which
+      // filters by collection but not by subject, so it shows every plate in
+      // these books. Both filters mirror what /api/gallery actually serves.
+      withTimeout(db.collection('gallery_images').countDocuments(
+        { ...galleryFilter, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
+        { maxTimeMS: 5000 }), 5000, 0),
+      withTimeout(db.collection('gallery_images').countDocuments(
+        { book_id: { $in: bookIdDocs.map((d) => d.id as string).slice(0, 200) }, gallery_quality: { $gte: 0.5 },
+          book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
+        { maxTimeMS: 5000 }), 5000, 0),
     ])
-    : [[] as Record<string, unknown>[], 0];
+    : [[] as Record<string, unknown>[], 0, 0];
 
   const firstTranslations = firstRaw.map(toMini);
   const sourceWorks = sourceRaw.map(toMini);
@@ -206,7 +214,7 @@ async function getSlimeMouldData() {
 
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
-    firstTranslations, sourceWorks, ftCount, total, galleryCount,
+    firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
     languages, gallery, featured, featuredPages, parent,
   };
@@ -296,7 +304,7 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, dateRange, languages, gallery, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   const galleryTotal = galleryCount;
   const galleryPlates = gallery
@@ -494,8 +502,8 @@ export default async function SlimeMouldsCollectionPage() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
-                  {galleryTotal > 0 && (
-                    <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  {galleryAllCount > 0 && (
+                    <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_OUTLINE}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-3.5 h-3.5" /></Link>
                   )}
                 </div>
               </div>
@@ -509,7 +517,7 @@ export default async function SlimeMouldsCollectionPage() {
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">Gallery</h2>
-            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
+            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates of the slime moulds themselves, drawn from across the collection. Most of these books are general works on the fungi, so their remaining plates are of other things.</p>
             {/* Balanced masonry (true heights, no crop), capped + faded into the page
                 so the ragged bottom is hidden. Cap is static (server-rendered). */}
             <div
@@ -522,7 +530,7 @@ export default async function SlimeMouldsCollectionPage() {
               <GalleryMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
+              <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_DARK}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>
