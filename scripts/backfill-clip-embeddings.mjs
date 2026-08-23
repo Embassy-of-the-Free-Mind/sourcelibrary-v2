@@ -221,6 +221,10 @@ async function main() {
   // Process in batches
   let embedded = 0;
   let failed = 0;
+  // Keep a bounded sample of WHY things failed, not just how many. Capped so a
+  // run where everything fails cannot itself become the problem.
+  const FAILED_SAMPLE_CAP = 10;
+  const failedSamples = [];
   const pendingRows = [];
 
   for (let i = 0; i < total; i += BATCH_SIZE) {
@@ -252,6 +256,17 @@ async function main() {
           embedded++;
         } else {
           failed++;
+          // SAY WHY. This branch used to be a bare `failed++`, which threw away
+          // the server's reason — so on 2026-08-21 a run where every source URL
+          // 404'd surfaced as "0 embedded, 60 failed" and read like a broken
+          // embedder. It cost an hour of eliminating the CLIP server, the batch
+          // size and the Postgres write before the actual cause (1,596 gallery
+          // rows carrying a dead `extracted_url` at /artwork/<slug>.jpg) showed
+          // up. A counter cannot distinguish a dead source from a dead service;
+          // the reason can. #4185.
+          if (failedSamples.length < FAILED_SAMPLE_CAP) {
+            failedSamples.push({ id: item.id, url: item.image_url, reason: result.error || 'no embedding returned' });
+          }
         }
       }
 
@@ -275,6 +290,20 @@ async function main() {
   }
 
   console.log(`\n\nDone: ${embedded} embedded, ${failed} failed`);
+
+  if (failedSamples.length) {
+    console.log(`\nWhy they failed (first ${failedSamples.length} of ${failed}):`);
+    for (const f of failedSamples) console.log(`  ${f.reason} — ${f.url}`);
+    // A run that embeds NOTHING is a different event from one that loses a few
+    // pages, and it is almost never the embedder: the CLIP server and the batch
+    // size are the first things anyone suspects and the last things at fault.
+    if (embedded === 0 && failed > 0) {
+      console.log(
+        `\nEVERY image failed. Check the SOURCE before the service — HEAD one of the URLs above.\n` +
+        `1,596 gallery rows are known to carry a dead extracted_url at /artwork/<slug>.jpg (#4185).`,
+      );
+    }
+  }
 
   await pgClient.end();
   await mongo.close();

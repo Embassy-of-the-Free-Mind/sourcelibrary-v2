@@ -36,7 +36,16 @@ export function generateCitations(
   bookId: string,
   pageId: string,
   baseUrl: string,
-  edition?: TranslationEdition
+  edition?: TranslationEdition,
+  /**
+   * The reading language of the text being cited (#4095). Only the two link
+   * fields change: the citation PROSE stays as it is, because the apparatus
+   * describes the printed source — author, place, year, the edition being
+   * quoted — none of which a translation into Spanish alters. Passing a
+   * language whose edition the book does not hold would mint a URL that 307s
+   * back to English, so callers pass it only when they served that edition.
+   */
+  lang?: string,
 ): Citation {
   // `published` is free text: 23% of the corpus is not a year, and ~1,500 books
   // carry raw Wikidata QuickStatements ("1573date QS:P571,+1573-...Z/9"). That
@@ -150,10 +159,11 @@ export function generateCitations(
   // API by id would otherwise mint a permanent citation to /book/<objectid>.
   const editionVersion = edition?.version;
   const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const url = `${baseUrl}${readerPageUrl({ slug: book.slug, id: bookId }, pageId)}${vParam}`;
+  const localePrefix = lang && lang !== 'en' ? `/${lang}` : '';
+  const url = `${baseUrl}${localePrefix}${readerPageUrl({ slug: book.slug, id: bookId }, pageId)}${vParam}`;
 
   // Short URL for sharing
-  const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl);
+  const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl, lang);
 
   return {
     inline,

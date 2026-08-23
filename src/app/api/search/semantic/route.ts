@@ -40,6 +40,12 @@ export async function GET(request: NextRequest) {
   const yearMin = searchParams.get('year_min') ? parseInt(searchParams.get('year_min')!, 10) : undefined;
   const yearMax = searchParams.get('year_max') ? parseInt(searchParams.get('year_max')!, 10) : undefined;
   const maxPerBook = searchParams.get('max_per_book') ? parseInt(searchParams.get('max_per_book')!, 10) : undefined;
+  // Which TEXT store to search (#4095) — `en` reads `page_translations`,
+  // anything else reads the language-keyed `page_texts`. Page level only: book
+  // summaries have one embedding, in English, so `level=book` cannot honour it
+  // and says so rather than pretending.
+  const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+  const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
 
   if (!query || query.length < 2) {
     return NextResponse.json({ results: [], query: '' });
@@ -50,7 +56,7 @@ export async function GET(request: NextRequest) {
 
   if (level === 'page') {
     try {
-      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, languages, excludeLanguages, yearMin, yearMax, maxPerBook });
+      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, languages, excludeLanguages, yearMin, yearMax, maxPerBook, textLang });
       const bookIds = [...new Set(pages.map(p => p.book_id))];
       let slugMap: Record<string, string> = {};
       // Books hidden from the public reader (visible:false OR hidden:true). Embeddings
@@ -80,7 +86,7 @@ export async function GET(request: NextRequest) {
       logSearchQuery({
         request, route: 'search.semantic.page', query: query!,
         total: enriched.length, ms: Date.now() - _searchStart, ok: true,
-        filters: { language, languages, exclude_languages: excludeLanguages, year_min: yearMin, year_max: yearMax, max_per_book: maxPerBook },
+        filters: { language, languages, exclude_languages: excludeLanguages, year_min: yearMin, year_max: yearMax, max_per_book: maxPerBook, lang: textLang },
       });
       return NextResponse.json({
         results: enriched,
@@ -88,6 +94,8 @@ export async function GET(request: NextRequest) {
         total: enriched.length,
         mode: 'semantic',
         level: 'page',
+        // Which text store answered. Snippets are in THIS language.
+        lang: textLang,
       }, {
         headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
       });
@@ -204,6 +212,11 @@ export async function GET(request: NextRequest) {
       query,
       total: results.length,
       mode,
+      // Book-level embeddings are one per book, composed from the English
+      // summary and index. There is no localized store to point `lang` at, so
+      // say `en` plainly rather than echo a request we did not honour.
+      lang: 'en',
+      ...(textLang !== 'en' ? { lang_note: `Book-level semantic search has only English embeddings; use level=page for ${textLang} passages.` } : {}),
     }, {
       headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
     });

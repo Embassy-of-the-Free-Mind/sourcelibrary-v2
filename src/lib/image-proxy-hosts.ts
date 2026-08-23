@@ -45,6 +45,7 @@ export const ALLOWED_IMAGE_HOSTS = [
   'rijksmuseum.nl',                  // Rijksmuseum
   'dl.ndl.go.jp',                    // National Diet Library Japan
   'e-rara.ch',                       // Swiss libraries
+  'media.getty.edu',                 // Getty (Florentine Codex)
 ] as const;
 
 /** IPv4 literal, or null if the string is not one. */

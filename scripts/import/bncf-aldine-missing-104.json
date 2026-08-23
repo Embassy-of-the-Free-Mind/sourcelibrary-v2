@@ -1,0 +1,938 @@
+[
+  {
+    "ia_identifier": "ita-bnc-ald-00000775-001",
+    "title": "Martialis.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1501,
+    "original_language": "Latin",
+    "imagecount": 400,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000594-001",
+    "title": "Prudentius. Prosper. Ioannes Damascenus. Cosmus Hierosolymitanus Marcus episcopus Taluontis Theophanes.",
+    "author": "Gabiano, Balthazard de",
+    "year": 1502,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": null
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000337-001",
+    "title": "Demosthenous logoi, dyo kai hexekonta. Libaniou sophistou, hypotheseis eis tous autous logois. Bios demosthenous, kat'auton libanion. Bios demosthenous, kata ploutarchon. Demosthenis orationes duae & sexaginta. Libanii sophistae in eas ipsas orationes argumenta. Vita Demosthenis per Libanium. Eiusdem uita per Plutarchum.",
+    "author": "Libanius",
+    "year": 1504,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000588-001",
+    "title": "Xenophon in hoc volumine continentur infrascripta opera Xenophontis. Paedia Cyri Persarum regis. De venatione. De re publica & de legibus Lacedaemoniorum. De regis Agesilai Lacedaemoniorum laudibus. Apologia pro Socrate. Opusculum de tyrannide.",
+    "author": "Filelfo, Francesco",
+    "year": 1504,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": null
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000042-001",
+    "title": "C. Crispi Sallustii De coniuratione Catilinae. Eiusdem De bello Iugurthino. Eiusdem Oratio contra M.T. Ciceronem. M.T. Ciceronis Oratio contra C. Crispum Sallustium. Eiusdem Orationes quatuor contra Lucium Catilinam. Porcii Latronis Declamatio contra Lucium Catilinam. Orationes quaedam ex libris historiarum C. Crispi Sallustii.",
+    "author": "Latro, Marcus Porcius",
+    "year": 1509,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000037-001",
+    "title": "M.T. Ciceronis Epistolarum ad Atticum ad Brutum, ad Quintum fratrem, libri 20. Latina interpretatio eorum, quae in ijs ipsis epistolis graece scripta sunt ubi multa & mutata, & addita sunt. ...",
+    "author": "Cicero, Marcus Tullius",
+    "year": 1513,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000607-001",
+    "title": "M. Plauti Sars sinatis. *Comedie. 20. uarroniane ex antiquis recentioribusque exemplaribus inuicem collatis diligentissime emendate .",
+    "author": "Trot, Barthélemy",
+    "year": 1513,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Trot, Barthélemy, fl. 1506-1535"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000026-001",
+    "title": "Auli Gellii Noctium Atticarum libri vndeuiginti",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1515,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press [Torresanus, Andreas, de Asula, 1451-1529]"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000873-001",
+    "title": "Gli Asolani di messer Pietro Bembo.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1515,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000839-001",
+    "title": "Pomponius Mela. Iulius Solinus. Itinerarium Antonini Aug. Vibius Sequester. P. Victor De regionibus urbis Romae. Dionysius Afer De situ orbis Prisciano interprete.",
+    "author": "Asulanus, Franciscus",
+    "year": 1518,
+    "original_language": "Latin",
+    "imagecount": 484,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000841-001",
+    "title": "Pomponius Mela. Iulius Solinus. Itinerarium Antonini Aug. Vibius Sequester. P. Victor De regionibus urbis Romae. Dionysius Afer De situ orbis Prisciano interprete.",
+    "author": "Asulanus, Franciscus",
+    "year": 1518,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000057-001",
+    "title": "M. T. Ciceronis Orationum vol. 1.",
+    "author": "Cicero, Marcus Tullius",
+    "year": 1519,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000727-001",
+    "title": "In hoc volumine haec continentur. Neruae & Traiani, atque Adriani Caesarum uitae ex Dione, Georgio Merula interprete. Aelius Spartianus. Iulius Capitolinus. Lampridius. Flauius Vopiscus. Trebellius Pollio. Vulcatius Gallicanus. Ab Ioanne Baptista Egnatio Veneto diligentissime castigati. Heliogabali principis ad meretrices elegantissima oratio. Eiusdem Io. Baptistae Egnatij de Caesaribus libri tres ... Eiusdem in Spartiani, Lampridijque uitas, & reliquorum annotationes. Aristidis Smyrnaei Oratio de laudibus urbis Romae à Scipione Carteromacho in Latinum uersa. In extrema operis parte addita Conflagratio Veseui montis ex Dione, Georgio Merula interprete.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1519,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000902-001",
+    "title": "Ioannis Iouiani Pontani. De Aspiratione libri duo. Charon dialogus. Antonius dialogus. Actius dialogus. Aegidius dialogus. Asinus dialogus. De sermone libri sex. Belli, quod Ferdinandus senior Neapolitanus rex cum Ioanne Andeganiensium duce gessit, libri sex.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1519,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000067-001",
+    "title": "In hoc volumine haec continentur. C. Suetonij Tranquilli 12. Caesares. Sexti Aurelij Victoris a D. Caesare Augusto usque ad Theodosium excerpta. Eutropij de gestis Romanorum Lib. 10. Pauli Diaconi libri 8. ad Eutropij historiam additi. Index rerum memorabilium per singulos Tranquilli Caesares ab Ioanne Baptista Egnatio Veneto compositus. Annotationes eiusdem Egnatij in omnes Tranquilli Caesares. annotatione etiam Erasmi in Suetonium, Eutropium & Paulum Diaconum per literarum ordinem.",
+    "author": "Egnazio, Giovanni Battista",
+    "year": 1521,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000836-001",
+    "title": "Titi Liuii Patauini Librorum epitomae. Lucius Florus",
+    "author": "Livy",
+    "year": 1521,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000887-001",
+    "title": "L. Apuleii Metamorphoseos, siue Lusus asini libri 11. Floridorum 4. De deo Socratis 1. De philosophia 1. Asclepius Trismegisti dialogus eodem Apuleio interprete ... Isagogicus liber Platonicae philosophiae per Alcinoum philosophum Graece impressus ...",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1521,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000072-001",
+    "title": "Asconii Paediani Expositio in 4. orationes M. Tullii Cic. contra C. Verrem. & in orationem pro Cornelio. In orationem contra C. Antonium, & L. Catilinam. In orationem pro M. Scauro. In orationem contra L. Pisonem. In orationem pro Milone. atque harum rerum omnium index. Victorini commentarij in libros M.T.C. de inuentione. & Georgij Trapezuntij in orationem pro Q. Ligario.",
+    "author": "Asulanus, Franciscus",
+    "year": 1522,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000819-001",
+    "title": "Asconii Paediani Expositio in 4. orationes M. Tullii Cic. contra C. Verrem. & in orationem pro Cornelio. In orationem contra C. Antonium, & L. Catilinam. In orationem pro M. Scauro. In orationem contra L. Pisonem. In orationem pro Milone. atque harum rerum omnium index. Victorini commentarij in libros M.T.C. de inuentione. & Georgij Trapezuntij in orationem pro Q. Ligario.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1522,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000107-001",
+    "title": "Silii Italici De bello Punico secundo 17. libri nuper diligentissime castigati.",
+    "author": "Crinito, Pietro",
+    "year": 1523,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000108-001",
+    "title": "Silii Italici De bello Punico secundo 17. libri nuper diligentissime castigati.",
+    "author": "Crinito, Pietro",
+    "year": 1523,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000889-001",
+    "title": "Odysseia. Batrachomyomachia. Hymnoi 32. Vlyssea. Batrachomyomachia. Hymni. 32.",
+    "author": "Elci, Angiolo d'",
+    "year": 1524,
+    "original_language": "Latin",
+    "imagecount": 516,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000093-001",
+    "title": "Actii Synceri Sannazarii De partu Virginis. Lamentatio de morte Christi. Piscatoria. Petri Bembi Benacus. Augustini Beatiani Verona.",
+    "author": "Sannazaro, Jacopo",
+    "year": 1527,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000201-001",
+    "title": "Prisciani grammatici Caesariensis Libri omnes. De octo partibus orationis, 16. deque earundem constructione 2. De duodecim primis Aeneidos librorum carminibus. De accentibus. De ponderibus, & mensuris. De praeexercitamentis rhetoricae ex Hermogene. De uersibus comicis. Rufini item de metris comicis, & oratorijs numeris. ...",
+    "author": "Donato, Bernardino",
+    "year": 1527,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000110-001",
+    "title": "[3]: Cla. Ptolemaei Inerrantium stellarum significationes per Nicolaum Leonicum è graeco translatae. 12 Romanorum menses in ueteribus monimentis Romae reperti. Sex priorum mensium digestio ex sex Ouidij Fastorum libris excerpta. P. Ouidii Nasonis Fastorum lib. 6. Tristium lib. 5. De Ponto lib. 4. In Ibin. Ad Liuiam.",
+    "author": "Leonico Tomeo, Nicolò",
+    "year": 1533,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & eredi di Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000192-001",
+    "title": "Libri de re rustica. M. Catonis lib. 1. M. Terentii Varronis lib. 3. L. Iunii Moderati Columellae lib. 12. Eiusdem de arboribus liber separatus ab alijs. Palladii lib. 14. De duobus dierum generibus: simulque de umbris, & horis, quae apud Palladium. Index omnium ferè rerum, quae in his libris scitu dignae leguntur. Index graecarum dictionum. Enarrationes priscarum uocum per ordinem literarum digestae.",
+    "author": "Cato, Marcus Porcius",
+    "year": 1533,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000822-001",
+    "title": "L'anthropologia di Galeazzo Capella secretario dell'illustrissimo signor duca di Milano.",
+    "author": "Elci, Angiolo d'",
+    "year": 1533,
+    "original_language": "Italian",
+    "imagecount": 170,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000123-001",
+    "title": "L. Coelii Lactantii Firmiani Diuinarum institutionum libri septem proxime castigati, et aucti. Eiusdem De ira Dei liber 1. De opificio Dei liber 1. Epitome in libros suos, liber acephalos. Phoenix. Carmen de dominica resurrectione. Item index in eundem rerum omnium. Tertulliani liber apologeticus cum indice.",
+    "author": "Egnazio, Giovanni Battista",
+    "year": 1535,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula, 1451-1529"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000184-001",
+    "title": "La Biblia quale contiene i sacri libri del Vecchio Testamento, tradotti da la hebraica uerita in lingua toscana per Antonio Brucioli, aggiuntiui duoi libri di Esdra, & più capitoli in Daniel, & in Ester, nuouamente trouati, & il terzo libro de Machabei. Co diuini libri del Nuouo Testamento di Christo Giesu signore, & saluatore nostro. Tradotti dal greco pel medesimo. Con due tauole ... Con le concordantie del Nuouo & Vecchio Testamento.",
+    "author": "Zanetti, Bartholomeo",
+    "year": 1539,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Torresano, Federico, d. 1561 or 62"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000185-001",
+    "title": "La Biblia quale contiene i sacri libri del Vecchio Testamento, tradotti da la hebraica uerita in lingua toscana per Antonio Brucioli, aggiuntiui duoi libri di Esdra, & più capitoli in Daniel, & in Ester, nuouamente trouati, & il terzo libro de Machabei. Co diuini libri del Nuouo Testamento di Christo Giesu signore, & saluatore nostro. Tradotti dal greco pel medesimo. Con due tauole ... Con le concordantie del Nuouo & Vecchio Testamento.",
+    "author": "Zanetti, Bartholomeo",
+    "year": 1539,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Torresano, Federico, d. 1561 or 62"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000084-001",
+    "title": "Historie di Nicolò Machiauelli, cittadino et secretario fiorentino ...",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1540,
+    "original_language": "Italian",
+    "imagecount": 544,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000514-001",
+    "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quintum fratrem, summa diligentia castigatae, ut in ijs menda, quae plurima erant, paucissima iam supersint. Pauli Manutii in easdem epistolas Scholia, quibus abditi locorum sensus obstenduntur, cum explicatione castigationum, quae in his epistolis pene innumerabiles factae sunt.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1540,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000773-001",
+    "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quintum fratrem, summa diligentia castigatae, ut in ijs menda, quae plurima erant, paucissima iam supersint. Pauli Manutii in easdem epistolas Scholia, quibus abditi locorum sensus obstenduntur, cum explicatione castigationum, quae in his epistolis pene innumerabiles factae sunt.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1540,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000979-001",
+    "title": "1: M. Tullii Ciceronis Orationum uolumen primum, in quo multa, quæ in aliarum editionum libris corrupte legebantur, ex diligenti uetustorum exemplarium collatione sunt emendata",
+    "author": "Manuzio, Paolo",
+    "year": 1540,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000182-001",
+    "title": "1. M. Tullii Ciceronis Epistolae familiares, diligentius, quam quae hactenus exierunt, emendatae. Pauli Manutii scholia. ...",
+    "author": "Unknown",
+    "year": 1543,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000141-001",
+    "title": "Le epistole famig. di Cicerone, tradotte secondo i veri sensi dell'auttore, et con figure proprie della lingua volgare, ristampate, & con molto studio riuedute, & corrette.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1545,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000160-001",
+    "title": "De discorsi del reuerendo monsignor Francesco Patritij Sanese vescouo Gaiettano, sopra alle cose appartenenti ad una città libera, e famiglia nobile; tradotti in lingua toscana da Giouanni Fabrini fiorentino ... libri noue.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1545,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000149-001",
+    "title": "Le occorrenze humane per Nicolo Liburnio composte.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1546,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000176-001",
+    "title": "Il Petrarca.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1546,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000858-001",
+    "title": "Le comedie di Terentio volgari, di nuouo ricorrette, et a miglior tradottione ridotte.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1546,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": null
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000368-001",
+    "title": "Il libro del cortegiano del conte Baldesar Castiglione.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1547,
+    "original_language": "Italian",
+    "imagecount": 436,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000854-001",
+    "title": "In epistolas Ciceronis ad Atticum, Pauli Manutij commentarius, ...",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1547,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000241-001",
+    "title": "Epistole et orationi della seraphica vergine santa Catharina da Siena: ... Vi è aggionta la vita, & canonizatione della detta santa: con alcuni capitoli in sua laude, nouamente reuiste, & con somma diligentia ristampate. Con la sua tauola.",
+    "author": "Torresano, Federico",
+    "year": 1548,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Torresano, Federico, d. 1561 or 62"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000859-001",
+    "title": "Giocasta. Tragedia di M. Lodouico Dolce.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1549,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": null
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000860-001",
+    "title": "Fabritia. Comedia di M. Lodouico Dolce.",
+    "author": "Manuzio, Paolo",
+    "year": 1549,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000352-001",
+    "title": "Dialoghi di M. Speron Speroni.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1550,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000346-001",
+    "title": "Aristotelous Ten Peri physikes akroaseos, Peri ouranou, Peri kosmou pros Alex. Peri geneseos kai phthoras kai Ten meteorologiken pragmateian peri echon, tomos B'. Aristotelis *De physica auscultatione, De coelo, De mundo ad Alex. De generatione et corruptione, et meteorologicam disciplinam continens tomus 2.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1551,
+    "original_language": "Greek",
+    "imagecount": null,
+    "publisher": null
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000356-001",
+    "title": "Delle guerre ciuili et esterne de romaniAppiano Alessandrino, con diligentia corretto & con nuoua tradottione di molti luoghi migliorato. Aggiuntoui alla fine un libro del medesimo, delle guerre di Hispagna, non piu ueduto. Volume 1.",
+    "author": "Braccesi, Alessandro",
+    "year": 1551,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000404-001",
+    "title": "Lettere uolgari di diuersi nobilissimi huomini, et eccellentissimi ingegni, scritte in diuerse materie, ... Libro primo.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1551,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000705-001",
+    "title": "Al beatissimo Giulio 3., papa com'il 2. ammirando il Genesi l'Humanita di Christo, & i Salmi. Opere di m. Pietro Aretino del sacrosanto monte humil germe, & per diuina gratia huomo libero.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1551,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000800-001",
+    "title": "Historiae Venetae ...",
+    "author": "Bembo, Pietro",
+    "year": 1551,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": null
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000391-001",
+    "title": "Marci Tullii Ciceronis Officiorum libri tres: Cato maior, uel De senectute: Laelius, uel De amicitia: Paradoxa stoicorum sex: Somnium Scipionis, ex libro sexto De republica ... Additae sunt in extremo opere uariæ lectiones ex libris manuscriptis, et ex ingenio.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1552,
+    "original_language": "Latin",
+    "imagecount": 268,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000392-001",
+    "title": "Iunioris Ludouici Pariseti Regiensis De diuina in hominem beneuolentia, atque beneficentia orationes tres ad viros Regienses habitae.",
+    "author": "Manuzio, Paolo",
+    "year": 1552,
+    "original_language": "Latin",
+    "imagecount": 502,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000412-001",
+    "title": "Aristotelous Ta Ethika megala, kai ethika eydem. Kai ethika nikomax. Kai oikonomika kai politika periechon tomos 5. Aristotelis moralia magna, et moralia eudem. et moralia nicomach. et rei familiaris, ciuilisque disciplinam continens tomus 5.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1552,
+    "original_language": "Greek",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000916-001",
+    "title": "5: Aristotelous Ta Ethika megala, kai ethika eydem. Kai ethika nikomax. Kai oikonomika kai politika periechon tomos 5. Aristotelis moralia magna, et moralia eudem. et moralia nicomach. et rei familiaris, ciuilisque disciplinam continens tomus 5.",
+    "author": "Manuzio, Aldo, 1449 or 50-1515 & Torresanus, Andreas, de Asula",
+    "year": 1552,
+    "original_language": "Greek",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000365-001",
+    "title": "Clarissimi iurisconsulti Benuenuti Stracchae patritij Anconitani De mercatura, seu mercatore tractatus.",
+    "author": "Manuzio, Paolo",
+    "year": 1553,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000367-001",
+    "title": "Pauli Aeginetae medici Opera. A Ioanne Guinterio Andernaco medico exercitatissimo summique iudicii conuersa, & illustrata commentariis. Adiectae sunt annotationes Iacobi Goupyli medici Parisiensis, in aliquot singulorum librorum capita. Ioanne Baptista Camotio philosopho nouissime corrigente, cum quibusdam scolijs in margine politis.",
+    "author": "Torresano, Federico",
+    "year": 1553,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Torresano, Federico, d. 1561 or 62"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000614-001",
+    "title": "Palladii diui Euagrii discipuli Lausiaca quae dicitur historia, et Theodoreti episcopi Cyri Theophiles, id est religiosa historia. ... Gentiano Herueto Aurelio interprete.",
+    "author": "Turrisan, Bernard",
+    "year": 1555,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Turrisanum, Bernardinum"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000732-001",
+    "title": "M. Tullii Ciceronis De philosophia, prima pars ... Cum sccholijs & coniecturis Pauli Manutij.",
+    "author": "Manuzio, Paolo",
+    "year": 1555,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000914-001",
+    "title": "De philosophia",
+    "author": "Cicero, Marcus Tullius",
+    "year": 1555,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": null
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000203-001",
+    "title": "Gauini Sambigucii Sardi Sassarensis In Hermathenam Bocchiam interpretatio ad illustriss. et reuerendiss. d. Saluatorem Salapussium archiepis. Sassarensem, ..",
+    "author": "Sambigucci, Gavino",
+    "year": 1556,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Antonio, d. ca. 1559"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000447-001",
+    "title": "Epistolae clarorum uirorum, selectae de quamplurimis optimæ, ad indicandam nostrorum temporum eloquentiam.",
+    "author": "Manuzio, Paolo",
+    "year": 1556,
+    "original_language": "Latin",
+    "imagecount": 276,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000440-001",
+    "title": "Constantini Lascaris Byzantini Grammaticae compendium. Adiectis in fine quibusdam opusculis, ad graecae linguae scientiam aptissimis. Cum latina interpretatione e regione apposita, ut conferri a quouis tyrone possint.",
+    "author": "Manuzio, Paolo",
+    "year": 1557,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000467-001",
+    "title": "Le pistole di Cicerone ad Attico, fatte volgari da M. Matteo Senarega.",
+    "author": "Manuzio, Paolo",
+    "year": 1557,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Eredi di Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000454-001",
+    "title": "Catullus, et in eum commentarius M. Antonii Mureti ab eodem correcti, & scholiis illustrati, Tibullus, et Propertius.",
+    "author": "Manuzio, Paolo",
+    "year": 1558,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000338-001",
+    "title": "C. Plinii Secundi Naturalis historiae libri trigintaseptem, a Paulo Manutio multis in locis emendati. Castigationes Sigismundi Gelenij. Index plenissimus.",
+    "author": "Manuzio, Paolo",
+    "year": 1559,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000750-001",
+    "title": "Rhetoricorum ad C. Herennium libri 4. incerto auctore. Ciceronis De inuentione libri 2. Topica ad Trebatium, Oratoriae partitiones. Cum correctionibus Pauli Manutii.",
+    "author": "Manuzio, Paolo",
+    "year": 1559,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000441-001",
+    "title": "C. Sallustii Crispi De coniuratione Catilinae, & De bello Iugurthino. Eiusdem orationes quaedam ex libris historiarum. Orationes contrariae, quarum altera Sallustio tribuitur, altera Ciceroni. Index rerum memorabilium.",
+    "author": "Manuzio, Paolo",
+    "year": 1560,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000959-001",
+    "title": "M. Tullii Ciceronis Epistolae familiares. Pauli Manutii adnotationes breuissimæ, in margine adscriptæ, quæ commentarii loco esse possint, & ad eloquentiam, artemque scribendi multum afferant. Eiusdem Manutii scholia",
+    "author": "Manuzio, Paolo",
+    "year": 1560,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000212-001",
+    "title": "Matthaei Curtii Papiensis De prandii ac caenae modo libellus.",
+    "author": "Manuzio, Paolo",
+    "year": 1562,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000657-001",
+    "title": "Marci Antonii Nattae Astensis Volumina quaedam nuper excussa numero et ordine, qui subiicitur. De libris suis quibusdam nunc primùm in lucem editis & argumentis eorum. De Principium doctrina, magnum, & uarium, & elegans opus, libris 9. ... In funere Io. Francisci Nattæ patruelis, Oratio ...",
+    "author": "Manuzio, Paolo",
+    "year": 1562,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000760-001",
+    "title": "De sacramento confessionis, seu paenitentiae, historia, ex ueteribus sanctis patribus collecta, per quam contra haereticos Lutheranos copiose ostenditur, sacramentalem confessionem ab ipso Christo institutam esse, et in ecclesiae catholicae usu usque ad nostra tempora semper obseruatam. De antiquis paenitentiis utilis libellus, e ueteribus sanctis patribus accurate contextus. Mariano Victorio Reatino auctore.",
+    "author": "Manuzio, Paolo",
+    "year": 1562,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000488-001",
+    "title": "Eleganze, insieme con la copia della lingua toscana, e latina, scielte da Aldo Manutio, utilissime al comporre, ne l'una e l'altra lingua.",
+    "author": "Manuzio, Paolo",
+    "year": 1563,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000308-001",
+    "title": "Index librorum prohibitorum, cum regulis confectis per patres a Tridentina Synodo delectos, auctoritate sanctiss. D.N. Pii 4., Pont. Max. comprobatus.",
+    "author": "Manuzio, Paolo",
+    "year": 1564,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000817-001",
+    "title": "M. Antonii Flaminii In librum psalmorum breuis explanatio, atque in eorum aliquot, paraphrases luculentissimae. His adiecimus alias eiusdem in psalmos triginta, paraphrases, carmine conscriptas, ac suo loco positas",
+    "author": "Manuzio, Paolo",
+    "year": 1564,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000339-001",
+    "title": "Epistolae D. Hieronymi Stridonensis, et libri contra haereticos, ex antiquissimis exemplaribus, nunc primum, opera, ac studio Mariani Victorii Reatini emendati, eiusdemque argumentis, & scholiis illustrati. Adiecta est operis initio Vita S. Hieronymi, olim falso ab Erasmo, aliisque relata, quam idem Marianus ex eius scriptis collectam primus edidit. ... Index locupletissimus, ... ab eodem Mariano compositus. Loca Sacrae Scripturae, a D. Hieronymo explicata. Volume 1.",
+    "author": "Manuzio, Paolo",
+    "year": 1566,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000487-001",
+    "title": "Orthographiae ratio ab. Aldo. Manutio Paulli. f. collecta ex libris antiquis grammaticis etymologia Graeca consuetudine nummis ueteribus tabulis aereis lapidibus amplius 1500. Interpungendi ratio notarum ueterum explanatio kalendarium uetus Romanum, e marmore descriptum, cum Paulli Manutij, patris, commentariolo, de ueterum dierum ratione & kalendarij explanatione Aldi Manutij, aui, de uitiata vocalium, ac diphtongorum prolatione, parergon.",
+    "author": "Manuzio, Paolo",
+    "year": 1566,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000498-001",
+    "title": "Le epistole famigliari di Cicerone tradotte di nuouo, e quasi in infiniti luoghi corrette da Aldo Manutio.",
+    "author": "Manuzio, Paolo",
+    "year": 1566,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000520-001",
+    "title": "Terentius, a M. Antonio Mureto locis prope innumerabilibus emendatus. Eiusdem Mureti argumenta in singulas comoedias, & annotationes ... .",
+    "author": "Manuzio, Paolo",
+    "year": 1566,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000497-001",
+    "title": "M. Tulli Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quinctum fratrem, cum correctionibus Pauli Manutij.",
+    "author": "Manuzio, Paolo",
+    "year": 1567,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000490-001",
+    "title": "Epistolarum Pauli Manutii libri 8 tribus nuper additis. Eiusdem quae Praefationes appellantur. Vol. 1.",
+    "author": "Manuzio, Paolo",
+    "year": 1569,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1547-1597"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000850-001",
+    "title": "Catechismus, ex decreto Concilii Tridentini, ad parochos. Pii 5. pont. max. iussu editus",
+    "author": "Manuzio, Paolo",
+    "year": 1569,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000504-001",
+    "title": "Horatius. In quo quidem, praeter M. Antonii Mureti scholia, Io. Michaelis Bruti animaduersiones habentur, quibus obscursiores plerique loci illustrantur. Aldi Manutij de metris Horatianis libellus. Eiusdem in eundem annotationes.",
+    "author": "Manuzio, Aldo",
+    "year": 1570,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000566-001",
+    "title": "Horatius M. Antonii Mureti in eum scholia Aldi Manutii de metris Horatianis. Eiusdem annotationes in Horatium.",
+    "author": "Manuzio, Aldo",
+    "year": 1570,
+    "original_language": "Latin",
+    "imagecount": 404,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000296-001",
+    "title": "De gentib. et familiis romanorum, Richardi Streinnij baronis Schuuarzenauii.",
+    "author": "Manuzio, Aldo",
+    "year": 1571,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000549-001",
+    "title": "Epistolarum Pauli. Manutij libri. 10. duobus. nuper. additis. Eiusdem quae Praefationes appellantur. Vol. 1.",
+    "author": "Unknown",
+    "year": 1571,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000562-001",
+    "title": "Pauli de Palacio Granatensis, s. th. d. et in inclyta Lusytanorum Conimbricensi academia, S. Scripturæ professoris, Enarrationes in sacrosanctum Iesu Christi Euangelium secundum Matthæum. Prima ; pars. Vol. 1.",
+    "author": "Biblioteca Aldina (ed.)",
+    "year": 1571,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000386-001",
+    "title": "Commentarius Pauli. Manutij in. Epistolas. Ciceronis ad. Atticum. Index rerum, & uerborum.",
+    "author": "Manuzio, Paolo",
+    "year": 1572,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Manuzio, Paolo, 1512-1574"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000552-001",
+    "title": "Epistolarum Pauli. Manutij libri. 11 Vno nuper addito Eiusdem quae Praefationes appellantur.",
+    "author": "Manuzio, Aldo",
+    "year": 1573,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000301-001",
+    "title": "Vita dell'inuittissimo, e sacratissimo imperator Carlo 5. Descritta dal signor Alfonso Vlloa. Con l'aggionta di molte cose vtili all'historia, che nelle altre impressioni mancauano. Nella quale si comprendono le cose piu notabili, occorse al suo tempo: incominciando dall'anno 1500. insino al 1560.",
+    "author": "Manuzio, Aldo",
+    "year": 1575,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000537-001",
+    "title": "Catechismus ex decreto Concilii Tridentini ad parochos Pii 5. pont. max. iussu editus.",
+    "author": "Manuzio, Aldo",
+    "year": 1575,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000761-001",
+    "title": "Locutioni dell'Epistole di Cicerone, scielte da Aldo Manutio. Vtilissime al comporre nell'una, e l'altra lingua. Con due copiosissime tauole, per trouare le materie, nel libro contenute.",
+    "author": "Manuzio, Aldo",
+    "year": 1575,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1547-1597"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000272-001",
+    "title": "Del Teuere di M. Andrea Bacci medico et filosofo libri tre, ne' quali si tratta della natura, & bontà dell'acque, & specialmente del Teuere, & dell'acque antiche di Roma, del Nilo, del Po, dell'Arno, & d'altri fonti, & fiumi del mondo. Dell'vso dell'acque, ... Delle inondationi, & de' rimedii, che gli antichi Romani fecero, ...",
+    "author": "Manuzio, Aldo",
+    "year": 1576,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1547-1597"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000611-001",
+    "title": "Adagia quaecumque ad hanc diem exierunt, Paulli Manutij studio, atque industria, ... ab omnibus mendis vindicata, quae pium, & veritatis Catholicae studiosum lectorem poterant offendere: sublatis etiam falsis interpretationibus, & nonnullis, ... digressionibus. Quem laborem, a sacrosancti Concilii Tridentini patribus Manutio mandatum.",
+    "author": "Rocca, Angelo",
+    "year": 1578,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Polum, Hieronymum"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000303-001",
+    "title": "L'agricoltura, et casa di villa di Carlo Stefano gentil'huomo francese nuouamente tradotta dal caualiere Hercole Cato. Con tre tauole, vna de' capitoli; l'altra delle cose più notabili; & la terza delle cose appartenenti alle medicine.",
+    "author": "Manuzio, Aldo",
+    "year": 1581,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000385-001",
+    "title": "Gli straccioni comedia del commendator Annibal Caro.",
+    "author": "Manuzio, Aldo",
+    "year": 1582,
+    "original_language": "Italian",
+    "imagecount": 128,
+    "publisher": "Manuzio, Aldo, 1547-1597"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000538-001",
+    "title": "Catechismo, cioe' istruttione, secondo il decreto del Concilio di Trento, a' parochi, publicato per commandamento del santiss. s.n. papa Pio 5. Et tradotto poi per ordine di sua sant. in lingua uolg. dal r.p.f. Alesso Figliucci, de l'ord. de' Predicatori.",
+    "author": "Manuzio, Aldo",
+    "year": 1582,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000556-001",
+    "title": "Declaratio difficilium terminorum theologiae. philosophiae atq. logicae D. Armandi Bellouisii artium, & sacrae theologiae doctoris praeclarissimi. Opus scientiarum studiosis vtilissimum, & nunc demum ab innumeris erroribus expurgatum. Cum duplici indice: altero capitum, altero rerum memorabilium.",
+    "author": "Manuzio, Aldo",
+    "year": 1586,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000546-001",
+    "title": "Eleganze insieme con la copia della lingua toscana e latina. Scielte da Aldo Mannucci. Vtilissime al comporre nell'vna, e l'altra lingua. Con l'aggiunta di cinquecento nuoui capi necessarijssimi. Et con tre nuoue tauole.",
+    "author": "Ruffinelli, Giacomo",
+    "year": 1589,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Ruffinelli, Giacomo"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000558-001",
+    "title": "Della republica et magistrati di Venetia libri 5 di m. Gasparo Contarini ... Con un ragionamento intorno alla medesima di m. Donato Giannotti fiorentino. Et i discorsi di m. Sebastiano Erizzo, & di m. Bartolomeo Caualcanti: aggiuntoui vno di nuouo dell'eccellenza delle republiche ...",
+    "author": "Manuzio, Aldo",
+    "year": 1591,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000898-001",
+    "title": "Dello stato delle republiche secondo la mente di Aristotele con essempi moderni giornate otto, di M. Nicolo Vito di Gozzi gentilhuomo raguseo, accademico occulto. Con 222 auertimenti ciuili dell'istesso, molto curiosi, & vtili per coloro, che gouernano stati. Et nel fine vna Apologia dell'honor ciuile. ...",
+    "author": "Manuzio, Aldo",
+    "year": 1591,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000250-001",
+    "title": "Demonomania de gli stregoni, cioè furori, et malie de' demoni, col mezo de gl'huomini: diuisa in libri 4. Di Gio. Bodino francese tradotta dal K.r Hercole Cato. Nel primo de' quali si tratta, la natura de' demoni; ... Nel secondo, si tratta l'arte profana, ... Nel terzo, si ragiona de' modi leciti, & illeciti, ... Nel quarto, & vltimo, il modo di far inquisitione, ... Con vna confutatione dell'opinione di Gio. Vuier; ...",
+    "author": "Manuzio, Aldo",
+    "year": 1592,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Aldine Press"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000263-001",
+    "title": "Della vicissitudine o' Mutabile varietà delle cose nell'vniuerso libri 12. di Luigi Regio francese tradotti dal K.r Hercole Cato. Nella quale sotto breuità si hà piena cognitione de i mutamenti vniuersali, ... Aggiuntoui di nuouo i sommarij à ciascun libro, & due tauole vna de i capitoli, & l'altra delle cose più notabili.",
+    "author": "Manuzio, Aldo",
+    "year": 1592,
+    "original_language": "Italian",
+    "imagecount": null,
+    "publisher": "Manuzio, Aldo, 1449 or 50-1515"
+  },
+  {
+    "ia_identifier": "ita-bnc-ald-00000655-001",
+    "title": "Marci Velseri ... Rerum Augustanar. Vindelicar libri. octo.",
+    "author": "Manuzio, Aldo",
+    "year": 1594,
+    "original_language": "Latin",
+    "imagecount": null,
+    "publisher": null
+  }
+]

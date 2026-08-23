@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { localePath, type Locale } from '@/lib/locale-path';
 
 interface LogoProps {
   /** White text/stroke for dark backgrounds */
@@ -7,9 +8,24 @@ interface LogoProps {
   compact?: boolean;
   /** Extra-compact: icon only on mobile, text on sm+ (used in reader header) */
   mini?: boolean;
+  /**
+   * Keep the wordmark at every width. For surfaces that have the room and
+   * need the full identity: the reader's full-screen site menu is the whole
+   * screen, so the three rings alone read as an unlabelled dot.
+   */
+  alwaysWordmark?: boolean;
+  /**
+   * Surface locale. The wordmark is the most-clicked nav element on the site and
+   * its href used to be a hard-coded `/`: on every `/es` page it dropped a
+   * Spanish reader onto the ENGLISH homepage, silently ending their localized
+   * session. Passed down (not read from `usePathname`) because the homepage is
+   * statically prerendered, where the pathname is null at build time and the
+   * link would only become correct after hydration.
+   */
+  lang?: Locale;
 }
 
-export default function Logo({ white, compact, mini }: LogoProps) {
+export default function Logo({ white, compact, mini, alwaysWordmark, lang = 'en' }: LogoProps) {
   const strokeColor = white ? 'white' : 'currentColor';
 
   const iconSize = mini
@@ -31,11 +47,13 @@ export default function Logo({ white, compact, mini }: LogoProps) {
   // leaving just the three rings on phones/tablets. Reader feedback: the logo
   // read as "smooshed" and "should collapse to just the circles" (#3085).
   // The marketing/site header keeps its wordmark from `sm` up.
-  const wordmarkVisibility = mini ? 'hidden lg:inline' : 'hidden sm:inline';
+  const wordmarkVisibility = alwaysWordmark
+    ? 'inline'
+    : mini ? 'hidden lg:inline' : 'hidden sm:inline';
 
   return (
     <Link
-      href="/"
+      href={localePath('/', lang)}
       className={`inline-flex items-center ${mini ? 'gap-1.5' : 'gap-3'} ${
         white
           ? 'text-white hover:opacity-80'

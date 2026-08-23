@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { threadId, message, history = [], visibility, stream = false, collection = null } = parsed.data;
+  const { threadId, message, history = [], visibility, stream = false, collection = null, lang } = parsed.data;
   const db = await getDb();
 
   // Get user display name (anonymous visitors skip the lookup)
@@ -149,6 +149,7 @@ export async function POST(request: NextRequest) {
       creatorName: displayName,
       visibility: threadVisibility(userId, visibility === 'public'),
       aiEnabled: true,
+      lang,
       messageCount: 0,
       createdAt: now,
       lastMessageAt: now,
@@ -214,7 +215,7 @@ export async function POST(request: NextRequest) {
 
   if (!stream) {
     try {
-      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection })) {
+      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection, lang })) {
         if (step.type === 'text') {
           fullText += step.text || '';
         } else if (step.type === 'sources') {
@@ -298,7 +299,7 @@ export async function POST(request: NextRequest) {
     try {
       await send({ type: 'threadId', threadId: activeThreadId });
 
-      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection })) {
+      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection, lang })) {
         lastStepType = step.type;
         switch (step.type) {
           case 'thinking':

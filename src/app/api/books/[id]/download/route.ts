@@ -15,6 +15,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { getTranslation } from '@/lib/page-translations';
 import { getBookIndex } from '@/lib/book-index';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
@@ -2474,12 +2475,40 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       .sort({ page_number: 1 })
       .toArray();
 
+    // Export a non-English edition (#4095) by SUBSTITUTING it into
+    // `page.translation` right here, once, instead of threading a language
+    // through fifteen format generators (PDF, EPUB in six variants, TXT,
+    // markdown, the facing-page builders). Every downstream reader keeps
+    // reading `page.translation.data` and gets the requested edition, with its
+    // own model/source metadata attached — which is what an export should
+    // record. Pages with no text in that language keep their English
+    // translation rather than dropping out: an export with holes in it is
+    // worse than one that is mostly Spanish, and `lang_coverage` in the
+    // response header says how many of each there are.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const exportLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    let localizedPages = 0;
+    if (exportLang !== 'en') {
+      for (const p of pages) {
+        const localized = getTranslation(p as never, exportLang);
+        if (localized?.data) { p.translation = localized; localizedPages++; }
+      }
+      // A file download has no room for a coverage field, so record it here:
+      // `/api/books/{id}/text?lang=<iso>` reports `lang_coverage` for the same
+      // book if a caller needs the number before exporting.
+      console.info(`[download] ${id} format=${format} lang=${exportLang}: ${localizedPages}/${pages.length} pages in ${exportLang}, the rest fall back to English`);
+    }
+
     // Create safe filename base
-    const safeTitle = (book.display_title || book.title || 'untitled')
+    // The language belongs in the FILENAME. A downloaded file leaves the site
+    // and is read months later out of a folder; `plato-es-translation.pdf` says
+    // what it is and `plato-translation.pdf` does not.
+    const langSuffix = exportLang !== 'en' ? `-${exportLang}` : '';
+    const safeTitle = ((book.display_title || book.title || 'untitled')
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '')
-      .substring(0, 50);
+      .substring(0, 50)) + langSuffix;
 
     // Handle images ZIP download
     if (isImagesZip) {

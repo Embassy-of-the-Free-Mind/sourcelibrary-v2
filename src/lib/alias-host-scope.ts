@@ -1,3 +1,5 @@
+import { canonicalPath } from '@/lib/locale-path';
+
 /**
  * Scoping non-canonical hosts to the surface they exist for.
  *
@@ -144,9 +146,21 @@ export function aliasPolicyForHost(host: string): AliasPolicy | null {
   return null;
 }
 
-/** Is this a content path the preview policy withholds from anonymous callers? */
+/**
+ * Is this a content path the preview policy withholds from anonymous callers?
+ *
+ * Matched on the LOCALE-STRIPPED path: `/es/book/x` is the same book as
+ * `/book/x` and must be gated identically. Matching the raw pathname left the
+ * Spanish twin wide open on every preview from the day `/es/book` shipped —
+ * `/book/dawn-rising-boehme` 403'd and `/es/book/dawn-rising-boehme` returned
+ * the whole record. Because it strips ANY prefixed locale, a future `/fr` is
+ * covered the moment the locale is registered, with no edit here.
+ */
 export function isPreviewGatedPath(pathname: string): boolean {
-  return PREVIEW_GATED_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'));
+  const canonical = canonicalPath(pathname);
+  return PREVIEW_GATED_PREFIXES.some(
+    (p) => canonical === p || canonical.startsWith(p + '/'),
+  );
 }
 
 /** Plain-text body for the anonymous-on-preview refusal. */

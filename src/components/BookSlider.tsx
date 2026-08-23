@@ -2,6 +2,7 @@
 
 import HorizontalSlider from '@/components/HorizontalSlider';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import type { Locale } from '@/lib/i18n';
 
 export interface MiniBook {
   id: string;
@@ -14,12 +15,17 @@ export interface MiniBook {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  /** Feeds hasLocalizedEdition() in the card — drop it and every /es card links
+   *  to its English page (#4166). Keep it on anything you map into MiniBook. */
+  pages_translated_es?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
   image_display?: string;
   image_thumb?: string;
+  /** Optional full link target (e.g. straight into the Spanish reader); defaults to the book page. */
+  href?: string;
 }
 
 /**
@@ -27,7 +33,7 @@ export interface MiniBook {
  * shared HorizontalSlider. Extracted from the Mycology "First translations"
  * band so it can be reused on the homepage and beyond.
  */
-export default function BookSlider({ books }: { books: MiniBook[] }) {
+export default function BookSlider({ books, lang = 'en' }: { books: MiniBook[]; lang?: Locale }) {
   return (
     <HorizontalSlider ariaLabel="books">
       {books.map((b) => (
@@ -36,7 +42,7 @@ export default function BookSlider({ books }: { books: MiniBook[] }) {
           data-card
           className="snap-start shrink-0 basis-[66%] sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-4rem)/5)]"
         >
-          <CollectionBookCard book={b as unknown as CollectionBook} />
+          <CollectionBookCard book={b as unknown as CollectionBook} lang={lang} href={b.href} />
         </div>
       ))}
     </HorizontalSlider>

@@ -61,6 +61,10 @@ export const CSP_IMG_HOSTS = [
   'https://iiif-images.library.upenn.edu',
   'https://content.staatsbibliothek-berlin.de',
   'https://images.sub.uni-goettingen.de',
+  // Getty (Florentine Codex vols 1-3, 2,506 pages). Missing here meant every
+  // page thumbnail AND the reader's own page image were CSP-blocked — the
+  // books were unreadable in a browser while every URL returned 200 to curl.
+  'https://media.getty.edu',
 ] as const;
 
 /** The full img-src directive value, consumed by next.config.ts. */

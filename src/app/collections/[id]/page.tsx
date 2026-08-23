@@ -25,6 +25,7 @@ import { ftRenderProps, type FtRenderSource } from '@/lib/first-translation/rend
 import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
 import { authorUrl } from '@/lib/slugify';
+import { localizedEditionFilter } from '@/lib/localized';
 import { ObjectId } from 'mongodb';
 
 // ISR: rebuild at most once per day
@@ -99,6 +100,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  *  (schema.org JSON-LD `description`) must not carry raw markdown syntax. */
 function stripMarkdownLinks(text: string | null | undefined): string {
   return (text || '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+}
+
+interface ChildCollection {
+  slug: string;
+  name: string;
+  subtitle?: string;
+  book_count?: number;
+  total_book_count?: number;
+  artwork_count?: number;
+  collection_type?: string;
+  featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[];
+}
+
+/**
+ * What a sub-collection card should claim, judged by the child's OWN type.
+ *
+ * A `visual_art` collection renders artworks and nothing else (see `isArtCollection`
+ * in the loader), so its `book_count` / `total_book_count` describe texts the reader
+ * will never be shown. `school-of-athens` is the worst case: 518 tagged texts, 30
+ * artworks on the page. Nineteen art children were mislabelled this way — most in
+ * the other direction, e.g. `esoteric-engravers` advertising 0 while holding ~1,600
+ * artworks — because the card took the parent's noun and the parent's counter.
+ */
+function childCardCount(child: ChildCollection): { count: number; label: string } {
+  return child.collection_type === 'visual_art'
+    ? { count: child.artwork_count || 0, label: 'works' }
+    : { count: child.total_book_count ?? child.book_count ?? 0, label: 'books' };
 }
 
 interface BookItem {
@@ -682,14 +710,28 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     }
   }
 
-  // Fetch child collections if this is a parent collection
+  // Fetch child collections if this is a parent collection.
+  // `collection_type` + `artwork_count` are load-bearing here: a `visual_art` child
+  // renders ONLY artworks on its own page, so its book counters describe items the
+  // reader will never see. Project both so the card can label itself (see
+  // `childCardCount` below) instead of inheriting the parent's noun and counter.
   const childCollections = await withTimeout(
     db.collection('collections')
       .find({ parent: id, visible: true, ...(tenantId ? { tenantId } : {}) })
-      .sort({ book_count: -1 })
-      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, total_book_count: 1, featured_images: 1 })
+      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, total_book_count: 1, artwork_count: 1, collection_type: 1, featured_images: 1 })
       .toArray(),
     8000, [],
+  );
+
+  // How many books here are readable in Spanish — translated into it, or written
+  // in it (#4120). Only used to decide whether this page offers its Spanish twin,
+  // so it fails to 0 (no link) rather than blocking the render.
+  const spanishBookCount = await withTimeout(
+    db.collection('books').countDocuments(
+      { collections: id, visible: true, ...localizedEditionFilter('es'), ...(tenantId ? { tenantId } : {}) },
+      { maxTimeMS: 3000 },
+    ),
+    3000, 0,
   );
 
   const { _id, ...collectionClean } = collection;
@@ -807,7 +849,9 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     galleryTotalCount,
     exhibition: curationDraft?.curation ? JSON.parse(JSON.stringify(curationDraft.curation)) : null,
     exhibitionBooks,
-    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; total_book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
+    childCollections: (childCollections.map(({ _id, ...rest }) => rest) as ChildCollection[])
+      .sort((a, b) => childCardCount(b).count - childCardCount(a).count),
+    spanishBookCount,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
   };
@@ -888,7 +932,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
   // tenant-scoped mismatch can still return null here.
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
+  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, spanishBookCount } = data;
 
   // Collections that carry an Index catalogue (index_catalogs editions) render
   // the catalogue browser as their centrepiece — hide the Visual Art section
@@ -1101,6 +1145,25 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 <span>{languages.map((l: { lang: string }) => l.lang).join(', ')}</span>
               </>
             )}
+            {/* The bridge only ran one way: the Spanish twin links here ("Ver esta
+                colección … en inglés") and this page had NO reference to
+                /es/collections at all, so a Spanish reader was told to go read
+                English and an English reader never learned a Spanish page existed.
+                Shown only when the collection really has Spanish books — a link
+                into an empty Spanish page is the broken promise the route gate
+                exists to prevent. Tenants keep their own prefix and never get it. */}
+            {!tenantSlug && spanishBookCount > 0 && (
+              <>
+                <span className="w-px h-4 bg-white/20" />
+                <Link
+                  href={`/es/collections/${collection.slug || id}`}
+                  hrefLang="es"
+                  className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+                >
+                  Leer en español ({spanishBookCount.toLocaleString('es-ES')})
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -1114,6 +1177,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             </h2>
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {childCollections.map((child) => {
+                const { count: childCount, label: childLabel } = childCardCount(child);
                 const fi = child.featured_images;
                 let heroUrl: string | undefined;
                 if (fi?.length) {
@@ -1144,9 +1208,9 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                      {(child.total_book_count ?? child.book_count) ? (
+                      {childCount ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {(child.total_book_count ?? child.book_count)!.toLocaleString('en-US')} {itemLabel}
+                          {childCount.toLocaleString('en-US')} {childLabel}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
