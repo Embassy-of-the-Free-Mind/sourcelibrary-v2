@@ -269,8 +269,16 @@ export default async function SlimeMouldsCollectionPage() {
   // Best available plate, used as the introduction figure. Caption is the source
   // book, not the AI description, so it reads as a credit line.
   const introSrc = gallery[0];
+  // Caption from the book record, not gallery_images.book_title — that field
+  // carries an AI-rendered title ("New Generae of Plants") rather than the one
+  // the catalogue shows.
+  const introBook = [...firstTranslations, ...sourceWorks].find((b) => b.id === (introSrc?.book_id || introSrc?.bookId));
   const introPlate = introSrc && imgUrl(introSrc)
-    ? { src: (thumbUrl(introSrc) || imgUrl(introSrc)) as string, label: introSrc.book_title, href: galleryPlates[0]?.href }
+    ? {
+      src: (thumbUrl(introSrc) || imgUrl(introSrc)) as string,
+      label: introBook ? `${bookTitle(introBook)}${introBook.year ? `, ${introBook.year}` : ''}` : introSrc.book_title,
+      href: galleryPlates[0]?.href,
+    }
     : null;
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
   const sections = ([
