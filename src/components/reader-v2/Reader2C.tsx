@@ -34,7 +34,6 @@ import { useReaderV2 } from './useReaderV2';
 import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls';
 import RevisionHistoryPanel from './RevisionHistoryPanel';
 import SavePanel from './SavePanel';
-import { ContinueReading } from './ContinueReading';
 import PinnedVersionBanner from './PinnedVersion';
 import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishButton } from './ReaderSpanishToggle';
 import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
@@ -2923,14 +2922,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           data-reader-panels-container
           className="relative flex min-h-0"
         >
-          {/* Book-level, so it sits over the whole reading area rather than
-              once per pane. */}
-          <ContinueReading
-            bookId={r.book.id}
-            currentPageId={r.currentPageId}
-            currentPageNumber={r.currentPage.page_number}
-            onGo={(pageId) => r.goToPage(pageId)}
-          />
           {r.views.scan && (
             <section
               className="flex-1 min-w-0 flex flex-col border-r"
