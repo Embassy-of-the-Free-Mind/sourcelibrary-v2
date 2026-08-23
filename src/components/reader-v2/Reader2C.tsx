@@ -22,7 +22,7 @@ import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
-  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Menu, LogOut, LifeBuoy, MessageSquare,
+  Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Menu, LogOut, LifeBuoy, MessageSquare, User,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
@@ -81,8 +81,9 @@ function panelBlurb(t: ReaderStrings, panel: Exclude<LeftPanel, null>): string |
  * which is keyed by exactly these names.
  */
 const MORE_TOOLS = [
-  'contents', 'guide', 'search', 'librarian', 'cite',
-  'downloads', 'info', 'history', 'settings',
+  'cite', 'downloads', 'info', 'history',
+  'contents', 'guide', 'search', 'librarian',
+  'settings',
 ] as const;
 
 interface Reader2CProps {
@@ -667,6 +668,16 @@ function SearchHighlighter() {
  * menu sitting in the same slot read as one more of them; full-screen says
  * plainly that this is about leaving. It is also the only menu on the reader,
  * which is why the desktop bar has a hamburger where the avatar used to be.
+ *
+ * It is set in the SITE's surface rather than the reader's ink. Everything
+ * dark on this page is the book; the moment you are looking at the library
+ * instead, the ground should be the library's. The tokens are the reader's
+ * own, so a night-mode reader gets a dark menu without a cream flash.
+ *
+ * Height is fixed to the viewport (`100svh`, not `100vh`, so a phone's
+ * collapsing address bar cannot push the last row under the fold) and only
+ * the middle column scrolls. The destinations go two-up above `sm` because a
+ * seven-item column was taller than it had any reason to be.
  */
 function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
   const { data: session } = useSession();
@@ -675,6 +686,7 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
   const t = strings.accountMenu;
   const isSpanishSite = !!pathname?.startsWith('/es');
   const signedIn = !!session?.user;
+  const [imgError, setImgError] = useState(false);
 
   // Escape closes, and the page behind stops scrolling while it is open.
   useEffect(() => {
@@ -703,94 +715,127 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
   // Spanish reader gets silently dropped back onto the English site.
   const href = (path: string) => localeHref(isSpanishSite ? 'es' : 'en', path);
 
-  const minorRow = 'no-underline font-sans text-[13.5px] leading-none py-2.5 transition-opacity hover:opacity-100';
-  const minorStyle = { color: onInk(0.66) } as const;
+  const initials = session?.user?.name
+    ?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    || session?.user?.email?.[0]?.toUpperCase() || '?';
+
+  const minorLink = 'no-underline font-sans text-[12.5px] leading-none transition-colors hover:text-[var(--text-primary)]';
 
   return (
     <div
-      className="fixed inset-0 z-[70] rv2-menu-ground overflow-y-auto"
-      style={{ background: INK, color: '#fdfcf9' }}
+      className="fixed inset-0 z-[70] rv2-menu-ground flex flex-col overflow-hidden"
+      style={{ height: '100svh', background: 'var(--bg-cream)', color: 'var(--text-primary)' }}
       role="dialog"
       aria-modal="true"
       aria-label={t.library}
     >
-      <div className="min-h-full flex flex-col">
-        <div className="flex items-center justify-between h-[52px] lg:h-[58px] px-3 lg:px-4 shrink-0">
-          <span className="flex items-center [&_svg]:w-8 [&_svg]:h-8 lg:[&_svg]:w-auto lg:[&_svg]:h-auto">
-            <Logo white compact />
-          </span>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label={strings.toolbar.close}
-            className="w-10 h-10 -mr-1.5 flex items-center justify-center transition-colors hover:bg-[rgba(253,252,249,0.1)]"
-            style={{ color: onInk(0.85) }}
-          >
-            <X size={20} />
-          </button>
-        </div>
+      <div
+        className="shrink-0 flex items-center justify-between h-[52px] lg:h-[58px] px-3 lg:px-4"
+        style={{ borderBottom: '1px solid var(--border-light)' }}
+      >
+        <span className="flex items-center [&_svg]:w-8 [&_svg]:h-8 lg:[&_svg]:w-auto lg:[&_svg]:h-auto">
+          <Logo compact />
+        </span>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={strings.toolbar.close}
+          className="w-10 h-10 -mr-1.5 flex items-center justify-center transition-colors hover:bg-[var(--bg-warm)]"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          <X size={20} />
+        </button>
+      </div>
 
-        <div className="flex-1 w-full max-w-[52rem] mx-auto px-6 lg:px-10 pt-6 lg:pt-12 pb-12">
-          {/* The library, set at reading size. These are the only things on
-              the screen, so they get to be the size they actually are. */}
-          <nav className="flex flex-col items-start">
+      <div className="flex-1 min-h-0 overflow-y-auto" style={{ overscrollBehavior: 'contain' }}>
+        <div className="w-full max-w-[44rem] mx-auto px-5 lg:px-8 pt-6 lg:pt-9 pb-10">
+          <CapsLabel className="block pb-1" style={{ color: 'var(--text-faint)' }}>{t.library}</CapsLabel>
+          {/* Two columns above sm. Hairlines rather than gaps, which is how
+              every other list on the site separates its rows. */}
+          <nav className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-10">
             {destinations.map(([label, path], i) => (
               <Link
                 key={path}
                 href={href(path)}
                 onClick={onClose}
-                className="rv2-menu-item no-underline font-body text-[30px] lg:text-[38px] leading-[1.32] transition-colors hover:text-[#fdfcf9]"
-                style={{ color: onInk(0.82), animationDelay: `${60 + i * 34}ms` }}
+                className="rv2-menu-item no-underline font-body text-[19px] lg:text-[21px] leading-none py-3.5 transition-colors hover:text-[var(--accent-rust)]"
+                style={{
+                  color: 'var(--text-primary)',
+                  borderBottom: '1px solid var(--border-light)',
+                  animationDelay: `${50 + i * 26}ms`,
+                }}
               >
                 {label}
               </Link>
             ))}
           </nav>
 
-          <span
-            className="rv2-menu-item block w-full my-8 lg:my-10"
-            style={{ borderTop: `1px solid ${onInk(0.16)}`, animationDelay: '300ms' }}
-            aria-hidden="true"
-          />
+          {/* The account is one row with a face on it, not a sub-menu. The
+              three pages behind it (saved, history, settings) are the account
+              page's own business and were only listed here because this used
+              to be the account dropdown. */}
+          <div className="rv2-menu-item pt-7" style={{ animationDelay: '250ms' }}>
+            <CapsLabel className="block pb-2.5" style={{ color: 'var(--text-faint)' }}>{t.you}</CapsLabel>
+            <Link
+              href={href(signedIn ? '/account' : '/auth/signin')}
+              onClick={onClose}
+              className="no-underline flex items-center gap-3 p-2.5 border transition-colors hover:bg-[var(--bg-white)]"
+              style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }}
+            >
+              {signedIn && session?.user?.image && !imgError ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={session.user.image}
+                  alt=""
+                  className="w-10 h-10 rounded-full border-2 shrink-0"
+                  style={{ borderColor: 'var(--border-light)' }}
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <span
+                  className="w-10 h-10 rounded-full border-2 shrink-0 flex items-center justify-center font-sans text-[13px] font-medium"
+                  style={{ borderColor: 'var(--border-light)', background: 'var(--bg-cream)', color: 'var(--text-secondary)' }}
+                >
+                  {signedIn ? initials : <User size={17} />}
+                </span>
+              )}
+              <span className="min-w-0 flex-1">
+                <span className="block font-body text-[16px] leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
+                  {signedIn ? (session?.user?.name || session?.user?.email) : t.signIn}
+                </span>
+                <span className="block font-sans text-[12px] leading-tight pt-0.5 truncate" style={{ color: 'var(--text-faint)' }}>
+                  {signedIn ? t.yourAccount : t.savedPages}
+                </span>
+              </span>
+              <ChevronRight size={16} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
+            </Link>
 
-          {/* Everything below the rule is about you rather than the library,
-              and is set small so the two never compete. */}
-          <div
-            className="rv2-menu-item flex flex-col items-start"
-            style={{ animationDelay: '330ms' }}
-          >
-            <CapsLabel className="block pb-3" style={{ color: onInk(0.42) }}>{t.you}</CapsLabel>
-            {signedIn ? (
-              <>
-                <Link href={href('/account')} onClick={onClose} className={minorRow} style={minorStyle}>{t.yourAccount}</Link>
-                <Link href={href('/favorites')} onClick={onClose} className={minorRow} style={minorStyle}>{t.savedPages}</Link>
-                <Link href={href('/reading-history')} onClick={onClose} className={minorRow} style={minorStyle}>{t.readingHistory}</Link>
-              </>
-            ) : (
-              <Link href={href('/auth/signin')} onClick={onClose} className={minorRow} style={minorStyle}>{t.signIn}</Link>
-            )}
-            <Link href={href('/support')} onClick={onClose} className={`${minorRow} flex items-center gap-2`} style={minorStyle}>
-              <LifeBuoy size={14} />{t.supportSourceLibrary}
-            </Link>
-            <Link href={href('/feedback')} onClick={onClose} className={`${minorRow} flex items-center gap-2`} style={minorStyle}>
-              <MessageSquare size={14} />{t.sendFeedback}
-            </Link>
-            {signedIn && (
-              <button
-                type="button"
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className={`${minorRow} flex items-center gap-2`}
-                style={minorStyle}
-              >
-                <LogOut size={14} />{t.signOut}
-              </button>
-            )}
+            {/* Support, feedback and sign-out on one line: three small errands
+                that do not each deserve a row of their own. */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-3.5" style={{ color: 'var(--text-secondary)' }}>
+              <Link href={href('/support')} onClick={onClose} className={`${minorLink} flex items-center gap-1.5`} style={{ color: 'var(--text-secondary)' }}>
+                <LifeBuoy size={13} />{t.supportSourceLibrary}
+              </Link>
+              <Link href={href('/feedback')} onClick={onClose} className={`${minorLink} flex items-center gap-1.5`} style={{ color: 'var(--text-secondary)' }}>
+                <MessageSquare size={13} />{t.sendFeedback}
+              </Link>
+              {signedIn && (
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                  className={`${minorLink} flex items-center gap-1.5`}
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  <LogOut size={13} />{t.signOut}
+                </button>
+              )}
+            </div>
           </div>
 
           {/* The reader has a Spanish twin, so switching keeps you on the page
               you are reading instead of dropping you at the homepage. */}
-          <div className="rv2-menu-item pt-9" style={{ animationDelay: '370ms' }}>
-            <CapsLabel className="block pb-3" style={{ color: onInk(0.42) }}>{t.siteLanguage}</CapsLabel>
+          <div className="rv2-menu-item pt-7" style={{ animationDelay: '290ms' }}>
+            <CapsLabel className="block pb-2.5" style={{ color: 'var(--text-faint)' }}>{t.siteLanguage}</CapsLabel>
             <div className="flex gap-2">
               {([['English', localeHref('en', pathname)], ['Español', localeHref('es', pathname)]] as Array<[string, string]>).map(([label, target]) => {
                 const active = (label === 'Español') === isSpanishSite;
@@ -801,8 +846,8 @@ function ReaderSiteMenu({ onClose }: { onClose: () => void }) {
                     onClick={onClose}
                     className="h-9 px-5 flex items-center justify-center border font-sans text-[12.5px] no-underline transition-colors"
                     style={active
-                      ? { background: '#fdfcf9', color: INK, borderColor: '#fdfcf9' }
-                      : { borderColor: onInk(0.26), color: onInk(0.72) }}
+                      ? { background: 'var(--text-primary)', color: 'var(--bg-cream)', borderColor: 'var(--text-primary)' }
+                      : { borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
                   >
                     {label}
                   </Link>
@@ -2679,21 +2724,23 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           style={{ background: INK, borderRight: `1px solid ${onInk(0.12)}` }}
           aria-label={t.toolbar.readerToolsAria}
         >
-          {/* Three groups, in the order a reader meets them: find your way
-              through the book, ask something of it, then do something with the
-              page you are on. Settings is last because you set it once. */}
-          <RailButton label={t.toolbar.contents} active={leftPanel === 'contents'} onClick={() => togglePanel('contents')} icon={<List size={17} />} />
-          <RailButton label={t.toolbar.guide} active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
-          <RailButton label={t.toolbar.search} active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
-          <RailButton label={t.toolbar.librarian} active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
-
-          <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
-
+          {/* Three groups. What you do with the page you are on comes first,
+              because it is what a reader reaches for while reading and it is
+              nearest the top of the rail. Then the ways through the book,
+              which you use to arrive rather than to work. Settings is last
+              because you set it once. */}
           <RailButton label={t.toolbar.save} active={leftPanel === 'save'} onClick={() => togglePanel('save')} icon={<Heart size={17} />} />
           <RailButton label={t.toolbar.share} active={leftPanel === 'share'} onClick={() => togglePanel('share')} icon={<Share2 size={17} />} />
           <RailButton label={t.toolbar.cite} active={leftPanel === 'cite'} onClick={() => togglePanel('cite')} icon={<Quote size={17} />} />
           <RailButton label={t.toolbar.download} active={leftPanel === 'downloads'} onClick={() => togglePanel('downloads')} icon={<Download size={17} />} />
           <RailButton label={t.toolbar.info} active={leftPanel === 'info'} onClick={() => togglePanel('info')} icon={<Info size={17} />} />
+
+          <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
+
+          <RailButton label={t.toolbar.contents} active={leftPanel === 'contents'} onClick={() => togglePanel('contents')} icon={<List size={17} />} />
+          <RailButton label={t.toolbar.guide} active={leftPanel === 'guide'} onClick={() => togglePanel('guide')} icon={<BookOpen size={17} />} />
+          <RailButton label={t.toolbar.search} active={leftPanel === 'search'} onClick={() => togglePanel('search')} icon={<Search size={17} />} />
+          <RailButton label={t.toolbar.librarian} active={leftPanel === 'librarian'} onClick={() => togglePanel('librarian')} icon={<MessageCircle size={17} />} />
 
           <span className="w-6 my-1.5 shrink-0" style={{ borderTop: `1px solid ${onInk(0.14)}` }} aria-hidden="true" />
 
