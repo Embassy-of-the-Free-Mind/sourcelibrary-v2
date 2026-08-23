@@ -66,11 +66,20 @@ async function hasSession(): Promise<boolean> {
   }
 }
 
-/** True when this request should bypass anon gating entirely. */
-async function isExempt(request: Request): Promise<boolean> {
-  if (request.headers.get('x-warm-ping')) return true; // internal cache warmers
-  if (isVerifiedBot(request)) return true;             // SEO crawlers
-  if (await hasSession()) return true;                 // signed-in users
+/**
+ * True when this request should bypass anon gating entirely.
+ *
+ * `allowBotBypass` exists because the UA check above is spoofable and its
+ * stated worst case — "a scraper getting the same access as a logged-out
+ * human" — only holds for CONTENT. For an action that spends money per call,
+ * `curl -A googlebot` would buy unlimited Gemini requests, so spend-class
+ * call sites pass false. A crawler has no business asking us to transliterate
+ * a page anyway: it indexes what is already there.
+ */
+async function isExempt(request: Request, allowBotBypass = true): Promise<boolean> {
+  if (request.headers.get('x-warm-ping')) return true;              // internal cache warmers
+  if (allowBotBypass && isVerifiedBot(request)) return true;        // SEO crawlers
+  if (await hasSession()) return true;                              // signed-in users
   return false;
 }
 
@@ -87,9 +96,9 @@ export interface GateResult {
  */
 export async function anonActionGate(
   request: Request,
-  opts: { name: string; limit: number; windowSeconds?: number },
+  opts: { name: string; limit: number; windowSeconds?: number; allowBotBypass?: boolean },
 ): Promise<GateResult> {
-  if (await isExempt(request)) return { allowed: true };
+  if (await isExempt(request, opts.allowBotBypass ?? true)) return { allowed: true };
   // Shared (cross-instance) cap — these actions are Gemini-backed, so the limit
   // has to be a real global cap, not a per-lambda soft cap. Falls back to the
   // in-memory limiter automatically if Mongo is slow/unavailable.
