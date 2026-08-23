@@ -877,6 +877,29 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
   const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
   const totalPages = book.pages_count || pages.length;
+  /**
+   * Does this book have page IMAGES at all, or only text?
+   *
+   * 373 ETCSL works are transcription editions: Oxford keyed the Sumerian and
+   * translated it from published editions, so there is no page image because
+   * there was never a page. The page announced "1 scans" anyway, tooltipped
+   * "Scanned images, including covers and blanks", over "Every page scanned
+   * from the original, digitized by University of Oxford (ETCSL)" — three
+   * claims, none of them true, on a library whose whole proposition is that
+   * you can go and check the source. Measured 2026-08-23: 5,421 pages across
+   * the 336 CDLI compositions alone, zero of them with any image.
+   *
+   * Derived from the pages already fetched rather than from a counter, because
+   * no counter distinguishes "not archived yet" from "there is nothing to
+   * archive" — pages_archived is 0 for both. `pages` is capped at the first
+   * 100, which is the right sample: a book whose first hundred pages carry no
+   * image has no scans.
+   */
+  const hasScans = pages.some(p => {
+    const q = p as unknown as Record<string, unknown>;
+    return !!(q.photo || q.photo_original || q.archived_photo || q.cropped_photo
+      || q.image_display || q.image_thumb || q.thumbnail || q.thumbnail_blob);
+  });
   const pagesBlank = (book as unknown as { pages_blank?: number }).pages_blank ?? 0;
   const ocrPct = totalPages > 0 ? Math.min(100, Math.round((ocrCount / totalPages) * 100)) : 0;
   const readablePages = Math.max(1, ocrCount - pagesBlank);
@@ -1634,8 +1657,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                         <Globe className={chipIcon} />{languageName(book.language, lang)}
                       </span>
                     )}
-                    <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={t.scansTooltip}>
-                      <FileText className={chipIcon} />{t.scans(totalPages)}
+                    <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={hasScans ? t.scansTooltip : t.textEditionTooltip}>
+                      <FileText className={chipIcon} />{hasScans ? t.scans(totalPages) : t.pagesOfText(totalPages)}
                     </span>
                     {imageCount > 0 && (
                       <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors hover:opacity-80`} style={{ color: 'rgba(245,240,232,0.88)' }}>
@@ -1758,9 +1781,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
             {(() => {
               const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
-              const pagesSubtitle = digitizer
-                ? t.pagesDigitizedBy(digitizer)
-                : t.pagesInReadingOrder;
+              const pagesSubtitle = !hasScans
+                ? (digitizer ? t.textEditionBy(digitizer) : t.textEdition)
+                : digitizer
+                  ? t.pagesDigitizedBy(digitizer)
+                  : t.pagesInReadingOrder;
               const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
@@ -1964,10 +1989,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     of the displayed page counts matched the real book. */}
                 <div
                   className="flex items-center gap-2"
-                  title="Scanned images, including covers and blanks. Bibliographic pagination may differ."
+                  title={hasScans
+                    ? 'Scanned images, including covers and blanks. Bibliographic pagination may differ.'
+                    : t.textEditionTooltip}
                 >
                   <FileText className="w-4 h-4" />
-                  {totalPages} scans
+                  {hasScans ? `${totalPages} scans` : t.pagesOfText(totalPages)}
                 </div>
                 {imageCount > 0 && (
                   <Link
