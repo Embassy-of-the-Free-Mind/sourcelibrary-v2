@@ -1352,7 +1352,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 Illustrations
               </h2>
               <Link
-                href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}` : `/gallery?collection=${id}`)}
+                href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}&maxPerBook=999` : `/gallery?collection=${id}&maxPerBook=999`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors"
               >
                 Browse all {galleryTotalImages.toLocaleString('en-US')}
@@ -1398,7 +1398,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
               })}
               {galleryTotalImages > diverseGalleryImages.length && (
                 <Link
-                  href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}` : `/gallery?collection=${id}`)}
+                  href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}&maxPerBook=999` : `/gallery?collection=${id}&maxPerBook=999`)}
                   className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
                 >
                   <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">

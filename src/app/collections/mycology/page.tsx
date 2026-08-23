@@ -124,12 +124,16 @@ async function getMycologyData() {
   ]);
 
   const bookIds = bookIdDocs.map((d) => d.id as string);
-  const galleryRaw = bookIds.length
-    ? await withTimeout(db.collection('gallery_images').find(
-      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
-      { projection: { _id: 0 }, maxTimeMS: 5000 },
-    ).sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, [])
-    : [];
+  const galleryFilter = { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } };
+  const [galleryRaw, galleryCount] = bookIds.length
+    ? await Promise.all([
+      withTimeout(db.collection('gallery_images').find(galleryFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
+        .sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+      // The array above is capped at 60. Reporting its length as the plate count
+      // told readers this collection had 60 plates when it has thousands.
+      withTimeout(db.collection('gallery_images').countDocuments(galleryFilter, { maxTimeMS: 5000 }), 5000, 0),
+    ])
+    : [[] as Record<string, unknown>[], 0];
 
   const firstTranslations = firstRaw.map(toMini);
   const sourceWorks = sourceRaw.map(toMini);
@@ -145,7 +149,7 @@ async function getMycologyData() {
 
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
-    firstTranslations, sourceWorks, ftCount, total,
+    firstTranslations, sourceWorks, ftCount, total, galleryCount,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
     languages, gallery, featured, featuredPages, parent,
   };
@@ -235,14 +239,14 @@ export default async function MycologyCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   const quoteFraming = await getImageFraming('mycology-quote-bg');
 
   // Quote background: the Battarra title-page engraving (lynx, owl, mushrooms),
   // cropped to the illustration with the Greek-motto banner removed.
   const quoteBg = '/collections/mycology/quote-bg.webp';
-  const galleryTotal = gallery.length;
+  const galleryTotal = galleryCount;
   const galleryPlates = gallery
     .filter((g) => imgUrl(g))
     .slice(0, 20)
@@ -407,7 +411,7 @@ export default async function MycologyCollectionPage() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
-                  <Link href={`/gallery?collection=${SLUG}`} className={BTN_OUTLINE}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
                 </div>
               </div>
             </div>
@@ -433,7 +437,7 @@ export default async function MycologyCollectionPage() {
               <MycoMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href={`/gallery?collection=${SLUG}`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
+              <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>
