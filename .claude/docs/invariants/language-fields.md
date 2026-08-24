@@ -151,6 +151,47 @@ early modern vernacular scholarship. These belong in `languages[]` as an
 addition, never as a replacement of `language`, and they are the standing reason
 the detector's `contradict` bucket is a review queue and not a patch.
 
+## How much drift is actually there — the corrected corpus-wide number
+
+The two figures above (5 apparent mislabels, 6,230 bilingual books) come from the
+detector's FIRST run and are artifacts. Here is the whole live corpus after both
+fixes, so nobody has to re-derive it: `detect-book-languages.mjs`, all 21,481
+live books with OCR, 2026-08-21.
+
+| bucket | books | what it means |
+|---|---:|---|
+| `agree` | 14,332 | catalogue matches the pages |
+| `add_second` | 3,775 | monolingual record, real second language ≥10% of pages |
+| `contradict` | **1,015** | catalogue disagrees with the pages |
+| `no_tag` / `thin` / `unparsed` | 2,146 | not enough tagged pages to judge |
+| `unsupported_claim` | 109 | catalogued bilingual, second language not measurable |
+| `no_catalogue_value` | 104 | no `language` to compare against |
+
+**The 1,015 `contradict` rows are three different things, and only the last two
+are defects.** Splitting them is the whole job — a sweep that treats them as one
+bucket is #2184 repeating:
+
+| class | books | disposition |
+|---|---:|---|
+| **hanmun** — `Korean` → Classical Chinese | 211 (21%) | **correctly catalogued.** The largest single cluster is the known artifact, exactly as this document predicts. |
+| **source-vs-edition** — catalogued language IS on the pages, just not dominant | 457 | Latin editions of Greek authors (Hero ed. Commandino 1575; Archimedes; Jerome's *Opera Omnia*, 99% Latin, catalogued Greek). `language` should be the edition's, with the source moving to `original_language`. Never delete the source language. |
+| **record-vs-pages** — catalogued language is absent from its own pages entirely | 347 | the real queue. Eliot's Massachusett Bible catalogued `Hebrew,Greek`; Wycliffe catalogued `Hebrew,Greek`, pages Middle English; Avicenna's *Canon* catalogued `Arabic`, pages 99% Latin (Gerard of Cremona). |
+
+347 of 22,073 live books = **1.6%**. Not a wave, and not nothing.
+
+Two cautions the numbers do not show on their own:
+
+- **The detector's top language can be wrong even when the contradiction is
+  right.** Merezhkovsky's *Христос и Антихрист* vol. 2 is catalogued `Russian`,
+  tagged `French` on 100% of pages, and is actually an **English** translation
+  ("THE ROMANCE OF LEONARDO DA VINCI"). The finding held; the proposed label did
+  not. This is why `contradict` is a review queue and not a patch.
+- **The existing `language_review: true` queue is not the same set.** 1,519 live
+  books carry the flag; the detector calls only 496 of them `contradict` and
+  clears 204 outright, while 148 of the 347 hard contradictions were never
+  flagged at all. Neither list supersedes the other; the page tags are the
+  sharper instrument.
+
 ## Four vocabularies, none authoritative
 
 - `src/lib/language-utils.ts` — `CODE_TO_NAME` / `CODE3_TO_NAME` / `expandLanguages` (read path)
