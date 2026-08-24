@@ -43,6 +43,46 @@ const BOOKS = [
     brief: 'The first monograph of the slime moulds, written in Polish by de Bary’s student and published in Paris in 1875. Its classification and species descriptions are the foundation the group’s taxonomy still rests on, and because few of its readers had the language, most of the field met it second hand through Arthur Lister’s English monograph of 1894.',
     detailed: 'Józef Tomasz Rostafiński (1850-1928) studied under Anton de Bary at Halle and Strasbourg, in the years immediately after de Bary had separated the slime moulds from the fungi. Śluzowce, published at Paris in 1875 by the Kórnik Library, is the first attempt to treat the whole group monographically: a classification, keys, and descriptions of the species then known. It is the point at which the Mycetozoa become a subject with its own literature rather than a difficult corner of mycology. The book was written in Polish, which almost none of its intended readership could read, and its influence travelled through intermediaries, above all Arthur Lister’s Monograph of the Mycetozoa of 1894, which rearranged what it found here. Rostafiński’s names and concepts remain in use; the reasoning behind them has been largely inaccessible.',
   },
+  {
+    id: '6a8b7898ddf894921a433f42',
+    name: 'Schrader, Nova Genera Plantarum (1797)',
+    firstTranslation: true,
+    english: false,
+    brief: 'The only part published of Schrader\u2019s Nova Genera Plantarum (Leipzig, 1797), with hand-coloured engraved plates. It belongs to the decade when Persoon was fixing the names of the slime moulds, and it describes and figures several of them at a moment when the group was still being sorted out among the fungi.',
+    detailed: 'Heinrich Adolph Schrader (1767-1836) published this first part of a projected larger work in 1797 and never continued it. It is a small book carrying careful descriptions and hand-coloured plates of genera then newly distinguished, among them slime moulds, and it sits inside the short period between Persoon\u2019s first arrangement of the group and the Synopsis of 1801 that made his names current. Its interest here is double: the descriptions have never been translated into English, and the plates are among the earliest coloured figures of these organisms drawn with any precision.',
+  },
+  {
+    id: '6a8b76ef313cdd0126cb79af',
+    name: 'Zopf, Die Pilzthiere oder Schleimpilze (1885)',
+    firstTranslation: true,
+    english: false,
+    brief: 'The monograph that stands between Rostafi\u0144ski\u2019s Polish one of 1875 and Lister\u2019s English one of 1894 (Breslau, Trewendt, 1885). Zopf calls the group Pilzthiere, fungus animals, and works through their structure, development and classification at book length while de Bary\u2019s question was still open.',
+    detailed: 'Wilhelm Zopf (1846-1909) wrote this while the status of the Mycetozoa was genuinely unsettled: de Bary had moved them out of the fungi on developmental evidence, Rostafi\u0144ski had classified them in a language almost nobody in the field could read, and the group had no accessible synthesis. Zopf supplies one. The title keeps de Bary\u2019s answer, Pilzthiere, fungus animals, and the book treats the plasmodium, the fruiting body, the life cycle and the classification in turn. It has never been translated into English, which is why the decade it covers is usually told through Lister instead.',
+  },
+  {
+    id: '6a8b78a1ddf894921a433f76',
+    name: 'Cooke, The Myxomycetes of Great Britain (1877)',
+    firstTranslation: false,
+    english: true,
+    brief: 'A British flora of the slime moulds arranged, as its title says outright, according to the method of Rostafi\u0144ski (London, 1877). It is the book that carried the Polish monograph into English practice, seventeen years before Lister, with twenty-four plates.',
+    detailed: 'Mordecai Cubitt Cooke (1825-1914) was a prolific popular mycologist, and this is a working handbook rather than a work of theory: keys, descriptions and plates for the species then known in Britain. Its significance is in the subtitle. Rostafi\u0144ski\u2019s monograph of 1875 was in Polish, and the usual account of how his classification reached the English-speaking field jumps straight to Lister in 1894. Cooke got there first, and said in his own title whose arrangement he was following.',
+  },
+  {
+    id: '6a8b78abddf894921a43401a',
+    name: 'Massee, Monograph of the Myxogastres (1892)',
+    firstTranslation: false,
+    english: true,
+    brief: 'Massee\u2019s arrangement of the group (London, Methuen, 1892), with twelve coloured plates. It appeared two years before Lister\u2019s monograph and was largely displaced by it, which is exactly what makes the pair worth reading together.',
+    detailed: 'George Massee (1845-1917) worked at Kew and published widely across mycology. This monograph was the standard English treatment for a very short time. Arthur Lister\u2019s of 1894 disagreed with it on both species limits and arrangement, and it is Lister\u2019s that the twentieth century inherited. Read beside each other, the two books show a classification being argued rather than settled, which the surviving winner on its own cannot show.',
+  },
+  {
+    id: '6a8b76f6313cdd0126cb7a75',
+    name: 'Lister, A Monograph of the Mycetozoa (1894)',
+    firstTranslation: false,
+    english: true,
+    brief: 'The work that made the slime moulds legible to English readers (London, British Museum, 1894), a descriptive catalogue of the species in the Museum\u2019s herbarium, with plates drawn by Gulielma Lister.',
+    detailed: 'Arthur Lister (1830-1908) reorganised Rostafi\u0144ski\u2019s classification and illustrated it with plates drawn by his daughter Gulielma, who was a mycologist in her own right and carried the book through two further editions after his death. For most of the twentieth century this is how the field knew the group, and the reason Rostafi\u0144ski is far more often cited than read. It is here for the plates and for the comparison: the Polish monograph it reorganises is in this collection too, in English for the first time.',
+  },
 ];
 
 const client = new MongoClient(process.env.MONGODB_URI);
@@ -50,10 +90,13 @@ await client.connect();
 const db = client.db(process.env.MONGODB_DB);
 
 for (const b of BOOKS) {
-  const doc = await db.collection('books').findOne({ id: b.id }, { projection: { _id: 0, pages_count: 1, pages_translated: 1, visible: 1 } });
+  const doc = await db.collection('books').findOne({ id: b.id }, { projection: { _id: 0, pages_count: 1, pages_ocr: 1, pages_translated: 1, visible: 1 } });
   if (!doc) { console.error(`${b.name}: NOT FOUND`); continue; }
-  const ready = (doc.pages_translated || 0) > 0;
-  console.log(`\n${b.name}\n  translated ${doc.pages_translated}/${doc.pages_count}  visible=${doc.visible === true}  ${ready ? '' : '→ SKIP, nothing translated yet'}`);
+  // English books have nothing to translate, so gate them on OCR instead —
+  // otherwise they would wait forever for a translation that never runs.
+  const ready = b.english ? (doc.pages_ocr || 0) > 0 : (doc.pages_translated || 0) > 0;
+  const measure = b.english ? `ocr ${doc.pages_ocr}/${doc.pages_count}` : `translated ${doc.pages_translated}/${doc.pages_count}`;
+  console.log(`\n${b.name}\n  ${measure}  visible=${doc.visible === true}  ${ready ? '' : '→ SKIP, not ready yet'}`);
   if (!ready || DRY) continue;
 
   await db.collection('books').updateOne({ id: b.id }, {
