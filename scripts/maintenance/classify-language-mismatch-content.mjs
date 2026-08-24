@@ -11,41 +11,37 @@
  *     correct the `language` field to the dominant language. (--apply)
  *   - mixed / unclear -> leave flagged for human review.
  *
+ * SUPERSEDED AS AN ENTRY POINT (#3958). This script reads its candidate list from
+ * `/tmp/noneng-triage.json`, a temp file that no longer exists and was never
+ * reproducible, which is why it never drained the queue it was built for. The
+ * runnable entry point is now:
+ *
+ *   scripts/audit/language-review-triage.mjs
+ *
+ * which queries the `language_review` queue from Mongo, uses the per-page OCR
+ * `<language>` tag as the primary signal (#4117), and falls back to the
+ * classifier below only for books the tag cannot reach. Its classifier now lives
+ * in `scripts/lib/language-content-classify.mjs` and is shared with this file.
+ *
+ * Kept because its `--apply` block is the reference write shape: clear the flag,
+ * stamp `field_provenance.language`, bump `updated_at`.
+ *
  * Reads /tmp/noneng-triage.json (ids). Usage:
  *   node scripts/maintenance/classify-language-mismatch-content.mjs          # report
  *   node scripts/maintenance/classify-language-mismatch-content.mjs --apply  # fix clear vernacular + clear false-positive flags
  */
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+// Classifier extracted to a lib so the #3958 triage reuses it rather than
+// copying it. Behaviour here is unchanged.
+import {
+  classifyLanguageContent as classify,
+  formatDetectedLanguage,
+  toClassifierKey as norm,
+  RELIABLE_CATALOGUE_LANGS,
+} from '../lib/language-content-classify.mjs';
 
 const APPLY = process.argv.includes('--apply');
-const SW = {
-  latin: 'et in est non cum ad qui quod sed ut ex per sunt enim hoc esse si aut nam atque ab de quae quam ipse autem'.split(' '),
-  german: 'der die das und ist von zu den nicht mit auch ein eine auf im dem sich des wird werden für als aus dass nach bei'.split(' '),
-  french: 'le la les de des et que qui une dans pour est par sur plus au aux ce il ne pas nous avec son ont été cette'.split(' '),
-  italian: 'il la di che un per non con del della le si nel gli come questo sono anche più ma suo nella delle alla'.split(' '),
-  spanish: 'el la de que los las en un una por con del se su para es como más al sus este entre cuando muy sin'.split(' '),
-  dutch: 'de het een van en in is dat op te met voor niet zijn aan die ook als maar door werd wordt deze'.split(' '),
-  english: 'the and of to in is that it was as with for his by this are be or from at on which have'.split(' '),
-};
-const swSets = Object.fromEntries(Object.entries(SW).map(([k, v]) => [k, new Set(v)]));
-const norm = s => ({ 'ancient greek': 'greek', eng: 'english' }[String(s||'').toLowerCase().trim()] || String(s||'').toLowerCase().trim());
-const strip = t => (t||'').replace(/<(meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning)[^>]*>[\s\S]*?<\/\1>/gi,' ').replace(/<[^>]+>/g,' ');
-
-function classify(text) {
-  const t = strip(text);
-  const greek = (t.match(/[Ͱ-Ͽἀ-῿]/g)||[]).length;
-  const cyr = (t.match(/[Ѐ-ӿ]/g)||[]).length;
-  const latinCh = (t.match(/[A-Za-zÀ-ÿ]/g)||[]).length;
-  const words = (t.toLowerCase().match(/[a-zà-ÿ]+/g)||[]);
-  const total = words.length || 1;
-  const dens = {};
-  for (const [k, set] of Object.entries(swSets)) dens[k] = words.filter(w => set.has(w)).length / total;
-  dens.greek = greek / (greek + latinCh + cyr + 1);
-  dens.russian = cyr / (greek + latinCh + cyr + 1);
-  const ranked = Object.entries(dens).sort((a,b)=>b[1]-a[1]);
-  return { dominant: ranked[0][0], score: ranked[0][1], dens, words: total };
-}
 
 const cand = JSON.parse(fs.readFileSync('/tmp/noneng-triage.json','utf8'));
 const mc = new MongoClient(process.env.MONGODB_URI); await mc.connect();
@@ -71,13 +67,13 @@ for (const c of cand) {
   // invisible to it (no stopword/script detection), so curDens≈0 is an artifact,
   // not evidence the original is absent. Only auto-judge when the catalog
   // language is one we can actually read: latin or greek.
-  const RELIABLE = new Set(['latin','greek']);
+  const RELIABLE = RELIABLE_CATALOGUE_LANGS;
   if (norm(dominant) === cur) out.falsePositive.push(rec);                          // dominant IS the catalog language → correctly tagged
   else if (RELIABLE.has(cur) && ranked[0][1] >= 0.05 && (curDens||0) < 0.015) out.vernacular.push(rec); // reliably a modern lang, classical absent
   else out.unclear.push(rec);                                                        // non-Latin/Greek script, or mixed → human review
 }
 
-const fmtLang = d => ({ german:'German', french:'French', italian:'Italian', spanish:'Spanish', dutch:'Dutch', english:'English', greek:'Greek', russian:'Russian', latin:'Latin' }[d] || d);
+const fmtLang = formatDetectedLanguage;
 console.log(`triaged ${cand.length} candidates:`);
 console.log(`  FALSE POSITIVE (original w/ apparatus — clear review flag): ${out.falsePositive.length}`);
 console.log(`  VERNACULAR (genuine modern-lang — fix language): ${out.vernacular.length}`);
