@@ -301,10 +301,19 @@ export default async function MycologyCollectionPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Fungi &amp; Mycology</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Fungi built the soil that built our world. These are the books that first studied them.</p>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{total.toLocaleString('en-US')} works</span>
-            {ftCount > 0 && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>}
-            {dateRange && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{dateRange.min} – {dateRange.max}</span>}
-            {languages.length > 0 && <span className="text-xs sm:text-sm text-white/80 border border-white/20 px-3 py-1">{languages.join(' · ')}</span>}
+            {/* Stat chips borrow the book hero's colour language so the two read as
+                one system: soft blue for scope, green for language coverage, gold
+                for the first-translation claim. Same tones as book/[id] page.tsx. */}
+            <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e8e2d6', borderColor: 'rgba(232,226,214,0.3)' }}>{total.toLocaleString('en-US')} works</span>
+            {ftCount > 0 && (
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e0b46a', borderColor: 'rgba(224,180,106,0.42)' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
+            )}
+            {dateRange && (
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#8fbfe6', borderColor: 'rgba(143,191,230,0.4)' }}>{dateRange.min} – {dateRange.max}</span>
+            )}
+            {languages.length > 0 && (
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#86c98f', borderColor: 'rgba(134,201,143,0.4)' }}>{languages.join(' · ')}</span>
+            )}
           </div>
         </div>
       </section>

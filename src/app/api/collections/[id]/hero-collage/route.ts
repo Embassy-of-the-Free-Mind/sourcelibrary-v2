@@ -10,8 +10,13 @@ import { getReadDb } from '@/lib/mongodb';
 export const runtime = 'nodejs';
 export const revalidate = 86400;
 
-const COLS = 7, COLW = 200, H = 900, W = COLS * COLW;
-const BG = '#1a1612';
+// Match the book hero mosaic (api/books/[id]/hero-mosaic): a thin gap between
+// tiles so the dark ground shows through as a grid, and the same #14100c the
+// book hero uses, so the two heroes read as one system rather than two.
+const GAP = 6;
+const COLS = 7, COLW = 200, H = 900;
+const W = COLS * COLW + (COLS + 1) * GAP;
+const BG = '#14100c';
 const FETCH_LIMIT = 48;
 // Below this many matches a filtered collage looks broken, so we fall back.
 const MIN_COLLAGE = 14;
@@ -69,7 +74,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
     // Masonry pack: each image goes to the currently-shortest column; the bottom
     // overflowing tile in a column is cropped so nothing exceeds the canvas.
-    const colH = new Array(COLS).fill(0);
+    const colH = new Array(COLS).fill(GAP);
     const tiles: OverlayOptions[] = [];
     for (const r of resized) {
       let c = 0;
@@ -79,8 +84,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       const input = r.height > remaining
         ? await sharp(r.data).extract({ left: 0, top: 0, width: COLW, height: remaining }).toBuffer()
         : r.data;
-      tiles.push({ input, left: c * COLW, top: colH[c] });
-      colH[c] += r.height;
+      tiles.push({ input, left: GAP + c * (COLW + GAP), top: colH[c] });
+      colH[c] += r.height + GAP;
     }
     if (!tiles.length) return solid(3600);
 

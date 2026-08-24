@@ -39,7 +39,16 @@
  */
 
 const SOURCELIBRARY_HOST = 'images.sourcelibrary.org';
-const THUMB_WIDTH_THRESHOLD = 500;
+// The `-thumb.jpg` variant is 150px wide, so serving it into a 500px slot
+// upscaled it 3.3x and covers rendered visibly soft (de Bary 1864 on
+// /collections/slime-moulds, 2026-08-24). Cap the swap at a slot the 150px
+// image can actually fill: beyond this the original is served instead.
+//
+// The right long-term fix is the 1200px `display` variant, which sits between
+// these two — but it does not exist for every book yet (the archive-images
+// worker only began writing it on 2026-08-24), so pointing mid-width slots at
+// it would 404 for everything archived before that.
+const THUMB_WIDTH_THRESHOLD = 200;
 
 // Only these R2 path families actually materialize a `-thumb.jpg` sibling
 // (page scans, gallery crops, cropped covers, artworks). Other single-variant

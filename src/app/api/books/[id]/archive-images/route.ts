@@ -172,6 +172,24 @@ export const POST = withAuth(async (request, session, context) => {
               allowOverwrite: true,
             });
 
+            // Generate the 1200px display variant. pagePaths has always
+            // defined three sizes, but this worker only ever wrote `full` and
+            // `thumb` — so `deriveVariant()` in page-image-url.ts, which builds
+            // the display URL by stripping `-full`, pointed at a file that was
+            // never created. Every book archived by this route rendered a broken
+            // cover on its book page as a result.
+            try {
+              const displayBuffer = await compress_photo(buffer, 1200, 78);
+              await storagePut(paths.display, displayBuffer, {
+                access: 'public',
+                contentType: 'image/jpeg',
+                addRandomSuffix: false,
+                allowOverwrite: true,
+              });
+            } catch {
+              // Non-fatal — the reader falls back to the full-res image.
+            }
+
             // Generate 150px thumbnail
             let thumbnailUrl: string | undefined;
             try {
