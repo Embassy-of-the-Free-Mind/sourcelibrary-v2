@@ -156,6 +156,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // Merged-gallery source facet: 'all' (default, interleaves illustrations + artworks),
   // 'illustration', or 'artwork'.
   const sourceFilter = searchParams.get('source') || 'all';
+  // /api/gallery caps results at 3 images per book by default, for variety on the
+  // unscoped browse. Collection pages link here with maxPerBook=999 so "view all
+  // N plates" lands on all N — but the param was never read, so those links
+  // opened a page showing 9 of 267 and looked broken.
+  const maxPerBookParam = searchParams.get('maxPerBook');
 
   const limit = 48;
 
@@ -210,6 +215,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           offset: 0,
           bookId: bookId || undefined,
           collection: collectionFilter || undefined,
+          maxPerBook: maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined,
           library: libraryFilter || undefined,
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
@@ -257,6 +263,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         offset: currentOffset,
         bookId: bookId || undefined,
         collection: collectionFilter || undefined,
+        maxPerBook: maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined,
         library: libraryFilter || undefined,
         query: imageSearchQuery || undefined,
         type: typeFilter || undefined,
