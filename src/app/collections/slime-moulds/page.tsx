@@ -19,6 +19,8 @@ import ParallaxImage from '@/components/ParallaxImage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import LibrarianSearch from '@/components/LibrarianSearch';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import CuratorLauncher from '@/components/collections/CuratorLauncher';
+import { applyCuration, curationId, surfaceCuration } from '@/lib/collection-image-curation';
 
 /*
  * Slime Moulds collection page. Same skeleton as collections/mycology (built per
@@ -304,9 +306,13 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, dateRange, languages, gallery, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, dateRange, languages, gallery: galleryRawList, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
-  const galleryTotal = galleryCount;
+  // Editor curation runs last: it decides order and exclusions on top of the
+  // relevance filter, so a hidden image is hidden however well it scored.
+  const galleryCuration = surfaceCuration(collection, 'gallery');
+  const gallery = applyCuration(galleryRawList, (g) => curationId(g as { page_id?: string; detection_index?: number }), galleryCuration);
+  const galleryTotal = Math.max(0, galleryCount - galleryCuration.hidden.length);
   const galleryPlates = gallery
     .filter((g) => imgUrl(g))
     .slice(0, 20)
@@ -525,7 +531,10 @@ export default async function SlimeMouldsCollectionPage() {
       {gallery.length > 0 && (
         <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
-            <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">Gallery</h2>
+            <div className="flex items-start justify-between gap-4 mb-1">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
+              <CuratorLauncher slug={SLUG} />
+            </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates of the slime moulds themselves, drawn from across the collection. Most of these books are general works on the fungi, so their remaining plates are of other things.</p>
             {/* Balanced masonry (true heights, no crop), capped + faded into the page
                 so the ragged bottom is hidden. Cap is static (server-rendered). */}

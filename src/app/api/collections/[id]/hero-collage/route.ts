@@ -42,7 +42,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     // handful of images tiled over seven columns.
     const match = req.nextUrl.searchParams.get('match');
     const base = { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } };
-    const proj = { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1 }, maxTimeMS: 5000 };
+    const proj = { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1, page_id: 1, detection_index: 1 }, maxTimeMS: 5000 };
     let imgs: Record<string, unknown>[] = [];
     if (match) {
       const rx = match.slice(0, 600);
