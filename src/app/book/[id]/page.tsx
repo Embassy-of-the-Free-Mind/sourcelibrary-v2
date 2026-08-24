@@ -1805,7 +1805,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <GalleryMasonry plates={galleryPlates} />
               {imageCount > galleryPlates.length && (
                 <div className="mt-8 text-center">
-                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
+                  {/* imageCount is counted at quality >= 0.7, the bar this section curates
+                      to, but /gallery defaults to 0.5 — so "view all 141" opened a
+                      page of 192. Carry the threshold so the destination matches the
+                      promise. */}
+                  <Link href={`/gallery?bookId=${book.id}&minQuality=0.7`} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
                     <Images className="w-4 h-4" />
                     {t.viewAllIllustrations(imageCount)}
                   </Link>
