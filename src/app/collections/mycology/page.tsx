@@ -19,6 +19,7 @@ import ParallaxImage from '@/components/ParallaxImage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
 import { getImageFraming } from '@/lib/image-framing';
+import { countGalleryImages, galleryFilter, galleryHref, NO_PER_BOOK_CAP, type GalleryScope } from '@/lib/gallery-scope';
 import LibrarianSearch from '@/components/LibrarianSearch';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
@@ -124,18 +125,17 @@ async function getMycologyData() {
   ]);
 
   const bookIds = bookIdDocs.map((d) => d.id as string);
-  const galleryFilter = { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } };
-  // The count must mirror what /api/gallery actually serves — it also drops
-  // images with no extracted crop or missing source photo — or the "view all N"
-  // link promises more than the page it lands on shows.
-  const galleryCountFilter = { ...galleryFilter, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } };
+  // One scope drives the preview, the count and the browse link, so they cannot
+  // disagree — see src/lib/gallery-scope for the five bugs that motivated it.
+  const scope: GalleryScope = { collection: SLUG, bookIds, maxPerBook: NO_PER_BOOK_CAP, minQuality: 0.5 };
+  const galleryPreviewFilter = galleryFilter(scope);
   const [galleryRaw, galleryCount] = bookIds.length
     ? await Promise.all([
-      withTimeout(db.collection('gallery_images').find(galleryFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
+      withTimeout(db.collection('gallery_images').find(galleryPreviewFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
         .sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
       // The array above is capped at 60. Reporting its length as the plate count
       // told readers this collection had 60 plates when it has thousands.
-      withTimeout(db.collection('gallery_images').countDocuments(galleryCountFilter, { maxTimeMS: 5000 }), 5000, 0),
+      withTimeout(countGalleryImages(db as never, scope), 5000, 0),
     ])
     : [[] as Record<string, unknown>[], 0];
 
@@ -154,6 +154,7 @@ async function getMycologyData() {
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
     firstTranslations, sourceWorks, ftCount, total, galleryCount,
+    galleryBrowseHref: galleryHref(scope),
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
     languages, gallery, featured, featuredPages, parent,
   };
@@ -243,7 +244,7 @@ export default async function MycologyCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, dateRange, languages, gallery, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryBrowseHref, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   const quoteFraming = await getImageFraming('mycology-quote-bg');
 
@@ -424,7 +425,7 @@ export default async function MycologyCollectionPage() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
-                  <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  <Link href={galleryBrowseHref} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
                 </div>
               </div>
             </div>
@@ -450,7 +451,7 @@ export default async function MycologyCollectionPage() {
               <MycoMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
+              <Link href={galleryBrowseHref} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>

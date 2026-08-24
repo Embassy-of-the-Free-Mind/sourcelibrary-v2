@@ -21,6 +21,7 @@ import LibrarianSearch from '@/components/LibrarianSearch';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import CuratorLauncher from '@/components/collections/CuratorLauncher';
 import { applyCuration, curationId, surfaceCuration } from '@/lib/collection-image-curation';
+import { countGalleryImages, galleryFilter, galleryHref, isLinkableScope, NO_PER_BOOK_CAP, type GalleryScope } from '@/lib/gallery-scope';
 
 /*
  * Slime Moulds collection page. Same skeleton as collections/mycology (built per
@@ -167,35 +168,38 @@ async function getSlimeMouldData() {
   // that merely contain it, then apply the relevance rule to the second set.
   const onTopic = bookIdDocs.filter((d) => isWhollyMyxo(String(d.title || ''))).map((d) => d.id as string);
   const mixed = bookIdDocs.filter((d) => !isWhollyMyxo(String(d.title || ''))).map((d) => d.id as string);
-  const galleryFilter = {
-    gallery_quality: { $gte: 0.5 },
-    $or: [
-      { book_id: { $in: onTopic.slice(0, 200) } },
-      {
-        book_id: { $in: mixed.slice(0, 200) },
-        $or: [
-          { description: { $regex: MYXO_DESC_RX, $options: 'i' } },
-          { museum_description: { $regex: MYXO_DESC_RX, $options: 'i' } },
-        ],
-      },
-    ],
+  // Two scopes, both real, and the page must not confuse them:
+  //   subjectScope — the plates OF the slime moulds, which is what the section
+  //     shows. /gallery cannot filter by subject, so this scope is not linkable
+  //     and its count never labels a link.
+  //   allScope — every plate in these books, which is what /gallery serves and
+  //     therefore what the browse button counts and opens.
+  const subjectScope: GalleryScope = { bookIds: bookIdDocs.map((d) => d.id as string), maxPerBook: NO_PER_BOOK_CAP, minQuality: 0.5 };
+  const allScope: GalleryScope = { collection: SLUG, bookIds: subjectScope.bookIds, maxPerBook: NO_PER_BOOK_CAP, minQuality: 0.5 };
+  // Relevance is expressed as a $and over the shared filter so the servable
+  // conditions (crop present, book visible) still apply.
+  const subjectFilter = {
+    ...galleryFilter(subjectScope),
+    $and: [{
+      $or: [
+        { book_id: { $in: onTopic.slice(0, 200) } },
+        {
+          book_id: { $in: mixed.slice(0, 200) },
+          $or: [
+            { description: { $regex: MYXO_DESC_RX, $options: 'i' } },
+            { museum_description: { $regex: MYXO_DESC_RX, $options: 'i' } },
+          ],
+        },
+      ],
+    }],
   };
   const bookIds = bookIdDocs.map((d) => d.id as string);
   const [galleryRaw, galleryCount, galleryAllCount] = bookIds.length
     ? await Promise.all([
-      withTimeout(db.collection('gallery_images').find(galleryFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
+      withTimeout(db.collection('gallery_images').find(subjectFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
         .sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
-      // Two counts, because they answer different questions. The section shows
-      // only the myxomycete plates; the browse link goes to /gallery, which
-      // filters by collection but not by subject, so it shows every plate in
-      // these books. Both filters mirror what /api/gallery actually serves.
-      withTimeout(db.collection('gallery_images').countDocuments(
-        { ...galleryFilter, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
-        { maxTimeMS: 5000 }), 5000, 0),
-      withTimeout(db.collection('gallery_images').countDocuments(
-        { book_id: { $in: bookIdDocs.map((d) => d.id as string).slice(0, 200) }, gallery_quality: { $gte: 0.5 },
-          book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
-        { maxTimeMS: 5000 }), 5000, 0),
+      withTimeout(db.collection('gallery_images').countDocuments(subjectFilter, { maxTimeMS: 5000 }), 5000, 0),
+      withTimeout(countGalleryImages(db as never, allScope), 5000, 0),
     ])
     : [[] as Record<string, unknown>[], 0, 0];
 
@@ -217,6 +221,7 @@ async function getSlimeMouldData() {
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
     firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount,
+    galleryBrowseHref: isLinkableScope(allScope) ? galleryHref(allScope) : null,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
     languages, gallery, featured, featuredPages, parent,
   };
@@ -306,7 +311,7 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, dateRange, languages, gallery: galleryRawList, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, languages, gallery: galleryRawList, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   // Editor curation runs last: it decides order and exclusions on top of the
   // relevance filter, so a hidden image is hidden however well it scored.
@@ -518,7 +523,7 @@ export default async function SlimeMouldsCollectionPage() {
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
                   {galleryAllCount > 0 && (
-                    <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_OUTLINE}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-3.5 h-3.5" /></Link>
+                    <Link href={galleryBrowseHref || '#'} className={BTN_OUTLINE}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-3.5 h-3.5" /></Link>
                   )}
                 </div>
               </div>
@@ -548,7 +553,7 @@ export default async function SlimeMouldsCollectionPage() {
               <GalleryMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href={`/gallery?collection=${SLUG}&maxPerBook=999`} className={BTN_DARK}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-4 h-4" /></Link>
+              <Link href={galleryBrowseHref || '#'} className={BTN_DARK}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>
