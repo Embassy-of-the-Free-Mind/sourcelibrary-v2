@@ -427,13 +427,16 @@ export async function GET(request: NextRequest) {
     const hasMore = items.length > limit;
     if (hasMore) items.splice(limit); // trim to limit
 
-    // Derive total — avoid countDocuments for unfiltered browsing, but use it for searches
+    // Derive total — avoid countDocuments for unfiltered browsing, but use it for
+    // searches. `bookId` was missing from the filtered branch, so a book-scoped
+    // gallery returned the corpus-wide estimate: Lister's 192 plates reported as
+    // 206,230 results while correctly showing only Lister's.
     let total: number;
     if (!hasMore && offset === 0) {
       total = items.length; // we have everything
     } else if (!hasMore) {
       total = offset + items.length; // last page
-    } else if (searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
+    } else if (bookId || searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
       // Filtered query — for Atlas Search queries, countDocuments can't replicate the
       // search pipeline, so estimate from result count. For $text queries, use countDocuments.
       if (searchQuery && !filter.$text) {
