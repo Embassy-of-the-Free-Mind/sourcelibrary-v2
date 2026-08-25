@@ -29,11 +29,19 @@ export async function POST(request: NextRequest) {
       // (isBookReadable, PR #2522), but bots and stale links keep re-crawling
       // their /book/<slug>[/page/<id>] URLs — ~27k/week of noise that buries the
       // real broken links. If the URL points at a known-hidden book, skip it.
-      const bookSlug = url.match(/^\/book\/([^/?#]+)/)?.[1];
-      if (bookSlug) {
-        const slug = decodeURIComponent(bookSlug);
+      // Artworks are books-collection records too, and hidden ones (dedup
+      // twins, curation removals) draw the same bot re-crawl noise on their
+      // /artwork/<slug> URLs — they were the largest cluster in the log by
+      // 2026-08. The art-<slug> twin is included because /artwork resolves it
+      // (see src/lib/artwork-slug.ts).
+      const contentMatch = url.match(/^\/(book|artwork)\/([^/?#]+)/);
+      if (contentMatch) {
+        const slug = decodeURIComponent(contentMatch[2]);
+        const or: Record<string, string>[] = [{ slug }, { id: slug }];
+        // The art-<slug> twin only resolves on /artwork URLs.
+        if (contentMatch[1] === 'artwork') or.push({ slug: `art-${slug}` });
         const book = await db.collection('books').findOne(
-          { $or: [{ slug }, { id: slug }] },
+          { $or: or },
           { projection: { visible: 1, hidden: 1 } },
         );
         if (book && (book.hidden === true || book.visible === false)) {
