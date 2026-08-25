@@ -63,7 +63,17 @@ export async function GET(request: NextRequest) {
       // live in Supabase and aren't pruned when a book is hidden, so we drop them here —
       // otherwise they surface in search and 404 on click (matches the reader gate
       // isBookReadable / isHiddenBook, PR #2522).
+      //
+      // DELETED books are the other half of the same failure and need the inverse
+      // test: a book absent from Mongo is in neither the slug map nor the hidden
+      // set, so a hidden-only filter passes it through and the click 404s (#4216
+      // — two deleted books, still in book_embeddings, surfaced this way). Drop
+      // anything Mongo doesn't return — but only when the Mongo lookup actually
+      // ran, so a Mongo blip degrades to the old behaviour instead of zeroing
+      // every search result.
       const hiddenBookIds = new Set<string>();
+      const liveBookIds = new Set<string>();
+      let mongoOk = false;
       if (bookIds.length > 0) {
         try {
           const db = await getDb();
@@ -72,13 +82,16 @@ export async function GET(request: NextRequest) {
             { projection: { id: 1, slug: 1, visible: 1, hidden: 1 } }
           ).toArray();
           for (const b of books) {
+            if (b.id) liveBookIds.add(b.id as string);
             if (b.id && b.slug) slugMap[b.id as string] = b.slug as string;
             if (b.id && (b.hidden === true || b.visible === false)) hiddenBookIds.add(b.id as string);
           }
+          mongoOk = true;
         } catch { /* slug enrichment is best-effort */ }
       }
       const enriched = pages
         .filter(p => !hiddenBookIds.has(p.book_id))
+        .filter(p => !mongoOk || liveBookIds.has(p.book_id))
         .map(p => ({
           ...p,
           slug: slugMap[p.book_id] || null,
@@ -126,7 +139,13 @@ export async function GET(request: NextRequest) {
     // live in Supabase and aren't pruned when a book is hidden, so we drop them here —
     // otherwise they surface in search and 404 on click (matches the reader gate
     // isBookReadable / isHiddenBook, PR #2522).
+    //
+    // DELETED books need the inverse test — absent from Mongo means absent from
+    // the hidden set too, so they passed a hidden-only filter and 404'd on click
+    // (#4216). Drop non-live ids, but only when the Mongo lookup succeeded.
     const hiddenBookIds = new Set<string>();
+    const liveBookIds = new Set<string>();
+    let mongoOk = false;
     if (bookIds.length > 0) {
       try {
         const db = await getDb();
@@ -136,9 +155,11 @@ export async function GET(request: NextRequest) {
         ).toArray();
         for (const mb of mongoBooks) {
           const bid = mb.id || mb._id?.toString();
+          if (bid) liveBookIds.add(bid as string);
           if (bid) thumbnailMap[bid] = { thumbnail: mb.thumbnail, thumbnail_blob: mb.thumbnail_blob, slug: mb.slug };
           if (bid && (mb.hidden === true || mb.visible === false)) hiddenBookIds.add(bid);
         }
+        mongoOk = true;
       } catch (e) {
         // Non-fatal — results still work without thumbnails
       }
@@ -152,6 +173,7 @@ export async function GET(request: NextRequest) {
     const enriched = books
       .filter(b => b.similarity >= SEMANTIC_SIM_FLOOR)
       .filter(b => !hiddenBookIds.has(b.book_id))
+      .filter(b => !mongoOk || liveBookIds.has(b.book_id))
       .map(b => ({
         ...b,
         thumbnail: thumbnailMap[b.book_id]?.thumbnail || null,
