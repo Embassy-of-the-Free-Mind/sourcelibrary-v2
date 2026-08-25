@@ -4,6 +4,7 @@ import { getDb, getReadDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
@@ -147,13 +148,19 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
       await db.collection('pages').deleteMany({ book_id: bookId, tenantId });
       await db.collection('books').deleteOne({ _id: book._id, tenantId });
 
+      // A deleted book must leave every SERVING surface, not just Mongo —
+      // stale embedding/catalog rows kept surfacing deleted books in search
+      // and 404'd on click (#4216). Best-effort: a Supabase failure never
+      // blocks the delete; the stale-embeddings sweep is the backstop.
+      const pruned = await pruneSearchRowsForDeletedBook(bookId);
+
       // Audit log (non-blocking)
       logAuditEvent({
         action: 'book_deleted',
         book_id: bookId,
         book_title: book.title,
         pages_affected: pages.length,
-        metadata: { recoverable: true },
+        metadata: { recoverable: true, search_rows_pruned: pruned.every(p => !p.error) },
       });
 
       return NextResponse.json({
@@ -161,7 +168,7 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
         message: `Archived "${book.title}" with ${pages.length} pages`,
         bookId,
         recoverable: true,
-        hint: 'POST /api/books/restore/{id} to recover'
+        hint: 'POST /api/books/restore/{id} to recover — a restored book needs re-embedding before it surfaces in semantic search'
       });
     }
 
@@ -206,6 +213,9 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
     // Book is not archived - permanent delete from active (should be rare)
     const pagesResult = await db.collection('pages').deleteMany({ book_id: bookId, tenantId });
     await db.collection('books').deleteOne({ _id: book._id, tenantId });
+
+    // Same serving-surface prune as the soft-delete path (#4216).
+    await pruneSearchRowsForDeletedBook(bookId);
 
     logAuditEvent({
       action: 'book_deleted_permanent',
