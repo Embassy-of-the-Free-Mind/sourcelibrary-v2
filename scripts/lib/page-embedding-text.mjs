@@ -145,8 +145,14 @@ export const PAGE_EMBEDDING_COLUMNS = [
  *
  * Callers must derive the flag from the BOOK's language via
  * `NATIVE_EDITION_LANGUAGE` (src/lib/localized.ts) — never guess it per page,
- * and never set it for a bilingual edition, where only part of the page is the
- * language and the promise would be half-kept.
+ * and never set it for a BILINGUAL edition, where only part of the page is the
+ * language and the promise would be half-kept. A bilingual edition reaches this
+ * store by the ordinary route instead: `extract-source-columns.mjs` writes its
+ * Spanish COLUMN to `pages.translations.es` (`source: 'source-column'`), which
+ * the first branch above picks up with no flag at all. That is why the rule here
+ * did not need widening when bilingual editions were finally served — the unit
+ * that is wholly Spanish is the column, and by the time it reaches this function
+ * it is already a stored translation.
  *
  * The legacy `pages.translation_es` field is folded in for `es`, matching
  * `src/lib/page-translations.ts` — the map wins when both are present.
