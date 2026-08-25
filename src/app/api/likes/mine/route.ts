@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
     if (targetType === 'book') {
       const booksData = await db.collection('books').find(
         { id: { $in: targetIds }, ...tenantFilter },
-        { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, thumbnail_blob: 1, image_thumb: 1, cover_image: 1, content_type: 1 } }
+        { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, thumbnail_blob: 1, image_thumb: 1, cover_image: 1, content_type: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
 
@@ -104,6 +104,10 @@ export async function GET(request: NextRequest) {
           const gallery = galleryMap.get(book.id) || [];
           return {
             id: book.id,
+            // The favorites page builds /artwork/<slug || id> hrefs from this.
+            // /popular already returns slug; without it here every artwork in
+            // "My Likes" linked to /artwork/<id>, which used to 404.
+            slug: book.slug,
             title: book.display_title || book.title,
             author: book.author,
             year: book.year,
