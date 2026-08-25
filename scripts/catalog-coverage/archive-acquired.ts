@@ -52,7 +52,7 @@ async function main() {
     if (!b) { await queue.updateOne({ sn: w.sn }, { $set: { archived: true, archive_note: 'no-book' } }); return; }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (have0 < (b.pages_count || 0) * 0.99) {
-      if (w.source === 'erara' || w.source === 'iiif') { await archiveIiif(w.book_id); }
+      if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') { await archiveIiif(w.book_id); }
       else { try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
