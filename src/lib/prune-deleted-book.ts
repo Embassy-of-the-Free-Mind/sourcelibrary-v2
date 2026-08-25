@@ -36,11 +36,16 @@ export interface PruneResult {
 
 export async function pruneSearchRowsForDeletedBook(bookId: string): Promise<PruneResult[]> {
   if (!bookId) return [];
+  const client = supabaseAdmin;
+  if (!client) {
+    console.error(`[prune-deleted-book] ${bookId}: supabaseAdmin unavailable — run scripts/maintenance/delete-stale-embeddings.mjs to catch up`);
+    return [...EMBEDDING_TABLES, 'books_catalog'].map(table => ({ table, error: 'supabaseAdmin unavailable' }));
+  }
   const results: PruneResult[] = [];
 
   for (const table of EMBEDDING_TABLES) {
     try {
-      const { error } = await supabaseAdmin.from(table).delete().eq('book_id', bookId);
+      const { error } = await client.from(table).delete().eq('book_id', bookId);
       results.push({ table, error: error?.message ?? null });
     } catch (e) {
       results.push({ table, error: e instanceof Error ? e.message : String(e) });
@@ -48,7 +53,7 @@ export async function pruneSearchRowsForDeletedBook(bookId: string): Promise<Pru
   }
 
   try {
-    const { error } = await supabaseAdmin.from('books_catalog').delete().eq('id', bookId);
+    const { error } = await client.from('books_catalog').delete().eq('id', bookId);
     results.push({ table: 'books_catalog', error: error?.message ?? null });
   } catch (e) {
     results.push({ table: 'books_catalog', error: e instanceof Error ? e.message : String(e) });
