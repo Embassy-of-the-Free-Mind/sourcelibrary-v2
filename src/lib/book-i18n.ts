@@ -358,6 +358,13 @@ export interface ReaderStrings {
   typeCaption: string;
   // footer + search
   likeThisPage: string;
+  // The footer like line: "[♥ Like this page] to save it to your favorites"
+  // (unliked) / "[♥] Saved to your favorites" (liked). The prefix and the
+  // linked word are separate strings because "favorites" is an <a> to
+  // /favorites rendered OUTSIDE the button (#4126).
+  likeSavePrefix: string;
+  likeSavedPrefix: string;
+  likeFavoritesWord: string;
   searchThisBook: string;
   searchWithinBook: string;
   clearSearch: string;
@@ -446,6 +453,9 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     typeCaption: 'Griffo\u2019s roman for Aldus Manutius, traced from the 1496 De Aetna.',
 
     likeThisPage: 'Like this page',
+    likeSavePrefix: 'to save it to your',
+    likeSavedPrefix: 'Saved to your',
+    likeFavoritesWord: 'favorites',
     searchThisBook: 'Search this book...',
     searchWithinBook: 'Search within this book',
     clearSearch: 'Clear search',
@@ -532,6 +542,9 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     typeCaption: 'La redonda de Griffo para Aldo Manucio, calcada del De Aetna de 1496.',
 
     likeThisPage: 'Me gusta esta página',
+    likeSavePrefix: 'para guardarla en tus',
+    likeSavedPrefix: 'Guardada en tus',
+    likeFavoritesWord: 'favoritos',
     searchThisBook: 'Buscar en este libro...',
     searchWithinBook: 'Buscar dentro de este libro',
     clearSearch: 'Borrar la búsqueda',
