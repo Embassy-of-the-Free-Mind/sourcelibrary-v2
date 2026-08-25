@@ -34,7 +34,8 @@ async function main() {
         const url = upgradeToFullRes(p.photo_original || p.photo);
         try {
           const buf = await rateLimitedFetch(url);
-          const jpg = await sharp(buf).rotate().resize(6000, null, { withoutEnlargement: true }).jpeg({ quality: 90, mozjpeg: true }).toBuffer();
+          // Archive at source fidelity: no resolution cap (#3897, matches archive-ia-bulk).
+          const jpg = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
           const padded = String(p.page_number).padStart(4, '0');
           const blob = await storagePut(`pages/${bookId}/${padded}.jpg`, jpg, { contentType: 'image/jpeg', access: 'public' });
           const upd: any = { $set: { archived_photo: blob.url } };
