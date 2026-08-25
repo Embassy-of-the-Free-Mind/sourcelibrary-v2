@@ -7,6 +7,7 @@ import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
@@ -213,6 +214,17 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
     'index.keyTerms': 0,
   }, tenantId);
   if (scoped) return scoped.book as unknown as Book;
+
+  // A book the tenant's own catalogue links (external-scan edition of a held
+  // work) renders in the reading room even without a tenantId assignment —
+  // mirror of the same admission in getBook(). See src/lib/tenant-catalog-books.ts.
+  if (tenantSlug && tenantSlug !== 'default') {
+    const unscopedId = ((result.book as Record<string, unknown>).id
+      || (result.book as { _id?: { toString(): string } })._id?.toString()) as string;
+    if (await tenantCatalogReferencesBook(tenantSlug, unscopedId)) {
+      return result.book as unknown as Book;
+    }
+  }
 
   // Default tenant is the global namespace. Legacy + corpus-source books
   // (ETCSL, CDLI, etc.) have no `tenantId`/`tenant_id` field at all; the
@@ -521,12 +533,25 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       'index.concepts': 0,
       'index.keyTerms': 0,
     }, tenantId);
-    if (!scoped) return null;
-    effectiveResult = {
-      book: scoped.book as Record<string, unknown>,
-      matchedBySlug: scoped.matchedBySlug,
-      fromCatalog: false,
-    };
+    if (scoped) {
+      effectiveResult = {
+        book: scoped.book as Record<string, unknown>,
+        matchedBySlug: scoped.matchedBySlug,
+        fromCatalog: false,
+      };
+    } else {
+      // Not assigned to this tenant — but the tenant's own catalogue may link
+      // it as an external-scan edition of a work they hold (sl_external_book_id
+      // on bph_works / library_catalog_records). The catalogue row is the
+      // authorization; without it this stays a hard miss (tenant lockdown).
+      const unscopedId = (result.book.id || result.book._id?.toString()) as string;
+      const referenced = tenantSlug
+        ? await tenantCatalogReferencesBook(tenantSlug, unscopedId)
+        : false;
+      if (!referenced) return null;
+      // Fall through with the unscoped lookup result; the hidden-book gate
+      // downstream still applies to it unchanged.
+    }
   }
 
   const { book: quickBook, matchedBySlug, fromCatalog } = effectiveResult;
