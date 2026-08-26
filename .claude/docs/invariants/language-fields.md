@@ -142,6 +142,44 @@ comparison. Before reporting a rate, take the largest single cluster in your
 findings and look at it by hand — an artifact is almost always the *biggest*
 group, because it is systematic and the real thing is not.
 
+## A pivot worker will translate a page that is ALREADY in the target language
+
+`es-translate-worker.mjs` selects pages whose `translations.es` is empty and
+pivots our English translation into Spanish. It has no way to ask whether the
+leaf is already Spanish, so on a bilingual edition it writes machine Spanish over
+a source that is sitting on the same page.
+
+Measured 2026-08-25: all three Florentine Codex volumes (`Nahuatl-Spanish`) carry
+`pages_translated_es` of 703 / 752 / 992 — **2,121 pages of `ai-pivot-en` Spanish
+standing in front of Sahagún's own**. Vol. 2, p. 201, Sahagún on the leaf: *"que
+no te ensuberbescas, ni te altiuescas… y baxa la cabeça, y recoge tus braços"*.
+Stored as the Spanish edition: *"que no te vuelvas orgulloso, ni te enaltezcas…
+y baja la cabeza, y cruza los brazos"*. Both are Spanish; only one is the source.
+
+The reader sees no difference, because a machine paraphrase of a period text
+reads as a modernisation of it. `pages.translations.<iso>.source` is the only
+thing that distinguishes them — `ai-pivot-en` versus `source-column` — which is
+why every surface that tells a reader or an agent where a text came from now
+branches on it (`resolveQuoteText`, the MCP tips, `SourceBadge`).
+
+**The general rule: an emptiness check is not a licence.** "This field has no
+value" says nothing about whether the value belongs there. Before a worker
+generates content for a page, ask whether the page already holds it in another
+form — for language, that means the per-page `<language>` tag and, on a
+parallel-text leaf, `<column-break/>`. The mechanism for the bilingual case is
+`scripts/lib/source-column.mjs`; the measurement that has to pass before it runs
+on a new book is `scripts/audit/source-column-separation.mjs`.
+
+Corollary for the catalogue: this whole class is invisible while `books.language`
+names one language. The Ximénez Popol Vuh was catalogued `K'iche' Maya` with
+Spanish on 96% of its leaves' own page tags. `relabel-bilingual-edition.mjs`
+proposes the compound value from those tags and prints its evidence — and keeps
+the CATALOGUED language first, because Spanish is tagged slightly more often than
+K'iche' there and a share-ordered rule renames the K'iche' Popol Vuh
+"Spanish-K'iche'". Which language a bilingual edition principally IS stays a
+curatorial judgement; the leaves are evidence that something is MISSING from the
+record, never that it is backwards.
+
 ## The Korean/hanmun class must never be auto-flipped
 
 A book catalogued `Korean` whose pages are Classical Chinese is not mislabelled.
@@ -275,6 +313,8 @@ the same arrangement `translate-core.mjs` ↔ `ai-models.ts` already lives with.
 
 ## Open issues
 
+#4226 (Florentine Codex: 2,121 pages of pivot Spanish still stand in front of
+Sahagún's own — replacing them is a curatorial call, not a technical one) ·
 #4146 (native Spanish unfindable in Spanish search) ·
 #4089 (read path + ordering rule) · #4117 (detector from page tags) ·
 #3893 (one vocabulary) · #3958 (1,519 live books in `language_review` with no
