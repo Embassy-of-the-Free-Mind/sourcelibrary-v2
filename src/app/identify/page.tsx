@@ -79,6 +79,9 @@ export default function IdentifyPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // What the pipeline is doing right now — timer-driven until the first stream
+  // event arrives, event-driven after. The stages named here are real (#4232).
+  const [stageMessage, setStageMessage] = useState<string | null>(null);
   const lastFileRef = useRef<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -87,6 +90,14 @@ export default function IdentifyPage() {
     setLoading(true);
     setError(null);
     setResult(null);
+
+    // Fallback narration: if the stream is slow to open (or unsupported), the
+    // spinner still tells the truth about what is happening and when.
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const clearTimers = () => { timers.forEach(clearTimeout); timers.length = 0; };
+    setStageMessage('Reading the image…');
+    timers.push(setTimeout(() => setStageMessage('Comparing against 152,000 illustrations…'), 6000));
+    timers.push(setTimeout(() => setStageMessage('Confirming the match…'), 14000));
 
     // Compress large images client-side (phone cameras produce 5-10MB files)
     let imageFile = file;
@@ -108,22 +119,86 @@ export default function IdentifyPage() {
     formData.append('image', imageFile);
 
     try {
-      const res = await fetch('/api/identify', { method: 'POST', body: formData });
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        setError(`Server error (${res.status}) — try again`);
+      const res = await fetch('/api/identify?stream=1', { method: 'POST', body: formData });
+      const ctype = res.headers.get('content-type') || '';
+
+      // Errors (rate limit, size) and any non-streaming server are plain JSON.
+      if (!res.ok || !ctype.includes('ndjson') || !res.body) {
+        let data;
+        try {
+          data = await res.json();
+        } catch {
+          setError(`Server error (${res.status}) — try again`);
+          return;
+        }
+        if (!res.ok) {
+          setError(data.detail || data.error || `Failed to identify (${res.status})`);
+        } else {
+          setResult(data);
+        }
         return;
       }
-      if (!res.ok) {
-        setError(data.detail || data.error || `Failed to identify (${res.status})`);
-      } else {
-        setResult(data);
+
+      // NDJSON stream: one event per line, rendered as it lands. The photo is
+      // identified in ~6s; retrieval and visual confirmation follow — this is
+      // what turns a ~25s opaque wait into visible progress.
+      let sawTerminal = false;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handleEvent = (evt: any) => {
+        switch (evt.type) {
+          case 'identification':
+            clearTimers();
+            setStageMessage('Searching the library…');
+            setResult({ identification: evt.data, matches: [], confirmed: null, page: null });
+            break;
+          case 'matches':
+            setStageMessage('Confirming the match visually…');
+            setResult(r => (r ? { ...r, matches: evt.data || [], visual_search: evt.visual_search } : r));
+            break;
+          case 'confirmed':
+            setStageMessage('Checking catalogues…');
+            setResult(r => (r ? { ...r, confirmed: evt.data, page: evt.page ?? null, matches: evt.matches || r.matches } : r));
+            break;
+          case 'verification':
+            setResult(r => (r ? { ...r, identification: evt.data, verified: true } : r));
+            break;
+          case 'done':
+            sawTerminal = true;
+            break;
+          case 'error':
+            sawTerminal = true;
+            setError(evt.detail || evt.message || 'Identification failed');
+            break;
+        }
+      };
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        let nl;
+        while ((nl = buf.indexOf('\n')) >= 0) {
+          const line = buf.slice(0, nl).trim();
+          buf = buf.slice(nl + 1);
+          if (!line) continue;
+          try {
+            handleEvent(JSON.parse(line));
+          } catch {
+            // Skip a malformed line rather than killing the whole stream
+          }
+        }
+      }
+      if (!sawTerminal) {
+        setError('Connection interrupted — try again');
       }
     } catch {
       setError('Network error — check your connection and try again');
     } finally {
+      clearTimers();
+      setStageMessage(null);
       setLoading(false);
     }
   }, []);
@@ -188,8 +263,10 @@ export default function IdentifyPage() {
         className="hidden"
       />
 
-      {/* Landing: you are standing in the room */}
-      {!image && (
+      {/* Landing: you are standing in the room. Gated on submission state, not
+          just the preview — if FileReader ever fails to produce a preview, the
+          results must not render underneath the hero. */}
+      {!image && !loading && !result && !error && (
         <>
           <section className="relative bg-dark">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -268,11 +345,11 @@ export default function IdentifyPage() {
             <div className="relative rounded-xl overflow-hidden bg-stone-100">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={image} alt="Your photo" className="w-full max-h-[50vh] object-contain" />
-              {loading && (
+              {loading && !result && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                   <div className="flex items-center gap-3 bg-white/90 rounded-full px-5 py-2.5">
                     <Loader2 className="w-5 h-5 animate-spin text-accent-rust" />
-                    <span className="text-sm font-medium">Identifying...</span>
+                    <span className="text-sm font-medium">{stageMessage || 'Identifying…'}</span>
                   </div>
                 </div>
               )}
@@ -306,6 +383,15 @@ export default function IdentifyPage() {
         {/* Results */}
         {result && (
           <div className="space-y-6">
+            {/* Streaming: analysis is already on screen while retrieval and
+                visual confirmation continue — say so instead of overlaying */}
+            {loading && (
+              <div className="flex items-center gap-2.5 text-sm text-secondary" role="status">
+                <Loader2 className="w-4 h-4 animate-spin text-accent-rust" />
+                <span>{stageMessage || 'Searching the library…'}</span>
+              </div>
+            )}
+
             {/* Visually confirmed match — the answer, front and center */}
             {result.confirmed && (
               <div className="rounded-xl overflow-hidden bg-white border-2 border-accent-rust/40 shadow-sm">
@@ -314,7 +400,9 @@ export default function IdentifyPage() {
                   <span className="text-[10px] text-green-700 bg-green-50 rounded px-1.5 py-0.5">confirmed by visual comparison</span>
                 </div>
                 <div className="flex gap-4 p-5">
-                  <div className="w-24 sm:w-32 flex-shrink-0 rounded overflow-hidden bg-stone-100">
+                  {/* self-start keeps the thumb box hugging the image instead of
+                      stretching to row height and leaving a gray dead zone */}
+                  <div className="w-24 sm:w-32 flex-shrink-0 self-start rounded overflow-hidden bg-stone-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={result.confirmed.image_url} alt="" className="w-full h-auto object-contain" />
                   </div>
@@ -324,8 +412,11 @@ export default function IdentifyPage() {
                     )}
                     <p className="font-display font-semibold text-primary">
                       {result.confirmed.book_title}
+                      {/* "scan page", not "page": the work's own plate numbering
+                          (e.g. the Codex Borgia's "Page 56") can differ from our
+                          scan sequence, and the Analysis card may show it */}
                       {result.confirmed.page_number != null && (
-                        <span className="text-sm font-normal text-muted ml-2">page {result.confirmed.page_number}</span>
+                        <span className="text-sm font-normal text-muted ml-2">scan page {result.confirmed.page_number}</span>
                       )}
                     </p>
                     {result.confirmed.book_author && (
@@ -557,7 +648,7 @@ export default function IdentifyPage() {
                   })}
                 </div>
               </div>
-            ) : (
+            ) : loading ? null : (
               <div className="card p-5 text-center">
                 <p className="text-secondary">Not found in Source Library</p>
                 <p className="text-sm text-muted mt-1">
