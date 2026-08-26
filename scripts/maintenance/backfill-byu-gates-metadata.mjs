@@ -32,6 +32,27 @@ const COMMIT = process.argv.includes('--commit');
 const COLL = 'p15999coll16';
 const HOST = 'https://contentdm.lib.byu.edu';
 
+/**
+ * Per-book curation the importers left blank, alongside the call numbers.
+ *
+ * `categories` is the subject vocabulary the rest of the corpus uses — the
+ * Chumayel is `history, astronomy, divination, literature`, the Kaua `medicine,
+ * botany, linguistics, history` — and an empty array leaves a book out of every
+ * subject facet. `collections` is not a substitute: it is curatorial grouping,
+ * not subject.
+ */
+const CATEGORIES = {
+  // Chronicle with Christian material, in a 1621 hand.
+  79957: ['history', 'literature', 'linguistics'],
+  // Medical and calendrical, in the Teabo tradition.
+  85095: ['medicine', 'botany', 'divination', 'history'],
+  // "Lunario" — the moon, the calendar, and remedies.
+  83560: ['astronomy', 'divination', 'medicine', 'history'],
+  // The Canul lineage, the founding of Calkiní and its boundaries.
+  138175: ['history', 'literature', 'linguistics'],
+  83705: ['medicine', 'botany', 'linguistics', 'history'],
+};
+
 /** Archival call numbers, from each item's own ContentDM record. */
 const SHELFMARKS = {
   79957: 'MSS 279, Series 9 Subseries 11 Subseries 2, box 74 folder 3',
@@ -47,7 +68,7 @@ const db = client.db('bookstore');
 
 const books = await db.collection('books')
   .find({ source_fingerprint: { $regex: `^byu:${COLL}/` } })
-  .project({ id: 1, title: 1, source_fingerprint: 1, image_source: 1, visible: 1 })
+  .project({ id: 1, title: 1, source_fingerprint: 1, image_source: 1, visible: 1, categories: 1, thumbnail: 1 })
   .toArray();
 console.log(`${COMMIT ? 'WRITING' : 'DRY RUN'} — ${books.length} BYU/Gates books\n`);
 
@@ -71,16 +92,32 @@ for (const b of books) {
     'image_source.attribution': 'Courtesy of L. Tom Perry Special Collections, Harold B. Lee Library, Brigham Young University',
     updated_at: new Date(),
   };
+  const cats = CATEGORIES[record];
+  if (cats && !(b.categories || []).length) set.categories = cats;
+
+  // A book with no `thumbnail` has no cover anywhere it is listed. The
+  // Calkiní importer derives its page images and so had no source URL to reach
+  // for, and simply left the field out — invisible until you look at a grid.
+  if (!b.thumbnail) {
+    const firstPage = await db.collection('pages').findOne(
+      { book_id: b.id, page_number: 1 },
+      { projection: { display_photo: 1, photo: 1, thumbnail: 1 } },
+    );
+    const t = firstPage?.display_photo || firstPage?.thumbnail || firstPage?.photo;
+    if (t) { set.thumbnail = t; set.thumbnail_source = 'first_page'; }
+  }
 
   const before = b.image_source || {};
   const changed = Object.entries(set)
     .filter(([k]) => k.startsWith('image_source.'))
     .filter(([k, v]) => before[k.slice('image_source.'.length)] !== v);
   console.log(`  ${String(b.title).slice(0, 58).padEnd(60)} record ${record}`);
+  if (set.categories) console.log(`      categories: [] → ${JSON.stringify(set.categories)}`);
+  if (set.thumbnail) console.log(`      thumbnail: (none) → ${String(set.thumbnail).slice(0, 78)}`);
   for (const [k, v] of changed) console.log(`      ${k.slice('image_source.'.length)}: ${JSON.stringify(before[k.slice('image_source.'.length)])} → ${JSON.stringify(String(v).slice(0, 78))}`);
-  if (!changed.length) console.log('      (already complete)');
+  if (!changed.length && !set.categories && !set.thumbnail) console.log('      (already complete)');
 
-  if (COMMIT && changed.length) {
+  if (COMMIT && (changed.length || set.categories || set.thumbnail)) {
     const r = await db.collection('books').updateOne({ id: b.id }, { $set: set });
     console.log(`      modified=${r.modifiedCount}`);
   }
