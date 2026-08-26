@@ -135,7 +135,14 @@ export async function POST(request: NextRequest) {
   // streaming path (?stream=1) can deliver partial results while later stages
   // are still running; the buffered JSON path passes a no-op. Returns the same
   // assembled payload either way. (#4232)
-  const pipeline = async (emit: (e: Record<string, unknown>) => void) => {
+  const pipeline = async (emitRaw: (e: Record<string, unknown>) => void) => {
+    // Stage timing: `t` (ms since pipeline start) rides on every event, and
+    // `mark` logs internal boundaries — the streamed events alone showed an
+    // unexplained multi-second gap between identification and matches (#4232).
+    const t0 = Date.now();
+    const emit = (e: Record<string, unknown>) => emitRaw({ ...e, t: Date.now() - t0 });
+    const mark = (label: string) => console.log(`[identify] t+${Date.now() - t0}ms ${label}`);
+
     // Run Gemini vision + CLIP visual search in parallel
     const apiKey = getNextApiKey();
     const model = 'gemini-3.1-flash-lite';
@@ -206,6 +213,7 @@ export async function POST(request: NextRequest) {
 
     // Wait for initial identification + CLIP
     const [resp, clipMatches] = await Promise.all([geminiPromise, clipPromise]);
+    mark('gemini+clip resolved');
 
     if (!resp.ok) {
       const err = await resp.text();
@@ -233,6 +241,7 @@ export async function POST(request: NextRequest) {
     // First streamed stage: the reader sees the analysis while retrieval,
     // visual confirmation and web verification are still running.
     emit({ type: 'identification', data: identification });
+    mark('identification emitted');
 
     // Promise 3: Semantic artwork search (runs after initial ID, in parallel with DB search)
     // Uses the identification to find related artworks via embedding similarity
@@ -259,6 +268,7 @@ export async function POST(request: NextRequest) {
         const textQuery = [identification.subject, ...(identification.search_terms || []).slice(0, 3)]
           .filter(Boolean).join('. ');
         const textCands = await getGalleryCandidatesByText(textQuery, 10);
+        mark('rerank: text candidates');
 
         const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(cm => ({
           id: cm.id,
@@ -291,8 +301,10 @@ export async function POST(request: NextRequest) {
           })
           .filter(c => c.thumbnailUrl && (!c.galleryId || c._hydrated?.book_visible !== false));
 
+        mark('rerank: candidates hydrated');
         const t0 = Date.now();
         const verdict = await rerankByVisualComparison(base64, mimeType, candidates);
+        mark('rerank: verdict');
         if (!verdict?.picked) {
           return {
             confirmed: null as ConfirmedMatch | null,
@@ -459,6 +471,12 @@ Return JSON only:
         ],
       };
 
+      // maxTimeMS is a hard latency budget, not a safety net: these unindexed
+      // regex scans short-circuit fast when terms are common (the limit fills
+      // early) but walk all ~105K books when terms are rare — measured 8.07s
+      // for one Strategy 2 scan, which was the whole pipeline's tail (#4232).
+      // The text strategies are fallback lanes behind CLIP + visual rerank, so
+      // a bounded partial beats a complete-but-slow answer here.
       const artistBooks = await books
         .find(nameQuery, {
           projection: {
@@ -467,7 +485,7 @@ Return JSON only:
             commons_full_url: 1, archived_full_url: 1,
             commons_title: 1, 'enrichment.subject': 1, 'enrichment.inscriptions': 1,
           },
-          maxTimeMS: 8000,
+          maxTimeMS: 2500,
         })
         .limit(50)
         .toArray()
@@ -517,6 +535,7 @@ Return JSON only:
       matches.push(...scored.slice(0, 10));
     }
 
+    mark('strategy1 done');
     // Strategy 2: Search terms against title/display_title (fallback if no artist or few matches)
     if (matches.length < 3 && identification.search_terms?.length) {
       const termQueries = identification.search_terms
@@ -548,7 +567,9 @@ Return JSON only:
                 published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, resource_type: 1,
                 'enrichment.subject': 1,
               },
-              maxTimeMS: 8000,
+              // Hard latency budget — see the Strategy 1 comment: THIS scan
+              // measured 8.07s on rare terms and was the pipeline's tail.
+              maxTimeMS: 2500,
             },
           )
           .limit(20)
@@ -596,29 +617,46 @@ Return JSON only:
       .filter(w => w.length > 4)
       .slice(0, 5);
 
+    mark('strategy2 done');
     const pageMatches: { bookId: string; pageNumber: number; score: number }[] = [];
 
     if ((searchTerms.length > 0 || phrases.length > 0) && topMatches.length > 0) {
       const bookIds = topMatches.map(m => m.id);
 
-      // Strategy A: Search for distinctive phrases (strongest signal — exact multi-word match)
-      for (const phrase of phrases.slice(0, 4)) {
+      // Up to 10 book-scoped OCR regex queries. They used to run SEQUENTIALLY
+      // and this loop alone could add several seconds; the queries are
+      // independent, so fire them together and merge in a fixed order
+      // (phrases before terms) to keep scoring deterministic. (#4232 perf)
+      const phraseQueries = phrases.slice(0, 4).map(phrase => {
         const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const found = await pages
+        return pages
           .find(
-            {
-              book_id: { $in: bookIds },
-              'ocr.data': { $regex: escaped, $options: 'i' },
-            },
-            {
-              projection: { book_id: 1, page_number: 1 },
-              maxTimeMS: 5000,
-            },
+            { book_id: { $in: bookIds }, 'ocr.data': { $regex: escaped, $options: 'i' } },
+            { projection: { book_id: 1, page_number: 1 }, maxTimeMS: 2500 },
           )
           .limit(10)
           .toArray()
           .catch(() => []);
+      });
+      const termQueries2 = searchTerms.slice(0, 6).map(term => {
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return pages
+          .find(
+            { book_id: { $in: bookIds }, 'ocr.data': { $regex: escaped, $options: 'i' } },
+            { projection: { book_id: 1, page_number: 1 }, maxTimeMS: 2500 },
+          )
+          .limit(20)
+          .toArray()
+          .catch(() => []);
+      });
+      const [phraseResults, termResults] = await Promise.all([
+        Promise.all(phraseQueries),
+        Promise.all(termQueries2),
+      ]);
 
+      // Phrases first (strongest signal — exact multi-word match), then words
+      // (catches pages where OCR line breaks differ from the inscriptions).
+      for (const found of phraseResults) {
         for (const p of found) {
           const existing = pageMatches.find(
             pm => pm.bookId === p.book_id && pm.pageNumber === p.page_number,
@@ -630,26 +668,7 @@ Return JSON only:
           }
         }
       }
-
-      // Strategy B: Search for individual distinctive words (more queries but catches
-      // pages where OCR line breaks differ from the inscriptions)
-      for (const term of searchTerms.slice(0, 6)) {
-        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const found = await pages
-          .find(
-            {
-              book_id: { $in: bookIds },
-              'ocr.data': { $regex: escaped, $options: 'i' },
-            },
-            {
-              projection: { book_id: 1, page_number: 1 },
-              maxTimeMS: 3000,
-            },
-          )
-          .limit(20)
-          .toArray()
-          .catch(() => []);
-
+      for (const found of termResults) {
         for (const p of found) {
           const existing = pageMatches.find(
             pm => pm.bookId === p.book_id && pm.pageNumber === p.page_number,
@@ -689,6 +708,7 @@ Return JSON only:
       }
     }
 
+    mark('page matching done');
     // Merge CLIP visual matches into text matches
     // CLIP matches come from Supabase with book_id — merge by boosting existing or adding new
     const existingMatchIds = new Set(matches.map(m => m.id));
@@ -720,6 +740,7 @@ Return JSON only:
     // here (thumbnail/title/id), so guard against a stale visible column.
     const { filterVisibleArtworks } = await import('@/lib/artwork-visibility');
     const semanticArtworks = await filterVisibleArtworks(db, await semanticArtworkPromise);
+    mark('semantic artworks merged');
     for (const sa of semanticArtworks) {
       if (existingMatchIds.has(sa.book_id)) continue;
       const semanticScore = Math.round(sa.similarity * 30); // Scale similarity to 0-30
@@ -810,6 +831,7 @@ Return JSON only:
 
     // Second streamed stage: the provisional rail (text + visual + semantic,
     // not yet visually confirmed), so the wait for the rerank shows results.
+    mark('matches emitting');
     emit({ type: 'matches', data: shapeMatches(matches), visual_search: clipMatches.length > 0 });
 
     // Await visual confirmation (started right after identification), but never
@@ -869,10 +891,12 @@ Return JSON only:
 
     // Third streamed stage: the verdict. Carries the final (possibly reordered
     // and trimmed) rail so the client replaces the provisional one.
+    mark('confirmed emitting');
     emit({ type: 'confirmed', data: confirmed, page: pagePayload, rerank: rerankPayload, matches: shapeMatches(matches) });
 
     // Await Google Search verification (started earlier, should be done by now)
     const verification = await verifyPromise;
+    mark('verification resolved');
 
     // Merge verification corrections into identification
     if (verification) {
