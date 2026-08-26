@@ -15,17 +15,28 @@
  *
  * Usage (cron):
  *   node scripts/catalog-coverage/acquire-gap-batch.mjs --batch 50
- *   --batch N   works to attempt this run (default 50)
- *   --dry-run   resolve+verify, don't import
- *   --reseed    rebuild the queue from USTC even if populated
+ *   --batch N        works to attempt this run (default 50)
+ *   --dry-run        resolve+verify, don't import
+ *   --reseed         rebuild the queue from USTC even if populated
+ *   --retry-failed   flip import-failed rows back to pending (records retry count), then exit
+ *
+ * v2 (#4225): the held gate is screened + LLM-verified (the regex-only gate measured
+ * 60% false — works we silently declined to acquire); MDZ + Gallica live resolvers
+ * added; terminal rows record the evidence that produced them (held_book_id etc.).
  */
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenAI } from '@google/genai';
 
-const BATCH = parseInt(process.argv[process.argv.indexOf('--batch') + 1] || '50');
+// Flag-absent means indexOf() is -1 and argv[0] (the node path) gets parseInt'd to NaN —
+// which made a bare invocation claim rows and process none. Parse defensively.
+const intArg = (name, dflt) => { const i = process.argv.indexOf(name); const v = i >= 0 ? parseInt(process.argv[i + 1], 10) : NaN; return Number.isFinite(v) && v > 0 ? v : dflt; };
+const BATCH = intArg('--batch', 50);
 const DRY = process.argv.includes('--dry-run');
 const RESEED = process.argv.includes('--reseed');
+const RETRY_FAILED = process.argv.includes('--retry-failed');
+const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
+const stripEm = s => (s || '').replace(/<\/?em>/g, '');
 const BASE = process.env.SL_BASE_URL || 'https://sourcelibrary.org';
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const MODEL = 'gemini-3.1-flash-lite';
@@ -79,6 +90,44 @@ async function eraraResolve(w) {
   const cands = await ecat.find({ title: new RegExp('\\b(' + tk.join('|') + ')', 'i'), ...(w.year ? { year: { $gte: +w.year - 50, $lte: +w.year + 80 } } : {}) }, { projection: { id: 1, author: 1, title: 1, year: 1, manifest_url: 1 } }).limit(6).toArray();
   return cands.map(c => ({ src: 'erara', id: c.id, title: c.title, year: c.year, ref: c.manifest_url }));
 }
+// Live MDZ search (undocumented JSON API — contract in memory reference_mdz_search_api).
+// Relevancy-sorted, includes fulltext hits, so filter to IIIF-available and let verify()
+// judge; titles/authors carry <em> highlight tags that must be stripped.
+async function mdzResolve(w) {
+  const surname = (w.author || '').split(/[,\s]+/)[0];
+  const tk = toks(w.title).slice(0, 2).join(' ');
+  if (!surname || surname.length < 4 || !tk) return [];
+  const url = `https://www.digitale-sammlungen.de/api/search?query=${encodeURIComponent(surname + ' ' + tk)}&handler=simple-all&startPage=0&pageSize=6`;
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(15000) });
+    if (!r.ok) return [];
+    const j = await r.json();
+    return (j.docs || []).filter(d => d.iiifAvailable && d.id).map(d => ({ src: 'mdz', id: d.id, title: stripEm(d.title), year: d.publicationDate || '', ref: d.id }));
+  } catch { return []; }
+}
+// Live Gallica SRU (CQL). Gallica 429s datacenter IPs on heavy manifest fetching; one
+// bounded search per work is modest, and any failure degrades to [] (other resolvers cover).
+async function gallicaResolve(w) {
+  const surname = (w.author || '').split(/[,\s]+/)[0];
+  const tk = toks(w.title).slice(0, 2).join(' ');
+  if (!surname || surname.length < 4 || !tk) return [];
+  const cql = `gallica all "${surname} ${tk}" and dc.type all "monographie"`;
+  const url = `https://gallica.bnf.fr/SRU?operation=searchRetrieve&version=1.2&query=${encodeURIComponent(cql)}&maximumRecords=6`;
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(20000) });
+    if (!r.ok) return [];
+    const xml = await r.text();
+    return [...xml.matchAll(/<srw:record>([\s\S]*?)<\/srw:record>/g)].map(m => {
+      const rec = m[1];
+      // A record carries both the document ark (bpt6k…/btv1b…) and the catalogue-notice
+      // ark (cb…) — only the document ark resolves to a IIIF manifest.
+      const ark = (rec.match(/ark:\/12148\/(?!cb)([a-z0-9]+)/i) || [])[1];
+      const title = ((rec.match(/<dc:title>([\s\S]*?)<\/dc:title>/) || [])[1] || '').trim();
+      const year = ((rec.match(/<dc:date>([\s\S]*?)<\/dc:date>/) || [])[1] || '').trim();
+      return ark ? { src: 'gallica', id: ark, title, year, ref: ark } : null;
+    }).filter(Boolean).slice(0, 6);
+  } catch { return []; }
+}
 // Local match against the harvested German-library catalog (import_candidates): fast lookup by
 // author_surname (indexed, partial on manifest_url), then distinctive-title-token filter. Recovers
 // the continental Latin (VD16/17) that IA search misses. Imported as generic IIIF.
@@ -104,38 +153,65 @@ async function importWork(w, hit) {
   // astrology/natural-philosophy where they don't belong.
   const COLL_MAP = { 'witch-trials': ['witchcraft'], 'mission': ['astrology', 'natural-philosophy'] };
   const colls = COLL_MAP[w.category] || [];
-  const ep = hit.src === 'ia' ? '/api/import/ia' : '/api/import/iiif';
+  const ep = hit.src === 'ia' ? '/api/import/ia' : hit.src === 'mdz' ? '/api/import/mdz' : hit.src === 'gallica' ? '/api/import/gallica' : '/api/import/iiif';
   // Pass the USTC language (authoritative) — the IIIF import otherwise stores 'Unknown',
   // which keeps genuine Latin acquisitions out of the Latin filter / held count.
-  const body = hit.src === 'ia' ? { ia_identifier: hit.ref, title: w.title, author: w.author, collections: colls, language: w.lang } : { manifest_url: hit.ref, title: w.title, author: w.author, collections: colls, language: w.lang };
+  const body = hit.src === 'ia' ? { ia_identifier: hit.ref, title: w.title, author: w.author, collections: colls, language: w.lang }
+    : hit.src === 'mdz' ? { bsb_id: hit.ref, title: w.title, author: w.author, year: w.year, categories: colls, original_language: w.lang }
+    : hit.src === 'gallica' ? { ark: hit.ref, title: w.title, author: w.author, published: w.year, categories: colls, language: w.lang }
+    : { manifest_url: hit.ref, title: w.title, author: w.author, collections: colls, language: w.lang };
   const r = await fetch(BASE + ep, { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.CRON_SECRET, 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(60000) });
   const j = await r.json(); return (r.ok && (j.success || j.bookId)) ? j.bookId : null;
 }
 
 // ---- process a bounded batch of pending works, CONCURRENTLY ----
-const CONCURRENCY = parseInt(process.argv[process.argv.indexOf('--concurrency') + 1] || '10');
+const CONCURRENCY = intArg('--concurrency', 10);
 const tally = { acquired: 0, held: 0, 'no-source': 0, 'no-match': 0, 'import-failed': 0 };
+
+// Held gate v2 (#4225): the old regex-only gate ("surname anywhere + either of two title
+// tokens") measured 60% FALSE on an LLM-judged sample — each false hit a work we silently
+// declined to acquire. Now: deterministic screen (surname in the AUTHOR field + >=2
+// significant title tokens overlap) and an LLM same-work verify on the survivors.
+async function heldCheck(w, surname, targetToks) {
+  const tk = targetToks.slice(0, 2);
+  if (surname.length < 4 || !tk.length) return null;
+  const cands = await books.find({ $and: [{ $or: [{ author: new RegExp(surname, 'i') }, { title: new RegExp(surname, 'i') }] }, { title: new RegExp(tk.join('|'), 'i') }] }, { projection: { id: 1, title: 1, author: 1, published: 1 } }).limit(8).toArray();
+  const screened = cands.filter(b => {
+    if (!clean(b.author || '').includes(surname)) return false;
+    const bt = clean(b.title || '');
+    return targetToks.filter(t => bt.includes(t)).length >= Math.min(2, targetToks.length);
+  });
+  if (!screened.length) return null;
+  const v = await verify(w, screened.map(b => ({ id: b.id, title: b.title, year: b.published })));
+  return v ? screened.find(b => b.id === v.id) || null : null;
+}
 
 async function processWork(w) {
   const surname = clean((w.author || '').split(/[,\s]+/)[0]);
-  const tk = toks(w.title).slice(0, 2);
-  if (surname.length >= 4 && tk.length) {
-    const have = await books.findOne({ $and: [{ $or: [{ author: new RegExp(surname, 'i') }, { title: new RegExp(surname, 'i') }] }, { title: new RegExp(tk.join('|'), 'i') }] }, { projection: { _id: 1 } });
-    if (have) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'held', done_at: new Date() } }); return 'held'; }
-  }
+  const targetToks = toks(w.title);
+  const heldBook = await heldCheck(w, surname, targetToks);
+  if (heldBook) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'held', held_book_id: heldBook.id, held_via: 'screened+verified', done_at: new Date() } }); return 'held'; }
   // Combine candidates from ALL sources — don't stop at the first non-empty one. IA search
   // usually returns weak candidates that already failed verify, which would starve the
   // higher-precision German-library catalog (catalogResolve) of a chance. Gather IA + catalog
-  // (+ e-rara), then let verify() pick the true match from the union.
-  const [ia, cat, er] = await Promise.all([iaResolve(w), catalogResolve(w), eraraResolve(w)]);
-  const cands = [...ia, ...cat, ...er];
+  // (+ e-rara + MDZ + Gallica), then let verify() pick the true match from the union.
+  const [ia, cat, er, mdz, gal] = await Promise.all([iaResolve(w), catalogResolve(w), eraraResolve(w), mdzResolve(w), gallicaResolve(w)]);
+  const cands = [...ia, ...cat, ...er, ...mdz, ...gal];
   if (!cands.length) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-source', done_at: new Date() } }); return 'no-source'; }
-  const v = await verify(w, cands.slice(0, 9));
-  if (!v) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-match', done_at: new Date() } }); return 'no-match'; }
+  const v = await verify(w, cands.slice(0, 12));
+  if (!v) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'no-match', candidates_seen: cands.length, done_at: new Date() } }); return 'no-match'; }
   if (DRY) return 'acquired';
   const bookId = await importWork(w, v);
   if (bookId) { await queue.updateOne({ sn: w.sn }, { $set: { status: 'acquired', book_id: bookId, source: v.src, source_ref: v.ref, done_at: new Date() } }); return 'acquired'; }
   await queue.updateOne({ sn: w.sn }, { $set: { status: 'import-failed', done_at: new Date() } }); return 'import-failed';
+}
+
+// Deliberate retry lane: --retry-failed flips import-failed rows back to pending and exits.
+if (RETRY_FAILED) {
+  const r = await queue.updateMany({ status: 'import-failed' }, { $set: { status: 'pending' }, $inc: { retries: 1 }, $currentDate: { retried_at: true } });
+  log('retry-failed: flipped', r.modifiedCount, 'rows back to pending');
+  await mc.close();
+  process.exit(0);
 }
 
 // Self-heal: return stale 'processing' (a prior run died mid-flight) back to pending
