@@ -99,16 +99,20 @@ export default function IdentifyPage() {
     timers.push(setTimeout(() => setStageMessage('Comparing against 152,000 illustrations…'), 6000));
     timers.push(setTimeout(() => setStageMessage('Confirming the match…'), 14000));
 
-    // Compress large images client-side (phone cameras produce 5-10MB files)
+    // Compress large images client-side (phone cameras produce 5-10MB files).
+    // 1600px / q0.8 is still ample for reading inscriptions, and the photo is
+    // the dominant payload THREE times over: the mobile upload, the vision
+    // identification call, and the visual-rerank call all carry it — so every
+    // byte saved here is saved at each stage (#4232 perf).
     let imageFile = file;
-    if (file.size > 3 * 1024 * 1024) {
+    if (file.size > 1.5 * 1024 * 1024) {
       try {
         const bitmap = await createImageBitmap(file);
-        const scale = Math.min(1, 2000 / Math.max(bitmap.width, bitmap.height));
+        const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
         const canvas = new OffscreenCanvas(bitmap.width * scale, bitmap.height * scale);
         const ctx = canvas.getContext('2d')!;
         ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-        const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.85 });
+        const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.8 });
         imageFile = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
       } catch {
         // Fall through with original file if compression fails
