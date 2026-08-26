@@ -93,12 +93,21 @@ interface IdentifyResult {
   web_sources?: WebSource[];
 }
 
+/** Pipeline failure that maps to a specific HTTP status on the JSON path. */
+class IdentifyError extends Error {
+  constructor(message: string, public status: number, public detail?: string) {
+    super(message);
+  }
+}
+
 export async function POST(request: NextRequest) {
   const rl = checkRateLimit({ name: 'identify', limit: 10, windowSeconds: 3600 }, getClientIp(request));
   if (!rl.allowed) {
     return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
   }
 
+  let base64: string;
+  let mimeType: string;
   try {
     const formData = await request.formData();
     const file = formData.get('image') as File | null;
@@ -116,9 +125,17 @@ export async function POST(request: NextRequest) {
 
     // Convert to base64
     const bytes = await file.arrayBuffer();
-    const base64 = Buffer.from(bytes).toString('base64');
-    const mimeType = file.type || 'image/jpeg';
+    base64 = Buffer.from(bytes).toString('base64');
+    mimeType = file.type || 'image/jpeg';
+  } catch {
+    return NextResponse.json({ error: 'Invalid upload' }, { status: 400 });
+  }
 
+  // The identification pipeline, staged. `emit` fires at stage boundaries so the
+  // streaming path (?stream=1) can deliver partial results while later stages
+  // are still running; the buffered JSON path passes a no-op. Returns the same
+  // assembled payload either way. (#4232)
+  const pipeline = async (emit: (e: Record<string, unknown>) => void) => {
     // Run Gemini vision + CLIP visual search in parallel
     const apiKey = getNextApiKey();
     const model = 'gemini-3.1-flash-lite';
@@ -194,7 +211,7 @@ export async function POST(request: NextRequest) {
       const err = await resp.text();
       console.error('[identify] Gemini error:', resp.status, err);
       const detail = resp.status === 429 ? 'Rate limited — try again in a moment' : `Vision API error (${resp.status})`;
-      return NextResponse.json({ error: detail }, { status: 502 });
+      throw new IdentifyError(detail, 502);
     }
 
     const geminiData = await resp.json();
@@ -202,7 +219,7 @@ export async function POST(request: NextRequest) {
 
     // Parse JSON from response
     if (!text) {
-      return NextResponse.json({ error: 'Vision API returned empty response — try a different image' }, { status: 502 });
+      throw new IdentifyError('Vision API returned empty response — try a different image', 502);
     }
     const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
     const jsonStr = (jsonMatch?.[1] || text).trim();
@@ -210,8 +227,12 @@ export async function POST(request: NextRequest) {
     try {
       identification = JSON.parse(jsonStr);
     } catch {
-      return NextResponse.json({ error: 'Could not parse vision response — try a clearer image', detail: text.substring(0, 300) }, { status: 500 });
+      throw new IdentifyError('Could not parse vision response — try a clearer image', 500, text.substring(0, 300));
     }
+
+    // First streamed stage: the reader sees the analysis while retrieval,
+    // visual confirmation and web verification are still running.
+    emit({ type: 'identification', data: identification });
 
     // Promise 3: Semantic artwork search (runs after initial ID, in parallel with DB search)
     // Uses the identification to find related artworks via embedding similarity
@@ -398,7 +419,7 @@ Return JSON only:
     const db = await getDb();
     const books = db.collection('books');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const matches: any[] = [];
+    let matches: any[] = [];
 
     // Collect all names to search — from artist, publisher, and all inscription names
     const allNames: string[] = [];
@@ -762,6 +783,35 @@ Return JSON only:
     // The artwork image fields are already in the match object from Strategy 1 query
     // (commons_full_url, archived_full_url were projected but not shown — now we surface them)
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const shapeMatches = (list: any[]) =>
+      list.slice(0, 10).map(({ _score, _visual_similarity, _match_source, enrichment, commons_title, english_title, ...rest }) => {
+        // Attach page match if this book has one
+        const pm = pageMatches.find(p => p.bookId === rest.id);
+        // Use page image, artwork image, or fall back to book cover
+        const pageImg = pageImageMap.get(rest.id);
+        const matchImage = pageImg?.image_url
+          || rest.commons_full_url  // artworks from Wikimedia
+          || rest.archived_full_url // artworks archived to R2
+          || rest.thumbnail_blob || rest.thumbnail;
+        // Clean up fields we don't want to expose
+        const { commons_full_url, archived_full_url, ...cleanRest } = rest;
+        return {
+          ...cleanRest,
+          match_image: matchImage,
+          score: _score,
+          visual_similarity: _visual_similarity || undefined,
+          match_source: _match_source || 'text',
+          subject: enrichment?.subject,
+          ...(pm ? { page_number: pm.pageNumber, page_score: pm.score } : {}),
+          ...(pageImg ? { page_number: pageImg.page_number } : {}),
+        };
+      });
+
+    // Second streamed stage: the provisional rail (text + visual + semantic,
+    // not yet visually confirmed), so the wait for the rerank shows results.
+    emit({ type: 'matches', data: shapeMatches(matches), visual_search: clipMatches.length > 0 });
+
     // Await visual confirmation (started right after identification), but never
     // let it hold the response — a stalled dependency degrades to "no
     // confirmation" instead of a hung request.
@@ -792,7 +842,34 @@ Return JSON only:
           _match_source: 'visual_confirmed',
         });
       }
+
+      // With a confirmed answer the rail below it is corroboration, not
+      // discovery: the semantic lane matches on description text and reliably
+      // pads the tail with unrelated works (Book of the Dead papyri after a
+      // Mesoamerican codex — #4232). Keep the visual and text lanes, capped.
+      matches = matches
+        .filter((m, i) => i === 0 || m._match_source !== 'semantic_artwork')
+        .slice(0, 5);
     }
+
+    const pagePayload = confirmed
+      ? (confirmed.page_number != null ? { book_id: confirmed.book_id, page_number: confirmed.page_number, score: 100 } : null)
+      : bestPage ? {
+        book_id: bestPage.bookId,
+        page_number: bestPage.pageNumber,
+        score: bestPage.score,
+      } : null;
+    const rerankPayload = {
+      ran: rerank.ran,
+      candidates: rerank.candidateCount,
+      sure: (rerank as { sure?: boolean }).sure ?? false,
+      ms: (rerank as { ms?: number }).ms,
+      error: (rerank as { error?: string }).error,
+    };
+
+    // Third streamed stage: the verdict. Carries the final (possibly reordered
+    // and trimmed) rail so the client replaces the provisional one.
+    emit({ type: 'confirmed', data: confirmed, page: pagePayload, rerank: rerankPayload, matches: shapeMatches(matches) });
 
     // Await Google Search verification (started earlier, should be done by now)
     const verification = await verifyPromise;
@@ -811,57 +888,71 @@ Return JSON only:
       if (verification.sources?.length) {
         identification.web_sources = verification.sources;
       }
+      // Fourth streamed stage: web-verified attribution patched into the
+      // already-rendered analysis card.
+      emit({ type: 'verification', data: identification });
     }
 
-    return NextResponse.json({
+    return {
       identification,
-      matches: matches.slice(0, 10).map(({ _score, _visual_similarity, _match_source, enrichment, commons_title, english_title, ...rest }) => {
-        // Attach page match if this book has one
-        const pm = pageMatches.find(p => p.bookId === rest.id);
-        // Use page image, artwork image, or fall back to book cover
-        const pageImg = pageImageMap.get(rest.id);
-        const matchImage = pageImg?.image_url
-          || rest.commons_full_url  // artworks from Wikimedia
-          || rest.archived_full_url // artworks archived to R2
-          || rest.thumbnail_blob || rest.thumbnail;
-        // Clean up fields we don't want to expose
-        const { commons_full_url, archived_full_url, ...cleanRest } = rest;
-        return {
-          ...cleanRest,
-          match_image: matchImage,
-          score: _score,
-          visual_similarity: _visual_similarity || undefined,
-          match_source: _match_source || 'text',
-          subject: enrichment?.subject,
-          ...(pm ? { page_number: pm.pageNumber, page_score: pm.score } : {}),
-          ...(pageImg ? { page_number: pageImg.page_number } : {}),
-        };
-      }),
+      matches: shapeMatches(matches),
       visual_search: clipMatches.length > 0,
       semantic_artwork_search: semanticArtworks.length > 0,
       verified: !!verification,
       confirmed,
-      rerank: {
-        ran: rerank.ran,
-        candidates: rerank.candidateCount,
-        sure: (rerank as { sure?: boolean }).sure ?? false,
-        ms: (rerank as { ms?: number }).ms,
-        error: (rerank as { error?: string }).error,
-      },
+      rerank: rerankPayload,
       // A visually confirmed match supersedes the text-heuristic page guess —
       // an unconfirmed guess pointing at a different book misleads (see #3193
       // benchmark: the heuristic picked the wrong book on degraded photos).
-      page: confirmed
-        ? (confirmed.page_number != null ? { book_id: confirmed.book_id, page_number: confirmed.page_number, score: 100 } : null)
-        : bestPage ? {
-          book_id: bestPage.bookId,
-          page_number: bestPage.pageNumber,
-          score: bestPage.score,
-        } : null,
-    });
-  } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error);
-    console.error('[identify] Error:', msg);
-    return NextResponse.json({ error: 'Identification failed', detail: msg }, { status: 500 });
+      page: pagePayload,
+    };
+  };
+
+  // Buffered JSON is the DEFAULT: scripts and the eval bench
+  // (scripts/eval/identify-bench.mjs) keep working unchanged. The page opts
+  // into streaming with ?stream=1.
+  const wantStream = new URL(request.url).searchParams.get('stream') === '1';
+
+  if (!wantStream) {
+    try {
+      return NextResponse.json(await pipeline(() => {}));
+    } catch (error) {
+      if (error instanceof IdentifyError) {
+        return NextResponse.json(
+          { error: error.message, ...(error.detail ? { detail: error.detail } : {}) },
+          { status: error.status },
+        );
+      }
+      const msg = error instanceof Error ? error.message : String(error);
+      console.error('[identify] Error:', msg);
+      return NextResponse.json({ error: 'Identification failed', detail: msg }, { status: 500 });
+    }
   }
+
+  // NDJSON stream: one JSON object per line. Every event has a `type`; the
+  // stream always ends with `done` or `error`, so a client can treat either as
+  // terminal. HTTP status is 200 regardless — by the time a stage fails, the
+  // headers are long gone.
+  const encoder = new TextEncoder();
+  const body = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const emit = (e: Record<string, unknown>) => controller.enqueue(encoder.encode(JSON.stringify(e) + '\n'));
+      try {
+        emit({ type: 'status', stage: 'reading' });
+        await pipeline(emit);
+        emit({ type: 'done' });
+      } catch (error) {
+        const msg = error instanceof IdentifyError ? error.message : 'Identification failed';
+        console.error('[identify] stream error:', error instanceof Error ? error.message : String(error));
+        emit({ type: 'error', message: msg, ...(error instanceof IdentifyError && error.detail ? { detail: error.detail } : {}) });
+      }
+      controller.close();
+    },
+  });
+  return new Response(body, {
+    headers: {
+      'Content-Type': 'application/x-ndjson; charset=utf-8',
+      'Cache-Control': 'no-store',
+    },
+  });
 }
