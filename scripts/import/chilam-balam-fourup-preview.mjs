@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * The four-up Gates photostats — Calkiní and Tizimín. A PREVIEW tool, not an
- * importer, and the reason it is not an importer is the whole point of the file.
+ * The four-up Gates photostats — a preview tool for looking at one frame, and
+ * the record of how their page order was worked out. Calkiní is imported (see
+ * `chilam-balam-calkini-byu.mjs`); Tizimín is not, and the reason is below.
  *
  * ## What these records are
  *
@@ -37,38 +38,46 @@
  * pages 55-66 plus an unnumbered colophon leaf signed and dated "noviembre de
  * 1821". So the numbers needed to order the book are right there on the images.
  *
- * ## What is NOT established, and why nothing is imported
+ * ## Calkiní is DONE — see chilam-balam-calkini-byu.mjs
  *
- * WHICH PANEL IS WHICH PAGE — because it is not the same on every frame. This
- * looked like a fixed layout and is not:
+ * Its page order was read off the leaves and the book is imported. The rule that
+ * came out of it, which this file exists to hand on:
  *
- *   frame 1   TL=58 … BR=55      (descending)
- *   frame 2   TL=56 … BR=57
- *   frame 3   TL=59 … BR=62      (ascending, span of four)
- *   frame 4   TL=61 … BR=60
- *   frame 6   TL=64 … BR=65
+ *  - Each COLUMN of a four-up frame is one leaf, recto above verso. The recto
+ *    carries its number at the top RIGHT and the verso the SAME number at the
+ *    top LEFT — ordinary foliation, and it held on all twelve leaves.
+ *  - The left column runs TL (recto) then BL (verso); the right column runs the
+ *    other way, BR then TR, because the top row was laid head-down.
+ *  - The FRAMES are not in page order and no layout rule would have got it
+ *    right: frame 1 holds leaves 58 and 55, frame 3 holds 59 and 62, frame 4
+ *    holds 61 and 60. Two frames alone would have supported a confident, wrong
+ *    rule — both frame 3 and Tizimín frame 5 give a clean ascending span of four.
+ *  - Confirmed by TEXT as well as by number: leaf 59's recto ends "…cate molah
+ *    uba" and its verso opens "Batabob…"; leaf 55's verso ends "y cabe thoxbil"
+ *    and leaf 56's recto opens "thoxbil - tu chi cahun…", the scribe's catchword
+ *    carrying across two different sheets.
+ *  - The twelve leaves came out 55-66, each exactly once, which is the "24 p."
+ *    on BYU's record. That agreement is the check: a misread number shows up as
+ *    a gap or a duplicate rather than as a quietly scrambled book.
+ *  - AND THE LAST SHEET WAS NOT FOUR-UP AT ALL. Frame 7 holds two full-width
+ *    pages stacked upright; quartering it produced four half-pages whose lines
+ *    ended mid-word ("…Ah calkiniob J" | "uan de Dios Yuc…"). Caught only by
+ *    reading the output. The layout of a sheet is a property of the sheet.
  *
- * Two frames alone would have supported a confident, wrong rule. Frame 3 gives
- * TL=59/BR=62 and Tizimín frame 5 gives TL=8/BR=11 — both a clean span of four,
- * both consistent with reading TL -> BL -> TR -> BR, which is also what the text
- * continuity shows on Tizimín frame 5, where the top-left panel ends "…vamatan
- * amanese xe ti uboh" and the BOTTOM-left begins "hal tavo cexe…", splitting the
- * word `ubohal` across the two. Then frame 1 runs backwards and frame 2 puts
- * consecutive numbers in the two corners, and the rule is gone.
+ * ## Tizimín is NOT done, and the blocker is different
  *
- * A manuscript served in the wrong page order is a silent corruption of a
- * primary source: every page renders, every citation resolves, and every quote
- * is attached to the wrong leaf. So these two stay unimported until the order is
- * read rather than inferred.
+ * Its geometry is the same and the split works — frame 5's top-left is a leaf
+ * dating itself "hum pis kin Febrero 1522 haab". But its foliation is SPARSE:
+ * across frames 1-4 only four leaves carry a legible number (3, 2, 7, 6), and
+ * the frames are no more in order than Calkiní's. Thirty-eight leaves cannot be
+ * ordered from a handful of anchors, and the first sheet's right-hand column is
+ * not manuscript at all but a Spanish donation inscription ("Obsequio de este
+ * libro… Manuel Ximenez Perez").
  *
- * **The way to finish it** is the pipeline's own, and it is cheap in effort if
- * not in tokens: split every frame, import to a hidden book in frame order, OCR
- * (the prompt already emits `<page-num>`), then reorder the pages by the number
- * the model read off the leaf. That is an OCR pass over ~104 pages, which is why
- * it has not been run unasked. Reading the numbers by eye also works — a contact
- * sheet of the top strips gets most of them — but "most" is the problem: the
- * panels whose number is cropped or faint are exactly where a mistake would not
- * show.
+ * **The way to finish it** is the pipeline's own: split all 19 frames, import to
+ * a hidden book in frame order, OCR (the prompt already emits `<page-num>`), and
+ * reorder by what the model reads off each leaf. That is an OCR pass over 76
+ * pages, which costs money and has not been run unasked.
  *
  * ## One more thing this turned up
  *
