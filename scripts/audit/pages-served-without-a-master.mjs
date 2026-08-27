@@ -28,6 +28,9 @@
  * detector was written — `…-full.jpg` was a 404 on every book sampled):
  *   - old era: `archived_photo` -> images.sourcelibrary.org/archived/<book>/N.jpg
  *   - new era: `photo`          -> images.sourcelibrary.org/pages/<book>/NNNN-full.jpg
+ *   - and `photo` may ALSO hold the old-era /archived/ master with
+ *     `archived_photo` unset — missing that cost 116 false positives on the
+ *     first run, so both shapes are accepted in `photo` (see MASTER_IN_PHOTO)
  *   - split halves: `cropped_photo` on R2 is the materialised page
  *
  * READ-ONLY. Finds, never fixes — repair is `archive-mdz-gap-4190.mjs` and its
@@ -54,7 +57,18 @@ const TOP = num('top', 20);
 const ALL = ARGS.includes('--all');
 
 const R2 = 'images\\.sourcelibrary\\.org';
-const MASTER_NEW = `^https://${R2}/pages/[^/]+/[^/]*\\d+(-full)?\\.jpg$`;
+/**
+ * A `photo` that is itself a master on R2, under EITHER naming convention:
+ *   new era: /pages/<book>/NNNN-full.jpg  (or the bare NNNN.jpg it derives from)
+ *   old era: /archived/<book>/N.jpg
+ *
+ * The `/archived/` half was missing on the first run and cost 116 false
+ * positives — pages that DO hold a master were reported as lacking one, because
+ * the master sat in `photo` rather than `archived_photo`. The tell was
+ * `images.sourcelibrary.org` appearing in a census of "source hosts we cannot
+ * archive from", which is nonsense: we never fetch from ourselves.
+ */
+const MASTER_IN_PHOTO = `^https://${R2}/(pages/[^/]+/[^/]*\\d+(-full)?|archived/[^/]+/\\d+)\\.jpg$`;
 
 let client;
 try {
@@ -86,7 +100,7 @@ try {
         ],
         // …but we hold no full-resolution copy, under either era's convention.
         archived_photo: { $not: new RegExp(R2) },
-        photo: { $not: new RegExp(MASTER_NEW) },
+        photo: { $not: new RegExp(MASTER_IN_PHOTO) },
         cropped_photo: { $not: new RegExp(R2) },
       },
     },
