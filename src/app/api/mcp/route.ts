@@ -1085,7 +1085,7 @@ const TOOLS: Tool[] = [
   {
     name: 'submit_feedback',
     title: 'Submit Feedback',
-    description: 'Submit feedback, bug reports, or feature requests to the Source Library team.',
+    description: 'Submit feedback, bug reports, or feature requests to the Source Library team. Before proposing NEW functionality, read https://sourcelibrary.org/llms.txt and https://sourcelibrary.org/developers — several past submissions proposed building things that already exist (IIIF manifests, Content Search, DTS), which wastes reviewer time. State in the report which docs you checked. Bug reports with record IDs and reproducing queries are the most actionable kind.',
     annotations: { title: 'Submit Feedback', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
