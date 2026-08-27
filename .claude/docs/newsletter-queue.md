@@ -147,10 +147,12 @@ books** (the 1472 Pimander). Text-only, no counts, no images.
 
 Carries a PROPOSED paragraph for Jons Hensel (one paragraph, no ask, no
 pivot — per the ops-repo rule: never make a death a reason to give). Gates,
-all three hard: (1) EFM + family blessing via Natalie Koch — including the
-explicit question of whether Jons's name appears at all; (2) Derek rewrites
-the copy; (3) re-verify the Pimander link on send day. The sign-off email to
-Natalie was drafted 2026-08-27 (Gmail drafts).
+all three hard: (1) EFM + family blessing — including the explicit question
+of whether Jons's name appears at all; who signs off is Derek's call, and
+the routing + contacts live in the PRIVATE ops repo
+(`~/sourcelibrary-ops/email-campaign/memorial-signoff.md` — this repo is
+public, so no names or addresses here); (2) Derek rewrites the copy;
+(3) re-verify the Pimander link on send day.
 
 The serpent letter moves to October as a plain reader's letter, farewell
 opening deleted (note in its header).
