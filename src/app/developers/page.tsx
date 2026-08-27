@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 import toolManifest from '../../../scripts/audit/mcp-directory-contract.tools.json';
+import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 
 // One row per MCP tool, in the order the table shows them. The blurbs are
 // human one-liners — the agent-facing descriptions live in
@@ -173,7 +174,7 @@ export default function DevelopersPage() {
         <h2 className="text-2xl font-semibold text-primary mb-2">MCP Server</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           Gives Claude (and any MCP client) direct access to the full collection &mdash;
-          search, read, quote, and browse 150,000+ illustrations. The endpoint is plain JSON-RPC
+          search, read, quote, and browse {IMAGE_CORPUS_STATS.illustrations} illustrations. The endpoint is plain JSON-RPC
           over HTTP, so you can also call it from any HTTP client without an MCP library
           (see the snippets above). Pick whichever path fits.
         </p>
@@ -462,7 +463,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations</td>
+                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
