@@ -43,6 +43,8 @@ interface Identification {
   confidence_reason?: string;
   alternative_identifications?: AlternativeIdentification[];
   search_terms?: string[];
+  /** [ymin, xmin, ymax, xmax], normalized 0-1000 — the artwork's box within the photo (#4237) */
+  artwork_bbox?: number[] | string | null;
   // From Google Search verification
   verified_artist?: string;
   verified_title?: string;
@@ -63,6 +65,20 @@ interface ConfirmedMatch {
   read_url: string;
   gallery_url?: string;
   source_type: string;
+}
+
+/** Client-side mirror of the server's bbox guard: malformed → no overlay. */
+function parseBbox(raw: unknown): { ymin: number; xmin: number; ymax: number; xmax: number } | null {
+  let a = raw;
+  if (typeof a === 'string') {
+    try { a = JSON.parse(a.replace(/[^\d,.[\]-]/g, '')); } catch { return null; }
+  }
+  if (!Array.isArray(a) || a.length !== 4 || a.some(v => typeof v !== 'number' || !isFinite(v))) return null;
+  const [ymin, xmin, ymax, xmax] = a as number[];
+  if (!(ymax > ymin && xmax > xmin) || ymin < 0 || xmin < 0 || ymax > 1000 || xmax > 1000) return null;
+  // Boxes covering nearly the whole photo carry no information — don't draw them.
+  if ((ymax - ymin) * (xmax - xmin) > 900000) return null;
+  return { ymin, xmin, ymax, xmax };
 }
 
 interface Result {
@@ -346,9 +362,31 @@ export default function IdentifyPage() {
         {/* Preview + loading */}
         {image && (
           <div className="space-y-4">
-            <div className="relative rounded-xl overflow-hidden bg-stone-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={image} alt="Your photo" className="w-full max-h-[50vh] object-contain" />
+            <div className="relative rounded-xl overflow-hidden bg-stone-100 flex justify-center">
+              {/* Inner wrapper shrinks to the image's rendered box so the bbox
+                  overlay's percentages map onto the PHOTO, not the letterboxed
+                  container (#4237). */}
+              <div className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={image} alt="Your photo" className="max-h-[50vh] max-w-full w-auto h-auto object-contain" />
+                {(() => {
+                  const b = result ? parseBbox(result.identification.artwork_bbox) : null;
+                  if (!b) return null;
+                  return (
+                    <div
+                      aria-hidden
+                      title="The region we searched for"
+                      className="absolute border-2 border-white/90 rounded-sm pointer-events-none shadow-[0_0_0_9999px_rgba(0,0,0,0.35)]"
+                      style={{
+                        top: `${b.ymin / 10}%`,
+                        left: `${b.xmin / 10}%`,
+                        width: `${(b.xmax - b.xmin) / 10}%`,
+                        height: `${(b.ymax - b.ymin) / 10}%`,
+                      }}
+                    />
+                  );
+                })()}
+              </div>
               {loading && !result && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                   <div className="flex items-center gap-3 bg-white/90 rounded-full px-5 py-2.5">

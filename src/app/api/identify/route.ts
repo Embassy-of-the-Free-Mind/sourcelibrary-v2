@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import sharp from 'sharp';
 import { getNextApiKey } from '@/lib/gemini-client';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
@@ -52,7 +53,8 @@ Return JSON with these fields:
       "reasoning": "Why this is a possibility"
     }
   ],
-  "search_terms": ["Array of 3-5 key search terms to find this work in a library catalog — include all names from inscriptions (invenit, fecit, excudit), key figures, distinctive words from inscriptions"]
+  "search_terms": ["Array of 3-5 key search terms to find this work in a library catalog — include all names from inscriptions (invenit, fecit, excudit), key figures, distinctive words from inscriptions"],
+  "artwork_bbox": "[ymin, xmin, ymax, xmax] — bounding box of the artwork/illustration ITSELF within the photograph, in normalized 0-1000 coordinates, excluding wall, frame, mat, and background; null if the artwork fills nearly the whole photo"
 }
 
 RULES:
@@ -86,6 +88,8 @@ interface IdentifyResult {
   confidence_reason?: string;
   alternative_identifications?: AlternativeIdentification[];
   search_terms?: string[];
+  /** [ymin, xmin, ymax, xmax], normalized 0-1000 (#4237) */
+  artwork_bbox?: number[] | string | null;
   // Added by Google Search verification
   verified_artist?: string;
   verified_title?: string;
@@ -98,6 +102,22 @@ class IdentifyError extends Error {
   constructor(message: string, public status: number, public detail?: string) {
     super(message);
   }
+}
+
+/**
+ * Parse the identification's artwork_bbox (#4237). The model may return the
+ * array directly or as a string; anything malformed becomes null and the
+ * pipeline behaves exactly as before the crop lane existed.
+ */
+function parseArtworkBbox(raw: unknown): { ymin: number; xmin: number; ymax: number; xmax: number } | null {
+  let a = raw;
+  if (typeof a === 'string') {
+    try { a = JSON.parse(a.replace(/[^\d,.[\]-]/g, '')); } catch { return null; }
+  }
+  if (!Array.isArray(a) || a.length !== 4 || a.some(v => typeof v !== 'number' || !isFinite(v))) return null;
+  const [ymin, xmin, ymax, xmax] = a as number[];
+  if (!(ymax > ymin && xmax > xmin) || ymin < 0 || xmin < 0 || ymax > 1000 || xmax > 1000) return null;
+  return { ymin, xmin, ymax, xmax };
 }
 
 export async function POST(request: NextRequest) {
@@ -243,6 +263,54 @@ export async function POST(request: NextRequest) {
     emit({ type: 'identification', data: identification });
     mark('identification emitted');
 
+    // #4237: crop the photo to the artwork's own box (from the identification
+    // call — no extra model call) and run a second CLIP search on the crop.
+    // On wall photos the frame/wall/angle drown the CLIP signal (#3193 measured
+    // the true image never surfacing); the crop recovers it. Runs concurrently
+    // with the text strategies and the rerank lane's own candidate fetch, and
+    // degrades to null on ANY failure — the pipeline then behaves as before.
+    const cropPromise: Promise<{ matches: ClipMatch[]; cropBase64: string } | null> = (async () => {
+      try {
+        const b = parseArtworkBbox(identification.artwork_bbox);
+        if (!b) return null;
+        const img = sharp(Buffer.from(base64, 'base64'));
+        const meta = await img.metadata();
+        if (!meta.width || !meta.height) return null;
+        const W = meta.width, H = meta.height;
+        const px = { x: (b.xmin / 1000) * W, y: (b.ymin / 1000) * H, w: ((b.xmax - b.xmin) / 1000) * W, h: ((b.ymax - b.ymin) / 1000) * H };
+        // 4% margin; reject implausible boxes (hallucinated slivers, or boxes
+        // so large the crop would change nothing).
+        const mx = px.w * 0.04, my = px.h * 0.04;
+        const left = Math.max(0, Math.round(px.x - mx)), top = Math.max(0, Math.round(px.y - my));
+        const width = Math.min(W - left, Math.round(px.w + 2 * mx)), height = Math.min(H - top, Math.round(px.h + 2 * my));
+        const frac = (width * height) / (W * H);
+        if (frac < 0.08 || frac > 0.95 || width < 40 || height < 40) return null;
+        const cropBuf = await img.extract({ left, top, width, height }).jpeg({ quality: 85 }).toBuffer();
+        mark('crop: extracted');
+
+        const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ base64: cropBuf.toString('base64'), mime_type: 'image/jpeg' }),
+          signal: AbortSignal.timeout(8000),
+        });
+        if (!clipResp.ok) return null;
+        const { embedding } = await clipResp.json();
+        if (!embedding) return null;
+        const { data, error } = await supabase.rpc('match_clip_images', {
+          query_embedding: embedding,
+          match_threshold: 0.25,
+          match_count: 12,
+        }).abortSignal(AbortSignal.timeout(8000));
+        if (error) return null;
+        mark('crop: clip matches');
+        return { matches: (data || []) as ClipMatch[], cropBase64: cropBuf.toString('base64') };
+      } catch (e) {
+        console.warn('[identify] crop lane failed:', e instanceof Error ? e.message : String(e));
+        return null;
+      }
+    })();
+
     // Promise 3: Semantic artwork search (runs after initial ID, in parallel with DB search)
     // Uses the identification to find related artworks via embedding similarity
     const artworkSearchQuery = [
@@ -267,10 +335,15 @@ export async function POST(request: NextRequest) {
         // retrieval, while the visual description alone ranks best.
         const textQuery = [identification.subject, ...(identification.search_terms || []).slice(0, 3)]
           .filter(Boolean).join('. ');
-        const textCands = await getGalleryCandidatesByText(textQuery, 10);
+        // The crop lane runs concurrently with this fetch; awaiting both keeps
+        // the slower of the two as the only wait.
+        const [textCands, crop] = await Promise.all([
+          getGalleryCandidatesByText(textQuery, 10),
+          cropPromise,
+        ]);
         mark('rerank: text candidates');
 
-        const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(cm => ({
+        const toCand = (cm: ClipMatch): IdentifyCandidate => ({
           id: cm.id,
           source: 'clip' as const,
           sourceType: (cm.source_type as IdentifyCandidate['sourceType']) || 'gallery_image',
@@ -280,11 +353,15 @@ export async function POST(request: NextRequest) {
           similarity: cm.similarity,
           title: cm.title,
           author: cm.author,
-        }));
+        });
+        const cropCands: IdentifyCandidate[] = (crop?.matches || []).slice(0, 10).map(toCand);
+        const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(toCand);
 
-        // Union, CLIP first (dedupe by id), capped to keep the rerank call small
+        // Union, crop-CLIP first (its candidates saw the artwork without the
+        // wall — #4237 bench), then full-photo CLIP, then text (dedupe by id),
+        // capped to keep the rerank call small
         const byId = new Map<string, IdentifyCandidate>();
-        for (const c of [...clipCands, ...textCands]) if (!byId.has(c.id)) byId.set(c.id, c);
+        for (const c of [...cropCands, ...clipCands, ...textCands]) if (!byId.has(c.id)) byId.set(c.id, c);
         let candidates = [...byId.values()].slice(0, 16);
 
         const hydration = await hydrateCandidates(db, candidates);
@@ -303,7 +380,12 @@ export async function POST(request: NextRequest) {
 
         mark('rerank: candidates hydrated');
         const t0 = Date.now();
-        const verdict = await rerankByVisualComparison(base64, mimeType, candidates);
+        // The CROP is the query image when we have one: the #4237 bench showed
+        // the comparison call picks the right candidate far more often when the
+        // wall/frame clutter is gone (RcropPhoto 23/24 vs Runion 20/24).
+        const verdict = crop
+          ? await rerankByVisualComparison(crop.cropBase64, 'image/jpeg', candidates)
+          : await rerankByVisualComparison(base64, mimeType, candidates);
         mark('rerank: verdict');
         if (!verdict?.picked) {
           return {
