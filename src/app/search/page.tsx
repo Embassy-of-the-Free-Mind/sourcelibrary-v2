@@ -31,6 +31,7 @@ import {
 } from '@/lib/api-client';
 import { tenantBookUrl } from '@/lib/slugify';
 import { matchKnownEntity } from '@/lib/known-entities';
+import { assessMatchQuality } from '@/lib/search/match-quality';
 import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -155,6 +156,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // "no related results" as if it were a fact — the "looks like 1 result" bug, where
   // held editions catalogued under another name (Pimander ≈ Corpus Hermeticum) vanish.
   const [semanticDegraded, setSemanticDegraded] = useState(false);
+  // Honest-failure flag from /api/search/unified (#4281): 'weak' = results
+  // exist but none contains all the query's words. null = strong or unjudged.
+  const [matchQuality, setMatchQuality] = useState<'strong' | 'weak' | null>(null);
 
   // Page-content passage results (for quoted phrase searches)
   const [passageResults, setPassageResults] = useState<SearchResult[]>([]);
@@ -441,6 +445,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       setCollectionResults([]);
       setImageResults([]); setImageTotal(0);
       setCatalogResults([]); setCatalogTotal(0);
+      setMatchQuality(null);
       return;
     }
     setLoading(true);
@@ -458,6 +463,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           setIndexTotal(cached.indexTotal);
           setImageResults(cached.images);
           setImageTotal(cached.imageTotal);
+          setMatchQuality(cached.matchQuality ?? null);
           setLoading(false);
           return;
         }
@@ -558,6 +564,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           }
           baseImagesSet.current = true;
           setCollectionResults((data as any).collections?.results || []);
+          const mq = ((data as any).match_quality === 'weak' || (data as any).match_quality === 'strong')
+            ? (data as any).match_quality : null;
+          setMatchQuality(mq);
           displayHintLocked.current = true; // lock layout once results render
 
           // Cache the result
@@ -566,6 +575,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             books, bookTotal: bTotal,
             index, indexTotal: iTotal,
             images, imageTotal: imTotal,
+            matchQuality: mq,
           });
           // Evict old cache entries
           if (searchCache.current.size > 50) {
@@ -581,6 +591,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             setBookResults([]); setBookTotal(0);
             setIndexResults([]); setIndexTotal(0);
             setImageResults([]); setImageTotal(0);
+            setMatchQuality(null);
             setCollectionResults([]); setSemanticResults([]); setSemanticDegraded(false);
             // Stop the parallel AI-expand stream so nothing leaks past the wall.
             aiAbortRef.current?.();
@@ -763,7 +774,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   }, [router, currentPathname, tenant, defaultMode, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype
-  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number }>());
+  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number; matchQuality?: 'strong' | 'weak' | null }>());
   const CACHE_TTL = 60_000; // 1 minute
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
@@ -1707,8 +1718,26 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </>
           );
 
+          // Honest weak-match banner (#4281): the lanes found only partial-word
+          // matches ("Rainer" alone, "Maria" alone). Say so before showing them,
+          // instead of presenting token noise as an answer. The unified flag is
+          // metadata-only, so a page-content passage that covers every word
+          // (quoted-phrase queries) overrides it — and while passages are still
+          // loading we stay quiet rather than flash a claim we may retract.
+          const passagesCover = assessMatchQuality(
+            query,
+            passageResults.map(r => [r.title, r.display_title, r.author, r.snippet].filter(Boolean).join(' ')),
+          ) === 'strong';
+          const weakMatchBanner = matchQuality === 'weak' && !passageLoading && !passagesCover && (
+            <div className="px-4 py-3 rounded-lg border border-border-light bg-warm/60">
+              <p className="text-sm font-medium text-primary">{t.weakMatchTitle(query)}</p>
+              <p className="text-sm text-secondary mt-0.5">{t.weakMatchBody}</p>
+            </div>
+          );
+
           return (
             <div className="space-y-3">
+              {weakMatchBanner}
               {passageSection}
               {collectionCards}
               {narrationBlock}

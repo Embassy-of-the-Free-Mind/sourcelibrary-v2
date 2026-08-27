@@ -121,6 +121,8 @@ export interface SearchStrings {
   illustrations: string;
   seeAllImages: string;
   semanticDegraded: string;
+  weakMatchTitle: (q: string) => string;
+  weakMatchBody: string;
   conceptualMatches: string;
   textMatches: string;
   seeAllResults: (n: string) => string;
@@ -267,6 +269,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     illustrations: 'Illustrations',
     seeAllImages: 'See all images',
     semanticDegraded: 'Related results couldn’t be loaded just now — you may be seeing fewer matches than we hold. Try again in a moment.',
+    weakMatchTitle: (q) => `No strong matches for “${q}”`,
+    weakMatchBody: 'Nothing in the library matches all of your search words. The results below match only part of your search.',
     conceptualMatches: 'Conceptual matches',
     textMatches: 'Text matches',
     seeAllResults: (n) => `See all ${n} results`,
@@ -394,6 +398,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     illustrations: 'Ilustraciones',
     seeAllImages: 'Ver todas las imágenes',
     semanticDegraded: 'No se han podido cargar los resultados relacionados — puede que veas menos coincidencias de las que tenemos. Inténtalo de nuevo en un momento.',
+    weakMatchTitle: (q) => `No hay coincidencias exactas para «${q}»`,
+    weakMatchBody: 'Nada en la biblioteca coincide con todas las palabras de tu búsqueda. Los resultados siguientes coinciden solo con una parte.',
     conceptualMatches: 'Coincidencias conceptuales',
     textMatches: 'Coincidencias en el texto',
     seeAllResults: (n) => `Ver los ${n} resultados`,

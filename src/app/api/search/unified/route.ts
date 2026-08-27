@@ -14,6 +14,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
+import { assessMatchQuality } from '@/lib/search/match-quality';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -457,8 +458,22 @@ export async function GET(request: NextRequest) {
       filters: { language, category, library },
     });
 
+    // Honest-failure flag (#4281): lanes merge by rank, so a set of stray
+    // token matches renders exactly like a real answer. If no result across
+    // any lane contains ALL the query's tokens, say so instead of bluffing.
+    const matchQuality = assessMatchQuality(query, [
+      ...scopedBooks.results.map((r: any) => [r.title, r.display_title, r.author, r.summary].filter(Boolean).join(' ')),
+      ...scopedIndex.results.map((r: any) => [r.term, r.book_title].filter(Boolean).join(' ')),
+      ...scopedGallery.results.map((r: any) => [r.description, r.bookTitle].filter(Boolean).join(' ')),
+      ...filteredVisual.results.map((r: any) => [r.description, r.bookTitle].filter(Boolean).join(' ')),
+      ...scopedSemantic.results.map((r: any) => [r.title, r.author, r.summary_snippet].filter(Boolean).join(' ')),
+      ...filteredArtworks.results.map((r: any) => [r.title, r.display_title, r.author].filter(Boolean).join(' ')),
+      ...collectionsWithTenantSlug.results.map((r: any) => [r.name, r.description].filter(Boolean).join(' ')),
+    ]);
+
     return NextResponse.json({
       query,
+      match_quality: matchQuality,
       books: scopedBooks,
       index: scopedIndex,
       gallery: scopedGallery,
