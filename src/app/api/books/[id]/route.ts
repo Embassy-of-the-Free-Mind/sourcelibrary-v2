@@ -9,7 +9,7 @@ import { withApiAuth } from '@/lib/api-auth';
 import { EDITION_COUNTER_PROJECTION } from '@/lib/page-translations';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
-import { isBookReadable } from '@/lib/book-access';
+import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
@@ -76,12 +76,13 @@ export const GET = withApiAuth(async (
     }
     const book = result.book;
 
-    // Hidden books are gated on every content route (text/quote/index/chat/…)
-    // via book-access; the base metadata route was the one surface still
-    // serving full records for hidden ids to anonymous callers. Same
-    // indistinguishable-404 contract as the sibling routes.
+    // Hidden books present their CATALOG CARD to unauthorized callers —
+    // bibliographic metadata is public policy (#4240 follow-up, 2026-08-27),
+    // content is not: no pages array, no page-image URLs (the public bucket
+    // would make that content access in one hop). Editors and CRON_SECRET
+    // callers fall through to the full record + pages as before.
     if (!(await isBookReadable(book, request))) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      return NextResponse.json({ ...hiddenBookMetadataCard(book), pages: [] });
     }
 
     // Page projections:

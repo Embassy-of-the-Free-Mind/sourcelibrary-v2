@@ -8,7 +8,7 @@ import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
-import { isBookReadable } from '@/lib/book-access';
+import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 
 export const preferredRegion = 'fra1';
@@ -45,10 +45,10 @@ export async function GET(
     }
     const book = result.book;
 
-    // Hidden books: same gate + indistinguishable-404 as the sibling
-    // tenant content routes (quote/download/index/…).
+    // Hidden books: catalog card only for unauthorized callers (metadata is
+    // public policy, content is not — see book-access.hiddenBookMetadataCard).
     if (!(await isBookReadable(book, request))) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      return NextResponse.json({ ...hiddenBookMetadataCard(book), pages: [] });
     }
 
     // Page projections:
