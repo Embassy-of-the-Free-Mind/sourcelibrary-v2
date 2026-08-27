@@ -21,6 +21,7 @@
  *   node scripts/analysis/llm-verify-work-merges.mjs --limit-authors 40
  *   node scripts/analysis/llm-verify-work-merges.mjs --apply         # write HIGH merges (+backup)
  *   node scripts/analysis/llm-verify-work-merges.mjs --coverage-only # exclusion report + coverage, NO LLM calls (free)
+ *   node scripts/analysis/llm-verify-work-merges.mjs --include-backlog # ALSO judge hidden/backlog books (#4246 Phase 1)
  *
  * Env: MONGODB_URI, GEMINI_API_KEY_TIER3|GEMINI_API_KEY. Model: gemini-3.1-flash-lite.
  */
@@ -29,6 +30,13 @@ import fs from 'node:fs';
 
 const APPLY = process.argv.includes('--apply');
 const COVERAGE_ONLY = process.argv.includes('--coverage-only');
+// Include hidden/backlog books in the judged universe (#4246 Phase 1). Work
+// identity pays off most BEFORE a book is processed — "do we already hold
+// this?" is an acquisition gate — and the visible-only default left 28.8K
+// author-linked backlog books judge-blind (measured 2026-08-27). Off by
+// default so the standing run's behavior is unchanged. Still requires
+// pages_count > 0: metadata-only imports carry unverified titles.
+const INCLUDE_BACKLOG = process.argv.includes('--include-backlog');
 const LIMIT_AUTHORS = parseInt((process.argv.find(a => a.startsWith('--limit-authors=')) || '').split('=')[1]
   || process.argv[process.argv.indexOf('--limit-authors') + 1] || '0', 10) || 0;
 const KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
@@ -137,7 +145,7 @@ if (APPLY_FROM) {
   process.exit(0);
 }
 
-const TEXT = { visible: true, pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] }, author_id: { $exists: true, $ne: null } };
+const TEXT = { ...(INCLUDE_BACKLOG ? {} : { visible: true }), pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] }, author_id: { $exists: true, $ne: null } };
 const all = await books.find(TEXT, { projection: { id: 1, work_id: 1, title: 1, display_title: 1, language: 1, year: 1, author_id: 1 } }).toArray();
 
 // ── Exclusion report + judged-coverage metric (#4246 Phase 0) ──────────────
@@ -154,9 +162,9 @@ const all = await books.find(TEXT, { projection: { id: 1, work_id: 1, title: 1, 
     books.countDocuments({ ...textish, visible: true, ...noAuthorId }),
     books.aggregate([{ $match: TEXT }, { $group: { _id: '$work_id_source', n: { $sum: 1 } } }, { $sort: { n: -1 } }]).toArray(),
   ]);
-  console.log(`Selected (visible text books with author_id): ${all.length}`);
+  console.log(`Selected (${INCLUDE_BACKLOG ? 'ALL' : 'visible'} text books with author_id): ${all.length}`);
   console.log('EXCLUDED — populations this judge cannot reach:');
-  console.log(`  hidden/backlog text books WITH author_id  : ${hiddenWithAuthor}`);
+  console.log(`  hidden/backlog text books WITH author_id  : ${hiddenWithAuthor}${INCLUDE_BACKLOG ? '  (INCLUDED this run via --include-backlog)' : ''}`);
   console.log(`  visible text books MISSING author_id      : ${visibleNoAuthor}  <- #4246 Phase 1 backfill target`);
   console.log('Judged coverage of the selection, by work_id_source:');
   const judged = new Set(['work-merge:llm-verified', 'work-merge:hand-adjudicated', 'work-merge:identical-title-deterministic', 'wikidata:P50']);
