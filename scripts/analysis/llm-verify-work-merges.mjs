@@ -20,6 +20,7 @@
  *   node scripts/analysis/llm-verify-work-merges.mjs                 # dry-run (proposals + sample)
  *   node scripts/analysis/llm-verify-work-merges.mjs --limit-authors 40
  *   node scripts/analysis/llm-verify-work-merges.mjs --apply         # write HIGH merges (+backup)
+ *   node scripts/analysis/llm-verify-work-merges.mjs --coverage-only # exclusion report + coverage, NO LLM calls (free)
  *
  * Env: MONGODB_URI, GEMINI_API_KEY_TIER3|GEMINI_API_KEY. Model: gemini-3.1-flash-lite.
  */
@@ -27,6 +28,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 
 const APPLY = process.argv.includes('--apply');
+const COVERAGE_ONLY = process.argv.includes('--coverage-only');
 const LIMIT_AUTHORS = parseInt((process.argv.find(a => a.startsWith('--limit-authors=')) || '').split('=')[1]
   || process.argv[process.argv.indexOf('--limit-authors') + 1] || '0', 10) || 0;
 const KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
@@ -138,12 +140,41 @@ if (APPLY_FROM) {
 const TEXT = { visible: true, pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] }, author_id: { $exists: true, $ne: null } };
 const all = await books.find(TEXT, { projection: { id: 1, work_id: 1, title: 1, display_title: 1, language: 1, year: 1, author_id: 1 } }).toArray();
 
+// ── Exclusion report + judged-coverage metric (#4246 Phase 0) ──────────────
+// The selection gate above excludes silently, and a judge that never says what
+// it cannot see reads as exhaustive (the #3769 shape: a backfill scanning
+// 19,712 while 43,858 sat outside its filter). Each count below holds the
+// OTHER gates satisfied, so every number is one actionable backlog, not
+// overlap soup. Runs every invocation; --coverage-only stops after it.
+{
+  const textish = { pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] } };
+  const noAuthorId = { $or: [{ author_id: { $exists: false } }, { author_id: null }] };
+  const [hiddenWithAuthor, visibleNoAuthor, srcDist] = await Promise.all([
+    books.countDocuments({ ...textish, author_id: { $exists: true, $ne: null }, visible: { $ne: true } }),
+    books.countDocuments({ ...textish, visible: true, ...noAuthorId }),
+    books.aggregate([{ $match: TEXT }, { $group: { _id: '$work_id_source', n: { $sum: 1 } } }, { $sort: { n: -1 } }]).toArray(),
+  ]);
+  console.log(`Selected (visible text books with author_id): ${all.length}`);
+  console.log('EXCLUDED — populations this judge cannot reach:');
+  console.log(`  hidden/backlog text books WITH author_id  : ${hiddenWithAuthor}`);
+  console.log(`  visible text books MISSING author_id      : ${visibleNoAuthor}  <- #4246 Phase 1 backfill target`);
+  console.log('Judged coverage of the selection, by work_id_source:');
+  const judged = new Set(['work-merge:llm-verified', 'work-merge:hand-adjudicated', 'work-merge:identical-title-deterministic', 'wikidata:P50']);
+  let judgedN = 0;
+  for (const r of srcDist) {
+    if (judged.has(r._id)) judgedN += r.n;
+    console.log(`  ${String(r._id).padEnd(44)}: ${r.n}`);
+  }
+  console.log(`  => judged or authority-anchored: ${judgedN}/${all.length} (${Math.round(100 * judgedN / Math.max(1, all.length))}%) — the rest are unexamined mints/seeds`);
+}
+
 // group by author -> items (one per work_id, one per unset book)
 const byAuthor = new Map();
 for (const b of all) { if (!byAuthor.has(b.author_id)) byAuthor.set(b.author_id, []); byAuthor.get(b.author_id).push(b); }
 
 // candidate authors: have a possible merge (>=2 distinct work_ids, OR an unset book alongside another item)
 const candidates = [];
+let singleItemAuthors = 0, megaAuthors = 0, megaAuthorBooks = 0;
 for (const [aid, bks] of byAuthor) {
   const items = new Map(); // key -> {ref,title,langs,years,currentWorkId,bookIds}
   for (const b of bks) {
@@ -157,11 +188,14 @@ for (const [aid, bks] of byAuthor) {
     if (t.length > it.title.length) it.title = t;   // representative = longest title
   }
   const arr = [...items.values()];
-  if (arr.length < 2) continue;                      // nothing to merge
-  if (arr.length > 50) continue;                     // skip pathological mega-authors (handle separately)
+  if (arr.length < 2) { singleItemAuthors++; continue; }   // nothing to merge
+  if (arr.length > 50) { megaAuthors++; megaAuthorBooks += bks.length; continue; } // skip pathological mega-authors (handle separately)
   arr.forEach((it, i) => { it.ref = 'I' + i; it.years = it.years.length ? `${Math.min(...it.years)}${Math.max(...it.years) !== Math.min(...it.years) ? '-' + Math.max(...it.years) : ''}` : ''; });
   candidates.push({ aid, items: arr });
 }
+console.log(`Author blocks: ${byAuthor.size} — judgeable ${candidates.length}, single-item ${singleItemAuthors}, mega (>50 items, SKIPPED) ${megaAuthors} covering ${megaAuthorBooks} books`);
+
+if (COVERAGE_ONLY) { console.log('\n--coverage-only: stopping before LLM calls.'); await mc.close(); process.exit(0); }
 
 // resolve author names
 const aids = candidates.map(c => c.aid);
