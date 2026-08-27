@@ -350,7 +350,7 @@ export default function CatalogBrowser({
     chips.push({ key: 'years', label, onRemove: () => apply({ yearMin: null, yearMax: null }) });
   }
   if (filters.firstTranslation) chips.push({ key: 'ft', label: 'First translations', onRemove: () => apply({ firstTranslation: false }) });
-  if (filters.hasTranslation) chips.push({ key: 'tr', label: 'Translated', onRemove: () => apply({ hasTranslation: false }) });
+  if (filters.hasTranslation) chips.push({ key: 'tr', label: 'Readable in English', onRemove: () => apply({ hasTranslation: false }) });
   if (filters.hasOcr) chips.push({ key: 'ocr', label: 'Transcribed', onRemove: () => apply({ hasOcr: false }) });
 
   const heroTitle = initialCollection ? (collectionName || 'Collection') : 'The Catalogue';
@@ -402,7 +402,7 @@ export default function CatalogBrowser({
       <FacetMenu
         label="Shows"
         value={
-          [filters.hasTranslation && 'Translated', filters.hasOcr && 'Transcribed', filters.firstTranslation && 'First translations']
+          [filters.hasTranslation && 'Readable in English', filters.hasOcr && 'Transcribed', filters.firstTranslation && 'First translations']
             .filter(Boolean).join(', ')
         }
         options={[]}
