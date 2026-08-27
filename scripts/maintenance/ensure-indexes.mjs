@@ -66,6 +66,7 @@ export const INDEXES = [
   // ── acquisition_queue ─────────────────────────────────────────
   { collection: 'acquisition_queue', key: { 'status': 1 }, options: { 'name': 'status_1' }, why: 'Queue-status filter. scripts/catalog-coverage/acquire-gap-batch.mjs.' },
   { collection: 'acquisition_queue', key: { 'sn': 1 }, options: { 'name': 'sn_1', 'unique': true }, why: 'Unique catalog serial-number key, prevents re-queuing the same USTC/catalog entry. scripts/catalog-coverage/acquire-gap-batch.mjs.' },
+  { collection: 'acquisition_queue', key: { 'status': 1, 'priority': -1, '_id': 1 }, options: { 'name': 'claim_priority_idx' }, why: 'Priority-ordered claim (findOneAndUpdate sort) so reader-request rows (priority:1) jump bulk seeds. scripts/catalog-coverage/acquire-gap-batch.mjs.' },
   // ── analytics_bot_access ──────────────────────────────────────
   { collection: 'analytics_bot_access', key: { 'bot': 1, 'path_prefix': 1, 'date': 1 }, options: { 'name': 'bot_daily_idx', 'background': true }, why: 'Daily bot-hit counter upsert key (bot+path_prefix+day). src/app/api/analytics/bots/route.ts creates this lazily on first write.' },
   // ── analytics_events ──────────────────────────────────────────
