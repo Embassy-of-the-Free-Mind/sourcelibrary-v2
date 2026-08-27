@@ -40,8 +40,12 @@ export async function GET(req: Request) {
     return new Response('Invalid redirect_uri: must be https or loopback http', { status: 400 });
   }
 
-  // Auto-approve path (form submission)
-  if (url.searchParams.get('approve') === '1') {
+  // Consent is auto-granted: there is no account and the token gates nothing,
+  // so a consent click would be pure ceremony. Redirect straight back with the
+  // code — the user experience is click-Connect → connected, zero clicks.
+  // Pass ?prompt=consent to see the consent card anyway (kept for debugging
+  // and as the branded fallback if a client ever renders this URL in a tab).
+  if (url.searchParams.get('prompt') !== 'consent') {
     return approve(redirect_uri, state, code_challenge);
   }
 
