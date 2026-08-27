@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'technique-is-local',
+    title: 'Technique Is Local, Crisis Is Universal',
+    subtitle:
+      'Reading a thousand years of meditation manuals as research artifacts: the Visuddhimagga prescribes practices by temperament, Iamblichus states a dose-response curve for ritual prayer, and every imaging tradition wrote the same safety warnings. Seven testable hypotheses from the contemplative archive — and one measurement suggesting the cross-cultural core of deep practice is not bliss, but crisis.',
+    date: '27 August 2026',
+    readTime: '11 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/pages/6a1d81af5afc14a085e6d7e6/spdxcs-0138.jpg',
+    imageAlt:
+      'Woodcut from the 1615 Xingming guizhi: a Daoist practitioner in seated meditation with an internal-alchemy diagram on his abdomen.',
+  },
+  {
     slug: 'suda-benchmark',
     title: 'Graded by the Suda',
     subtitle:

@@ -188,7 +188,7 @@ export default function ChakraTraditionPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The modern understanding of chakras in the West derives almost entirely from three sources: Arthur Avalon&apos;s 1919 <em>The Serpent Power</em>, C.W. Leadbeater&apos;s 1927 Theosophical reinterpretation, and their popularization through 20th-century yoga culture. Each layer added simplifications and distortions. Leadbeater introduced the rainbow colour scheme (red, orange, yellow, green, blue, indigo, violet) that appears nowhere in the Sanskrit sources. The original texts assign colours based on elemental and deity associations that vary from text to text.
+          The modern understanding of chakras in the West derives almost entirely from three sources: Arthur Avalon&apos;s 1919 <em>The Serpent Power</em>, C.W. Leadbeater&apos;s 1927 Theosophical reinterpretation, and their popularization through 20th-century yoga culture. Each layer added simplifications and distortions. Leadbeater assigned the chakras colours of his own devising; the now-ubiquitous rainbow scheme (red, orange, yellow, green, blue, indigo, violet) came later still, introduced by Christopher Hills in <em>Nuclear Evolution</em> (1977), and appears nowhere in the Sanskrit sources. The original texts assign colours based on elemental and deity associations that vary from text to text.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
