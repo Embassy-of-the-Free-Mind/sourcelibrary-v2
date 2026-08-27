@@ -733,6 +733,8 @@ async function searchImages(args: Record<string, unknown>) {
   if (args.min_quality !== undefined) params.set('minQuality', String(args.min_quality));
   const limit = Math.min(Number(args.limit) || 20, 50);
   params.set('limit', String(limit));
+  const offset = Math.max(0, Math.floor(Number(args.offset) || 0));
+  if (offset) params.set('offset', String(offset));
 
   // Search both gallery illustrations AND artworks (paintings/prints) in parallel.
   // The artwork lane supports type/subject/figure/symbol/year filters and MUST
@@ -752,12 +754,19 @@ async function searchImages(args: Record<string, unknown>) {
 
   const [galleryResult, artworkResult] = await Promise.all([
     apiGet('/gallery', params) as Promise<Record<string, unknown>>,
-    args.query && !args.book_id
+    // The artwork lane has no offset support — include it on the first page
+    // only, so paging doesn't re-serve the same artworks on every call.
+    args.query && !args.book_id && offset === 0
       ? (apiGet('/artwork/search', artworkParams) as Promise<Record<string, unknown>>).catch(() => ({ items: [] }))
       : Promise.resolve({ items: [] }),
   ]);
 
   const galleryImages = (galleryResult.items as Array<Record<string, unknown>>)?.map((item) => ({
+    // Explicit citability flag (#4287): book_illustration = extracted from a
+    // scanned page, citable with book_id + page; artwork = standalone museum
+    // record, display/context only. Agents previously had to infer this from
+    // which fields happened to be present.
+    source_type: item.source === 'artwork' ? 'artwork' : 'book_illustration',
     description: item.description, type: item.type, quality: item.galleryQuality,
     book: { title: item.bookTitle, author: item.author, year: item.year },
     page: item.pageNumber, image_url: item.imageUrl,
@@ -778,6 +787,7 @@ async function searchImages(args: Record<string, unknown>) {
   })) || [];
 
   const artworks = (artworkResult.items as Array<Record<string, unknown>>)?.map((item) => ({
+    source_type: 'artwork',
     description: item.title, type: 'artwork',
     artist: item.artist, medium: item.medium,
     year: item.year, image_url: item.image_url,
@@ -821,9 +831,21 @@ async function searchImages(args: Record<string, unknown>) {
   }
 
   const total = (galleryResult.total as number || 0) + artworks.length;
+  // Pagination signal (#4287): before this, a caller saw total: 22767,
+  // showing: 12 with no way to reach result 13 except raising limit to 50.
+  const galleryShown = Math.min(galleryImages.length, limit);
+  const hasMore = galleryResult.hasMore === true;
   return {
     total,
     showing: allImages.length,
+    offset,
+    ...(hasMore
+      ? {
+          next_offset: offset + galleryShown,
+          remaining: Math.max(0, (galleryResult.total as number || 0) - offset - galleryShown),
+          pagination_note: `More results exist — call again with offset=${offset + galleryShown} to continue (book-illustration lane only; narrow the query or add filters if you are surveying rather than exhausting).`,
+        }
+      : {}),
     images: allImages,
     ...(thumbNote ? { thumbnails_note: thumbNote } : {}),
     // An empty scoped result must SAY so — silently returning nothing (or,
@@ -1079,6 +1101,7 @@ const TOOLS: Tool[] = [
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
+        offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
       },
     },
