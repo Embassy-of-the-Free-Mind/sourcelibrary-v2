@@ -45,7 +45,7 @@ eslint 10 — if lint misbehaves, revert that one).
   machine-readable error code + sign-in CTA + twin-parameterized test, rewritten to
   main's 429 shape. Review also found a **pre-existing hidden-book leak** in the
   transliterate route (cached `transliteration.data` served for any page id, no
-  `book-access` check) — NOT yet filed; Derek to decide public vs ops tracker.
+  `book-access` check) — verified against main and filed privately: ops repo issue #13.
 - **#3546** hero mosaic — writes 7 `books` fields unregistered in
   `books-known-fields.json` (the field-sprawl PR lint postdates its green checks;
   merging breaks the lint for every later PR), plus a retry hole where a
