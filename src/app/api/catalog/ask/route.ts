@@ -213,12 +213,23 @@ export async function POST(request: Request) {
       note: str(raw.note, 160).replace(/\s*[—–]\s*/g, ', '),
     };
 
-    // A plan that narrows nothing would silently return the whole catalogue as
-    // if it had answered. Fall back to searching the question itself.
+    // A plan that narrows nothing found no subject, no title and no metadata in
+    // the request. Searching the raw words anyway is the worst of both: the
+    // embedder happily ranks the corpus against a keyboard mash and returns
+    // thirty confident books ("qwertyuiop zxcvbnm" did, at every threshold
+    // tried). Say we could not read it instead, and let the reader rephrase.
     const narrows = plan.topic || plan.keywords || plan.language || plan.collection
       || plan.category || plan.yearMin != null || plan.yearMax != null
       || plan.firstTranslation || plan.hasTranslation;
-    if (!narrows) plan.topic = question;
+    if (!narrows) {
+      plan.topic = '';
+      return NextResponse.json({
+        plan,
+        parsed: true,
+        unreadable: true,
+        note: plan.note || 'I could not tell what to look for in that.',
+      });
+    }
 
     return NextResponse.json({ plan, parsed: true });
   } catch (err) {

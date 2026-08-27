@@ -9,13 +9,16 @@ export const maxDuration = 20;
 const ASK_POOL = 200;
 
 /**
- * Cosine floor for the ask lane, above the 0.3 the other semantic lanes use.
- * Measured on the preview: at 0.3 a keyboard mash ("qwertyuiop zxcvbnm")
- * returned 30 books, which is a confident answer to a question nobody asked.
- * The other lanes merge their hits into a ranked list where a weak match is
- * simply last; here the hits ARE the result set, so the floor has to hold.
+ * Cosine floor, the same 0.3 every other semantic lane uses.
+ *
+ * Raising it to 0.45 was tried and reverted: measured against the preview it
+ * returned the identical set for a real query (32 books) and for a keyboard
+ * mash (30), so the floor is not what decides the nonsense case. What decides
+ * it is whether the librarian could read the request at all, which is a
+ * question /api/catalog/ask can answer and a cosine cannot — see `unreadable`
+ * there. Don't re-tune this without a measurement that moves.
  */
-const ASK_THRESHOLD = 0.45;
+const ASK_THRESHOLD = 0.3;
 
 /**
  * GET /api/catalog/browse

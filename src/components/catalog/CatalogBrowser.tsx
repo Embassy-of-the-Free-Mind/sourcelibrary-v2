@@ -237,11 +237,19 @@ export default function CatalogBrowser({
       });
 
       if (!res.ok) throw new Error(String(res.status));
-      const data = await res.json() as { plan?: Record<string, unknown>; parsed?: boolean };
+      const data = await res.json() as { plan?: Record<string, unknown>; parsed?: boolean; unreadable?: boolean; note?: string };
       const plan = data.plan || {};
 
       if (!data.parsed) setAskDegraded(true);
       setAskNote(typeof plan.note === 'string' ? plan.note : '');
+
+      // The librarian read the request and found nothing to look for. Leave the
+      // grid exactly as it was and let the note do the talking — running the
+      // search anyway would answer a question nobody managed to ask.
+      if (data.unreadable) {
+        setAskNote(data.note || 'I could not tell what to look for in that.');
+        return;
+      }
 
       apply({
         ask: (plan.topic as string) || text,
