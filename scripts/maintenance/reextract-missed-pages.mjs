@@ -37,6 +37,11 @@
  *                 blind to those pages, so they are never offered to the vision
  *                 model and read as "extracted, empty" permanently. Also skips
  *                 pages already examined.
+ *   --all-pages   Offer EVERY never-examined page (page_number > 0, no
+ *                 detected_images) to the vision model — no marker, no
+ *                 page_type needed. For books whose OCR vintage has neither
+ *                 (the worker sees "no candidates" and stamps them
+ *                 images_complete on first touch, #4241). Requires --book.
  */
 
 import { MongoClient } from 'mongodb';
@@ -71,6 +76,20 @@ const ANY_MARKER = args.includes('--any-marker');
 // Also accept pages the page-typer already called an illustration, whether or
 // not OCR left a marker behind — see pageIsWorkerCandidate() below.
 const PAGE_TYPE_CANDIDATES = args.includes('--page-type-candidates');
+// Offer EVERY never-examined page to the vision model, no marker or page_type
+// required. For books whose OCR vintage predates the <image-desc> convention
+// AND whose pages were never typed, every gate above sees zero candidates —
+// the production worker then stamps the book images_complete on first touch
+// and it exits the queue forever (the Utriusque Cosmi Vol. 2 case, #4241:
+// 700pp of plates, page_type null on every page, no markers). Requires --book:
+// this is a per-book recovery tool, not a corpus sweep — an unbounded all-pages
+// vision pass over the library would be a five-figure spend.
+const ALL_PAGES = args.includes('--all-pages');
+
+if (ALL_PAGES && !getArg('book', null)) {
+  console.error('FATAL: --all-pages requires --book=ID (per-book recovery only, never a corpus sweep)');
+  process.exit(1);
+}
 
 const MODEL = 'gemini-3-flash-preview';
 const TRIVIAL = new Set(['symbol', 'stamp', 'ornament', 'blank', 'exlibris', 'bookplate', 'decorative', "printer's mark", 'photograph', 'photographic']);
@@ -152,7 +171,7 @@ function pageIsWorkerCandidate(page) {
 }
 
 async function main() {
-  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} anyMarker=${ANY_MARKER} pageTypeCandidates=${PAGE_TYPE_CANDIDATES} keys=${API_KEYS.length}`);
+  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} anyMarker=${ANY_MARKER} pageTypeCandidates=${PAGE_TYPE_CANDIDATES} allPages=${ALL_PAGES} keys=${API_KEYS.length}`);
   const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 5 });
   await client.connect();
   const db = client.db('bookstore');
@@ -185,16 +204,18 @@ async function main() {
       // for --page-type-candidates: page_type alone is weaker evidence than a
       // high-significance marker, so don't spend a second vision call on a page
       // some earlier pass already looked at and found empty.
-      ...(ANY_MARKER || PAGE_TYPE_CANDIDATES ? { image_extraction_updated_at: { $exists: false } } : {}),
+      ...(ANY_MARKER || PAGE_TYPE_CANDIDATES || ALL_PAGES ? { image_extraction_updated_at: { $exists: false } } : {}),
     }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, display_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1 } }).toArray();
     for (const p of pages) {
       // Require the high-significance non-trivial OCR marker — the precise
       // "genuine miss" signal the pilot measured at ~63% recovery. (page_type
       // alone is a weaker signal and dilutes yield.) --page-type-candidates
       // trades that yield for coverage of typed pages OCR never marked up.
-      const accept = PAGE_TYPE_CANDIDATES
-        ? pageIsWorkerCandidate(p)
-        : pageHasNonTrivialHighSigMarker(p.ocr?.data);
+      const accept = ALL_PAGES
+        ? true
+        : PAGE_TYPE_CANDIDATES
+          ? pageIsWorkerCandidate(p)
+          : pageHasNonTrivialHighSigMarker(p.ocr?.data);
       if (!accept) continue;
       // Keep only the fields getPageSource() needs — drop ocr.data so a 56K-page
       // full sweep doesn't hold the entire OCR corpus in memory.
