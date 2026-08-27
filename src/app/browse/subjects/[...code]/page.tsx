@@ -30,6 +30,7 @@ interface CategoryNode {
 
 interface GalleryImage {
   id: string;
+  href: string;
   extracted_url?: string;
   thumbnail_url?: string;
   description?: string;
@@ -68,6 +69,12 @@ async function getImagesForCode(db: any, code: string, limit = 48): Promise<Gall
 
   const results: GalleryImage[] = galleryImages.map((img: any) => ({
     id: img.id || img._id?.toString(),
+    // Gallery rows carry the canonical viewer id (`${page_id}-${detection_index}`),
+    // so send readers to the image itself, not the bare book page. Rows without
+    // that id (legacy) fall back to the book.
+    href: img.id
+      ? `/gallery/image/${img.id}`
+      : `/book/${img.book_slug || img.book_id}`,
     extracted_url: img.extracted_url,
     thumbnail_url: img.thumbnail_url,
     description: img.description,
@@ -98,14 +105,18 @@ async function getImagesForCode(db: any, code: string, limit = 48): Promise<Gall
       .toArray();
 
     for (const art of artworks) {
+      const artId = art.id || art._id?.toString();
       results.push({
-        id: art.id || art._id?.toString(),
+        id: artId,
+        // Artwork docs live at /artwork/[slug]; /book/[id] only gets there via a
+        // redirect, so link straight when we have the slug.
+        href: art.slug ? `/artwork/${art.slug}` : `/book/${artId}`,
         extracted_url: art.thumbnail,
         thumbnail_url: art.thumbnail,
         description: art.enrichment?.description || art.title,
         book_title: art.title,
         book_author: art.author,
-        book_id: art.id || art._id?.toString(),
+        book_id: artId,
         book_slug: art.slug,
       });
     }
@@ -269,7 +280,7 @@ export default async function SubjectCategoryPage({ params }: Props) {
               {images.map(img => (
                 <div key={img.id} className="break-inside-avoid mb-4">
                   <Link
-                    href={img.book_slug ? `/book/${img.book_slug}` : `/book/${img.book_id}`}
+                    href={img.href}
                     className="block group rounded-lg overflow-hidden transition-shadow hover:shadow-lg"
                     style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                   >
