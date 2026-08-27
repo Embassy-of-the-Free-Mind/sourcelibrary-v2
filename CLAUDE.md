@@ -141,6 +141,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - **Any write to `bph_works`** — migrations, sweeps, the catalogue editor → `../bph-catalogue-disaster-recovery.md` (a bulk UPDATE with no revision rows pages a human at 04:30; 2,012 records legitimately have no UBN)
 - Bekker/Stephanus references, `locus_anchors`, `/api/locus`, "which page is 1094a?" → `canonical-loci.md`
 - `entities.books[]`, book-index generation, page citations from the index → `entity-page-attribution.md`
+- Pipeline phases, `pipeline_auto.status`, `setPipelineStatus`, "assert the stage really ran" guards → `pipeline-status-truth.md`
 - Measuring OCR agreement / calibration / page difficulty → `page-revisions-corpus.md`
 - Asserting, badging, or counting "first translation" → `first-translation-claims.md`
 

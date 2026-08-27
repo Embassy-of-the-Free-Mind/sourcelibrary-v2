@@ -836,12 +836,88 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+/**
+ * What each "done" status claims the book now HAS (#3740).
+ *
+ * Measured 2026-08-08 across 58,605 text books: 28,233 sat past enrichment with no
+ * summary and 27,837 past chapters with no chapters. Nothing was broken loudly — the
+ * statuses were simply written ahead of the work, and every downstream phase selects on
+ * status, so those books are permanently "past" the phases that would have filled them
+ * in. A status that runs ahead of the work is worse than no status.
+ *
+ * `skip` is the other half and is not optional. Absence has two causes that are
+ * indistinguishable after the fact: the stage failed, or the stage correctly decided
+ * there was nothing to do. A single-work volume legitimately has no chapters; a book
+ * under 10 pages is not meant to have them. If the predicate read absence as failure,
+ * ~28K books would re-stall permanently — a far bigger outage than the bug. So a status
+ * is satisfied by **output OR an explicitly recorded skip**, and the phase that decides
+ * to skip must say so at the moment it decides, because that is the only moment the
+ * reason exists.
+ */
+const STATUS_OUTPUT_CLAIMS = {
+  archive_complete:  { has: b => (b.pages_archived || 0) > 0,                      skip: 'archive_skipped_reason',     want: 'pages_archived > 0' },
+  ocr_complete:      { has: b => (b.pages_ocr || 0) > 0,                           skip: 'ocr_skipped_reason',         want: 'pages_ocr > 0' },
+  summary_indexed:   { has: b => !!b.summary,                                      skip: 'summary_skipped_reason',     want: 'a summary' },
+  chapters_complete: { has: b => Array.isArray(b.chapters) && b.chapters.length > 0, skip: 'chapters_skipped_reason',  want: 'chapters' },
+  cover_selected:    { has: b => b.cover_page != null,                             skip: 'cover_skipped_reason',       want: 'a cover_page' },
+};
+
+// Default is OBSERVE, not enforce. Flipping behaviour at 53 call sites in a pipeline that
+// is about to be restarted is how you turn a silent-success bug into an outage, and the
+// predicates above have not yet been proven against every path that writes a status.
+// Observe mode records the violation and still advances; once the recorded violations
+// look right, STATUS_GUARD_ENFORCE=1 makes it refuse.
+const STATUS_GUARD_ENFORCE = process.env.STATUS_GUARD_ENFORCE === '1';
+
+/**
+ * Does this status tell the truth about the book? Returns null when fine, else a reason.
+ * Satisfied by real output, by a skip reason recorded on the document, or by one being
+ * written in this very call (`extra`).
+ */
+function statusOutputViolation(book, status, extra = {}) {
+  const claim = STATUS_OUTPUT_CLAIMS[status];
+  if (!claim) return null;
+  if (claim.has(book)) return null;
+  if (extra[claim.skip] || book?.pipeline_auto?.[claim.skip]) return null;
+  return `status '${status}' claims ${claim.want}, book has none and no ${claim.skip} was recorded`;
+}
+
 async function setPipelineStatus(db, bookId, status, extra = {}) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { 'pipeline_auto.status': 1, title: 1 } }
+    {
+      projection: {
+        title: 1, pipeline_auto: 1,
+        summary: 1, chapters: 1, cover_page: 1,
+        pages_ocr: 1, pages_archived: 1, pages_count: 1,
+      },
+    }
   );
   const prevStatus = book?.pipeline_auto?.status;
+
+  const violation = book ? statusOutputViolation(book, status, extra) : null;
+  if (violation) {
+    console.log(`  [status-guard] ${bookId}: ${violation}${STATUS_GUARD_ENFORCE ? ' — REFUSED' : ''}`);
+    db.collection('audit_log').insertOne({
+      action: 'pipeline_status_output_missing',
+      book_id: bookId,
+      book_title: book?.title,
+      metadata: { attempted: status, from: prevStatus || 'none', violation, enforced: STATUS_GUARD_ENFORCE },
+      timestamp: new Date(),
+    }).catch(() => {});
+
+    if (STATUS_GUARD_ENFORCE) {
+      // Park it where a sweep can find it, rather than advancing past the work.
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { 'pipeline_auto.status': 'needs_attention', 'pipeline_auto.last_updated': new Date(),
+                  'pipeline_auto.error': violation, updated_at: new Date() } }
+      );
+      return;
+    }
+    // Observe mode: advance, but leave a mark so the population stays countable.
+    extra = { ...extra, output_missing: violation, output_missing_at: new Date() };
+  }
 
   await db.collection('books').updateOne(
     { id: bookId },
@@ -4776,7 +4852,13 @@ Rules:
         } catch (err) {
           const retries = book.pipeline_auto?.retry_count || 0;
           if (retries >= MAX_RETRIES) {
-            await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: 0 });
+            // Gave up after repeated throws, but the book is still counted as enriched
+            // and moved on. Record the reason so the summary_indexed population can be
+            // split into "has a summary" and "we stopped trying" (#3740).
+            await setPipelineStatus(db, book.id, 'summary_indexed', {
+              retry_count: 0,
+              summary_skipped_reason: `summary+index threw ${retries} times (last: ${err.message?.slice(0, 120)}); advanced as non-critical`,
+            });
             log.enriched++;
           } else {
             await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
@@ -4810,7 +4892,14 @@ Rules:
         try {
           if ((book.pages_count || 0) < 10) {
             if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
+              // A legitimate skip: too short to have chapters. Record WHY on the book —
+              // `log.chapters_skipped` is an in-memory counter that dies with the run, so
+              // this decision used to leave no trace and the book became indistinguishable
+              // from one whose extraction failed (#3740).
+              await setPipelineStatus(db, book.id, 'chapters_complete', {
+                retry_count: 0,
+                chapters_skipped_reason: `book has ${book.pages_count || 0} pages, fewer than the 10-page minimum for chapter extraction`,
+              });
             }
             log.chapters_skipped++;
             continue;
@@ -4835,8 +4924,13 @@ Rules:
           } else {
             const retries = book.pipeline_auto?.retry_count || 0;
             if (retries >= MAX_RETRIES) {
-              // Non-critical — skip
-              await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
+              // Non-critical — give up, but say so. This path writes the SUCCESS status
+              // after repeated FAILURE; unlabelled, it is why "chapters_complete with no
+              // chapters" cannot be told apart from a book that legitimately has none.
+              await setPipelineStatus(db, book.id, 'chapters_complete', {
+                retry_count: 0,
+                chapters_skipped_reason: `extract-chapters failed ${retries} times (last: HTTP ${res.status}); advanced as non-critical`,
+              });
               log.chapters_skipped++;
             } else {
               await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: retries + 1 });
