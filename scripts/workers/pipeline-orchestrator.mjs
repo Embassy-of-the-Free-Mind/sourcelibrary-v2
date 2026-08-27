@@ -905,7 +905,7 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
     { id: bookId },
     {
       projection: {
-        'pipeline_auto.status': 1, title: 1, pipeline_auto: 1,
+        title: 1, pipeline_auto: 1,
         summary: 1, chapters: 1, cover_page: 1,
         pages_ocr: 1, pages_archived: 1, pages_count: 1,
       },
