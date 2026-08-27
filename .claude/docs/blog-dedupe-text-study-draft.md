@@ -128,13 +128,31 @@ them); garbage OCR on one side.
 
 ### 4.3 Finishing the job — the slots this note publishes on
 
-- `[SLOT — full sweep]` Verification over ALL same-key clusters (hidden +
-  warehouse included, not just both-visible): N pairs, X% confirmed.
-  (Free; extends the pilot script. #4285.)
-- `[SLOT — recall probe]` Embedding-shortlisted candidate pairs
-  (`book_embeddings` NN + MinHash over first-20-page OCR) verdicted by the
-  comparator: **N missed duplicates found** that no key caught. (Free. #4285
-  phase 2.) Grain rule stated in Discussion.
+- **[FILLED 2026-08-27 — full sweep]** All full-quality same-key clusters,
+  any visibility: 880 clusters exist (1,010 extra copies); 363 verifiable
+  (both sides OCR'd) → 446 pairs scored: **175 confirmed (39%) / 148 suspect
+  (33%) / 48 gray / 75 insufficient**. The pilot's suspect rate holds
+  corpus-wide. Bonus lane — validating existing `duplicate_of` links (118
+  with OCR, 73 evidence-bearing): **10 links (14%) join texts that are NOT
+  the same** — the 1532/1585 Pymander pair (linked both directions), two
+  unique manuscript miscellanies, five Tibetan Kanjur volumes whose letters
+  A vs 'A are *different volumes* of the canon, one De vitis sanctorum.
+  All ten are distinct texts wrongly darkened as copies: restore-review
+  candidates. (Detail: #4285 comments.)
+- **[FILLED 2026-08-27 — recall probe]** All 35,801 `book_embeddings`
+  brute-forced (640M pairs, 7 min, zero spend); calibrated on 2,913 known-copy
+  pairs (true copies: cosine p10/p50/p90 = 0.80/0.958/0.992). At ≥0.985, 400
+  unlinked candidates; 21 verifiable; **1 true missed duplicate** (a Cicero
+  commentary dated 1579 vs 1592, interior text 0.89 — same setting, wrong
+  year or a page-for-page reprint) — and 19 rejections that ARE the finding:
+  nearly all sat at cosine 0.996–1.000 (identical embeddings, mostly
+  incunabula with indistinguishable metadata) while the text comparator
+  separated them decisively. **The grain argument is empirical: embedding
+  similarity saturates at the record/work grain and cannot discriminate
+  printings.** Production probe redesign: MinHash/shingle blocking over
+  first-N-pages OCR for copy-grain recall; embeddings kept for work-grain
+  questions (cross-language siblings, translation gaps). `[SUB-SLOT: MinHash
+  probe run — N missed duplicates found]`
 - `[SLOT — tier-2 fix]` `edition_key_latin` shipped (#4270): cross-source
   non-Latin replay recall 0% → X%; shadow tier retired after N clean days.
 - `[SLOT — queues drained]` work_merge_queue 1,940 → 0 (#4271 batch lane;
