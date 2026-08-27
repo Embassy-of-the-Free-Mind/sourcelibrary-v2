@@ -136,3 +136,31 @@ The invoice line items measure the stack, not just the money:
 
 Line items are in the plaintext body of the Vercel receipt emails. Current figures and how to re-pull
 them live in the private ops repo (`costs/infrastructure-costs.md`) — not here.
+
+## Verifying a content change on prod — never trust the bare URL
+
+**A stale cached page and a failed write look identical from `curl`.** Separate them with
+a cache-busting query string *before* diagnosing anything:
+`curl "https://sourcelibrary.org/collections/<slug>?cb=$RANDOM"`. The query string is part
+of the edge cache key but **not** part of the Next route/ISR key, so it forces a fresh
+render of the same page while bypassing both Cloudflare and Vercel's edge copy. If `?cb=`
+shows the new content, the write landed and the render is fine — you have a cache problem,
+not a data problem, and you should stop reading application code.
+
+Measured 2026-08-18 (Secret Societies recuration): after a Mongo edit, a successful
+`POST /api/admin/revalidate`, and a Cloudflare purge that returned `success: true`,
+`/collections/freemasonry` still served the pre-edit prose and the pre-edit
+`numberOfItems` with `x-vercel-cache: HIT` and `age` climbing past 5,000s. **In the same
+minute, on the same route, with identical cache headers, two sibling collection pages
+served fresh content.** So do not conclude "revalidatePath doesn't work" — conclude that
+it can silently fail to take on a *given path*, which is exactly the case that fools you,
+because the paths you spot-check may be the ones that worked.
+
+Two corollaries:
+
+- **Purge order matters.** Purging Cloudflare before the origin has regenerated just
+  re-caches the stale copy from Vercel. Purge, confirm fresh at origin with `?cb=`, then
+  purge again. (Same shape as "a purge is only safe if the origin can refill it".)
+- **A deployment is the reliable flush** when a path stays stuck. `/collections/:path*`
+  carries `CDN-Cache-Control: public, max-age=86400` in `next.config.ts`, so a stuck entry
+  otherwise sits for 24h.
