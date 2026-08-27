@@ -68,8 +68,13 @@ of shadow traffic. The retired title+author tier still runs as the POST-FLIP
 shadow: both verdicts land in `dedup_shadow_decisions` (`regime:
 'edition_live'`), where a shadow-only row now means the OLD tier caught
 something the new one lets through — the regression signature. Read with
-`scripts/audit/dedup-shadow-agreement.mjs`; a clean week means the shadow
-block and `titleAuthorTierMatches()` get deleted. Audit scripts replaying
+`scripts/audit/dedup-shadow-agreement.mjs`. **Retirement is gated on #4270,
+not on a lucky quiet week**: the 2026-08-27 triage found tier 2 blind to
+bilingual stored titles (native script + romanization) re-imported under the
+bare romanized title — the key prefix differs, and only the old ASCII tier
+catches it (by stripping the non-Latin half). Fix the recall gap
+(`edition_key_latin` secondary key, #4270), THEN a clean week deletes the
+shadow block and `titleAuthorTierMatches()`. Audit scripts replaying
 books already in the DB must pass `{ shadowLog: false }`. The shadow block is
 fenced — it must never fail an import. Corollary of the flip: dedup recall now
 DEPENDS on Phase 0 stamping both `books` and `books_warehouse` — an unstamped
