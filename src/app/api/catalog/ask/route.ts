@@ -227,7 +227,11 @@ export async function POST(request: Request) {
         plan,
         parsed: true,
         unreadable: true,
-        note: plan.note || 'I could not tell what to look for in that.',
+        // Fixed wording, not the model's. Asked to describe a search it did not
+        // make, flash-lite writes things like "Unintelligible search query" —
+        // accurate, useless, and not what a librarian sounds like. This is the
+        // one branch where there is nothing to report, so the words are ours.
+        note: 'I could not tell what to look for in that. Try naming a subject, a title or an author.',
       });
     }
 
