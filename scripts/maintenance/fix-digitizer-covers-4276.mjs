@@ -20,9 +20,13 @@
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/fix-digitizer-covers-4276.mjs --dry-run
- *   --dry-run       Census + preview only, no writes
- *   --limit N       Apply at most N cover changes
- *   --book-id ID    Single book (diagnostics)
+ *   --dry-run        Census + preview only, no writes
+ *   --limit N        Apply at most N cover changes
+ *   --book-id ID     Single book (diagnostics)
+ *   --include-blank  Also flag covers on blank flyleaves — but SPARE pages whose
+ *                    OCR describes a real binding (vellum/leather/"front cover"),
+ *                    and require a much stronger replacement (score ≥ 100, i.e. a
+ *                    real title page or frontispiece) than the boilerplate rule.
  *
  * After a live run: run scripts/workers/sync-books-catalog.mjs (incremental)
  * and POST the changed slugs to /api/admin/revalidate.
@@ -43,9 +47,14 @@ const BOOK_ID = (() => {
   return i !== -1 ? process.argv[i + 1] : null;
 })();
 
+const INCLUDE_BLANK = process.argv.includes('--include-blank');
+
 const SWEEP = 'digitizer-cover-sweep-4276';
 const SCAN_PAGES = 20;
 const BATCH = 50;
+/** A blank flyleaf may only be replaced by a clearly strong page — a real
+ *  title page / frontispiece — never by a marginally-better text page. */
+const BLANK_MIN_SCORE = 100;
 
 /** Digitizer/scanner boilerplate signatures, tested on the OCR head of the
  *  CURRENT cover page only. Google's insert + IA funding pages. Deliberately
@@ -63,6 +72,12 @@ const JUNK_TYPES = new Set([
   'digitizer-insert', 'scanner_metadata',
   'scanner-metadata', 'color-card', 'colorcard', 'color_card', 'target',
 ]);
+
+/** An OCR head that describes a REAL binding — an authentic cover the reader
+ *  should keep, even though the page is typed 'blank'. Checked only in
+ *  --include-blank mode. */
+const REAL_BINDING_RE =
+  /front cover|back cover|book cover|cover of (?:the|a) (?:manuscript|book|volume)|binding|vellum|leather|marbled|boards\b|spine\b|bookplate|ex.?libris/i;
 
 /** Resolve which page_number the book's current cover points at, or null. */
 function currentCoverPage(book) {
@@ -147,15 +162,23 @@ for (let i = 0; i < books.length; i += BATCH) {
     const head = coverPage?.ocr_head || '';
     const isBoilerplate =
       (coverPage && JUNK_TYPES.has(coverPage.page_type)) || BOILERPLATE_RE.test(head);
-    if (!isBoilerplate) { stats.coverClean++; continue; }
+    // Blank-flyleaf rule (opt-in): typed blank — by the field or by the OCR's
+    // own <page-type> tag — and NOT described as a real binding.
+    const typedBlank = coverPage &&
+      (coverPage.page_type === 'blank' || /<page-type>\s*blank\s*<\/page-type>/i.test(head));
+    const isBlankFlyleaf = INCLUDE_BLANK && !isBoilerplate &&
+      typedBlank && !REAL_BINDING_RE.test(head);
+    if (!isBoilerplate && !isBlankFlyleaf) { stats.coverClean++; continue; }
     stats.flagged++;
+
+    const minScore = isBoilerplate ? 30 : BLANK_MIN_SCORE;
 
     // Re-score every scanned page; scorer reads ocr_head via its fallback chain.
     const scored = bookPages
       .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle: book.title }) }))
       .sort((a, b) => b.score - a.score);
     const best = scored[0];
-    if (!best || best.score < 30 || best.page.page_number === coverNum) {
+    if (!best || best.score < minScore || best.page.page_number === coverNum) {
       stats.noBetterPage++;
       skips.push({ id: book.id, slug: book.slug, why: `no better page (best p${best?.page.page_number} score ${best?.score})` });
       continue;
@@ -166,7 +189,7 @@ for (let i = 0; i < books.length; i += BATCH) {
       method: SWEEP,
       actor: 'script',
       confidence: 0.8,
-      detail: `was p${coverNum} (digitizer boilerplate) → p${best.page.page_number}: ${best.reason} (score ${best.score})`,
+      detail: `was p${coverNum} (${isBoilerplate ? 'digitizer boilerplate' : 'blank flyleaf'}) → p${best.page.page_number}: ${best.reason} (score ${best.score})`,
     });
     if (!update || !isRenderableCoverUrl(update.image_thumb)) {
       stats.notRenderable++;
@@ -175,7 +198,7 @@ for (let i = 0; i < books.length; i += BATCH) {
     }
 
     stats.fixed++;
-    changes.push({ id: book.id, slug: book.slug, title: (book.title || '').slice(0, 55), from: coverNum, to: best.page.page_number, reason: best.reason, score: best.score, thumb: update.image_thumb });
+    changes.push({ id: book.id, slug: book.slug, title: (book.title || '').slice(0, 55), rule: isBoilerplate ? 'boilerplate' : 'blank', from: coverNum, to: best.page.page_number, reason: best.reason, score: best.score, thumb: update.image_thumb });
 
     if (!DRY_RUN) {
       await db.collection('books').updateOne(
