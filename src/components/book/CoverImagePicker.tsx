@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BookOpen, X, Check, Loader2, Pencil } from 'lucide-react';
@@ -148,8 +149,14 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         )}
       </AuthCheck>
 
-      {/* Picker Modal - Only rendered for authenticated users */}
-      {isOpen && (
+      {/* Picker Modal — only rendered for authenticated users. Portaled to
+          <body>: this component often mounts inside the hero cover slot, whose
+          ancestors carry `[&_img]` !important sizing overrides (which clobbered
+          every tile image to a fixed 420px height — blank-looking tiles) and a
+          filled `hero-cover-in` opacity animation (a permanent stacking context
+          that trapped the z-50 overlay UNDER later page content). The portal
+          escapes both, and any future transformed ancestor, in one move. */}
+      {isOpen && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div
             role="dialog"
@@ -232,7 +239,8 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
