@@ -69,11 +69,17 @@ test.describe('Librarian', () => {
     // conversations and come back to them later") and broke the test the next
     // morning; the behaviour under test (a soft prompt, not a hard gate) never
     // changed. What matters is that anonymous visitors get a link, not a wall.
-    // Match the composer nudge by its exact href, not by role+name: the header
-    // UserMenu also renders a "Sign in" link (bare /auth/signin), so a name
-    // locator would pass even if the nudge below the input disappeared.
+    // Match the composer nudge by an href PREFIX, not by role+name: the header
+    // UserMenu also renders a "Sign in" link, but it is a bare /auth/signin
+    // with no query, so a name locator would pass even if the nudge below the
+    // input disappeared while `?callbackUrl=` still separates the two.
+    // Not an exact href either — #4134 (Spanish librarian) routed this through
+    // `encodeURIComponent`, so the callback renders as `%2Flibrarian` rather
+    // than `/librarian` and an equality match broke the next morning. The
+    // behaviour under test (a soft prompt carrying you back here, not a wall)
+    // never changed, and both spellings are the same URL.
     await expect(
-      page.locator('a[href="/auth/signin?callbackUrl=/librarian"]')
+      page.locator('a[href^="/auth/signin?callbackUrl="]')
     ).toBeVisible();
   });
 
