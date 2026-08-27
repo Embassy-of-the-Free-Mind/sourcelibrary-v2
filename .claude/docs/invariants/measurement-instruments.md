@@ -328,3 +328,24 @@ one acting on it, suspect the watchdog before the corpus.
 Related: the same self-referential shape as the error reporter that reported its
 own failures (#4045/#4047), and the inverse of "absence is not failure — no silent
 skips" (#3740): here the failure was not silent, it was *disguised as a finding*.
+
+## The absence of a marker is not the absence of the mechanism
+
+A cost-and-analytics audit on 2026-08-05/07 produced **six retractions, every one the same shape**: a
+missing thing was read as a missing behaviour, when the behaviour lived somewhere unlooked-at — often
+outside this repo entirely.
+
+- No Cloudflare receipt email ⇒ "billed to another mailbox." Cloudflare *states* it sends none;
+  invoices are dashboard-only, as are Supabase's and Atlas's.
+- No `skewProtection` in `next.config.ts`/`vercel.json` ⇒ "the feature is off." It is a **Vercel
+  project setting**, was on, and the real defect was that its window was *shorter than the CDN TTL*.
+- No `traffic_class` field on `analytics_pageviews` rows ⇒ "unclassified." The route classifies and
+  **drops** non-human before the insert, so every stored row is human by filtering — this one nearly
+  merged a wrong "correction" to a doc that was right.
+- An unfamiliar model id read as a third model ⇒ lite usage under-counted **40×**
+  (`gemini-3.1-flash-lite-preview` is an alias; the orchestrator says so in a comment).
+
+**Before concluding from a shape in the data, find the code path or the vendor's own page.** One
+known-absent item looked up in the authoritative source beats any amount of reasoning about
+aggregates. Corollary: everything *measured* in that audit held up; everything *inferred* from
+absence did not.
