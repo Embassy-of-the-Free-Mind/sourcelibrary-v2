@@ -65,7 +65,10 @@ export async function POST(req: Request) {
   return Response.json({
     access_token,
     token_type: 'Bearer',
-    expires_in: 86400, // 24 hours
+    // Long-lived on purpose: the MCP endpoint serves anonymous callers too, so
+    // an expiring token buys no security and a short one makes Claude re-run
+    // the consent popup for connected users.
+    expires_in: 31536000, // 1 year
     scope: 'mcp',
   }, {
     headers: {
