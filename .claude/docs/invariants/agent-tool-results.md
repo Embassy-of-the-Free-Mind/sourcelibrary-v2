@@ -81,3 +81,20 @@ Note `next dev` cannot stand in for it in a worktree: the shared `node_modules`
 symlink points outside the worktree root and Turbopack panics on it
 ("Symlink [project]/node_modules is invalid, it points out of the filesystem
 root"). Preview deploys are the practical loop.
+
+## Tool descriptions are the only lever that acts before the mistake
+
+From an agent's own postmortem of its session (feedback, 2026-08-27): it
+asserted three false things with full confidence — no IIIF MCP servers exist
+(two do), visual-similarity over collections is unprecedented (it isn't), we
+lack IIIF endpoints (we ship them) — and each was caught only because a human
+pushed back. An unprompted agent files all three and moves on.
+
+/llms.txt, /developers, and result-payload notes all correct errors *after*
+they're made or only if consulted. The tool description is read every single
+time, by every client, before every call. **Treat descriptions as the primary
+documentation surface for agent consumers, not as parameter labels**: put the
+known data hazards (unreliable fields, sparse coverage, lanes a filter cannot
+reach) and the narrowing strategy in the description of the tool and of the
+specific parameter they poison. `get_quote` teaching citation practice and
+`year_from`'s artwork-year caution are the house pattern.
