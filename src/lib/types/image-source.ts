@@ -56,6 +56,10 @@ export type ImageSourceProvider =
   | 'byu'            // Brigham Young University, L. Tom Perry Special Collections
   | 'slub_dresden'   // Sächsische Landesbibliothek – Staats- und Universitätsbibliothek Dresden
   | 'goettingen'     // Niedersächsische Staats- und Universitätsbibliothek Göttingen
+  | 'b-nice'         // B-NICE / Pustaka Nusantara (Dutch-Indonesian heritage)
+  | 'wikimedia_commons' // Wikimedia Commons / Wikisource
+  | 'tartu_dspace'   // University of Tartu Library (DSpace)
+  | 'morgan'         // The Morgan Library & Museum
   | 'contentdm'      // OCLC CONTENTdm
   | 'ia'             // Internet Archive (alternate key)
   | 'library'
