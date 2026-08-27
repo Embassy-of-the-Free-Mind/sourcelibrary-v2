@@ -9,6 +9,7 @@ import { withApiAuth } from '@/lib/api-auth';
 import { EDITION_COUNTER_PROJECTION } from '@/lib/page-translations';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isBookReadable } from '@/lib/book-access';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
@@ -38,7 +39,9 @@ export const GET = withApiAuth(async (
     // categories, year) — without these, MCP returns a book card with
     // null pages and no summary.
     const bookProjection = pagesMode === 'nav' ? {
-      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+      // `visible` feeds the hidden-book gate below — without it a hidden book
+      // in nav mode reads as public (isHiddenBook tests visible === false).
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
       published: 1, year: 1, language: 1, doi: 1,
       // The edition-vs-work language distinction (#3942). `language` is the
       // MANIFESTATION language — what is printed on these leaves — while
@@ -72,6 +75,14 @@ export const GET = withApiAuth(async (
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
     const book = result.book;
+
+    // Hidden books are gated on every content route (text/quote/index/chat/…)
+    // via book-access; the base metadata route was the one surface still
+    // serving full records for hidden ids to anonymous callers. Same
+    // indistinguishable-404 contract as the sibling routes.
+    if (!(await isBookReadable(book, request))) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
 
     // Page projections:
     // - full: all fields (for admin/processing views)

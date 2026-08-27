@@ -8,6 +8,7 @@ import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isBookReadable } from '@/lib/book-access';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 
 export const preferredRegion = 'fra1';
@@ -31,8 +32,9 @@ export async function GET(
     const db = includeFull ? await getDb() : await getReadDb();
 
     // Book projection: nav mode only needs fields the reader uses
+    // (`visible` feeds the hidden-book gate below).
     const bookProjection = pagesMode === 'nav' ? {
-      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
       published: 1, language: 1, doi: 1,
       chapters: 1,
     } : undefined;
@@ -42,6 +44,12 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
     const book = result.book;
+
+    // Hidden books: same gate + indistinguishable-404 as the sibling
+    // tenant content routes (quote/download/index/…).
+    if (!(await isBookReadable(book, request))) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
 
     // Page projections:
     // - full: all fields (for admin/processing views)
