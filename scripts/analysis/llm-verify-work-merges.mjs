@@ -22,6 +22,10 @@
  *   node scripts/analysis/llm-verify-work-merges.mjs --apply         # write HIGH merges (+backup)
  *   node scripts/analysis/llm-verify-work-merges.mjs --coverage-only # exclusion report + coverage, NO LLM calls (free)
  *   node scripts/analysis/llm-verify-work-merges.mjs --include-backlog # ALSO judge hidden/backlog books (#4246 Phase 1)
+ *   node scripts/analysis/llm-verify-work-merges.mjs --mega            # judge ONLY the >50-item mega-author blocks,
+ *                                                                     # hierarchically: title-sorted chunks of ≤40, then
+ *                                                                     # rounds over surviving group representatives until
+ *                                                                     # convergence. Writes llm-work-merge-proposals-mega.json.
  *
  * Env: MONGODB_URI, GEMINI_API_KEY_TIER3|GEMINI_API_KEY. Model: gemini-3.1-flash-lite.
  */
@@ -37,6 +41,12 @@ const COVERAGE_ONLY = process.argv.includes('--coverage-only');
 // default so the standing run's behavior is unchanged. Still requires
 // pages_count > 0: metadata-only imports carry unverified titles.
 const INCLUDE_BACKLOG = process.argv.includes('--include-backlog');
+// Judge ONLY the mega-author blocks (>50 items) the normal pass skips. One LLM
+// call cannot hold a 200-item author, so: sort clusters by de-accented title
+// (same-work items land adjacent), judge chunks of ≤40, merge HIGH groups,
+// repeat over the surviving representatives until no merges or one chunk holds
+// everything. Cross-chunk merges happen in later rounds via representatives.
+const MEGA = process.argv.includes('--mega');
 const LIMIT_AUTHORS = parseInt((process.argv.find(a => a.startsWith('--limit-authors=')) || '').split('=')[1]
   || process.argv[process.argv.indexOf('--limit-authors') + 1] || '0', 10) || 0;
 const KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
@@ -182,6 +192,7 @@ for (const b of all) { if (!byAuthor.has(b.author_id)) byAuthor.set(b.author_id,
 
 // candidate authors: have a possible merge (>=2 distinct work_ids, OR an unset book alongside another item)
 const candidates = [];
+const megaCandidates = [];
 let singleItemAuthors = 0, megaAuthors = 0, megaAuthorBooks = 0;
 for (const [aid, bks] of byAuthor) {
   const items = new Map(); // key -> {ref,title,langs,years,currentWorkId,bookIds}
@@ -197,7 +208,7 @@ for (const [aid, bks] of byAuthor) {
   }
   const arr = [...items.values()];
   if (arr.length < 2) { singleItemAuthors++; continue; }   // nothing to merge
-  if (arr.length > 50) { megaAuthors++; megaAuthorBooks += bks.length; continue; } // skip pathological mega-authors (handle separately)
+  if (arr.length > 50) { megaAuthors++; megaAuthorBooks += bks.length; if (MEGA) megaCandidates.push({ aid, items: arr }); continue; } // skipped by the normal pass; --mega judges them hierarchically
   arr.forEach((it, i) => { it.ref = 'I' + i; it.years = it.years.length ? `${Math.min(...it.years)}${Math.max(...it.years) !== Math.min(...it.years) ? '-' + Math.max(...it.years) : ''}` : ''; });
   candidates.push({ aid, items: arr });
 }
@@ -206,16 +217,16 @@ console.log(`Author blocks: ${byAuthor.size} — judgeable ${candidates.length},
 if (COVERAGE_ONLY) { console.log('\n--coverage-only: stopping before LLM calls.'); await mc.close(); process.exit(0); }
 
 // resolve author names
-const aids = candidates.map(c => c.aid);
+const aids = (MEGA ? megaCandidates : candidates).map(c => c.aid);
 const nameMap = new Map();
 for (let i = 0; i < aids.length; i += 500) {
   const docs = await authorsCol.find({ _id: { $in: aids.slice(i, i + 500) } }, { projection: { name: 1 } }).toArray();
   for (const d of docs) nameMap.set(d._id, d.name);
 }
 
-let pool = candidates;
-if (LIMIT_AUTHORS) pool = candidates.slice(0, LIMIT_AUTHORS);
-console.log(`Candidate authors with a possible merge: ${candidates.length}${LIMIT_AUTHORS ? ` (processing ${pool.length})` : ''}`);
+let pool = MEGA ? [] : candidates;
+if (LIMIT_AUTHORS) pool = pool.slice(0, LIMIT_AUTHORS);
+if (!MEGA) console.log(`Candidate authors with a possible merge: ${candidates.length}${LIMIT_AUTHORS ? ` (processing ${pool.length})` : ''}`);
 
 const proposals = [];
 let processed = 0, mergeGroups = 0;
@@ -250,9 +261,78 @@ for (let i = 0; i < pool.length; i += CONC) {
   await Promise.all(pool.slice(i, i + CONC).map(runAuthor));
 }
 
+// ── Mega-author hierarchical pass (#4246): chunk → judge → merge reps → repeat ──
+if (MEGA) {
+  const fmtYears = ys => ys.length ? `${Math.min(...ys)}${Math.max(...ys) !== Math.min(...ys) ? '-' + Math.max(...ys) : ''}` : '';
+  const MCONC = 4, CHUNK = 40, MAX_ROUNDS = 5;
+  const megaPool = LIMIT_AUTHORS ? megaCandidates.slice(0, LIMIT_AUTHORS) : megaCandidates;
+  console.log(`--mega: hierarchically judging ${megaPool.length}/${megaCandidates.length} mega-author blocks (${megaAuthorBooks} books total)`);
+  let mdone = 0;
+  async function runMega(c) {
+    const authorName = nameMap.get(c.aid) || c.aid;
+    // one cluster per item; clusters absorb each other as rounds progress
+    let clusters = c.items.map(it => ({ title: it.title, langs: new Set(it.langs), years: [...it.years], items: [it], canonical: null, reason: null }));
+    for (let round = 1; round <= MAX_ROUNDS; round++) {
+      if (clusters.length < 2) break;
+      clusters.sort((a, b) => deacc(a.title).localeCompare(deacc(b.title)));
+      const chunks = [];
+      if (clusters.length <= 45) chunks.push(clusters.slice());
+      else for (let i = 0; i < clusters.length; i += CHUNK) chunks.push(clusters.slice(i, i + CHUNK));
+      const removed = new Set();
+      let mergedThisRound = 0;
+      for (const chunk of chunks) {
+        if (chunk.length < 2) continue;
+        chunk.forEach((cl, i) => { cl.ref = 'I' + i; });
+        const res = await clusterAuthor(authorName, chunk.map(cl => ({ ref: cl.ref, title: cl.title, langs: cl.langs, years: fmtYears(cl.years) })));
+        if (!res?.groups) continue;
+        const byRef = new Map(chunk.map(cl => [cl.ref, cl]));
+        for (const g of res.groups) {
+          if (g.confidence !== 'high') continue;                       // only HIGH merges accumulate across rounds
+          const mems = (g.members || []).map(r => byRef.get(r)).filter(cl => cl && !removed.has(cl));
+          if (mems.length < 2) continue;
+          if (hasVolumeConflict(mems.map(m => m.title))) continue;     // series guard
+          const head = mems[0];
+          for (const m of mems.slice(1)) {
+            head.items.push(...m.items);
+            m.langs.forEach(l => head.langs.add(l));
+            head.years.push(...m.years);
+            if (m.title.length > head.title.length) head.title = m.title;
+            removed.add(m);
+          }
+          head.canonical = g.canonical_title; head.reason = g.reason;
+          mergedThisRound++;
+        }
+      }
+      clusters = clusters.filter(cl => !removed.has(cl));
+      const coveredInOneCall = chunks.length === 1;
+      process.stderr.write(`  [${authorName}] round ${round}: ${mergedThisRound} merges → ${clusters.length} clusters\n`);
+      if (!mergedThisRound || coveredInOneCall) break;
+    }
+    for (const cl of clusters) {
+      if (cl.items.length < 2) continue;
+      const cwids = new Set(cl.items.map(m => m.currentWorkId).filter(Boolean));
+      if (cwids.size <= 1 && !cl.items.some(m => !m.currentWorkId)) continue;  // already one cluster = no-op
+      mergeGroups++;
+      proposals.push({
+        author: authorName, author_id: c.aid, confidence: 'high',
+        reason: `${cl.reason || 'accumulated hierarchical merge'} [mega-chunked]`,
+        canonical_title: cl.canonical || cl.title,
+        members: cl.items.map(m => ({ ref: m.key, title: m.title, langs: [...m.langs], currentWorkId: m.currentWorkId, nBooks: m.bookIds.length })),
+        bookIds: cl.items.flatMap(m => m.bookIds),
+      });
+    }
+    mdone++;
+    process.stderr.write(`  mega ${mdone}/${megaPool.length} done: ${authorName}\n`);
+  }
+  for (let i = 0; i < megaPool.length; i += MCONC) {
+    await Promise.all(megaPool.slice(i, i + MCONC).map(runMega));
+  }
+}
+
 const outDir = new URL('../output/', import.meta.url).pathname;
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(`${outDir}llm-work-merge-proposals.json`, JSON.stringify({ processed, candidateAuthors: candidates.length, mergeGroups, proposals }, null, 2));
+const proposalsFile = `${outDir}llm-work-merge-proposals${MEGA ? '-mega' : ''}.json`;
+fs.writeFileSync(proposalsFile, JSON.stringify({ processed, candidateAuthors: MEGA ? megaCandidates.length : candidates.length, mergeGroups, proposals }, null, 2));
 
 const high = proposals.filter(p => p.confidence === 'high');
 const crossLang = high.filter(p => new Set(p.members.flatMap(m => m.langs)).size > 1);
@@ -264,7 +344,7 @@ for (const p of crossLang.slice(0, 12)) {
   for (const m of p.members) console.log(`     "${m.title.slice(0, 56)}" [${m.langs.join('/')}]`);
   console.log(`     ${p.reason.slice(0, 120)}`);
 }
-console.log(`\nProposal → ${outDir}llm-work-merge-proposals.json`);
+console.log(`\nProposal → ${proposalsFile}`);
 
 if (APPLY) {
   const backup = `${outDir}llm-work-merge-backup.json`;
