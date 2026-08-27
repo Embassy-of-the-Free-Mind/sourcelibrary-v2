@@ -508,7 +508,7 @@ export const posts: BlogPost[] = [
     readTime: '12 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
-    image: 'https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg',
+    image: 'https://images.sourcelibrary.org/archived/69b52f961a04ee0f3b417b55/80.jpg',
     imageAlt: 'Page from Budge\'s Egyptian Reading Book showing hieroglyphic text and transliteration, 1896',
   },
   {
