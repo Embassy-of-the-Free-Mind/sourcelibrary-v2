@@ -107,7 +107,7 @@ Return ONLY JSON with these keys:
   "firstTranslation": boolean, // true only if they asked for first translations / never-before-translated works
   "hasTranslation": boolean,   // true only if they asked for books they can read in English / translated ones
   "sort": string,              // one of: relevance, popular, recent, last_translated, title, author, year_asc, year_desc, quality
-  "note": string               // one sentence, under 18 words, saying what you looked for. Plain English, no dashes, no jargon, do not mention JSON or filters.
+  "note": string               // what was looked for, as a plain noun phrase under 12 words. "Latin medical texts on plague, printed before 1600." Not "I am searching for". No dashes, no flattery, no mention of filters or JSON.
 }
 
 LANGUAGES: ${list(vocab.languages) || '(none supplied)'}
@@ -116,7 +116,7 @@ COLLECTIONS: ${list(vocab.collections) || '(none supplied)'}
 
 Rules:
 - Only ever use a value that appears in the lists above. If nothing fits, use "".
-- Do not set both "collection" and "category" unless the reader clearly asked for both.
+- Never set both "collection" and "category". They overlap, and setting both narrows twice for one request. Pick the better fit, or leave both empty and rely on "topic".
 - Prefer "topic" over "category": the similarity search is better at subjects than the tag list is.
 - "before 1600" means yearMax 1599. "16th century" means 1500 to 1599. "medieval" means up to 1500. Leave a bound null when the reader implied none.
 - Set firstTranslation and hasTranslation to false unless the reader actually asked for that.

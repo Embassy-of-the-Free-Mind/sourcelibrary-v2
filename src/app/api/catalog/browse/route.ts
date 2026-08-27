@@ -9,6 +9,15 @@ export const maxDuration = 20;
 const ASK_POOL = 200;
 
 /**
+ * Cosine floor for the ask lane, above the 0.3 the other semantic lanes use.
+ * Measured on the preview: at 0.3 a keyboard mash ("qwertyuiop zxcvbnm")
+ * returned 30 books, which is a confident answer to a question nobody asked.
+ * The other lanes merge their hits into a ranked list where a weak match is
+ * simply last; here the hits ARE the result set, so the floor has to hold.
+ */
+const ASK_THRESHOLD = 0.45;
+
+/**
  * GET /api/catalog/browse
  *
  * Server-side paginated catalog browse powered by Supabase books_catalog.
@@ -68,7 +77,7 @@ export async function GET(request: Request) {
         if (!embedding) {
           laneDown = true;
         } else {
-          const hits = await semanticBookSearch(f.ask, ASK_POOL, { threshold: 0.3, embedding });
+          const hits = await semanticBookSearch(f.ask, ASK_POOL, { threshold: ASK_THRESHOLD, embedding });
           ids = hits.map((h) => h.book_id).filter(Boolean);
           rank = new Map(ids.map((id, i) => [id, i]));
         }
