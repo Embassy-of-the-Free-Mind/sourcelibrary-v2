@@ -48,6 +48,8 @@ export interface CollectionBook {
 export interface CollectionBookCardLabels {
   firstTranslation: string;
   pages: string;
+  /** Singular form. A one-page broadside read "1 pages" on every surface. */
+  page: string;
   ocr: string;
   translated: string;
   editedBy: string;
@@ -57,6 +59,7 @@ export interface CollectionBookCardLabels {
 export const CARD_LABELS_EN: CollectionBookCardLabels = {
   firstTranslation: 'First Translation',
   pages: 'pages',
+  page: 'page',
   ocr: 'OCR',
   translated: 'Translated',
   editedBy: 'edited by',
@@ -65,6 +68,7 @@ export const CARD_LABELS_EN: CollectionBookCardLabels = {
 export const CARD_LABELS_ES: CollectionBookCardLabels = {
   firstTranslation: 'Primera traducción',
   pages: 'páginas',
+  page: 'página',
   ocr: 'OCR',
   translated: 'Traducido',
   editedBy: 'editado por',
@@ -281,7 +285,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (book.published ? <span>{book.published}</span> : null)}
           {isArtwork
             ? (book.resource_type ? <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span> : null)
-            : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} {labels.pages}</span> : null)}
+            : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} {pageCount === 1 ? labels.page : labels.pages}</span> : null)}
         </div>
 
         {!isArtwork && pageCount > 0 && (

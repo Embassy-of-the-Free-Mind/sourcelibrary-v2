@@ -608,12 +608,6 @@ export default function CatalogBrowser({
       <div
         className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10"
         ref={gridRef}
-        /* The list view and the pager are shared components that accent in
-           rust. On a page of sixty results that reads as sixty warnings, so the
-           accent token is re-pointed to the gold this page already uses for the
-           first-translation line. Scoped to the results, and it moves with the
-           token rather than forking two components. */
-        style={{ ['--accent-rust' as string]: 'var(--accent-gold-dark)' }}
       >
         <div className={loading ? 'opacity-50 transition-opacity duration-200' : 'transition-opacity duration-200'}>
           {books.length === 0 && !loading ? (
@@ -645,6 +639,7 @@ export default function CatalogBrowser({
               sort={filters.sort}
               onSort={(s) => apply({ sort: s as CatalogSort })}
               loading={loading}
+              accent="gold"
             />
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
@@ -673,10 +668,13 @@ export default function CatalogBrowser({
           )}
         </div>
 
+        {/* Gold, not rust: sixty results with a red marker under them reads as
+            an error state. See the prop's note in CatalogPagination. */}
         <CatalogPagination
           currentPage={filters.page}
           totalPages={totalPages}
           onPageChange={handlePage}
+          accent="gold"
         />
 
         {/* The exits a catalogue owes its readers: the same set as a file, and
