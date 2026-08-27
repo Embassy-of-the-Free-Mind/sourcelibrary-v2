@@ -72,3 +72,30 @@ Up: nothing new — the reconcile blindness is an instance of the existing
 "a bad write can erase its own repair path" corollary (Data Protection), and the
 fix is documented in the script's own usage header where it fires. Down: no
 demotions found this session.
+
+## Round 2 (same evening, after "keep going")
+
+- **Translations landed**: Clavis 87/88 pages English (was 25), Das höchste Gut
+  124/127 (was 0; gaps are blank leaves). Batch API via
+  `POST /api/books/<id>/batch-translate-async` with Bearer CRON_SECRET (~$0.25),
+  collected with `collect-batch-results.mjs`, ISR revalidated. Fludd shortlist
+  fully closed on #4241.
+- **#4265 merged** (#4246 Phase 0): the work-merge judge prints an exclusion
+  report + judged-coverage metric every run; `--coverage-only` is free. First
+  measurement (on #4246): 19% coverage; 28,775 hidden text books WITH author_id
+  are judge-blind (larger than the visible selection); 4,112 visible books
+  missing author_id; 14 mega-authors (>50 items, 2,747 books) silently skipped —
+  chunking strategy proposed on the issue.
+- **Search verification** (Derek's ask): "divisions of the mind" → gallery TEXT
+  lane (`/api/gallery?q=`) finds Vol 2 **p219** (printed 217, "De triplici
+  animae in corpore visione") first among page hits, plus the same plate in a
+  sibling scan and two standalone artwork records. Shortlink
+  https://sourcelibrary.org/q/BekMFWOLaxCok1zerwB. NOTE: `q=` is the text param;
+  `query=` is silently ignored (first probe returned tarot — wrong param, looked
+  like broken search).
+- **CLIP backfill**: 1,827 gallery rows missing clip_embeddings embedded on
+  Hetzner (self-hosted CLIP, ~13 min, 0 failed). Visual lane ranks Fludd
+  microcosm material for literal-visual phrasings; it cannot rank conceptual
+  phrases ("divisions of the mind") — that's CLIP's nature, text lane is the
+  conceptual lane. `gallery_text_embeddings` has its own cron
+  (`image-embeddings-cron.mjs`, in `crontab.production`).
