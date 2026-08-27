@@ -735,6 +735,7 @@ async function searchImages(args: Record<string, unknown>) {
   params.set('limit', String(limit));
   const offset = Math.max(0, Math.floor(Number(args.offset) || 0));
   if (offset) params.set('offset', String(offset));
+  if (args.iconclass) params.set('iconclass', String(args.iconclass));
 
   // Search both gallery illustrations AND artworks (paintings/prints) in parallel.
   // The artwork lane supports type/subject/figure/symbol/year filters and MUST
@@ -756,7 +757,10 @@ async function searchImages(args: Record<string, unknown>) {
     apiGet('/gallery', params) as Promise<Record<string, unknown>>,
     // The artwork lane has no offset support — include it on the first page
     // only, so paging doesn't re-serve the same artworks on every call.
-    args.query && !args.book_id && offset === 0
+    // Also skip it when an iconclass filter is set: the artwork lane cannot
+    // apply it, and unfiltered results merged into a filtered request is the
+    // silent no-op disease #3936 was about.
+    args.query && !args.book_id && !args.iconclass && offset === 0
       ? (apiGet('/artwork/search', artworkParams) as Promise<Record<string, unknown>>).catch(() => ({ items: [] }))
       : Promise.resolve({ items: [] }),
   ]);
@@ -767,6 +771,11 @@ async function searchImages(args: Record<string, unknown>) {
     // record, display/context only. Agents previously had to infer this from
     // which fields happened to be present.
     source_type: item.source === 'artwork' ? 'artwork' : 'book_illustration',
+    // Iconclass notations where the classifier has run (~2,500 of 206K images
+    // as of 2026-08 — sparse, so absence means unclassified, not unthemed).
+    ...((item.metadata as { iconclass?: string[] } | undefined)?.iconclass?.length
+      ? { iconclass: (item.metadata as { iconclass: string[] }).iconclass }
+      : {}),
     description: item.description, type: item.type, quality: item.galleryQuality,
     book: { title: item.bookTitle, author: item.author, year: item.year },
     page: item.pageNumber, image_url: item.imageUrl,
@@ -1102,6 +1111,7 @@ const TOOLS: Tool[] = [
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
         offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
+        iconclass: { type: 'string', description: 'Filter by Iconclass notation, prefix-matched ("49" matches 49G22, 49E39, …). Coverage is SPARSE: only ~2,500 of 206K images carry a notation, so an empty result means the classifier has not run on matching images, NOT that the subject is absent from the corpus — retry with a text query before concluding anything. Book-illustration lane only (artworks are excluded when this filter is set). Matching results return their notations in an iconclass array.' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
       },
     },
