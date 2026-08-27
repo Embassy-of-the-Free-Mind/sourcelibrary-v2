@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
+import Reader2C from '@/components/reader-v2/Reader2C';
 import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
@@ -96,7 +97,15 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
     findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION, ctx?.id ?? undefined),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
-      .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })
+      // Image fields are part of the nav list because the reader's filmstrip
+      // draws a thumbnail per page. Without them getPageThumbUrl has nothing
+      // to resolve and every slot renders empty — books with no pre-sized
+      // image_thumb (only an archived original) fail hardest, since their
+      // thumb has to be derived from the source.
+      .project({
+        _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1,
+        image_thumb: 1, thumbnail_blob: 1, display_photo: 1, archived_photo: 1, photo: 1,
+      })
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
@@ -134,7 +143,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const bookPath = book.slug || scopedBookId;
   // JSON-LD is built from the UNMARKED page: the SEO excerpt stays free of
   // zero-width characters so search snippet matching is untouched.
-  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org/book/${bookPath}/page/${pageId}`);
+  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org${localePath(`/book/${bookPath}/page/${pageId}`, lang)}`);
 
   // The flight payload the reader (and anything scraping this URL) receives
   // carries the invisible provenance imprimatur in the translation. It is
@@ -151,36 +160,65 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      {/* Books we hold a facsimile fount for are read in their own type (#4083).
-          `display: contents` so this wrapper carries the font variables and the
-          scoping class without adding a box to the reader's flex layout. */}
+      {/* The redesign ships on sourcelibrary.org. Partner reading rooms —
+          BPH, EFM, every /embed/** iframe and tenant subdomain — stay on the
+          old reader until BPH have seen it and approved it. Not caution for
+          its own sake: the new reader's Cite and Share build absolute URLs
+          against sourcelibrary.org rather than the host page, so a scholar
+          citing a page inside a partner's site would be handed a URL pointing
+          away from it.
+          
+          Books we hold a facsimile fount for are read in their own type
+          (#4083); `display: contents` so this wrapper carries the font
+          variables without adding a box to either reader's flex layout. Both
+          readers get it — the fount is a reading feature, not a chrome one. */}
       <div
         className={isAldineFount(book.id) ? `aldine-fount ${aldineVariables}` : undefined}
         style={isAldineFount(book.id) ? { display: 'contents' } : undefined}
       >
-        <PageEditorClient
-          initialBook={book}
-          initialPage={markedPage}
-          initialPageList={serializedNavPages}
-        />
+        {ctx?.isEmbedded ? (
+          <PageEditorClient
+            initialBook={book}
+            initialPage={markedPage}
+            initialPageList={serializedNavPages}
+          />
+        ) : (
+          <Reader2C
+            initialBook={book}
+            initialPage={markedPage}
+            initialPageList={serializedNavPages}
+          />
+        )}
       </div>
       {musicTranscriptions.length > 0 && (
         <HymnPlayer transcriptions={musicTranscriptions} />
       )}
       {/* Server-rendered nav links so crawlers can walk book → pages even
-          when client-component SSR changes (#2266). Sits below the h-screen
-          reader; the in-reader controls remain the primary navigation. */}
+          when client-component SSR changes (#2266).
+          
+          Screen-reader-only, NOT merely below the fold. The reader owns one
+          viewport, so on a phone this block appeared under it as a stray row
+          of links — a stale page number and an "All N pages" beside the real
+          pager, shoving the toolbar up the screen. It stays in the DOM and in
+          the accessibility tree, which is all #2266 needed; sighted readers
+          have the pager, the filmstrip and Contents for the same job. */}
       {!(ctx?.isEmbedded) && (() => {
         const rs = READER_STRINGS[lang];
         const idx = serializedNavPages.findIndex(p => p.id === pageId);
         const prev = idx > 0 ? serializedNavPages[idx - 1] : null;
         const next = idx >= 0 && idx < serializedNavPages.length - 1 ? serializedNavPages[idx + 1] : null;
+        // Screen-reader-only, NOT merely below the fold. The redesigned reader
+        // owns one viewport, so on a phone this block appeared under it as a
+        // stray row of links — a stale page number and an "All N pages" beside
+        // the real pager, shoving the toolbar up the screen. It stays in the
+        // DOM and in the accessibility tree, which is all #2266 needed; sighted
+        // readers have the pager, the filmstrip and Contents for the same job.
         return (
-          <nav aria-label={rs.pageNavigation} className="max-w-[1500px] mx-auto px-4 sm:px-6 py-4 text-sm text-stone-500 flex flex-wrap items-center gap-x-5 gap-y-1">
-            {prev && <a href={localePath(`/book/${bookPath}/page/${prev.id}`, lang)} className="hover:text-stone-700">{rs.prevPageLink(prev.page_number)}</a>}
-            <a href={localePath(`/book/${bookPath}`, lang)} className="hover:text-stone-700">{localizedTitle(book, lang)}</a>
-            <a href={`/book/${bookPath}/overview`} className="hover:text-stone-700">{rs.allPagesLink(serializedNavPages.length)}</a>
-            {next && <a href={localePath(`/book/${bookPath}/page/${next.id}`, lang)} className="hover:text-stone-700">{rs.nextPageLink(next.page_number)}</a>}
+          <nav aria-label={rs.pageNavigation} className="sr-only">
+            {prev && <a href={localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
+            <a href={localePath(`/book/${bookPath}`, lang)}>{localizedTitle(book, lang)}</a>
+            <a href={`/book/${bookPath}/overview`}>{rs.allPagesLink(serializedNavPages.length)}</a>
+            {next && <a href={localePath(`/book/${bookPath}/page/${next.id}`, lang)}>{rs.nextPageLink(next.page_number)}</a>}
           </nav>
         );
       })()}

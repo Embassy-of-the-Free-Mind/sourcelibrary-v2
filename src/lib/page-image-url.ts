@@ -84,11 +84,15 @@ function isProxyableUrl(url: string): boolean {
  *
  * Until 2026-08-21 it did not. `media.getty.edu` was absent from
  * `CSP_IMG_HOSTS`, so all 2,506 Florentine Codex pages resolved to a Getty
- * `image_thumb` that every browser refused — the page grid, the cover picker
- * and the reader itself showed a broken image, while curl got a clean 200 from
- * every one of those URLs. The book-cover resolver (`getBookThumbnailUrl`) had
- * screened against this same list since 2026-08-04; the page resolver never did,
- * and an R2 thumbnail that would have worked sat one field away the whole time.
+ * `image_thumb` that every browser refused — the page grid and the cover picker
+ * rendered nothing — while curl got a clean 200 from every one of those URLs.
+ * The book-cover resolver (`getBookThumbnailUrl`) had screened against this same
+ * list since 2026-08-04; the page resolver never did, and an R2 thumbnail that
+ * would have worked sat one field away the whole time.
+ *
+ * Note the blast radius is per SIZE TIER, not per book: those same pages carry
+ * `display_photo` on R2, so the reader's main image was never affected. A host
+ * can be missing for one tier and present for another.
  *
  * But not every consumer here is a browser. Exports (PDF/EPUB/ZIP) hand the
  * result to a server-side fetcher, where CSP does not apply — so a URL the

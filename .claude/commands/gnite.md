@@ -44,12 +44,41 @@ test/deploy outcomes, what was agreed. Skip for short or routine sessions.
 contacts, outreach, budgets, donors, sponsors — goes in the private
 `sourcelibrary-ops` repo (`~/sourcelibrary-ops`), never here.
 
-## 4. Reflect — both directions of the ratchet
+## 4. Reflect — three questions, and the first one is not about docs
 
 This is the point of `gnite` beyond tidying: the session is over, the lesson is fresh,
-and nobody will ever be better placed to write it down or throw it away. Ask **both**
-questions, not just the first. The first one alone is why `CLAUDE.md` grew from ~290
-lines to 827 in three months.
+and nobody will ever be better placed to write it down or throw it away. Ask **all
+three**. The doc question alone is why `CLAUDE.md` grew from ~290 lines to 827 in three
+months — and, less obviously, why lessons that *were* written down still recurred.
+
+**First — could this lesson be a CHECK instead of a sentence?** A doc is the weakest
+layer: it works only if the next person reads it at the moment it applies. Measured on
+2026-08-21, three of that session's four findings were classes where the doc already
+existed and did not prevent recurrence — `csp-img-hosts.ts` says "one edit, both layers"
+and the second resolver still never screened (#4163); #3293 says "validate a counter
+against the READ path" and `pages_archived` drifted 4.7× anyway (#4190). So before
+writing prose, ask whether the lesson can **fail loudly** instead:
+
+- a test that sweeps a directory and asserts the property — 21 of 214 unit tests already
+  do this (`csp-image-hosts.test.ts` over `next.config.ts`,
+  `locale-prefix-not-tenant.test.ts` over `src/app/`)
+- a detector or cron that files what it finds
+- a constructor that throws on bad input (`makeBookDoc()` / `makePageDoc()`)
+- a script that refuses to run without its guard
+
+If a check is possible, build it, and let the doc be one line pointing at it.
+
+**But do not reflex into a bad test.** Read `invariants/tests-that-are-not-guards.md`
+first: a guard whose only failure mode is "someone deleted this line" is documentation
+with a green checkmark. Run the negative control — delete the guarded line, watch the
+test go red, restore it — or you have shipped a decoration.
+
+**And know when prose is right.** A guard is the wrong tool when the lesson is about
+**judgment** rather than mechanism. "Hand-check the largest cluster before quoting a
+rate" and "ask which size tier a surface uses before calling it broken" cannot be
+asserted, and both earned their keep the day they were written. The discriminator: if you
+can name the file or symbol that must hold the property, it is a check; if the trigger is
+a human about to draw a conclusion, it is a doc.
 
 **Up — does `CLAUDE.md` or an invariant doc need something new?** If this session hit a
 non-obvious failure that would bite the next person, PR the doc change now. Otherwise

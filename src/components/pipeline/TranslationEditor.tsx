@@ -7,6 +7,7 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
+import UserMenu from '@/components/layout/UserMenu';
 import RevisionHistory from '@/components/reader/RevisionHistory';
 import {
   Loader2,
@@ -58,19 +59,8 @@ import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
+import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 
-// Languages that use non-Latin scripts and benefit from transliteration
-const NON_LATIN_LANGUAGES = new Set([
-  'greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
-  'syriac', 'chinese', 'japanese', 'korean', 'sanskrit',
-  'armenian', 'georgian', 'ethiopic', 'coptic', 'tibetan',
-  'russian', 'church slavonic'
-]);
-
-function hasNonLatinScript(language?: string): boolean {
-  if (!language) return false;
-  return NON_LATIN_LANGUAGES.has(language.toLowerCase());
-}
 
 // Helper to format edit source info
 // EditSourceBadge removed — source info folded into RevisionHistory trigger
@@ -642,6 +632,10 @@ export default function TranslationEditor({
   const [transliterationLoading, setTransliterationLoading] = useState(false);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
+  // Liked state of the CURRENT page, reported by the LikeButtons (#4126) so
+  // the footer line can swap "to save it to your favorites" → "Saved to your
+  // favorites". Both the toolbar and footer hearts report here.
+  const [pageLiked, setPageLiked] = useState(false);
   // Full book doc for the edition-info section of the metadata panel. The reader
   // route only ships a slim book projection, so the bibliographic fields are
   // fetched on demand — once per book, the first time the panel opens.
@@ -1367,6 +1361,17 @@ export default function TranslationEditor({
                 </span>
               )}
             </div>
+
+            {/* Account/sign-in — the reader was the one surface with no route
+                back to /favorites and no visible sign-in state (#4126). After
+                the page navigator so the highest-frequency control keeps its
+                position; on mobile this lives in row 2 instead. Never in
+                partner embeds. */}
+            {!isEmbedded && (
+              <div className="hidden sm:block shrink-0">
+                <UserMenu />
+              </div>
+            )}
           </div>
 
           {/* Row 2: Panel toggles ... Mode toggle + Like */}
@@ -1592,6 +1597,7 @@ export default function TranslationEditor({
                   bookId={book.id}
                   size="sm"
                   showCount={true}
+                  onLikedChange={setPageLiked}
                 />
                 <ShareButton
                   title={book.display_title || book.title}
@@ -1649,6 +1655,12 @@ export default function TranslationEditor({
                   tenantSlug={params?.tenant || undefined}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full text-sm"
                 />
+                {/* Mobile home of the account menu — row 1 is too tight there (#4126). */}
+                {!isEmbedded && (
+                  <div className="sm:hidden ml-1">
+                    <UserMenu />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -2362,7 +2374,13 @@ export default function TranslationEditor({
 
         {/* Footer: like + nav hint + search */}
         <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-3 flex-wrap text-xs">
+          {/* The like line states the payoff BEFORE the click and gives the
+              like a route back: "[♥ Like this page] to save it to your
+              favorites" → "[♥] Saved to your favorites" (#4126). The
+              /favorites link is a sibling of the button, never nested inside
+              it (nested interactives are an a11y fail and a mis-tap magnet);
+              embeds keep the bare button — there is no /favorites there. */}
+          <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-1.5 flex-wrap text-xs" aria-live="polite">
             <LikeButton
               key={`footer-${page.id}`}
               targetType="page"
@@ -2370,8 +2388,21 @@ export default function TranslationEditor({
               bookId={book.id}
               size="sm"
               showCount={true}
-              label={rs.likeThisPage}
+              label={pageLiked && !isEmbedded ? undefined : rs.likeThisPage}
+              onLikedChange={setPageLiked}
             />
+            {!isEmbedded && (
+              <span style={{ color: 'var(--text-muted)' }}>
+                {pageLiked ? rs.likeSavedPrefix : rs.likeSavePrefix}{' '}
+                <a
+                  href="/favorites"
+                  className="underline underline-offset-2 hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {rs.likeFavoritesWord}
+                </a>
+              </span>
+            )}
           </div>
           {showNavHint && (
             <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">

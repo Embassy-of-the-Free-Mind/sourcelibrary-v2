@@ -32,6 +32,11 @@ export interface BookStrings {
   editedBy: string;
   scans: (n: number) => string;
   scansTooltip: string;
+  /** For text editions, which have no page images at all. */
+  pagesOfText: (n: number) => string;
+  textEditionTooltip: string;
+  textEditionBy: (who: string) => string;
+  textEdition: string;
   images: (n: number) => string;
   notTranscribed: string;
   ocr: string;
@@ -123,6 +128,10 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     editedBy: 'edited by',
     scans: (n) => `${n} scans`,
     scansTooltip: 'Scanned images, including covers and blanks.',
+    pagesOfText: (n) => `${n} ${n === 1 ? 'page' : 'pages'} of text`,
+    textEditionTooltip: 'This is a text edition. There are no page images for this work.',
+    textEditionBy: (who) => `A text edition, transcribed and edited by ${who}. There are no page images for this work.`,
+    textEdition: 'A text edition. There are no page images for this work.',
     images: (n) => `${n} image${n === 1 ? '' : 's'}`,
     notTranscribed: 'Scans only — not transcribed yet',
     ocr: 'OCR',
@@ -206,6 +215,10 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     editedBy: 'editado por',
     scans: (n) => `${n} escaneos`,
     scansTooltip: 'Imágenes escaneadas, incluidas cubiertas y páginas en blanco.',
+    pagesOfText: (n) => `${n} ${n === 1 ? 'página' : 'páginas'} de texto`,
+    textEditionTooltip: 'Es una edición de texto. Esta obra no tiene imágenes de página.',
+    textEditionBy: (who) => `Edición de texto, transcrita y editada por ${who}. Esta obra no tiene imágenes de página.`,
+    textEdition: 'Edición de texto. Esta obra no tiene imágenes de página.',
     images: (n) => `${n} ${n === 1 ? 'imagen' : 'imágenes'}`,
     notTranscribed: 'Solo escaneos — todavía sin transcribir',
     ocr: 'OCR',
@@ -345,6 +358,13 @@ export interface ReaderStrings {
   typeCaption: string;
   // footer + search
   likeThisPage: string;
+  // The footer like line: "[♥ Like this page] to save it to your favorites"
+  // (unliked) / "[♥] Saved to your favorites" (liked). The prefix and the
+  // linked word are separate strings because "favorites" is an <a> to
+  // /favorites rendered OUTSIDE the button (#4126).
+  likeSavePrefix: string;
+  likeSavedPrefix: string;
+  likeFavoritesWord: string;
   searchThisBook: string;
   searchWithinBook: string;
   clearSearch: string;
@@ -433,6 +453,9 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     typeCaption: 'Griffo\u2019s roman for Aldus Manutius, traced from the 1496 De Aetna.',
 
     likeThisPage: 'Like this page',
+    likeSavePrefix: 'to save it to your',
+    likeSavedPrefix: 'Saved to your',
+    likeFavoritesWord: 'favorites',
     searchThisBook: 'Search this book...',
     searchWithinBook: 'Search within this book',
     clearSearch: 'Clear search',
@@ -519,6 +542,9 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     typeCaption: 'La redonda de Griffo para Aldo Manucio, calcada del De Aetna de 1496.',
 
     likeThisPage: 'Me gusta esta página',
+    likeSavePrefix: 'para guardarla en tus',
+    likeSavedPrefix: 'Guardada en tus',
+    likeFavoritesWord: 'favoritos',
     searchThisBook: 'Buscar en este libro...',
     searchWithinBook: 'Buscar dentro de este libro',
     clearSearch: 'Borrar la búsqueda',

@@ -1,0 +1,74 @@
+name: Master copy watch
+
+# The detector for a class every other check calls healthy.
+#
+# A page can serve entirely from our own CDN — our 1200px display variant, our
+# 150px thumbnail — while the only FULL-RESOLUTION copy of the scan sits on the
+# source institution's server. It renders, it counts toward "served from R2",
+# and no broken-image sweep touches it. If that source changes a URL scheme or
+# withdraws the item, we keep serving 1200px forever and can never regenerate
+# anything larger.
+#
+# Measured 2026-08-21: a corpus census reported 99.56% of live pages "held on R2
+# and served from R2" — true, and it missed ~100,000 pages in exactly this state.
+# Nothing we ran would have noticed, which is why this exists.
+#
+# READ-ONLY, and findings go to an issue rather than failing a build. Repair
+# fetches from the source and costs bandwidth and R2 storage, so it is a
+# decision a person makes, never something a cron does on its own.
+#
+# Weekly, not daily: it is a full scan of ~19M page documents, and the number it
+# watches moves in weeks, not hours.
+
+on:
+  schedule:
+    - cron: '0 6 * * 2'   # Tuesdays 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      threshold:
+        description: 'Pages above which this is a finding'
+        required: false
+        default: '0'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  master-copy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Look for pages served without a master
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/pages-served-without-a-master.mjs \
+            --max=${{ github.event.inputs.threshold || '0' }} > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+      - name: File findings
+        if: steps.run.outputs.fired == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Pages served from R2 with no master held — $(date -u +'%Y-%m-%d')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "These pages render entirely from our own CDN while the only full-resolution copy lives on the source institution's server. Repair costs bandwidth and storage and crawls a partner's infrastructure — treat this as a prompt to decide, not an instruction to run." \
+            "$(cat report.txt)")
+          gh issue create --title "$TITLE" --body "$BODY"
+      # Exit 2 means the detector never reached the database. Fail loudly: a
+      # silent green run is indistinguishable from "checked, found nothing"
+      # (#4071 — three detectors sat blind behind a missing secret).
+      - name: Fail if the detector could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::pages-served-without-a-master could not run (exit ${{ steps.run.outputs.fired }}) — no finding was measured. Check the MONGODB_URI repo secret."
+          exit 1

@@ -19,13 +19,19 @@ interface PageProps {
 async function getArtwork(slug: string) {
   const db = await getReadDb();
 
-  // Exact slug, or the legacy `art-` prefixed twin. Fetch BOTH and choose
-  // deliberately — a single findOne over an $in returns an arbitrary match, so
-  // a hidden duplicate twin could shadow the visible canonical and 404 a live
-  // artwork (see src/lib/artwork-slug.ts).
+  // Exact slug, the legacy `art-` prefixed twin, or the record id. Fetch ALL
+  // and choose deliberately — a single findOne over an $in returns an arbitrary
+  // match, so a hidden duplicate twin could shadow the visible canonical and
+  // 404 a live artwork (see src/lib/artwork-slug.ts). Id resolution matters
+  // because /favorites and saved links address artworks by id, and /book/<id>
+  // permanently redirects those here.
   const candidates = await db.collection('books').find(
     // content_type:'book' wins: never render a textual book as artwork even via a direct /artwork/<slug> URL.
-    { slug: { $in: [slug, `art-${slug}`] }, resource_type: { $exists: true }, content_type: { $ne: 'book' } },
+    {
+      $or: [{ slug: { $in: [slug, `art-${slug}`] } }, { id: slug }],
+      resource_type: { $exists: true },
+      content_type: { $ne: 'book' },
+    },
   ).toArray();
   const artwork = pickArtworkRecord(candidates, slug);
   if (!artwork) return null;

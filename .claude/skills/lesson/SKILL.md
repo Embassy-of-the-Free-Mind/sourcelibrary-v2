@@ -17,6 +17,16 @@ After fixing a bug, resolving an incident, or discovering an important pattern, 
    - Cross-cutting/general → `memory/lessons-learned.md`
    - If it's a critical safety rule → also add to `MEMORY.md` (keep under 200 lines)
 
+   **Before picking a doc tier at all, ask whether this should be a CHECK.** A doc only
+   works if the next person reads it at the moment it applies, and that is a weak bet:
+   measured 2026-08-21, three of four findings in one session were classes where the doc
+   already existed and the thing recurred anyway (#4163, #4190). If you can name the file
+   or symbol that must hold the property, prefer a sweeping test, a detector that files
+   what it finds, or a constructor that throws — and let the doc be one line pointing at
+   it. Run the negative control first (`invariants/tests-that-are-not-guards.md`): delete
+   the guarded line, watch it go red, restore it. Keep prose for lessons about *judgment*,
+   which cannot be asserted.
+
    **If it rises to an invariant** — a rule whose violation already cost real damage —
    pick the tier deliberately:
    - Applies *regardless of what you're working on* → `CLAUDE.md` (budget: ~250 lines;

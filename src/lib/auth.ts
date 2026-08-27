@@ -452,7 +452,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // it): 3,850 of 3,854 users never saw the welcome interstitial.
           const dbUser = await db.collection('users').findOne(
             { _id: toUserId(token.id as string) as any },
-            { projection: { name: 1, 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
+            { projection: { name: 1, image: 1, 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
           );
           if (dbUser?.membership?.active) {
             token.membership = dbUser.membership.plan || 'ficino';
@@ -465,6 +465,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // Pick up a name saved after sign-in (magic-link users have none until
           // they fill in /welcome) so the session greets them without a re-login.
           if (dbUser?.name) token.name = dbUser.name;
+
+          // Profile photo, three states (see /api/me/avatar): a string is a
+          // photo the reader chose, an explicit null is a removal (clear the
+          // provider picture too), and an absent field means never touched —
+          // leave token.picture alone so Google avatars keep working.
+          if (dbUser && 'image' in dbUser) {
+            token.picture = dbUser.image ?? null;
+          }
 
           // needsWelcome is true only when welcomedAt is explicitly null (set on createUser).
           // Pre-feature users have no welcomedAt field at all — treat as already welcomed.

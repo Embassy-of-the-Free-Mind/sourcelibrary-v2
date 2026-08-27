@@ -34,7 +34,8 @@ async function main() {
         const url = upgradeToFullRes(p.photo_original || p.photo);
         try {
           const buf = await rateLimitedFetch(url);
-          const jpg = await sharp(buf).rotate().resize(6000, null, { withoutEnlargement: true }).jpeg({ quality: 90, mozjpeg: true }).toBuffer();
+          // Archive at source fidelity: no resolution cap (#3897, matches archive-ia-bulk).
+          const jpg = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
           const padded = String(p.page_number).padStart(4, '0');
           const blob = await storagePut(`pages/${bookId}/${padded}.jpg`, jpg, { contentType: 'image/jpeg', access: 'public' });
           const upd: any = { $set: { archived_photo: blob.url } };
@@ -52,7 +53,7 @@ async function main() {
     if (!b) { await queue.updateOne({ sn: w.sn }, { $set: { archived: true, archive_note: 'no-book' } }); return; }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (have0 < (b.pages_count || 0) * 0.99) {
-      if (w.source === 'erara' || w.source === 'iiif') { await archiveIiif(w.book_id); }
+      if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') { await archiveIiif(w.book_id); }
       else { try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
