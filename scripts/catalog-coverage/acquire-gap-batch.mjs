@@ -216,10 +216,12 @@ if (RETRY_FAILED) {
 
 // Self-heal: return stale 'processing' (a prior run died mid-flight) back to pending
 await queue.updateMany({ status: 'processing', claimed_at: { $lt: new Date(Date.now() - 60*60*1000) } }, { $set: { status: 'pending' } });
-// Atomically claim a batch (set status:'processing') so concurrent/overlapping runs don't collide
+// Atomically claim a batch (set status:'processing') so concurrent/overlapping runs don't collide.
+// Sort priority DESC: reader-request rows carry priority:1 and must jump the queue; rows
+// without the field sort as null (lowest), i.e. bulk seeds keep FIFO among themselves.
 const claimed = [];
 for (let i = 0; i < BATCH; i++) {
-  const r = await queue.findOneAndUpdate({ status: 'pending' }, { $set: { status: 'processing', claimed_at: new Date() } }, { returnDocument: 'after' });
+  const r = await queue.findOneAndUpdate({ status: 'pending' }, { $set: { status: 'processing', claimed_at: new Date() } }, { sort: { priority: -1, _id: 1 }, returnDocument: 'after' });
   const doc = r?.value ?? r; if (!doc) break; claimed.push(doc);
 }
 for (let i = 0; i < claimed.length; i += CONCURRENCY) {
