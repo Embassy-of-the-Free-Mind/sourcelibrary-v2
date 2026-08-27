@@ -254,6 +254,8 @@ export function useReaderV2(
   const viewsKey = `sl-reader-v2-views-${variant}`;
   const [views, setViews] = useState<ViewState>(defaultViews);
   useEffect(() => {
+    let hasChosen = false;
+    try { hasChosen = window.localStorage.getItem(viewsKey) !== null; } catch { /* private mode */ }
     const stored = loadStored(viewsKey, defaultViews);
     // Views are stored globally, not per book, so a reader who last turned off
     // OCR and translation arrives at an image-less book (6,743 pages, the CDLI
@@ -262,6 +264,15 @@ export function useReaderV2(
     const hasScan = !!getPageDisplayUrl(initialPage as unknown as Record<string, unknown>);
     if (!hasScan && !stored.ocr && !stored.en) {
       setViews({ ...stored, scan: false, ocr: true, en: true });
+      return;
+    }
+    // On a phone the three panes stack, and a full OCR pane pushes the
+    // translation a long scroll away — so a reader who has never chosen gets
+    // scan + translation only. Not persisted: their first explicit toggle is
+    // what writes localStorage, and this default must not follow them to
+    // desktop. (<lg, same line the stacked mobile layout uses.)
+    if (!hasChosen && hasScan && window.matchMedia('(max-width: 1023px)').matches) {
+      setViews({ ...stored, ocr: false });
       return;
     }
     setViews(stored);
