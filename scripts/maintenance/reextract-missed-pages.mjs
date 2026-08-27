@@ -42,6 +42,16 @@
  *                 page_type needed. For books whose OCR vintage has neither
  *                 (the worker sees "no candidates" and stamps them
  *                 images_complete on first touch, #4241). Requires --book.
+ *   --reconcile   No vision calls. Re-crop + re-materialize books whose
+ *                 recovered pages have no gallery_images doc. The corpus scan
+ *                 selects on `detected_images_count > 0` — a field written BY
+ *                 materialization — so a book whose FIRST materialization died
+ *                 is invisible to it (#4241). For that case use:
+ *   --reconcile --book=ID
+ *                 targeted repair of one book: skips the rollup-field gate and
+ *                 considers ANY qualifying detection (not just miss_recheck_at
+ *                 pages), so worker-written detections that never materialized
+ *                 are repaired too.
  */
 
 import { MongoClient } from 'mongodb';
@@ -325,27 +335,48 @@ async function thumbnailAndMaterialize(db, bid) {
 }
 
 // ── Reconcile: re-crop + re-materialize books whose recovered pages have no gallery_images doc ──
+// Returns true when the book had a gap (i.e. thumbnailAndMaterialize was attempted).
+async function bookHasGalleryGap(db, bookId, { anyDetection }) {
+  // recovered pages with a gallery-worthy detection (these MUST end up visible)
+  const recovered = await db.collection('pages').find(
+    {
+      book_id: bookId,
+      ...(anyDetection ? {} : { miss_recheck_at: { $exists: true } }),
+      detected_images: { $elemMatch: { bbox: { $exists: true }, gallery_quality: { $gte: 0.5 } } },
+    },
+    { projection: { id: 1, detected_images: 1 } }
+  ).toArray();
+  if (!recovered.length) return false;
+  const haveGallery = new Set(await db.collection('gallery_images').distinct('page_id', { book_id: bookId }));
+  // A page needs repair if it has no gallery doc, OR a qualifying detection has no
+  // extracted_url crop yet (thumbnails never ran → it'd be filtered from the gallery).
+  return recovered.some(p =>
+    !haveGallery.has(p.id) ||
+    (p.detected_images || []).some(d => d?.bbox && (d.gallery_quality ?? 0) >= 0.5 && !d.extracted_url)
+  );
+}
+
 async function reconcile(db) {
+  if (ONLY_BOOK) {
+    // Targeted repair. No `detected_images_count` gate (that field is written by
+    // materialization itself, so a book whose first materialization failed never has
+    // it) and no miss_recheck_at requirement (the failed run may have been the
+    // production worker's, which doesn't stamp it).
+    console.log(`[reconcile] targeted repair of ${ONLY_BOOK}…`);
+    const gap = await bookHasGalleryGap(db, ONLY_BOOK, { anyDetection: true });
+    if (!gap) { console.log('[reconcile] done. No gap — gallery already consistent with detections.'); return; }
+    await thumbnailAndMaterialize(db, ONLY_BOOK);
+    const rows = await db.collection('gallery_images').countDocuments({ book_id: ONLY_BOOK });
+    console.log(`[reconcile] done. Gap repaired; gallery_images rows now: ${rows}`);
+    return;
+  }
   console.log('[reconcile] scanning Case-3 books for recovered pages missing gallery docs…');
   const cursor = db.collection('books').find({ visible: true, detected_images_count: { $gt: 0 } }, { projection: { id: 1 } }).sort({ _id: 1 });
   let scanned = 0, gapBooks = 0, fixed = 0, failed = 0;
   for await (const book of cursor) {
     scanned++;
     if (scanned % 1000 === 0) console.log(`  …scanned ${scanned} books, ${gapBooks} gap, ${fixed} fixed, ${failed} failed`);
-    // recovered pages with a gallery-worthy detection (these MUST end up visible)
-    const recovered = await db.collection('pages').find(
-      { book_id: book.id, miss_recheck_at: { $exists: true }, detected_images: { $elemMatch: { bbox: { $exists: true }, gallery_quality: { $gte: 0.5 } } } },
-      { projection: { id: 1, detected_images: 1 } }
-    ).toArray();
-    if (!recovered.length) continue;
-    const haveGallery = new Set(await db.collection('gallery_images').distinct('page_id', { book_id: book.id }));
-    // A page needs repair if it has no gallery doc, OR a qualifying detection has no
-    // extracted_url crop yet (thumbnails never ran → it'd be filtered from the gallery).
-    const gap = recovered.some(p =>
-      !haveGallery.has(p.id) ||
-      (p.detected_images || []).some(d => d?.bbox && (d.gallery_quality ?? 0) >= 0.5 && !d.extracted_url)
-    );
-    if (!gap) continue;
+    if (!await bookHasGalleryGap(db, book.id, { anyDetection: false })) continue;
     gapBooks++;
     try { await thumbnailAndMaterialize(db, book.id); fixed++; }
     catch (e) { failed++; console.error(`  [reconcile-fail] ${book.id}: ${e.codeName || ''} ${e.message}`); }
