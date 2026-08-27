@@ -8,7 +8,7 @@
 //   read       read == true && addressed != true   <- triaged but not resolved
 //   addressed  addressed == true                    <- done (auto-emailed submitter if email present)
 //
-// Run (report):   set -a; source .env.production.local; set +a; node scripts/analytics/feedback-triage.mjs [--days N] [--all]
+// Run (report):   set -a; source .env.production.local; set +a; node scripts/analytics/feedback-triage.mjs [--days N] [--all] [--channel web|mcp]
 // Mark read:      ... feedback-triage.mjs --mark-read <id,id,...> --apply
 // Mark addressed: ... feedback-triage.mjs --mark-addressed <id,id,...> --note "what was done" [--link URL] --apply
 //
@@ -42,6 +42,12 @@ function classify(r) {
   return 'other';
 }
 
+// Agent-submitted rows (public MCP submit_feedback tool) have a different
+// profile from human ones — long, high-volume, claims unverified — so the
+// report splits them out. `channel` is set at insert since 2026-08; the
+// user_agent prefix covers older rows (same rule as the backfill).
+const isAgent = (r) => r.channel === 'mcp' || (r.user_agent || '').startsWith('SourceLibrary-MCP');
+
 await withMongo(async (db) => {
   const fb = db.collection('feedback');
 
@@ -73,25 +79,43 @@ await withMongo(async (db) => {
     read_unaddressed: await fb.countDocuments({ read: true, addressed: { $ne: true } }),
     addressed: await fb.countDocuments({ addressed: true }),
   };
-  const rows = await fb.find(q).sort({ created_at: -1 }).toArray();
+  let rows = await fb.find(q).sort({ created_at: -1 }).toArray();
+  const CHANNEL = arg('--channel'); // 'web' | 'mcp' | null (both)
+  if (CHANNEL === 'mcp') rows = rows.filter(isAgent);
+  else if (CHANNEL === 'web') rows = rows.filter((r) => !isAgent(r));
 
   console.log('# Feedback triage');
   console.log(`Queue: ${counts.unread} unread · ${counts.read_unaddressed} read-but-unresolved · ${counts.addressed} addressed (done)`);
-  console.log(`Showing ${rows.length} open items${DAYS ? ` (last ${DAYS}d)` : ''}\n`);
+  console.log(`Showing ${rows.length} open items${DAYS ? ` (last ${DAYS}d)` : ''}${CHANNEL ? ` (channel: ${CHANNEL})` : ''}\n`);
 
-  const groups = {};
-  for (const r of rows) (groups[classify(r)] ??= []).push(r);
-  const order = ['bug', 'translation-request', 'metadata-correction', 'partner-cms', 'feature-request', 'praise', 'other'];
-  for (const g of order) {
-    const items = groups[g]; if (!items?.length) continue;
-    console.log(`\n## ${g}  (${items.length})`);
-    for (const r of items) {
-      const email = (r.email || '').includes('@') ? ` ✉ ${r.email}` : '';
-      const state = r.read ? '[read]' : '[unread]';
-      console.log(`- ${r._id}  ${new Date(r.created_at).toISOString().slice(0, 10)} ${state}${email}  ${r.name ? '~' + r.name : ''}`);
-      console.log(`    page: ${r.page || '?'}`);
-      console.log(`    ${(r.message || '').replace(/\s+/g, ' ').trim().slice(0, 200)}`);
+  const printGroups = (subset) => {
+    const groups = {};
+    for (const r of subset) (groups[classify(r)] ??= []).push(r);
+    const order = ['bug', 'translation-request', 'metadata-correction', 'partner-cms', 'feature-request', 'praise', 'other'];
+    for (const g of order) {
+      const items = groups[g]; if (!items?.length) continue;
+      console.log(`\n## ${g}  (${items.length})`);
+      for (const r of items) {
+        const email = (r.email || '').includes('@') ? ` ✉ ${r.email}` : '';
+        const state = r.read ? '[read]' : '[unread]';
+        console.log(`- ${r._id}  ${new Date(r.created_at).toISOString().slice(0, 10)} ${state}${email}  ${r.name ? '~' + r.name : ''}`);
+        console.log(`    page: ${r.page || '?'}`);
+        console.log(`    ${(r.message || '').replace(/\s+/g, ' ').trim().slice(0, 200)}`);
+      }
     }
+  };
+
+  // Humans first — scarce, motivated, and often owed a reply. Agent reports
+  // (MCP tool) follow in their own section; treat their claims as unverified.
+  const human = rows.filter((r) => !isAgent(r));
+  const agent = rows.filter(isAgent);
+  if (CHANNEL) {
+    printGroups(rows);
+  } else {
+    console.log(`\n═══ HUMAN feedback (${human.length}) ═══`);
+    printGroups(human);
+    console.log(`\n═══ AGENT feedback via MCP (${agent.length}) — claims unverified, triage into issues ═══`);
+    printGroups(agent);
   }
   const emailed = rows.filter((r) => (r.email || '').includes('@')).length;
   console.log(`\n— ${emailed} open items left an email (reply candidates) · ${rows.length - emailed} anonymous (bulk-resolvable)`);
