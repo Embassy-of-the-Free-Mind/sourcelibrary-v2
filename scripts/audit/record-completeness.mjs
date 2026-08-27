@@ -18,9 +18,14 @@
  *
  *   provider    outside `ImageSourceProvider`, or with no `LIBRARY_PARTNERS`
  *               entry ⇒ no `/libraries/<slug>` page and no credit anywhere
- *   license     not an `IMAGE_LICENSES` id ⇒ `BibliographicInfo` renders the raw
- *               string instead of resolving the licence (a display NAME like
- *               "Public domain" is the common way to get this wrong)
+ *   license     a value that does not RESOLVE — neither an `IMAGE_LICENSES` id
+ *               nor a `LICENSE_ALIASES` entry — so the book page shows the
+ *               source's raw string. Counted against what the renderer can
+ *               resolve, not against the id list: `licenseDisplay()` maps the
+ *               rights-statement URIs and CC deed URLs that most sources
+ *               actually record, and an audit that ignored that would report a
+ *               fixed problem as broken forever. A check that cannot go green
+ *               is one people learn to ignore.
  *   thumbnail   absent ⇒ no cover in any grid
  *   categories  empty ⇒ absent from every subject facet
  *
@@ -55,18 +60,33 @@ const JSON_OUT = arg('json');
  */
 function parseTs() {
   const strip = (s) => s.replace(/\/\/[^\n]*/g, '');
-  const src = strip(readFileSync('src/lib/types/image-source.ts', 'utf8'));
+  const rawSrc = readFileSync('src/lib/types/image-source.ts', 'utf8');
+  const src = strip(rawSrc);
   const union = src.match(/export type ImageSourceProvider\s*=([\s\S]*?);/);
   if (!union) throw new Error('could not find the ImageSourceProvider union');
   const providers = new Set([...union[1].matchAll(/'([^']+)'/g)].map((m) => m[1]));
   const licenses = new Set([...src.matchAll(/\{\s*id:\s*'([^']+)'/g)].map((m) => m[1]));
+  // Everything `licenseDisplay()` can resolve, lower-cased the way it compares.
+  // From the RAW source, not the comment-stripped copy. Stripping `//` to end
+  // of line is fine for a union of bare identifiers and destroys this block:
+  // every alias key is a URL, so `'http://creativecommons.org/…'` becomes
+  // `'http:` and the parse silently loses nearly every entry. Second time in
+  // this one function that a naive text transform has broken on content that
+  // merely looks like syntax — the `;` inside a comment was the first.
+  const aliasBlock = rawSrc.match(/const LICENSE_ALIASES[^{]*\{([\s\S]*?)\n\};/);
+  if (!aliasBlock) throw new Error('could not find LICENSE_ALIASES');
+  // Keys are quoted URLs (which contain ':') or bare identifiers, so match
+  // both forms rather than one char class — the first attempt excluded ':'
+  // and therefore missed every URL alias, i.e. nearly all of them.
+  for (const m of aliasBlock[1].matchAll(/'([^']+)'\s*:/g)) licenses.add(m[1].trim().toLowerCase());
+  for (const m of aliasBlock[1].matchAll(/^\s*([A-Za-z_][\w]*)\s*:/gm)) licenses.add(m[1].trim().toLowerCase());
   const partners = new Set(
     [...strip(readFileSync('src/lib/library-partners.ts', 'utf8')).matchAll(/providerKey:\s*'([^']+)'/g)].map((m) => m[1]),
   );
   // Self-check. These are lower bounds well under the real counts; if the parse
   // breaks again it fails here instead of in the findings.
   if (providers.size < 40) throw new Error(`parsed only ${providers.size} providers — the parse is broken, not the corpus`);
-  if (licenses.size < 5) throw new Error(`parsed only ${licenses.size} licences`);
+  if (licenses.size < 20) throw new Error(`parsed only ${licenses.size} licence ids + aliases — the parse is broken`);
   if (partners.size < 20) throw new Error(`parsed only ${partners.size} library partners`);
   return { providers, licenses, partners };
 }
@@ -96,7 +116,9 @@ for (const b of books) {
   else if (!providers.has(p)) { r.notInUnion++; bad.push('provider not in union'); }
   else if (!partners.has(p)) { r.noPartner++; bad.push('no library page'); }
   const lic = b.image_source?.license;
-  if (lic && !licenses.has(lic)) { r.badLicense++; bad.push(`license "${lic}"`); }
+  if (lic && !licenses.has(lic) && !licenses.has(String(lic).toLowerCase())) {
+    r.badLicense++; bad.push(`license "${lic}"`);
+  }
   if (!b.thumbnail) { r.noThumb++; bad.push('no cover'); }
   if (!(b.categories || []).length) { r.noCats++; bad.push('no categories'); }
   if (bad.length && !r.example) r.example = `${String(b.title).slice(0, 44)} — ${bad.join(', ')}`;

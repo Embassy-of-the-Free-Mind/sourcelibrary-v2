@@ -54,6 +54,8 @@ export type ImageSourceProvider =
   | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
   | 'tu_darmstadt'   // Technische Universität Darmstadt (ULB)
   | 'byu'            // Brigham Young University, L. Tom Perry Special Collections
+  | 'slub_dresden'   // Sächsische Landesbibliothek – Staats- und Universitätsbibliothek Dresden
+  | 'goettingen'     // Niedersächsische Staats- und Universitätsbibliothek Göttingen
   | 'contentdm'      // OCLC CONTENTdm
   | 'ia'             // Internet Archive (alternate key)
   | 'library'
