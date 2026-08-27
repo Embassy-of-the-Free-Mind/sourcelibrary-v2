@@ -2163,7 +2163,11 @@ async function generateScholarlyEpubDownload(
       const illusPageUrl = illusPage
         ? ((illusPage as any).cropped_photo || (illusPage as any).archived_photo || illusPage.photo)
         : null;
-      const illusUrl = illusPageUrl || img.extracted_url || img.image_url;
+      // Prefer the extracted CROP: the figure should show the illustration itself,
+      // not the whole page scan (the figure already links back to the page). Page
+      // scan is the fallback when no crop was generated. The cover block above
+      // deliberately keeps the opposite preference — a cover wants the full page.
+      const illusUrl = img.extracted_url || illusPageUrl || img.image_url;
       if (illusUrl) {
         const illusBuffer = await fetchIllustrationImage(illusUrl);
         if (illusBuffer) {
