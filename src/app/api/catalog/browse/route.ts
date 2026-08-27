@@ -1,48 +1,138 @@
 import { NextResponse } from 'next/server';
 import { browseBooks, getLanguageCounts, type SortOption } from '@/lib/books-catalog';
+import { parseCatalogParams, BROWSE_SORTS } from '@/lib/catalog-query';
+import { semanticBookSearch, getQueryEmbedding } from '@/lib/semantic-search';
 
-export const maxDuration = 15;
+export const maxDuration = 20;
 
-const VALID_SORTS = new Set<SortOption>([
-  'popular', 'recent', 'last_translated', 'title', 'author', 'year_asc', 'year_desc',
-]);
+/** Hits the librarian's semantic lane pulls before the SQL filters narrow them. */
+const ASK_POOL = 200;
 
 /**
  * GET /api/catalog/browse
  *
  * Server-side paginated catalog browse powered by Supabase books_catalog.
- * Replaces the old MongoDB snapshot approach.
  *
- * Query params: sort, language, q, page, limit
+ * Every filter name is read through `parseCatalogParams` — the same module the
+ * client builds its query string with, so the two cannot drift
+ * (`.claude/docs/invariants/search-filters-and-lanes.md`).
  */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const sortRaw = searchParams.get('sort') || 'popular';
-    const sort: SortOption = VALID_SORTS.has(sortRaw as SortOption) ? (sortRaw as SortOption) : 'popular';
-    const language = searchParams.get('language') || undefined;
-    const search = searchParams.get('q') || undefined;
-    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
+    const f = parseCatalogParams(searchParams);
     const limit = Math.min(120, Math.max(1, parseInt(searchParams.get('limit') || '60', 10)));
-    const offset = (page - 1) * limit;
+    const offset = (f.page - 1) * limit;
     const includeLangs = searchParams.get('langs') === '1';
 
-    // Additional filters
-    const yearMin = searchParams.get('year_min') ? parseInt(searchParams.get('year_min')!, 10) : undefined;
-    const yearMax = searchParams.get('year_max') ? parseInt(searchParams.get('year_max')!, 10) : undefined;
-    const firstTranslation = searchParams.get('first_translation') === '1' || undefined;
-    const hasTranslation = searchParams.get('has_translation') === '1' || undefined;
-    const category = searchParams.get('category') || undefined;
-    const collection = searchParams.get('collection') || undefined;
+    const filters = {
+      language: f.language || undefined,
+      collection: f.collection || undefined,
+      category: f.category || undefined,
+      provider: f.provider || undefined,
+      yearMin: f.yearMin ?? undefined,
+      yearMax: f.yearMax ?? undefined,
+      // The reader asked for first translations, so give them the ones that
+      // ARE first translations on screen — badge gate, not the raw flag.
+      firstTranslationPublished: f.firstTranslation || undefined,
+      hasTranslation: f.hasTranslation || undefined,
+      hasOcr: f.hasOcr || undefined,
+      search: f.q || undefined,
+    };
 
-    const promises: [Promise<{ books: unknown[]; total: number }>, Promise<{ lang: string; count: number }[]> | null] = [
-      browseBooks({ language, search, sort, offset, limit, exactCount: true, yearMin, yearMax, firstTranslation, hasTranslation, category, collection }),
-      includeLangs ? getLanguageCounts({ collection }) : null,
-    ];
+    // A sort the SQL lane can serve. `relevance` is meaningful only inside an
+    // ask; asked for anywhere else it falls back to the default.
+    const browseSort: SortOption = (BROWSE_SORTS as readonly string[]).includes(f.sort)
+      ? (f.sort as SortOption)
+      : 'popular';
+
+    const langsPromise = includeLangs
+      ? getLanguageCounts({ collection: f.collection || undefined })
+      : Promise.resolve(null);
+
+    // ── The librarian's lane ────────────────────────────────────────────────
+    // A vector lane carries no metadata predicate, so its hits are handed to
+    // browseBooks as an id set and filtered by exactly the same SQL as an
+    // ordinary browse. Never merge them in unfiltered.
+    if (f.ask) {
+      let ids: string[] = [];
+      let rank = new Map<string, number>();
+      let laneDown = false;
+
+      try {
+        // Embed first, so an unreachable embedder is distinguishable from a
+        // query with no neighbours. `semanticBookSearch` returns [] for both,
+        // and rendering "no books match" over a corpus that was never queried
+        // is a lie about the corpus, not a result.
+        const embedding = await getQueryEmbedding(f.ask);
+        if (!embedding) {
+          laneDown = true;
+        } else {
+          const hits = await semanticBookSearch(f.ask, ASK_POOL, { threshold: 0.3, embedding });
+          ids = hits.map((h) => h.book_id).filter(Boolean);
+          rank = new Map(ids.map((id, i) => [id, i]));
+        }
+      } catch (err) {
+        console.error('[catalog] semantic lane failed:', (err as Error)?.message || err);
+        laneDown = true;
+      }
+
+      // Degrade to literal matching on the same words rather than to nothing,
+      // and flag it so the page can say which question it actually answered.
+      if (laneDown) {
+        const { books, total } = await browseBooks({
+          ...filters,
+          search: filters.search || f.ask,
+          sort: browseSort,
+          limit,
+          offset,
+          exactCount: true,
+        });
+        return NextResponse.json(
+          { books, total, askDegraded: true },
+          { headers: { 'Cache-Control': 'no-store' } },
+        );
+      }
+
+      if (!ids.length) {
+        const languages = await langsPromise;
+        return NextResponse.json(
+          { books: [], total: 0, ...(languages ? { languages } : {}) },
+          { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60' } },
+        );
+      }
+
+      // The pool is bounded (≤200 ids), so pull the whole filtered set once and
+      // page it in memory — that keeps the count exact and lets `relevance`
+      // order by similarity, which no SQL sort can express.
+      const { books } = await browseBooks({
+        ...filters,
+        ids,
+        sort: browseSort,
+        limit: ASK_POOL,
+        offset: 0,
+        exactCount: true,
+      });
+
+      const ordered = f.sort === 'relevance'
+        ? [...books].sort((a, b) => (rank.get(a.id) ?? 1e9) - (rank.get(b.id) ?? 1e9))
+        : books;
+
+      const languages = await langsPromise;
+      return NextResponse.json(
+        {
+          books: ordered.slice(offset, offset + limit),
+          total: ordered.length,
+          poolCapped: ids.length >= ASK_POOL,
+          ...(languages ? { languages } : {}),
+        },
+        { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=30' } },
+      );
+    }
 
     const [result, languages] = await Promise.all([
-      promises[0],
-      promises[1] || Promise.resolve(null),
+      browseBooks({ ...filters, sort: browseSort, offset, limit, exactCount: true }),
+      langsPromise,
     ]);
 
     return NextResponse.json(
