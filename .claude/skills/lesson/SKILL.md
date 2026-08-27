@@ -29,8 +29,8 @@ After fixing a bug, resolving an incident, or discovering an important pattern, 
 
    **If it rises to an invariant** — a rule whose violation already cost real damage —
    pick the tier deliberately:
-   - Applies *regardless of what you're working on* → `CLAUDE.md` (budget: ~250 lines;
-     over it, demote something to `invariants/` first).
+   - Applies *regardless of what you're working on* → `CLAUDE.md` (budget: ~5,500 words
+     by `wc -w`; over it, demote something to `invariants/` first).
    - Fires only when someone touches a particular subsystem → a new or existing
      `.claude/docs/invariants/<name>.md`, **plus** a one-line trigger entry in
      `CLAUDE.md`'s routing table. If you can name the file or subsystem that triggers

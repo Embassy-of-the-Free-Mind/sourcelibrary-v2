@@ -93,8 +93,9 @@ the lesson lives only in the handoff and decays. Decide *which tier*:
 **Down — is anything in `CLAUDE.md` no longer earning its place?** Do not skip this
 because nothing feels wrong; it never feels wrong. Concretely:
 
-- `wc -l CLAUDE.md` — the budget is **~250 lines**. Over it, something must be demoted
-  to `invariants/` before anything is added.
+- `wc -w CLAUDE.md` — the budget is **~5,500 words** (words, not lines: the line cap was
+  gamed by joining essays into single 3,800-char lines). Over it, something must be
+  demoted to `invariants/` before anything is added.
 - Did this session read a section that turned out to be **conditional**? Demote it.
 - Did it hit a rule that **contradicts** another, or a second write-up of the same
   incident under a different aphorism? Merge them — don't append a correction beside the

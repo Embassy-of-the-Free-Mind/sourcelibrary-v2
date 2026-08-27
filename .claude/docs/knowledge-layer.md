@@ -28,7 +28,9 @@ a "Read this when" line so an agent can bail in two seconds.
 `CLAUDE.md` grew from ~290 lines to **827** between May and August 2026 — a 157KB file
 loaded into every one of ~10 concurrent terminals, roughly 39K tokens before any work
 began — because the ratchet below only ever *added*. Adding a section now means fitting
-the ~250-line budget or demoting an existing one into `invariants/`. The test: **if you
+the budget — **~5,500 words by `wc -w`**; a line-count cap was tried first and gamed
+within a month by joining essays into single 3,800-character lines — or demoting an
+existing section into `invariants/`. The test: **if you
 can name the file or subsystem that triggers a rule, it belongs in `invariants/`; if you
 cannot, it belongs in `CLAUDE.md`.** Note that age is not the criterion — when the split
 was done, the four largest sections were all under three weeks old.
