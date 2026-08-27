@@ -121,6 +121,8 @@ export default function CatalogBrowser({
   const [asking, setAsking] = useState(false);
   const [askNote, setAskNote] = useState('');
   const [askDegraded, setAskDegraded] = useState(false);
+  /** The ask filled its similarity pool, so there may be more beyond it. */
+  const [poolCapped, setPoolCapped] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   // Mirrors `filters` so callbacks always read the committed value without
@@ -149,6 +151,7 @@ export default function CatalogBrowser({
       if (abortRef.current !== controller) return;
       setBooks(data.books || []);
       setTotal(data.total || 0);
+      setPoolCapped(!!data.poolCapped);
       if (data.askDegraded) setAskDegraded(true);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
@@ -509,6 +512,12 @@ export default function CatalogBrowser({
               {!loading && activeCount > 0 && (
                 <span className="text-faint"> of {facets.total.toLocaleString('en-US')}</span>
               )}
+              {!loading && poolCapped && (
+                <span
+                  className="text-faint normal-case tracking-normal"
+                  title="The librarian ranks the closest 200 books by similarity, then applies your filters to those. There may be more beyond them."
+                > · closest 200</span>
+              )}
             </p>
 
             {/* Desktop: every facet inline. Mobile: one button that opens them. */}
@@ -588,7 +597,16 @@ export default function CatalogBrowser({
       </div>
 
       {/* ===================== Results ===================== */}
-      <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10" ref={gridRef}>
+      <div
+        className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10"
+        ref={gridRef}
+        /* The list view and the pager are shared components that accent in
+           rust. On a page of sixty results that reads as sixty warnings, so the
+           accent token is re-pointed to the gold this page already uses for the
+           first-translation line. Scoped to the results, and it moves with the
+           token rather than forking two components. */
+        style={{ ['--accent-rust' as string]: 'var(--accent-gold-dark)' }}
+      >
         <div className={loading ? 'opacity-50 transition-opacity duration-200' : 'transition-opacity duration-200'}>
           {books.length === 0 && !loading ? (
             <div className="py-24 text-center">
