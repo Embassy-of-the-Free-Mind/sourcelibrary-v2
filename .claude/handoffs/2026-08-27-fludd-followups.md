@@ -99,3 +99,33 @@ demotions found this session.
   phrases ("divisions of the mind") — that's CLIP's nature, text lane is the
   conceptual lane. `gallery_text_embeddings` has its own cron
   (`image-embeddings-cron.mjs`, in `crontab.production`).
+
+## Round 3 (into 2026-08-28: Phase 1 executed, mega pass, Johannes trapdoor)
+
+- **#4246 Phase 1 run end-to-end**: author-link backfill `--include-backlog`
+  (+879), judge `--include-backlog` shipped (PR #4277) and run (47,514 books,
+  3,145 blocks, ~$1.50) → 2,040 HIGH groups / 6,687 books applied. Coverage
+  7% → 19%.
+- **`--mega` shipped (PR #4299) and run**: hierarchical chunked judging of the
+  51 >50-item author blocks. 717 HIGH raw → screened (reason-text + size +
+  Opera-title nets, then hand pass) → 659 groups / 2,870 books applied same
+  night; 58 held. Screen rescued size-only single works; one rescue was itself
+  wrong (Rhetorica bundle) — nets, not verdicts.
+- **Hold set hand-adjudicated next morning**: 34 groups / 151 books applied
+  (titled aggregates; same-edition volumes; identical bundles), 24 / 352
+  REJECTED as collection-mixing. Artifacts:
+  `scripts/output/llm-work-merge-*-2026-08-2{7,8}.json` (gitignored, on disk).
+- **Bare-"Johannes" thesaurus trapdoor repaired** (run
+  `jan-hus-bare-johannes-2026-08-28`): jan-hus doc carried variant "Johannes" →
+  115 books by ~12 different Johannes-es linked to Hus. Variant pulled, 96
+  unlinked, 13 title-explicit Sacrobosco editions → `johannes-de-sacro-bosco-2`
+  (Q433841); Quaestiones commentaries deliberately not relinked (genitive names
+  the commented text). jan-hus now 6 genuine books. KEY CORRECTION to the
+  author-identity invariant's "de-matching is safe, every book has author_id":
+  those author_ids can BE the poison — the link was minted FROM the unsafe
+  variant. Check-issue filed (see below).
+- **Day-end: coverage 25%** (11,704/47,418); missing-author_id ROSE to 4,669 —
+  the repair returning de-poisoned books to the queue honestly.
+- Remaining: additive-minting tail (4,669 visible + backlog) — review-heavy,
+  fresh session; Sacrobosco duplicate author-doc pair merge; 24 rejected groups
+  are closed-won't-merge.
