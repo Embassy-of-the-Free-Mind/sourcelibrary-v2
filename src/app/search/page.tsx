@@ -7,7 +7,7 @@ import Image from 'next/image';
 import {
   Search, Book, ExternalLink, Filter, X, Loader2,
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
-  ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
+  ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown, Library
 } from 'lucide-react';
 import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigation';
 import { useLocale, useLocalePath } from '@/lib/i18n';
@@ -620,7 +620,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             return r.json();
           })
           .then(data => {
-            // Dedup against keyword book results
+            // Coarse dedup against whatever keyword results this closure can
+            // see. The authoritative pass is the work-grain one at render time
+            // (`uniqueSemantic` below) — this closure captures `bookResults`
+            // from the render that fired the fetch, so it can be a step behind.
             const keywordIds = new Set(bookResults.map(b => b.id || b.book_id));
             const deduped = (data.results || []).filter((s: any) => !keywordIds.has(s.book_id));
             setSemanticResults(deduped);
@@ -1550,8 +1553,18 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
         {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
         {!signInRequired && viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
+          // Dedup the conceptual lane against the keyword lane at the WORK
+          // grain, not just by book id (#4300). The two lanes are fetched
+          // independently (unified + /api/search/semantic), so each collapses
+          // its own copies server-side and neither can see the other's — a
+          // second scan of an already-listed work would otherwise take a slot
+          // on the first screen, which is the complaint this fixes. Both lanes
+          // now return `work_id`; rows without one are never merged, because an
+          // unkeyed book is not shown to be an edition of anything.
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
-          const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
+          const keywordWorkIds = new Set(bookResults.map(b => b.work_id).filter(Boolean));
+          const uniqueSemantic = semanticResults.filter((sem: any) =>
+            !keywordIds.has(sem.book_id) && !(sem.work_id && keywordWorkIds.has(sem.work_id)));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
 
           // Shared components
@@ -1910,6 +1923,37 @@ function cleanSnippet(text: string): string {
     .trim();
 }
 
+/**
+ * "N editions & copies of this work →" (#4300).
+ *
+ * Rendered under a result that STANDS IN for siblings the work-grain collapse
+ * removed — four scans of Kircher's Musurgia now occupy one row, and this is
+ * the affordance that says so instead of the library silently dropping three.
+ * The count comes from the API, which reads it off the same filter `/work/[id]`
+ * renders its edition list from, so the number always describes the page this
+ * link opens (visibility-and-stats.md). Absent under a tenant context, by
+ * construction — the API does not send it there.
+ *
+ * Sits OUTSIDE the card's own <Link>: a nested anchor is invalid HTML and the
+ * inner one would swallow the click.
+ */
+function WorkEditionsLink({ group }: { group: NonNullable<SearchResult['work_group']> }) {
+  const t = SEARCH_STRINGS[useLocale()];
+  const lp = useLocalePath();
+  return (
+    <div className="px-4 pb-3 -mt-1">
+      <Link
+        href={lp(group.href)}
+        className="inline-flex items-center gap-1 text-xs text-accent-gold-dark hover:text-accent-gold font-medium transition-colors"
+      >
+        <Library className="w-3.5 h-3.5" aria-hidden />
+        {t.workEditionsLink(group.editions)}
+        <ChevronRight className="w-3 h-3" />
+      </Link>
+    </div>
+  );
+}
+
 function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: { result: SearchResult; query: string; tenant?: string; autoPassages?: boolean; mobileCompact?: boolean }) {
   // Client children take no `lang` prop — the pathname already says which
   // language they are in (i18n.md, "the book page: ONE page, two URLs").
@@ -2055,6 +2099,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
           </div>
         </div>
       </Link>
+      {result.work_group && <WorkEditionsLink group={result.work_group} />}
       {passagesOpen && (
         <div className="px-4 pb-4 -mt-1">
           {passagesLoading ? (
@@ -2155,6 +2200,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
           </div>
         </div>
       </Link>
+      {result.work_group && <WorkEditionsLink group={result.work_group} />}
     </div>
   );
 }

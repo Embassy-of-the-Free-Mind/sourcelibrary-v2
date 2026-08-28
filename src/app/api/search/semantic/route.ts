@@ -3,6 +3,9 @@ import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-sea
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { getDb } from '@/lib/mongodb';
 import { logSearchQuery } from '@/lib/search-log';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 
 export const dynamic = 'force-dynamic';
 
@@ -145,19 +148,29 @@ export async function GET(request: NextRequest) {
     // (#4216). Drop non-live ids, but only when the Mongo lookup succeeded.
     const hiddenBookIds = new Set<string>();
     const liveBookIds = new Set<string>();
+    // Work identity for the collapse below (#4300). `match_books_semantic`
+    // returns no work_id, which is why four scans of Kircher's Musurgia came
+    // back as four "conceptual matches" while the keyword lane showed one.
+    const identityByBookId = new Map<string, WorkGroupable>();
     let mongoOk = false;
     if (bookIds.length > 0) {
       try {
         const db = await getDb();
         const mongoBooks = await db.collection('books').find(
           { id: { $in: bookIds } },
-          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, slug: 1, visible: 1, hidden: 1 } }
+          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, slug: 1, visible: 1, hidden: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1 } }
         ).toArray();
         for (const mb of mongoBooks) {
           const bid = mb.id || mb._id?.toString();
           if (bid) liveBookIds.add(bid as string);
           if (bid) thumbnailMap[bid] = { thumbnail: mb.thumbnail, thumbnail_blob: mb.thumbnail_blob, slug: mb.slug };
           if (bid && (mb.hidden === true || mb.visible === false)) hiddenBookIds.add(bid);
+          if (bid) identityByBookId.set(bid as string, {
+            book_id: bid as string,
+            work_id: mb.work_id as string | undefined,
+            work_id_aliases: mb.work_id_aliases as string[] | undefined,
+            duplicate_of: mb.duplicate_of as string | undefined,
+          });
         }
         mongoOk = true;
       } catch (e) {
@@ -203,6 +216,10 @@ export async function GET(request: NextRequest) {
         });
         if (filtered.length > 0) {
           mode = 'lexical';
+          // books_catalog carries work_id — keep it for the collapse below.
+          for (const b of filtered) {
+            if (b.id) identityByBookId.set(b.id, { book_id: b.id, work_id: (b as any).work_id });
+          }
           results = filtered.map(b => ({
             book_id: b.id,
             title: b.title,
@@ -224,15 +241,56 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // One row per work (#4300). This endpoint is what the /search page renders
+    // as "conceptual matches", and it had no work-grain dedup at all: a query
+    // for a much-scanned work spent its whole result window on copies of that
+    // one work. The collapse keeps the best-ranked (highest-similarity) row —
+    // `results` is already in rank order and collapseByWork never reorders.
+    const collapsed = collapseByWork(results, {
+      getIdentity: r => identityByBookId.get((r as { book_id: string }).book_id) ?? {},
+    });
+    // Carry the work id out to the client: /search merges this lane with the
+    // separately-fetched keyword lane and can otherwise only compare book ids,
+    // which lets one more edition of an already-represented work back onto the
+    // first screen (#4300).
+    let grouped: Array<Record<string, unknown>> = collapsed.results.map(r => {
+      const workId = identityByBookId.get((r as { book_id: string }).book_id)?.work_id;
+      return workId ? { ...r, work_id: workId } : { ...r };
+    });
+    if (collapsed.groups.length > 0) {
+      const collapsedByKey = new Map(collapsed.groups.map(g => [g.key, g.collapsed.length]));
+      try {
+        const db = await getDb();
+        const tenant = getTenantContextFromRequest(request.headers);
+        const fanouts = await fetchWorkFanouts(db, collapsedByKey, {
+          tenantScoped: !!tenant.id || !!tenant.slug || tenant.isEmbedded,
+        });
+        if (fanouts.size > 0) {
+          const keyByBookId = new Map<string, string>();
+          for (const [key, group] of collapsed.byKey) {
+            const bid = (group.primary as { book_id?: string }).book_id;
+            if (bid) keyByBookId.set(bid, key);
+          }
+          grouped = grouped.map(r => {
+            const key = keyByBookId.get((r as { book_id: string }).book_id);
+            const fanout = key ? fanouts.get(key) : undefined;
+            return fanout ? { ...r, work_group: fanout } : r;
+          });
+        }
+      } catch {
+        // A missing count renders as a plain collapsed row — never a guess.
+      }
+    }
+
     logSearchQuery({
       request, route: 'search.semantic.book', query: query!,
-      total: results.length, ms: Date.now() - _searchStart, ok: true,
+      total: grouped.length, ms: Date.now() - _searchStart, ok: true,
       filters: { language, year_min: yearMin, year_max: yearMax, mode },
     });
     return NextResponse.json({
-      results,
+      results: grouped,
       query,
-      total: results.length,
+      total: grouped.length,
       mode,
       // Book-level embeddings are one per book, composed from the English
       // summary and index. There is no localized store to point `lang` at, so

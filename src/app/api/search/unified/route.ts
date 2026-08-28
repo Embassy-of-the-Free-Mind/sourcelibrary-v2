@@ -15,6 +15,8 @@ import { CLIP_URL } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { assessMatchQuality } from '@/lib/search/match-quality';
+import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -161,7 +163,11 @@ export async function GET(request: NextRequest) {
         }, ms)),
       ]);
 
-    const emptyBooks = { results: [] as SearchResult[], total: 0, hasMore: false };
+    const emptyBooks = {
+      results: [] as SearchResult[], total: 0, hasMore: false,
+      groups: [] as ReturnType<typeof collapseByWork<WorkGroupable>>['groups'],
+      workKeyByBookId: new Map<string, string>(),
+    };
     const emptyIndex = { results: [] as IndexResult[], total: 0, hasMore: false };
     const emptyGallery = { results: [] as GalleryResult[], total: 0 };
 
@@ -282,13 +288,25 @@ export async function GET(request: NextRequest) {
       ),
     ]);
 
+    // One lookup serves two jobs: tenant attribution (below) and work identity
+    // for the semantic lane. `match_books_semantic` returns no work_id — that
+    // is exactly why the copies the keyword lane collapses came back through
+    // the semantic lane (#4300, Kircher's Musurgia: 1 keyword row, 4 more
+    // semantic rows of the same work).
     const resultBookIds = booksResultRaw.results.map((b: any) => b.id).filter(Boolean);
-    const resultBooks = resultBookIds.length > 0
+    const semanticBookIds = semanticResultRaw.results.map(s => s.book_id).filter(Boolean);
+    const identityLookupIds = [...new Set([...resultBookIds, ...semanticBookIds])];
+    const resultBooks = identityLookupIds.length > 0
       ? await db.collection('books').find(
-        { id: { $in: resultBookIds } },
-        { projection: { _id: 0, id: 1, tenantId: 1 }, maxTimeMS: 5000 }
+        { id: { $in: identityLookupIds } },
+        { projection: { _id: 0, id: 1, tenantId: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1 }, maxTimeMS: 5000 }
       ).toArray()
       : [];
+    const identityByBookId = new Map<string, WorkGroupable>(
+      resultBooks.map((b: any) => [b.id as string, {
+        book_id: b.id, work_id: b.work_id, work_id_aliases: b.work_id_aliases, duplicate_of: b.duplicate_of,
+      }]),
+    );
     const collectionTenantIds = collectionsResult.results.map((c: any) => c.tenantId).filter(Boolean);
     const tenantIds = [...new Set([
       ...resultBooks.map((book: any) => book.tenantId).filter(Boolean),
@@ -303,8 +321,11 @@ export async function GET(request: NextRequest) {
     const tenantSlugById = new Map(tenants.map((tenant: any) => [tenant.id, tenant.slug]));
     const tenantIdByBookId = new Map(resultBooks.map((book: any) => [book.id, book.tenantId]));
 
+    // `groups` / `workKeyByBookId` are internal plumbing for the collapse — they
+    // carry raw catalogue rows and must never reach the wire.
+    const { groups: _bookGroups, workKeyByBookId: _bookWorkKeys, ...booksResultPublic } = booksResultRaw;
     const booksResult = {
-      ...booksResultRaw,
+      ...booksResultPublic,
       results: booksResultRaw.results.map((book: any) => ({
         ...book,
         tenant_slug: tenantIdByBookId.get(book.id)
@@ -333,9 +354,44 @@ export async function GET(request: NextRequest) {
       if (yearTo !== undefined && year > yearTo) return false;
       return true;
     };
-    const dedupedSemantic = semanticResultRaw.results
+    // Work-grain dedup, not just book-id dedup (#4300). Two things to remove:
+    // a semantic hit on a work the keyword lane already represents, and several
+    // semantic hits on ONE work (four scans of Musurgia Universalis are one
+    // work, not four conceptual matches). Rows with no work identity are left
+    // alone — an unkeyed book is not shown to be a copy of anything.
+    const keywordWorkKeys = new Set(booksResultRaw.workKeyByBookId.values());
+    const semanticInRange = semanticResultRaw.results
       .filter(s => !keywordBookIds.has(s.book_id))
       .filter(s => inYearRange(s.year));
+    const semanticCollapsed = collapseByWork(semanticInRange, {
+      getIdentity: s => identityByBookId.get(s.book_id) ?? { book_id: s.book_id },
+    });
+    // Every row a collapse removed, by work key — from the keyword lane, from
+    // inside the semantic lane, and from the cross-lane suppression below. It
+    // has to be one tally: a work whose siblings were all removed by the
+    // CROSS-lane rule would otherwise show no fan-out at all, which is the
+    // silent-hide this issue exists to end.
+    const collapsedByKey = new Map<string, number>();
+    const addCollapsed = (key: string, n: number) =>
+      collapsedByKey.set(key, (collapsedByKey.get(key) ?? 0) + n);
+    for (const g of booksResultRaw.groups) addCollapsed(g.key, g.collapsed.length);
+    for (const g of semanticCollapsed.groups) addCollapsed(g.key, g.collapsed.length);
+
+    // Canonical (alias-resolved) key per surviving semantic row — read off the
+    // collapse rather than recomputed, so the two lanes compare the same keys.
+    const semanticKeyByBookId = new Map<string, string>();
+    for (const [key, group] of semanticCollapsed.byKey) {
+      const bid = (group.primary as { book_id?: string }).book_id;
+      if (bid) semanticKeyByBookId.set(bid, key);
+    }
+    const dedupedSemantic = semanticCollapsed.results.filter(s => {
+      const key = semanticKeyByBookId.get(s.book_id);
+      if (key && keywordWorkKeys.has(key)) {
+        addCollapsed(key, 1);
+        return false;
+      }
+      return true;
+    });
     const semanticResult = { results: dedupedSemantic.slice(0, 6), total: dedupedSemantic.length };
 
     // Apply similarity floor to visual/semantic/artwork lanes.
@@ -450,6 +506,34 @@ export async function GET(request: NextRequest) {
       filteredArtworks.total = filteredArtworks.results.length;
     }
 
+    // Fan-out for every row that replaced siblings: "N editions of this work →".
+    // The count is the WORK PAGE's own count (fetchWorkFanouts calls the same
+    // `workEditionsFilter` /work/[id] renders from), never the number of rows we
+    // hid — a card must count what its target page shows. Suppressed entirely
+    // under a tenant: an edition census across the global library is not a
+    // partner reading room's claim to make (tenant-lockdown.md).
+    const fanouts = await fetchWorkFanouts(db, collapsedByKey, {
+      tenantScoped: !!tenantContext.id || !!tenantContext.slug || tenantContext.isEmbedded,
+    });
+    if (fanouts.size > 0) {
+      scopedBooks = {
+        ...scopedBooks,
+        results: scopedBooks.results.map((r: any) => {
+          const key = booksResultRaw.workKeyByBookId.get(r.id);
+          const fanout = key ? fanouts.get(key) : undefined;
+          return fanout ? { ...r, work_group: fanout } : r;
+        }),
+      };
+      scopedSemantic = {
+        ...scopedSemantic,
+        results: scopedSemantic.results.map((r: any) => {
+          const key = semanticKeyByBookId.get(r.book_id);
+          const fanout = key ? fanouts.get(key) : undefined;
+          return fanout ? { ...r, work_group: fanout } : r;
+        }),
+      };
+    }
+
     // Log search query (fire-and-forget) — see src/lib/search-event-log.ts
     logSearchEvent({
       request, db, query, source: 'unified',
@@ -536,19 +620,31 @@ async function searchBooks(
     return (b.quality_score || 0) - (a.quality_score || 0);
   });
 
-  // Work-level dedup: collapse editions of the same work (keep best-ranked)
-  const seenWorkIds = new Set<string>();
-  const deduped = books.filter((b: any) => {
-    if (!b.work_id) return true;
-    if (seenWorkIds.has(b.work_id)) return false;
-    seenWorkIds.add(b.work_id);
-    return true;
-  });
+  // Work-level collapse: one row per work, best-ranked edition representing it
+  // (#4300). The sort above IS the keeper choice, so this must run after it and
+  // must not reorder. `collapseByWork` also honours `duplicate_of` and folds
+  // retired work_ids into their survivor — see src/lib/search/work-grouping.ts
+  // for why `edition_key` is deliberately not a grouping key.
+  const collapsed = collapseByWork(books as WorkGroupable[]);
+  const deduped = collapsed.results as any[];
 
   const hasMore = deduped.length > limit;
   const truncated = hasMore ? deduped.slice(0, limit) : deduped;
 
+  // The work key of every row we return, so the route can (a) hang the
+  // "N editions of this work" fan-out on a row that replaced siblings and
+  // (b) keep the semantic lane from re-introducing the same work as a
+  // separate result.
+  const shownIds = new Set(truncated.map((b: any) => b.id));
+  const workKeyByBookId = new Map<string, string>();
+  for (const [key, group] of collapsed.byKey) {
+    const primaryId = (group.primary as any).id;
+    if (primaryId && shownIds.has(primaryId)) workKeyByBookId.set(primaryId as string, key);
+  }
+
   return {
+    groups: collapsed.groups,
+    workKeyByBookId,
     results: truncated.map((b: any): SearchResult => {
       const summaryText = b.summary_text;
       return {
@@ -571,6 +667,10 @@ async function searchBooks(
         thumbnail: b.thumbnail,
         thumbnail_blob: b.thumbnail_blob,
         quality_score: b.quality_score,
+        // For the client's cross-lane dedup — /search merges this lane with a
+        // separately-fetched conceptual lane and can otherwise only compare
+        // book ids (#4300).
+        work_id: b.work_id || undefined,
       };
     }),
     total: truncated.length,

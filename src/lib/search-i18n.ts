@@ -151,6 +151,12 @@ export interface SearchStrings {
   pageAbbrev: (n: number) => string;
   pagesCount: (n: number) => string;
   translatedCount: (n: number) => string;
+  /**
+   * Fan-out under a result that stands in for other editions/copies (#4300).
+   * `n` is the count `/work/[id]` renders — the set this link reaches — so the
+   * wording must promise the destination, not the rows we collapsed.
+   */
+  workEditionsLink: (n: number) => string;
   findPassages: string;
   hidePassages: string;
   searchingEllipsis: string;
@@ -296,6 +302,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     pageAbbrev: (n) => `p. ${n}`,
     pagesCount: (n) => `${n} pages`,
     translatedCount: (n) => `${n} translated`,
+    workEditionsLink: (n) => `${n} editions & copies of this work`,
     findPassages: 'Find passages',
     hidePassages: 'Hide passages',
     searchingEllipsis: 'Searching...',
@@ -425,6 +432,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     pageAbbrev: (n) => `p. ${n}`,
     pagesCount: (n) => `${n} páginas`,
     translatedCount: (n) => `${n} traducidas`,
+    workEditionsLink: (n) => `${n} ediciones y ejemplares de esta obra`,
     findPassages: 'Buscar pasajes',
     hidePassages: 'Ocultar pasajes',
     searchingEllipsis: 'Buscando...',
