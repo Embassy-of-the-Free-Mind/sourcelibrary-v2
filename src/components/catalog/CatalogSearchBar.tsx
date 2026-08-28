@@ -63,7 +63,7 @@ export default function CatalogSearchBar({
               role="tab"
               aria-selected={on}
               onClick={() => { onModeChange(tab.id); requestAnimationFrame(() => inputRef.current?.focus()); }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-[12.5px] font-medium transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-[12.5px] font-medium transition-colors cursor-pointer focus-ink"
               style={{
                 color: on ? '#f7f2ea' : 'rgba(245,240,232,0.6)',
                 background: on ? 'rgba(12,9,6,0.55)' : 'transparent',
@@ -108,7 +108,7 @@ export default function CatalogSearchBar({
             type="button"
             onClick={onClear}
             aria-label="Clear"
-            className="px-2 transition-opacity hover:opacity-70 cursor-pointer"
+            className="px-2 transition-opacity hover:opacity-70 cursor-pointer focus-ink"
             style={{ color: 'rgba(245,240,232,0.6)' }}
           >
             <X className="w-[18px] h-[18px]" />
@@ -117,7 +117,7 @@ export default function CatalogSearchBar({
         <button
           type="submit"
           disabled={asking}
-          className="px-5 sm:px-7 text-[14px] font-semibold text-white transition-[filter] hover:brightness-110 disabled:opacity-70 cursor-pointer"
+          className="px-5 sm:px-7 text-[14px] font-semibold text-white transition-[filter] hover:brightness-110 disabled:opacity-70 cursor-pointer focus-ink"
           style={{ background: '#a5503d' }}
         >
           {isAsk ? 'Ask' : 'Search'}
@@ -144,7 +144,7 @@ export default function CatalogSearchBar({
                 key={ex}
                 type="button"
                 onClick={() => { onValueChange(ex); requestAnimationFrame(() => inputRef.current?.focus()); }}
-                className="underline underline-offset-2 transition-colors cursor-pointer hover:text-white"
+                className="underline underline-offset-2 transition-colors cursor-pointer hover:text-white focus-ink"
                 style={{ color: 'rgba(245,240,232,0.62)' }}
               >
                 {ex}{i < examples.length - 1 ? ',' : ''}

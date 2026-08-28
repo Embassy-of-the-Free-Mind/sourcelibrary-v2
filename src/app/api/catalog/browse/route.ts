@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { browseBooks, getLanguageCounts, type SortOption } from '@/lib/books-catalog';
+import { browseBooks, type SortOption } from '@/lib/books-catalog';
 import { parseCatalogParams, BROWSE_SORTS } from '@/lib/catalog-query';
 import { semanticBookSearch, getQueryEmbedding } from '@/lib/semantic-search';
 
@@ -23,7 +23,7 @@ const ASK_THRESHOLD = 0.3;
 /**
  * GET /api/catalog/browse
  *
- * Server-side paginated catalog browse powered by Supabase books_catalog.
+ * Server-side paginated library browse powered by Supabase books_catalog.
  *
  * Every filter name is read through `parseCatalogParams` — the same module the
  * client builds its query string with, so the two cannot drift
@@ -35,20 +35,23 @@ export async function GET(request: Request) {
     const f = parseCatalogParams(searchParams);
     const limit = Math.min(120, Math.max(1, parseInt(searchParams.get('limit') || '60', 10)));
     const offset = (f.page - 1) * limit;
-    const includeLangs = searchParams.get('langs') === '1';
 
     const filters = {
-      language: f.language || undefined,
-      collection: f.collection || undefined,
-      category: f.category || undefined,
-      provider: f.provider || undefined,
+      languages: f.languages.length ? f.languages : undefined,
+      collections: f.collections.length ? f.collections : undefined,
+      categories: f.categories.length ? f.categories : undefined,
+      providers: f.providers.length ? f.providers : undefined,
+      textRoles: f.textRoles.length ? f.textRoles : undefined,
       yearMin: f.yearMin ?? undefined,
       yearMax: f.yearMax ?? undefined,
+      pagesMin: f.pagesMin ?? undefined,
+      pagesMax: f.pagesMax ?? undefined,
       // The reader asked for first translations, so give them the ones that
       // ARE first translations on screen — badge gate, not the raw flag.
       firstTranslationPublished: f.firstTranslation || undefined,
       hasTranslation: f.hasTranslation || undefined,
       hasOcr: f.hasOcr || undefined,
+      hasDoi: f.hasDoi || undefined,
       search: f.q || undefined,
     };
 
@@ -57,10 +60,6 @@ export async function GET(request: Request) {
     const browseSort: SortOption = (BROWSE_SORTS as readonly string[]).includes(f.sort)
       ? (f.sort as SortOption)
       : 'popular';
-
-    const langsPromise = includeLangs
-      ? getLanguageCounts({ collection: f.collection || undefined })
-      : Promise.resolve(null);
 
     // ── The librarian's lane ────────────────────────────────────────────────
     // A vector lane carries no metadata predicate, so its hits are handed to
@@ -107,9 +106,8 @@ export async function GET(request: Request) {
       }
 
       if (!ids.length) {
-        const languages = await langsPromise;
         return NextResponse.json(
-          { books: [], total: 0, ...(languages ? { languages } : {}) },
+          { books: [], total: 0 },
           { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60' } },
         );
       }
@@ -130,25 +128,20 @@ export async function GET(request: Request) {
         ? [...books].sort((a, b) => (rank.get(a.id) ?? 1e9) - (rank.get(b.id) ?? 1e9))
         : books;
 
-      const languages = await langsPromise;
       return NextResponse.json(
         {
           books: ordered.slice(offset, offset + limit),
           total: ordered.length,
           poolCapped: ids.length >= ASK_POOL,
-          ...(languages ? { languages } : {}),
         },
         { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=30' } },
       );
     }
 
-    const [result, languages] = await Promise.all([
-      browseBooks({ ...filters, sort: browseSort, offset, limit, exactCount: true }),
-      langsPromise,
-    ]);
+    const result = await browseBooks({ ...filters, sort: browseSort, offset, limit, exactCount: true });
 
     return NextResponse.json(
-      { books: result.books, total: result.total, ...(languages ? { languages } : {}) },
+      { books: result.books, total: result.total },
       { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=30' } },
     );
   } catch (err) {

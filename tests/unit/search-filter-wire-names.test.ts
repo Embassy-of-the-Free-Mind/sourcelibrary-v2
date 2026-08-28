@@ -89,7 +89,7 @@ describe('search api-client date range', () => {
 // things a shared module cannot guarantee on its own: that the wire names are
 // the ones /api/catalog/browse and ScholarCatalog already speak, and that every
 // filter actually survives a round trip.
-describe('catalog filter contract', () => {
+describe('library filter contract', () => {
   it('writes the wire names the browse route reads', async () => {
     const { buildCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
 
@@ -97,15 +97,19 @@ describe('catalog filter contract', () => {
       ...DEFAULT_FILTERS,
       q: 'fludd',
       ask: 'books about angels',
-      language: 'Latin',
-      collection: 'alchemy',
-      category: 'hermeticism',
-      provider: 'bph',
+      languages: ['Latin'],
+      collections: ['alchemy'],
+      categories: ['hermeticism'],
+      providers: ['bph'],
+      textRoles: ['original'],
       yearMin: 1600,
       yearMax: 1699,
+      pagesMin: 100,
+      pagesMax: 500,
       firstTranslation: true,
       hasTranslation: true,
       hasOcr: true,
+      hasDoi: true,
       sort: 'year_asc',
       page: 3,
     }).toString();
@@ -116,36 +120,56 @@ describe('catalog filter contract', () => {
     expect(qs).toContain('collection=alchemy');
     expect(qs).toContain('category=hermeticism');
     expect(qs).toContain('provider=bph');
+    expect(qs).toContain('text_role=original');
     expect(qs).toContain('year_min=1600');
     expect(qs).toContain('year_max=1699');
+    expect(qs).toContain('pages_min=100');
+    expect(qs).toContain('pages_max=500');
     expect(qs).toContain('first_translation=1');
     expect(qs).toContain('has_translation=1');
     expect(qs).toContain('has_ocr=1');
+    expect(qs).toContain('has_doi=1');
     expect(qs).toContain('sort=year_asc');
     expect(qs).toContain('page=3');
     // The camelCase spellings are the ones that were inert in #3269. They must
     // never be what goes on the wire.
     expect(qs).not.toContain('yearMin');
-    expect(qs).not.toContain('yearMax');
     expect(qs).not.toContain('firstTranslation');
+    expect(qs).not.toContain('textRoles');
   });
 
-  it('round-trips every filter through build → parse', async () => {
+  it('repeats a multi-value facet rather than joining it', async () => {
+    const { buildCatalogParams, parseCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
+
+    // A real `books_catalog.language` value with punctuation in it: any
+    // delimiter we picked for joining would eventually split a value in half.
+    const languages = ['Latin', 'Hebrew and Aramaic in Hebrew script', 'Latin-German'];
+    const params = buildCatalogParams({ ...DEFAULT_FILTERS, languages });
+
+    expect(params.getAll('language')).toEqual(languages);
+    expect(parseCatalogParams(params).languages).toEqual(languages);
+  });
+
+  it('round-trips every filter through build then parse', async () => {
     const { buildCatalogParams, parseCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
 
     const filters = {
       ...DEFAULT_FILTERS,
       q: 'agrippa',
       ask: 'plague remedies',
-      language: 'German',
-      collection: 'magic',
-      category: 'alchemy',
-      provider: 'gallica',
+      languages: ['German', 'Latin'],
+      collections: ['magic', 'alchemy'],
+      categories: ['alchemy'],
+      providers: ['gallica', 'bph'],
+      textRoles: ['original', 'modern-translation'],
       yearMin: 1500,
       yearMax: 1599,
+      pagesMin: 10,
+      pagesMax: 900,
       firstTranslation: true,
       hasTranslation: true,
       hasOcr: true,
+      hasDoi: true,
       sort: 'relevance' as const,
       page: 2,
       view: 'list' as const,
@@ -155,26 +179,37 @@ describe('catalog filter contract', () => {
     expect(parsed).toEqual(filters);
   });
 
-  it('omits everything that is at its default, so a clean catalogue has a clean URL', async () => {
+  it('omits everything that is at its default, so an untouched library has a clean URL', async () => {
     const { buildCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
     expect(buildCatalogParams(DEFAULT_FILTERS, { includeView: true }).toString()).toBe('');
   });
 
-  it('swaps a reversed year range instead of returning nothing', async () => {
+  it('swaps a reversed range instead of returning nothing', async () => {
     const { parseCatalogParams } = await import('@/lib/catalog-query');
-    const parsed = parseCatalogParams(new URLSearchParams('year_min=1700&year_max=1500'));
-    expect(parsed.yearMin).toBe(1500);
-    expect(parsed.yearMax).toBe(1700);
+    const years = parseCatalogParams(new URLSearchParams('year_min=1700&year_max=1500'));
+    expect([years.yearMin, years.yearMax]).toEqual([1500, 1700]);
+    const pages = parseCatalogParams(new URLSearchParams('pages_min=900&pages_max=10'));
+    expect([pages.pagesMin, pages.pagesMax]).toEqual([10, 900]);
   });
 
-  it('counts a year range as one active filter, not two', async () => {
+  it('drops blanks and duplicates from a multi-value facet', async () => {
+    const { parseCatalogParams } = await import('@/lib/catalog-query');
+    const parsed = parseCatalogParams(new URLSearchParams('language=Latin&language=&language=Latin&language=Greek'));
+    expect(parsed.languages).toEqual(['Latin', 'Greek']);
+  });
+
+  it('counts one condition per removable chip', async () => {
     const { parseCatalogParams, countActiveFilters } = await import('@/lib/catalog-query');
-    expect(countActiveFilters(parseCatalogParams(new URLSearchParams('year_min=1500&year_max=1599')))).toBe(1);
-    expect(countActiveFilters(parseCatalogParams(new URLSearchParams('language=Latin&first_translation=1')))).toBe(2);
+    // Two languages are two chips, and a year range is one.
+    expect(countActiveFilters(parseCatalogParams(
+      new URLSearchParams('language=Latin&language=Greek&year_min=1500&year_max=1599'),
+    ))).toBe(3);
+    expect(countActiveFilters(parseCatalogParams(new URLSearchParams('sort=title&page=4&view=list')))).toBe(0);
   });
 
-  it('ignores a sort it does not know', async () => {
+  it('ignores values it does not know', async () => {
     const { parseCatalogParams } = await import('@/lib/catalog-query');
     expect(parseCatalogParams(new URLSearchParams('sort=; DROP TABLE')).sort).toBe('popular');
+    expect(parseCatalogParams(new URLSearchParams('text_role=made-up')).textRoles).toEqual([]);
   });
 });

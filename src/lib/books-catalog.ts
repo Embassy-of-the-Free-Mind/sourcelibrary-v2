@@ -99,7 +99,7 @@ export interface CatalogBookDetail extends CatalogBook {
 // a field the query never asked for.
 export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
 
-export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
+export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality' | 'longest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function applySort(query: any, sort: SortOption) {
@@ -111,6 +111,7 @@ function applySort(query: any, sort: SortOption) {
     case 'recent': return query.order('created_at', { ascending: false });
     case 'last_translated': return query.order('last_translation_at', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
     case 'quality': return query.order('quality_score', { ascending: false }).order('title', { ascending: true });
+    case 'longest': return query.order('pages_count', { ascending: false }).order('title', { ascending: true });
     case 'popular':
     default: return query.order('read_count', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
   }
@@ -126,6 +127,27 @@ export async function browseBooks(opts: {
   category?: string;
   provider?: string;
   library?: string;
+  /**
+   * Multi-value forms of the four facets above, for surfaces that let a reader
+   * pick more than one. Within a facet the values are OR'd (a reader asking for
+   * Latin and Greek wants either); across facets they are AND'd, which is what
+   * every catalogue filter means by stacking conditions.
+   *
+   * They compose with the singular forms rather than replacing them — the
+   * singular ones are still what /languages/[code], /libraries/[slug] and the
+   * search page pass, and one shared query builder is the whole point.
+   */
+  languages?: string[];
+  collections?: string[];
+  categories?: string[];
+  providers?: string[];
+  /** `text_role`: original | period-translation | modern-translation (#2395). */
+  textRoles?: string[];
+  /** Bounds on `pages_count`, for "short works" / "the big folios". */
+  pagesMin?: number;
+  pagesMax?: number;
+  /** Only editions with a registered DOI. */
+  hasDoi?: boolean;
   /** `is_first_translation` alone — the bibliographic claim, badged or not. */
   firstTranslation?: boolean;
   /**
@@ -188,6 +210,18 @@ export async function browseBooks(opts: {
   if (opts.collection) query = query.contains('collections', [opts.collection]);
   if (opts.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
   if (opts.provider) query = query.eq('image_source_provider', opts.provider);
+
+  // `in` for scalar columns, `overlaps` for the array ones: `contains` would
+  // demand a book carry EVERY chosen collection, which is the opposite of what
+  // picking two of them means.
+  if (opts.languages?.length) query = query.in('language', opts.languages);
+  if (opts.providers?.length) query = query.in('image_source_provider', opts.providers);
+  if (opts.textRoles?.length) query = query.in('text_role', opts.textRoles);
+  if (opts.collections?.length) query = query.overlaps('collections', opts.collections);
+  if (opts.categories?.length) query = query.overlaps('categories', opts.categories.map(canonicalizeCategory));
+  if (opts.pagesMin != null) query = query.gte('pages_count', opts.pagesMin);
+  if (opts.pagesMax != null) query = query.lte('pages_count', opts.pagesMax);
+  if (opts.hasDoi) query = query.not('doi', 'is', null);
   if (opts.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
   if (opts.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts.firstTranslationPublished) query = query.eq('is_first_translation', true).gt('pages_translated', 0);
@@ -626,6 +660,9 @@ export interface CatalogFacets {
    */
   languageCount: number;
   categories: FacetValue[];
+  /** original | period-translation | modern-translation, with counts. */
+  textRoles: FacetValue[];
+  withDoi: number;
   collections: FacetValue[];
   providers: FacetValue[];
   /** Books per half-century, for the year-range histogram. */
@@ -652,7 +689,7 @@ export interface CatalogFacets {
  */
 export async function getCatalogFacets(scope?: { collection?: string }): Promise<CatalogFacets> {
   const PAGE = 1000;
-  const COLUMNS = 'language, categories, collections, year, image_source_provider, is_first_translation, pages_translated, pages_ocr';
+  const COLUMNS = 'language, categories, collections, year, image_source_provider, text_role, doi, is_first_translation, pages_translated, pages_ocr';
 
   // PostgREST builders are chainable and structurally identical whatever their
   // row type, so the scope is applied through one generic helper rather than
@@ -706,7 +743,9 @@ export async function getCatalogFacets(scope?: { collection?: string }): Promise
   const categories = new Map<string, number>();
   const collections = new Map<string, number>();
   const providers = new Map<string, number>();
+  const textRoles = new Map<string, number>();
   const decades = new Map<number, number>();
+  let withDoi = 0;
   let yearMin: number | null = null;
   let yearMax: number | null = null;
   let firstTranslations = 0;
@@ -721,6 +760,8 @@ export async function getCatalogFacets(scope?: { collection?: string }): Promise
   for (const row of rows) {
     bump(languages, row.language);
     bump(providers, row.image_source_provider);
+    bump(textRoles, row.text_role);
+    if (typeof row.doi === 'string' && row.doi.trim()) withDoi++;
     if (Array.isArray(row.categories)) for (const c of row.categories) bump(categories, canonicalizeCategory(String(c)));
     if (Array.isArray(row.collections)) for (const c of row.collections) bump(collections, String(c));
 
@@ -754,6 +795,8 @@ export async function getCatalogFacets(scope?: { collection?: string }): Promise
     languages: sorted(languages).filter((l) => isSingleRealLanguage(l.value)),
     languageCount: distinctLanguageSet([...languages.keys()]).size,
     categories: sorted(categories),
+    textRoles: sorted(textRoles),
+    withDoi,
     collections: sorted(collections),
     providers: sorted(providers),
     decades: [...decades.entries()].map(([year, count]) => ({ year, count })).sort((a, b) => a.year - b.year),

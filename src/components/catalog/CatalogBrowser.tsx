@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { LayoutGrid, List, Download, X, SlidersHorizontal, ArrowLeft } from 'lucide-react';
+import { LayoutGrid, List, Download, X, SlidersHorizontal, ArrowLeft, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
-import FacetMenu, { type FacetOption } from './FacetMenu';
-import YearRangeMenu from './YearRangeMenu';
+import FilterRail from './FilterRail';
 import CatalogSearchBar, { type SearchMode } from './CatalogSearchBar';
+import type { CatalogBookItem, CatalogFacetsProp } from './catalog-types';
 import {
   DEFAULT_FILTERS,
+  TEXT_ROLE_LABELS,
   buildCatalogParams,
   parseCatalogParams,
   clearFilters,
@@ -36,51 +37,15 @@ const SORT_LABELS: { value: CatalogSort; label: string }[] = [
   { value: 'quality', label: 'Best scans' },
   { value: 'title', label: 'Title A–Z' },
   { value: 'author', label: 'Author A–Z' },
-  { value: 'year_asc', label: 'Year, oldest' },
-  { value: 'year_desc', label: 'Year, newest' },
+  { value: 'year_asc', label: 'Earliest first' },
+  { value: 'year_desc', label: 'Latest first' },
+  { value: 'longest', label: 'Longest first' },
 ];
 
-export interface BookItem {
-  id: string;
-  slug?: string | null;
-  title: string;
-  display_title?: string | null;
-  author?: string | null;
-  year?: number | null;
-  language?: string | null;
-  pages_count?: number;
-  pages_ocr?: number;
-  pages_translated?: number;
-  pages_blank?: number;
-  photo?: string | null;
-  thumbnail?: string | null;
-  thumbnail_blob?: string | null;
-  published?: string | null;
-  read_count?: number;
-  is_first_translation?: boolean;
-  ft_disposition?: string;
-}
-
-export interface CatalogFacetsProp {
-  total: number;
-  languages: { value: string; count: number }[];
-  categories: { value: string; count: number }[];
-  collections: { value: string; count: number }[];
-  providers: { value: string; count: number }[];
-  decades: { year: number; count: number }[];
-  yearMin: number | null;
-  yearMax: number | null;
-  firstTranslations: number;
-  translated: number;
-  transcribed: number;
-  languageCount: number;
-}
-
 interface CatalogBrowserProps {
-  initialBooks: BookItem[];
+  initialBooks: CatalogBookItem[];
   initialTotal: number;
   facets: CatalogFacetsProp;
-  /** slug → display name, for collections and categories and libraries. */
   collectionNames: Record<string, string>;
   categoryNames: Record<string, string>;
   providerNames: Record<string, string>;
@@ -95,8 +60,8 @@ function getStoredView(): CatalogView | null {
   return v === 'grid' || v === 'list' ? v : null;
 }
 
-/** Micro heading used across the toolbar and hero, matching the reader's rails. */
-const MICRO = 'text-[10.5px] uppercase tracking-[0.14em]';
+/** The letterspaced micro label used across the reader and this page. */
+const MICRO = 'text-[10px] uppercase tracking-[0.14em]';
 
 export default function CatalogBrowser({
   initialBooks,
@@ -110,9 +75,9 @@ export default function CatalogBrowser({
 }: CatalogBrowserProps) {
   const [filters, setFilters] = useState<CatalogFilters>({
     ...DEFAULT_FILTERS,
-    collection: initialCollection || '',
+    collections: initialCollection ? [initialCollection] : [],
   });
-  const [books, setBooks] = useState<BookItem[]>(initialBooks);
+  const [books, setBooks] = useState<CatalogBookItem[]>(initialBooks);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
 
@@ -121,9 +86,9 @@ export default function CatalogBrowser({
   const [asking, setAsking] = useState(false);
   const [askNote, setAskNote] = useState('');
   const [askDegraded, setAskDegraded] = useState(false);
-  /** The ask filled its similarity pool, so there may be more beyond it. */
   const [poolCapped, setPoolCapped] = useState(false);
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [railOpen, setRailOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
 
   // Mirrors `filters` so callbacks always read the committed value without
   // threading it through every handler.
@@ -131,7 +96,8 @@ export default function CatalogBrowser({
   filtersRef.current = filters;
   const initializedRef = useRef(false);
   const abortRef = useRef<AbortController | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const totalPages = Math.ceil(total / PER_PAGE);
   const activeCount = countActiveFilters(filters);
@@ -172,16 +138,24 @@ export default function CatalogBrowser({
     const params = new URLSearchParams(window.location.search);
     const parsed = parseCatalogParams(params);
     const view = parsed.view !== DEFAULT_FILTERS.view ? parsed.view : (getStoredView() || DEFAULT_FILTERS.view);
-    const next: CatalogFilters = { ...parsed, view, collection: parsed.collection || initialCollection || '' };
+    const collections = parsed.collections.length
+      ? parsed.collections
+      : (initialCollection ? [initialCollection] : []);
+    const next: CatalogFilters = { ...parsed, view, collections };
 
     setFilters(next);
     filtersRef.current = next;
     setSearchInput(next.ask || next.q);
     if (next.ask) setMode('ask');
+    if (countActiveFilters(next) > 0) setRailOpen(true);
 
     // The server already rendered page 1 of the default query; anything else
     // has to be fetched.
-    const isDefault = JSON.stringify({ ...next, view: 'grid' }) === JSON.stringify({ ...DEFAULT_FILTERS, collection: initialCollection || '' });
+    const base: CatalogFilters = {
+      ...DEFAULT_FILTERS,
+      collections: initialCollection ? [initialCollection] : [],
+    };
+    const isDefault = JSON.stringify({ ...next, view: 'grid' }) === JSON.stringify(base);
     if (!isDefault) fetchBooks(next);
   }, [fetchBooks, initialCollection]);
 
@@ -226,8 +200,8 @@ export default function CatalogBrowser({
         body: JSON.stringify({
           question: text,
           // The vocabulary the librarian may choose from is this page's own
-          // facet lists, so it can only ever answer with a filter this
-          // catalogue actually has.
+          // facet lists, so it can only ever answer with a filter this library
+          // actually has.
           vocab: {
             languages: facets.languages.slice(0, 60).map((l) => l.value),
             categories: facets.categories.slice(0, 60).map((c) => ({ id: c.value, name: categoryNames[c.value] || c.value })),
@@ -251,18 +225,20 @@ export default function CatalogBrowser({
         return;
       }
 
+      const one = (v: unknown) => (typeof v === 'string' && v ? [v] : []);
       apply({
         ask: (plan.topic as string) || text,
         q: (plan.keywords as string) || '',
-        language: (plan.language as string) || '',
-        collection: (plan.collection as string) || filtersRef.current.collection,
-        category: (plan.category as string) || '',
+        languages: one(plan.language),
+        collections: one(plan.collection).length ? one(plan.collection) : filtersRef.current.collections,
+        categories: one(plan.category),
         yearMin: (plan.yearMin as number | null) ?? null,
         yearMax: (plan.yearMax as number | null) ?? null,
         firstTranslation: plan.firstTranslation === true,
         hasTranslation: plan.hasTranslation === true,
         sort: (plan.sort as CatalogSort) || 'relevance',
       });
+      setRailOpen(true);
     } catch {
       // The librarian is unreachable: fall back to matching the words. Say so,
       // rather than showing a thinner result set as if it were the answer.
@@ -283,7 +259,7 @@ export default function CatalogBrowser({
 
   const handlePage = useCallback((page: number) => {
     apply({ page });
-    gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [apply]);
 
   const handleView = useCallback((view: CatalogView) => {
@@ -303,30 +279,20 @@ export default function CatalogBrowser({
     fetchBooks(next);
   }, [fetchBooks, writeUrl]);
 
-  // ── Facet options ─────────────────────────────────────────────────────────
-
-  const languageOptions: FacetOption[] = useMemo(
-    () => facets.languages.map((l) => ({ value: l.value, label: l.value, count: l.count })),
-    [facets.languages],
-  );
-  const categoryOptions: FacetOption[] = useMemo(
-    () => facets.categories
-      .filter((c) => categoryNames[c.value])
-      .map((c) => ({ value: c.value, label: categoryNames[c.value], count: c.count })),
-    [facets.categories, categoryNames],
-  );
-  const collectionOptions: FacetOption[] = useMemo(
-    () => facets.collections
-      .filter((c) => collectionNames[c.value])
-      .map((c) => ({ value: c.value, label: collectionNames[c.value], count: c.count })),
-    [facets.collections, collectionNames],
-  );
-  const providerOptions: FacetOption[] = useMemo(
-    () => facets.providers
-      .filter((p) => providerNames[p.value])
-      .map((p) => ({ value: p.value, label: providerNames[p.value], count: p.count })),
-    [facets.providers, providerNames],
-  );
+  // Close the sort menu on an outside click or Escape.
+  useEffect(() => {
+    if (!sortOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(e.target as Node)) setSortOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSortOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [sortOpen]);
 
   const sortOptions = useMemo(
     () => SORT_LABELS.filter((s) => s.value !== 'relevance' || filters.ask),
@@ -334,166 +300,90 @@ export default function CatalogBrowser({
   );
   const sortLabel = SORT_LABELS.find((s) => s.value === filters.sort)?.label || 'Most read';
 
-  // ── Active-filter chips ───────────────────────────────────────────────────
+  // ── Active-filter chips: one per removable condition ──────────────────────
 
   const chips: { key: string; label: string; onRemove: () => void }[] = [];
+  const dropFrom = (list: string[], v: string) => list.filter((x) => x !== v);
+
   if (filters.ask) chips.push({ key: 'ask', label: `Asked: ${filters.ask}`, onRemove: clearSearch });
   if (filters.q) chips.push({ key: 'q', label: `“${filters.q}”`, onRemove: () => { setSearchInput(''); apply({ q: '' }); } });
-  if (filters.language) chips.push({ key: 'language', label: filters.language, onRemove: () => apply({ language: '' }) });
-  if (filters.category) chips.push({ key: 'category', label: categoryNames[filters.category] || filters.category, onRemove: () => apply({ category: '' }) });
-  if (filters.collection) chips.push({ key: 'collection', label: collectionNames[filters.collection] || filters.collection, onRemove: () => apply({ collection: '' }) });
-  if (filters.provider) chips.push({ key: 'provider', label: providerNames[filters.provider] || filters.provider, onRemove: () => apply({ provider: '' }) });
+  for (const v of filters.languages) {
+    chips.push({ key: `lang:${v}`, label: v, onRemove: () => apply({ languages: dropFrom(filters.languages, v) }) });
+  }
+  for (const v of filters.categories) {
+    chips.push({ key: `cat:${v}`, label: categoryNames[v] || v, onRemove: () => apply({ categories: dropFrom(filters.categories, v) }) });
+  }
+  for (const v of filters.collections) {
+    chips.push({ key: `col:${v}`, label: collectionNames[v] || v, onRemove: () => apply({ collections: dropFrom(filters.collections, v) }) });
+  }
+  for (const v of filters.providers) {
+    chips.push({ key: `pro:${v}`, label: providerNames[v] || v, onRemove: () => apply({ providers: dropFrom(filters.providers, v) }) });
+  }
+  for (const v of filters.textRoles) {
+    chips.push({ key: `role:${v}`, label: TEXT_ROLE_LABELS[v] || v, onRemove: () => apply({ textRoles: dropFrom(filters.textRoles, v) }) });
+  }
   if (filters.yearMin != null || filters.yearMax != null) {
     const label = filters.yearMin != null && filters.yearMax != null
       ? `${filters.yearMin}–${filters.yearMax}`
       : filters.yearMin != null ? `${filters.yearMin} onwards` : `to ${filters.yearMax}`;
     chips.push({ key: 'years', label, onRemove: () => apply({ yearMin: null, yearMax: null }) });
   }
-  if (filters.firstTranslation) chips.push({ key: 'ft', label: 'First translations', onRemove: () => apply({ firstTranslation: false }) });
+  if (filters.pagesMin != null || filters.pagesMax != null) {
+    const label = filters.pagesMin != null && filters.pagesMax != null
+      ? `${filters.pagesMin}–${filters.pagesMax} pages`
+      : filters.pagesMin != null ? `${filters.pagesMin}+ pages` : `under ${(filters.pagesMax ?? 0) + 1} pages`;
+    chips.push({ key: 'pages', label, onRemove: () => apply({ pagesMin: null, pagesMax: null }) });
+  }
   if (filters.hasTranslation) chips.push({ key: 'tr', label: 'Readable in English', onRemove: () => apply({ hasTranslation: false }) });
   if (filters.hasOcr) chips.push({ key: 'ocr', label: 'Transcribed', onRemove: () => apply({ hasOcr: false }) });
+  if (filters.firstTranslation) chips.push({ key: 'ft', label: 'First translation', onRemove: () => apply({ firstTranslation: false }) });
+  if (filters.hasDoi) chips.push({ key: 'doi', label: 'Has a DOI', onRemove: () => apply({ hasDoi: false }) });
 
-  const heroTitle = initialCollection ? (collectionName || 'Collection') : 'The Catalogue';
+  const heroTitle = initialCollection ? (collectionName || 'Collection') : 'The Library';
 
-  // ── Render ────────────────────────────────────────────────────────────────
-
-  const facetControls = (
-    <>
-      <FacetMenu
-        label="Language"
-        value={filters.language}
-        options={languageOptions}
-        onChange={(v) => apply({ language: v })}
-        allLabel="All languages"
-        placeholder="Find a language…"
-      />
-      <FacetMenu
-        label="Subject"
-        value={filters.category ? (categoryNames[filters.category] || filters.category) : ''}
-        options={categoryOptions}
-        onChange={(v) => apply({ category: v })}
-        allLabel="All subjects"
-        placeholder="Find a subject…"
-      />
-      <FacetMenu
-        label="Collection"
-        value={filters.collection ? (collectionNames[filters.collection] || filters.collection) : ''}
-        options={collectionOptions}
-        onChange={(v) => apply({ collection: v })}
-        allLabel="All collections"
-        placeholder="Find a collection…"
-        width={300}
-      />
-      <YearRangeMenu
-        min={filters.yearMin}
-        max={filters.yearMax}
-        onChange={(min, max) => apply({ yearMin: min, yearMax: max })}
-        buckets={facets.decades}
-      />
-      <FacetMenu
-        label="Held by"
-        value={filters.provider ? (providerNames[filters.provider] || filters.provider) : ''}
-        options={providerOptions}
-        onChange={(v) => apply({ provider: v })}
-        allLabel="Every library"
-        placeholder="Find a library…"
-        width={300}
-      />
-      <FacetMenu
-        label="Shows"
-        value={
-          [filters.hasTranslation && 'Readable in English', filters.hasOcr && 'Transcribed', filters.firstTranslation && 'First translations']
-            .filter(Boolean).join(', ')
-        }
-        options={[]}
-        onChange={() => {}}
-        width={286}
-      >
-        <div className="p-1.5">
-          {([
-            { key: 'hasTranslation' as const, label: 'Readable in English', hint: facets.translated },
-            { key: 'hasOcr' as const, label: 'Transcribed', hint: facets.transcribed },
-            { key: 'firstTranslation' as const, label: 'First translations', hint: facets.firstTranslations },
-          ]).map((row) => (
-            <label
-              key={row.key}
-              className="flex items-center justify-between gap-3 px-2.5 py-2 text-[13px] cursor-pointer hover:bg-warm"
-            >
-              <span className="flex items-center gap-2.5 text-secondary">
-                <input
-                  type="checkbox"
-                  checked={filters[row.key]}
-                  onChange={(e) => apply({ [row.key]: e.target.checked } as Partial<CatalogFilters>)}
-                  className="w-3.5 h-3.5 accent-[#a5503d] cursor-pointer"
-                />
-                {row.label}
-              </span>
-              <span className="text-[11px] text-muted tabular-nums">{row.hint.toLocaleString('en-US')}</span>
-            </label>
-          ))}
-        </div>
-      </FacetMenu>
-    </>
+  const rail = (
+    <FilterRail
+      filters={filters}
+      facets={facets}
+      collectionNames={collectionNames}
+      categoryNames={categoryNames}
+      providerNames={providerNames}
+      apply={apply}
+    />
   );
 
   return (
     <div>
       {/* ===================== Hero ===================== */}
+      {/* No imagery. A collage behind the search box competed with the covers
+          below it and made the one thing you came here to do hard to find. */}
       <section className="relative overflow-hidden" style={{ background: '#14100c' }}>
-        <div className="absolute inset-0">
-          {/* One composited plate of the library's own engravings — a single
-              optimized asset rather than fifty thumbnails flashing in. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/api/catalog/hero-collage"
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          {/* The book hero's tint, so the two pages read as one system. */}
-          <div className="absolute inset-0" style={{ background: 'rgba(16,12,8,0.78)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(14,10,7,0.62) 0%, rgba(14,10,7,0.22) 62%, transparent 100%)' }} />
-          <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 84% 12%, rgba(165,80,61,0.18) 0%, transparent 58%)' }} />
-        </div>
-
-        <div className="relative max-w-[1500px] mx-auto px-6 md:px-12 pt-10 md:pt-14 pb-9 md:pb-12">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(120% 140% at 78% 0%, rgba(165,80,61,0.13) 0%, transparent 60%)' }}
+        />
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-9 md:pt-12 pb-8 md:pb-10">
           {initialCollection && (
             <Link
               href={`/collections/${initialCollection}`}
-              className="inline-flex items-center gap-1.5 mb-5 text-[13px] transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-1.5 mb-4 text-[13px] transition-opacity hover:opacity-80 focus-ink"
               style={{ color: 'rgba(245,240,232,0.7)' }}
             >
               <ArrowLeft className="w-3.5 h-3.5" /> Back to {collectionName || initialCollection}
             </Link>
           )}
 
-          <p className={MICRO} style={{ color: 'rgba(201,168,108,0.9)' }}>
-            {initialCollection ? 'Collection' : 'Every book in the library'}
-          </p>
-          <h1
-            className="font-display font-medium text-[34px] sm:text-5xl md:text-[56px] leading-[1.05] tracking-[-0.01em] mt-2 mb-3"
-            style={{ color: '#f7f2ea' }}
-          >
-            {heroTitle}
-          </h1>
-          <p className="text-[15px] md:text-base max-w-2xl mb-5" style={{ color: 'rgba(245,240,232,0.78)' }}>
-            Search it, filter it, or ask the librarian to find what you need.
-          </p>
-
-          {/* The catalogue's own extent, stated once. Every number here counts
-              the same set the facets below are built from. */}
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-7 text-[12px]">
-            {[
-              `${facets.total.toLocaleString('en-US')} works`,
-              `${facets.languageCount} languages`,
-              facets.firstTranslations > 0 ? `${facets.firstTranslations.toLocaleString('en-US')} first translations` : '',
-              `${facets.translated.toLocaleString('en-US')} readable in English`,
-            ].filter(Boolean).map((stat) => (
-              <span key={stat} className="px-2.5 py-1 border" style={{ borderColor: 'rgba(245,240,232,0.22)', color: 'rgba(245,240,232,0.86)' }}>
-                {stat}
-              </span>
-            ))}
+          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4 md:mb-5">
+            <h1
+              className="font-display font-medium text-[30px] sm:text-[42px] md:text-[48px] leading-[1.05] tracking-[-0.01em]"
+              style={{ color: '#f7f2ea' }}
+            >
+              {heroTitle}
+            </h1>
+            <p className={`${MICRO} pb-1`} style={{ color: 'rgba(201,168,108,0.85)' }}>
+              {facets.total.toLocaleString('en-US')} works · {facets.languageCount} languages ·{' '}
+              {facets.firstTranslations.toLocaleString('en-US')} first translations
+            </p>
           </div>
 
           <CatalogSearchBar
@@ -511,192 +401,234 @@ export default function CatalogBrowser({
         </div>
       </section>
 
-      {/* ===================== Toolbar ===================== */}
-      <div className="sticky top-0 z-30 border-b border-border-light bg-cream/95 backdrop-blur-sm">
-        <div className="max-w-[1500px] mx-auto px-6 md:px-12">
-          <div className="flex items-center gap-3 py-3">
-            <p className={`${MICRO} text-muted whitespace-nowrap tabular-nums`}>
-              {loading ? 'Searching' : `${total.toLocaleString('en-US')} ${total === 1 ? 'book' : 'books'}`}
-              {!loading && activeCount > 0 && (
-                <span className="text-faint"> of {facets.total.toLocaleString('en-US')}</span>
-              )}
-              {!loading && poolCapped && (
-                <span
-                  className="text-faint normal-case tracking-normal"
-                  title="The librarian ranks the closest 200 books by similarity, then applies your filters to those. There may be more beyond them."
-                > · closest 200</span>
-              )}
-            </p>
-
-            {/* Desktop: every facet inline. Mobile: one button that opens them. */}
-            <div className="hidden lg:flex items-center gap-2 flex-wrap">{facetControls}</div>
-
-            <button
-              type="button"
-              onClick={() => setMobileFiltersOpen((v) => !v)}
-              className={`lg:hidden inline-flex items-center gap-1.5 h-9 px-3 text-[13px] border transition-colors cursor-pointer ${
-                activeCount > 0 ? 'border-border-medium bg-warm text-primary' : 'border-border-light bg-white text-secondary'
-              }`}
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              Filters
-              {activeCount > 0 && <span className="tabular-nums">({activeCount})</span>}
-            </button>
-
-            <div className="ml-auto flex items-center gap-2">
-              <FacetMenu
-                label="Sort"
-                value={sortLabel}
-                options={sortOptions.map((s) => ({ value: s.value, label: s.label }))}
-                onChange={(v) => apply({ sort: (v || 'popular') as CatalogSort })}
-                allLabel="Most read"
-                searchable={false}
-                align="right"
-                width={210}
-              />
-              <div className="hidden sm:flex items-center border border-border-light bg-white">
-                {([
-                  { id: 'grid' as const, Icon: LayoutGrid, label: 'Grid view' },
-                  { id: 'list' as const, Icon: List, label: 'List view' },
-                ]).map(({ id, Icon, label }) => (
+      {/* ===================== Body ===================== */}
+      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
+        <div className="flex flex-col lg:flex-row lg:gap-10">
+          {/* ---- Filter rail ---- */}
+          <aside className="lg:w-[236px] lg:shrink-0">
+            {/* Desktop: always open, sticky beside the results. */}
+            <div className="hidden lg:block sticky top-6 py-8 max-h-[calc(100vh-3rem)] overflow-y-auto overscroll-contain pr-1">
+              <div className="flex items-baseline justify-between gap-2 mb-6">
+                <h2 className={`${MICRO} text-primary`}>Refine</h2>
+                {activeCount > 0 && (
                   <button
-                    key={id}
-                    onClick={() => handleView(id)}
-                    aria-label={label}
-                    title={label}
-                    className={`p-2 transition-colors cursor-pointer ${
-                      filters.view === id ? 'bg-warm text-primary' : 'text-muted hover:text-primary'
-                    }`}
+                    type="button"
+                    onClick={resetAll}
+                    className="text-[11px] text-muted hover:text-primary underline underline-offset-2 transition-colors cursor-pointer focus-ink"
                   >
-                    <Icon className="w-4 h-4" />
+                    Reset all
                   </button>
-                ))}
+                )}
               </div>
+              {rail}
             </div>
-          </div>
 
-          {mobileFiltersOpen && (
-            <div className="lg:hidden flex flex-wrap items-center gap-2 pb-3">{facetControls}</div>
-          )}
-
-          {chips.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1.5 pb-3">
-              {chips.map((chip) => (
-                <button
-                  key={chip.key}
-                  type="button"
-                  onClick={chip.onRemove}
-                  className="group inline-flex items-center gap-1.5 max-w-full pl-2.5 pr-2 py-1 text-[12px] bg-warm border border-border-light text-secondary hover:border-border-medium hover:text-primary transition-colors cursor-pointer"
-                >
-                  <span className="truncate max-w-[18rem]">{chip.label}</span>
-                  <X className="w-3 h-3 shrink-0 text-muted group-hover:text-primary" />
-                </button>
-              ))}
+            {/* Mobile: one button that reveals the same rail. */}
+            <div className="lg:hidden border-b border-border-light">
               <button
                 type="button"
-                onClick={resetAll}
-                className="ml-1 text-[12px] text-muted hover:text-primary underline underline-offset-2 transition-colors cursor-pointer"
+                onClick={() => setRailOpen((v) => !v)}
+                aria-expanded={railOpen}
+                className="w-full flex items-center justify-between gap-2 py-3.5 text-[13px] text-primary cursor-pointer focus-ink"
               >
-                Clear all
+                <span className="inline-flex items-center gap-2">
+                  <SlidersHorizontal className="w-4 h-4 text-muted" />
+                  Refine
+                  {activeCount > 0 && <span className="text-muted tabular-nums">({activeCount})</span>}
+                </span>
+                <ChevronDown className={`w-4 h-4 text-muted transition-transform ${railOpen ? 'rotate-180' : ''}`} />
               </button>
+              {railOpen && <div className="pb-7">{rail}</div>}
             </div>
-          )}
-        </div>
-      </div>
+          </aside>
 
-      {/* ===================== Results ===================== */}
-      <div
-        className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-10"
-        ref={gridRef}
-      >
-        <div className={loading ? 'opacity-50 transition-opacity duration-200' : 'transition-opacity duration-200'}>
-          {books.length === 0 && !loading ? (
-            <div className="py-24 text-center">
-              <p className="font-display text-2xl text-primary mb-2">Nothing here yet</p>
-              <p className="text-secondary mb-6 max-w-xl mx-auto">
-                {filters.ask && askDegraded
-                  /* We never reached the librarian, so this is not a statement
-                     about the corpus. Say which question was actually asked. */
-                  ? 'The librarian could not be reached, so the words themselves were matched against titles and authors, and nothing came back. Try the Search tab with a title or an author.'
-                  : filters.ask
-                    ? 'The librarian found no books that match that. Try fewer conditions, or different words.'
-                    : 'No books match these filters.'}
+          {/* ---- Results ---- */}
+          <div className="min-w-0 flex-1 py-6 lg:py-8" ref={resultsRef}>
+            {/* Toolbar */}
+            <div className="flex items-center gap-3 flex-wrap pb-4 border-b border-border-light">
+              <p className={`${MICRO} text-muted whitespace-nowrap tabular-nums`}>
+                {loading ? 'Searching' : `${total.toLocaleString('en-US')} ${total === 1 ? 'book' : 'books'}`}
+                {!loading && activeCount > 0 && (
+                  <span className="text-faint"> of {facets.total.toLocaleString('en-US')}</span>
+                )}
+                {!loading && poolCapped && (
+                  <span
+                    className="text-faint normal-case tracking-normal"
+                    title="The librarian ranks the closest 200 books by similarity, then applies your filters to those. There may be more beyond them."
+                  > · closest 200</span>
+                )}
               </p>
-              {activeCount > 0 && (
+
+              <div className="ml-auto flex items-center gap-2">
+                {/* Sort */}
+                <div ref={sortRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setSortOpen((v) => !v)}
+                    aria-expanded={sortOpen}
+                    aria-haspopup="listbox"
+                    className="inline-flex items-center gap-1.5 h-8 px-2.5 text-[13px] text-secondary hover:text-primary transition-colors cursor-pointer focus-ink"
+                  >
+                    <span className="text-muted">Sort</span>
+                    {sortLabel}
+                    <ChevronDown className={`w-3.5 h-3.5 text-muted transition-transform ${sortOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {sortOpen && (
+                    <div
+                      role="listbox"
+                      className="absolute right-0 z-40 mt-1 w-[13rem] bg-white border border-border-medium py-1 shadow-[0_18px_40px_-24px_rgba(26,22,18,0.55)]"
+                    >
+                      {sortOptions.map((s) => (
+                        <button
+                          key={s.value}
+                          type="button"
+                          role="option"
+                          aria-selected={s.value === filters.sort}
+                          onClick={() => { apply({ sort: s.value }); setSortOpen(false); }}
+                          className={`w-full text-left px-3 py-1.5 text-[13px] hover:bg-warm cursor-pointer focus-ink ${
+                            s.value === filters.sort ? 'text-primary font-medium' : 'text-secondary'
+                          }`}
+                        >
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="hidden sm:flex items-center border border-border-light bg-white">
+                  {([
+                    { id: 'grid' as const, Icon: LayoutGrid, label: 'Grid view' },
+                    { id: 'list' as const, Icon: List, label: 'List view' },
+                  ]).map(({ id, Icon, label }) => (
+                    <button
+                      key={id}
+                      onClick={() => handleView(id)}
+                      aria-label={label}
+                      title={label}
+                      className={`p-1.5 transition-colors cursor-pointer focus-ink ${
+                        filters.view === id ? 'bg-warm text-primary' : 'text-muted hover:text-primary'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Active conditions */}
+            {chips.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 pt-3">
+                {chips.map((chip) => (
+                  <button
+                    key={chip.key}
+                    type="button"
+                    onClick={chip.onRemove}
+                    className="group inline-flex items-center gap-1.5 max-w-full pl-2.5 pr-1.5 py-[3px] text-[12px] bg-warm border border-border-light text-secondary hover:border-border-medium hover:text-primary transition-colors cursor-pointer focus-ink"
+                  >
+                    <span className="truncate max-w-[18rem]">{chip.label}</span>
+                    <X className="w-3 h-3 shrink-0 text-muted group-hover:text-primary" />
+                  </button>
+                ))}
                 <button
                   type="button"
                   onClick={resetAll}
-                  className="inline-flex items-center px-5 py-2.5 text-[14px] font-semibold text-white transition-[filter] hover:brightness-110 cursor-pointer"
-                  style={{ background: '#a5503d' }}
+                  className="ml-1 text-[12px] text-muted hover:text-primary underline underline-offset-2 transition-colors cursor-pointer focus-ink"
                 >
-                  Clear all filters
+                  Clear all
                 </button>
+              </div>
+            )}
+
+            {/* Results */}
+            <div className={`pt-6 ${loading ? 'opacity-50 transition-opacity duration-200' : 'transition-opacity duration-200'}`}>
+              {books.length === 0 && !loading ? (
+                <div className="py-24 text-center">
+                  <p className="font-display text-2xl text-primary mb-2">Nothing here yet</p>
+                  <p className="text-secondary mb-6 max-w-xl mx-auto">
+                    {filters.ask && askDegraded
+                      ? 'The librarian could not be reached, so the words themselves were matched against titles and authors, and nothing came back. Try the Search tab with a title or an author.'
+                      : filters.ask
+                        ? 'The librarian found no books that match that. Try fewer conditions, or different words.'
+                        : 'No books match these filters.'}
+                  </p>
+                  {activeCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={resetAll}
+                      className="inline-flex items-center px-5 py-2.5 text-[14px] font-semibold text-white transition-[filter] hover:brightness-110 cursor-pointer focus-ink"
+                      style={{ background: '#a5503d' }}
+                    >
+                      Clear all filters
+                    </button>
+                  )}
+                </div>
+              ) : filters.view === 'list' ? (
+                <CollectionListView
+                  books={books as never}
+                  sort={filters.sort}
+                  onSort={(s) => apply({ sort: s as CatalogSort })}
+                  loading={loading}
+                  accent="gold"
+                />
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+                  {books.map((book, i) => (
+                    <CollectionBookCard
+                      key={book.id}
+                      variant="catalog"
+                      priority={i < 4}
+                      book={{
+                        ...book,
+                        bookId: book.id,
+                        slug: book.slug || undefined,
+                        author: book.author || 'Unknown',
+                        year: book.year || 0,
+                        pages_count: book.pages_count || 0,
+                        pages_translated: book.pages_translated || 0,
+                        pages_ocr: book.pages_ocr || 0,
+                        thumbnail: book.thumbnail || undefined,
+                        thumbnail_blob: book.thumbnail_blob || undefined,
+                        language: book.language || undefined,
+                        published: book.published || undefined,
+                      }}
+                    />
+                  ))}
+                </div>
               )}
             </div>
-          ) : filters.view === 'list' ? (
-            <CollectionListView
-              books={books as never}
-              sort={filters.sort}
-              onSort={(s) => apply({ sort: s as CatalogSort })}
-              loading={loading}
+
+            {/* Gold, not rust: a red marker under sixty results reads as an
+                error state. See the prop's note in CatalogPagination. */}
+            <CatalogPagination
+              currentPage={filters.page}
+              totalPages={totalPages}
+              onPageChange={handlePage}
               accent="gold"
             />
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-              {books.map((book, i) => (
-                <CollectionBookCard
-                  key={book.id}
-                  variant="catalog"
-                  priority={i < 5}
-                  book={{
-                    ...book,
-                    bookId: book.id,
-                    slug: book.slug || undefined,
-                    author: book.author || 'Unknown',
-                    year: book.year || 0,
-                    pages_count: book.pages_count || 0,
-                    pages_translated: book.pages_translated || 0,
-                    pages_ocr: book.pages_ocr || 0,
-                    thumbnail: book.thumbnail || undefined,
-                    thumbnail_blob: book.thumbnail_blob || undefined,
-                    language: book.language || undefined,
-                    published: book.published || undefined,
-                  }}
-                />
-              ))}
+
+            {/* The exits a library owes its readers. */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-10 pt-5 border-t border-border-light text-[12.5px] text-muted">
+              <a
+                href={`/api/catalog/csv${filters.languages[0] ? `?language=${encodeURIComponent(filters.languages[0])}` : ''}`}
+                className="inline-flex items-center gap-1.5 hover:text-primary transition-colors focus-ink"
+                title="Download this library as CSV"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download as CSV
+              </a>
+              <Link href="/catalog/scholar" className="hover:text-primary transition-colors focus-ink">
+                Scholar view
+              </Link>
+              <Link href="/browse" className="hover:text-primary transition-colors focus-ink">
+                Browse by author, title and year
+              </Link>
+              <span className="ml-auto hidden md:inline text-faint">
+                Press <kbd className="px-1 border border-border-light bg-white">/</kbd> to search
+              </span>
             </div>
-          )}
-        </div>
-
-        {/* Gold, not rust: sixty results with a red marker under them reads as
-            an error state. See the prop's note in CatalogPagination. */}
-        <CatalogPagination
-          currentPage={filters.page}
-          totalPages={totalPages}
-          onPageChange={handlePage}
-          accent="gold"
-        />
-
-        {/* The exits a catalogue owes its readers: the same set as a file, and
-            the bibliographic view. */}
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-10 pt-6 border-t border-border-light text-[12.5px] text-muted">
-          <a
-            href={`/api/catalog/csv${filters.language ? `?language=${encodeURIComponent(filters.language)}` : ''}`}
-            className="inline-flex items-center gap-1.5 hover:text-primary transition-colors"
-            title="Download this catalogue as CSV"
-          >
-            <Download className="w-3.5 h-3.5" />
-            Download as CSV
-          </a>
-          <Link href="/catalog/scholar" className="hover:text-primary transition-colors">
-            Scholar view
-          </Link>
-          <Link href="/browse" className="hover:text-primary transition-colors">
-            Browse by author, title and year
-          </Link>
-          <span className="ml-auto hidden md:inline text-faint">
-            Press <kbd className="px-1 border border-border-light bg-white">/</kbd> to search
-          </span>
+          </div>
         </div>
       </div>
     </div>

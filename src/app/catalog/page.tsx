@@ -10,8 +10,8 @@ export const revalidate = 86400;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Catalogue - Source Library',
-  description: 'Browse the complete Source Library catalogue — thousands of translated primary sources in alchemy, philosophy, theology, and the esoteric traditions.',
+  title: 'The Library - Source Library',
+  description: 'Every book in the Source Library — thousands of translated primary sources in alchemy, philosophy, theology, and the esoteric traditions, with filters for language, subject, date and more.',
   alternates: { canonical: '/catalog' },
 };
 

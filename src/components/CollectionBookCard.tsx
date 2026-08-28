@@ -171,10 +171,12 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
       className={cn(
         'group flex flex-col h-full border bg-white',
         isCatalog
-          /* The lift lives on the root, so `animate-fade-in-up` (which ends on a
-             transform and would out-rank a hover one under its `forwards` fill)
-             is swapped for a plain opacity fade. */
-          ? 'border-border-light hover:border-border-medium hover:-translate-y-[3px] hover:shadow-[0_14px_28px_-18px_rgba(26,22,18,0.45)] transition-[transform,border-color,box-shadow] duration-300 ease-out animate-fade-in'
+          /* Hover does one thing: the hairline goes from light to ink. No lift,
+             no shadow, no wash over the scan — sixty cards that rise and drop
+             as the cursor crosses them is motion for its own sake, and a card
+             that moves is a card you have to re-aim at. `animate-fade-in-up` is
+             swapped for a plain opacity fade so nothing transforms at all. */
+          ? 'border-border-light hover:border-[var(--text-secondary)] transition-colors duration-200 animate-fade-in'
           : 'border-border-light hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow] animate-fade-in-up',
       )}
     >
@@ -195,7 +197,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
               'object-cover transition-transform',
               /* Slower and shallower than the default card's: on a 60-card grid
                  a fast 5% jump reads as a twitch, not a response. */
-              isCatalog ? 'group-hover:scale-[1.035] duration-[600ms] ease-out' : 'group-hover:scale-105 duration-300',
+              isCatalog ? 'duration-[600ms] ease-out' : 'group-hover:scale-105 duration-300',
               priority ? 'opacity-100' : (imageLoaded ? 'opacity-100' : 'opacity-0'),
             )}
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
@@ -230,15 +232,6 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
             at, and on /es the page already sorts into "in Spanish" and
             "not yet", so the heading above the grid has said it. Stacked over
             First Translation it read as the more important of the two. */}
-        {isCatalog && (
-          /* A whisper of shade rising off the foot of the cover on hover — it
-             seats the card against the page without moving anything. */
-          <div
-            className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: 'linear-gradient(180deg, rgba(20,16,12,0) 55%, rgba(20,16,12,0.22) 100%)' }}
-          />
-        )}
-
         {/* The catalogue card moves the First Translation claim down to the
             status line — same gate, same words, read where the reader is
             already comparing OCR and Translated rather than stamped over the
