@@ -256,7 +256,11 @@ export const POST = withCuratorAuth(async (request, session) => {
         ? { year: publishedToYear(typeof year === 'number' ? year : published)! }
         : {}),
       ...(requestCollections?.length ? { collections: requestCollections } : {}),
-      ...(work_id ? { work_id } : {}),
+      // NOTE: do NOT write the Wellcome id into `work_id` — that field is our
+      // work-identity key (`kr:` / `local:` / `wikidata:` ids, see
+      // .claude/docs/invariants/work-identity.md). Writing a provider id there
+      // minted 8 bogus work identities before this was caught (#4311). The
+      // provider id belongs in `wellcome_id` / `image_source.identifier` only.
       wellcome_id: work_id,
       wellcome_b_number: bNumber,
       thumbnail: getThumbnailUrl(0),
