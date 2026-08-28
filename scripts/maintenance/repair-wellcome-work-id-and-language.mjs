@@ -25,12 +25,12 @@ const db = client.db('bookstore');
 
 const books = await db.collection('books').find(
   { 'image_source.provider': 'wellcome' },
-  { projection: { id: 1, title: 1, language: 1, work_id: 1, work_id_source: 1, wellcome_id: 1, text_role: 1, text_role_source: 1 } },
+  { projection: { id: 1, title: 1, language: 1, author: 1, published: 1, year: 1, categories: 1, work_id: 1, work_id_source: 1, wellcome_id: 1, text_role: 1, text_role_source: 1 } },
 ).toArray();
 console.log(`wellcome books: ${books.length}`);
 
 const enLike = s => /^(en|eng|english)$/i.test((s || '').trim());
-let idFixes = 0, langFixes = 0;
+let idFixes = 0, langFixes = 0, metaFixes = 0;
 
 for (const b of books) {
   const ops = { $set: {}, $unset: {} };
@@ -42,6 +42,51 @@ for (const b of books) {
     ops.$unset.work_id_confidence = '';
     idFixes++;
     console.log(`  work_id unset: ${b.id} (${b.work_id})  ${(b.title || '').slice(0, 45)}`);
+  }
+
+  // --- defect 3: metadata never fetched (route asked for ?include=items only,
+  // so author/published/year/categories/language all fell through to
+  // 'Unknown' — PR #4319). Backfill from the catalogue for any Wellcome book
+  // still carrying the sentinel. Only fills sentinels; never overwrites a real
+  // curated value.
+  if (b.wellcome_id && (b.author === 'Unknown' || b.published === 'Unknown' || b.language === 'Unknown')) {
+    const res = await fetch(`https://api.wellcomecollection.org/catalogue/v2/works/${b.wellcome_id}?include=languages,subjects,production,contributors`);
+    if (res.ok) {
+      const w = await res.json();
+      const author = w.contributors?.find(c => c.roles?.some(r => r.label === 'author'))?.agent?.label
+        || w.contributors?.[0]?.agent?.label;
+      const published = w.production?.[0]?.dates?.[0]?.label;
+      const language = w.languages?.[0]?.label;
+      const categories = (w.subjects || []).map(s => s.label);
+      if (b.author === 'Unknown' && author) ops.$set.author = author;
+      if (b.published === 'Unknown' && published) {
+        ops.$set.published = published;
+        const yr = (published.match(/(1[0-9]\d\d|20\d\d)/) || [])[1];
+        if (yr) ops.$set.year = Number(yr);
+      }
+      if (b.language === 'Unknown' && language) {
+        ops.$set.language = language;
+        // text_role was derived at import from language 'Unknown' (non-English
+        // => 'original'). Re-derive now that the real edition language is known.
+        ops.$set.text_role = enLike(language) ? 'modern-translation' : 'original';
+        ops.$set.text_role_source = 'repair-4311';
+        // original_language is only meaningful when THIS edition is a
+        // translation. A second listed language on a non-English edition is
+        // usually apparatus (an English introduction to a Sanskrit text), not a
+        // source — reading it as one produced `language: Sanskrit,
+        // original_language: English` on a Sanskrit original. So claim a source
+        // only for English-language editions, and only when exactly one other
+        // language is listed.
+        const others = (w.languages || []).map(l => l.label).filter(l => l !== language);
+        if (enLike(language) && others.length === 1) ops.$set.original_language = others[0];
+      }
+      if (categories.length && !(b.categories || []).length) ops.$set.categories = categories;
+      if (Object.keys(ops.$set).length) {
+        metaFixes++;
+        console.log(`  metadata: ${(b.title || '').slice(0, 40)} -> author=${ops.$set.author ?? '-'} pub=${ops.$set.published ?? '-'} lang=${ops.$set.language ?? '-'} cats=${categories.length}`);
+      }
+    }
+    await new Promise(r => setTimeout(r, 200));
   }
 
   // --- defect 2: edition language forced to Sanskrit on a translation ---
@@ -85,6 +130,6 @@ for (const b of books) {
   }
 }
 
-console.log(`\nwork_id unsets: ${idFixes}  language corrections: ${langFixes}`);
+console.log(`\nwork_id unsets: ${idFixes}  language corrections: ${langFixes}  metadata backfills: ${metaFixes}`);
 console.log(APPLY ? 'applied.' : 'DRY RUN — pass --apply to write.');
 await client.close();
