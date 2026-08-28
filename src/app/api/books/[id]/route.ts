@@ -42,6 +42,11 @@ export const GET = withApiAuth(async (
       // `visible` feeds the hidden-book gate below — without it a hidden book
       // in nav mode reads as public (isHiddenBook tests visible === false).
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
+      // Whether `display_title` is the source record's title or a label a
+      // vision model wrote from the image (#4288). Artwork records live in
+      // `books` too, and MCP's get_book returned `display_title || title` with
+      // no way for a client to tell a catalogued title from an AI caption.
+      'field_provenance.display_title': 1, content_type: 1, resource_type: 1,
       published: 1, year: 1, language: 1, doi: 1,
       // The edition-vs-work language distinction (#3942). `language` is the
       // MANIFESTATION language — what is printed on these leaves — while

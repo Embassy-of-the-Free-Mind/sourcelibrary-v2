@@ -10,6 +10,7 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { citationYear, citationYearOrNd } from '@/lib/publication-date';
 import { getShortUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
+import { citationTitle } from '@/lib/title-provenance';
 import type { Book, TranslationEdition } from '@/lib/types';
 
 export interface Citation {
@@ -55,7 +56,15 @@ export function generateCitations(
   // BibTeX keys must stay alphanumeric — 'n.d.' would emit a key with dots.
   const bibtexYearKey = citationYear(book.published) ?? 'nd';
   const author = book.author || 'Unknown';
-  const title = book.display_title || book.title;
+  // NOT `display_title || title` (#4288). On an artwork record that field can
+  // hold a label a vision model wrote by looking at the picture — "The Macrocosm
+  // and the Human Intellect" over a Fludd engraving whose actual record title is
+  // "El cerebro según Fludd" — and every format below would then assert a work
+  // that was never published, under a real author and a real year. `citationTitle`
+  // resolves the provenance stamp the enrichment script already writes and hands
+  // back the SOURCE record's title. Textual books are unaffected: there
+  // display_title is a translation of a real printed title, and still wins.
+  const title = citationTitle(book);
   const doi = edition?.doi || book.doi;
   const doiUrl = doi ? `https://doi.org/${doi}` : undefined;
   const accessed = formatAccessedDate();
