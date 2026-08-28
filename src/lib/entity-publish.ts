@@ -1,4 +1,4 @@
-import type { Db } from 'mongodb';
+import type { Db, Document, Filter } from 'mongodb';
 
 /**
  * The published tier of the entity layer (#4321).
@@ -51,13 +51,13 @@ export function isPublishedEntity(entity: EntityPublishFields): boolean {
  * from the deduped count (the citable surface gets the accurate value, the
  * link side an indexed approximation).
  */
-export const PUBLISHED_ENTITY_FILTER = {
+export const PUBLISHED_ENTITY_FILTER: Filter<Document> = {
   book_count: { $gte: PUBLISHED_ENTITY_MIN_BOOKS },
   $or: [
     { wikidata_id: { $type: 'string', $ne: '' } },
     { description: { $type: 'string', $ne: '' } },
   ],
-} as const;
+};
 
 /**
  * Which of these index terms name a published entity? One indexed `$in`
