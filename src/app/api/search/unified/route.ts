@@ -667,6 +667,10 @@ async function searchBooks(
         thumbnail: b.thumbnail,
         thumbnail_blob: b.thumbnail_blob,
         quality_score: b.quality_score,
+        // For the client's cross-lane dedup — /search merges this lane with a
+        // separately-fetched conceptual lane and can otherwise only compare
+        // book ids (#4300).
+        work_id: b.work_id || undefined,
       };
     }),
     total: truncated.length,

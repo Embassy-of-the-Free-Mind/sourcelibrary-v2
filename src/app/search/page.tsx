@@ -620,7 +620,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             return r.json();
           })
           .then(data => {
-            // Dedup against keyword book results
+            // Coarse dedup against whatever keyword results this closure can
+            // see. The authoritative pass is the work-grain one at render time
+            // (`uniqueSemantic` below) — this closure captures `bookResults`
+            // from the render that fired the fetch, so it can be a step behind.
             const keywordIds = new Set(bookResults.map(b => b.id || b.book_id));
             const deduped = (data.results || []).filter((s: any) => !keywordIds.has(s.book_id));
             setSemanticResults(deduped);
@@ -1550,8 +1553,18 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
         {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
         {!signInRequired && viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
+          // Dedup the conceptual lane against the keyword lane at the WORK
+          // grain, not just by book id (#4300). The two lanes are fetched
+          // independently (unified + /api/search/semantic), so each collapses
+          // its own copies server-side and neither can see the other's — a
+          // second scan of an already-listed work would otherwise take a slot
+          // on the first screen, which is the complaint this fixes. Both lanes
+          // now return `work_id`; rows without one are never merged, because an
+          // unkeyed book is not shown to be an edition of anything.
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
-          const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
+          const keywordWorkIds = new Set(bookResults.map(b => b.work_id).filter(Boolean));
+          const uniqueSemantic = semanticResults.filter((sem: any) =>
+            !keywordIds.has(sem.book_id) && !(sem.work_id && keywordWorkIds.has(sem.work_id)));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
 
           // Shared components

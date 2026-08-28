@@ -249,7 +249,14 @@ export async function GET(request: NextRequest) {
     const collapsed = collapseByWork(results, {
       getIdentity: r => identityByBookId.get((r as { book_id: string }).book_id) ?? {},
     });
-    let grouped = collapsed.results;
+    // Carry the work id out to the client: /search merges this lane with the
+    // separately-fetched keyword lane and can otherwise only compare book ids,
+    // which lets one more edition of an already-represented work back onto the
+    // first screen (#4300).
+    let grouped: Array<Record<string, unknown>> = collapsed.results.map(r => {
+      const workId = identityByBookId.get((r as { book_id: string }).book_id)?.work_id;
+      return workId ? { ...r, work_id: workId } : { ...r };
+    });
     if (collapsed.groups.length > 0) {
       const collapsedByKey = new Map(collapsed.groups.map(g => [g.key, g.collapsed.length]));
       try {

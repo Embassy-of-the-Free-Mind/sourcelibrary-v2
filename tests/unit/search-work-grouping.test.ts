@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { collapseByWork, workGroupKey, workIdFromGroupKey } from '@/lib/search/work-grouping';
-import { workHref } from '@/lib/search/work-fanout';
+import { fetchWorkFanouts, workHref } from '@/lib/search/work-fanout';
+import type { Db } from 'mongodb';
 import { workEditionsFilter, workEditionsCountFilter } from '@/lib/canon-works';
 
 // Work-grain result grouping (#4300). The motivating case is real: an external
@@ -162,6 +163,20 @@ describe('fan-out target', () => {
     // And the dropped branch is the work_slug one, nothing else.
     expect(page.$or).toHaveLength(2);
     expect(page.$or.some(b => 'work_slug' in b)).toBe(true);
+  });
+
+  it('a tenant request gets NO fan-out, and never even reaches the database', () => {
+    // tenant-lockdown.md: "N editions of this work" is a census across the
+    // GLOBAL library and links to a global surface. A partner reading room
+    // must not make that claim — same gate embedPolicy.showRelatedEditions
+    // puts on the book page's editions rail. The db stub throws, so this also
+    // proves the suppression happens BEFORE the query, not after it.
+    const exploding = {
+      collection() { throw new Error('a tenant request must not query the global corpus'); },
+    } as unknown as Db;
+    return expect(
+      fetchWorkFanouts(exploding, new Map([['work:Q18942469', 3]]), { tenantScoped: true }),
+    ).resolves.toEqual(new Map());
   });
 
   it('a canon work counts every work_id the canon entry collects, not just one', () => {

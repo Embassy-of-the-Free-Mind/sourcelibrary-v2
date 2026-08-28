@@ -34,6 +34,14 @@ export interface SearchResult {
   image_thumb?: string;
   quality_score?: number;
   /**
+   * The work this edition belongs to, when it has one. Exposed so a CLIENT that
+   * merges two independently-fetched lanes can dedup at the work grain — the
+   * `/search` page fetches its keyword and conceptual lanes separately and
+   * could only compare book ids, which let one more copy of a collapsed work
+   * back onto the first screen (#4300).
+   */
+  work_id?: string;
+  /**
    * Present when this row stands in for other editions/copies that the
    * work-grain collapse removed from the list (#4300). `editions` counts what
    * `/work/[id]` renders — the set the link actually reaches — never the number
