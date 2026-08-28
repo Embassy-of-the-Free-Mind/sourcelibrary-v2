@@ -7,6 +7,14 @@
  *   e-rara IIIF -> per-page fetch + R2 (e-rara is datacenter-tolerant).
  * Run with tsx. Bounded per run; marks queue.archived so runs advance.
  *   npx tsx scripts/catalog-coverage/archive-acquired.ts --batch 60
+ *
+ * `--provider <name>` sweeps HIDDEN imports by `image_source.provider` instead
+ * of the acquisition queue — the generalization #4225 Phase 2 asks for, so
+ * imports that never went through `acquisition_queue` (e.g. the #4311 Wellcome
+ * Sanskrit wave) still get their masters onto R2:
+ *   npx tsx scripts/catalog-coverage/archive-acquired.ts --provider wellcome --batch 20
+ * Provider mode records completion on the BOOK (there is no queue row) and is
+ * idempotent: archiveIiif only fetches pages that lack `archived_photo`.
  */
 import { MongoClient } from 'mongodb';
 import { execFile } from 'child_process';
@@ -46,11 +54,36 @@ async function main() {
     }
   }
 
-  const todo = await queue.find({ status: 'acquired', book_id: { $exists: true }, archived: { $ne: true } }).limit(BATCH).toArray();
+  // Work list: acquisition_queue rows by default, or hidden imports of one
+  // provider when --provider is passed. Provider rows are shaped like queue
+  // rows ({ book_id, source }) with sn:null so the queue writes below no-op.
+  const provIdx = process.argv.indexOf('--provider');
+  const PROVIDER = provIdx > -1 ? process.argv[provIdx + 1] : null;
+  let todo: any[];
+  if (PROVIDER) {
+    const cand = await books.find(
+      {
+        'image_source.provider': PROVIDER,
+        pages_count: { $gt: 0 },
+        archive_status: { $ne: 'archive_complete' },
+      },
+      { projection: { id: 1 } },
+    ).limit(BATCH).toArray();
+    todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
+    log(`provider mode: ${PROVIDER} — ${todo.length} book(s) not yet archive_complete`);
+  } else {
+    todo = await queue.find({ status: 'acquired', book_id: { $exists: true }, archived: { $ne: true } }).limit(BATCH).toArray();
+  }
   let ok = 0, partial = 0;
+  // Provider-mode rows have no queue row. `{ sn: null }` would MATCH queue docs
+  // whose sn is null/missing, so every queue write goes through this guard.
+  const markQueue = async (w: any, set: Record<string, unknown>) => {
+    if (w.sn == null) return;
+    await queue.updateOne({ sn: w.sn }, { $set: set });
+  };
   async function processBook(w: any) {
     const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1 } });
-    if (!b) { await queue.updateOne({ sn: w.sn }, { $set: { archived: true, archive_note: 'no-book' } }); return; }
+    if (!b) { await markQueue(w, { archived: true, archive_note: 'no-book' }); return; }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (have0 < (b.pages_count || 0) * 0.99) {
       if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') { await archiveIiif(w.book_id); }
@@ -58,15 +91,23 @@ async function main() {
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (r2 >= (b.pages_count || 0) * 0.99 && r2 > 0) {
-      await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete', pages_archived: r2 } });
-      await queue.updateOne({ sn: w.sn }, { $set: { archived: true } });
+      await books.updateOne({ id: w.book_id }, { $set: { archive_status: 'archive_complete', pages_archived: r2, updated_at: new Date() } });
+      await markQueue(w, { archived: true });
       ok++;
-    } else { await queue.updateOne({ sn: w.sn }, { $set: { archived: true, archive_note: `partial:${r2}/${b.pages_count}` } }); partial++; }
+    } else {
+      // Record partial progress on the book too, so provider-mode runs are
+      // resumable and a later run can see how far it got.
+      await books.updateOne({ id: w.book_id }, { $set: { pages_archived: r2, updated_at: new Date() } });
+      await markQueue(w, { archived: true, archive_note: `partial:${r2}/${b.pages_count}` });
+      partial++;
+    }
   }
   for (let i = 0; i < todo.length; i += CONCURRENCY) {
     await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w).catch(() => {})));
   }
-  const remaining = await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
+  const remaining = PROVIDER
+    ? await books.countDocuments({ 'image_source.provider': PROVIDER, pages_count: { $gt: 0 }, archive_status: { $ne: 'archive_complete' } })
+    : await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
   log(`archive-acquired: complete ${ok}, partial ${partial} | un-archived acquired remaining ${remaining}`);
   await mc.close();
 }
