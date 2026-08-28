@@ -6,6 +6,8 @@ import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
 import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+import { pickLimit } from '@/lib/api-budget';
+import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
@@ -641,7 +643,11 @@ async function getQuote(args: Record<string, unknown>) {
 
 // Assemble a multi-passage dossier in one round-trip: fetch several pages of a
 // single book by explicit list (pages:[...]) or inclusive range (from/to).
-async function getQuotes(args: Record<string, unknown>) {
+async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?: boolean }) {
+  // Past QUOTE_CLEAN_PAGES_PER_DAY quote-lane pages in 24h the zero-width
+  // provenance marks stay in the text: at that volume this is a corpus pull,
+  // not citation work. The text remains verbatim-correct either way.
+  const stripMarks = opts?.keepQuoteMarks ? (s: string) => s : stripProvenanceMarks;
   const bookId = String(args.book_id);
   const batchLang = langArg(args);
   let pageNums: number[] = [];
@@ -674,9 +680,9 @@ async function getQuotes(args: Record<string, unknown>) {
           quotableText(q),
           typeof q?.original === 'string' ? q.original : null,
         );
-        if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
-        if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
-        if (q && typeof q.romanized === 'string') q.romanized = stripProvenanceMarks(q.romanized);
+        if (q && typeof q.translation === 'string') q.translation = stripMarks(q.translation);
+        if (q && typeof q.original === 'string') q.original = stripMarks(q.original);
+        if (q && typeof q.romanized === 'string') q.romanized = stripMarks(q.romanized);
         const hint = continuityHint(continuity, page);
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
@@ -717,6 +723,9 @@ async function getQuotes(args: Record<string, unknown>) {
     pages_requested: pageNums,
     quotes: settled,
     tip: tips.join('\n\n'),
+    ...(opts?.keepQuoteMarks ? {
+      provenance_note: 'High-volume quote access: this text retains Source Library\'s invisible provenance marks (zero-width characters). It reads and quotes identically. Clean text at volume is a licensed product — see https://sourcelibrary.org/licensing.',
+    } : {}),
   };
 }
 
@@ -1028,7 +1037,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book_text',
     title: 'Read Book Text',
-    description: 'READ PIPELINE step 2 — READ. Read a book\'s text. Call get_book first (step 1) for the chapter list, then come here. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation). Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). When you find passages worth quoting, hand the page numbers to get_quote / get_quotes (step 3) for verbatim text + a citation link. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.',
+    description: 'READ PIPELINE step 2 — READ. Read a book\'s text. Call get_book first (step 1) for the chapter list, then come here. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation). Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). When you find passages worth quoting, hand the page numbers to get_quote / get_quotes (step 3) for verbatim text + a citation link. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Daily page budgets apply across get_book_text/get_quote/get_quotes: anonymous 500 pages/24h, signed-in 1,000, free Explorer keys 100, paid keys uncapped — sign in at sourcelibrary.org/auth/signin or get a key at sourcelibrary.org/developers. Corpus-scale text belongs on the dataset API (sourcelibrary.org/dataset), not on this tool.',
     annotations: { title: 'Read Book Text', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1078,7 +1087,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
-    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface.',
+    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface. Batch pages count toward the shared daily page budget (see get_book_text); this is a citation tool, and corpus-scale extraction belongs on the dataset API (sourcelibrary.org/dataset).',
     annotations: { title: 'Get Quotes (batch)', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1201,7 +1210,51 @@ const TOOLS: Tool[] = [
 
 type ToolArgs = Record<string, unknown>;
 
-async function handleToolCall(name: string, args: ToolArgs) {
+// ── Page-budget enforcement for the text-bearing tools ─────────────
+// The MCP route proxies to its own REST API server-side, so downstream
+// per-identity gates (e.g. /text's daily page budget) see the PROXY as the
+// caller — one shared anonymous identity for every MCP user — and can never
+// bite per-caller. The only place the real caller identity exists is here.
+// Enforced on the three tools that return page text at volume; searches and
+// snippets stay ungated. See #4288-adjacent harvesting notes and the ops
+// strategy memo 2026-08-27.
+const PAGE_BUDGET_TOOLS = new Set(['get_book_text', 'get_quote', 'get_quotes']);
+// Below this many quote-lane pages in 24h, get_quotes serves provenance-
+// stripped text (citation work). Above it, the zero-width marks stay in —
+// "one page is a citation, hundreds is a corpus pull" — text is still
+// verbatim-correct for reading and quoting.
+const QUOTE_CLEAN_PAGES_PER_DAY = Number(process.env.MCP_QUOTE_CLEAN_PAGES_PER_DAY || 100);
+
+function pageBudgetExceededResult(used: number, limit: number, identity: ApiIdentity) {
+  const next = identity.kind === 'anon'
+    ? 'Sign in free at https://sourcelibrary.org/auth/signin for a higher limit, or get an API key at https://sourcelibrary.org/developers.'
+    : 'Get or upgrade an API key at https://sourcelibrary.org/developers — bulk export belongs on https://sourcelibrary.org/dataset.';
+  return {
+    error: `Daily page budget reached (${used}/${limit} pages of text in the last 24h across get_book_text/get_quote/get_quotes). ${next}`,
+    budget: { used, limit },
+    licensing_url: 'https://sourcelibrary.org/licensing',
+    note: 'Search and single-snippet tools remain available. Corpus-scale text access is a licensed product — see /licensing.',
+  };
+}
+
+function pagesServedByTool(name: string, result: unknown): number {
+  const r = result as Record<string, unknown> | null;
+  if (!r || typeof r !== 'object' || r.error) return 0;
+  if (name === 'get_quote') return r.quote ? 1 : 0;
+  if (name === 'get_quotes') {
+    const quotes = r.quotes as Array<Record<string, unknown>> | undefined;
+    return Array.isArray(quotes) ? quotes.filter((q) => q && q.quote).length : 0;
+  }
+  if (name === 'get_book_text') {
+    const n = Number(r.pages_returned);
+    if (Number.isFinite(n) && n > 0) return n;
+    const pages = r.pages as unknown[] | undefined;
+    return Array.isArray(pages) ? pages.length : 0;
+  }
+  return 0;
+}
+
+async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMarks?: boolean }) {
   switch (name) {
     case 'search_library': return searchLibrary(args);
     case 'search_translations':
@@ -1214,7 +1267,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
-    case 'get_quotes': return getQuotes(args);
+    case 'get_quotes': return getQuotes(args, opts);
     case 'search_images': return searchImages(args);
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
@@ -1391,7 +1444,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
   };
 }
 
-function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
+function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest }) {
   const server = new Server(
     { name: 'source-library', version: SERVER_VERSION },
     {
@@ -1493,7 +1546,49 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     const argsObj = (args || {}) as ToolArgs;
     const started = Date.now();
     try {
-      const result = await handleToolCall(name, argsObj);
+      // Per-caller daily page budget on the text-bearing tools, enforced HERE
+      // because the real caller identity never survives the internal proxy.
+      // Same tiering as /text (pickLimit): paid keys uncapped, anon 500/day.
+      let usedPages24h: number | null = null;
+      let toolOpts: { keepQuoteMarks?: boolean } | undefined;
+      if (PAGE_BUDGET_TOOLS.has(name)) {
+        const { limit } = pickLimit(reqContext.identity);
+        if (Number.isFinite(limit)) {
+          usedPages24h = await getPagesServedLast24h({
+            identity: reqContext.identity, request: reqContext.request,
+          });
+          if (usedPages24h >= limit) {
+            const refusal = pageBudgetExceededResult(usedPages24h, limit, reqContext.identity);
+            logApiUsage({
+              request: reqContext.request, identity: reqContext.identity,
+              route: `mcp:${name}`, status: 429, ms: Date.now() - started,
+              wouldBlock: true, blocked: true, reason: 'page_budget',
+            });
+            logMcpToolCall({
+              tool: name, args: argsObj, ms: Date.now() - started,
+              ip: reqContext.ip, userAgent: reqContext.userAgent,
+            });
+            return { content: [{ type: 'text' as const, text: JSON.stringify(refusal, null, 2) }] };
+          }
+        }
+        if (name === 'get_quotes' && usedPages24h !== null && usedPages24h > QUOTE_CLEAN_PAGES_PER_DAY) {
+          toolOpts = { keepQuoteMarks: true };
+        }
+      }
+
+      const result = await handleToolCall(name, argsObj, toolOpts);
+      // Record pages served under the REAL caller identity so the budget
+      // above has something to sum. Fire-and-forget, like all usage logging.
+      if (PAGE_BUDGET_TOOLS.has(name)) {
+        const pagesServed = pagesServedByTool(name, result);
+        if (pagesServed > 0) {
+          logApiUsage({
+            request: reqContext.request, identity: reqContext.identity,
+            route: `mcp:${name}`, status: 200, ms: Date.now() - started,
+            wouldBlock: false, blocked: false, pagesServed,
+          });
+        }
+      }
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
@@ -1622,6 +1717,7 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
       ip: getClientIp(req),
       userAgent: req.headers.get('user-agent'),
       identity,
+      request: req,
     });
     await server.connect(transport);
     try {
