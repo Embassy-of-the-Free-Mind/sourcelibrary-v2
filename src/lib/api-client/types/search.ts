@@ -33,6 +33,20 @@ export interface SearchResult {
   image_display?: string;
   image_thumb?: string;
   quality_score?: number;
+  /**
+   * Present when this row stands in for other editions/copies that the
+   * work-grain collapse removed from the list (#4300). `editions` counts what
+   * `/work/[id]` renders — the set the link actually reaches — never the number
+   * of rows collapsed, which is reported separately. Absent under a tenant
+   * context: an edition census across the global library is not a partner
+   * reading room's claim to make.
+   */
+  work_group?: {
+    work_id: string;
+    href: string;
+    editions: number;
+    collapsed_in_results: number;
+  };
 }
 
 export interface SearchFilters {

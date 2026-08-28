@@ -7,7 +7,7 @@ import Image from 'next/image';
 import {
   Search, Book, ExternalLink, Filter, X, Loader2,
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
-  ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
+  ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown, Library
 } from 'lucide-react';
 import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigation';
 import { useLocale, useLocalePath } from '@/lib/i18n';
@@ -1910,6 +1910,37 @@ function cleanSnippet(text: string): string {
     .trim();
 }
 
+/**
+ * "N editions & copies of this work →" (#4300).
+ *
+ * Rendered under a result that STANDS IN for siblings the work-grain collapse
+ * removed — four scans of Kircher's Musurgia now occupy one row, and this is
+ * the affordance that says so instead of the library silently dropping three.
+ * The count comes from the API, which reads it off the same filter `/work/[id]`
+ * renders its edition list from, so the number always describes the page this
+ * link opens (visibility-and-stats.md). Absent under a tenant context, by
+ * construction — the API does not send it there.
+ *
+ * Sits OUTSIDE the card's own <Link>: a nested anchor is invalid HTML and the
+ * inner one would swallow the click.
+ */
+function WorkEditionsLink({ group }: { group: NonNullable<SearchResult['work_group']> }) {
+  const t = SEARCH_STRINGS[useLocale()];
+  const lp = useLocalePath();
+  return (
+    <div className="px-4 pb-3 -mt-1">
+      <Link
+        href={lp(group.href)}
+        className="inline-flex items-center gap-1 text-xs text-accent-gold-dark hover:text-accent-gold font-medium transition-colors"
+      >
+        <Library className="w-3.5 h-3.5" aria-hidden />
+        {t.workEditionsLink(group.editions)}
+        <ChevronRight className="w-3 h-3" />
+      </Link>
+    </div>
+  );
+}
+
 function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: { result: SearchResult; query: string; tenant?: string; autoPassages?: boolean; mobileCompact?: boolean }) {
   // Client children take no `lang` prop — the pathname already says which
   // language they are in (i18n.md, "the book page: ONE page, two URLs").
@@ -2055,6 +2086,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
           </div>
         </div>
       </Link>
+      {result.work_group && <WorkEditionsLink group={result.work_group} />}
       {passagesOpen && (
         <div className="px-4 pb-4 -mt-1">
           {passagesLoading ? (
@@ -2155,6 +2187,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
           </div>
         </div>
       </Link>
+      {result.work_group && <WorkEditionsLink group={result.work_group} />}
     </div>
   );
 }

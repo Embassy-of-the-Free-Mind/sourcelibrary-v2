@@ -283,3 +283,29 @@ export function workEditionsFilter(idOrSlug: string): Record<string, unknown> {
   }
   return { $or: [{ work_slug: idOrSlug }, { work_id: idOrSlug }], visible: true };
 }
+
+/**
+ * The same edition set as `workEditionsFilter`, in a form a REQUEST PATH can
+ * afford — for counting "N editions of this work" on a search result (#4300).
+ *
+ * `workEditionsFilter`'s `$or` reaches `work_slug`, which carries no index, so
+ * Mongo scans the whole `books` collection: measured 2026-08-28 that filter
+ * takes **7,990 ms** for one work while the `work_id` half takes **38 ms**.
+ * That is fine on `/work/[id]` (ISR, 6h window) and not fine inside a search
+ * response (request-path-queries.md).
+ *
+ * Dropping the `work_slug` branch is safe **when the argument is a work_id**,
+ * which is the only way this is called: `work_slug` holds human slugs
+ * (`ficino-on-the-mysteries`), never work_ids. Measured the same day over the
+ * 81,135 books carrying a `work_slug`: exactly 4 have `work_slug == work_id`,
+ * and for those the `work_id` branch matches the identical document. So the
+ * two filters select the same set, and this one uses `work_id_1`.
+ *
+ * Do NOT pass a route param here — a canon slug or a `work_slug` would silently
+ * count zero. Pass a work_id; canon expansion is handled for you.
+ */
+export function workEditionsCountFilter(workId: string): Record<string, unknown> {
+  const canon = byWorkId.get(workId);
+  if (canon) return { work_id: { $in: canon.workIds }, visible: true };
+  return { work_id: workId, visible: true };
+}
