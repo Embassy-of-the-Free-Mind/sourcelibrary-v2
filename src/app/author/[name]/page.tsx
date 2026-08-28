@@ -15,6 +15,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
 import { authorThesaurusReadpathEnabled, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 import { classifyNonPersonAuthor, type NonPersonAuthor } from '@/lib/non-person-author';
+import { isPublishedEntity, type EntityPublishFields } from '@/lib/entity-publish';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -77,6 +78,7 @@ interface AuthorEntity {
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   portrait_url?: string;
+  book_count?: number;
 }
 
 // dynamicParams + generateStaticParams: generate on first request, not at build time
@@ -199,7 +201,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
     try {
       entity = await db.collection('entities').findOne(
         { _id: new ObjectId(repBook.author_entity_id) },
-        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
+        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1, book_count: 1 } }
       ) as AuthorEntity | null;
     } catch { /* invalid ObjectId */ }
 
@@ -229,7 +231,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
       try {
         entity = await db.collection('entities').findOne(
           { _id: new ObjectId(entityBookId) },
-          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
+          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1, book_count: 1 } }
         ) as AuthorEntity | null;
       } catch { /* invalid ObjectId */ }
     }
@@ -362,14 +364,21 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   const deathYear = entity?.wikidata_death_date?.split('-')[0];
   const lifeDates = !nonPerson && birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
-  // Encyclopedia entry: use entity directly if we have one, otherwise regex fallback
-  const encyclopediaEntity = entity || await db.collection('entities').findOne(
+  // Encyclopedia entry: use entity directly if we have one, otherwise regex
+  // fallback. The pill only renders for published-tier entities (#4321) — a
+  // below-the-line entry is a noindex page listing a mention or two, and the
+  // one place we deliberately keep linking the tail is nowhere.
+  const encyclopediaCandidate = entity || await db.collection('entities').findOne(
     { type: 'person', $or: [
       { name: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
       { aliases: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
     ]},
-    { projection: { name: 1 } }
+    { projection: { name: 1, book_count: 1, wikidata_id: 1, description: 1 } }
   );
+  const encyclopediaEntity =
+    encyclopediaCandidate && isPublishedEntity(encyclopediaCandidate as EntityPublishFields)
+      ? encyclopediaCandidate
+      : null;
 
   // Portrait image — static read (enriched offline; CSP-safe CDN URL).
   // Never for a non-person: a portrait is the strongest visual assertion the

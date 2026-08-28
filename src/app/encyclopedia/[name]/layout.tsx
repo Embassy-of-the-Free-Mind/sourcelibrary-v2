@@ -9,6 +9,7 @@ import {
   normalizeEntityBook,
   type EntityBookRef,
 } from '@/lib/entity-books';
+import { isPublishedEntity } from '@/lib/entity-publish';
 
 // ISR: 24h background revalidation
 export const revalidate = 86400;
@@ -241,6 +242,14 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   return {
     title,
     description,
+    // Published tier only (#4321): below-the-line entities keep rendering as
+    // internal utility pages but are not offered for indexing. Uses the
+    // deduped book_count from getEntity, not the stored field. robots.txt
+    // currently disallows /encyclopedia/ wholesale; this metadata is what
+    // makes narrowing that disallow safe later.
+    ...(entity && !isPublishedEntity(entity)
+      ? { robots: { index: false, follow: true } }
+      : {}),
     alternates: {
       canonical: `/encyclopedia/${encodeURIComponent(decodedName)}`,
     },
