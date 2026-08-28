@@ -89,7 +89,10 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch work details from Wellcome Catalogue API
     const workRes = await fetch(
-      `https://api.wellcomecollection.org/catalogue/v2/works/${work_id}?include=items`
+      // `languages`, `subjects` and `production` must be requested explicitly —
+      // the Wellcome API omits them otherwise, so the language/categories/date
+      // fallbacks below silently resolved to 'Unknown' on every import (#4311).
+      `https://api.wellcomecollection.org/catalogue/v2/works/${work_id}?include=items,languages,subjects,production,contributors`
     );
 
     if (!workRes.ok) {
