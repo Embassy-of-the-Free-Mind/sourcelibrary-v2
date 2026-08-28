@@ -45,7 +45,10 @@ if (!APPLY) {
   process.exit(0);
 }
 
-const res = await books.updateMany(query, { $set: { visible: false } });
+// updated_at bump is load-bearing: the Supabase catalog sync is incremental
+// on updated_at, so a hide without it never propagates to books_catalog
+// (the browse LISTING predicate) and the book stays publicly listed.
+const res = await books.updateMany(query, { $set: { visible: false, updated_at: new Date() } });
 console.log(`\nUpdated ${res.modifiedCount} books (matched ${res.matchedCount}).`);
 
 const remaining = await books.countDocuments({ visible: true, hidden: true });
