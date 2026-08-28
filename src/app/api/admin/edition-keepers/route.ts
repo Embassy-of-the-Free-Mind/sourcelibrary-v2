@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { withInnerCircleAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { applyKeeperChoice, dismissKeeperCluster } from '@/lib/identity-review-apply';
 
 export const maxDuration = 30;
 
@@ -28,11 +29,19 @@ export const GET = withInnerCircleAuth(async (request) => {
   const skip = Math.max(parseInt(url.searchParams.get('skip') || '0', 10) || 0, 0);
 
   const bphOnly = url.searchParams.get('bph') === '1';
+  // `ids=key1,key2` (max 50) — the batch lane's spot-check renders its sample
+  // through this same read path (see /api/admin/edition-keepers/batch).
+  const idsParam = url.searchParams.get('ids');
 
   const db = await getDb();
   const queue = db.collection('edition_keeper_queue');
 
   const filter: Record<string, unknown> = { status };
+  if (idsParam) {
+    const ids = idsParam.split(',').map((s) => s.trim()).filter(Boolean).slice(0, 50);
+    if (ids.length === 0) return NextResponse.json({ items: [], total: 0, counts: {}, buckets: {} });
+    filter._id = { $in: ids };
+  }
   if (bucket === 'human') filter.bucket = { $in: HUMAN_BUCKETS };
   else if (bucket !== 'all') filter.bucket = bucket;
   if (bphOnly) {
@@ -127,34 +136,19 @@ export const POST = withInnerCircleAuth(async (request, session) => {
     return NextResponse.json({ error: `cluster is already ${row.status}` }, { status: 409 });
   }
 
-  const now = new Date();
   const reviewer = session.user?.email || 'admin';
 
+  // Shared write path with the batch lane (#4271) — see @/lib/identity-review-apply.
   if (action === 'dismiss') {
-    await queue.updateOne({ _id: editionKey as never }, { $set: { status: 'dismissed', note: note || null, reviewed_by: reviewer, reviewed_at: now, updated_at: now } });
+    const res = await dismissKeeperCluster(db, editionKey, { note, reviewer });
+    if (res.status === 'error') return NextResponse.json({ error: res.message }, { status: 409 });
     return NextResponse.json({ status: 'dismissed' });
   }
 
-  const memberIds = ((row.members as { id: string }[]) || []).map((m) => m.id);
-  if (!keeperId || !memberIds.includes(keeperId)) {
+  if (!keeperId) {
     return NextResponse.json({ error: 'keeperId must be a member of the cluster' }, { status: 400 });
   }
-  const others = memberIds.filter((m) => m !== keeperId);
-
-  const hidden = await db.collection('books').updateMany(
-    { id: { $in: others }, visible: true },
-    { $set: {
-      hidden: true, visible: false,
-      hidden_reason: 'duplicate', hidden_at: now,
-      duplicate_of: keeperId,
-      updated_at: now, // books_catalog sync keys on this — a flip without it is invisible to Supabase
-    } }
-  );
-
-  await queue.updateOne(
-    { _id: editionKey as never },
-    { $set: { status: 'kept', keeper: keeperId, note: note || null, reviewed_by: reviewer, reviewed_at: now, updated_at: now } }
-  );
-
-  return NextResponse.json({ status: 'kept', keeper: keeperId, hidden: hidden.modifiedCount });
+  const res = await applyKeeperChoice(db, row, { keeperId, note, reviewer });
+  if (res.status === 'error') return NextResponse.json({ error: res.message }, { status: 400 });
+  return NextResponse.json(res);
 });
