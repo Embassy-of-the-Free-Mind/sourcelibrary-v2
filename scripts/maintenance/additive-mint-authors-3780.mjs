@@ -23,6 +23,22 @@
  * tombstone (merged_into) are skipped and reported — a person string keying
  * into a non-person cluster needs eyes, not automation.
  *
+ * POISON-FORM GUARD (added 2026-08-28 after #4313). A variant is a MATCH KEY:
+ * `backfill-author-canonical-links.mjs` links every book whose author string
+ * equals it. So a BARE FORENAME variant is not a weak match, it is a trapdoor
+ * onto the wrong person — the `jan-hus` doc carried the bare variant
+ * "Johannes" and thereby claimed 115 books by Chrysostom, Sacrobosco, Duns
+ * Scotus and John of Salisbury. Uniqueness is not validity: the string matched
+ * exactly one doc, which is precisely why the backfill trusted it.
+ * The mechanical tell is measurable in our own corpus — count the DISTINCT
+ * people (canonicalKey) whose author string extends the candidate:
+ *   Johannes 77 · Thomas 67 · Alexander 31 · Petrus 19 · Leo 13
+ *   vs Aristoteles 1 · Cicero 4 · Boethius 5 · Paracelsus 6
+ * Single-token candidates at or above POISON_MIN_EXTENDERS are refused and
+ * reported rather than minted or appended. It is a NET, not a verdict: a
+ * bare forename below the threshold is still a bad variant, which is why the
+ * classification step must call bare forenames `uncertain` in the first place.
+ *
  * After applying, run:
  *   node scripts/maintenance/backfill-author-canonical-links.mjs --include-backlog --apply
  * which links books by exact NFD variant match to exactly one doc (its own
@@ -46,6 +62,11 @@ const SOURCE = 'additive-mint-3780';
 
 // The builder's clustering + slug rules — shared via scripts/lib/author-name-key.mjs.
 import { norm, canonicalKey, authorSlug } from '../lib/author-name-key.mjs';
+
+// See POISON-FORM GUARD above. Threshold chosen from the measured corpus
+// separation, and deliberately loose — a false positive costs one review line,
+// a false negative costs a wrong byline on every book carrying the string.
+const POISON_MIN_EXTENDERS = 5;
 
 const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
@@ -96,6 +117,29 @@ const EXCLUDE_APPEND = new Set([
   'rhumelius-johann-conrad-ii|Rhumel, Johann Conrad', // Nuremberg physician father/son — conflation risk
 ]);
 
+// ── poison-form index: how many DISTINCT people extend each candidate form? ──
+// Built from books.author because that is the population the backfill matches
+// against — the thesaurus cannot show us a trapdoor it does not yet contain.
+const candidateForms = new Set(actionable.map(v => norm(v.string).trim()).filter(s => s && !/[\s,]/.test(s)));
+const extenders = new Map();   // bare form -> Set of canonicalKey of extending strings
+if (candidateForms.size) {
+  const strings = await db.collection('books').aggregate([
+    { $match: { author: { $type: 'string', $nin: ['', null] }, content_type: { $ne: 'artwork' } } },
+    { $group: { _id: '$author' } },
+  ], { allowDiskUse: true }).toArray();
+  for (const form of candidateForms) extenders.set(form, new Set());
+  // Index by first token so this stays linear in the corpus, not forms × corpus.
+  for (const r of strings) {
+    const n = norm(r._id).trim();
+    const head = n.split(/[\s,]+/)[0];
+    if (!head || head === n) continue;          // the bare form itself is not its own extender
+    const bucket = extenders.get(head);
+    if (bucket) bucket.add(canonicalKey(r._id));
+  }
+  const flagged = [...extenders.entries()].filter(([, k]) => k.size >= POISON_MIN_EXTENDERS);
+  console.log(`poison-form scan: ${candidateForms.size} single-token candidates, ${flagged.length} at or above ${POISON_MIN_EXTENDERS} distinct extending people`);
+}
+
 const mints = [];      // { _id, doc }
 const appends = [];    // { doc, variant, variant_slug }
 const skips = [];
@@ -104,6 +148,11 @@ const claimedKeys = new Map();  // key -> minted doc id, so same-person strings 
 for (const v of actionable) {
   const s = v.string;
   if (byVariant.has(norm(s))) { skips.push({ s, why: 'already a variant (matched since enumeration)' }); continue; }
+  const ext = extenders.get(norm(s).trim());
+  if (ext && ext.size >= POISON_MIN_EXTENDERS) {
+    skips.push({ s, why: `POISON FORM — bare name extended by ${ext.size} distinct people in our own corpus (e.g. ${[...ext].slice(0, 3).join(', ')}); as a variant it would claim all of them` });
+    continue;
+  }
   const display = v.verdict === 'institution' ? s : v.canonical_name;
   const key = canonicalKey(s);
   const keyHit = byKey.get(key) || byKey.get(canonicalKey(display)) || (claimedKeys.has(key) ? { _id: claimedKeys.get(key), minted: true } : null);
@@ -122,9 +171,17 @@ for (const v of actionable) {
     continue;
   }
 
-  let id = authorSlug(display);
+  const id = authorSlug(display);
   if (!id) { skips.push({ s, why: 'canonical_name slugs to empty — needs a romanization' }); continue; }
-  for (let n = 2; usedIds.has(id); n++) id = `${authorSlug(display)}-${n}`;
+  // A slug clash means an existing doc already displays this name while its
+  // cluster key did NOT match — either the same person the keyer missed, or a
+  // genuine homonym. Minting `<slug>-2` decides that silently and wrongly half
+  // the time: it is how 31 split pairs (`x` and `x-2`, books divided between
+  // them) reached the thesaurus. Route to review instead.
+  if (usedIds.has(id)) {
+    skips.push({ s, why: `slug "${id}" already taken — same person the key missed, or a homonym; needs eyes, not a "-2" doc` });
+    continue;
+  }
   usedIds.add(id);
   claimedKeys.set(key, id);
   const variants = [...new Set([s, display])];
