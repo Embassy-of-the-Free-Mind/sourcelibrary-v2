@@ -103,20 +103,13 @@ export default function FacetList({
         </div>
       )}
 
-      {/* Rows are exactly 28px, so `rows` shows whole ones. When there are more
-          than fit, the last few pixels fade out — a silent "keep scrolling"
-          that costs no chrome and no measurement. */}
+      {/* Rows are exactly 28px. When there are more than fit, the box is half a
+          row taller than a whole number of them, so the next one peeks over the
+          edge — the plainest "keep scrolling" there is, and unlike a fade it
+          cannot be mistaken for a rendering fault. */}
       <div
         className="overflow-y-auto overscroll-contain -mx-1 px-1"
-        style={{
-          maxHeight: `${rows * 28}px`,
-          ...(ordered.length > rows
-            ? {
-                maskImage: 'linear-gradient(to bottom, #000 calc(100% - 20px), transparent)',
-                WebkitMaskImage: 'linear-gradient(to bottom, #000 calc(100% - 20px), transparent)',
-              }
-            : {}),
-        }}
+        style={{ maxHeight: `${rows * 28 + (ordered.length > rows ? 14 : 0)}px` }}
       >
         {ordered.length === 0 && (
           <p className="py-2 text-[12px] text-muted">Nothing matches that.</p>
