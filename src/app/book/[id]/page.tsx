@@ -48,6 +48,7 @@ import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { AISection } from '@/components/embed/AISection';
 import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
+import { filterPublishedEntityTerms } from '@/lib/entity-publish';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { BookShare } from '@/components/ui/ShareButton';
@@ -987,7 +988,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const hasSummary = !!summaryText;
   const showProposedBanner = previewProposed && !!candidate?.brief;
   const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
-  const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+  // Prose links go only to published-tier entity pages (#4321) — linking every
+  // index term is how one-book vocabulary like "Axis" earned sitewide links.
+  // On lookup failure, degrade to unlinked prose rather than linking unvetted.
+  const summaryEntities = await (async () => {
+    const all = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+    if (all.length === 0) return all;
+    try {
+      const entityDb = await getReadDb();
+      const published = await filterPublishedEntityTerms(entityDb, all.map(e => e.term));
+      return all.filter(e => published.has(e.term));
+    } catch {
+      return [];
+    }
+  })();
 
   // ============================================================================
   // Book page v2 layout (non-embed only). Tenant/embed reading rooms keep the
