@@ -687,20 +687,28 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
 
   const artworks = await artworksPromise;
 
-  // Fetch parent collection if this is a subcollection
+  // Fetch parent collection if this is a subcollection.
+  // `parent` is a string OR an array of slugs (cross-listed pathways like
+  // women-of-the-secret-tradition carry ["hermetica","secret-societies"]).
+  // findOne({slug: <array>}) matches nothing, which silently dropped the
+  // breadcrumb on exactly the cross-listed collections — the ones where a
+  // reader most needs to know where they are (#4339). The child query
+  // ({parent: id}) matches array values natively, so the tree only broke in
+  // the upward direction. First slug wins as the primary trail.
   let parentCollection: { slug: string; name: string } | null = null;
-  if (collection.parent) {
+  const parentSlug = Array.isArray(collection.parent) ? collection.parent[0] : collection.parent;
+  if (parentSlug) {
     const parentDoc = await withTimeout(
       db.collection('collections').findOne(
         tenantId
           ? {
-            slug: collection.parent,
+            slug: parentSlug,
             $or: [
               { tenantId },
               { tenantId: { $exists: false } },
             ],
           }
-          : { slug: collection.parent },
+          : { slug: parentSlug },
         { projection: { slug: 1, name: 1 } },
       ),
       5000, null,
