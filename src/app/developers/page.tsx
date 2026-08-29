@@ -202,7 +202,8 @@ export default function DevelopersPage() {
           </div>
           <p className="text-secondary text-xs mt-3">
             Your own meter: <code>GET /api/dataset/v1/usage</code> with your key. Verified search crawlers
-            and user-directed assistant fetches are never limited.
+            and user-directed assistant fetches are never limited. Full-tier keys can request images without
+            the visible provenance marks (<code>&amp;clean=1</code> on <code>/api/image</code>).
           </p>
         </div>
       </section>

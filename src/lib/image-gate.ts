@@ -52,6 +52,7 @@ import { isTrustedBot } from '@/lib/bot-gate';
 import { verifyImageProxyToken } from '@/lib/image-proxy-auth';
 import { API_LIMITS } from '@/lib/api-limits';
 import { checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { DATASET_TIERS, type DatasetTier } from '@/lib/dataset/types';
 
 const IMAGE_ROUTE = 'image';
 
@@ -119,11 +120,26 @@ export type ImageIdentity = Omit<ApiIdentity, 'kind'> & {
   kind: ApiIdentity['kind'] | 'internal';
 };
 
+/**
+ * Clean (visible-mark-free) serving is a capability, not a default: implied by
+ * full-scope paid tiers, or admin-granted per key via permissions.clean_images.
+ * Only the VISIBLE marks come off — the invisible evidence layer (EXIF, keyed
+ * watermark) stays on every tier by design; a bit-clean corpus is a negotiated
+ * deal, not an API parameter.
+ */
+export function keyAllowsCleanImages(doc: Pick<ApiKeyDoc, 'tier' | 'permissions'>): boolean {
+  if (doc.permissions?.clean_images === true) return true;
+  const cfg = DATASET_TIERS[doc.tier as DatasetTier];
+  return cfg?.scope === 'full';
+}
+
 export interface ImageAccessDecision {
   allowed: boolean;
   /** 429 when a budget is exhausted (only meaningful when !allowed). */
   status: number;
   identity: ImageIdentity;
+  /** Serve without visible marks — set only for clean-capable keyed callers. */
+  clean?: boolean;
   /** Log this request to api_usage (keyed/session/anon traffic; never the hot browser path). */
   shouldLog: boolean;
   reason?: string;
@@ -135,6 +151,47 @@ export interface ImageAccessDecision {
 const enforceImageGate = () => process.env.IMAGE_GATE_ENFORCE !== '0';
 
 export async function checkImageAccess(request: NextRequest): Promise<ImageAccessDecision> {
+  // 0) ?clean=1 — unmarked serving. Handled BEFORE every other rung, and the
+  // only way through is a clean-capable key: a marked fallback here would be
+  // CDN-cached under the clean URL and poison it for the paying caller, so an
+  // unqualified clean request is a hard 403, never a downgrade. (The route
+  // must also serve clean responses Cache-Control: private — the key lives in
+  // a header, so the CDN cannot tell clean-entitled requests apart.)
+  if (request.nextUrl.searchParams.get('clean') === '1') {
+    const keyDoc = await validateApiKey(request.headers.get('authorization'));
+    if (!keyDoc || !keyAllowsCleanImages(keyDoc)) {
+      return {
+        allowed: false, status: 403,
+        identity: keyDoc
+          ? { kind: 'apikey', apiKeyId: String((keyDoc as ApiKeyDoc)._id), userId: keyDoc.user_id, apiKeyTier: keyDoc.tier }
+          : { kind: 'anon' },
+        shouldLog: true,
+        reason: 'clean_requires_capability',
+      };
+    }
+    const identity: ApiIdentity = {
+      kind: 'apikey',
+      apiKeyId: String((keyDoc as ApiKeyDoc)._id),
+      userId: keyDoc.user_id,
+      apiKeyTier: keyDoc.tier,
+    };
+    const rpm = checkKeyRequestRate(keyDoc as ApiKeyDoc);
+    if (!rpm.allowed && enforceImageGate()) {
+      return { allowed: false, status: 429, identity, shouldLog: true, reason: 'key_rate_limit' };
+    }
+    const { limit } = pickLimit(identity);
+    if (Number.isFinite(limit)) {
+      const used = await getPagesServedLast24h({ identity, request, route: IMAGE_ROUTE });
+      if (used >= limit && enforceImageGate()) {
+        return {
+          allowed: false, status: 429, identity, shouldLog: true,
+          reason: 'image_budget_apikey', used, limit,
+        };
+      }
+    }
+    return { allowed: true, status: 200, identity, shouldLog: true, clean: true };
+  }
+
   // 1) Browser subresource loads — the hot path. Nothing else runs.
   if (isBrowserShapedImageRequest(request)) {
     return { allowed: true, status: 200, identity: { kind: 'anon' }, shouldLog: false };
@@ -225,6 +282,12 @@ export async function checkImageAccess(request: NextRequest): Promise<ImageAcces
 
 /** 429 body: what happened, and the funnel — key, sign-in, licensing. */
 export function imageBudgetExceededBody(decision: ImageAccessDecision) {
+  if (decision.reason === 'clean_requires_capability') {
+    return {
+      error: 'Unmarked (clean=1) image serving requires a full-tier API key, or a key with the clean-images grant. Send your key as "Authorization: Bearer sl_data_…". Tiers: https://sourcelibrary.org/dataset — or drop clean=1 for the standard (marked) image.',
+      next_steps: { tiers: 'https://sourcelibrary.org/dataset', get_api_key: 'https://sourcelibrary.org/developers' },
+    };
+  }
   if (decision.reason === 'key_rate_limit') {
     return {
       error: 'Your API key\'s requests-per-minute limit was reached. Slow your request rate — the daily budget is unaffected. Higher rates come with paid tiers: https://sourcelibrary.org/licensing.',
