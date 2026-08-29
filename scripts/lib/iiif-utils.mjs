@@ -65,7 +65,7 @@ export function getDomainLimit(url) {
 export async function rateLimitedFetch(url, opts = {}) {
   const {
     timeout = 30000,
-    userAgent = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)',
+    userAgent = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
     retries = 3,
   } = opts;
 

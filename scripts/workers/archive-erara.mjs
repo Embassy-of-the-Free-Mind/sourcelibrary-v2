@@ -54,7 +54,7 @@ if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 try { execSync('which pdftoppm', { stdio: 'pipe' }); }
 catch { console.error('pdftoppm not found. Install: apt-get install poppler-utils'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const s3 = new S3Client({
   region: 'auto',
