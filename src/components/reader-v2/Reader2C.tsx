@@ -39,10 +39,12 @@ import PinnedVersionBanner from './PinnedVersion';
 import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishButton } from './ReaderSpanishToggle';
 import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
 import {
-  CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
+  CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
   SURFACE, themeAttr, bookByline,
 } from './ReaderV2Bits';
+import { pageTextCorpus, translationCorpus } from '@/lib/text-provenance';
+import type { CdliWitness } from '@/lib/types/book';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -1365,22 +1367,29 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
 
       {/* Provenance. A library that publishes machine-made text owes the
           reader the record of how it was made, in the same place as the rest
-          of the bibliographic record — not tucked in a pane menu. */}
-      {(page.ocr?.model || page.translation?.model) && (
+          of the bibliographic record — not tucked in a pane menu. Corpus
+          editions (#4350) branch on every row: there is no scan behind them,
+          and an ETCSL translation is the corpus editors' scholarly work — the
+          default wording was false in both directions. */}
+      {(page.ocr?.model || page.translation?.model) && (() => {
+        const ocrCorpus = pageTextCorpus(page);
+        const trCorpus = translationCorpus(page);
+        const witnessCount = (book.cdli_witnesses || []).length;
+        return (
         <>
           <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>{t.howPageWasMade}</CapsLabel>
           <dl>
             <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
               <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldScan}</dt>
               <dd style={{ color: 'var(--text-secondary)' }}>
-                {t.scannedFrom(page.page_number ?? undefined)}
+                {ocrCorpus ? t.corpusNoScan(witnessCount) : t.scannedFrom(page.page_number ?? undefined)}
               </dd>
             </div>
             {page.ocr?.model && (
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {t.transcribedBy(page.ocr.model)}
+                  {ocrCorpus ? t.corpusTranscript(ocrCorpus.name, ocrCorpus.org) : t.transcribedBy(page.ocr.model)}
                 </dd>
               </div>
             )}
@@ -1388,16 +1397,17 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldEnglish}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {t.translatedBy(page.translation.model)}
+                  {trCorpus ? t.corpusTranslation(trCorpus.name) : t.translatedBy(page.translation.model)}
                 </dd>
               </div>
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            {t.machineNotice}
+            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : t.machineNotice}
           </p>
         </>
-      )}
+        );
+      })()}
     </div>
   );
 }
@@ -1625,7 +1635,7 @@ function ScanControls({
  * link to the bare image file: that navigated away from the library entirely
  * and left nothing to come back from.
  */
-function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }: {
+function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, srcOverride, altOverride }: {
   page: Page;
   book: Book;
   onClose: () => void;
@@ -1633,6 +1643,9 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
   onNext: () => void;
   hasPrev: boolean;
   hasNext: boolean;
+  /** Witness photo stand-in (#4350) — fullRes, so hand it the 4000px tier. */
+  srcOverride?: string;
+  altOverride?: string;
 }) {
   const strings = getReaderStrings(useLocale());
   const t = strings.toolbar;
@@ -1685,7 +1698,7 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
           className={navBtn} style={{ color: onInk(0.75) }}><X size={17} /></button>
       </div>
       <div className="flex-1 min-h-0 px-3 py-3">
-        <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes />
+        <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes srcOverride={srcOverride} altOverride={altOverride} />
       </div>
       <div className="shrink-0 flex items-center justify-center gap-1 h-[46px]" style={{ borderTop: `1px solid ${onInk(0.12)}` }}>
         <button type="button" aria-label={strings.panes.zoomOut} disabled={zoom <= 1}
@@ -2556,6 +2569,30 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   const pageNum = r.currentPage?.page_number ?? '—';
   const scan = resolveScanUrls(r.currentPage);
+  // Corpus editions (#4350): no scan exists, so a CDLI tablet-witness
+  // photograph stands in — clearly captioned as a witness, not the source of
+  // the text. The index survives page turns on purpose: the witnesses belong
+  // to the composition, not to any one of our page divisions.
+  const witnessPhotos = useMemo(
+    () => ((r.book.cdli_witnesses || []) as CdliWitness[]).filter(w => w.has_photo && w.photo_url),
+    [r.book.cdli_witnesses],
+  );
+  const [witnessIndex, setWitnessIndex] = useState(0);
+  const witness = !scan.display && witnessPhotos.length > 0
+    ? witnessPhotos[((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length]
+    : null;
+  // Through the sharp resizer, not raw: CDLI originals run to ~24MB. Two
+  // tiers, same contract as display vs native — 1600px at rest, 4000px once
+  // the reader zooms past 1.5× or goes fullscreen. The caption's CDLI link
+  // remains the road to the untouched original.
+  const witnessSrc = witness?.photo_url
+    ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=1600&q=80`
+    : undefined;
+  const witnessNativeSrc = witness?.photo_url
+    ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=4000&q=85`
+    : undefined;
+  const ocrCorpusInfo = pageTextCorpus(r.currentPage);
+  const translationCorpusInfo = translationCorpus(r.currentPage);
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`
     : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
@@ -2940,11 +2977,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     onZoomReset={() => changeZoom(1)}
                     lensOn={lensOn}
                     onToggleLens={() => setLensOn(v => !v)}
-                    onExpand={scan.native ? () => setLightbox(true) : undefined}
+                    onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
                   />
                 }
               >
-                <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.originalScan}</CapsLabel>
+                <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
               </PaneHeader>
               {/* `relative` because PageDeepZoomButton positions its control
                   and its inline viewer against the nearest positioned parent:
@@ -2959,7 +2996,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   lensOn={lensOn}
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
+                  srcOverride={witnessSrc}
+                  nativeSrcOverride={witnessNativeSrc}
+                  altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                 />
+                {witness && (
+                  <WitnessCaption
+                    witness={witness}
+                    index={((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length}
+                    total={witnessPhotos.length}
+                    onPrev={() => setWitnessIndex(i => i - 1)}
+                    onNext={() => setWitnessIndex(i => i + 1)}
+                    corpus={ocrCorpusInfo}
+                  />
+                )}
                 {/* Tiled deep zoom, where the page has a tile pyramid. The
                     lightbox tops out at a 4000px render; this serves tiles, so
                     a reader can go to the native resolution of the scan and
@@ -3075,6 +3125,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     editing={editing}
                   />
                 )}
+                {/* A corpus translation is the corpus editors' work, not AI's —
+                    say so where the reader is looking (#4350). */}
+                {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -3246,14 +3299,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           {r.views.scan && (
             <section style={{ background: SURFACE.scanBed }}>
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
-                <CapsLabel style={{ color: 'var(--text-muted)' }}>{t.panes.originalScan}</CapsLabel>
+                <CapsLabel style={{ color: 'var(--text-muted)' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
                 <ScanControls
                   zoom={scanZoom}
                   onZoomStep={zoomStep}
                   onZoomReset={() => changeZoom(1)}
                   lensOn={lensOn}
                   onToggleLens={() => setLensOn(v => !v)}
-                  onExpand={scan.native ? () => setLightbox(true) : undefined}
+                  onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
                 />
               </div>
               {/* Zoom/pan and the lens need the touch stream, so keep those
@@ -3265,7 +3318,22 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 onTouchMove={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
                 onTouchEnd={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
               >
-                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn} />
+                <ScanViewer
+                  page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
+                  srcOverride={witnessSrc}
+                  nativeSrcOverride={witnessNativeSrc}
+                  altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
+                />
+                {witness && (
+                  <WitnessCaption
+                    witness={witness}
+                    index={((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length}
+                    total={witnessPhotos.length}
+                    onPrev={() => setWitnessIndex(i => i - 1)}
+                    onNext={() => setWitnessIndex(i => i + 1)}
+                    corpus={ocrCorpusInfo}
+                  />
+                )}
                 {/* On a phone this opens the fullscreen viewer directly —
                     inline pan/zoom fights the swipe between pages. */}
                 {deepzoomManifest && (
@@ -3326,6 +3394,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     spanishAvailable={spanishAvailable}
                     editing={editing}
                   />
+                  {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
                 </div>
                 <div className="flex items-center gap-1">
                   {traceShown && (
@@ -3499,6 +3568,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           onNext={r.goNext}
           hasPrev={!!prevPage}
           hasNext={!!nextPage}
+          srcOverride={witnessNativeSrc}
+          altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
         />
       )}
     </div>

@@ -1820,12 +1820,22 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
             {(() => {
               const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+              // Corpus editions (#4350): the page cards have no images of
+              // their own, so CDLI witness-tablet photos stand in — cycled
+              // across the grid, and named for what they are in the subtitle.
+              const witnessFallbacks = !hasScans
+                ? (book.cdli_witnesses || [])
+                  .filter(w => w.has_photo && (w.thumbnail_url || w.photo_url))
+                  .map(w => ({ src: (w.thumbnail_url || w.photo_url) as string, alt: `Tablet ${w.designation}` }))
+                : [];
               const pagesSubtitle = !hasScans
-                ? (digitizer ? t.textEditionBy(digitizer) : t.textEdition)
+                ? (witnessFallbacks.length > 0
+                  ? t.textEditionWitnesses(witnessFallbacks.length)
+                  : digitizer ? t.textEditionBy(digitizer) : t.textEdition)
                 : digitizer
                   ? t.pagesDigitizedBy(digitizer)
                   : t.pagesInReadingOrder;
-              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} />;
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} fallbackImages={witnessFallbacks.length > 0 ? witnessFallbacks : undefined} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
                 return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
