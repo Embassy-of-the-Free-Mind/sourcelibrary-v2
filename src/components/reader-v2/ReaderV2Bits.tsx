@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import type { Book, Page } from '@/lib/types';
+import type { CdliWitness } from '@/lib/types/book';
+import type { CorpusInfo } from '@/lib/text-provenance';
 import type { ReaderSettings } from './useReaderV2';
 import { PaneEmptyState } from './PaneEmptyState';
 
@@ -70,6 +73,94 @@ export function AiChip({ short = false }: { short?: boolean }) {
     >
       {short ? t.aiShort : t.aiTranslated}
     </span>
+  );
+}
+
+/**
+ * The corpus counterpart of AiChip (#4350): this translation is the corpus
+ * editors' scholarly work — labelling it "AI" (or leaving it unlabelled next
+ * to panes that are) misattributes a human translation to a machine.
+ */
+export function CorpusChip({ corpus }: { corpus: CorpusInfo }) {
+  const t = getReaderStrings(useLocale()).panes;
+  return (
+    <span
+      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em]"
+      style={{ color: 'var(--text-faint)' }}
+      title={t.corpusChipTitle(corpus.name)}
+    >
+      {t.corpusChip(corpus.shortName)}
+    </span>
+  );
+}
+
+/**
+ * Caption bar under a tablet-witness photograph in the scan pane (#4350).
+ * Names the tablet, offers the carousel when the composition survives on
+ * several, and — the part that must never be implied away — says the text
+ * follows the corpus edition rather than this photograph.
+ */
+export function WitnessCaption({ witness, index, total, onPrev, onNext, corpus }: {
+  witness: CdliWitness;
+  index: number;
+  total: number;
+  onPrev: () => void;
+  onNext: () => void;
+  corpus: CorpusInfo | null;
+}) {
+  const t = getReaderStrings(useLocale()).panes;
+  const detail = [witness.designation, witness.museum, witness.period].filter(Boolean).join(' · ');
+  return (
+    <div
+      className="absolute bottom-0 left-0 right-0 px-4 py-2 flex items-center gap-3 border-t"
+      style={{
+        background: 'color-mix(in srgb, var(--bg-warm) 92%, transparent)',
+        borderColor: 'var(--border-light)',
+        backdropFilter: 'blur(3px)',
+      }}
+    >
+      <div className="flex-1 min-w-0">
+        <p className="font-sans text-[11.5px] truncate" style={{ color: 'var(--text-secondary)' }}>
+          {detail}
+          {witness.cdli_url && (
+            <>
+              {' · '}
+              <a href={witness.cdli_url} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+                {t.viewOnCdli}
+              </a>
+            </>
+          )}
+        </p>
+        <p className="font-sans text-[10.5px] mt-0.5" style={{ color: 'var(--text-faint)' }}>
+          {t.witnessNotSource(corpus?.shortName || 'corpus')}
+        </p>
+      </div>
+      {total > 1 && (
+        <div className="flex items-center gap-1 shrink-0">
+          <button
+            type="button"
+            onClick={onPrev}
+            aria-label={t.prevWitness}
+            className="w-7 h-7 flex items-center justify-center border transition-colors hover:bg-[var(--bg-white)]"
+            style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+          >
+            <ChevronLeft size={14} />
+          </button>
+          <span className="font-sans text-[10.5px] tabular-nums px-1" style={{ color: 'var(--text-muted)' }}>
+            {t.witnessCount(index + 1, total)}
+          </span>
+          <button
+            type="button"
+            onClick={onNext}
+            aria-label={t.nextWitness}
+            className="w-7 h-7 flex items-center justify-center border transition-colors hover:bg-[var(--bg-white)]"
+            style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+          >
+            <ChevronRight size={14} />
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -194,6 +285,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
+  srcOverride, altOverride,
 }: {
   page: Page;
   book: Book;
@@ -206,9 +298,21 @@ export function ScanViewer({
   /** The scroller, exposed so the reader can sync it with the text panes. */
   scrollRef?: React.RefObject<HTMLDivElement | null>;
   onScroll?: () => void;
+  /**
+   * Show this URL instead of the page's own image — a CDLI tablet-witness
+   * photograph standing in for a scan that does not exist (#4350). A raw,
+   * CSP-allowlisted URL, deliberately NOT routed through resolveScanUrls:
+   * cdli.earth is browser-renderable but not on the /api/image proxy
+   * allowlist, so the display-tier resolver could hand back a guaranteed 400.
+   */
+  srcOverride?: string;
+  /** Alt text to pair with srcOverride — the default alt describes a scan. */
+  altOverride?: string;
 }) {
   const t = getReaderStrings(useLocale()).panes;
-  const { display, native } = resolveScanUrls(page);
+  const resolved = resolveScanUrls(page);
+  const display = srcOverride ?? resolved.display;
+  const native = srcOverride ?? resolved.native;
   const localRef = useRef<HTMLDivElement>(null);
   const containerRef = scrollRef ?? localRef;
   const spacerRef = useRef<HTMLDivElement>(null);
@@ -436,11 +540,20 @@ export function ScanViewer({
     if (e.pointerType !== 'mouse') setLens(null);
   };
 
-  const alt = t.scanAlt(page.page_number, book.display_title || book.title);
+  const alt = altOverride ?? t.scanAlt(page.page_number, book.display_title || book.title);
   if (!display) {
+    // Words, not a bare block: a silent placeholder reads as an image that
+    // failed to load, when the truth is that no image exists (#4350).
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="h-[80%]" style={{ aspectRatio: '0.68', background: 'color-mix(in srgb, var(--bg-warm) 80%, var(--bg-dark))' }} role="img" aria-label={alt} />
+        <div
+          className="h-[80%] flex items-center justify-center px-6 text-center"
+          style={{ aspectRatio: '0.68', background: 'color-mix(in srgb, var(--bg-warm) 80%, var(--bg-dark))' }}
+        >
+          <span className="font-sans text-[12px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
+            {t.noFacsimile}
+          </span>
+        </div>
       </div>
     );
   }

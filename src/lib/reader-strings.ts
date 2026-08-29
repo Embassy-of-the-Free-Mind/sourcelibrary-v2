@@ -166,6 +166,19 @@ export interface ReaderStrings {
     aiTranslated: string;
     aiShort: string;
     aiTitle: string;
+    /** Corpus editions (#4350): chip on a translation that is the corpus's
+     *  own scholarly work — must never read as AI output. */
+    corpusChip: (shortName: string) => string;
+    corpusChipTitle: (name: string) => string;
+    /** Scan pane, when a CDLI tablet witness stands in for the missing scan. */
+    tabletWitness: string;
+    witnessCount: (index: number, total: number) => string;
+    witnessNotSource: (shortName: string) => string;
+    witnessAlt: (designation: string) => string;
+    prevWitness: string;
+    nextWitness: string;
+    viewOnCdli: string;
+    noFacsimile: string;
     /** Alt text for the facsimile itself. */
     scanAlt: (pageNumber: number, title: string) => string;
 
@@ -301,6 +314,13 @@ export interface ReaderStrings {
     /** "Translated from the transcript by {model}" */
     translatedBy: (model: string) => string;
     machineNotice: string;
+    /** Corpus editions (#4350): no scan exists, and the text (for ETCSL, the
+     *  translation too) is the corpus editors' scholarly work, not AI's. */
+    corpusNoScan: (witnessCount: number) => string;
+    corpusTranscript: (name: string, org?: string) => string;
+    corpusTranslation: (name: string) => string;
+    corpusNotice: string;
+    corpusAiNotice: (name: string) => string;
   };
 
   /** Cite panel. */
@@ -580,6 +600,16 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       aiTranslated: 'AI translated',
       aiShort: 'AI',
       aiTitle: 'Produced with AI assistance',
+      corpusChip: (shortName) => `${shortName} translation`,
+      corpusChipTitle: (name) => `The English follows the scholarly translation of the ${name} — it is not machine-made`,
+      tabletWitness: 'Tablet witness',
+      witnessCount: (index, total) => `Tablet ${index} of ${total}`,
+      witnessNotSource: (shortName) => `The text follows the ${shortName} edition — it is not read from this photograph`,
+      witnessAlt: (designation) => `Photograph of tablet ${designation}`,
+      prevWitness: 'Previous tablet',
+      nextWitness: 'Next tablet',
+      viewOnCdli: 'View on CDLI',
+      noFacsimile: 'No facsimile — this is a text edition',
       scanAlt: (pageNumber, title) => `Scan of page ${pageNumber} of ${title}`,
 
       originalScan: 'Original scan',
@@ -688,6 +718,13 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcribedBy: (model) => `Read from the scan by ${model}`,
       translatedBy: (model) => `Translated from the transcript by ${model}`,
       machineNotice: 'Machine transcription and translation carry errors. The scan is the source, so read it alongside the text wherever a reading matters.',
+      corpusNoScan: (witnessCount) => witnessCount > 0
+        ? `None — this is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
+        : 'None — this is a digital text edition; no page images exist.',
+      corpusTranscript: (name, org) => `Composite transliteration from the ${name}${org ? ` (${org})` : ''}`,
+      corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
+      corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours — the corpus divides the text by lines, not pages.',
+      corpusAiNotice: (name) => `The transliteration follows the ${name}; the English is a machine translation of it and may contain errors.`,
     },
     cite: {
       copyCitation: 'Copy citation',
@@ -927,6 +964,16 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       aiTranslated: 'Traducido por IA',
       aiShort: 'IA',
       aiTitle: 'Generado con ayuda de IA',
+      corpusChip: (shortName) => `Traducción ${shortName}`,
+      corpusChipTitle: (name) => `El inglés sigue la traducción académica de ${name} — no es obra de una máquina`,
+      tabletWitness: 'Tablilla testigo',
+      witnessCount: (index, total) => `Tablilla ${index} de ${total}`,
+      witnessNotSource: (shortName) => `El texto sigue la edición ${shortName} — no se leyó de esta fotografía`,
+      witnessAlt: (designation) => `Fotografía de la tablilla ${designation}`,
+      prevWitness: 'Tablilla anterior',
+      nextWitness: 'Tablilla siguiente',
+      viewOnCdli: 'Ver en CDLI',
+      noFacsimile: 'Sin facsímil — es una edición de texto',
       scanAlt: (pageNumber, title) => `Escaneo de la página ${pageNumber} de ${title}`,
 
       originalScan: 'Escaneo original',
@@ -1040,6 +1087,13 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcribedBy: (model) => `Leída del escaneo por ${model}`,
       translatedBy: (model) => `Traducida de la transcripción por ${model}`,
       machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente, así que léelo junto al texto siempre que una lectura sea importante.',
+      corpusNoScan: (witnessCount) => witnessCount > 0
+        ? `Ninguno — es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
+        : 'Ninguno — es una edición digital de texto; no existen imágenes de página.',
+      corpusTranscript: (name, org) => `Transliteración compuesta procedente de ${name}${org ? ` (${org})` : ''}`,
+      corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
+      corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra — el corpus divide el texto por líneas, no por páginas.',
+      corpusAiNotice: (name) => `La transliteración sigue ${name}; el inglés es una traducción automática de ella y puede contener errores.`,
     },
     cite: {
       copyCitation: 'Copiar la cita',
