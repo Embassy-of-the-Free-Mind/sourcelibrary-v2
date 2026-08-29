@@ -122,7 +122,7 @@ async function phase2(db) {
 
   let updated = 0;
   let failed = 0;
-  const BATCH_SIZE = 50;
+  const BATCH_SIZE = 5; // was 50 — that concurrency got the IP blocked at IA (2026-08-29)
 
   for (let i = 0; i < books.length; i += BATCH_SIZE) {
     const batch = books.slice(i, i + BATCH_SIZE);
@@ -132,6 +132,9 @@ async function phase2(db) {
       try {
         const resp = await fetch(`https://archive.org/metadata/${identifier}`, {
           signal: AbortSignal.timeout(10000),
+          // Contact-carrying UA per #4353; anonymous bulk fetch at high
+          // concurrency got this IP connection-refused by IA on 2026-08-29.
+          headers: { 'User-Agent': 'SourceLibraryArchiver/1.0 (derek@sourcelibrary.org)' },
         });
         if (!resp.ok) { failed++; return; }
         const data = await resp.json();
@@ -167,7 +170,7 @@ async function phase2(db) {
       console.log(`  ${Math.min(i + BATCH_SIZE, books.length)}/${books.length} — ${updated} updated, ${failed} failed`);
     }
     // Small delay between batches to be kind to IA
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => setTimeout(r, 1000));
   }
 
   console.log(`\nPhase 2 total: ${updated} updated, ${failed} failed`);
@@ -328,7 +331,7 @@ async function phase4(db) {
   let updated = 0;
   let noContributor = 0;
   let failed = 0;
-  const BATCH_SIZE = 50;
+  const BATCH_SIZE = 5; // was 50 — that concurrency got the IP blocked at IA (2026-08-29)
 
   for (let i = 0; i < pending.length; i += BATCH_SIZE) {
     const batch = pending.slice(i, i + BATCH_SIZE);
@@ -338,6 +341,9 @@ async function phase4(db) {
       try {
         const resp = await fetch(`https://archive.org/metadata/${identifier}`, {
           signal: AbortSignal.timeout(10000),
+          // Contact-carrying UA per #4353; anonymous bulk fetch at high
+          // concurrency got this IP connection-refused by IA on 2026-08-29.
+          headers: { 'User-Agent': 'SourceLibraryArchiver/1.0 (derek@sourcelibrary.org)' },
         });
         if (!resp.ok) { failed++; return; }
         const data = await resp.json();
@@ -383,7 +389,7 @@ async function phase4(db) {
     if ((i + BATCH_SIZE) % 500 === 0 || i + BATCH_SIZE >= pending.length) {
       console.log(`  ${Math.min(i + BATCH_SIZE, pending.length)}/${pending.length} — ${updated} recovered, ${noContributor} no-contributor, ${failed} failed`);
     }
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => setTimeout(r, 1000));
   }
 
   console.log(`\nPhase 4 total: ${updated} recovered, ${noContributor} genuinely holderless, ${failed} failed (transient — re-run retries them)`);
