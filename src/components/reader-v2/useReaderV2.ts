@@ -179,6 +179,27 @@ export function useReaderV2(
     }
   }, [signedIn, currentPage, currentPageId, fetchPage]);
 
+  // Citation exception (#4357): a reader arriving from a /q/ quote link
+  // carries ?cite=<token> — a per-page capability minted by the redirect.
+  // The ISR HTML is still the stripped variant (static render, one HTML for
+  // everyone), so when the page on screen is gated and a token is present,
+  // refetch with it; the API ungates exactly the cited page. The token rides
+  // along on page turns (pageUrl preserves the query) but verifies only for
+  // the page it was minted for, so it cannot be walked along the book.
+  useEffect(() => {
+    if (!(currentPage as Page & { gated?: boolean }).gated) return;
+    if (typeof window === 'undefined') return;
+    const cite = new URLSearchParams(window.location.search).get('cite');
+    if (!cite) return;
+    let cancelled = false;
+    pagesApi.get(currentPageId, { cite }).then((p) => {
+      if (cancelled || !p || (p as Page & { gated?: boolean }).gated) return;
+      cacheRef.current.set(currentPageId, p);
+      setCurrentPage(p);
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [currentPage, currentPageId]);
+
   // Reading history beacon (same contract as the production reader)
   useEffect(() => {
     // currentPageId moves synchronously on a page turn; currentPage arrives a

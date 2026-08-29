@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getLibraryStats, roundedCountLabel } from '@/lib/library-stats';
+import { meteredReaderEnabled } from '@/lib/free-preview';
 
 export const metadata: Metadata = {
   title: 'FAQ — Source Library',
@@ -245,11 +246,24 @@ function getFaqs(bookCount: string): FAQItem[] {
     question: 'Is this a commercial project?',
     answer: (
       <>
-        <p>
-          Source Library is a non-profit project in partnership with the Embassy of the
-          Free Mind in Amsterdam. All texts, translations, and tools are freely accessible.
-          There are no paywalls.
-        </p>
+        {/* Metered reader (#4357): the access claim must flip in the same
+            deploy as the METERED_READER flag — a site that walls text while
+            promising "no paywalls" breaks faith with exactly the readers who
+            checked. Flag off (the default) keeps the original wording verbatim. */}
+        {meteredReaderEnabled() ? (
+          <p>
+            Source Library is a non-profit project in partnership with the Embassy of the
+            Free Mind in Amsterdam. Every book is freely browsable &mdash; scans, metadata,
+            and a generous free sample of every text &mdash; and a free account unlocks
+            full reading access.
+          </p>
+        ) : (
+          <p>
+            Source Library is a non-profit project in partnership with the Embassy of the
+            Free Mind in Amsterdam. All texts, translations, and tools are freely accessible.
+            There are no paywalls.
+          </p>
+        )}
         <p>
           The project is funded by institutional support and individual contributions.
           Processing thousands of books with AI is expensive &mdash; if you find value

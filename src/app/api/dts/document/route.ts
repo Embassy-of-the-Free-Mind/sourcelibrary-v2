@@ -13,7 +13,11 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getReadDb } from '@/lib/mongodb';import { getTenantContextFromRequest } from '@/lib/tenant-context';import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { isMeteredAnonRequest } from '@/lib/metered-gate';
+import { resolveTenantId } from '@/lib/tenant-context';
 import { dtsPageText } from '@/lib/dts-text';
 
 const BASE = 'https://sourcelibrary.org';
@@ -79,10 +83,22 @@ export async function GET(request: NextRequest) {
     const bookId = book.id as string;
     const pagesCount = (book.pages_count as number) || 0;
 
-    // Bot gating
+    // Bot gating — and, when METERED_READER=1, the same free-sample clamp
+    // for anonymous humans (#4357): DTS document serves full page text, so
+    // leaving it open would hand the reader wall's content out the side
+    // door. The human clamp applies only to default-tenant books — named
+    // tenants are partner reading rooms and stay exempt, matching the pages
+    // API. (Today every DTS-servable book is tenant-tagged to a partner, so
+    // the human clamp is dormant even with the flag on; it exists for any
+    // future default-tagged book.)
     const bot = isBot(request);
     const trusted = bot && (await isTrustedBot(request));
-    const maxPage = bot && !trusted ? botMaxPage(pagesCount) : pagesCount;
+    const defaultTenantId = await resolveTenantId('default').catch(() => null);
+    const meteredHuman = !bot
+      && tenantId === defaultTenantId
+      && (await isMeteredAnonRequest(request));
+    const clampToFree = (bot && !trusted) || meteredHuman;
+    const maxPage = clampToFree ? botMaxPage(pagesCount) : pagesCount;
 
     // Determine page range to fetch
     let startPage: number;
