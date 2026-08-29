@@ -2578,6 +2578,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const witness = !scan.display && witnessPhotos.length > 0
     ? witnessPhotos[((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length]
     : null;
+  // Through the sharp resizer, not raw: CDLI originals run to ~24MB. The
+  // caption's CDLI link is the road to full resolution.
+  const witnessSrc = witness?.photo_url
+    ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=1600&q=80`
+    : undefined;
   const ocrCorpusInfo = pageTextCorpus(r.currentPage);
   const translationCorpusInfo = translationCorpus(r.currentPage);
   const shareUrl = typeof window !== 'undefined'
@@ -2983,7 +2988,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   lensOn={lensOn}
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
-                  srcOverride={witness?.photo_url}
+                  srcOverride={witnessSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                 />
                 {witness && (
@@ -3306,7 +3311,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
-                  srcOverride={witness?.photo_url}
+                  srcOverride={witnessSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                 />
                 {witness && (

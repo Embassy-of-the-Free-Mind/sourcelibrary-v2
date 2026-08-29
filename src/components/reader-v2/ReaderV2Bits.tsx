@@ -300,10 +300,10 @@ export function ScanViewer({
   onScroll?: () => void;
   /**
    * Show this URL instead of the page's own image — a CDLI tablet-witness
-   * photograph standing in for a scan that does not exist (#4350). A raw,
-   * CSP-allowlisted URL, deliberately NOT routed through resolveScanUrls:
-   * cdli.earth is browser-renderable but not on the /api/image proxy
-   * allowlist, so the display-tier resolver could hand back a guaranteed 400.
+   * photograph standing in for a scan that does not exist (#4350). Already
+   * browser-loadable (an /api/image proxy URL, or a CSP-allowlisted host);
+   * deliberately not routed through resolveScanUrls, which reads page fields
+   * this synthetic image does not have.
    */
   srcOverride?: string;
   /** Alt text to pair with srcOverride — the default alt describes a scan. */
