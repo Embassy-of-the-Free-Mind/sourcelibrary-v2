@@ -216,7 +216,7 @@ export default async function DatasetPage() {
 
         <div className="space-y-px rounded-lg border border-[#e8e6e3] overflow-hidden">
           {[
-            { name: 'Explorer', price: 'Free', scope: '100 pages/day, any language', note: 'For evaluation' },
+            { name: 'Explorer', price: 'Free', scope: '2,000 pages/day, any language', note: 'Self-serve — instant' },
             { name: 'Single Language', price: '$4,990/yr', scope: 'One language corpus, unlimited', note: 'or $499/mo' },
             { name: 'Domain', price: '$14,990/yr', scope: 'One scholarly domain, unlimited', note: 'or $1,499/mo' },
             { name: 'Full Collection', price: '$49,990/yr', scope: 'All languages, all domains', note: 'or $4,999/mo' },

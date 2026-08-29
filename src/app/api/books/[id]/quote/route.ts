@@ -10,7 +10,8 @@ import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
-import { withApiAuth } from '@/lib/api-auth';
+import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
+import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
 import { languageApparatusFields } from '@/lib/edition-language';
 
@@ -94,8 +95,20 @@ interface QuoteResponse {
 }
 
 // GET /api/books/[id]/quote?page=N - Get a quote from a specific page
-export const GET = withApiAuth(async (request: NextRequest, context: RouteContext) => {
+export const GET = withApiAuth(async (request: NextRequest, context: RouteContext, identity: ApiIdentity) => {
   try {
+    // A quote serves one page of text, so it spends the same 24h page budget
+    // as /text — the MCP docs always claimed this; the route never did it
+    // until #4366. The success response sets X-Pages-Served so the wrapper
+    // logs the page into the pool.
+    const budget = await checkPageBudget({ identity, request });
+    if (!budget.allowed) {
+      return NextResponse.json(bulkBudgetExceededBody(budget), {
+        status: 429,
+        headers: { 'Retry-After': '3600' },
+      });
+    }
+
     const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const pageNumber = parseInt(searchParams.get('page') || '1');
@@ -276,7 +289,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       };
     }
 
-    return NextResponse.json(response);
+    return NextResponse.json(response, { headers: { 'X-Pages-Served': '1' } });
   } catch (error) {
     console.error('Error getting quote:', error);
     return NextResponse.json({ error: 'Failed to get quote' }, { status: 500 });

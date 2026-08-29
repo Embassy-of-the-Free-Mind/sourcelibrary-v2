@@ -1,5 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { API_LIMITS } from '@/lib/api-limits';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 15;
@@ -22,7 +24,20 @@ function isMongoTimeout(err: unknown): boolean {
  * Public endpoint — no auth required.
  * Returns corpus statistics for the marketing page and API consumers.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // Deliberately public (the /dataset marketing page renders from it), but a
+  // 4-aggregation fan-out is too expensive to leave entirely unmetered (#4366).
+  const rl = checkRateLimit(
+    { name: 'dataset-stats', limit: API_LIMITS.publicReads.datasetStatsPerMinute, windowSeconds: 60 },
+    getClientIp(request),
+  );
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests' },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+    );
+  }
+
   const db = await getReadDb();
   const books = db.collection('books');
   const visible = { visible: true };

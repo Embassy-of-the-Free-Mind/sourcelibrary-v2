@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  RSL (Really Simple Licensing, https://rslstandard.org) declaration for
+  sourcelibrary.org. Expresses the same policy as robots.txt Content-Signal
+  lines, /.well-known/tdmrep.json, and https://sourcelibrary.org/licensing:
+
+    - Search indexing and user-directed assistant reading (ai-input): FREE,
+      with attribution (content is CC BY-SA 4.0).
+    - AI training / bulk text-and-data-mining: RESERVED — requires a separate
+      license. Standing rate card: $250/book floor, $200,000/yr full corpus.
+
+  Human-readable terms and contact: https://sourcelibrary.org/licensing
+-->
+<rsl xmlns="https://rslstandard.org/rsl">
+  <content url="https://sourcelibrary.org/">
+    <license>
+      <permits type="usage">search</permits>
+      <permits type="usage">ai-input</permits>
+      <payment type="attribution">
+        <standard>https://creativecommons.org/licenses/by-sa/4.0/</standard>
+      </payment>
+    </license>
+    <license>
+      <prohibits type="usage">train-ai</prohibits>
+      <payment type="purchase">
+        <custom>https://sourcelibrary.org/licensing</custom>
+      </payment>
+    </license>
+    <copyright type="notice">Source Library — Embassy of the Free Mind. Translations CC BY-SA 4.0; AI training requires a separate license (https://sourcelibrary.org/licensing).</copyright>
+  </content>
+</rsl>

@@ -42,6 +42,9 @@ const ALWAYS_ALLOW = ['sourcelibrary-mcp'];
 // the robots.ts search-allow list and the /licensing policy. NB: this is UA-based
 // (honor system) — consistent with the rest of this gate, which only ever applied
 // to self-identifying bots; a scraper using a browser UA was never gated anyway.
+// NB: ccbot/bytespider appear in KNOWN_BOTS above but are hard-403'd at the
+// edge (proxy.ts BLOCKED_BOT_RE), so their entries here are unreachable
+// defense-in-depth — kept deliberately in case the edge rule changes (#4366).
 const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'duckduckbot', 'claude-searchbot', 'oai-searchbot'];
 
 // User-INITIATED assistant fetches: an AI assistant retrieving a page because a
