@@ -50,6 +50,14 @@ export interface CatalogBook {
   photo: string | null;
   thumbnail: string | null;
   thumbnail_blob: string | null;
+  /** Canonical cover URL. Distinct from `thumbnail` for ~4,300 live books, which
+   *  is why the card's staleness check cannot be done against `thumbnail`.
+   *  Not a books_catalog column — attached from Mongo by attachCardVariants(). */
+  image_display?: string | null;
+  /** 500px AVIF card variant (~28 KB vs the ~490 KB scan). Only used when it
+   *  names the same page as `image_display` — see getBookCardUrl. `undefined`
+   *  means "not looked up yet"; `null` means "looked up, this book has none". */
+  image_card?: string | null;
   read_count: number;
   is_first_translation: boolean;
   quality_score: number;
@@ -97,6 +105,11 @@ export interface CatalogBookDetail extends CatalogBook {
 // Exported so tests can assert the localization counter is in it (#4166) —
 // a card cannot tell a Spanish-readable book from an English-only one without
 // a field the query never asked for.
+// NB: `image_display` / `image_card` are deliberately NOT selected here. They
+// are not columns on books_catalog (see supabase/migrations/20260828000000_…),
+// and PostgREST 42703s the whole query on an unknown column — which would take
+// the catalogue down rather than degrade it. They are attached from Mongo by
+// `attachCardVariants()` below instead.
 export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
@@ -190,7 +203,65 @@ export async function browseBooks(opts: {
     throw new Error(`books_catalog query failed: ${error.message}`);
   }
 
-  return { books: (data || []) as CatalogBook[], total: count || 0 };
+  return { books: await attachCardVariants((data || []) as CatalogBook[]), total: count || 0 };
+}
+
+/**
+ * Attach `image_card` + `image_display` to catalogue rows, from Mongo.
+ *
+ * The catalogue renders from the Supabase mirror, which carries `thumbnail` but
+ * not the canonical cover fields — so without this every catalogue card falls
+ * back to the 2000px archival scan (~746 KB) and the 500px AVIF card variant
+ * (~28 KB) never reaches the surface it was built for. Measured 2026-08-26: the
+ * 60-card /catalog grid ships 43.4 MB and its slowest covers take 6–10s.
+ *
+ * Doing it here rather than in the mirror is a deliberate trade. The tidier fix
+ * is two columns on books_catalog (migration written:
+ * supabase/migrations/20260828000000_books_catalog_cover_card.sql), but that
+ * needs Supabase DDL access, and this needs none. One indexed `$in` over the
+ * page's ~60 ids costs a few ms against a page that is ISR-cached for a day.
+ * When the columns do land, `BOOK_SELECT` picks them up and rows arriving with
+ * `image_card` already set skip the lookup — so this becomes a no-op rather
+ * than something to unpick.
+ *
+ * Both fields are required together: getBookCardUrl() only trusts `image_card`
+ * when it names the same page as `image_display`, which is how a cover changed
+ * since the backfill falls back instead of rendering the previous cover.
+ *
+ * Failure is non-fatal by design. A Mongo hiccup here means heavier covers for
+ * one render, never a broken or empty grid — the catalogue's own data has
+ * already been fetched and is returned unchanged.
+ */
+async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
+  const needing = rows.filter(r => r.id && r.image_card === undefined);
+  if (needing.length === 0) return rows;
+  try {
+    const { getReadDb } = await import('@/lib/mongodb');
+    const db = await getReadDb();
+    const docs = await db.collection('books')
+      .find({ id: { $in: needing.map(r => r.id) } }, { projection: { _id: 0, id: 1, image_card: 1, image_display: 1 } })
+      .maxTimeMS(2000)
+      .toArray();
+    const byId = new Map(docs.map(d => [d.id as string, d]));
+    for (const row of needing) {
+      const doc = byId.get(row.id);
+      if (!doc) continue;
+      // ONLY the card. `image_display` is deliberately not attached: this table
+      // has never carried it, so the catalogue renders `thumbnail`, and the two
+      // disagree for 4,309 live books. Attaching it would make
+      // getBookThumbnailUrl prefer it and silently change which PICTURE 3,635
+      // books show — a cover migration smuggled inside a performance fix.
+      // getBookCardUrl then validates the card against `thumbnail` here (and
+      // against `image_display` on surfaces that do project it), so the picture
+      // never changes and only its weight does. The ~2,000 books whose card was
+      // cut from a different page than `thumbnail` simply keep the full-size
+      // cover until the two fields are reconciled — a separate fix.
+      row.image_card = (doc.image_card as string | null) ?? null;
+    }
+  } catch (err) {
+    console.error('[books-catalog] card-variant lookup failed, serving full-size covers:', (err as Error)?.message);
+  }
+  return rows;
 }
 
 /**

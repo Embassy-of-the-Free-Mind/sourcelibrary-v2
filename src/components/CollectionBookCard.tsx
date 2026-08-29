@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Check, X } from 'lucide-react';
-import { cn, getBookThumbnailUrl } from '@/lib/utils';
+import { cn, getBookThumbnailUrl, getBookCardUrl } from '@/lib/utils';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
@@ -35,6 +35,12 @@ export interface CollectionBook {
   localized?: LocalizedBookMap | null;
   thumbnail?: string;
   thumbnail_blob?: string;
+  /** Canonical cover fields. `image_card` is the 500px AVIF variant; it is only
+   *  used when it names the same page as `image_display` (see getBookCardUrl),
+   *  so BOTH must be projected by any query feeding this card or the book
+   *  silently falls back to the 2000px scan. */
+  image_display?: string | null;
+  image_card?: string | null;
   language?: string;
   has_doi?: boolean;
   is_first_translation?: boolean;
@@ -125,8 +131,20 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
 
   const isArtwork = !!book.resource_type;
   const pageCount = book.pages_count || book.pages || 0;
-  const primaryUrl = getBookThumbnailUrl(book, 'display');
-  const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
+  // The 500px AVIF card variant when this book has a live, non-stale one
+  // (~43 KB); otherwise the 2000px display scan exactly as before (~750 KB).
+  // getBookCardUrl returns null unless `image_card` is set AND names the same
+  // page as `image_display`, so a cover changed since the backfill falls back
+  // here rather than rendering the previous cover. See src/lib/utils.ts.
+  const cardUrl = getBookCardUrl(book);
+  const displayUrl = getBookThumbnailUrl(book, 'display');
+  const primaryUrl = cardUrl || displayUrl;
+  // What to try if the primary fails to load. When the primary IS the card, the
+  // right retry is the full-size scan, not the 150px thumb — a browser too old
+  // to decode AVIF (~4%) should get the correct cover, not a blurry one. Only
+  // once that also fails do we drop to the thumb, which is the pre-existing
+  // behaviour for every non-card book.
+  const fallbackUrl = (cardUrl && displayUrl) || getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
   const slug = book.slug || book.id || book.bookId || '';
 
