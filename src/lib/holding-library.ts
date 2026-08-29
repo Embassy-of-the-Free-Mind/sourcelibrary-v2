@@ -39,6 +39,8 @@ const AGGREGATORS = new Set([
   // host, not its holder — the true holder needs #4361's per-item metadata.
   'e-rara (swiss electronic library)',
   'e-rara',
+  // Importer placeholder, not an institution (797 live books, measured 2026-08-29).
+  'iiif source',
 ]);
 
 /**
@@ -50,7 +52,9 @@ const AGGREGATORS = new Set([
 const CANONICAL: Record<string, string> = {
   'bayerische staatsbibliothek': 'Bayerische Staatsbibliothek, Munich',
   'bayerische staatsbibliothek (munich)': 'Bayerische Staatsbibliothek, Munich',
+  'bayerische staatsbibliothek, munich': 'Bayerische Staatsbibliothek, Munich',
   'bibliotheca philosophica hermetica': 'Bibliotheca Philosophica Hermetica, Amsterdam',
+  'embassy of the free mind (bibliotheca philosophica hermetica)': 'Bibliotheca Philosophica Hermetica, Amsterdam',
   'british library': 'British Library, London',
   // Gallica is BnF's platform; the holder is the library itself.
   'gallica (bibliothèque nationale de france)': 'Bibliothèque nationale de France, Paris',
@@ -84,9 +88,22 @@ export function copyClause(contributingLibrary?: string | null, shelfmark?: stri
   };
 }
 
-/** Resolve the copy clause straight off a book document. */
+/**
+ * Resolve the copy clause straight off a book document.
+ *
+ * `image_source.*` is the canonical location, but 3,860 live books (measured
+ * 2026-08-29 — British Library, BPH, Harvard imports among them) carry the
+ * fact only in TOP-LEVEL `contributing_library`/`shelfmark` — field sprawl
+ * the #4361 sweep consolidates. A guard must normalize both sides, so the
+ * read path accepts both until the writers do.
+ */
 export function resolveHoldingCopy(book: {
   image_source?: { contributing_library?: string; shelfmark?: string };
+  contributing_library?: string;
+  shelfmark?: string;
 }): HoldingCopy | null {
-  return copyClause(book.image_source?.contributing_library, book.image_source?.shelfmark);
+  return copyClause(
+    book.image_source?.contributing_library || book.contributing_library,
+    book.image_source?.shelfmark || book.shelfmark,
+  );
 }

@@ -78,7 +78,10 @@ const BOOK_NAV_PROJECTION = {
   // The copy clause of the citation panel (#4360): which library's physical
   // copy the scan shows, and its shelfmark there. Sub-paths only — the full
   // image_source carries license/attribution baggage the reader doesn't use.
+  // The top-level twins are legacy sprawl 3,860 live books still rely on
+  // (consolidation: #4361); resolveHoldingCopy reads both.
   'image_source.contributing_library': 1, 'image_source.shelfmark': 1,
+  contributing_library: 1, shelfmark: 1,
 };
 
 export default async function PageEditorPage({ params, allowHidden = false, lang = 'en' }: PageProps & { allowHidden?: boolean; lang?: Locale }) {
