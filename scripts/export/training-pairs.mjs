@@ -162,6 +162,16 @@ function gzWriter(p) {
   };
 }
 
+// Streaming hash — pairs files exceed Node's 2 GiB readFileSync cap (the
+// Latin build crashed at exactly this step; same lesson as the corpus
+// snapshot's sha256Stream).
+function sha256Stream(p) {
+  return new Promise((resolve, reject) => {
+    const h = crypto.createHash('sha256');
+    fs.createReadStream(p).on('data', (d) => h.update(d)).on('end', () => resolve(h.digest('hex'))).on('error', reject);
+  });
+}
+
 async function* gzLines(p) {
   const rl = readline.createInterface({
     input: fs.createReadStream(p).pipe(zlib.createGunzip()),
@@ -307,10 +317,10 @@ async function build() {
       near_duplicate: `MinHash-${SIG_N} 5-gram signature matches an earlier page at >=${NEAR_DUP_MIN}/${SIG_N} (multiple copies of one edition); near_dup_of names the kept page`,
     },
     split_rule: `md5(book_id) % 100 < ${VAL_PCT} → val (whole books, deterministic)`,
-    files: [path.basename(pairsPath), ...(CHAT ? [`chat-${LANG}.jsonl.gz`] : [])].map((f) => {
+    files: await Promise.all([path.basename(pairsPath), ...(CHAT ? [`chat-${LANG}.jsonl.gz`] : [])].map(async (f) => {
       const p = path.join(DIR, f);
-      return { file: f, bytes: fs.statSync(p).size, sha256: crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex') };
-    }),
+      return { file: f, bytes: fs.statSync(p).size, sha256: await sha256Stream(p) };
+    })),
   };
   fs.writeFileSync(path.join(DIR, 'manifest.json'), JSON.stringify(manifest, null, 2));
   console.log(`[build] done: ${nPairs.toLocaleString()} pairs from ${workList.length.toLocaleString()} books ` +
@@ -361,4 +371,44 @@ async function verify(db, manifest, pairsPath) {
   }
 }
 
-build().catch((err) => { console.error(err); process.exit(1); });
+// Rebuild manifest + verify from an existing --dir, streaming the actual
+// shard bytes — recovery path for a build that died in finalization (the
+// 2 GiB readFileSync crash). Per-page skip counts are lost with the build's
+// memory; the manifest says so instead of pretending.
+async function finalizeOnly() {
+  const pairsPath = path.join(DIR, `pairs-${LANG}.jsonl.gz`);
+  if (!fs.existsSync(pairsPath)) { console.error(`[finalize] ${pairsPath} missing`); process.exit(1); }
+  const { client, db } = await getScriptClient({ noTimeout: true });
+  const books = new Set();
+  const perSplit = { train: 0, val: 0 };
+  const flagCounts = {};
+  let nPairs = 0, nSrcChars = 0, nTrChars = 0;
+  for await (const line of gzLines(pairsPath)) {
+    const r = JSON.parse(line);
+    nPairs++; books.add(r.book_id); perSplit[r.split]++;
+    nSrcChars += r.source_text.length; nTrChars += r.translation_en.length;
+    for (const f of r.flags || []) flagCounts[f] = (flagCounts[f] || 0) + 1;
+    if (nPairs % 250000 === 0) console.log(`[finalize] ${nPairs.toLocaleString()} pairs…`);
+  }
+  const chatPath = path.join(DIR, `chat-${LANG}.jsonl.gz`);
+  const manifest = {
+    dataset: `Source Library training pairs (${LANG} → English)`,
+    issue: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4320',
+    created: new Date().toISOString(),
+    recovered: 'manifest rebuilt from shard bytes after a finalization crash; per-page skip counts were lost with the build process and are NOT included',
+    distribution: 'PRIVATE — local/Hetzner only, never the public R2 bucket',
+    eligibility: { lang: LANG, text_role: 'original', max_year: MAX_YEAR, page_gate: 'per-page <language> tag, never books.language' },
+    counts: { books: books.size, pairs: nPairs, split: perSplit, source_chars: nSrcChars, translation_chars: nTrChars },
+    flagged: flagCounts,
+    split_rule: `md5(book_id) % 100 < ${VAL_PCT} → val (whole books, deterministic)`,
+    files: await Promise.all([pairsPath, ...(fs.existsSync(chatPath) ? [chatPath] : [])].map(async (p) => (
+      { file: path.basename(p), bytes: fs.statSync(p).size, sha256: await sha256Stream(p) }
+    ))),
+  };
+  fs.writeFileSync(path.join(DIR, 'manifest.json'), JSON.stringify(manifest, null, 2));
+  console.log(`[finalize] ${nPairs.toLocaleString()} pairs, ${books.size} books (train ${perSplit.train.toLocaleString()} / val ${perSplit.val.toLocaleString()})`);
+  if (!SKIP_VERIFY) await verify(db, manifest, pairsPath);
+  await client.close();
+}
+
+(has('--finalize-only') ? finalizeOnly() : build()).catch((err) => { console.error(err); process.exit(1); });
