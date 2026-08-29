@@ -49,6 +49,29 @@ function EmptyPane({
 }
 
 /**
+ * Metered reader (#4357): pane content for a page whose text the server
+ * withheld (page.gated — beyond the book's free sample, signed-out caller).
+ * The scan pane stays live; this renders where the transcription/translation
+ * would be. Deliberately NOT the "not transcribed yet" wording — that state
+ * means the text does not exist; this one means it exists and is a sign-in
+ * away. Signed-in readers never see it: useReaderV2 refetches gated pages
+ * once a session is present.
+ */
+export function GatedPane({ page }: { page: Page }) {
+  const pathname = usePathname();
+  const t = getReaderStrings(useLocale()).paneGated;
+  const freePages = page.gate?.free_pages || 0;
+  const signInHref = `/auth/signin?callbackUrl=${encodeURIComponent(pathname || '/')}`;
+  return (
+    <EmptyPane label={t.label} body={t.body(freePages)}>
+      <a href={signInHref} className={actionButtonClass} style={actionButtonStyle}>
+        {t.signIn}
+      </a>
+    </EmptyPane>
+  );
+}
+
+/**
  * Empty-state content for one reader pane (OCR or translation) when that
  * pane has no text. Renders in place of ReaderProse's plain italic line.
  *
