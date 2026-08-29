@@ -2560,9 +2560,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.
+  // Carried by both layouts — a tablet in landscape gets the desktop grid, and
+  // for a while that meant a touch device with no gesture at all.
   const swipeRef = useRef<{ x: number; y: number; axis: null | 'x' | 'y' } | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length !== 1) { swipeRef.current = null; return; }
+    // Anything with its own use for a horizontal drag opts out by marking
+    // itself: a zoomed scan is being panned, and a slide-out panel is not the
+    // page you are reading.
+    if ((e.target as HTMLElement | null)?.closest('[data-no-page-swipe]')) {
+      swipeRef.current = null;
+      return;
+    }
     swipeRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, axis: null };
   };
   const onTouchMove = (e: React.TouchEvent) => {
@@ -3029,6 +3038,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
           className="relative flex min-h-0"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           {r.views.scan && (
             <section
@@ -3053,7 +3065,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   and its inline viewer against the nearest positioned parent:
                   the tiled canvas fills this box, over the scan, while the
                   translation stays readable beside it. */}
-              <div className={`relative flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
+              <div
+                className={`relative flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}
+                data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
+              >
                 <ScanViewer
                   page={r.currentPage}
                   book={r.book}
@@ -3224,6 +3239,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <div
               role="dialog"
               aria-labelledby="rv2-panel-title"
+              data-no-page-swipe=""
               className="absolute top-0 left-0 bottom-0 border-r z-40 flex flex-col rv2-slide-in-left"
               style={{
                 width: leftPanelWidth,
@@ -3380,9 +3396,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div
                 className="relative px-4 py-4"
                 style={{ height: 'min(66dvh, 520px)' }}
-                onTouchStart={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
-                onTouchMove={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
-                onTouchEnd={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
+                data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
               >
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
