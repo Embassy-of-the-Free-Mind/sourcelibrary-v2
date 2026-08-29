@@ -6,6 +6,7 @@
  * "Translated by Source Library" over an English book the translator's own
  * work — see the credit logic below and #3724.
  */
+import { resolveHoldingCopy, type HoldingCopy } from '@/lib/holding-library';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { citationYear, citationYearOrNd } from '@/lib/publication-date';
 import { getShortUrl } from '@/lib/shortlinks';
@@ -23,6 +24,12 @@ export interface Citation {
   url: string;
   short_url: string;
   doi_url?: string;
+  /**
+   * The physical copy behind the scan (#4360): holding institution and, when
+   * known, its shelfmark there. Absent when we cannot name a genuine holder —
+   * never filled with an aggregator or "unknown".
+   */
+  copy?: HoldingCopy;
 }
 
 function formatAccessedDate(): string {
@@ -116,6 +123,18 @@ export function generateCitations(
     ? null
     : { short: `trans. Source Library ${translationYear}`, long: `Translated by Source Library. ${translationYear}.` };
 
+  /**
+   * The COPY clause (#4360). A scan is a photograph of one physical object; the
+   * imprint above describes the EDITION (any copy of the 1609 printing reads
+   * the same), but marginalia, provenance marks and bindings exist in exactly
+   * one copy — so a citation of our images must say whose object it shows:
+   * `Copy: Bibliotheca Philosophica Hermetica, Amsterdam, PH441`. Null when we
+   * cannot name a genuine holder (no data, or only an aggregator like IA);
+   * then the citation reads exactly as it did before this clause existed.
+   */
+  const copy = resolveHoldingCopy(book);
+  const copyStr = copy ? `${copy.statement}. ` : '';
+
   // Inline citation. Carries the rendering credit when the English is ours —
   // this is the form that gets pasted into prose, and it was the only one that
   // said nothing.
@@ -124,10 +143,10 @@ export function generateCitations(
     : `(${authorParts[0]} ${year}, p. ${pageNumber})`;
 
   // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}${renderingCredit ? `${renderingCredit.short.replace(`Source Library ${translationYear}`, `Source Library (${translationYear})`)}, ` : ''}${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
+  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}${renderingCredit ? `${renderingCredit.short.replace(`Source Library ${translationYear}`, `Source Library (${translationYear})`)}, ` : ''}${pageNumber}${copy ? `. ${copy.statement}` : ''}${doi ? `. DOI: ${doi}` : ''}.`;
 
   // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}${renderingCredit ? `${renderingCredit.long} ` : ''}${doi ? `DOI: ${doi}.` : `Accessed ${accessed}.`}`;
+  const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}${renderingCredit ? `${renderingCredit.long} ` : ''}${copyStr}${doi ? `DOI: ${doi}.` : `Accessed ${accessed}.`}`;
 
   // BibTeX — original imprint (address/publisher) + translation credit (note)
   const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${bibtexYearKey}`;
@@ -149,15 +168,17 @@ export function generateCitations(
     : ['Text transcribed from the printed page by Source Library'];
   if (book.format) bibtexNote.push(book.format);
   if (book.ustc_id) bibtexNote.push(`USTC ${book.ustc_id}`);
+  // BibTeX has no standard copy field, so the clause rides the note.
+  if (copy) bibtexNote.push(copy.statement);
   bibtexLines.push(`  note = {${bibtexNote.join('; ')}}`);
   bibtexLines.push(`}`);
   const bibtex = bibtexLines.join('\n');
 
   // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. ${imprintStr}${renderingCredit ? `${renderingCredit.long} ` : ''}${doi ? `${doiUrl}.` : `Accessed ${accessed}.`}`;
+  const chicago = `${authorLastFirst}. ${year}. ${title}. ${imprintStr}${renderingCredit ? `${renderingCredit.long} ` : ''}${copyStr}${doi ? `${doiUrl}.` : `Accessed ${accessed}.`}`;
 
   // MLA
-  const mla = `${authorLastFirst}. ${title}. ${imprintStr}${renderingCredit ? `Translated by Source Library, ${translationYear}.` : ''}${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
+  const mla = `${authorLastFirst}. ${title}. ${imprintStr}${renderingCredit ? `Translated by Source Library, ${translationYear}.` : ''}${copy ? ` ${copy.statement}.` : ''}${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
 
   // Direct URL to page in Source Library (pinned to edition version).
   // baseUrl is derived from the request host so quotes returned from
@@ -184,5 +205,6 @@ export function generateCitations(
     url,
     short_url,
     doi_url: doiUrl,
+    ...(copy ? { copy } : {}),
   };
 }

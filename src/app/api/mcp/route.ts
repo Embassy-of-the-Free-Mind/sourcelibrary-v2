@@ -643,6 +643,18 @@ async function getQuote(args: Record<string, unknown>) {
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
 
+  // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
+  // each read their own copy of this guidance and fixes do not propagate.
+  const holdingCopy = (result.citation as Record<string, unknown> | undefined)?.copy as
+    | { statement?: string }
+    | undefined;
+  if (holdingCopy?.statement) {
+    tips.push(
+      `The scanned images reproduce one physical copy: "${holdingCopy.statement}". ` +
+        'When citing copy-specific evidence (marginalia, provenance marks, hand-coloring), include that clause in the citation.',
+    );
+  }
+
   return {
     ...withCitationLink(result),
     continuity,

@@ -6,6 +6,7 @@ import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
 import { checkAndRecordDownload } from '@/lib/download-cap';
+import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -83,6 +84,11 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push(`Original Language: ${book.language}`);
   if (book.published) {
     lines.push(`Published: ${book.published}`);
+  }
+  // The physical copy behind the scan (#4360) — cite the holder, not just us.
+  const holdingCopy = resolveHoldingCopy(book);
+  if (holdingCopy) {
+    lines.push(`Source Copy: ${holdingCopy.holding_library}${holdingCopy.shelfmark ? `, shelfmark ${holdingCopy.shelfmark}` : ''}`);
   }
   lines.push('');
 

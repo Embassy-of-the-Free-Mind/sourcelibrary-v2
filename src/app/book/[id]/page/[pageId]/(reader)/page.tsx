@@ -76,6 +76,13 @@ const BOOK_NAV_PROJECTION = {
   pages_translated_es: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
+  // The copy clause of the citation panel (#4360): which library's physical
+  // copy the scan shows, and its shelfmark there. Sub-paths only — the full
+  // image_source carries license/attribution baggage the reader doesn't use.
+  // The top-level twins are legacy sprawl 3,860 live books still rely on
+  // (consolidation: #4361); resolveHoldingCopy reads both.
+  'image_source.contributing_library': 1, 'image_source.shelfmark': 1,
+  contributing_library: 1, shelfmark: 1,
   // Metered reader (#4357): isPageFree() needs the book's page total.
   pages_count: 1,
 };
