@@ -1652,8 +1652,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
-                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
-                    <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
+                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
+                    <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
                     </Link>
                   ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
@@ -1931,8 +1931,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 return (
                   <p className="text-base sm:text-lg text-stone-300 mb-1">
                     {heroByline.role === 'author' ? (
-                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
-                        <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
+                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
+                        <Link href={authorUrl(book.author, book.author_id)!} className="hover:text-white transition-colors">
                           <AuthorName author={book.author} />
                         </Link>
                       ) : <AuthorName author={book.author} />
