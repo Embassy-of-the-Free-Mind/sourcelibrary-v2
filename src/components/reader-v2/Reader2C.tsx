@@ -20,6 +20,7 @@ import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-clien
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
+import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { ReaderSettings } from './useReaderV2';
 import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
@@ -1990,7 +1991,7 @@ function PanelContent({
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
-  citationParts: { author: string; title: string; year: string; locator: string; source: string; url: string };
+  citationParts: { author: string; title: string; year: string; locator: string; copy: string; source: string; url: string };
   copied: boolean;
   onCopyCitation: () => void;
   librarianMessages: LibrarianMessage[];
@@ -2163,7 +2164,7 @@ function PanelContent({
             {citationParts.year && <span style={{ color: 'var(--text-muted)' }}> {citationParts.year}</span>}
           </p>
           <p className="font-sans text-[12px] mt-1" style={{ color: 'var(--text-secondary)' }}>
-            {[citationParts.locator, citationParts.source].filter(Boolean).join(' · ')}
+            {[citationParts.locator, citationParts.copy.replace(/\.$/, ''), citationParts.source].filter(Boolean).join(' · ')}
           </p>
           <p className="font-sans text-[11.5px] mt-1.5 break-all" style={{ color: 'var(--text-faint)' }}>
             {citationParts.url}
@@ -2544,11 +2545,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // text on screen while being perfectly correct on the clipboard; setting the
   // title, the locator and the URL apart makes it checkable at a glance
   // without changing a character of what gets pasted.
+  // The copy clause (#4360): the scan shows one library's physical object, and
+  // a citation of the image is a claim about that copy — marginalia and
+  // provenance marks exist nowhere else. Null when no genuine holder is known
+  // (aggregators like Internet Archive are filtered), and then the citation
+  // reads as before.
+  const holdingCopy = resolveHoldingCopy(r.book);
   const citationParts = {
     author: r.book.author ? `${r.book.author}.` : '',
     title: r.book.display_title || r.book.title,
     year: r.book.published ? `(${r.book.published})` : '',
     locator: r.currentPage?.page_number != null ? `p. ${r.currentPage.page_number}` : '',
+    copy: holdingCopy ? `${holdingCopy.statement}.` : '',
     source: 'Source Library',
     url: `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`,
   };
@@ -2556,6 +2564,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     citationParts.author,
     `${citationParts.title}${citationParts.year ? ` ${citationParts.year}` : ''},`,
     `${citationParts.locator}.`,
+    citationParts.copy,
     `${citationParts.source}.`,
     citationParts.url,
   ].filter(Boolean).join(' ');

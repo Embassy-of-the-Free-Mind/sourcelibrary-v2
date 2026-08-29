@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { resolveHoldingCopy } from '@/lib/holding-library';
 import { generateGalleryImages } from '@/lib/gallery-image-gen';
 import { getSession } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
@@ -187,7 +188,7 @@ export async function GET(
           pageNumber: pageData.page_number,
           readUrl: tenantPath(`/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
-          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, ${(() => { const c = resolveHoldingCopy(pageData.book || {}); return c ? `${c.statement}, ` : ''; })()}Source Library, ${aiCitationNote(galleryDoc.model)}`,
           stale: true, // Signal that detection index is stale
         }, {
           headers: tenantResponseHeaders,
@@ -235,7 +236,7 @@ export async function GET(
           pageNumber: pageData.page_number,
           readUrl: tenantPath(`/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`),
           galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
-          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library, ${aiCitationNote(galleryDoc.model)}`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, ${(() => { const c = resolveHoldingCopy(pageData.book || {}); return c ? `${c.statement}, ` : ''; })()}Source Library, ${aiCitationNote(galleryDoc.model)}`,
           corrupt: true,
         }, {
           headers: tenantResponseHeaders,
@@ -683,6 +684,12 @@ function buildCitation(page: Record<string, unknown>, detection: Record<string, 
   if (detection.description) {
     parts.push(`[${detection.description}]`);
   }
+
+  // Gallery images are per-copy by declaration (edition-identity.md): this
+  // engraving's hand-coloring or marginal mark exists only in this library's
+  // copy, so name it (#4360).
+  const holdingCopy = book ? resolveHoldingCopy(book as { image_source?: { contributing_library?: string; shelfmark?: string } }) : null;
+  if (holdingCopy) parts.push(holdingCopy.statement);
 
   parts.push('Source Library');
 

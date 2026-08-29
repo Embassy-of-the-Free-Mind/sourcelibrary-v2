@@ -1,6 +1,7 @@
 import archiver from 'archiver';
 import sharp from 'sharp';
 import type { Db } from 'mongodb';
+import { resolveHoldingCopy } from '@/lib/holding-library';
 import { resolveImprintPlace } from '@/lib/imprint';
 import type { Book, Chapter, Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
@@ -658,6 +659,11 @@ ${section('People', idx!.people)}${section('Places', idx!.places)}${section('Con
     <dc:creator>${escapeXml(book.author)}</dc:creator>
     <dc:contributor>Source Library (translator)</dc:contributor>
     <dc:publisher>Source Library</dc:publisher>
+    ${(() => {
+      // dc:source names the physical copy the facsimile reproduces (#4360).
+      const copy = resolveHoldingCopy(book);
+      return copy ? `<dc:source>${escapeXml(`Copy held by ${copy.holding_library}${copy.shelfmark ? `, shelfmark ${copy.shelfmark}` : ''}`)}</dc:source>` : '';
+    })()}
     <dc:description>${escapeXml(description)}</dc:description>
     <dc:language>en</dc:language>
     <dc:date>${now}</dc:date>

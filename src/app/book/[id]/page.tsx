@@ -1608,7 +1608,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               )}
               <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
-                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
@@ -1764,7 +1764,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
                   <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
@@ -2196,6 +2196,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       ustcId={book.ustc_id}
                       language={book.language}
                       doi={book.doi}
+                      holdingLibrary={book.image_source?.contributing_library}
+                      shelfmark={book.image_source?.shelfmark}
                       editionVersion={currentEdition?.version}
                       tenantSlug={tenantSlug || undefined}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
