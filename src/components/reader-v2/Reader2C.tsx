@@ -2425,6 +2425,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * time. Turning a page from inside a pane now keeps you in that pane.
    */
   const mobileAnchor = useRef<string | null>(null);
+  // A swipe is "carry on reading" and keeps your pane. Every other way of
+  // changing page — the pager, the filmstrip, Contents, a typed page number —
+  // is a deliberate move, and lands at the top of the reader.
+  const keepPaneOnTurn = useRef(false);
   // Restoring the anchor scrolls the column, and that scroll must not be read
   // back as a reading move — on a short page the restore clamps at the foot,
   // which would re-read the anchor as the scan and lose the pane on the next
@@ -2456,7 +2460,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     const el = mobileMainRef.current;
     if (!el) return;
     // Read once: the two passes below must place the SAME pane.
-    const anchor = mobileAnchor.current;
+    const anchor = keepPaneOnTurn.current ? mobileAnchor.current : null;
+    keepPaneOnTurn.current = false;
     anchorLock.current = Date.now() + 250;
     const place = () => {
       // No anchor, or the new page hasn't got that pane (plenty have no
@@ -2606,7 +2611,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     const t = e.changedTouches[0];
     const dx = t.clientX - s.x;
     if (Math.abs(dx) < 45) return;
-    if (dx < 0) r.goNext(); else r.goPrev();
+    if (dx < 0) {
+      if (!nextPage) return;
+      keepPaneOnTurn.current = true;
+      r.goNext();
+    } else {
+      if (!prevPage) return;
+      keepPaneOnTurn.current = true;
+      r.goPrev();
+    }
   };
 
   // Filmstrip: keep the current page centred
