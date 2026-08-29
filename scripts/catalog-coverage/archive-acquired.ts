@@ -35,6 +35,29 @@ async function main() {
   const books = db.collection('books');
   const pages = db.collection('pages');
 
+  // A blocked host must stop the run, not be retried page after page. On
+  // 2026-08-29 Wellcome's CloudFront WAF began answering every image request
+  // with 403 "Request blocked" while info.json still returned 200; the empty
+  // catch below meant the loop kept firing thousands of doomed requests and
+  // reported "partial" progress instead of a failure. Per
+  // invariants/archive-fetch-failures.md a 403 is never auto-retried.
+  const hostFailures = new Map<string, number>();
+  const FAIL_ABORT = 25;
+  class HostBlocked extends Error {}
+  const noteFailure = (url: string, err: unknown) => {
+    let host = 'unknown';
+    try { host = new URL(url).hostname; } catch { /* keep 'unknown' */ }
+    const msg = String((err as Error)?.message ?? err);
+    // Only auth/blocking statuses count toward the abort — a slow or oversized
+    // page is a per-page problem, not a host verdict.
+    if (!/\b(401|403|429)\b/.test(msg)) return;
+    const n = (hostFailures.get(host) ?? 0) + 1;
+    hostFailures.set(host, n);
+    if (n >= FAIL_ABORT) {
+      throw new HostBlocked(`${host}: ${n} consecutive auth/block responses (${msg.slice(0, 120)}). Stopping — do NOT auto-retry a 403.`);
+    }
+  };
+
   async function archiveIiif(bookId: string) {
     const ps = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1 } }).toArray();
     for (let i = 0; i < ps.length; i += 6) {
@@ -49,7 +72,11 @@ async function main() {
           const upd: any = { $set: { archived_photo: blob.url } };
           try { const th = await sharp(buf).rotate().resize(150, null, { withoutEnlargement: true }).jpeg({ quality: 60 }).toBuffer(); upd.$set.thumbnail_blob = (await storagePut(`pages/${bookId}/${padded}-thumb.jpg`, th, { contentType: 'image/jpeg', access: 'public' })).url; } catch {}
           await pages.updateOne({ _id: p._id }, upd);
-        } catch {}
+          hostFailures.clear(); // a success clears the streak
+        } catch (e) {
+          if (e instanceof HostBlocked) throw e;
+          noteFailure(url, e); // rethrows HostBlocked once the host looks blocked
+        }
       }));
     }
   }
@@ -102,13 +129,26 @@ async function main() {
       partial++;
     }
   }
-  for (let i = 0; i < todo.length; i += CONCURRENCY) {
-    await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w).catch(() => {})));
+  let blocked: Error | null = null;
+  for (let i = 0; i < todo.length && !blocked; i += CONCURRENCY) {
+    await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w).catch((e) => {
+      // Per-book failures stay swallowed (one bad book must not stop a sweep),
+      // but a blocked HOST is a verdict about the source: stop the whole run
+      // and say so, rather than grinding out thousands of doomed requests.
+      if (e instanceof HostBlocked) blocked = e;
+    })));
   }
   const remaining = PROVIDER
     ? await books.countDocuments({ 'image_source.provider': PROVIDER, pages_count: { $gt: 0 }, archive_status: { $ne: 'archive_complete' } })
     : await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
   log(`archive-acquired: complete ${ok}, partial ${partial} | un-archived acquired remaining ${remaining}`);
+  if (blocked) {
+    // Exit non-zero so a wrapper loop stops instead of re-running into the block.
+    log(`ABORTED — SOURCE BLOCKED: ${(blocked as Error).message}`);
+    log('Back off and check with the institution before retrying. Do not change user-agent to route around a block.');
+    await mc.close();
+    process.exit(3);
+  }
   await mc.close();
 }
 main().catch(e => { console.error(e); process.exit(1); });
