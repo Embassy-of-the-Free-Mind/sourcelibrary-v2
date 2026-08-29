@@ -2413,16 +2413,72 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     }
   }, []);
 
-  // Mobile: one scroller for the stacked panes. Reset it on a page turn so a
-  // new page always starts at the top, and drive paging from a horizontal swipe.
+  // Mobile: one scroller for the stacked panes, and paging driven from a
+  // horizontal swipe.
   const mobileMainRef = useRef<HTMLElement>(null);
+
+  /**
+   * Which stacked pane you were reading when the page turned. Resetting the
+   * column to the top on every turn meant a swipe taken halfway down a
+   * translation landed you back on the next page's scan, so reading a
+   * translation across a page break cost a scroll past the facsimile every
+   * time. Turning a page from inside a pane now keeps you in that pane.
+   */
+  const mobileAnchor = useRef<string | null>(null);
+  // Restoring the anchor scrolls the column, and that scroll must not be read
+  // back as a reading move — on a short page the restore clamps at the foot,
+  // which would re-read the anchor as the scan and lose the pane on the next
+  // turn. Same idea as the zoom guard on the scan sync above.
+  const anchorLock = useRef(0);
+
+  const readMobileAnchor = useCallback(() => {
+    const el = mobileMainRef.current;
+    if (!el) return null;
+    if (el.scrollTop < 24) return null;
+    const probe = el.getBoundingClientRect().top + 8;
+    for (const section of el.querySelectorAll<HTMLElement>('[data-reader-section]')) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= probe && rect.bottom > probe) return section.dataset.readerSection ?? null;
+    }
+    return null;
+  }, []);
 
   useEffect(() => {
     ocrRef.current?.scrollTo({ top: 0 });
     enRef.current?.scrollTo({ top: 0 });
-    mobileMainRef.current?.scrollTo({ top: 0 });
     setBarHidden(false);
   }, [r.currentPageId]);
+
+  // Keyed on the page that is actually RENDERED, not the one being navigated
+  // to: an uncached turn changes the id first and the content a fetch later,
+  // and anchoring against the outgoing page's layout puts you nowhere.
+  useLayoutEffect(() => {
+    const el = mobileMainRef.current;
+    if (!el) return;
+    // Read once: the two passes below must place the SAME pane.
+    const anchor = mobileAnchor.current;
+    anchorLock.current = Date.now() + 250;
+    const place = () => {
+      // No anchor, or the new page hasn't got that pane (plenty have no
+      // translation): start at the top, as before.
+      const target = anchor
+        ? el.querySelector<HTMLElement>(`[data-reader-section="${anchor}"]`)
+        : null;
+      if (target) {
+        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top;
+        el.scrollTop = Math.max(0, el.scrollTop + delta);
+      } else {
+        el.scrollTop = 0;
+      }
+      lastScrollY.current = el.scrollTop;
+    };
+    place();
+    // The title bar comes back on a turn and the new text settles a beat
+    // later; both change how far the column can scroll, so a position taken
+    // in this pass alone lands short of where it was asked to go.
+    const raf = requestAnimationFrame(place);
+    return () => cancelAnimationFrame(raf);
+  }, [r.currentPage.id]);
 
   /**
    * How much of the viewport the on-screen keyboard is covering. The layout
@@ -2499,14 +2555,40 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     else if (delta > 6) setBarHidden(true);
     else if (delta < -6) setBarHidden(false);
     lastScrollY.current = y;
-  }, []);
+    if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
+  }, [readMobileAnchor]);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.
+  // Carried by both layouts — a tablet in landscape gets the desktop grid, and
+  // for a while that meant a touch device with no gesture at all.
   const swipeRef = useRef<{ x: number; y: number; axis: null | 'x' | 'y' } | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length !== 1) { swipeRef.current = null; return; }
-    swipeRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, axis: null };
+    // Anything with its own use for a horizontal drag opts out by marking
+    // itself: a zoomed scan is being panned, and a slide-out panel is not the
+    // page you are reading.
+    if ((e.target as HTMLElement | null)?.closest('[data-no-page-swipe]')) {
+      swipeRef.current = null;
+      return;
+    }
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+    // A finger that lands in live selected text is working the selection, not
+    // turning a page — dragging a handle sideways across the 45px floor used
+    // to throw the selection away and jump to the next page. The pad covers
+    // the handles, which sit a little outside the text they belong to.
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+      const PAD = 24;
+      for (const rect of Array.from(selection.getRangeAt(0).getClientRects())) {
+        if (x >= rect.left - PAD && x <= rect.right + PAD && y >= rect.top - PAD && y <= rect.bottom + PAD) {
+          swipeRef.current = null;
+          return;
+        }
+      }
+    }
+    swipeRef.current = { x, y, axis: null };
   };
   const onTouchMove = (e: React.TouchEvent) => {
     const s = swipeRef.current;
@@ -2972,6 +3054,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
           className="relative flex min-h-0"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           {r.views.scan && (
             <section
@@ -2996,7 +3081,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   and its inline viewer against the nearest positioned parent:
                   the tiled canvas fills this box, over the scan, while the
                   translation stays readable beside it. */}
-              <div className={`relative flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
+              <div
+                className={`relative flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}
+                data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
+              >
                 <ScanViewer
                   page={r.currentPage}
                   book={r.book}
@@ -3167,6 +3255,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <div
               role="dialog"
               aria-labelledby="rv2-panel-title"
+              data-no-page-swipe=""
               className="absolute top-0 left-0 bottom-0 border-r z-40 flex flex-col rv2-slide-in-left"
               style={{
                 width: leftPanelWidth,
@@ -3323,9 +3412,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div
                 className="relative px-4 py-4"
                 style={{ height: 'min(66dvh, 520px)' }}
-                onTouchStart={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
-                onTouchMove={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
-                onTouchEnd={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
+                data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
               >
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
