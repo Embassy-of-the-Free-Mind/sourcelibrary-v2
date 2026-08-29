@@ -161,7 +161,12 @@ async function main() {
         visible: true,
         pages_count: { $gt: 0 },
         image_display: { $type: 'string' },
-        ...(FORCE ? {} : { image_card: { $exists: false } }),
+        // "has no usable card" is `not a string`, NOT `$exists: false`. A cover
+        // write CLEARS the pointer by setting it to null (buildCoverUpdate), and
+        // a null field still EXISTS — so `$exists: false` silently skipped every
+        // book whose cover had just moved, which is exactly the set that needs
+        // a fresh variant.
+        ...(FORCE ? {} : { image_card: { $not: { $type: 'string' } } }),
       };
 
   const cursor = books.find(query, {
