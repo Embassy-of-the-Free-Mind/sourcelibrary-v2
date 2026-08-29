@@ -47,6 +47,22 @@ function logGateHit(request: Request, pagesGated: number): void {
   }
 }
 
+/**
+ * Is this request an anonymous human the metered reader applies to?
+ * False whenever metering is off, or the caller is cron, signed in, or a
+ * trusted bot. Used by full-text surfaces (DTS document, /text) to extend
+ * their existing bot clamp to anonymous humans with the same free-sample
+ * math, without duplicating the exemption ladder.
+ */
+export async function isMeteredAnonRequest(request: Request): Promise<boolean> {
+  if (!meteredReaderEnabled()) return false;
+  if (hasCronAuth(request)) return false;
+  const session = await auth().catch(() => null);
+  if (session?.user) return false;
+  if (await isTrustedBot(request)) return false;
+  return true;
+}
+
 type PageDoc = Record<string, unknown> & {
   book_id?: string;
   page_number?: number | null;
