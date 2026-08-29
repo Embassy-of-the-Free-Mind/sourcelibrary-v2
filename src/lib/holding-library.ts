@@ -41,6 +41,12 @@ const AGGREGATORS = new Set([
   'e-rara',
   // Importer placeholder, not an institution (797 live books, measured 2026-08-29).
   'iiif source',
+  // Null-holder tokens: IA's own metadata says "unknown library" for many
+  // Google-scanned items, and old backfills wrote it verbatim (641 books,
+  // 156 live, measured 2026-08-29). "Copy: unknown library" asserts nothing —
+  // the honest citation omits the clause.
+  'unknown library',
+  'unknown',
 ]);
 
 /**

@@ -33,6 +33,12 @@ const SWEEP = 'holding-library-4361';
 // Sponsors that fund scanning but hold nothing — never a contributing_library.
 const JUNK_SPONSOR = /google|msn|microsoft|sloan foundation|internet archive/i;
 
+// Null-holder tokens IA itself serves ("unknown library" on many Google
+// scans). Writing one asserts a holder that isn't known; 18 slipped through
+// phase 4's first run before this guard (read side suppresses them too —
+// src/lib/holding-library.ts).
+const NULL_HOLDER = /^(unknown( library)?|n\/?a|none|-)$/i;
+
 // Aggregator values that should never stand as a holding library. Mirror of
 // the read-side list in src/lib/holding-library.ts (AGGREGATORS) — the
 // citation layer filters these on read; this sweep replaces them at the rows.
@@ -143,7 +149,7 @@ async function phase2(db) {
         // funder (Google, MSN, Sloan) is not a holder (#4361).
         const sponsor = typeof meta?.sponsor === 'string' && !JUNK_SPONSOR.test(meta.sponsor) ? meta.sponsor : null;
         const contributor = meta?.contributor || sponsor;
-        if (!contributor || typeof contributor !== 'string') { failed++; return; }
+        if (!contributor || typeof contributor !== 'string' || NULL_HOLDER.test(contributor.trim())) { failed++; return; }
 
         // IA's call_number is that holder's shelfmark for the copy — the other
         // half of the citation copy clause (#4360/#4361).
@@ -353,7 +359,7 @@ async function phase4(db) {
 
         // The item itself names no holder: leave the aggregator value (the
         // read-side citation layer suppresses it) and checkpoint the verdict.
-        if (!contributor || AGGREGATOR_VALUES.some(a => a.toLowerCase() === contributor.toLowerCase())) {
+        if (!contributor || NULL_HOLDER.test(contributor) || AGGREGATOR_VALUES.some(a => a.toLowerCase() === contributor.toLowerCase())) {
           noContributor++;
           if (!DRY_RUN) {
             await recordSweepAction(db, {

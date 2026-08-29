@@ -53,6 +53,14 @@ describe('copyClause — who actually holds the book', () => {
     expect(copyClause('', 'PH441')).toBeNull();
   });
 
+  it('refuses null-holder tokens — "Copy: unknown library" asserts nothing', () => {
+    // IA metadata itself says "unknown library" on many Google scans, and old
+    // backfills wrote it verbatim (641 books measured 2026-08-29).
+    for (const tok of ['unknown library', 'Unknown', 'IIIF Source']) {
+      expect(copyClause(tok, 'shelf-1')).toBeNull();
+    }
+  });
+
   it('passes an unmapped institution through as-is', () => {
     expect(copyClause('John Rylands Library, University of Manchester')?.statement)
       .toBe('Copy: John Rylands Library, University of Manchester');
