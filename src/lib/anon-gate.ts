@@ -46,8 +46,11 @@ function logGateHit(request: Request, feature: string): void {
 // Same list withApiAuth uses — UA substrings that get the SEO-crawler bypass so
 // indexing is never walled. Spoofable, but the worst case is a scraper getting
 // the same access as a logged-out human.
+// NOTE: `google-extended` is deliberately NOT here (#4366) — it is Google's
+// AI-TRAINING token, not a search crawler, and api-auth.ts already excludes it
+// for that reason. This list drifted to include it; the two now agree.
 const VERIFIED_BOT_UAS = [
-  'googlebot', 'google-extended', 'bingbot', 'msnbot',
+  'googlebot', 'bingbot', 'msnbot',
   'duckduckbot', 'applebot', 'mojeekbot',
 ];
 

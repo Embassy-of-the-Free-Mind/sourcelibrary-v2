@@ -13,6 +13,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { isBookReadable } from '@/lib/book-access';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { API_LIMITS } from '@/lib/api-limits';
 
 const BASE = 'https://sourcelibrary.org';
 const MAX_TERMS = 20;
@@ -31,6 +33,12 @@ function corsHeaders() {
 }
 
 export async function GET(request: NextRequest, { params }: RouteContext) {
+  // Public and keyless by design, but not unmetered (#4366): a light
+  // per-IP ceiling far above any reader or viewer, low enough to blunt scripts.
+  const _rl = checkRateLimit({ name: 'iiif-read', limit: API_LIMITS.publicReads.iiifPerMinute, windowSeconds: 60 }, getClientIp(request));
+  if (!_rl.allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(_rl.retryAfter) } });
+  }
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);

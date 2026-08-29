@@ -50,6 +50,8 @@ import { pickLimit } from '@/lib/api-budget';
 import { getPagesServedLast24h } from '@/lib/api-usage';
 import { isTrustedBot } from '@/lib/bot-gate';
 import { verifyImageProxyToken } from '@/lib/image-proxy-auth';
+import { API_LIMITS } from '@/lib/api-limits';
+import { checkKeyRequestRate } from '@/lib/dataset/api-keys';
 
 const IMAGE_ROUTE = 'image';
 
@@ -57,8 +59,8 @@ const IMAGE_ROUTE = 'image';
 // Anon 500 mirrors the /text anon budget (#2983): roughly a book a day of
 // headroom for a one-off script, far under mass extraction (the day-one
 // observed bulk puller did 3,000+). Env-overridable for instant tuning.
-const IMAGE_ANON_PER_DAY = Number(process.env.IMAGE_ANON_PAGES_PER_DAY || 500);
-const IMAGE_SESSION_PER_DAY = Number(process.env.IMAGE_SESSION_PAGES_PER_DAY || 1000);
+const IMAGE_ANON_PER_DAY = Number(process.env.IMAGE_ANON_PAGES_PER_DAY || API_LIMITS.anon.imagesPerDay);
+const IMAGE_SESSION_PER_DAY = Number(process.env.IMAGE_SESSION_PAGES_PER_DAY || API_LIMITS.session.imagesPerDay);
 
 // Sec-Fetch-Dest values a real browser uses for subresource/navigation image
 // loads. 'empty' (fetch/XHR) is deliberately absent — the site's own client JS
@@ -156,6 +158,14 @@ export async function checkImageAccess(request: NextRequest): Promise<ImageAcces
         userId: keyDoc.user_id,
         apiKeyTier: keyDoc.tier,
       };
+      // Per-key requests/minute applies here too (same rule as the text APIs).
+      const rpm = checkKeyRequestRate(keyDoc as ApiKeyDoc);
+      if (!rpm.allowed && enforceImageGate()) {
+        return {
+          allowed: false, status: 429, identity, shouldLog: true,
+          reason: 'key_rate_limit',
+        };
+      }
       const { limit } = pickLimit(identity);
       if (!Number.isFinite(limit)) {
         return { allowed: true, status: 200, identity, shouldLog: true };
@@ -215,6 +225,13 @@ export async function checkImageAccess(request: NextRequest): Promise<ImageAcces
 
 /** 429 body: what happened, and the funnel — key, sign-in, licensing. */
 export function imageBudgetExceededBody(decision: ImageAccessDecision) {
+  if (decision.reason === 'key_rate_limit') {
+    return {
+      error: 'Your API key\'s requests-per-minute limit was reached. Slow your request rate — the daily budget is unaffected. Higher rates come with paid tiers: https://sourcelibrary.org/licensing.',
+      next_steps: { upgrade: 'https://sourcelibrary.org/licensing' },
+      retry_after_seconds: 60,
+    };
+  }
   const next =
     decision.identity.kind === 'apikey'
       ? `Your free Explorer key is capped at ${decision.limit} images/day. Paid tiers are uncapped — see https://sourcelibrary.org/licensing.`

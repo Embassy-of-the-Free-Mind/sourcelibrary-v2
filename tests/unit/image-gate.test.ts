@@ -13,7 +13,10 @@ import type { NextRequest } from 'next/server';
  */
 
 vi.mock('@/lib/auth', () => ({ auth: vi.fn(async () => null) }));
-vi.mock('@/lib/dataset/api-keys', () => ({ validateApiKey: vi.fn(async () => null) }));
+vi.mock('@/lib/dataset/api-keys', () => ({
+  validateApiKey: vi.fn(async () => null),
+  checkKeyRequestRate: vi.fn(() => ({ allowed: true })),
+}));
 vi.mock('@/lib/bot-gate', () => ({ isTrustedBot: vi.fn(async () => false) }));
 vi.mock('@/lib/api-usage', () => ({
   getPagesServedLast24h: vi.fn(async () => 0),
@@ -126,7 +129,7 @@ describe('API keys — the sanctioned, attributable bulk path', () => {
 
   it('free Explorer keys hit their tier cap with a 429 and an upgrade pitch', async () => {
     vi.mocked(validateApiKey).mockResolvedValue({ _id: 'k1', user_id: 'u1', tier: 'explorer' } as never);
-    vi.mocked(getPagesServedLast24h).mockResolvedValue(100);
+    vi.mocked(getPagesServedLast24h).mockResolvedValue(2000);
     const decision = await checkImageAccess(req({ headers: { authorization: 'Bearer sl_data_x' } }));
     expect(decision.allowed).toBe(false);
     expect(decision.status).toBe(429);

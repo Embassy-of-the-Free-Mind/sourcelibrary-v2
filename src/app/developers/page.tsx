@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
+import { API_LIMITS } from '@/lib/api-limits';
 import toolManifest from '../../../scripts/audit/mcp-directory-contract.tools.json';
 import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 
@@ -149,6 +150,60 @@ export default function DevelopersPage() {
             (anonymous scripts are capped per day; paid tiers are uncapped — see the rate card on the licensing page).
           </p>
           <ApiKeyRequestForm />
+        </div>
+      </section>
+
+      {/* Published limits — rendered from src/lib/api-limits.ts, the single
+          source of truth the enforcement code also reads (#4366). */}
+      <section className="mb-16">
+        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
+          <h2 className="text-lg font-semibold text-primary mb-3">Rate limits &amp; daily budgets</h2>
+          <p className="text-secondary text-sm mb-4">
+            Budgets are rolling 24-hour windows across the text and quote tools; images have their own
+            equal pool. Identity is always an upgrade: a free key out-ranks staying anonymous.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="text-secondary border-b border-border-light">
+                  <th className="py-2 pr-4 font-medium">Caller</th>
+                  <th className="py-2 pr-4 font-medium">Pages / day</th>
+                  <th className="py-2 pr-4 font-medium">Images / day</th>
+                  <th className="py-2 font-medium">Requests</th>
+                </tr>
+              </thead>
+              <tbody className="text-primary">
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Anonymous</td>
+                  <td className="py-2 pr-4">{API_LIMITS.anon.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.anon.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.anon.requestsPerHour}/hour</td>
+                </tr>
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Signed in (free)</td>
+                  <td className="py-2 pr-4">{API_LIMITS.session.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.session.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.session.requestsPerHour.toLocaleString()}/hour</td>
+                </tr>
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Free API key</td>
+                  <td className="py-2 pr-4">{API_LIMITS.explorerKey.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.explorerKey.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.explorerKey.requestsPerMinute}/minute</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4">Paid tiers</td>
+                  <td className="py-2 pr-4">Uncapped</td>
+                  <td className="py-2 pr-4">Uncapped</td>
+                  <td className="py-2">60–1,000/minute by tier</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-secondary text-xs mt-3">
+            Your own meter: <code>GET /api/dataset/v1/usage</code> with your key. Verified search crawlers
+            and user-directed assistant fetches are never limited.
+          </p>
         </div>
       </section>
 
