@@ -15,7 +15,7 @@
   ],
   "generated_from": "full-scan enumeration of bookstore.books",
   "generated_at": "2026-08-18",
-  "count": 423,
+  "count": 426,
   "retired": [
     "acquisition_priority",
     "acquisition_wave",
@@ -254,6 +254,7 @@
     "ia_identifier",
     "id",
     "identifier",
+    "image_card",
     "image_display",
     "image_extraction_status",
     "image_full",
