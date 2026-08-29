@@ -18,6 +18,8 @@ const AGGREGATOR_VALUES = [
   'hathitrust', 'project gutenberg', 'wikimedia commons', 'wikisource',
   'e-rara (swiss electronic library)', 'e-rara',
   'iiif source',
+  // Null-holder tokens IA metadata itself serves — suppressed read-side.
+  'unknown library', 'unknown',
 ];
 
 const client = await MongoClient.connect(process.env.MONGODB_URI);
