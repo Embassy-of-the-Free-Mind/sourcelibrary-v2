@@ -935,7 +935,10 @@ async function searchVisual(db: any, query: string, limit: number, yearRange?: {
     // Search Supabase CLIP embeddings
     const { data, error } = await supabase.rpc('match_clip_text', {
       query_embedding: embedding,
-      match_threshold: 0.22,
+      // 0.22 → 0.26 (#4338): below ~0.26 CLIP hands back plausible-looking
+      // junk (unrelated instruments, screenshots) that the client blends into
+      // the image grid as if it matched the query.
+      match_threshold: 0.26,
       match_count: limit * 2,
     });
     if (error || !data) return { results: [], total: 0 };

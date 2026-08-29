@@ -408,18 +408,23 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         const existingIds = new Set(imageResults.map(i => `${i.pageId}-${i.detectionIndex}`));
         const newImages: GalleryItem[] = [];
         // Search all image terms in parallel
+        const supplementTerms = imgTerms.slice(0, 3);
         const results = await Promise.allSettled(
-          imgTerms.slice(0, 3).map(term =>
+          supplementTerms.map(term =>
             galleryApi.list({ query: term, limit: 4, maxPerBook: 1 })
           )
         );
-        for (const r of results) {
+        for (const [i, r] of results.entries()) {
           if (r.status !== 'fulfilled') continue;
           for (const item of (r.value.items || [])) {
             const key = `${item.pageId}-${item.detectionIndex}`;
             if (existingIds.has(key)) continue;
             existingIds.add(key);
-            newImages.push(item);
+            // Carry the LLM term that fetched this image so the card can label
+            // it "related · <term>". Unlabeled, these read as direct matches —
+            // a user searching "ancient egyptian" saw tarot layouts because the
+            // expansion suggested "book of thoth" (#4338).
+            newImages.push({ ...item, aiTerm: supplementTerms[i] } as GalleryItem);
           }
         }
         if (newImages.length > 0) {
@@ -494,7 +499,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           // Map unified gallery + visual + artwork results to GalleryItem shape
           // Merge all image sources, deduped by id
           const galleryResults = data.gallery?.results || [];
-          const visualResults = data.visual?.results || [];
+          // CLIP results are approximate by nature — tag them so the card can
+          // say "visual match" instead of presenting an embedding neighbor as
+          // if it matched the query text (#4338: tarot cards under "ancient
+          // egyptian" read as broken search when unlabeled).
+          const visualResults = (data.visual?.results || []).map((v: any) => ({ ...v, visualMatch: true }));
           const artworkResults = (data as any).artworks?.results || [];
           const seenImageIds = new Set<string>();
           const allImageResults = [...galleryResults, ...visualResults];
@@ -516,6 +525,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               author: '',
               description: g.description || '',
               type: g.type,
+              visualMatch: (g as any).visualMatch || undefined,
             } as GalleryItem);
           }
           // Merge artwork results as image cards. With lexical recall (#2735) a
@@ -2292,8 +2302,14 @@ function IndexResultCard({ result, query, tenant }: { result: IndexSearchResult;
   );
 }
 
-function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null }; query: string; large?: boolean; tenant?: string }) {
+function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null; aiTerm?: string; visualMatch?: boolean }; query: string; large?: boolean; tenant?: string }) {
   const [imageError, setImageError] = useState(false);
+
+  // Provenance chip: images that arrived via LLM term expansion or CLIP
+  // similarity are honest neighbors, not matches — say so on the card (#4338).
+  const provenance = item.aiTerm
+    ? `related · ${item.aiTerm}`
+    : item.visualMatch ? 'visual match' : null;
 
   // Use pre-generated thumbnail/extracted URL first (publicly accessible),
   // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
@@ -2327,6 +2343,11 @@ function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & {
           <div className="absolute inset-0 flex items-center justify-center">
             <ImageIcon className="w-8 h-8 text-border-medium" />
           </div>
+        )}
+        {provenance && (
+          <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/55 text-[10px] leading-tight text-white/90 backdrop-blur-sm">
+            {provenance}
+          </span>
         )}
       </div>
       <div className="p-2.5">
