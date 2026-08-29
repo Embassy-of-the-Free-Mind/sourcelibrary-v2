@@ -2413,16 +2413,72 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     }
   }, []);
 
-  // Mobile: one scroller for the stacked panes. Reset it on a page turn so a
-  // new page always starts at the top, and drive paging from a horizontal swipe.
+  // Mobile: one scroller for the stacked panes, and paging driven from a
+  // horizontal swipe.
   const mobileMainRef = useRef<HTMLElement>(null);
+
+  /**
+   * Which stacked pane you were reading when the page turned. Resetting the
+   * column to the top on every turn meant a swipe taken halfway down a
+   * translation landed you back on the next page's scan, so reading a
+   * translation across a page break cost a scroll past the facsimile every
+   * time. Turning a page from inside a pane now keeps you in that pane.
+   */
+  const mobileAnchor = useRef<string | null>(null);
+  // Restoring the anchor scrolls the column, and that scroll must not be read
+  // back as a reading move — on a short page the restore clamps at the foot,
+  // which would re-read the anchor as the scan and lose the pane on the next
+  // turn. Same idea as the zoom guard on the scan sync above.
+  const anchorLock = useRef(0);
+
+  const readMobileAnchor = useCallback(() => {
+    const el = mobileMainRef.current;
+    if (!el) return null;
+    if (el.scrollTop < 24) return null;
+    const probe = el.getBoundingClientRect().top + 8;
+    for (const section of el.querySelectorAll<HTMLElement>('[data-reader-section]')) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= probe && rect.bottom > probe) return section.dataset.readerSection ?? null;
+    }
+    return null;
+  }, []);
 
   useEffect(() => {
     ocrRef.current?.scrollTo({ top: 0 });
     enRef.current?.scrollTo({ top: 0 });
-    mobileMainRef.current?.scrollTo({ top: 0 });
     setBarHidden(false);
   }, [r.currentPageId]);
+
+  // Keyed on the page that is actually RENDERED, not the one being navigated
+  // to: an uncached turn changes the id first and the content a fetch later,
+  // and anchoring against the outgoing page's layout puts you nowhere.
+  useLayoutEffect(() => {
+    const el = mobileMainRef.current;
+    if (!el) return;
+    // Read once: the two passes below must place the SAME pane.
+    const anchor = mobileAnchor.current;
+    anchorLock.current = Date.now() + 250;
+    const place = () => {
+      // No anchor, or the new page hasn't got that pane (plenty have no
+      // translation): start at the top, as before.
+      const target = anchor
+        ? el.querySelector<HTMLElement>(`[data-reader-section="${anchor}"]`)
+        : null;
+      if (target) {
+        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top;
+        el.scrollTop = Math.max(0, el.scrollTop + delta);
+      } else {
+        el.scrollTop = 0;
+      }
+      lastScrollY.current = el.scrollTop;
+    };
+    place();
+    // The title bar comes back on a turn and the new text settles a beat
+    // later; both change how far the column can scroll, so a position taken
+    // in this pass alone lands short of where it was asked to go.
+    const raf = requestAnimationFrame(place);
+    return () => cancelAnimationFrame(raf);
+  }, [r.currentPage.id]);
 
   /**
    * How much of the viewport the on-screen keyboard is covering. The layout
@@ -2499,7 +2555,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     else if (delta > 6) setBarHidden(true);
     else if (delta < -6) setBarHidden(false);
     lastScrollY.current = y;
-  }, []);
+    if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
+  }, [readMobileAnchor]);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.

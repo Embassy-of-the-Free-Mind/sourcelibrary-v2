@@ -586,7 +586,12 @@ export function ScanViewer({
         // Capture touch only while the scan is interactive, so a drag over a
         // fitted page still scrolls the mobile column and swipes pages.
         touchAction: zoomed || lensOn ? 'none' : 'auto',
-        overscrollBehavior: 'contain',
+        // Only while it can actually be panned. `overflow: hidden` still makes
+        // this a scroll container, so containing the overscroll on a fitted
+        // page swallowed every vertical drag over the scan instead of passing
+        // it up to the mobile column — and the scan is most of a phone screen,
+        // so the page read as unscrollable until you found the text below it.
+        overscrollBehavior: zoomed ? 'contain' : 'auto',
       }}
       onWheel={onWheel}
       onPointerDown={onPointerDown}
