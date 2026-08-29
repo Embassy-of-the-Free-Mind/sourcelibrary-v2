@@ -1013,7 +1013,14 @@ export async function proxy(request: NextRequest) {
   // This in-memory limiter only applies to bots as a defense-in-depth layer.
   // It's per-instance so not reliable, but cheap to keep for bots.
   if (pathname.startsWith('/api/') && !pathname.startsWith('/api/cron/')) {
-    if (looksLikeBot(request)) {
+    // A dataset-key holder is an identified partner, not a bot — their custom
+    // clients often carry odd UAs that trip looksLikeBot, and the 10/60s
+    // limiter would throttle sanctioned bulk use (#4356). Cheap prefix check
+    // only (no DB at the edge): a FORGED header skips this limiter but the
+    // key is validated at the route, where an invalid key falls back to the
+    // stricter anonymous caps — so forging buys nothing.
+    const hasDatasetKey = (request.headers.get('authorization') || '').startsWith('Bearer sl_data_');
+    if (!hasDatasetKey && looksLikeBot(request)) {
       const ip = getClientIp(request);
       logBotAccess(request, 'api-bot');
       if (!checkLimit(`${ip}:bot`, 10, 60)) {

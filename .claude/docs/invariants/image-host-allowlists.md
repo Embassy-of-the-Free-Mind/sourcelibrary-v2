@@ -70,4 +70,8 @@ curl -sI https://sourcelibrary.org/book/<slug> | grep -o "img-src[^;]*"
 3. Never assume the two lists agree — read them, as `isProxyableUrl()` in `page-image-url.ts` does.
 4. `next.config.ts` `images.remotePatterns` is a third list, already guarded: `tests/unit/csp-image-hosts.test.ts` asserts every remotePatterns host is covered by `img-src`.
 
-Related: `content-urls-and-libraries.md` (provider prefixes), `image-quality-and-bboxes.md` (crops and bboxes), `text-helpers-and-exports.md` (the export surfaces that consume these URLs).
+## Server-side consumers must sign their /api/image fetches (#4356)
+
+`/api/image` and `/api/crop-image` budget anonymous non-browser traffic (`src/lib/image-gate.ts`). A server-side consumer of the proxy — an export, a pipeline step, anything handing a proxy URL to a worker — is exactly "anonymous non-browser" unless it carries the internal HMAC token (`itk`, `src/lib/image-proxy-auth.ts`). The `images.fetchBuffer/fetchBase64/fetchBufferWithMimeType` helpers sign automatically; a new consumer using bare `fetch()` against the proxy will work in testing (under 500/day) and then starve mid-batch. Fetch through the helpers, or call `signImageProxyUrl()` yourself.
+
+Related: `content-urls-and-libraries.md` (provider prefixes), `image-quality-and-bboxes.md` (crops and bboxes), `text-helpers-and-exports.md` (the export surfaces that consume these URLs), `crawler-access-gate.md` (the image-proxy budget ladder).
