@@ -285,7 +285,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
-  srcOverride, altOverride,
+  srcOverride, nativeSrcOverride, altOverride,
 }: {
   page: Page;
   book: Book;
@@ -306,13 +306,16 @@ export function ScanViewer({
    * this synthetic image does not have.
    */
   srcOverride?: string;
+  /** Higher-resolution companion to srcOverride, swapped in past 1.5× zoom
+   *  and in the fullscreen view — same contract as display vs native. */
+  nativeSrcOverride?: string;
   /** Alt text to pair with srcOverride — the default alt describes a scan. */
   altOverride?: string;
 }) {
   const t = getReaderStrings(useLocale()).panes;
   const resolved = resolveScanUrls(page);
   const display = srcOverride ?? resolved.display;
-  const native = srcOverride ?? resolved.native;
+  const native = nativeSrcOverride ?? srcOverride ?? resolved.native;
   const localRef = useRef<HTMLDivElement>(null);
   const containerRef = scrollRef ?? localRef;
   const spacerRef = useRef<HTMLDivElement>(null);

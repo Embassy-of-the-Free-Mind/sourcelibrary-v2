@@ -1761,6 +1761,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           languages={languages}
           collectionType={collection.collection_type}
           provider={provider}
+          defaultView={(collection as { all_books_default_view?: 'grid' | 'list' }).all_books_default_view}
         />
       </div>
       <SignUpCTA />

@@ -1635,7 +1635,7 @@ function ScanControls({
  * link to the bare image file: that navigated away from the library entirely
  * and left nothing to come back from.
  */
-function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }: {
+function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, srcOverride, altOverride }: {
   page: Page;
   book: Book;
   onClose: () => void;
@@ -1643,6 +1643,9 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
   onNext: () => void;
   hasPrev: boolean;
   hasNext: boolean;
+  /** Witness photo stand-in (#4350) — fullRes, so hand it the 4000px tier. */
+  srcOverride?: string;
+  altOverride?: string;
 }) {
   const strings = getReaderStrings(useLocale());
   const t = strings.toolbar;
@@ -1695,7 +1698,7 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
           className={navBtn} style={{ color: onInk(0.75) }}><X size={17} /></button>
       </div>
       <div className="flex-1 min-h-0 px-3 py-3">
-        <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes />
+        <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes srcOverride={srcOverride} altOverride={altOverride} />
       </div>
       <div className="shrink-0 flex items-center justify-center gap-1 h-[46px]" style={{ borderTop: `1px solid ${onInk(0.12)}` }}>
         <button type="button" aria-label={strings.panes.zoomOut} disabled={zoom <= 1}
@@ -2578,10 +2581,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const witness = !scan.display && witnessPhotos.length > 0
     ? witnessPhotos[((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length]
     : null;
-  // Through the sharp resizer, not raw: CDLI originals run to ~24MB. The
-  // caption's CDLI link is the road to full resolution.
+  // Through the sharp resizer, not raw: CDLI originals run to ~24MB. Two
+  // tiers, same contract as display vs native — 1600px at rest, 4000px once
+  // the reader zooms past 1.5× or goes fullscreen. The caption's CDLI link
+  // remains the road to the untouched original.
   const witnessSrc = witness?.photo_url
     ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=1600&q=80`
+    : undefined;
+  const witnessNativeSrc = witness?.photo_url
+    ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=4000&q=85`
     : undefined;
   const ocrCorpusInfo = pageTextCorpus(r.currentPage);
   const translationCorpusInfo = translationCorpus(r.currentPage);
@@ -2969,7 +2977,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     onZoomReset={() => changeZoom(1)}
                     lensOn={lensOn}
                     onToggleLens={() => setLensOn(v => !v)}
-                    onExpand={scan.native ? () => setLightbox(true) : undefined}
+                    onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
                   />
                 }
               >
@@ -2989,6 +2997,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
                   srcOverride={witnessSrc}
+                  nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                 />
                 {witness && (
@@ -3297,7 +3306,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   onZoomReset={() => changeZoom(1)}
                   lensOn={lensOn}
                   onToggleLens={() => setLensOn(v => !v)}
-                  onExpand={scan.native ? () => setLightbox(true) : undefined}
+                  onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
                 />
               </div>
               {/* Zoom/pan and the lens need the touch stream, so keep those
@@ -3312,6 +3321,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
                   srcOverride={witnessSrc}
+                  nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                 />
                 {witness && (
@@ -3558,6 +3568,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           onNext={r.goNext}
           hasPrev={!!prevPage}
           hasNext={!!nextPage}
+          srcOverride={witnessNativeSrc}
+          altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
         />
       )}
     </div>
