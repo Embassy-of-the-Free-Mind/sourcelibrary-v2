@@ -2572,7 +2572,23 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       swipeRef.current = null;
       return;
     }
-    swipeRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, axis: null };
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+    // A finger that lands in live selected text is working the selection, not
+    // turning a page — dragging a handle sideways across the 45px floor used
+    // to throw the selection away and jump to the next page. The pad covers
+    // the handles, which sit a little outside the text they belong to.
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+      const PAD = 24;
+      for (const rect of Array.from(selection.getRangeAt(0).getClientRects())) {
+        if (x >= rect.left - PAD && x <= rect.right + PAD && y >= rect.top - PAD && y <= rect.bottom + PAD) {
+          swipeRef.current = null;
+          return;
+        }
+      }
+    }
+    swipeRef.current = { x, y, axis: null };
   };
   const onTouchMove = (e: React.TouchEvent) => {
     const s = swipeRef.current;
