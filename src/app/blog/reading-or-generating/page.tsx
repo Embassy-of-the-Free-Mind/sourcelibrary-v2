@@ -177,6 +177,30 @@ export default function ReadingOrGeneratingPage() {
           </table>
         </div>
 
+        <div className="flex flex-wrap gap-3 mb-6">
+          <a href="/data/corpus/books.csv" download
+             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-warm border border-border-light text-sm text-secondary hover:text-primary transition-colors">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+            </svg>
+            books.csv <span className="text-muted font-mono text-xs">2,135 rows &middot; 1.5&nbsp;MB</span>
+          </a>
+          <a href="/data/corpus/pages-sample.csv" download
+             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-warm border border-border-light text-sm text-secondary hover:text-primary transition-colors">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+            </svg>
+            pages-sample.csv <span className="text-muted font-mono text-xs">18,301 rows &middot; 2.3&nbsp;MB</span>
+          </a>
+        </div>
+
+        <p className="text-muted text-sm leading-relaxed mb-4">
+          <span className="text-secondary">books.csv</span> is the complete book table. <span className="text-secondary">pages-sample.csv</span>{' '}
+          is one page in forty, spanning every book and length &mdash; the full 779,409-row table is 160&nbsp;MB and
+          lives in the repo rather than here. Both are CC0; the underlying scans belong to the libraries credited
+          in the <span className="font-mono text-xs">provider</span> column.
+        </p>
+
         <p className="text-muted text-sm leading-relaxed mb-12">
           Scripts:{' '}
           <span className="font-mono text-xs">build-corpus-dataset.mjs</span>,{' '}
@@ -185,6 +209,101 @@ export default function ReadingOrGeneratingPage() {
           <span className="font-mono text-xs">ocr-self-agreement.mjs</span>,{' '}
           <span className="font-mono text-xs">ocr-quality-screen.mjs</span> &mdash; all under{' '}
           <span className="font-mono text-xs">scripts/eval/</span>.
+        </p>
+
+
+        {/* --- EXPLORING THE CORPUS --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          What the corpus looks like
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Before any of the quality questions, the tables describe the collection itself. These 2,135 books are the
+          ones our pipeline happened to re-read, so they are not a random sample of the library &mdash; but they are
+          a large and reasonably varied slice of it, and the shape is worth seeing.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="border border-border-light rounded-xl overflow-hidden">
+            <div className="bg-warm px-4 py-2 border-b border-border-light">
+              <span className="text-xs font-mono uppercase tracking-wider text-muted">By century</span>
+            </div>
+            <div className="px-4 py-3 font-mono text-xs text-secondary leading-relaxed">
+              <div>1400s &nbsp;103 &nbsp;<span className="text-accent-rust">████</span></div>
+              <div>1500s &nbsp;491 &nbsp;<span className="text-accent-rust">████████████████████</span></div>
+              <div>1600s &nbsp;466 &nbsp;<span className="text-accent-rust">███████████████████</span></div>
+              <div>1700s &nbsp;517 &nbsp;<span className="text-accent-rust">█████████████████████</span></div>
+              <div>1800s &nbsp;319 &nbsp;<span className="text-accent-rust">█████████████</span></div>
+              <div>1900s &nbsp;181 &nbsp;<span className="text-accent-rust">███████</span></div>
+            </div>
+          </div>
+          <div className="border border-border-light rounded-xl overflow-hidden">
+            <div className="bg-warm px-4 py-2 border-b border-border-light">
+              <span className="text-xs font-mono uppercase tracking-wider text-muted">By language</span>
+            </div>
+            <div className="px-4 py-3 font-mono text-xs text-secondary leading-relaxed">
+              <div>Latin &nbsp;&nbsp;&nbsp;823</div>
+              <div>German &nbsp;&nbsp;456</div>
+              <div>English &nbsp;298</div>
+              <div>French &nbsp;&nbsp;105</div>
+              <div>Tibetan &nbsp;&nbsp;91</div>
+              <div>Greek &nbsp;&nbsp;&nbsp;&nbsp;65</div>
+              <div className="text-muted">+ Chinese, Italian, Sanskrit, Arabic, Hebrew&hellip;</div>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          A median book is <strong>240 pages</strong>; the longest is 4,198. Half were printed between{' '}
+          <strong>1529 and 1893</strong>, with the median at 1688. The scans come mostly from the Bibliotheca
+          Philosophica Hermetica (662 books), the Internet Archive (548) and e-rara (405).
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">How much text is on a page?</h3>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          Across 732,037 transcribed pages the median is <strong>272 words</strong>. But the figure moves with the
+          language, and here the numbers need a warning before they are read:
+        </p>
+
+        <div className="overflow-x-auto mb-4">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border-light">
+                <th className="text-left py-2 pr-4 font-mono text-xs uppercase tracking-wider text-muted font-medium">Language</th>
+                <th className="text-right py-2 pr-4 font-mono text-xs uppercase tracking-wider text-muted font-medium">Median words/page</th>
+                <th className="text-right py-2 font-mono text-xs uppercase tracking-wider text-muted font-medium">Pages measured</th>
+              </tr>
+            </thead>
+            <tbody className="text-secondary">
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Hebrew</td><td className="py-2 pr-4 text-right font-mono">393</td><td className="py-2 text-right font-mono text-muted">9,291</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">English</td><td className="py-2 pr-4 text-right font-mono">332</td><td className="py-2 text-right font-mono text-muted">91,892</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Latin</td><td className="py-2 pr-4 text-right font-mono">303</td><td className="py-2 text-right font-mono text-muted">271,959</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">Greek</td><td className="py-2 pr-4 text-right font-mono">288</td><td className="py-2 text-right font-mono text-muted">38,044</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">German</td><td className="py-2 pr-4 text-right font-mono">252</td><td className="py-2 text-right font-mono text-muted">146,802</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4">French</td><td className="py-2 pr-4 text-right font-mono">238</td><td className="py-2 text-right font-mono text-muted">40,638</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4 text-muted">Tibetan <span className="text-xs">&dagger;</span></td><td className="py-2 pr-4 text-right font-mono text-muted">203</td><td className="py-2 text-right font-mono text-muted">21,864</td></tr>
+              <tr className="border-b border-border-light"><td className="py-2 pr-4 text-muted">Sanskrit <span className="text-xs">&dagger;</span></td><td className="py-2 pr-4 text-right font-mono text-muted">111</td><td className="py-2 text-right font-mono text-muted">19,399</td></tr>
+              <tr><td className="py-2 pr-4 text-muted">Chinese <span className="text-xs">&dagger;</span></td><td className="py-2 pr-4 text-right font-mono text-muted">68</td><td className="py-2 text-right font-mono text-muted">8,804</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="bg-warm border border-border-light rounded-xl p-6 mb-8">
+          <p className="text-xs font-mono uppercase tracking-wider text-muted mb-3">&dagger; Do not compare the last three</p>
+          <p className="text-secondary leading-relaxed">
+            A &ldquo;word&rdquo; here is a run of letters between spaces. Chinese does not put spaces between words,
+            so a densely printed Chinese page counts as 68 of them &mdash; that is a fact about the tokenizer, not
+            about the page. Tibetan and Sanskrit are distorted the same way. The honest reading is that these three
+            rows are <em>not measured</em> rather than low, which is exactly the kind of silent artefact the rest of
+            this note is about.
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-12">
+          By century the figure is flatter than you might expect &mdash; 272 in the 1500s, 274 in the 1600s, 254 in
+          the 1700s, 287 in the 1900s. Page size, type size and margins changed enormously over those four hundred
+          years, and the amount of text on a page barely moved.
         </p>
 
         {/* --- WALKTHROUGH --- */}
