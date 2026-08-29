@@ -47,6 +47,17 @@ export interface Page {
   // Canonical type: WordAlignmentData in src/lib/word-alignment.ts.
   word_alignment?: import('@/lib/word-alignment').WordAlignmentData;
 
+  // Metered reader (#4357): set by the server (free-preview.ts stripGatedPage)
+  // on pages served to anonymous readers beyond the book's free sample — the
+  // text fields are absent and the reader shows a sign-in pane instead of the
+  // "not yet transcribed" empty state. Never stored on the pages collection.
+  gated?: boolean;
+  gate?: { free_pages: number; pages_count: number; sign_in_url: string };
+
+  // SEO: demand-proven pages opened to indexing (#2688); always in the free
+  // sample when the metered reader is on.
+  seo_indexable?: boolean;
+
   // Page classification from OCR (title-page, frontispiece, toc, etc.)
   page_type?: string;
 
