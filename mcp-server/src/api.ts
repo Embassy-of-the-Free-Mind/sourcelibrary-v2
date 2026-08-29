@@ -554,6 +554,15 @@ export async function getQuote(args: {
     );
   }
 
+  // Marginalia (#4362): quote.marginalia_note carries the full guidance; the
+  // tip makes sure it is read rather than passed over.
+  if (quote?.contains_marginalia === true) {
+    tips.push(
+      "This page carries MARGINAL text (<margin>…</margin>). A marginal note exists only in this " +
+        "physical copy — when quoting from one, say 'marginal annotation' and follow quote.marginalia_note.",
+    );
+  }
+
   return {
     ...withCitationLink(result),
     tip: tips.join("\n\n"),

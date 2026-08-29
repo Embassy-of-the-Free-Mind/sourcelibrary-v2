@@ -84,6 +84,33 @@ export const SOURCE_COLUMN_NOTE =
 export const SOURCE_COLUMN_PROVENANCE = 'source-column';
 
 /**
+ * Does this quotable text contain marginalia? (#4362)
+ *
+ * `<margin>` is a real page mark, not an editorial wrapper — its content stays
+ * in quotable text (quote-and-snippet-integrity.md) in two forms: the tag the
+ * OCR prompts emit, and the `[[margin: …]]` bracket form NotesRenderer also
+ * normalizes. A marginal note is COPY-SPECIFIC evidence: it exists in exactly
+ * one physical copy, so a quote drawn from it needs the copy clause
+ * (citation.copy, #4360) and must say it is marginal — a citation that treats
+ * a reader's annotation as the printed body text misattributes the words.
+ */
+export function containsMarginalia(text: string): boolean {
+  return /<margin[\s>]/.test(text) || /\[\[margin:/.test(text);
+}
+
+/**
+ * What a caller has to be told when the quoted page carries marginal text.
+ * Spelled out because agents act on these sentences.
+ */
+export const MARGINALIA_NOTE =
+  'This page carries marginal text (marked <margin>…</margin> or [[margin: …]]). Marginalia are '
+  + 'COPY-SPECIFIC: a marginal note exists only in the one physical copy that was scanned, unlike '
+  + 'the printed body text, which any copy of the edition carries. When quoting from a marginal '
+  + 'note, say so ("marginal annotation"), and cite the holding library named in citation.copy when '
+  + 'present — without the copy, the note cannot be located by a reader. Marginal text may be in a '
+  + 'different hand, language, or century than the printed text.';
+
+/**
  * The quotable text of a page, or null when the page holds nothing citable.
  *
  * Emptiness is measured AFTER wrapper stripping on purpose: a page whose

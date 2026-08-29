@@ -5,7 +5,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { resolveQuoteText, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -38,6 +38,13 @@ interface QuoteResponse {
     text_source: QuoteTextSource;
     /** Set when text_source is `ocr_original` or `source_column` — see those notes. */
     transcription_note?: string;
+    /**
+     * The page carries marginal text (#4362) — copy-specific by nature: it
+     * exists only in the one physical copy that was scanned. Set together
+     * with `marginalia_note`, which says how to cite it.
+     */
+    contains_marginalia?: boolean;
+    marginalia_note?: string;
     /**
      * ISO code of the language the quoted text is IN — always present, so a
      * caller branches on it rather than assuming English (#4095).
@@ -197,6 +204,12 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
           : {}),
         ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
         ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
+        // Checked on the served text AND the OCR original: a translation often
+        // renders the note without the mark-up, so the transcription is the
+        // authority on whether the leaf carries one (#4362).
+        ...(containsMarginalia(quotable.text) || containsMarginalia(page.ocr?.data || '')
+          ? { contains_marginalia: true, marginalia_note: MARGINALIA_NOTE }
+          : {}),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,

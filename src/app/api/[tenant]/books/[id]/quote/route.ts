@@ -4,7 +4,7 @@ import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getRequestBaseUrl } from '@/lib/shortlinks';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { resolveQuoteText, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
@@ -34,6 +34,9 @@ interface QuoteResponse {
     text_source: QuoteTextSource;
     /** Set when text_source is `ocr_original` or `source_column` — see those notes. */
     transcription_note?: string;
+    /** The page carries marginal text (#4362) — copy-specific by nature; see marginalia_note. */
+    contains_marginalia?: boolean;
+    marginalia_note?: string;
     /**
      * Romanization of the original for non-Latin scripts (#3828) — AI-derived
      * apparatus, never a transcription, hence `romanized` and not
@@ -159,6 +162,11 @@ export async function GET(request: NextRequest, context: RouteContext) {
         text_source: quotable.source,
         ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
         ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
+        // Served text AND the OCR original — the transcription is the
+        // authority on whether the leaf carries a marginal note (#4362).
+        ...(containsMarginalia(quotable.text) || containsMarginalia(page.ocr?.data || '')
+          ? { contains_marginalia: true, marginalia_note: MARGINALIA_NOTE }
+          : {}),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,

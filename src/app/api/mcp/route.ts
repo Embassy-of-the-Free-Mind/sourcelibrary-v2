@@ -655,6 +655,15 @@ async function getQuote(args: Record<string, unknown>) {
     );
   }
 
+  // Marginalia (#4362) — same logic in mcp-server/src/api.ts (fixes do not
+  // propagate between the two servers).
+  if ((quote as Record<string, unknown> | undefined)?.contains_marginalia === true) {
+    tips.push(
+      'This page carries MARGINAL text (<margin>…</margin>). A marginal note exists only in this ' +
+        "physical copy — when quoting from one, say 'marginal annotation' and follow quote.marginalia_note.",
+    );
+  }
+
   return {
     ...withCitationLink(result),
     continuity,
