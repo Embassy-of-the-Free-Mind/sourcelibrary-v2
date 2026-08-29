@@ -12,8 +12,11 @@
 
 import { validateApiKey } from '@/lib/dataset/api-keys';
 import { CONTENT_LICENSE } from '@/lib/license-info';
+import { FREE_PAGE_PERCENT, freeMaxPage } from '@/lib/free-preview';
 
-const BOT_PAGE_PERCENT = 20; // % of pages bots can read from each book
+// % of pages bots can read from each book — shared with the metered reader
+// (free-preview.ts) so the bot sample and the human sample can never drift.
+const BOT_PAGE_PERCENT = FREE_PAGE_PERCENT;
 
 const KNOWN_BOTS = [
   'gptbot', 'chatgpt', 'oai-searchbot',
@@ -90,8 +93,7 @@ export async function isTrustedBot(request: Request): Promise<boolean> {
  * Returns 0 if pages_count is unknown (deny by default).
  */
 export function botMaxPage(pagesCount: number): number {
-  if (!pagesCount || pagesCount <= 0) return 0;
-  return Math.max(1, Math.floor(pagesCount * BOT_PAGE_PERCENT / 100));
+  return freeMaxPage(pagesCount);
 }
 
 export function botGateResponse(book: {

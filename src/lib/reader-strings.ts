@@ -360,6 +360,14 @@ export interface ReaderStrings {
     thanksWillPrioritise: string;
   };
 
+  /** Metered reader (#4357): pane shown past the free sample for signed-out readers. */
+  paneGated: {
+    label: string;
+    /** `…past the first {n} pages…` */
+    body: (freePages: number) => string;
+    signIn: string;
+  };
+
   /** Save panel (likes, not folders — see SavePanel.tsx's own comment). */
   save: {
     anonymousNotice: string;
@@ -750,6 +758,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       thanksWillEmail: 'Thanks — we’ll email you when this page is translated.',
       thanksWillPrioritise: 'Thanks — we’ll prioritize this book.',
     },
+    paneGated: {
+      label: 'Sign in to keep reading',
+      body: (freePages) => `The scan is free to browse. Reading the transcription and translation past the first ${freePages} pages asks for a free account.`,
+      signIn: 'Sign in — it’s free',
+    },
     save: {
       anonymousNotice: 'Saves work without an account, on this device only.',
       signInToKeep: 'Sign in to keep them everywhere',
@@ -1118,6 +1131,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       requested: 'Solicitada',
       thanksWillEmail: 'Gracias. Te escribiremos cuando esta página esté traducida.',
       thanksWillPrioritise: 'Gracias. Daremos prioridad a este libro.',
+    },
+    paneGated: {
+      label: 'Inicia sesión para seguir leyendo',
+      body: (freePages) => `El escaneo se puede hojear libremente. Para leer la transcripción y la traducción más allá de las primeras ${freePages} páginas hace falta una cuenta gratuita.`,
+      signIn: 'Inicia sesión — es gratis',
     },
     save: {
       anonymousNotice: 'Puedes guardar sin una cuenta; se guarda solo en este dispositivo.',

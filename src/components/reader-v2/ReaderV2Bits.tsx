@@ -11,7 +11,7 @@ import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
 import type { CorpusInfo } from '@/lib/text-provenance';
 import type { ReaderSettings } from './useReaderV2';
-import { PaneEmptyState } from './PaneEmptyState';
+import { PaneEmptyState, GatedPane } from './PaneEmptyState';
 
 // Shared presentational pieces for the v2 reader design previews. All values
 // map to existing Source Library tokens (globals.css) — no new primitives.
@@ -204,6 +204,13 @@ export function ReaderProse({
   const raw = kind === 'ocr' ? (page.ocr?.data || '') : (page.translation?.data || '');
   const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
   const lang = kind === 'ocr' ? book.language : 'English';
+
+  // Metered reader (#4357): the server withheld this page's text (beyond the
+  // free sample, signed-out caller). Must come before the empty check — a
+  // gated page IS empty, but "not transcribed yet" would be a lie.
+  if (page.gated) {
+    return <GatedPane page={page} />;
+  }
 
   // An empty pane is several different situations wearing one sentence: a page
   // nobody has transcribed, a page transcribed but not translated, a blank

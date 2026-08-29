@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Book, Page } from '@/lib/types';
 import { pages as pagesApi, readingHistory } from '@/lib/api-client';
+import { useStableSession } from '@/hooks/useStableSession';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl } from '@/lib/utils';
 
@@ -155,6 +156,28 @@ export function useReaderV2(
     if (idx >= 0) prefetchAround(idx);
     return () => { cancelled = true; };
   }, [currentPageId, currentPage.id, fetchPage, pageList, prefetchAround]);
+
+  // Metered reader (#4357): the ISR HTML and any pre-sign-in fetches carry
+  // the STRIPPED variant of gated pages (the static render can't see who is
+  // asking). Once a session is present, purge those from the cache and
+  // refetch the one on screen — the API serves signed-in callers the full
+  // text. Without this, a reader who signs in at the wall keeps staring at
+  // the wall until a hard reload.
+  const { data: gateSessionData } = useStableSession();
+  const signedIn = !!gateSessionData?.user;
+  useEffect(() => {
+    if (!signedIn) return;
+    for (const [id, p] of cacheRef.current) {
+      if ((p as Page & { gated?: boolean }).gated) cacheRef.current.delete(id);
+    }
+    if ((currentPage as Page & { gated?: boolean }).gated) {
+      fetchPage(currentPageId).then((p) => {
+        // Only swap in a real page: on a fetch failure (or a still-gated
+        // response) keep what's on screen — the wall, not a blank.
+        if (p && !(p as Page & { gated?: boolean }).gated) setCurrentPage(p);
+      });
+    }
+  }, [signedIn, currentPage, currentPageId, fetchPage]);
 
   // Reading history beacon (same contract as the production reader)
   useEffect(() => {

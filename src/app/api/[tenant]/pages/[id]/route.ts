@@ -8,6 +8,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
+import { gatePagesForRequest } from '@/lib/metered-gate';
 
 export const preferredRegion = 'fra1';
 
@@ -79,6 +80,11 @@ export async function GET(
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+
+    // Metered reader (#4357): the 'default' tenant is the main library, so it
+    // meters like the global twin; named tenants (bph/kloss/…) are partner
+    // reading rooms and stay exempt. No-op unless METERED_READER=1.
+    [page] = await gatePagesForRequest(db, request, [page], { exempt: tenant !== 'default' });
 
     // Reader-path provenance: translation carries the invisible imprimatur
     // (deterministic, no ref — cache-safe). Mirrors the global twin.
