@@ -101,6 +101,54 @@ describe('ordinary names stay matchable', () => {
   }
 });
 
+/**
+ * #4313 / #4318 — a bare forename is a trapdoor, not a weak match. `jan-hus`
+ * carried the variant "Johannes" and claimed 115 books by Chrysostom, Sacrobosco
+ * and Duns Scotus; nine more docs had the same defect and 75 more books were
+ * mis-linked. Shape alone cannot see it, so the corpus supplies the evidence.
+ *
+ * Counts below are the real measured ones, so the fixture doubles as the record
+ * of what separates a poison form from a genuine mononym.
+ */
+describe('underspecified bare forms', () => {
+  const measured: Record<string, number> = {
+    // poison: many distinct people extend these
+    johannes: 77, thomas: 67, alexander: 31, petrus: 19, jacobus: 13,
+    // genuine mononyms: almost nobody does
+    aristoteles: 1, cicero: 4, boethius: 5, hermes: 4,
+  };
+  const extendingPeople = (v: string) => measured[v.toLowerCase()] ?? 0;
+
+  for (const v of ['Johannes', 'Thomas', 'Alexander', 'Petrus']) {
+    it(`${v} is underspecified and NOT matchable`, () => {
+      const c = classifyVariant(v, { extendingPeople });
+      expect(c.shape).toBe('underspecified');
+      expect(c.matchable).toBe(false);
+    });
+  }
+
+  for (const v of ['Aristoteles', 'Cicero']) {
+    it(`${v} stays matchable — few people extend it`, () => {
+      expect(classifyVariant(v, { extendingPeople }).matchable).toBe(true);
+    });
+  }
+
+  it('a multi-token name is never underspecified, however common its forename', () => {
+    // "Johannes Kepler" is specific even though bare "Johannes" is not.
+    expect(classifyVariant('Johannes Kepler', { extendingPeople }).matchable).toBe(true);
+    expect(classifyVariant('Hus, Johannes', { extendingPeople }).matchable).toBe(true);
+  });
+
+  // NEGATIVE CONTROL. Without corpus evidence the rule must not fire at all —
+  // this is what proves the test is measuring the guard and not merely the
+  // presence of a line. Deleting the underspecified branch turns the assertions
+  // above red while this one stays green.
+  it('does not fire when the caller supplies no evidence', () => {
+    expect(classifyVariant('Johannes').shape).toBe('clean');
+    expect(classifyVariant('Johannes').matchable).toBe(true);
+  });
+});
+
 describe('stripRole', () => {
   it('drops a trailing role', () => expect(stripRole('Karl Gottlob Kühn (ed.)')).toBe('Karl Gottlob Kühn'));
   it('keeps life dates', () => expect(stripRole('Pico della Mirandola, Giovanni, 1463-1494'))
