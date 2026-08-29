@@ -144,7 +144,9 @@ export default function DevelopersPage() {
           <h2 className="text-lg font-semibold text-primary mb-2">Building something? Grab a free key.</h2>
           <p className="text-secondary mb-6">
             The endpoints work without one — keys lift rate limits, give your traffic attribution, and help us learn what
-            people are building so we can keep this open and free. Takes a minute.
+            people are building so we can keep this open and free. Takes a minute. Bulk page-image downloads need one:
+            send it as <code className="text-sm">Authorization: Bearer sl_data_…</code> on <code className="text-sm">/api/image</code> requests
+            (anonymous scripts are capped per day; paid tiers are uncapped — see the rate card on the licensing page).
           </p>
           <ApiKeyRequestForm />
         </div>

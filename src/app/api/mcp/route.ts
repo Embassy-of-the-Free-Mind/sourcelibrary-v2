@@ -1327,7 +1327,10 @@ async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMa
 
 async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
   try {
-    const resp = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    // Self-referential /api/image fetches must carry the internal signature or
+    // the image gate budgets this server like an anonymous scraper (#4356).
+    const { signImageProxyUrl } = await import('@/lib/image-proxy-auth');
+    const resp = await fetch(signImageProxyUrl(url), { signal: AbortSignal.timeout(5000) });
     if (!resp.ok) return null;
     const contentType = resp.headers.get('content-type') || 'image/jpeg';
     const mimeType = contentType.split(';')[0].trim();

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
+import { refuseImageUrl } from '@/lib/image-proxy-hosts';
+import { checkImageAccess, imageBudgetExceededBody } from '@/lib/image-gate';
+import { logApiUsage } from '@/lib/api-usage';
+import type { ApiIdentity } from '@/lib/api-auth';
 
 /**
  * GET /api/crop-image
@@ -25,6 +29,37 @@ export async function GET(request: NextRequest) {
 
     if (!imageUrl) {
       return NextResponse.json({ error: 'url required' }, { status: 400 });
+    }
+
+    // Same host policy as /api/image: this is a server-side fetcher taking a
+    // caller-supplied URL, so it must refuse non-allowlisted hosts and private
+    // address literals (it previously fetched anything — SSRF-shaped).
+    const refusal = refuseImageUrl(imageUrl);
+    if (refusal) {
+      return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
+    }
+
+    // Same identity + budget gate as /api/image (#4356) — this route is the
+    // same free resizer under a different path, so it gets the same door.
+    const access = await checkImageAccess(request);
+    if (access.shouldLog) {
+      logApiUsage({
+        request,
+        identity: access.identity as ApiIdentity,
+        route: 'image',
+        status: access.allowed ? 200 : access.status,
+        ms: 0,
+        wouldBlock: !!access.reason,
+        blocked: !access.allowed,
+        reason: access.reason,
+        pagesServed: access.allowed ? 1 : 0,
+      });
+    }
+    if (!access.allowed) {
+      return NextResponse.json(imageBudgetExceededBody(access), {
+        status: access.status,
+        headers: { 'Retry-After': '3600', 'Cache-Control': 'no-store' },
+      });
     }
 
     // Fetch the source image

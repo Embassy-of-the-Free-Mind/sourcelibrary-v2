@@ -6,6 +6,9 @@ import axios from 'axios';
 import crypto from 'crypto';
 import { refuseImageUrl } from '@/lib/image-proxy-hosts';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { checkImageAccess, imageBudgetExceededBody } from '@/lib/image-gate';
+import { logApiUsage } from '@/lib/api-usage';
+import type { ApiIdentity } from '@/lib/api-auth';
 
 // Cache resized images for 1 week
 const CACHE_DURATION = 60 * 60 * 24 * 7;
@@ -120,6 +123,31 @@ export async function GET(request: NextRequest) {
         { error: 'Too many image requests' },
         { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
       );
+    }
+
+    // Identity + budget gate (#4356): browsers, signed internal fetchers, and
+    // trusted bots pass untouched; keyed callers are tier-budgeted and logged;
+    // anonymous non-browser bulk pulls are budgeted per IP. Blocked responses
+    // are no-store — a CDN-cached 429 would outlive the budget window.
+    const access = await checkImageAccess(request);
+    if (access.shouldLog) {
+      logApiUsage({
+        request,
+        identity: access.identity as ApiIdentity,
+        route: 'image',
+        status: access.allowed ? 200 : access.status,
+        ms: 0,
+        wouldBlock: !!access.reason,
+        blocked: !access.allowed,
+        reason: access.reason,
+        pagesServed: access.allowed ? 1 : 0,
+      });
+    }
+    if (!access.allowed) {
+      return NextResponse.json(imageBudgetExceededBody(access), {
+        status: access.status,
+        headers: { 'Retry-After': '3600', 'Cache-Control': 'no-store' },
+      });
     }
 
     const { searchParams } = new URL(request.url);
