@@ -3,6 +3,7 @@ import sharp from 'sharp';
 import { images } from '@/lib/api-client';
 import { refuseImageUrl } from '@/lib/image-proxy-hosts';
 import { checkImageAccess, imageBudgetExceededBody } from '@/lib/image-gate';
+import { finalizeMarkedJpeg } from '@/lib/image-marks';
 import { logApiUsage } from '@/lib/api-usage';
 import type { ApiIdentity } from '@/lib/api-auth';
 
@@ -56,9 +57,11 @@ export async function GET(request: NextRequest) {
       });
     }
     if (!access.allowed) {
+      const gateHeaders: Record<string, string> = { 'Cache-Control': 'no-store' };
+      if (access.status === 429) gateHeaders['Retry-After'] = '3600';
       return NextResponse.json(imageBudgetExceededBody(access), {
         status: access.status,
-        headers: { 'Retry-After': '3600', 'Cache-Control': 'no-store' },
+        headers: gateHeaders,
       });
     }
 
@@ -111,14 +114,23 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const croppedBuffer = await pipeline
-      .jpeg({ quality: 85 })
-      .toBuffer();
+    // Finalize through the shared marks module: before #4366's follow-up this
+    // route served unmarked bytes, making a full-frame "crop" a trivial bypass
+    // of every visible mark on /api/image. Clean-capable keys skip the visible
+    // marks; clean responses stay out of the shared CDN cache (entitlement is
+    // in a header the cache key can't see).
+    const rawCrop = await pipeline.toBuffer();
+    const croppedBuffer = await finalizeMarkedJpeg(rawCrop, {
+      quality: 85,
+      clean: access.clean === true,
+    });
 
     return new NextResponse(new Uint8Array(croppedBuffer), {
       headers: {
         'Content-Type': 'image/jpeg',
-        'Cache-Control': 'public, max-age=31536000, immutable',
+        'Cache-Control': access.clean
+          ? 'private, no-store'
+          : 'public, max-age=31536000, immutable',
       },
     });
   } catch (error) {

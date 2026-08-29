@@ -32,6 +32,7 @@ import {
   isBrowserShapedImageRequest,
   isSocialCardScraper,
   imageBudgetExceededBody,
+  keyAllowsCleanImages,
 } from '@/lib/image-gate';
 import { signImageProxyUrl, verifyImageProxyToken } from '@/lib/image-proxy-auth';
 
@@ -158,6 +159,48 @@ describe('bots and scrapers', () => {
     const decision = await checkImageAccess(req({}));
     expect(decision.allowed).toBe(true);
     expect(decision.identity.kind).toBe('bot');
+  });
+});
+
+describe('clean serving — visible marks come off only for a capable key', () => {
+  const cleanUrl = 'https://sourcelibrary.org/api/image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2Fb1%2F1.jpg&w=400&clean=1';
+
+  it('capability: full-scope tiers and the admin grant, nothing else', () => {
+    expect(keyAllowsCleanImages({ tier: 'full', permissions: { languages: '*', clusters: '*' } })).toBe(true);
+    expect(keyAllowsCleanImages({ tier: 'enterprise', permissions: { languages: '*', clusters: '*' } })).toBe(true);
+    expect(keyAllowsCleanImages({ tier: 'explorer', permissions: { languages: '*', clusters: '*' } })).toBe(false);
+    expect(keyAllowsCleanImages({ tier: 'language', permissions: { languages: [], clusters: '*' } })).toBe(false);
+    expect(keyAllowsCleanImages({ tier: 'explorer', permissions: { languages: '*', clusters: '*', clean_images: true } })).toBe(true);
+  });
+
+  it('clean=1 without a key is a hard 403 — never a marked fallback (cache poisoning)', async () => {
+    const decision = await checkImageAccess(req({ url: cleanUrl }));
+    expect(decision.allowed).toBe(false);
+    expect(decision.status).toBe(403);
+    expect(decision.clean).toBeUndefined();
+    expect(imageBudgetExceededBody(decision).error).toContain('full-tier');
+  });
+
+  it('clean=1 with a non-capable key is also 403', async () => {
+    vi.mocked(validateApiKey).mockResolvedValue({ _id: 'k1', user_id: 'u1', tier: 'explorer', permissions: { languages: '*', clusters: '*' } } as never);
+    const decision = await checkImageAccess(req({ url: cleanUrl, headers: { authorization: 'Bearer sl_data_x' } }));
+    expect(decision.allowed).toBe(false);
+    expect(decision.status).toBe(403);
+  });
+
+  it('clean=1 with a full-tier key passes, flagged clean, and is logged', async () => {
+    vi.mocked(validateApiKey).mockResolvedValue({ _id: 'k1', user_id: 'u1', tier: 'full', permissions: { languages: '*', clusters: '*' } } as never);
+    const decision = await checkImageAccess(req({ url: cleanUrl, headers: { authorization: 'Bearer sl_data_x' } }));
+    expect(decision.allowed).toBe(true);
+    expect(decision.clean).toBe(true);
+    expect(decision.identity.kind).toBe('apikey');
+    expect(decision.shouldLog).toBe(true);
+  });
+
+  it('clean=1 wins over browser-shaped headers — the capability check still runs', async () => {
+    const decision = await checkImageAccess(req({ url: cleanUrl, headers: { 'sec-fetch-dest': 'image' } }));
+    expect(decision.allowed).toBe(false);
+    expect(decision.status).toBe(403);
   });
 });
 

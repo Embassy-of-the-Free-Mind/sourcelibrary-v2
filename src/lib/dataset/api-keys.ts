@@ -30,6 +30,8 @@ export async function generateApiKey(
     languages?: string[];
     clusters?: string[];
     stripeSubscriptionId?: string;
+    /** Grant visible-mark-free image serving regardless of tier. */
+    cleanImages?: boolean;
   }
 ): Promise<{ key: string; doc: ApiKeyDoc }> {
   const db = await getDb();
@@ -47,6 +49,7 @@ export async function generateApiKey(
     permissions: {
       languages: options?.languages || (tier === 'language' ? [] : '*'),
       clusters: options?.clusters || (tier === 'domain' ? [] : '*'),
+      ...(options?.cleanImages ? { clean_images: true } : {}),
     },
     rate_limit: {
       requests_per_minute: tierConfig.requestsPerMinute,
@@ -147,6 +150,7 @@ export async function rotateApiKey(
     languages: old.permissions.languages === '*' ? undefined : old.permissions.languages,
     clusters: old.permissions.clusters === '*' ? undefined : old.permissions.clusters,
     stripeSubscriptionId: old.stripe_subscription_id,
+    cleanImages: old.permissions.clean_images === true,
   });
 }
 
