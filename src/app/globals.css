@@ -479,8 +479,14 @@ body:has([data-reader-v2]) {
   from { opacity: 0; transform: translateX(-14px); }
   to   { opacity: 1; transform: none; }
 }
-.rv2-turn-next { animation: rv2-turn-next 190ms ease-out both; }
-.rv2-turn-prev { animation: rv2-turn-prev 190ms ease-out both; }
+/* `backwards`, not `both`: a filled-forwards animation keeps applying its end
+   value after it finishes, and an animated property beats an inline style, so
+   the pane would sit locked at transform:none and the drag-follow's inline
+   transform would be silently ignored for the rest of the session — the swipe
+   would stop moving anything under the finger after the first page turn. The
+   end state here is the natural state, so there is nothing to hold. */
+.rv2-turn-next { animation: rv2-turn-next 190ms ease-out backwards; }
+.rv2-turn-prev { animation: rv2-turn-prev 190ms ease-out backwards; }
 
 /* Panel contents arrive just after the panel itself, so switching tools reads
    as one movement instead of two things appearing at once. */

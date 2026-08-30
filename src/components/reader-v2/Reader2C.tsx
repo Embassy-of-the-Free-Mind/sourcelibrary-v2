@@ -2606,6 +2606,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       // The pane holds still and its text and facsimile arrive inside it.
       const inner = pane.lastElementChild;
       if (!(inner instanceof HTMLElement)) continue;
+      // The drag-follow writes an inline transform on this same element; leave
+      // it in place and the pane starts its arrival wherever the finger left it.
+      inner.style.transition = '';
+      inner.style.transform = '';
       inner.classList.remove('rv2-turn-next', 'rv2-turn-prev');
       void inner.offsetWidth; // reflow, or the class swap is coalesced and nothing plays
       inner.classList.add(back ? 'rv2-turn-prev' : 'rv2-turn-next');
@@ -2792,13 +2796,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const dragFollow = (dx: number | null) => {
     const el = mobileMainRef.current;
     if (!el) return;
-    if (dx === null) {
-      el.style.transition = 'transform 180ms ease-out';
-      el.style.transform = '';
-    } else {
-      el.style.transition = 'none';
-      el.style.transform = `translateX(${Math.max(-90, Math.min(90, dx * 0.35))}px)`;
+    // The pane CONTENTS move under the finger, not the column. Moving the
+    // column moved its backgrounds with it, and the gap it opened showed the
+    // bare page behind: a pale band down the side of the screen for the length
+    // of every swipe, against a facsimile that is nowhere near that colour.
+    // The panes hold still and their text and scan slide inside them, which is
+    // the same gesture with nothing behind it to see. (Same reasoning as the
+    // turn animation, which moves these very elements.)
+    for (const pane of Array.from(el.querySelectorAll<HTMLElement>(':scope > section'))) {
+      const inner = pane.lastElementChild;
+      if (!(inner instanceof HTMLElement)) continue;
+      if (dx === null) {
+        inner.style.transition = 'transform 180ms ease-out';
+        inner.style.transform = '';
+      } else {
+        inner.style.transition = 'none';
+        inner.style.transform = `translateX(${Math.max(-90, Math.min(90, dx * 0.35))}px)`;
+      }
     }
+    // A column left translated by an older build would sit off-centre forever.
+    if (el.style.transform) { el.style.transition = ''; el.style.transform = ''; }
   };
   const onTouchMove = (e: React.TouchEvent) => {
     const s = swipeRef.current;
