@@ -218,7 +218,6 @@ If `code-review-graph` is installed (per-machine, see `.claude/docs/code-review-
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
-- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`, at `src/app/rithmomachia`), not dead code.
 
 ## Knowledge Maintenance
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
