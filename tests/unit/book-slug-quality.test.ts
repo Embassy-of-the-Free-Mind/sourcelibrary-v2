@@ -11,7 +11,7 @@
  * and Sanskrit titles, so that path is load-bearing, not theoretical.
  */
 import { describe, it, expect } from 'vitest';
-import { generateBookSlug, isPlaceholderSlug, readerPageUrl } from '@/lib/slugify';
+import { generateBookSlug, isNonTitle, isPlaceholderSlug, readerPageUrl } from '@/lib/slugify';
 
 describe('generateBookSlug', () => {
   it('builds title-author for the ordinary case', () => {
@@ -79,6 +79,60 @@ describe('readerPageUrl', () => {
   });
 });
 
+/**
+ * #4389 — 111 visible books published at /book/unknown-1 … /book/unknown-111.
+ *
+ * The importer slugged an English-title field whose value was the literal
+ * string "Unknown". "Unknown" sanitizes to "unknown" — a legal, readable-looking
+ * slug — so no fallback branch fired, the dedupe counter did the rest, and the
+ * books shipped with perfectly good titles sitting unused one field over.
+ *
+ * The lesson is the one in .claude/docs/invariants/non-latin-text-operations.md,
+ * displaced by one step: an operation whose input means "we cannot judge" must
+ * not produce a confident output. Here the unjudgeable input was not an empty
+ * string but a sentinel that LOOKS like data.
+ */
+describe('title sentinels never become the slug (#4389)', () => {
+  it('recognises the sentinel family, and only it', () => {
+    for (const sentinel of ['Unknown', 'unknown', ' UNKNOWN ', '[unknown]', 'Untitled',
+      'No title', 'n/a', 'N/A', '?', '-', 'null', 'undefined', 'Onbekend', 'Sans titre', '']) {
+      expect(isNonTitle(sentinel), `"${sentinel}" should read as absent`).toBe(true);
+    }
+    for (const real of ['Unknown Pleasures', 'The Unknown God', 'Titles of Honour', 'Nada', 'Nihil']) {
+      expect(isNonTitle(real), `"${real}" is a real title`).toBe(false);
+    }
+  });
+
+  it('falls through a sentinel display_title to the real title', () => {
+    // The exact production shape: english_title "Unknown", display_title good.
+    expect(generateBookSlug("Ninurta's Return to Nibru (ETCSL 1.6.1)", 'Anonymous Sumerian', 'Unknown'))
+      .toBe('ninurta-s-return-to-nibru-etcsl-1-6-1-anonymous');
+  });
+
+  it('never mints a slug whose body is a sentinel', () => {
+    for (const [title, displayTitle] of [['Unknown', null], ['Unknown', 'Unknown'], ['', 'unknown'], ['n/a', '[unknown]']] as Array<[string, string | null]>) {
+      const slug = generateBookSlug(title, 'Anonymous Sumerian', displayTitle);
+      expect(isPlaceholderSlug(slug), `"${title}"/"${displayTitle}" → ${slug}`).toBe(false);
+      expect(slug).toBe('anonymous');
+    }
+  });
+
+  it('flags the shipped URLs so the repair sweep and the audit can see them', () => {
+    expect(isPlaceholderSlug('unknown')).toBe(true);
+    expect(isPlaceholderSlug('unknown-1')).toBe(true);
+    expect(isPlaceholderSlug('unknown-111')).toBe(true);
+    expect(isPlaceholderSlug('no-title')).toBe(true);
+    expect(isPlaceholderSlug('n-a')).toBe(true);
+    // A numeric dedupe suffix is stripped before the test; a word is not.
+    expect(isPlaceholderSlug('unknown-pleasures')).toBe(false);
+    expect(isPlaceholderSlug('the-unknown-god-anonymous')).toBe(false);
+  });
+
+  it('a title that is only a sentinel does not out-rank the author', () => {
+    expect(generateBookSlug('Unknown', 'Mousouros, Markos (ed.)')).toBe('mousouros');
+  });
+});
+
 describe('unknown authors', () => {
   it('does not suffix a slug with "artist" for "Unknown artist"', () => {
     // /book/…-setsubun-oni-yari-ritual-at-osu-kannon-artist was a real
@@ -86,6 +140,13 @@ describe('unknown authors', () => {
     expect(generateBookSlug('大須観音 節分会', 'Unknown artist', 'Setsubun Oni-yari Ritual at Ōsu Kannon'))
       .toBe('setsubun-oni-yari-ritual-at-osu-kannon');
     expect(generateBookSlug('A Title', 'unknown')).toBe('a-title');
+  });
+
+  it('does not read the qualifier of a qualified anonymity marker as a surname', () => {
+    // /book/a-balbale-to-inana-sumerian presents a language as the author.
+    expect(generateBookSlug('A Balbale to Inana', 'Anonymous Sumerian')).toBe('a-balbale-to-inana-anonymous');
+    expect(generateBookSlug('A Hymn', 'Anonymous (Egyptian)')).toBe('a-hymn-anonymous');
+    expect(generateBookSlug('A Hymn', 'Anonymous Yucatec Maya scribes')).toBe('a-hymn-anonymous');
   });
 
   it('still keeps "Anonymous", which is a real attribution in this corpus', () => {
