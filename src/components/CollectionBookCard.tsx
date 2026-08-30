@@ -54,6 +54,8 @@ export interface CollectionBook {
 export interface CollectionBookCardLabels {
   firstTranslation: string;
   pages: string;
+  /** Singular form. A one-page broadside read "1 pages" on every surface. */
+  page: string;
   ocr: string;
   translated: string;
   editedBy: string;
@@ -63,6 +65,7 @@ export interface CollectionBookCardLabels {
 export const CARD_LABELS_EN: CollectionBookCardLabels = {
   firstTranslation: 'First Translation',
   pages: 'pages',
+  page: 'page',
   ocr: 'OCR',
   translated: 'Translated',
   editedBy: 'edited by',
@@ -71,6 +74,7 @@ export const CARD_LABELS_EN: CollectionBookCardLabels = {
 export const CARD_LABELS_ES: CollectionBookCardLabels = {
   firstTranslation: 'Primera traducción',
   pages: 'páginas',
+  page: 'página',
   ocr: 'OCR',
   translated: 'Traducido',
   editedBy: 'editado por',
@@ -91,6 +95,15 @@ interface CollectionBookCardProps {
    * beneath, or the original alone when no gloss exists yet. Default English.
    */
   lang?: Locale;
+  /**
+   * `catalog` is the /catalog grid's card: the same data and the same claim
+   * gates, restyled. The status line drops to micro type and carries the
+   * first-translation claim inline beside it, instead of a tag over the cover;
+   * the hover lifts the whole card rather than recolouring the title. Every
+   * other surface keeps `default`, which is the card described in
+   * `.claude/docs/collection-book-card-design.md`.
+   */
+  variant?: 'default' | 'catalog';
 }
 
 function pctOf(n?: number, d?: number): number {
@@ -99,9 +112,10 @@ function pctOf(n?: number, d?: number): number {
 }
 
 // One status item: tick at 100%, cross at 0%, else the percentage. (book design.md)
-function Status({ label, pctValue, doneClass }: { label: string; pctValue: number; doneClass: string }) {
-  if (pctValue >= 100) return <span className={`inline-flex items-center gap-1 ${doneClass}`}><Check className="w-3 h-3" /> {label}</span>;
-  if (pctValue <= 0) return <span className="inline-flex items-center gap-1 text-muted"><X className="w-3 h-3" /> {label}</span>;
+function Status({ label, pctValue, doneClass, micro = false }: { label: string; pctValue: number; doneClass: string; micro?: boolean }) {
+  const icon = micro ? 'w-2.5 h-2.5' : 'w-3 h-3';
+  if (pctValue >= 100) return <span className={`inline-flex items-center gap-1 ${doneClass}`}><Check className={icon} /> {label}</span>;
+  if (pctValue <= 0) return <span className="inline-flex items-center gap-1 text-muted"><X className={icon} /> {label}</span>;
   return <span className="text-muted">{pctValue}% {label}</span>;
 }
 
@@ -112,7 +126,8 @@ function Status({ label, pctValue, doneClass }: { label: string; pctValue: numbe
  * language pill · year · pages, and a single OCR/Translated status line (books
  * only). Keeps the robust data handling: artwork, embed placeholders, DOI.
  */
-export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, lang = 'en' }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, lang = 'en', variant = 'default' }: CollectionBookCardProps) {
+  const isCatalog = variant === 'catalog';
   const labels = CARD_LABELS[lang];
   const shownTitle = localizedTitle(book, lang);
   const originalLine = lang === 'en' ? null : originalTitleIfDifferent(book, lang);
@@ -171,7 +186,17 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   return (
     <Link
       href={href ?? (isArtwork ? artworkHref : bookHref)}
-      className="group flex flex-col h-full border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow] animate-fade-in-up"
+      className={cn(
+        'group flex flex-col h-full border bg-white',
+        isCatalog
+          /* Hover does one thing: the hairline goes from light to ink. No lift,
+             no shadow, no wash over the scan — sixty cards that rise and drop
+             as the cursor crosses them is motion for its own sake, and a card
+             that moves is a card you have to re-aim at. `animate-fade-in-up` is
+             swapped for a plain opacity fade so nothing transforms at all. */
+          ? 'border-border-light hover:border-[var(--text-secondary)] transition-colors duration-200 animate-fade-in'
+          : 'border-border-light hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow] animate-fade-in-up',
+      )}
     >
       {/* Cover */}
       <div className="relative aspect-[3/4] bg-warm overflow-hidden">
@@ -187,7 +212,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
             fill
             quality={85}
             className={cn(
-              'object-cover group-hover:scale-105 transition-transform duration-300',
+              'object-cover transition-transform',
+              /* Slower and shallower than the default card's: on a 60-card grid
+                 a fast 5% jump reads as a twitch, not a response. */
+              isCatalog ? 'duration-[600ms] ease-out' : 'group-hover:scale-105 duration-300',
               priority ? 'opacity-100' : (imageLoaded ? 'opacity-100' : 'opacity-0'),
             )}
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
@@ -222,9 +250,13 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
             at, and on /es the page already sorts into "in Spanish" and
             "not yet", so the heading above the grid has said it. Stacked over
             First Translation it read as the more important of the two. */}
-        {(isPublishedFirstTranslation(book) || book.has_doi) && (
+        {/* The catalogue card moves the First Translation claim down to the
+            status line — same gate, same words, read where the reader is
+            already comparing OCR and Translated rather than stamped over the
+            scan. The DOI tag stays: it is about the record, not the text. */}
+        {((isPublishedFirstTranslation(book) && !isCatalog) || book.has_doi) && (
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
-            {isPublishedFirstTranslation(book) && (
+            {isPublishedFirstTranslation(book) && !isCatalog && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
                 {labels.firstTranslation}
               </span>
@@ -240,7 +272,16 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
 
       {/* Info */}
       <div className="flex flex-col flex-1 p-3">
-        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug" style={{ fontFamily: 'var(--font-body)' }}>
+        <h3
+          className={cn(
+            'text-sm font-semibold text-primary line-clamp-2 leading-snug transition-colors',
+            /* No recolour on hover here: the lift already says the card is
+               live, and a title that turns red on a page of 60 titles is the
+               loudest thing in the grid. */
+            isCatalog ? 'decoration-border-medium underline-offset-[3px] group-hover:underline' : 'group-hover:text-accent-rust',
+          )}
+          style={{ fontFamily: 'var(--font-body)' }}
+        >
           {shownTitle}
         </h3>
         {originalLine && (
@@ -255,14 +296,27 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (book.published ? <span>{book.published}</span> : null)}
           {isArtwork
             ? (book.resource_type ? <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span> : null)
-            : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} {labels.pages}</span> : null)}
+            : (pageCount > 0 ? <span>{pageCount.toLocaleString('en-US')} {pageCount === 1 ? labels.page : labels.pages}</span> : null)}
         </div>
 
         {!isArtwork && pageCount > 0 && (
-          <div className="flex items-center gap-3 mt-auto pt-3 text-[11px]">
-            <Status label={labels.ocr} pctValue={ocrPct} doneClass="text-status-info" />
-            <Status label={labels.translated} pctValue={translatedPct} doneClass="text-status-success" />
-          </div>
+          isCatalog ? (
+            /* Micro type, and tight enough that OCR, Translated and the
+               first-translation claim sit on ONE line at desktop card width.
+               Below that they wrap, in that order of importance. */
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 mt-auto pt-3 text-[9px] font-medium uppercase tracking-[0.035em] [&>span]:whitespace-nowrap">
+              <Status label={labels.ocr} pctValue={ocrPct} doneClass="text-status-info" micro />
+              <Status label={labels.translated} pctValue={translatedPct} doneClass="text-status-success" micro />
+              {isPublishedFirstTranslation(book) && (
+                <span className="text-accent-gold-dark">{labels.firstTranslation}</span>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-3 mt-auto pt-3 text-[11px]">
+              <Status label={labels.ocr} pctValue={ocrPct} doneClass="text-status-info" />
+              <Status label={labels.translated} pctValue={translatedPct} doneClass="text-status-success" />
+            </div>
+          )
         )}
       </div>
     </Link>

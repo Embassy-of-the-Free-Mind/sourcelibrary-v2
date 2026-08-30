@@ -9,7 +9,7 @@
  */
 
 import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
-import { isSingleRealLanguage } from '@/lib/language-canonical';
+import { isSingleRealLanguage, distinctLanguageSet } from '@/lib/language-canonical';
 
 /**
  * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
@@ -112,7 +112,7 @@ export interface CatalogBookDetail extends CatalogBook {
 // `attachCardVariants()` below instead.
 export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
 
-export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
+export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality' | 'longest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function applySort(query: any, sort: SortOption) {
@@ -124,6 +124,7 @@ function applySort(query: any, sort: SortOption) {
     case 'recent': return query.order('created_at', { ascending: false });
     case 'last_translated': return query.order('last_translation_at', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
     case 'quality': return query.order('quality_score', { ascending: false }).order('title', { ascending: true });
+    case 'longest': return query.order('pages_count', { ascending: false }).order('title', { ascending: true });
     case 'popular':
     default: return query.order('read_count', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
   }
@@ -139,11 +140,53 @@ export async function browseBooks(opts: {
   category?: string;
   provider?: string;
   library?: string;
+  /**
+   * Multi-value forms of the four facets above, for surfaces that let a reader
+   * pick more than one. Within a facet the values are OR'd (a reader asking for
+   * Latin and Greek wants either); across facets they are AND'd, which is what
+   * every catalogue filter means by stacking conditions.
+   *
+   * They compose with the singular forms rather than replacing them — the
+   * singular ones are still what /languages/[code], /libraries/[slug] and the
+   * search page pass, and one shared query builder is the whole point.
+   */
+  languages?: string[];
+  collections?: string[];
+  categories?: string[];
+  providers?: string[];
+  /** `text_role`: original | period-translation | modern-translation (#2395). */
+  textRoles?: string[];
+  /** Bounds on `pages_count`, for "short works" / "the big folios". */
+  pagesMin?: number;
+  pagesMax?: number;
+  /** Only editions with a registered DOI. */
+  hasDoi?: boolean;
+  /** `is_first_translation` alone — the bibliographic claim, badged or not. */
   firstTranslation?: boolean;
+  /**
+   * The claim AND the translation that makes it visible, i.e. the same gate the
+   * "First Translation" badge renders behind (`isPublishedFirstTranslation`).
+   *
+   * `is_first_translation: true` is set by batch-flag scripts before the
+   * translation exists (`visibility-and-stats.md`), so the bare flag returns
+   * books whose cards carry no badge — a filter whose result set visibly
+   * disagrees with the count that offered it. Surfaces that let a reader ASK
+   * for first translations want this one; a bibliographic census wants the flag.
+   */
+  firstTranslationPublished?: boolean;
   hasTranslation?: boolean;
+  /** Only books with at least one transcribed page. */
+  hasOcr?: boolean;
   hasPages?: boolean;
   /** Only return items with resource_type set (artworks) */
   hasResourceType?: boolean;
+  /**
+   * Restrict to these book ids. The metadata predicates below still apply, so a
+   * vector lane that hands its hits in here is filtered by the SAME SQL as an
+   * ordinary browse — the leak `search-filters-and-lanes.md` warns about
+   * ("vector lanes carry no metadata predicate") cannot happen through it.
+   */
+  ids?: string[];
   yearMin?: number;
   yearMax?: number;
   titlePrefix?: string;
@@ -173,13 +216,28 @@ export async function browseBooks(opts: {
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
   if (opts.hasTranslation) query = query.gt('pages_translated', 0);
+  if (opts.hasOcr) query = query.gt('pages_ocr', 0);
   if (opts.hasResourceType) query = query.not('resource_type', 'is', null);
+  if (opts.ids) query = query.in('id', opts.ids);
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);
   if (opts.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
   if (opts.provider) query = query.eq('image_source_provider', opts.provider);
+
+  // `in` for scalar columns, `overlaps` for the array ones: `contains` would
+  // demand a book carry EVERY chosen collection, which is the opposite of what
+  // picking two of them means.
+  if (opts.languages?.length) query = query.in('language', opts.languages);
+  if (opts.providers?.length) query = query.in('image_source_provider', opts.providers);
+  if (opts.textRoles?.length) query = query.in('text_role', opts.textRoles);
+  if (opts.collections?.length) query = query.overlaps('collections', opts.collections);
+  if (opts.categories?.length) query = query.overlaps('categories', opts.categories.map(canonicalizeCategory));
+  if (opts.pagesMin != null) query = query.gte('pages_count', opts.pagesMin);
+  if (opts.pagesMax != null) query = query.lte('pages_count', opts.pagesMax);
+  if (opts.hasDoi) query = query.not('doi', 'is', null);
   if (opts.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
   if (opts.firstTranslation) query = query.eq('is_first_translation', true);
+  if (opts.firstTranslationPublished) query = query.eq('is_first_translation', true).gt('pages_translated', 0);
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
   if (opts.yearMax != null) query = query.lte('year', opts.yearMax);
   if (opts.titlePrefix) { const s = sanitizeFilterValue(opts.titlePrefix); query = query.or(`display_title.ilike.${s}%,title.ilike.${s}%`); }
@@ -648,6 +706,177 @@ export async function searchBookIds(
   const { data, error } = await query;
   if (error) throw new Error(`searchBookIds failed: ${error.message}`);
   return (data || []).map(row => row.id);
+}
+
+// ── Catalogue facets ─────────────────────────────────────────────────────────
+
+export interface FacetValue {
+  value: string;
+  count: number;
+}
+
+export interface CatalogFacets {
+  /** Books the facets were built from — `visible && pages_count > 0`. */
+  total: number;
+  languages: FacetValue[];
+  /**
+   * Distinct languages after compounds are split and variants folded
+   * ("Greek/Latin" is two, "Ancient Greek" is Greek) — see
+   * `language-canonical.ts`. Always >= `languages.length`, which counts only
+   * the labels that survive as a usable exact filter.
+   *
+   * Denominator note: this is over every visible processed book, NOT the
+   * homepage's `languageCount`, which additionally requires translated pages
+   * (`visibility-and-stats.md`). Same corpus, different question.
+   */
+  languageCount: number;
+  categories: FacetValue[];
+  /** original | period-translation | modern-translation, with counts. */
+  textRoles: FacetValue[];
+  withDoi: number;
+  collections: FacetValue[];
+  providers: FacetValue[];
+  /** Books per half-century, for the year-range histogram. */
+  decades: { year: number; count: number }[];
+  yearMin: number | null;
+  yearMax: number | null;
+  firstTranslations: number;
+  translated: number;
+  transcribed: number;
+}
+
+/**
+ * Every facet on the catalogue, from ONE sweep of `books_catalog`.
+ *
+ * The page used to call `getLanguageCounts` (a full paginated sweep) and would
+ * have needed `getCategoryCounts` (a second identical sweep) beside it, plus
+ * one more per facet — the same ~29 round trips repeated per dimension, all
+ * inside a 30s `maxDuration`. One sweep reads every facet column together and
+ * counts them in JS.
+ *
+ * Pages are fetched concurrently after an exact count tells us how many there
+ * are; sequential paging is what makes this shape slow, not the row volume.
+ * Runs behind ISR (`revalidate = 86400`), so it costs this once a day.
+ */
+export async function getCatalogFacets(scope?: { collection?: string }): Promise<CatalogFacets> {
+  const PAGE = 1000;
+  const COLUMNS = 'language, categories, collections, year, image_source_provider, text_role, doi, is_first_translation, pages_translated, pages_ocr';
+
+  // PostgREST builders are chainable and structurally identical whatever their
+  // row type, so the scope is applied through one generic helper rather than
+  // repeated on the count query and every page query.
+  type Chainable = {
+    eq: (col: string, val: unknown) => Chainable;
+    gt: (col: string, val: unknown) => Chainable;
+    contains: (col: string, val: unknown) => Chainable;
+  };
+  const scoped = <T>(q: T): T => {
+    let query = q as unknown as Chainable;
+    query = query.eq('visible', true).gt('pages_count', 0);
+    if (scope?.collection) query = query.contains('collections', [scope.collection]);
+    return query as unknown as T;
+  };
+
+  const { count, error: countError } = await scoped(
+    supabase.from('books_catalog').select('id', { count: 'exact', head: true }),
+  );
+  if (countError) throw new Error(`getCatalogFacets count failed: ${countError.message}`);
+
+  const total = count || 0;
+  const pageCount = Math.ceil(total / PAGE);
+  const rows: Record<string, unknown>[] = [];
+
+  // Bounded concurrency: enough to collapse the wall clock, few enough that we
+  // aren't opening 30 sockets at once against Supabase.
+  const CONCURRENCY = 8;
+  for (let start = 0; start < pageCount; start += CONCURRENCY) {
+    const batch = await Promise.all(
+      Array.from({ length: Math.min(CONCURRENCY, pageCount - start) }, (_, i) => {
+        const from = (start + i) * PAGE;
+        return scoped(supabase.from('books_catalog').select(COLUMNS))
+          // A deterministic total order is what makes the pages disjoint. Without
+          // it Postgres may return rows in a different order per query, so
+          // concurrent `.range()` windows overlap and skip — measured here as
+          // facet counts that moved between identical page loads (languages read
+          // 101, then 112, then 116 for the same corpus).
+          .order('id', { ascending: true })
+          .range(from, from + PAGE - 1)
+          .then(({ data, error }: { data: unknown; error: { message: string } | null }) => {
+            if (error) throw new Error(`getCatalogFacets page failed: ${error.message}`);
+            return (data || []) as Record<string, unknown>[];
+          });
+      }),
+    );
+    for (const page of batch) rows.push(...page);
+  }
+
+  const languages = new Map<string, number>();
+  const categories = new Map<string, number>();
+  const collections = new Map<string, number>();
+  const providers = new Map<string, number>();
+  const textRoles = new Map<string, number>();
+  const decades = new Map<number, number>();
+  let withDoi = 0;
+  let yearMin: number | null = null;
+  let yearMax: number | null = null;
+  let firstTranslations = 0;
+  let translated = 0;
+  let transcribed = 0;
+
+  const bump = (map: Map<string, number>, key: unknown) => {
+    if (typeof key !== 'string' || !key.trim()) return;
+    map.set(key, (map.get(key) || 0) + 1);
+  };
+
+  for (const row of rows) {
+    bump(languages, row.language);
+    bump(providers, row.image_source_provider);
+    bump(textRoles, row.text_role);
+    if (typeof row.doi === 'string' && row.doi.trim()) withDoi++;
+    if (Array.isArray(row.categories)) for (const c of row.categories) bump(categories, canonicalizeCategory(String(c)));
+    if (Array.isArray(row.collections)) for (const c of row.collections) bump(collections, String(c));
+
+    const year = typeof row.year === 'number' ? row.year : null;
+    // Years outside this window are catalogue errors, not books — they would
+    // stretch the range slider across a millennium of empty space.
+    if (year != null && year >= 1000 && year <= 1950) {
+      if (yearMin == null || year < yearMin) yearMin = year;
+      if (yearMax == null || year > yearMax) yearMax = year;
+      const bucket = Math.floor(year / 50) * 50;
+      decades.set(bucket, (decades.get(bucket) || 0) + 1);
+    }
+
+    // `is_first_translation` alone is a bibliographic claim set before the
+    // translation exists (visibility-and-stats.md), so the count that sits
+    // beside a "First translations" filter requires translated pages too — the
+    // same gate the badge renders behind.
+    if (row.is_first_translation === true && (row.pages_translated as number) > 0) firstTranslations++;
+    if ((row.pages_translated as number) > 0) translated++;
+    if ((row.pages_ocr as number) > 0) transcribed++;
+  }
+
+  const sorted = (map: Map<string, number>): FacetValue[] =>
+    [...map.entries()].map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count);
+
+  return {
+    total,
+    // Drop junk labels ("e") and multi-language "collab" labels: only a single
+    // real language's raw label still matches the exact `eq('language', …)`
+    // filter in browseBooks. See src/lib/language-canonical.ts.
+    languages: sorted(languages).filter((l) => isSingleRealLanguage(l.value)),
+    languageCount: distinctLanguageSet([...languages.keys()]).size,
+    categories: sorted(categories),
+    textRoles: sorted(textRoles),
+    withDoi,
+    collections: sorted(collections),
+    providers: sorted(providers),
+    decades: [...decades.entries()].map(([year, count]) => ({ year, count })).sort((a, b) => a.year - b.year),
+    yearMin,
+    yearMax,
+    firstTranslations,
+    translated,
+    transcribed,
+  };
 }
 
 /**

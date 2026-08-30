@@ -82,3 +82,134 @@ describe('search api-client date range', () => {
     expect(url).toContain('date_to=1700');
   });
 });
+
+// The catalogue's filters go through one module that both writes and reads the
+// query string (src/lib/catalog-query.ts), so the drift these tests exist to
+// catch is structurally impossible there. What still needs pinning is the two
+// things a shared module cannot guarantee on its own: that the wire names are
+// the ones /api/catalog/browse and ScholarCatalog already speak, and that every
+// filter actually survives a round trip.
+describe('library filter contract', () => {
+  it('writes the wire names the browse route reads', async () => {
+    const { buildCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
+
+    const qs = buildCatalogParams({
+      ...DEFAULT_FILTERS,
+      q: 'fludd',
+      ask: 'books about angels',
+      languages: ['Latin'],
+      collections: ['alchemy'],
+      categories: ['hermeticism'],
+      providers: ['bph'],
+      textRoles: ['original'],
+      yearMin: 1600,
+      yearMax: 1699,
+      pagesMin: 100,
+      pagesMax: 500,
+      firstTranslation: true,
+      hasTranslation: true,
+      hasOcr: true,
+      hasDoi: true,
+      sort: 'year_asc',
+      page: 3,
+    }).toString();
+
+    expect(qs).toContain('q=fludd');
+    expect(qs).toContain('ask=books+about+angels');
+    expect(qs).toContain('language=Latin');
+    expect(qs).toContain('collection=alchemy');
+    expect(qs).toContain('category=hermeticism');
+    expect(qs).toContain('provider=bph');
+    expect(qs).toContain('text_role=original');
+    expect(qs).toContain('year_min=1600');
+    expect(qs).toContain('year_max=1699');
+    expect(qs).toContain('pages_min=100');
+    expect(qs).toContain('pages_max=500');
+    expect(qs).toContain('first_translation=1');
+    expect(qs).toContain('has_translation=1');
+    expect(qs).toContain('has_ocr=1');
+    expect(qs).toContain('has_doi=1');
+    expect(qs).toContain('sort=year_asc');
+    expect(qs).toContain('page=3');
+    // The camelCase spellings are the ones that were inert in #3269. They must
+    // never be what goes on the wire.
+    expect(qs).not.toContain('yearMin');
+    expect(qs).not.toContain('firstTranslation');
+    expect(qs).not.toContain('textRoles');
+  });
+
+  it('repeats a multi-value facet rather than joining it', async () => {
+    const { buildCatalogParams, parseCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
+
+    // A real `books_catalog.language` value with punctuation in it: any
+    // delimiter we picked for joining would eventually split a value in half.
+    const languages = ['Latin', 'Hebrew and Aramaic in Hebrew script', 'Latin-German'];
+    const params = buildCatalogParams({ ...DEFAULT_FILTERS, languages });
+
+    expect(params.getAll('language')).toEqual(languages);
+    expect(parseCatalogParams(params).languages).toEqual(languages);
+  });
+
+  it('round-trips every filter through build then parse', async () => {
+    const { buildCatalogParams, parseCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
+
+    const filters = {
+      ...DEFAULT_FILTERS,
+      q: 'agrippa',
+      ask: 'plague remedies',
+      languages: ['German', 'Latin'],
+      collections: ['magic', 'alchemy'],
+      categories: ['alchemy'],
+      providers: ['gallica', 'bph'],
+      textRoles: ['original', 'modern-translation'],
+      yearMin: 1500,
+      yearMax: 1599,
+      pagesMin: 10,
+      pagesMax: 900,
+      firstTranslation: true,
+      hasTranslation: true,
+      hasOcr: true,
+      hasDoi: true,
+      sort: 'relevance' as const,
+      page: 2,
+      view: 'list' as const,
+    };
+
+    const parsed = parseCatalogParams(buildCatalogParams(filters, { includeView: true }));
+    expect(parsed).toEqual(filters);
+  });
+
+  it('omits everything that is at its default, so an untouched library has a clean URL', async () => {
+    const { buildCatalogParams, DEFAULT_FILTERS } = await import('@/lib/catalog-query');
+    expect(buildCatalogParams(DEFAULT_FILTERS, { includeView: true }).toString()).toBe('');
+  });
+
+  it('swaps a reversed range instead of returning nothing', async () => {
+    const { parseCatalogParams } = await import('@/lib/catalog-query');
+    const years = parseCatalogParams(new URLSearchParams('year_min=1700&year_max=1500'));
+    expect([years.yearMin, years.yearMax]).toEqual([1500, 1700]);
+    const pages = parseCatalogParams(new URLSearchParams('pages_min=900&pages_max=10'));
+    expect([pages.pagesMin, pages.pagesMax]).toEqual([10, 900]);
+  });
+
+  it('drops blanks and duplicates from a multi-value facet', async () => {
+    const { parseCatalogParams } = await import('@/lib/catalog-query');
+    const parsed = parseCatalogParams(new URLSearchParams('language=Latin&language=&language=Latin&language=Greek'));
+    expect(parsed.languages).toEqual(['Latin', 'Greek']);
+  });
+
+  it('counts one condition per removable chip', async () => {
+    const { parseCatalogParams, countActiveFilters } = await import('@/lib/catalog-query');
+    // Two languages are two chips, and a year range is one.
+    expect(countActiveFilters(parseCatalogParams(
+      new URLSearchParams('language=Latin&language=Greek&year_min=1500&year_max=1599'),
+    ))).toBe(3);
+    expect(countActiveFilters(parseCatalogParams(new URLSearchParams('sort=title&page=4&view=list')))).toBe(0);
+  });
+
+  it('ignores values it does not know', async () => {
+    const { parseCatalogParams } = await import('@/lib/catalog-query');
+    expect(parseCatalogParams(new URLSearchParams('sort=; DROP TABLE')).sort).toBe('popular');
+    expect(parseCatalogParams(new URLSearchParams('text_role=made-up')).textRoles).toEqual([]);
+  });
+});

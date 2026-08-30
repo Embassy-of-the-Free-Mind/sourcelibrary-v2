@@ -227,6 +227,18 @@ h1, h2, h3, h4 {
   outline-offset: 2px;
 }
 
+/* The same indicator in ink, for surfaces made mostly of controls. On the
+   library's filter rail the rust ring fires on every checkbox, every facet
+   search box and every chip, and a page outlined in red reads as a page full of
+   errors. Same 2px, same offset, so nothing is lost for keyboard users — only
+   the hue changes. Applied per element rather than by re-pointing the token,
+   because globals.css declares the palette under `@theme inline` and Tailwind
+   inlines the literal, leaving no custom property to override at runtime. */
+.focus-ink:focus-visible {
+  outline-color: var(--text-primary);
+  outline-offset: 1px;
+}
+
 /* Prose styling for manuscripts */
 .prose-manuscript {
   font-family: 'Newsreader', Georgia, serif;

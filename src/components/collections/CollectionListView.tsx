@@ -37,9 +37,23 @@ interface CollectionListViewProps {
   collectionType?: string;
   /** Collection slug carried on artwork links (?from=) so prev/next walks this collection. */
   fromCollection?: string;
+  /** Accent for the sort arrows and the title hover. */
+  accent?: ListAccent;
 }
 
-function SortIcon({ column, currentSort }: { column: string; currentSort: string }) {
+/** See CatalogPagination for why this is a prop and not a CSS variable. */
+export type ListAccent = 'rust' | 'gold';
+
+const ACCENT_TEXT: Record<ListAccent, string> = {
+  rust: 'text-accent-rust',
+  gold: 'text-accent-gold-dark',
+};
+const ACCENT_HOVER: Record<ListAccent, string> = {
+  rust: 'group-hover:text-accent-rust',
+  gold: 'group-hover:text-accent-gold-dark',
+};
+
+function SortIcon({ column, currentSort, accent }: { column: string; currentSort: string; accent: ListAccent }) {
   const isActive =
     (column === 'year' && (currentSort === 'year_asc' || currentSort === 'year_desc')) ||
     (column === 'title' && currentSort === 'title') ||
@@ -48,9 +62,9 @@ function SortIcon({ column, currentSort }: { column: string; currentSort: string
   if (!isActive) return <ArrowUpDown className="w-3 h-3 text-muted/50" />;
 
   if (column === 'year' && currentSort === 'year_desc') {
-    return <ArrowDown className="w-3 h-3 text-accent-rust" />;
+    return <ArrowDown className={`w-3 h-3 ${ACCENT_TEXT[accent]}`} />;
   }
-  return <ArrowUp className="w-3 h-3 text-accent-rust" />;
+  return <ArrowUp className={`w-3 h-3 ${ACCENT_TEXT[accent]}`} />;
 }
 
 function translationPercent(book: BookItem): number {
@@ -65,6 +79,7 @@ export default function CollectionListView({
   loading,
   collectionType,
   fromCollection,
+  accent = 'rust',
 }: CollectionListViewProps) {
   const handleColumnSort = (column: string) => {
     if (column === 'year') {
@@ -89,7 +104,7 @@ export default function CollectionListView({
                 className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer"
               >
                 Title
-                <SortIcon column="title" currentSort={sort} />
+                <SortIcon column="title" currentSort={sort} accent={accent} />
               </button>
             </th>
             <th className="pb-3 pr-4 font-medium hidden sm:table-cell">
@@ -98,7 +113,7 @@ export default function CollectionListView({
                 className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer"
               >
                 {isArt ? 'Artist' : 'Author'}
-                <SortIcon column="author" currentSort={sort} />
+                <SortIcon column="author" currentSort={sort} accent={accent} />
               </button>
             </th>
             <th className="pb-3 pr-4 font-medium w-20">
@@ -107,7 +122,7 @@ export default function CollectionListView({
                 className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer"
               >
                 Year
-                <SortIcon column="year" currentSort={sort} />
+                <SortIcon column="year" currentSort={sort} accent={accent} />
               </button>
             </th>
             <th className="pb-3 pr-4 font-medium hidden md:table-cell w-24">Language</th>
@@ -129,7 +144,7 @@ export default function CollectionListView({
                 <td className="py-3 pr-4">
                   <Link href={href} className="block">
                     <span
-                      className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors line-clamp-1"
+                      className={`text-sm font-medium text-primary ${ACCENT_HOVER[accent]} transition-colors line-clamp-1`}
                       style={{ fontFamily: 'var(--font-serif)' }}
                     >
                       {book.display_title || book.title}

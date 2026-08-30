@@ -84,9 +84,19 @@ export interface SemanticBookResult {
 export async function semanticBookSearch(
   query: string,
   limit: number = 20,
-  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number; tenantId?: string }
+  opts?: {
+    language?: string; yearMin?: number; yearMax?: number; threshold?: number; tenantId?: string;
+    /**
+     * A query embedding the caller already has. Pass it when the caller needed
+     * to know whether the embedding was reachable at all: this function's empty
+     * array cannot tell "we asked and found nothing" from "we could not ask"
+     * (`first-translation-claims.md` names that conflation as the single most
+     * common way this system lies), and a caller that embeds first can.
+     */
+    embedding?: number[];
+  }
 ): Promise<SemanticBookResult[]> {
-  const queryEmbedding = await getQueryEmbedding(query);
+  const queryEmbedding = opts?.embedding ?? await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
   const { data, error } = await supabase.rpc('match_books_semantic', {
