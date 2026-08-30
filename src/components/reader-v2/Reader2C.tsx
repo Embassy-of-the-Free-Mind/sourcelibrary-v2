@@ -2429,6 +2429,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // changing page — the pager, the filmstrip, Contents, a typed page number —
   // is a deliberate move, and lands at the top of the reader.
   const keepPaneOnTurn = useRef(false);
+  // Which way the last turn went, so the new page can arrive from that side.
+  // Taken from the index rather than from the swipe, so the pager, the
+  // filmstrip and a jump all animate the same way a swipe does.
+  const lastIndex = useRef(r.currentIndex);
   // Restoring the anchor scrolls the column, and that scroll must not be read
   // back as a reading move — on a short page the restore clamps at the foot,
   // which would re-read the anchor as the scan and lose the pane on the next
@@ -2478,11 +2482,28 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       lastScrollY.current = el.scrollTop;
     };
     place();
+
+    // Slide the panes in from the side the turn came from. Restarting the
+    // animation by hand rather than keying the elements: a new key would
+    // remount the column, and the scan would be re-fetched and re-decoded on
+    // every page turn.
+    const back = r.currentIndex < lastIndex.current;
+    lastIndex.current = r.currentIndex;
+    for (const pane of Array.from(el.querySelectorAll<HTMLElement>(':scope > section'))) {
+      pane.classList.remove('rv2-turn-next', 'rv2-turn-prev');
+      void pane.offsetWidth; // reflow, or the class swap is coalesced and nothing plays
+      pane.classList.add(back ? 'rv2-turn-prev' : 'rv2-turn-next');
+    }
+
     // The title bar comes back on a turn and the new text settles a beat
     // later; both change how far the column can scroll, so a position taken
     // in this pass alone lands short of where it was asked to go.
     const raf = requestAnimationFrame(place);
     return () => cancelAnimationFrame(raf);
+    // The RENDERED page only. On an uncached turn the index moves a fetch
+    // ahead of the content, and keying on it too would play the animation
+    // over the outgoing page and then again over the new one.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [r.currentPage.id]);
 
   /**
@@ -3396,6 +3417,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           className="flex-1 min-h-0 overflow-y-auto flex flex-col"
           style={{
             overscrollBehavior: 'contain',
+            // The turn animation slides the panes in from the side, and a pane
+            // sitting 14px to the right is 14px of scrollable width the browser
+            // will scroll sideways to reach — the turn jiggled and could be
+            // left horizontally scrolled if you touched it mid-flight.
+            overflowX: 'hidden',
             background: lastSurface,
             // No scroll-snap here. A proximity snap on the pager made the
             // scroller grab at the finger near the foot of every page, which
