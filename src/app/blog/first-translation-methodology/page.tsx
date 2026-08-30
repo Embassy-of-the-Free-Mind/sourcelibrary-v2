@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How We Identify First Translations',
     description: 'The methodology behind Source Library\'s first-translation classification: AI enrichment, bibliographic heuristics, and human review.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg' }],
   },
   alternates: {
     canonical: '/blog/first-translation-methodology',
@@ -26,7 +26,7 @@ export default function FirstTranslationMethodologyPage() {
         <ContentHeader
           title="How We Identify First Translations"
           subtitle="The methodology behind Source Library's classification system"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg"
+          image="https://images.sourcelibrary.org/archived/6952587bab34727b1f045546/3.jpg"
           imageAlt="Title page of Symbola Aureae Mensae by Michael Maier, 1617"
         >
           <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 30 March 2026 &middot; 22 min read</p>

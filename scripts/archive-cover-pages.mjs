@@ -11,7 +11,35 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { put } from '@vercel/blob';
+import { ARCHIVABLE_SOURCES_REGEX } from './lib/archivable-sources.mjs';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { assertBookScopedKey } from './lib/r2-key.mjs';
+
+// Writes go to R2, never Vercel Blob. This script imported `put` from
+// '@vercel/blob' directly, which bypassed both the shared writer and its key
+// guards, and wrote new objects into the very store #3645 is trying to retire.
+// Same client + key-guard shape as scripts/maintenance/archive-ia-bulk.mjs.
+const s3 = new S3Client({
+  region: 'auto',
+  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+});
+const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME || 'sourcelibrary';
+const R2_PUBLIC_URL = (process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org').replace(/\/$/, '');
+
+async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
+  await s3.send(new PutObjectCommand({
+    Bucket: R2_BUCKET_NAME,
+    Key: key,
+    Body: buffer,
+    ContentType: contentType,
+    CacheControl: 'public, max-age=86400',
+  }));
+  return `${R2_PUBLIC_URL}/${key}`;
+}
 
 const DRY_RUN = process.env.DRY_RUN === '1';
 const BOOK_LIMIT = parseInt(process.env.LIMIT || '100');
@@ -25,7 +53,8 @@ await client.connect();
 const db = client.db('bookstore');
 
 // Archivable source pattern
-const ARCHIVABLE_RE = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/;
+// Shared with the archive route and the watchdog — see scripts/lib/archivable-sources.mjs.
+const ARCHIVABLE_RE = ARCHIVABLE_SOURCES_REGEX;
 
 // Find books with zero archived pages but with archivable source URLs
 let bookFilter = {
@@ -49,8 +78,8 @@ const pipeline = [
         { $match: {
           $expr: { $eq: ['$book_id', '$$bid'] },
           $or: [
-            { photo: { $regex: /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/ } },
-            { photo_original: { $regex: /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/ } },
+            { photo: { $regex: ARCHIVABLE_RE } },
+            { photo_original: { $regex: ARCHIVABLE_RE } },
           ],
         }},
         { $limit: 1 },
@@ -132,21 +161,19 @@ for (const book of books) {
           const buffer = Buffer.from(await resp.arrayBuffer());
           const mimeType = resp.headers.get('content-type') || 'image/jpeg';
 
-          // Upload to R2/Blob
+          // Upload to R2. The key MUST carry this book's id — a book-independent
+          // page key is shared between books by construction and nothing
+          // downstream can detect it (#3362).
           const filename = `archived/${book.id}/${page.page_number}.jpg`;
-          const blob = await put(filename, buffer, {
-            access: 'public',
-            contentType: mimeType,
-            addRandomSuffix: false,
-            allowOverwrite: true,
-          });
+          assertBookScopedKey(filename, book.id, 'archive-cover-pages');
+          const uploadedUrl = await uploadToR2(filename, buffer, mimeType);
 
           // Update page
           await db.collection('pages').updateOne(
             { _id: page._id },
             {
               $set: {
-                archived_photo: blob.url,
+                archived_photo: uploadedUrl,
                 'archive_metadata.archived_at': new Date(),
                 'archive_metadata.source_url': sourceUrl,
                 'archive_metadata.bytes': buffer.byteLength,

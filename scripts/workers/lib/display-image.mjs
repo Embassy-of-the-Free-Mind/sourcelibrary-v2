@@ -3,6 +3,16 @@
  * from a full-res image buffer, with provenance marks baked into the display version.
  *
  * Used by all 3 archive workers (archive-ocr, archive-bulk, archive-erara).
+ *
+ * WIDTH DISAGREEMENT — deliberate, and open (#4406). This forward path writes
+ * display variants at DISPLAY_WIDTH (1200). The backfill,
+ * scripts/maintenance/bake-provenance-mark.mjs, REGENERATES them at
+ * min(2000, native) — chosen so the keyed watermark has enough textured blocks
+ * to survive recompression (detection z 6.9-8.5 -> 10.7-13), and because the
+ * marked variant became the reader's resting image. The corpus therefore holds
+ * both widths. Do not "fix" one to match the other unilaterally: 2000px costs
+ * ~$40/month in R2 corpus-wide (measured 1.98x, +336 KB/page), so it is a
+ * spend decision, tracked on #4406. Whoever settles it should change BOTH.
  */
 
 import sharp from 'sharp';
@@ -11,6 +21,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { assertBookScopedKey } from '../../lib/r2-key.mjs';
+import { markImage } from '../../lib/provenance-mark.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -121,13 +132,63 @@ async function applyProvenanceMarks(buffer) {
     .toBuffer();
 }
 
+// Warn once per process, not once per page — an archive run is millions of pages.
+let _warnedNoKeyedMark = null;
+
+/**
+ * Apply the canonical #2651 provenance scheme to a display buffer: EXIF +
+ * LLM-readable message + a keyed invisible watermark on EVERY page, plus a
+ * discreet visible logo on ~1 in 10 (the rate lives inside markImage).
+ *
+ * This is the SAME module the backfill uses (scripts/lib/provenance-mark.mjs),
+ * so a page archived today carries the same detectable mark as a page the
+ * backfill touched. Before #4406 this path applied a local, cosmetic-only
+ * reimplementation to just 10% of pages and embedded no keyed watermark at all,
+ * so 90% of newly archived pages left the system unmarked and none of them were
+ * attributable — while the whole point of #2651 is recognising our scans in the
+ * wild. Every import widened that hole.
+ *
+ * Falls back to the legacy cosmetic marks (never to *nothing*) when the
+ * watermark key or the book id is unavailable, and says so once — a silent
+ * downgrade here is invisible for months.
+ */
+async function applyCanonicalMarks(displayBuffer, bookId, pageNumber) {
+  const key = process.env.PROVENANCE_SECRET_KEY;
+  const reason = !key ? 'PROVENANCE_SECRET_KEY is not set'
+    : !bookId ? 'caller passed no bookId'
+    : null;
+
+  if (!reason) {
+    try {
+      return await markImage(displayBuffer, { editionId: bookId, pageNumber, key });
+    } catch (e) {
+      if (_warnedNoKeyedMark !== 'error') {
+        _warnedNoKeyedMark = 'error';
+        console.warn(`[provenance] keyed mark FAILED, falling back to cosmetic marks: ${e.message}`);
+      }
+    }
+  } else if (_warnedNoKeyedMark !== reason) {
+    _warnedNoKeyedMark = reason;
+    console.warn(
+      `[provenance] display variants are being written WITHOUT the keyed watermark — ${reason}. ` +
+      `They will not be attributable in the wild (#2651).`
+    );
+  }
+
+  // Legacy path: cosmetic marks on ~1 in 10, exactly as before #4406.
+  return Math.random() < 0.1 ? applyProvenanceMarks(displayBuffer) : displayBuffer;
+}
+
 /**
  * Generate display and thumbnail variants from a full-res buffer.
  *
  * @param {Buffer} fullResBuffer - The full-resolution JPEG buffer
- * @returns {{ display: Buffer, thumb: Buffer }} - The generated variants
+ * @param {{ bookId?: string, pageNumber?: number }} [ids] - Identity for the
+ *   provenance mark. Omit ONLY where no page identity exists; omitting it costs
+ *   the keyed watermark and logs a warning.
+ * @returns {{ display: Buffer, thumb: Buffer, displayWidth: number|null, displayHeight: number|null }}
  */
-export async function generateDisplayVariants(fullResBuffer) {
+export async function generateDisplayVariants(fullResBuffer, ids = {}) {
   // Guard BEFORE creating displayPromise: an empty/invalid buffer makes the
   // sharp() constructor throw *synchronously*. If that sync throw happened at
   // the thumbPromise line below, `displayPromise` would already be a pending
@@ -143,9 +204,7 @@ export async function generateDisplayVariants(fullResBuffer) {
       .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
       .jpeg({ quality: DISPLAY_QUALITY, progressive: true })
       .toBuffer();
-    return Math.random() < 0.1
-      ? await applyProvenanceMarks(displayResized)
-      : displayResized;
+    return applyCanonicalMarks(displayResized, ids.bookId, ids.pageNumber);
   })();
 
   const thumbPromise = sharp(fullResBuffer)
@@ -154,7 +213,16 @@ export async function generateDisplayVariants(fullResBuffer) {
     .toBuffer();
 
   const [display, thumb] = await Promise.all([displayPromise, thumbPromise]);
-  return { display, thumb };
+  // The variant's OWN dimensions. The IIIF manifest paints the display variant
+  // (#4406) and needs its real size; without this it can only estimate from the
+  // master. Recorded here so every writer that persists a page doc can store it.
+  let displayWidth = null, displayHeight = null;
+  try {
+    const dm = await sharp(display).metadata();
+    displayWidth = dm.width || null;
+    displayHeight = dm.height || null;
+  } catch { /* dimensions are a nice-to-have; never fail an archive over them */ }
+  return { display, thumb, displayWidth, displayHeight };
 }
 
 /**
@@ -184,7 +252,7 @@ export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uplo
   // while sharp generates the resized variants in parallel.
   const metaPromise = sharp(fullResBuffer).metadata();
   const archivedUploadPromise = uploadFn(archivedKey, fullResBuffer, 'image/jpeg');
-  const variantsPromise = generateDisplayVariants(fullResBuffer);
+  const variantsPromise = generateDisplayVariants(fullResBuffer, { bookId, pageNumber });
 
   // Once variants are ready, start their uploads — they run alongside the full-res upload.
   const variantUploadsPromise = variantsPromise.then(({ display, thumb }) =>
@@ -194,17 +262,24 @@ export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uplo
     ])
   );
 
-  const [archivedUrl, [displayUrl, thumbUrl], meta] = await Promise.all([
+  const [archivedUrl, [displayUrl, thumbUrl], meta, variants] = await Promise.all([
     archivedUploadPromise,
     variantUploadsPromise,
     metaPromise,
+    variantsPromise,
   ]);
 
   return {
     archived: archivedUrl,
     display: displayUrl,
     thumb: thumbUrl,
+    // width/height describe the MASTER (archived_photo), as they always have.
     width: meta.width || null,
     height: meta.height || null,
+    // …and these describe the display variant. Callers that persist a page doc
+    // should store them as display_width / display_height so the IIIF manifest
+    // can state the painted body's true size instead of estimating it (#4406).
+    displayWidth: variants.displayWidth,
+    displayHeight: variants.displayHeight,
   };
 }

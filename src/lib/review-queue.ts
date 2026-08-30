@@ -68,6 +68,22 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
   ],
 };
 
+/**
+ * A volunteer_id has TWO valid shapes: the signed-in account id (NextAuth
+ * MongoDBAdapter ObjectId string — 24 hex chars, what useReviewQueue sends
+ * since ratings became account-attributed) or the anonymous per-browser uuid
+ * (36 chars, the signed-out fallback). The submit route validated only the
+ * uuid shape, so every signed-in submission 400'd — zero ratings landed
+ * between 2026-08-05 and 2026-08-19 while volunteers saw "Submit failed".
+ * Every route that checks a volunteer_id must use this, not its own regex.
+ */
+export function isValidVolunteerId(id: string): boolean {
+  return (
+    /^[0-9a-fA-F]{24}$/.test(id) ||
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
+  );
+}
+
 export function isValidRating(queue: string, rating: string): boolean {
   return QUEUE_RATINGS[queue]?.some(r => r.rating === rating) ?? false;
 }

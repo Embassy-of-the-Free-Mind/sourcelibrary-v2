@@ -25,6 +25,8 @@
  * archive pipeline runs opj_decompress → JPEG on R2. 100% of stored URLs are .jpg.
  */
 import { isUsableImageUrl, isArchiveFailed } from '@/lib/utils';
+import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
+import { isAllowedImageHost } from '@/lib/image-proxy-hosts';
 
 export type ImageSize = 'thumb' | 'display' | 'original' | 'hires';
 
@@ -61,6 +63,64 @@ const UNSAFE_FORMAT = /\.(jp2|jpx|jpf|j2k|tiff?)(\?|$)/i;
  */
 function isBrowserSafe(url: string): boolean {
   return !UNSAFE_FORMAT.test(url);
+}
+
+/**
+ * Will `/api/image` agree to fetch this? The proxy keeps its own, narrower
+ * allowlist (it is an outbound-fetch boundary, not a render policy), so routing
+ * an un-allowlisted host through it produces a 400, not a picture.
+ */
+function isProxyableUrl(url: string): boolean {
+  try {
+    return isAllowedImageHost(new URL(url).hostname);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Candidate screening for the browser-facing sizes, and the reason this module
+ * screens at all.
+ *
+ * Until 2026-08-21 it did not. `media.getty.edu` was absent from
+ * `CSP_IMG_HOSTS`, so all 2,506 Florentine Codex pages resolved to a Getty
+ * `image_thumb` that every browser refused — the page grid and the cover picker
+ * rendered nothing — while curl got a clean 200 from every one of those URLs.
+ * The book-cover resolver (`getBookThumbnailUrl`) had screened against this same
+ * list since 2026-08-04; the page resolver never did, and an R2 thumbnail that
+ * would have worked sat one field away the whole time.
+ *
+ * Note the blast radius is per SIZE TIER, not per book: those same pages carry
+ * `display_photo` on R2, so the reader's main image was never affected. A host
+ * can be missing for one tier and present for another.
+ *
+ * But not every consumer here is a browser. Exports (PDF/EPUB/ZIP) hand the
+ * result to a server-side fetcher, where CSP does not apply — so a URL the
+ * browser would refuse is still perfectly usable there. Hence: a renderable
+ * candidate wins outright, and a non-renderable but size-bounded one is
+ * *remembered* rather than discarded, returned only when nothing renderable and
+ * nothing proxyable exists. That case is empty in the corpus today (every
+ * page-image host is allowlisted), but discarding the only working URL would
+ * have broken `pageExportImageUrl` for any future one.
+ *
+ * Same-origin URLs (`/api/image?…`) never reach here — they are built, not
+ * chosen, and `'self'` always passes.
+ */
+class SizedCandidates {
+  private fallback: string | null = null;
+
+  /** True when `url` can go straight to an <img>; otherwise it may be kept. */
+  accept(url: string | null | undefined): url is string {
+    if (!isUsableImageUrl(url) || !isBrowserSafe(url)) return false;
+    if (isBrowserRenderableImageUrl(url)) return true;
+    this.fallback ??= url;
+    return false;
+  }
+
+  /** The best non-renderable candidate seen, for server-side consumers. */
+  get lastResort(): string | null {
+    return this.fallback;
+  }
 }
 
 /**
@@ -163,14 +223,16 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
     return base && isBrowserSafe(base) ? proxyUrl(base, width, quality, crop) : null;
   }
 
+  const candidates = new SizedCandidates();
+
   // (A) Pre-sized R2 variant — only when it matches the *displayed* content.
   // Skip for old-era split pages: their display_photo / image_thumb are resizes
   // of the UNcropped image, so using them would show more than the cropped half.
   if (!hasCroppedHalf) {
-    if (size === 'display' && isUsableImageUrl(page.display_photo)) return page.display_photo;
+    if (size === 'display' && candidates.accept(page.display_photo)) return page.display_photo;
     if (size === 'thumb') {
-      if (isUsableImageUrl(page.image_thumb)) return page.image_thumb;
-      if (isUsableImageUrl(page.thumbnail_blob)) return page.thumbnail_blob;
+      if (candidates.accept(page.image_thumb)) return page.image_thumb;
+      if (candidates.accept(page.thumbnail_blob)) return page.thumbnail_blob;
     }
     const derived = deriveVariant(page.photo, size);
     if (derived) return derived;
@@ -180,12 +242,17 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
   const base = getPageSource(page);
   if (!base || !isBrowserSafe(base)) {
     // Source unusable for display; last-resort browser-safe thumbnail field.
-    if (size === 'thumb' && isUsableImageUrl(page.thumbnail)) return page.thumbnail;
-    return null;
+    if (candidates.accept(page.thumbnail) && size === 'thumb') return page.thumbnail!;
+    return candidates.lastResort;
   }
+  // IIIF-native resize is free but lands on the provider's host — worth it only
+  // when the CSP allows that host; otherwise proxy, which is same-origin and so
+  // always renders. A host the proxy will not fetch either leaves the bounded
+  // stored variant as the only thing that works anywhere.
   const iiif = iiifResize(base, width);
-  if (iiif) return iiif;
-  return proxyUrl(base, width, quality);
+  if (iiif && candidates.accept(iiif)) return iiif;
+  if (isProxyableUrl(base)) return proxyUrl(base, width, quality);
+  return candidates.lastResort ?? proxyUrl(base, width, quality);
 }
 
 /** Resolve a large (zoom/magnifier) URL — IIIF-native at high width, else proxy. */
@@ -195,7 +262,9 @@ function resolveHires(page: PageImageFields): string | null {
   const crop = cropRegion(page);
   if (!crop) {
     const iiif = iiifResize(base, HIRES_WIDTH);
-    if (iiif) return iiif;
+    // Renderable → use it. Un-allowlisted but the proxy can't fetch the host
+    // either → it is still the only bounded URL that works at all.
+    if (iiif && (isBrowserRenderableImageUrl(iiif) || !isProxyableUrl(base))) return iiif;
   }
   return proxyUrl(base, HIRES_WIDTH, 85, crop);
 }

@@ -41,7 +41,12 @@ function getR2BucketName(): string {
 }
 
 function getR2PublicUrl(): string {
-  return process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+  // .trim() is load-bearing: a trailing "\n" in this env value once poisoned
+  // 7,575 gallery_images rows with "https://images.sourcelibrary.org\n/..."
+  // URLs (#4340, lesson_env_newline_phantom_sync_success). Browsers strip the
+  // newline when parsing, so it shipped unnoticed; every non-browser consumer
+  // got broken URLs.
+  return (process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org').trim();
 }
 
 export function isR2Configured(): boolean {
@@ -84,18 +89,21 @@ export async function storagePut(
     return r2Put(r2, pathname, body, options);
   }
 
-  // R2 not configured — this should not happen in production
-  console.warn('[storage] WARNING: R2 not configured, falling back to Vercel Blob. This costs money — check R2 env vars.');
-
-  // Fallback to Vercel Blob
-  const { put } = await import('@vercel/blob');
-  const blob = await put(pathname, Buffer.isBuffer(body) ? body : Buffer.from(body as Uint8Array), {
-    access: options.access || 'public',
-    contentType: options.contentType,
-    addRandomSuffix: options.addRandomSuffix ?? false,
-    allowOverwrite: options.allowOverwrite,
-  });
-  return { url: blob.url, pathname: blob.pathname };
+  // R2 not configured. This used to fall through to Vercel Blob behind a
+  // console.warn — which is a silent failure wearing a warning's clothes:
+  // nothing reads server logs on the happy path, the write appears to succeed,
+  // and the object lands in the store we are trying to retire while the row
+  // records a blob.vercel-storage.com URL that no later R2 sweep will find.
+  //
+  // A misconfiguration must not be able to quietly resurrect the old backend.
+  // Fail here instead: the caller sees a real error, and the fix (set the R2
+  // env vars) is named in it.
+  throw new Error(
+    `[storage] R2 is not configured (R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / ` +
+    `R2_SECRET_ACCESS_KEY / R2_BUCKET_NAME) — refusing to write "${pathname}". ` +
+    `Vercel Blob is retired (#3645); writing there costs money and strands the ` +
+    `object outside R2. Set the R2 environment variables.`,
+  );
 }
 
 // --- Path helpers ---

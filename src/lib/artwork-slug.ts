@@ -18,15 +18,47 @@
  * Precedence, most specific first:
  *   1. the exact slug asked for, if visible
  *   2. the `art-` variant, if visible
- *   3. any match at all — hidden, so the caller's visibility gate 404s it
+ *   3. the record whose id was asked for, if visible (favorites and saved
+ *      links address artworks by id — the like APIs didn't always carry slugs)
+ *   4. any match at all — hidden, so the caller's visibility gate 404s it
  *
  * Rule 3 matters: a hidden *canonical* must still 404 rather than silently
  * falling through to some other record (the hidden-book read-path gate).
  */
 
 export interface ArtworkCandidate {
+  id?: string | null;
   slug?: string | null;
   visible?: boolean | null;
+}
+
+/**
+ * Where a `/book/<id>` request should be sent instead, or null to render it as a book.
+ *
+ * `/book/[id]` renders artworks too (BookInfo branches to <ArtworkInfo> on
+ * `resource_type`), so every artwork had two fully-rendering URLs, each emitting a
+ * self-referential canonical. This is the predicate that collapses them onto /artwork.
+ *
+ * It has to agree with BOTH ends or it strands a working page:
+ *   - the `isVisualArt` branch in src/app/book/[id]/page.tsx — what /book renders as art
+ *   - getArtwork() in src/app/artwork/[slug]/page.tsx — what /artwork will accept:
+ *     `resource_type` present, `content_type !== 'book'`, and matched BY SLUG ONLY
+ * Anything failing either test keeps its /book rendering. A redirect into a 404 is
+ * strictly worse than the duplicate URL this cleans up, so every branch here fails
+ * toward "keep rendering where you are".
+ */
+export function artworkRedirectSlug(book: {
+  content_type?: string | null;
+  resource_type?: string | null;
+  slug?: string | null;
+}): string | null {
+  // 'text' is handled by TextReader upstream; 'book' is refused by /artwork outright.
+  if (book.content_type === 'text' || book.content_type === 'book') return null;
+  // Mirrors isVisualArt: a resource_type that is neither of the two textual kinds.
+  if (!book.resource_type || book.resource_type === 'printed_book' || book.resource_type === 'manuscript') return null;
+  // /artwork also resolves by id now, but a slugless artwork keeps its /book
+  // rendering — flipping those to permanent redirects is a separate decision.
+  return book.slug || null;
 }
 
 // Unconstrained in T so callers keep their own document type (the route passes
@@ -37,10 +69,12 @@ export function pickArtworkRecord<T>(candidates: T[], requestedSlug: string): T 
   const as = (c: T) => c as unknown as ArtworkCandidate;
   const visible = (c: T) => as(c).visible !== false;
   const slugOf = (c: T) => as(c).slug;
+  const idOf = (c: T) => as(c).id;
 
   return (
     candidates.find((c) => slugOf(c) === requestedSlug && visible(c)) ??
     candidates.find((c) => slugOf(c) === `art-${requestedSlug}` && visible(c)) ??
+    candidates.find((c) => idOf(c) === requestedSlug && visible(c)) ??
     candidates.find((c) => slugOf(c) === requestedSlug) ??
     candidates[0]
   );

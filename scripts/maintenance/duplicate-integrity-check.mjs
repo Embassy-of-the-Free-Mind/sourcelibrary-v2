@@ -228,19 +228,35 @@ const extractVolume = (title) => {
   return null;
 };
 
+// Prefer the MATERIALIZED edition layer (#3258 workstream A). The inline
+// computation below is the pre-materialization fallback and stays only so this
+// script still works against a checkout where the backfill hasn't run — it is
+// NOT a second definition of the key. `src/lib/edition-key.ts` is the only
+// definition; `edition-key-integrity.ts` is what proves the stored field
+// matches it. (The fallback is ASCII-only and therefore erases every
+// non-Latin-script title; the materialized key does not. If `storedKeys` is
+// small, the numbers below are the old Latin-only ones.)
 const visible = books.find(
   { visible: true, content_type: { $ne: 'artwork' } },
-  { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1 } }
+  { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, edition_key: 1 } }
 );
 const clusters = new Map();
+let storedKeys = 0;
+let fallbackKeys = 0;
 for await (const b of visible) {
-  const t = normTitle(b.title);
-  if (!t) continue;
-  const year = typeof b.year === 'number' && b.year > 0
-    ? b.year
-    : (String(b.published || '').match(/\b(\d{3,4})\b/) || [])[1] ?? '';
-  const vol = extractVolume(b.display_title) ?? extractVolume(b.title) ?? '';
-  const key = `${t}|${surname(b.author)}|${year}|v${vol}`;
+  let key = b.edition_key;
+  if (key) {
+    storedKeys++;
+  } else {
+    const t = normTitle(b.title);
+    if (!t) continue;
+    const year = typeof b.year === 'number' && b.year > 0
+      ? b.year
+      : (String(b.published || '').match(/\b(\d{3,4})\b/) || [])[1] ?? '';
+    const vol = extractVolume(b.display_title) ?? extractVolume(b.title) ?? '';
+    key = `${t}|${surname(b.author)}|${year}|v${vol}`;
+    fallbackKeys++;
+  }
   if (!clusters.has(key)) clusters.set(key, []);
   clusters.get(key).push({ id: b.id, slug: b.slug });
 }
@@ -269,6 +285,7 @@ const summary = {
   visibleWithDupeReason: visibleFlagged.length,
   bothVisibleSameEditionClusters: editionClusters,
   extraVisibleCopies,
+  editionKeySource: { stored: storedKeys, fallback: fallbackKeys },
 };
 
 if (JSON_OUT) {
@@ -282,6 +299,7 @@ if (JSON_OUT) {
   console.log(`  prose tail (no pointer): ${summary.proseTail} ${JSON.stringify(tailBuckets)}`);
   console.log(`  VISIBLE books with dupe hidden_reason: ${summary.visibleWithDupeReason}`);
   console.log(`  both-visible same-edition clusters: ${summary.bothVisibleSameEditionClusters} (+${summary.extraVisibleCopies} extra copies; baseline 270/+460 on 2026-07-09)`);
+  console.log(`    keyed from stored edition_key: ${storedKeys}; inline fallback: ${fallbackKeys}`);
   console.log(`  detail -> ${detailPath}`);
 }
 

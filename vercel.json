@@ -25,6 +25,10 @@
     {
       "path": "/api/cron/storage-stats",
       "schedule": "45 3 * * *"
+    },
+    {
+      "path": "/api/cron/dashboard-snapshot",
+      "schedule": "20 * * * *"
     }
   ]
 }

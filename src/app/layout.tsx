@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { FEED_TYPES } from "@/lib/feed-links";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import Providers from "@/components/providers/Providers";
 import PageTracker from "@/components/reader/PageTracker";
@@ -69,13 +70,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
     canonical: '/',
-    types: {
-      'application/atom+xml': [
-        { url: '/api/feed/books', title: 'Source Library - New Books' },
-        { url: '/api/feed/gallery', title: 'Source Library Gallery' },
-        { url: '/api/feed/blog', title: 'Source Library - Research Notes' },
-      ],
-    },
+    types: FEED_TYPES,
   },
   keywords: [
     'Hermetic texts',

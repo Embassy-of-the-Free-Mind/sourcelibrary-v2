@@ -93,6 +93,45 @@ describe('pageContinuity', () => {
     expect(c.continues_on_next).toBe(true);
   });
 
+
+  // THE REGRESSION. Reported from a live session against the deployed tool:
+  // get_quote on p.269 of the Taylor Ethics said continues_from_previous:false
+  // on a page opening "dom from pain" — the tail of "the prudent man pursues a
+  // free-" on p.268. The most mechanically detectable case the feature exists
+  // for, and it was the one it missed.
+  //
+  // Cause: stripInlineNoise removes `>` to kill markdown blockquote markers,
+  // and `>` also closes every tag. Run first, it turned
+  // `<page-num>276</page-num>` into `<page-num276</page-num`, after which the
+  // furniture regex could not match and the head was never reached.
+  //
+  // Every existing fixture used a BARE running head ("BOOK ONE"), which the
+  // uppercase-line branch catches with no tag involved — so the tagged path had
+  // no coverage at all and 11 green tests said nothing about it.
+  it('sees through TAGGED page furniture, not just bare running heads', () => {
+    const p269 =
+      '<page-num>276</page-num>\n<header>THE NICOMACHEAN BOOK VII.</header>\n\n' +
+      'dom from pain, and not what is pleasant; for pleasure is not a generation, ' +
+      'nor is it always accompanied by generation, but it is an energy and an end. ' +
+      'Nor does it arise when we are being filled, but when we are exercising some ' +
+      'power. Its end is not always something other than itself, but only in the ' +
+      'case of those who are being led to the perfecting of their nature.';
+    const c = pageContinuity(p269);
+    expect(c.continues_from_previous, 'page opens mid-word after a tagged header').toBe(true);
+  });
+
+  it('sees a hyphen split through a TAGGED trailing block', () => {
+    const p268 =
+      '<page-num>275</page-num>\n<header>CHAP. XI. ETHICS.</header>\n\n' +
+      'The discussion of pleasure follows, since it is proper to one who philosophises ' +
+      'about political science to consider it. Some say that no pleasure is a good, ' +
+      'either essentially or accidentally, and that the temperate man avoids pleasures. ' +
+      'Furthermore, the prudent man pursues a free-';
+    const c = pageContinuity(p268);
+    expect(c.hyphen_split_at_end, 'trailing hyphen after a tagged header block').toBe(true);
+    expect(c.continues_on_next).toBe(true);
+  });
+
   it('declines to judge text too short to be prose', () => {
     // Real shape: a Chinese page whose entire stripped content was "道\n蔵\n1".
     expect(pageContinuity('道\n蔵\n1').continues_on_next).toBe(false);
@@ -127,5 +166,96 @@ describe('continuityHint', () => {
     expect(hint).toContain('p.47');
     expect(hint).toContain('split');
     expect(hint).not.toContain('p.45');
+  });
+});
+
+describe('the hyphen signal is read from the ORIGINAL, not the translation', () => {
+  // Reported twice, on two books and two languages (#3653 follow-ups #3 and #4):
+  // hyphen_split_at_end "appears never to fire". The cause is that a TRANSLATOR
+  // RESOLVES HYPHENS — the line-break hyphen is a fact about the printed page,
+  // and the English rendering of that page simply carries the whole word. The
+  // flag was being tested against the one text in which it can never appear.
+  //
+  // Text below is the real Diogenes Laertius p.33 (book 6993882874305116d72cf9f3),
+  // trimmed. The Greek breaks ἐγέ-/-νετο across the leaf; the English does not.
+  const body = 'He judged the case of a friend according to the law. '.repeat(6);
+  const translation = `${body}He was most reputable among the Greeks.\n\n<margin></margin>\nThe level\n</margin>`;
+  const original = `${body}εὐδοξότατος δὲ μάλιστα παρὰ τοῖς ἕλλησιν ἐγέ-\n\n<margin>\nἡ στάθμη\n</margin>`;
+
+  it('does not fire on the translation alone — the hyphen is not there to find', () => {
+    expect(pageContinuity(translation).hyphen_split_at_end).toBe(false);
+  });
+
+  it('fires when the original is supplied', () => {
+    expect(pageContinuity(translation, original).hyphen_split_at_end).toBe(true);
+  });
+
+  it('carries the split through to continues_on_next', () => {
+    // Without the original this page looks self-contained: the English ends on
+    // a full stop. That is the misleading case the flag exists to catch.
+    expect(pageContinuity(translation).continues_on_next).toBe(false);
+    expect(pageContinuity(translation, original).continues_on_next).toBe(true);
+  });
+
+  it('steps past a trailing <margin> gloss to reach the hyphen', () => {
+    // The gloss sits AFTER the hyphenated word in the markup, so a naive tail
+    // read sees "ἡ στάθμη" and concludes the page ends cleanly.
+    expect(pageContinuity(translation, original).hyphen_split_at_end).toBe(true);
+  });
+
+  it('falls back to the served text when there is no separate original', () => {
+    // Monolingual books pass the same string twice, or only one; behaviour must
+    // not change for them.
+    const mono = `${body}the prudent man pursues a free-`;
+    expect(pageContinuity(mono).hyphen_split_at_end).toBe(true);
+    expect(pageContinuity(mono, null).hyphen_split_at_end).toBe(true);
+  });
+});
+
+/**
+ * The translator's ellipsis marker (#3721).
+ *
+ * Fixtures captured from production, not drafted: Taylor 1818 Nicomachean Ethics
+ * pp.45-47. The reporter gave eight datapoints across five books and five
+ * layouts, and also retracted their own earlier theory that hyphen resolution
+ * was the cause — the mechanism is that the translation layer appends an
+ * ellipsis where a sentence runs off the leaf, and TERMINAL contained both the
+ * ellipsis and the dot. The marker meaning INCOMPLETE made the detector say
+ * COMPLETE.
+ */
+describe('pageContinuity — an edge ellipsis is a continuation marker', () => {
+  const { p45, p46, p47 } = fixtures.ellipsis_marker;
+
+  it('reads a page ending on an appended ellipsis as continuing', () => {
+    // p.46 ends `…a conscious awareness of such energy..."` — inside a block
+    // quote, so the marker is followed by a closing quotation mark.
+    expect(pageContinuity(p46.translation, p46.original).continues_on_next).toBe(true);
+    expect(pageContinuity(p47.translation, p47.original).continues_on_next).toBe(true);
+  });
+
+  it('reads a page opening on an ellipsis as continued-from', () => {
+    expect(pageContinuity(p46.translation, p46.original).continues_from_previous).toBe(true);
+  });
+
+  it('leaves a page ending on a bare word alone', () => {
+    // p.45 ends "…displeasing to a common nature, but" and always worked. The
+    // fix must not be doing the work of the existing rule.
+    expect(pageContinuity(p45.translation, p45.original).continues_on_next).toBe(true);
+  });
+
+  it('satisfies the reporter\'s invariant across the captured run', () => {
+    // For adjacent pages, N.continues_on_next must equal N+1.continues_from_previous.
+    // This is the assertion that makes the class visible rather than one page.
+    const c45 = pageContinuity(p45.translation, p45.original);
+    const c46 = pageContinuity(p46.translation, p46.original);
+    const c47 = pageContinuity(p47.translation, p47.original);
+    expect(c45.continues_on_next).toBe(c46.continues_from_previous);
+    expect(c46.continues_on_next).toBe(c47.continues_from_previous);
+  });
+
+  it('still reports a self-contained page as self-contained', () => {
+    // Guard against the fix turning into "everything continues". A real page
+    // that ends on a full stop with no ellipsis must stay false.
+    expect(pageContinuity(self_contained).continues_on_next).toBe(false);
   });
 });

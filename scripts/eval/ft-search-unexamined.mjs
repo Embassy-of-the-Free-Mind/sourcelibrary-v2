@@ -142,10 +142,18 @@ async function main() {
         if (APPLY) {
           const ok = await appendAttempt(db, {
           attempt_id: `${b.id}:ft_search_unexamined:${PROMPT_VERSION}`,
-          book_id: b.id, work_id: b.work_id || null, date: RUN_DATE, method: 'gemini_grounded_search', match_key: 'work_search',
+          // match_key/result MUST be legal enum values (attempt-log.ts): the
+          // original 'work_search'/'not_found' were off-enum, so every absence
+          // this script logged was invisible to deriveVerdictFromAttempts and
+          // ranked as NaN in strongestAttempt (#3778). Historical rows keep the
+          // old values; only new runs write legal ones.
+          book_id: b.id, work_id: b.work_id || null, date: RUN_DATE, method: 'gemini_grounded_search', match_key: 'author_title',
           prompt_version: PROMPT_VERSION, prompt: buildPrompt(b), model: MODEL, raw_response: v.raw || null,
           sources_checked: v.sources_checked || [], queries: v.queries || [],
-          result: priorFound ? 'found' : (v.verdict === 'not_applicable' ? 'not_applicable' : 'not_found'),
+          result: priorFound ? 'found' : (v.verdict === 'not_applicable' ? 'not_applicable' : 'none'),
+          // "Could not tell" must never count as an absence vote: derive
+          // excludes verdict:'uncertain' rows from absence/refute counting.
+          verdict: (v.verdict === 'unverifiable' || v.verdict === 'needs_review') ? 'uncertain' : v.verdict,
           found_refs: [],
           priors: priors.map((p) => ({ english_title: p.english_title || undefined, translator: p.translator || undefined, pub_year: p.pub_year != null ? String(p.pub_year) : undefined, completeness: p.completeness || undefined, source_url: p.source_url || undefined })),
           adjudication: { verdict: v.verdict, our_completeness: v.our_completeness, confidence: v.confidence },

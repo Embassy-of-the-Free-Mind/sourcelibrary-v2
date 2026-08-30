@@ -1,6 +1,14 @@
 /**
  * Effort-tier router for first-translation resolution (issue #2564).
  *
+ * STATUS (#3785 drift 7, 2026-08-09): `resolve()` is NOT wired into
+ * production — the live escalation router is scripts/eval/ft-ladder.ts, which
+ * implements its own cascade. Production imports from this module only the
+ * `ResolvableBook` type (ft-ladder.ts, ft-tier0-resolve.ts). The routing logic
+ * is kept as the unit-tested design reference
+ * (tests/unit/first-translation-resolve-reuse.test.ts); wire it or delete it
+ * deliberately, but do not assume it runs.
+ *
  * Match effort to difficulty. Cost rises tier by tier; every tier appends an
  * attempt to the provenance log.
  *

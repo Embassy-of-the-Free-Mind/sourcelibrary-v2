@@ -89,6 +89,11 @@ describe('isGlobalOnlyNavHref', () => {
     expect(isGlobalOnlyNavHref('/collections')).toBe(false);
     expect(isGlobalOnlyNavHref('/gallery')).toBe(false);
     expect(isGlobalOnlyNavHref('/browse')).toBe(false);
+    // The works index is corpus-wide ("31 editions across 4 libraries"), so it
+    // is blocked — but `/work/[id]`, the per-book edition rail, is not: it is
+    // reached from a book page and gated by embedPolicy.showRelatedEditions.
+    expect(isGlobalOnlyNavHref('/works')).toBe(true);
+    expect(isGlobalOnlyNavHref('/work/boethius-de-consolatione-philosophiae')).toBe(false);
   });
 
   it('does not flag API paths — those are never nav targets', () => {
@@ -199,6 +204,22 @@ describe('wiring', () => {
       "from '@/lib/tenant-global-paths'"
     );
     expect(src).toContain('isGlobalOnlyNavHref');
+  });
+
+  it('the site nav filters dropdown children, not just top-level links', () => {
+    // `/works` sits under the Browse dropdown and is global-only. Filtering only
+    // `link.href` would leave it in a partner's header pointing at a page the
+    // proxy 404s — the exact failure this shared list exists to prevent.
+    //
+    // The child's href may be normalised on the way into the predicate — the nav
+    // localizes hrefs, so a Spanish header holds `/es/works` and the lookup runs
+    // on `canonicalPath(child.href)`. What this guard is for is that `child.href`
+    // REACHES the predicate at all; pinning the exact argument expression made it
+    // fail on a change that strengthened the very thing it protects.
+    const src = read('src/components/layout/SiteHeader.tsx');
+    expect(src, 'children must be run through the predicate too').toMatch(
+      /children.*?\.filter\(\s*child\s*=>\s*!isGlobalOnlyNavHref\([^)]*child\.href/s
+    );
   });
 
   it('every blocked page path is a real route in the app tree', () => {

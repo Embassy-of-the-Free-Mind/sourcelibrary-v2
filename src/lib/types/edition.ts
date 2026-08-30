@@ -53,7 +53,20 @@ export interface TranslationEdition {
     title: string;             // "English Translation of [Original Title]"
     original_title: string;
     original_author: string;
+    /**
+     * Language of the leaves THIS translation was made from — not necessarily
+     * the language of the work. Verbatim `books.language`; never normalised,
+     * because this field is persisted and travels into minted DOI payloads.
+     * See `citationLanguageFields()` in src/lib/edition-language.ts (#3959).
+     */
     original_language: string;
+    /**
+     * Language of the WORK, when it differs from `original_language` — i.e. when
+     * this edition is itself a translation and ours is a translation of a
+     * translation. Absent when the two coincide, and absent on every row minted
+     * before #3959 (historic citations are left as minted, not backfilled).
+     */
+    work_language?: string;
     original_published?: string;
     target_language: string;   // "en"
   };

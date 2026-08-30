@@ -31,8 +31,15 @@ async function getArtist(slug: string) {
   // Don't generate pages for non-artist names
   if (isNonArtist(artistName)) return null;
 
-  const escaped = artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const authorRegex = { $regex: `^${escaped}$`, $options: 'i' };
+  // Link builders write author.replace(/\s+/g, '-'), which makes a slug dash
+  // ambiguous: it may stand for a space OR a real hyphen in the name
+  // ("Abbas Al-Musavi" → "Abbas-Al-Musavi"). Matching with every dash turned
+  // into a literal space could never resolve hyphenated names (404 log,
+  // 2026-08). Match each dash-or-space position as either character instead.
+  const tokens = decodeURIComponent(slug).split(/[-\s]+/).filter(Boolean)
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (tokens.length === 0) return null;
+  const authorRegex = { $regex: `^${tokens.join('[-\\s]+')}$`, $options: 'i' };
 
   // Fetch artworks and books by this author in parallel
   const [artworks, books] = await Promise.all([
@@ -62,13 +69,13 @@ async function getArtist(slug: string) {
   // Also check reversed name format for books (e.g. "Dürer, Albrecht")
   let allBooks = books;
   if (books.length === 0 && !artistName.includes(',')) {
-    const parts = artistName.split(' ');
+    const parts = tokens;
     if (parts.length >= 2) {
-      const reversed = `${parts[parts.length - 1]}, ${parts.slice(0, -1).join(' ')}`;
-      const reversedEscaped = reversed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // Same dash-or-space matching as above, with the surname moved in front.
+      const reversedPattern = `^${parts[parts.length - 1]},[-\\s]+${parts.slice(0, -1).join('[-\\s]+')}$`;
       allBooks = await db.collection('books')
         .find(
-          { author: { $regex: `^${reversedEscaped}$`, $options: 'i' }, resource_type: { $exists: false }, visible: true },
+          { author: { $regex: reversedPattern, $options: 'i' }, resource_type: { $exists: false }, visible: true },
           { projection: {
             slug: 1, title: 1, display_title: 1, author: 1, published: 1,
             language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, pages_translated: 1,
@@ -82,7 +89,9 @@ async function getArtist(slug: string) {
   if (artworks.length === 0 && allBooks.length === 0) return null;
 
   return {
-    name: artistName,
+    // Prefer the stored author string — artistName has real hyphens flattened
+    // to spaces ("Abbas Al Musavi").
+    name: (artworks[0]?.author as string) || (allBooks[0]?.author as string) || artistName,
     artworks: JSON.parse(JSON.stringify(artworks)),
     books: JSON.parse(JSON.stringify(allBooks)),
   };

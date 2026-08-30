@@ -38,6 +38,7 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { uploadPageVariants } from '../workers/lib/display-image.mjs';
+import { preserveObjectVersion } from '../lib/r2-version.mjs';
 import { checkAlignment, hashBuffer, readerVisibleShift } from '../lib/page-alignment.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -187,6 +188,8 @@ async function repairBook(db, bookId) {
       const p = targets[idx++];
       try {
         const buf = await fetchBuf(fullRes(p.photo_original || p.photo));
+        // Everything versions (#3756): keep the pre-repair object reachable
+        await preserveObjectVersion(s3, process.env.R2_BUCKET_NAME, `archived/${bookId}/${p.page_number}.jpg`);
         await uploadPageVariants(buf, bookId, p.page_number, uploadToR2);
         done++;
         if (done % 25 === 0) console.log(`    … ${done}/${targets.length}`);

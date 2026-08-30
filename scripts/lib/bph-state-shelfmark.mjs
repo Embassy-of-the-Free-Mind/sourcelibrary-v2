@@ -11,11 +11,17 @@
 /** Values that mean "no", not a shelf mark. Compared case-insensitively. */
 const NOT_A_SHELFMARK = new Set(['neen', 'nee']);
 
+/** `ja` carries real information (the copy IS on loan from the state
+    collection) so it is translated, not dropped — José Bouman, 2026-08-12.
+    See the TS twin for the full note. */
+const TRANSLATE = new Map([['ja', 'yes']]);
+
 export function normalizeStateShelfMark(raw) {
   if (raw == null) return null;
   const kept = String(raw)
     .split('|')
     .map((part) => part.trim())
-    .filter((part) => part.length > 0 && !NOT_A_SHELFMARK.has(part.toLowerCase()));
+    .filter((part) => part.length > 0 && !NOT_A_SHELFMARK.has(part.toLowerCase()))
+    .map((part) => TRANSLATE.get(part.toLowerCase()) ?? part);
   return kept.length > 0 ? kept.join('|') : null;
 }

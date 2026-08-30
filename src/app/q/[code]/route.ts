@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { decodeShortlink } from '@/lib/shortlinks';
+import { mintCitationToken } from '@/lib/citation-token';
+import { meteredReaderEnabled } from '@/lib/free-preview';
 import { Page } from '@/lib/types';
 
 interface RouteContext {
@@ -24,27 +26,49 @@ export async function GET(request: NextRequest, context: RouteContext) {
     // shortlink encodes an ObjectId, so without the slug every shortlink we
     // publish would land on /book/<objectid>/page/<pageid> and take a second
     // redirect to reach its readable form. One projection, one hop.
+    // `?lang=<iso>` sends the reader to that language's twin (#4095). The code
+    // itself stays canonical — one shortlink per leaf, printable in a footnote
+    // — and the language is a preference laid over it.
+    const requested = (request.nextUrl.searchParams.get('lang') || '').trim().toLowerCase();
+    const lang = /^[a-z]{2,3}$/.test(requested) && requested !== 'en' ? requested : null;
+
     const db = await getReadDb();
     const [page, book] = await Promise.all([
       db.collection('pages').findOne({
         book_id: bookId,
         page_number: pageNumber,
       }) as unknown as Promise<Page | null>,
-      db.collection('books').findOne({ id: bookId }, { projection: { _id: 0, id: 1, slug: 1 } }),
+      db.collection('books').findOne(
+        { id: bookId },
+        // The counter decides whether the localized twin exists. Sending a
+        // reader to `/es/book/…` for a book with no Spanish pages costs them a
+        // second redirect back to English (i18n.md, "an /es URL is a promise"),
+        // so check here rather than hand off a URL that will bounce.
+        { projection: { _id: 0, id: 1, slug: 1, ...(lang ? { [`pages_translated_${lang}`]: 1 } : {}) } },
+      ),
     ]);
     const bookPath = (book?.slug as string) || bookId;
+    const prefix = lang && Number(book?.[`pages_translated_${lang}`] || 0) > 0 ? `/${lang}` : '';
 
     if (!page) {
       // Redirect to book page if specific page not found
       return NextResponse.redirect(
-        new URL(`/book/${bookPath}`, request.url),
+        new URL(`${prefix}/book/${bookPath}`, request.url),
         { status: 302 }
       );
     }
 
+    // Metered reader (#4357): a citation must resolve even past the free
+    // sample, so the redirect carries a per-page capability token the
+    // page-content API honors for exactly this page (citation-token.ts).
+    // Only minted while metering is on — with the flag off the param would
+    // be inert noise on every shared URL.
+    const cite = meteredReaderEnabled() ? mintCitationToken(page.id) : null;
+    const citeSuffix = cite ? `?cite=${cite}` : '';
+
     // Redirect to the full page URL
     return NextResponse.redirect(
-      new URL(`/book/${bookPath}/page/${page.id}`, request.url),
+      new URL(`${prefix}/book/${bookPath}/page/${page.id}${citeSuffix}`, request.url),
       { status: 302 }
     );
   } catch (error) {

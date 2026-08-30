@@ -10,6 +10,7 @@
 
 import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 import { isSingleRealLanguage } from '@/lib/language-canonical';
+import { NON_ARTWORK_FILTERS } from '@/lib/artwork-record';
 
 /**
  * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
@@ -38,16 +39,35 @@ export interface CatalogBook {
   pages_count: number;
   pages_ocr: number;
   pages_translated: number;
+  /**
+   * Pages carrying a Spanish edition (#4166). Mirrors `books.pages_translated_es`.
+   * Read it only through `hasLocalizedEdition()` — a book WRITTEN in Spanish has
+   * no translated pages and would score zero here (#4120). Without this field a
+   * catalog-fed `CollectionBookCard` cannot tell a Spanish-readable book from an
+   * English-only one and links every card to its English page.
+   */
+  pages_translated_es: number;
   pages_blank: number;
   photo: string | null;
   thumbnail: string | null;
   thumbnail_blob: string | null;
+  /** Canonical cover URL. Distinct from `thumbnail` for ~4,300 live books, which
+   *  is why the card's staleness check cannot be done against `thumbnail`.
+   *  Not a books_catalog column — attached from Mongo by attachCardVariants(). */
+  image_display?: string | null;
+  /** 500px AVIF card variant (~28 KB vs the ~490 KB scan). Only used when it
+   *  names the same page as `image_display` — see getBookCardUrl. `undefined`
+   *  means "not looked up yet"; `null` means "looked up, this book has none". */
+  image_card?: string | null;
   read_count: number;
   is_first_translation: boolean;
   quality_score: number;
   image_source_provider: string | null;
   categories: string[];
   collections: string[];
+  /** 'artwork' | 'book' | 'text' | null. Paired with resource_type: both are
+   *  needed to tell an artwork from a text — see isArtworkRecord(). */
+  content_type: string | null;
   resource_type: string | null;
   /** original | period-translation | modern-translation — see src/lib/text-role.ts (#2395) */
   text_role: string | null;
@@ -72,13 +92,29 @@ export interface CatalogBookDetail extends CatalogBook {
   source_work_dates: Array<{ type: string; date_display: string; author?: string }> | null;
   ft_disposition: string | null;
   ft_reasoning: string | null;
+  // Graded FT verdict + screens (#3726 Tier 3): raw projections of
+  // books.first_translation.* and the #3524 screens, so card surfaces can
+  // compute the claim register via ftRenderProps without an Atlas fetch.
+  ft_verdict: string | null;
+  ft_evidence_strength: string | null;
+  ft_our_completeness: string | null;
+  ft_source_screen: string | null;
+  ft_translator_screen: string | null;
   description: string | null;
   subject_keywords: string[] | null;
   created_at: string | null;
   updated_at: string | null;
 }
 
-const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published';
+// Exported so tests can assert the localization counter is in it (#4166) —
+// a card cannot tell a Spanish-readable book from an English-only one without
+// a field the query never asked for.
+// NB: `image_display` / `image_card` are deliberately NOT selected here. They
+// are not columns on books_catalog (see supabase/migrations/20260828000000_…),
+// and PostgREST 42703s the whole query on an unknown column — which would take
+// the catalogue down rather than degrade it. They are attached from Mongo by
+// `attachCardVariants()` below instead.
+export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
@@ -171,7 +207,65 @@ export async function browseBooks(opts: {
     throw new Error(`books_catalog query failed: ${error.message}`);
   }
 
-  return { books: (data || []) as CatalogBook[], total: count || 0 };
+  return { books: await attachCardVariants((data || []) as CatalogBook[]), total: count || 0 };
+}
+
+/**
+ * Attach `image_card` + `image_display` to catalogue rows, from Mongo.
+ *
+ * The catalogue renders from the Supabase mirror, which carries `thumbnail` but
+ * not the canonical cover fields — so without this every catalogue card falls
+ * back to the 2000px archival scan (~746 KB) and the 500px AVIF card variant
+ * (~28 KB) never reaches the surface it was built for. Measured 2026-08-26: the
+ * 60-card /catalog grid ships 43.4 MB and its slowest covers take 6–10s.
+ *
+ * Doing it here rather than in the mirror is a deliberate trade. The tidier fix
+ * is two columns on books_catalog (migration written:
+ * supabase/migrations/20260828000000_books_catalog_cover_card.sql), but that
+ * needs Supabase DDL access, and this needs none. One indexed `$in` over the
+ * page's ~60 ids costs a few ms against a page that is ISR-cached for a day.
+ * When the columns do land, `BOOK_SELECT` picks them up and rows arriving with
+ * `image_card` already set skip the lookup — so this becomes a no-op rather
+ * than something to unpick.
+ *
+ * Both fields are required together: getBookCardUrl() only trusts `image_card`
+ * when it names the same page as `image_display`, which is how a cover changed
+ * since the backfill falls back instead of rendering the previous cover.
+ *
+ * Failure is non-fatal by design. A Mongo hiccup here means heavier covers for
+ * one render, never a broken or empty grid — the catalogue's own data has
+ * already been fetched and is returned unchanged.
+ */
+async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
+  const needing = rows.filter(r => r.id && r.image_card === undefined);
+  if (needing.length === 0) return rows;
+  try {
+    const { getReadDb } = await import('@/lib/mongodb');
+    const db = await getReadDb();
+    const docs = await db.collection('books')
+      .find({ id: { $in: needing.map(r => r.id) } }, { projection: { _id: 0, id: 1, image_card: 1, image_display: 1 } })
+      .maxTimeMS(2000)
+      .toArray();
+    const byId = new Map(docs.map(d => [d.id as string, d]));
+    for (const row of needing) {
+      const doc = byId.get(row.id);
+      if (!doc) continue;
+      // ONLY the card. `image_display` is deliberately not attached: this table
+      // has never carried it, so the catalogue renders `thumbnail`, and the two
+      // disagree for 4,309 live books. Attaching it would make
+      // getBookThumbnailUrl prefer it and silently change which PICTURE 3,635
+      // books show — a cover migration smuggled inside a performance fix.
+      // getBookCardUrl then validates the card against `thumbnail` here (and
+      // against `image_display` on surfaces that do project it), so the picture
+      // never changes and only its weight does. The ~2,000 books whose card was
+      // cut from a different page than `thumbnail` simply keep the full-size
+      // cover until the two fields are reconciled — a separate fix.
+      row.image_card = (doc.image_card as string | null) ?? null;
+    }
+  } catch (err) {
+    console.error('[books-catalog] card-variant lookup failed, serving full-size covers:', (err as Error)?.message);
+  }
+  return rows;
 }
 
 /**
@@ -468,6 +562,16 @@ export async function searchBooksCatalog(
     .gt('pages_count', 0)
     .or(orFilter)
     .limit(limit);
+
+  // Artworks share this table with texts, and a book card linking to /book/ is
+  // the wrong promise for a Met stela — the reader clicks expecting a readable
+  // scan. Search surfaces artworks in their own Images lane instead (see the
+  // artwork lanes in /api/search/unified). Measured 2026-08-30: this drops 96
+  // of 31,731 live rows, e.g. "stela" 27 results → 8, all of them books.
+  // NOT `.not('resource_type','is',null)` — that would also drop the one live
+  // record carrying content_type:'text' + resource_type:'text', a real Javanese
+  // chronicle. See isArtworkRecord().
+  for (const f of NON_ARTWORK_FILTERS) query = query.or(f);
 
   if (opts?.language) query = query.eq('language', opts.language);
   if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);

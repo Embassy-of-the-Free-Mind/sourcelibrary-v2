@@ -24,6 +24,7 @@ const client = new MongoClient(MONGODB_URI);
 
 // Inline the v2 extraction logic since we can't import TS from mjs
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { computeEndPages, chunkEndPage } from './lib/chapter-endpages.mjs';
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 function extractHeadingsV2(text, pageNumber) {
@@ -82,13 +83,6 @@ function buildPrompt(book, headings, tocPages, sectionHints, pageCount) {
 
 const MAX_CHUNK_CHARS = 400000;
 
-function computeEndPages(chapters, totalPages) {
-  for (let i = 0; i < chapters.length; i++) {
-    chapters[i].endPage = i < chapters.length - 1 ? chapters[i + 1].pageNumber - 1 : totalPages;
-  }
-  return chapters;
-}
-
 async function materializeBook(db, bookId, chapters, totalPages) {
   computeEndPages(chapters, totalPages);
   const pages = await db.collection('pages')
@@ -101,7 +95,9 @@ async function materializeBook(db, bookId, chapters, totalPages) {
   for (let i = 0; i < chapters.length; i++) {
     const ch = chapters[i];
     const startPage = ch.pageNumber;
-    const endPage = ch.endPage || totalPages;
+    // NOT ch.endPage — a container's span covers its children, which must not
+    // be chunked twice. See chunkEndPage.
+    const endPage = chunkEndPage(chapters, i, totalPages);
     const pageTexts = [];
     for (let pn = startPage; pn <= endPage; pn++) {
       const page = pageMap.get(pn);

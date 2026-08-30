@@ -3,13 +3,27 @@
  * Embed pages for semantic search using Gemini embedding-2-preview.
  *
  * Embeds BOTH ocr.data and translation.data per page into Supabase
- * page_translations table. Uses Gemini API (free tier, 768 dims).
+ * page_translations table. Uses Gemini API (768 dims).
  *
  * Replaces the old e5-base backfill (embed-translations.mjs).
  * The Gemini model is much better for Latin, Greek, Arabic, Sanskrit.
  *
- * Cost: $0 (free tier, rate-limited to ~13 texts/sec sustained).
- * Time: ~5-6 days for full 3M-page backfill.
+ * COST — THIS IS BILLED, AND AT THIS SCALE IT IS THE LARGEST SINGLE EMBEDDING
+ * SPEND IN THE REPO. gemini-embedding-2-preview is $0.20 per 1M input tokens on
+ * the paid tier, and every GEMINI_API_KEY* in the env is a paid key. At the
+ * measured 4.29 chars/token (see .claude/docs/embeddings.md) a FULL 3.9M-page
+ * pass is roughly **$180**. This header used to say "Cost: $0 (free tier)";
+ * that line was believed and acted on in Aug 2026 and cost ~$12 on a corpus
+ * 100x smaller. --incremental and --missing-only are cheap because they touch
+ * few pages; --full is not. ASK BEFORE A FULL PASS.
+ *
+ * Since #4162 this worker RECORDS what it spends: gemini_usage rows with
+ * type 'embedding', flushed every FLUSH_EVERY_TEXTS so a full pass writes ~780
+ * rows rather than 78,000 (the spend guard fails closed above 40,000/day).
+ * Tokens are estimated from characters — batchEmbedContents returns no
+ * usageMetadata. See scripts/lib/embedding-usage.mjs.
+ *
+ * Time: ~5-6 days for full 3M-page backfill (~13 texts/sec sustained).
  *
  * Modes:
  *   --full        Process all pages with OCR or translation
@@ -35,6 +49,9 @@
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
+import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -72,6 +89,11 @@ const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') ||
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
 
+// Text composition and row shape are SHARED with the pipeline-side writer
+// (scripts/lib/embed-book-pages.mjs, called from enrich-worker Phase 6). Two
+// writers producing subtly different rows is exactly the failure that put
+// `People: , , , ,` into 14,237 book_embeddings rows — see
+// scripts/lib/book-embedding-text.mjs. Import, never re-type.
 const EMBED_BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
 const UPSERT_BATCH_SIZE = 10; // Small batches for Supabase — HNSW index updates are expensive
 const DIMS = 768;
@@ -111,6 +133,24 @@ async function getPgClient() {
 
 let rateLimitBackoff = 0;
 
+// Embedding spend, accumulated and flushed periodically (#4162). This worker
+// streams pages rather than walking books, so there is no per-book boundary to
+// flush on; FLUSH_EVERY_TEXTS bounds the row count instead (~780 rows for a
+// full 3.9M-page pass, against the spend guard's 40,000-row/day ceiling — one
+// row per 50-text batch would have been 78,000 and read as over-budget).
+const embedUsage = newEmbedUsage();
+let usageRows = 0;         // gemini_usage rows written this run
+let usageTotalChars = 0;   // characters recorded, for the closing summary
+
+async function flushEmbedUsage(force = false) {
+  if (!force && embedUsage.texts < FLUSH_EVERY_TEXTS) return;
+  const chars = embedUsage.chars;
+  if (!chars) return;
+  await logEmbeddingUsage(embedUsage, { model: MODEL, endpoint: 'worker/embed-gemini' });
+  usageRows += 1;
+  usageTotalChars += chars;
+}
+
 async function embedBatch(texts) {
   const requests = texts.map(t => ({
     model: `models/${MODEL}`,
@@ -143,24 +183,21 @@ async function embedBatch(texts) {
   if (!data.embeddings || data.embeddings.length !== texts.length) {
     throw new Error(`Expected ${texts.length} embeddings, got ${data.embeddings?.length || 0}`);
   }
+  // Counted only on success — a 429 retried above was not billed for a result.
+  addEmbedUsage(embedUsage, texts);
+  await flushEmbedUsage();
   return data.embeddings.map(e => e.values);
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────
 
+/**
+ * Delegates to the shared composer so this worker and the pipeline-side writer
+ * embed byte-identical text. The rationale for dropping editorial wrappers
+ * content-and-all lives there.
+ */
 function cleanText(text) {
-  if (!text || typeof text !== 'string') return '';
-  return text
-    // Drop EDITORIAL page-level wrappers content-and-all. These are Gemini's
-    // "what this page is about" descriptions — they routinely name content from
-    // ADJACENT pages (e.g. a page-89 <meta> mentioning the "mercury" wheel that
-    // is actually on page 88). Embedding/quoting them mislocates the source and
-    // produces citations to words that aren't on the page. (Nirmal, 2026-05-30.)
-    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')    // strip remaining tags, keep inner body text
-    .replace(/\s+/g, ' ')        // collapse whitespace
-    .trim()
-    .slice(0, 8000);             // Gemini embedding-2 supports 8192 tokens
+  return cleanPageText(text);
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -183,6 +220,25 @@ console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? '
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
+
+// Pause + dial gate (#3826). This worker had NEITHER check — the reason its
+// cron line is hard-disabled (#PAUSED-3826#). Unattended runs (no explicit
+// --book) must honor the pause flag and the daily budget; an explicit
+// operator --book run bypasses, matching the spend-guard convention.
+{
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (!BOOK_ID) {
+    if (control?.paused) {
+      console.log('[embed-gemini] Pipeline paused — exiting.');
+      await mongoClient.close();
+      process.exit(0);
+    }
+    if (!await budgetAllowsDispatch(db, 'embed-gemini', { control })) {
+      await mongoClient.close();
+      process.exit(0);
+    }
+  }
+}
 
 // Build query — need pages with OCR or translation.
 // page_number > 0 skips hidden/deduped trailing pages (page_number ≤ 0).
@@ -230,10 +286,24 @@ if (BOOK_ID) {
   pageQuery.book_id = { $in: myBookIds };
   console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
 } else if (BOOKS_FILE) {
-  const targetIds = JSON.parse(fs.readFileSync(BOOKS_FILE, 'utf8'));
+  let targetIds = JSON.parse(fs.readFileSync(BOOKS_FILE, 'utf8'));
   if (!Array.isArray(targetIds) || !targetIds.length) {
     console.error(`--books-file ${BOOKS_FILE} is empty or not a JSON array`);
     process.exit(1);
+  }
+  // Partition across workers, exactly as --missing-only does above.
+  //
+  // This branch accepted --worker-id/--worker-count and IGNORED them: it printed
+  // "(worker 3/8)" in the mode line and then loaded the whole list anyway. Eight
+  // shards launched against one books-file on 2026-08-07 each embedded the same
+  // ~900k pages — the upserts are idempotent so no data was harmed, but it was
+  // 8x the API calls and it started drawing 429s. The tell was that all eight
+  // logs reported byte-identical progress counters, which independent shards
+  // cannot do.
+  if (WORKER_COUNT > 1) {
+    const all = [...targetIds].sort();
+    targetIds = all.filter((_, i) => i % WORKER_COUNT === WORKER_ID);
+    console.log(`Worker ${WORKER_ID}/${WORKER_COUNT}: ${targetIds.length.toLocaleString()}/${all.length.toLocaleString()} books`);
   }
   // Fetch page_ids already embedded for these books (REST, chunked) so we skip
   // them in the loop and only embed the not-yet-present (untranslated) pages.
@@ -457,10 +527,15 @@ for await (const page of cursor) {
 
 if (batch.length > 0) await processBatch(batch);
 
+// Record the tail. Without this, everything since the last flush is spend that
+// happened and was never written down — the exact hole #4162 is about.
+await flushEmbedUsage(true);
+
 await mongoClient.close();
 if (pgClient) await pgClient.end();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 console.log(`\nDone: ${embedded.toLocaleString()} embedded, ${skipped} skipped, ${errors} errors, ${elapsed}s`);
+console.log(`Embedding spend recorded: ~$${estimateUsd(usageTotalChars).toFixed(2)} across ${usageRows} gemini_usage row(s) (estimated from characters — see scripts/lib/embedding-usage.mjs)`);
 
 // After a large full backfill, rebuild the HNSW index if it's missing
 if (FULL_MODE && embedded > 10000) {
@@ -558,26 +633,14 @@ async function processBatch(items) {
     const texts = items.map(i => i.text);
     const embeddings = await embedBatch(texts);
 
-    const rows = items.map((item, i) => {
-      const mongoTs = item.page.translation?.updated_at || item.page.ocr?.updated_at || item.page.updated_at;
-      return {
-        page_id: item.page.id,
-        book_id: item.page.book_id,
-        page_number: item.page.page_number,
-        translation: (item.hasTranslation ? item.text : '').slice(0, 50000),
-        embedding: JSON.stringify(embeddings[i]),
-        book_title: item.book.title,
-        book_author: item.book.author,
-        book_language: item.book.language,
-        book_year: item.book.year,
-        updated_at: mongoTs || new Date(),
-        embedding_model: MODEL,
-        // Watermark of the Mongo source's freshness at embed time. The
-        // --restale mode compares this against current Mongo updated_at to
-        // detect drift (re-OCR / re-translation in Mongo without re-embed).
-        mongo_updated_at: mongoTs || null,
-      };
-    });
+    // Shared row builder — see the import note above.
+    const rows = items.map((item, i) => buildPageEmbeddingRow({
+      page: item.page,
+      book: item.book,
+      text: item.text,
+      hasTranslation: item.hasTranslation,
+      embedding: embeddings[i],
+    }));
 
     // Upsert in small sub-batches to avoid overwhelming Supabase
     let batchErrors = 0;

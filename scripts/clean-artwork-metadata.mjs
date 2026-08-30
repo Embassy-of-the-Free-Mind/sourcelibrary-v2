@@ -239,6 +239,20 @@ async function main() {
         updates.commons_title = art.title;
       }
       updates.display_title = cleanedTitle;
+      // Stamp WHY display_title differs from title (#4288). Without this, a
+      // deterministically-shortened title is indistinguishable on the read side
+      // from one a vision model invented — both are just "display_title !==
+      // title" — and src/lib/title-provenance.ts has to fall back to treating
+      // it as unverified. 'catalog_cleanup' says: same title, apparatus
+      // stripped. This stamps only rows this run touches; the ~1,455 existing
+      // unstamped rows are reported by scripts/audit/artwork-title-provenance.mjs
+      // and are NOT backfilled here.
+      updates['field_provenance.display_title'] = {
+        source: 'catalog_cleanup',
+        script: 'clean-artwork-metadata.mjs',
+        date: new Date().toISOString(),
+        previous_value: art.display_title || art.title,
+      };
       titleFixed++;
       if (titleFixed <= 20) {
         issues.titleCleaned.push({ before: art.title.substring(0, 80), after: cleanedTitle.substring(0, 80) });

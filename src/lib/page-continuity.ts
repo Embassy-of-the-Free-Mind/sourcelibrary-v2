@@ -41,6 +41,44 @@
 /** Sentence-final marks across the scripts where we make a claim, plus closers. */
 const TERMINAL = /[.!?:;»”"'’)\]…。！？۔։።៕။]$/;
 
+/**
+ * The translator's own "this is cut off here" marker, at either edge.
+ *
+ * **The marker meaning INCOMPLETE was making the detector say COMPLETE.** The
+ * translation layer appends an ellipsis where a sentence runs off the leaf, and
+ * `TERMINAL` above contains both `…` and `.` — so every such page tested as
+ * ending on sentence-final punctuation and reported `continues_on_next: false`.
+ * A page opening on one failed the mirror test, since `^\p{Ll}` sees a dot, not
+ * a lowercase letter.
+ *
+ * Reported with eight datapoints across five books and five layouts, in a
+ * submission that also retracted its own earlier theory that hyphen resolution
+ * was the cause (#3721):
+ *
+ *     TRUE   Taylor p.45   "…to a common nature, but"      ← bare word, detected
+ *     TRUE   Taylor p.269  "…likewise which appear to"     ← bare word, detected
+ *     FALSE  Taylor p.46   "…of such energy..."            ← appended ellipsis
+ *     FALSE  Taylor p.47   "…in a variety..."              ← appended ellipsis
+ *     FALSE  Maier p.100   "…increased and stronger..."    ← appended ellipsis
+ *     FALSE  Confucius p.300 "…is by nature so..."         ← appended ellipsis
+ *
+ * So an edge ellipsis is now read as continuation rather than termination, which
+ * is also the right way to be wrong: this module's whole purpose is that a false
+ * negative (no hint, caller quotes a fragment believing it whole) is worse than a
+ * false positive (a hint to fetch context that turns out unnecessary).
+ *
+ * Matches a single `…` and a spaced or unspaced run of dots (`...`, `. . .`).
+ *
+ * **Closers must be allowed AFTER the marker.** Captured from production, the
+ * real tails are `…of such energy..."` and `…in a variety...”` — the pages sit
+ * inside a block quote, so the ellipsis is followed by a closing quotation mark.
+ * A `$`-anchored pattern without this matched neither, and the first draft of
+ * this fix silently did nothing on the very pages it was written for.
+ */
+const CLOSERS = '[»”"\'’)\\]]*';
+const ELLIPSIS_TAIL = new RegExp(`(?:…|\\.\\s*\\.\\s*\\.)\\s*${CLOSERS}\\s*$`, 'u');
+const ELLIPSIS_HEAD = new RegExp(`^\\s*[«“"'‘(\\[]*\\s*(?:…|\\.\\s*\\.\\s*\\.)`, 'u');
+
 /** A trailing hyphen directly after a letter: the word itself is cut in half. */
 const HYPHEN_SPLIT = /[\p{L}]-$/u;
 
@@ -86,18 +124,38 @@ const TRAILING_FURNITURE =
  */
 const ZERO_WIDTH = /[​-‏⁠-⁤﻿]/g;
 
+/**
+ * ORDER IS LOAD-BEARING: furniture first, then inline noise.
+ *
+ * `stripInlineNoise` removes `>` to kill markdown blockquote markers — and `>`
+ * is also the closing bracket of every tag. Running it first turns
+ * `<page-num>276</page-num>` into `<page-num276</page-num`, after which
+ * LEADING_FURNITURE cannot match a tagged block at all and the head is never
+ * reached.
+ *
+ * That shipped. `get_quote` on p.269 of the Taylor Ethics reported
+ * continues_from_previous: false on a page opening "dom from pain" — the tail
+ * of "the prudent man pursues a free-" on p.268 — which is the single most
+ * mechanically detectable case the feature exists for. Reported from a real
+ * session (#3653).
+ *
+ * The unit tests passed throughout because every fixture used a BARE running
+ * head ("BOOK ONE"), which the uppercase-line alternative catches without any
+ * tag surviving. The tagged path had no coverage. There is now a fixture with
+ * real tags for exactly this reason.
+ */
 function stripInlineNoise(text: string): string {
-  return text.replace(ZERO_WIDTH, '').replace(/[*_#>`~[\]]/g, '').replace(/\|/g, ' ');
+  return text.replace(/[*_#>`~[\]]/g, '').replace(/\|/g, ' ');
 }
 
 /** The text as it flows INTO this page — furniture at the top removed. */
 function headOf(text: string): string {
-  return stripInlineNoise(text).replace(LEADING_FURNITURE, '').trim();
+  return stripInlineNoise(text.replace(ZERO_WIDTH, '').replace(LEADING_FURNITURE, '')).trim();
 }
 
 /** The text as it flows OUT of this page — furniture at the foot removed. */
 function tailOf(text: string): string {
-  return stripInlineNoise(text).replace(TRAILING_FURNITURE, '').trim();
+  return stripInlineNoise(text.replace(ZERO_WIDTH, '').replace(TRAILING_FURNITURE, '')).trim();
 }
 
 export interface PageContinuity {
@@ -121,16 +179,39 @@ const NONE: PageContinuity = {
  * very run-on we are looking for. (That is not hypothetical: the same measurement
  * run at 39% before the real stripper was applied and 55.7% after.)
  */
-export function pageContinuity(text: string | null | undefined): PageContinuity {
+export function pageContinuity(
+  text: string | null | undefined,
+  /**
+   * The page's SOURCE text, when the served text is a translation.
+   *
+   * The hyphen signal must be read here, not from the translation. Reported
+   * twice independently, on two books and two languages (#3653 follow-up #3
+   * and #4): p.269 of Taylor's Ethics opens "dom from pain" after p.268 ends
+   * "pursues a free-", and p.33 of Diogenes Laertius ends
+   * "…ἐγέ-" (ἐγέ-/-νετο) — both returned hyphen_split_at_end: false.
+   *
+   * The cause is that a TRANSLATOR RESOLVES HYPHENS. The line-break hyphen is a
+   * fact about the printed original; the English rendering of that page simply
+   * has the whole word. So the flag was being tested against the one text in
+   * which it can never appear, and it could never fire. The sentence-level
+   * signals were unaffected, which is why continues_on_next looked correct on
+   * exactly the pages where the hyphen flag was wrong.
+   */
+  originalText?: string | null,
+): PageContinuity {
   if (!text) return NONE;
 
   // Too short to be prose — plate captions, colophons, blank leaves. Judging
   // these produces noise, and noise here is worse than silence.
-  if (stripInlineNoise(text).trim().length < 200) return NONE;
+  if (stripInlineNoise(text.replace(ZERO_WIDTH, '')).trim().length < 200) return NONE;
 
   const head = headOf(text);
   const tail = tailOf(text);
-  const hyphen_split_at_end = HYPHEN_SPLIT.test(tail);
+  // Prefer the original: see the parameter note above. Fall back to the served
+  // text when there is no separate source, which is the monolingual case where
+  // the two are the same string anyway.
+  const hyphenTail = originalText ? tailOf(originalText) : tail;
+  const hyphen_split_at_end = HYPHEN_SPLIT.test(hyphenTail);
 
   // Caseless scripts get the hyphen signal only; see the note above.
   if (!HAS_CASED_SCRIPT.test(tail)) {
@@ -138,8 +219,10 @@ export function pageContinuity(text: string | null | undefined): PageContinuity 
   }
 
   return {
-    continues_from_previous: /^\p{Ll}/u.test(head),
-    continues_on_next: hyphen_split_at_end || !TERMINAL.test(tail),
+    // An edge ellipsis is the translator saying "cut off here" — see ELLIPSIS_*.
+    // Tested BEFORE the punctuation rules, because those two read it backwards.
+    continues_from_previous: ELLIPSIS_HEAD.test(head) || /^\p{Ll}/u.test(head),
+    continues_on_next: hyphen_split_at_end || ELLIPSIS_TAIL.test(tail) || !TERMINAL.test(tail),
     hyphen_split_at_end,
   };
 }

@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { stripArchiveOnlyFields } from '@/lib/restore-hygiene';
 
 /**
  * Restore a deleted book from the deleted_books archive
@@ -35,10 +36,16 @@ export const POST = withAuth(async (request, session, context) => {
     // Extract pages from the archived document
     const { pages, deleted_at, original_id, ...bookData } = archivedBook;
 
+    // `deleted_books` is not a subset of `books` — spreading an archived doc
+    // back wholesale carries archive bookkeeping and resurrects retired fields
+    // (#3997). Strip them; the audit log below records what was removed.
+    const { clean: restorable, stripped: strippedOnRestore } =
+      stripArchiveOnlyFields(bookData as Record<string, unknown>);
+
     // Restore book (generate new _id to avoid conflicts)
     const newBookId = new ObjectId();
     await db.collection('books').insertOne({
-      ...bookData,
+      ...restorable,
       _id: newBookId,
       restored_at: new Date(),
       restored_from: archivedBook._id
@@ -63,6 +70,9 @@ export const POST = withAuth(async (request, session, context) => {
       book_id: bookData.id,
       book_title: bookData.title,
       pages_affected: pages?.length || 0,
+      ...(Object.keys(strippedOnRestore).length
+        ? { metadata: { stripped_on_restore: strippedOnRestore } }
+        : {}),
     });
 
     return NextResponse.json({

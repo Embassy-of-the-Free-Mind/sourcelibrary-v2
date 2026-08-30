@@ -96,21 +96,23 @@ const scenario = (state, name, ok, detail) => {
   }
 }
 
-// ── STILL OPEN: "which book has the Poetics?" is unanswerable from metadata,
-//    because work_id names the container. (#3653 item 1, #3652 A)
+// ── Reported: "which book has the Poetics?" is unanswerable from metadata,
+//    because four volumes advertise it and none contain it. (#3653 items 1-2,
+//    #3652 A)
+//
+//    Deliberately NOT "does a search for Poetics return something titled
+//    Poetics" — it does, and that is the very thing that misled the reporter.
+//    The question is whether a record says WHICH PAGES hold the work.
 {
-  // Deliberately NOT "does a search for Poetics return something titled
-  // Poetics" — it now does, and that would score this fixed while the actual
-  // complaint stands. The reporter's problem was that four volumes advertise
-  // the Poetics in their titles and none contain it, so a title match is the
-  // very thing that misled them. The real question is whether any record says
-  // WHICH pages hold the work, which is what contains_works would carry.
-  const r = await tool('search_library', { query: 'Poetics Aristotle', limit: 5 });
-  const first = (r.results || [])[0];
-  const detail = first ? await tool('get_book', { book_id: first.id }) : null;
-  const hasContents = Boolean(detail?.contains_works || detail?.book?.contains_works);
-  scenario('OPEN', 'contains_works — which pages actually hold the Poetics', hasContents,
-    'no contains_works field; title claims remain unverifiable (#3652 A)');
+  const BEKKER = '69937973b0a84a5763964d43'; // the volume that actually holds it
+  const detail = await tool('get_book', { book_id: BEKKER });
+  const cw = detail?.contains_works;
+  const works = cw?.works || [];
+  const poetics = works.find((w) => /ΠΟΙΗΤΙΚ/i.test(w.header || ''));
+  scenario('FIXED', 'contains_works — which pages actually hold the Poetics',
+    Boolean(poetics),
+    poetics ? `ΠΕΡΙ ΠΟΙΗΤΙΚΗΣ pp.${poetics.first_page}-${poetics.last_page}, ${works.length} works listed`
+            : `no contains_works (${cw?.status || 'absent'})`);
 }
 
 // ── Reported: "Every semantic search on a 400+ page book returned ~45 pages of

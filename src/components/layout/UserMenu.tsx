@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useLocale } from '@/lib/i18n';
+import { useLocale, localePath } from '@/lib/i18n';
 
 interface UserMenuProps {
   variant?: 'hero' | 'default';
@@ -41,7 +41,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
 
     return (
       <Link
-        href={locale === 'es' ? '/es/auth/signin' : '/auth/signin'}
+        href={localePath('/auth/signin', locale)}
         className={`text-sm font-medium transition-colors hover:opacity-80 ${textColor}`}
         style={textStyle}
       >
@@ -65,6 +65,27 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     .toUpperCase()
     .slice(0, 2) || session.user?.email?.[0]?.toUpperCase() || '?';
 
+  // The white-on-translucent-white styling below is only legible over the
+  // dark/transparent 'hero' headers. On the default cream header it rendered
+  // the initials fallback invisible (white text on a near-white bar) — which
+  // is what every reader sees whenever the Google avatar image fails to load,
+  // e.g. lh3.googleusercontent intermittently 503s in-browser.
+  const onDark = variant === 'hero';
+  const avatarBorder = isMember
+    ? 'var(--accent-gold)'
+    : onDark ? 'rgba(255,255,255,0.3)' : 'var(--border-light)';
+  const fallbackStyle = onDark
+    ? {
+        background: isMember ? 'rgba(201,168,108,0.2)' : 'rgba(255,255,255,0.2)',
+        color: '#fff',
+        borderColor: avatarBorder,
+      }
+    : {
+        background: isMember ? 'rgba(201,168,108,0.2)' : 'var(--bg-warm)',
+        color: 'var(--text-primary)',
+        borderColor: avatarBorder,
+      };
+
   return (
     <div ref={menuRef} className="relative">
       <button
@@ -79,17 +100,14 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             alt={session.user.name || 'User'}
             data-avatar="true"
             className="w-8 h-8 rounded-full border-2"
-            style={{ borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)' }}
+            style={{ borderColor: avatarBorder }}
             onError={handleImgError}
           />
         ) : (
           <div
             data-avatar="true"
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium border-2"
-            style={{
-              background: isMember ? 'rgba(201,168,108,0.2)' : 'rgba(255,255,255,0.2)',
-              borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)',
-            }}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium border-2"
+            style={fallbackStyle}
           >
             {initials}
           </div>
@@ -135,7 +153,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
               Reading History
             </Link>
             <Link
-              href="/support"
+              href={localePath('/support', locale)}
               className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: 'var(--text-primary)' }}
               onClick={() => setIsOpen(false)}
@@ -152,21 +170,29 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Analytics
                 </Link>
+                {/* People first. Introductions is what readers WROTE about
+                    themselves and who offered to help — it lived only inside
+                    AdminNav, which renders on /admin/* pages, so you could only
+                    reach it once you were already there. 216 volunteers had
+                    written in and none had been answered; a menu with no door
+                    to them is part of why. Duplicates and API Keys moved out to
+                    make room: they are deep tools that belong in the admin nav,
+                    not in a menu opened twenty times a day. */}
                 <Link
-                  href="/admin/duplicates"
+                  href="/admin/introductions"
                   className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
                   style={{ color: 'var(--text-primary)' }}
                   onClick={() => setIsOpen(false)}
                 >
-                  Duplicates
+                  Introductions
                 </Link>
                 <Link
-                  href="/admin/api-keys"
+                  href="/admin/users"
                   className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
                   style={{ color: 'var(--text-primary)' }}
                   onClick={() => setIsOpen(false)}
                 >
-                  API Keys
+                  Users
                 </Link>
                 <Link
                   href="/feedback"

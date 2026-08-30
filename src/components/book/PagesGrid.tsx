@@ -5,6 +5,21 @@ import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw, La
 import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useEmbedHref } from '@/lib/EmbedContext';
+import { useLocale, useLocalePath } from '@/lib/i18n';
+import { BOOK_STRINGS } from '@/lib/book-i18n';
+
+/**
+ * Card body for a page that HAS no image (#4350) — corpus text editions,
+ * mostly. A static state, deliberately not the shimmer: the shimmer promises
+ * an image that is loading, and on these pages nothing will ever arrive.
+ */
+function TextPageCard({ natural }: { natural?: boolean }) {
+  return (
+    <div className={`${natural ? 'w-full aspect-[3/4]' : 'absolute inset-0'} flex items-center justify-center bg-stone-100`}>
+      <FileText className="w-5 h-5 text-stone-300" />
+    </div>
+  );
+}
 
 function PageImage({ src, alt, className, natural }: { src: string; alt: string; className?: string; natural?: boolean }) {
   const [loaded, setLoaded] = useState(false);
@@ -53,6 +68,12 @@ interface PagesGridProps {
   getImageUrl: (page: Page) => string | null;
   overviewHref?: string;
   subtitle?: string;
+  /**
+   * Stand-in images for pages that have none (#4350): CDLI tablet-witness
+   * photos on corpus editions, cycled across the cards. Serializable — this
+   * crosses the server→client boundary from the book page.
+   */
+  fallbackImages?: Array<{ src: string; alt: string }>;
 }
 
 export default function PagesGrid({
@@ -77,8 +98,15 @@ export default function PagesGrid({
   totalCount,
   overviewHref,
   subtitle,
+  fallbackImages,
 }: PagesGridProps) {
+  const fallbackFor = (index: number) =>
+    fallbackImages && fallbackImages.length > 0 ? fallbackImages[index % fallbackImages.length] : null;
   const embedHref = useEmbedHref();
+  // The grid takes its language and its URL prefix from the page it is mounted
+  // on: /es/book/… renders Spanish chrome and keeps /es on every page link.
+  const t = BOOK_STRINGS[useLocale()];
+  const localePath = useLocalePath();
   const displayTotal = totalCount || pages.length;
   // CSS brightness filter — only apply when not default (1.0)
   const brightnessStyle = brightness && brightness !== 1.0
@@ -87,9 +115,9 @@ export default function PagesGrid({
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4 mb-1">
-        <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>Pages</h2>
+        <h2 className="font-display font-medium text-2xl md:text-[28px]" style={{ color: 'var(--text-primary)' }}>{t.pagesHeading}</h2>
         <span className="text-sm text-stone-500 whitespace-nowrap">
-          {Math.min(visibleCount, pages.length)} of {displayTotal}
+          {t.pagesShownOf(Math.min(visibleCount, pages.length), displayTotal)}
         </span>
       </div>
       {subtitle && <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>{subtitle}</p>}
@@ -99,7 +127,7 @@ export default function PagesGrid({
           <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--bg-warm)' }}>
             <FileText className="w-8 h-8" style={{ color: 'var(--text-faint)' }} />
           </div>
-          <h3 className="text-lg font-medium" style={{ color: 'var(--text-secondary)' }}>No pages yet</h3>
+          <h3 className="text-lg font-medium" style={{ color: 'var(--text-secondary)' }}>{t.noPagesYet}</h3>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Upload pages to start processing</p>
         </div>
       ) : (
@@ -107,6 +135,7 @@ export default function PagesGrid({
           {pages.slice(0, visibleCount).map((page, index) => {
             const isSelected = selectedPages.has(page.id);
             const imageUrl = getImageUrl(page);
+            const fallback = imageUrl ? null : fallbackFor(index);
             // Check updated_at since data is excluded from projection for performance
             const hasOcr = !!page.ocr?.updated_at;
             const hasTranslation = !!page.translation?.updated_at;
@@ -130,8 +159,10 @@ export default function PagesGrid({
                     }`} style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="pointer-events-none" />
+                    ) : fallback ? (
+                      <PageImage src={fallback.src} alt={fallback.alt} className="pointer-events-none" />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+                      <TextPageCard />
                     )}
                     {/* Drag handle indicator */}
                     <div className="absolute top-1 left-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
@@ -159,8 +190,10 @@ export default function PagesGrid({
                     }`} style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} />
+                    ) : fallback ? (
+                      <PageImage src={fallback.src} alt={fallback.alt} />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+                      <TextPageCard />
                     )}
                     {isSelected && (
                       <div className="absolute inset-0 bg-accent-gold/15 flex items-center justify-center">
@@ -181,13 +214,15 @@ export default function PagesGrid({
             return (
               <div key={page.id} className="group relative">
                 <a
-                  href={embedHref(`/book/${bookPath || bookId}/page/${page.id}`)}
+                  href={localePath(embedHref(`/book/${bookPath || bookId}/page/${page.id}`))}
                 >
                   <div className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} natural className="group-hover:scale-105 transition-transform duration-200" />
+                    ) : fallback ? (
+                      <PageImage src={fallback.src} alt={fallback.alt} natural className="group-hover:scale-105 transition-transform duration-200" />
                     ) : (
-                      <div className="w-full aspect-[3/4] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+                      <TextPageCard natural />
                     )}
                   </div>
                 </a>
@@ -226,16 +261,16 @@ export default function PagesGrid({
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
             >
               <RefreshCw className="w-4 h-4" />
-              Load more ({displayTotal - visibleCount} remaining)
+              {t.loadMore(displayTotal - visibleCount)}
             </button>
           )}
           {overviewHref && (
             <a
-              href={embedHref(overviewHref)}
+              href={localePath(embedHref(overviewHref))}
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
             >
               <LayoutGrid className="w-4 h-4" />
-              Overview
+              {t.overview}
             </a>
           )}
         </div>

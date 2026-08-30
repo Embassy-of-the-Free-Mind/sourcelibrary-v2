@@ -11,6 +11,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT_ARG = process.argv.find(a => a.startsWith('--limit='));
@@ -23,7 +24,8 @@ const BATCH_MODEL = 'gemini-3-flash-preview';
 const MAX_PAGES_PER_BATCH = 300;
 
 // Skip page types that don't need translation
-const SKIP_PAGE_TYPES = ['blank', 'illustration', 'cover', 'title_page', 'colophon'];
+// Canonical list + deliberate extras: stale re-runs also skip low-text-value pages.
+const SKIP_PAGE_TYPES = [...SKIP_TRANSLATION_PAGE_TYPES, 'illustration', 'cover', 'title_page', 'colophon'];
 
 // API keys for batch submission (prefer KEY_2 for separate quota)
 const BATCH_KEYS = [

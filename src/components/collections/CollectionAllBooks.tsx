@@ -47,6 +47,13 @@ interface CollectionAllBooksProps {
   collectionType?: string;
   /** Tenant provider filter (e.g. "bph") — restricts books to a specific library */
   provider?: string;
+  /**
+   * Curated override for the size-based view default (#4350): a collection
+   * whose covers carry the meaning — the cuneiform tablet corpora, for one —
+   * leads with the grid however many books it holds. From the collection
+   * doc's `all_books_default_view`; the reader's own toggle still wins.
+   */
+  defaultView?: 'grid' | 'list';
 }
 
 type ViewMode = 'grid' | 'list';
@@ -103,6 +110,7 @@ export default function CollectionAllBooks({
   languages,
   collectionType,
   provider,
+  defaultView,
 }: CollectionAllBooksProps) {
   const isArt = collectionType === 'visual_art';
   const itemLabel = isArt ? 'works' : 'books';
@@ -110,7 +118,8 @@ export default function CollectionAllBooks({
   // point. The list default (below) is a readability aid for long *book*
   // catalogues only; on a visual-art collection it renders as a text list and
   // reads as "a catalogue, not pictures" (user feedback on ficinos-florence).
-  const sizeDefault: ViewMode = isArt ? 'grid' : (total > 200 ? 'list' : 'grid');
+  // A curated defaultView (tablet corpora, #4350) outranks the size rule.
+  const sizeDefault: ViewMode = defaultView ?? (isArt ? 'grid' : (total > 200 ? 'list' : 'grid'));
 
   const [expanded, setExpanded] = useState(false);
   const [allBooks, setAllBooks] = useState<BookItem[]>([]);

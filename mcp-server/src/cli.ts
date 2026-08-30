@@ -395,6 +395,14 @@ async function run() {
             console.log(`\n${bold("Original")}`);
             console.log(wrap(original as string, 80, 2));
           }
+          // Non-Latin scripts carry a third layer (#3828). Labelled as
+          // apparatus, not transcription — a reader scanning this output must
+          // not mistake it for what is printed on the leaf.
+          const romanized = quote?.romanized || q.romanized;
+          if (romanized) {
+            console.log(`\n${bold("Romanized")} ${dim("(AI reading aid, not a transcription)")}`);
+            console.log(wrap(romanized as string, 80, 2));
+          }
           if (cit?.url) console.log(`\n${cyan(cit.url as string)}`);
           return;
         }

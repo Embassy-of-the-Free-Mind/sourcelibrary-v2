@@ -12,7 +12,10 @@
 // incident history (PR #2232, #3108, issue #2764).
 
 const EDITORIAL_WRAPPERS =
-  'meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning|image-desc'
+  // `lang` is the OCR-prompt alias of `language` (src/lib/types/prompt.ts emits
+  // `<lang>`); without it, `<lang>Hindustani</lang>` survives into quotable text.
+  // Listed after `language` so the longer alternative wins the alternation.
+  'meta|summary|keywords|vocab|language|lang|scan-quality|script|page-type|columns|warning|image-desc'
   // The EPIGRAPHY/ARTIFACT schema, used by tablet, papyrus and manuscript-fragment
   // records. `<condition>` in particular is a paragraph of English prose about the
   // OBJECT ("The image shows multiple fragments (K.2421, K.2511, K.16765) from the

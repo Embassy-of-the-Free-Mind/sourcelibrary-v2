@@ -21,6 +21,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -45,7 +46,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const r2 = new S3Client({
   region: 'auto',
@@ -81,17 +82,19 @@ async function waitForToken() {
   }
 }
 
+// Stall timeout, not a total-duration cap (#3477): the old 60s-from-start abort
+// selected for the largest page in a book — the foldout, the map, the plate.
+// The old 60s becomes the stall window; the lib's 15-min maxMs is the backstop.
+const FETCH_STALL_MS = parseInt(process.env.ARCHIVE_STALL_TIMEOUT_MS || '60000', 10);
+
 async function downloadImage(url, maxRetries = 4) {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 60_000);
     try {
-      const res = await fetch(url, {
-        signal: controller.signal,
+      const { res, buffer } = await fetchWithStallTimeout(url, {
+        stallMs: FETCH_STALL_MS,
         headers: { 'User-Agent': USER_AGENT },
       });
       if (res.status === 429) {
-        clearTimeout(timeout);
         const backoff = 5000 * Math.pow(2, attempt); // 5s, 10s, 20s, 40s
         if (attempt < maxRetries) {
           await new Promise(r => setTimeout(r, backoff));
@@ -100,10 +103,8 @@ async function downloadImage(url, maxRetries = 4) {
         throw new Error(`HTTP 429 after ${maxRetries + 1} attempts`);
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const buffer = Buffer.from(await res.arrayBuffer());
       return buffer;
     } catch (err) {
-      clearTimeout(timeout);
       if (attempt === maxRetries || !err.message?.includes('429')) throw err;
     }
   }

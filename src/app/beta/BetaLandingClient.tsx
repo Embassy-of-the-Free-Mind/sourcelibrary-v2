@@ -8,37 +8,37 @@ const GALLERY_IMAGES = [
     title: 'The Wind Carried Him in Its Belly',
     source: 'Atalanta Fugiens',
     year: '1617',
-    thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044154-0-thumb.jpg',
+    thumbnail: 'https://images.sourcelibrary.org/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044154-0-thumb.jpg',
   },
   {
     title: 'The First Key of Basil Valentine',
     source: 'Musaeum Hermeticum',
     year: '1678',
-    thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/695203a5ab34727b1f041c53/695203a6ab34727b1f041dea-0-thumb.jpg',
+    thumbnail: 'https://images.sourcelibrary.org/gallery/695203a5ab34727b1f041c53/695203a6ab34727b1f041dea-0-thumb.jpg',
   },
   {
     title: 'Perspective Drawing Machine',
     source: 'Unterweysung der Messung',
     year: '1525',
-    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2Fe532b010-6d2e-40ca-9f95-c67e74c5ee61%2F183.jpg&x=0.063&y=0.119&w=0.898&h=0.491',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2Fe532b010-6d2e-40ca-9f95-c67e74c5ee61%2F183.jpg&x=0.063&y=0.119&w=0.898&h=0.491',
   },
   {
     title: 'Fortuna Overcoming Virtue',
     source: 'Emblemata',
     year: '1621',
-    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2Fa0461b95-c56a-463a-beed-a6a2fb11cec2%2F102.jpg&x=0.06&y=0.07&w=0.88&h=0.84',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2Fa0461b95-c56a-463a-beed-a6a2fb11cec2%2F102.jpg&x=0.06&y=0.07&w=0.88&h=0.84',
   },
   {
     title: 'The Ouroboros',
     source: 'Atalanta Fugiens',
     year: '1617',
-    thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044188-0-thumb.jpg',
+    thumbnail: 'https://images.sourcelibrary.org/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044188-0-thumb.jpg',
   },
   {
     title: 'Alchemical Distillation',
     source: 'Musaeum Hermeticum',
     year: '1678',
-    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F695203a5ab34727b1f041c53%2F357.jpg&x=0.118&y=0.279&w=0.448&h=0.433',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F695203a5ab34727b1f041c53%2F357.jpg&x=0.118&y=0.279&w=0.448&h=0.433',
   },
 ];
 

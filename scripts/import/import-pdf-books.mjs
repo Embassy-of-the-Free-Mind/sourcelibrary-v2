@@ -37,6 +37,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { parseArgs } from 'util';
 import sharp from 'sharp';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const { values: args } = parseArgs({ options: {
   manifest:    { type: 'string' },
@@ -277,21 +278,21 @@ async function importBook(db, entry) {
         uploadToR2(`${base}-thumb.jpg`, thumbBuf),
       ]);
       if (pageNum % 25 === 0) console.log(`    uploaded ${pageNum}/${rendered.length}`);
-      return {
+      return makePageDoc({
         _id: new ObjectId(), id: new ObjectId().toHexString(), book_id: bookIdStr,
         page_number: pageNum,
         photo: displayUrl, display_photo: displayUrl, archived_photo: fullUrl,
         thumbnail: thumbUrl, image_thumb: thumbUrl,
         image_width: meta.width, image_height: meta.height, width: meta.width, height: meta.height,
         ocr: null, status: 'archived', created_at: now, updated_at: now,
-      };
+      });
     }, PARALLEL_PAGES);
 
     const validPages = pageDocs.filter(Boolean);
 
     // 5. Build the book record — full provenance
     const provEntry = { source: 'import-pdf-books', provider: entry.provider, method: extractMethod, confidence: 1.0, date: now.toISOString() };
-    const book = {
+    const book = makeBookDoc({
       _id: bookId, id: bookIdStr, slug,
       title: entry.title,
       display_title: entry.display_title || entry.title,
@@ -366,7 +367,7 @@ async function importBook(db, entry) {
       } } : {}),
       thumbnail: (validPages.find(p => p.page_number === 1) || validPages[0])?.photo,
       created_at: now, updated_at: now,
-    };
+    });
 
     await db.collection('books').insertOne(book);
     await db.collection('pages').insertMany(validPages);

@@ -6,8 +6,10 @@ import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { withApiAuth } from '@/lib/api-auth';
+import { EDITION_COUNTER_PROJECTION } from '@/lib/page-translations';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
@@ -37,14 +39,40 @@ export const GET = withApiAuth(async (
     // categories, year) — without these, MCP returns a book card with
     // null pages and no summary.
     const bookProjection = pagesMode === 'nav' ? {
-      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+      // `visible` feeds the hidden-book gate below — without it a hidden book
+      // in nav mode reads as public (isHiddenBook tests visible === false).
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
+      // Whether `display_title` is the source record's title or a label a
+      // vision model wrote from the image (#4288). Artwork records live in
+      // `books` too, and MCP's get_book returned `display_title || title` with
+      // no way for a client to tell a catalogued title from an AI caption.
+      'field_provenance.display_title': 1, content_type: 1, resource_type: 1,
       published: 1, year: 1, language: 1, doi: 1,
+      // The edition-vs-work language distinction (#3942). `language` is the
+      // MANIFESTATION language — what is printed on these leaves — while
+      // `original_language` names the work when it differs (de Slane's French
+      // Muqaddimah: language French, original_language Arabic). Without these
+      // three, every MCP caller saw one scalar and had no way to tell a
+      // translation-of-a-translation from a source text.
+      original_language: 1, text_role: 1, is_translation: 1,
       pages_count: 1, pages_translated: 1,
+      // Per-language edition counters, so get_book can report `editions`
+      // ({ en: 357, es: 357 }) rather than leaving an agent to discover a
+      // Spanish edition by accident (#4095).
+      ...EDITION_COUNTER_PROJECTION,
       categories: 1, reading_summary: 1,
       chapters: 1,
+      // Cover art (all four fields of the cover-write contract, see
+      // src/lib/cover-fields.ts) — the MCP get_book tool attaches the cover
+      // as an inline image block (#3937).
+      thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
       // Needed by the MCP list_editions tool to find sibling editions of the
       // same work without a second lookup.
       work_id: 1,
+      // What the volume's own running heads say it contains. Present only where
+      // the scans carry heads; `status: 'insufficient-heads'` distinguishes
+      // "we looked and could not tell" from "nobody looked".
+      contains_works: 1,
     } : undefined;
 
     const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId ?? undefined);
@@ -52,6 +80,15 @@ export const GET = withApiAuth(async (
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
     const book = result.book;
+
+    // Hidden books present their CATALOG CARD to unauthorized callers —
+    // bibliographic metadata is public policy (#4240 follow-up, 2026-08-27),
+    // content is not: no pages array, no page-image URLs (the public bucket
+    // would make that content access in one hop). Editors and CRON_SECRET
+    // callers fall through to the full record + pages as before.
+    if (!(await isBookReadable(book, request))) {
+      return NextResponse.json({ ...hiddenBookMetadataCard(book), pages: [] });
+    }
 
     // Page projections:
     // - full: all fields (for admin/processing views)

@@ -51,6 +51,10 @@ const SECTIONS: Array<{
     title: 'Title',
     fields: [
       { name: 'title', label: 'Short title' },
+      // Manuscripts are titled here, not in `title`: 663 of the 812 manuscripts
+      // carry full_title and NONE carry title. It was missing from this form
+      // entirely, which made a manuscript's title uneditable anywhere in the UI.
+      { name: 'full_title', label: 'Full title', type: 'textarea' },
       { name: 'parallel_title', label: 'Full title (transcription)', type: 'textarea' },
       { name: 'uniform_title', label: 'Variant title' },
       { name: 'series_title', label: 'Series' },
@@ -138,6 +142,54 @@ const SECTIONS: Array<{
   },
 ];
 
+/**
+ * What kind of object a record describes. Constrained enum `bph_record_type`;
+ * production holds exactly these three (28,110 · 959 · 812, measured
+ * 2026-08-13). Order is most-common-first so the default sits at the top.
+ */
+const RECORD_TYPES = [
+  { value: 'printed', label: 'Printed book', hint: 'Has a UBN. The default for the collection.' },
+  { value: 'manuscript', label: 'Manuscript', hint: 'Identified by its manuscript number (M 341, or bare 216). No UBN.' },
+  { value: 'photocopy', label: 'Photograph / photocopy', hint: 'The Fot series. No UBN.' },
+] as const;
+
+type RecordType = (typeof RECORD_TYPES)[number]['value'];
+
+/**
+ * The fields a manuscript record actually uses, measured across all 812
+ * manuscripts in production (2026-08-13). Everything else is 0.0% populated —
+ * no manuscript has a title, ubn, place, year, printer, publisher, keywords or
+ * number_of_copies, because those describe an edition coming off a press and a
+ * manuscript is a unique object.
+ *
+ *   shelf_mark 100%  ·  full_title 82%  ·  uniform_title 70%  ·  author 64%
+ *   language 48%  ·  object_size_cm 47%  ·  remarks 41%  ·  binding 29%
+ *   provenance 22%  ·  bibliography 15%
+ *
+ * This is what "the same format as those already catalogued" means concretely
+ * (José Bouman, 2026-08-13). present_location and the two staff-only note
+ * fields are included as well — they apply to any physical object we hold.
+ */
+const MANUSCRIPT_FIELDS = new Set<string>([
+  'full_title', 'uniform_title',
+  'author', 'variant_author', 'pseudonym',
+  'author_entity_id', 'author_canonical_name', 'author_wikidata_qid', 'author_viaf_id',
+  'language',
+  'object_size_cm', 'binding', 'bound_with',
+  'present_location', 'shelf_mark', 'provenance', 'collection',
+  'bibliography', 'remarks', 'internal_remarks', 'exhibition_history',
+]);
+
+/** Photographs use the same reduced shape as manuscripts. */
+const FIELDS_BY_TYPE: Record<RecordType, Set<string> | null> = {
+  printed: null, // null = show everything
+  manuscript: MANUSCRIPT_FIELDS,
+  photocopy: MANUSCRIPT_FIELDS,
+};
+
+/** Records of these types carry no UBN, so the create form must not demand one. */
+const TYPES_WITHOUT_UBN = new Set<RecordType>(['manuscript', 'photocopy']);
+
 /** Normalise the stored `contributors` JSONB into editable rows. */
 function parseContributors(v: unknown): BphContributor[] {
   if (!Array.isArray(v)) return [];
@@ -215,6 +267,28 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
     () => JSON.stringify(cleanContributors(contributors)) !== JSON.stringify(cleanContributors(initialContributors)),
     [contributors, initialContributors],
   );
+  // What kind of object this record describes. Drives which fields the form
+  // shows and whether a UBN is required at all. Editable on existing records
+  // too: 252 rows with an "M …" shelf mark are typed `printed`, and a librarian
+  // needs to be able to correct that.
+  const initialRecordType = ((): RecordType => {
+    const v = initial.record_type;
+    return RECORD_TYPES.some((t) => t.value === v) ? (v as RecordType) : 'printed';
+  })();
+  const [recordType, setRecordType] = useState<RecordType>(initialRecordType);
+  const needsUbn = !TYPES_WITHOUT_UBN.has(recordType);
+
+  // Sections/fields filtered to the chosen record type. Hidden fields stay in
+  // the list (they carry the author-authority quad) — the filter is about which
+  // *kinds of description* apply to this object, not about the render.
+  const visibleSections = useMemo(() => {
+    const allowed = FIELDS_BY_TYPE[recordType];
+    if (!allowed) return SECTIONS;
+    return SECTIONS.map((s) => ({ ...s, fields: s.fields.filter((f) => allowed.has(f.name)) })).filter(
+      (s) => s.fields.length > 0,
+    );
+  }, [recordType]);
+
   const [createUbn, setCreateUbn] = useState(suggestedUbn || '');
   const [source, setSource] = useState('');
   const [evidence, setEvidence] = useState('');
@@ -236,13 +310,26 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
     return changed;
   }, [values, initial]);
 
+  const recordTypeChanged = recordType !== initialRecordType;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isCreate && !createUbn.trim()) {
+    // Only printed books have a UBN. Demanding one for a manuscript is what
+    // blocked José Bouman from cataloguing them at all (2026-08-13); the record
+    // is addressed by its uuid instead, and found by its manuscript number.
+    if (isCreate && needsUbn && !createUbn.trim()) {
       setError('Give the new record a UBN (catalogue id).');
       return;
     }
-    if (changedFields.length === 0 && !contributorsChanged) {
+    if (isCreate && !needsUbn && !values['shelf_mark']?.trim()) {
+      setError(
+        recordType === 'manuscript'
+          ? 'Give the manuscript its number (e.g. “M 341” or “216”) in the Shelf mark field — it is how the object is found.'
+          : 'Give the record its shelf mark (e.g. “Fot 118”) — it is how the object is found.',
+      );
+      return;
+    }
+    if (changedFields.length === 0 && !contributorsChanged && !recordTypeChanged) {
       setError(isCreate ? 'Add at least a title before saving.' : 'No fields have changed — nothing to save.');
       return;
     }
@@ -274,6 +361,17 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
     }
     // Repeatable contributors are a single JSONB field, edited outside the flat
     // value map — include the cleaned array when it changed.
+    // record_type lives outside the flat value map (it's a radio group, and it
+    // decides what the rest of the form shows). Always sent on create so a new
+    // record is typed rather than left null — an untyped record can never
+    // appear in the worklist buckets that filter on record_type.
+    if (recordTypeChanged || isCreate) {
+      fieldChanges.record_type = {
+        to: recordType,
+        source: source.trim(),
+        ...(evidence.trim() ? { evidence: evidence.trim() } : {}),
+      };
+    }
     if (contributorsChanged) {
       fieldChanges.contributors = {
         to: cleanContributors(contributors),
@@ -290,7 +388,9 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          ...(isCreate ? { ubn: createUbn.trim() } : {}),
+          // A UBN-less record sends no ubn at all; the API mints a uuid to key
+          // it by. Sending '' would read as "a UBN I forgot to fill in".
+          ...(isCreate && needsUbn ? { ubn: createUbn.trim() } : {}),
           fieldChanges,
           ...(note.trim() ? { note: note.trim() } : {}),
         }),
@@ -301,12 +401,19 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         setSubmitting(false);
         return;
       }
-      const body = (await res.json()) as { mode?: 'applied' | 'queued' | 'created'; pendingId?: string; ubn?: string };
+      const body = (await res.json()) as {
+        mode?: 'applied' | 'queued' | 'created';
+        pendingId?: string;
+        ubn?: string;
+        key?: string;
+      };
       if (body.mode === 'created') {
         // New record is live. Land the cataloguer on it so they can see the
-        // entry they just made (and its first history row).
-        const newUbn = body.ubn || createUbn.trim();
-        router.push(`/catalog/${encodeURIComponent(newUbn)}`);
+        // entry they just made (and its first history row). `key` is the
+        // addressable id — the UBN for printed books, the minted uuid for
+        // manuscripts and photographs, which have no UBN to navigate by.
+        const newKey = body.key || body.ubn || createUbn.trim();
+        router.push(`/catalog/${encodeURIComponent(newKey)}`);
         router.refresh();
         return;
       }
@@ -370,33 +477,79 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         </div>
       )}
 
-      {/* Create mode — new-record intro + the catalogue id. The UBN is
-          pre-filled with a safe Source-Library id (SL-…) but editors can
-          replace it with a real BPH UBN if the record already has one. */}
-      {isCreate && (
+      {/* What is being catalogued. First question on the form, because it
+          decides which fields the rest of it shows and whether a UBN applies
+          at all — "the blank form should show other fields than the one for
+          printed books. No UBN required." (José Bouman, 2026-08-13) */}
+      <div className="p-4 bg-white border border-border-light rounded-lg">
+        <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-3">
+          {isCreate ? 'What are you cataloguing?' : 'Kind of record'}
+        </h2>
+        <div className="space-y-2">
+          {RECORD_TYPES.map((t) => (
+            <label key={t.value} className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="radio"
+                name="record_type"
+                value={t.value}
+                checked={recordType === t.value}
+                onChange={() => setRecordType(t.value)}
+                className="mt-1 accent-accent-rust"
+              />
+              <span className="text-sm">
+                <span className="text-primary font-medium">{t.label}</span>
+                {recordTypeChanged && recordType === t.value && (
+                  <span className="ml-2 text-[10px] uppercase text-accent-rust font-medium">changed</span>
+                )}
+                <span className="block text-xs text-muted">{t.hint}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Create mode — the catalogue id, for the record types that have one.
+          Pre-filled from the 33,000+ allocation range (José Bouman, 2026-07-15:
+          the UBN gets written into the physical book by hand, so it must be a
+          plain number in the BPH's own sequence). */}
+      {isCreate && needsUbn && (
         <div className="p-4 bg-white border border-border-light rounded-lg">
           <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-3">New catalogue record</h2>
           <FormField
             label="UBN (catalogue id) *"
-            hint="Pre-filled with a Source-Library id. Replace it with the BPH UBN if this record already has one. Letters, numbers, dot, dash, underscore only."
+            hint="Pre-filled with the next free number in the BPH range. Replace it if this record already has a UBN. Letters, numbers, dot, dash, underscore only."
           >
             <input
               type="text"
               value={createUbn}
               onChange={(e) => setCreateUbn(e.target.value)}
               className="w-full text-sm border border-border-light rounded-md px-3 py-2 bg-white text-primary font-mono focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
-              placeholder="SL-000001"
+              placeholder={suggestedUbn || '33000'}
             />
           </FormField>
         </div>
       )}
 
-      {/* Edit mode — surface the UBN (catalogue id) read-only so the cataloguer
-          always sees which record they're editing (Paul D., 2026-06-24). The
-          UBN is the primary key and isn't changed through this form. */}
+      {/* Create mode, no-UBN types — say plainly that this is correct, not a
+          field we forgot. The shelf mark below carries the identity. */}
+      {isCreate && !needsUbn && (
+        <div className="p-4 bg-white border border-border-light rounded-lg">
+          <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-1">No UBN</h2>
+          <p className="text-sm text-secondary">
+            {recordType === 'manuscript'
+              ? 'Manuscripts have no UBN. Give this one its manuscript number in the Shelf mark field below — “M 341”, or a bare number like “216”.'
+              : 'Photographs have no UBN. Give this one its shelf mark in the field below — e.g. “Fot 118”.'}
+          </p>
+        </div>
+      )}
+
+      {/* Edit mode — surface the identifier read-only so the cataloguer always
+          sees which record they're editing (Paul D., 2026-06-24). */}
       {!isCreate && (
         <div className="p-4 bg-white border border-border-light rounded-lg">
-          <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-1">UBN (catalogue id)</h2>
+          <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-1">
+            {needsUbn ? 'UBN (catalogue id)' : 'Record id (no UBN)'}
+          </h2>
           <p className="font-mono text-sm text-primary">{ubn}</p>
         </div>
       )}
@@ -437,7 +590,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         </div>
       </div>
 
-      {SECTIONS.map((section) => (
+      {visibleSections.map((section) => (
         <section key={section.title}>
           <h2 className="text-xs uppercase tracking-wider text-muted font-medium mb-2">{section.title}</h2>
           <div className="space-y-3 p-4 bg-white border border-border-light rounded-lg">

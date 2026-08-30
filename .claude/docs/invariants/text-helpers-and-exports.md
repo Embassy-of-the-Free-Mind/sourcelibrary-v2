@@ -6,6 +6,43 @@
 
 ---
 
+## A language-keyed export must SAY which edition it served (#4095)
+
+Since Aug 2026 a page can hold more than one translation: English on
+`pages.translation`, everything else on `pages.translations.<iso>`. Every text
+surface therefore takes an optional `lang` (an ISO code, default `en`) —
+`/api/books/:id/quote`, `/api/books/:id/text`, `/api/books/:id/download`,
+`/api/books/:id/search`, `/api/search`, and the matching MCP tools.
+
+Three rules, all of them about not lying:
+
+- **The fallback is loud.** 103 books of 22,000 have a Spanish edition, so
+  falling back to English is the COMMON case, not the edge one. `quote.lang`,
+  `translation_lang`, `lang_coverage`, `lang_note` exist so a caller can see
+  which edition it actually got. A quote is a claim about words; a silent
+  substitution makes the caller assert something it never checked.
+- **Resolve per PAGE, not per book.** The Spanish worker's length guard skipped
+  ~30 pages across 17 otherwise-complete books, so a book-level claim is wrong
+  on exactly the pages a reader would notice. `/text` reports
+  `lang_coverage: { es, en_fallback }` for this reason, and one batch of
+  `get_quotes` can legitimately mix editions.
+- **`lang` is not `language`.** `language` filters by what is printed on the
+  leaves of the scan; `lang` chooses which rendering of the text to read. A
+  Latin book with a Spanish edition matches both.
+
+Downloads are the exception to "thread the parameter": `download/route.ts`
+substitutes the requested edition into `page.translation` ONCE, right after the
+pages are fetched, so fifteen format generators keep reading one field. The
+language goes into the FILENAME (`plato-es-translation.pdf`) — a downloaded file
+is read months later out of a folder, where a header cannot reach it.
+
+The distributable corpus snapshot carries other editions under a
+`translations` MAP on each page record, never in place of `translation`: the
+English text is what the OCR is aligned to and what existing consumers read, and
+its words are counted ONCE — `edition_pages` in the manifest counts localized
+pages separately so no figure quoted from it is inflated by holding two
+renderings of one passage.
+
 Lessons from 2026-08-04 (#3580/#3598/#3620). The handoff this section originally cited
 (`2026-08-04-export-surfaces-and-unreachable-page-types.md`) was never written — the
 issues above are the record, and the text below is the whole lesson.
@@ -57,3 +94,19 @@ silently because the output reads as ordinary prose.
   (`src/lib/ordered-stream.ts`) yields in input order with a bounded look-ahead.
   And when an artifact must be truncated, **say so inside the artifact** — a
   partial edition that doesn't admit it is worse than an error.
+- **A fix to a duplicated surface is a fix to one copy.** The download route has a
+  tenant twin (`/api/[tenant]/books/[id]/download`) that is not parity-tested, and
+  every lesson in this file landed on the global copy only. Measured 2026-08-11:
+  388 diff lines, with the tenant copy still deleting transcribed `<margin>`
+  content under notes-off (#3870, the reader's own #3811 bug), resolving three of
+  four image formats from raw `photo` (the uncropped spread on split pages),
+  fetching unbounded or serially, buffering the whole zip, awaiting every image
+  before writing a byte, running with no `maxDuration`, and labelling a truncated
+  facsimile a complete edition. **None of it errors** — a wrong image is a valid
+  JPEG, a serial fetch is merely slow until Cloudflare 524s it. Ported and shared
+  in #3908/#3914 (`src/lib/notes-off.ts`, `export-markdown-html.ts`,
+  `export-page-images.ts`; drift 388 → 175 lines). Before fixing anything here,
+  `git grep` for a twin, and prefer *extracting* the rule over patching both — a
+  shared module cannot drift, a convention always does. Pinned by
+  `tests/unit/notes-off.test.ts` and `tests/unit/download-route-parity.test.ts`,
+  whose guards were each verified firing against the pre-fix files.

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import type { Book, SourceWorkDateLayer } from '@/lib/types/book';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
+import { resolveImprintPlace } from '@/lib/imprint';
 
 /**
  * Light-themed bibliographic panel for the book page's "Bibliographic
@@ -34,7 +35,7 @@ export default function BookBiblioPanel({
 }) {
   const src = book.image_source;
   const layers = (book.source_work_dates ?? []) as SourceWorkDateLayer[];
-  const place = book.place_published?.trim();
+  const place = resolveImprintPlace(book)?.display; // family resolver, #4043
   const publisher = book.publisher?.trim();
   const impressum = [place, publisher].filter(Boolean).join(', ');
 

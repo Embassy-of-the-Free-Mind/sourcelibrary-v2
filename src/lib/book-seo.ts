@@ -70,7 +70,18 @@ export interface DescriptionInput {
   year?: string | null;
   language?: string | null;
   summary?: string | null;
-  isFirstTranslation?: boolean;
+  /**
+   * The claim's register, not the badge flag (#3459). Only `confirmed` — a
+   * first-family verdict backed by strong or moderate evidence — earns the
+   * "First English translation" prefix here.
+   *
+   * A `candidate` gets the plain "English translation" prefix rather than a
+   * search statement. 155 characters is not room to state a search AND its
+   * limits, and a truncated caveat is worse than none: it would put the
+   * assertion in front of search engines and AI crawlers with the qualifier
+   * cut off. Saying less is the honest option at this length.
+   */
+  firstTranslationClaim?: string;
   pagesTranslated?: number | null;
 }
 
@@ -85,7 +96,7 @@ function clamp(s: string, max = DESC_MAX): string {
 /** Unique, accurate meta description from the real summary, with an honest
  *  translation claim (never on English-language originals). */
 export function buildSeoDescription(input: DescriptionInput): string {
-  const { originalTitle, authorLabel, year, language, summary, isFirstTranslation, pagesTranslated } = input;
+  const { originalTitle, authorLabel, year, language, summary, firstTranslationClaim, pagesTranslated } = input;
   const translated = (pagesTranslated ?? 0) > 0 && !isEnglish(language);
 
   const core = (summary && summary.trim())
@@ -95,7 +106,7 @@ export function buildSeoDescription(input: DescriptionInput): string {
   const alreadySaysTranslation = /translat/i.test(core.slice(0, 60));
   let prefix = '';
   if (translated && !alreadySaysTranslation) {
-    prefix = isFirstTranslation ? 'First English translation. ' : 'English translation. ';
+    prefix = firstTranslationClaim === 'confirmed' ? 'First English translation. ' : 'English translation. ';
   }
   return clamp(prefix + core);
 }

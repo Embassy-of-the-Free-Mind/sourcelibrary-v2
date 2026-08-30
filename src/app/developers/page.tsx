@@ -2,10 +2,49 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
+import { API_LIMITS } from '@/lib/api-limits';
+import toolManifest from '../../../scripts/audit/mcp-directory-contract.tools.json';
+import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+
+// One row per MCP tool, in the order the table shows them. The blurbs are
+// human one-liners — the agent-facing descriptions live in
+// src/app/api/mcp/route.ts and are much longer.
+const MCP_TOOLS: Array<{ name: string; blurb: string }> = [
+  { name: 'search_library', blurb: 'Find books on a topic — full-text search across the catalog' },
+  { name: 'search_translations', blurb: 'Find quotable passages by keyword across the whole library' },
+  { name: 'search_concept', blurb: 'Semantic passage search — matches paraphrases and adjacent ideas, not just keywords' },
+  { name: 'search_within_book', blurb: 'Search inside a specific book’s pages' },
+  { name: 'list_books', blurb: 'Browse with filters — language, year, category, translation status' },
+  { name: 'list_editions', blurb: 'Every edition of a work the library holds, across languages and centuries' },
+  { name: 'get_book', blurb: 'Book metadata: summary, chapters, edition info, DOI' },
+  { name: 'get_book_text', blurb: 'Read 50+ pages in one call — OCR, translation, or both' },
+  { name: 'get_quote', blurb: 'Exact text of a single page with a stable citation URL' },
+  { name: 'get_quotes', blurb: 'Verbatim text + citation links for up to 25 pages in one call' },
+  { name: 'get_locus', blurb: 'Resolve canonical references — Bekker (Aristotle) and Stephanus (Plato) — to the leaves that carry them' },
+  { name: 'search_images', blurb: 'Search historical illustrations and artworks by subject, symbol, figure, type' },
+  { name: 'submit_feedback', blurb: 'Send bug reports and requests to the team' },
+  { name: 'share_findings', blurb: 'Contribute a cited research dossier back to the library (human-reviewed)' },
+  { name: 'propose_collection', blurb: 'Propose a themed grouping of books (human-reviewed)' },
+];
+
+// Build-time tripwire: the manifest is CI-audited against the live server
+// (scripts/audit/mcp-directory-contract.mjs), so if this table and the manifest
+// disagree, the page is documenting tools that don't exist — fail the build
+// instead of publishing the drift. This page said "9 research tools" for months
+// while the server had 15.
+{
+  const manifestNames = new Set(toolManifest.tools.map((t) => t.name));
+  const tableNames = new Set(MCP_TOOLS.map((t) => t.name));
+  const missing = [...manifestNames].filter((n) => !tableNames.has(n));
+  const extra = [...tableNames].filter((n) => !manifestNames.has(n));
+  if (missing.length || extra.length) {
+    throw new Error(`developers page tool table out of sync with MCP manifest — missing: [${missing}], extra: [${extra}]`);
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Open API over 15,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. 9 research tools, REST endpoints, CLI.',
+  description: `Open API over 15,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. ${MCP_TOOLS.length} research tools, REST endpoints, CLI.`,
   alternates: {
     canonical: '/developers',
   },
@@ -106,9 +145,66 @@ export default function DevelopersPage() {
           <h2 className="text-lg font-semibold text-primary mb-2">Building something? Grab a free key.</h2>
           <p className="text-secondary mb-6">
             The endpoints work without one — keys lift rate limits, give your traffic attribution, and help us learn what
-            people are building so we can keep this open and free. Takes a minute.
+            people are building so we can keep this open and free. Takes a minute. Bulk page-image downloads need one:
+            send it as <code className="text-sm">Authorization: Bearer sl_data_…</code> on <code className="text-sm">/api/image</code> requests
+            (anonymous scripts are capped per day; paid tiers are uncapped — see the rate card on the licensing page).
           </p>
           <ApiKeyRequestForm />
+        </div>
+      </section>
+
+      {/* Published limits — rendered from src/lib/api-limits.ts, the single
+          source of truth the enforcement code also reads (#4366). */}
+      <section className="mb-16">
+        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
+          <h2 className="text-lg font-semibold text-primary mb-3">Rate limits &amp; daily budgets</h2>
+          <p className="text-secondary text-sm mb-4">
+            Budgets are rolling 24-hour windows across the text and quote tools; images have their own
+            equal pool. Identity is always an upgrade: a free key out-ranks staying anonymous.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="text-secondary border-b border-border-light">
+                  <th className="py-2 pr-4 font-medium">Caller</th>
+                  <th className="py-2 pr-4 font-medium">Pages / day</th>
+                  <th className="py-2 pr-4 font-medium">Images / day</th>
+                  <th className="py-2 font-medium">Requests</th>
+                </tr>
+              </thead>
+              <tbody className="text-primary">
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Anonymous</td>
+                  <td className="py-2 pr-4">{API_LIMITS.anon.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.anon.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.anon.requestsPerHour}/hour</td>
+                </tr>
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Signed in (free)</td>
+                  <td className="py-2 pr-4">{API_LIMITS.session.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.session.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.session.requestsPerHour.toLocaleString()}/hour</td>
+                </tr>
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Free API key</td>
+                  <td className="py-2 pr-4">{API_LIMITS.explorerKey.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.explorerKey.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.explorerKey.requestsPerMinute}/minute</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4">Paid tiers</td>
+                  <td className="py-2 pr-4">Uncapped</td>
+                  <td className="py-2 pr-4">Uncapped</td>
+                  <td className="py-2">60–1,000/minute by tier</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-secondary text-xs mt-3">
+            Your own meter: <code>GET /api/dataset/v1/usage</code> with your key. Verified search crawlers
+            and user-directed assistant fetches are never limited. Full-tier keys can request images without
+            the visible provenance marks (<code>&amp;clean=1</code> on <code>/api/image</code>).
+          </p>
         </div>
       </section>
 
@@ -136,7 +232,7 @@ export default function DevelopersPage() {
         <h2 className="text-2xl font-semibold text-primary mb-2">MCP Server</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           Gives Claude (and any MCP client) direct access to the full collection &mdash;
-          search, read, quote, and browse 150,000+ illustrations. The endpoint is plain JSON-RPC
+          search, read, quote, and browse {IMAGE_CORPUS_STATS.illustrations} illustrations. The endpoint is plain JSON-RPC
           over HTTP, so you can also call it from any HTTP client without an MCP library
           (see the snippets above). Pick whichever path fits.
         </p>
@@ -247,42 +343,12 @@ export default function DevelopersPage() {
         <div className="overflow-x-auto mb-10">
           <table className="w-full text-sm">
             <tbody className="divide-y divide-stone-100">
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_library</td>
-                <td className="py-2.5 text-secondary">Full-text search across books and page content</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_translations</td>
-                <td className="py-2.5 text-secondary">Search inside translated text across the whole library</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_concept</td>
-                <td className="py-2.5 text-secondary">Semantic / conceptual passage search &mdash; matches paraphrases and adjacent ideas, not just keywords</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_within_book</td>
-                <td className="py-2.5 text-secondary">Search inside a specific book&apos;s pages</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">list_books</td>
-                <td className="py-2.5 text-secondary">Browse with filters &mdash; language, year, category, translation status</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">get_book</td>
-                <td className="py-2.5 text-secondary">Book metadata: summary, chapters, edition info, DOI</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">get_book_text</td>
-                <td className="py-2.5 text-secondary">Read 50+ pages in one call &mdash; OCR, translation, or both</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">get_quote</td>
-                <td className="py-2.5 text-secondary">Exact text of a single page with citation URL</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_images</td>
-                <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations by subject, symbol, type</td>
-              </tr>
+              {MCP_TOOLS.map((tool) => (
+                <tr key={tool.name}>
+                  <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">{tool.name}</td>
+                  <td className="py-2.5 text-secondary">{tool.blurb}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -455,7 +521,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations</td>
+                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>

@@ -20,6 +20,8 @@
 
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -242,11 +244,10 @@ async function main() {
       const bookIdStr = bookId.toHexString();
       const slug = await ensureUniqueSlug(db, generateSlug(title, author));
 
-      const bookDoc = {
+      const acquired = await insertBookIfNew(db, {
         _id: bookId,
         id: bookIdStr,
         slug,
-        tenant_id: 'default',
         title,
         author,
         language,
@@ -279,18 +280,17 @@ async function main() {
         visible: false,
         created_at: new Date(),
         updated_at: new Date(),
-      };
-
-      await db.collection('books').insertOne(bookDoc);
+      }, { importer: 'script:bsb-from-file', sourceIdentifier: bsbId, sourceUrl: manifestUrl });
+      // The gate declined this candidate; the reason is a row in `dedup_skips`.
+      if (!acquired.inserted) { log(`  SKIP — ${acquired.message}`); skipped++; continue; }
 
       // Insert pages in batches of 500
       for (let start = 0; start < pages.length; start += 500) {
         const chunk = pages.slice(start, start + 500).map((p, j) => {
           const pageId = new ObjectId();
-          return {
+          return makePageDoc({
             _id: pageId,
             id: pageId.toHexString(),
-            tenant_id: 'default',
             book_id: bookIdStr,
             page_number: start + j + 1,
             photo: p.photo,
@@ -298,7 +298,7 @@ async function main() {
             photo_original: p.photo,
             created_at: new Date(),
             updated_at: new Date(),
-          };
+          });
         });
         await db.collection('pages').insertMany(chunk, { ordered: false });
       }

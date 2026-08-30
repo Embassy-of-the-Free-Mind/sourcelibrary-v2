@@ -32,6 +32,31 @@ const STITCH_PROMPT = `You are reviewing a scholarly translation for continuity 
 If change needed: Return ONLY the smoothed opening paragraph (first 1-3 sentences), followed by "..." to indicate the rest continues unchanged.
 If no change needed: Return exactly "NO_CHANGE_NEEDED"`;
 
+/**
+ * DB-first stitch prompt (#3756), mirroring the english_modernization pattern
+ * in src/lib/prompts.ts getTranslationPrompt: the prompts collection (type:
+ * 'stitch', is_default: true) is the source of truth so the prompt can be
+ * improved without a deploy; the hardcoded constant remains only as a
+ * fallback so stitching never fails closed on a DB hiccup. Not seeded here —
+ * until a 'stitch' prompt row exists, the constant is used.
+ */
+async function getStitchPrompt(
+  db: Awaited<ReturnType<typeof getDb>>
+): Promise<{ text: string; version: string }> {
+  try {
+    const doc = await db.collection('prompts').findOne(
+      { type: 'stitch', is_default: true },
+      { sort: { version: -1 } }
+    );
+    if (doc?.content) {
+      return { text: doc.content as string, version: `stitch-db-v${doc.version ?? 1}` };
+    }
+  } catch (error) {
+    console.error('[stitch] Error fetching stitch prompt from DB:', error);
+  }
+  return { text: STITCH_PROMPT, version: 'stitch-inline-2026-05' };
+}
+
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
   const inputCost = (inputTokens / 1_000_000) * pricing.input;
@@ -100,6 +125,8 @@ export const POST = withAuth(async (request, session, context) => {
 
     console.log(`[stitch] Processing ${pages.length} pages for book ${bookId}`);
 
+    const stitchPrompt = await getStitchPrompt(db);
+
     const genAI = getGeminiClient();
     const model = genAI.getGenerativeModel({ model: modelId });
 
@@ -130,7 +157,7 @@ export const POST = withAuth(async (request, session, context) => {
       // Use last 1500 chars of previous page
       const prevEnding = prevTranslation.slice(-1500);
 
-      const prompt = STITCH_PROMPT
+      const prompt = stitchPrompt.text
         .replace('{prev_translation}', prevEnding)
         .replace('{curr_translation}', currTranslation.slice(0, 3000));
 
@@ -223,7 +250,7 @@ export const POST = withAuth(async (request, session, context) => {
         input_tokens: totalInputTokens,
         output_tokens: totalOutputTokens,
         status: 'success',
-        prompt_version: 'stitch-inline-2026-05',
+        prompt_version: stitchPrompt.version,
         endpoint: '/api/books/stitch-translations',
         triggered_by: triggeredBy,
       });

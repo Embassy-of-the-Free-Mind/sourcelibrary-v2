@@ -20,13 +20,21 @@ import type {
 
 export const ATTEMPTS_COLLECTION = 'first_translation_attempts';
 
-/** How an attempt was carried out. Superset of {@link Resolver} (adds the live instruments). */
+/**
+ * How an attempt was carried out. Superset of {@link Resolver} (adds the live
+ * instruments). `constituent_catalog_match` is the deterministic
+ * translation_catalogs match run against a CONTAINER's constituent sub-works
+ * (scripts/eval/ft-constituent-catalog-match.mjs, #2916) — same Tier-0
+ * mechanism as `tier0_linked`, but the evidence is scoped to one constituent
+ * (see {@link FirstTranslationAttempt.constituent}), not the whole book.
+ */
 export type AttemptMethod =
   | Resolver
   | 'gemini_verifier'
   | 'gemini_grounded_search'
   | 'claude_subagent_verify'
-  | 'llm_prior_adjudicate';
+  | 'llm_prior_adjudicate'
+  | 'constituent_catalog_match';
 
 /**
  * A prior English translation found during an attempt, kept STRUCTURED (not just
@@ -69,6 +77,13 @@ export interface FirstTranslationAttempt {
   result: 'found' | 'none' | 'not_applicable';
   /** Registry ids of priors found (empty when result==='none'). */
   found_refs?: string[];
+  /**
+   * Set only by constituent-scoped attempts (method
+   * 'constituent_catalog_match'): WHICH sub-work of the container this evidence
+   * is about. A constituent-level `found` means that sub-work is not a first —
+   * it must never be read as "the whole container has a prior."
+   */
+  constituent?: { index: number; title: string };
   /** Structured priors found this attempt (translator/year/title/link). */
   priors?: PriorTranslation[];
   evidence_strength: EvidenceStrength;
@@ -80,6 +95,19 @@ export interface FirstTranslationAttempt {
   model?: string;
   cost_usd?: number;
   notes?: string;
+  /**
+   * Version tag of the prompt that produced this attempt (e.g.
+   * 'ft-ladder-skeptic/v1-2026-08-08'). Required on every automated
+   * instrument's rows (#3778): without it a search result cannot be reproduced
+   * or superseded when the prompt changes — the July replicability gap.
+   */
+  prompt_version?: string;
+  /**
+   * Pointer into `first_translation_transcripts` (the attempt_id doubles as the
+   * key) when the full prompt + raw response + grounding metadata were
+   * persisted separately. The ledger row stays lean; the transcript endures.
+   */
+  transcript_ref?: string;
   /**
    * The verifier's raw result string, preserved by the ingest
    * (ingest-ft-verify-results.mjs) alongside the coarse `result`. For a

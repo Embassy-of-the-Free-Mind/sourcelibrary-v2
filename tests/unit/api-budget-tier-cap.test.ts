@@ -19,10 +19,12 @@ const key = (tier?: string): ApiIdentity => ({
 });
 
 describe('pickLimit — API key tier caps on /text', () => {
-  it('caps the free Explorer tier at its published 100 pages/day', () => {
+  it('caps the free Explorer tier at its published daily budget (finite, above session)', () => {
     const { limit, tier } = pickLimit(key('explorer'));
     expect(limit).toBe(DATASET_TIERS.explorer.pagesPerDay);
-    expect(limit).toBe(100);
+    // Raised 100 → 2000 in #4366: a free key must OUT-RANK anonymous (500)
+    // and session (1000) access — identity is an upgrade, never a downgrade.
+    expect(limit).toBe(2000);
     expect(Number.isFinite(limit)).toBe(true);
     expect(tier).toBe('apikey');
   });

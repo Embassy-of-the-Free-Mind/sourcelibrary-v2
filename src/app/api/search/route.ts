@@ -6,7 +6,7 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withApiAuth } from '@/lib/api-auth';
@@ -14,10 +14,36 @@ import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { logSearchEvent } from '@/lib/search-event-log';
+import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 
 export const preferredRegion = 'fra1';
 
 const MAX_PAGE_RESULTS = 25;
+
+/**
+ * Carry a book's identity fields onto a result as transients, so the
+ * work-grain collapse below can read them. Stripped before the response —
+ * `_work_id` was already doing this; aliases and `duplicate_of` join it so
+ * every lane in the app collapses on the same rule (src/lib/search/work-grouping.ts).
+ */
+function attachIdentity(result: SearchResult, book: Record<string, unknown>): void {
+  const r = result as unknown as Record<string, unknown>;
+  if (book.work_id) r._work_id = book.work_id;
+  if (Array.isArray(book.work_id_aliases)) r._work_id_aliases = book.work_id_aliases;
+  if (book.duplicate_of) r._duplicate_of = book.duplicate_of;
+}
+
+/** Read the transients back as the shape `collapseByWork` expects. */
+function identityOf(result: SearchResult): WorkGroupable {
+  const r = result as unknown as Record<string, unknown>;
+  return {
+    book_id: result.book_id,
+    work_id: r._work_id as string | undefined,
+    work_id_aliases: r._work_id_aliases as string[] | undefined,
+    duplicate_of: r._duplicate_of as string | undefined,
+  };
+}
 
 /** Strip XML/HTML tags and clean up OCR artifacts for display */
 function cleanText(text: string): string {
@@ -60,6 +86,21 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const excludeLanguagesParam = searchParams.get('exclude_languages');
     const languages = expandLanguages(languagesParam ? languagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
     const excludeLanguages = expandLanguages(excludeLanguagesParam ? excludeLanguagesParam.split(',').map(l => l.trim()).filter(Boolean) : []);
+    // `lang` is the TEXT language of the answer — which edition of each page to
+    // search and to quote back. It is NOT `language`, which filters by the
+    // BOOK's edition language and keeps that meaning everywhere
+    // (search-filters-and-lanes.md). `?lang=es&language=Latin` is coherent: the
+    // Spanish rendering of Latin editions.
+    //
+    // Anything but `en` narrows the whole request to books that HAVE that
+    // edition. That is not a nicety — result cards on a localized surface link
+    // to `/es/book/…`, and an `/es` URL for a book with no Spanish pages 307s
+    // straight back to English (i18n.md, "an /es URL is a promise"). A result
+    // the reader cannot open in their language is worse than no result.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const textLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
+    const isLocalizedSearch = textLang !== 'en';
+    const editionCounter = `pages_translated_${textLang}`;
     const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');
@@ -178,6 +219,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
       if (firstTranslation === 'true') filters.is_first_translation = true;
       if (library) filters.$or = [{ held_by: library }, { 'image_source.provider': library }];
+      if (isLocalizedSearch) filters[editionCounter] = { $gt: 0 };
       return filters;
     }
 
@@ -208,8 +250,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         thumbnail_blob: (typedBook as any).thumbnail_blob,
         quality_score: (typedBook as any).quality_score,
       };
-      // Transient field for work-level dedup (stripped before response)
-      if ((typedBook as any).work_id) (result as any)._work_id = (typedBook as any).work_id;
+      // Transient fields for work-level dedup (stripped before response)
+      attachIdentity(result, typedBook as unknown as Record<string, unknown>);
       if ((typedBook as any).text_role) (result as any)._text_role = (typedBook as any).text_role;
       return result;
     }
@@ -244,7 +286,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, text_role: 1 };
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -296,6 +338,57 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       // Wrapped in a timeout race to prevent Atlas Search from blocking the response
       timed(async () => {
         if (!searchContent && !pagesOnly) return [];
+
+        // Localized keyword lane. The Atlas `pages_search` index maps
+        // `translation.data` / `ocr.data` and nothing else, so it cannot see
+        // `translations.es.data`; the Spanish text lives in Supabase for the
+        // vector lane anyway, and a GIN index over it gives real Spanish
+        // stemming that the Atlas index (lucene.standard everywhere) does not.
+        // Shaped to look like a Mongo page doc so everything downstream — the
+        // books join, the hidden-book drop, RRF, snippet extraction — is the
+        // same code the English lane runs.
+        if (isLocalizedSearch) {
+          try {
+            // Every book-level filter is resolved to an ALLOW-LIST of book ids
+            // and pushed into the RPC, rather than re-expressed as RPC
+            // parameters. `page_texts` denormalizes only `book_language` and
+            // `book_year`, so a lane that filtered on those alone would leak
+            // past category, has_doi, library, first_translation and the
+            // languages/exclude_languages arrays — a filter is only as strong
+            // as its weakest lane (search-filters-and-lanes.md), and a vector
+            // or text lane with no metadata predicate is the one people miss.
+            let allowedBookIds: string[] | undefined;
+            if (bookId) {
+              allowedBookIds = [bookId];
+            } else if (hasBookLevelFilters || tenantId) {
+              const allowed = await db.collection('books')
+                .find(buildBookFilters()).project({ id: 1 }).toArray();
+              // An empty allow-list must return NOTHING, never fall open to the
+              // whole corpus (#2760). `[]` reaches the RPC as an empty array and
+              // `book_id = ANY('{}')` matches nothing, but bail here rather than
+              // depend on that.
+              if (allowed.length === 0) return [];
+              allowedBookIds = allowed.map(b => b.id as string);
+            }
+            const rows = await lexicalPageSearchLang(query, textLang, (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS, {
+              yearMin, yearMax,
+              bookIds: allowedBookIds,
+            });
+            return rows.map(r => ({
+              id: r.page_id,
+              book_id: r.book_id,
+              page_number: r.page_number,
+              // The stored text is already wrapper-stripped by the embedding
+              // composer; extractSnippet re-cleans it harmlessly.
+              translation: { data: r.full_text || r.snippet },
+              ocr: { data: '' },
+            }));
+          } catch (err) {
+            console.warn('[search] Localized page lane failed:', err instanceof Error ? err.message : String(err));
+            degradedLanes.push('page');
+            return [];
+          }
+        }
 
         const pageSearchPromise = (async () => {
           const pageFilter: Record<string, unknown> = {};
@@ -397,7 +490,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (bookId || !searchContent) return [];
         try {
-          const pages = await semanticPageSearchGlobal(matchQuery, 15, { tenantId: tenantId || undefined });
+          const pages = await semanticPageSearchGlobal(matchQuery, 15, {
+            tenantId: tenantId || undefined,
+            textLang,
+          });
           if (pages.length === 0) return pages;
           // Drop semantic matches on non-content pages (cover/blank/illustration/etc.).
           // The Supabase embedding table has these — they pollute conceptual queries.
@@ -463,7 +559,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const pageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -530,7 +626,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail: (book as any).thumbnail,
           thumbnail_blob: (book as any).thumbnail_blob,
         };
-        if ((book as any).work_id) (pageResult as any)._work_id = (book as any).work_id;
+        attachIdentity(pageResult, book as unknown as Record<string, unknown>);
         if ((book as any).text_role) (pageResult as any)._text_role = (book as any).text_role;
         results.push(pageResult);
       }
@@ -562,6 +658,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
               // Tenant scope: match_books_semantic is GLOBAL (book_embeddings has
               // no tenant_id column, so the RPC can't filter), so a tenant request
               // must re-apply the tenant filter here or global books leak into the
@@ -578,7 +675,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
                 : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
                 : language ? { language } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -616,7 +713,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             thumbnail_blob: book.thumbnail_blob as string | undefined,
             quality_score: (book as any).quality_score,
           };
-          if ((book as any).work_id) (semResult as any)._work_id = (book as any).work_id;
+          attachIdentity(semResult, book as unknown as Record<string, unknown>);
           if ((book as any).text_role) (semResult as any)._text_role = (book as any).text_role;
           results.push(semResult);
         }
@@ -644,6 +741,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           .find(
             {
               id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
+              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
               // match_semantic already filters by filter_tenant_id, so this is
               // defense-in-depth — but keep it consistent with the book lane so a
               // future RPC change can't silently leak cross-tenant pages.
@@ -658,7 +756,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
                 : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
                 : language ? { language } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -696,7 +794,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
         };
-        if (book.work_id) (spResult as any)._work_id = book.work_id;
+        attachIdentity(spResult, book as Record<string, unknown>);
         if ((book as any).text_role) (spResult as any)._text_role = (book as any).text_role;
         results.push(spResult);
       }
@@ -739,6 +837,46 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aWordHits = queryWords.filter(w => aAllText.includes(w)).length;
         const bWordHits = queryWords.filter(w => bAllText.includes(w)).length;
         if (aWordHits !== bWordHits) return bWordHits - aWordHits;
+
+        // 2c. Does the query name this book's AUTHOR? A commentary ON Aristotle
+        // is not Aristotle.
+        //
+        // Measured on "Aristotle Metaphysics": Bekker's 1831 Greek critical
+        // edition ranked 7th and Taylor's translation 9th, behind commentaries
+        // by Aquinas, Asclepius and Tartaretus. All of those carry both query
+        // words in their titles, so rung 2 tied — and the tie fell through to
+        // rung 4, "older editions rank higher", which handed the top of the page
+        // to whichever commentary happened to be oldest.
+        //
+        // Rung 4 is right BETWEEN EDITIONS OF ONE WORK, where earlier really
+        // does mean closer to the source. It says nothing ACROSS works: a 1480
+        // commentary is not a better witness to the Metaphysics than an 1831
+        // critical edition of it. This rung stops that comparison being reached
+        // in the one case where the corpus can tell the difference.
+        //
+        // It sits ABOVE the exact-phrase rung deliberately. Asclepius's volume
+        // is titled "…Commentary on Aristotle Metaphysics", so it contains the
+        // query as a literal phrase and won that rung by coincidence. Being the
+        // named author's own text is better evidence than a phrase that happens
+        // to fall contiguously in a title about them. Measured across eight
+        // queries, moving it up promoted Aristotle over both commentaries and
+        // Newton over Descartes, and changed nothing else.
+        //
+        // WHAT THIS DOES NOT FIX: rung 2 counts query words across title AND
+        // author together, so a commentary whose title names both the author and
+        // the work ("Averroes' Paraphrase of Plato's Republic", "Proclus in
+        // Politiam Platonis") scores 2 where Plato's own manuscripts score 1,
+        // and is separated before this rung is reached. Searching "Plato
+        // Republic" still returns Proclus at #2 and Averroes at #3. That needs
+        // the work/commentary distinction represented in the data rather than
+        // inferred from title strings — see the issue linked in the PR.
+        const authorHits = (r: SearchResult) => {
+          const author = (r.author || '').toLowerCase();
+          return author ? queryWords.filter((w) => author.includes(w)).length : 0;
+        };
+        const aAuthorHits = authorHits(a);
+        const bAuthorHits = authorHits(b);
+        if (aAuthorHits !== bAuthorHits) return bAuthorHits - aAuthorHits;
 
         // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
@@ -794,23 +932,46 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       }
     }
 
-    // Dedup by work_id: keep the first (best-ranked) edition of each work.
-    // Results are already sorted by relevance, so the first hit for a work_id wins.
-    // Books without work_id are always kept (they can't be deduped).
-    const seenWorkIds = new Set<string>();
-    const dedupedResults: SearchResult[] = [];
-    for (const r of results) {
-      const workId = (r as any)._work_id as string | undefined;
-      if (workId) {
-        if (seenWorkIds.has(workId)) continue;
-        seenWorkIds.add(workId);
+    // Collapse to one row per work (#4300). Results are already sorted by
+    // relevance, so the first hit for a work wins and represents it; books with
+    // no blessed work identity are always kept, because "no work_id" means
+    // "not shown to be an edition of anything", not "dedupe me by title".
+    // Shared with the unified and semantic lanes — one definition, so a new
+    // lane can't reintroduce the copies (src/lib/search/work-grouping.ts).
+    const collapsed = collapseByWork(results, { getIdentity: identityOf });
+    const dedupedResults: SearchResult[] = collapsed.results;
+
+    // "N editions of this work →" for rows that replaced siblings. The number
+    // is what /work/[id] renders (fetchWorkFanouts calls that page's own
+    // filter), not how many rows we hid — a count shown to a reader has to
+    // describe the set its link reaches. Suppressed under a tenant: an
+    // edition census across the global library is not a partner reading
+    // room's claim to make (tenant-lockdown.md).
+    // `pages_only` is the MCP passage contract — a caller asking for passages
+    // gets passages, not an edition census, and the extra count queries would
+    // be latency it never asked for.
+    const fanouts = collapsed.groups.length > 0 && !pagesOnly
+      ? await fetchWorkFanouts(
+        db,
+        new Map(collapsed.groups.map(g => [g.key, g.collapsed.length])),
+        { tenantScoped: !!tenantId || !!tenantSlug },
+      )
+      : new Map();
+    const fanoutByResultId = new Map<string, unknown>();
+    if (fanouts.size > 0) {
+      for (const [key, group] of collapsed.byKey) {
+        const fanout = fanouts.get(key);
+        if (fanout) fanoutByResultId.set(group.primary.id, fanout);
       }
-      dedupedResults.push(r);
     }
 
     // Apply offset and strip transient fields
     const paginatedResults = dedupedResults.slice(offset, offset + limit)
-      .map(r => { const { _work_id, _text_role, ...clean } = r as any; return clean as SearchResult; });
+      .map(r => {
+        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, ...clean } = r as any;
+        const fanout = fanoutByResultId.get(r.id);
+        return (fanout ? { ...clean, work_group: fanout } : clean) as SearchResult;
+      });
 
     // For exact year searches, find nearby books (within 5 years)
     let nearby: SearchResult[] = [];
@@ -856,7 +1017,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       // unattributable even though the value was sitting in scope — the same
       // blind spot that made the pre-existing rows unsplittable.
       tenantId,
-      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length },
+      // `lang` is recorded so Spanish demand is measurable — without it a
+      // localized search is indistinguishable from an English one in the log.
+      filters: { language, category, year, bookId, library, semantic_count: semanticDocs.length, lang: textLang },
     });
 
     logSearchQuery({

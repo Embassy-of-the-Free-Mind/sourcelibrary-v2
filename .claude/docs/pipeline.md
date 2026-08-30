@@ -312,8 +312,11 @@ The old Vercel-based `post-import-pipeline` cron also had OCR routing with Lambd
 ### Fallback Path: Lambda + SQS FIFO
 
 Lambda translation processor still works for:
-- Preview translation (first 25 pages via `preview-translate.ts`)
 - Manual job submission via `/api/jobs/queue-books`
+
+Preview translation via `preview-translate.ts` was REMOVED 2026-08-30 along with
+its trigger, import-time preview OCR. Both enqueued Gemini work onto this SQS
+path, which checks neither `processing_control.paused` nor the daily dial.
 
 These paths use SQS FIFO queue with `MessageGroupId` = job ID for sequential processing.
 

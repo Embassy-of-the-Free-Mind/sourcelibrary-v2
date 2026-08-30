@@ -29,6 +29,12 @@ const clampAspect = (r: number) => Math.min(3, Math.max(0.33, r));
 export function artworkToGalleryItem(a: any) {
   const image = a.image_display || a.image_full || a.image_thumb || a.thumbnail_blob || a.thumbnail || '';
   const thumb = a.image_thumb || a.thumbnail_blob || a.thumbnail || a.image_display || image;
+  // books.summary has two shapes: legacy plain string, or the enrich-worker
+  // wrapper { data, generated_at, model, ... } (~17k books each). Passing the
+  // wrapper object through as `description` crashed /search client-side
+  // ("e.normalize is not a function" in the highlighter) for any query whose
+  // AI expansion surfaced such an artwork.
+  const summaryText = typeof a.summary === 'string' ? a.summary : a.summary?.data;
   const year = typeof a.year === 'number' ? a.year : (parseInt(a.published, 10) || undefined);
   const w = a.full_width || a.commons_width;
   const h = a.full_height || a.commons_height;
@@ -45,10 +51,16 @@ export function artworkToGalleryItem(a: any) {
     bookTitle: a.display_title || a.title || 'Untitled',
     author: a.author,
     year,
-    description: a.summary || a.display_title || a.title || '',
+    description: summaryText || a.display_title || a.title || '',
     type: a.resource_type,
     source: 'artwork' as const,
-    link: `/book/${a.slug || a.id}`,
+    // /artwork is the canonical route for a standalone artwork. This field is
+    // consumed by GalleryClient tiles AND handed to MCP clients verbatim as the
+    // public URL, so a `/book/...` here is how AI answers ended up citing the
+    // non-canonical twin. `/artwork` also resolves on tenant subdomains.
+    // Falls back to the id only when a slug is missing — /artwork matches by
+    // slug, so an id-only record has to keep the /book form.
+    link: a.slug ? `/artwork/${a.slug}` : `/book/${a.id}`,
     likeCount: 0,
     likedByVisitor: false,
   };

@@ -30,6 +30,22 @@ describe('classifyApiError', () => {
     expect(r.error).not.toBe('not_found');
   });
 
+  // Observed live on production 2026-08-14, p. 40 of *News from Nowhere* (25 of
+  // 296 pages transcribed). Since #3939 an English leaf comes back as a quote,
+  // so `no_translation` asserts a foreign source — which is a false statement
+  // about a page that simply has not been read yet.
+  it('separates an UNTRANSCRIBED page from an untranslated one', () => {
+    const r = classifyApiError(new Error('API 404: {"error":"No text available for this page: the scan has not been transcribed","page_number":40,"has_original":false}'));
+    expect(r.error).toBe('not_transcribed');
+    expect(r.has_original).toBe(false);
+    // The two failures need different recoveries: a foreign page is readable
+    // right now via get_book_text, an untranscribed one is not readable at all.
+    expect(r.recovery).toMatch(/pages_ocr/);
+    expect(r.message).not.toMatch(/language other than English/);
+    // And the caller must not turn "not read yet" into "does not exist".
+    expect(r.recovery).toMatch(/has not been read yet/i);
+  });
+
   it('still reports a genuine 404 as not_found', () => {
     expect(classifyApiError(new Error('API 404: Book not found')).error).toBe('not_found');
   });

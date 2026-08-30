@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
-import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal, Download } from 'lucide-react';
 import { useEmbed } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 // Book URL helper moved inline to use basePath
@@ -360,6 +360,33 @@ export default function BphCatalogBrowser({
   const [showAdvanced, setShowAdvanced] = useState(defaultAdvanced || hasAnyAdv || cadvParam);
   const abortRef = useRef<AbortController | null>(null);
 
+  // Hand-picked export basket (José Bouman, 2026-08-26, #4252). Keys are
+  // ubn-or-uuid (same fallback as detailUrl), gathered across searches and
+  // pages, exported via POST /api/catalog/bph/export. Kept in sessionStorage
+  // so a reload mid-picking doesn't cost the librarian her selection —
+  // hydrated in an effect, not the useState initializer, because this
+  // component also renders on the server where sessionStorage doesn't exist
+  // (and an initializer mismatch would break hydration).
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem('bph-catalog-selection');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) setSelectedKeys(parsed.filter((k) => typeof k === 'string'));
+      }
+    } catch { /* a broken stored value is just an empty basket */ }
+  }, []);
+  const updateSelection = useCallback((next: string[]) => {
+    setSelectedKeys(next);
+    try { sessionStorage.setItem('bph-catalog-selection', JSON.stringify(next)); } catch { /* quota/private mode */ }
+  }, []);
+  const workKey = (w: { ubn?: string | null; uuid?: string | null }) => w.ubn || w.uuid || null;
+  const selectedSet = useMemo(() => new Set(selectedKeys), [selectedKeys]);
+  const toggleSelected = useCallback((key: string) => {
+    updateSelection(selectedKeys.includes(key) ? selectedKeys.filter((k) => k !== key) : [...selectedKeys, key]);
+  }, [selectedKeys, updateSelection]);
+
   const buildParams = useCallback((q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     const params = new URLSearchParams();
     params.set('limit', String(PER_PAGE));
@@ -381,6 +408,21 @@ export default function BphCatalogBrowser({
     if (a.firstTranslation) params.set('first_translation', '1');
     return params;
   }, []);
+
+  /**
+   * The current selection as a spreadsheet. Same query string the results came
+   * from, minus paging — the export is the whole selection, not the page on
+   * screen. Asked for by José Bouman (BPH), 2026-08-12: "Is it possible to
+   * export a search selection? […] This is an important feature, that we
+   * often! use!"
+   */
+  const exportHref = useMemo(() => {
+    const params = buildParams(searchQuery, sort, keyword, 0, adv);
+    params.delete('limit');
+    params.delete('offset');
+    const qs = params.toString();
+    return `/api/catalog/bph/export${qs ? `?${qs}` : ''}`;
+  }, [buildParams, searchQuery, sort, keyword, adv]);
 
   const fetchWorks = useCallback(async (q: string, s: string, kw: string, off: number, a: AdvancedFilters) => {
     // Cancel any in-flight request so fast typing doesn't show stale results
@@ -596,6 +638,18 @@ export default function BphCatalogBrowser({
   // search row.
   const hasHeaderSlot = resultsHeaderSlot !== undefined;
 
+  // Select-all applies to the visible page only — "select all 29,000" is what
+  // the search export (GET) is for.
+  const pageKeys = works.map(workKey).filter((k): k is string => !!k);
+  const allOnPageSelected = pageKeys.length > 0 && pageKeys.every((k) => selectedSet.has(k));
+  const togglePage = () => {
+    if (allOnPageSelected) {
+      updateSelection(selectedKeys.filter((k) => !pageKeys.includes(k)));
+    } else {
+      updateSelection([...selectedKeys, ...pageKeys.filter((k) => !selectedSet.has(k))]);
+    }
+  };
+
   return (
     <div>
       {/* Search / filter row — search input, subjects dropdown, optional
@@ -664,6 +718,16 @@ export default function BphCatalogBrowser({
             <span className="font-medium text-primary">{total.toLocaleString('en-US')}</span>
             {catalogTotal && catalogTotal > 0 ? ` of ${catalogTotal.toLocaleString('en-US')} works` : ' works'}
           </span>
+          {total > 0 && (
+            <a
+              href={exportHref}
+              className="inline-flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors"
+              title={`Download all ${total.toLocaleString('en-US')} results as a spreadsheet`}
+            >
+              <Download className="w-3.5 h-3.5" />
+              Export
+            </a>
+          )}
           <div className="flex items-center gap-3 ml-auto">
             {/* Sort control — sits to the LEFT of the list/grid toggle. Drives
                 the same `sort` state as the list-view column headers, so it
@@ -762,6 +826,41 @@ export default function BphCatalogBrowser({
         </div>
       )}
 
+      {/* Selection basket bar. The basket survives searches and pages (state
+          + sessionStorage), so a librarian can gather records from several
+          queries and export them as one spreadsheet. A plain form POST so the
+          browser downloads the CSV without navigating. */}
+      {selectedKeys.length > 0 && (
+        <form
+          method="POST"
+          action="/api/catalog/bph/export"
+          className="flex flex-wrap items-center gap-3 mb-3 px-4 py-2.5 bg-warm border border-border-light rounded-lg"
+        >
+          <input type="hidden" name="keys" value={selectedKeys.join(',')} />
+          <span className="text-sm text-primary">
+            <span className="font-medium">{selectedKeys.length.toLocaleString('en-US')}</span>
+            {' '}record{selectedKeys.length === 1 ? '' : 's'} selected
+            {selectedKeys.length > 0 && !works.some((w) => selectedSet.has(workKey(w) || '')) && (
+              <span className="text-muted"> (from earlier searches)</span>
+            )}
+          </span>
+          <button
+            type="submit"
+            className="inline-flex items-center gap-1.5 text-sm text-white bg-accent-rust hover:bg-accent-rust/90 rounded-md px-3 py-1.5 transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export selection
+          </button>
+          <button
+            type="button"
+            onClick={() => updateSelection([])}
+            className="text-sm text-muted hover:text-primary transition-colors"
+          >
+            Clear
+          </button>
+        </form>
+      )}
+
       {/* Results — table for list view, covers for grid view. The chrome
           above is identical in both modes so the top of the page doesn't
           shift between displays. */}
@@ -774,6 +873,16 @@ export default function BphCatalogBrowser({
             <table className="w-full text-sm table-fixed">
               <thead>
                 <tr className="border-b border-border-light bg-warm">
+                  <th className="px-2 py-2.5 w-9">
+                    <input
+                      type="checkbox"
+                      checked={allOnPageSelected}
+                      onChange={togglePage}
+                      aria-label="Select all records on this page"
+                      title="Select all records on this page"
+                      className="rounded border-border-light text-accent-rust focus:ring-accent-rust/30 cursor-pointer"
+                    />
+                  </th>
                   <th className="text-left px-3 py-2.5 font-medium text-secondary hidden sm:table-cell w-[20%]">
                     <button
                       type="button"
@@ -822,6 +931,7 @@ export default function BphCatalogBrowser({
                 {loading && works.length === 0 && (
                   Array.from({ length: 8 }, (_, i) => (
                     <tr key={`skel-${i}`} className="border-b border-border-light last:border-0">
+                      <td className="px-2 py-3 align-top" />
                       <td className="px-3 py-3 align-top hidden sm:table-cell">
                         <div className="h-4 w-1/2 bg-border-light/40 rounded animate-pulse" />
                       </td>
@@ -861,6 +971,17 @@ export default function BphCatalogBrowser({
                       key={w.ubn ?? `null-ubn-${idx}`}
                       className="border-b border-border-light last:border-0 hover:bg-cream/50 transition-colors"
                     >
+                      <td className="px-2 py-2 align-top">
+                        {workKey(w) ? (
+                          <input
+                            type="checkbox"
+                            checked={selectedSet.has(workKey(w)!)}
+                            onChange={() => toggleSelected(workKey(w)!)}
+                            aria-label={`Select ${displayTitle}`}
+                            className="rounded border-border-light text-accent-rust focus:ring-accent-rust/30 cursor-pointer"
+                          />
+                        ) : null}
+                      </td>
                       <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
                         {displayAuthor ? hl(displayAuthor) : <span className="text-muted">—</span>}
                       </td>
@@ -931,7 +1052,7 @@ export default function BphCatalogBrowser({
                 })}
                 {!loading && works.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="px-3 py-12 text-center text-muted">
+                    <td colSpan={7} className="px-3 py-12 text-center text-muted">
                       No works found matching your search.
                     </td>
                   </tr>

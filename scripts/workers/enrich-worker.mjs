@@ -41,8 +41,12 @@ import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
+import { embedBookPages } from '../lib/embed-book-pages.mjs';
+import { computeEndPages } from '../lib/chapter-endpages.mjs';
+import pg from 'pg';
 
 // Selective-unpause scope confinement, set in main() after the pause check.
 // Empty {} in normal operation so the full enrich queue is unaffected.
@@ -186,6 +190,48 @@ const supabaseClient = SUPABASE_URL && SUPABASE_SERVICE_KEY
 
 const EMBED_MODEL = 'gemini-embedding-2-preview';
 const EMBED_DIMS = 768;
+
+/**
+ * Page-level vectors, written as part of enrichment.
+ *
+ * These used to come ONLY from the `embed-gemini.mjs` cron. On 2026-08-07 that
+ * cron was found commented out behind a `#PAUSED-GEMINI` marker with an empty
+ * log dated June 9 — and the measured consequence was 2,462 live books with
+ * zero page vectors plus 4,420 under 90%, i.e. semantic search blind on roughly
+ * 45% of the corpus. Nothing alerted, because an unembedded book and a book
+ * with no match return the same empty list.
+ *
+ * A step outside the pipeline can be switched off without anything noticing.
+ * Inside it, a book that finishes enrichment is searchable by meaning. The cron
+ * still exists for bulk backfill and for books enriched before this landed.
+ *
+ * Non-blocking, exactly like upsertBookEmbedding: a Supabase or Gemini hiccup
+ * must not fail an enrichment run that has already done the expensive work.
+ */
+let pagePgPool = null;
+function getPagePgPool() {
+  const url = (process.env.SUPABASE_DB_URL || '').trim();
+  if (!url) return null;
+  if (!pagePgPool) pagePgPool = new pg.Pool({ connectionString: url, max: 2 });
+  return pagePgPool;
+}
+
+async function upsertPageEmbeddings(db, book) {
+  const pool = getPagePgPool();
+  if (!pool) return;  // no direct PG configured — the cron still covers this book
+  const apiKey = process.env.GEMINI_API_KEY_TIER3 || API_KEYS[0];
+  if (!apiKey) return;
+
+  const client = await pool.connect();
+  try {
+    const res = await embedBookPages({ db, pg: client, book, apiKey });
+    if (res.embedded > 0) {
+      console.log(`    [embed] ${res.embedded} page vectors written (${res.alreadyPresent} already present, ${res.skipped} blank)`);
+    }
+  } finally {
+    client.release();
+  }
+}
 
 
 async function upsertBookEmbedding(book, indexData) {
@@ -1067,6 +1113,10 @@ async function enrichBook(db, book) {
       generated_at: new Date(),
       model: LITE_MODEL,
       source: 'ai',
+      // Derivation provenance (Vaughan/Sammelband lesson #3584): record WHICH
+      // pages this summary was derived from, so a wrong description can be
+      // traced to its input instead of trusted as catalog fact.
+      pages_sampled: batchExtractions.map((b) => b.pageRange).filter(Boolean),
     };
   }
 
@@ -1117,6 +1167,13 @@ async function enrichBook(db, book) {
   // Upsert book embedding to Supabase (non-blocking, issue #1158)
   upsertBookEmbedding(book, index).catch(err => {
     console.warn(`    [embed] Book embedding failed: ${err.message}`);
+  });
+
+  // Page-level vectors, so this book is searchable BY MEANING the moment it
+  // finishes enrichment rather than whenever a separate cron next runs — see
+  // the note on upsertPageEmbeddings for what that separation cost.
+  upsertPageEmbeddings(db, book).catch(err => {
+    console.warn(`    [embed] Page embeddings failed: ${err.message}`);
   });
 
   console.log(`    Done — ${batchExtractions.length} batches, ${groundedBatchQuotes.length} quotes, ${sectionSummaries.length} sections`);
@@ -1255,17 +1312,6 @@ Respond with ONLY a JSON array, no markdown fences, no explanation:
 Empty array [] if no discernible structure.`;
 
   return prompt;
-}
-
-function computeEndPages(chapters, totalPages) {
-  for (let i = 0; i < chapters.length; i++) {
-    if (i < chapters.length - 1) {
-      chapters[i].endPage = chapters[i + 1].pageNumber - 1;
-    } else {
-      chapters[i].endPage = totalPages;
-    }
-  }
-  return chapters;
 }
 
 async function extractChaptersForBook(db, bookId) {
@@ -1443,6 +1489,20 @@ async function main() {
     const scopeIds = [...await resolveScopeBookIds(db, control)];
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[ENRICH] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
+  }
+
+  // The dial caps money regardless of pause/scope state (#3826): a scope
+  // confines WHICH books, the budget caps HOW MUCH. Every Gemini call below
+  // is paid work.
+  if (!DRY_RUN && !await budgetAllowsDispatch(db, 'enrich-worker', { control })) {
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-enrich-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      actions: { skip_reason: 'budget ceiling' }, errors: [], error_count: 0,
+      summary: 'skipped: daily budget ceiling reached',
+    }).catch(() => {});
+    await client.close();
+    return;
   }
 
   let enriched = 0;

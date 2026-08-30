@@ -8,6 +8,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { computeEndPages, chunkEndPage } from './lib/chapter-endpages.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
@@ -20,17 +21,6 @@ const limitArg = args.includes('--limit') ? parseInt(args[args.indexOf('--limit'
 const bookIdArg = args.includes('--book-id') ? args[args.indexOf('--book-id') + 1] : null;
 
 const client = new MongoClient(MONGODB_URI);
-
-function computeEndPages(chapters, totalPages) {
-  for (let i = 0; i < chapters.length; i++) {
-    if (i < chapters.length - 1) {
-      chapters[i].endPage = chapters[i + 1].pageNumber - 1;
-    } else {
-      chapters[i].endPage = totalPages;
-    }
-  }
-  return chapters;
-}
 
 async function materializeBook(db, book) {
   const chapters = computeEndPages(book.chapters, book.pages_count || 0);
@@ -58,7 +48,9 @@ async function materializeBook(db, book) {
   for (let i = 0; i < chapters.length; i++) {
     const ch = chapters[i];
     const startPage = ch.pageNumber;
-    const endPage = ch.endPage || book.pages_count || 0;
+    // NOT ch.endPage — a container's span covers its children, which must not
+    // be chunked twice. See chunkEndPage.
+    const endPage = chunkEndPage(chapters, i, book.pages_count || 0);
 
     // Collect per-page text first
     const pageTexts = [];

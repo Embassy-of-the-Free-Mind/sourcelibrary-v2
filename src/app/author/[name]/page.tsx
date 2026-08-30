@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { translationPercent } from '@/lib/translation-percent';
+import { ftRenderProps } from '@/lib/first-translation/render';
 import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -14,6 +15,8 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
 import { authorThesaurusReadpathEnabled, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 import { classifyNonPersonAuthor, type NonPersonAuthor } from '@/lib/non-person-author';
+import { isPublishedEntity, type EntityPublishFields } from '@/lib/entity-publish';
+import { isArtworkRecord } from '@/lib/artwork-record';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -37,27 +40,20 @@ interface Book {
   summary?: { data: string } | string;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  ft_claim?: 'confirmed' | 'candidate';
   publisher?: string;
   place_of_publication?: string;
+  publication_place?: string;
+  place_published?: string;
+  place?: string;
   image_source?: { contributing_library?: string; provider_name?: string };
   // Used to split the bibliography (texts) from visual works (artworks).
-  // See isArtworkRecord() — older records use resource_type instead.
+  // See isArtworkRecord() in @/lib/artwork-record — older records carry only
+  // resource_type, and an explicit non-artwork content_type always wins.
   content_type?: string;
   resource_type?: string;
   image_display?: string;
   image_thumb?: string;
-}
-
-function isArtworkRecord(b: Pick<Book, 'content_type' | 'resource_type'>): boolean {
-  // 25,368 of 25,383 artworks carry both markers in production; a handful
-  // have only one. Treat either as artwork to avoid leaks during slow
-  // backfills, mirroring the /artist/[slug] page (which keys off
-  // resource_type).
-  // An explicit content_type:'book' always wins: a textual book that happens to
-  // carry a resource_type (e.g. a digitized papyrus text tagged 'papyrus_fragment')
-  // must never be treated as artwork, or it routes to /artwork/ instead of /book/.
-  if (b.content_type === 'book') return false;
-  return b.content_type === 'artwork' || !!b.resource_type;
 }
 
 interface AuthorEntity {
@@ -72,6 +68,7 @@ interface AuthorEntity {
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   portrait_url?: string;
+  book_count?: number;
 }
 
 // dynamicParams + generateStaticParams: generate on first request, not at build time
@@ -95,21 +92,39 @@ const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
-  summary: 1, is_first_translation: 1, ft_disposition: 1,
-  publisher: 1, place_of_publication: 1, resource_type: 1, content_type: 1,
+  summary: 1, is_first_translation: 1,
+  // What ftRenderProps needs to pick the claim register (#3726 Tier 3). The
+  // old `ft_disposition: 1` projected a field Mongo books never had.
+  'translation_verification.disposition': 1,
+  'first_translation.verdict': 1, 'first_translation.evidence_strength': 1,
+  'first_translation.our_completeness': 1,
+  'source_language_screen.verdict': 1, 'translator_author_screen.verdict': 1,
+  // The whole imprint-place family (#4043) — the resolver reads all four.
+  publisher: 1, place_of_publication: 1, publication_place: 1, place_published: 1, place: 1,
+  resource_type: 1, content_type: 1,
   'image_source.contributing_library': 1, 'image_source.provider_name': 1,
 };
 
 function computeBooks(raw: any[]): Book[] {
-  return raw.map((b: any) => ({
-    ...b,
-    pages_count: b.pages_count || 0,
-    pages_translated: b.pages_translated || 0,
-    // Shared definition. The formula that stood here divided by
-    // (pages_ocr − pages_blank), which exceeds 100% on 5,835 live books because
-    // "blank" leaves do get translated. See src/lib/translation-percent.ts.
-    translation_percent: translationPercent(b),
-  }));
+  return raw.map((b: any) => {
+    const ft = ftRenderProps(b);
+    const {
+      first_translation: _ft, translation_verification: _tv,
+      source_language_screen: _sls, translator_author_screen: _tas,
+      ...rest
+    } = b;
+    return {
+      ...rest,
+      pages_count: b.pages_count || 0,
+      pages_translated: b.pages_translated || 0,
+      // Shared definition. The formula that stood here divided by
+      // (pages_ocr − pages_blank), which exceeds 100% on 5,835 live books because
+      // "blank" leaves do get translated. See src/lib/translation-percent.ts.
+      translation_percent: translationPercent(b),
+      ft_disposition: ft.disposition,
+      ft_claim: ft.claim,
+    };
+  });
 }
 
 /**
@@ -176,7 +191,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
     try {
       entity = await db.collection('entities').findOne(
         { _id: new ObjectId(repBook.author_entity_id) },
-        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
+        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1, book_count: 1 } }
       ) as AuthorEntity | null;
     } catch { /* invalid ObjectId */ }
 
@@ -206,7 +221,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
       try {
         entity = await db.collection('entities').findOne(
           { _id: new ObjectId(entityBookId) },
-          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
+          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1, book_count: 1 } }
         ) as AuthorEntity | null;
       } catch { /* invalid ObjectId */ }
     }
@@ -339,14 +354,21 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   const deathYear = entity?.wikidata_death_date?.split('-')[0];
   const lifeDates = !nonPerson && birthYear ? `${birthYear}–${deathYear || '?'}` : null;
 
-  // Encyclopedia entry: use entity directly if we have one, otherwise regex fallback
-  const encyclopediaEntity = entity || await db.collection('entities').findOne(
+  // Encyclopedia entry: use entity directly if we have one, otherwise regex
+  // fallback. The pill only renders for published-tier entities (#4321) — a
+  // below-the-line entry is a noindex page listing a mention or two, and the
+  // one place we deliberately keep linking the tail is nowhere.
+  const encyclopediaCandidate = entity || await db.collection('entities').findOne(
     { type: 'person', $or: [
       { name: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
       { aliases: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
     ]},
-    { projection: { name: 1 } }
+    { projection: { name: 1, book_count: 1, wikidata_id: 1, description: 1 } }
   );
+  const encyclopediaEntity =
+    encyclopediaCandidate && isPublishedEntity(encyclopediaCandidate as EntityPublishFields)
+      ? encyclopediaCandidate
+      : null;
 
   // Portrait image — static read (enriched offline; CSP-safe CDN URL).
   // Never for a non-person: a portrait is the strongest visual assertion the

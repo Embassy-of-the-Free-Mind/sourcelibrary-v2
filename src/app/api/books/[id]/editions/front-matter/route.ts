@@ -3,6 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { withAuth } from '@/lib/auth-helpers';
+import { resolveHoldingCopy } from '@/lib/holding-library';
+import { resolveImprintPlace } from '@/lib/imprint';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -114,10 +116,15 @@ function buildBookContext(book: Book, pages: Page[]): string {
   parts.push(`Author: ${book.author}`);
   parts.push(`Language: ${book.language}`);
   parts.push(`Published: ${book.published}`);
-  if (book.place_published) parts.push(`Place of publication: ${book.place_published}`);
+  const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+  if (imprintPlace) parts.push(`Place of publication: ${imprintPlace}`);
   if (book.publisher) parts.push(`Printer/Publisher: ${book.publisher}`);
   if (book.ustc_id) parts.push(`USTC catalog number: ${book.ustc_id}`);
   if (bookAny.is_first_translation) parts.push('NOTE: This is believed to be the FIRST English translation of this work.');
+  // The copy behind the scan (#4360): a DOI-minted edition must name whose
+  // physical object it reproduces, not just which host served the images.
+  const holdingCopy = resolveHoldingCopy(bookAny);
+  if (holdingCopy) parts.push(`Source copy: ${holdingCopy.holding_library}${holdingCopy.shelfmark ? `, shelfmark ${holdingCopy.shelfmark}` : ''}`);
   if (bookAny.ia_identifier) parts.push(`Source scan: Internet Archive (${bookAny.ia_identifier})`);
 
   // Categories / tradition
@@ -217,6 +224,7 @@ async function generateMethodology(
   });
 
   const bookAny = book as any;
+  const holdingCopy = resolveHoldingCopy(bookAny);
   const prompt = `Write a concise methodology section (400-600 words) for this AI-translated scholarly edition.
 
 **Facts about how this book was produced:**
@@ -225,7 +233,10 @@ async function generateMethodology(
 - Published: ${book.published}
 - Total pages processed: ${pages.length}
 - AI models used: ${Array.from(models).join(', ') || 'Google Gemini'}
-- Source scan: ${bookAny.ia_identifier ? `Internet Archive (${bookAny.ia_identifier})` : 'digitized page images from a European digital library'}
+- Source scan: ${[
+    holdingCopy ? `the copy held by ${holdingCopy.holding_library}${holdingCopy.shelfmark ? ` (shelfmark ${holdingCopy.shelfmark})` : ''}` : '',
+    bookAny.ia_identifier ? `Internet Archive (${bookAny.ia_identifier})` : '',
+  ].filter(Boolean).join(', via ') || 'digitized page images from a digital library'}
 
 **The actual pipeline (describe exactly this, no more):**
 1. Page images were imported from a digital library and archived

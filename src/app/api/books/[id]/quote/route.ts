@@ -1,43 +1,90 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { citationYear, citationYearOrNd } from '@/lib/publication-date';
+import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
-import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
+import { getPageImageUrl } from '@/lib/page-image-url';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
-import { withApiAuth } from '@/lib/api-auth';
+import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
+import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
+import { languageApparatusFields } from '@/lib/edition-language';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-interface Citation {
-  inline: string;           // (Drebbel 1628, p. 15)
-  footnote: string;         // Full footnote citation
-  bibliography: string;     // Bibliography entry
-  bibtex: string;           // BibTeX format
-  chicago: string;          // Chicago style
-  mla: string;              // MLA style
-  url: string;              // Direct link to page in Source Library
-  short_url: string;        // Shortlink for sharing (e.g., Twitter)
-  doi_url?: string;         // Clickable DOI URL
-}
-
 interface QuoteResponse {
   quote: {
-    translation: string;
+    /**
+     * Our English translation of the leaf. ABSENT on an English-original page,
+     * where there is no translation because none is needed — read `text_source`
+     * and quote from `original` there (#3939).
+     */
+    translation?: string;
     original?: string;
+    /**
+     * Which field holds the quotable text, and whose words they are:
+     * `translation` normally; `ocr_original` where the leaf is already English and
+     * the transcription IS the citable text; `source_column` where a bilingual
+     * leaf's own column is already in the requested language, so the words belong
+     * to the historical translator and not to us. Always present, so a caller can
+     * branch instead of inferring from which fields came back.
+     */
+    text_source: QuoteTextSource;
+    /** Set when text_source is `ocr_original` or `source_column` — see those notes. */
+    transcription_note?: string;
+    /**
+     * The page carries marginal text (#4362) — copy-specific by nature: it
+     * exists only in the one physical copy that was scanned. Set together
+     * with `marginalia_note`, which says how to cite it.
+     */
+    contains_marginalia?: boolean;
+    marginalia_note?: string;
+    /**
+     * ISO code of the language the quoted text is IN — always present, so a
+     * caller branches on it rather than assuming English (#4095).
+     */
+    lang: string;
+    /** Set only when `lang` differs from the `lang` parameter that was asked for. */
+    lang_note?: string;
+    /**
+     * Romanization of the original for non-Latin scripts (#3828) — AI-derived
+     * apparatus, never a transcription, hence `romanized` and not
+     * `original_romanized`. Served only when the page carries a
+     * transliteration that is still current against its OCR.
+     */
+    romanized?: string;
     page: number;
     book_id: string;
     book_title: string;
     display_title?: string;
     author: string;
     published: string;
+    /**
+     * Language of the leaves in THIS scan. On a translated edition it is the
+     * translator's language, not the author's — which is why the three
+     * apparatus fields below ride alongside it (#3942). Kept as `language`
+     * rather than renamed, so existing clients keep reading a true value.
+     */
     language: string;
+    /** Language of the work, when it differs from `language`. */
+    work_language?: string;
+    /** original | period-translation | modern-translation, when classified. */
+    text_role?: string;
+    /**
+     * Set only where `original` below is a translator's text rather than the
+     * author's. A quote is a claim about who wrote the words; where the chain
+     * runs English←French←Arabic the citation has to say so.
+     */
+    translation_note?: string;
+    /** Display-sized scan of the cited leaf (≤1200px, browser-safe). Only when ?include_image=true. */
+    page_image_url?: string;
   };
   citation: Citation;
   license: ContentLicense;
@@ -47,125 +94,33 @@ interface QuoteResponse {
   };
 }
 
-function formatAccessedDate(): string {
-  const d = new Date();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
-function generateCitations(
-  book: Book,
-  pageNumber: number,
-  bookId: string,
-  pageId: string,
-  baseUrl: string,
-  edition?: TranslationEdition
-): Citation {
-  // `published` is free text: 23% of the corpus is not a year, and ~1,500 books
-  // carry raw Wikidata QuickStatements ("1573date QS:P571,+1573-...Z/9"). That
-  // string was landing in the BibTeX `year` field and the inline citation, i.e.
-  // straight into scholars' bibliographies. Assert a bare year or `n.d.`.
-  const year = citationYearOrNd(book.published);
-  // BibTeX keys must stay alphanumeric — 'n.d.' would emit a key with dots.
-  const bibtexYearKey = citationYear(book.published) ?? 'nd';
-  const author = book.author || 'Unknown';
-  const title = book.display_title || book.title;
-  const doi = edition?.doi || book.doi;
-  const doiUrl = doi ? `https://doi.org/${doi}` : undefined;
-  const accessed = formatAccessedDate();
-  const translationYear = edition?.published_at
-    ? new Date(edition.published_at).getFullYear()
-    : new Date().getFullYear();
-
-  // Clean author name (remove extra spaces, handle "Lastname, Firstname")
-  const authorParts = author.split(',').map(s => s.trim());
-  const authorLastFirst = authorParts.length === 2
-    ? `${authorParts[0]}, ${authorParts[1]}`
-    : author;
-  const authorFirstLast = authorParts.length === 2
-    ? `${authorParts[1]} ${authorParts[0]}`
-    : author;
-
-  // Original-edition imprint (place, publisher, format, USTC) of the source
-  // printing being translated — the bibliographic record of the original work,
-  // distinct from the Source Library translation credit. Mirrors the "Cite"
-  // dropdown (CiteButton) and the bibliographic panel (BibliographicInfo).
-  const pubImprint = [book.place_published, book.publisher].filter(Boolean).join(': ');
-  const imprint = [pubImprint, book.format, book.ustc_id ? `USTC ${book.ustc_id}` : ''].filter(Boolean).join('. ');
-  const imprintStr = imprint ? `${imprint}. ` : '';
-
-  // Inline citation
-  const inline = `(${authorParts[0]} ${year}, p. ${pageNumber})`;
-
-  // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
-
-  // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
-
-  // BibTeX — original imprint (address/publisher) + translation credit (note)
-  const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${bibtexYearKey}`;
-  const bibtexLines = [
-    `@book{${bibtexKey},`,
-    `  author = {${authorLastFirst}},`,
-    `  title = {${title}},`,
-    `  year = {${year}},`,
-  ];
-  if (book.place_published) bibtexLines.push(`  address = {${book.place_published}},`);
-  bibtexLines.push(`  publisher = {${book.publisher || 'Source Library'}},`);
-  bibtexLines.push(`  translator = {Source Library},`);
-  if (doi) {
-    bibtexLines.push(`  doi = {${doi}},`);
-    bibtexLines.push(`  url = {${doiUrl}},`);
-  }
-  const bibtexNote = [`Translation published ${translationYear}`];
-  if (book.format) bibtexNote.push(book.format);
-  if (book.ustc_id) bibtexNote.push(`USTC ${book.ustc_id}`);
-  bibtexLines.push(`  note = {${bibtexNote.join('; ')}}`);
-  bibtexLines.push(`}`);
-  const bibtex = bibtexLines.join('\n');
-
-  // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. ${imprintStr}Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
-
-  // MLA
-  const mla = `${authorLastFirst}. ${title}. ${imprintStr}Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
-
-  // Direct URL to page in Source Library (pinned to edition version).
-  // baseUrl is derived from the request host so quotes returned from
-  // tenant subdomains link back to the same subdomain.
-  //
-  // Built from the book's slug, not the requested id: this URL gets printed
-  // into papers and footnotes, so it has to say which book it is. Calling the
-  // API by id would otherwise mint a permanent citation to /book/<objectid>.
-  const editionVersion = edition?.version;
-  const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const url = `${baseUrl}${readerPageUrl({ slug: book.slug, id: bookId }, pageId)}${vParam}`;
-
-  // Short URL for sharing
-  const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl);
-
-  return {
-    inline,
-    footnote,
-    bibliography,
-    bibtex,
-    chicago,
-    mla,
-    url,
-    short_url,
-    doi_url: doiUrl,
-  };
-}
-
 // GET /api/books/[id]/quote?page=N - Get a quote from a specific page
-export const GET = withApiAuth(async (request: NextRequest, context: RouteContext) => {
+export const GET = withApiAuth(async (request: NextRequest, context: RouteContext, identity: ApiIdentity) => {
   try {
+    // A quote serves one page of text, so it spends the same 24h page budget
+    // as /text — the MCP docs always claimed this; the route never did it
+    // until #4366. The success response sets X-Pages-Served so the wrapper
+    // logs the page into the pool.
+    const budget = await checkPageBudget({ identity, request });
+    if (!budget.allowed) {
+      return NextResponse.json(bulkBudgetExceededBody(budget), {
+        status: 429,
+        headers: { 'Retry-After': '3600' },
+      });
+    }
+
     const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const pageNumber = parseInt(searchParams.get('page') || '1');
     const includeOriginal = searchParams.get('include_original') !== 'false';
     const includeContext = searchParams.get('include_context') === 'true';
+    const includeImage = searchParams.get('include_image') === 'true';
+    // Which EDITION of the page to quote (#4095). Falls back to English when
+    // the book has no such edition — and SAYS so, in `quote.lang`. A quote is a
+    // claim about words; a silent substitution makes the caller assert
+    // something it never checked.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const requestedLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
 
     if (isNaN(pageNumber) || pageNumber < 1) {
       return NextResponse.json({ error: 'Invalid page number' }, { status: 400 });
@@ -214,10 +169,26 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    if (!page.translation?.data) {
+    // Translation when we have one; the OCR transcription when the leaf is
+    // already English and therefore is itself the citable text (#3939).
+    const quotable = resolveQuoteText(page, book.id, requestedLang);
+
+    // A caller that explicitly said include_original=false wants English we
+    // produced, so an English-original page has nothing to give it either.
+    if (!quotable || (quotable.source === 'ocr_original' && !includeOriginal)) {
+      const hasOriginal = !!page.ocr?.data;
       return NextResponse.json({
-        error: 'No translation available for this page',
+        // Two different facts, and they need different sentences: an
+        // untranscribed leaf holds no text at all, while "no translation" now
+        // implies a foreign source (an English one is served as a quote —
+        // #3939). Conflating them told callers an un-OCR'd page was foreign.
+        error: hasOriginal
+          ? 'No translation available for this page'
+          : 'No text available for this page: the scan has not been transcribed',
         page_number: pageNumber,
+        // Lets the caller fall back to the original language instead of reading
+        // this as "the page is missing" (see src/lib/mcp-errors.ts).
+        has_original: hasOriginal,
       }, { status: 404 });
     }
 
@@ -230,8 +201,28 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       quote: {
         // Editorial annotation blocks (<meta>/<summary>/… and the OCR page
         // envelope) describe the page — they are never verbatim source text
-        // and must not be served as quotable content (PR #2232).
-        translation: markForExport(stripEditorialWrappers(page.translation.data).trim(), book.id),
+        // and must not be served as quotable content (PR #2232). Stripped in
+        // resolveQuoteText, for both text sources.
+        // `source_column` rides in `translation` too — a Spanish reader asked for
+        // Spanish and got Spanish — but `text_source` and the note below say who
+        // wrote it, because the field alone cannot tell Ximenez's 1701 Spanish
+        // from a machine pivot of our English.
+        ...(quotable.source === 'translation' || quotable.source === 'source_column'
+          ? { translation: quotable.text }
+          : {}),
+        text_source: quotable.source,
+        lang: quotable.lang,
+        ...(requestedLang !== quotable.lang
+          ? { lang_note: `This page has no text in "${requestedLang}", so the English translation was served (lang: "${quotable.lang}"). Do not present it as the "${requestedLang}" edition.` }
+          : {}),
+        ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
+        ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
+        // Checked on the served text AND the OCR original: a translation often
+        // renders the note without the mark-up, so the transcription is the
+        // authority on whether the leaf carries one (#4362).
+        ...(containsMarginalia(quotable.text) || containsMarginalia(page.ocr?.data || '')
+          ? { contains_marginalia: true, marginalia_note: MARGINALIA_NOTE }
+          : {}),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,
@@ -239,14 +230,32 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         author: book.author,
         published: book.published,
         language: book.language,
+        ...languageApparatusFields(book),
       },
-      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition),
+      // The citation links follow the edition actually served, never the one
+      // asked for — a `/es` URL for a book we fell back on would 307 straight
+      // back to English.
+      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, quotable.lang),
       license: CONTENT_LICENSE,
     };
+
+    // Include the scan image of the cited leaf if requested. Display size only
+    // (≤1200px via the canonical resolver) — the quote path is a citation
+    // apparatus, not a download channel.
+    if (includeImage) {
+      const imageUrl = getPageImageUrl(page, 'display');
+      if (imageUrl) response.quote.page_image_url = imageUrl;
+    }
 
     // Include original text if requested
     if (includeOriginal && page.ocr?.data) {
       response.quote.original = stripEditorialWrappers(page.ocr.data).trim();
+      // …and, for non-Latin scripts, its romanization — the third layer of the
+      // citation (#3828). Rides the same flag as `original`: it is a reading of
+      // the original, so a caller that asked for translation only should not
+      // get the source text back in Latin letters.
+      const romanized = romanizedForQuote(page);
+      if (romanized) response.quote.romanized = romanized;
     }
 
     // Include context (adjacent pages) if requested
@@ -262,15 +271,25 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         }),
       ]);
 
-      const prevText = (prevPage as unknown as Page | null)?.translation?.data;
-      const nextText = (nextPage as unknown as Page | null)?.translation?.data;
+      // Same resolution as the cited page: on an English-original book the
+      // neighbours have no translation either, and context exists precisely so a
+      // sentence running across the leaf break can be quoted whole — serving it
+      // only for translated pages would leave that unreachable exactly where the
+      // fallback matters (#3939).
+      // Context exists so a sentence running across a leaf break can be quoted
+      // whole — it must therefore be in the SAME language as the quote, or the
+      // two halves cannot be joined.
+      const neighbour = (p: unknown) => {
+        const pg = p as Page | null;
+        return pg ? resolveQuoteText(pg, resolvedBookId, quotable.lang)?.text : undefined;
+      };
       response.context = {
-        previous_page: prevText ? markForExport(stripEditorialWrappers(prevText).trim(), book.id) : undefined,
-        next_page: nextText ? markForExport(stripEditorialWrappers(nextText).trim(), book.id) : undefined,
+        previous_page: neighbour(prevPage),
+        next_page: neighbour(nextPage),
       };
     }
 
-    return NextResponse.json(response);
+    return NextResponse.json(response, { headers: { 'X-Pages-Served': '1' } });
   } catch (error) {
     console.error('Error getting quote:', error);
     return NextResponse.json({ error: 'Failed to get quote' }, { status: 500 });

@@ -113,6 +113,8 @@ async function cascadeUnsetSnakeTenantId({ db, bookIds, apply, label }) {
   let revisionsUnset = 0;
   let galleryMatched = 0;
   let galleryUnset = 0;
+  let literalMatched = 0;
+  let literalUnset = 0;
 
   for (const ids of chunk(bookIds, BOOK_CHUNK_SIZE)) {
     const pq = { book_id: { $in: ids }, tenant_id: { $exists: true } };
@@ -120,6 +122,16 @@ async function cascadeUnsetSnakeTenantId({ db, bookIds, apply, label }) {
     if (apply) {
       const r = await pages.updateMany(pq, { $unset: { tenant_id: '' } });
       pagesUnset += r.modifiedCount;
+    }
+
+    // camelCase tenantId holding the literal string 'default' — a small bug
+    // cohort (the UUID field fed a slug). Part 1 can't reach these: it
+    // cascades from books with a bad tenantId, and books are clean.
+    const dq = { book_id: { $in: ids }, tenantId: 'default' };
+    literalMatched += await pages.countDocuments(dq);
+    if (apply) {
+      const r = await pages.updateMany(dq, { $unset: { tenantId: '' } });
+      literalUnset += r.modifiedCount;
     }
 
     const rq = { book_id: { $in: ids }, tenant_id: { $exists: true } };
@@ -138,6 +150,7 @@ async function cascadeUnsetSnakeTenantId({ db, bookIds, apply, label }) {
   }
 
   console.log(`  [${label}] pages matched=${pagesMatched}${apply ? ` unset=${pagesUnset}` : ''}`);
+  console.log(`  [${label}] pages tenantId='default' matched=${literalMatched}${apply ? ` unset=${literalUnset}` : ''}`);
   console.log(`  [${label}] page_revisions matched=${revisionsMatched}${apply ? ` unset=${revisionsUnset}` : ''}`);
   console.log(`  [${label}] gallery_images matched=${galleryMatched}${apply ? ` unset=${galleryUnset}` : ''}`);
 }

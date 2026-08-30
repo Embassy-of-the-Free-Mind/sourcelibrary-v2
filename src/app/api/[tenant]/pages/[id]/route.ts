@@ -7,6 +7,9 @@ import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
+import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
+import { gatePagesForRequest } from '@/lib/metered-gate';
+import { verifyCitationToken } from '@/lib/citation-token';
 
 export const preferredRegion = 'fra1';
 
@@ -79,7 +82,18 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    return NextResponse.json(page, {
+    // Metered reader (#4357): the 'default' tenant is the main library, so it
+    // meters like the global twin; named tenants (bph/kloss/…) are partner
+    // reading rooms and stay exempt, as is a valid ?cite= citation token for
+    // this page (published citations must always resolve). No-op unless
+    // METERED_READER=1.
+    [page] = await gatePagesForRequest(db, request, [page], {
+      exempt: tenant !== 'default' || verifyCitationToken(id, searchParams.get('cite')),
+    });
+
+    // Reader-path provenance: translation carries the invisible imprimatur
+    // (deterministic, no ref — cache-safe). Mirrors the global twin.
+    return NextResponse.json(markPageForReader(page), {
       headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
@@ -128,6 +142,14 @@ export const PATCH = withAuth(async (request, session, context) => {
       );
     }
     const body = parseResult.data;
+
+    // Strip reader-path provenance marks from the incoming translation before
+    // storing — the editor round-trips served (marked) text. Mirrors the
+    // global twin; OCR deliberately untouched (never marked, and bidi control
+    // marks can be genuine content there).
+    if (body.translation) {
+      body.translation.data = stripProvenanceMarks(body.translation.data);
+    }
 
     const updateData: Record<string, unknown> = {
       updated_at: new Date()

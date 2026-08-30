@@ -77,7 +77,10 @@ const COL = c.db('bookstore').collection('first_translation_attempts');
 const attempts = all.map(x => ({ attempt_id: `${x.book_id}:${DIR}_verify:${x.date}`, book_id: x.book_id, date: x.date, method: 'gemini_verifier',
   match_key: 'author_title', sources_checked: x.sources_checked || [], queries: x.queries || [],
   result: (DIR === 'demote' ? x.result === 'confirmed_complete' : x.result === 'complete_prior_found') ? 'found' : 'none',
-  verdict: `${DIR}_verify:${x.result}`, model: 'gemini-3-flash-preview',
+  // #3785: verdict is the RAW result string (derive-from-evidence matches 'not_found' exactly);
+  // direction provenance lives in notes. Strength is required — unstated fails toward 'weak'.
+  verdict: x.result, evidence_strength: ['strong', 'moderate', 'weak'].includes(x.evidence_strength) ? x.evidence_strength : 'weak',
+  model: 'gemini-3-flash-preview',
   notes: `${DIR.toUpperCase()}-VERIFY ${x.result}: ${x.prior || x.translator || ''} | ${x.note || ''} | url:${x.evidence_url || ''}`.trim(), _src: 'ft-verify-gate' }));
 const present = new Set((await COL.find({ attempt_id: { $in: attempts.map(a => a.attempt_id) } }, { projection: { attempt_id: 1 } }).toArray()).map(d => d.attempt_id));
 const fresh = attempts.filter(a => !present.has(a.attempt_id));

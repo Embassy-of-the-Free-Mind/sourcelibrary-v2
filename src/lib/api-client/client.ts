@@ -1,35 +1,43 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { PREFIXED_LOCALES } from '@/lib/locale-path';
 
-// Global routes that are not tenant slugs; keep in sync with proxy routing rules.
-const NON_TENANT_SEGMENTS = new Set([
-  'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
-  'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
-  'support', 'unauthorized', 'design-options', 'experiments',
-  'ficino-society', 'contribute', 'census', 'oauth', 'developers',
-  'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
-  'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
-  'favorites', 'reading-history', 'timeline', 'topics', 'languages',
-  'categories', 'catalog', 'artwork', 'artist', 'book', 'collections',
-  'author', 'work', 'connect', 'data', 'read', 'research', 'embed', 'shwep',
-  'identify', 'for-researchers', 'admin',
-  'map', 'constellation', 'analytics', 'traffic',
-]);
+import { TENANT_ROOT_PATHS } from '@/lib/tenant-roots';
 
+/**
+ * Resolve the tenant slug that owns `pathname`, or null when the URL is a
+ * global (corpus-wide) route.
+ *
+ * Segment 0 is shared by three namespaces — tenants (`/bph/…`), locale
+ * prefixes (`/es/…`) and every global route root (`/book/…`, `/gallery/…`,
+ * `/encyclopedia/…`) — so the order of the checks below is the whole design:
+ *
+ *   1. strip a locale prefix: it decorates a global route, it never owns one
+ *   2. `/embed/<tenant>/…`: the slug sits in a RESERVED position, so anything
+ *      well-formed there is a tenant claim (the server resolves it against the
+ *      `tenants` collection and 404s an unknown one) — no global route can
+ *      collide with it
+ *   3. a bare first segment is a tenant ONLY if it is on TENANT_ROOT_PATHS,
+ *      the same allowlist the proxy gates on
+ *
+ * Step 3 used to be a denylist of global route roots, which is the wrong
+ * shape: it has to name every route that has ever been added, and it was 39
+ * entries short — `/es`, `/encyclopedia`, `/upload`, `/qa`, `/give` and the
+ * rest all read as tenants, so client calls from those pages went to
+ * `/api/<route>/…` and 404'd. See `@/lib/tenant-roots`.
+ */
 export function getTenantSlugFromPathname(pathname: string): string | null {
   const segments = pathname.split('/').filter(Boolean);
-  // Handle /embed/{tenant}/... paths (tenant subdomains rewrite to /embed/bph/...)
-  if (segments[0] === 'embed' && segments[1]) {
-    const embedTenant = segments[1];
-    if (/^[a-z0-9-]+$/.test(embedTenant) && !NON_TENANT_SEGMENTS.has(embedTenant)) {
-      return embedTenant;
-    }
-    return null;
+
+  if (segments[0] && (PREFIXED_LOCALES as string[]).includes(segments[0])) {
+    segments.shift();
   }
+
+  if (segments[0] === 'embed' && segments[1]) {
+    return /^[a-z0-9-]+$/.test(segments[1]) ? segments[1] : null;
+  }
+
   const slug = segments[0] || '';
-  if (!slug) return null;
-  if (!/^[a-z0-9-]+$/.test(slug)) return null;
-  if (NON_TENANT_SEGMENTS.has(slug)) return null;
-  return slug;
+  return TENANT_ROOT_PATHS.has(slug) ? slug : null;
 }
 
 // Browser-only wrapper. Returns the tenant slug for the current page, or ''

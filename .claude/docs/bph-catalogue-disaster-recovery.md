@@ -6,7 +6,9 @@ Memorix is no longer the upstream (that sync ended 2026-05-25, see
 Library. So this table is not a cache of something else — if it is lost, the
 catalogue is lost. It holds 29,879 records.
 
-Verified end-to-end 2026-08-01, including a full restore drill.
+Verified end-to-end 2026-08-01, including a full restore drill. Re-drilled
+2026-08-14 after the #3985 schema change — 29,881/29,881 restored, zero
+differences outside expected automation drift.
 
 ## The four layers
 
@@ -42,7 +44,12 @@ scp -r root@46.224.122.120:/root/backups/bph-catalog-latest /tmp/
 # 2. Rehearse — reads the snapshot, writes nothing
 node scripts/maintenance/restore-bph-catalog.mjs --dir /tmp/bph-catalog-latest
 
-# 3. Restore into a scratch table and diff before committing to anything
+# 3. Create the scratch table FIRST — the restore script does not create it,
+#    and INCLUDING ALL is load-bearing: INCLUDING CONSTRAINTS omits the primary
+#    key, and without a PK there is nothing to upsert on.
+#      DROP TABLE IF EXISTS bph_works_restore_drill;
+#      CREATE TABLE bph_works_restore_drill (LIKE bph_works INCLUDING ALL);
+#    Then restore into it and diff before committing to anything.
 node scripts/maintenance/restore-bph-catalog.mjs --dir /tmp/bph-catalog-latest \
   --table bph_works --into bph_works_restore_drill --apply
 
@@ -84,6 +91,32 @@ Result: 29,879/29,879 rows restored in ~3m30s; a field-by-field comparison again
 live differed on exactly 7 rows, in `sl_book_id`/`sl_book_slug` only — written by the
 6-hourly `sync-bph-sl-book-ids` cron in the hours after the snapshot. Correct drift,
 not restore error.
+
+### Re-drilled 2026-08-14, after the #3985 schema change
+
+Owed because #3985 added a UNIQUE constraint on `bph_works.uuid` (and `work_uuid`
+to the two sibling tables). Restored the 04:00 snapshot into a scratch table and
+diffed every column that change touched:
+
+| check | result |
+|---|---|
+| rows | 29,881 restored / 29,881 live; **0** ids on either side only |
+| `search_norm` | **29,881 rebuilt identically** — generated columns recomputed, not copied |
+| `uuid`, `ubn`, `record_type`, `state_shelf_mark` | **0** differences |
+| `title`, `full_title`, `author`, `shelf_mark` | **0** differences |
+| `sl_book_id` | 9 differences — expected drift from the 6-hourly sync since 04:00 (was 7 in the 08-01 drill, same cause) |
+| scratch table constraints | 1 primary key + 1 unique, both carried by `INCLUDING ALL` |
+
+So the new constraint survives a restore, and `full_title` — the column this PR
+made editable, and where all 812 manuscripts keep their titles — round-trips
+exactly. Scratch table dropped afterwards; verified gone.
+
+**One finding, and it is the reason to keep re-running this:** step 3 above used
+to say "restore into a scratch table" without saying to *create* it. The restore
+script does not create the target, so the drill failed on the first attempt with
+`Could not find the table 'public.bph_works_restore_drill' in the schema cache`.
+Harmless at a desk on a Thursday; a bad five minutes in an actual recovery. The
+recipe now carries the `CREATE TABLE … INCLUDING ALL` line.
 
 ## Backup integrity
 
@@ -138,6 +171,47 @@ test after changing the grouping.
 
 A scan that *fails to run* also alerts: a silent detector and an untouched
 catalogue look identical from outside.
+
+### If you are writing a migration that touches `bph_works`, read this first
+
+**A bulk `UPDATE` on `bph_works` pages a human at 04:30 unless it writes
+revisions.** The monitor is doing its job when this happens — the alert cannot
+tell your migration from a stray credential, and that is the entire point — but
+an alert nobody predicted burns someone's morning and, repeated, trains everyone
+to wave the channel away.
+
+Happened 2026-08-14: `add-bph-uuid-keyed-revisions.sql` (PR #3985) backfilled
+`bph_works.uuid` on the 107 rows that had none, so a UNIQUE constraint could be
+added. `uuid` is in the `identifiers` group, the migration wrote no revisions,
+and the scan reported **105 unexplained changes** (105 flagged `changed`; the
+other 2 were records created that afternoon, new to the baseline, so they logged
+as `inserted` and were explained by their own create revisions). Nothing was
+wrong with the data — but nobody knew that until it had been chased.
+
+The contrast in the same night's scan is the lesson, because the same session
+produced both: `scripts/maintenance/translate-ja-state-shelfmark.mjs` changed 31
+rows and wrote a revision per row, and all 31 events came back
+`explanation = revision` with `revision_id` set. Same author, same evening, one
+noisy and one silent — the difference was purely whether history was written.
+
+So, before applying a migration that writes catalogue columns, do one of:
+
+1. **Write a revision row per record** (`editor_email: 'system:<migration>'`),
+   the way `clear-neen-state-shelfmark.mjs` and `translate-ja-state-shelfmark.mjs`
+   do. Best option: the change becomes individually reversible as well as
+   explained.
+2. **Pre-declare it** — tell whoever watches ntfy what is about to move and how
+   many rows, so the morning alert is a confirmation instead of a mystery.
+3. **Mark the events reviewed afterwards** with a note naming the migration
+   (`reviewed_at` / `reviewed_by` / `note`), which is what was done above. This
+   is the fallback, not the plan: it clears the board only after someone has
+   already paid the investigation cost.
+
+Never resolve an unexplained event by pattern-matching on count or timing alone.
+Confirm which columns actually moved — group membership is in
+`add-bph-integrity-monitor.sql` — and sweep only the events you have accounted
+for. In the incident above the review script asserted the bucket contained
+*only* identifiers-only events before touching any of them.
 
 ## Re-drill periodically
 

@@ -38,8 +38,12 @@ function escapeRegex(s: string): string {
  * `sourcelibrary.org`, so an unanchored pattern reads a perfectly good CDN URL
  * (`images.sourcelibrary.org/artwork/foo.jpg`) as a link to the `/artwork/foo`
  * page and reports it dead.
+ *
+ * The optional `/es` is the locale prefix: a Spanish conversation cites
+ * `sourcelibrary.org/es/book/<slug>`, which is the same book and must be
+ * verified (and repaired) exactly like the English link.
  */
-export const SITE_HOST_PATTERN = '(?<![\\w.-])sourcelibrary\\.org';
+export const SITE_HOST_PATTERN = '(?<![\\w.-])sourcelibrary\\.org(?:\\/es)?';
 
 /** Book links in a response: `/book/<slug>` plus any page suffix. */
 export function findCitedBookLinks(text: string): Array<{ slug: string; page?: number }> {
@@ -81,12 +85,13 @@ export function applyCitationFixes(text: string, fixes: CitationFix[]): string {
   let out = text;
   for (const fix of fixes) {
     if (!fix?.fromSlug || !fix?.toSlug || fix.fromSlug === fix.toSlug) continue;
+    // `$1` keeps the `/es` locale prefix (if any) on the repaired link.
     const pattern = new RegExp(
-      `https://sourcelibrary\\.org/book/${escapeRegex(fix.fromSlug)}(?![a-z0-9-])` +
+      `https://sourcelibrary\\.org(/es)?/book/${escapeRegex(fix.fromSlug)}(?![a-z0-9-])` +
       `(?:\\?page=\\d+|/page-number/\\d+|/page/[A-Za-z0-9-]+)?`,
       'g',
     );
-    out = out.replace(pattern, `https://sourcelibrary.org/book/${fix.toSlug}`);
+    out = out.replace(pattern, (_m, prefix: string | undefined) => `https://sourcelibrary.org${prefix ?? ''}/book/${fix.toSlug}`);
   }
   return out;
 }

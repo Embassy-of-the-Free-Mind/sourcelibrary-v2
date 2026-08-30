@@ -30,6 +30,7 @@ import { execSync, execFileSync } from 'child_process';
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 // ── Config ────────────────────────────────────────────────────────────
 
@@ -240,11 +241,10 @@ async function importRecord(db, record, index, total) {
     // Catalog URL for this specific record
     const catalogUrl = `https://ais.vrijmetselarij.nl/axiellwebapi/wwwopac.ashx?command=search&database=fullCatalogue&search=priref=${priref}&xmltype=grouped&output=xml`;
 
-    const bookDoc = {
+    const bookDoc = makeBookDoc({
       _id: bookId,
       id: bookIdStr,
       slug,
-      tenant_id: 'default',
       title,
       display_title: null,
       author,
@@ -296,7 +296,7 @@ async function importRecord(db, record, index, total) {
       hidden: true,
       created_at: now,
       updated_at: now,
-    };
+    });
 
     await db.collection('books').insertOne(bookDoc);
 
@@ -305,10 +305,9 @@ async function importRecord(db, record, index, total) {
     for (let i = 0; i < pageCount; i++) {
       const pageId = new ObjectId();
       const photoUrl = blobUrls[i]?.photo || '';
-      pageDocs.push({
+      pageDocs.push(makePageDoc({
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookIdStr,
         page_number: i + 1,
         photo: photoUrl,
@@ -326,7 +325,7 @@ async function importRecord(db, record, index, total) {
         // Do NOT initialize ocr/translation — causes false completion bug
         created_at: now,
         updated_at: now,
-      });
+      }));
     }
 
     await db.collection('pages').insertMany(pageDocs);

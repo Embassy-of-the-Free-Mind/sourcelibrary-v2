@@ -63,11 +63,32 @@ test.describe('Librarian', () => {
     // than a hard disabled-input gate.
     await expect(page.locator('textarea')).toBeEnabled();
     await expect(page.locator('textarea')).toHaveAttribute('placeholder', 'Ask the Librarian...');
-    await expect(page.getByText('to save your conversations and keep them private')).toBeVisible();
+    // Assert the nudge STRUCTURALLY — the sign-in link plus the fact that it
+    // sits below the composer — not on its wording. #4007 reworded this line
+    // ("to save your conversations and keep them private" → "to keep your
+    // conversations and come back to them later") and broke the test the next
+    // morning; the behaviour under test (a soft prompt, not a hard gate) never
+    // changed. What matters is that anonymous visitors get a link, not a wall.
+    // Match the composer nudge by an href PREFIX, not by role+name: the header
+    // UserMenu also renders a "Sign in" link, but it is a bare /auth/signin
+    // with no query, so a name locator would pass even if the nudge below the
+    // input disappeared while `?callbackUrl=` still separates the two.
+    // Not an exact href either — #4134 (Spanish librarian) routed this through
+    // `encodeURIComponent`, so the callback renders as `%2Flibrarian` rather
+    // than `/librarian` and an equality match broke the next morning. The
+    // behaviour under test (a soft prompt carrying you back here, not a wall)
+    // never changed, and both spellings are the same URL.
+    await expect(
+      page.locator('a[href^="/auth/signin?callbackUrl="]')
+    ).toBeVisible();
   });
 
   test('shows Recent tab', async ({ page }) => {
-    await expect(page.locator('button', { hasText: 'Recent' })).toBeVisible();
+    // `exact: true` is load-bearing. #4007 made conversations listed by
+    // default, which renders a "Listed (shown in Recent, never under your
+    // name)" toggle above the composer — a second button containing the word
+    // "Recent", so the old substring locator became a strict-mode violation.
+    await expect(page.getByRole('button', { name: 'Recent', exact: true })).toBeVisible();
   });
 });
 

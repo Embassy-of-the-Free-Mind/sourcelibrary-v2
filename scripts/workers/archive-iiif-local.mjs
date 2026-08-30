@@ -49,6 +49,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
+import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -105,7 +106,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const r2 = new S3Client({
   region: 'auto',
@@ -134,22 +135,25 @@ async function waitForToken() {
   }
 }
 
+// Stall timeout, not a total-duration cap (#3477): the old TIMEOUT_MS-from-start
+// abort selected for the largest page in a book. --timeout now sets the stall
+// window; the lib's 15-min maxMs is the backstop.
 async function downloadImage(url, maxRetries = 3) {
   for (let attempt = 0; ; attempt++) {
-    const ctrl = new AbortController();
-    const timeout = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
     try {
-      const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT }, signal: ctrl.signal });
-      clearTimeout(timeout);
+      const { res, buffer } = await fetchWithStallTimeout(url, {
+        stallMs: TIMEOUT_MS,
+        headers: { 'User-Agent': USER_AGENT },
+      });
       if (res.status === 429 || res.status >= 500) {
         if (attempt < maxRetries) { await new Promise(r => setTimeout(r, 4000 * Math.pow(2, attempt))); continue; }
         throw new Error(`HTTP ${res.status} after ${maxRetries + 1} attempts`);
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return Buffer.from(await res.arrayBuffer());
+      return buffer;
     } catch (err) {
-      clearTimeout(timeout);
-      const transient = err.name === 'AbortError' || /ECONNRESET|ETIMEDOUT|EAI_AGAIN|socket|network/i.test(err.message || '');
+      // 'fetch aborted' is the stall/backstop abort — retried, as AbortError was before.
+      const transient = err.name === 'AbortError' || /fetch aborted|ECONNRESET|ETIMEDOUT|EAI_AGAIN|socket|network/i.test(err.message || '');
       if (attempt < maxRetries && transient) { await new Promise(r => setTimeout(r, 4000 * Math.pow(2, attempt))); continue; }
       throw err;
     }

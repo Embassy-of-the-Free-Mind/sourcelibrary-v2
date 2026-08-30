@@ -316,7 +316,9 @@ async function regenerateVariants(page, masterBuffer) {
   const displayKey = toKey(page.display_photo);
   const thumbKey = toKey(page.image_thumb) || toKey(page.thumbnail_blob);
   if (!displayKey && !thumbKey) return;
-  const { display, thumb } = await generateDisplayVariants(masterBuffer);
+  const { display, thumb } = await generateDisplayVariants(masterBuffer, {
+    bookId: page.book_id, pageNumber: page.page_number,
+  });
   if (displayKey) await r2Put(displayKey, display);
   if (thumbKey) await r2Put(thumbKey, thumb);
 }

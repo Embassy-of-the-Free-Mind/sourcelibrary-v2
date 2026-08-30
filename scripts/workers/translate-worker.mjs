@@ -26,8 +26,19 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash, randomBytes } from 'crypto';
 import { nanoid } from 'nanoid';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+import {
+  getTranslateModelForBook as getModelForBook,
+  sanitizeTranslationTags,
+  contentHash,
+  SKIP_TRANSLATION_PAGE_TYPES,
+  isBlankFromOcr,
+  assessTranslationHealth,
+  persistRefusedTranslation,
+} from '../lib/translate-core.mjs';
+import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -44,56 +55,10 @@ const RATE_LIMIT_BACKOFF_MS = 15000;
 const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '8', 10);
 const SINGLE_PAGE = process.argv.includes('--single-page');
 const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce batch size
-const MODEL_FLASH = 'gemini-3-flash-preview';
-const MODEL_LITE = 'gemini-3.1-flash-lite';
-
-// Latin-script languages safe for flash-lite translation. Non-Latin scripts
-// (Tibetan, Arabic, Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) route to flash.
-// flash-lite hallucinates on low-resource scripts during OCR — translation
-// from those OCR outputs is doubly exposed. Keep in sync with the matching
-// list in src/lib/types/ai-models.ts and pipeline-orchestrator.mjs.
-const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
-  'english', 'en', 'eng',
-  'latin', 'la', 'lat',
-  'french', 'fr', 'fra',
-  'italian', 'it', 'ita',
-  'spanish', 'es', 'spa',
-  'portuguese', 'pt', 'por',
-  'romanian', 'ro', 'ron', 'rum',
-  'catalan', 'ca', 'cat',
-  'german', 'de', 'deu', 'ger',
-  'dutch', 'nl', 'nld', 'dut',
-  'swedish', 'sv', 'swe',
-  'norwegian', 'no', 'nor',
-  'danish', 'da', 'dan',
-  'finnish', 'fi', 'fin',
-  'icelandic', 'is', 'isl', 'ice',
-  'welsh', 'cy', 'cym', 'wel',
-  'irish', 'ga', 'gle',
-  'polish', 'pl', 'pol',
-  'czech', 'cs', 'ces', 'cze',
-  'slovak', 'sk', 'slk', 'slo',
-  'slovenian', 'sl', 'slv',
-  'croatian', 'hr', 'hrv',
-  'hungarian', 'hu', 'hun',
-  'estonian', 'et', 'est',
-  'latvian', 'lv', 'lav',
-  'lithuanian', 'lt', 'lit',
-  'albanian', 'sq', 'sqi', 'alb',
-  'turkish', 'tr', 'tur',
-  'indonesian', 'id', 'ind',
-  'vietnamese', 'vi', 'vie',
-  'malay', 'ms', 'msa',
-  'tagalog', 'tl', 'tgl', 'filipino',
-  'swahili', 'sw', 'swa',
-]);
-
-function getModelForBook(book) {
-  if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
-  const lang = (book?.language || '').toLowerCase().trim();
-  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return MODEL_FLASH;
-  return MODEL_LITE;
-}
+// Model routing lives in translate-core (the one door, issue #3725) — this
+// worker's local copy had drifted to include Malay, routing Jawi manuscripts
+// to the lite model that garbles them. Parity with src/lib/types/ai-models.ts
+// is pinned by tests/unit/translate-core-parity.test.ts.
 const PROMPT_VERSION = 'v10';
 
 // ── Gemini API keys ──
@@ -175,7 +140,7 @@ async function getEnglishModernizationPromptFromDb(db) {
 }
 
 // ── Skip these page types (no translatable content) ──
-const SKIP_PAGE_TYPES = ['blank', 'digitizer-notice'];
+const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734) — the local fork missed exlibris/bookplate
 // Pages with very short OCR get excluded from batches (translated single-page instead).
 // Short pages in batches cause the model to produce minimal responses without XML tags.
 const MIN_OCR_CHARS_FOR_BATCH = 200;
@@ -226,21 +191,7 @@ const client = new MongoClient(process.env.MONGODB_URI, {
   maxPoolSize: 20,
 });
 
-// ── Sanitize translation tags (matches src/lib/sanitize-translation-tags.ts) ──
-function sanitizeTranslationTags(text) {
-  if (!text) return text;
-  // Fix common unclosed/malformed XML tags from Gemini
-  return text
-    .replace(/<(margin|gloss|insert|unclear|term|heading|footnote|caption)>([^<]*?)$/gm,
-      (_, tag, content) => `<${tag}>${content}</${tag}>`)
-    .replace(/<\/(margin|gloss|insert|unclear|term|heading|footnote|caption)>\s*<\/\1>/g,
-      (_, tag) => `</${tag}>`);
-}
-
-// ── Content hash for provenance ──
-function contentHash(text) {
-  return createHash('sha256').update(text || '').digest('hex').slice(0, 16);
-}
+// sanitizeTranslationTags + contentHash come from translate-core (one door).
 
 // ── Cost calculation ──
 const MODEL_PRICING = {
@@ -288,6 +239,21 @@ async function buildPromptHeader(db, book) {
 }
 
 // ── Translate a single page ──
+// ── Output-token cap (#3826) ──
+// A runaway loop bills every token it generates: the incident's worst pages
+// produced 65K output tokens against ~300-token pages, at 10-40× normal cost,
+// and the health gate could only refuse AFTER the bill. Cap generation at the
+// source: an English translation of a page runs ~0.3 output tokens per OCR
+// char; grant ~3× that headroom plus a fixed allowance for the editorial
+// wrappers (<note>/<summary>/<keywords>). A legitimate translation never
+// approaches the cap; a loop hits it and stops billing 6-30× sooner. Truncated
+// loops still fail the health gate downstream (repetition, not length).
+function maxOutputTokensFor(pages) {
+  const ocrChars = pages.reduce((n, p) => n + (p.ocr?.data || '').length, 0);
+  const perPageOverhead = 1200 * pages.length;
+  return Math.min(32768, Math.max(4096, Math.ceil(ocrChars * 1.0) + perPageOverhead));
+}
+
 async function translatePage(db, page, book, prevTranslation) {
   const { prompt: headerPrompt, isEnglish, promptRef } = await buildPromptHeader(db, book);
   let prompt = headerPrompt;
@@ -304,7 +270,11 @@ async function translatePage(db, page, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
-  const model = ai.getGenerativeModel({ model: selectedModel, safetySettings: SAFETY_SETTINGS });
+  const model = ai.getGenerativeModel({
+    model: selectedModel,
+    safetySettings: SAFETY_SETTINGS,
+    generationConfig: { maxOutputTokens: maxOutputTokensFor([page]) },
+  });
   const start = Date.now();
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
@@ -376,7 +346,11 @@ async function translateBatch(db, pages, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
-  const model = ai.getGenerativeModel({ model: selectedModel, safetySettings: SAFETY_SETTINGS });
+  const model = ai.getGenerativeModel({
+    model: selectedModel,
+    safetySettings: SAFETY_SETTINGS,
+    generationConfig: { maxOutputTokens: maxOutputTokensFor(pages) },
+  });
   const start = Date.now();
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
@@ -451,38 +425,11 @@ function effectiveBatchSize(pages, maxBatchSize) {
   return Math.max(1, size);
 }
 
-/**
- * Save current page content as a revision before overwriting.
- * Lightweight inline version of src/lib/page-revisions.ts createRevision().
- */
+// Revision snapshots use the shared helper (scripts/lib/page-revisions.mjs) —
+// this worker's lightweight inline copy predated it and stamped every revision
+// with job_id: undefined (3-arg calls against a 4-arg signature, issue #3725).
 async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
-  try {
-    const page = await db.collection('pages').findOne(
-      { id: pageId },
-      { projection: { book_id: 1, ocr: 1, translation: 1 } }
-    );
-    if (!page) return;
-    const fieldData = page[field];
-    if (!fieldData?.data) return; // No existing content — first write
-    await db.collection('page_revisions').insertOne({
-      id: randomBytes(6).toString('hex'),
-      page_id: pageId,
-      book_id: page.book_id,
-      field,
-      data: fieldData.data,
-      source: fieldData.source || 'ai',
-      model: fieldData.model,
-      language: fieldData.language,
-      prompt_version: fieldData.prompt_version,
-      edited_by: fieldData.edited_by,
-      job_id: jobId,
-      original_date: fieldData.updated_at,
-      created_at: new Date(),
-    });
-  } catch (e) {
-    // Non-fatal — don't block translation on revision failure
-    console.error(`  [revision] Failed for ${pageId}/${field}: ${e.message?.slice(0, 50)}`);
-  }
+  return saveRevisionShared(db, pageId, field, { jobId });
 }
 
 // ── Write a single page translation to DB ──
@@ -490,7 +437,23 @@ async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
 async function writePageTranslation(db, page, text, book, promptRef) {
-  await saveRevisionBeforeOverwrite(db, page.id, 'translation');
+  // Health gate (2026-08-08 relight incident): on the first live cohort, flash
+  // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
+  // OCR) and the worker wrote every one. Never persist a collapsed/runaway
+  // translation — stamp the page for the benchmark lane and move on. The
+  // page stays untranslated, which is the honest state.
+  const health = assessTranslationHealth(page.ocr?.data, text);
+  if (!health.healthy) {
+    await db.collection('pages').updateOne(
+      { id: page.id },
+      { $set: { 'translation.health_blocked': health.reason, 'translation.health_blocked_at': new Date(), updated_at: new Date() } }
+    );
+    // Keep the refused text as evidence (#3826) — it was billed in full.
+    await persistRefusedTranslation(db, page, text, health.reason, { jobId: book?.job?.job_id, model: getModelForBook(book) });
+    console.log(`  [health-gate] ${page.id} p${page.page_number}: ${health.reason} (${(text || '').length} chars) — write refused, evidence kept`);
+    return { written: false, reason: health.reason };
+  }
+  await saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id);
   const setPayload = {
     translation: {
       data: text,
@@ -514,13 +477,30 @@ async function writePageTranslation(db, page, text, book, promptRef) {
 // ── Bulk-write multiple page translations in one round trip ──
 // Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
 async function bulkWritePageTranslations(db, entries, book, promptRef) {
+  // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
+  const unhealthy = [];
+  entries = entries.filter(({ page, text }) => {
+    const h = assessTranslationHealth(page.ocr?.data, text);
+    if (!h.healthy) { unhealthy.push({ page, text, reason: h.reason, len: (text || '').length }); return false; }
+    return true;
+  });
+  if (unhealthy.length > 0) {
+    await db.collection('pages').bulkWrite(unhealthy.map(({ page, reason }) => ({
+      updateOne: { filter: { id: page.id }, update: { $set: { 'translation.health_blocked': reason, 'translation.health_blocked_at': new Date(), updated_at: new Date() } } },
+    })), { ordered: false }).catch(() => {});
+    // Keep each refusal as evidence (#3826) — the tokens were billed in full.
+    for (const u of unhealthy) {
+      await persistRefusedTranslation(db, u.page, u.text, u.reason, { jobId: book?.job?.job_id, model: getModelForBook(book) });
+      console.log(`  [health-gate] ${u.page.id} p${u.page.page_number}: ${u.reason} (${u.len} chars) — write refused, evidence kept`);
+    }
+  }
   if (entries.length === 0) return;
   if (entries.length === 1) {
     return writePageTranslation(db, entries[0].page, entries[0].text, book, promptRef);
   }
   // Save revisions before overwriting (parallel, non-blocking)
   await Promise.all(entries.map(({ page }) =>
-    saveRevisionBeforeOverwrite(db, page.id, 'translation')
+    saveRevisionBeforeOverwrite(db, page.id, 'translation', book?.job?.job_id)
   ));
   const now = new Date();
   const model = getModelForBook(book);
@@ -585,6 +565,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
       'translation.safety_blocked': { $ne: true },
+      'translation.health_blocked': { $exists: false },
       $or: [
         { 'translation.data': { $exists: false } },
         { 'translation.data': null },
@@ -600,15 +581,11 @@ async function processBook(db, book, job, globalCounter, deadline) {
   // ── Detect blank pages missing page_type (pre-pipeline OCR) ──
   // Some older OCR outputs have <lang>None</lang> or "Blank page" in meta but never set page_type.
   // Filter them out and backfill page_type so they're skipped in future runs too.
-  const blankFromOcr = pages.filter(p => {
-    if (p.page_type) return false; // already classified
-    const ocr = p.ocr?.data || '';
-    return /<lang>\s*None\s*<\/lang>/i.test(ocr) && /blank\s+page/i.test(ocr);
-  });
+  const blankFromOcr = pages.filter(p => !p.page_type && isBlankFromOcr(p.ocr?.data));
   if (blankFromOcr.length > 0) {
     const blankIds = blankFromOcr.map(p => p.id);
     // Snapshot prior translation content before overwriting with the blank marker.
-    await Promise.all(blankIds.map(id => saveRevisionBeforeOverwrite(db, id, 'translation')));
+    await Promise.all(blankIds.map(id => saveRevisionBeforeOverwrite(db, id, 'translation', job?.id)));
     await db.collection('pages').updateMany(
       { id: { $in: blankIds } },
       { $set: { page_type: 'blank', updated_at: new Date(), 'translation.data': '[Blank page]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } },
@@ -751,7 +728,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           if (msg.includes('PROHIBITED') || msg.includes('SAFETY') || msg.includes('safety') || msg.includes('RECITATION')) {
             try {
               // Snapshot prior translation before overwriting with the block marker.
-              await saveRevisionBeforeOverwrite(db, page.id, 'translation');
+              await saveRevisionBeforeOverwrite(db, page.id, 'translation', job?.id);
               // Replace null translation with {} so sub-fields can be set
               await db.collection('pages').updateOne(
                 { _id: page._id },
@@ -775,12 +752,17 @@ async function processBook(db, book, job, globalCounter, deadline) {
             }
             consecutiveErrors = Math.max(0, consecutiveErrors - 1); // don't count toward circuit breaker
           }
+          // Gemini bills the prompt even when the response is blocked or errors
+          // (#3826: 630 failed rows logged $0 during the incident). Estimate
+          // input from the OCR we sent (~4 chars/token + prompt header) so the
+          // spend-guard's sum isn't blind to failure-heavy runs.
+          const estInputTokens = Math.ceil(((page.ocr?.data || '').length / 4) + 1000);
           await logUsage({
             type: 'translation', mode: 'realtime', model: getModelForBook(book),
             book_id: book.id, page_ids: [page.id],
-            input_tokens: 0, output_tokens: 0, status: 'failed',
+            input_tokens: estInputTokens, output_tokens: 0, status: 'failed',
             error_message: msg.substring(0, 500), endpoint: 'worker/hetzner-translate',
-            batch_size: 1,
+            batch_size: 1, error_category: 'tokens_estimated',
           }, db);
         }
       }
@@ -828,7 +810,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
               console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
               try {
                 // Snapshot prior translation before overwriting with the block marker.
-                await saveRevisionBeforeOverwrite(db, page.id, 'translation');
+                await saveRevisionBeforeOverwrite(db, page.id, 'translation', job?.id);
                 // Replace null translation with {} so sub-fields can be set
                 await db.collection('pages').updateOne(
                   { _id: page._id },
@@ -903,7 +885,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
               console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
               try {
                 // Snapshot prior translation before overwriting with the block marker.
-                await saveRevisionBeforeOverwrite(db, page.id, 'translation');
+                await saveRevisionBeforeOverwrite(db, page.id, 'translation', job?.id);
                 // Replace null translation with {} so sub-fields can be set
                 await db.collection('pages').updateOne(
                   { _id: page._id },
@@ -1090,6 +1072,12 @@ function langSpeedTier(lang) {
 // ── Self-dispatch: create jobs for books that need translation ──
 // Eliminates the gap between translate-worker finishing and Phase 4 dispatching new books.
 async function selfDispatch(db, limit) {
+  // The dial gates SELF-dispatch too (#3826). This function creates new paid
+  // work exactly like orchestrator Phase 4 does, and during the 2026-08-08
+  // incident it was the only dispatcher actually running — ungated. Every
+  // path that turns a book into Gemini calls must ask the budget first.
+  if (!await budgetAllowsDispatch(db, 'translate-self-dispatch')) return [];
+
   // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
@@ -1110,8 +1098,11 @@ async function selfDispatch(db, limit) {
     // Books with ≥200 pages fill the full 200-page cap and finish together.
     // Small books finish early, leaving idle slots. Dispatch big books first.
     { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
-    // First translations prioritized above speed tier — clear untranslated backlog first
-    { $sort: { is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
+    // processing_priority (#3756) leads: explicit queue weight, higher first
+    // (reader requests / sponsorships / curated collections — see
+    // memory/pipeline-ops.md "Priority Ordering"). Then first translations
+    // above speed tier — clear untranslated backlog first.
+    { $sort: { processing_priority: -1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
     { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
     { $limit: limit },
   ]).toArray();
@@ -1128,8 +1119,10 @@ async function selfDispatch(db, limit) {
       } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] } } },
-      { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
-      { $sort: { pages_translated: -1 } }, // most-translated first — finish fastest
+      // processing_priority + pages_translated must survive the projection for
+      // the sort below to see them (#3756).
+      { $project: { id: 1, title: 1, pages_count: 1, pages_translated: 1, processing_priority: 1, language: 1, 'image_source.provider': 1 } },
+      { $sort: { processing_priority: -1, pages_translated: -1 } }, // explicit priority first, then most-translated — finish fastest
       { $limit: limit },
     ]).toArray();
     if (candidates.length > 0) {
@@ -1148,6 +1141,7 @@ async function selfDispatch(db, limit) {
         page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
       'translation.safety_blocked': { $ne: true },
+      'translation.health_blocked': { $exists: false },
         $or: [
           { 'translation.data': { $exists: false } },
           { 'translation.data': null },
@@ -1172,6 +1166,28 @@ async function selfDispatch(db, limit) {
     const label = (book.title || '').substring(0, 50);
     const pageIds = pages.map(p => p.id);
 
+    // Atomic claim (#3826): concurrent selfDispatch calls (each finishing book
+    // triggers a backfill) all read the same candidates before any of them
+    // flipped a status, so one book got 3-4 jobs within seconds — quadruple
+    // paid translation of the same pages. Claim the book by compare-and-swap
+    // on its status FIRST; only the winner creates a job. A claim that dies
+    // before the job insert self-heals: processWithJob rolls a book with a
+    // missing job back to ocr_complete.
+    const claim = await db.collection('books').updateOne(
+      { id: book.id, 'pipeline_auto.status': { $in: ['ocr_complete', 'translate_partial'] } },
+      { $set: {
+        'pipeline_auto.status': 'translate_submitted',
+        'pipeline_auto.last_updated': new Date(),
+        'pipeline_auto.translate_job_id': jobId,
+        job: { type: 'hetzner-inline', job_id: jobId },
+        updated_at: new Date(),
+      }},
+    );
+    if (claim.modifiedCount === 0) {
+      console.log(`[TRANSLATE] Skipped duplicate dispatch: ${label} (claimed by a concurrent dispatcher)`);
+      continue;
+    }
+
     await db.collection('jobs').insertOne({
       id: jobId,
       type: 'translation',
@@ -1188,17 +1204,6 @@ async function selfDispatch(db, limit) {
       created_at: new Date(),
       updated_at: new Date(),
     });
-
-    await db.collection('books').updateOne(
-      { id: book.id },
-      { $set: {
-        'pipeline_auto.status': 'translate_submitted',
-        'pipeline_auto.last_updated': new Date(),
-        'pipeline_auto.translate_job_id': jobId,
-        job: { type: 'hetzner-inline', job_id: jobId },
-        updated_at: new Date(),
-      }},
-    );
 
     dispatched.push({ ...book, job: { job_id: jobId } });
     console.log(`[TRANSLATE] Self-dispatched: ${label} — ${pageIds.length} pages (job ${jobId})`);

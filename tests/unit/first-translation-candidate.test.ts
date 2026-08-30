@@ -168,6 +168,51 @@ describe('monotonicity: new evidence only ever weakens a claim', () => {
   });
 });
 
+describe('confirmed is earned by EVIDENCE, not by carrying the badge', () => {
+  /** A badged book — the render gate passes. Only evidence strength varies. */
+  const badged = (evidence_strength?: string): ScreenedBook => ({
+    ...FOREIGN,
+    visible: true,
+    is_first_translation: true,
+    first_translation: { verdict: 'first_no_prior', evidence_strength },
+  } as ScreenedBook);
+
+  it('strong and moderate evidence confirm', () => {
+    expect(classifyFirstTranslationClaim(badged('strong')).claim).toBe('confirmed');
+    expect(classifyFirstTranslationClaim(badged('moderate')).claim).toBe('confirmed');
+  });
+
+  it('weak evidence does NOT confirm — it is a candidate', () => {
+    // 2,286 of the 5,932 badged + visible books measured 2026-08-07.
+    const r = classifyFirstTranslationClaim(badged('weak'));
+    expect(r.claim).toBe('candidate');
+    expect(r.reason).toBe('no_prior_found');
+  });
+
+  it('an unrecorded strength does not confirm', () => {
+    expect(classifyFirstTranslationClaim(badged(undefined)).claim).toBe('candidate');
+  });
+
+  it('the legacy-disposition shim does not confirm', () => {
+    // 2,957 badged books carry no verdict object at all; resolveFirstTranslation
+    // synthesizes one and stamps it `weak` precisely because it was never
+    // produced by a real adjudicator. Without this, gating on the render rule
+    // alone made 95.8% of badged books "confirmed" — a state that meant only
+    // "we badged it", which is the claim it exists to qualify.
+    const r = classifyFirstTranslationClaim({
+      ...FOREIGN,
+      visible: true,
+      is_first_translation: true,
+      translation_verification: { disposition: 'confirmed_first' },
+    } as ScreenedBook);
+    expect(r.claim).toBe('candidate');
+  });
+
+  it('a badged book stays a claim — this qualifies it, it does not demote it', () => {
+    expect(hasFirstTranslationClaim(badged('weak'))).toBe(true);
+  });
+});
+
 describe('hasFirstTranslationClaim', () => {
   it('covers confirmed and candidate, excludes the rest', () => {
     expect(hasFirstTranslationClaim(FOREIGN)).toBe(true);

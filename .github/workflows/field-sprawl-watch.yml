@@ -1,0 +1,86 @@
+name: Field sprawl watch
+
+# The ratchet half of issue #3969 ("a sweep must record a ROW, not a COLUMN").
+#
+# Two things can only be caught by a standing watch, because the sessions that
+# cause them are gone by the time the damage is visible:
+#   1. The field count on a watched collection drifting UP — some sweep wrote
+#      its verdict as a new column again.
+#   2. A RETIRED field reappearing — a consolidation being silently undone by
+#      a reused writer. This is not hypothetical: tenant_id was cleaned off
+#      45K books + 6.4M pages in PR #2085 and was back on 20K books + 1.4M
+#      pages within 3 months (PR #3983 stripped the writers).
+#
+# Read-only. Findings go to a tracking issue, not a red X on someone's PR
+# (same reasoning as corpus-integrity-watch.yml). Ratchet --max-fields DOWN
+# after each #3969 family consolidation; add each retired field to --forbid.
+
+on:
+  # The static lint below needs no database, so it gates every PR — the moment
+  # a new field write is cheapest to notice. The DB census stays weekly.
+  pull_request:
+  schedule:
+    # Weekly, Tuesdays 07:30 UTC.
+    - cron: '30 7 * * 2'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  # Static gate: a $set of an unknown `books` field fails HERE, on the PR that
+  # introduces it — a week before the census would notice, and before the write
+  # ever runs. No database, no secrets, seconds to run.
+  field-write-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Lint for new books field writes
+        run: node scripts/audit/new-field-writes.mjs --baseline scripts/lib/books-field-write-baseline.json
+
+  field-sprawl:
+    # The census reads production, so it stays on the schedule rather than
+    # running against the DB on every pull request.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Audit field sprawl on watched collections
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/field-sprawl.mjs \
+            --collection books \
+            --max-fields 383 \
+            --max-nested 65 \
+            --forbid tenant_id,hide_reason,pageCount,page_count,ft_prediction,ft_candidate,translation_audit_2026_06,existing_translation,translated_from,superseded_by,translation_requested_by_reader,work_authority,wikidata_work_ids,language_relabeled_from,language_relabeled_at,language_correction,language_corrected_at,language_corrected_by,author_corrected_2026_06_30,title_corrected_2026_06_30,bibliographic_correction,acquisition_wave,acquisition_priority,priority_translation,forshaw_relevance,pipeline_hold,pipeline_priority_at,pipeline_priority_reason,current_job_id,enrichment_phase,warehouse_reason,ia_identifier_previous,ia_repoint_reason,ica_records,dedup_note,deletion_batch,published_location,published_place,related_artwork,morgan_accession,morgan_bibid,resourced_from,rights_note,rights_status,author_original,thumbnail_page_id,former_resource_type,modern_typeset,split_warnings,unhidden_note,part_number,source_notes,summary_updated_at,cover_page_id > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          tail -60 report.txt
+      # field-sprawl.mjs exits 1 for a real breach and 2 when it cannot reach the
+      # database. `!= '0'` treated those as the same thing, so three weeks of
+      # "breach" issues were the script reporting its own missing MONGODB_URI.
+      - name: File findings
+        if: steps.run.outputs.fired == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Field sprawl breach on books — $(date -u +'%Y-%m-%d')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "Either the field count exceeded the ceiling (a sweep wrote a COLUMN again) or a retired field reappeared (a consolidation is being undone by a reused writer). See issue #3969 for the playbook: find the writer, strip it, re-clean — do not just raise the ceiling." \
+            "$(tail -60 report.txt)")
+          gh issue create --title "$TITLE" --body "$BODY" --label pipeline
+      - name: Fail if the census could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::field-sprawl census could not run (exit ${{ steps.run.outputs.fired }}) — no field count was measured. Check the MONGODB_URI repo secret."
+          exit 1

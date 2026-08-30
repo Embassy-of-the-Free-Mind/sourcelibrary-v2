@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import LibrarianClient from './LibrarianClient';
+import type { Locale } from '@/lib/locale-path';
 
 export const revalidate = 86400; // 24h ISR
 
@@ -60,28 +61,39 @@ async function getFeaturedPassage() {
       }
       if (text.length >= 60) {
         // Resolve page _id for deep linking (notebook stores slug, pages use book.id)
-        const bookSlug = f.source.bookSlug || f.source.bookId;
-        let pageId: string | undefined;
+        const notebookSlug = f.source.bookSlug || f.source.bookId;
         const bookDoc = await db.collection('books').findOne(
-          { $or: [{ slug: bookSlug }, { id: bookSlug }] },
-          { projection: { id: 1 }, maxTimeMS: 3000 }
+          { $or: [{ slug: notebookSlug }, { id: notebookSlug }] },
+          { projection: { id: 1, slug: 1 }, maxTimeMS: 3000 }
         );
+        // The whole passage is a LINK. A notebook slug that resolves to no book
+        // used to be returned anyway — the lookup's only job was the pageId and
+        // its failure was ignored — so the "Librarian is reading" card pointed
+        // at a 404. Measured 2026-08-21: 28 of 1,041 quotable findings (2.7%)
+        // name a book that no longer exists under that slug (renames, deletions,
+        // and a few malformed slugs with a `/page-number/N` tail baked in), and
+        // the passage is picked at random, so ~1 in 37 librarian page loads —
+        // English and Spanish alike — offered a dead link. If it does not
+        // resolve, fall through to the random-passage path below rather than
+        // render an unfollowable quote.
         if (bookDoc) {
           const pageDoc = await db.collection('pages').findOne(
             { book_id: bookDoc.id, page_number: f.source.pageNumber },
             { projection: { _id: 1 }, maxTimeMS: 3000 }
           );
-          pageId = pageDoc?._id?.toString();
+          return {
+            text,
+            bookTitle: f.source.bookTitle,
+            bookAuthor: f.source.bookAuthor,
+            bookYear: null,
+            // The book's OWN slug, not the notebook's copy of it: a book that
+            // has been re-slugged still resolves by `id` above, and echoing the
+            // stale slug back into the href would 404 just as surely.
+            bookSlug: (bookDoc.slug as string) || (bookDoc.id as string),
+            pageNumber: f.source.pageNumber,
+            pageId: pageDoc?._id?.toString(),
+          };
         }
-        return {
-          text,
-          bookTitle: f.source.bookTitle,
-          bookAuthor: f.source.bookAuthor,
-          bookYear: null,
-          bookSlug: bookSlug,
-          pageNumber: f.source.pageNumber,
-          pageId,
-        };
       }
     }
 
@@ -145,12 +157,17 @@ async function getFeaturedPassage() {
   }
 }
 
-export default async function LibrarianPage() {
+/**
+ * `lang` is set by the `/es/librarian` twin (src/app/es/librarian/page.tsx),
+ * which re-exports this component — one page, two locales, no drift.
+ */
+export default async function LibrarianPage({ lang = 'en' }: { lang?: Locale } = {}) {
   const featuredPassage = await getFeaturedPassage();
 
   return (
     <LibrarianClient
       featuredPassage={featuredPassage}
+      lang={lang}
     />
   );
 }

@@ -8,6 +8,7 @@ import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { findPendingBatchJob } from '@/lib/translate-write';
 import { contentHash } from '@/lib/steganographia';
 import { nanoid } from 'nanoid';
 
@@ -158,6 +159,7 @@ export const POST = withAuth(async (request, session, context) => {
       force = false, // When true, include pages that already have OCR (for re-processing)
       pagesPerRequest = 1, // >1 enables multi-page mode: N images per Gemini request (saves quota)
       apiKeyIndex, // Optional: rotate between available API keys (0, 1, 2)
+      resubmit = false, // When true, bypass the pending-job double-submit guard
     } = body;
 
     // Use key-specific client if requested (for quota rotation)
@@ -169,6 +171,20 @@ export const POST = withAuth(async (request, session, context) => {
     const book = await db.collection('books').findOne({ id: bookId });
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Double-submit guard (#3749, archaeology I68): a pending OCR batch for
+    // this book means submitting again pays Gemini twice for the same pages.
+    // 409 with the existing job; pass resubmit: true to bypass.
+    if (!resubmit) {
+      const pending = await findPendingBatchJob(db, { bookId, type: 'ocr' });
+      if (pending) {
+        return NextResponse.json({
+          error: 'batch_job_already_pending',
+          message: `An OCR batch job for this book is already pending (submitted ${pending.createdAt?.toISOString?.() || pending.createdAt}). Collect it or pass resubmit: true to force a new submission.`,
+          existingJob: pending,
+        }, { status: 409 });
+      }
     }
 
     // Find pages to OCR

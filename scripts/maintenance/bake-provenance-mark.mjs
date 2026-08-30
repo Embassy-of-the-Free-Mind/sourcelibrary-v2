@@ -10,12 +10,27 @@
  * itself means the mark travels with the file: it survives direct hotlinks,
  * copy-image-address, and screenshots, with zero recurring serve cost.
  *
- * It marks the EXISTING variant via scripts/lib/provenance-mark.mjs — invisible
- * EXIF (Copyright/Source/edition id) + an invisible keyed watermark on every page
- * + a subtle visible logo on ~1-in-10 pages — and overwrites the SAME R2 key, so
- * no DB pointer changes and no churn. Idempotent: it stamps each object's R2
- * metadata with `provenance: <MARK_VERSION>` and skips anything already marked.
+ * It does NOT mark the existing variant in place. It REGENERATES the display
+ * variant from the clean master at min(DISPLAY_MAX_W, native) and marks that,
+ * via scripts/lib/provenance-mark.mjs — invisible EXIF (Copyright/Source/edition
+ * id) + an invisible keyed watermark on every page + a subtle visible logo on
+ * ~1-in-10 pages — then overwrites the SAME R2 key, so no DB pointer changes and
+ * no churn. Idempotent: it stamps each object's R2 metadata with
+ * `provenance: <MARK_VERSION>` and skips anything already marked.
  * Requires PROVENANCE_SECRET_KEY (the watermark key, shared with the text imprimatur).
+ *
+ * ⚠ THIS COSTS STORAGE, AND THIS PARAGRAPH IS WHY (#4406). The regeneration is at
+ * 2000px while the forward-path generator (scripts/workers/lib/display-image.mjs)
+ * writes display variants at 1200px. Measured like-for-like — same master, same
+ * q85, width the only variable — 2000px is 1.98x the bytes, +336 KB per page:
+ * ~$40/month across the visible corpus, and on a page whose master is <=2000px the
+ * "display copy" ends up LARGER than the master it came from. That is not a bug;
+ * the width was chosen so the keyed watermark survives recompression (detection
+ * z 6.9-8.5 -> 10.7-13) and because the marked variant is the reader's resting
+ * image. It was simply never costed. An earlier header said "marks the EXISTING
+ * variant" — left over from the pre-sl-v3 design — and a cost investigation
+ * believed it, measured the watermark (0.7%, true) instead of the resize (98%),
+ * and cleared this script while it ran for six more weeks. Keep this accurate.
  *
  * The originals used for OCR / download / deep-zoom (`archived_photo`,
  * `photo_original`, `original`/`hires` tiers) are NOT touched — only the
@@ -198,16 +213,25 @@ async function main() {
     } catch (e) { failed++; if (failed <= 15) console.warn(`  FAIL ${item.displayKey}: ${e.message}`); }
   };
 
-  // Process per-book to keep each Mongo cursor bounded; the pool spans chunks.
-  const BOOK_CHUNK = 500;
+  // Process per-book in chunks, and MATERIALISE each chunk before doing any work.
+  //
+  // The previous shape streamed `for await (const p of cursor)` while each page
+  // did a HEAD + GET + PUT — so the cursor sat idle for far longer than Mongo's
+  // 10-minute timeout, and the run died (June) or wedged forever (Aug 21 → Aug 30,
+  // alive at 0.03s CPU per 20s with the log silent for nine days, which no retry
+  // loop can rescue because the process never exits). Same failure and same fix as
+  // the preservation manifest in b2f253e6: a few tens of thousands of small
+  // projected docs cost nothing to hold; an idle cursor costs the whole run.
+  // Chunk is 100 books, not 500, to keep each materialised batch modest.
+  const BOOK_CHUNK = 100;
   outer:
   for (let i = 0; i < bookIds.length; i += BOOK_CHUNK) {
     const chunk = bookIds.slice(i, i + BOOK_CHUNK);
     const proj = { _id: 0, id: 1, book_id: 1, page_number: 1, display_photo: 1,
       archived_photo: 1, photo_original: 1, cropped_photo: 1, photo: 1, split_from_spread: 1 };
-    const cursor = pages.find({ book_id: { $in: chunk } }, { projection: proj });
+    const batch = await pages.find({ book_id: { $in: chunk } }, { projection: proj }).toArray();
 
-    for await (const p of cursor) {
+    for (const p of batch) {
       scanned++;
       const displayKey = keyFromUrl(p.display_photo);     // pages/ key we may overwrite
       if (!p.display_photo) { skipped++; continue; }

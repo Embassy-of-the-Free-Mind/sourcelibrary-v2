@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { validateApiKey } from '@/lib/dataset/api-keys';
+import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
 import { logAccess, getDailyPageCount } from '@/lib/dataset/access-logger';
 import { DatasetPageRecord } from '@/lib/dataset/types';
 
@@ -28,6 +28,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       { error: 'Invalid or missing API key. Get one at https://sourcelibrary.org/dataset' },
       { status: 401 }
+    );
+  }
+
+  const rpm = checkKeyRequestRate(apiKey);
+  if (!rpm.allowed) {
+    return NextResponse.json(
+      { error: 'Requests-per-minute limit reached for this key. Slow down and retry.' },
+      { status: 429, headers: { 'Retry-After': String(rpm.retryAfter ?? 60) } }
     );
   }
 

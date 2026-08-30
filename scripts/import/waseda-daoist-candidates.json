@@ -1,0 +1,4749 @@
+[
+ {
+  "source": "waseda",
+  "shelfmark": "bunko01_01521_0001",
+  "title": "竜威秘書. 1集 / 馬俊良 輯",
+  "author": "馬 俊良",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko01/bunko01_01521_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko01_01521_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 津田文庫 / 歴史・文学 / 東洋史－日本史 / 津田左右吉",
+  "imprint": "[出版地不明] : 世徳堂, [出版年不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_c0401",
+  "title": "紅毛細工秘伝 / 蓮斎山人 著",
+  "author": "蓮斎山人, ※",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_c0401/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_c0401/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 勝俣銓吉郎",
+  "imprint": "[出版地不明] : 神仙堂, [出版年不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0066",
+  "title": "[参同契宝鏡三昧不能語] / 指月 [註]",
+  "author": "慧印, 1689-1764",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0066/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0066/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "東亰 : 山口屋佐七, [出版年不明]",
+  "matched_terms": [
+   "参同契"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0156",
+  "title": "宋詩鈔. 初,2-4集 / 呉孟舉,呉自牧 選",
+  "author": "呉 之振, 1640-1717",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0156/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0156/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "州銭 : 呉氏鑑古堂, 康熈10[1671]序",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0193",
+  "title": "山谷詩集. 巻第1-10 / 黄庭堅 [撰]",
+  "author": "黄 庭堅, 1045-1105",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0193/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0193/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko17_w0082",
+  "title": "宋詩鈔. 初,2-4集 / 呉孟舉,呉自牧 選",
+  "author": "呉 之振, 1640-1717",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko17/bunko17_w0082/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko17_w0082/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 土岐文庫 / 詩歌・詩歌研究 / 日本近代文学 / 土岐善麿",
+  "imprint": "州銭 : 呉氏鑑古堂, 康熈10[1671]序",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0289",
+  "title": "修真秘訣 : 二巻 / □・闕名撰 ; 劉鈞等較",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0289/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0289/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "呂祖",
+   "修真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0045",
+  "title": "修真宝伝因果全集 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0045/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0045/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷",
+   "修真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0046",
+  "title": "修真宝伝因果 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0046/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0046/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : [出版者不明], 光緒16 [1890]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷",
+   "修真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0047",
+  "title": "修真因果伝 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0047/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0047/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "北京 : 天華館",
+  "matched_terms": [
+   "宝巻",
+   "寶卷",
+   "修真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0050",
+  "title": "達摩宝伝 : 二巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0050/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0050/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷",
+   "悟真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_m0062",
+  "title": "鼓詞小段彙編",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_m0062/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_m0062/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 大鼓書",
+  "imprint": "北平 : 学古堂",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_m0121",
+  "title": "小児難孔子",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_m0121/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_m0121/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 笑話・謎語",
+  "imprint": "北平 : 学古堂",
+  "matched_terms": [
+   "神仙",
+   "小児"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0616",
+  "title": "鉄板数",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0616/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0616/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 某種唱本",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0701",
+  "title": "八洞神仙賀寿",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0701/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0701/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 雜歌",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0828",
+  "title": "高老庄収八戒 : 他四種",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0828/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0828/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 某種唱本",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "修真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0871",
+  "title": "惺迷錄 : 二巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0871/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0871/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 雜歌",
+  "imprint": "[出版地不明 : 出版者不明], 咸豊11 [1861]",
+  "matched_terms": [
+   "修真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_a0800",
+  "title": "青皇和漢神仙図絵 / 一炊菴 [ほか撰]",
+  "author": "南陽",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_a0800/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_a0800/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 雲英文庫 / 俳諧",
+  "imprint": "[出版地不明] : [出版者不明], 文化2[1805]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "he16_03332",
+  "title": "東渡筆談 / 東渡因静 著",
+  "author": "因静",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/he16/he16_03332/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/he16_03332/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 文学－中国文学総記",
+  "imprint": "吉田(三州) : 悟真寺, 宝暦14[1764]跋",
+  "matched_terms": [
+   "悟真"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "he18_00639",
+  "title": "山谷詩集注. 巻之第1-8 / 黄庭堅 [撰] ; [任淵] [注]",
+  "author": "黄 庭堅, 1045-1105",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/he18/he18_00639/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/he18_00639/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 文学－漢詩",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "he18_01286",
+  "title": "山谷詩集注. 巻第1-20 / 黄庭堅 [撰] ; 任淵 注",
+  "author": "黄 庭堅, 1045-1105",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/he18/he18_01286/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/he18_01286/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 文学－漢詩",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_01555_0137",
+  "title": "知不足斎叢書. 第18集 / 鮑廷博 [編]",
+  "author": "鮑 廷博, 1728-1807",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_01555_0137/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_01555_0137/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "嶺南 : 芸林仙館, 光緒8[1882]",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_02023",
+  "title": "漢魏叢書 : 全書計九十六種. 経翼,別史,子余,戴籍 / 王謨 [編]",
+  "author": "王, 謨",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_02023/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_02023/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "",
+  "matched_terms": [
+   "老子",
+   "道徳経",
+   "列子",
+   "淮南",
+   "神仙",
+   "参同契",
+   "陰符経",
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_03148",
+  "title": "漢魏叢書. 経翼,別史,子余,戴籍 / 王謨 [編]",
+  "author": "王, 謨",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_03148/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_03148/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "",
+  "matched_terms": [
+   "老子",
+   "道徳経",
+   "列子",
+   "淮南",
+   "神仙",
+   "参同契",
+   "陰符経",
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_03152_0036",
+  "title": "虚白軒文稿. [2集] / 久保得二 [撰]",
+  "author": "久保 天随, 1875-1934",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_03152_0036/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_03152_0036/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "写(自筆), [書写年不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i05_01656",
+  "title": "万寳極秘伝 / 蓬斎山人 著",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i05/i05_01656/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i05_01656/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 総類－雑纂・雑書",
+  "imprint": "東都(江戸) : 神仙堂, [出版年不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0009",
+  "title": "説郛. [正] 巻第7 / 陶宗儀 纂",
+  "author": "陶 宗儀, 1316-1369",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0009/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0009/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "参同契",
+   "陰符経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0021",
+  "title": "説郛. [正] 巻第19 / 陶宗儀 纂",
+  "author": "陶 宗儀, 1316-1369",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0021/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0021/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "呂祖",
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0058",
+  "title": "説郛. [正] 巻第58 / 陶宗儀 纂",
+  "author": "陶 宗儀, 1316-1369",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0058/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0058/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0077",
+  "title": "説郛. [正] 巻第78-79 / 陶宗儀 纂",
+  "author": "陶 宗儀, 1316-1369",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0077/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0077/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0091",
+  "title": "説郛. [正] 巻第95 / 陶宗儀 纂",
+  "author": "陶 宗儀, 1316-1369",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0091/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0091/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "黄庭"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0145",
+  "title": "説郛. 続 巻第30 / [陶珽] [纂]",
+  "author": "陶 珽",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0145/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0145/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "陰符経",
+   "胎息"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i17_02436",
+  "title": "[諸家画稿筆跡]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i17/i17_02436/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i17_02436/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 服部文庫 / 服部南郭 / 儒学・漢詩 / 漢籍",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "monjo12_m0024_0010",
+  "title": "帰藩伺書",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/monjo12/monjo12_m0024_0010/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/monjo12_m0024_0010/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 中御門家文書 / 日本－歴史－史料",
+  "imprint": "写, [慶応4(1868)]",
+  "matched_terms": [
+   "内丹"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "ro11_00878",
+  "title": "朱子遺書. [初]-2刻 / 朱熹 著",
+  "author": "朱 熹, 1130-1200",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/ro11/ro11_00878/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/ro11_00878/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 哲学－中国哲学総記",
+  "imprint": "禦児 : 呂氏宝竜堂, [出版年不明]",
+  "matched_terms": [
+   "参同契",
+   "陰符経",
+   "周易",
+   "易學"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "ro13_00963_0109",
+  "title": "亢倉子",
+  "author": "張 志和",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/ro13/ro13_00963_0109/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/ro13_00963_0109/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 子書百家 / 哲学－諸子",
+  "imprint": "湖北 : 崇文書局, 光緒元[1875]",
+  "matched_terms": [
+   "胎息"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "ru04_03826",
+  "title": "雲山竒勝 / 塩田鉄香 [画]",
+  "author": "塩田 鉄香, ※",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/ru04/ru04_03826/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/ru04_03826/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 地理－地理(日本各地)",
+  "imprint": "写(自筆), [書写年不明]",
+  "matched_terms": [
+   "性命"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "wo06_05437",
+  "title": "めうやくまじなひ伝授 / 蓬斎山人 著",
+  "author": "蓬斎山人, ※",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/wo06/wo06_05437/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/wo06_05437/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoist-alchemy",
+  "keywords": "古典籍 / 社会－風俗・習慣、民俗学(日本)",
+  "imprint": "[出版地不明] : 神仙堂, [出版年不明]",
+  "matched_terms": [
+   "神仙"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_e0003",
+  "title": "老子. 上,下篇 / 岡研 註",
+  "author": "岡 研介, 1799-1839",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_e0003/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_e0003/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学)",
+  "imprint": "写(自筆), 文政5[1822]序",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0037",
+  "title": "呂祖指玄篇秘註 / 純陽子 著 ; 滄海老人本誠子 秘註",
+  "author": "呂 巌, 755-",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0037/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0037/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "呂祖",
+   "文昌"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0038",
+  "title": "重刻荘子南華真経. 巻1-10 / 郭象 注 ; 千葉玄之 読",
+  "author": "郭 象, -312",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0038/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0038/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "冨小路通三条(皇都) : 須磨勘兵衛, [出版年不明]",
+  "matched_terms": [
+   "荘子",
+   "真経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0045",
+  "title": "抱朴子. 内,外,附篇 / 葛洪 [撰] ; 朱記栄 校",
+  "author": "葛 洪, 284-363",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0045/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0045/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "孫谿 : 朱氏愧廬家塾, 光緒10-15[1884-1889]",
+  "matched_terms": [
+   "抱朴子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0049",
+  "title": "老子道徳真経. 巻1-2 / 王弼 註 ; 陸徳明 音義 ; 宇恵 考訂",
+  "author": "王 弼, 226-249",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0049/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0049/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "東京 : 松山堂, [出版年不明]",
+  "matched_terms": [
+   "老子",
+   "道徳経",
+   "真経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_d0066",
+  "title": "玉皇上帝",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_d0066/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_d0066/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 民俗資料",
+  "imprint": "[民国初期]",
+  "matched_terms": [
+   "玉皇"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_d0068",
+  "title": "太上老君",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_d0068/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_d0068/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 民俗資料",
+  "imprint": "[民国初期]",
+  "matched_terms": [
+   "太上"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0046",
+  "title": "関帝祠志 : 六巻 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0046/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0046/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 史部 第9 傳記類 別傳之屬",
+  "imprint": "[出版地不明 : 出版者不明], 順治16年序 [1659]",
+  "matched_terms": [
+   "関帝"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0096",
+  "title": "近思錄 : 一四巻 / 宋・朱熹・呂祖謙同輯 ; 日本・山崎嘉点",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0096/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0096/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第2 儒家類 性理之屬",
+  "imprint": "京都 : 菱屋孫兵衛等",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0125",
+  "title": "淮南鴻烈解 二一巻 / 漢・高誘注 ; 明・茅坤批評 ; 鵜飼信之(石斎)訓点",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0125/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0125/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第10 雜家類 雜學之屬 漢",
+  "imprint": "京都 : 額田勝兵衛・額田正三郎, 寛文4年正月 [1664]",
+  "matched_terms": [
+   "淮南"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0260",
+  "title": "太上洞玄霊宝高上玉皇本行集経 : [三巻首一巻末一巻]存首巻,上巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0260/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0260/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 道經",
+  "imprint": "長沙 : 聚仙文社, 民国12 [1923]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "玉皇",
+   "真経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0262",
+  "title": "玉皇心印妙経・般若波羅蜜多心経・観音夢授経 : 五丁",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0262/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0262/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 道經",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "玉皇"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0264",
+  "title": "清静経図註 : 一巻 / □・水精子注解 ; □・混沌子付図",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0264/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0264/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 道經",
+  "imprint": "[出版地不明] : 金陵周氏愛蓮堂, 民国6 [1917]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0265",
+  "title": "太上玄霊北斗本命延生真経 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0265/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0265/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 道經",
+  "imprint": "[出版地不明 : 出版者不明], 万暦43 [1615]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "真経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0271",
+  "title": "太上元陽上帝無極天尊説至真妙法火車霊官真経 : 一巻・[首]一巻 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0271/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0271/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 道經",
+  "imprint": "長沙 : 善書流通処, 民国14 [1925]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "真経",
+   "善書"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0272",
+  "title": "張天師明断吉凶符法 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0272/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0272/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 神符",
+  "imprint": "朝鮮 : 写",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0273",
+  "title": "大洞法籙 : 二巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0273/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0273/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 譜〓",
+  "imprint": "写",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "玉皇"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0275",
+  "title": "太上感応篇直講 : 一巻首一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0275/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0275/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 戒律",
+  "imprint": "上海 : 宏大善書局, 民国11 [1922]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "感応篇",
+   "善書"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0276",
+  "title": "九天開化主宰元皇司禄宏仁文昌帝君陰隲文註案 : 四巻 / 明・顔正註釈 ; 清・顔文瑞補案",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0276/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0276/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 戒律",
+  "imprint": "[出版地不明 : 出版者不明], 光緒12 [1886]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "文昌",
+   "善書"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0277",
+  "title": "関帝宝訓像註 : 四巻 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0277/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0277/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 戒律",
+  "imprint": "[出版地不明 : 出版者不明], 乾隆59年補訂重刊道光初年重印 [1794]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "関帝"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0278",
+  "title": "重刻神訓必読 坿治世福神宝訓・戒食牛肉篇 / 清・関名輯",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0278/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0278/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 戒律",
+  "imprint": "[出版地不明] : 冀洲寇文琳, 光緒16 [1890]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "感応篇",
+   "文昌"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0280",
+  "title": "玉皇宥罪宝懺 : 三巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0280/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0280/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 威儀",
+  "imprint": "[長沙] : 聚仙文社, [民国中]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "玉皇",
+   "文昌"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0281",
+  "title": "孚佑上帝玉都師相呂聖真君無極度人宝懺 : 一巻 / □・孟珙撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0281/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0281/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 威儀",
+  "imprint": "北京 : 李氏翰藻斎, 道光28 [1848]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0282",
+  "title": "玉都師相呂聖真君無極度人宝懺・十六品経 : 坿呂帝本伝一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0282/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0282/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 威儀",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0283",
+  "title": "玄門早午晩科儀・玄門午供科儀・玄門晩課科儀 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0283/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0283/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 威儀",
+  "imprint": "北京 : 集賢軒",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0284",
+  "title": "清微金錄祝延万寿拝章表科 : 二巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0284/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0284/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 威儀",
+  "imprint": "写",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0285",
+  "title": "歩虚天尊讚 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0285/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0285/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 讚頌表奏",
+  "imprint": "写, 光緒18 [1892]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0286",
+  "title": "[天地疏等奏疏類] : [一巻] / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0286/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0286/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 讚頌表奏",
+  "imprint": "写, 清代",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0290",
+  "title": "三丰全書 / 明・張君宝撰 ; 清・李西月輯",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0290/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0290/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 雜箸",
+  "imprint": "上海 : 江左書林, 民国8 [1919]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0291",
+  "title": "文帝書鈔 : 一四巻 / 清・朱珪校",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0291/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0291/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 雜箸",
+  "imprint": "北京 : [出版者不明], 光緒8 [1882]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "玉皇",
+   "真経",
+   "感応篇",
+   "呂祖",
+   "文昌"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0292_0001",
+  "title": "救劫金箴 : 一巻 / 清・邵瑞澄輯",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0292_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0292_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明], 光緒7 [1881]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0292_0002",
+  "title": "指迷宝錄 : 四巻 / 清・邵瑞澄輯",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0292_0002/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0292_0002/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明], 光緒7年刊 光緒12年重印 [1886]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0293",
+  "title": "新刻万法帰宗 : 五巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0293/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0293/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0295_0001",
+  "title": "呂祖年譜海山奇遇 : 七巻 / 清・火西月撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0295_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0295_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明 : 出版者不明], 道光26 [1846]",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0295_0004",
+  "title": "呂祖編年詩集 : 一〇巻 / 唐・呂嵒撰 ; 清・火西月重編",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0295_0004/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0295_0004/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明 : 出版者不明], 道光26 [1846]",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0297",
+  "title": "長春道教源流 : 八巻 / 清・陳銘珪撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0297/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0297/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教 記傳",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0299",
+  "title": "観音真経",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0299/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0299/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "長沙 : 善書流通処, 民国12 [1923]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "真経",
+   "善書"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0300",
+  "title": "勅封孚佑昭顕陶真人曁福佑霊応陶真人済人救劫経 : 一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0300/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0300/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[出版地不明] : 存人長生局, 民国13 [1924]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "善書"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0301",
+  "title": "広済李公経",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0301/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0301/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[長沙] : [出版者不明], 民国13 [1924]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "真経",
+   "善書"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0302",
+  "title": "桓侯明道忠勇経懺",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0302/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0302/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[出版地不明] : [出版者不明], 民国中",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0303",
+  "title": "文昌帝君本願真経 : 不分巻神呪一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0303/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0303/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[出版地不明] : 李氏栄豊堂, 民国中",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上",
+   "真経",
+   "文昌"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0304",
+  "title": "包公鉄面明聖経 : 一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0304/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0304/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "長沙 : 孔繁[祐]・張耀鴻, 民国13 [1924]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "真経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0305",
+  "title": "中皇霊宝洞微十品至妙真経 : [二巻首一巻附錄一巻]残一巻存上巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0305/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0305/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "長沙 : 敦化文社, 民国12 [1923]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "真経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0306",
+  "title": "三聖心経",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0306/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0306/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[出版地不明] : 宣化文社",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "玉皇",
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0307",
+  "title": "呂祖心経 : 一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0307/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0307/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0308",
+  "title": "[済]祖無心経 : 一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0308/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0308/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "湖南 : 楚善[堂]雅亭, 民国中",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0309",
+  "title": "大聖有若無心経 : 一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0309/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0309/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "湖南 : 楚善堂雅亭, 民国中",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0310",
+  "title": "金母心経 : 一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0310/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0310/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0311",
+  "title": "金母心経 : 一巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0311/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0311/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 經",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0322",
+  "title": "返性図輯要宝錄 : 二巻 / 清・闕名撰 ; 清・洗心覚民校訂",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0322/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0322/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明], 光緒2 [1876]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0324",
+  "title": "三敎正宗・一心普度合編",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0324/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0324/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明], 光緒2 [1876]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "太上"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0325",
+  "title": "救劫囘生 : 四巻 / 清・任佑〓等彙集",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0325/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0325/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明], 光緒20 [1894]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0326",
+  "title": "現報新新 : [二巻]残巻下 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0326/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0326/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明, 清末]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0327",
+  "title": "火流星 : 二巻 / 清・鍾慧敏彙纂",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0327/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0327/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "[出版地不明] : 鍾氏, 宣統元年序 [1909]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0328",
+  "title": "闡道要言 : 一巻 / 清・中和山人渾渾子著",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0328/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0328/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "荘河県 : 青堆子黄柏樹, 民国5 [1916]",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0330",
+  "title": "観音勧善文 : 不分巻 / 闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0330/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0330/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明], 民国初年",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0331_0001",
+  "title": "呂祖八宝救世全書 : 四巻. [巻一] / 李行遠 彙輯 ; 閻慶福,范如致 参訂",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0331_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0331_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "張家口 : 光明仙壇, 民国10 [1921]",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0331_0002",
+  "title": "呂祖八宝救世全書 : 四巻. [巻二] / 李行遠 彙輯 ; 閻慶福,范如致 参訂",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0331_0002/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0331_0002/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "張家口 : 光明仙壇, 民国10 [1921]",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0331_0003",
+  "title": "呂祖八宝救世全書 : 四巻. [巻三] / 李行遠 彙輯 ; 閻慶福,范如致 参訂",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0331_0003/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0331_0003/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "張家口 : 光明仙壇, 民国10 [1921]",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0331_0004",
+  "title": "呂祖八宝救世全書 : 四巻. [巻四] / 李行遠 彙輯 ; 閻慶福,范如致 参訂",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0331_0004/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0331_0004/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "張家口 : 光明仙壇, 民国10 [1921]",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0332",
+  "title": "蓮花宗経 : 一巻 / 劉起竜[造]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0332/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0332/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 雜箸",
+  "imprint": "[出版地不明 : 出版者不明], 民国中",
+  "matched_terms": [
+   "道教",
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0334",
+  "title": "道義真経 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0334/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0334/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 子部 第14 道家類 道教系民間宗教 幇會",
+  "imprint": "杭州 : [出版者不明]",
+  "matched_terms": [
+   "道教",
+   "道家",
+   "真経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0012",
+  "title": "太上老子清静科儀 : 不分巻坿無極大道図説註解一巻・九曲囘文詩并読法一巻 / 清・瀛海道人同塵子述",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0012/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0012/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 万寧寺陳老舗, 康煕23 [1684]",
+  "matched_terms": [
+   "老子",
+   "太上",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0025",
+  "title": "仏説三皇初分天地嘆世宝巻 : 二巻一八品坿玉皇心印経[一巻]・太上清浄経[一巻] / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0025/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0025/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 岳泰, 道光28 [1848]",
+  "matched_terms": [
+   "太上",
+   "玉皇",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0034_0005",
+  "title": "鍼心宝巻 : 一巻坿太上感応篇一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0034_0005/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0034_0005/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "上海 : 大豊善書刊行所, 民国8年序 [1919]",
+  "matched_terms": [
+   "太上",
+   "感応篇",
+   "善書",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0057",
+  "title": "呂祖師度何仙姑因果巻 : 二巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0057/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0057/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "常州 : 楽善堂善書局, 光緒6 [1880]",
+  "matched_terms": [
+   "呂祖",
+   "善書",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0058",
+  "title": "呂祖度何仙姑因果宝巻 : 二巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0058/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0058/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[北京] : 蒋正貴, 宣統3 [1911]",
+  "matched_terms": [
+   "呂祖",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0059",
+  "title": "呂祖師度何仙姑因果巻・曾二娘経",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0059/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0059/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[徳州] : 鼓山経楼[釈騰空], 民国4 [1915]",
+  "matched_terms": [
+   "呂祖",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0503",
+  "title": "荘子搧墳",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0503/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0503/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第7 戲劇曲本類 〓子腔",
+  "imprint": "[出版地不明] : 錦文堂",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0648_0010",
+  "title": "荘子試妻 : 二巻",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0648_0010/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0648_0010/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 木魚書",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0814",
+  "title": "絵図荘子戯妻劈棺全伝",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0814/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0814/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 子弟書",
+  "imprint": "上海 : 槐蔭山房",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko30_d0043",
+  "title": "[建保六年中殿御会和歌] / 藤原道家[ほか] 撰",
+  "author": "藤原 道家, 1193-1252",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko30/bunko30_d0043/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko30_d0043/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 九曜文庫",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e0344",
+  "title": "桜荘子後日文談. 初,2-6編 / 並木五柳 綴 ; 芳虎 画 ; 魯文 校",
+  "author": "篠田 金治, 1829-1901",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e0344/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e0344/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[江戸] : 錦橋堂, 文久元[1861]序",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e0622",
+  "title": "華道家元華かゝみ. 立華の巻 / 池坊専啓 編輯",
+  "author": "池坊 専啓, -1944",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e0622/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e0622/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "京都 : 華道家元華務課, 明治44[1911]",
+  "matched_terms": [
+   "道家"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e0936",
+  "title": "川老金剛経. 上,中,下 / 川老子 [注]",
+  "author": "道川",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e0936/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e0936/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 中野市右衛門, 寛永9[1632]",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e0937",
+  "title": "川老金剛経. 上 / 川老子 [注]",
+  "author": "道川",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e0937/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e0937/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 中野市右衛門, 寛永9[1632]",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1827",
+  "title": "呂東莱先生左氏博議. 巻之1-12 / 呂祖謙 撰 ; 黄之寀 校 ; 伊藤長胤 [点]",
+  "author": "呂 祖謙, 1137-1181",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1827/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1827/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "京師(京都) : 永原屋孫兵衛, 元禄13[1700]跋",
+  "matched_terms": [
+   "呂祖"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1963",
+  "title": "老子鬳斉口義. 上,下 / 林希逸 [撰] ; [林羅山] [頭注]",
+  "author": "林 希逸",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1963/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1963/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 豊興堂, 正保5[1648]",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1964",
+  "title": "老子鬳斉口義. 上,下 / 林希逸 [撰] ; 道春 考正",
+  "author": "林 希逸",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1964/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1964/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "二条通玉屋町(京都) : 上村次郎右衛門, 明暦3[1657]",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1965",
+  "title": "老子鬳斉口義. 上,下 / 林希逸 [撰] ; 羅山子 考正",
+  "author": "林 希逸",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1965/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1965/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "二条通玉屋町(京都) : 植村次郎右衛門, 明暦3[1657]",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1966",
+  "title": "老子鬳斉口義. 上,下 / 林希逸 [撰] ; 徳倉昌堅 [首書]",
+  "author": "林 希逸",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1966/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1966/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "二条通玉屋町(京都) : 上村次郎右衛門, 延寳2[1674]跋",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1967",
+  "title": "老子鬳斉口義. 下 / 林希逸 [撰] ; 徳倉昌堅 [首書]",
+  "author": "林 希逸",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1967/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1967/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "二条通玉屋町(京都) : 上村次郎右衛門, 延寳2[1674]跋",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1968",
+  "title": "[老子経諺解大成]. 巻3 / [山本洞雲] [撰]",
+  "author": "山本 洞雲",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1968/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1968/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1970",
+  "title": "荘子鬳斎口義. 巻之1-10 / 林希逸 [撰]",
+  "author": "林 希逸",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1970/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1970/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 風月庄左衛門, 寛文5[1665]",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1971",
+  "title": "荘子鬳斎口義. 巻之1-10 / 林希逸 [撰]",
+  "author": "林 希逸",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1971/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1971/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 風月庄左衛門, 寛文5[1665]",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1972",
+  "title": "音釈文段批評荘子鬳斎口義大成俚諺鈔. 首巻之上,下 / 毛利貞斎 述",
+  "author": "毛利 貞斎",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1972/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1972/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "神洛(京都) : [出版者不明], 元禄15[1702]",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1973",
+  "title": "補義荘子因 : 独見附標. 巻之6 / 林雲銘 評述 ; 秦鼎 [補義]",
+  "author": "林 雲銘",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1973/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1973/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : 滄浪居, 寛政9[1797]",
+  "matched_terms": [
+   "荘子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "ha05_00408",
+  "title": "川老金剛経 / 川老子 [撰]",
+  "author": "道川",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/ha05/ha05_00408/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/ha05_00408/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 宗教－仏教経典、宗典、雑典",
+  "imprint": "広州(京畿) : 修道山奉恩寺, 同治8[1869]",
+  "matched_terms": [
+   "老子"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "ha06_00190",
+  "title": "文帝全書. 巻1-50,附録 / 劉体恕 彙輯 ; 関槐 校定 ; 王世陛 増訂",
+  "author": "劉 体恕",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/ha06/ha06_00190/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/ha06_00190/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 宗教－道教",
+  "imprint": "[出版地不明] : [出版者不明], 乾隆40[1775]序",
+  "matched_terms": [
+   "道教",
+   "文昌",
+   "cat:ha06"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "ha06_00696",
+  "title": "穏斎記 / 呂洞賓 [撰]",
+  "author": "呂 巌, 755-",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/ha06/ha06_00696/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/ha06_00696/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "daoism",
+  "keywords": "古典籍 / 宗教－道教",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "道教",
+   "cat:ha06"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0001",
+  "title": "銷釈金剛科儀 : 一巻三二分坿摩訶般若波羅蜜多心経一巻・仏説五十三仏三十五仏名経一巻・囘向浄土文一巻 / [宋・宗鏡述]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 呉尚中等",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0002",
+  "title": "嘆世無為巻 : 不分巻 / [明・羅清撰] ; 明・羅文挙校証",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0002/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0002/manifest.json",
+  "canvases": 2,
+  "usable": true,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 南京三山街第一家経房胡仰山, 万暦43 [1615]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 200
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0003",
+  "title": "破邪顕証鑰匙 : 二巻二四品存第一巻一一品 / [明・羅清撰] ; 明・羅文挙校証",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0003/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0003/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 南京三山街第一家経房胡仰山, 万暦43 [1615]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0004",
+  "title": "巍巍不動太山深根結果宝巻 : 一巻二四品 / [明・羅清撰] ; 明・羅文挙校証",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0004/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0004/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 南京三山街第一家経房胡仰山, 万暦43 [1615]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0006",
+  "title": "銷釈大乗宝巻 : 一巻二四品 / 明・帰円撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0006/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0006/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 大乗子等, 万暦32 [1604]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0007",
+  "title": "銷釈顕性宝巻 : 一巻二四品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0007/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0007/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明], 万暦20年蒋建元序 [1592]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0008",
+  "title": "混元弘陽仏如来無極飄高祖臨凡宝巻 : 二巻二四品附錄一巻 / [明・高陽撰]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0008/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0008/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0009",
+  "title": "銷釈混元弘陽大法祖明経 : 三巻 / 明・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0009/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0009/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0010_0001",
+  "title": "銷釈混元弘陽大法祖明経 : 三巻 / 明・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0010_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0010_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0010_0002",
+  "title": "弘陽妙道[玉]華真経随堂宝巻 : 一巻 / 明・韓[太湖]撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0010_0002/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0010_0002/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "真経",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0011",
+  "title": "[皇極金丹九蓮正信皈真還郷宝巻] : 二巻欠巻上 / [清・黄徳輝撰]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0011/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0011/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明, 乾隆中]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0013",
+  "title": "円通白衣宝懺 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0013/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0013/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 釈明心, 康煕21 [1682]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0014",
+  "title": "護国佑民伏魔宝巻 : 二四品 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0014/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0014/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明 : 出版者不明], 清初",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0015",
+  "title": "護国佑民伏魔宝巻 : 二巻二四品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0015/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0015/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明 : 出版者不明], 清代",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0016",
+  "title": "霊応泰山娘娘宝巻 : 二巻二四品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0016/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0016/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0017",
+  "title": "霊応泰山娘娘宝巻 : 存上巻一二品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0017/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0017/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0018",
+  "title": "護国威霊西王母宝巻 : 二巻二四品 / 明・劉香山撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0018/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0018/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明] : 汪妙香, 康煕16 [1677]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0019",
+  "title": "福国鎮宅霊応竃王宝巻 : 二巻二四品 / [清・郭祥瑞注]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0019/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0019/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "直隷河間府滄州 : 海舟等",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0020",
+  "title": "治国興家増福財神宝巻 : 二巻二四品 / 清・郭祥瑞註 ; 清・伝昌業錄",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0020/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0020/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明] : [出版者不明], 康煕22 [1683]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0021",
+  "title": "銷釈準提復生宝巻 : 存上巻一四品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0021/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0021/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0022",
+  "title": "銷釈白衣観音菩薩送嬰児下生宝巻 : 二巻二四品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0022/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0022/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0023",
+  "title": "銷釈孟姜忠烈貞賢節良宝巻 : 二巻三二品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0023/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0023/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "写",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0024_0001",
+  "title": "巍巍不動太山深根結果経曾解 : 二巻 / 明・羅大士撰 明・王海潮会解 明・[王]海浜較正 明・邢振羽・邢章渾参閲",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0024_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0024_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 強守礼等, 崇禎2 [1629]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0024_0002",
+  "title": "正信除疑無修証自在経会解 : 二巻 / 明・羅清撰 ; 明・王海潮会解 ; 明・[王]海浜較正 ; 明・邢振羽・邢章渾参閲",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0024_0002/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0024_0002/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明] : 孔氏, 崇禎2年 [1929]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0026",
+  "title": "泰山東岳十王宝巻 : 一巻二四品 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0026/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0026/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[北京] : 宏文斎刻字舗, 民国10 [1921]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0029",
+  "title": "皇極金丹九蓮正信皈真還郷宝巻 : 二巻 / 清・黄徳輝撰 ; 清・中一老人鑒定 ; 清・易南子校正",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0029/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0029/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明], 宣統元年 [1909]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0030",
+  "title": "護国佑民伏魔宝巻 : 二巻二四品 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0030/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0030/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[出版地不明 : 出版者不明], 民国23年朱培蘭序 [1934]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0031",
+  "title": "護国佑民伏魔宝巻 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0031/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0031/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "吉林 : 北山関帝廟学善堂, 光緒22 [1896]",
+  "matched_terms": [
+   "関帝",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0032",
+  "title": "護国佑民伏魔宝巻 : 四巻二四品 / 清・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0032/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0032/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂",
+  "imprint": "上海 : 宏大善書局, 民国22 [1933]",
+  "matched_terms": [
+   "関帝",
+   "善書",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0033",
+  "title": "悉達太子宝巻全集 : 一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0033/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0033/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "[杭州] : 慧空経房",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0034_0001",
+  "title": "絵図玉帯記宝巻 : 二巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0034_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0034_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "上海 : 惜陰書局",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0034_0003",
+  "title": "全図韓湘宝巻 : 二巻一八囘図一巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0034_0003/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0034_0003/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "上海 : 宏大善書局, 民国17 [1928]",
+  "matched_terms": [
+   "善書",
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0034_0006",
+  "title": "絵図懊悩祖師歓喜宝 : 二巻存第一巻 / □・闕名撰 謝少卿校正",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0034_0006/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0034_0006/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "上海 : 文益書局, 民国6 [1917]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0034_0008",
+  "title": "絵図懊悩祖師歓喜宝巻 : 二巻存上巻 / □・闕名撰",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0034_0008/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0034_0008/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "上海 : 文元書局",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0399_0034_0009",
+  "title": "絵図顧鼎臣双玉玦宝巻 : 二巻 / □・闕名撰 ; 謝少卿校",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0399_0034_0009/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0399_0034_0009/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "popular-religion",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 寶卷",
+  "imprint": "上海 : 文益書局, 民国5 [1916]",
+  "matched_terms": [
+   "宝巻",
+   "寶卷"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_a0079",
+  "title": "生々堂養生論抜萃",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_a0079/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_a0079/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 大槻玄沢",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "養生"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_a0205",
+  "title": "静春堂雑抄 / 阿部喜任 [編]",
+  "author": "阿部 檪斎, 1805-1870",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_a0205/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_a0205/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 大槻玄沢",
+  "imprint": "写(自筆), [書写年不明]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_a0213",
+  "title": "養生七不可 / 小詩僊堂主翁 著",
+  "author": "杉田 玄白, 1733-1817",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_a0213/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_a0213/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 大槻玄沢",
+  "imprint": "[出版地不明] : [出版者不明], 享和元[1801]跋",
+  "matched_terms": [
+   "養生"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_a0355",
+  "title": "[経絡図]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_a0355/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_a0355/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 大槻玄沢",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_b0103",
+  "title": "瘍医方範. 巻1 / 郁泄弗牙哥勃不冷吉 著 ; 杉田恭卿 訳",
+  "author": "Plenck, Joseph Jacob, 1738-1807",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_b0103/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_b0103/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 岡村千曳",
+  "imprint": "写, 文政3[1820]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_c0038",
+  "title": "遠西医方名物考. 巻1 / 榛斎先生 訳述 ; 宇田川榕菴 校補",
+  "author": "宇田川 玄真, 1769-1834",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_c0038/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_c0038/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 勝俣銓吉郎",
+  "imprint": "[江戸] : 青藜閣, 文政5[1822]序",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_c1041",
+  "title": "泰西医方二十四脈表",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_c1041/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_c1041/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 勝俣銓吉郎",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_f0022",
+  "title": "[蘭学資料二十二種]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_f0022/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_f0022/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学)",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko30_a0233",
+  "title": "絵本草源氏 : 近江八景 香之図",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko30/bunko30_a0233/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko30_a0233/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 九曜文庫 / 源氏物語",
+  "imprint": "心斉橋筋順慶町(大坂) : 柏原屋清右衛門, [江戸中期]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko30_a0337",
+  "title": "絵本草源氏",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko30/bunko30_a0337/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko30_a0337/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 九曜文庫 / 源氏物語",
+  "imprint": "心斎橋筋順慶町(大坂) : 柏原屋清右衛門, 享保3[1718]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e0037",
+  "title": "食物和歌本草増補. 巻之2-3,6-7 / [元隣] [撰]",
+  "author": "山岡 元隣, 1631-1672",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e0037/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e0037/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "四条坊門通東洞院東へ入(京都) : 水田甚左衛門尉, 寛文7[1667]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1424",
+  "title": "運気抄. 巻之下2 / 回生菴可敬 [撰]",
+  "author": "回生庵玄璞",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1424/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1424/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], 寛永12[1635]跋",
+  "matched_terms": [
+   "素問"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1430",
+  "title": "医方大成論 / 孫[允賢] [撰]",
+  "author": "孫 允賢",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1430/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1430/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], 正保4[1647]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1432",
+  "title": "編註医学入門. 内,外集 / 李梃 編",
+  "author": "李 梃",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1432/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1432/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], 慶安4[1651]",
+  "matched_terms": [
+   "医学入門"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1435",
+  "title": "医方大成論 / 孫[允賢] [撰]",
+  "author": "孫 允賢",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1435/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1435/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 荒木利兵衛, 明暦4[1658]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1445",
+  "title": "薛按陳氏痘疹方論. 巻上,下 / 薛已 註",
+  "author": "薛 己",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1445/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1445/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 野田庄右衛門, 寛文7[1667]",
+  "matched_terms": [
+   "痘疹"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1460",
+  "title": "医方大成論 / 孫[允賢] [撰]",
+  "author": "孫 允賢",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1460/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1460/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 井筒屋六兵衛, 天和2[1682]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1461",
+  "title": "医方大成論 / 孫[允賢] [撰]",
+  "author": "孫 允賢",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1461/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1461/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[江戸] : 須原茂兵衛, 貞享5[1688]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1466",
+  "title": "医方大成論 / [孫允賢] [撰]",
+  "author": "孫 允賢",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1466/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1466/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[江戸] : 須原茂兵衛, 貞享5[1688]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1467",
+  "title": "医方大成論 / 孫[允賢] [撰]",
+  "author": "孫 允賢",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1467/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1467/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : 江戸屋庄右衛門, 元禄2[1689]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1472",
+  "title": "難経本義. 巻之上,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1472/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1472/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 吉野屋徳兵衛, 天和4[1684]",
+  "matched_terms": [
+   "難経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1473",
+  "title": "難経本義. 巻之上,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1473/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1473/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "寺町通三条上ル(京) : 吉野屋徳兵衛, 天和4[1684]",
+  "matched_terms": [
+   "難経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1476",
+  "title": "医方大成論諺解. 巻之5 / [岡本一抱] [撰]",
+  "author": "岡本 一抱, -1716",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1476/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1476/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "二条通大恩寺町(京都) : 武村新兵衛, 貞享2[1685]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1477",
+  "title": "医方大成論諺解. 巻之5 / [岡本一抱] [撰]",
+  "author": "岡本 一抱, -1716",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1477/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1477/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "二条通大恩寺町(京都) : 武村新兵衛, 貞享2[1685]",
+  "matched_terms": [
+   "医方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1479",
+  "title": "素問原病式. 巻之下 / [劉完素] [撰]",
+  "author": "劉 完素",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1479/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1479/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "皇都(京都) : 銭屋庄兵衛, 元禄3[1690]",
+  "matched_terms": [
+   "素問"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1491",
+  "title": "難経本義諺解. 巻之11-12 / 岡本一抱子 編輯",
+  "author": "岡本 一抱, -1716",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1491/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1491/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "真斉橋筋呉服町角(大坂) : 池田屋三郎右衛門, 寳永3[1706]",
+  "matched_terms": [
+   "難経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1497",
+  "title": "痘疹活幼心法. 巻上,下 / 聶尚恒 著",
+  "author": "聶 尚恒",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1497/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1497/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "痘疹"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1503",
+  "title": "婦人良方. 巻之24 / 陳自明 編 ; 薛巳 補遺",
+  "author": "陳 自明",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1503/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1503/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], 承応3[1654]",
+  "matched_terms": [
+   "婦人良方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1504",
+  "title": "太医院校註婦人良方大全. 巻之1-4 / 陳自明 編 ; 薛巳 校註",
+  "author": "陳 自明",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1504/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1504/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "摂陽(大坂) : 保寿軒, 元禄6[1693]",
+  "matched_terms": [
+   "婦人良方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1505",
+  "title": "太医院校註婦人良方大全. 巻之18-24 / 陳自明 編 ; 薛巳 校註",
+  "author": "陳 自明",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1505/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1505/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "摂陽(大坂) : 伊丹屋太郎右衛門, 元禄6[1693]",
+  "matched_terms": [
+   "婦人良方"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1516",
+  "title": "十四経発揮. 巻上,中,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1516/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1516/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], 慶安2[1649]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1517",
+  "title": "十四経発揮. 巻上,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1517/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1517/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 丸屋庄三良, 万治3[1660]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1518",
+  "title": "十四経発揮鈔. 巻之1,4-5,9-10 / 谷村玄仙 纂輯",
+  "author": "谷村 玄仙",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1518/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1518/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "柳馬場通二条下町(京都) : 吉野屋権兵衛, 万治4[1661]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1519",
+  "title": "十四経発揮. 巻上,中,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1519/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1519/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 山本長兵衛尉, 寛文5[1665]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1520",
+  "title": "十四経発揮. 巻上,中,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1520/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1520/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "武州 : 本屋宗八, 享保12[1727]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1521",
+  "title": "十四経発揮. 巻上,中,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1521/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1521/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "皇都(京都) : 長村半兵衛, 享保16[1731]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1522",
+  "title": "十四経発揮. 巻上,中,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1522/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1522/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "皇都(京都) : 長村半兵衛, 享保16[1731]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1523",
+  "title": "十四経発揮. 巻上,中 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1523/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1523/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1524",
+  "title": "十四経発揮. 巻上 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1524/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1524/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1525",
+  "title": "十四経発揮. 巻上,中,下 / 滑寿 著",
+  "author": "滑 寿",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1525/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1525/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "経絡"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1527",
+  "title": "鍼灸抜萃. 上,中之上・中・下,下",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1527/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1527/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "柳馬場通松原上町(京都) : 紀伊国屋半兵衛, 延寳4[1676]",
+  "matched_terms": [
+   "鍼灸"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1528",
+  "title": "鍼灸抜萃. 上,中之上",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1528/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1528/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "鍼灸"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1531",
+  "title": "鍼灸抜萃大成. 巻上,中,下 / 岡本一抱子 [撰]",
+  "author": "岡本 一抱, -1716",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1531/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1531/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "心斎橋筋呉服町(大坂) : 岡田三郎右衛門, 元禄12[1699]",
+  "matched_terms": [
+   "鍼灸"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1532",
+  "title": "鍼灸抜萃大成. 巻中之中,下之末 / [岡本一抱] [撰]",
+  "author": "岡本 一抱, -1716",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1532/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1532/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "心斎橋筋呉服町(大坂) : 岡田三郎右衛門, 元禄12[1699]",
+  "matched_terms": [
+   "鍼灸"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1536",
+  "title": "鍼灸抜萃. 上,中之上・中・下",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1536/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1536/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "鍼灸"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1537",
+  "title": "鍼灸抜萃. 下",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1537/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1537/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "通油町(江戸) : 本問屋, 延寳8[1680]",
+  "matched_terms": [
+   "鍼灸"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1539",
+  "title": "本草綱目. 第14巻 / [李時珍] [撰]",
+  "author": "李 時珍, 1518-1593",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1539/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1539/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1540",
+  "title": "本草綱目. 第39-42巻 / 李時珍 [撰]",
+  "author": "李 時珍, 1518-1593",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1540/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1540/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1541",
+  "title": "[本草綱目]. 巻之19-20 / [李時珍] [撰]",
+  "author": "李 時珍, 1518-1593",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1541/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1541/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [出版年不明]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1550",
+  "title": "本草薬名備考. 巻之1-9",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1550/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1550/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "medicine",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "心斉橋筋順慶町(大坂) : 柏原屋清右衛門, 延寳6[1678]",
+  "matched_terms": [
+   "本草"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko06_00249",
+  "title": "元三大師御籤絵鈔",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko06/bunko06_00249/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko06_00249/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 逍遙文庫 / 坪内逍遙",
+  "imprint": "中橋広小路町(江戸) : 北林堂, [出版年不明]",
+  "matched_terms": [
+   "籤"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko08_c0996",
+  "title": "万国全図 / 阿部喜任 誌 ; 栗原信晃 再校",
+  "author": "阿部 檪斎, 1805-1870",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko08/bunko08_c0996/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko08_c0996/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 洋学文庫 / 洋学(蘭学) / 勝俣銓吉郎",
+  "imprint": "[出版地不明] : [出版者不明], 天保9[1838]",
+  "matched_terms": [
+   "六壬"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko11_d0018",
+  "title": "易経集註. 序目,巻之1-24 / 程頤 伝 ; 朱[熹] 本義 ; 昌易 [標註]",
+  "author": "程 頤, 1033-1107",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko11/bunko11_d0018/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko11_d0018/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 柳田文庫 / 日本文学－明治以後 / 柳田泉",
+  "imprint": "二条通柳馬場西江入町(京都) : 今村八兵衛, 享保9[1724]",
+  "matched_terms": [
+   "周易",
+   "易経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko17_w0006",
+  "title": "五経 / 佐藤一斎 校定",
+  "author": "佐藤 一斎, 1772-1859",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko17/bunko17_w0006/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko17_w0006/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 土岐文庫 / 詩歌・詩歌研究 / 日本近代文学 / 土岐善麿",
+  "imprint": "上町南革屋町(大坂) : 山内五郎兵衛, 天保12[1841]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko19_f0400_z0374",
+  "title": "十二号籤",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko19/bunko19_f0400_z0374/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko19_f0400_z0374/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 風陵文庫 / 中国民間信仰 / 澤田瑞穂 / 集部 第6 曲藝唱本類 時調小曲",
+  "imprint": "[出版地不明 : 出版者不明]",
+  "matched_terms": [
+   "籤"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko30_e0277",
+  "title": "夢占吉凶秘伝書",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko30/bunko30_e0277/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko30_e0277/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 九曜文庫",
+  "imprint": "綾小路ふや丁西へ入(京) : 墨屋吉兵衛, 嘉永5[1852]",
+  "matched_terms": [
+   "夢占"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1379",
+  "title": "卜筮指南大全. 巻之1-2 / 古市孝慈 編",
+  "author": "古市 南軒, 1649-1722",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1379/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1379/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "武江(江戸) : 千鍾堂, 元禄13[1700]序",
+  "matched_terms": [
+   "周易",
+   "卜筮"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1382",
+  "title": "百籤鈔 / 柴田隋万 [撰] ; 西村重長 [画]",
+  "author": "柴田 随万",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1382/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1382/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "下谷池之端(江府) : 和泉屋仁兵衛, 宝暦2[1752]",
+  "matched_terms": [
+   "籤"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1387",
+  "title": "百籤",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1387/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1387/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "心斎橋南(大坂) : 定栄堂, [江戸中期]",
+  "matched_terms": [
+   "籤"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1389",
+  "title": "易学小筌 / 新井白蛾 著",
+  "author": "新井 白蛾, 1725-1792",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1389/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1389/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "高麗橋(大阪) : 星文堂, 文政3[1820]",
+  "matched_terms": [
+   "易學"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1390",
+  "title": "増補卜筮盲筇. 巻上 / 平沢随貞 口授 ; 仲祗貞 訳訂",
+  "author": "平沢 随貞",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1390/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1390/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "玉屋町(名古屋) : 永楽屋東四郎, 文政8[1825]",
+  "matched_terms": [
+   "卜筮"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1395",
+  "title": "永代大雑書万暦大成",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1395/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1395/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "浪華(大坂) : 敦賀屋九兵衛, 安政3[1856]",
+  "matched_terms": [
+   "籤"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1805",
+  "title": "周易経伝. [序目],第1-11巻 / 程頤 伝 ; 朱[熹] 本義",
+  "author": "程 頤, 1033-1107",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1805/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1805/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [寛永年間]",
+  "matched_terms": [
+   "周易",
+   "易経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1806",
+  "title": "周易経伝. 目録,第1-24巻 / 程頤 [伝] ; 朱[熹] [本義] ; 文之 和点",
+  "author": "程 頤, 1033-1107",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1806/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1806/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "本能寺前(京都) : 八尾助左衛門, 慶安元[1648]",
+  "matched_terms": [
+   "周易",
+   "易経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1807",
+  "title": "易経集註. 序目,巻之1-2 / 程頤 [伝] ; [朱熹] [本義]",
+  "author": "程 頤, 1033-1107",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1807/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1807/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "烏丸通下立売下町(京都) : 野田庄右衛門, 寛文3[1663]",
+  "matched_terms": [
+   "周易",
+   "易経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1808",
+  "title": "易学啓蒙. 第3-4 / [朱熹] [撰] ; 山崎嘉 点",
+  "author": "朱 熹, 1130-1200",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1808/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1808/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[京都] : 村上平楽寺, 延寳5[1677]",
+  "matched_terms": [
+   "易學"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1809",
+  "title": "易学啓蒙. 本図書,原卦画 / 雲台真逸 [撰] ; 山崎嘉 点",
+  "author": "朱 熹, 1130-1200",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1809/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1809/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : [出版者不明], [江戸初期]",
+  "matched_terms": [
+   "易學"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1810",
+  "title": "易学啓蒙. 1上,2上・下,7",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1810/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1810/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "二条鶴屋町(京都) : 田原仁左衛門, 寛文7[1667]序",
+  "matched_terms": [
+   "易學"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "bunko31_e1817",
+  "title": "易学啓蒙図説 / 馬場信武 [撰]",
+  "author": "馬場 信武, -1715",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/bunko31/bunko31_e1817/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/bunko31_e1817/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 雲英文庫",
+  "imprint": "[出版地不明] : 沼波理元, 元禄13[1700]",
+  "matched_terms": [
+   "易學"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i01_01855",
+  "title": "牙籤考 / 近藤守重 著",
+  "author": "近藤 守重, 1771-1829",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i01/i01_01855/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i01_01855/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 総類－総記・学問一般",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "籤"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i03_01794",
+  "title": "玉海. 巻第1-204 / 王応麟 [編]",
+  "author": "王 応麟, 1223-1296",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i03/i03_01794/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i03_01794/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 総類－事彙、百科事典、一般年鑑",
+  "imprint": "[出版地不明] : [出版者不明], 嘉慶11[1806]序",
+  "matched_terms": [
+   "周易",
+   "天文"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_00458",
+  "title": "鄦斎叢書 / 徐乃昌 編",
+  "author": "徐 乃昌, 1862-1936",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_00458/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_00458/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "南陵 : 徐乃昌, [出版年不明]",
+  "matched_terms": [
+   "周易",
+   "易経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_00563_0008",
+  "title": "泰軒易伝. 巻第1-6 / 李中正 撰",
+  "author": "李 中正",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_00563_0008/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_00563_0008/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 佚存叢書 / 総類－叢書、全集、論文集",
+  "imprint": "[出版地不明] : [出版者不明], 光緒8[1882]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_00563_0025",
+  "title": "周易新講義. 巻第1-10 / 龔原 撰",
+  "author": "龔 原",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_00563_0025/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_00563_0025/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 佚存叢書 / 総類－叢書、全集、論文集",
+  "imprint": "[出版地不明] : [出版者不明], 光緒8[1882]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_00752",
+  "title": "王船山経史論十二種 / 王船山 [撰]",
+  "author": "王 夫之, 1619-1692",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_00752/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_00752/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 船山遺書 / 総類－叢書、全集、論文集",
+  "imprint": "[出版地不明] : 通文書局, 光緒29[1903]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_00760_0001",
+  "title": "周易王弼注唐写本残巻校字記 / 羅振玉 [撰]",
+  "author": "羅 振玉, 1866-1940",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_00760_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_00760_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 国学叢刊 / 総類－叢書、全集、論文集",
+  "imprint": "[出版地不明] : 国学叢刊出版部, 宣統3[1911]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_01532_0001",
+  "title": "周易王弼注唐写本残巻校字記 / 羅振玉 [撰]",
+  "author": "羅 振玉, 1866-1940",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_01532_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_01532_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 国学叢刊 / 総類－叢書、全集、論文集",
+  "imprint": "[出版地不明] : 国学叢刊出版部, 宣統3[1911]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_01627_0009",
+  "title": "芸海珠塵. 石集 / 呉省蘭 輯",
+  "author": "呉, 省蘭, 1738-1810",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_01627_0009/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_01627_0009/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "[南匯] : 聴彝堂, [出版年不明]",
+  "matched_terms": [
+   "夢占"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_03163_0001",
+  "title": "[八代集]",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_03163_0001/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_03163_0001/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "写, 寛永6[1629]",
+  "matched_terms": [
+   "堪輿"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0004",
+  "title": "説郛. [正] 巻第2 / 陶宗儀 纂",
+  "author": "陶 宗儀, 1316-1369",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0004/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0004/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0005",
+  "title": "説郛. [正] 巻第3 / 陶宗儀 纂",
+  "author": "陶 宗儀, 1316-1369",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0005/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0005/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00006_0117",
+  "title": "説郛. 続 巻第1 / [陶珽] [纂]",
+  "author": "陶 珽",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00006_0117/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00006_0117/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "[出版地不明] : 宛委山堂, [出版年不明]",
+  "matched_terms": [
+   "荘子",
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i12_00016",
+  "title": "[五経大全] / 胡広 [ほか]勅纂脩",
+  "author": "胡 広, 1370-1418",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i12/i12_00016/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i12_00016/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 下村文庫 / 中国史・中国思想 / 明版 / 漢籍",
+  "imprint": "建邑 : 余氏, [出版年不明]",
+  "matched_terms": [
+   "易経"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i13_00836",
+  "title": "五経 / 佐藤一斎 校定",
+  "author": "佐藤 一斎, 1772-1859",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i13/i13_00836/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i13_00836/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 花房文庫 / 統計学 / 花房直三郎",
+  "imprint": "日本橋通(江都) : 千鍾房, 文化10[1813]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i13_00852",
+  "title": "五経白文",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i13/i13_00852/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i13_00852/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 花房文庫 / 統計学 / 花房直三郎",
+  "imprint": "心斎橋通南久宝寺丁北ヘ入(大坂) : 伊丹屋善兵衛, 宝暦9[1759]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i13_00888",
+  "title": "筆記周易本義. 巻之1-10,12-16 / [中村惕斎] [著]",
+  "author": "中村 惕斎, 1629-1702",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i13/i13_00888/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i13_00888/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 花房文庫 / 統計学 / 花房直三郎",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "周易"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i14_a1069",
+  "title": "富籤会社ヲ起シ鉄道会社ヲ創設スルノ議 : 大隈参議宛",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i14/i14_a1069/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i14_a1069/manifest.json",
+  "canvases": 0,
+  "usable": false,
+  "category": "divination",
+  "keywords": "古典籍 / 大隈文書 / 明治時代政治史 / 大隈重信 / 大隈関係文書",
+  "imprint": "写, 明治14[1881]",
+  "matched_terms": [
+   "籤"
+  ],
+  "manifest_http_status": 404,
+  "note": "legacy-viewer-only (manifest not on IIIF host)"
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "ro12_01134",
+  "title": "[礼記子本疏義]. 第59 / [鄭灼] [撰]",
+  "author": "鄭 灼",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/ro12/ro12_01134/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/ro12_01134/manifest.json",
+  "canvases": 5,
+  "usable": true,
+  "category": "classics-studies",
+  "keywords": "古典籍 / 哲学－経学",
+  "imprint": "写, [唐代]",
+  "matched_terms": [
+   "bonus:iiif-host-inventory"
+  ],
+  "manifest_http_status": 200
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_03164_0131",
+  "title": "大般若波羅蜜多経巻第十断簡",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_03164_0131/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_03164_0131/manifest.json",
+  "canvases": 3,
+  "usable": true,
+  "category": "buddhist-classics",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "bonus:iiif-host-inventory"
+  ],
+  "manifest_http_status": 200
+ },
+ {
+  "source": "waseda",
+  "shelfmark": "i04_03164_0132",
+  "title": "大般若波羅蜜多経巻第十断簡",
+  "author": "",
+  "record_url": "https://www.wul.waseda.ac.jp/kotenseki/html/i04/i04_03164_0132/index.html",
+  "manifest_url": "https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/i04_03164_0132/manifest.json",
+  "canvases": 1,
+  "usable": true,
+  "category": "buddhist-classics",
+  "keywords": "古典籍 / 総類－叢書、全集、論文集",
+  "imprint": "写, [書写年不明]",
+  "matched_terms": [
+   "bonus:iiif-host-inventory"
+  ],
+  "manifest_http_status": 200
+ }
+]

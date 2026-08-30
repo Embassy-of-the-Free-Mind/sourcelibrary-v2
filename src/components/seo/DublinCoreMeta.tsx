@@ -3,6 +3,7 @@
  * Renders <meta name="DC.*"> and <link rel="schema.DCTERMS"> in the page head.
  * Makes book metadata discoverable by library crawlers and aggregators.
  */
+import { bylineClaimsAuthorship, institutionalByline } from '@/lib/corporate-bylines';
 
 interface DublinCoreMetaProps {
   title: string;
@@ -47,7 +48,21 @@ export default function DublinCoreMeta({
       {displayTitle && displayTitle !== title && (
         <meta name="DC.title.alternative" content={title} />
       )}
-      {author && <meta name="DC.creator" content={author} />}
+      {/* DC.creator is an AUTHORSHIP claim, and `author` here is the raw
+          `books.author` string — which for ~470 books names a holding
+          monastery or an issuing society rather than a writer. Dublin Core
+          has a better slot for those: DCTERMS.provenance for a holder,
+          DC.publisher for an issuer, both emitted below. Deciding it here
+          rather than at the call sites means every caller gets it right,
+          including the second one in book/[id]/page.tsx. */}
+      {author && bylineClaimsAuthorship(author) && (
+        <meta name="DC.creator" content={author} />
+      )}
+      {author && !bylineClaimsAuthorship(author) && (
+        institutionalByline(author)?.role === 'holder'
+          ? <meta name="DCTERMS.provenance" content={author} />
+          : <meta name="DC.publisher" content={author} />
+      )}
       {language && <meta name="DC.language" content={language} />}
       {year && <meta name="DC.date" content={String(year)} />}
       {description && <meta name="DC.description" content={description} />}

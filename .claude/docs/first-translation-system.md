@@ -9,13 +9,17 @@
 > recorded, dated, reproducible **search** (`search_efforts`), and — crucially —
 > it *measures* what that search is worth. The headline:
 >
-> - **Catalogue recall is 27%.** Three of every four known prior English
->   translations are invisible to the reference set. **`none_found` is weak
->   evidence and no count built on it should be quoted.** Positive findings are
->   unaffected.
+> - **Catalogue recall is 32.1%** (2026-08-07, after adding ESTC; 22% → 27% → 32.1%).
+>   **Two of every three** known prior English translations are still invisible to
+>   the reference set. **`none_found` is weak evidence and no count built on it
+>   should be quoted.** Positive findings are unaffected.
 > - A sample of the queue puts `none_found`'s **positive predictive value at ~50%**.
-> - The cause is corpus, not matching: the extract is **1.04% pre-1800** against an
->   early-modern corpus. **Matcher/threshold work is finished** — see #3522 (ESTC).
+> - The cause is corpus, not matching, and ESTC (#3522, merged) bought +5.1 points —
+>   but it covers imprints **1473–1800** while 80.8% of this corpus's known
+>   Latin/Greek priors are post-1950 imprints, so the remaining loss sits in modern
+>   scholarly publishing that no early-modern catalogue can reach. **Do not read the
+>   gain as the problem receding.** (The old "the extract is 1.04% pre-1800" line was
+>   retracted as a false diagnosis — see the reference-set doc §2b/§2c.)
 >
 > Any statement in this doc of the form "N books are first translations" or "N have
 > no prior" was written without that measurement and should be re-derived. The
@@ -55,7 +59,7 @@ The #2564 rebuild's graded-verdict **data model is merged and an evidence-first 
   - **#2871** — `derive-ft-verdict-from-attempts.ts` turns the accumulated ledger **into** a graded verdict (verdict = f(evidence)), hardened against two real legacy-backfill failure modes (studies miscounted as priors → false demotes; `not_applicable` collapsed into absence → false promotes).
 
 **Still NOT wired (target, not reality — do not trust as done):**
-- **The "single-writer reconcile" is MANUAL.** `reconcile-first-translation-flag.ts` is on no cron. The live writers of `is_first_translation` are still Phase 1.6 enrichment + the nightly apply-crons (`apply-audit-verdicts`, `apply-discovery-results`). The writer sprawl (§15) #2564 set out to kill is still live.
+- **The "single-writer reconcile" now RUNS NIGHTLY — unattended.** (This bullet previously claimed "on no cron"; that was stale.) The 05:30 Hetzner cron (`scripts/workers/crontab.production` line ~97) runs `derive-ft-verdict-from-attempts.ts --apply` then `reconcile-first-translation-flag.ts --apply --only-demotions --verdict=not_first,not_applicable --resolver=tier2_agent,human` — it derives verdicts from the attempts ledger and applies verified **demotions** with no human in the loop. Standing warning: writing evidence rows to `first_translation_attempts` is **actuation, not recording** — the next 05:30 run will act on them (exactly this consumed same-day evidence rows and removed 3 public badges in incident #3776). The other writers of `is_first_translation` are still Phase 1.6 enrichment + the nightly apply-crons (`apply-audit-verdicts`, `apply-discovery-results`). The writer sprawl (§15) #2564 set out to kill is still live.
 - **The tier cascade (`resolve.ts`) is unwired** — no production caller. `derive-ft-verdict-from-attempts.ts` is the closest live thing, run manually, **verdict-only** (writes `book.first_translation`, never the boolean flag; gated on sign-off).
 - **`isPublicFirst` is defined but unused** — the public count is still raw `is_first_translation`.
 - **No measured accuracy yet.** The eval is still the spine gap (§14); a non-circular harness is tracked in **#2876**.
