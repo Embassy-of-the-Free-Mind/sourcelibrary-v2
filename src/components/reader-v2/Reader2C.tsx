@@ -65,6 +65,8 @@ const BAR_SHOW_DELAY_MS = 280;
 const STRIP_KEY = 'sl-reader-v2c-strip';
 /** Mobile toolbar height — one row of four tools. */
 const MOBILE_TOOLBAR_H = 52;
+/** Breathing room kept above a mobile sheet, so it never meets the top edge. */
+const SHEET_TOP_GAP = 24;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -2307,6 +2309,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
+  /**
+   * Whether the client has taken over from the server render. The server has
+   * no viewport to measure, so isDesktop guesses true there — which meant the
+   * server sent every phone the DESKTOP filmstrip: a button and a thumbnail
+   * URL for every page of the book, a quarter of the HTML on a 101-page book
+   * and far worse on the 4,198-page one, and React then threw the whole
+   * subtree away as a hydration mismatch and rendered the mobile strip in its
+   * place. Neither strip is rendered until the viewport is known.
+   */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   // Librarian conversation survives panel toggles and page turns
   const [librarianMessages, setLibrarianMessages] = useState<LibrarianMessage[]>([]);
@@ -2587,9 +2600,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     const back = r.currentIndex < lastIndex.current;
     lastIndex.current = r.currentIndex;
     for (const pane of Array.from(el.querySelectorAll<HTMLElement>(':scope > section'))) {
-      pane.classList.remove('rv2-turn-next', 'rv2-turn-prev');
-      void pane.offsetWidth; // reflow, or the class swap is coalesced and nothing plays
-      pane.classList.add(back ? 'rv2-turn-prev' : 'rv2-turn-next');
+      // The CONTENTS of the pane, not the pane. Sliding the pane itself moved
+      // its background with it and left a strip of the column showing down the
+      // side of the screen — a white gap running past the edge of the page.
+      // The pane holds still and its text and facsimile arrive inside it.
+      const inner = pane.lastElementChild;
+      if (!(inner instanceof HTMLElement)) continue;
+      inner.classList.remove('rv2-turn-next', 'rv2-turn-prev');
+      void inner.offsetWidth; // reflow, or the class swap is coalesced and nothing plays
+      inner.classList.add(back ? 'rv2-turn-prev' : 'rv2-turn-next');
     }
 
     // The title bar comes back on a turn and the new text settles a beat
@@ -2639,8 +2658,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     if (!leftPanel || isDesktop) { setSheetHeight(null); return; }
     // With the keyboard up the usable viewport is what is LEFT above it, not
     // the window — sizing against the window made the sheet climb the screen.
-    const visible = Math.max(200, window.innerHeight - keyboardInset);
-    const cap = Math.round(visible * (keyboardInset > 0 ? 0.82 : 0.72));
+    // The cap is the room the sheet actually has: everything above whatever it
+    // rises from, less a margin so it never reaches the top edge. A flat 72% of
+    // the window left the More menu 400px for 480px of rows, so the last two
+    // items — Reading settings and Send feedback — sat below the fold on every
+    // phone, and under 8 of 10 on a small one.
+    const bottom = keyboardInset > 0 ? keyboardInset : MOBILE_TOOLBAR_H;
+    const cap = Math.max(200, window.innerHeight - bottom - SHEET_TOP_GAP);
     // Lists and conversations always want the full sheet; the short, fixed
     // panels size to their own content so they don't sit in a half-empty box.
     if (SHEET_FILLS.has(leftPanel)) { setSheetHeight(cap); return; }
@@ -3525,8 +3549,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 re-rendered both copies on every panel toggle and every scroll
                 that flipped the bar. 463 public books exceed 1,000 pages and
                 the largest is 4,198, which is ~8,400 buttons and images for
-                one reader. */}
-            {isDesktop && (
+                one reader. And `mounted`, because on the server isDesktop is
+                a guess: see where it is declared. */}
+            {mounted && isDesktop && (
             <Filmstrip
               pageList={r.pageList}
               currentPageId={r.currentPageId}
@@ -3846,11 +3871,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             ref={sheetRef}
             className="fixed left-0 right-0 z-50 border-t flex flex-col rv2-slide-up transition-[height,bottom] duration-200 ease-out"
             style={{
-              bottom: keyboardInset > 0
-                ? keyboardInset
-                : MOBILE_TOOLBAR_H + (stripVisible ? 96 : 0),
+              // From the toolbar, over the filmstrip rather than above it.
+              // Clearing the strip cost the sheet 96px it does not have to
+              // spare, to keep a row of page thumbnails visible behind a menu
+              // nobody opened to look at thumbnails.
+              bottom: keyboardInset > 0 ? keyboardInset : MOBILE_TOOLBAR_H,
               height: sheetHeight ?? undefined,
-              maxHeight: keyboardInset > 0 ? undefined : '72dvh',
+              maxHeight: keyboardInset > 0
+                ? undefined
+                : `calc(100dvh - ${MOBILE_TOOLBAR_H + SHEET_TOP_GAP}px)`,
               background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
@@ -3902,8 +3931,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           }}
         >
           <div className="h-[96px]">
-            {/* See the desktop strip: one layout at a time, not two. */}
-            {!isDesktop && (
+            {/* See the desktop strip: one layout at a time, and not until the
+                client knows which one. */}
+            {mounted && !isDesktop && (
               <Filmstrip
                 pageList={r.pageList}
                 currentPageId={r.currentPageId}
