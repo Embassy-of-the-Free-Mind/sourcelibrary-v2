@@ -124,6 +124,40 @@ and `tests/unit/robots-content-signals.test.ts` pin behavior that silently regre
 before. An invariant that lives only in prose gets violated by the next contributor who
 didn't read the prose.
 
+## The three questions at the end of an incident, and why all three
+
+`CLAUDE.md` says every incident handoff ends with a check that runs in both directions,
+and that a check beats a sentence. The evidence for each, kept here so the body can state
+the rule without the archaeology:
+
+**Why "could this be a check?" comes first.** A doc is the weakest layer: it only fires if
+the next person reads it at the moment it applies. Measured 2026-08-21, **three of that
+session's four findings were classes where the doc already existed and the thing recurred
+anyway** — `csp-img-hosts.ts` says "one edit, both layers" and the second resolver still
+never screened (#4163); #3293 says "validate a counter against the READ path" and
+`pages_archived` drifted 4.7× regardless (#4190). Prefer a sweeping test, a detector, or a
+constructor that throws. But **do not reflex into a bad test** — see
+`invariants/tests-that-are-not-guards.md`: a guard whose only failure mode is "someone
+deleted this line" is documentation with a green checkmark. Run the negative control.
+And know when prose is right: a lesson about *judgment* ("hand-check the largest cluster
+before quoting a rate") cannot be asserted. The discriminator — if you can name the file or
+symbol that must hold the property, it is a check; if the trigger is a human about to draw
+a conclusion, it is a doc.
+
+**Why the downward pass is not optional.** For three months only the upward question was
+written down. `CLAUDE.md` grew from ~290 lines to 827, with the same incident written up
+twice, 300 lines apart. Nothing ever felt wrong at the time — that is exactly why the pass
+has to be scheduled rather than triggered by suspicion. The word budget (~5,500) is what
+makes it enforceable: over it, something must be demoted before anything is added.
+
+**Why the upward pass needs a tier decision.** "Applies no matter what you're working on"
+belongs in the body; "fires only when you touch a subsystem" belongs in
+`.claude/docs/invariants/` with a routing line. The test: if you can name the file or
+subsystem that triggers the rule, it is not body material.
+
+`/gnite` runs all three at session end and also sweeps the private memory store; `/lesson`
+runs the loop mid-session.
+
 ## Doc lifecycle — the archive convention
 
 Reference docs accrete. A 2026-07 audit found **40 of 115 living docs with zero inbound

@@ -27,6 +27,27 @@ before a local repro with debug logs found the branch that never renders. Before
 that file, find WHICH return renders the surface you mean — and when a deployed change doesn't
 render, reproduce locally FIRST, theorize second.
 
+## A worktree isolates the FILES, not production — the `locus_anchors` clobber
+
+Mongo, Supabase and R2 are shared by every session, so a new collection is shared mutable state
+the moment you name it, and two sessions can each believe they own it.
+
+On 2026-08-08 two sessions implemented #3661 in parallel. Both wrote `locus_anchors`, with
+**incompatible schemas** (`ref_page` vs `page`). The second extractor replaced 6,324 rows with
+4,279 **four minutes after the first PR merged**, and `/api/locus` then answered *every* reference
+with `witness_count: 0` and an honest "no witness holds an anchor at this reference" — a message
+indistinguishable from a genuine gap in the corpus. The feature was dead and looked merely empty.
+
+Three consequences, and the third is the one people skip:
+
+- **Claim the issue before starting** — a "taking this" comment. This was the **fifth** time
+  parallel work on one issue cost real effort.
+- **A row count is not an integrity check.** The foreign rows carried `book_id`, so every per-book
+  count passed while the feature was dead. Assert the SHAPE, not the cardinality.
+- **A write-time guard cannot help here.** The clobbering writer is another session's script and
+  does not run your guards. The check has to live on the READ side, or in an audit that both sides
+  run. This is why "add validation to the writer" is the wrong instinct for shared-state races.
+
 ## A moved `main` ref strands the main checkout — phantom staged changes
 
 On 2026-08-25 and again 2026-08-27, `git checkout -B main origin/main` run **from a worktree** wrote
