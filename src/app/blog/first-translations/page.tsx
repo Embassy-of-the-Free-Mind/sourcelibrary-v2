@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Nearly 2,000 First English Translations — Over 900 Now Complete',
     description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — over 900 now fully translated into English for the first time.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg' }],
   },
   alternates: {
     canonical: '/blog/first-translations',
@@ -29,14 +29,14 @@ export default function FirstTranslationsPage() {
         description="Nearly 2,000 books in Source Library are first-ever English translations — over 900 now fully translated."
         datePublished="2026-02-20"
         dateModified="2026-03-08"
-        image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
+        image="https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
       />
     <ContentPageLayout
       header={
         <ContentHeader
           title="First English Translations"
           subtitle="Nearly 2,000 books in Source Library have never been read in English before — over 900 are now fully translated"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
+          image="https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
           imageAlt="Frontispiece of Kircher's Oedipus Aegyptiacus, 1653"
         >
           <p className="text-stone-400 text-sm mt-4">20 February 2026, updated 8 March 2026 &middot; 15 min read</p>
@@ -135,7 +135,7 @@ export default function FirstTranslationsPage() {
             <div className="md:w-32 shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/698255f12f8186e7ada0c92c/698256b4d09a5f3b90400721.jpg"
+                src="https://images.sourcelibrary.org/cropped/698255f12f8186e7ada0c92c/698256b4d09a5f3b90400721.jpg"
                 alt="Frontispiece of Das mineralische Gluten by Dorothea Juliana Walchin"
                 className="w-full md:w-32 h-40 md:h-auto object-cover rounded-lg"
               />
@@ -217,7 +217,7 @@ export default function FirstTranslationsPage() {
           <figure className="my-10">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69905f4140bc3a0478efb47b/3.jpg"
+              src="https://images.sourcelibrary.org/archived/69905f4140bc3a0478efb47b/3.jpg"
               alt="Page from the Brihat Samhita, a Sanskrit astrological encyclopedia"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
@@ -267,7 +267,7 @@ export default function FirstTranslationsPage() {
               <div className="md:w-48 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952898bab34727b1f04d709/1.jpg"
+                  src="https://images.sourcelibrary.org/archived/6952898bab34727b1f04d709/1.jpg"
                   alt="Title page of La chymie charitable et facile en faveur des dames by Marie Meurdrac, 1666"
                   className="w-full h-48 md:h-full object-cover"
                 />
@@ -291,7 +291,7 @@ export default function FirstTranslationsPage() {
                 <div className="md:w-40 shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/6984e84d875ef560e34aef4e/6984e9808ab59930765fe050.jpg"
+                    src="https://images.sourcelibrary.org/cropped/6984e84d875ef560e34aef4e/6984e9808ab59930765fe050.jpg"
                     alt="Frontispiece portrait of Anna Maria van Schurman from her Opuscula, 1648"
                     className="w-full h-48 md:h-full object-cover"
                   />
@@ -313,7 +313,7 @@ export default function FirstTranslationsPage() {
                 <div className="md:w-40 shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69529036b184004c526a17f8/6.jpg"
+                    src="https://images.sourcelibrary.org/archived/69529036b184004c526a17f8/6.jpg"
                     alt="Page from De claris selectisque mulieribus by Jacopo Filippo Foresti, 1497"
                     className="w-full h-48 md:h-full object-cover"
                   />
@@ -354,7 +354,7 @@ export default function FirstTranslationsPage() {
               <div className="md:w-48 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
+                  src="https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
                   alt="Frontispiece of Athanasius Kircher's Oedipus Aegyptiacus, 1653"
                   className="w-full h-48 md:h-full object-cover"
                 />
@@ -376,7 +376,7 @@ export default function FirstTranslationsPage() {
               <div className="md:w-48 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/cropped/6909a2e7cf28baa1b4caec93/694d21a6ef5ebd3ae6429684.jpg"
+                  src="https://images.sourcelibrary.org/cropped/6909a2e7cf28baa1b4caec93/694d21a6ef5ebd3ae6429684.jpg"
                   alt="Title page of Hermann Conring's De Hermetica Medicina, 1649"
                   className="w-full h-48 md:h-full object-cover"
                 />

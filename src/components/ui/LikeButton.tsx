@@ -22,6 +22,13 @@ interface LikeButtonProps {
   showCount?: boolean;
   /** Optional text label shown next to the heart (e.g. "Like this page"). Part of the clickable button. */
   label?: string;
+  /**
+   * Fires whenever the liked state settles (cache read on mount, status
+   * fetch, toggle, error revert) — lets a parent swap surrounding copy
+   * ("to save it…" → "Saved to your favorites", #4126) without owning
+   * the like state itself.
+   */
+  onLikedChange?: (liked: boolean) => void;
   className?: string;
 }
 
@@ -59,6 +66,7 @@ export default memo(function LikeButton({
   size = 'md',
   showCount = true,
   label,
+  onLikedChange,
   className = '',
 }: LikeButtonProps) {
   // If parent explicitly passed initialCount (even 0), server provided the data
@@ -72,6 +80,12 @@ export default memo(function LikeButton({
   const promptRef = useRef<HTMLDivElement>(null);
 
   const cacheKey = `${targetType}:${targetId}`;
+
+  // Report liked-state changes without making the callback a dependency of
+  // the fetch/toggle effects (parents often pass a fresh closure per render).
+  const onLikedChangeRef = useRef(onLikedChange);
+  useEffect(() => { onLikedChangeRef.current = onLikedChange; });
+  useEffect(() => { onLikedChangeRef.current?.(liked); }, [liked]);
 
   // Close auth prompt on outside click
   useEffect(() => {

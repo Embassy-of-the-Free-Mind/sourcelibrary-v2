@@ -38,6 +38,21 @@ describe('langKey', () => {
     expect(langKey('grc')).toBe('greek');
     expect(langKey('Latin-German')).toBe('latin'); // coarse: first token
   });
+
+  it('resolves every ISO bucket translation_catalogs stores, not a private ten-entry map (#3785)', () => {
+    // These buckets are stored by translation-catalog-record.mjs and were
+    // invisible to the old private map — 'fa' vs 'Persian' silently never matched.
+    expect(langKey('fa')).toBe(langKey('Persian'));
+    expect(langKey('bo')).toBe(langKey('Tibetan'));
+    expect(langKey('syc')).toBe(langKey('Syriac'));
+    expect(langKey('es')).toBe(langKey('Spanish'));
+  });
+
+  it('returns "" (UNKNOWN) for an unresolvable label instead of the raw token', () => {
+    expect(langKey('Q35497')).toBe('');
+    expect(langKey('Quechua')).toBe('');
+    expect(langKey('')).toBe('');
+  });
 });
 
 describe('isDecisivePrior', () => {
@@ -49,6 +64,18 @@ describe('isDecisivePrior', () => {
   });
   it('rejects a different-source-language prior (Greek prior for a Latin text)', () => {
     expect(isDecisivePrior(book, { ...completePrior, source_language: 'grc' })).toBe(false);
+  });
+  it('matches an ISO bucket the old private map missed (Persian book, "fa" prior) (#3785)', () => {
+    const persian: ResolvableBook = { ...book, title: 'Rubaiyat', author: 'Omar Khayyam', original_language: 'Persian', language: 'Persian' };
+    expect(
+      isDecisivePrior(persian, { ...completePrior, english_title: 'Rubaiyat of Omar Khayyam', translator: 'E. FitzGerald', source_language: 'fa' }),
+    ).toBe(true);
+  });
+  it('UNKNOWN never reads as MISMATCH: an unresolvable catalog language does not block', () => {
+    // Old code compared raw unmapped strings ('junk' !== 'latin' → blocked a
+    // real complete prior). Unknown must keep the language screen open; the
+    // completeness + evidence-quality guards still apply.
+    expect(isDecisivePrior(book, { ...completePrior, source_language: 'zz-unmapped' })).toBe(true);
   });
   it('rejects a self-match (prior == the book itself)', () => {
     expect(

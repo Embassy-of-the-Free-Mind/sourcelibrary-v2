@@ -277,6 +277,7 @@ export const POST = withAdminAuth(async (request) => {
       hidden: true, visible: false,
       hidden_reason: 'duplicate',
       hidden_at: now,
+      updated_at: now, // books_catalog sync keys on this — without it the flip never reaches Supabase
       ...(keeperId ? { duplicate_of: keeperId } : {}),
     }}
   );

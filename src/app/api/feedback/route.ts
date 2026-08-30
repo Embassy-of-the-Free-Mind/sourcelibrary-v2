@@ -48,13 +48,23 @@ export async function POST(request: NextRequest) {
     const trimmedEmail = email?.trim()?.toLowerCase() || null;
     const wantsHelp = wantsToHelp === true;
 
+    // The MCP server proxies submit_feedback to this route server-side with its
+    // own User-Agent, so the UA prefix is the one reliable origin signal we have.
+    // Agent-written reports have a very different profile from human submissions
+    // (long, high-volume, confidently wrong at a nontrivial rate), so the triage
+    // surfaces split on this field. Backfill for pre-existing rows:
+    // scripts/maintenance/backfill-feedback-channel.mjs
+    const userAgent = request.headers.get('user-agent') || null;
+    const channel = userAgent?.startsWith('SourceLibrary-MCP') ? 'mcp' : 'web';
+
     const doc = {
       message: message.trim(),
       page: page || null,
       name: name?.trim() || null,
       email: trimmedEmail,
       ip,
-      user_agent: request.headers.get('user-agent') || null,
+      user_agent: userAgent,
+      channel,
       created_at: new Date(),
       read: false,
       wants_to_help: wantsHelp,
@@ -101,6 +111,7 @@ export async function POST(request: NextRequest) {
 // GET /api/feedback — list feedback (admin only — contains PII: IPs, emails)
 // Query params:
 //   ?status=unread|read|addressed   filter by lifecycle state
+//   ?channel=mcp|web                filter by submission channel (mcp = agent via MCP tool)
 //   ?unread=true                    legacy, equivalent to ?status=unread
 export const GET = withAdminAuth(async (request: NextRequest) => {
   try {
@@ -109,6 +120,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     const offset = parseInt(searchParams.get('offset') || '0');
     const unreadOnly = searchParams.get('unread') === 'true';
     const status = searchParams.get('status'); // 'unread' | 'read' | 'addressed'
+    const channel = searchParams.get('channel'); // 'mcp' | 'web'
 
     const db = await getDb();
 
@@ -121,8 +133,13 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     } else if (status === 'addressed') {
       query.addressed = true;
     }
+    // 'web' matches rows without the field so pre-backfill data still lists as human.
+    const channelCond: Record<string, unknown> =
+      channel === 'mcp' ? { channel: 'mcp' } :
+      channel === 'web' ? { channel: { $ne: 'mcp' } } : {};
+    Object.assign(query, channelCond);
 
-    const [items, total, counts] = await Promise.all([
+    const [items, total, counts, channelCounts] = await Promise.all([
       db.collection('feedback')
         .find(query)
         .sort({ created_at: -1 })
@@ -130,14 +147,20 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
         .limit(limit)
         .toArray(),
       db.collection('feedback').countDocuments(query),
+      // Lifecycle counts within the selected channel, so the tabs stay truthful.
       Promise.all([
-        db.collection('feedback').countDocuments({ read: { $ne: true } }),
-        db.collection('feedback').countDocuments({ read: true, addressed: { $ne: true } }),
-        db.collection('feedback').countDocuments({ addressed: true }),
+        db.collection('feedback').countDocuments({ read: { $ne: true }, ...channelCond }),
+        db.collection('feedback').countDocuments({ read: true, addressed: { $ne: true }, ...channelCond }),
+        db.collection('feedback').countDocuments({ addressed: true, ...channelCond }),
       ]).then(([unread, read, addressed]) => ({ unread, read, addressed })),
+      // Open (not-addressed) totals per channel, regardless of the active filter.
+      Promise.all([
+        db.collection('feedback').countDocuments({ addressed: { $ne: true }, channel: { $ne: 'mcp' } }),
+        db.collection('feedback').countDocuments({ addressed: { $ne: true }, channel: 'mcp' }),
+      ]).then(([web, mcp]) => ({ web, mcp })),
     ]);
 
-    return NextResponse.json({ feedback: items, total, counts });
+    return NextResponse.json({ feedback: items, total, counts, channel_counts: channelCounts });
   } catch (error) {
     console.error('Feedback list error:', error);
     return NextResponse.json({ error: 'Failed to load feedback' }, { status: 500 });

@@ -10,6 +10,8 @@
  */
 
 import { TranslationEdition, Book } from './types';
+import { resolveHoldingCopy } from './holding-library';
+import { resolveImprintPlace } from './imprint';
 
 const ZENODO_API = process.env.ZENODO_SANDBOX === 'true'
   ? 'https://sandbox.zenodo.org/api'
@@ -357,6 +359,23 @@ function buildMetadata(book: Book, edition: TranslationEdition) {
     });
   }
 
+  // Copy-level provenance (#4360): the institution's own record of the scanned
+  // copy, and its IIIF manifest — the stable identifier of the digitized
+  // object. Before this, a non-IA book's DOI record carried no provenance link
+  // at all: the edition said only "a European digital library".
+  const imageSource = (book as any).image_source as
+    | { source_url?: string; iiif_manifest?: string }
+    | undefined;
+  for (const url of [imageSource?.source_url, imageSource?.iiif_manifest]) {
+    if (url && /^https?:\/\//.test(url)) {
+      related_identifiers.push({
+        identifier: url,
+        relation_type: { id: 'isderivedfrom' },
+        scheme: 'url',
+      });
+    }
+  }
+
   // Link to Source Library book page
   const bookSlug = (book as any).slug || book.id;
   related_identifiers.push({
@@ -405,11 +424,19 @@ function buildDescription(book: Book, edition: TranslationEdition): string {
     `<li>Author: ${author}</li>`,
     `<li>Language: ${book.language}</li>`,
     book.published ? `<li>Published: ${book.published}</li>` : '',
-    book.place_published ? `<li>Place: ${book.place_published}</li>` : '',
+    resolveImprintPlace(book) ? `<li>Place: ${resolveImprintPlace(book)!.display}</li>` : '',
     book.publisher ? `<li>Publisher: ${book.publisher}</li>` : '',
     book.ustc_id ? `<li>USTC: ${book.ustc_id}</li>` : '',
     '</ul>',
     '',
+    // The copy behind the scan (#4360) — the edition lines above hold for any
+    // copy of the printing; this names the one physical object we photographed.
+    ...(() => {
+      const copy = resolveHoldingCopy(book as any);
+      return copy
+        ? [`<p><strong>Source copy:</strong> ${copy.holding_library}${copy.shelfmark ? `, shelfmark ${copy.shelfmark}` : ''}.</p>`, '']
+        : [];
+    })(),
     `<p><strong>Translation:</strong> ${edition.page_count} pages translated.</p>`,
     '',
     '<p>The scholarly EPUB includes the complete English translation with facsimile page images, introduction, methodology notes, glossary, and index.</p>',

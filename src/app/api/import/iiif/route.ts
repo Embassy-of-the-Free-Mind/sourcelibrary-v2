@@ -6,8 +6,8 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
+import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import type { ImageSourceProvider } from '@/lib/types/image-source';
 
@@ -296,14 +296,14 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     // Cross-source dedup check
-    const dedupResult = await checkDuplicate(db, {
+    const gate = await acquisitionGate(db, {
       title, author, display_title, year, published,
       image_source: { provider: 'iiif', iiif_manifest: manifest_url, source_url: manifest_url },
-    });
-    if (dedupResult.isDuplicate) {
-      const best = dedupResult.matches[0];
+    }, { importer: 'api:iiif' });
+    if (!gate.ok) {
+      const best = gate.matches[0];
       return NextResponse.json(
-        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
+        { error: gate.message, existingId: best?.matchedBookId ?? null, reason: gate.reason, evidence: gate.evidence, matches: gate.matches },
         { status: 409 }
       );
     }
@@ -540,6 +540,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       status: 'draft',
       hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ image_source: { provider: 'iiif', iiif_manifest: manifest_url } }),
+      source_fingerprints: gate.fingerprints,
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
       created_at: new Date(),
@@ -549,6 +550,9 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Classify original-vs-translation at import (issue #2395).
     applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
+    // The claim now points at the row it produced, so it stops being
+    // reclaimable and the acquisition ledger is joinable to `books`.
+    await confirmClaims(db, gate.fingerprints, bookIdStr);
 
     // Create pages
     const pageDocs = [];
@@ -578,9 +582,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       book_id: bookIdStr,
       source: (provider as string) || 'iiif',
     }).catch((e) => console.warn(`[IIIF Import] manifest store failed for ${bookIdStr}: ${e?.message}`));
-
-    // Queue preview OCR for early metadata enrichment (non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     // Notify search engines of new book via IndexNow (non-blocking)
     notifyBookImport(bookIdStr, slug).catch(console.error);

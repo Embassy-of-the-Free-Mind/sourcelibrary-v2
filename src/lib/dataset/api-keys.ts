@@ -1,9 +1,25 @@
 import { randomBytes, createHash } from 'crypto';
+import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
+import { checkRateLimit } from '@/lib/rate-limit';
+import { keyRequestsPerMinute } from '@/lib/api-limits';
 import { ApiKeyDoc, DatasetTier, DATASET_TIERS } from './types';
 
 const COLLECTION = 'api_keys';
 const KEY_PREFIX = 'sl_data_';
+
+/**
+ * Key ids arrive as strings from route bodies but are stored as ObjectIds
+ * (insertOne generates them). Matching `{ _id: keyId }` with the raw string
+ * silently matched NOTHING — self-serve revoke/rotate returned "not found"
+ * for every real key (#4366 finding). Resolve to ObjectId when possible.
+ */
+function keyIdFilter(keyId: string): { _id: ObjectId } {
+  // Non-hex ids can't exist in this collection (driver-generated ObjectIds);
+  // map them to a well-formed id that matches nothing rather than widening
+  // the filter type to string.
+  return { _id: ObjectId.isValid(keyId) ? new ObjectId(keyId) : new ObjectId('000000000000000000000000') };
+}
 
 /** Generate a new API key. Returns the plaintext key (shown once) and the doc. */
 export async function generateApiKey(
@@ -14,6 +30,8 @@ export async function generateApiKey(
     languages?: string[];
     clusters?: string[];
     stripeSubscriptionId?: string;
+    /** Grant visible-mark-free image serving regardless of tier. */
+    cleanImages?: boolean;
   }
 ): Promise<{ key: string; doc: ApiKeyDoc }> {
   const db = await getDb();
@@ -31,6 +49,7 @@ export async function generateApiKey(
     permissions: {
       languages: options?.languages || (tier === 'language' ? [] : '*'),
       clusters: options?.clusters || (tier === 'domain' ? [] : '*'),
+      ...(options?.cleanImages ? { clean_images: true } : {}),
     },
     rate_limit: {
       requests_per_minute: tierConfig.requestsPerMinute,
@@ -60,7 +79,13 @@ export async function validateApiKey(authHeader: string | null): Promise<ApiKeyD
   const db = await getDb();
   const keyHash = hashKey(key);
   const doc = await db.collection<ApiKeyDoc>(COLLECTION).findOneAndUpdate(
-    { key_hash: keyHash, status: 'active' },
+    {
+      key_hash: keyHash,
+      status: 'active',
+      // Honour expiry: null/missing = perpetual; a past date = dead key.
+      // (This field was written since day one but never read — #4366.)
+      $or: [{ expires_at: null }, { expires_at: { $gt: new Date() } }],
+    },
     { $set: { last_used_at: new Date() } },
     { returnDocument: 'after' }
   );
@@ -68,11 +93,26 @@ export async function validateApiKey(authHeader: string | null): Promise<ApiKeyD
   return doc || null;
 }
 
+/**
+ * Per-key requests-per-minute limiter. The number has been WRITTEN on every
+ * key and DISPLAYED on the signup form since launch, but enforced nowhere
+ * (#4366). In-memory per instance, so it is a soft ceiling — the daily page
+ * budgets remain the hard anti-bulk control.
+ */
+export function checkKeyRequestRate(doc: ApiKeyDoc): { allowed: boolean; retryAfter?: number } {
+  const limit = keyRequestsPerMinute(doc);
+  const rl = checkRateLimit(
+    { name: 'api:key-rpm', limit, windowSeconds: 60 },
+    String(doc._id),
+  );
+  return rl.allowed ? { allowed: true } : { allowed: false, retryAfter: rl.retryAfter };
+}
+
 /** Revoke a key */
 export async function revokeApiKey(keyId: string, userId: string): Promise<boolean> {
   const db = await getDb();
   const result = await db.collection(COLLECTION).updateOne(
-    { _id: keyId as any, user_id: userId },
+    { ...keyIdFilter(keyId), user_id: userId },
     { $set: { status: 'revoked' } }
   );
   return result.modifiedCount > 0;
@@ -95,14 +135,14 @@ export async function rotateApiKey(
 ): Promise<{ key: string; doc: ApiKeyDoc } | null> {
   const db = await getDb();
   const old = await db.collection<ApiKeyDoc>(COLLECTION).findOne({
-    _id: keyId as any,
+    ...keyIdFilter(keyId),
     user_id: userId,
     status: 'active',
   });
   if (!old) return null;
 
   await db.collection(COLLECTION).updateOne(
-    { _id: keyId as any },
+    keyIdFilter(keyId),
     { $set: { status: 'revoked' } }
   );
 
@@ -110,6 +150,7 @@ export async function rotateApiKey(
     languages: old.permissions.languages === '*' ? undefined : old.permissions.languages,
     clusters: old.permissions.clusters === '*' ? undefined : old.permissions.clusters,
     stripeSubscriptionId: old.stripe_subscription_id,
+    cleanImages: old.permissions.clean_images === true,
   });
 }
 

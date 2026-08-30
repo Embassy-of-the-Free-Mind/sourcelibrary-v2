@@ -127,7 +127,7 @@ function FicinoSocietyContent() {
       {/* TITLE */}
       <section className="min-h-[85vh] flex flex-col justify-center items-center relative bg-[#0e0c0a]">
         <div className="absolute inset-0 overflow-hidden">
-          <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg" alt="" className="w-full h-full object-cover opacity-[0.07]" />
+          <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/99.jpg" alt="" className="w-full h-full object-cover opacity-[0.07]" />
         </div>
         <div className="relative z-10 text-center px-6 max-w-2xl">
           <h1 className="text-5xl md:text-6xl lg:text-7xl text-white/90 mb-6 font-serif leading-[1.1]" style={{ fontWeight: 300 }}>
@@ -218,13 +218,13 @@ function FicinoSocietyContent() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-[1px]">
             <div className="aspect-[3/4] overflow-hidden">
-              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/71.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/71.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
             </div>
             <div className="aspect-[3/4] overflow-hidden">
-              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/43.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/43.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
             </div>
             <div className="aspect-[3/4] overflow-hidden hidden md:block">
-              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/99.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
             </div>
           </div>
         </div>

@@ -42,7 +42,8 @@ for (const f of files) {
       result: priors.length > 0 ? 'found' : 'none',
       found_refs: [],
       verdict: r.verdict,
-      evidence_strength: r.evidence_strength || null,
+      // #3785: schema requires a valid strength; unstated fails toward 'weak' (never trust by omission).
+      evidence_strength: ['strong', 'moderate', 'weak'].includes(r.evidence_strength) ? r.evidence_strength : 'weak',
       model: r.model || null,
       cost_usd: r.cost_usd || null,
       notes: `${r.work_identified ? `[${r.work_identified}] ` : ''}${r.reasoning || ''}${priorStr ? `  PRIOR: ${priorStr}` : ''}`.trim(),

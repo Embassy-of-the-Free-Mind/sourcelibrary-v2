@@ -32,6 +32,12 @@ export async function GET(request: NextRequest) {
     const workId = searchParams.get('work_id') || '';
     const firstTranslation = searchParams.get('first_translation') === 'true';
     const hasTranslation = searchParams.get('has_translation') === 'true';
+    // `has_edition=<iso>`: books that carry a reader-ready edition in that
+    // language (#4095). Distinct from `language`, which is the language printed
+    // on the leaves of the original scan — a Latin book with a Spanish edition
+    // matches `language=Latin` AND `has_edition=es`.
+    const hasEditionParam = (searchParams.get('has_edition') || '').trim().toLowerCase();
+    const hasEdition = /^[a-z]{2,3}$/.test(hasEditionParam) && hasEditionParam !== 'en' ? hasEditionParam : '';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
     const { slug: tenantSlugHeader, id: tenantIdHeader } = getTenantContextFromRequest(request);
     const tenantSlugParam = searchParams.get('tenant_slug') || '';
@@ -49,7 +55,7 @@ export async function GET(request: NextRequest) {
 
     // Serve cached response for cacheable requests (no text search, reasonable pagination)
     const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}`;
+    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|he:${hasEdition}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -80,6 +86,10 @@ export async function GET(request: NextRequest) {
         ...(collection ? [{ $match: { collections: collection } }] : []),
         ...(workId ? [{ $match: { work_id: workId } }] : []),
         ...(library ? [{ $match: { 'image_source.provider': library } }] : []),
+        // Applied in BOTH branches. A filter honoured only when the caller
+        // omits `search` is inert exactly where it is most likely to be used,
+        // and reads as active either way (search-filters-and-lanes.md).
+        ...(hasEdition ? [{ $match: { [`pages_translated_${hasEdition}`]: { $gt: 0 } } }] : []),
         ...(tenantId ? [{ $match: { tenantId } }] : []),
       ];
     } else {
@@ -95,6 +105,7 @@ export async function GET(request: NextRequest) {
       if (library) matchConditions.push({ 'image_source.provider': library });
       if (firstTranslation) matchConditions.push({ is_first_translation: true });
       if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
+      if (hasEdition) matchConditions.push({ [`pages_translated_${hasEdition}`]: { $gt: 0 } });
       pipelineStart = [{ $match: { $and: matchConditions } }];
     }
 
@@ -153,6 +164,10 @@ export async function GET(request: NextRequest) {
       pages_ocr: 1,
       pages_translated: 1,
       translation_percent: 1,
+      // Only when asked for. Projecting every language's counter would put a
+      // field on 22,000 rows to describe 103 of them, and the counter set grows
+      // with each language.
+      ...(hasEdition ? { [`pages_translated_${hasEdition}`]: 1 } : {}),
       is_first_translation: 1,
       last_processed: 1,
       last_translation_at: 1,

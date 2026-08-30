@@ -4,9 +4,11 @@ import { getDb, getReadDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 
 export const preferredRegion = 'fra1';
@@ -30,8 +32,9 @@ export async function GET(
     const db = includeFull ? await getDb() : await getReadDb();
 
     // Book projection: nav mode only needs fields the reader uses
+    // (`visible` feeds the hidden-book gate below).
     const bookProjection = pagesMode === 'nav' ? {
-      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
       published: 1, language: 1, doi: 1,
       chapters: 1,
     } : undefined;
@@ -41,6 +44,12 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
     const book = result.book;
+
+    // Hidden books: catalog card only for unauthorized callers (metadata is
+    // public policy, content is not — see book-access.hiddenBookMetadataCard).
+    if (!(await isBookReadable(book, request))) {
+      return NextResponse.json({ ...hiddenBookMetadataCard(book), pages: [] });
+    }
 
     // Page projections:
     // - full: all fields (for admin/processing views)
@@ -147,13 +156,19 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
       await db.collection('pages').deleteMany({ book_id: bookId, tenantId });
       await db.collection('books').deleteOne({ _id: book._id, tenantId });
 
+      // A deleted book must leave every SERVING surface, not just Mongo —
+      // stale embedding/catalog rows kept surfacing deleted books in search
+      // and 404'd on click (#4216). Best-effort: a Supabase failure never
+      // blocks the delete; the stale-embeddings sweep is the backstop.
+      const pruned = await pruneSearchRowsForDeletedBook(bookId);
+
       // Audit log (non-blocking)
       logAuditEvent({
         action: 'book_deleted',
         book_id: bookId,
         book_title: book.title,
         pages_affected: pages.length,
-        metadata: { recoverable: true },
+        metadata: { recoverable: true, search_rows_pruned: pruned.every(p => !p.error) },
       });
 
       return NextResponse.json({
@@ -161,7 +176,7 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
         message: `Archived "${book.title}" with ${pages.length} pages`,
         bookId,
         recoverable: true,
-        hint: 'POST /api/books/restore/{id} to recover'
+        hint: 'POST /api/books/restore/{id} to recover — a restored book needs re-embedding before it surfaces in semantic search'
       });
     }
 
@@ -206,6 +221,9 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
     // Book is not archived - permanent delete from active (should be rare)
     const pagesResult = await db.collection('pages').deleteMany({ book_id: bookId, tenantId });
     await db.collection('books').deleteOne({ _id: book._id, tenantId });
+
+    // Same serving-surface prune as the soft-delete path (#4216).
+    await pruneSearchRowsForDeletedBook(bookId);
 
     logAuditEvent({
       action: 'book_deleted_permanent',

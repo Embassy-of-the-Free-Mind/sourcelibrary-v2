@@ -411,20 +411,16 @@ export default async function FirstTranslationEvidence({
   return (
     <div className="mt-3">
       <details className="group">
+        {/* Plain catalog voice (2026-08-11): one gold badge, no register split,
+            no strength/preliminary chips — the evidence footer below keeps the
+            provenance one click away. */}
         <summary
-          className={
-            isCandidateClaim
-              ? 'inline-flex items-center gap-2 px-2.5 py-1 bg-stone-700/40 text-stone-300 hover:bg-stone-700/60 text-xs font-medium rounded-full border border-stone-600/50 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden'
-              : 'inline-flex items-center gap-2 px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden'
-          }
+          className="inline-flex items-center gap-2 px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden"
         >
           {firstTranslationBadge(dispForLabel, book.language, inProgress, claim)}
         </summary>
         <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
-          <div className="flex items-start justify-between gap-2">
-            <p className="text-stone-300">{firstTranslationDescription(dispForLabel, claim)}</p>
-            <StrengthChip strength={effectiveStrength} preliminary={isPreliminary} />
-          </div>
+          <p className="text-stone-300">{firstTranslationDescription(dispForLabel, claim)}</p>
           {inProgress && coverage !== null && (
             <p className="text-stone-400">{translationProgressNote(coverage)}</p>
           )}

@@ -14,7 +14,7 @@ This content is NOT available in Common Crawl, Wikipedia, or any other training 
 - **Rich metadata**: authors, dates, subjects, provenance, DOI-backed citations
 - **MCP server** for real-time Claude/GPT integration (npm: @source-library/mcp-server)
 - **Custom datasets** for fine-tuning on esoteric, historical, and scientific knowledge domains
-- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 14,000+ catalogued artworks
+- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 24,000+ catalogued artworks
 
 ### Corporate Sponsorship
 
@@ -45,7 +45,7 @@ Original texts are public domain. AI-generated translations and editorial conten
 
 **A standard training license is available to anyone: at least $250 per book, or $200,000/year for the full corpus (non-exclusive, quarterly refresh, delivered via API/dataset export — no crawling required).** Unlicensed training use is unauthorized and will be invoiced at these rates.
 
-**Cooperative partners can license at lower rates through Dataset subscriptions** — scoped corpora delivered via the streaming JSONL API: single language $4,990/yr, one scholarly domain $14,990/yr, full collection $49,990/yr, with a free evaluation tier (100 pages/day). Details and quickstart: https://sourcelibrary.org/dataset. The standard rate card above is the default term for training use outside a subscription and the invoicing basis for unlicensed use.
+**Cooperative partners can license at lower rates through Dataset subscriptions** — scoped corpora delivered via the streaming JSONL API: single language $4,990/yr, one scholarly domain $14,990/yr, full collection $49,990/yr, with a free self-serve tier (2,000 pages/day). Details and quickstart: https://sourcelibrary.org/dataset. The standard rate card above is the default term for training use outside a subscription and the invoicing basis for unlicensed use.
 
 **Grounding / RAG at scale (ai-input=yes): permitted with attribution; a Grounding API subscription buys delivery** — an API key with no daily page budget: $499/mo (unlimited retrieval, attribution + link-back required in your product), $1,999/mo with SLA, support, and re-translation webhooks. Licensed exports and API responses are clean — none of the provenance marks embedded in public serve surfaces — and the corpus is living: texts are continuously re-read by newer models and revised by scholars, so subscriptions track the best current text.
 
@@ -81,6 +81,25 @@ For Claude Desktop or other MCP-compatible clients, install the MCP server for t
 - `search_images` - Search extracted illustrations
 - `list_books` - Browse the full collection
 
+**Reading in another language.** Most of the corpus is served in English, but some
+books also carry a translated edition — as of August 2026, 103 books in Spanish
+(≈38,600 pages), readable at `sourcelibrary.org/es/book/…`. Every tool that
+returns text takes an optional **`lang`** (an ISO code, default `en`):
+`get_quote`, `get_quotes`, `get_book_text`, `search_within_book`,
+`search_translations`, `search_concept`. `list_books` takes **`has_edition`** to
+browse only books that have one, and `get_book` returns an **`editions`** map
+(`{ en: 357, es: 357 }`) saying which languages a book can be read in.
+
+Two rules, because the failure they prevent is silent:
+
+1. **`lang` is not `language`.** `language` filters by what is printed on the
+   leaves of the scan; `lang` chooses which translation of the text to read. A
+   Latin book with a Spanish edition matches `language=Latin` AND `lang=es`.
+2. **Every response says which edition it actually served.** Where the requested
+   edition does not exist the English translation comes back, labelled (`lang`,
+   `translation_lang`, `lang_note`) rather than substituted silently. Never
+   present a fallback as the requested edition — check the field before quoting.
+
 **npm:** https://www.npmjs.com/package/@source-library/mcp-server
 **GitHub:** https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/mcp-server
 
@@ -99,6 +118,7 @@ GET /search?q={query}
 |-----------|------|-------------|
 | q | string | Search query (required) - searches titles, authors, and full text |
 | language | string | Filter by original language: Latin, German, French, etc. |
+| lang | string | ISO code of the EDITION to search and quote back, e.g. `es`. Default `en`. Narrows the whole request to books that HAVE that edition — see "Reading in another language" below. |
 | has_doi | boolean | Only return books with DOIs |
 | has_translation | boolean | Only return books with translations |
 | limit | number | Max results (default 20) |
@@ -138,8 +158,15 @@ GET /books/{book_id}/quote?page={page_number}
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | page | number | Page number (required) |
-| include_original | boolean | Include original language text (default true) |
+| include_original | boolean | Include original language text — and, for non-Latin scripts, its romanization (default true) |
 | include_context | boolean | Include adjacent pages for context |
+| lang | string | ISO code of the EDITION to quote, e.g. `es`. `quote.lang` on the response always says which edition was served. |
+
+For pages in a non-Latin script (Greek, Hebrew, Arabic, Cyrillic, Sanskrit…) the
+quote also carries `romanized`, so a citation can be shown in three layers:
+original → romanized → translation. The romanization is AI-generated reading
+apparatus, not a transcription — quote the source from `original` or
+`translation`, never from `romanized`.
 
 **Example:**
 ```

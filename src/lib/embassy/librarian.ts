@@ -6,6 +6,13 @@ import {
   findEmbeddedImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
+import { PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
+import {
+  localizedTitle,
+  localizedEditionFilter,
+  isNativeEdition,
+  type LocalizedBookMap,
+} from '@/lib/localized';
 import { GoogleGenAI, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
@@ -13,6 +20,7 @@ import { logAiUsage } from '@/lib/log-ai-usage';
 import { supabase } from '@/lib/supabase';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { authorSlug } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
@@ -185,6 +193,24 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
     },
   },
   {
+    name: 'browse_catalog',
+    description: 'Browse the CATALOGUE by filter and get an EXACT count — "what do you have in Spanish", "how many books from before 1600", "list everything in the astrology collection", "how many first translations". This answers how-many / show-me-everything questions that `search` structurally cannot: search returns only the strongest matching PASSAGES, so counting books from its results undercounts the shelf by orders of magnitude. Returns the real total, a representative list with links, and a browse URL for the rest.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        language: { type: Type.STRING, description: 'The language the edition is PRINTED in, named in English: "Spanish", "Latin", "Greek", "Chinese", "Tibetan". This is the language on the leaves of the scan — a Latin book we translated into English is still "Latin". Use this for "books published/written in X".' },
+        readable_in: { type: Type.STRING, description: 'Two-letter code of a language the reader can READ the book in — currently only "es". Matches books written in Spanish PLUS books we have translated into Spanish. This, not `language`, is what "libros en español" / "books available in Spanish" means.' },
+        collection: { type: Type.STRING, description: 'A collection slug from the "Collections" list in your instructions. Here it is a hard FILTER (in `search` the same argument is only a lean).' },
+        author: { type: Type.STRING, description: 'Match part of the author name as catalogued (e.g. "Ficino", "Paracelsus").' },
+        year_from: { type: Type.NUMBER, description: 'Earliest publication year, inclusive. ~13% of books carry no parsed year and drop out whenever either year bound is set — the result says so.' },
+        year_to: { type: Type.NUMBER, description: 'Latest publication year, inclusive.' },
+        first_translation: { type: Type.BOOLEAN, description: 'Only books carrying the first-translation badge.' },
+        sort: { type: Type.STRING, description: 'oldest (default) | newest | title | most_translated' },
+        limit: { type: Type.NUMBER, description: 'How many books to list back, 1-30 (default 15). The total count is exact no matter how few are listed.' },
+      },
+    },
+  },
+  {
     name: 'search_wikipedia',
     description: 'Search Wikipedia for historical, biographical, or scholarly context. Use to understand concepts, identify historical terms and synonyms, get biographical details about authors, or find cross-references. Returns a summary and key facts.',
     parameters: {
@@ -308,6 +334,48 @@ function tenantVisibilityFilter() {
   };
 }
 
+// ── Language ──────────────────────────────────────────────────────────
+
+/**
+ * Book URLs the model is handed (and told to copy verbatim) carry the locale
+ * prefix, so a Spanish conversation cites `/es/book/…` and the reader stays in
+ * the Spanish chrome. Every `/book/*` shape the Librarian emits has an `/es`
+ * twin (see LOCALIZED_PATTERNS in src/lib/locale-path.ts).
+ */
+function siteBase(lang: Locale): string {
+  return lang === 'en' ? 'https://sourcelibrary.org' : `https://sourcelibrary.org/${lang}`;
+}
+
+/**
+ * The page text the Librarian quotes, in the reader's language when we hold
+ * it. Search and the page tools read `translation.data` (English); for another
+ * locale this looks up `pages.translations.<lang>.data` for the same pages and
+ * returns what exists. A page with no edition in that language is simply
+ * absent from the map — the caller keeps the English text and LABELS it, so
+ * the model quotes our Spanish edition where there is one and never
+ * re-translates the English on the fly (`.claude/docs/i18n.md` rule 4).
+ */
+async function loadLocalizedTexts(
+  lang: Locale,
+  keys: Array<{ book_id: string; page_number: number }>,
+): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  if (lang === 'en' || keys.length === 0) return out;
+  const db = await getDb();
+  const field = `translations.${lang}.data`;
+  const rows = await db.collection('pages')
+    .find({ $or: keys.map(k => ({ book_id: k.book_id, page_number: k.page_number })), [field]: { $exists: true, $ne: '' } })
+    .project({ book_id: 1, page_number: 1, [field]: 1 })
+    .toArray();
+  for (const r of rows) {
+    const text = (r.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data;
+    if (typeof text === 'string' && text.trim()) out.set(`${r.book_id}:${r.page_number}`, text);
+  }
+  return out;
+}
+
+const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish' };
+
 // ── Tool Execution ────────────────────────────────────────────────────
 
 // Hybrid search — combines Atlas keyword + book-then-page semantic + global-page
@@ -367,8 +435,8 @@ async function executeSearchWikipedia(query: string): Promise<{ title: string; s
   } catch { return null; }
 }
 
-async function executeGetBookPage(bookId: string, pageNumber: number): Promise<{
-  text: string; originalText?: string; bookTitle: string; bookAuthor: string; bookSlug?: string;
+async function executeGetBookPage(bookId: string, pageNumber: number, lang: Locale = 'en'): Promise<{
+  text: string; textLang: Locale; originalText?: string; bookTitle: string; bookAuthor: string; bookSlug?: string;
 } | null> {
   const db = await getDb();
   const page = await db.collection('pages').findOne(
@@ -377,14 +445,15 @@ async function executeGetBookPage(bookId: string, pageNumber: number): Promise<{
   );
   if (!page) return null;
   const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
+  const localized = (await loadLocalizedTexts(lang, [{ book_id: bookId, page_number: pageNumber }])).get(`${bookId}:${pageNumber}`);
   return {
-    text: page.translation?.data || '', originalText: page.ocr?.data?.slice(0, 800),
+    text: localized ?? page.translation?.data ?? '', textLang: localized ? lang : 'en', originalText: page.ocr?.data?.slice(0, 800),
     bookTitle: book?.display_title || book?.title || 'Unknown', bookAuthor: book?.author || 'Unknown', bookSlug: book?.slug,
   };
 }
 
-async function executeReadNearbyPages(bookId: string, centerPage: number, range = 2): Promise<{
-  pages: Array<{ page_number: number; text: string }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
+async function executeReadNearbyPages(bookId: string, centerPage: number, range = 2, lang: Locale = 'en'): Promise<{
+  pages: Array<{ page_number: number; text: string; textLang: Locale }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
 }> {
   const db = await getDb();
   const r = Math.min(range, 3);
@@ -395,9 +464,13 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
     .toArray();
 
   const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
+  const localized = await loadLocalizedTexts(lang, pages.map(p => ({ book_id: bookId, page_number: p.page_number })));
 
   return {
-    pages: pages.map(p => ({ page_number: p.page_number, text: (p.translation?.data || '').slice(0, 1000) })),
+    pages: pages.map(p => {
+      const local = localized.get(`${bookId}:${p.page_number}`);
+      return { page_number: p.page_number, text: (local ?? p.translation?.data ?? '').slice(0, 1000), textLang: (local ? lang : 'en') as Locale };
+    }),
     bookTitle: book?.display_title || book?.title || 'Unknown',
     bookAuthor: book?.author || 'Unknown',
     bookSlug: book?.slug,
@@ -548,6 +621,274 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
   };
 }
 
+// ── Catalogue Browse ──────────────────────────────────────────────────
+
+/**
+ * The shelf, not the passages.
+ *
+ * `search` ranks passages, so every "what do you have in X / how many / list
+ * them all" question used to be answered from whatever the top few hits
+ * happened to be: asked for "all the books published in Spanish" the Librarian
+ * replied with 5 books drawn from 8 passages, against a shelf of 74. A count is
+ * a different query from a relevance ranking, and this is it — filter, exact
+ * count, a representative page of rows, and the browse URL showing the rest.
+ */
+
+const BROWSE_MAX_LIMIT = 30;
+const BROWSE_DEFAULT_LIMIT = 15;
+
+interface BrowseRow {
+  id: string;
+  slug?: string;
+  title?: string;
+  display_title?: string;
+  localized?: LocalizedBookMap | null;
+  author?: string;
+  author_id?: string;
+  year?: number;
+  published?: string;
+  language?: string;
+  pages_count?: number;
+  pages_translated?: number;
+  pages_translated_es?: number;
+  is_first_translation?: boolean;
+}
+
+function escapeRegex(input: string): string {
+  return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** Live, main-site books only — the same set every public browse surface counts. */
+function browseBaseFilter(): Record<string, unknown> {
+  return { visible: true, pages_count: { $gt: 0 }, ...tenantVisibilityFilter() };
+}
+
+// The catalogued `language` values with their live counts. Cached because the
+// model asks for "Spanish" the same way on every thread and the histogram moves
+// by a handful of books a week.
+let languageHistogramCache: { at: number; rows: Array<{ language: string; count: number }> } | null = null;
+
+async function languageHistogram(): Promise<Array<{ language: string; count: number }>> {
+  if (languageHistogramCache && Date.now() - languageHistogramCache.at < 600_000) {
+    return languageHistogramCache.rows;
+  }
+  const db = await getDb();
+  const rows = await db.collection('books').aggregate<{ _id: string; n: number }>([
+    { $match: { ...browseBaseFilter(), language: { $type: 'string', $ne: '' } } },
+    { $group: { _id: '$language', n: { $sum: 1 } } },
+    { $sort: { n: -1 } },
+  ], { maxTimeMS: 20000 }).toArray();
+  languageHistogramCache = { at: Date.now(), rows: rows.map(r => ({ language: r._id, count: r.n })) };
+  return languageHistogramCache.rows;
+}
+
+/**
+ * Map what the model typed to the values actually in the catalogue.
+ *
+ * Exact (case-insensitive) first, because that is what `/languages/<slug>`
+ * counts — a tool that reports 74 and links a page showing 68 is a worse answer
+ * than one that reports 68. Compound values ("Old Spanish", "Spanish / Latin",
+ * "Nahuatl-Spanish") are separate shelves and come back as `variants` for the
+ * model to mention, never silently folded into the total.
+ */
+async function resolveLanguageValues(input: string): Promise<{
+  matched: string[];
+  variants: Array<{ language: string; count: number }>;
+  suggestions: string[];
+}> {
+  const hist = await languageHistogram();
+  const wanted = input.trim().toLowerCase();
+  const exact = hist.filter(r => r.language.trim().toLowerCase() === wanted);
+  const word = new RegExp(`(^|[^a-z])${escapeRegex(wanted)}([^a-z]|$)`, 'i');
+  const near = hist.filter(r => r.language.trim().toLowerCase() !== wanted && word.test(r.language));
+  if (exact.length > 0) return { matched: exact.map(r => r.language), variants: near, suggestions: [] };
+  // No exact shelf: fall back to the compound ones so "Nahuatl" still answers.
+  if (near.length > 0) return { matched: near.map(r => r.language), variants: [], suggestions: [] };
+  return { matched: [], variants: [], suggestions: hist.slice(0, 12).map(r => `${r.language} (${r.count})`) };
+}
+
+interface BrowseArgs {
+  language?: string;
+  readable_in?: string;
+  collection?: string;
+  author?: string;
+  year_from?: number;
+  year_to?: number;
+  first_translation?: boolean;
+  sort?: string;
+  limit?: number;
+}
+
+const BROWSE_SORTS: Record<string, Record<string, 1 | -1>> = {
+  oldest: { year: 1, title: 1 },
+  newest: { year: -1, title: 1 },
+  title: { title: 1 },
+  most_translated: { pages_translated: -1, title: 1 },
+};
+
+async function executeBrowseCatalog(args: BrowseArgs, lang: Locale): Promise<{
+  total: number;
+  rows: BrowseRow[];
+  filterLabel: string;
+  browseUrl: string | null;
+  notes: string[];
+  sort: string;
+}> {
+  const db = await getDb();
+  const conditions: Record<string, unknown>[] = [browseBaseFilter()];
+  const labels: string[] = [];
+  const notes: string[] = [];
+  // Only a single-axis filter has a browse page showing exactly the same set.
+  // Anything narrower gets no URL rather than one that quietly means something
+  // else.
+  let linkable: { kind: 'language' | 'collection' | 'readable'; value: string } | null = null;
+
+  const languageInput = (args.language || '').trim();
+  if (languageInput) {
+    const { matched, variants, suggestions } = await resolveLanguageValues(languageInput);
+    if (matched.length === 0) {
+      notes.push(`No shelf is catalogued as "${languageInput}". The largest languages we do hold: ${suggestions.join(', ')}.`);
+      conditions.push({ language: '__no_such_language__' });
+    } else {
+      conditions.push(matched.length === 1 ? { language: matched[0] } : { language: { $in: matched } });
+      linkable = { kind: 'language', value: matched[0] };
+    }
+    labels.push(`printed in ${matched.length > 0 ? matched.join(' / ') : languageInput}`);
+    if (variants.length > 0) {
+      // "Latin" has 22 compound shelves; the whole list is noise in a prompt.
+      const shown = variants.slice(0, 6).map(v => `${v.language} (${v.count})`).join(', ');
+      const rest = variants.length > 6 ? `, and ${variants.length - 6} more` : '';
+      notes.push(`Counted only books catalogued exactly as "${matched[0]}". Related shelves NOT in this total: ${shown}${rest}.`);
+    }
+  }
+
+  const readable = (args.readable_in || '').trim().toLowerCase();
+  if (readable) {
+    if (readable === 'en') {
+      notes.push('English is the root edition — nearly every book is readable in English, so `readable_in: "en"` was ignored.');
+    } else if ((PREFIXED_LOCALES as string[]).includes(readable)) {
+      // Native original OR pages translated into that language — the same
+      // predicate every /es surface gates on (src/lib/localized.ts), so this
+      // total matches what the reader can actually open.
+      conditions.push(localizedEditionFilter(readable as Exclude<Locale, 'en'>));
+      labels.push(`readable in ${LANG_NAMES[readable as Locale] || readable}`);
+      linkable = { kind: 'readable', value: readable };
+    } else {
+      notes.push(`We do not publish editions in "${readable}" yet — that filter was ignored.`);
+    }
+  }
+
+  const collectionInput = (args.collection || '').trim();
+  if (collectionInput) {
+    const { resolveCollectionSlug } = await import('@/lib/embassy/collection-catalog');
+    const slug = await resolveCollectionSlug(collectionInput);
+    if (slug) {
+      conditions.push({ collections: slug });
+      labels.push(`in the "${slug}" collection`);
+      linkable = { kind: 'collection', value: slug };
+    } else {
+      notes.push(`No collection matches "${collectionInput}" — that filter was ignored.`);
+    }
+  }
+
+  const author = (args.author || '').trim();
+  if (author) {
+    conditions.push({ author: new RegExp(escapeRegex(author), 'i') });
+    labels.push(`author matching "${author}"`);
+    linkable = null;
+  }
+
+  const yearFrom = typeof args.year_from === 'number' ? Math.round(args.year_from) : null;
+  const yearTo = typeof args.year_to === 'number' ? Math.round(args.year_to) : null;
+  if (yearFrom !== null || yearTo !== null) {
+    const range: Record<string, number> = {};
+    if (yearFrom !== null) range.$gte = yearFrom;
+    if (yearTo !== null) range.$lte = yearTo;
+    conditions.push({ year: range });
+    labels.push(`published ${yearFrom ?? '…'}–${yearTo ?? '…'}`);
+    notes.push('Books with no parsed publication year are excluded from a year-bounded count.');
+    linkable = null;
+  }
+
+  if (args.first_translation) {
+    conditions.push({ is_first_translation: true });
+    labels.push('first translations');
+    linkable = null;
+  }
+
+  const filter = conditions.length === 1 ? conditions[0] : { $and: conditions };
+  const sortKey = BROWSE_SORTS[args.sort || ''] ? (args.sort as string) : 'oldest';
+  const limit = Math.min(Math.max(Math.round(args.limit ?? BROWSE_DEFAULT_LIMIT), 1), BROWSE_MAX_LIMIT);
+
+  const [total, rows] = await Promise.all([
+    db.collection('books').countDocuments(filter, { maxTimeMS: 20000 }),
+    db.collection('books').find(filter, {
+      projection: {
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, localized: 1, author: 1, author_id: 1,
+        year: 1, published: 1, language: 1, pages_count: 1, pages_translated: 1,
+        pages_translated_es: 1, is_first_translation: 1,
+      },
+      sort: BROWSE_SORTS[sortKey],
+      limit,
+      maxTimeMS: 20000,
+      collation: { locale: 'en', strength: 1 },
+    }).toArray() as unknown as Promise<BrowseRow[]>,
+  ]);
+
+  const base = siteBase(lang);
+  let browseUrl: string | null = null;
+  if (linkable?.kind === 'collection') {
+    browseUrl = `${base}/collections/${linkable.value}`;
+  } else if (linkable?.kind === 'readable' && linkable.value === 'es') {
+    browseUrl = `${base}/collections/en-espanol`;
+  } else if (linkable?.kind === 'language') {
+    // /languages/<slug> has no localized twin (LOCALIZED_PATTERNS in
+    // locale-path.ts), so it is always the unprefixed URL — an /es/languages/…
+    // link would 404.
+    browseUrl = `https://sourcelibrary.org/languages/${linkable.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+  } else if (labels.length === 0) {
+    browseUrl = `${base}/collections`;
+  }
+
+  return { total, rows, filterLabel: labels.join(', ') || 'the whole library', browseUrl, notes, sort: sortKey };
+}
+
+/**
+ * The rows as the model should see them: the title to show, the link, and how
+ * much of the book is readable in THIS conversation's language.
+ */
+function formatBrowseRows(rows: BrowseRow[], lang: Locale): string {
+  const base = siteBase(lang);
+  // Clamped: the per-language counters can exceed pages_count (a split spread
+  // translates into more rows than the book counts pages), and "149% in
+  // Spanish" is not a number to hand a reader.
+  const pct = (done: number, total: number) => (total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0);
+  return rows.map(b => {
+    const shown = localizedTitle(b, lang);
+    const original = b.title && b.title !== shown ? ` [original title: ${b.title}]` : '';
+    const year = b.year || (b.published || '').trim();
+    const pages = b.pages_count || 0;
+    let readable: string;
+    if (lang === 'en') {
+      readable = `${pct(b.pages_translated || 0, pages)}% in English`;
+    } else if (isNativeEdition(b as unknown as Record<string, unknown>, lang)) {
+      readable = `original ${LANG_NAMES[lang]} edition`;
+    } else {
+      readable = `${pct(lang === 'es' ? (b.pages_translated_es || 0) : 0, pages)}% in ${LANG_NAMES[lang]}`;
+    }
+    const bits = [b.language, `${pages} pp`, readable];
+    if (b.is_first_translation) bits.push('first translation');
+    // The resolvable author link, same rule as `search`: prefer the thesaurus
+    // id, else the slug of the stored name — and ALWAYS unprefixed, because
+    // /author/<slug> has no localized twin. A Spanish turn that got only a name
+    // here invented `/es/author/alfonso-x-el-sabio`, which 404s twice over.
+    const authorPart = b.author
+      ? `[${b.author}](https://sourcelibrary.org/author/${b.author_id || authorSlug(b.author)})`
+      : 'Unknown';
+    return `- "${shown}"${original} by ${authorPart}${year ? ` (${year})` : ''} — ${bits.filter(Boolean).join(', ')} — ${base}/book/${b.slug || b.id}`;
+  }).join('\n');
+}
+
 // ── Tool Router ───────────────────────────────────────────────────────
 
 async function executeTool(
@@ -555,7 +896,9 @@ async function executeTool(
   args: Record<string, unknown>,
   threadId?: string,
   collectionContext?: string | null,
+  lang: Locale = 'en',
 ): Promise<{ result: unknown; step: LibrarianStep; sources?: SourceCard[] }> {
+  const base = siteBase(lang);
   switch (name) {
     case 'search':
     // Aliases — accept old tool names for one release to avoid breakage if
@@ -570,6 +913,14 @@ async function executeTool(
       const collection = (args.collection as string | undefined) || collectionContext || null;
       const data = await executeSearch(query, collection);
       const totalFound = data.passages.length + data.books.length;
+      // Spanish conversation: swap in the Spanish edition for every passage
+      // that has one, and say which language each passage is in so the model
+      // can label an English-only quote instead of translating it itself.
+      const localized = await loadLocalizedTexts(lang, data.passages.map(p => ({ book_id: p.book_id, page_number: p.page_number })));
+      for (const p of data.passages) {
+        const t = localized.get(`${p.book_id}:${p.page_number}`);
+        if (t) p.text = t.slice(0, 1200);
+      }
 
       let context = '';
       if (data.books.length > 0) {
@@ -583,14 +934,19 @@ async function executeTool(
               ? `[${b.author}](https://sourcelibrary.org/author/${b.authorSlug})`
               : b.author)
             : 'Unknown';
-          context += `- "${b.title}" by ${authorPart}${b.year ? ` (${b.year})` : ''} — https://sourcelibrary.org/book/${b.slug || b.id}\n`;
+          context += `- "${b.title}" by ${authorPart}${b.year ? ` (${b.year})` : ''} — ${base}/book/${b.slug || b.id}\n`;
         }
       }
       if (data.passages.length > 0) {
         context += '\nPassages found:\n';
         for (const p of data.passages) {
-          const url = `https://sourcelibrary.org/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
-          context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url}) ---\n${p.text}\n`;
+          const url = `${base}/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
+          const langTag = lang === 'en'
+            ? ''
+            : (localized.has(`${p.book_id}:${p.page_number}`)
+              ? ` [text: ${LANG_NAMES[lang]} edition]`
+              : ` [text: English only — no ${LANG_NAMES[lang]} edition of this page]`);
+          context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
         }
       }
       if (totalFound === 0) context = 'No results found for this query.';
@@ -609,6 +965,23 @@ async function executeTool(
       };
     }
 
+    case 'browse_catalog': {
+      const data = await executeBrowseCatalog(args as BrowseArgs, lang);
+      let context = `Catalogue browse — ${data.total} book${data.total === 1 ? '' : 's'} match: ${data.filterLabel}. This count is EXACT and covers the whole library — report IT as the answer, never the number of rows listed below.\n`;
+      if (data.notes.length > 0) context += `${data.notes.map(n => `Note: ${n}`).join('\n')}\n`;
+      if (data.rows.length > 0) {
+        context += `\nShowing ${data.rows.length} of ${data.total} (${data.sort} first):\n${formatBrowseRows(data.rows, lang)}\n`;
+      }
+      context += data.browseUrl
+        ? `\nBrowse all ${data.total} here — link this so the reader can see the rest: ${data.browseUrl}\n`
+        : '\nThere is NO page that lists exactly this filter. Do not write a browse link for it — no URL you compose will exist. Say the total in prose instead.\n';
+      return {
+        result: { found: data.total, context },
+        step: { type: 'tool_result', name: 'browse_catalog', query: data.filterLabel, found: data.total,
+          summary: `${data.total} books — ${data.filterLabel}` },
+      };
+    }
+
     case 'search_wikipedia': {
       const query = args.query as string;
       const result = await executeSearchWikipedia(query);
@@ -621,9 +994,9 @@ async function executeTool(
     case 'get_book_page': {
       const bookId = args.book_id as string;
       const pageNumber = args.page_number as number;
-      const result = await executeGetBookPage(bookId, pageNumber);
+      const result = await executeGetBookPage(bookId, pageNumber, lang);
       return {
-        result: result ? { found: 1, text: result.text, originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
+        result: result ? { found: 1, text: result.text, textLanguage: LANG_NAMES[result.textLang], originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
         step: { type: 'tool_result', name: 'get_book_page', query: `p.${pageNumber}`, found: result ? 1 : 0,
           summary: result ? `Read page ${pageNumber} of ${result.bookTitle}` : 'Page not found' },
       };
@@ -633,10 +1006,11 @@ async function executeTool(
       const bookId = args.book_id as string;
       const centerPage = args.center_page as number;
       const range = (args.range as number) || 2;
-      const result = await executeReadNearbyPages(bookId, centerPage, range);
+      const result = await executeReadNearbyPages(bookId, centerPage, range, lang);
       let context = `Pages from ${result.bookTitle}:\n`;
       for (const p of result.pages) {
-        context += `\n--- Page ${p.page_number} ---\n${p.text}\n`;
+        const langTag = lang === 'en' ? '' : ` [text: ${p.textLang === 'en' ? 'English only' : `${LANG_NAMES[lang]} edition`}]`;
+        context += `\n--- Page ${p.page_number}${langTag} ---\n${p.text}\n`;
       }
       return {
         result: { found: result.pages.length, context, bookTitle: result.bookTitle },
@@ -803,6 +1177,7 @@ function buildSystemPrompt(
   notebookContext: string,
   messageIndex: number,
   collectionOpts?: { catalog?: string; collectionContext?: string | null },
+  lang: Locale = 'en',
 ): string {
   const catalog = collectionOpts?.catalog?.trim();
   const collectionContext = collectionOpts?.collectionContext;
@@ -821,10 +1196,36 @@ ${catalog}
 `
     : '';
 
-  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection);
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang);
 }
 
-function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string): string {
+/**
+ * The language block for a non-English conversation. The model already answers
+ * in whatever language it is addressed in; what it cannot know on its own is
+ * that we HOLD a Spanish edition of many pages and that quoting our edition
+ * beats improvising a translation of the English. The tool results carry a
+ * `[text: …]` tag per passage for exactly this.
+ */
+function languageSection(lang: Locale): string {
+  if (lang === 'en') return '';
+  const name = LANG_NAMES[lang];
+  const base = siteBase(lang);
+  return `## Language — this is a ${name} conversation
+
+The reader is using the ${name} edition of the library. Write your whole answer in ${name} (headers, captions, suggested next steps included), unless the reader switches language.
+
+Searching: the search index is English, so write your **search queries in English** (translate the reader's terms yourself — "piedra filosofal" → "philosopher's stone") even though you answer in ${name}.
+
+Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.
+
+What the library HOLDS in ${name} — "how many books do you have in ${name}", "show me everything in ${name}" — goes to **browse_catalog**, never to \`search\`, which only ranks passages and would answer a shelf of hundreds with the handful it happened to match. Two different questions live here and the tool takes both: \`readable_in: "${lang}"\` is what a reader means (books written in ${name} PLUS the ones we have translated into it), while \`language: "${name}"\` is the narrower "printed in ${name}". Prefer \`readable_in\`, and say which one you counted.
+
+Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).
+
+`;
+}
+
+function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en'): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -855,6 +1256,8 @@ On follow-up messages (message #3+), never present choices — the user has esta
 Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use the **search** tool for everything text-based — it fuses keyword and semantic matching so you don't have to choose between them. Note that **search covers books and their pages only — it does NOT return the standalone artworks**; those live in a separate index reachable only via search_artworks (and page illustrations via search_images). So a question the 23,000+ artworks could answer will come back empty from search alone — reach for search_artworks explicitly. Use search_wikipedia for outside context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
 
 For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 23,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
+
+**Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
@@ -889,7 +1292,7 @@ After 2-3 rounds of searching (4-6 tool calls total), stop and synthesize what y
 - Don't run the same search with slightly different wording — if keyword search missed, try semantic (or vice versa), then move on.
 - read_nearby_pages is for deepening a promising find, not for fishing. Only use it after you've found something specific worth expanding.
 
-## The collection
+${languageSection(lang)}## The collection
 
 Source Library has over 10,000 rare books spanning antiquity through the 18th century, many translated into English for the first time. The collection covers alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, and related traditions across Western, Middle Eastern, and Asian intellectual history.
 
@@ -918,9 +1321,10 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
-  options?: { collection?: string | null },
+  options?: { collection?: string | null; lang?: Locale },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
+  const lang: Locale = options?.lang ?? 'en';
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
   const _t0 = Date.now();
@@ -942,11 +1346,13 @@ export async function* streamAgenticResponse(
     formatCatalogForPrompt(),
     resolveCollectionSlug(options?.collection),
   ]);
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext });
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
-    { role: 'model', parts: [{ text: 'I understand. I\'m the Librarian — ready to help with research across the collection.' }] },
+    { role: 'model', parts: [{ text: lang === 'es'
+      ? 'Entendido. Soy el Bibliotecario: listo para investigar en la colección, en español.'
+      : 'I understand. I\'m the Librarian — ready to help with research across the collection.' }] },
     ...history.map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: [{ text: msg.content }],
@@ -1094,7 +1500,7 @@ export async function* streamAgenticResponse(
       functionCalls.map(async part => {
         const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
         try {
-          return await executeTool(fc.name, fc.args || {}, threadId, collectionContext);
+          return await executeTool(fc.name, fc.args || {}, threadId, collectionContext, lang);
         } catch (err) {
           console.error(`[Librarian] Tool ${fc.name} failed:`, err instanceof Error ? err.message : err);
           return {

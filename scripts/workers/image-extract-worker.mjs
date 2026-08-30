@@ -23,6 +23,7 @@ import { nanoid } from 'nanoid';
 import sharp from 'sharp';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -1047,6 +1048,13 @@ async function main() {
     const scopeIds = [...await resolveScopeBookIds(db, ctrl)];
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[IMAGE-EXTRACT] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
+  }
+
+  // The dial caps money regardless of pause/scope state (#3826): a scope
+  // confines WHICH books, the budget caps HOW MUCH. Vision calls are paid work.
+  if (!await budgetAllowsDispatch(db, 'image-extract-worker', { control: ctrl })) {
+    await client.close();
+    return;
   }
 
   // Find books ready for image extraction

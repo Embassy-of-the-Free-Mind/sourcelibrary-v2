@@ -21,6 +21,7 @@ import {
   semanticPageSearchGlobal,
 } from '@/lib/semantic-search';
 import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 
 // ── Types ────────────────────────────────────────────────────────────
@@ -412,16 +413,18 @@ async function findBooks(query: string, opts: HybridSearchOptions, limit: number
 // ── Snippet cleanup (mirrors librarian.ts existing logic) ────────────
 
 function stripAnnotations(text: string): string {
-  return text
-    .replace(/\[\[[^\]]+\]\]/g, '')
-    .replace(/^```(?:markdown)?\s*\n?/i, '')
-    .replace(/\n?```\s*$/i, '')
-    // Drop editorial page-level wrappers content-and-all (multiline, any of
-    // meta/summary/keywords/vocab). These describe the page — often naming
-    // content from neighbouring pages — and must never be quoted as source
-    // text. Old regex (<meta>[^<]*</meta>) missed multiline + the other tags
-    // and was the root of the "mercury on page 89" misquote (Nirmal, 2026-05-30).
-    .replace(/<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi, ' ')
+  // Editorial wrappers are dropped content-and-all by the canonical stripper —
+  // the inline 4-tag copy this replaces missed <image-desc>/<warning>/… and
+  // let AI plate descriptions into result snippets (#3820; same class as the
+  // "mercury on page 89" misquote, Nirmal 2026-05-30). Remaining annotation
+  // tags (note/term/margin/…) are unwrapped so no raw markup reaches the UI.
+  return stripEditorialWrappers(
+    text
+      .replace(/\[\[[^\]]+\]\]/g, '')
+      .replace(/^```(?:markdown)?\s*\n?/i, '')
+      .replace(/\n?```\s*$/i, ''),
+  )
+    .replace(/<\/?[a-z][a-z0-9-]*(?:\s[^>]*)?\/?>/gi, ' ')
     .replace(/\s{2,}/g, ' ')
     .trim();
 }

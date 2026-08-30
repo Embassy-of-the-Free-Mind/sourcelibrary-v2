@@ -22,6 +22,8 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync } from 'node:fs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const MANIFEST_PATH = '/tmp/wuzhen-manifest.json';
@@ -82,8 +84,8 @@ async function main() {
   const slug = await uniqueSlug(db, slugify('daoyan-neiwai-mijue-quanshu-wuzhen-pian'));
   const now = new Date();
 
-  const bookDoc = {
-    _id: bookId, id: bookIdStr, slug, tenant_id: 'default',
+  const acquired = await insertBookIfNew(db, {
+    _id: bookId, id: bookIdStr, slug,
     title, display_title, author,
     language: 'Chinese', original_language: 'Chinese',
     published: '明萬曆 Ming Wanli (1573–1620)',
@@ -108,17 +110,18 @@ async function main() {
     normalized_title: slugify(display_title).replace(/-/g, ' '),
     normalized_author: 'boduan zhang',
     created_at: now, updated_at: now,
-  };
-  await db.collection('books').insertOne(bookDoc);
+  }, { importer: 'script:harvard-wuzhen-direct', sourceIdentifier: 'wuzhen-pian', sourceUrl: CANONICAL_MANIFEST });
+  // The gate declined this candidate; the reason is a row in `dedup_skips`.
+  if (!acquired.inserted) { console.log(`SKIP — ${acquired.message}`); await client.close(); return; }
   console.log(`Inserted book ${bookIdStr} slug=${slug}`);
 
   const CHUNK = 500;
   for (let s = 0; s < pages.length; s += CHUNK) {
     const docs = pages.slice(s, s + CHUNK).map((p, k) => {
       const pid = new ObjectId();
-      return { _id: pid, id: pid.toHexString(), tenant_id: 'default', book_id: bookIdStr,
+      return makePageDoc({ _id: pid, id: pid.toHexString(), book_id: bookIdStr,
         page_number: s + k + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo,
-        created_at: now, updated_at: now };
+        created_at: now, updated_at: now });
     });
     await db.collection('pages').insertMany(docs, { ordered: false });
     console.log(`  inserted pages ${s + 1}-${s + docs.length}`);

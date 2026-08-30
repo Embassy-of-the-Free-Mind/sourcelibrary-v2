@@ -32,6 +32,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { execFileSync } from 'child_process';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync, existsSync, statSync } from 'fs';
 import { join } from 'path';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -216,11 +217,10 @@ async function main() {
   // Build + insert book
   const now = new Date();
   const pdfStat = statSync(PDF_PATH);
-  const bookDoc = {
+  const bookDoc = makeBookDoc({
     _id: bookId,
     id: bookIdStr,
     slug,
-    tenant_id: 'default',
     title: BOOK_META.title,
     display_title: BOOK_META.display_title,
     author: BOOK_META.author,
@@ -280,7 +280,7 @@ async function main() {
     normalized_author: normalizeAuthor(BOOK_META.author),
     created_at: now,
     updated_at: now,
-  };
+  });
 
   await db.collection('books').insertOne(bookDoc);
   console.log(`Inserted book ${bookIdStr} (${slug})`);
@@ -291,10 +291,9 @@ async function main() {
     const docs = [];
     for (let p = start; p < Math.min(start + CHUNK, pageCount); p++) {
       const pageId = new ObjectId();
-      docs.push({
+      docs.push(makePageDoc({
         _id: pageId,
         id: pageId.toHexString(),
-        tenant_id: 'default',
         book_id: bookIdStr,
         page_number: p + 1,
         photo: pageUrls[p].url,
@@ -310,7 +309,7 @@ async function main() {
         },
         created_at: now,
         updated_at: now,
-      });
+      }));
     }
     await db.collection('pages').insertMany(docs, { ordered: false });
     console.log(`  pages ${start + 1}–${start + docs.length} inserted`);

@@ -19,9 +19,11 @@ interface FeedbackItem {
   reply_message?: string | null;
   reply_sent_at?: string | null;
   reply_recipient?: string | null;
+  channel?: 'mcp' | 'web' | null;
 }
 
 type Tab = 'unread' | 'read' | 'addressed';
+type Channel = 'web' | 'mcp' | 'all';
 
 function formatDate(s: string) {
   const d = new Date(s);
@@ -30,25 +32,31 @@ function formatDate(s: string) {
 
 export default function AdminFeedbackPage() {
   const [tab, setTab] = useState<Tab>('unread');
+  // Human submissions are scarce and motivated; agent (MCP) submissions are
+  // high-volume and would drown them in one queue — so human-first by default.
+  const [channel, setChannel] = useState<Channel>('web');
   const [items, setItems] = useState<FeedbackItem[]>([]);
   const [counts, setCounts] = useState<{ unread: number; read: number; addressed: number }>({ unread: 0, read: 0, addressed: 0 });
+  const [channelCounts, setChannelCounts] = useState<{ web: number; mcp: number }>({ web: 0, mcp: 0 });
   const [loading, setLoading] = useState(false);
   const [actionDraft, setActionDraft] = useState<Record<string, { action: string; link: string; reply: string }>>({});
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/feedback?status=${tab}&limit=200`);
+      const channelParam = channel === 'all' ? '' : `&channel=${channel}`;
+      const res = await fetch(`/api/feedback?status=${tab}&limit=200${channelParam}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setItems(data.feedback || []);
       setCounts(data.counts || { unread: 0, read: 0, addressed: 0 });
+      setChannelCounts(data.channel_counts || { web: 0, mcp: 0 });
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [tab]);
+  }, [tab, channel]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -117,7 +125,19 @@ export default function AdminFeedbackPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <h1 className="text-2xl font-semibold mb-2">Feedback</h1>
-      <p className="text-sm text-stone-500 mb-6">From the &quot;Give Feedback&quot; button in the site footer. Mark items as <em>addressed</em> once a fix ships &mdash; if the submitter left an email, they&apos;re automatically notified (once).</p>
+      <p className="text-sm text-stone-500 mb-4">From the &quot;Give Feedback&quot; button in the site footer and the public MCP <code>submit_feedback</code> tool. Mark items as <em>addressed</em> once a fix ships &mdash; if the submitter left an email, they&apos;re automatically notified (once).</p>
+
+      <div className="flex gap-1 mb-4">
+        {([['web', `Humans (${channelCounts.web})`], ['mcp', `Agents (${channelCounts.mcp})`], ['all', 'All']] as [Channel, string][]).map(([c, label]) => (
+          <button
+            key={c}
+            onClick={() => setChannel(c)}
+            className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-colors ${channel === c ? 'border-accent-rust bg-accent-rust/10 text-accent-rust' : 'border-stone-200 text-stone-500 hover:text-stone-800'}`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
       <div className="flex gap-2 mb-6 border-b border-stone-200">
         {(['unread', 'read', 'addressed'] as Tab[]).map(t => (
@@ -144,6 +164,11 @@ export default function AdminFeedbackPage() {
                 <span>{formatDate(item.created_at)}</span>
                 {item.name && <span> · <span className="text-stone-700">{item.name}</span></span>}
                 {item.email && <span className="text-stone-400"> &lt;{item.email}&gt;</span>}
+                {item.channel === 'mcp' && (
+                  <span className="ml-2 px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-200 text-[10px] font-medium align-middle" title="Submitted by an AI agent via the MCP submit_feedback tool — treat claims as unverified">
+                    MCP agent
+                  </span>
+                )}
               </div>
               {item.page && (
                 <a href={item.page} target="_blank" rel="noopener noreferrer" className="text-xs text-accent-rust hover:underline truncate max-w-[40ch]" title={item.page}>

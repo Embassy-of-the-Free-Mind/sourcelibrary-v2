@@ -4,6 +4,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { withAuth } from '@/lib/auth-helpers';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { resolveImprintPlace } from '@/lib/imprint';
 
 interface RouteContext {
   params: Promise<{ tenant: string; id: string }>;
@@ -120,7 +121,8 @@ function buildBookContext(book: Book, pages: Page[]): string {
   parts.push(`Author: ${book.author}`);
   parts.push(`Language: ${book.language}`);
   parts.push(`Published: ${book.published}`);
-  if (book.place_published) parts.push(`Place of publication: ${book.place_published}`);
+  const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+  if (imprintPlace) parts.push(`Place of publication: ${imprintPlace}`);
   if (book.publisher) parts.push(`Printer/Publisher: ${book.publisher}`);
   if (book.ustc_id) parts.push(`USTC catalog number: ${book.ustc_id}`);
   if (bookAny.is_first_translation) parts.push('NOTE: This is believed to be the FIRST English translation of this work.');

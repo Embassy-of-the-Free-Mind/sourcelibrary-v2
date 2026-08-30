@@ -1,67 +1,26 @@
 import { usePathname } from 'next/navigation';
+import { localeFromPathname, localePath, type Locale } from '@/lib/locale-path';
 
-// Lightweight locale primitive shared across the site shell (header, footer,
-// etc.). Locale is derived from the URL prefix (`/es`, `/es/...`) rather than a
-// cookie or Accept-Language header, so it never branches edge-cached HTML and
-// every localized route is its own indexable page. Client components read it
-// with useLocale(); server components pass their known locale explicitly.
-//
-// To add a language: add it to Locale + SUPPORTED_LOCALES, extend the prefix
-// check in localeFromPathname, and fill in the dictionaries (NAV_STRINGS here,
-// HOME_STRINGS in home-i18n.ts). Keep the prefixes disjoint from tenant slugs.
-
-export type Locale = 'en' | 'es';
-
-export const SUPPORTED_LOCALES: Locale[] = ['en', 'es'];
-
-/** Map a pathname to its locale by URL prefix. Defaults to English. */
-export function localeFromPathname(pathname: string | null | undefined): Locale {
-  if (pathname === '/es' || (pathname?.startsWith('/es/') ?? false)) return 'es';
-  return 'en';
-}
+// The site-shell locale layer: the pure primitives (re-exported from
+// `locale-path.ts` so every existing `@/lib/i18n` import keeps working) plus
+// the two hooks that read the CURRENT url. Server components must import from
+// `@/lib/locale-path` instead — this module pulls in `usePathname`, and Next 16
+// rejects that in a server component.
+export * from '@/lib/locale-path';
 
 /** Client hook: current locale from the URL. */
 export function useLocale(): Locale {
   return localeFromPathname(usePathname());
 }
 
-// ---------- Locale switching (sitewide EN/ES toggle, #2763) ----------
-
-// EN base paths that have a real Spanish (`/es…`) twin route. Keep this in sync
-// with the `src/app/es/**` route folders: the homepage plus the acquisition
-// funnel (`/support`, `/auth/signin`). The header toggle is shown on EVERY page,
-// but on a page with no twin the ES link falls back to the Spanish homepage
-// (`/es`) as a front door rather than dead-ending on a 404 — the thin-i18n
-// bargain (deep pages rely on the browser's own translate).
-export const LOCALIZED_PATHS = new Set<string>(['/', '/support', '/auth/signin']);
-
-/** Strip the `/es` locale prefix to get the canonical English path. */
-export function canonicalPath(pathname: string | null | undefined): string {
-  if (!pathname || pathname === '/es') return '/';
-  if (pathname.startsWith('/es/')) return pathname.slice(3); // '/es/x' → '/x'
-  return pathname;
-}
-
 /**
- * Whether the current page has a real Spanish twin (i.e. switching to ES keeps
- * the reader on the same page rather than dumping them on the `/es` homepage).
- * The header uses this to HIDE the EN/ES toggle on deep, English-only pages —
- * the thin-i18n bargain — so clicking ES never bounces you to the front page.
+ * Client hook: `localePath` bound to the locale of the page being rendered.
+ * A client component that builds `/book/...` links can call this instead of
+ * taking a `lang` prop — the URL already says which language it is.
  */
-export function hasLocalizedTwin(pathname: string | null | undefined): boolean {
-  return LOCALIZED_PATHS.has(canonicalPath(pathname));
-}
-
-/**
- * Href for switching the current page to `target` locale.
- * - English: the canonical page (any `/es` prefix dropped) so the reader stays put.
- * - Spanish: the `/es` twin when one exists, else the Spanish homepage (`/es`).
- */
-export function localeHref(target: Locale, pathname: string | null | undefined): string {
-  const canonical = canonicalPath(pathname);
-  if (target === 'en') return canonical;
-  if (LOCALIZED_PATHS.has(canonical)) return canonical === '/' ? '/es' : `/es${canonical}`;
-  return '/es';
+export function useLocalePath(): (href: string) => string {
+  const lang = useLocale();
+  return (href: string) => localePath(href, lang);
 }
 
 // ---------- Shared site-shell strings (header nav) ----------
@@ -69,12 +28,12 @@ export function localeHref(target: Locale, pathname: string | null | undefined):
 export interface NavStrings {
   collections: string;
   gallery: string;
+  identify: string;
   browse: string;
   catalogue: string;
   works: string;
-  map: string;
+  explore: string;
   librarian: string;
-  podcast: string;
   search: string;
   menu: string;
   support: string;
@@ -84,12 +43,12 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
   en: {
     collections: 'Collections',
     gallery: 'Gallery',
+    identify: 'Identify',
     browse: 'Browse',
     catalogue: 'Catalogue',
     works: 'Works',
-    map: 'Map',
+    explore: 'Explore',
     librarian: 'Librarian',
-    podcast: 'Podcast',
     search: 'Search',
     menu: 'Navigation menu',
     support: 'Support',
@@ -97,12 +56,14 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
   es: {
     collections: 'Colecciones',
     gallery: 'Galería',
+    identify: 'Identificar',
     browse: 'Explorar',
     catalogue: 'Catálogo',
     works: 'Obras',
-    map: 'Mapa',
+    // NOT 'Explorar' — that is already this nav's label for Browse. The hub is
+    // a set of interactive visualizations, so name it for what it holds.
+    explore: 'Visualizaciones',
     librarian: 'Bibliotecario',
-    podcast: 'Podcast',
     search: 'Buscar',
     menu: 'Menú de navegación',
     support: 'Donar',
@@ -123,8 +84,12 @@ export interface FooterStrings {
   browseBooks: string;
   browseAZ: string;
   gallery: string;
+  identify: string;
   collections: string;
   search: string;
+  // Kept reachable here after the header nav item was retired — the podcast is
+  // otherwise only linked from the homepage feature and its librarian thread.
+  podcast: string;
   favorites: string;
   // About column
   about: string;
@@ -231,8 +196,10 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     browseBooks: 'Browse Books',
     browseAZ: 'Browse A–Z',
     gallery: 'Gallery',
+    identify: 'Identify an Artwork',
     collections: 'Collections',
     search: 'Search',
+    podcast: 'Podcast',
     favorites: 'Favorites',
     about: 'About',
     vision: 'Our Vision',
@@ -261,8 +228,10 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     browseBooks: 'Explorar libros',
     browseAZ: 'Índice A–Z',
     gallery: 'Galería',
+    identify: 'Identificar una obra',
     collections: 'Colecciones',
     search: 'Buscar',
+    podcast: 'Pódcast',
     favorites: 'Favoritos',
     about: 'Acerca de',
     vision: 'Nuestra visión',

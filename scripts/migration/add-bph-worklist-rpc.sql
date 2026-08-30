@@ -22,6 +22,17 @@
 -- So each category below is scoped to something a librarian would genuinely
 -- act on, and every one carries samples so the number is never just a number.
 --
+-- EVERY SAMPLE CARRIES `uuid`, AND THAT IS THE ONLY KEY THE SITE CAN RESOLVE.
+-- `bph_works.id` and `bph_works.uuid` are two DIFFERENT uuids on every row, and
+-- /catalog/{key} routes a uuid-shaped key to the `uuid` column (see
+-- src/lib/bph-catalog-key.ts). Three of the categories below select exactly the
+-- rows where `ubn IS NULL`, so their links can only fall back to a uuid — and
+-- while these samples emitted `id`, all 2,012 of them 404'd. José Bouman,
+-- 2026-08-12: "I cannot access these by clicking on them, so I can't see what
+-- is the case" — reported against this worklist, one week after the catalogue
+-- browser's own null-ubn links were fixed in #3654. Same symptom, second path.
+-- `id` is kept in the payload for debugging; never build a link from it.
+--
 -- Run via Supabase SQL editor or psql:
 --   psql "$DATABASE_URL" -f scripts/migration/add-bph-worklist-rpc.sql
 
@@ -44,11 +55,16 @@ RETURNS TABLE (category text, label text, detail text, n bigint, samples jsonb)
 LANGUAGE sql STABLE AS $$
   -- Real physical objects, on a shelf, with no name and no catalogue number.
   -- The most interesting rows in the catalogue and currently invisible.
+  -- José Bouman answered this one on 2026-08-12: "These are indeed incomplete
+  -- descriptions and they will be enhanced (sooner or later). Leave them as
+  -- they are." So it stays visible as a known backlog, but it no longer asks
+  -- for a number — manuscripts never get one — and it no longer reads as a
+  -- question awaiting a decision that has already been made.
   SELECT 'undescribed_manuscripts',
-         'Manuscripts on the shelf with no title and no UBN',
-         'Real objects we hold and can locate, but which the catalogue barely describes. Each needs a title and a number.',
+         'Manuscripts on the shelf with no title yet',
+         'Known incomplete descriptions, to be enhanced when there is time (José, 12 Aug). Listed so they are not forgotten; nothing to decide.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', present_location)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', present_location)
                   ORDER BY shelf_mark) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, row_number() OVER (ORDER BY w.shelf_mark) rn
@@ -68,7 +84,7 @@ LANGUAGE sql STABLE AS $$
          'Printed records with no title, shelf mark or UBN',
          'Probably residue from an old import rather than real holdings. Needs a decision: complete them, or remove them.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', author)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', author)
                   ORDER BY id) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, row_number() OVER (ORDER BY w.id) rn
@@ -81,28 +97,52 @@ LANGUAGE sql STABLE AS $$
 
   UNION ALL
 
-  -- No catalogue number at all. Findable by title, never by number — which is
-  -- how the BPH actually works day to day.
-  SELECT 'missing_ubn',
-         'Records with no UBN',
-         'These cannot be found by catalogue number, only by title. Mostly photocopies and manuscripts.',
+  -- Records with NO WAY TO FIND THE OBJECT: no catalogue number and no shelf
+  -- mark either.
+  --
+  -- This category used to be "Records with no UBN", all 2,012 of them, and it
+  -- was wrong in the way this file exists to prevent — it counted correct data
+  -- as a defect. José Bouman, 2026-08-12, answering it:
+  --
+  --   "Manuscripts never have a UBN, instead they have a manuscript number
+  --    (M+ number, or just a number, like 216, 217, 218). […] M-numbers
+  --    (manuscripts) and FOT-items don't have a UBN"
+  --
+  -- 1,771 of the 2,012 are exactly those manuscripts (812) and photocopies
+  -- (959), correctly catalogued, and no amount of librarian attention would
+  -- ever change them. Asking about them forever is how a worklist teaches
+  -- someone to stop opening it. What is genuinely actionable is a record with
+  -- neither identifier — nothing to search by and nothing to find on a shelf.
+  -- Measured 2026-08-13: 253 rows, of which 228 have no title either (they are
+  -- the empty_printed_stubs above) and 25 have a title but no location at all.
+  SELECT 'unfindable_records',
+         'Records with no UBN and no shelf mark',
+         'Nothing to look them up by and nothing to find them on a shelf with. Each needs an identifier, or removing.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
                   ORDER BY id) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, public.bph_any_title(w) AS any_title, row_number() OVER (ORDER BY w.id) rn
-    FROM bph_works w WHERE w.ubn IS NULL
+    FROM bph_works w
+    WHERE w.ubn IS NULL
+      AND (w.shelf_mark IS NULL OR TRIM(w.shelf_mark) = '')
   ) t
 
   UNION ALL
 
   -- The other half of the "neen" cleanup, deliberately left for a librarian:
   -- emptying "ja" would destroy the only trace that these copies ARE on loan.
+  -- Answered and swept on 2026-08-13: José chose "yes" over emptying, because
+  -- the value records that the copy IS on loan. The 31 rows were translated by
+  -- scripts/maintenance/translate-ja-state-shelfmark.mjs and the normaliser now
+  -- maps ja→yes at the write boundary, so this returns 0 and drops out of the
+  -- page. It is KEPT as a standing detector: a non-zero count here means a
+  -- Memorix re-import has reintroduced the Dutch.
   SELECT 'state_shelfmark_ja',
-         'State Collection shelf mark still reads "ja"',
-         'Same import fault as the "neen" values that were cleared on 30 July. Emptying these would lose the only record that the copy IS on loan from the State Collection, so it needs your decision.',
+         'State Collection shelf mark reads "ja" again',
+         'Cleared on 13 Aug (translated to "yes"). If this is non-zero, an import has put the Dutch back — the normaliser should have prevented it.',
          count(*),
-         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
+         COALESCE(jsonb_agg(jsonb_build_object('ubn', ubn, 'uuid', uuid, 'id', id, 'shelf_mark', shelf_mark, 'hint', any_title)
                   ORDER BY ubn) FILTER (WHERE rn <= 25), '[]'::jsonb)
   FROM (
     SELECT w.*, public.bph_any_title(w) AS any_title, row_number() OVER (ORDER BY w.ubn) rn

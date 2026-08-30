@@ -54,7 +54,7 @@ if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 try { execSync('which pdftoppm', { stdio: 'pipe' }); }
 catch { console.error('pdftoppm not found. Install: apt-get install poppler-utils'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const s3 = new S3Client({
   region: 'auto',
@@ -63,7 +63,7 @@ const s3 = new S3Client({
 });
 
 const stats = {
-  booksProcessed: 0, booksSkipped: 0, booksFailed: 0,
+  booksProcessed: 0, booksSkipped: 0, booksFailed: 0, countersSynced: 0,
   pagesArchived: 0, pagesFailed: 0,
   bytesDownloaded: 0, bytesUploaded: 0,
   startTime: Date.now(),
@@ -126,6 +126,36 @@ async function processBook(book, db) {
     .toArray();
 
   if (pages.length === 0) {
+    // Nothing to archive — but the ONLY reason this book was selected is
+    // `pages_archived: { $not: { $gte: 1 } }`, so returning here without writing
+    // the counter leaves it eligible forever. Measured 2026-08-27: 6,865
+    // warehouse e-rara books sat in exactly this state — every page already
+    // archived in `pages_warehouse`, `pages_archived` never written on the
+    // warehouse doc — and this worker re-selected 100 of them every 30 minutes,
+    // ran for ~207s, and reported "0 archived, 0 failed, 100 skipped". 227 such
+    // runs in the log, none of which moved anything.
+    //
+    // A skip that does not record WHY is an infinite loop with a progress bar.
+    // Sync the counter from the pages themselves, using the same predicate the
+    // archive route uses, so the book leaves the queue by being correct rather
+    // than by being ignored.
+    const archivedCount = await db.collection(pagesCol).countDocuments(
+      { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
+      { maxTimeMS: 10000 },
+    );
+    if (archivedCount > 0) {
+      await db.collection(booksCol).updateOne(
+        { id: book.id },
+        {
+          $set: {
+            pages_archived: archivedCount,
+            archive_status: archivedCount >= (book.pages_count || 0) ? 'archive_complete' : 'archive_partial',
+            updated_at: new Date(),
+          },
+        },
+      );
+      stats.countersSynced++;
+    }
     stats.booksSkipped++;
     return;
   }
@@ -372,7 +402,8 @@ async function main() {
   console.log(`Done in ${Math.round(elapsed)}s — ${stats.pagesArchived} archived, ${stats.pagesFailed} failed`);
   console.log(`Rate: ${pagesPerSec} pages/sec`);
   console.log(`Data: ${(stats.bytesDownloaded / (1024 * 1024)).toFixed(0)}MB downloaded, ${(stats.bytesUploaded / (1024 * 1024)).toFixed(0)}MB uploaded`);
-  console.log(`Books: ${stats.booksProcessed} processed, ${stats.booksFailed} failed, ${stats.booksSkipped} skipped`);
+  console.log(`Books: ${stats.booksProcessed} processed, ${stats.booksFailed} failed, ${stats.booksSkipped} skipped` +
+    (stats.countersSynced ? `, ${stats.countersSynced} stale counters synced (already archived)` : ''));
 
   // Log to cron_runs
   await db.collection('cron_runs').insertOne({

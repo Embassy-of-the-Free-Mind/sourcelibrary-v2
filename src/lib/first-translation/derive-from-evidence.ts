@@ -71,6 +71,10 @@ function methodToResolver(method: FirstTranslationAttempt['method']): Resolver {
     case 'claude_subagent_verify': return 'tier2_agent';
     case 'human': return 'human';
     case 'tier0_linked': return 'tier0_linked';
+    // Constituent-scoped deterministic registry match (#3785,
+    // ft-constituent-catalog-match.mjs) — the same Tier-0 mechanism applied to
+    // a container's sub-work, so the Tier-0 resolver owns it.
+    case 'constituent_catalog_match': return 'tier0_linked';
     // tier1_catalog and the gemini instruments are all catalog-grounded searches.
     default: return 'tier1_catalog';
   }
@@ -349,7 +353,9 @@ export function deriveVerdictFromAttempts(
     const targetedRefutes = attempts.filter(
       (a) =>
         a.result === 'none' &&
-        a.verdict === 'not_found' &&
+        // ft-verify-gate historically prefixed the direction ('demote_verify:not_found');
+        // ledger rows are append-only, so the legacy string is accepted forever (#3785).
+        (a.verdict === 'not_found' || a.verdict === 'demote_verify:not_found') &&
         !isNotApplicable(a) &&
         hasSearchCoverage(a),
     );

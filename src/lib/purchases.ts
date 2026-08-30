@@ -31,12 +31,17 @@ export async function classifyImageAccess(bookId: string): Promise<ImageAccess> 
   const db = await getDb();
   const book = await db.collection('books').findOne(
     { $or: [{ id: bookId }, { _id: bookId as any }] },
-    { projection: { 'image_source.license': 1, 'image_source.provider': 1, year_published: 1 } },
+    { projection: { 'image_source.license': 1, 'image_source.provider': 1, year: 1 } },
   );
   if (!book) return 'blocked';
   const license = book.image_source?.license;
   const provider = book.image_source?.provider;
-  const year = (book as { year_published?: number }).year_published;
+  // `year` — NOT `year_published`, which no book has ever had (#4131). This
+  // projected and read a nonexistent field, so the pre-1930 release below never
+  // fired once and 4,840 public-domain library scans stayed blocked on an
+  // `unknown` license. `books.published` is the free-text twin and must never be
+  // parsed for this (#3718); `year` is the numeric one, on 49,959 books.
+  const year = (book as { year?: number }).year;
   if (provider === 'bph') return 'open';
   if (typeof year === 'number' && year < 1930) return 'open';
   if (license && NC_LICENSE_PATTERNS.some(p => p.test(license))) return 'nc-free';

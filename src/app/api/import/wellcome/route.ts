@@ -7,8 +7,8 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
+import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 
 export const maxDuration = 300;
 
@@ -89,7 +89,10 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch work details from Wellcome Catalogue API
     const workRes = await fetch(
-      `https://api.wellcomecollection.org/catalogue/v2/works/${work_id}?include=items`
+      // `languages`, `subjects` and `production` must be requested explicitly —
+      // the Wellcome API omits them otherwise, so the language/categories/date
+      // fallbacks below silently resolved to 'Unknown' on every import (#4311).
+      `https://api.wellcomecollection.org/catalogue/v2/works/${work_id}?include=items,languages,subjects,production,contributors`
     );
 
     if (!workRes.ok) {
@@ -193,14 +196,14 @@ export const POST = withCuratorAuth(async (request, session) => {
       'Unknown';
 
     // Cross-source dedup check
-    const dedupResult = await checkDuplicate(db, {
+    const gate = await acquisitionGate(db, {
       title, author, year, published,
       image_source: { provider: 'wellcome', identifier: work_id, iiif_manifest: manifestUrl, source_url: `https://wellcomecollection.org/works/${work_id}` },
-    });
-    if (dedupResult.isDuplicate) {
-      const best = dedupResult.matches[0];
+    }, { importer: 'api:wellcome' });
+    if (!gate.ok) {
+      const best = gate.matches[0];
       return NextResponse.json(
-        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
+        { error: gate.message, existingId: best?.matchedBookId ?? null, reason: gate.reason, evidence: gate.evidence, matches: gate.matches },
         { status: 409 }
       );
     }
@@ -256,7 +259,11 @@ export const POST = withCuratorAuth(async (request, session) => {
         ? { year: publishedToYear(typeof year === 'number' ? year : published)! }
         : {}),
       ...(requestCollections?.length ? { collections: requestCollections } : {}),
-      ...(work_id ? { work_id } : {}),
+      // NOTE: do NOT write the Wellcome id into `work_id` — that field is our
+      // work-identity key (`kr:` / `local:` / `wikidata:` ids, see
+      // .claude/docs/invariants/work-identity.md). Writing a provider id there
+      // minted 8 bogus work identities before this was caught (#4311). The
+      // provider id belongs in `wellcome_id` / `image_source.identifier` only.
       wellcome_id: work_id,
       wellcome_b_number: bNumber,
       thumbnail: getThumbnailUrl(0),
@@ -280,6 +287,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       status: 'draft',
       hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ image_source: { provider: 'wellcome', identifier: work_id, iiif_manifest: manifestUrl } }),
+      source_fingerprints: gate.fingerprints,
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
       created_at: new Date(),
@@ -289,6 +297,9 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Classify original-vs-translation at import (issue #2395).
     applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
+    // The claim now points at the row it produced, so it stops being
+    // reclaimable and the acquisition ledger is joinable to `books`.
+    await confirmClaims(db, gate.fingerprints, bookIdStr);
 
     // Create pages
     const pageDocs = [];
@@ -313,9 +324,6 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     await db.collection('pages').insertMany(pageDocs);
-
-    // Queue preview OCR for early metadata enrichment (non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     // Audit log (non-blocking)
     logAuditEvent({

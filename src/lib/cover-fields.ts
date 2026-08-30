@@ -57,6 +57,21 @@ export interface CoverUpdate {
   image_display: string;
   image_thumb: string;
 
+  // 500px AVIF card variant — always CLEARED here, never carried over.
+  //
+  // `image_card` names one specific page's `-card.avif` object. Changing the
+  // cover changes which page that must be, so a pointer that survives a cover
+  // change does not go stale in the harmless sense (a missing image) — it
+  // renders the OLD page as the new cover, which is worse than no card at all.
+  // Clearing is the only safe default: the reader falls back to `image_display`
+  // until the backfill or the ingest pipeline writes the new page's variant.
+  //
+  // Read-side belt and braces: `getBookThumbnailUrl(book, 'card')` also checks
+  // that `image_card` names the same page as `image_display` and ignores it if
+  // not — because the postmortem in this file's header is precisely about cover
+  // writers that bypassed the helper and were missed.
+  image_card: null;
+
   // Legacy mirrors (BPH embed API and a few CMS pages still read these)
   thumbnail: string;
   thumbnail_blob: string;
@@ -111,6 +126,8 @@ export function buildCoverUpdate(
   const update: CoverUpdate = {
     image_display: url,
     image_thumb: thumbUrl,
+    // Cleared, not carried: see the field's note on CoverUpdate above.
+    image_card: null,
     thumbnail: url,
     thumbnail_blob: thumbUrl,
     thumbnail_source: opts.source,

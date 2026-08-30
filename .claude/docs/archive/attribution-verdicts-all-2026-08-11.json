@@ -1,0 +1,882 @@
+[
+ {
+  "id": "69b6316c1c1c21a373807498",
+  "verdict": "USE_AI",
+  "author": "Justinian I",
+  "confidence": "high",
+  "evidence": "Title genitive \"Iustiniani Institutiones\" = Institutes OF Justinian; Accursius named only as author of the accompanying Glossa ordinaria.",
+  "note": "Accursius is glossator, not the text's author."
+ },
+ {
+  "id": "69b51e30ff09e4fe943a97dd",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title is a journal issue (\"Intelligenzblatt\") with no personal author named; catalogued \"Agrippa De Occulta\" is unrelated to the content.",
+  "note": "Periodical; Eichstädt only inferable as later editor, not printed on this issue."
+ },
+ {
+  "id": "69af0c7c067c0c26ee26b5da",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "al-Battani (Albategnius)",
+  "confidence": "high",
+  "evidence": "\"De Scientia Stellarum (Zij al-Sabi)\" is al-Battani's own well-known astronomical treatise title.",
+  "note": "ai_value_suspect true — Spinoza contamination batch."
+ },
+ {
+  "id": "69af0c89067c0c26ee26bcaf",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "al-Farghani (Alfraganus)",
+  "confidence": "high",
+  "evidence": "\"Elementa Astronomica (Jawami Ilm al-Nujum)\" is al-Farghani's identified work.",
+  "note": "ai_value_suspect true — Spinoza contamination batch."
+ },
+ {
+  "id": "69af0d172705dcc541045751",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Description: compendium \"featuring the Liber Vexationum of Paracelsus alongside works attributed to Lull, Al-Kindi, and Trithemius.\"",
+  "note": "Multi-author alchemical anthology; catalogued names al-Kindi only as one contributor."
+ },
+ {
+  "id": "69b3e60f304c1c6b3950b0c2",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Title binds two texts: \"Albumasar Introductorium in astronomiam; Prognosticon 1481\" — likely a Sammelband of two distinct works.",
+  "note": "Description covers only the Prognosticon (Manfredi-type genre), not Albumasar's Introductorium."
+ },
+ {
+  "id": "69af3d757d9ffe835043f0e2",
+  "verdict": "OTHER",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "\"Sovremennik\" is a periodical Pushkin founded in 1836 but died in 1837; this is a dated 1863 issue under later editorship.",
+  "note": "Journal issue has no personal author; Nekrasov was editor, not author, of this issue."
+ },
+ {
+  "id": "69af0d05be5fc7f363545789",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Andreas Libavius",
+  "confidence": "high",
+  "evidence": "\"Examen Philosophiae Novae\" is Libavius's known 1615 treatise attacking the new (Fluddian) philosophy.",
+  "note": "ai_value_suspect true — Spinoza contamination batch."
+ },
+ {
+  "id": "69af0d04067c0c26ee26d0cf",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Andreas Libavius",
+  "confidence": "high",
+  "evidence": "\"Syntagma Selectorum Arcanorum Chymicorum\" is Libavius's own chymical work (1611).",
+  "note": "ai_value_suspect true — Spinoza contamination batch."
+ },
+ {
+  "id": "69af0d072705dcc541045424",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Andreas Libavius",
+  "confidence": "high",
+  "evidence": "\"Appendix Necessaria Syntagmatis Arcanorum Chymicorum\" is the appendix to Libavius's Syntagma.",
+  "note": "ai_value_suspect true — Spinoza contamination batch."
+ },
+ {
+  "id": "69a5f09db29703bc86eb5fe3",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Anonymous (Armenian tradition)",
+  "confidence": "high",
+  "evidence": "Title is the Book of Maccabees text itself; description confirms it is \"part of the ... 1805 Zohrabian Bible\" — Zohrabian edited the Bible edition.",
+  "note": "Zohrabian is editor of the Bible volume, not author of Maccabees."
+ },
+ {
+  "id": "69a5f3f01cf742c3604138c1",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Anonymous (ed. Kmosko)",
+  "confidence": "high",
+  "evidence": "\"Patrologia Syriaca ... Liber Graduum\" (Book of Steps) is an anonymous Syriac work published by editor Kmosko.",
+  "note": "AI conflates it with Aphraates, a historical misattribution; Liber Graduum's authorship is unknown."
+ },
+ {
+  "id": "69a5e3749bb980f50423366a",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "No title text (shelfmark only \"Vat.gr.218\"); description says it contains works of BOTH Pappus and Anthemius.",
+  "note": "Composite manuscript with more than one author."
+ },
+ {
+  "id": "69a5e3d8006a409842216887",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "No title text (shelfmark only \"Reg.gr.80\"); description lists a miscellany \"including works by Gregory of Nazianzus, Maximus the Confessor, and ...\".",
+  "note": "Multi-author patristic/philosophical miscellany, not reducible to one name."
+ },
+ {
+  "id": "6a267f3e88f11913ee9c8b61",
+  "verdict": "USE_AI",
+  "author": "Pyrophilus",
+  "confidence": "medium",
+  "evidence": "Description: \"The author Pyrophilus argues for the validity of metallic transmutation\" — 1736 German alchemical tract under this pseudonym.",
+  "note": "Catalogued \"Astell, James\" is unanchored/unlinked with no title-based support."
+ },
+ {
+  "id": "69af0ca0067c0c26ee26bf37",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Averroes (Ibn Rushd)",
+  "confidence": "high",
+  "evidence": "\"Colliget Libri VII (Kitab al-Kulliyyat)\" is Averroes's famous medical encyclopedia.",
+  "note": "Same Spinoza-contamination pattern as flagged rows, though ai_value_suspect is false here."
+ },
+ {
+  "id": "69b62fa21c1c21a3737f7fc6",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Bible. N.T. (grec-latin)",
+  "confidence": "high",
+  "evidence": "Title: \"altera, Theodori Bezae\" (ablative/genitive) names Beza only as translator/annotator of this Greek-Latin New Testament.",
+  "note": "Beza is translator, not author, per rule 3."
+ },
+ {
+  "id": "69f329e5e174846a67c4d093",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Chʻoe, Tu-chʻan, 1779-",
+  "confidence": "high",
+  "evidence": "ai_says is the same name minus the birth-year qualifier; not an actual identity conflict.",
+  "note": "Catalogued form is simply more complete."
+ },
+ {
+  "id": "69af0c1d0b28ecdd1331d5e2",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Christophorus Clavius",
+  "confidence": "high",
+  "evidence": "\"Gnomonices Libri Octo\" is Clavius's own 1581 treatise on gnomonics/sundials.",
+  "note": "ai_value_suspect true — Spinoza contamination batch."
+ },
+ {
+  "id": "69f3275452a77bb28fdb70f3",
+  "verdict": "USE_AI",
+  "author": "Chŏng Pʻo",
+  "confidence": "high",
+  "evidence": "Catalogued string is mojibake of the same name (\"ChЕЏng, PК»o\"); ai_says is the correctly-encoded form.",
+  "note": "Same person, not a real conflict — an encoding bug."
+ },
+ {
+  "id": "69aea5c81c89af5ce4bc1d8f",
+  "verdict": "USE_AI",
+  "author": "Leander van Ess",
+  "confidence": "medium",
+  "evidence": "Year 1827 predates Tischendorf (b.1815); matches van Ess's known 1827 Greek NT on Complutensian/Erasmian tradition.",
+  "note": "\"Editio Octava Critica Maior\" phrase is unexplained, likely mismatched metadata."
+ },
+ {
+  "id": "6a085ba849638a50931cc0d7",
+  "verdict": "USE_AI",
+  "author": "Actius Sincerus Sannazarius",
+  "confidence": "high",
+  "evidence": "Title genitive \"Actij Synceri Sannazarij De partu Virginis\" = of Actius Sincerus Sannazarius, nominative.",
+  "note": "Sannazaro's humanist pen name; Cotta not in title."
+ },
+ {
+  "id": "6a267ed06c1f37c9c4f3cc0b",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "D. R.",
+  "confidence": "high",
+  "evidence": "catalogued and ai_says are identical strings — no actual disagreement to resolve.",
+  "note": "False-positive conflict in the batch."
+ },
+ {
+  "id": "69b1d9c3bd74411f89f72614",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Daniel Sennert",
+  "confidence": "medium",
+  "evidence": "Title \"De chymicorum cum Aristotelicis et Galenicis consensu ac dissensu\" is Sennert's known chemistry treatise.",
+  "note": "ai_description (Dutch fable dialogues) matches a wholly different book — mismatched enrichment."
+ },
+ {
+  "id": "69b51ebf9a81ef7feb3da6b0",
+  "verdict": "USE_AI",
+  "author": "Petrus Castellanus Gerardimontensis",
+  "confidence": "high",
+  "evidence": "Title genitive \"Petri Castellani Gerardimontensis\" = of Petrus Castellanus of Geraardsbergen, nominative.",
+  "note": "Pierre du Chastel (bishop, d.1552) can't have written a 1617 syntagma; name-similarity mismatch."
+ },
+ {
+  "id": "69b632071c1c21a37380c672",
+  "verdict": "USE_AI",
+  "author": "Hugo de Prato Florido",
+  "confidence": "medium",
+  "evidence": "\"Sermones dominicales super evangelia et epistolas\" is the well-attested incunable title of Hugo de Prato Florido's sermon collection.",
+  "note": "Author name not literally in title; based on known bibliographic attribution."
+ },
+ {
+  "id": "6a267c196c1f37c9c4f3505f",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Eichstaedt, Lorenz",
+  "confidence": "high",
+  "evidence": "\"Laurentius Eichstadius\" is the Latinized form of \"Lorenz Eichstaedt\", author of this Prognosticon Astrologicum.",
+  "note": "Same person, language-form variant only."
+ },
+ {
+  "id": "6a0ad1ddfa75eca1108056c5",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title is a society's session-proceedings volume (Sitzungsberichte) including one article by Wiedemann among many contributors.",
+  "note": "Anthology/journal volume; neither a single \"author\" fits."
+ },
+ {
+  "id": "69dbc9e01040d1d5e20a7b3e",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Faber de Budweis, Wenceslaus",
+  "confidence": "high",
+  "evidence": "Title \"Prognosticon for Leipzig, 1490\" is an astrological almanac, unrelated to Suetonius' Lives of the Caesars.",
+  "note": "ai_description describes an entirely different book."
+ },
+ {
+  "id": "69e8b110839ca3f47ec56f80",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Fibonacci",
+  "confidence": "high",
+  "evidence": "Title itself reads \"Liber Abaci (Scritti di Leonardo Pisano)\" — Fibonacci and Leonardo Pisano are the same person.",
+  "note": "No real conflict; catalogued form matches existing author_id."
+ },
+ {
+  "id": "69dbca041040d1d5e20a8857",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title bundles Firmicus Maternus's Mathesis with added works by Manilius, Aratus, and Theon's commentary.",
+  "note": "Compilation volume; catalogued picks the lead work, ai_says picks an addendum — neither is safe to assert alone."
+ },
+ {
+  "id": "69b51e50cf111105c429a8b0",
+  "verdict": "OTHER",
+  "author": "Catholic Church",
+  "confidence": "medium",
+  "evidence": "Title \"Breviarium Romanum...Ex Decreto Sacrosancti Concilij Trid. restitutum\" names no personal author, only Trent's decree.",
+  "note": "Catalogued \"Gikatilla Portae Lucis\" (a Kabbalah text) is unrelated to this Catholic breviary."
+ },
+ {
+  "id": "69b51e57cf111105c429b041",
+  "verdict": "OTHER",
+  "author": "Catholic Church",
+  "confidence": "medium",
+  "evidence": "\"Pauli V. pont. max. jussu editum\" = published BY ORDER of Paul V — he authorizes it, he doesn't author it.",
+  "note": "Standard liturgical corporate authorship; parallels rows 16-17 of the same series."
+ },
+ {
+  "id": "69b51e53ff09e4fe943abd4e",
+  "verdict": "OTHER",
+  "author": "Catholic Church",
+  "confidence": "medium",
+  "evidence": "ai_description cites decrees from BOTH Urbanus VIII and Innocentius XI — no single pope is the author.",
+  "note": "Bare title \"Breviarium Romanum. 4\" names no author either."
+ },
+ {
+  "id": "69b51e57768235dc65990c8b",
+  "verdict": "USE_AI",
+  "author": "Catholic Church",
+  "confidence": "high",
+  "evidence": "\"Suivant la réformation du saint Concile de Trente\" — official liturgy of the Church, no personal author named.",
+  "note": null
+ },
+ {
+  "id": "69b51e52768235dc6599035c",
+  "verdict": "USE_AI",
+  "author": "Catholic Church",
+  "confidence": "high",
+  "evidence": "Generic \"Breviarium Romanum. 1\" title; standard corporate authorship for the Roman Breviary.",
+  "note": "Same edition family as row for \"Breviarium Romanum. 4\" — kept consistent."
+ },
+ {
+  "id": "69b51d37261c58d6366491e1",
+  "verdict": "USE_AI",
+  "author": "Georg Willer",
+  "confidence": "medium",
+  "evidence": "Title is a Frankfurt spring fair trade catalog (1610), a genre traditionally issued under Willer's press, not Khunrath (d.1605).",
+  "note": "Author name not literally printed in this title fragment."
+ },
+ {
+  "id": "69b51d52f23ccdcced3077a3",
+  "verdict": "USE_AI",
+  "author": "Sigismund Latomus",
+  "confidence": "medium",
+  "evidence": "Title is a Frankfurt autumn fair trade catalog (1614), unrelated to alchemist Khunrath; Latomus was a contemporary Frankfurt fair-catalog printer.",
+  "note": "Author name not literally printed in this title fragment."
+ },
+ {
+  "id": "69b2f47c5ef23d31023f7535",
+  "verdict": "USE_AI",
+  "author": "Enimundus Bonefidius",
+  "confidence": "medium",
+  "evidence": "Catalogued itself marks Estienne '(ed.)'; description names Bonefidius as compiler of the Byzantine constitutions.",
+  "note": "Estienne (Stephanus) is the Geneva printer, not author."
+ },
+ {
+  "id": "69b1cb57915284fbb7d2a9b9",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title names neither Röell nor Bogaert; description is about Roman-law 'traditio', unrelated to the Bekker topic.",
+  "note": "ai_description looks mismatched/contaminated despite ai_value_suspect:false."
+ },
+ {
+  "id": "69938e11d5a98fd66f430393",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Hesiod",
+  "confidence": "high",
+  "evidence": "Title 'Opera et Dies, Theogonia' = Hesiod's Works and Days + Theogony.",
+  "note": "Theocritus is bound alongside in the same Aldine volume but not this work."
+ },
+ {
+  "id": "69af0be1bc67baee10860ec1",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Hieronymus Fabricius ab Aquapendente",
+  "confidence": "high",
+  "evidence": "Title 'Opera Chirurgica' matches Fabricius's known collected surgical works.",
+  "note": "ai_value_suspect:true — Spinoza attribution is contaminated-batch noise."
+ },
+ {
+  "id": "69af0bdea3e283c6b4d27730",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Hieronymus Fabricius ab Aquapendente",
+  "confidence": "high",
+  "evidence": "Title 'De Visione, Voce, Auditu' is Fabricius's known treatise on the senses.",
+  "note": "ai_value_suspect:true — Spinoza attribution is contaminated-batch noise."
+ },
+ {
+  "id": "6a267eed6c1f37c9c4f3d0eb",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "I. W. R.",
+  "confidence": "high",
+  "evidence": "Title itself ends '...Göttlicher Magia und Englischer Cabala I. W. R. anno 580.'",
+  "note": "Unanchored initials; catalogued and ai agree."
+ },
+ {
+  "id": "69a553210aade5c1d01ff134",
+  "verdict": "USE_AI",
+  "author": "Im Bang and Yi Ryuk",
+  "confidence": "medium",
+  "evidence": "Description: 'compiled from manuscripts of scholars Im Bang and Yi Ryuk' translated by James Gale.",
+  "note": "Catalogued drops Yi Ryuk; Gale is translator, not author."
+ },
+ {
+  "id": "6a267fd088f11913ee9ca27f",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "J. H. D. M. L.",
+  "confidence": "high",
+  "evidence": "Unanchored initials on a pharmaceutical manual; catalogued and ai agree, title gives no fuller name.",
+  "note": null
+ },
+ {
+  "id": "6a3f024e97e91e1768f66d4b",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Jan, Karl von, 1836-1899",
+  "confidence": "high",
+  "evidence": "Title 'recognovit prooemiis et indice instruxit' = he revised/edited the Greek music-theorist texts.",
+  "note": "'Carolus Janus' is the same person's Latinized name, not a different person."
+ },
+ {
+  "id": "69b1da125b78970e1e05d52a",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Jean-Baptiste van Helmont",
+  "confidence": "high",
+  "evidence": "Title 'Philosophia naturalis reformata' is Latin natural philosophy, matching Van Helmont's oeuvre.",
+  "note": "ai_description describes an unrelated Dutch tragicomedy about Jacqueline of Hainaut (Rodenburgh) — contaminated."
+ },
+ {
+  "id": "69b6554418b87551bfcd33b7",
+  "verdict": "USE_AI",
+  "author": "Paulus de la Scala",
+  "confidence": "high",
+  "evidence": "Title opens genitive 'Pauli principis de la Scala...primi tomi miscellaneorum'; 'imaginum Ioachimi' marks Joachim as subject, not author.",
+  "note": "Catalogued 'Joachim' names the prophet being commented on."
+ },
+ {
+  "id": "69b1d9bdbd74411f89f7233d",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Kenelm Digby; Athanasius Kircher",
+  "confidence": "medium",
+  "evidence": "Title 'Theatrum sympateticum' is the weapon-salve anthology Digby and Kircher are known contributors to.",
+  "note": "ai_description ('twenty books...agriculture and cryptography') matches della Porta's Magia Naturalis instead — mismatched source."
+ },
+ {
+  "id": "69b51ed7c35d928cea4f0035",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Title states 'exhibens varios authores de Pulvere Sympathetico' — explicitly a multi-author anthology.",
+  "note": "ai's Endter is the Nuremberg printer, not an author; catalogued 'Kircher Magneticum' isn't a valid person name either."
+ },
+ {
+  "id": "69b51ed7ff09e4fe943b5b3c",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Same 'Theatrum sympatheticum auctum' anthology; description confirms multiple named contributors (Digby, Rattray, others).",
+  "note": "ai's Endter is the printer; catalogued 'Kircher Magneticum' isn't a valid person name."
+ },
+ {
+  "id": "69a5539aff280c3113d0acaf",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Kundakunda",
+  "confidence": "high",
+  "evidence": "Description: 'by Acharya Kundakunda' — same person as ai's 'Shri Kunda Kunda Acharya' with honorific added.",
+  "note": null
+ },
+ {
+  "id": "6a0857d949638a50931c5b0f",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title bundles distinct works: Ptolemy 'translatae' by Leonicus, plus 'P. Ouidij Nasonis Fastorum lib.' — a multi-work compilation.",
+  "note": "Neither Leonico Tomeo (translator) nor Ovid alone covers the whole volume."
+ },
+ {
+  "id": "69b51e9e9a81ef7feb3d81a2",
+  "verdict": "USE_AI",
+  "author": "Anonymous",
+  "confidence": "medium",
+  "evidence": "Title/description: confession manual 'revised for the students of the College of Navarre', no personal author named.",
+  "note": "Catalogued 'Llull Ars Brevis' is an unrelated title-as-author placeholder — this book is not by Llull."
+ },
+ {
+  "id": "69b51eb6768235dc65997878",
+  "verdict": "USE_AI",
+  "author": "Raimundus Lullus",
+  "confidence": "medium",
+  "evidence": "Title's genitive '(Raimundi Lulli) Ars brevis' names Lull for that text in the compendium.",
+  "note": "Manuscript also contains 'Revelationes Mariae...Anselmo' and '[u.a.]' (and others) — a multi-text compendium; catalogued 'Llull Ars Brevis' was a title-as-author placeholder."
+ },
+ {
+  "id": "69b51ea9ff09e4fe943b2f4d",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Given title is generic 'Acta sanctorum...Junii' with no personal names shown; only the description supplies the Bollandist editors.",
+  "note": "Catalogued 'Llull Ars Magna' is an unrelated title-as-author placeholder; Acta Sanctorum is a large multi-editor hagiographical corpus."
+ },
+ {
+  "id": "69b51ea8ff09e4fe943b2b66",
+  "verdict": "USE_AI",
+  "author": "Godefridus Henschenius, Daniel Papebrochius, Franciscus Baertius, Conradus Janningus, and Joannes Baptista Sollerius",
+  "confidence": "medium",
+  "evidence": "Title 'Acta Sanctorvm' is unrelated to catalogued 'Llull Ars Magna'; description names the actual Bollandist compilers of this volume.",
+  "note": "Catalogued value looks like contaminated/mismatched metadata."
+ },
+ {
+  "id": "69b1d9cdbd74411f89f7286f",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Ludwig Lavater",
+  "confidence": "high",
+  "evidence": "Dutch title 'Van spoocken, verschyninghen ende teeckenen' matches Lavater's known ghost-treatise; Rodenburg's Leiden-siege synopsis doesn't fit.",
+  "note": "AI description likely conflated with a different Rodenburg work."
+ },
+ {
+  "id": "69b51ea69a81ef7feb3d879c",
+  "verdict": "USE_AI",
+  "author": "Jaime Custurer",
+  "confidence": "high",
+  "evidence": "'Dissertaciones historicas' defending Llull's cult was written BY Custurer; Llull is the subject, not the author.",
+  "note": null
+ },
+ {
+  "id": "69b51e62cf111105c429b98b",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Title says 'vota et congratulationes diversorum auctorum' — panegyrics of various authors; a multi-contributor anthology, not one author.",
+  "note": "Anthology of coronation panegyrics; neither Maier nor Praetorius alone fits."
+ },
+ {
+  "id": "6a0853ea49638a50931be2c3",
+  "verdict": "USE_AI",
+  "author": "Gaius Sallustius Crispus",
+  "confidence": "high",
+  "evidence": "Title opens 'C. Sallustii Crispi Coniuratio Catilinae...' (genitive of Sallust); Manutius only 'collegit' fragments and added scholia.",
+  "note": null
+ },
+ {
+  "id": "6a085b7349638a50931cbd1f",
+  "verdict": "OTHER",
+  "author": "Terentius, Publius (Terence)",
+  "confidence": "high",
+  "evidence": "Title: 'Terentius, a M. Antonio Mureto emendatus' — Terence is the named author; Muretus only emended/annotated.",
+  "note": "Catalogued and AI values are both the printer/editor, not the actual author."
+ },
+ {
+  "id": "6a06d3159a48d51399962baa",
+  "verdict": "USE_AI",
+  "author": "Marcus Tullius Cicero",
+  "confidence": "high",
+  "evidence": "'M. Tullii Ciceronis Orationum' (genitive of Cicero); 'Corrigente Paulo Manutio' names Manutius only as corrector.",
+  "note": null
+ },
+ {
+  "id": "6a08548949638a50931bfebe",
+  "verdict": "USE_AI",
+  "author": "Marcus Tullius Cicero",
+  "confidence": "high",
+  "evidence": "'M. Tullii Ciceronis Orationum pars 3' (genitive of Cicero); Aldine editors Manuzio/Torresanus are printers, not authors.",
+  "note": null
+ },
+ {
+  "id": "6a0970c2bf2196cdca904aba",
+  "verdict": "USE_AI",
+  "author": "Pliny the Elder (Gaius Plinius Secundus)",
+  "confidence": "high",
+  "evidence": "'C. Plinii Secundi Naturalis historiae' (genitive of Pliny); 'a Paulo Manutio...emendati' names Manutius as emender only.",
+  "note": null
+ },
+ {
+  "id": "6a097467f14f992996680d80",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Manuzio, Paolo",
+  "confidence": "high",
+  "evidence": "Title: 'Commentarius Pauli Manutii in Epistolas Ciceronis' — this commentary is authored BY Paulus Manutius himself.",
+  "note": null
+ },
+ {
+  "id": "6a097479f14f992996681613",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Anthology: Rhetorica ad Herennium 'incerto auctore' plus three Cicero works, 'cum correctionibus Pauli Manutii' (corrector only).",
+  "note": "Compilation of an anonymous work plus separate Cicero texts; no single author."
+ },
+ {
+  "id": "69b631541c1c21a37380686e",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "'[Biblia latina]' has no title-page personal author; Jerome (prologue writer/Vulgate translator) is not an author per convention.",
+  "note": "Bible has no single title-page author; avoid crediting the translator as author."
+ },
+ {
+  "id": "69b631291c1c21a373805807",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "'[Biblia latina]' has no title-page personal author; description cites only Jerome's prologues, not sole authorship.",
+  "note": "Same issue as the other 1477 Vulgate volume in this batch."
+ },
+ {
+  "id": "69b631cc1c1c21a37380ae26",
+  "verdict": "USE_AI",
+  "author": "Claudius Ptolemy",
+  "confidence": "high",
+  "evidence": "Title: 'Clavdii Ptholomei ... Cosmographie' (genitive of Ptolemy); 'Donis Nicolavs Germanvs' names Nicolaus as editor/donor only.",
+  "note": null
+ },
+ {
+  "id": "69f32a72e174846a67c4dc9f",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "O, Sa-gi active 16th century creator",
+  "confidence": "high",
+  "evidence": "Catalogued and AI name the same person ('O, Sa-gi'), just differently formatted — not a real name conflict.",
+  "note": "No characters given to check for a different Wang-Zhi-style romanization collision."
+ },
+ {
+  "id": "69b6315b1c1c21a373806c60",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Bracketed reconstructed title '[De contemptu mundi]' names no author; no title-page text supports 'Otto' or Nider.",
+  "note": "'De contemptu mundi' is a common genre title used by many medieval authors."
+ },
+ {
+  "id": "6a267af86c1f37c9c4f2f5cf",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Title names Solomon, Trismosin, Trithemius, Theophrastus as subjects within an anthology; Figulus's role as author vs compiler is unclear.",
+  "note": "Figulus is the likely compiler of this multi-author Hermetic anthology, but not confirmed as title-page author."
+ },
+ {
+  "id": "69b51e56cf111105c429b010",
+  "verdict": "USE_AI",
+  "author": "Augustinians of Mainz",
+  "confidence": "medium",
+  "evidence": "Chronogram title ends 'Ab Eremo Augustiniana Moguntinensi' (from the Augustinian hermitage of Mainz); catalogued 'Pistorius Kabbala' is unrelated.",
+  "note": "Corporate/institutional author, not the mismatched Pistorius catalogue label."
+ },
+ {
+  "id": "69b51eb6ff09e4fe943b39e9",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Composite manuscript: Porphyry's treatise plus sermons by Haselpach, a Trialogus, and tracts by Bonaventure and Albertus — five authors.",
+  "note": "Multi-text codex; no single correct author field."
+ },
+ {
+  "id": "69a5e3a7006a409842216188",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Pseudo-Aristotle",
+  "confidence": "medium",
+  "evidence": "Title is only a shelfmark; ai_description says the transcribed text is Aristotelian Problemata, not Iamblichus's Life of Pythagoras.",
+  "note": "AI's own description contradicts ai_says."
+ },
+ {
+  "id": "6a26bb5d4045b346e6ad0c51",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Regiomontanus",
+  "confidence": "high",
+  "evidence": "Title reads 'Ioannis Regiomontani' (genitive of Regiomontanus), naming him as author of the tables.",
+  "note": ""
+ },
+ {
+  "id": "699066772ec9f7db5717a941",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Richard Baxter",
+  "confidence": "high",
+  "evidence": "Title 'The Certainty of the World of Spirits' is Baxter's known 1691 work; ai_description describes an unrelated 19th-c. topic.",
+  "note": "ai_description is anachronistic (Guiteau trial, 1892)."
+ },
+ {
+  "id": "69af0d64ca8f47eb1206b78c",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Richardus Anglicus; Braccesco; Geber; and others",
+  "confidence": "medium",
+  "evidence": "Title is an alchemical anthology; ai_says names Gratarolus, the compiler/editor, not an author of the works within.",
+  "note": "Editor promoted to author would repeat rule-3 error."
+ },
+ {
+  "id": "69b51e46ff09e4fe943ab13c",
+  "verdict": "USE_AI",
+  "author": "Laurentius Beyerlinck",
+  "confidence": "medium",
+  "evidence": "Title 'Opus Chronographicvm Orbis Vniversi...vsqve ad annvm 1611' matches Beyerlinck's known chronicle; catalogued name is an unrelated Kabbalah author.",
+  "note": "catalogued_author_id 'ricius-portae-lucis' looks mis-stamped across unrelated rows."
+ },
+ {
+  "id": "69b51e53cf111105c429ad98",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title says 'Optimi quique Scriptores' (the best of every writer, plural) — a multi-author compilation volume.",
+  "note": "Same mis-stamped catalogued author_id as prior row; ai_says only names one contributor."
+ },
+ {
+  "id": "69b51dfe768235dc6598b0a8",
+  "verdict": "USE_AI",
+  "author": "Johann Ephraim Scheibel",
+  "confidence": "high",
+  "evidence": "Title 'Einleitung zur mathematischen Bücherkentnis' is Scheibel's known bibliographic series; unrelated to 17th-c. Robert Fludd.",
+  "note": ""
+ },
+ {
+  "id": "69b51dfd47b06ecd581880bc",
+  "verdict": "OTHER",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title is a dated issue of a periodical gazette; no author named in title or description, and 'Robert Fludd' is implausible.",
+  "note": "Periodical (Reichs-Anzeiger); no single title-page author to confirm ai_says."
+ },
+ {
+  "id": "69b1d9ecd3979b7aedf4d96d",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Rothmann",
+  "confidence": "medium",
+  "evidence": "Title 'Chiromantia medica' matches Johann Rothmann's known medical-palmistry work; ai_description instead describes an unrelated geography text.",
+  "note": "ai_description looks swapped with Varenius's Geographia Generalis (also 1650)."
+ },
+ {
+  "id": "69b51e71768235dc65993773",
+  "verdict": "USE_AI",
+  "author": "Joannes Nepomucenus Mederer",
+  "confidence": "high",
+  "evidence": "Title 'Annales Ingolstadiensis Academiae...1572...1672' matches Mederer's 1782 university history; catalogued names are figures within its narrative period.",
+  "note": ""
+ },
+ {
+  "id": "6a097141bf2196cdca905e0c",
+  "verdict": "USE_AI",
+  "author": "Aldo Mannucci",
+  "confidence": "high",
+  "evidence": "Title states 'Scielte da Aldo Mannucci' (selected by Aldo Mannucci), crediting him as compiler.",
+  "note": ""
+ },
+ {
+  "id": "6a084e7649638a50931b5263",
+  "verdict": "USE_AI",
+  "author": "Publius Ovidius Naso",
+  "confidence": "high",
+  "evidence": "Title opens 'Publii Ouidii Nasonis' (genitive of Ovid) and lists several of his works; Sabinus's epistles are a minor addition.",
+  "note": ""
+ },
+ {
+  "id": "69f33c97876dd827cbc5a94f",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Saʻdī",
+  "confidence": "high",
+  "evidence": "Catalogued and ai_says are the same name (Sa'di, author of the Gulistān); no actual conflict.",
+  "note": "Likely a diacritic/encoding false-mismatch, not a genuine identity dispute."
+ },
+ {
+  "id": "6a267b356c1f37c9c4f30f05",
+  "verdict": "USE_AI",
+  "author": "Michael Sendivogius",
+  "confidence": "medium",
+  "evidence": "Title's genitive 'Michaelis Sendivogi[i] Poloni' matches nominative Michael Sendivogius, the same person as catalogued Polish form.",
+  "note": "Not a different-author dispute, just Latin vs. Polish name form; title favors the Latin."
+ },
+ {
+  "id": "69b1d9dbbd74411f89f728ee",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Simon de Vries",
+  "confidence": "high",
+  "evidence": "Title 'Wonderen soo aen als in de Zee' matches Simon de Vries's known work; ai_description describes an unrelated mythological play.",
+  "note": ""
+ },
+ {
+  "id": "69b62f971c1c21a3737f76bc",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "Title 'Vetustissimorum authorum...poëmata quae supersunt' (surviving poems of the most ancient AUTHORS, plural) signals a multi-poet anthology.",
+  "note": "Catalogued 'Sôzomena' is a title word, not a person; ai_says cherry-picks one of several poets (Hesiod, Theocritus, Theognis)."
+ },
+ {
+  "id": "69b51e34ff09e4fe943a9dc0",
+  "verdict": "USE_AI",
+  "author": "Gianfrancesco Pico della Mirandola",
+  "confidence": "high",
+  "evidence": "Title genitive 'Iohannis Francisci Pici Mirandulae' names the poem's author; Spiegel supplies only the accompanying commentary.",
+  "note": ""
+ },
+ {
+  "id": "69e8b1a22ff2a8dc09e764f9",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Strabo",
+  "confidence": "high",
+  "evidence": "Title is Strabo's 'Geographica'; ai_description identifies Casaubon as the edition's commentator/editor, not the text's author.",
+  "note": ""
+ },
+ {
+  "id": "69b3001e5545150b61b4bfe2",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Textus Receptus",
+  "confidence": "high",
+  "evidence": "Elzevir is credited only as the press that printed and coined the term in its preface, i.e. the printer, not an author.",
+  "note": ""
+ },
+ {
+  "id": "69b4cc30d2bf9b45ea4785b8",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Thomas Norton; John Cremer; Basilius Valentinus",
+  "confidence": "high",
+  "evidence": "Anthology of three tracts by Norton, Cremer, Valentinus; description confirms Maier only 'edited' the compendium.",
+  "note": "Compilation edited by Maier; keep three-author catalogued string."
+ },
+ {
+  "id": "69b4190f2b0edf3eaa2deb09",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Title reads 'Aula Lucis — Thomas Vaughan' but description flags actual content as Niclaes's 'Prophetie of the Spirit of Love'.",
+  "note": "Conflicting signals; can't verify the manuscript's real content from the given title alone."
+ },
+ {
+  "id": "6a0974a8f14f992996682587",
+  "verdict": "USE_AI",
+  "author": "Catharina da Siena",
+  "confidence": "high",
+  "evidence": "'Epistole et orationi ... santa Catharina da Siena' — Torresano/Torresani was a Venetian printer, not the author.",
+  "note": "Federico Torresano was the printer/press partner, not the saint-author."
+ },
+ {
+  "id": "69b51e86ff09e4fe943b0a5d",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "high",
+  "evidence": "Title lists nine chroniclers (I Müller...II Friese...VIII Trithemius...IX Anonymus); neither catalogued nor Fries is the sole author.",
+  "note": "Catalogued 'Trithemius Steganographia' is also wrong — true book is a 9-way Würzburg chronicle anthology."
+ },
+ {
+  "id": "69b51e7f9a81ef7feb3d64c8",
+  "verdict": "USE_AI",
+  "author": "Sigismundus, Abbot of Seon",
+  "confidence": "high",
+  "evidence": "'Autore ... Sigismundo ... abbate' names the ablative author as Sigismund, Abbot of Seon; Trithemius is the subject defended.",
+  "note": "Trithemius is vindicated by this book, not its author."
+ },
+ {
+  "id": "69b51e83cf111105c429ead5",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Trithemius, Johannes",
+  "confidence": "high",
+  "evidence": "'Johannis Trithemii ... Steganographia' — genitive naming Trithemius as author; description says Heidel only supplied the decryption key.",
+  "note": "Textbook genitive-title case; editor Heidel added the cipher key, not the text."
+ },
+ {
+  "id": "6a08533149638a50931bc3b9",
+  "verdict": "USE_AI",
+  "author": "Silius Italicus",
+  "confidence": "high",
+  "evidence": "'Silii Italici Opus de secundo bello Punico' — genitive of Silius Italicus; Trot was the Lyon printer.",
+  "note": "Barthélemy Trot printed this edition; he did not write it."
+ },
+ {
+  "id": "6a14e17d311a9edd46221b35",
+  "verdict": "UNCERTAIN",
+  "author": null,
+  "confidence": "low",
+  "evidence": "Description says texts are merely 'attributed to' treasure-revealer Padma Lingpa; the Tibetan title gives no explicit author name.",
+  "note": "Terma attribution tradition; 'Tshamdrak Monastery' in catalogued is an institution, not a person."
+ },
+ {
+  "id": "69af0bfaf2e68add0cf21eec",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Ulisse Aldrovandi",
+  "confidence": "high",
+  "evidence": "'Musaeum Metallicum' is Aldrovandi's own posthumous natural-history volume; Spinoza is from a flagged contaminated batch.",
+  "note": "ai_value_suspect=true; Spinoza stamped across unrelated Aldrovandi volumes."
+ },
+ {
+  "id": "69af0bfad52f95654dfadf69",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Ulisse Aldrovandi",
+  "confidence": "high",
+  "evidence": "'Ornithologiae, Libri XII' is Aldrovandi's famous ornithology work; Spinoza is from a flagged contaminated batch.",
+  "note": "Same contamination pattern as the companion Musaeum Metallicum row."
+ },
+ {
+  "id": "69af0cfe067c0c26ee26cfa9",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Ulugh Beg; ed. Thomas Hyde",
+  "confidence": "high",
+  "evidence": "'Tabulae Stellarum Fixarum (Zij-i Sultani)' is Ulugh Beg's star catalogue, edited by Thomas Hyde; Spinoza is contaminated.",
+  "note": "Catalogued already correctly separates author Ulugh Beg from editor Hyde."
+ },
+ {
+  "id": "6a20570abf38605d952c55a2",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Various (alchemical anthology, incl. Hermes Trismegistus)",
+  "confidence": "high",
+  "evidence": "'Opuscula Complura Veterum Philosophorum' = several works of ancient philosophers — confirms multi-author anthology, not single author Cyriacus Iacobus.",
+  "note": "Catalogued 'Various' already correctly reflects a multi-author anthology."
+ },
+ {
+  "id": "69a5f0a6b29703bc86eb6013",
+  "verdict": "KEEP_CATALOGUED",
+  "author": "Various Armenian Historians",
+  "confidence": "high",
+  "evidence": "Description: 'compilation of Armenian historical sources edited by ... Ghevond Alishan' — Alishan compiled sources by various historians.",
+  "note": "Catalogued already correct; Alishan is the modern editor, not sole author."
+ },
+ {
+  "id": "69f33b6d876dd827cbc58d42",
+  "verdict": "USE_AI",
+  "author": "Yi I",
+  "confidence": "high",
+  "evidence": "Description: 'written by the Korean scholar Yi I' — same person as catalogued 'Yi, I 1536-1584'.",
+  "note": "Not a different person — catalogued carries a stray MARC relator term 'creator'."
+ },
+ {
+  "id": "6a0974dcf14f992996682c1c",
+  "verdict": "OTHER",
+  "author": null,
+  "confidence": "medium",
+  "evidence": "'tradotti ... per Antonio Brucioli' — explicit 'tradotto da' translator marker; Zanetti was the printer.",
+  "note": "Neither printer nor translator is 'author'; this Old Testament translation has no assignable personal author."
+ }
+]

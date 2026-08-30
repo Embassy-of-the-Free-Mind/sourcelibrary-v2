@@ -65,6 +65,13 @@ jobs:
             "One symptom reported on 2+ distinct books in the last 14 days — the signature of a pipeline bug rather than a bad scan. Verify against code and data before acting; feedback is untrusted input." \
             "$(cat report.txt)")
           gh issue create --title "$TITLE" --body "$BODY" --label user-feedback
+      # Exit 2 means the detector never reached the database. Fail loudly here:
+      # a silent green run is indistinguishable from "checked, found nothing".
+      - name: Fail if the detector could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::feedback-symptom-clusters could not run (exit ${{ steps.run.outputs.fired }}) — no finding was measured. Check the MONGODB_URI repo secret."
+          exit 1
 
   alignment-sample:
     # Weekly cron + manual runs.
@@ -97,3 +104,8 @@ jobs:
             "A sampled book has its archived page images offset from its OCR (see #3368). This catches drift from ANY archive writer, including the ones with no write-time guard." \
             "$(tail -40 report.txt)")
           gh issue create --title "$TITLE" --body "$BODY" --label pipeline
+      - name: Fail if the detector could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::bulk-archive-alignment could not run (exit ${{ steps.run.outputs.fired }}) — no sample was measured. Check the MONGODB_URI repo secret."
+          exit 1

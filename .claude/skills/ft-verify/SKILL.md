@@ -22,6 +22,17 @@ limit. Context: issue #2564; `.claude/docs/ft-verification-runbook.md`.
   single-pass verdict.
 
 ## Inputs
+**Build the worklist from the LEDGER, never from a per-run report file** (#3881 pass 2 —
+`ft-ladder-*.json` files are run reports; they overwrite each other and go stale):
+
+    set -a; source .env.production.local; set +a
+    npx tsx scripts/eval/ft-rung3-queue.ts --out=queue.json          # full, bucket-prioritized
+    npx tsx scripts/eval/ft-rung3-queue.ts --bucket=demote_candidate --out=demotes.json
+
+Buckets arrive verification-priority ordered: `demote_candidate` (a claimed complete prior
+against a live badge — verify these FIRST), `uncertain`, `needs_review`, `hard_class`,
+`undocumented_absence`.
+
 A set of flips, each with: `book_id`, `work` (title), `author`, `lang`, and a **direction**:
 - `demote` — Stage 1 said *a prior exists* → verify the prior is REAL and COMPLETE.
 - `promote` — Stage 1 said *first / no prior* → try to REFUTE by FINDING a prior.

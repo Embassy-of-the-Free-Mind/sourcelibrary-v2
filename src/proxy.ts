@@ -4,7 +4,13 @@ import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { getProviderPrefixRedirect, TENANT_ROOT_PATHS } from '@/lib/provider-prefix';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 import { retiredCollectionMessage } from '@/lib/retired-collections';
-import { shouldRedirectToCanonical, canonicalUrl, aliasPolicyForHost } from '@/lib/alias-host-scope';
+import {
+  shouldRedirectToCanonical,
+  canonicalUrl,
+  aliasPolicyForHost,
+  isPreviewGatedPath,
+  previewGateResponse,
+} from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 
@@ -573,10 +579,13 @@ function getCorsHeaders(origin: string): Record<string, string> {
   };
 }
 
-// OG share card rotation. The four named variants live under public/.
-// Day-of-year mod 4 picks one — every link share gets a different look as
-// the week progresses, but a given calendar day is deterministic so the
-// crawler caches stay consistent within a day.
+// OG share card rotation. The four named variants live under public/, in one
+// set per locale: og-image-{variant}.jpg (English) and og-image-es-{variant}.jpg
+// (Spanish). Day-of-year mod 4 picks one — every link share gets a different
+// look as the week progresses, but a given calendar day is deterministic so the
+// crawler caches stay consistent within a day. The stable URLs the metadata
+// points at are /og-image.jpg and /og-image-es.jpg (see src/lib/og-locale.ts);
+// both are rewritten here.
 const OG_VARIANTS = ['cosmological', 'zodiac', 'illuminated', 'arcani'] as const;
 
 function pickOgVariantForToday(now: Date = new Date()): string {
@@ -638,11 +647,41 @@ export async function proxy(request: NextRequest) {
     });
   }
 
-  // Rewrite /og-image.jpg → /og-image-{variant}.jpg based on day of year.
+  // Preview deployments sit outside Cloudflare and their URLs are public
+  // (the Vercel bot posts them on every PR of this public repo), so book
+  // content there is withheld from anonymous callers. A session cookie or an
+  // Authorization header passes — branch review by a signed-in dev, and any
+  // credentialed script, keep working. Placed HERE, before the embed-CORS
+  // branch, because that branch passes /api/books straight through on a
+  // forgeable Origin header. See alias-host-scope.ts for why this is a loud
+  // 403 and not a redirect.
+  if (
+    aliasPolicyForHost(request.headers.get('host') || '') === 'preview' &&
+    isPreviewGatedPath(pathname)
+  ) {
+    const hasSession =
+      request.cookies.has('__Secure-authjs.session-token') ||
+      request.cookies.has('authjs.session-token');
+    const hasAuthHeader = Boolean(request.headers.get('authorization'));
+    if (!hasSession && !hasAuthHeader) {
+      return new NextResponse(previewGateResponse(pathname), {
+        status: 403,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+  }
+
+  // Rewrite /og-image.jpg → /og-image-{variant}.jpg (and the Spanish twin
+  // /og-image-es.jpg → /og-image-es-{variant}.jpg) based on day of year.
   // Must come before any DB work since this fires on every OG crawl.
-  if (pathname === '/og-image.jpg') {
+  if (pathname === '/og-image.jpg' || pathname === '/og-image-es.jpg') {
+    const localePrefix = pathname === '/og-image-es.jpg' ? 'es-' : '';
     const url = request.nextUrl.clone();
-    url.pathname = `/og-image-${pickOgVariantForToday()}.jpg`;
+    url.pathname = `/og-image-${localePrefix}${pickOgVariantForToday()}.jpg`;
     return NextResponse.rewrite(url);
   }
 
@@ -974,7 +1013,14 @@ export async function proxy(request: NextRequest) {
   // This in-memory limiter only applies to bots as a defense-in-depth layer.
   // It's per-instance so not reliable, but cheap to keep for bots.
   if (pathname.startsWith('/api/') && !pathname.startsWith('/api/cron/')) {
-    if (looksLikeBot(request)) {
+    // A dataset-key holder is an identified partner, not a bot — their custom
+    // clients often carry odd UAs that trip looksLikeBot, and the 10/60s
+    // limiter would throttle sanctioned bulk use (#4356). Cheap prefix check
+    // only (no DB at the edge): a FORGED header skips this limiter but the
+    // key is validated at the route, where an invalid key falls back to the
+    // stricter anonymous caps — so forging buys nothing.
+    const hasDatasetKey = (request.headers.get('authorization') || '').startsWith('Bearer sl_data_');
+    if (!hasDatasetKey && looksLikeBot(request)) {
       const ip = getClientIp(request);
       logBotAccess(request, 'api-bot');
       if (!checkLimit(`${ip}:bot`, 10, 60)) {
@@ -1133,8 +1179,9 @@ export const config = {
   // Match all paths except static files
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)',
-    // OG share-card daily rotation — middleware must see this path even
-    // though it ends in .jpg (the default matcher above excludes dotted paths).
+    // OG share-card daily rotation — middleware must see these paths even
+    // though they end in .jpg (the default matcher above excludes dotted paths).
     '/og-image.jpg',
+    '/og-image-es.jpg',
   ],
 };

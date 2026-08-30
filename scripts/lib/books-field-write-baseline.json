@@ -1,0 +1,37 @@
+{
+  "_comment": [
+    "Pre-existing $set writes of fields absent from scripts/lib/books-known-fields.json.",
+    "The gate fails only on entries NOT listed here, so new drift is caught while the",
+    "existing backlog stays visible instead of turning the check into noise.",
+    "Shrink this list; never grow it. Each entry is either a field that should be",
+    "added to the known list deliberately, or a write that should become a sweep_log row.",
+    "The identity-review-apply.ts entries are the checker's known blind spot, not drift:",
+    "reviewed_by/reviewed_at are written to work_merge_queue and edition_keeper_queue,",
+    "never to books, but the file also writes books so every $set in it gets scanned.",
+    "They replace five identical entries for the two route files the code moved out of (#4271)."
+  ],
+  "count": 21,
+  "accepted": [
+    "scripts/enrichment/verify-translation-claims.mjs::write",
+    "scripts/enrichment/wikidata-books.mjs::wikidata_label",
+    "scripts/enrichment/wikidata-books.mjs::wikidata_match",
+    "scripts/import/setup-1041-collections.mjs::color",
+    "scripts/import/setup-1041-collections.mjs::name",
+    "scripts/import/setup-1041-collections.mjs::order",
+    "scripts/import/setup-1041-collections.mjs::subtitle",
+    "scripts/maintenance/batch-cover-selection.mjs::cover_confidence",
+    "scripts/maintenance/batch-cover-selection.mjs::cover_rationale",
+    "scripts/maintenance/dedup-canonical-authors.mjs::is_person",
+    "scripts/maintenance/reorganize-collections.mjs::name",
+    "scripts/maintenance/repair-bulkjp2-text-shift.mjs::repair",
+    "scripts/maintenance/repair-bulkjp2-text-shift.mjs::text_shift_repair_manual",
+    "scripts/maintenance/repair-erara-text-shift.mjs::text_shift_repair_manual",
+    "scripts/maintenance/set-digitization-sponsor.mjs::digitization_adopted_at",
+    "scripts/maintenance/set-digitization-sponsor.mjs::digitization_sponsor",
+    "src/app/api/admin/promote-warehouse/route.ts::demoted_at",
+    "src/app/api/admin/promote-warehouse/route.ts::promoted_session",
+    "src/app/api/books/[id]/dedicate/route.ts::dedication",
+    "src/lib/identity-review-apply.ts::reviewed_at",
+    "src/lib/identity-review-apply.ts::reviewed_by"
+  ]
+}

@@ -29,6 +29,40 @@ with no re-publish and no re-review. **Renaming or removing an existing tool is
 the one genuinely breaking change** — it silently breaks saved Claude Projects and
 any client holding a tool name. Add-and-deprecate instead.
 
+**But the directory record DOES snapshot the auth mode, and never re-probes.**
+This is the one property where changing the server is not enough, and it cost us
+the entire listing funnel for three weeks. The May submission declared "OAuth 2.0
++ PKCE + Dynamic Client Registration"; PR #2621 removed every OAuth endpoint on
+2026-06-20; Anthropic's record still said OAuth. So the directory's "Connect to
+Claude" button ran client registration against endpoints that 404'd and failed for
+every visitor with *"Couldn't register with Source Library's sign-in service"*
+(ref `ofid_6c896212e1e85390`) — while the identical URL added as a **custom
+connector worked fine**, because that flow probes the live server instead of
+trusting a record. That asymmetry is the tell: **directory fails + custom works =
+their record disagrees with your server.**
+
+Two rules follow:
+
+1. **Before changing auth mode (or the endpoint URL), plan to change THEIR copy
+   too.** For the directory that means replying on the approval thread —
+   whose footer says "Replies go to the MCP Directory team and are read by a
+   person." We did email `mcp-review@` on 2026-06-22 and got only the
+   "high submission volume" auto-reply plus Intercom ticket #110826204; nobody
+   read it, and the listing published six weeks later still declaring OAuth. **An
+   auto-acked email is not a delivered correction.**
+2. **Or make the server match their record.** PR #4302 (2026-08-28) restored a
+   *working* OAuth flow — RFC 8414/9728 metadata, RFC 7591 registration at
+   `/oauth/register` (the May-era version had none, which is precisely why DCR was
+   the failing step), zero-click auto-granted authorize, PKCE token — while
+   `initialize` still answers anonymous callers, so no existing client is gated.
+   Fixing either copy resolves the mismatch; the mismatch itself is the bug.
+
+`npm run audit:mcp` now asserts the whole flow works end to end *and* that
+unauthenticated `initialize` still succeeds. Note it used to assert the
+opposite — no OAuth advertisement — which was correct in June and actively wrong
+after August: **when a guard encodes one side of an external contract, changing
+the contract means inverting the guard.**
+
 ## What's published
 
 The registry shows the contents of `server.json` at the repo root. Edit that

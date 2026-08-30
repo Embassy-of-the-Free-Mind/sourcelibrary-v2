@@ -43,7 +43,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
  */
 export const POST = withAdminAuth(async (request: NextRequest) => {
   const body = await request.json();
-  const { name, user_id, tier, languages, clusters } = body;
+  const { name, user_id, tier, languages, clusters, clean_images } = body;
 
   if (!name || !user_id) {
     return NextResponse.json(
@@ -63,6 +63,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
   const { key, doc } = await generateApiKey(user_id, selectedTier, name, {
     languages,
     clusters,
+    cleanImages: clean_images === true,
   });
 
   return NextResponse.json({

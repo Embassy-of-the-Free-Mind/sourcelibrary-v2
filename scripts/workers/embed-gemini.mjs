@@ -3,13 +3,27 @@
  * Embed pages for semantic search using Gemini embedding-2-preview.
  *
  * Embeds BOTH ocr.data and translation.data per page into Supabase
- * page_translations table. Uses Gemini API (free tier, 768 dims).
+ * page_translations table. Uses Gemini API (768 dims).
  *
  * Replaces the old e5-base backfill (embed-translations.mjs).
  * The Gemini model is much better for Latin, Greek, Arabic, Sanskrit.
  *
- * Cost: $0 (free tier, rate-limited to ~13 texts/sec sustained).
- * Time: ~5-6 days for full 3M-page backfill.
+ * COST — THIS IS BILLED, AND AT THIS SCALE IT IS THE LARGEST SINGLE EMBEDDING
+ * SPEND IN THE REPO. gemini-embedding-2-preview is $0.20 per 1M input tokens on
+ * the paid tier, and every GEMINI_API_KEY* in the env is a paid key. At the
+ * measured 4.29 chars/token (see .claude/docs/embeddings.md) a FULL 3.9M-page
+ * pass is roughly **$180**. This header used to say "Cost: $0 (free tier)";
+ * that line was believed and acted on in Aug 2026 and cost ~$12 on a corpus
+ * 100x smaller. --incremental and --missing-only are cheap because they touch
+ * few pages; --full is not. ASK BEFORE A FULL PASS.
+ *
+ * Since #4162 this worker RECORDS what it spends: gemini_usage rows with
+ * type 'embedding', flushed every FLUSH_EVERY_TEXTS so a full pass writes ~780
+ * rows rather than 78,000 (the spend guard fails closed above 40,000/day).
+ * Tokens are estimated from characters — batchEmbedContents returns no
+ * usageMetadata. See scripts/lib/embedding-usage.mjs.
+ *
+ * Time: ~5-6 days for full 3M-page backfill (~13 texts/sec sustained).
  *
  * Modes:
  *   --full        Process all pages with OCR or translation
@@ -36,6 +50,8 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -117,6 +133,24 @@ async function getPgClient() {
 
 let rateLimitBackoff = 0;
 
+// Embedding spend, accumulated and flushed periodically (#4162). This worker
+// streams pages rather than walking books, so there is no per-book boundary to
+// flush on; FLUSH_EVERY_TEXTS bounds the row count instead (~780 rows for a
+// full 3.9M-page pass, against the spend guard's 40,000-row/day ceiling — one
+// row per 50-text batch would have been 78,000 and read as over-budget).
+const embedUsage = newEmbedUsage();
+let usageRows = 0;         // gemini_usage rows written this run
+let usageTotalChars = 0;   // characters recorded, for the closing summary
+
+async function flushEmbedUsage(force = false) {
+  if (!force && embedUsage.texts < FLUSH_EVERY_TEXTS) return;
+  const chars = embedUsage.chars;
+  if (!chars) return;
+  await logEmbeddingUsage(embedUsage, { model: MODEL, endpoint: 'worker/embed-gemini' });
+  usageRows += 1;
+  usageTotalChars += chars;
+}
+
 async function embedBatch(texts) {
   const requests = texts.map(t => ({
     model: `models/${MODEL}`,
@@ -149,6 +183,9 @@ async function embedBatch(texts) {
   if (!data.embeddings || data.embeddings.length !== texts.length) {
     throw new Error(`Expected ${texts.length} embeddings, got ${data.embeddings?.length || 0}`);
   }
+  // Counted only on success — a 429 retried above was not billed for a result.
+  addEmbedUsage(embedUsage, texts);
+  await flushEmbedUsage();
   return data.embeddings.map(e => e.values);
 }
 
@@ -183,6 +220,25 @@ console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? '
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
+
+// Pause + dial gate (#3826). This worker had NEITHER check — the reason its
+// cron line is hard-disabled (#PAUSED-3826#). Unattended runs (no explicit
+// --book) must honor the pause flag and the daily budget; an explicit
+// operator --book run bypasses, matching the spend-guard convention.
+{
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (!BOOK_ID) {
+    if (control?.paused) {
+      console.log('[embed-gemini] Pipeline paused — exiting.');
+      await mongoClient.close();
+      process.exit(0);
+    }
+    if (!await budgetAllowsDispatch(db, 'embed-gemini', { control })) {
+      await mongoClient.close();
+      process.exit(0);
+    }
+  }
+}
 
 // Build query — need pages with OCR or translation.
 // page_number > 0 skips hidden/deduped trailing pages (page_number ≤ 0).
@@ -471,10 +527,15 @@ for await (const page of cursor) {
 
 if (batch.length > 0) await processBatch(batch);
 
+// Record the tail. Without this, everything since the last flush is spend that
+// happened and was never written down — the exact hole #4162 is about.
+await flushEmbedUsage(true);
+
 await mongoClient.close();
 if (pgClient) await pgClient.end();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 console.log(`\nDone: ${embedded.toLocaleString()} embedded, ${skipped} skipped, ${errors} errors, ${elapsed}s`);
+console.log(`Embedding spend recorded: ~$${estimateUsd(usageTotalChars).toFixed(2)} across ${usageRows} gemini_usage row(s) (estimated from characters — see scripts/lib/embedding-usage.mjs)`);
 
 // After a large full backfill, rebuild the HNSW index if it's missing
 if (FULL_MODE && embedded > 10000) {

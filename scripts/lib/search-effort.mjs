@@ -237,3 +237,71 @@ export function renderEffortSummary(effort) {
       return `Inconclusive — candidates remain unscreened. ${scope}`;
   }
 }
+
+/**
+ * effortToAttempt — the ONE-LEDGER bridge (#3881 pass 1).
+ *
+ * `first_translation_attempts` is the canonical evidence ledger; this
+ * collection is the tier-1 DETAIL ARCHIVE behind it (the same relationship
+ * `first_translation_transcripts` has to rung-2 skeptic rows: ledger row lean,
+ * deep artifact separate). Every searchable effort therefore also lands in the
+ * ledger as one compact attempt row, produced here, with `transcript_ref`
+ * pointing back at the effort for the full queries/candidates/screening record.
+ *
+ * NOT_SEARCHABLE efforts return null on purpose: "we could not ask" must never
+ * enter the ledger, where downstream readers treat a row as "we asked" — the
+ * exact conflation the invariant doc forbids.
+ */
+export function effortToAttempt(effort) {
+  if (!effort || effort.verdict === VERDICT.NOT_SEARCHABLE) return null;
+
+  const candidates = effort.candidates ?? [];
+  const priorRows = candidates.filter((c) => c.screen === SCREEN.PRIOR);
+  const partialRows = candidates.filter((c) => c.screen === SCREEN.PARTIAL);
+  const citeUrl = (c) => {
+    const id = c.identifiers ?? {};
+    if (id.lccn) return `https://lccn.loc.gov/${id.lccn}`;
+    if (id.estc_id) return `http://estc.bl.uk/${id.estc_id}`;
+    if (id.wikidata_edition) return `https://www.wikidata.org/wiki/${id.wikidata_edition}`;
+    return undefined;
+  };
+  const toPrior = (c, completeness) => ({
+    english_title: c.title,
+    pub_year: c.year != null ? String(c.year) : undefined,
+    publisher: c.publisher,
+    completeness,
+    source_url: citeUrl(c),
+  });
+
+  const found = effort.verdict === VERDICT.PRIOR_FOUND || effort.verdict === VERDICT.ONLY_PARTIAL_FOUND;
+  return {
+    // Deterministic: an effort maps to exactly one attempt, so re-ingesting a
+    // generation is idempotent under appendAttempt's $setOnInsert.
+    attempt_id: `${effort.book_id}:tier1_catalog:${effort.effort_id}`,
+    book_id: effort.book_id,
+    work_id: effort.work_id ?? null,
+    date: new Date(effort.run_at).toISOString(),
+    method: 'tier1_catalog',
+    match_key: effort.work_id ? 'work_id' : 'author_title',
+    sources_checked: (effort.reference_set?.sources ?? []).map((s) => s.id),
+    queries: (effort.queries ?? []).map((q) => `[${q.source}] ${q.query} → ${q.result_count ?? 0}`),
+    result: found ? 'found' : 'none',
+    verdict: effort.verdict,
+    found_refs: priorRows.concat(partialRows)
+      .map((c) => c.identifiers?.lccn ?? c.identifiers?.estc_id ?? c.identifiers?.wikidata_edition)
+      .filter(Boolean),
+    priors: [
+      ...priorRows.map((c) => toPrior(c, 'complete')),
+      ...partialRows.map((c) => toPrior(c, 'partial')),
+    ],
+    // A positive sighting in a curated catalogue is strong; catalogue-tier
+    // absence is weak BY MEASUREMENT (32.1% recall) — never higher.
+    evidence_strength: effort.verdict === VERDICT.PRIOR_FOUND ? 'strong'
+      : effort.verdict === VERDICT.ONLY_PARTIAL_FOUND ? 'moderate'
+      : 'weak',
+    notes: renderEffortSummary(effort),
+    prompt_version: `ft-reference-set-search/${effort.reference_set?.version ?? 'unknown'}@${effort.code_version ?? 'unknown'}`,
+    transcript_ref: effort.effort_id,
+    _src: 'search_efforts',
+  };
+}

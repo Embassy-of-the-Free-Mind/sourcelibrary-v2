@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.6.0 (2026-08-18)
+
+### Images are first-class (parity with the remote server, #3937)
+
+- `search_images`: the first 5 results are attached as inline MCP `image` content blocks (audience `['user','assistant']` — the model can see them). Empty results carry an explanatory `note`; under `book_id` the artwork lane is skipped (artworks don't belong to books, so they can only un-scope a book-filtered call).
+- `get_quote`: new `include_image` param returns the scan of the cited leaf inline (display size, ≤1200px).
+- `get_book`: cover art attached inline on every call (`cover_thumb_url` / `cover_image_url` in the JSON).
+- Fetches are bounded: 5s timeout, 1MB cap per image, silent skip on failure.
+
+
 ## 4.3.0 (2026-05-18)
 
 ### Server-level orientation

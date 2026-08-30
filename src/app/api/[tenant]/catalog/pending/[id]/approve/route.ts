@@ -77,8 +77,23 @@ export const POST = withAuth(
         { status: 400 },
       );
     }
+    // A proposal is keyed by UBN, or by uuid for the 2,012 records that have
+    // no UBN (manuscripts, photographs). Requiring a UBN here rejected every
+    // contributor correction to a manuscript. work_uuid is read separately so
+    // an environment without add-bph-uuid-keyed-revisions.sql still approves
+    // ubn-keyed proposals normally.
+    let workUuidFromRow: string | null = null;
     if (!row.ubn) {
-      return NextResponse.json({ error: 'Pending edit has no UBN' }, { status: 400 });
+      const { data: extra } = await supabaseAdmin
+        .from('bph_works_pending_changes')
+        .select('work_uuid')
+        .eq('id', id)
+        .maybeSingle();
+      workUuidFromRow = (extra as { work_uuid?: string | null } | null)?.work_uuid ?? null;
+    }
+    const workKey = row.ubn || workUuidFromRow;
+    if (!workKey) {
+      return NextResponse.json({ error: 'Pending edit targets no work (neither UBN nor uuid)' }, { status: 400 });
     }
 
     // 2. Re-validate field names against the current whitelist.
@@ -103,7 +118,7 @@ export const POST = withAuth(
     let revisionId: string;
     try {
       const result = await applyWorkRevision({
-        ubn: row.ubn,
+        ubn: workKey,
         changeType: 'edit',
         fieldChanges,
         editorEmail,

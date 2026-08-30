@@ -28,7 +28,6 @@ import { MongoClient, ObjectId } from 'mongodb';
 
 const APPLY = process.argv.includes('--apply');
 
-const PARTICLES = new Set(['de','del','della','di','da','la','le','van','von','der','den','du','des','el','al','ibn','ben','a','ab','zu','of','the','don','fr','st','saint','y','e','pseudo']);
 // People-only: drop placeholders, institutions, and ethnonym/anonymous buckets.
 const PLACEHOLDER = /^(anonymous|unknown|various|anon|n\/a|none|egyptian|sumerian|babylonian|assyrian|traditional|chinese|japanese|tibetan|greek|roman)\b|collection|monastery|temple|press|library|dynasty|school of|circle of|workshop|^mtena|\b(church|council|society|congregation|order of|company of|guild|academy|université|university|conserv|ministry|commission|office|bureau)\b/i;
 /** Compound authorship ("A & B", "A | B", "A / B", "A; B", "A, B, C, …") — real
@@ -39,27 +38,9 @@ const PLACEHOLDER = /^(anonymous|unknown|various|anon|n\/a|none|egyptian|sumeria
  *  entity-linked ones still resolve correctly and only no-entity ones drop. */
 const COMPOUND = /\s[|/&]\s|;\s|\bet\s+al\b|,[^,]+,[^,]+,/i;
 
-const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-
-/** Cluster key: folded Latin stems of the name tokens; non-Latin names fall back
- *  to the diacritic-folded raw name so CJK/Cyrillic/Greek authors still cluster. */
-function canonicalKey(author) {
-  const s = norm(author).replace(/\([^)]*\)/g, '').replace(/,?\s*\d{3,4}\b.*$/, '').replace(/[^a-z\s,]/g, ' ');
-  const toks = s.split(/[\s,]+/).filter(t => t.length >= 3 && !PARTICLES.has(t));
-  const stems = toks.map(t => t
-    .replace(/^j/, 'i').replace(/^gi/, 'i').replace(/v/g, 'u')
-    .replace(/(issimus|us|um|orum|arum|ibus|onis|ius|is|ae|i|o|a|e)$/, ''))
-    .filter(t => t.length >= 3).sort();
-  if (!stems.length) {
-    return (author || '').normalize('NFKD').replace(/[̀-ͯ]/g, '')
-      .replace(/\([^)]*\)/g, '').replace(/[\d,.;]/g, '').replace(/\s+/g, '').toLowerCase();
-  }
-  return stems.join(' ');
-}
-
-/** URL slug — must match src/lib/slugify.ts authorSlug() exactly. */
-const authorSlug = (a) => (a || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-  .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').replace(/-{2,}/g, '-');
+// canonicalKey (cluster key) + authorSlug — shared with additive-mint-authors-3780
+// and the USTC coverage metric via scripts/lib/author-name-key.mjs.
+import { norm, canonicalKey, authorSlug } from '../lib/author-name-key.mjs';
 
 const mc = new MongoClient(process.env.MONGODB_URI); await mc.connect();
 const db = mc.db('bookstore'); const books = db.collection('books'); const ents = db.collection('entities');

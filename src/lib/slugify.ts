@@ -60,18 +60,48 @@ export function isPlaceholderSlug(slug: string | null | undefined): boolean {
 }
 
 /**
+ * Latin letters that are NOT a base letter plus a combining mark, so NFD cannot
+ * decompose them and the `[^a-z0-9]` strip below DELETES them outright.
+ *
+ * That silent deletion lands hardest on exactly this library's corpus:
+ * `Ægyptiaca` slugged to `gyptiaca`, `iustitiæ christianæ quæ` to
+ * `iustiti christian qu`, `Œuvres` to `uvres`, and `Straßburg` to `stra-burg` —
+ * where the deletion also SPLIT the word, because a run of non-matching characters
+ * collapses to a single hyphen.
+ *
+ * `ſ` (long s) is here deliberately: early-modern printing uses it throughout, and
+ * `ſuper` losing its first letter is worse than a diacritic dropping an accent.
+ *
+ * Keyed on the LOWERCASE form — `.toLowerCase()` runs before this map and folds
+ * Æ→æ, Œ→œ, ẞ→ß, so uppercase inputs are already covered.
+ */
+const LATIN_TRANSLITERATIONS: Record<string, string> = {
+  'æ': 'ae', 'œ': 'oe', 'ß': 'ss',
+  'ø': 'o', 'þ': 'th', 'ð': 'd', 'ł': 'l', 'đ': 'd',
+  'ħ': 'h', 'ı': 'i', 'ĸ': 'k', 'ŋ': 'n', 'ſ': 's',
+};
+const TRANSLITERATION_RE = new RegExp(`[${Object.keys(LATIN_TRANSLITERATIONS).join('')}]`, 'g');
+
+/**
  * Sanitize text into a URL-safe slug segment.
  * - Lowercases
  * - Strips diacritics (ü → u, é → e)
+ * - Transliterates non-decomposable Latin letters (æ → ae, ß → ss)
  * - Replaces non-alphanumeric with hyphens
  * - Collapses multiple hyphens
  * - Trims to maxLength at a word boundary
+ *
+ * Non-Latin scripts (Greek, Hebrew, CJK, Tibetan…) still sanitize to nothing — that is
+ * the deliberate behaviour `generateBookSlug` handles by falling back to the author
+ * segment. This map only rescues Latin letters a reader expects to survive.
  */
 function slugifyText(text: string, maxLength: number): string {
   let slug = text
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '') // strip diacritics
     .toLowerCase()
+    // Must run BEFORE the [^a-z0-9] strip, or these letters are already gone.
+    .replace(TRANSLITERATION_RE, (ch) => LATIN_TRANSLITERATIONS[ch])
     .replace(/[^a-z0-9]+/g, '-')    // non-alphanum → hyphen
     .replace(/^-+|-+$/g, '')         // trim leading/trailing hyphens
     .replace(/-{2,}/g, '-');         // collapse double hyphens
@@ -224,7 +254,23 @@ export function authorSlug(author: string): string {
     .replace(/-{2,}/g, '-');
 }
 
-export function authorUrl(author: string): string | null {
+/**
+ * URL for a book's author page.
+ *
+ * Prefer `authorId` (`books.author_id`, the canonical FK) over the byline
+ * string whenever it is present. The byline is what a CATALOGUE said; the
+ * canonical link is who we decided that means, and the two diverge exactly
+ * where it matters. Slugifying the byline sends every book bylined "Thomas" to
+ * `/author/thomas` — Aquinas and Thomas à Kempis alike — so the reader is told
+ * a work is by whoever that bare form happens to resolve to (#4318).
+ *
+ * It also makes the link independent of the thesaurus's MATCH surface. Bare
+ * forenames had to be withdrawn from `variants[]` because they claimed every
+ * namesake; a byline-derived URL would then dead-end, while `author_id` keeps
+ * pointing at the right person.
+ */
+export function authorUrl(author: string, authorId?: string | null): string | null {
+  if (authorId) return `/author/${authorId}`;
   if (!author || author === 'Unknown' || author === 'Anonymous') return null;
   return `/author/${authorSlug(author)}`;
 }

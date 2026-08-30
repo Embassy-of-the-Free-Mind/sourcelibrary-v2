@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { validateApiKey } from '@/lib/dataset/api-keys';
+import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { logAccess } from '@/lib/dataset/access-logger';
+import { getClientIp } from '@/lib/rate-limit';
 
 export const maxDuration = 15;
 
@@ -28,6 +30,15 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  // Same request-rate rule as every other keyed surface (#4366 parity).
+  const rpm = checkKeyRequestRate(apiKey);
+  if (!rpm.allowed) {
+    return NextResponse.json(
+      { error: 'Requests-per-minute limit reached for this key. Slow down and retry.' },
+      { status: 429, headers: { 'Retry-After': String(rpm.retryAfter ?? 60) } }
+    );
+  }
+
   const { searchParams } = new URL(request.url);
   const language = searchParams.get('language');
   const cluster = searchParams.get('cluster');
@@ -37,11 +48,19 @@ export async function GET(request: NextRequest) {
   const offset = Math.max(0, parseInt(searchParams.get('offset') || '0'));
   const limit = Math.min(1000, Math.max(1, parseInt(searchParams.get('limit') || '100')));
 
-  // Check permissions
+  // Check permissions — languages AND clusters, exactly as the /pages twin
+  // does. (This route silently skipped the cluster check; #4366 finding.)
   if (language && apiKey.permissions.languages !== '*' &&
       !apiKey.permissions.languages.includes(language)) {
     return NextResponse.json(
       { error: `Your API key does not have access to "${language}".` },
+      { status: 403 }
+    );
+  }
+  if (cluster && apiKey.permissions.clusters !== '*' &&
+      !apiKey.permissions.clusters.includes(cluster)) {
+    return NextResponse.json(
+      { error: `Your API key does not have access to cluster "${cluster}".` },
       { status: 403 }
     );
   }
@@ -72,6 +91,20 @@ export async function GET(request: NextRequest) {
       .toArray(),
     db.collection('books').countDocuments(filter),
   ]);
+
+  // EU AI Act access log — the /pages twin has always done this; the omission
+  // here made book-level harvesting invisible to the compliance log (#4366).
+  logAccess({
+    api_key_id: apiKey._id,
+    user_id: apiKey.user_id,
+    timestamp: new Date(),
+    endpoint: 'books',
+    filters: { language, cluster, from_year: fromYear, to_year: toYear, has_translation: hasTranslation, offset, limit },
+    records_returned: books.length,
+    book_ids: books.slice(0, 100).map(b => String(b._id)),
+    format: 'json',
+    ip_address: getClientIp(request),
+  }, { countPages: false });
 
   return NextResponse.json({
     total,

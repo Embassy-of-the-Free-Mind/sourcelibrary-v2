@@ -18,17 +18,28 @@
   --text-primary: #1a1612;
   --text-secondary: #444;
   --text-muted: #6b6560;  /* was #888, now 5.2:1 on #fdfcf9 */
-  --text-faint: #8a8480;  /* was #aaa, now 4.5:1 on #fdfcf9 */
+  /* Measured against every ground it actually lands on, not just cream. The
+     previous #79736f cleared 4.5:1 on --bg-cream (4.55) and failed on every
+     other reader surface: 4.12 on a panel, 4.31 in the OCR pane, 3.73 on a
+     panel header. This value's worst case is 4.53, on the scan bed. */
+  --text-faint: #6b6560;
 
   /* Accent colors */
   --accent-rust: #9e4a3a;
+  /* Trace and annotation each need a value per theme for the same reason the
+     accents above do: night flips which direction "more contrast" points. */
+  --trace-blue: #496da3;
+  --annotation-teal: #3e7a6e;
   --accent-gold: #c9a86c;
   --accent-sage: #8b9a7d;
   --accent-violet: #7c5db5;
+  /* Text-on-light variant, matching the sage/gold pattern. Its absence is why
+     the revision badges were being drawn in the raw hue and failing. */
+  --accent-violet-dark: #6b4ea3;
 
   /* Dark accent variants — for text on light backgrounds (higher contrast) */
   --accent-sage-dark: #5e6d52;
-  --accent-gold-dark: #9e7c3c;
+  --accent-gold-dark: #8d6f35;
 
   /* Borders */
   --border-light: #e8e4dc;
@@ -240,6 +251,35 @@ h1, h2, h3, h4 {
   max-width: 70ch;
   margin-inline: auto;
 }
+/* ---------------------------------------------------------------------------
+   Reading a book in the type it was printed in (#4083, pilot)
+   The reader page adds `.aldine-fount` for books listed in
+   src/lib/fonts/aldine-fount.ts. Both text panels — the transcription and the
+   English translation — are then set in the facsimile traced from that book's
+   own pages, with Cardo behind it for scripts the fount never had.
+   Display only: the DOM text is untouched, so search, copy and citation are
+   unaffected. The reader can switch back to the library's face from the
+   reading-settings popover — that sets data-reader-fount="modern" on the reader
+   root, and these rules stop matching.
+--------------------------------------------------------------------------- */
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] .prose-manuscript,
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
+  font-family: var(--font-aldine-aetna), var(--font-cardo), 'Newsreader', Georgia, serif;
+  /* liga: the ct/ſt/fi sorts. calt: rotate the three impressions of each common
+     letter so neighbours are never the same cast — hand-set, not typeset. */
+  font-feature-settings: "liga" 1, "calt" 1;
+  /* x-height 0.424 em against Newsreader's 0.441 — a 4% bump keeps the reading
+     size the user chose. Measured, not guessed. */
+  font-size: calc(var(--reader-font-size, 18px) * 1.04);
+}
+/* Both reading panels use .prose-manuscript, whose size comes from CSS. The
+   German-source and modernised views use a `.prose` div that sets font-size
+   inline (a React style prop beats a stylesheet rule whatever its specificity),
+   so that one — and only that one — needs !important. */
+.aldine-fount [data-reader-fount="original"] [data-reader-panel] > .prose {
+  font-size: calc(var(--reader-font-size, 15px) * 1.04) !important;
+}
+
 /* Nested NotesRenderer inside an already-capped wrapper: don't re-center */
 [data-reader-panel] .prose-manuscript .prose-manuscript {
   max-width: none;
@@ -252,6 +292,13 @@ h1, h2, h3, h4 {
    design primitives): sepia warms the paper tokens, night inverts around
    --bg-dark (#1a1612). */
 [data-reader-theme='sepia'] {
+  --trace-blue: #3f6096;
+  --annotation-teal: #356b60;
+  /* Sepia used to inherit the light greys onto a warmer, lighter paper, which
+     dropped faint text to 3.70:1 and muted to 4.13:1 on the darker surfaces.
+     Worst case now 4.54 and 4.83. */
+  --text-muted: #5f5954;
+  --text-faint: #635d58;
   --bg-cream: #f6eeda;
   --bg-white: #fbf4e4;
   --bg-warm: #efe4cb;
@@ -266,12 +313,23 @@ h1, h2, h3, h4 {
   --text-primary: #ece7df;
   --text-secondary: #cfc8bd;
   --text-muted: #a49b8f;
-  --text-faint: #7d766c;
+  /* Night is the mirror of the light case: too dark against its own paper.
+     Worst case now 5.05, on --bg-warm. */
+  --text-faint: #968f85;
   --border-light: #3a332b;
   --border-medium: #4a4238;
   /* "dark" accent variants exist for text on light backgrounds — lighten them */
   --accent-sage-dark: #a8b898;
   --accent-gold-dark: #d4b072;
+  /* Oxblood at its light-background value (#9e4a3a) is barely legible on the
+     night surfaces — panel headings, the current chapter, links. Lighten it
+     here for the same reason the two above are lightened. It stays readable
+     as a fill too (cream text on #cf7f6a). */
+  --accent-rust: #cf7f6a;
+  --accent-violet-dark: #b49ae0;
+  --trace-blue: #8fb0e0;
+  --annotation-teal: #7bc0b1;
+  --status-error: #e88f8f;
 }
 
 /* Night-mode compatibility for hardcoded light-utility classes used inside the
@@ -290,6 +348,182 @@ h1, h2, h3, h4 {
 [data-reader-theme='night'] .hover\:text-secondary:hover { color: #cfc8bd; }
 [data-reader-theme='night'] .text-stone-700 { color: #cfc8bd; }
 [data-reader-theme='night'] .hover\:text-stone-700:hover { color: #ece7df; }
+
+/* Reader v2 design previews (/v2a, /v2c): the typeface setting must reach
+   NotesRenderer's nested .prose-manuscript, whose class font-family would
+   otherwise beat an inherited inline style. */
+[data-reader-v2-typeface='sans'],
+[data-reader-v2-typeface='sans'] .prose-manuscript {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Reader v2 is a fixed-frame reader: it owns exactly one viewport and never
+   scrolls the document. The root layout renders the feedback callout (a
+   <section>) and the global <footer> as siblings of #main-content, which
+   would hang below the frame and make the page scroll. Same shape as the
+   embed-mode suppression above, keyed on the reader root instead. */
+body:has([data-reader-v2]) > section,
+body:has([data-reader-v2]) > footer {
+  display: none !important;
+}
+html:has([data-reader-v2]),
+body:has([data-reader-v2]) {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* The global :focus-visible ring is unlayered, so it beats Tailwind's layered
+   focus:outline-none and drew a rust box inside the reader's text fields (the
+   search field autofocuses, so it appeared the moment the panel opened). The
+   fields carry their focus state on the wrapper border instead. */
+[data-reader-v2] input:focus,
+[data-reader-v2] input:focus-visible,
+[data-reader-v2] textarea:focus,
+[data-reader-v2] textarea:focus-visible {
+  outline: none;
+}
+
+/* …except the edit-mode textareas, which have no wrapper to carry the state
+   and so had no focus indicator at all. It is the surface an editor types the
+   most in. */
+[data-reader-v2] textarea[data-reader-editor]:focus-visible {
+  outline: 2px solid var(--text-muted);
+  outline-offset: -2px;
+}
+
+/* The UA default placeholder is a translucent dark grey. On the night theme
+   the search and librarian fields sit on a near-black ground, so it was very
+   nearly invisible. */
+[data-reader-v2] ::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+/* The Line height setting sets --reader-line-height on the .prose-manuscript
+   wrapper, but NotesRenderer gives every paragraph and list item Tailwind's
+   `leading-relaxed`, which re-declares line-height on the element itself and
+   beats anything inherited. Same shape as the typeface rule above: the
+   setting has to reach the elements that actually carry the text. */
+[data-reader-v2] .prose-manuscript p,
+[data-reader-v2] .prose-manuscript li,
+[data-reader-v2] .prose-manuscript blockquote {
+  line-height: var(--reader-line-height, 1.8);
+}
+
+/* Quoted matter in the reader's text panes: an indent and a hairline, not a
+   rust bar over a rust wash. Rust already carries two jobs here (the current
+   page in the strip, and the interactive accent), and on a page that is
+   mostly italics a tinted block outshouts the passage it is quoting. Scoped
+   to the reader so every other surface keeps NOTE_TAG_STYLES as it is. */
+[data-reader-v2] blockquote {
+  border-left-color: var(--border-medium);
+  background: transparent;
+  color: inherit;
+  border-radius: 0;
+}
+
+/* WebKit draws its own clear button on type="search" — a bright system blue
+   that is the loudest thing in the panel. The field clears with a keystroke. */
+[data-reader-v2] input[type='search']::-webkit-search-cancel-button,
+[data-reader-v2] input[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Reader v2: smooth entrances for panels / menus / popovers */
+@keyframes rv2-slide-in-left {
+  from { transform: translateX(-16px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.rv2-slide-in-left { animation: rv2-slide-in-left 0.22s ease-out both; }
+@keyframes rv2-pop {
+  from { transform: translateY(-4px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.rv2-pop { animation: rv2-pop 0.16s ease-out both; }
+/* Panels rise from the bottom toolbar */
+@keyframes rv2-slide-up {
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.rv2-slide-up { animation: rv2-slide-up 0.22s ease-out both; }
+/* The page strip slides in by its own height, so the travel reads the same on
+   a 92px desktop strip and a 96px phone one. Short on purpose. */
+@keyframes rv2-strip-in {
+  from { transform: translateY(100%); }
+  to   { transform: none; }
+}
+.rv2-strip-in { animation: rv2-strip-in 180ms ease-out both; }
+
+/* A page turn used to be an instant swap, which read as a flicker rather than
+   a change. The new page settles in over a short rise — enough to register
+   that something moved, short enough not to sit between the reader and the
+   text. Keyed on the page id, so it plays per turn and not on every render. */
+@keyframes rv2-page-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* Opacity only. A rise moved the text under the reader's eye, which on a
+   facsimile is worse than the abrupt swap it replaced. */
+.rv2-page-in { animation: rv2-page-in 200ms ease-out both; }
+
+/* The phone column swapped pages instantly, which on a swipe reads as a jolt
+   rather than as having moved. The new page arrives from the side you sent it,
+   far enough to say a page went by and no further. X only, for the same reason
+   the fade above is opacity only: a vertical rise moves text under the eye. */
+@keyframes rv2-turn-next {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes rv2-turn-prev {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+/* `backwards`, not `both`: a filled-forwards animation keeps applying its end
+   value after it finishes, and an animated property beats an inline style, so
+   the pane would sit locked at transform:none and the drag-follow's inline
+   transform would be silently ignored for the rest of the session — the swipe
+   would stop moving anything under the finger after the first page turn. The
+   end state here is the natural state, so there is nothing to hold. */
+.rv2-turn-next { animation: rv2-turn-next 190ms ease-out backwards; }
+.rv2-turn-prev { animation: rv2-turn-prev 190ms ease-out backwards; }
+
+/* Panel contents arrive just after the panel itself, so switching tools reads
+   as one movement instead of two things appearing at once. */
+@keyframes rv2-panel-body-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+.rv2-panel-body-in { animation: rv2-panel-body-in 200ms ease-out 60ms both; }
+
+/* Tiles in the mobile More grid arrive in sequence rather than all at once,
+   which is what made a grid of seven read as a slab appearing. */
+@keyframes rv2-tile-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.rv2-tile-in { animation: rv2-tile-in 220ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+/* Full-screen site menu. The ground arrives first and flat, then the
+   destinations settle onto it one after another — the sequence is what stops
+   a page-sized black rectangle from reading as a jump cut. */
+@keyframes rv2-menu-ground {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.rv2-menu-ground { animation: rv2-menu-ground 160ms ease-out both; }
+@keyframes rv2-menu-item {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: none; }
+}
+.rv2-menu-item { animation: rv2-menu-item 320ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in,
+  .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in,
+  .rv2-turn-next, .rv2-turn-prev,
+  .rv2-menu-ground, .rv2-menu-item { animation: none; }
+}
+
 
 /* Prose styling for content/document pages */
 .prose-content {
@@ -868,11 +1102,26 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
     .reveal-in {
       animation: reveal-in-kf linear both;
       animation-timeline: view();
-      animation-range: entry 2% entry 36%;
+      /* A short fixed distance, not a percentage of the element.
+      
+         `entry 36%` is 36% of the way through the element ENTERING, measured
+         against the element's OWN height — so on a section taller than the
+         viewport it finished long after the section had taken over the
+         screen. Measured on the book page: 237px of a section sitting at 0.74
+         opacity, and at its most transparent 0.22 with 57px showing. That is
+         not a reveal, it is a half-drawn page.
+         
+         70px is the same short distance for every section, so the fade is
+         over while the section is still a sliver at the bottom edge. Same
+         page after: at worst 50px at 0.79, and the most transparent moment
+         shows 17px. You never arrive at something that is still fading. */
+      animation-range: entry 0 entry 70px;
     }
   }
 }
 @keyframes reveal-in-kf {
-  from { opacity: 0; transform: translateY(24px); }
+  /* 14px, not 24: the rise now happens over 70px of scroll rather than a
+     third of the section, and a long throw in a short range reads as a jump. */
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }

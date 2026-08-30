@@ -65,6 +65,15 @@ const IDS = arg('ids')?.split(',').map((s) => s.trim()).filter(Boolean);
 const LIMIT = parseInt(arg('limit') ?? '0', 10);
 const MODEL = arg('model') ?? 'gemini-3.1-flash-lite';
 const BUDGET = parseFloat(arg('budget-usd') ?? '0');
+/**
+ * Explicit positive thinking cap (tokens). Unset → the API default (dynamic).
+ * NEVER pass -1: `thinkingBudget: -1` silently SUPPRESSES grounding on
+ * flash-preview (the §8 hazard in the FT paper). A positive cap bounds the
+ * dominant cost driver — unbounded thinking ran ~$0.19/book on preview vs
+ * ~$0.002 for lean calls (measured 2026-08-10).
+ */
+const THINKING = arg('thinking-budget');
+const THINKING_BUDGET = THINKING !== undefined ? Math.max(0, parseInt(THINKING, 10) || 0) : undefined;
 const CONC = parseInt(arg('concurrency') ?? '4', 10);
 const TRANSCRIPTS = 'first_translation_transcripts'; // pure archive: no automated job reads it (#3778)
 
@@ -189,7 +198,10 @@ async function main() {
         const ai = new GoogleGenAI({ apiKey: nextKey() });
         const resp = await ai.models.generateContent({
           model: MODEL, contents: prompt,
-          config: { tools: [{ googleSearch: {} }], temperature: 0.1 },
+          config: {
+            tools: [{ googleSearch: {} }], temperature: 0.1,
+            ...(THINKING_BUDGET !== undefined ? { thinkingConfig: { thinkingBudget: THINKING_BUDGET } } : {}),
+          },
         });
         const gm = (resp.candidates?.[0] as { groundingMetadata?: { webSearchQueries?: string[]; groundingChunks?: Array<{ web?: { uri?: string; title?: string } }> } })?.groundingMetadata ?? {};
         const u = resp.usageMetadata ?? {};
@@ -225,7 +237,12 @@ async function main() {
         row.outcome = `resolved:${stored.verdict} (resolver=${stored.resolver})`; continue;
       }
       const attempts = await attemptsCol.find({ book_id: b.id }).sort({ date: -1 }).limit(20).toArray();
-      if (attempts.some((a) => a.prompt_version === SKEPTIC_PROMPT_VERSION)) {
+      // Model-aware: the instrument is (prompt_version, model), not the prompt
+      // alone. gemini-3.1-flash-lite answers this prompt WITHOUT grounding
+      // (empty groundingMetadata on all 189 rows of the 2026-08-10 batch), and
+      // a prompt-only skip would let those ungrounded rows permanently block a
+      // grounded re-run on a model that actually searches.
+      if (attempts.some((a) => a.prompt_version === SKEPTIC_PROMPT_VERSION && a.model === MODEL)) {
         row.outcome = 'already_searched_this_prompt_version'; continue;
       }
 
@@ -348,20 +365,15 @@ async function main() {
   console.log(`  rung-3 (claude) queue: ${rung3Queue.length} | rung-4 (human) queue: ${rung4Queue.length}`);
   if (RUN) console.log(`  rung-2 spend: $${spent.toFixed(4)} of $${BUDGET} budget${spent >= BUDGET ? '  ← BUDGET EXHAUSTED, queue truncated' : ''}`);
 
+  // RUN REPORTS, not queues (#3881 pass 2). Timestamped so same-day runs never
+  // clobber each other. The canonical rung-3/-4 worklist is rebuilt from the
+  // ledger at any moment by scripts/eval/ft-rung3-queue.ts — never feed these
+  // files to ft-verify.
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  const reportPath = path.join(OUT_DIR, `ft-ladder-${DATE}.json`);
-  fs.writeFileSync(reportPath, JSON.stringify({ date: RUN_DATE, queue: QUEUE, model: MODEL, prompt_version: SKEPTIC_PROMPT_VERSION, spent_usd: spent, rows }, null, 1));
-  console.log(`\nWrote ${reportPath}`);
-  if (rung3Queue.length) {
-    const p = path.join(OUT_DIR, `ft-ladder-rung3-queue-${DATE}.json`);
-    fs.writeFileSync(p, JSON.stringify(rung3Queue, null, 1));
-    console.log(`Wrote ${p} — feed to the ft-verify skill (Claude subagents).`);
-  }
-  if (rung4Queue.length) {
-    const p = path.join(OUT_DIR, `ft-ladder-rung4-human-${DATE}.json`);
-    fs.writeFileSync(p, JSON.stringify(rung4Queue, null, 1));
-    console.log(`Wrote ${p} — policy holds for Derek.`);
-  }
+  const RUN_STAMP = RUN_DATE.replace(/[:.]/g, '-');
+  const reportPath = path.join(OUT_DIR, `ft-ladder-report-${RUN_STAMP}.json`);
+  fs.writeFileSync(reportPath, JSON.stringify({ date: RUN_DATE, queue: QUEUE, model: MODEL, prompt_version: SKEPTIC_PROMPT_VERSION, spent_usd: spent, rows, rung3: rung3Queue, rung4: rung4Queue }, null, 1));
+  console.log(`\nWrote ${reportPath} (run report — the canonical queue is \`npx tsx scripts/eval/ft-rung3-queue.ts\`).`);
 
   if (APPLY && (rung1Applied || rung2Logged)) {
     console.log(`\n⚠ ACTUATION NOTICE: ingested ${rung1Applied + rung2Logged} row(s) into first_translation_attempts `

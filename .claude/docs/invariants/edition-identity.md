@@ -58,16 +58,27 @@ write partial identity. The worker's `stale_missing` count in `cron_runs` is
 the alarm: a book >7 days old with no identity fields means the worker is not
 running. The integrity script proves stored == computed.
 
-**Dedup's edition-key tier runs in SHADOW (since 2026-08-08).** Every real
-`checkDuplicate()` call logs the edition-key tier's would-be verdict next to
-the live tier-2 verdict in `dedup_shadow_decisions` (`agree` compares tier 2
-only — fingerprint/IIIF are untouched by the flip). Read it with
-`scripts/audit/dedup-shadow-agreement.mjs`; the flip criterion is a week of
-agreement on real traffic (offline baseline: 99.94% over 20,326, PR #3787).
-Audit scripts replaying books already in the DB must pass
-`{ shadowLog: false }` or their self-matches pollute the stats. The shadow
-block is fenced — it must never fail or slow an import materially, and it
-DECIDES nothing until the flip PR swaps tier 2's implementation.
+**Dedup tier 2 IS the edition key (flipped 2026-08-08, #3730 §2).**
+`checkDuplicate()`'s tier 2 is `editionKeyTierMatches()` — stored-key prefix
+lookup, year/volume as a both-sides veto, a missing year non-distinguishing
+(the safe error is "assume duplicate"). It replaced the ASCII title+author
+match on Derek's call after the offline replay (99.94% agreement over 20,326
+real candidates, 0 regressions — PR #3787) rather than after the planned week
+of shadow traffic. The retired title+author tier still runs as the POST-FLIP
+shadow: both verdicts land in `dedup_shadow_decisions` (`regime:
+'edition_live'`), where a shadow-only row now means the OLD tier caught
+something the new one lets through — the regression signature. Read with
+`scripts/audit/dedup-shadow-agreement.mjs`. **Retirement is gated on #4270,
+not on a lucky quiet week**: the 2026-08-27 triage found tier 2 blind to
+bilingual stored titles (native script + romanization) re-imported under the
+bare romanized title — the key prefix differs, and only the old ASCII tier
+catches it (by stripping the non-Latin half). Fix the recall gap
+(`edition_key_latin` secondary key, #4270), THEN a clean week deletes the
+shadow block and `titleAuthorTierMatches()`. Audit scripts replaying
+books already in the DB must pass `{ shadowLog: false }`. The shadow block is
+fenced — it must never fail an import. Corollary of the flip: dedup recall now
+DEPENDS on Phase 0 stamping both `books` and `books_warehouse` — an unstamped
+row is invisible to tier 2 (tiers 1/3 still catch same-source re-imports).
 
 ## `edition_key_quality` is not decoration — gate on it
 
@@ -170,3 +181,62 @@ and nothing downstream of it can be trusted.
   work_id over-split, now **detected automatically from below** instead of
   hunted by hand. This is the argument for building layers bottom-up: the
   edition layer falsifies the work layer for free.
+
+---
+
+## The acquisition gate (copy layer) — 2026-08-30
+
+**Read this half when:** you are writing an importer, adding an import route, or
+about to conclude that acquisition dedupe "already runs."
+
+Acquisition dedupe is a **different problem from merging**. At acquisition time a
+false positive is cheap — we decline a book we may already hold, and nothing is
+destroyed. A wrong `duplicate_of` merge HIDES a real book. So the gate is
+deliberately not tuned for precision: the two things that were actually wrong
+were that it did not always run, and that a NO left no trace.
+
+**Where the gate lives.** `acquisitionGate()` in `src/lib/acquisition-guard.ts`
+(TS, used by all ten `/api/import/*` routes) and `insertBookIfNew()` in
+`scripts/lib/acquire-book.mjs` (the direct importers). Call one of them instead
+of a bare `checkDuplicate()` on any path that creates a book.
+
+Three rules, each from a measurement over the 139 same-fingerprint groups in
+`books` on 2026-08-30:
+
+- **A check-then-insert is not a gate under concurrency.** 80 of those 139 groups
+  (58%) have every member created within five seconds of each other, dozens
+  within a single millisecond. `scripts/catalog-coverage/acquire-gap-batch.mjs`
+  runs at `CONCURRENCY = 10`, and ten USTC works resolving to the same scan all
+  passed `checkDuplicate()` before any of them inserted. The gate claims the
+  candidate's fingerprints in `acquisition_claims` (unique `_id`), so exactly one
+  writer wins. **Tell:** members of a duplicate group whose `created_at` differ by
+  milliseconds — that is a race, not a missing check, and adding a check will not
+  fix it.
+- **A fingerprint is a SET, not a string.** `sourceFingerprint()` picks one
+  identifier by priority, so the same IA object arriving as `ia:<id>` and as
+  `iiif:…/iiif/<id>/manifest.json` was two books to tier 1 — the tier that
+  cannot be wrong. `sourceFingerprints()` holds every identifier a record
+  carries, including ones derived back out of its URLs, and tier 1 matches on
+  intersection. It finds 268 groups where the scalar finds 139.
+  **The exclusions are load-bearing, not oversights:** bare `dc:` values (LCCN and
+  OCLC identify a bibliographic RECORD, not a scan — every volume of one serial
+  shares them; and `dc_identifier` is a bare STRING on 89,772 books, so `[0]` is a
+  single character), and numeric path segments scraped from arbitrary URLs. Each
+  merged tens of thousands of distinct books in the dry run. Pinned as negative
+  tests in `tests/unit/source-fingerprints.test.ts`; widen only with a dry run
+  over the live corpus first.
+- **A skip must be a row, not a line of stdout.** Every decision lands in
+  `dedup_skips` with the candidate's identity, the matched book, the tier, and
+  an `evidence` grade. `edition_key_no_year` is the one to review: **81% of
+  edition-key-only decisions have no publication year on at least one side**, so
+  they rest on normalized title + surname alone — weaker than the
+  "same author, same title, same year" rule of thumb the gate is meant to encode.
+  Nothing automated reads `dedup_skips` or `acquisition_claims`; deliberately kept
+  out of `dedup_shadow_decisions`, which an agreement audit computes percentages
+  over.
+
+**Standing detector:** `node scripts/audit/duplicate-fingerprint-groups.mjs --detect`
+exits 2 when a same-fingerprint group appears that is not in
+`scripts/audit/baselines/duplicate-fingerprints.json`. It reports; it never
+merges, hides, or deletes. Re-baseline with `--update-baseline` once a human has
+looked.

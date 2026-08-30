@@ -12,8 +12,11 @@
 
 import { validateApiKey } from '@/lib/dataset/api-keys';
 import { CONTENT_LICENSE } from '@/lib/license-info';
+import { FREE_PAGE_PERCENT, freeMaxPage } from '@/lib/free-preview';
 
-const BOT_PAGE_PERCENT = 20; // % of pages bots can read from each book
+// % of pages bots can read from each book — shared with the metered reader
+// (free-preview.ts) so the bot sample and the human sample can never drift.
+const BOT_PAGE_PERCENT = FREE_PAGE_PERCENT;
 
 const KNOWN_BOTS = [
   'gptbot', 'chatgpt', 'oai-searchbot',
@@ -39,6 +42,9 @@ const ALWAYS_ALLOW = ['sourcelibrary-mcp'];
 // the robots.ts search-allow list and the /licensing policy. NB: this is UA-based
 // (honor system) — consistent with the rest of this gate, which only ever applied
 // to self-identifying bots; a scraper using a browser UA was never gated anyway.
+// NB: ccbot/bytespider appear in KNOWN_BOTS above but are hard-403'd at the
+// edge (proxy.ts BLOCKED_BOT_RE), so their entries here are unreachable
+// defense-in-depth — kept deliberately in case the edge rule changes (#4366).
 const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'duckduckbot', 'claude-searchbot', 'oai-searchbot'];
 
 // User-INITIATED assistant fetches: an AI assistant retrieving a page because a
@@ -90,8 +96,7 @@ export async function isTrustedBot(request: Request): Promise<boolean> {
  * Returns 0 if pages_count is unknown (deny by default).
  */
 export function botMaxPage(pagesCount: number): number {
-  if (!pagesCount || pagesCount <= 0) return 0;
-  return Math.max(1, Math.floor(pagesCount * BOT_PAGE_PERCENT / 100));
+  return freeMaxPage(pagesCount);
 }
 
 export function botGateResponse(book: {

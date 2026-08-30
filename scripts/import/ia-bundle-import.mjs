@@ -38,6 +38,8 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
 import crypto from 'crypto';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -155,11 +157,10 @@ async function main() {
       const bookId = new ObjectId();
       const bookIdStr = bookId.toHexString();
 
-      const bookDoc = {
+      const acquired = await insertBookIfNew(db, {
         _id: bookId,
         id: bookIdStr,
         slug,
-        tenant_id: 'default',
         title: entry.title,
         display_title: entry.display_title || null,
         author: entry.author,
@@ -195,19 +196,18 @@ async function main() {
         normalized_author: normalizeAuthor(entry.author),
         created_at: new Date(),
         updated_at: new Date(),
-      };
-
-      await db.collection('books').insertOne(bookDoc);
+      }, { importer: 'script:ia-bundle-import', sourceIdentifier: `${bundle_id}/${fileHash}`, sourceUrl: `https://archive.org/details/${bundle_id}` });
+      // The gate declined this candidate; the reason is a row in `dedup_skips`.
+      if (!acquired.inserted) { console.log(`  SKIP — ${acquired.message}`); skipped++; continue; }
 
       const CHUNK = 500;
       for (let start = 0; start < pageCount; start += CHUNK) {
         const pageDocs = [];
         for (let p = start; p < Math.min(start + CHUNK, pageCount); p++) {
           const pageId = new ObjectId();
-          pageDocs.push({
+          pageDocs.push(makePageDoc({
             _id: pageId,
             id: pageId.toHexString(),
-            tenant_id: 'default',
             book_id: bookIdStr,
             page_number: p + 1,
             photo: getPageUrl(p),
@@ -215,7 +215,7 @@ async function main() {
             photo_original: getPageUrl(p),
             created_at: new Date(),
             updated_at: new Date(),
-          });
+          }));
         }
         await db.collection('pages').insertMany(pageDocs, { ordered: false });
       }

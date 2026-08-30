@@ -20,13 +20,13 @@ export interface TimelineEvent {
  * edition(s)/translation(s) appeared, and when it joined Source Library.
  * Rendered as a dropdown card matching the other book-page dropdowns.
  */
-export default function BookTimeline({ events }: { events: TimelineEvent[] }) {
+export default function BookTimeline({ events, title = 'Book history' }: { events: TimelineEvent[]; title?: string }) {
   if (!events || events.length === 0) return null;
 
   return (
     <details className="card group sl-collapse">
       <summary className="p-4 md:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between gap-3 md:gap-4">
-        <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>Book history</h3>
+        <h3 className="font-display font-medium text-[17px] md:text-[22px]" style={{ color: '#2b2620' }}>{title}</h3>
         <PlusToggle />
       </summary>
       <div className="px-4 pb-5 md:px-6 md:pb-6">

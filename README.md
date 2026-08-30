@@ -510,7 +510,7 @@ SUPABASE_URL=<for-embeddings>
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow our [development workflow](./CLAUDE.md#development-workflow):
+We welcome contributions! **Start with [CONTRIBUTING.md](./CONTRIBUTING.md)** — setup, the branch/PR workflow, how deploys work (and the Vercel setup you should NOT do), and the data-safety rules. Deeper doctrine lives in the [development workflow](./CLAUDE.md#development-workflow). The short version:
 
 1. **🌿 Create a feature branch** (off `main`):
    ```bash

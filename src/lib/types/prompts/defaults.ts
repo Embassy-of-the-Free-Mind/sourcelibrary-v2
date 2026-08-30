@@ -1,5 +1,6 @@
 import { ProcessingPrompts } from "./core";
 import type { DetectedImage } from "../page";
+import { VALID_IMAGE_TYPES } from "../../gallery-image-types";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
 export const PROMPT_VERSION = 'v6.1.2026-05';
@@ -51,11 +52,9 @@ export function extractScriptType(ocrText: string): 'printed' | 'handwritten' | 
   return undefined;
 }
 
-const VALID_IMAGE_TYPES = new Set([
-  'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
-  'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score',
-  'exlibris', 'bookplate', 'unknown',
-]);
+// Vocabulary moved to `src/lib/gallery-image-types.ts` (#3419) — it was written out
+// verbatim here and in the gallery re-tag route, and the extraction write path
+// consulted neither, which is how 99 rows came to hold raw model output.
 
 /** Parse <detected-images> JSON from OCR text into typed DetectedImage[]. Returns empty array if none found. */
 export function parseDetectedImages(ocrText: string): DetectedImage[] {

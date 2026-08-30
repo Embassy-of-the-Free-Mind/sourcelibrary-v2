@@ -26,6 +26,7 @@ interface SubCollection {
   book_count: number;
   total_book_count?: number;
   artwork_count?: number;
+  collection_type?: string;
   visible: boolean;
   type?: string;
   image?: string;
@@ -66,7 +67,7 @@ async function fetchWings(): Promise<Wing[]> {
     parent: { $exists: true },
     visible: { $ne: false },
   }).project({
-    slug: 1, tenantId: 1, name: 1, book_count: 1, total_book_count: 1, artwork_count: 1, parent: 1, visible: 1, type: 1,
+    slug: 1, tenantId: 1, name: 1, book_count: 1, total_book_count: 1, artwork_count: 1, collection_type: 1, parent: 1, visible: 1, type: 1,
     hero_image: 1, featured_images: { $slice: 1 }, _id: 0,
   }).toArray();
 
@@ -95,6 +96,7 @@ async function fetchWings(): Promise<Wing[]> {
         book_count: sub.book_count || 0,
         total_book_count: sub.total_book_count,
         artwork_count: sub.artwork_count || 0,
+        collection_type: sub.collection_type,
         visible: sub.visible !== false,
         type: sub.type,
         image: coverOverride(sub.slug) || sub.hero_image || pickImage(sub.featured_images),
@@ -102,9 +104,13 @@ async function fetchWings(): Promise<Wing[]> {
     }
   }
 
-  // Sort children by book count descending
+  // Sort children by the count their card actually shows — an art child's
+  // book_count is meaningless (see collectionCountLabel), so sorting on it buried
+  // 1,600-artwork collections below 20-text ones.
+  const displayCount = (c: SubCollection) =>
+    c.collection_type === 'visual_art' ? (c.artwork_count ?? 0) : (c.total_book_count ?? c.book_count);
   for (const kids of childMap.values()) {
-    kids.sort((a, b) => b.book_count - a.book_count);
+    kids.sort((a, b) => displayCount(b) - displayCount(a));
   }
 
   return wings.map(w => ({
@@ -141,7 +147,7 @@ function CollectionCard({ col }: { col: SubCollection }) {
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3">
         <p className="text-white/50 text-[10px] mb-0.5">
-          {collectionCountLabel(col.total_book_count ?? col.book_count, col.artwork_count) || 'Empty'}
+          {collectionCountLabel(col.total_book_count ?? col.book_count, col.artwork_count, col.collection_type) || 'Empty'}
         </p>
         <h3 className="font-serif text-xs sm:text-sm text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
           {col.name}

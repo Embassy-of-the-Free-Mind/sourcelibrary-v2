@@ -20,6 +20,7 @@
  *   node scripts/import/founding-docs-direct.mjs --commit
  */
 import { MongoClient, ObjectId } from 'mongodb';
+import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 
@@ -141,7 +142,7 @@ async function main() {
     const photo = i => `https://archive.org/download/${b.ia}/page/n${i}/full/full/0/default.jpg`;
     const thumb = i => `https://archive.org/download/${b.ia}/page/n${i}/full/pct:15/0/default.jpg`;
 
-    const bookDoc = {
+    const bookDoc = makeBookDoc({
       _id: bookId, id: bookIdStr, slug,
       title: b.title, display_title: null, author: b.author,
       language: b.language, published: b.published,
@@ -176,7 +177,7 @@ async function main() {
       source_fingerprint: fp,
       normalized_title: normalizeTitle(b.title), normalized_author: normalizeAuthor(b.author),
       created_at: now, updated_at: now,
-    };
+    });
 
     if (!COMMIT) { console.log(`DRY   ${b.ia} — would insert "${b.title}" (${pageCount}pp, ${pageCountSource}) slug=${slug}`); imported++; continue; }
 
@@ -186,8 +187,8 @@ async function main() {
       const docs = [];
       for (let k = 0; k < CHUNK && s + k < pageCount; k++) {
         const i = s + k; const pid = new ObjectId();
-        docs.push({ _id: pid, id: pid.toHexString(), book_id: bookIdStr, page_number: i + 1,
-          photo: photo(i), thumbnail: thumb(i), photo_original: photo(i), created_at: now, updated_at: now });
+        docs.push(makePageDoc({ _id: pid, id: pid.toHexString(), book_id: bookIdStr, page_number: i + 1,
+          photo: photo(i), thumbnail: thumb(i), photo_original: photo(i), created_at: now, updated_at: now }));
       }
       await db.collection('pages').insertMany(docs, { ordered: false });
     }

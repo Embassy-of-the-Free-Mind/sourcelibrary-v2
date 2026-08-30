@@ -71,6 +71,18 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
   '/volunteers',
+  // Inner-circle curation surfaces (#3846): identity adjudication over the
+  // whole corpus (work merges, edition keeper choices). Corpus-wide by
+  // construction and actuating, so a partner host must refuse it outright —
+  // the same reasoning as /review, with writes attached.
+  '/curation',
+  // Photo identification searches the ENTIRE corpus (CLIP index over every
+  // library's images, Mongo across all books) and links to whatever it finds —
+  // on a partner host that is a machine for surfacing other institutions'
+  // holdings. Same content-leak reasoning as /encyclopedia and /review. The
+  // museum QR use case points at sourcelibrary.org/identify, not a subdomain,
+  // so nothing tenant-facing is lost. (#4232)
+  '/identify',
 ] as const;
 
 /**
@@ -110,6 +122,9 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // they were served on, so blocking only the page would leave the unscoped
   // corpus reachable from a tenant subdomain.
   '/api/review',
+  // /identify posts the photo from the client, so blocking only the page would
+  // leave corpus-wide visual search callable from a tenant host.
+  '/api/identify',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [

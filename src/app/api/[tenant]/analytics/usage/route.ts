@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { withAuth } from '@/lib/auth-helpers';
 import { supabase } from '@/lib/supabase';
+import { DASHBOARD_SNAPSHOT_MAX_AGE_MS } from '@/lib/dashboard-snapshot';
 
 export const maxDuration = 30;
 
@@ -146,10 +147,26 @@ export const GET = withAuth(async (request: NextRequest, session, context) => {
     // === Unpack snapshot (or fall back to dashboard_snapshot) ===
     let snap = snapshot?.data;
     if (!snap) {
-      // Fall back to dashboard_snapshot if analytics_usage hasn't been seeded yet
-      const fallback = await db.collection('system_config').findOne({ _id: 'dashboard_snapshot', tenantId } as any)
-        || await db.collection('system_config').findOne({ _id: 'dashboard_snapshot' } as any);
-      snap = fallback?.data;
+      // Fall back to dashboard_snapshot if analytics_usage hasn't been seeded
+      // yet — but only if it is actually fresh. The global twin of this route
+      // has refused stale fallbacks since the 2026-08-06 audit; this one never
+      // did, so an unseeded tenant would have been served the 138-day-old
+      // global snapshot with nothing to say so.
+      const tenantDoc = await db.collection('system_config').findOne({ _id: 'dashboard_snapshot', tenantId } as any);
+      const fallback = tenantDoc
+        ?? await db.collection('system_config').findOne({ _id: 'dashboard_snapshot' } as any);
+      const fallbackAge = fallback?.updated_at
+        ? Date.now() - new Date(fallback.updated_at).getTime()
+        : Infinity;
+      if (fallback?.data && fallbackAge <= DASHBOARD_SNAPSHOT_MAX_AGE_MS) {
+        snap = fallback.data;
+      } else if (fallback?.data) {
+        console.warn(
+          `[${tenantId}/analytics/usage] dashboard_snapshot is ` +
+          `${Number.isFinite(fallbackAge) ? Math.round(fallbackAge / 86_400_000) + 'd' : 'undated'} old ` +
+          `— serving no snapshot rather than stale totals`,
+        );
+      }
     }
 
     const canon = snap?.canon || {};

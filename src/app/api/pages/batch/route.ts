@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { markPageForReader } from '@/lib/provenance';
+import { gatePagesForRequest } from '@/lib/metered-gate';
+import { meteredReaderEnabled } from '@/lib/free-preview';
 
 export const preferredRegion = 'fra1';
 
@@ -35,16 +38,31 @@ export async function POST(request: NextRequest) {
     if (tenantId) filter.tenantId = tenantId;
 
     const db = await getDb();
-    const pages = await db.collection('pages').find(
+    let pages = await db.collection('pages').find(
       filter,
       { projection: { detected_images: 0 } }
     ).toArray();
 
-    // Strip MongoDB _id
-    const cleaned = pages.map(({ _id, ...rest }) => rest);
+    // Metered reader (#4357): strip gated text for anonymous callers beyond
+    // each book's free sample. Tenant-scoped requests are exempt. No-op
+    // unless METERED_READER=1.
+    pages = await gatePagesForRequest(db, request, pages, { exempt: !!tenantId });
+
+    // Strip MongoDB _id; weave the reader-path provenance mark into each
+    // translation. Deterministic (content-keyed, no ref), so the shared
+    // s-maxage cache below serves identical bytes to every caller.
+    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(rest));
+
+    // With metering on, the body depends on who asked (session vs anon) —
+    // never let a shared cache serve one caller's variant to another. POSTs
+    // aren't CDN-cached today, so this is belt and braces, not a behavior
+    // change for the flag-off default.
+    const cacheControl = meteredReaderEnabled()
+      ? 'private, no-store'
+      : 'public, max-age=0, s-maxage=60, stale-while-revalidate=300';
 
     return NextResponse.json({ pages: cleaned }, {
-      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' },
+      headers: { 'Cache-Control': cacheControl },
     });
   } catch (error) {
     console.error('Batch pages error:', error);

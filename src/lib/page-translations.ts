@@ -25,6 +25,44 @@ export const TARGET_LANGUAGE_NAMES: Record<string, string> = {
 };
 
 /**
+ * The ISO codes a book-level EDITION counter can exist for —
+ * `books.pages_translated_<iso>`, written by that language's translation worker.
+ *
+ * Derived from the language-name table above so the two cannot drift: a
+ * language a reader can be offered is a language whose counter we look for.
+ * English is not here; its counter is the unsuffixed `pages_translated`.
+ */
+export const TEXT_EDITION_LANGS: string[] = Object.keys(TARGET_LANGUAGE_NAMES);
+
+/** Mongo projection for every edition counter, for `editionsForBook` below. */
+export const EDITION_COUNTER_PROJECTION: Record<string, 1> = {
+  pages_translated: 1,
+  ...Object.fromEntries(TEXT_EDITION_LANGS.map((l) => [`pages_translated_${l}`, 1])),
+};
+
+/**
+ * Which editions of a book's text exist, and how many pages each covers:
+ * `{ en: 357, es: 357 }`. Languages with no pages are omitted — a key with a
+ * zero would read as "we have a Spanish edition, it's empty", which is the
+ * opposite of true.
+ *
+ * The counters are the source of truth here rather than a per-page scan,
+ * because they are what every other surface gates on (the `/es` 307, the card
+ * tag, the derived collection). A caller comparing this against page-level
+ * results is comparing the same number the reader's URL was judged by.
+ */
+export function editionsForBook(book: Record<string, unknown>): Record<string, number> {
+  const out: Record<string, number> = {};
+  const en = Number(book.pages_translated || 0);
+  if (en > 0) out.en = en;
+  for (const l of TEXT_EDITION_LANGS) {
+    const n = Number(book[`pages_translated_${l}`] || 0);
+    if (n > 0) out[l] = n;
+  }
+  return out;
+}
+
+/**
  * All non-English translations available for a page, keyed by ISO code.
  * Folds the legacy `translation_es` into the map (map entry wins on conflict).
  */

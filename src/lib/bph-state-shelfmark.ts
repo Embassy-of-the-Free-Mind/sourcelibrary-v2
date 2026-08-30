@@ -20,22 +20,31 @@
  * sides together.
  */
 
-/**
- * Values that mean "no", not a shelf mark. Compared case-insensitively.
- *
- * Deliberately limited to the negative answers: `ja` ("yes") also appears in
- * the column (31 rows as of 2026-07-30) and is equally not a shelf mark, but
- * emptying it would discard the only record that those copies ARE on loan from
- * the state collection. That needs a librarian's decision and a column that can
- * express it, so it is left alone here rather than swept.
- */
+/** Values that mean "no", not a shelf mark. Compared case-insensitively. */
 const NOT_A_SHELFMARK = new Set(['neen', 'nee']);
+
+/**
+ * `ja` ("yes") is the other Memorix boolean in this column — 31 rows. It is not
+ * a shelf mark either, but unlike `neen` it is not noise: it is the only record
+ * that those copies ARE on loan from the state collection, so it is translated
+ * rather than dropped. José Bouman (BPH) made the call on 2026-08-12, having
+ * been asked for exactly this decision by the catalogue worklist:
+ *
+ *   "This set of 31 is owned by the State, therefore the 'Ja'. Better change
+ *    it to 'yes'."
+ *
+ * Normalised at the write boundary as well as swept in the data, so a Memorix
+ * re-import cannot put the Dutch back — the same belt-and-braces the `neen`
+ * cleanup used.
+ */
+const TRANSLATE = new Map([['ja', 'yes']]);
 
 export function normalizeStateShelfMark(raw: string | null | undefined): string | null {
   if (raw == null) return null;
   const kept = String(raw)
     .split('|')
     .map((part) => part.trim())
-    .filter((part) => part.length > 0 && !NOT_A_SHELFMARK.has(part.toLowerCase()));
+    .filter((part) => part.length > 0 && !NOT_A_SHELFMARK.has(part.toLowerCase()))
+    .map((part) => TRANSLATE.get(part.toLowerCase()) ?? part);
   return kept.length > 0 ? kept.join('|') : null;
 }

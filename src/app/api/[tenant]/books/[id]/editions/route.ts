@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { citationLanguageFields } from '@/lib/edition-language';
 
 // SPDX license options
 export const LICENSES = [
@@ -175,7 +176,9 @@ export const POST = withAuth(async (request, session, context) => {
         title: `English Translation of ${book.display_title || book.title}`,
         original_title: book.title,
         original_author: book.author,
-        original_language: book.language,
+        // original_language is the language we translated FROM; work_language
+        // appears beside it only when the work itself is in a third language.
+        ...citationLanguageFields(book),
         original_published: book.published,
         target_language: 'en',
       },

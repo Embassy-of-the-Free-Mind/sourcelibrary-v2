@@ -1,0 +1,1021 @@
+{
+  "date": "2026-08-09",
+  "issue": 3823,
+  "sample": {
+    "books": 40,
+    "words": 786,
+    "selection": "interior pages (15–85%), tokens ≥3 letters, non-numeric"
+  },
+  "hitRate": 0.76,
+  "confidentHitRate": 0.683,
+  "tierCounts": {
+    "ocr": 10,
+    "irregular": 62,
+    "exact": 239,
+    "inflected": 233,
+    "miss": 189,
+    "suffix": 48,
+    "variant": 3,
+    "loose": 2
+  },
+  "spotCheckHits": [
+    {
+      "word": "Mathematici",
+      "headword": "mathematicus",
+      "tier": "suffix",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "super",
+      "headword": "super",
+      "tier": "exact",
+      "title": "Compendium alchimiae"
+    },
+    {
+      "word": "prædictum",
+      "headword": "praedictum",
+      "tier": "exact",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "non",
+      "headword": "non",
+      "tier": "exact",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "audent",
+      "headword": "audeo",
+      "tier": "inflected",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "longius",
+      "headword": "longus",
+      "tier": "inflected",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "cum",
+      "headword": "cum",
+      "tier": "exact",
+      "title": "Speculum judiciale. With the additions of Johannes Andreae a"
+    },
+    {
+      "word": "nil",
+      "headword": "nil",
+      "tier": "exact",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "Tantali",
+      "headword": "Tantalus",
+      "tier": "inflected",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "hostes",
+      "headword": "hostis",
+      "tier": "inflected",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "euangeliū",
+      "headword": "evangelium",
+      "tier": "exact",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "esse",
+      "headword": "sum",
+      "tier": "irregular",
+      "title": "In Somnium Scipionis Explanatio; Saturnaliorum libri VII; Ce"
+    },
+    {
+      "word": "illorum",
+      "headword": "ille",
+      "tier": "irregular",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "lingua",
+      "headword": "lingua",
+      "tier": "exact",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "æquale",
+      "headword": "aequalis",
+      "tier": "inflected",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "pisces",
+      "headword": "piscis",
+      "tier": "inflected",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "circulus",
+      "headword": "circulus",
+      "tier": "exact",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "signant",
+      "headword": "signo",
+      "tier": "inflected",
+      "title": "Opera ea quae ad adinventam ab ipso artem universalem scient"
+    },
+    {
+      "word": "notum",
+      "headword": "notus",
+      "tier": "suffix",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "hypotenusa",
+      "headword": "hypotenusa",
+      "tier": "exact",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "alijs",
+      "headword": "Alius",
+      "tier": "irregular",
+      "title": "In Somnium Scipionis Explanatio; Saturnaliorum libri VII; Ce"
+    },
+    {
+      "word": "mente",
+      "headword": "mens",
+      "tier": "inflected",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "sui",
+      "headword": "sui",
+      "tier": "exact",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "pacta",
+      "headword": "pacta",
+      "tier": "exact",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "dignoſces",
+      "headword": "dignosco",
+      "tier": "suffix",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "Forma",
+      "headword": "forma",
+      "tier": "exact",
+      "title": "Opera ea quae ad adinventam ab ipso artem universalem scient"
+    },
+    {
+      "word": "the",
+      "headword": "thus",
+      "tier": "suffix",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "Pannoniam",
+      "headword": "Pannonia",
+      "tier": "suffix",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "etiā",
+      "headword": "etiam",
+      "tier": "exact",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "defunctorum",
+      "headword": "defunctus",
+      "tier": "suffix",
+      "title": "De nummis dissertationes XX"
+    },
+    {
+      "word": "diametrum",
+      "headword": "diametrum",
+      "tier": "exact",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "ſilentio",
+      "headword": "silentium",
+      "tier": "inflected",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "fuperioribus",
+      "headword": "superus",
+      "tier": "ocr",
+      "title": "Opera ea quae ad adinventam ab ipso artem universalem scient"
+    },
+    {
+      "word": "horribile",
+      "headword": "horribilis",
+      "tier": "inflected",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "supra",
+      "headword": "supra",
+      "tier": "exact",
+      "title": "Summa de virtutibus"
+    },
+    {
+      "word": "mare",
+      "headword": "mare",
+      "tier": "exact",
+      "title": "Geographi Latini Minores"
+    },
+    {
+      "word": "conſuetudinem",
+      "headword": "consuetudo",
+      "tier": "inflected",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "carnibus",
+      "headword": "caro",
+      "tier": "inflected",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "latinitas",
+      "headword": "latinitas",
+      "tier": "exact",
+      "title": "Geographi Latini Minores"
+    },
+    {
+      "word": "unde",
+      "headword": "unde",
+      "tier": "exact",
+      "title": "Opera Varia, Vol. 2"
+    }
+  ],
+  "misses": [
+    {
+      "word": "CAP",
+      "title": "Opera ea quae ad adinventam ab ipso artem universalem scient"
+    },
+    {
+      "word": "LVII",
+      "title": "Opera ea quae ad adinventam ab ipso artem universalem scient"
+    },
+    {
+      "word": "each",
+      "title": "Opera ea quae ad adinventam ab ipso artem universalem scient"
+    },
+    {
+      "word": "olimpias",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "usqʒ",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "p̄hibentibʒ",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "most",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "lasciuie",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "paperclip",
+      "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)"
+    },
+    {
+      "word": "common",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "root",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "script",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "flanked",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "illustration",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "woodcut",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "Tulipa",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "detailed",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "heads",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "marginalia",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "plant",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "tulip",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "flower",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "upright",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "vertical",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "botany",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "two",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "identified",
+      "title": "Rariorum Stirpium per Pannoniam Historia"
+    },
+    {
+      "word": "Voetium",
+      "title": "De nummis dissertationes XX"
+    },
+    {
+      "word": "Dietericum",
+      "title": "De nummis dissertationes XX"
+    },
+    {
+      "word": "adire",
+      "title": "De nummis dissertationes XX"
+    },
+    {
+      "word": "nominaque",
+      "title": "De nummis dissertationes XX"
+    },
+    {
+      "word": "Junonis",
+      "title": "De nummis dissertationes XX"
+    },
+    {
+      "word": "enterrer",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "religieuse",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "German",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "ist",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "viuras",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "entierement",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "morts",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "veux",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "tromperas",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "tousiours",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "debtes",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "atq",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "donneras",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "peu",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "tiene",
+      "title": "Tintinabulum sophorum"
+    },
+    {
+      "word": "discontinuitate",
+      "title": "Summa perfectionis magisterii. Add: Liber trium verborum. Al"
+    },
+    {
+      "word": "mirabil",
+      "title": "Summa perfectionis magisterii. Add: Liber trium verborum. Al"
+    },
+    {
+      "word": "ignitio",
+      "title": "Summa perfectionis magisterii. Add: Liber trium verborum. Al"
+    },
+    {
+      "word": "tranea",
+      "title": "Summa perfectionis magisterii. Add: Liber trium verborum. Al"
+    },
+    {
+      "word": "mediamque",
+      "title": "In hoc volumine haec continentur. Aurelii Cornelii Celsii Me"
+    },
+    {
+      "word": "representat",
+      "title": "In hoc volumine haec continentur. Aurelii Cornelii Celsii Me"
+    },
+    {
+      "word": "idque",
+      "title": "In hoc volumine haec continentur. Aurelii Cornelii Celsii Me"
+    },
+    {
+      "word": "pferri",
+      "title": "Speculum judiciale. With the additions of Johannes Andreae a"
+    },
+    {
+      "word": "aliquaz",
+      "title": "Speculum judiciale. With the additions of Johannes Andreae a"
+    },
+    {
+      "word": "ꝓcept",
+      "title": "Speculum judiciale. With the additions of Johannes Andreae a"
+    },
+    {
+      "word": "spon",
+      "title": "Speculum judiciale. With the additions of Johannes Andreae a"
+    },
+    {
+      "word": "cās",
+      "title": "Speculum judiciale. With the additions of Johannes Andreae a"
+    },
+    {
+      "word": "amp",
+      "title": "Cornelii Valerii Ultraiectini In universam benedicendi [sic]"
+    },
+    {
+      "word": "tiá",
+      "title": "Cornelii Valerii Ultraiectini In universam benedicendi [sic]"
+    },
+    {
+      "word": "quadr",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "rectangulum",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "which",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "Fig",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "rectang",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "rectangulo",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "postrema",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "clearly",
+      "title": "Opera Varia, Vol. 2"
+    },
+    {
+      "word": "xpi",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "Glozia",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "teq",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "sup",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "exorcism",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "aliquib",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "equalis",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "misericordie",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "John",
+      "title": "Coniuratio malignorum spirituum [Coniuratio daemonum]"
+    },
+    {
+      "word": "facienda",
+      "title": "Rhetorica ad C. Herennium. Comm: Franciscus Maturantius [Mat"
+    },
+    {
+      "word": "oio",
+      "title": "Rhetorica ad C. Herennium. Comm: Franciscus Maturantius [Mat"
+    },
+    {
+      "word": "Eleemosyn",
+      "title": "Summa Theologica, Secunda Secundae (On Justice and Just Pric"
+    },
+    {
+      "word": "Corinth",
+      "title": "Summa Theologica, Secunda Secundae (On Justice and Just Pric"
+    },
+    {
+      "word": "script",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "Iohannem",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "Leftmost",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "above",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "image",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "text",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "Latin",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "notation",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "introiuit",
+      "title": "[Kyriale, Troper-Proser and processional]"
+    },
+    {
+      "word": "amp;c",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "tuam",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "potentior",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "catchword",
+      "title": "Arcana Politica"
+    },
+    {
+      "word": "obtinuisse",
+      "title": "Physica subterranea. Specimen Beccherianum"
+    },
+    {
+      "word": "Latin",
+      "title": "In Somnium Scipionis Explanatio; Saturnaliorum libri VII; Ce"
+    },
+    {
+      "word": "nunq",
+      "title": "In Somnium Scipionis Explanatio; Saturnaliorum libri VII; Ce"
+    },
+    {
+      "word": "mathcal{q",
+      "title": "In Somnium Scipionis Explanatio; Saturnaliorum libri VII; Ce"
+    },
+    {
+      "word": "Dianamq",
+      "title": "In Somnium Scipionis Explanatio; Saturnaliorum libri VII; Ce"
+    },
+    {
+      "word": "BIBLIOTHEK",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "STIFTES",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "sepactas",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "loops",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "Latin",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "Mellensis",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "stamp",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "precipue",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "Senging",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "Mellicensis",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "catchword",
+      "title": "Modus scribendi"
+    },
+    {
+      "word": "Romana",
+      "title": "Opera Omnia Vol. 1"
+    },
+    {
+      "word": "Iudæi",
+      "title": "Opera Omnia Vol. 1"
+    },
+    {
+      "word": "tūc",
+      "title": "De omnibus rebus naturalibus"
+    },
+    {
+      "word": "Quatuor",
+      "title": "De omnibus rebus naturalibus"
+    },
+    {
+      "word": "effe",
+      "title": "De omnibus rebus naturalibus"
+    },
+    {
+      "word": "lexagexies",
+      "title": "De omnibus rebus naturalibus"
+    },
+    {
+      "word": "exalationibus",
+      "title": "De omnibus rebus naturalibus"
+    },
+    {
+      "word": "Alibotra",
+      "title": "Geographi Latini Minores"
+    },
+    {
+      "word": "Vatic",
+      "title": "Geographi Latini Minores"
+    },
+    {
+      "word": "Hictiophagi",
+      "title": "Geographi Latini Minores"
+    },
+    {
+      "word": "inmergitur",
+      "title": "Geographi Latini Minores"
+    },
+    {
+      "word": "Metaphysicam",
+      "title": "Monas hieroglyphica"
+    },
+    {
+      "word": "SYMME",
+      "title": "Monas hieroglyphica"
+    },
+    {
+      "word": "nostra",
+      "title": "Monas hieroglyphica"
+    },
+    {
+      "word": "ACTVA",
+      "title": "Monas hieroglyphica"
+    },
+    {
+      "word": "partē",
+      "title": "Monas hieroglyphica"
+    },
+    {
+      "word": "Maiorque",
+      "title": "Monas hieroglyphica"
+    },
+    {
+      "word": "Turkish",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "manuscript",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "instruction",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "Naskh",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "Arabic",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "Ottoman",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "Handwritten",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "moral",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "Nasta'liq",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "script",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "ethics",
+      "title": "Sirr al-Asrar (Secret of Secrets)"
+    },
+    {
+      "word": "gracia",
+      "title": "Summa de virtutibus"
+    },
+    {
+      "word": "Theb",
+      "title": "Summa de virtutibus"
+    },
+    {
+      "word": "temperancia",
+      "title": "Summa de virtutibus"
+    },
+    {
+      "word": "temperancie",
+      "title": "Summa de virtutibus"
+    },
+    {
+      "word": "collaudacio",
+      "title": "Summa de virtutibus"
+    },
+    {
+      "word": "misericordes",
+      "title": "Summa de virtutibus"
+    },
+    {
+      "word": "Latin",
+      "title": "De annorum revolutionibus astronomicis"
+    },
+    {
+      "word": "viderit",
+      "title": "De annorum revolutionibus astronomicis"
+    },
+    {
+      "word": "inferiora",
+      "title": "Procli philosophi Platonici opera : E codd. mss. biblioth. r"
+    },
+    {
+      "word": "perfectiora",
+      "title": "Procli philosophi Platonici opera : E codd. mss. biblioth. r"
+    },
+    {
+      "word": "adsint",
+      "title": "Procli philosophi Platonici opera : E codd. mss. biblioth. r"
+    },
+    {
+      "word": "propinquiora",
+      "title": "Procli philosophi Platonici opera : E codd. mss. biblioth. r"
+    },
+    {
+      "word": "Analemmate",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "Boetius",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "Finchius",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "Holometrum",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "Geometr",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "Commandin",
+      "title": "Neopaedia : sive Methodi ratio"
+    },
+    {
+      "word": "Beruhr",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "Experiolus",
+      "title": "De secretis mulierum libellus : scholiis auctus"
+    },
+    {
+      "word": "pannisq",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "Latin",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "catchword",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "crowned",
+      "title": "Abortus Chimicus, Sive Valleis Arcanitatum Divae Sapientiae."
+    },
+    {
+      "word": "Latin",
+      "title": "Compendium alchimiae"
+    },
+    {
+      "word": "rotumba",
+      "title": "Compendium alchimiae"
+    },
+    {
+      "word": "fac",
+      "title": "Compendium alchimiae"
+    },
+    {
+      "word": "ogni",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "uoglio",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "descriuendolo",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "impossibil",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "Vadano",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "auenga",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "ragione",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "son",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "petto",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "Che'l",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "alcune",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "fiamme",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "Dal",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "cagione",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "Vecchi",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "Enea",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "deh",
+      "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+      "word": "motiua",
+      "title": "Tractatus duo physici : prior de impostoria vulnerum per ung"
+    },
+    {
+      "word": "effe",
+      "title": "Tractatus duo physici : prior de impostoria vulnerum per ung"
+    },
+    {
+      "word": "cutting",
+      "title": "Tractatus duo physici : prior de impostoria vulnerum per ung"
+    },
+    {
+      "word": "partial",
+      "title": "Tractatus duo physici : prior de impostoria vulnerum per ung"
+    },
+    {
+      "word": "ondum",
+      "title": "Tractatus duo physici : prior de impostoria vulnerum per ung"
+    },
+    {
+      "word": "oportere",
+      "title": "Tractatus duo physici : prior de impostoria vulnerum per ung"
+    }
+  ]
+}

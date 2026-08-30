@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Claude Can Now Read Thousands of Rare Books',
     description: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations.',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg' }],
   },
   alternates: {
     canonical: '/blog/mcp-server',
@@ -26,7 +26,7 @@ export default function McpServerPage() {
         <ContentHeader
           title="Claude Can Now Read Thousands of Rare Books"
           subtitle="An MCP server for primary source research in alchemy, Hermeticism, Renaissance philosophy, and early modern science"
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
+          image="https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg"
           imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
         >
           <p className="text-stone-400 text-sm mt-4">18 February 2026 &middot; 8 min read</p>

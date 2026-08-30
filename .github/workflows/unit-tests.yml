@@ -26,3 +26,10 @@ jobs:
 
       - name: Type check
         run: npx tsc --noEmit
+
+      # Static source check — no network, no secrets — so it gates PRs here
+      # rather than running nightly. Vercel Blob is retired in favour of R2
+      # (#3645); this refuses new hardcoded Blob URLs (plain OR percent-encoded)
+      # and new direct `@vercel/blob` imports that bypass storagePut().
+      - name: No new Vercel Blob dependencies
+        run: node scripts/audit/no-vercel-blob.mjs

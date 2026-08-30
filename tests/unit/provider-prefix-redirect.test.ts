@@ -39,6 +39,23 @@ describe('getProviderPrefixRedirect', () => {
     }
   });
 
+  it('strips a /libraries/<lib> prefix off deep content paths', () => {
+    expect(
+      getProviderPrefixRedirect('/libraries/bibliotheca-philosophica-hermetica/book/the-new-jerusalem-teellinck')
+    ).toBe('/book/the-new-jerusalem-teellinck');
+    expect(getProviderPrefixRedirect('/libraries/bph/book/foo/page/abc123')).toBe(
+      '/book/foo/page/abc123'
+    );
+    // Unknown library segments strip too — the content slug is what matters.
+    expect(getProviderPrefixRedirect('/libraries/not-a-partner/gallery/image/x-0')).toBe(
+      '/gallery/image/x-0'
+    );
+    // The credit page itself and non-content children stay untouched.
+    expect(getProviderPrefixRedirect('/libraries/internet-archive')).toBeNull();
+    expect(getProviderPrefixRedirect('/libraries')).toBeNull();
+    expect(getProviderPrefixRedirect('/libraries/bph/about')).toBeNull();
+  });
+
   it('strips the phantom default-tenant prefix', () => {
     expect(getProviderPrefixRedirect('/default/book/foo')).toBe('/book/foo');
     expect(getProviderPrefixRedirect('/default/book/foo/page/abc123')).toBe(

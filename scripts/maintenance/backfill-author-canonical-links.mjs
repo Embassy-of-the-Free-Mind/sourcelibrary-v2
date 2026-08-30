@@ -59,10 +59,23 @@ const UNDO = process.argv.includes('--undo');
  * strings skipped, provenance written, reversible via --undo.
  */
 const INCLUDE_BACKLOG = process.argv.includes('--include-backlog');
-const liveScope = INCLUDE_BACKLOG ? {} : { visible: { $ne: false }, pages_count: { $gt: 0 } };
-// Separate run id so a backlog pass can be reverted on its own, without also
-// undoing the live linkage an earlier run wrote.
-const RUN_ID = INCLUDE_BACKLOG ? 'backfill-2250-backlog' : 'backfill-2250';
+
+/**
+ * --artworks: link ARTWORK records instead of texts (#4037).
+ *
+ * The live filter below requires `pages_count > 0`, and an artwork is a single
+ * image — measured 2026-08-19, only 97 of 24,912 artworks pass it, which is why
+ * the artwork shelf never acquired author_id (the "scoping bug wearing drift's
+ * clothes" shape from field-sprawl.md). For an artwork, "live" means visible;
+ * there are no pages. Linking rule is unchanged and exact.
+ */
+const ARTWORKS = process.argv.includes('--artworks');
+const liveScope = ARTWORKS
+  ? { content_type: 'artwork', ...(INCLUDE_BACKLOG ? {} : { visible: { $ne: false } }) }
+  : INCLUDE_BACKLOG ? {} : { visible: { $ne: false }, pages_count: { $gt: 0 } };
+// Separate run id so a backlog or artwork pass can be reverted on its own,
+// without also undoing the live linkage an earlier run wrote.
+const RUN_ID = ARTWORKS ? 'backfill-2250-artworks' : INCLUDE_BACKLOG ? 'backfill-2250-backlog' : 'backfill-2250';
 
 const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 
@@ -93,23 +106,70 @@ if (UNDO) {
 }
 
 // 1. Build NFD-normalized name -> [canonical docs] multimap from the thesaurus.
+//    Person docs by default. --include-institutions widens to is_person:false
+//    docs (corporate headings — a monastery collection, a learned society):
+//    the #3780 mint created those at scale, and a book whose author string IS
+//    the corporate heading should link to it — the read path renders them as
+//    Organization, never as a portrait-slot person (#3483). Tombstones stay out.
+const INCLUDE_INSTITUTIONS = process.argv.includes('--include-institutions');
 const allAuthors = await authors
-  .find({ is_person: { $ne: false } }, { projection: { slug: 1, canonical_name: 1, variants: 1, entity_ids: 1, viaf_id: 1, wikidata_id: 1 } })
+  .find({
+    ...(INCLUDE_INSTITUTIONS ? {} : { is_person: { $ne: false } }),
+    merged_into: { $exists: false },
+  }, { projection: { slug: 1, canonical_name: 1, variants: 1, aliases: 1, entity_ids: 1, viaf_id: 1, wikidata_id: 1 } })
   .toArray();
+// `aliases` are Wikidata-sourced name forms (backfill-author-aliases.mjs,
+// #4037): "Cornelis Drebbel" (artwork entity spelling) reaches "Cornelius
+// Drebbel" (our heading) only through them. But an alias is a claim about a
+// DIFFERENT person's name-space than our catalogue observed, and Wikidata
+// aliases include historical nicknames that collide with other people:
+// Caccini's genuine alias "Giulio Romano" staged 21 painter references onto
+// the composer (caught reading the dry-run rows, 2026-08-19). So an
+// alias-only match must ALSO share a rare token with the doc's own catalogue
+// forms — thesaurus-wide frequency <= 3, which admits surnames (drebbel: 1,
+// hokusai: 1) and refuses given names (giulio: 5, jacob: 75).
+const tokensOf = (s) => norm(s).replace(/[^\w\s]/g, ' ').split(/\s+/).filter((t) => t.length >= 4);
+const tokenFreq = new Map();
 const nameMap = new Map();
+const aliasOnly = new Set(); // `${normForm}|${slug}` — reachable via alias alone
 const entityToDocs = new Map(); // entity_id (string) -> [canonical docs] (for the entity-linked phase)
 for (const a of allAuthors) {
+  const docToks = new Set();
   for (const v of [a.canonical_name, ...(a.variants || [])]) {
     if (!v) continue;
+    for (const t of tokensOf(v)) docToks.add(t);
     const n = norm(v);
     if (!nameMap.has(n)) nameMap.set(n, []);
     if (!nameMap.get(n).some((d) => d.slug === a.slug)) nameMap.get(n).push(a);
+  }
+  for (const t of docToks) tokenFreq.set(t, (tokenFreq.get(t) || 0) + 1);
+  a._catalogueTokens = docToks;
+  for (const v of (a.aliases || [])) {
+    if (!v) continue;
+    const n = norm(v);
+    if (!nameMap.has(n)) nameMap.set(n, []);
+    if (!nameMap.get(n).some((d) => d.slug === a.slug)) {
+      nameMap.get(n).push(a);
+      aliasOnly.add(`${n}|${a.slug}`);
+    }
   }
   for (const e of (a.entity_ids || [])) {
     const k = String(e);
     if (!entityToDocs.has(k)) entityToDocs.set(k, []);
     if (!entityToDocs.get(k).some((d) => d.slug === a.slug)) entityToDocs.get(k).push(a);
   }
+}
+
+/** nameMap hits for this string, with the alias-only rare-token guard applied. */
+function lookupPerson(raw) {
+  const n = norm(raw);
+  const hits = nameMap.get(n);
+  if (!hits) return null;
+  const kept = hits.filter((doc) => {
+    if (!aliasOnly.has(`${n}|${doc.slug}`)) return true; // catalogue-observed form
+    return tokensOf(raw).some((t) => doc._catalogueTokens.has(t) && (tokenFreq.get(t) || 0) <= 3);
+  });
+  return kept.length ? kept : null;
 }
 
 // 2. Entity-LESS live books with an author string and no canonical link yet.
@@ -131,7 +191,7 @@ const stamp = new Date().toISOString();
 const ops = [];
 let ambiguous = 0, noMatch = 0, anchored = 0, unanchored = 0, withEntityBackfill = 0;
 for (const b of liveUnlinked) {
-  const ds = nameMap.get(norm(b.author));
+  const ds = lookupPerson(b.author);
   if (!ds) { noMatch++; continue; }
   if (ds.length > 1) { ambiguous++; continue; }
   const doc = ds[0];
@@ -174,16 +234,43 @@ const liveEntityLinked = await books
       author_entity_id: { $nin: [null, ''] },
       author_id: { $exists: false },
     },
-    { projection: { id: 1, author_entity_id: 1 } },
+    { projection: { id: 1, author: 1, author_entity_id: 1 } },
   )
   .toArray();
 
-let entAmbiguous = 0, entOrphan = 0;
+// Artwork lane: the artwork pipeline minted its OWN person entities, so nearly
+// every artwork entity is orphan here (measured 2026-08-19: 7,045 of 7,045
+// visible ones — 198 distinct entities, zero owned by a thesaurus doc). For an
+// orphan, fall back to the entity's NAME (then the artwork's author string)
+// under the same rule as Phase A: verbatim NFD match to EXACTLY ONE person.
+const orphanEntityName = new Map();
+if (ARTWORKS) {
+  const ids = [...new Set(liveEntityLinked.map((b) => String(b.author_entity_id)))]
+    .filter((s) => ObjectId.isValid(s) && !entityToDocs.has(s));
+  const ents = await db.collection('entities')
+    .find({ _id: { $in: ids.map((s) => new ObjectId(s)) }, type: 'person' }, { projection: { name: 1 } })
+    .toArray();
+  for (const e of ents) orphanEntityName.set(String(e._id), e.name);
+}
+
+let entAmbiguous = 0, entOrphan = 0, entNameMatched = 0;
 for (const b of liveEntityLinked) {
   const ds = entityToDocs.get(String(b.author_entity_id));
-  if (!ds) { entOrphan++; continue; }          // entity not owned by any canonical person
-  if (ds.length > 1) { entAmbiguous++; continue; }
-  const doc = ds[0];
+  let doc, method, matched;
+  if (ds && ds.length > 1) { entAmbiguous++; continue; }
+  if (ds) {
+    doc = ds[0]; method = 'entity-id-link'; matched = b.author_entity_id;
+  } else {
+    // entity not owned by any canonical person — artwork-lane name fallback
+    const entName = orphanEntityName.get(String(b.author_entity_id));
+    for (const cand of [entName, b.author]) {
+      const hits = cand ? lookupPerson(cand) : null;
+      if (hits && hits.length === 1) { doc = hits[0]; method = 'entity-name-match'; matched = cand; break; }
+      if (hits && hits.length > 1) { entAmbiguous++; matched = 'AMBIG'; break; }
+    }
+    if (!doc) { if (matched !== 'AMBIG') entOrphan++; continue; }
+    entNameMatched++;
+  }
   ops.push({
     updateOne: {
       filter: { _id: b._id },
@@ -192,11 +279,13 @@ for (const b of liveEntityLinked) {
         $push: {
           author_link_provenance: {
             run: RUN_ID,
-            method: 'entity-id-link',
-            matched: b.author_entity_id,
+            method,
+            matched,
             authors_slug: doc.slug,
             anchored: !!(doc.viaf_id || doc.wikidata_id),
-            confidence: 'high', // the build already adjudicated this entity = this person
+            // entity-id links were adjudicated by the thesaurus build; a name
+            // fallback is an exact string claim, one notch below.
+            confidence: method === 'entity-id-link' ? 'high' : 'medium',
             at: stamp,
           },
         },
@@ -206,14 +295,17 @@ for (const b of liveEntityLinked) {
 }
 
 console.log('=== backfill-author-canonical-links (#2250) ===');
-console.log(`scope: ${INCLUDE_BACKLOG ? 'ALL books (live + hidden/unprocessed backlog)' : 'LIVE books only (visible && pages_count>0) — pass --include-backlog for the rest'}`);
+console.log(`scope: ${
+  ARTWORKS ? `ARTWORKS${INCLUDE_BACKLOG ? ' (all, incl. hidden)' : ' (visible)'} — content_type: artwork`
+  : INCLUDE_BACKLOG ? 'ALL books (live + hidden/unprocessed backlog)'
+  : 'LIVE books only (visible && pages_count>0) — pass --include-backlog for the rest'}`);
 console.log(`mode: ${APPLY ? 'APPLY (writing)' : 'DRY RUN (no writes)'}`);
 console.log('--- Phase A: entity-less books (exact author-string match) ---');
-console.log(`  scanned: ${liveUnlinked.length} | writes staged: ${ops.length - (liveEntityLinked.length - entAmbiguous - entOrphan)}`);
+console.log(`  scanned: ${liveUnlinked.length} | writes staged: ${anchored + unanchored}`);
 console.log(`    anchored=high: ${anchored} | unanchored=medium: ${unanchored} | also set author_entity_id: ${withEntityBackfill}`);
 console.log(`    skipped: ambiguous ${ambiguous}, no-match ${noMatch}`);
 console.log('--- Phase B: entity-linked books (author_entity_id -> authors doc) ---');
-console.log(`  scanned: ${liveEntityLinked.length} | writes staged: ${liveEntityLinked.length - entAmbiguous - entOrphan}`);
+console.log(`  scanned: ${liveEntityLinked.length} | writes staged: ${ops.length - (anchored + unanchored)} (name-fallback: ${entNameMatched})`);
 console.log(`    skipped: entity owned by >1 person ${entAmbiguous}, orphan entity (no canonical owner) ${entOrphan}`);
 console.log(`=> TOTAL author_id writes staged: ${ops.length}`);
 
@@ -227,6 +319,15 @@ if (APPLY && ops.length) {
   }
   console.log(`\nAPPLIED: modifiedCount = ${modified} / ${ops.length} staged.`);
 } else if (!APPLY) {
+  // Reading actual rows is what has caught every defect in this area (#4037) —
+  // aggregate counts looked fine each time. Print what a small run would do.
+  if (ops.length <= 100) {
+    console.log('\nStaged links (reference → canonical slug):');
+    for (const op of ops) {
+      const p = op.updateOne.update.$push.author_link_provenance;
+      console.log(`  [${p.method}] ${JSON.stringify(p.matched)} → ${p.authors_slug}`);
+    }
+  }
   console.log('\nDry run — pass --apply to write. Reversible via --undo --apply.');
 }
 

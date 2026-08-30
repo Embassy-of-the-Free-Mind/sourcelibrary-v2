@@ -35,10 +35,15 @@ function escapeHtml(s: string): string {
  * injection surface.
  */
 export default function HighlightedText({ text, query, className }: HighlightedTextProps) {
+  // Callers pass fields straight off API responses, and one non-string value
+  // (books.summary is an object on ~17k rows) took down the whole /search page
+  // via the error boundary. A snippet renderer must never be the thing that
+  // crashes the page: tolerate any input.
+  const safeText = typeof text === 'string' ? text : text == null ? '' : String(text);
   const html =
-    !query || !text
-      ? escapeHtml(text ?? '')
-      : splitByMatches(text, query)
+    !query || !safeText
+      ? escapeHtml(safeText)
+      : splitByMatches(safeText, query)
           .map((segment) =>
             segment.highlight
               ? `<mark class="${MARK_CLASS}">${escapeHtml(segment.text)}</mark>`

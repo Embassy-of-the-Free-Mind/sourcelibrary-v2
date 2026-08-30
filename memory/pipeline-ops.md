@@ -61,6 +61,13 @@ spend counts toward the measured total, and its volume is downstream of gated ph
 `cost_usd` is a computed estimate and some rows lack it → the guard can UNDERCOUNT;
 treat the ceiling as a brake, not accounting. The guard logs `spend $X / $Y` every cycle.
 
+**Change the dial ONLY via `scripts/maintenance/set-dial.mjs`** (`--budget N --by "why"`,
+`--pause/--resume`, `--history`) — it snapshots the prior state to
+`system_config_revisions` (everything versions; raw one-liner \$sets on
+`processing_control` are how scopes got clobbered). `unpause-scope.mjs` writes are
+versioned the same way. Repair scripts that overwrite R2 images preserve the prior
+object under `versions/<key>.<ts>` via `scripts/lib/r2-version.mjs`.
+
 **To turn the line on (Derek):**
 1. Set the dial: `db.system_config.updateOne({_id:'processing_control'}, {$set:{daily_budget_usd: 5}})` — start at $5/day.
 2. Unpause: `{$set:{paused:false}}` (same doc).

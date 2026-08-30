@@ -3,11 +3,18 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
+import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
+import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+import { pickLimit } from '@/lib/api-budget';
+import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { stripProvenanceMarks } from '@/lib/provenance';
+import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
+import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
+import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -123,16 +130,27 @@ async function searchPassages(args: Record<string, unknown>) {
   if (args.year_from) params.set('year_from', String(args.year_from));
   if (args.year_to) params.set('year_to', String(args.year_to));
   if (args.book_id) params.set('book_id', String(args.book_id));
+  const textLang = langArg(args);
+  if (textLang !== 'en') params.set('lang', textLang);
 
   const result = await apiGet('/search', params) as Record<string, unknown>;
   const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
     const snippetType = r.snippet_type as string | undefined;
-    const snippetLanguage = snippetType === 'ocr' ? r.language : 'English';
+    // The snippet's language: the leaf's own for an OCR hit, otherwise the
+    // edition that was searched. Hard-coding "English" here was correct while
+    // one translation existed per page; it is not any more (#4095).
+    const snippetLanguage = snippetType === 'ocr' ? r.language : (textLang === 'en' ? 'English' : textLang);
     return {
       book_id: r.book_id,
       title: r.display_title || r.title,
       author: r.author,
-      original_language: r.language,
+      // This is the EDITION's language — what is printed on the leaf the
+      // snippet came from. It was called `original_language` and described as
+      // "the book's source language", which is false for every translated
+      // edition in the corpus (#3942); the search index carries no work
+      // language, so the honest fix here is to stop claiming one. Call
+      // get_book for the work language.
+      language: r.language,
       snippet_language: snippetLanguage,
       published: r.published,
       page: r.page_number,
@@ -152,11 +170,15 @@ async function searchPassages(args: Record<string, unknown>) {
     total_matches: result.total,
     returned: passages.length,
     offset,
+    lang: textLang,
+    ...(textLang !== 'en' ? {
+      lang_note: `Searched the "${textLang}" edition. Only books that HAVE an edition in that language can appear — this is a narrower corpus than the default English search, not a smaller result set for the same books.`,
+    } : {}),
     // BUG 2: surface the backend's lane-timeout signal so callers know the count
     // may be incomplete when a search lane degraded. Only present when true.
     ...(result.partial ? { partial: true } : {}),
     passages,
-    tip: 'original_language is the book\'s source language; snippet_language is the language of the snippet text (English for translations/summaries, source language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages — which may itself be a translation, so it is NOT evidence of the work\'s original language; call get_book for work_language and text_role before citing a passage as an author\'s own wording. snippet_language is the language of the snippet text (English for translations/summaries, the edition language for ocr). Only quote snippets where snippet_type is "translation" or "ocr". Always cite using short_url when presenting passages to users.',
   };
 }
 
@@ -174,14 +196,17 @@ async function searchConcept(args: Record<string, unknown>) {
   if (args.year_from) params.set('year_min', String(args.year_from));
   if (args.year_to) params.set('year_max', String(args.year_to));
   if (args.max_per_book) params.set('max_per_book', String(args.max_per_book));
+  const conceptLang = langArg(args);
+  if (conceptLang !== 'en') params.set('lang', conceptLang);
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
   const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
     book_id: r.book_id,
     title: r.book_title,
     author: r.book_author,
-    original_language: r.book_language,
-    snippet_language: 'English',
+    // Edition language, not the work's — see the note in searchPassages (#3942).
+    language: r.book_language,
+    snippet_language: conceptLang === 'en' ? 'English' : conceptLang,
     published: r.book_year,
     page: r.page_number,
     snippet: stripProvenanceMarks(r.snippet as string),
@@ -200,13 +225,30 @@ async function searchConcept(args: Record<string, unknown>) {
     // not return a separate corpus count), so keep it equal to returned.
     total_matches: passages.length,
     returned: passages.length,
+    lang: (result.lang as string) ?? conceptLang,
+    ...(result.lang_note ? { lang_note: result.lang_note } : {}),
     passages,
-    tip: 'original_language is the book\'s source language; semantic search always returns English translation text (snippet_language: "English"). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
+    tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording. Semantic search always returns English translation text (snippet_language: "English"). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
 }
 
+/**
+ * The `lang` argument, normalised (#4095).
+ *
+ * An ISO code names which EDITION of the text to read — Spanish covers 103
+ * books of 22,000, so every tool that takes it also has to say which edition it
+ * actually served. `en` and anything malformed collapse to English, the default
+ * store, rather than erroring: a bad language code should not fail a search.
+ */
+function langArg(args: Record<string, unknown>): string {
+  const raw = String(args.lang || '').trim().toLowerCase();
+  return /^[a-z]{2,3}$/.test(raw) ? raw : 'en';
+}
+
 async function searchWithinBook(args: Record<string, unknown>) {
+  const lang = langArg(args);
   const params = new URLSearchParams({ q: String(args.query) });
+  if (lang !== 'en') params.set('lang', lang);
   const result = await apiGet(`/books/${args.book_id}/search`, params) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => {
     const matches = r.matches as Array<Record<string, unknown>>;
@@ -236,6 +278,9 @@ async function searchWithinBook(args: Record<string, unknown>) {
   const coverage = result.semantic_coverage as { status?: string; caveat?: string } | undefined;
   return {
     book_id: args.book_id, query: result.query, total: result.total, returned: result.returned,
+    // Which edition of the book's text was searched, and which the snippets are
+    // in. Always present so a caller never has to infer it.
+    lang: result.lang ?? 'en',
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
@@ -248,6 +293,11 @@ async function listBooks(args: Record<string, unknown>) {
   if (args.search) params.set('search', String(args.search));
   if (args.language) params.set('language', String(args.language));
   if (args.category) params.set('category', String(args.category));
+  // `has_edition` filters by a language the book can be READ in; `language`
+  // filters by the language printed on its leaves. A Latin book with a Spanish
+  // edition matches both.
+  const hasEdition = String(args.has_edition || '').trim().toLowerCase();
+  if (/^[a-z]{2,3}$/.test(hasEdition) && hasEdition !== 'en') params.set('has_edition', hasEdition);
   if (args.sort) params.set('sort', String(args.sort));
   if (args.limit) params.set('limit', String(Math.min(Number(args.limit), 200)));
   if (args.skip) params.set('skip', String(args.skip));
@@ -256,18 +306,56 @@ async function listBooks(args: Record<string, unknown>) {
   const books = (result.books as Array<Record<string, unknown>>)?.map((b) => ({
     id: b.id, title: b.display_title || b.title, author: b.author, language: b.language,
     published: b.published, pages_count: b.pages_count, pages_translated: b.pages_translated,
-    translation_percent: b.translation_percent, url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
+    translation_percent: b.translation_percent,
+    ...(params.get('has_edition') ? {
+      [`pages_translated_${params.get('has_edition')}`]: b[`pages_translated_${params.get('has_edition')}`],
+      // The reader URL for that edition, which only exists because the filter
+      // guarantees the book has pages in it.
+      url_localized: `https://sourcelibrary.org/${params.get('has_edition')}/book/${b.slug || b.id}`,
+    } : {}),
+    url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
   }));
-  return { total: result.total, showing: books?.length || 0, books };
+  return {
+    total: result.total, showing: books?.length || 0,
+    ...(params.get('has_edition') ? { has_edition: params.get('has_edition') } : {}),
+    books,
+  };
 }
 
 async function getBook(args: Record<string, unknown>) {
   const result = await apiGet(`/books/${args.book_id}`, new URLSearchParams({ pages: 'nav' })) as Record<string, unknown>;
+  // Cover art, preferring the canonical R2 fields (see src/lib/cover-fields.ts).
+  // cover_thumb_url is the small variant used for the inline image block; the
+  // full display URL rides alongside for callers that want to link it.
+  const coverThumb = (result.image_thumb || result.thumbnail_blob || result.image_display || result.thumbnail) as string | undefined;
+  const coverFull = (result.image_display || result.thumbnail || result.image_thumb || result.thumbnail_blob) as string | undefined;
+  // #4288: an artwork id resolves here too (/book/<id> 308s to /artwork/<slug>),
+  // and on ~12.2K such records `display_title` is an AI caption of the image
+  // rather than a title anyone published. Say so in prose next to the title.
+  const resolvedTitle = resolveTitle(result as Parameters<typeof resolveTitle>[0]);
+  const titleNote = titleProvenanceNote(result as Parameters<typeof resolveTitle>[0]);
   return {
-    id: result.id, title: result.display_title || result.title, author: result.author,
+    id: result.id, title: resolvedTitle.display, author: result.author,
+    ...(resolvedTitle.isDescriptive
+      ? { title_is_descriptive: true, source_record_title: resolvedTitle.citation }
+      : {}),
+    ...(titleNote ? { title_note: titleNote } : {}),
+    ...(coverThumb ? { cover_thumb_url: coverThumb } : {}),
+    ...(coverFull ? { cover_image_url: coverFull } : {}),
     language: result.language, published: result.published, year: result.year,
+    // Edition language vs work language (#3942). `language` above is what is
+    // printed on these leaves; `work_language` appears only when the work was
+    // written in another one, with `translation_note` spelling out the chain.
+    // Serving one flattened scalar is what let de Slane's French Muqaddimah be
+    // cited as an Arabic source.
+    ...languageApparatusFields(result as LanguageApparatusSource),
     categories: result.categories, pages_count: result.pages_count,
     pages_translated: result.pages_translated, doi: result.doi,
+    // Which languages this book can be READ in, and how many pages each covers
+    // (#4095). Always present; `{ en: 357 }` on most books, `{ en: 357, es: 357 }`
+    // where a localized edition exists. Pass the code as `lang` to get_quote /
+    // get_book_text / search_within_book to read that edition.
+    editions: editionsForBook(result),
     reading_summary: result.reading_summary, chapters: result.chapters,
     work_id: result.work_id,
     // What the volume's own running heads say it holds, with page spans. This
@@ -349,6 +437,8 @@ async function getBookText(args: Record<string, unknown>) {
   if (args.content) params.set('content', String(args.content));
   if (args.from !== undefined) params.set('from', String(args.from));
   if (args.to !== undefined) params.set('to', String(args.to));
+  const textLang = langArg(args);
+  if (textLang !== 'en') params.set('lang', textLang);
   const format = String(args.format || 'json');
   params.set('format', format);
 
@@ -402,6 +492,109 @@ const QUOTE_TIP =
   '> [exact translation text, verbatim]\n' +
   '> — [Author], p. [N]. [citation_link]';
 
+// Three-layer apparatus for non-Latin scripts (#3828). Only emitted when a
+// page actually carries a romanization, so a caller quoting a Latin book is
+// never told about a field that isn't there.
+const ROMANIZED_TIP =
+  'This page is in a non-Latin script and carries all three layers. Render as:\n' +
+  '> [original, verbatim]\n' +
+  '> [romanized]\n' +
+  '> [translation, verbatim]\n' +
+  '> — [Author], p. [N]. [citation_link]\n' +
+  'The `romanized` field is AI-generated reading apparatus, not a transcription — ' +
+  'never present it as the text printed on the page, and quote from `original` or ' +
+  '`translation` when quoting the source itself.';
+
+function hasRomanized(result: Record<string, unknown>): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  return typeof quote?.romanized === 'string' && quote.romanized.length > 0;
+}
+
+// Where the cited edition is itself a translation, `original` holds the
+// translator's words, not the author's (#3942). The quote API computes the note
+// (see languageApparatus); this lifts it into the tip so a caller composing a
+// citation cannot miss it — the failure this fixes is silent, and the reader
+// who is misled is downstream of the agent, not the agent itself.
+const TRANSLATED_ORIGINAL_TIP =
+  'CITATION WARNING — this edition is a translation. The `original` field below is NOT the ' +
+  'author\'s own language; see `translation_note` for the chain. Attribute the wording to the ' +
+  'translator, and do not present this passage as evidence of what the author wrote in their own ' +
+  'tongue. To find an original-language witness, call list_editions with this book_id.';
+
+// The requested edition did not exist for this page and English was served
+// instead (#4095). Loud, because the failure it prevents is a caller presenting
+// English prose to a Spanish reader as "the Spanish edition" — the quote API
+// puts the fact in `quote.lang`, and this makes an agent read it.
+const LANG_FALLBACK_TIP = (requested: string) =>
+  `EDITION NOTICE — this page has no text in "${requested}", so the English translation was served ` +
+  `(see quote.lang). Do not present it as the "${requested}" edition. Most books have no edition in ` +
+  `that language at all: call get_book and read \`editions\` to see which languages a book can be read ` +
+  `in, or list_books with has_edition to browse only the ones that have it.`;
+
+/** Set when the served edition is not the one that was asked for. */
+function langFallback(result: Record<string, unknown>, requested: string): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  const served = typeof quote?.lang === 'string' ? quote.lang : 'en';
+  return requested !== 'en' && served !== requested;
+}
+
+function translationNote(result: Record<string, unknown>): string | null {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  const note = quote?.translation_note;
+  return typeof note === 'string' && note ? note : null;
+}
+
+// An ENGLISH-ORIGINAL page carries no translation and never will — the leaf is
+// already in the reader's language (#3939). The quote API then serves the
+// transcription as `original` with text_source: "ocr_original", and the default
+// tip ("copy the translation text") would point at a field that isn't there.
+const OCR_ORIGINAL_TIP =
+  'This page is an ENGLISH ORIGINAL: the text printed on the leaf is already English, so there is no ' +
+  'translation and none is needed (this is why the book reports pages_translated: 0). The verbatim ' +
+  'text is in `original`. Copy it exactly and attribute it as the source\'s own words — never call it ' +
+  'a translation. Render as:\n' +
+  '> [exact original text, verbatim]\n' +
+  '> — [Author], p. [N]. [citation_link]\n' +
+  'It is an uncorrected AI transcription, preserving period spelling, long-s (ſ) and printer marks: ' +
+  'keep them as they stand, or say that any modernization is yours. Where the exact wording carries ' +
+  'weight, call again with include_image: true and read the leaf.';
+
+function ocrOriginalQuote(result: Record<string, unknown>): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  return quote?.text_source === 'ocr_original';
+}
+
+// The requested edition IS on the leaf — a bilingual manuscript whose parallel
+// column is already in that language. The words are the historical translator's
+// (Ximenez's Spanish of 1701, Sahagun's of 1577), not ours, and their period
+// spelling is evidence rather than OCR noise. Without this an agent presents a
+// sixteenth-century source as "the Spanish translation" and tidies the spelling
+// on the way, which is a misattribution the reader cannot see.
+const SOURCE_COLUMN_TIP =
+  'This text is NOT our translation. This is a bilingual manuscript, and the column of the leaf you ' +
+  'asked for is already in this language — transcribed from the scan, uncorrected. Attribute the ' +
+  'wording to the historical translator or scribe named in the book record (see `author`), never to ' +
+  'Source Library, and quote the period spelling as it stands rather than modernising it; if you do ' +
+  'modernise, say that the modernisation is yours. `transcription_note` on the quote states the same. ' +
+  'Where the exact wording carries weight, call again with include_image: true and read the leaf.';
+
+function sourceColumnQuote(result: Record<string, unknown>): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  return quote?.text_source === 'source_column';
+}
+
+/**
+ * The verbatim text of a quote response, whichever field holds it. Reading
+ * `translation` alone made continuity unfireable on English-original pages —
+ * the flags would come back all-false on precisely the pages where the caller
+ * has nothing but the original to quote from.
+ */
+function quotableText(quote: Record<string, unknown> | undefined): string | null {
+  if (typeof quote?.translation === 'string') return quote.translation;
+  if (quote?.text_source === 'ocr_original' && typeof quote.original === 'string') return quote.original;
+  return null;
+}
+
 async function getQuote(args: Record<string, unknown>) {
   const params = new URLSearchParams({ page: String(args.page) });
   // The quote API has always accepted this; the MCP tool never passed it, so
@@ -409,6 +602,11 @@ async function getQuote(args: Record<string, unknown>) {
   // sentence. Opt-in, because it triples the payload on a call that is usually
   // fine as-is — 18.6% of adjacent prose pairs span the break, not 100%.
   if (args.context === true) params.set('include_context', 'true');
+  // Opt-in scan of the cited leaf (#3937): the response then carries
+  // quote.page_image_url and the MCP layer attaches the image inline.
+  if (args.include_image === true) params.set('include_image', 'true');
+  const quoteLang = langArg(args);
+  if (quoteLang !== 'en') params.set('lang', quoteLang);
 
   const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
 
@@ -419,7 +617,7 @@ async function getQuote(args: Record<string, unknown>) {
   // `text` is not a field on this response and reading it silently produced
   // all-false flags on a preview deploy while every unit test stayed green.
   const quote = result.quote as Record<string, unknown> | undefined;
-  const quoteText = typeof quote?.translation === 'string' ? quote.translation : null;
+  const quoteText = quotableText(quote);
   // Hyphen splits live in the ORIGINAL, never in the translation — a translator
   // resolves them. Passing only the translation made hyphen_split_at_end
   // unfireable; see the note on pageContinuity's second parameter.
@@ -430,6 +628,7 @@ async function getQuote(args: Record<string, unknown>) {
   // get_book_text: one page is a citation, hundreds is a corpus pull.
   if (quote && typeof quote.translation === 'string') quote.translation = stripProvenanceMarks(quote.translation);
   if (quote && typeof quote.original === 'string') quote.original = stripProvenanceMarks(quote.original);
+  if (quote && typeof quote.romanized === 'string') quote.romanized = stripProvenanceMarks(quote.romanized);
   const ctx = result.context as Record<string, unknown> | undefined;
   if (ctx) {
     for (const k of ['previous_page', 'next_page']) {
@@ -438,18 +637,50 @@ async function getQuote(args: Record<string, unknown>) {
   }
   const hint = continuityHint(continuity, Number(args.page));
 
+  const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
+  if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
+  if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
+  if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
+  if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
+
+  // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
+  // each read their own copy of this guidance and fixes do not propagate.
+  const holdingCopy = (result.citation as Record<string, unknown> | undefined)?.copy as
+    | { statement?: string }
+    | undefined;
+  if (holdingCopy?.statement) {
+    tips.push(
+      `The scanned images reproduce one physical copy: "${holdingCopy.statement}". ` +
+        'When citing copy-specific evidence (marginalia, provenance marks, hand-coloring), include that clause in the citation.',
+    );
+  }
+
+  // Marginalia (#4362) — same logic in mcp-server/src/api.ts (fixes do not
+  // propagate between the two servers).
+  if ((quote as Record<string, unknown> | undefined)?.contains_marginalia === true) {
+    tips.push(
+      'This page carries MARGINAL text (<margin>…</margin>). A marginal note exists only in this ' +
+        "physical copy — when quoting from one, say 'marginal annotation' and follow quote.marginalia_note.",
+    );
+  }
+
   return {
     ...withCitationLink(result),
     continuity,
     ...(hint ? { continuity_hint: hint } : {}),
-    tip: QUOTE_TIP,
+    tip: tips.join('\n\n'),
   };
 }
 
 // Assemble a multi-passage dossier in one round-trip: fetch several pages of a
 // single book by explicit list (pages:[...]) or inclusive range (from/to).
-async function getQuotes(args: Record<string, unknown>) {
+async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?: boolean }) {
+  // Past QUOTE_CLEAN_PAGES_PER_DAY quote-lane pages in 24h the zero-width
+  // provenance marks stay in the text: at that volume this is a corpus pull,
+  // not citation work. The text remains verbatim-correct either way.
+  const stripMarks = opts?.keepQuoteMarks ? (s: string) => s : stripProvenanceMarks;
   const bookId = String(args.book_id);
+  const batchLang = langArg(args);
   let pageNums: number[] = [];
   if (Array.isArray(args.pages)) {
     pageNums = (args.pages as unknown[]).map(Number).filter((n) => Number.isFinite(n));
@@ -467,18 +698,22 @@ async function getQuotes(args: Record<string, unknown>) {
   const settled = await Promise.all(
     pageNums.map(async (page) => {
       try {
-        const result = await apiGet(`/books/${bookId}/quote`, new URLSearchParams({ page: String(page) })) as Record<string, unknown>;
+        const quoteParams = new URLSearchParams({ page: String(page) });
+        if (args.include_image === true) quoteParams.set('include_image', 'true');
+        if (batchLang !== 'en') quoteParams.set('lang', batchLang);
+        const result = await apiGet(`/books/${bookId}/quote`, quoteParams) as Record<string, unknown>;
         // Same continuity signal get_quote returns. This is the tool where it
         // matters MOST — a batch is how a caller assembles a multi-page dossier,
         // which is exactly where a sentence running across a leaf gets quoted as
         // though it were whole. Omitting it here was backwards.
         const q = result.quote as Record<string, unknown> | undefined;
         const continuity = pageContinuity(
-          typeof q?.translation === 'string' ? q.translation : null,
+          quotableText(q),
           typeof q?.original === 'string' ? q.original : null,
         );
-        if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
-        if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
+        if (q && typeof q.translation === 'string') q.translation = stripMarks(q.translation);
+        if (q && typeof q.original === 'string') q.original = stripMarks(q.original);
+        if (q && typeof q.romanized === 'string') q.romanized = stripMarks(q.romanized);
         const hint = continuityHint(continuity, page);
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
@@ -489,11 +724,39 @@ async function getQuotes(args: Record<string, unknown>) {
     })
   );
 
+  const anyRomanized = settled.some((s) => hasRomanized(s as Record<string, unknown>));
+  // Every page here is from ONE book, so the edition-language warning is either
+  // true of all of them or none — and a dossier is precisely where a translated
+  // edition gets quoted at length as an author's own words (#3942).
+  const anyTranslated = settled.some((s) => translationNote(s as Record<string, unknown>));
+
+  // A batch can mix the two text sources — a volume like Billingsley's Euclid
+  // holds Dee's English Praeface inside a Latin book — so both tips can apply,
+  // and the translation tip is dropped only when no entry has a translation.
+  const anyOcrOriginal = settled.some((s) => ocrOriginalQuote(s as Record<string, unknown>));
+  const anyTranslationText = settled.some((s) => {
+    const q = (s as Record<string, unknown>).quote as Record<string, unknown> | undefined;
+    return typeof q?.translation === 'string';
+  });
+
+  const tips: string[] = [];
+  if (anyTranslationText || !anyOcrOriginal) tips.push(QUOTE_TIP);
+  if (anyOcrOriginal) tips.push(OCR_ORIGINAL_TIP);
+  if (settled.some((x) => sourceColumnQuote(x as Record<string, unknown>))) tips.push(SOURCE_COLUMN_TIP);
+  if (anyRomanized) tips.push(ROMANIZED_TIP);
+  // A batch can be mixed — the Spanish worker's length guard skipped ~30 pages
+  // across 17 books — so one fallback in the range is enough to warn about.
+  if (settled.some((x) => langFallback(x as Record<string, unknown>, batchLang))) tips.push(LANG_FALLBACK_TIP(batchLang));
+  if (anyTranslated) tips.push(TRANSLATED_ORIGINAL_TIP);
+
   return {
     book_id: bookId,
     pages_requested: pageNums,
     quotes: settled,
-    tip: QUOTE_TIP,
+    tip: tips.join('\n\n'),
+    ...(opts?.keepQuoteMarks ? {
+      provenance_note: 'High-volume quote access: this text retains Source Library\'s invisible provenance marks (zero-width characters). It reads and quotes identically. Clean text at volume is a licensed product — see https://sourcelibrary.org/licensing.',
+    } : {}),
   };
 }
 
@@ -510,20 +773,49 @@ async function searchImages(args: Record<string, unknown>) {
   if (args.min_quality !== undefined) params.set('minQuality', String(args.min_quality));
   const limit = Math.min(Number(args.limit) || 20, 50);
   params.set('limit', String(limit));
+  const offset = Math.max(0, Math.floor(Number(args.offset) || 0));
+  if (offset) params.set('offset', String(offset));
+  if (args.iconclass) params.set('iconclass', String(args.iconclass));
 
-  // Search both gallery illustrations AND artworks (paintings/prints) in parallel
+  // Search both gallery illustrations AND artworks (paintings/prints) in parallel.
+  // The artwork lane supports type/subject/figure/symbol/year filters and MUST
+  // receive them — before #3936 it got only q+limit, so every filter silently
+  // no-opped through the artwork half of the merge. It has no concept of
+  // "images inside a book" (its book_id means "this artwork"), so a book_id
+  // request is gallery-only.
   const artworkParams = new URLSearchParams();
   if (args.query) artworkParams.set('q', String(args.query));
+  if (args.type) artworkParams.set('type', String(args.type));
+  if (args.subject) artworkParams.set('subject', String(args.subject));
+  if (args.figure) artworkParams.set('figure', String(args.figure));
+  if (args.symbol) artworkParams.set('symbol', String(args.symbol));
+  if (args.year_from) artworkParams.set('year_from', String(args.year_from));
+  if (args.year_to) artworkParams.set('year_to', String(args.year_to));
   artworkParams.set('limit', String(limit));
 
   const [galleryResult, artworkResult] = await Promise.all([
     apiGet('/gallery', params) as Promise<Record<string, unknown>>,
-    args.query
+    // The artwork lane has no offset support — include it on the first page
+    // only, so paging doesn't re-serve the same artworks on every call.
+    // Also skip it when an iconclass filter is set: the artwork lane cannot
+    // apply it, and unfiltered results merged into a filtered request is the
+    // silent no-op disease #3936 was about.
+    args.query && !args.book_id && !args.iconclass && offset === 0
       ? (apiGet('/artwork/search', artworkParams) as Promise<Record<string, unknown>>).catch(() => ({ items: [] }))
       : Promise.resolve({ items: [] }),
   ]);
 
   const galleryImages = (galleryResult.items as Array<Record<string, unknown>>)?.map((item) => ({
+    // Explicit citability flag (#4287): book_illustration = extracted from a
+    // scanned page, citable with book_id + page; artwork = standalone museum
+    // record, display/context only. Agents previously had to infer this from
+    // which fields happened to be present.
+    source_type: item.source === 'artwork' ? 'artwork' : 'book_illustration',
+    // Iconclass notations where the classifier has run (~2,500 of 206K images
+    // as of 2026-08 — sparse, so absence means unclassified, not unthemed).
+    ...((item.metadata as { iconclass?: string[] } | undefined)?.iconclass?.length
+      ? { iconclass: (item.metadata as { iconclass: string[] }).iconclass }
+      : {}),
     description: item.description, type: item.type, quality: item.galleryQuality,
     book: { title: item.bookTitle, author: item.author, year: item.year },
     page: item.pageNumber, image_url: item.imageUrl,
@@ -533,27 +825,122 @@ async function searchImages(args: Record<string, unknown>) {
     url: item.source === 'artwork'
       ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
       : `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+    // A standalone artwork IS its own record — there is no separate book to
+    // point at, so book_url mirrors the canonical /artwork URL rather than
+    // minting a second /book/<id> twin for the client to cite.
     book_url: item.bookId
       ? (item.source === 'artwork'
-        ? `https://sourcelibrary.org/book/${item.bookId}`
+        ? `https://sourcelibrary.org${item.link || `/book/${item.bookId}`}`
         : `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}`)
       : undefined,
   })) || [];
 
-  const artworks = (artworkResult.items as Array<Record<string, unknown>>)?.map((item) => ({
-    description: item.title, type: 'artwork',
-    artist: item.artist, medium: item.medium,
-    year: item.year, image_url: item.image_url,
-    url: item.url,
-  })) || [];
+  // #4288 item 1. Two things were wrong here and both made a model assert a
+  // work that does not exist:
+  //   1. the artwork's title was emitted under the key `description`, so a
+  //      client had no `title` at all and read the caption as the work's name;
+  //   2. `/api/artwork/search` hands back `display_title || title`, which on
+  //      ~12.2K artwork records is a label a vision model wrote by LOOKING AT
+  //      THE PICTURE ("The Macrocosm and the Human Intellect" over a Fludd
+  //      engraving catalogued as "El cerebro según Fludd"). Emitted next to a
+  //      real author and a real year, it reads as a bibliographic claim.
+  // A field a model cannot interpret it will paper over, so the warning is
+  // prose, not a boolean (see .claude/docs/invariants/agent-tool-results.md).
+  const artworks = (artworkResult.items as Array<Record<string, unknown>>)?.map((item) => {
+    const provenance = item.title_provenance as string | undefined;
+    const sourceTitle = item.source_record_title as string | undefined;
+    return {
+      source_type: 'artwork',
+      title: item.title,
+      // Keep `description` populated for clients written against the old shape.
+      description: item.title,
+      ...(provenance === 'descriptive'
+        ? {
+          title_is_descriptive: true,
+          source_record_title: sourceTitle,
+          title_note:
+            'The `title` above is a description of the image generated by AI, not a title this work was published under. '
+            + 'Do not cite it as a work title'
+            + (sourceTitle ? `; the title on the source record is "${sourceTitle}".` : '.'),
+        }
+        : {}),
+      ...(provenance === 'derived' && sourceTitle && sourceTitle !== item.title
+        ? { source_record_title: sourceTitle }
+        : {}),
+      type: 'artwork',
+      // `/api/artwork/search` returns `author`, not `artist` — reading `item.artist`
+      // emitted `undefined` on every row, so the artwork lane has never carried an
+      // attribution at all. Prefer the real key, keep the old one as a fallback.
+      artist: item.author ?? item.artist,
+      medium: item.medium,
+      year: item.year, image_url: item.image_url,
+      url: item.url,
+    };
+  }) || [];
 
-  // Artworks first (exact matches), then gallery illustrations
-  const allImages = [...artworks, ...galleryImages].slice(0, limit);
+  // Gallery illustrations first — the in-book plates are this library's
+  // distinctive asset. Artworks (museum layer) follow. The old artwork-first
+  // order meant small-limit calls returned ONLY artworks and a caller could
+  // conclude the 110K book illustrations don't exist (#3936 symptom 3).
+  const allImages: Array<Record<string, unknown>> = [...galleryImages, ...artworks].slice(0, limit);
 
+  // Embeddable bytes (#3937 item 5): a sandboxed agent (no egress) can SEE the
+  // inline image blocks but cannot fetch the CDN URLs to embed images in a
+  // deliverable (HTML deck, report, artifact — artifact CSP blocks remote
+  // images entirely). Opt-in data URIs in the JSON close that gap. Downscaling
+  // goes through /api/image (sharp, allowlisted hosts) so the payload stays
+  // bounded; capped at THUMBNAIL_BASE64_MAX results because six ~150KB data
+  // URIs is already a ~1MB tool result.
+  let thumbNote: string | null = null;
+  if (args.include_thumbnail_base64 === true && allImages.length > 0) {
+    const toEmbed = allImages.slice(0, THUMBNAIL_BASE64_MAX);
+    const fetched = await Promise.all(
+      toEmbed.map((img) => {
+        const src = typeof img.image_url === 'string' ? img.image_url : null;
+        if (!src) return Promise.resolve(null);
+        const proxied = `${API_BASE}/image?url=${encodeURIComponent(src)}&w=${THUMBNAIL_BASE64_WIDTH}&q=${THUMBNAIL_BASE64_QUALITY}`;
+        // Fall back to the raw URL if the proxy refuses (host not allowlisted);
+        // fetchImageBase64's 1MB cap still bounds the payload.
+        return fetchFirstImage([proxied, src]);
+      }),
+    );
+    for (let i = 0; i < toEmbed.length; i++) {
+      const img = fetched[i];
+      if (img) toEmbed[i].thumbnail_data_uri = `data:${img.mimeType};base64,${img.data}`;
+    }
+    const embedded = fetched.filter(Boolean).length;
+    thumbNote = allImages.length > THUMBNAIL_BASE64_MAX
+      ? `thumbnail_data_uri embedded on the first ${embedded} of ${allImages.length} results (capped to bound payload size). Call again with a smaller limit or paginate to embed others.`
+      : `thumbnail_data_uri embedded on ${embedded} of ${allImages.length} results.`;
+  }
+
+  const total = (galleryResult.total as number || 0) + artworks.length;
+  // Pagination signal (#4287): before this, a caller saw total: 22767,
+  // showing: 12 with no way to reach result 13 except raising limit to 50.
+  const galleryShown = Math.min(galleryImages.length, limit);
+  const hasMore = galleryResult.hasMore === true;
   return {
-    total: (galleryResult.total as number || 0) + artworks.length,
+    total,
     showing: allImages.length,
+    offset,
+    ...(hasMore
+      ? {
+          next_offset: offset + galleryShown,
+          remaining: Math.max(0, (galleryResult.total as number || 0) - offset - galleryShown),
+          pagination_note: `More results exist — call again with offset=${offset + galleryShown} to continue (book-illustration lane only; narrow the query or add filters if you are surveying rather than exhausting).`,
+        }
+      : {}),
     images: allImages,
+    ...(thumbNote ? { thumbnails_note: thumbNote } : {}),
+    // An empty scoped result must SAY so — silently returning nothing (or,
+    // worse, unscoped results) is how the book_id no-op went unnoticed.
+    ...(allImages.length === 0
+      ? {
+          note: args.book_id
+            ? 'This book has no catalogued images matching the query. Its illustrations may not have been extracted yet — absence here does not mean the physical book has no plates.'
+            : 'No images matched. Try a broader query, or drop filters (type/subject/year) one at a time.',
+        }
+      : {}),
   };
 }
 
@@ -643,6 +1030,7 @@ const TOOLS: Tool[] = [
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
         offset: { type: 'number', description: 'Pagination offset (use with limit to page through total_matches; default 0)' },
       },
@@ -664,6 +1052,7 @@ const TOOLS: Tool[] = [
         year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
         year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
         max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
       },
       required: ['query'],
@@ -679,6 +1068,7 @@ const TOOLS: Tool[] = [
       properties: {
         book_id: { type: 'string', description: 'The book ID to search within' },
         query: { type: 'string', description: 'Search query' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
       },
       required: ['book_id', 'query'],
     },
@@ -693,6 +1083,7 @@ const TOOLS: Tool[] = [
       properties: {
         search: { type: 'string', description: 'Filter by title or author' },
         language: { type: 'string' }, category: { type: 'string' },
+        has_edition: { type: 'string', description: 'ISO code — return only books READABLE in that language, e.g. "es". Different from `language`, which is the language printed on the leaves of the scan: a Latin book with a Spanish edition matches language="Latin" AND has_edition="es". Each result then also carries url_localized.' },
         sort: { type: 'string', enum: ['recent-translation', 'recent', 'title-asc', 'title-desc'] },
         limit: { type: 'number', description: 'Max results (default 100, max 200)' },
       },
@@ -701,7 +1092,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     title: 'Get Book',
-    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, and IIIF manifest. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided.',
+    description: 'READ PIPELINE step 1 — DISCOVER. START HERE for any named work or author. Returns the book\'s AI-generated summary, chapter list, edition metadata, DOI, page counts, IIIF manifest, and the cover image (inline, so you and the user can see the book). LANGUAGE: `language` is what is printed on THIS EDITION\'s leaves, which is frequently not the language the work was written in. Where they differ the response also carries `work_language`, `text_role` (original / period-translation / modern-translation) and a `translation_note` — read them before describing a passage as the author\'s own words, because an edition can be a translation of a translation (de Slane\'s 1863 French Muqaddimah, read in English, is English←French←Arabic). Absent `work_language` means the edition is in the work\'s own language. Use list_editions to find an original-language witness. The summary is typically a multi-paragraph orientation covering the book\'s argument, structure, and significance — often answering the question without further searching. Then: get_book_text to read a chapter or page range (step 2), get_quote / get_quotes to lock specific pages with full citation apparatus (step 3). search_within_book locates passages inside this book. MULTI-WORK VOLUMES: where the scans carry running heads, contains_works lists the works the volume ACTUALLY holds with their page spans, taken from the heads the printer put on each leaf. Trust it over the title — collected-works titles routinely name works the volume does not contain, and the volume holding a work often does not name it. If contains_works is absent the scans have no heads to read; status "insufficient-heads" means it was examined and could not be decided. EDITIONS: `editions` says which languages this book can be READ in and how many pages each covers ({ en: 357 } on most books, { en: 357, es: 357 } where a localized edition exists). Pass a code as `lang` to get_quote, get_quotes, get_book_text or search_within_book to read that edition; without it you get English.',
     annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -712,7 +1103,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book_text',
     title: 'Read Book Text',
-    description: 'READ PIPELINE step 2 — READ. Read a book\'s text. Call get_book first (step 1) for the chapter list, then come here. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation). Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). When you find passages worth quoting, hand the page numbers to get_quote / get_quotes (step 3) for verbatim text + a citation link. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.',
+    description: 'READ PIPELINE step 2 — READ. Read a book\'s text. Call get_book first (step 1) for the chapter list, then come here. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation). Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). When you find passages worth quoting, hand the page numbers to get_quote / get_quotes (step 3) for verbatim text + a citation link. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Daily page budgets apply across get_book_text/get_quote/get_quotes: anonymous 500 pages/24h, signed-in 1,000, free Explorer keys 2,000, paid keys uncapped — sign in at sourcelibrary.org/auth/signin or get a key at sourcelibrary.org/developers. Corpus-scale text belongs on the dataset API (sourcelibrary.org/dataset), not on this tool.',
     annotations: { title: 'Read Book Text', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -724,6 +1115,7 @@ const TOOLS: Tool[] = [
         from: { type: 'number', description: 'Start page number (inclusive). Use with to for explicit page ranges.' },
         to: { type: 'number', description: 'End page number (inclusive). Recommended chunk size: 50 pages. If the response has truncated=true, use the next from/to from truncation_note.' },
         format: { type: 'string', enum: ['json', 'plain'], description: 'json (default, structured with per-page fields) or plain (concatenated text with page markers)' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Resolved PER PAGE: a page with no text in that language comes back as English, labelled `translation_lang: "en"` (json) or `[Translation — en]` (plain), and the response carries lang_coverage. Chapter text is materialized in English only, so `chapter` with a non-English `lang` is served from the chapter\'s page range instead.' },
       },
       required: ['book_id'],
     },
@@ -731,7 +1123,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quote',
     title: 'Get Quote',
-    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right. For several pages of one book at once, use get_quotes.',
+    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right.\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nENGLISH ORIGINALS: where the leaf is already English there is no translation and none is needed — the response omits `translation`, sets `text_source: "ocr_original"`, and the verbatim text is `original` (with a `transcription_note`). Quote it as the source\'s own words, never as a translation, and expect period spelling and long-s (ſ) — it is an uncorrected transcription of the scan. `text_source` is on every response (`translation` otherwise), so branch on it rather than guessing from pages_translated, which is 0 for an English-original book by construction.\nTRANSLATED EDITIONS: `original` means the text printed on this leaf, which on a translated edition is the TRANSLATOR\'s language, not the author\'s. When the response carries `translation_note`, the chain is stated there — attribute the wording to the translator and do not offer the passage as evidence of what the author wrote in their own tongue. Call list_editions to find an original-language witness of the same work.\nFor several pages of one book at once, use get_quotes.',
     annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -739,6 +1131,8 @@ const TOOLS: Tool[] = [
         book_id: { type: 'string', description: 'The book ID' },
         page: { type: 'number', description: 'Page number' },
         context: { type: 'boolean', description: 'Also return the full text of the previous and next pages, so a sentence spanning the page break can be read whole. Set this when continuity.continues_from_previous or continues_on_next came back true on an earlier call, or whenever you are about to quote near a page edge.' },
+        include_image: { type: 'boolean', description: 'Also return the scan of the cited leaf as an inline image (display size, ≤1200px). Set this when the user would benefit from SEEING the page — an illustrated leaf, a title page, a diagram, disputed OCR — or asks to see it. The image arrives as an MCP image block you can view and the user sees rendered.' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to quote, e.g. "es". Default "en". `quote.lang` on every response says which edition was actually served — where no such edition exists the English translation comes back with lang: "en" and a lang_note, and it must not be presented as the requested edition. The citation link follows the edition served.' },
       },
       required: ['book_id', 'page'],
     },
@@ -759,7 +1153,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
-    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote.',
+    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface. Batch pages count toward the shared daily page budget (see get_book_text); this is a citation tool, and corpus-scale extraction belongs on the dataset API (sourcelibrary.org/dataset).',
     annotations: { title: 'Get Quotes (batch)', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -768,6 +1162,8 @@ const TOOLS: Tool[] = [
         pages: { type: 'array', items: { type: 'number' }, description: 'Explicit list of page numbers (e.g. [12, 40, 41]). Use this OR from/to.' },
         from: { type: 'number', description: 'Start page (inclusive) of a range. Use with to.' },
         to: { type: 'number', description: 'End page (inclusive) of a range. Use with from.' },
+        include_image: { type: 'boolean', description: 'Also return page scans as inline images (display size). The first 5 pages of the batch get inline image blocks; every entry still carries its page_image_url in the JSON.' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to quote, e.g. "es". Default "en". Resolved per page — one batch can mix editions, so read `quote.lang` on each entry rather than assuming the whole dossier is in one language.' },
       },
       required: ['book_id'],
     },
@@ -775,23 +1171,31 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
+    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol/iconclass or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
     annotations: { title: 'Search Images', ...READ_ONLY },
+    // MCP Apps (2026-01-26): hosts that support in-chat UI fetch this ui://
+    // resource and render the gallery grid in the conversation (#3978).
+    _meta: { ui: { resourceUri: GALLERY_VIEWER_RESOURCE_URI } },
     inputSchema: {
       type: 'object' as const,
       properties: {
         query: { type: 'string', description: 'Text search (e.g., "ouroboros", "tree of life")' },
-        type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram)' },
+        type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram). Best-effort: the medium metadata on museum artworks is unnormalized, so treat results as ranked rather than strictly filtered.' },
         subject: { type: 'string' }, figure: { type: 'string' }, symbol: { type: 'string' },
-        year_from: { type: 'number' }, year_to: { type: 'number' },
-        book_id: { type: 'string' }, limit: { type: 'number', description: 'Max results (default 20, max 50)' },
+        year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some 17th-century works carry ingest years like 2014, and null years bypass the range check entirely — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup).' },
+        year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
+        book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
+        limit: { type: 'number', description: 'Max results (default 20, max 50)' },
+        offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
+        iconclass: { type: 'string', description: 'Filter by Iconclass notation, prefix-matched ("49" matches 49G22, 49E39, …). Coverage is SPARSE: only ~2,500 of 206K images carry a notation, so an empty result means the classifier has not run on matching images, NOT that the subject is absent from the corpus — retry with a text query before concluding anything. Book-illustration lane only (artworks are excluded when this filter is set). Matching results return their notations in an iconclass array.' },
+        include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
       },
     },
   },
   {
     name: 'submit_feedback',
     title: 'Submit Feedback',
-    description: 'Submit feedback, bug reports, or feature requests to the Source Library team.',
+    description: 'Submit feedback, bug reports, or feature requests to the Source Library team. Before proposing NEW functionality, read https://sourcelibrary.org/llms.txt and https://sourcelibrary.org/developers — several past submissions proposed building things that already exist (IIIF manifests, Content Search, DTS), which wastes reviewer time. State in the report which docs you checked. Bug reports with record IDs and reproducing queries are the most actionable kind.',
     annotations: { title: 'Submit Feedback', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
@@ -872,7 +1276,51 @@ const TOOLS: Tool[] = [
 
 type ToolArgs = Record<string, unknown>;
 
-async function handleToolCall(name: string, args: ToolArgs) {
+// ── Page-budget enforcement for the text-bearing tools ─────────────
+// The MCP route proxies to its own REST API server-side, so downstream
+// per-identity gates (e.g. /text's daily page budget) see the PROXY as the
+// caller — one shared anonymous identity for every MCP user — and can never
+// bite per-caller. The only place the real caller identity exists is here.
+// Enforced on the three tools that return page text at volume; searches and
+// snippets stay ungated. See #4288-adjacent harvesting notes and the ops
+// strategy memo 2026-08-27.
+const PAGE_BUDGET_TOOLS = new Set(['get_book_text', 'get_quote', 'get_quotes']);
+// Below this many quote-lane pages in 24h, get_quotes serves provenance-
+// stripped text (citation work). Above it, the zero-width marks stay in —
+// "one page is a citation, hundreds is a corpus pull" — text is still
+// verbatim-correct for reading and quoting.
+const QUOTE_CLEAN_PAGES_PER_DAY = Number(process.env.MCP_QUOTE_CLEAN_PAGES_PER_DAY || 100);
+
+function pageBudgetExceededResult(used: number, limit: number, identity: ApiIdentity) {
+  const next = identity.kind === 'anon'
+    ? 'Sign in free at https://sourcelibrary.org/auth/signin for a higher limit, or get an API key at https://sourcelibrary.org/developers.'
+    : 'Get or upgrade an API key at https://sourcelibrary.org/developers — bulk export belongs on https://sourcelibrary.org/dataset.';
+  return {
+    error: `Daily page budget reached (${used}/${limit} pages of text in the last 24h across get_book_text/get_quote/get_quotes). ${next}`,
+    budget: { used, limit },
+    licensing_url: 'https://sourcelibrary.org/licensing',
+    note: 'Search and single-snippet tools remain available. Corpus-scale text access is a licensed product — see /licensing.',
+  };
+}
+
+function pagesServedByTool(name: string, result: unknown): number {
+  const r = result as Record<string, unknown> | null;
+  if (!r || typeof r !== 'object' || r.error) return 0;
+  if (name === 'get_quote') return r.quote ? 1 : 0;
+  if (name === 'get_quotes') {
+    const quotes = r.quotes as Array<Record<string, unknown>> | undefined;
+    return Array.isArray(quotes) ? quotes.filter((q) => q && q.quote).length : 0;
+  }
+  if (name === 'get_book_text') {
+    const n = Number(r.pages_returned);
+    if (Number.isFinite(n) && n > 0) return n;
+    const pages = r.pages as unknown[] | undefined;
+    return Array.isArray(pages) ? pages.length : 0;
+  }
+  return 0;
+}
+
+async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMarks?: boolean }) {
   switch (name) {
     case 'search_library': return searchLibrary(args);
     case 'search_translations':
@@ -885,7 +1333,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
-    case 'get_quotes': return getQuotes(args);
+    case 'get_quotes': return getQuotes(args, opts);
     case 'search_images': return searchImages(args);
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
@@ -900,7 +1348,10 @@ async function handleToolCall(name: string, args: ToolArgs) {
 
 async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
   try {
-    const resp = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    // Self-referential /api/image fetches must carry the internal signature or
+    // the image gate budgets this server like an anonymous scraper (#4356).
+    const { signImageProxyUrl } = await import('@/lib/image-proxy-auth');
+    const resp = await fetch(signImageProxyUrl(url), { signal: AbortSignal.timeout(5000) });
     if (!resp.ok) return null;
     const contentType = resp.headers.get('content-type') || 'image/jpeg';
     const mimeType = contentType.split(';')[0].trim();
@@ -912,6 +1363,87 @@ async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: 
   } catch {
     return null;
   }
+}
+
+// Try candidate URLs in order until one fetches within the size cap — lets a
+// caller prefer a mid-size variant but still get SOMETHING when it's oversized.
+async function fetchFirstImage(urls: Array<string | undefined | null>): Promise<{ data: string; mimeType: string } | null> {
+  for (const url of urls) {
+    if (!url) continue;
+    const img = await fetchImageBase64(url);
+    if (img) return img;
+  }
+  return null;
+}
+
+// ── Inline image attachments (#3937: "pics in Claude sessions") ────
+//
+// Tools whose results carry imagery return image URLs in their JSON; this layer
+// turns the first few into MCP `image` content blocks so Claude clients
+// (claude.ai, Desktop, Claude Code) render them inline. audience includes
+// 'assistant' deliberately — the model should SEE the plates it is citing,
+// not just relay them (the old ['user']-only annotation let clients withhold
+// them from the model).
+const MAX_INLINE_IMAGES = 5;
+const IMAGE_AUDIENCE = { audience: ['user', 'assistant'] };
+
+// Embeddable-thumbnail knobs (#3937 item 5). ~1000px q70 JPEG keeps a plate
+// legible in a slide while a full batch stays near ~1MB of base64.
+const THUMBNAIL_BASE64_MAX = 6;
+const THUMBNAIL_BASE64_WIDTH = 1000;
+const THUMBNAIL_BASE64_QUALITY = 70;
+
+interface ImageAttachment {
+  /** Candidate URLs, tried in order (first that fetches under the size cap wins). */
+  urls: Array<string | undefined | null>;
+  /** Text block rendered directly after the image — caption + link. */
+  caption: string;
+}
+
+function collectImageAttachments(name: string, result: unknown): ImageAttachment[] {
+  if (!result || typeof result !== 'object') return [];
+  const r = result as Record<string, unknown>;
+
+  if (name === 'search_images' && Array.isArray(r.images)) {
+    return (r.images as Array<Record<string, unknown>>)
+      .slice(0, MAX_INLINE_IMAGES)
+      .filter((img) => typeof img.image_url === 'string')
+      .map((img) => ({
+        urls: [img.image_url as string],
+        caption: `${(img.description as string) || 'Image'}\n${img.url as string}`,
+      }));
+  }
+
+  if (name === 'get_quote') {
+    const quote = r.quote as Record<string, unknown> | undefined;
+    if (typeof quote?.page_image_url === 'string') {
+      return [{
+        urls: [quote.page_image_url],
+        caption: `Scan of the cited leaf — p. ${quote.page}, ${quote.author || quote.book_title}`,
+      }];
+    }
+    return [];
+  }
+
+  if (name === 'get_quotes' && Array.isArray(r.quotes)) {
+    return (r.quotes as Array<Record<string, unknown>>)
+      .map((entry) => entry.quote as Record<string, unknown> | undefined)
+      .filter((q): q is Record<string, unknown> => typeof q?.page_image_url === 'string')
+      .slice(0, MAX_INLINE_IMAGES)
+      .map((q) => ({
+        urls: [q.page_image_url as string | undefined],
+        caption: `Scan of the cited leaf — p. ${q.page}, ${q.author || q.book_title}`,
+      }));
+  }
+
+  if (name === 'get_book' && typeof r.cover_thumb_url === 'string') {
+    return [{
+      urls: [r.cover_thumb_url, r.cover_image_url as string | undefined],
+      caption: `Cover — ${r.title}${r.author ? `, ${r.author}` : ''}`,
+    }];
+  }
+
+  return [];
 }
 
 // ── Create a fresh MCP server instance (stateless per-request) ─────
@@ -981,10 +1513,22 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
   };
 }
 
-function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
+function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest }) {
   const server = new Server(
     { name: 'source-library', version: SERVER_VERSION },
-    { capabilities: { tools: {}, resources: {} } },
+    {
+      capabilities: {
+        tools: {},
+        resources: {},
+        // MCP Apps extension (2026-01-26 spec): tells hosts we serve
+        // `text/html;profile=mcp-app` UI resources, so clients that support
+        // in-chat apps (claude.ai web + desktop) render the gallery viewer
+        // instead of hiding images in the tool-result accordion (#3978).
+        extensions: {
+          'io.modelcontextprotocol/ui': { mimeTypes: [MCP_APP_MIME_TYPE] },
+        },
+      },
+    },
   );
 
   /**
@@ -1006,6 +1550,13 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       description: 'What the corpus holds, which search tool to reach for, how citation and provenance work, and the failure modes worth knowing before you spend calls. Read this first if you are doing sustained research rather than a single lookup.',
       mimeType: 'text/plain',
     },
+    {
+      uri: GALLERY_VIEWER_RESOURCE_URI,
+      name: 'Gallery viewer (MCP App)',
+      title: 'In-chat image gallery for search_images',
+      description: 'UI resource rendered by MCP Apps-capable hosts as an in-chat image grid for search_images results. Not meant to be read as a document.',
+      mimeType: MCP_APP_MIME_TYPE,
+    },
   ] as const;
 
   server.setRequestHandler(ListResourcesRequestSchema, async () => ({
@@ -1016,6 +1567,24 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     const uri = request.params.uri;
     const known = RESOURCES.find((r) => r.uri === uri);
     if (!known) throw new Error(`Unknown resource: ${uri}`);
+    // The MCP App is served inline — a ui:// URI is not fetchable. Its CSP
+    // meta is load-bearing: resourceDomains maps to the iframe's img-src, so
+    // dropping images.sourcelibrary.org here silently blanks every thumbnail.
+    if (uri === GALLERY_VIEWER_RESOURCE_URI) {
+      return {
+        contents: [{
+          uri,
+          mimeType: MCP_APP_MIME_TYPE,
+          text: GALLERY_VIEWER_HTML,
+          _meta: {
+            ui: {
+              csp: { resourceDomains: ['https://images.sourcelibrary.org'] },
+              prefersBorder: true,
+            },
+          },
+        }],
+      };
+    }
     const resp = await fetch(uri, { signal: AbortSignal.timeout(8000) });
     if (!resp.ok) throw new Error(`Could not read ${uri}: HTTP ${resp.status}`);
     return { contents: [{ uri, mimeType: known.mimeType, text: await resp.text() }] };
@@ -1046,7 +1615,49 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     const argsObj = (args || {}) as ToolArgs;
     const started = Date.now();
     try {
-      const result = await handleToolCall(name, argsObj);
+      // Per-caller daily page budget on the text-bearing tools, enforced HERE
+      // because the real caller identity never survives the internal proxy.
+      // Same tiering as /text (pickLimit): paid keys uncapped, anon 500/day.
+      let usedPages24h: number | null = null;
+      let toolOpts: { keepQuoteMarks?: boolean } | undefined;
+      if (PAGE_BUDGET_TOOLS.has(name)) {
+        const { limit } = pickLimit(reqContext.identity);
+        if (Number.isFinite(limit)) {
+          usedPages24h = await getPagesServedLast24h({
+            identity: reqContext.identity, request: reqContext.request,
+          });
+          if (usedPages24h >= limit) {
+            const refusal = pageBudgetExceededResult(usedPages24h, limit, reqContext.identity);
+            logApiUsage({
+              request: reqContext.request, identity: reqContext.identity,
+              route: `mcp:${name}`, status: 429, ms: Date.now() - started,
+              wouldBlock: true, blocked: true, reason: 'page_budget',
+            });
+            logMcpToolCall({
+              tool: name, args: argsObj, ms: Date.now() - started,
+              ip: reqContext.ip, userAgent: reqContext.userAgent,
+            });
+            return { content: [{ type: 'text' as const, text: JSON.stringify(refusal, null, 2) }] };
+          }
+        }
+        if (name === 'get_quotes' && usedPages24h !== null && usedPages24h > QUOTE_CLEAN_PAGES_PER_DAY) {
+          toolOpts = { keepQuoteMarks: true };
+        }
+      }
+
+      const result = await handleToolCall(name, argsObj, toolOpts);
+      // Record pages served under the REAL caller identity so the budget
+      // above has something to sum. Fire-and-forget, like all usage logging.
+      if (PAGE_BUDGET_TOOLS.has(name)) {
+        const pagesServed = pagesServedByTool(name, result);
+        if (pagesServed > 0) {
+          logApiUsage({
+            request: reqContext.request, identity: reqContext.identity,
+            route: `mcp:${name}`, status: 200, ms: Date.now() - started,
+            wouldBlock: false, blocked: false, pagesServed,
+          });
+        }
+      }
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
@@ -1059,22 +1670,28 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       if (noResultsHint) metaPayload.no_results_hint = noResultsHint;
       const meta = Object.keys(metaPayload).length > 0 ? { _meta: metaPayload } : {};
 
-      // search_images: return image content blocks alongside text metadata
-      if (name === 'search_images' && result && typeof result === 'object' && 'images' in result) {
-        const imageResult = result as { total: unknown; showing: unknown; images: Array<{ image_url: string; description: string; book: { title: string }; url: string; [k: string]: unknown }> };
+      // Attach inline image blocks for tools whose results carry imagery
+      // (search_images results, get_quote/get_quotes page scans, get_book
+      // covers) — see collectImageAttachments (#3937). Skipped when the caller
+      // asked for embeddable base64 in the JSON instead: doubling ~1MB of data
+      // URIs with up to 5MB of image blocks would blow past client tool-result
+      // limits, and the documented flow is see-first (blocks), then re-call
+      // with include_thumbnail_base64 for the chosen few.
+      const attachments = argsObj?.include_thumbnail_base64 === true
+        ? []
+        : collectImageAttachments(name, result);
+      if (attachments.length > 0) {
         const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: string[] } }> = [];
 
-        // Text summary first
-        content.push({ type: 'text' as const, text: JSON.stringify({ total: imageResult.total, showing: imageResult.showing, images: imageResult.images }, null, 2) });
+        // Text summary first, then image + caption pairs
+        content.push({ type: 'text' as const, text: JSON.stringify(result, null, 2) });
 
-        // Fetch actual images in parallel (limit to first 5 to keep response size manageable)
-        const imagesToFetch = imageResult.images.slice(0, 5);
-        const fetched = await Promise.all(imagesToFetch.map(img => fetchImageBase64(img.image_url)));
-        for (let i = 0; i < imagesToFetch.length; i++) {
+        const fetched = await Promise.all(attachments.map((a) => fetchFirstImage(a.urls)));
+        for (let i = 0; i < attachments.length; i++) {
           const img = fetched[i];
           if (img) {
-            content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: { audience: ['user'] } });
-            content.push({ type: 'text' as const, text: `${imagesToFetch[i].description || 'Image'}\n${imagesToFetch[i].url}` });
+            content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: IMAGE_AUDIENCE });
+            content.push({ type: 'text' as const, text: attachments[i].caption });
           }
         }
 
@@ -1169,6 +1786,7 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
       ip: getClientIp(req),
       userAgent: req.headers.get('user-agent'),
       identity,
+      request: req,
     });
     await server.connect(transport);
     try {

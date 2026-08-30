@@ -23,25 +23,52 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     .sort({ created_at: -1 })
     .toArray();
 
-  // Aggregate daily usage per key
-  const dailyUsage = await db.collection('dataset_usage_daily')
-    .find({ date: { $gte: since } })
-    .sort({ date: -1 })
+  // Per-key usage comes from api_usage — the log EVERY gated surface writes
+  // (withApiAuth routes, MCP, /text, /quote, the image proxy). This route
+  // previously read only dataset_usage_daily/dataset_access_log, which the
+  // bulk-dump route alone writes, so every other key showed ZERO usage here
+  // (#4366 finding — the instrument error behind "the key was never used").
+  const dailyUsage = await db.collection('api_usage')
+    .aggregate([
+      { $match: { api_key_id: { $ne: null }, ts: { $gte: since } } },
+      {
+        $group: {
+          _id: { key: '$api_key_id', day: { $dateToString: { format: '%Y-%m-%d', date: '$ts' } } },
+          requests: { $sum: 1 },
+          pages_served: { $sum: '$pages_served' },
+        },
+      },
+      { $sort: { '_id.day': -1 } },
+    ])
     .toArray();
 
-  // Aggregate access logs for endpoint breakdown
-  const endpointBreakdown = await db.collection('dataset_access_log')
+  // Route breakdown from the same log, plus the dataset bulk endpoints from
+  // their compliance log (they don't write api_usage).
+  const endpointBreakdown = await db.collection('api_usage')
+    .aggregate([
+      { $match: { api_key_id: { $ne: null }, ts: { $gte: since } } },
+      {
+        $group: {
+          _id: { api_key_id: '$api_key_id', endpoint: '$route' },
+          requests: { $sum: 1 },
+          pages_served: { $sum: '$pages_served' },
+        },
+      },
+    ])
+    .toArray();
+  const datasetBreakdown = await db.collection('dataset_access_log')
     .aggregate([
       { $match: { timestamp: { $gte: since } } },
       {
         $group: {
-          _id: { api_key_id: '$api_key_id', endpoint: '$endpoint' },
+          _id: { api_key_id: '$api_key_id', endpoint: { $concat: ['dataset/', '$endpoint'] } },
           requests: { $sum: 1 },
           pages_served: { $sum: '$records_returned' },
         },
       },
     ])
     .toArray();
+  endpointBreakdown.push(...datasetBreakdown);
 
   // Build per-key summaries
   const keyMap = new Map(keys.map(k => [k._id.toString(), k]));
@@ -76,8 +103,25 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     };
   }
 
-  // Fill daily usage
+  // Fill daily usage from api_usage…
   for (const d of dailyUsage) {
+    const keyId = d._id?.key?.toString();
+    if (!summaries[keyId]) continue;
+    summaries[keyId].total_requests += d.requests || 0;
+    summaries[keyId].total_pages += d.pages_served || 0;
+    summaries[keyId].daily.push({
+      date: d._id.day,
+      requests: d.requests || 0,
+      pages: d.pages_served || 0,
+    });
+  }
+  // …and merge the dataset bulk route's own daily counters (it logs to its
+  // compliance collections, not api_usage).
+  const datasetDaily = await db.collection('dataset_usage_daily')
+    .find({ date: { $gte: since } })
+    .sort({ date: -1 })
+    .toArray();
+  for (const d of datasetDaily) {
     const keyId = d.api_key_id?.toString();
     if (!summaries[keyId]) continue;
     summaries[keyId].total_requests += d.requests || 0;

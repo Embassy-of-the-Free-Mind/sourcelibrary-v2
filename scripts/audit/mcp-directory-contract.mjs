@@ -46,6 +46,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { createHash, randomBytes } from 'node:crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, '..', '..');
@@ -64,15 +65,12 @@ const MCP_URL = `${BASE}/api/mcp`;
  */
 const MANIFEST = JSON.parse(readFileSync(join(__dirname, 'mcp-directory-contract.tools.json'), 'utf8'));
 
-// Advertising OAuth without enforcing it is what defect (2) was. These must NOT
-// return 200 while `initialize` is open. If the connector ever does gate per user,
-// rewrite this audit alongside — the failure mode then inverts.
-const OAUTH_PATHS = [
-  '/.well-known/oauth-protected-resource',
-  '/.well-known/oauth-authorization-server',
-  '/oauth/authorize',
-  '/oauth/token',
-];
+// Defect (2) was OAuth advertised but BROKEN (no registration endpoint, flow
+// never completable). Since the 2026-08 restore the contract inverted: the
+// directory record declares OAuth, so the flow must WORK end to end — metadata,
+// dynamic client registration, PKCE authorize, token — while `initialize` stays
+// open to anonymous callers (locking them out would break every non-OAuth
+// client). A half-working state in either direction is the de-listing shape.
 
 // A directory submission needs a reachable privacy policy and developer docs.
 // /privacy-policy is a 404 — the live path is /privacy, and that has bitten before.
@@ -122,6 +120,24 @@ const PREDICATES = {
       detail: missing.length ? `GONE: ${missing.join(', ')} — this breaks saved Claude Projects` : `${MANIFEST.tools.length} present`,
     };
   },
+
+  oauthMetadata: (meta) => {
+    // Claude's connector flow needs all three endpoints; a missing
+    // registration_endpoint is exactly the "Couldn't register with sign-in
+    // service" directory error of 2026-08.
+    const missing = ['authorization_endpoint', 'token_endpoint', 'registration_endpoint']
+      .filter((k) => typeof meta?.[k] !== 'string' || !meta[k].startsWith('http'));
+    const s256 = Array.isArray(meta?.code_challenge_methods_supported) && meta.code_challenge_methods_supported.includes('S256');
+    return {
+      ok: missing.length === 0 && s256,
+      detail: missing.length ? `missing: ${missing.join(', ')}` : s256 ? 'endpoints + S256 present' : 'S256 not offered',
+    };
+  },
+
+  oauthTokenResponse: (tok) => {
+    const ok = typeof tok?.access_token === 'string' && tok.access_token.length > 0 && /bearer/i.test(tok?.token_type || '');
+    return { ok, detail: ok ? `Bearer, expires_in ${tok.expires_in}` : `body: ${JSON.stringify(tok).slice(0, 120)}` };
+  },
 };
 
 const results = [];
@@ -166,6 +182,21 @@ function selfTest() {
     ['noToolRemoved', 'catches a renamed tool', base.map((t, i) => (i === 0 ? { ...t, name: `${t.name}_v2` } : t)), false],
     ['noToolRemoved', 'allows an added tool', [...base, goodTool('brand_new_tool', true)], true],
   ];
+
+  const goodMeta = {
+    authorization_endpoint: 'https://x/oauth/authorize',
+    token_endpoint: 'https://x/oauth/token',
+    registration_endpoint: 'https://x/oauth/register',
+    code_challenge_methods_supported: ['S256'],
+  };
+  cases.push(
+    ['oauthMetadata', 'accepts complete metadata', goodMeta, true],
+    // The exact 2026-08 directory-error shape: flow advertised, nowhere to register.
+    ['oauthMetadata', 'catches missing registration_endpoint (the 2026-08 defect)', { ...goodMeta, registration_endpoint: undefined }, false],
+    ['oauthMetadata', 'catches missing S256', { ...goodMeta, code_challenge_methods_supported: ['plain'] }, false],
+    ['oauthTokenResponse', 'accepts a bearer token', { access_token: 'sl_abc', token_type: 'Bearer', expires_in: 1 }, true],
+    ['oauthTokenResponse', 'catches an error body', { error: 'invalid_grant' }, false],
+  );
 
   for (const [key, label, fixture, expectOk] of cases) {
     const got = PREDICATES[key](fixture).ok;
@@ -248,13 +279,65 @@ async function liveAudit() {
     }
   }
 
-  for (const path of OAUTH_PATHS) {
-    const status = await statusOf(path);
+  // --- OAuth flow: must WORK end to end (the directory record declares OAuth).
+  const metaRes = await fetch(`${BASE}/.well-known/oauth-authorization-server`, { headers: { 'User-Agent': UA } });
+  const meta = metaRes.ok ? await metaRes.json().catch(() => null) : null;
+  {
+    const { ok, detail } = PREDICATES.oauthMetadata(meta);
+    record(metaRes.status === 200 && ok, 'OAuth AS metadata complete', `HTTP ${metaRes.status} — ${detail}`);
+  }
+
+  const prRes = await fetch(`${BASE}/.well-known/oauth-protected-resource`, { headers: { 'User-Agent': UA } });
+  const pr = prRes.ok ? await prRes.json().catch(() => null) : null;
+  record(
+    prRes.status === 200 && pr?.resource === MCP_URL,
+    'protected-resource metadata points at /api/mcp',
+    `HTTP ${prRes.status}, resource: ${pr?.resource ?? '?'}`
+  );
+
+  if (meta?.registration_endpoint && meta?.authorization_endpoint && meta?.token_endpoint) {
+    const cb = 'https://claude.ai/api/mcp/auth_callback';
+    const regRes = await fetch(meta.registration_endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'User-Agent': UA },
+      body: JSON.stringify({ client_name: 'directory-contract-audit', redirect_uris: [cb], token_endpoint_auth_method: 'none' }),
+    });
+    const reg = await regRes.json().catch(() => null);
     record(
-      status !== 200,
-      `no OAuth advertisement at ${path}`,
-      `HTTP ${status}${status === 200 ? ' — advertising OAuth while initialize is open is the hybrid that de-listed us' : ''}`
+      regRes.status === 201 && typeof reg?.client_id === 'string',
+      'dynamic client registration succeeds',
+      `HTTP ${regRes.status}${reg?.client_id ? `, client_id issued` : ''}`
     );
+
+    const verifier = randomBytes(32).toString('base64url');
+    const challenge = createHash('sha256').update(verifier).digest('base64url');
+    const authUrl = `${meta.authorization_endpoint}?response_type=code&client_id=${encodeURIComponent(reg?.client_id || 'audit')}&redirect_uri=${encodeURIComponent(cb)}&state=audit&code_challenge=${challenge}&code_challenge_method=S256`;
+    const authRes = await fetch(authUrl, { headers: { 'User-Agent': UA }, redirect: 'manual' });
+    const loc = authRes.headers.get('location') || '';
+    const code = new URL(loc, cb).searchParams.get('code');
+    record(
+      authRes.status >= 300 && authRes.status < 400 && !!code && loc.startsWith(cb),
+      'authorize redirects back with a code (zero-click)',
+      `HTTP ${authRes.status}${code ? ', code present' : `, location: ${loc.slice(0, 80)}`}`
+    );
+
+    if (code) {
+      const tokRes = await fetch(meta.token_endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': UA },
+        body: new URLSearchParams({ grant_type: 'authorization_code', code, code_verifier: verifier, redirect_uri: cb }).toString(),
+      });
+      const tok = await tokRes.json().catch(() => null);
+      const { ok, detail } = PREDICATES.oauthTokenResponse(tok);
+      record(tokRes.status === 200 && ok, 'token exchange succeeds with valid PKCE', `HTTP ${tokRes.status} — ${detail}`);
+
+      const badRes = await fetch(meta.token_endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': UA },
+        body: new URLSearchParams({ grant_type: 'authorization_code', code, code_verifier: 'wrong-verifier-wrong-verifier-wrong-verifier-wrong', redirect_uri: cb }).toString(),
+      });
+      record(badRes.status === 400, 'token exchange REJECTS a wrong PKCE verifier', `HTTP ${badRes.status}`);
+    }
   }
 
   for (const path of REQUIRED_PAGES) {

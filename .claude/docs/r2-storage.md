@@ -44,6 +44,87 @@ book-thumbnails/{bookId}.jpg            Old book cover path (legacy)
 _test/...                               Test files, safe to delete
 ```
 
+## Full prefix inventory, classified by REPLACEABILITY (added 2026-08-18)
+
+Everything above classifies paths by **convention and era** — which is what you need to serve a
+page. It does not tell you the only thing that matters before deleting something: *could we get
+this back?*
+
+That gap is not cosmetic. Of the 41 top-level prefixes in the bucket, **this doc described 12**, and
+the 29 it omitted included `archive/`, `masters/`, `page-masters/`, `manuscripts/`, `papyri/`,
+`tablets/`, `source-pdfs/` and `imports/` — **every prefix whose name suggests it holds masters.**
+The reason is structural and worth stating: a missing *display* variant is a broken image someone
+reports within the hour, so serving paths get documented. A missing *master* breaks nothing visible,
+so it never generates the pressure that produces documentation. The paths that fail silently are
+exactly the ones that go unrecorded, and they are the ones you cannot re-create.
+
+**The near-miss this prevents.** On 2026-08-18 `archive/` presented every signal of dead weight —
+**zero** page documents referenced it across a 20,000-row sample, every object was written on a
+single day (2026-04-27), and it sits beside the live `archived/` under a near-identical name. It is
+**358,625 JPEG 2000 master scans from the BPH partner library**; 999 of 1,000 sampled folders are
+live books, all `provider=bph`, and **none carries an `ia_identifier`**, so none can be re-fetched
+from Internet Archive. Deleting it would have destroyed partner masters to save $71/year.
+
+**Replaceability classes:**
+
+- **M — master.** Irreplaceable, or replaceable only by re-acquiring from an institution. Never delete.
+- **S — source.** Bulk imports/PDFs the corpus was built from. Delete only after proving the derived
+  pages exist.
+- **D — derived.** Recomputable from an M or S. Free to delete and regenerate.
+- **E — editorial.** Hand-made site assets (hero images, brand, blog). Small; re-creating means a
+  person redoing design work.
+- **T — transient.** Test/prototype scratch.
+
+| Prefix | Objects | Size | Class | Evidence |
+|---|---|---|---|---|
+| `archived/` | 12.4M+ | 9.9 TB+ | **M/D** | the 77% legacy page convention; holds originals *and* display variants at the same shape — **must be split before either is treated as deletable** |
+| `uploads/` | 209,935 | 548 GB | **M** | raw user/import uploads, ObjectId filenames; last written 2026-06-02 |
+| `archive/` | 358,625 | 396 GB | **M** | **verified** — BPH JP2 partner masters, no `ia_identifier` |
+| `cropped/` | 400K+ | 188 GB+ | D | split-page crops, regenerable from the page master |
+| `artwork/` | 194,662 | 145 GB | M/D | artwork wing; `-full` is master, `-thumb`/display derived |
+| `gallery/` | 400K+ | 53 GB+ | D | extracted illustrations; regenerable from page masters |
+| `books/` | 129,198 | 45 GB | **M** | kloss / IDP / CCAG / PDF imports — **single high-res file per page, NO variants**, so this IS the master |
+| `page-masters/` | 2,914 | 5.9 GB | **M** | name and size (1.7 MB avg) — *inferred, not verified* |
+| `enhanced/` | 7,973 | 6.5 GB | D | image-enhancement output — *inferred* |
+| `deepzoom/` | 400K+ | 6.4 GB+ | D | tile pyramids, regenerable |
+| `thumbnails/`, `book-thumbnails/` | 400K+ | 2.8 GB | D | oldest thumb conventions |
+| `manuscripts/` | 2,414 | 1.3 GB | M? | *inferred — verify before touching* |
+| `masters/` | 42 | 1.1 GB | **M** | 24 MB avg — *inferred* |
+| `hero-mosaic/`, `hero/`, `heroes/`, `collection-*` | ~18.5K | 2 GB | E | editorial imagery |
+| `podcasts/` | 36 | 0.3 GB | E/M | generated audio; expensive to re-create |
+| `imports/`, `source-pdfs/`, `source-imports/` | 4 | 0.4 GB | **S** | bulk import archives |
+| `papyri/`, `tablets/`, `bph-backups/` | 140 | ~0.2 GB | M? | *inferred — verify* |
+| `blog/`, `brand/`, `assets/`, `email/` | ~50 | small | E | site assets, referenced from JSX |
+| `prototype/`, `prototypes/`, `artwork-prototype/`, `exports/`, `_test/` | ~35 | tiny | T | scratch |
+
+**Rows marked *inferred* were classified from prefix name, object size and write date only.** Do not
+delete anything on the strength of an inferred row — verify the way `archive/` was verified: sample
+the keys, resolve the book ids, and check whether the source is re-fetchable.
+
+### Why not just rename the masters?
+
+Tempting, and wrong at this scale. The canonical convention already encodes tier by **suffix**
+(`-full` = master, bare = display, `-thumb`), so new writes are self-describing. Re-keying the
+legacy 93% would mean ~54.6M copy+delete operations plus rewriting ~19.1M `pages` pointers — and a
+mass re-key is precisely the operation that produced #3362, where a dropped `book_id` wrote every
+book's pages to one shared key. Adding a seventh convention on top of six makes the reader's rewrite
+chain worse before it makes it better.
+
+Two cheaper mechanisms, with different jobs:
+
+- **Object metadata** — additive, non-breaking, no key or DB change. `bake-provenance-mark.mjs`
+  already proves it works at scale (it stamps `provenance: <version>` and uses it for idempotency).
+  **Caveat that decides the design:** `ListObjectsV2` returns key, size, date and ETag — **not user
+  metadata** — so a metadata-only scheme cannot be surveyed without a HEAD per object (54.6M requests).
+  Good for labelling; useless for inventory.
+- **A generated manifest** — the authoritative index, joining key → book → provider →
+  replaceability → checksum. Surveyable and joinable. It must be **generated from the stores**, never
+  hand-maintained, or it drifts into fiction.
+
+**Enforcement for new writes belongs at the boundary that already exists.** `storagePut()` calls
+`validateR2Key()` on every write; a known-prefix check there would stop a seventh convention being
+born by accident — the same shape as the book-scoping guard, applied to tier.
+
 ## Reader behavior — rewrites are aspirational
 
 `src/lib/utils.ts:91-124` rewrites legacy paths to canonical form at read time:

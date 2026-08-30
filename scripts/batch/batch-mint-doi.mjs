@@ -24,6 +24,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { generateScholarlyPdf } from '../lib/scholarly-typst.mjs';
+import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -461,7 +462,9 @@ function createEdition(book, translatedPages) {
       title: `English Translation of ${book.display_title || book.title}`,
       original_title: book.title,
       original_author: book.author,
-      original_language: book.language,
+      // original_language is the language we translated FROM; work_language
+      // appears beside it only when the work itself is in a third language.
+      ...citationLanguageFields(book),
       original_published: book.published,
       target_language: 'en',
     },
