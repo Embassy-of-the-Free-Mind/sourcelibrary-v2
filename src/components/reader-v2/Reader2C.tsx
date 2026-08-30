@@ -55,6 +55,12 @@ import type { CdliWitness } from '@/lib/types/book';
 // scrolls. Design handoff: design_handoff_reader_page/README.md § 2c.
 
 const INK = 'var(--bg-dark)';
+/** Height of the floating mobile title bar, and of the lead-in the column
+ *  keeps for it. One number: the bar covers the top of the column, so
+ *  anything that scrolls a pane to the top has to clear it. */
+const BAR_H = 52;
+/** How long a scroll up has to have been meant before the bar comes back. */
+const BAR_SHOW_DELAY_MS = 280;
 const STRIP_KEY = 'sl-reader-v2c-strip';
 /** Mobile toolbar height — one row of four tools. */
 const MOBILE_TOOLBAR_H = 52;
@@ -2480,7 +2486,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         ? el.querySelector<HTMLElement>(`[data-reader-section="${anchor}"]`)
         : null;
       if (target) {
-        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top;
+        // Under the bar, not under the top edge of the column: the bar floats
+        // over the column and is always back on screen for a new page, so
+        // aligning to the edge would put the first line behind it.
+        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top - BAR_H;
         el.scrollTop = Math.max(0, el.scrollTop + delta);
       } else {
         el.scrollTop = 0;
@@ -2586,6 +2595,28 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * changing direction starts the count again.
    */
   const barIntent = useRef(0);
+  /**
+   * The bar waits before coming back. Meeting the threshold mid-scroll and
+   * appearing on the spot put it on screen while the reader was still moving,
+   * which is what made it feel like it jumped out. Leaving is not delayed:
+   * getting out of the way should be immediate.
+   */
+  const barShowTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancelBarShow = useCallback(() => {
+    if (barShowTimer.current !== null) {
+      clearTimeout(barShowTimer.current);
+      barShowTimer.current = null;
+    }
+  }, []);
+  const showBarSoon = useCallback(() => {
+    if (barShowTimer.current !== null) return; // already on its way
+    barShowTimer.current = setTimeout(() => {
+      barShowTimer.current = null;
+      setBarHidden(false);
+    }, BAR_SHOW_DELAY_MS);
+  }, []);
+  useEffect(() => cancelBarShow, [cancelBarShow]);
+
   const onMobileScroll = useCallback(() => {
     const el = mobileMainRef.current;
     if (!el) return;
@@ -2600,10 +2631,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     // reader wants the whole set of ways out — next, previous, or back to the
     // book — so the bar comes back with it rather than staying hidden.
     const atFoot = el.scrollHeight - (y + el.clientHeight) < 80;
-    if (y < 48 || atFoot) { setBarHidden(false); barIntent.current = 0; }
-    else if (barIntent.current > 16) setBarHidden(true);
-    else if (barIntent.current < -28) setBarHidden(false);
-  }, [readMobileAnchor]);
+    // The top of a page is where the bar lives: no wait there, it is the
+    // resting state rather than something arriving.
+    if (y < 48) { cancelBarShow(); setBarHidden(false); barIntent.current = 0; }
+    else if (barIntent.current > 16) { cancelBarShow(); setBarHidden(true); }
+    else if (barIntent.current < -28 || atFoot) showBarSoon();
+  }, [readMobileAnchor, cancelBarShow, showBarSoon]);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.
@@ -3371,25 +3404,29 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       </div>
 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
-      <div className="lg:hidden flex flex-col flex-1 min-h-0">
-        {/* Clipping is only needed while the bar is collapsing. Left on, it
-            cut off the account menu, which opens downward out of the header. */}
+      <div className="lg:hidden relative flex flex-col flex-1 min-h-0">
+        {/* The bar floats over the column rather than sitting above it in the
+            flow. It used to animate its own height, which resized the scroller
+            under the reader and shoved the text down the screen every time it
+            came back. The column carries a permanent lead-in of the same
+            height instead, so at the top of a page nothing looks different and
+            nothing ever moves. */}
         <header
-          className="shrink-0 relative z-[60]"
+          className="absolute top-0 left-0 right-0 z-[60]"
           style={{
+            height: BAR_H,
             background: INK,
             color: '#fdfcf9',
-            height: barHidden ? 0 : 52,
-            overflow: barHidden ? 'hidden' : 'visible',
-            // Same reason as the filmstrips: a 0-height bar still held a
-            // focusable back-link and menu button, and aria-hidden over them
-            // made that worse rather than better.
+            transform: barHidden ? 'translateY(-100%)' : 'none',
+            // Same reason as the filmstrips: a bar off the top of the screen
+            // still held a focusable back-link and menu button, and aria-hidden
+            // over them made that worse rather than better.
             visibility: barHidden ? 'hidden' : 'visible',
             // visibility is in the transition on purpose. It is a discrete
             // property, so transitioning it holds the old value for the whole
             // duration instead of applying at once — without that the contents
-            // were cut off the screen while the bar was still closing.
-            transition: `height ${BAR_MS}ms ${BAR_EASE}, visibility ${BAR_MS}ms ${BAR_EASE}`,
+            // were cut off the screen while the bar was still leaving.
+            transition: `transform ${BAR_MS}ms ${BAR_EASE}, visibility ${BAR_MS}ms ${BAR_EASE}`,
           }}
         >
           {/* The row fades with the bar rather than being revealed by it.
@@ -3462,6 +3499,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
+          {/* The floating bar's share of the column. Fixed, so the reading
+              area never changes size and the text never shifts. */}
+          <div className="shrink-0" style={{ height: BAR_H }} aria-hidden="true" />
           {r.views.scan && (
             <section style={{ background: SURFACE.scanBed }}>
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
