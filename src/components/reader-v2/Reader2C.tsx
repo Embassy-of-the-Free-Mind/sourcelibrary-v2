@@ -3485,7 +3485,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       </div>
 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
-      <div className="lg:hidden relative flex flex-col flex-1 min-h-0">
+      {/* overflowX clip: the drag-follow translates the column, and a
+          transformed element's bounds extend the PAGE's scrollable overflow —
+          iOS then natively panned the whole document sideways (title bar,
+          filmstrip, toolbar and all) and could leave it stuck there. Clipped
+          here, only the column can ever move. `clip`, not `hidden`: hidden
+          would quietly turn this box into a scroll container. */}
+      <div className="lg:hidden relative flex flex-col flex-1 min-h-0" style={{ overflowX: 'clip' }}>
         {/* The bar floats over the column rather than sitting above it in the
             flow. It used to animate its own height, which resized the scroller
             under the reader and shoved the text down the screen every time it
