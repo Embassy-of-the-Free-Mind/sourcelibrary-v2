@@ -39,7 +39,8 @@
 
 import { ObjectId } from 'mongodb';
 import { getScriptClient } from '../lib/mongo.mjs';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -106,7 +107,7 @@ for (const c of cands) {
   const slug = await uniqueSlug(slugify(title));
   const bookId = new ObjectId();
   const facsimile = isArtwork || FACSIMILE;
-  const doc = makeBookDoc({
+  const fields = {
     _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
@@ -132,11 +133,17 @@ for (const c of cands) {
     ...(c.metadata?.subject_geographic ? { subject_geographic: c.metadata.subject_geographic } : {}),
     source_fingerprint: fp, normalized_title: normTitle(title), normalized_author: normAuthor(author),
     created_at: now, updated_at: now,
-  });
-  if (doc.resource_type === undefined) delete doc.resource_type;
+  };
+  if (fields.resource_type === undefined) delete fields.resource_type;
 
+  let doc;
   try {
-    await db.collection('books').insertOne(doc);
+    const acquired = await insertBookIfNew(db, fields, {
+      importer: 'script:iiif-discovery/import-from-cache', sourceIdentifier: fp, sourceUrl: c.manifest_url,
+    });
+    // The gate declined this candidate; the reason is a row in `dedup_skips`.
+    if (!acquired.inserted) { skipped++; console.log(`  SKIP ${title.slice(0, 40)} — ${acquired.message}`); continue; }
+    doc = acquired.doc;
     if (!isArtwork) {
       const CHUNK = 500;
       for (let s = 0; s < pages.length; s += CHUNK) {

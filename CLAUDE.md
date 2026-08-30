@@ -137,7 +137,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - `visible` / `hidden` / `hidden_reason`, homepage stats, FT badge gating, **a count shown on a card** → `visibility-and-stats.md`
 - `books.author`, `author_id`, the `authors` thesaurus, `/author/[slug]` → `author-identity.md`
 - `books.work_id`, translation gaps, "do we hold the original?", acquisition at scale → `work-identity.md`
-- `books.edition_key`, "same edition?", duplicate queues, other-scans rails, USTC/VD16/ESTC ids → `edition-identity.md`
+- `books.edition_key`, "same edition?", duplicate queues, other-scans rails, USTC/VD16/ESTC ids, **any path that CREATES a book** → `edition-identity.md` (**a check-then-insert is not a gate under concurrency**; use `acquisitionGate()` / `insertBookIfNew()`)
 - `books.language` / `original_language` / `languages[]`, language filters, "fix this book's language", OCR routing by language → `language-fields.md` (**`language` is the EDITION's language, not the source's** — a sweep that forgot nearly relabelled 547 translation editions)
 - **Any write to `bph_works`** — migrations, sweeps, the catalogue editor → `../bph-catalogue-disaster-recovery.md` (a bulk UPDATE with no revision rows pages a human at 04:30; 2,012 records legitimately have no UBN)
 - Bekker/Stephanus references, `locus_anchors`, `/api/locus`, "which page is 1094a?" → `canonical-loci.md`
