@@ -27,6 +27,7 @@ import {
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
   Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Menu, LogOut, LifeBuoy, MessageSquare, User,
+  History, Settings2,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
@@ -91,11 +92,25 @@ function panelBlurb(t: ReaderStrings, panel: Exclude<LeftPanel, null>): string |
  * opens full-screen from the bar instead. Labels come from `t.moreMenu`,
  * which is keyed by exactly these names.
  */
+// The More sheet, grouped the way a reader thinks (#4385 follow-up: it was a
+// flat ten-row wall with citation first): ways INTO the text, then things
+// about THIS page, then the reader itself. Feedback sits last, in rust, as
+// the one row that talks back to us.
+const MORE_GROUPS = [
+  { key: 'groupRead', tools: ['contents', 'guide', 'search', 'librarian'] },
+  { key: 'groupPage', tools: ['cite', 'downloads', 'info', 'history'] },
+  { key: 'groupReader', tools: ['settings', 'feedback'] },
+] as const;
 const MORE_TOOLS = [
-  'cite', 'downloads', 'info', 'history',
   'contents', 'guide', 'search', 'librarian',
+  'cite', 'downloads', 'info', 'history',
   'settings', 'feedback',
 ] as const;
+const MORE_ICONS: Record<(typeof MORE_TOOLS)[number], typeof List> = {
+  contents: List, guide: BookOpen, search: Search, librarian: MessageCircle,
+  cite: Quote, downloads: Download, info: Info, history: History,
+  settings: Settings2, feedback: MessageSquare,
+};
 
 interface Reader2CProps {
   initialBook: Book;
@@ -1565,7 +1580,7 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
  * switch on (it used to follow the cursor uninvited).
  */
 function ScanControls({
-  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand,
+  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand, compact = false,
 }: {
   zoom: number;
   onZoomStep: (dir: 1 | -1) => void;
@@ -1574,6 +1589,10 @@ function ScanControls({
   onToggleLens: () => void;
   /** Open the scan full screen, at the resolution it was archived at */
   onExpand?: () => void;
+  /** Touch layout: the fingers ARE the zoom control (pinch, double-tap), so
+   *  the ± steppers and the lens would only crowd a 34px header. Renders the
+   *  fullscreen button alone, plus a tap-to-reset % chip while pinched in. */
+  compact?: boolean;
 }) {
   const strings = getReaderStrings(useLocale());
   const t = strings.panes;
@@ -1586,6 +1605,28 @@ function ScanControls({
   // family holds without the outline fighting the ground.
   const btn = `${PANE_ICON_CHIP} disabled:opacity-30`;
   const btnStyle = { color: 'var(--text-muted)' } as const;
+  if (compact) {
+    return (
+      <div className="flex items-center gap-0.5">
+        {zoom > 1 && (
+          <button
+            type="button"
+            onClick={onZoomReset}
+            className="min-w-[46px] px-1 h-[26px] font-sans text-[11px] tabular-nums transition-colors hover:bg-black/[0.06]"
+            style={{ color: 'var(--text-muted)' }}
+            title={t.resetZoom}
+          >
+            {Math.round(zoom * 100)}%
+          </button>
+        )}
+        {onExpand && (
+          <button type="button" onClick={onExpand} aria-label={tb.viewScanFullScreen} title={tb.viewScanFullScreen} className={btn} style={btnStyle}>
+            <Maximize2 size={14} />
+          </button>
+        )}
+      </div>
+    );
+  }
   return (
     <div className="flex items-center gap-0.5">
       <button type="button" aria-label={t.zoomOut} disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
@@ -2036,26 +2077,42 @@ function PanelContent({
     // A quiet list, not a wall of boxes. Ten bordered white tiles on a warm
     // ground read as ten competing buttons; a single hairline-separated column
     // reads as a menu, which is what it is. Rows are full-width tap targets
-    // and arrive in sequence so opening More is one movement.
-    const row = 'w-full text-left flex items-center justify-between gap-3 h-[46px] font-sans text-[14px] transition-colors active:bg-[var(--bg-white)]';
+    // and arrive in sequence so opening More is one movement. Grouped with
+    // caps headers and a leading icon per row (#4385 follow-up — the flat
+    // list read as "a disorganized wall of options").
+    const row = 'w-full text-left flex items-center gap-3 h-[46px] font-sans text-[14px] transition-colors active:bg-[var(--bg-white)]';
+    let rowIndex = 0;
     return (
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-5" style={{ overscrollBehavior: 'contain' }}>
         <div className="flex flex-col">
-          {MORE_TOOLS.map((key, i) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => onSelectPanel(key)}
-              className={`${row} rv2-tile-in border-b`}
-              style={{
-                borderColor: 'var(--border-light)',
-                color: 'var(--text-primary)',
-                animationDelay: `${i * 18}ms`,
-              }}
-            >
-              {t.moreMenu[key]}
-              <ChevronRightSmall size={15} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
-            </button>
+          {MORE_GROUPS.map((group) => (
+            <div key={group.key} className="flex flex-col">
+              <CapsLabel className="pt-4 pb-1.5" style={{ color: 'var(--text-faint)' }}>
+                {t.moreMenu[group.key]}
+              </CapsLabel>
+              {group.tools.map((key) => {
+                const IconFor = MORE_ICONS[key];
+                const rust = key === 'feedback';
+                const i = rowIndex++;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => onSelectPanel(key)}
+                    className={`${row} rv2-tile-in border-b`}
+                    style={{
+                      borderColor: 'var(--border-light)',
+                      color: rust ? 'var(--accent-rust)' : 'var(--text-primary)',
+                      animationDelay: `${i * 18}ms`,
+                    }}
+                  >
+                    <IconFor size={16} className="shrink-0" style={{ color: rust ? 'var(--accent-rust)' : 'var(--text-muted)' }} />
+                    <span className="flex-1">{t.moreMenu[key]}</span>
+                    <ChevronRightSmall size={15} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
+                  </button>
+                );
+              })}
+            </div>
           ))}
           {/* The edit row is gone. This sheet is the mobile More menu, and the
               editor textarea and the Cancel/Save bar exist only in the desktop
@@ -3607,6 +3664,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
                 <ScanControls
+                  compact
                   zoom={scanZoom}
                   onZoomStep={zoomStep}
                   onZoomReset={() => changeZoom(1)}
