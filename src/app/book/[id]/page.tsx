@@ -2601,8 +2601,10 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     // working at the OLD address: the proxy only sends a /book/<segment> to the
     // book-slug resolver when `looksLikeBookId(segment)` is true, and that is
     // false for every slug-shaped segment — which is every alias a slug repair
-    // creates. So the ~276 books renamed by earlier sweeps, and the 111 renamed
+    // creates. So the ~276 books renamed by earlier sweeps, and the 112 renamed
     // by #4389, each had two live URLs emitting self-referential canonicals.
+    // Confirmed against production before the change: /book/1-10, a real alias
+    // on a real book, returned 200 rather than a redirect.
     // The redirect belongs here rather than in the proxy because deciding it
     // needs the resolved book, and the proxy would have to pay a DB lookup on
     // every book page view to learn what one string compare answers here.
