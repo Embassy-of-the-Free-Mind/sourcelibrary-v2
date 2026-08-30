@@ -175,6 +175,13 @@ const totals = slugRows.reduce(
 );
 const totalDrift = totals.missing + totals.stale + totals.noRow;
 
+// Positive control, before any verdict: "no drift" and "I compared nothing"
+// print identically otherwise.
+if (mongoTags === 0 || catalogTags === 0) {
+  console.error('One side carries no collection tags at all — the projection is wrong, not the data.');
+  process.exit(2);
+}
+
 if (AS_JSON) {
   console.log(
     JSON.stringify(
@@ -201,10 +208,6 @@ if (AS_JSON) {
     `Collection tags compared:               ${mongoTags.toLocaleString()} (Mongo)` +
       ` vs ${catalogTags.toLocaleString()} (catalog)`,
   );
-  if (mongoTags === 0 || catalogTags === 0) {
-    console.error('\nOne side carries no tags at all — the projection is wrong, not the data.');
-    process.exit(2);
-  }
   console.log('');
   console.log(`Books whose collections disagree:       ${booksWithDrift.toLocaleString()}`);
   console.log(`Books tagged but with NO catalog row:   ${booksWithoutRow.toLocaleString()}`);
