@@ -292,7 +292,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
-  srcOverride, nativeSrcOverride, altOverride,
+  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn,
 }: {
   page: Page;
   book: Book;
@@ -318,6 +318,16 @@ export function ScanViewer({
   nativeSrcOverride?: string;
   /** Alt text to pair with srcOverride — the default alt describes a scan. */
   altOverride?: string;
+  /** Reports the loaded image's natural dimensions, so a parent can size its
+   *  pane to the page's own shape (the mobile fit-to-width pane needs the
+   *  aspect ratio, which only the loaded image knows). */
+  onNaturalSize?: (size: { w: number; h: number }) => void;
+  /** A zoomed touch-pan that runs PAST the scan's left/right edge and keeps
+   *  going is a page turn (the photo-viewer convention). Without it a zoomed
+   *  reader has no way to the next page short of zooming out first (#4385).
+   *  Judged at finger-lift from the leftover travel, so drifting back before
+   *  release cancels it. */
+  onEdgePageTurn?: (dir: 'next' | 'prev') => void;
 }) {
   const t = getReaderStrings(useLocale()).panes;
   const resolved = resolveScanUrls(page);
@@ -327,7 +337,7 @@ export function ScanViewer({
   const containerRef = scrollRef ?? localRef;
   const spacerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-  const dragRef = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
+  const dragRef = useRef<{ x: number; y: number; left: number; top: number; handedY?: number; edgeX?: number } | null>(null);
   const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
   const pointers = useRef<Map<number, { x: number; y: number }>>(new Map());
   const [dragging, setDragging] = useState(false);
@@ -362,6 +372,7 @@ export function ScanViewer({
     const el = imgRef.current;
     if (el?.complete && el.naturalWidth) {
       natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+      onNaturalSize?.(natural.current);
       measure();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -532,8 +543,31 @@ export function ScanViewer({
     const d = dragRef.current;
     const el = containerRef.current;
     if (d && el) {
-      el.scrollLeft = d.left - (e.clientX - d.x);
-      el.scrollTop = d.top - (e.clientY - d.y);
+      const wantLeft = d.left - (e.clientX - d.x);
+      el.scrollLeft = wantLeft;
+      // Travel past the horizontal edge accrues toward a page turn, judged
+      // at finger-lift (onPointerUp). Only the LAST value counts, so easing
+      // back before release cancels the turn.
+      if (e.pointerType === 'touch') d.edgeX = wantLeft - el.scrollLeft;
+      const wantTop = d.top - (e.clientY - d.y);
+      el.scrollTop = wantTop;
+      // A zoomed pan that runs past the scan's top or bottom edge hands the
+      // leftover travel to the mobile column scroller. Without this the scan
+      // (most of a phone screen, touchAction none) traps every vertical drag,
+      // and the translation below is only reachable from the sliver of
+      // non-scan UI (#4385). handedY tracks what was already passed on, so
+      // reversing the finger takes it back before the scan pans again.
+      if (e.pointerType === 'touch') {
+        const leftover = wantTop - el.scrollTop;
+        const delta = leftover - (d.handedY ?? 0);
+        if (delta !== 0) {
+          const outer = el.closest<HTMLElement>('main[data-reader-panels-container]');
+          if (outer) {
+            outer.scrollTop += delta;
+            d.handedY = leftover;
+          }
+        }
+      }
       return;
     }
     // The lens tracks the cursor on a desk and the finger on a phone. Touch
@@ -545,6 +579,13 @@ export function ScanViewer({
   const onPointerUp = (e: React.PointerEvent) => {
     pointers.current.delete(e.pointerId);
     if (pointers.current.size < 2) pinchRef.current = null;
+    const d = dragRef.current;
+    // A zoomed pan that ended a deliberate distance past the left/right edge
+    // is a page turn — the photo-viewer convention, and otherwise a zoomed
+    // reader has no way forward short of zooming out first (#4385).
+    if (d && e.pointerType === 'touch' && onEdgePageTurn && Math.abs(d.edgeX ?? 0) > 80) {
+      onEdgePageTurn((d.edgeX ?? 0) > 0 ? 'next' : 'prev');
+    }
     dragRef.current = null;
     setDragging(false);
     if (e.pointerType !== 'mouse') setLens(null);
@@ -585,7 +626,13 @@ export function ScanViewer({
         cursor: zoomed ? (dragging ? 'grabbing' : 'grab') : (lensOn ? 'crosshair' : 'default'),
         // Capture touch only while the scan is interactive, so a drag over a
         // fitted page still scrolls the mobile column and swipes pages.
-        touchAction: zoomed || lensOn ? 'none' : 'auto',
+        // pan-x pan-y, NOT auto: auto lets the browser claim a two-finger
+        // gesture for NATIVE viewport zoom — it pointercancels our pinch
+        // mid-flight (the scan double-zooms), and afterwards swipes pan the
+        // zoomed viewport instead of reaching the reader at all, which is
+        // "you can't get to the next page after zooming" (#4385). pan-x pan-y
+        // keeps one-finger scrolling native and routes two fingers to us.
+        touchAction: zoomed || lensOn ? 'none' : 'pan-x pan-y',
         // Only while it can actually be panned. `overflow: hidden` still makes
         // this a scroll container, so containing the overscroll on a fitted
         // page swallowed every vertical drag over the scan instead of passing
@@ -598,6 +645,12 @@ export function ScanViewer({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
+      // The pointer map can wedge: a missed pointerup after a pinch leaves a
+      // stale entry, every later touch then reads as a second pinch finger,
+      // and panning freezes until remount. The touch stream carries the
+      // authoritative remaining-contact list — an empty one clears the map.
+      onTouchEnd={e => { if (e.touches.length === 0) { pointers.current.clear(); pinchRef.current = null; } }}
+      onTouchCancel={e => { if (e.touches.length === 0) { pointers.current.clear(); pinchRef.current = null; } }}
       onPointerLeave={() => { if (!dragRef.current) setLens(null); }}
       onDoubleClick={e => applyZoom(zoomed ? 1 : 2, { x: e.clientX, y: e.clientY })}
     >
@@ -618,6 +671,7 @@ export function ScanViewer({
           onLoad={e => {
             const el = e.currentTarget;
             natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+            onNaturalSize?.(natural.current);
             measure();
           }}
           className={fit ? 'absolute top-0 left-0' : 'max-h-full max-w-full object-contain'}

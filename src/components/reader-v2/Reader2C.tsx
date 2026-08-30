@@ -1682,6 +1682,26 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
 
   const navBtn = 'w-10 h-10 flex items-center justify-center transition-colors disabled:opacity-25 hover:bg-[rgba(253,252,249,0.12)]';
 
+  // The full-screen view had buttons and arrow keys but no touch at all — on
+  // a phone that reads as "you can no longer swipe to the next page" (#4385).
+  // At fit, a plain axis-locked swipe turns the page; zoomed, ScanViewer owns
+  // the touches and its edge-turn (onEdgePageTurn below) takes over.
+  const lightboxSwipe = useRef<{ x: number; y: number } | null>(null);
+  const onLbTouchStart = (e: React.TouchEvent) => {
+    lightboxSwipe.current = e.touches.length === 1 && zoom <= 1
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : null;
+  };
+  const onLbTouchEnd = (e: React.TouchEvent) => {
+    const s = lightboxSwipe.current;
+    lightboxSwipe.current = null;
+    if (!s || zoom > 1) return;
+    const dx = e.changedTouches[0].clientX - s.x;
+    const dy = e.changedTouches[0].clientY - s.y;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0) onNext(); else onPrev();
+  };
+
   return (
     <div ref={boxRef} className="fixed inset-0 z-[100] flex flex-col rv2-pop" style={{ background: '#14110d' }} role="dialog" aria-modal="true" aria-label={t.scanFullScreen}>
       <div className="shrink-0 flex items-center gap-2 px-3 h-[52px]" style={{ borderBottom: `1px solid ${onInk(0.12)}` }}>
@@ -1704,8 +1724,12 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
         <button type="button" onClick={onClose} aria-label={t.close}
           className={navBtn} style={{ color: onInk(0.75) }}><X size={17} /></button>
       </div>
-      <div className="flex-1 min-h-0 px-3 py-3">
-        <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes srcOverride={srcOverride} altOverride={altOverride} />
+      <div className="flex-1 min-h-0 px-3 py-3" onTouchStart={onLbTouchStart} onTouchEnd={onLbTouchEnd}>
+        <ScanViewer
+          page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes
+          srcOverride={srcOverride} altOverride={altOverride}
+          onEdgePageTurn={dir => { if (dir === 'next') { if (hasNext) onNext(); } else if (hasPrev) onPrev(); }}
+        />
       </div>
       <div className="shrink-0 flex items-center justify-center gap-1 h-[46px]" style={{ borderTop: `1px solid ${onInk(0.12)}` }}>
         <button type="button" aria-label={strings.panes.zoomOut} disabled={zoom <= 1}
@@ -2644,7 +2668,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // for a while that meant a touch device with no gesture at all.
   const swipeRef = useRef<{ x: number; y: number; axis: null | 'x' | 'y' } | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length !== 1) { swipeRef.current = null; return; }
+    if (e.touches.length !== 1) {
+      // A second finger means a pinch, not a page turn — abandon the swipe
+      // AND any drag-follow offset already applied, or the column sits
+      // shifted sideways for the whole zoom gesture.
+      swipeRef.current = null;
+      dragFollow(null);
+      return;
+    }
     // Anything with its own use for a horizontal drag opts out by marking
     // itself: a zoomed scan is being panned, and a slide-out panel is not the
     // page you are reading.
@@ -2670,6 +2701,24 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     }
     swipeRef.current = { x, y, axis: null };
   };
+  // Nothing moved under the finger during a drag, so the gesture read as
+  // absent (#4385). A locked horizontal drag now pulls the whole column a
+  // little (with resistance) and a released drag snaps back; the arrival of
+  // the new page is animated separately (#4384's slide-in, direction taken
+  // from the page index). Direct style writes, not state — a re-render per
+  // touchmove is exactly the jank the scan viewer's compositing comments
+  // warn about.
+  const dragFollow = (dx: number | null) => {
+    const el = mobileMainRef.current;
+    if (!el) return;
+    if (dx === null) {
+      el.style.transition = 'transform 180ms ease-out';
+      el.style.transform = '';
+    } else {
+      el.style.transition = 'none';
+      el.style.transform = `translateX(${Math.max(-90, Math.min(90, dx * 0.35))}px)`;
+    }
+  };
   const onTouchMove = (e: React.TouchEvent) => {
     const s = swipeRef.current;
     if (!s || e.touches.length !== 1) return;
@@ -2678,11 +2727,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     if (!s.axis && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
       s.axis = Math.abs(dx) > Math.abs(dy) * 1.5 ? 'x' : 'y';
     }
+    if (s.axis === 'x') dragFollow(dx);
   };
   const onTouchEnd = (e: React.TouchEvent) => {
     const s = swipeRef.current;
     swipeRef.current = null;
     if (!s || s.axis !== 'x') return;
+    dragFollow(null);
     const t = e.changedTouches[0];
     const dx = t.clientX - s.x;
     if (Math.abs(dx) < 45) return;
@@ -2696,7 +2747,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       r.goPrev();
     }
   };
-
+  const onTouchCancel = () => {
+    swipeRef.current = null;
+    dragFollow(null);
+  };
   // Filmstrip: keep the current page centred
   const stripRef = useRef<HTMLDivElement>(null);
   const stripMobileRef = useRef<HTMLDivElement>(null);
@@ -2770,6 +2824,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const witnessNativeSrc = witness?.photo_url
     ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=4000&q=85`
     : undefined;
+  // The mobile scan pane is sized by the page's own shape (full-bleed width,
+  // height from the aspect ratio) instead of a fixed 66dvh box. The ratio is
+  // only known once an image loads, so keep the last seen one across page
+  // turns — pages of one book share a shape — and open on a typical page
+  // proportion before the first load.
+  const [scanRatio, setScanRatio] = useState(0.72);
+  const onScanNaturalSize = useCallback((size: { w: number; h: number }) => {
+    if (!size.w || !size.h) return;
+    const ratio = size.w / size.h;
+    setScanRatio(prev => (Math.abs(prev - ratio) > 0.005 ? ratio : prev));
+  }, []);
   const ocrCorpusInfo = pageTextCorpus(r.currentPage);
   const translationCorpusInfo = translationCorpus(r.currentPage);
   const shareUrl = typeof window !== 'undefined'
@@ -2783,6 +2848,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const leftPanelWidth = 340;
   const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
   const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
+  // A zoomed pan that runs past the scan's left/right edge turns the page
+  // (ScanViewer's onEdgePageTurn) — without it a zoomed-in reader has no way
+  // forward short of zooming out first (#4385). It is a swipe-like move, so
+  // it holds your pane like one (#4383).
+  const onScanEdgeTurn = (dir: 'next' | 'prev') => {
+    if (dir === 'next') {
+      if (!nextPage) return;
+      keepPaneOnTurn.current = true;
+      r.goNext();
+    } else {
+      if (!prevPage) return;
+      keepPaneOnTurn.current = true;
+      r.goPrev();
+    }
+  };
 
   // Colour of whatever pane ends the mobile column, used to fill any leftover
   // height so a short page never shows a white band.
@@ -3184,6 +3264,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
+                  onEdgePageTurn={onScanEdgeTurn}
                 />
                 {witness && (
                   <WitnessCaption
@@ -3498,11 +3579,24 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchCancel}
         >
           {/* The floating bar's share of the column. Fixed, so the reading
               area never changes size and the text never shifts. */}
           <div className="shrink-0" style={{ height: BAR_H }} aria-hidden="true" />
-          {r.views.scan && (
+          {r.views.scan && !scan.display && !witness && (
+            /* No facsimile: one quiet line instead of a scan-sized empty bed.
+               The full-height placeholder read as an image that failed to
+               load — "the shimmer of empty pages" (#4385). */
+            <section className="border-b" style={{ background: SURFACE.scanBed, borderColor: 'var(--border-medium)' }}>
+              <div className="min-h-[34px] flex items-center px-4 py-1.5">
+                <span className="font-sans text-[12px]" style={{ color: 'var(--text-faint)' }}>
+                  {t.panes.noFacsimile}
+                </span>
+              </div>
+            </section>
+          )}
+          {r.views.scan && (scan.display || witness) && (
             <section style={{ background: SURFACE.scanBed }}>
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
@@ -3516,10 +3610,22 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 />
               </div>
               {/* Zoom/pan and the lens need the touch stream, so keep those
-                  gestures from also turning the page */}
+                  gestures from also turning the page. Full-bleed: the pane is
+                  as wide as the phone and as tall as the page's own shape —
+                  the old fixed 66dvh box left the scan floating in padding
+                  ("the width should fill to the ends", #4385). */}
               <div
-                className="relative px-4 py-4"
-                style={{ height: 'min(66dvh, 520px)' }}
+                className="relative"
+                style={{
+                  aspectRatio: String(scanRatio),
+                  // The exception to full-bleed: an extreme ratio (a scroll,
+                  // a strip, a foldout) would otherwise make the pane several
+                  // screens tall — cap those and let the viewer letterbox.
+                  // ONLY those: a maxHeight on a normal page transfers back
+                  // through aspect-ratio into a narrower box, quietly shaving
+                  // the full-width promise on every tall-ish page.
+                  maxHeight: scanRatio < 0.55 ? 'min(85dvh, 700px)' : undefined,
+                }}
                 data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
               >
                 <ScanViewer
@@ -3527,6 +3633,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
+                  onNaturalSize={onScanNaturalSize}
+                  onEdgePageTurn={onScanEdgeTurn}
                 />
                 {witness && (
                   <WitnessCaption

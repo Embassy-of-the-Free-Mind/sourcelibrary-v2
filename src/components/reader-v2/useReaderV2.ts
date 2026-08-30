@@ -295,27 +295,38 @@ export function useReaderV2(
   }, [pageList, goToPage]);
 
   // ── views ──────────────────────────────────────────────────────────────
-  const viewsKey = `sl-reader-v2-views-${variant}`;
+  const viewsKeyBase = `sl-reader-v2-views-${variant}`;
+  // Phone and desktop keep SEPARATE stored choices. The layouts differ (three
+  // stacked panes vs a grid), so a choice made on one is wrong on the other —
+  // a desktop "everything on" followed the reader to their phone and buried
+  // the translation below a full OCR pane, which read as "the reader defaults
+  // to OCR" (#4385). The ref is resolved client-side in the effect below;
+  // toggleView only runs on interaction, well after that.
+  const viewsKeyRef = useRef(viewsKeyBase);
   const [views, setViews] = useState<ViewState>(defaultViews);
   useEffect(() => {
+    // <lg — the same line where the stacked mobile layout begins.
+    const isPhone = window.matchMedia('(max-width: 1023px)').matches;
+    const viewsKey = isPhone ? `${viewsKeyBase}-m` : viewsKeyBase;
+    viewsKeyRef.current = viewsKey;
     let hasChosen = false;
     try { hasChosen = window.localStorage.getItem(viewsKey) !== null; } catch { /* private mode */ }
     const stored = loadStored(viewsKey, defaultViews);
     // Views are stored globally, not per book, so a reader who last turned off
     // OCR and translation arrives at an image-less book (6,743 pages, the CDLI
     // tablets among them) with scan on, nothing to show in it, and a blank
-    // reader. Fall back to whatever this page actually has.
+    // reader. Fall back to whatever this page actually has — on a phone that
+    // is the translation alone; a desktop grid has room for both text panes.
     const hasScan = !!getPageDisplayUrl(initialPage as unknown as Record<string, unknown>);
     if (!hasScan && !stored.ocr && !stored.en) {
-      setViews({ ...stored, scan: false, ocr: true, en: true });
+      setViews({ ...stored, scan: false, ocr: !isPhone, en: true });
       return;
     }
-    // On a phone the three panes stack, and a full OCR pane pushes the
-    // translation a long scroll away — so a reader who has never chosen gets
-    // scan + translation only. Not persisted: their first explicit toggle is
-    // what writes localStorage, and this default must not follow them to
-    // desktop. (<lg, same line the stacked mobile layout uses.)
-    if (!hasChosen && hasScan && window.matchMedia('(max-width: 1023px)').matches) {
+    // On a phone the panes stack, and a full OCR pane pushes the translation
+    // a long scroll away — so a reader who has never chosen on a phone gets
+    // the translation as the text pane (scan on top when the page has one).
+    // Not persisted: their first explicit toggle is what writes localStorage.
+    if (!hasChosen && isPhone) {
       setViews({ ...stored, ocr: false });
       return;
     }
@@ -327,10 +338,10 @@ export function useReaderV2(
       const next = { ...prev, [key]: !prev[key] };
       // At least one pane must stay on — clicking the last active pane is a no-op
       if (!next.scan && !next.ocr && !next.en) return prev;
-      try { window.localStorage.setItem(viewsKey, JSON.stringify(next)); } catch { /* private mode */ }
+      try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
-  }, [viewsKey]);
+  }, []);
 
   // ── settings ───────────────────────────────────────────────────────────
   const [settings, setSettings] = useState<ReaderSettings>(DEFAULT_SETTINGS);
