@@ -279,6 +279,24 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   return { cleanText: result, metadata };
 }
 
+/**
+ * Every element ReactMarkdown may render. `unwrapDisallowed` SILENTLY strips
+ * a tag not on this list while keeping its children — the text still reads
+ * fine, only the styling vanishes, which is how <interp> shipped invisible
+ * (#4385): the preprocessor emitted it, no component ever received it, and
+ * nothing errored. tests/unit/translator-interpolations.test.ts pins that
+ * every tag the preprocessing emits is on this list.
+ */
+export const NOTES_ALLOWED_ELEMENTS = [
+  'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
+  'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
+  'table', 'thead', 'tbody', 'tr', 'th', 'td',
+  'span', 'div', 'sup',
+  // XML annotation elements (new syntax)
+  'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc', 'interp',
+];
+
 // Pre-process bracket note tags to XML tags before ReactMarkdown sees them
 // Converts [[tag: content]] to <tag>content</tag> which rehype-raw handles
 function preprocessBracketTags(text: string, showNotes: boolean): string {
@@ -719,15 +737,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkBreaks]}
       rehypePlugins={[rehypeRaw]}
-      allowedElements={[
-        'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
-        'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
-        'table', 'thead', 'tbody', 'tr', 'th', 'td',
-        'span', 'div', 'sup',
-        // XML annotation elements (new syntax)
-        'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc'
-      ]}
+      allowedElements={NOTES_ALLOWED_ELEMENTS}
       unwrapDisallowed={true}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       components={{

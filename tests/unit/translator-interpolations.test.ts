@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { prepareNotesMarkdown } from '@/components/reader/NotesRenderer';
+import { prepareNotesMarkdown, NOTES_ALLOWED_ELEMENTS } from '@/components/reader/NotesRenderer';
 
 /**
  * Single-bracket runs in a translation are the translator's own voice —
@@ -55,6 +55,25 @@ describe('translator interpolations (single brackets)', () => {
     );
     expect(processedText).toContain('<note>');
     expect(processedText).not.toContain('<interp><note>');
+  });
+
+  it('emits no tag the renderer would silently strip', () => {
+    // `unwrapDisallowed` drops any element not on NOTES_ALLOWED_ELEMENTS while
+    // keeping its children — the styling vanishes with no error. This is how
+    // <interp> first shipped invisible: the preprocessor emitted it, the
+    // allowlist didn't know it. Feed every bracket syntax through and assert
+    // each emitted tag is on the list.
+    const src = [
+      'Plain [interpolation] here.',
+      '[[note: a note]] [[term: lapis]] [[margin: marginal]] [[gloss: gloss]]',
+      '[[insert: inserted]] [[unclear: smudged]] [[image: a woodcut]]',
+    ].join('\n\n');
+    const { processedText } = prepareNotesMarkdown(src, { showNotes: true });
+    const emitted = [...processedText.matchAll(/<([a-z][a-z0-9-]*)[\s>]/gi)].map(m => m[1].toLowerCase());
+    for (const tag of new Set(emitted)) {
+      expect(NOTES_ALLOWED_ELEMENTS, `tag <${tag}> is emitted but not allowlisted`).toContain(tag);
+    }
+    expect(emitted).toContain('interp');
   });
 
   it('does not match across lines or nested brackets', () => {

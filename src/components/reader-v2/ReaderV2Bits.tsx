@@ -331,7 +331,7 @@ export function ScanViewer({
   const containerRef = scrollRef ?? localRef;
   const spacerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-  const dragRef = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
+  const dragRef = useRef<{ x: number; y: number; left: number; top: number; handedY?: number } | null>(null);
   const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
   const pointers = useRef<Map<number, { x: number; y: number }>>(new Map());
   const [dragging, setDragging] = useState(false);
@@ -538,7 +538,25 @@ export function ScanViewer({
     const el = containerRef.current;
     if (d && el) {
       el.scrollLeft = d.left - (e.clientX - d.x);
-      el.scrollTop = d.top - (e.clientY - d.y);
+      const wantTop = d.top - (e.clientY - d.y);
+      el.scrollTop = wantTop;
+      // A zoomed pan that runs past the scan's top or bottom edge hands the
+      // leftover travel to the mobile column scroller. Without this the scan
+      // (most of a phone screen, touchAction none) traps every vertical drag,
+      // and the translation below is only reachable from the sliver of
+      // non-scan UI (#4385). handedY tracks what was already passed on, so
+      // reversing the finger takes it back before the scan pans again.
+      if (e.pointerType === 'touch') {
+        const leftover = wantTop - el.scrollTop;
+        const delta = leftover - (d.handedY ?? 0);
+        if (delta !== 0) {
+          const outer = el.closest<HTMLElement>('main[data-reader-panels-container]');
+          if (outer) {
+            outer.scrollTop += delta;
+            d.handedY = leftover;
+          }
+        }
+      }
       return;
     }
     // The lens tracks the cursor on a desk and the finger on a phone. Touch

@@ -2564,7 +2564,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // for a while that meant a touch device with no gesture at all.
   const swipeRef = useRef<{ x: number; y: number; axis: null | 'x' | 'y' } | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length !== 1) { swipeRef.current = null; return; }
+    if (e.touches.length !== 1) {
+      // A second finger means a pinch, not a page turn — abandon the swipe
+      // AND any drag-follow offset already applied, or the column sits
+      // shifted sideways for the whole zoom gesture.
+      swipeRef.current = null;
+      dragFollow(null);
+      return;
+    }
     // Anything with its own use for a horizontal drag opts out by marking
     // itself: a zoomed scan is being panned, and a slide-out panel is not the
     // page you are reading.
@@ -3484,7 +3491,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   ("the width should fill to the ends", #4385). */}
               <div
                 className="relative"
-                style={{ aspectRatio: String(scanRatio) }}
+                style={{
+                  aspectRatio: String(scanRatio),
+                  // The exception to full-bleed: an extreme ratio (a scroll,
+                  // a strip, a foldout) would otherwise make the pane several
+                  // screens tall — cap it and let the viewer letterbox.
+                  maxHeight: 'min(80dvh, 660px)',
+                }}
                 data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
               >
                 <ScanViewer
