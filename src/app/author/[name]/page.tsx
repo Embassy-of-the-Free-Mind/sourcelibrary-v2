@@ -16,6 +16,7 @@ import AuthorSchema from '@/components/seo/AuthorSchema';
 import { authorThesaurusReadpathEnabled, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 import { classifyNonPersonAuthor, type NonPersonAuthor } from '@/lib/non-person-author';
 import { isPublishedEntity, type EntityPublishFields } from '@/lib/entity-publish';
+import { isArtworkRecord } from '@/lib/artwork-record';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -47,23 +48,12 @@ interface Book {
   place?: string;
   image_source?: { contributing_library?: string; provider_name?: string };
   // Used to split the bibliography (texts) from visual works (artworks).
-  // See isArtworkRecord() — older records use resource_type instead.
+  // See isArtworkRecord() in @/lib/artwork-record — older records carry only
+  // resource_type, and an explicit non-artwork content_type always wins.
   content_type?: string;
   resource_type?: string;
   image_display?: string;
   image_thumb?: string;
-}
-
-function isArtworkRecord(b: Pick<Book, 'content_type' | 'resource_type'>): boolean {
-  // 25,368 of 25,383 artworks carry both markers in production; a handful
-  // have only one. Treat either as artwork to avoid leaks during slow
-  // backfills, mirroring the /artist/[slug] page (which keys off
-  // resource_type).
-  // An explicit content_type:'book' always wins: a textual book that happens to
-  // carry a resource_type (e.g. a digitized papyrus text tagged 'papyrus_fragment')
-  // must never be treated as artwork, or it routes to /artwork/ instead of /book/.
-  if (b.content_type === 'book') return false;
-  return b.content_type === 'artwork' || !!b.resource_type;
 }
 
 interface AuthorEntity {

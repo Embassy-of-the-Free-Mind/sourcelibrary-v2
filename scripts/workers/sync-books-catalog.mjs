@@ -116,9 +116,20 @@ function transformBook(book) {
     doi: book.doi || null,
     work_id: book.work_id || null,
     text_role: book.text_role || null,
-    // content_type:'book' wins — never expose a resource_type for a book, or the catalog
-    // grid (CollectionBookCard) routes it to /artwork/ instead of /book/.
-    resource_type: book.content_type === 'book' ? null : (book.resource_type || null),
+    // Artworks share the `books` collection with texts. Both markers are mirrored,
+    // because telling them apart needs both — see isArtworkRecord() in
+    // src/lib/artwork-record.ts and the NON_ARTWORK_FILTERS the search book lane
+    // applies. Paired with `content_type: 1` in the projection below: a field in
+    // this builder but NOT in the projection reads `undefined` and writes NULL for
+    // every book. Move the two together, always.
+    content_type: book.content_type || null,
+    // An explicit non-artwork content_type wins — never expose a resource_type for
+    // something labelled a text, or the catalog grid (CollectionBookCard) routes it
+    // to /artwork/ instead of /book/. This is not hypothetical: the Javanese
+    // chronicle "Babad Tanah Djawi…" carries content_type:'text' + resource_type:'text'.
+    resource_type: (book.content_type && book.content_type !== 'artwork')
+      ? null
+      : (book.resource_type || null),
     source_url: book.image_source?.source_url || null,
     provider_name: book.image_source?.provider_name || null,
     image_attribution: book.image_source?.attribution || null,
@@ -205,7 +216,7 @@ const projection = {
   // Book detail fields
   summary: 1, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1,
   publisher: 1, place_published: 1, doi: 1, work_id: 1,
-  resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1, text_role: 1,
+  content_type: 1, resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1, text_role: 1,
   source_work_dates: 1,
   'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
   // Graded FT verdict + screens (#3726 Tier 3) — pure projections; the render

@@ -10,6 +10,7 @@
 
 import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 import { isSingleRealLanguage } from '@/lib/language-canonical';
+import { NON_ARTWORK_FILTERS } from '@/lib/artwork-record';
 
 /**
  * Canonical form of a category value: lowercase, trimmed, spaces → hyphens.
@@ -64,6 +65,9 @@ export interface CatalogBook {
   image_source_provider: string | null;
   categories: string[];
   collections: string[];
+  /** 'artwork' | 'book' | 'text' | null. Paired with resource_type: both are
+   *  needed to tell an artwork from a text — see isArtworkRecord(). */
+  content_type: string | null;
   resource_type: string | null;
   /** original | period-translation | modern-translation — see src/lib/text-role.ts (#2395) */
   text_role: string | null;
@@ -110,7 +114,7 @@ export interface CatalogBookDetail extends CatalogBook {
 // and PostgREST 42703s the whole query on an unknown column — which would take
 // the catalogue down rather than degrade it. They are attached from Mongo by
 // `attachCardVariants()` below instead.
-export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
+export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
@@ -558,6 +562,16 @@ export async function searchBooksCatalog(
     .gt('pages_count', 0)
     .or(orFilter)
     .limit(limit);
+
+  // Artworks share this table with texts, and a book card linking to /book/ is
+  // the wrong promise for a Met stela — the reader clicks expecting a readable
+  // scan. Search surfaces artworks in their own Images lane instead (see the
+  // artwork lanes in /api/search/unified). Measured 2026-08-30: this drops 96
+  // of 31,731 live rows, e.g. "stela" 27 results → 8, all of them books.
+  // NOT `.not('resource_type','is',null)` — that would also drop the one live
+  // record carrying content_type:'text' + resource_type:'text', a real Javanese
+  // chronicle. See isArtworkRecord().
+  for (const f of NON_ARTWORK_FILTERS) query = query.or(f);
 
   if (opts?.language) query = query.eq('language', opts.language);
   if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);

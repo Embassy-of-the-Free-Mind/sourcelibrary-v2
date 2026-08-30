@@ -163,6 +163,14 @@ export interface SearchStrings {
   searchingPages: string;
   noMatchingPassages: string;
   untitled: string;
+  /**
+   * Subtitle under an illustration in the Images strip. The strip mixes details
+   * cropped from books we hold with standalone artworks held by museums, and
+   * the two used to wear the same bare title. This says the image is a detail
+   * FROM something. The page number is rendered separately so a long book title
+   * can truncate without taking the page number with it.
+   */
+  imageFromBook: (title: string) => string;
   digitized: string;
   catalogOnly: string;
   collectionBooks: (n: string) => string;
@@ -309,6 +317,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     searchingPages: 'Searching pages...',
     noMatchingPassages: 'No matching passages found in this book.',
     untitled: '(untitled)',
+    imageFromBook: (title) => `from ${title}`,
     digitized: 'Digitized',
     catalogOnly: 'Catalog only',
     collectionBooks: (n) => `${n} books`,
@@ -439,6 +448,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     searchingPages: 'Buscando en las páginas...',
     noMatchingPassages: 'No se han encontrado pasajes coincidentes en este libro.',
     untitled: '(sin título)',
+    imageFromBook: (title) => `de ${title}`,
     digitized: 'Digitalizado',
     catalogOnly: 'Solo en catálogo',
     collectionBooks: (n) => `${n} libros`,

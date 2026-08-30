@@ -13,6 +13,7 @@ import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigat
 import { useLocale, useLocalePath } from '@/lib/i18n';
 import type { Locale } from '@/lib/locale-path';
 import { SEARCH_STRINGS, EXAMPLE_QUERIES, type SearchStrings } from '@/lib/search-i18n';
+import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
@@ -517,7 +518,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             images.push({
               pageId,
               bookId: g.bookId || '',
-              pageNumber: 0,
+              // Carried through so the card can say which page of which book the
+              // detail was cropped from. CLIP rows have no page number; 0 reads
+              // as "unknown" and the card omits it.
+              pageNumber: typeof g.pageNumber === 'number' ? g.pageNumber : 0,
               detectionIndex,
               imageUrl: g.imageUrl || '',
               thumbnailUrl: g.imageUrl || '',
@@ -552,7 +556,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               type: a.genre || 'artwork',
               isArtwork: true,
               artworkSlug: a.slug || null,
-            } as GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null });
+              // What makes the card readable as an object rather than a page of
+              // one of our books: the medium, and the museum that holds it.
+              artworkType: a.resource_type || a.genre || null,
+              holder: a.holder || null,
+            } as GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null; artworkType?: string | null; holder?: string | null });
           }
           const imTotal = (data.gallery?.total || 0) + (data.visual?.total || 0) + artworkResults.length;
 
@@ -2302,14 +2310,38 @@ function IndexResultCard({ result, query, tenant }: { result: IndexSearchResult;
   );
 }
 
-function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null; aiTerm?: string; visualMatch?: boolean }; query: string; large?: boolean; tenant?: string }) {
+function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null; artworkType?: string | null; holder?: string | null; link?: string | null; aiTerm?: string; visualMatch?: boolean }; query: string; large?: boolean; tenant?: string }) {
   const [imageError, setImageError] = useState(false);
+  const t = SEARCH_STRINGS[useLocale()];
 
   // Provenance chip: images that arrived via LLM term expansion or CLIP
   // similarity are honest neighbors, not matches — say so on the card (#4338).
   const provenance = item.aiTerm
     ? `related · ${item.aiTerm}`
     : item.visualMatch ? 'visual match' : null;
+
+  // The strip mixes two different things and used to render them identically: a
+  // standalone artwork held by a museum (links to /artwork/) and a detail cropped
+  // out of a book we hold (links to /gallery/image/). The second line was
+  // `item.bookTitle` in both cases — a slot meaning "the object's own title" for
+  // one and "the book it came from" for the other. Say which: artworks get a
+  // medium chip and their holder, illustrations get "from <book> · p. N".
+  //
+  // Two producers feed this card and they mark an artwork differently: the
+  // unified-search artworks lane sets `isArtwork` (+ artworkType/holder), while
+  // /api/gallery — which backs the dedicated Images tab — sets `source:'artwork'`
+  // and puts the medium in `type` (see artworkToGalleryItem in gallery-merge.ts).
+  // Reading only one of them left half the artworks wearing a book card.
+  const isArtwork = item.isArtwork === true || item.source === 'artwork';
+  const typeChip = isArtwork ? artworkTypeLabel(item.artworkType || item.type) : null;
+  const subtitle = isArtwork
+    ? (item.holder || item.author || null)
+    : (item.bookTitle ? t.imageFromBook(item.bookTitle) : null);
+  // A NEGATIVE page_number is a soft-hide marker, not a leaf — "p. -154" is both
+  // nonsense to a reader and a leak of an internal flag. Only a positive number
+  // is a page you could turn to. Rendered as its own non-shrinking span so a long
+  // book title truncates without swallowing the page number with it.
+  const pageLabel = !isArtwork && item.pageNumber > 0 ? `p. ${item.pageNumber}` : null;
 
   // Use pre-generated thumbnail/extracted URL first (publicly accessible),
   // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
@@ -2318,14 +2350,15 @@ function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & {
     ? `/${tenant}/gallery/image/${item.pageId}-${item.detectionIndex}`
     : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
 
-  // Artworks link to /artwork/[slug], gallery images to /gallery/image/[id]
-  const href = item.isArtwork
-    ? `/artwork/${item.artworkSlug || item.pageId}`
-    : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
+  // /api/gallery hands back the canonical URL for a standalone artwork in `link`;
+  // prefer it. Without this the Images tab built `/gallery/image/artwork-<id>`
+  // from the synthetic pageId — a hard 404 on every artwork tile in that tab.
+  const artworkHref = item.link
+    || (item.artworkSlug ? `/artwork/${item.artworkSlug}` : null);
 
   return (
     <Link
-      href={item.isArtwork ? `/artwork/${item.artworkSlug || item.pageId}` : imageHref}
+      href={isArtwork && artworkHref ? artworkHref : imageHref}
       className="group block bg-white rounded-lg border border-border-light overflow-hidden hover:border-accent-gold/30 hover:shadow-md transition-all"
     >
       <div className={`relative bg-warm ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>
@@ -2344,17 +2377,31 @@ function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & {
             <ImageIcon className="w-8 h-8 text-border-medium" />
           </div>
         )}
-        {provenance && (
-          <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/55 text-[10px] leading-tight text-white/90 backdrop-blur-sm">
-            {provenance}
-          </span>
+        {(provenance || typeChip) && (
+          <div className="absolute top-1.5 left-1.5 flex flex-col items-start gap-1">
+            {typeChip && (
+              <span className="px-1.5 py-0.5 rounded bg-black/55 text-[10px] leading-tight text-white/90 backdrop-blur-sm">
+                {typeChip}
+              </span>
+            )}
+            {provenance && (
+              <span className="px-1.5 py-0.5 rounded bg-black/55 text-[10px] leading-tight text-white/90 backdrop-blur-sm">
+                {provenance}
+              </span>
+            )}
+          </div>
         )}
       </div>
       <div className="p-2.5">
         <p className="text-sm text-secondary line-clamp-2 mb-1">
           {query ? <HighlightedText text={item.description} query={query} /> : item.description}
         </p>
-        <p className="text-xs text-muted line-clamp-1">{item.bookTitle}</p>
+        {subtitle && (
+          <p className="text-xs text-muted flex items-baseline gap-1">
+            <span className="truncate">{subtitle}</span>
+            {pageLabel && <span className="shrink-0">· {pageLabel}</span>}
+          </p>
+        )}
       </div>
     </Link>
   );

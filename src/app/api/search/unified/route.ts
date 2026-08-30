@@ -8,6 +8,7 @@ import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
 import { filterVisibleArtworks } from '@/lib/artwork-visibility';
+import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -46,6 +47,25 @@ interface GalleryResult {
   type?: string;
   bookTitle: string;
   bookId: string;
+  /** Page the detail was cropped from. Present on ~93% of gallery_images rows
+   *  (192,703 of 206,362) and absent on every CLIP row, so the card treats it
+   *  as optional. It is what lets an illustration card say "from <book>, p. 411"
+   *  rather than wearing a bare title that reads like a standalone artwork. */
+  pageNumber?: number | null;
+}
+
+/**
+ * Fields attached to an artwork hit after the Mongo enrichment below. Both
+ * artwork lanes (semantic RPC rows and the lexical Mongo lane) produce objects
+ * without them, and both get them here so the client's card can render one
+ * shape.
+ */
+interface EnrichedArtwork {
+  slug?: string | null;
+  /** Medium/form. Drives the card's type chip via artworkTypeLabel(). */
+  resource_type?: string | null;
+  /** Holding institution or provider, for the card's subtitle. */
+  holder?: string | null;
 }
 
 interface CollectionResult {
@@ -299,9 +319,21 @@ export async function GET(request: NextRequest) {
     const resultBooks = identityLookupIds.length > 0
       ? await db.collection('books').find(
         { id: { $in: identityLookupIds } },
-        { projection: { _id: 0, id: 1, tenantId: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1 }, maxTimeMS: 5000 }
+        {
+          projection: {
+            _id: 0, id: 1, tenantId: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1,
+            // For the semantic-lane gate below. Free: this lookup already runs.
+            visible: 1, content_type: 1, resource_type: 1,
+          },
+          maxTimeMS: 5000,
+        }
       ).toArray()
       : [];
+    const semanticGateDocs = new Map<string, { visible?: boolean; content_type?: string | null; resource_type?: string | null }>(
+      resultBooks.map(b => [b.id as string, {
+        visible: b.visible, content_type: b.content_type, resource_type: b.resource_type,
+      }]),
+    );
     const identityByBookId = new Map<string, WorkGroupable>(
       resultBooks.map((b: any) => [b.id as string, {
         book_id: b.id, work_id: b.work_id, work_id_aliases: b.work_id_aliases, duplicate_of: b.duplicate_of,
@@ -421,8 +453,29 @@ export async function GET(request: NextRequest) {
     }
     const filteredVisual = { results: filteredVisualResults, total: filteredVisualResults.length };
 
+    // The semantic lane reads Supabase `book_embeddings` and, unlike every other
+    // lane, had no gate of its own: the keyword lane filters at source
+    // (books_catalog: visible + pages_count + NON_ARTWORK_FILTERS) and the
+    // artwork/gallery/CLIP lanes re-resolve against Mongo via
+    // filterVisibleArtworks. So `match_books_semantic` rows went to the client
+    // as book cards whatever they were. Measured on "tarot" 2026-08-30, 4 of its
+    // 6 results were artwork records with pages_count:0 ("Playing Card",
+    // "HS Tarot", "Jeu de tarot miniature… dessin") — each linking to /book/ for
+    // a thing with no pages — and one of those, "T13 Tarot", is visible:false in
+    // Mongo and was being served anyway.
+    //
+    // Gate both here, off the identity lookup that already ran. A row whose book
+    // is missing from Mongo is dropped too: it cannot be rendered honestly.
+    const semanticGate = (bookId: string): boolean => {
+      const doc = semanticGateDocs.get(bookId);
+      if (!doc) return false;
+      if (doc.visible !== true) return false;
+      return !isArtworkRecord(doc);
+    };
     const filteredSemantic = {
-      results: semanticResult.results.filter(r => r.similarity >= SEMANTIC_SIM_FLOOR),
+      results: semanticResult.results.filter(
+        r => r.similarity >= SEMANTIC_SIM_FLOOR && semanticGate(r.book_id),
+      ),
       total: 0,
     };
     filteredSemantic.total = filteredSemantic.results.length;
@@ -442,20 +495,43 @@ export async function GET(request: NextRequest) {
     // visibility column, so hidden/invisible artworks can surface from the
     // vector lane and 404 on click. Re-check visible:true here and drop any
     // artwork the query doesn't return.
+    //
+    // The same lookup also carries back what the card needs to LOOK like an
+    // artwork rather than a book illustration: the medium (resource_type) and
+    // the museum that holds the object. Doing it here covers both lanes at once
+    // — the semantic lane's RPC rows have neither field, and enriching only the
+    // lexical lane would leave half the strip unlabelled.
     let visibleArtworks = artworksAboveFloor;
     if (artworksAboveFloor.length > 0) {
       try {
         const artworkIds = artworksAboveFloor.map(a => a.book_id);
         const artworkDocs = await db.collection('books').find(
           { id: { $in: artworkIds }, visible: true },
-          { projection: { id: 1, slug: 1 } }
+          {
+            projection: {
+              id: 1, slug: 1, resource_type: 1,
+              contributing_library: 1,
+              'image_source.provider_name': 1,
+              'image_source.contributing_library': 1,
+            },
+          }
         ).maxTimeMS(2000).toArray();
-        const slugMap = new Map(artworkDocs.map(d => [d.id, d.slug]));
+        const docMap = new Map(artworkDocs.map(d => [d.id, d]));
         for (const a of artworksAboveFloor) {
-          (a as any).slug = slugMap.get(a.book_id) || null;
+          const doc = docMap.get(a.book_id);
+          const art = a as EnrichedArtwork;
+          art.slug = doc?.slug || null;
+          art.resource_type = doc?.resource_type || null;
+          // Prefer the institution's own name over the credit line: `provider_name`
+          // reads "The Metropolitan Museum of Art", while image_source.contributing_library
+          // often holds an acquisition note ("Rogers Fund, 1931") that means nothing
+          // as a subtitle.
+          art.holder = doc?.image_source?.provider_name
+            || doc?.contributing_library
+            || null;
         }
-        // Keep only artworks confirmed visible (present in slugMap).
-        visibleArtworks = artworksAboveFloor.filter(a => slugMap.has(a.book_id));
+        // Keep only artworks confirmed visible (present in the map).
+        visibleArtworks = artworksAboveFloor.filter(a => docMap.has(a.book_id));
       } catch { /* non-fatal — fall through with unfiltered list */ }
     }
     let filteredArtworks = {
@@ -863,7 +939,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         },
         ...(hasYearRange ? [{ $match: { book_year: yearMatch } }] : []),
         { $limit: limit * 2 },
-        { $project: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
+        { $project: { page_id: 1, page_number: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
       ], { maxTimeMS: 5000 }).toArray();
     } catch {
       // Fallback to regex if Atlas Search index not ready
@@ -882,7 +958,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
               { 'metadata.figures': queryRegex },
             ],
           },
-          { projection: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
+          { projection: { page_id: 1, page_number: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
         )
         .sort({ gallery_quality: -1 })
         .limit(limit)
@@ -906,6 +982,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         type: img.type,
         bookTitle: img.book_title || '',
         bookId: img.book_id || '',
+        pageNumber: typeof img.page_number === 'number' ? img.page_number : null,
       })),
       total: visibleImages.length,
     };
