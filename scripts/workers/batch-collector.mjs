@@ -563,7 +563,11 @@ async function processOneJob(db, job) {
           'ocr.updated_at': now,
           'ocr.model': job.model,
           'ocr.language': job.language,
-          'ocr.source': 'batch_api',
+          // Submitters may claim a narrower provenance label than "some batch".
+          // Phase 1.5 preview pools stamp `pipeline_preview` so the measurement
+          // stack can still segment previews from full passes now that both
+          // arrive through the Batch API (.claude/docs/data-provenance.md).
+          'ocr.source': job.ocr_source || 'batch_api',
           'ocr.prompt_version': job.prompt_version || 'v5.2026-02',
           'ocr.prompt_id': job.prompt_id,
           'ocr.prompt_hash': job.prompt_hash,

@@ -1,0 +1,42 @@
+name: Spend perimeter
+
+# The daily budget dial has failed twice, for two different reasons.
+#
+#   #3826 — INCOMPLETE METER. The guard summed Mongo `gemini_usage` while the
+#   logger wrote to Supabase: it read $9.00 on a day that billed ~$2.3K against
+#   a $15 dial. Fixed in #3835; spend-guard.mjs now sums both stores and fails
+#   closed on an unreadable one.
+#
+#   PERIMETER — this watch. A perfect meter still leaks if a path never calls
+#   the gate. Measured 2026-08-31: four of the orchestrator's seven spending
+#   phases never asked, including the one that runs every two minutes. And
+#   import-time preview OCR spent ~$392 in four days through a *pause* (#4432).
+#
+# The perimeter is a property of the code, so it is checked on the PR that
+# changes it — no database, no secrets, seconds to run. A new spending phase,
+# or a new cron, fails here rather than on a bill.
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/workers/**'
+      - 'scripts/lib/spend-guard.mjs'
+      - 'scripts/audit/spend-perimeter.mjs'
+      - 'infrastructure/hetzner-crontab'
+      - 'vercel.json'
+      - '.github/workflows/spend-perimeter.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  spend-perimeter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Every unattended Gemini spender must ask the dial
+        run: node scripts/audit/spend-perimeter.mjs --ci
