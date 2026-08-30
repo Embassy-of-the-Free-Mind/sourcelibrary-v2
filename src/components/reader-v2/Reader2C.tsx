@@ -1682,6 +1682,26 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
 
   const navBtn = 'w-10 h-10 flex items-center justify-center transition-colors disabled:opacity-25 hover:bg-[rgba(253,252,249,0.12)]';
 
+  // The full-screen view had buttons and arrow keys but no touch at all — on
+  // a phone that reads as "you can no longer swipe to the next page" (#4385).
+  // At fit, a plain axis-locked swipe turns the page; zoomed, ScanViewer owns
+  // the touches and its edge-turn (onEdgePageTurn below) takes over.
+  const lightboxSwipe = useRef<{ x: number; y: number } | null>(null);
+  const onLbTouchStart = (e: React.TouchEvent) => {
+    lightboxSwipe.current = e.touches.length === 1 && zoom <= 1
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : null;
+  };
+  const onLbTouchEnd = (e: React.TouchEvent) => {
+    const s = lightboxSwipe.current;
+    lightboxSwipe.current = null;
+    if (!s || zoom > 1) return;
+    const dx = e.changedTouches[0].clientX - s.x;
+    const dy = e.changedTouches[0].clientY - s.y;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0) onNext(); else onPrev();
+  };
+
   return (
     <div ref={boxRef} className="fixed inset-0 z-[100] flex flex-col rv2-pop" style={{ background: '#14110d' }} role="dialog" aria-modal="true" aria-label={t.scanFullScreen}>
       <div className="shrink-0 flex items-center gap-2 px-3 h-[52px]" style={{ borderBottom: `1px solid ${onInk(0.12)}` }}>
@@ -1704,8 +1724,12 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
         <button type="button" onClick={onClose} aria-label={t.close}
           className={navBtn} style={{ color: onInk(0.75) }}><X size={17} /></button>
       </div>
-      <div className="flex-1 min-h-0 px-3 py-3">
-        <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes srcOverride={srcOverride} altOverride={altOverride} />
+      <div className="flex-1 min-h-0 px-3 py-3" onTouchStart={onLbTouchStart} onTouchEnd={onLbTouchEnd}>
+        <ScanViewer
+          page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes
+          srcOverride={srcOverride} altOverride={altOverride}
+          onEdgePageTurn={dir => { if (dir === 'next') { if (hasNext) onNext(); } else if (hasPrev) onPrev(); }}
+        />
       </div>
       <div className="shrink-0 flex items-center justify-center gap-1 h-[46px]" style={{ borderTop: `1px solid ${onInk(0.12)}` }}>
         <button type="button" aria-label={strings.panes.zoomOut} disabled={zoom <= 1}
@@ -2824,6 +2848,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const leftPanelWidth = 340;
   const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
   const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
+  // A zoomed pan that runs past the scan's left/right edge turns the page
+  // (ScanViewer's onEdgePageTurn) — without it a zoomed-in reader has no way
+  // forward short of zooming out first (#4385). It is a swipe-like move, so
+  // it holds your pane like one (#4383).
+  const onScanEdgeTurn = (dir: 'next' | 'prev') => {
+    if (dir === 'next') {
+      if (!nextPage) return;
+      keepPaneOnTurn.current = true;
+      r.goNext();
+    } else {
+      if (!prevPage) return;
+      keepPaneOnTurn.current = true;
+      r.goPrev();
+    }
+  };
 
   // Colour of whatever pane ends the mobile column, used to fill any leftover
   // height so a short page never shows a white band.
@@ -3225,6 +3264,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
+                  onEdgePageTurn={onScanEdgeTurn}
                 />
                 {witness && (
                   <WitnessCaption
@@ -3580,8 +3620,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   aspectRatio: String(scanRatio),
                   // The exception to full-bleed: an extreme ratio (a scroll,
                   // a strip, a foldout) would otherwise make the pane several
-                  // screens tall — cap it and let the viewer letterbox.
-                  maxHeight: 'min(80dvh, 660px)',
+                  // screens tall — cap those and let the viewer letterbox.
+                  // ONLY those: a maxHeight on a normal page transfers back
+                  // through aspect-ratio into a narrower box, quietly shaving
+                  // the full-width promise on every tall-ish page.
+                  maxHeight: scanRatio < 0.55 ? 'min(85dvh, 700px)' : undefined,
                 }}
                 data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
               >
@@ -3591,6 +3634,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                   onNaturalSize={onScanNaturalSize}
+                  onEdgePageTurn={onScanEdgeTurn}
                 />
                 {witness && (
                   <WitnessCaption
