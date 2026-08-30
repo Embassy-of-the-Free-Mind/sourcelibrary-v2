@@ -41,16 +41,32 @@ async function main() {
   // catch below meant the loop kept firing thousands of doomed requests and
   // reported "partial" progress instead of a failure. Per
   // invariants/archive-fetch-failures.md a 403 is never auto-retried.
+  //
+  // 429 is deliberately NOT in that set. Lumping it in with 401/403 conflated
+  // two different verdicts: "you may not have this" (stop, ask a human) versus
+  // "you are going too fast" (slow down, keep going). MDZ 429'd every run from
+  // 2026-08-29 and the conflation turned each hourly cron into abort-at-25 →
+  // sleep an hour → retry at the identical rate → abort again, netting ~10
+  // books/hour against a 3.2k backlog (#4395). A 429 now feeds the rate limiter
+  // in iiif-utils, which halves the host's rate and honours Retry-After, so the
+  // run converges on a rate the host will serve instead of stopping.
   const hostFailures = new Map<string, number>();
+  const hostThrottles = new Map<string, number>();
   const FAIL_ABORT = 25;
   class HostBlocked extends Error {}
   const noteFailure = (url: string, err: unknown) => {
     let host = 'unknown';
     try { host = new URL(url).hostname; } catch { /* keep 'unknown' */ }
     const msg = String((err as Error)?.message ?? err);
+    if (/\b429\b/.test(msg)) {
+      // Throttling is not a block. Count it for visibility only — the backoff
+      // itself already happened inside rateLimitedFetch.
+      hostThrottles.set(host, (hostThrottles.get(host) ?? 0) + 1);
+      return;
+    }
     // Only auth/blocking statuses count toward the abort — a slow or oversized
     // page is a per-page problem, not a host verdict.
-    if (!/\b(401|403|429)\b/.test(msg)) return;
+    if (!/\b(401|403)\b/.test(msg)) return;
     const n = (hostFailures.get(host) ?? 0) + 1;
     hostFailures.set(host, n);
     if (n >= FAIL_ABORT) {
@@ -141,7 +157,8 @@ async function main() {
   const remaining = PROVIDER
     ? await books.countDocuments({ 'image_source.provider': PROVIDER, pages_count: { $gt: 0 }, archive_status: { $ne: 'archive_complete' } })
     : await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
-  log(`archive-acquired: complete ${ok}, partial ${partial} | un-archived acquired remaining ${remaining}`);
+  const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
+  log(`archive-acquired: complete ${ok}, partial ${partial} | un-archived acquired remaining ${remaining}${throttled ? ` | throttled ${throttled}` : ''}`);
   if (blocked) {
     // Exit non-zero so a wrapper loop stops instead of re-running into the block.
     log(`ABORTED — SOURCE BLOCKED: ${(blocked as Error).message}`);

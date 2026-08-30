@@ -21,7 +21,12 @@
 export const DOMAIN_LIMITS = {
   'archive.org': 10,
   'gallica.bnf.fr': 3,
-  'api.digitale-sammlungen.de': 5,
+  // MDZ began 429-ing every archive run on 2026-08-29/30 (see #4395). The
+  // nominal 5/s was never what we actually sent — the old bucket released
+  // every waiter at once, so 60 in-flight callers produced 55 requests in a
+  // single second. Lowered to 2/s while we re-earn their tolerance; raise
+  // again only with evidence from a clean run, not by assumption.
+  'api.digitale-sammlungen.de': 2,
   'iiif.wellcomecollection.org': 5,
   'www.e-rara.ch': 2,
   'digi.vatlib.it': 3,
@@ -40,7 +45,13 @@ export const DOMAIN_LIMITS = {
 
 const DEFAULT_LIMIT = 5;
 
+// Per-host scheduling state: { nextSlot, penalty }.
+//   nextSlot — epoch ms of the next unclaimed send slot for this host.
+//   penalty  — divisor applied to the configured limit after a 429, so a host
+//              that tells us to slow down actually gets a slower caller.
 const _domainBuckets = new Map();
+
+const MAX_PENALTY = 16; // floor: a 2/s host lands at one request every 8s
 
 export function getDomainLimit(url) {
   try {
@@ -49,6 +60,64 @@ export function getDomainLimit(url) {
   } catch {
     return DEFAULT_LIMIT;
   }
+}
+
+function bucketFor(host) {
+  let b = _domainBuckets.get(host);
+  if (!b) { b = { nextSlot: 0, penalty: 1 }; _domainBuckets.set(host, b); }
+  return b;
+}
+
+/**
+ * Claim one send slot for `host` and wait until it comes due.
+ *
+ * The previous implementation counted requests inside a one-second window and,
+ * when the window was full, made every waiter sleep and then RESET the window.
+ * Under concurrency that inverts the intent: N waiters all observe a full
+ * window, all sleep the same interval, and all wake and fire together. Measured
+ * with 60 in-flight callers against a nominal 5/s limit: 5 requests in the
+ * first second, then 55 in the next — an 11x burst, which is what MDZ was
+ * actually throttling (#4395).
+ *
+ * This version hands each caller its own slot spaced 1/limit apart. The claim
+ * is synchronous — there is no `await` between reading and writing `nextSlot` —
+ * so concurrent callers queue instead of colliding. Slots are real backpressure:
+ * the 60th caller genuinely waits its turn rather than jumping the line.
+ */
+async function claimSlot(host, limit) {
+  const b = bucketFor(host);
+  const interval = 1000 / Math.max(limit / b.penalty, 0.05);
+  const now = Date.now();
+  const slot = Math.max(now, b.nextSlot);
+  b.nextSlot = slot + interval;         // claimed synchronously — no await above
+  const wait = slot - now;
+  if (wait > 0) await new Promise(r => setTimeout(r, wait));
+}
+
+/**
+ * Record that `host` asked us to slow down (HTTP 429) and back off for real.
+ *
+ * A 429 is an instruction about RATE, not a refusal of access — unlike a 401 or
+ * 403, the correct response is to go slower, not to stop. Halving the effective
+ * limit and pushing the next slot out by `Retry-After` (when the host supplies
+ * one) means a throttled host converges on a rate it will serve instead of the
+ * caller retrying into the same wall.
+ */
+export function noteRateLimited(url, retryAfterSeconds) {
+  let host; try { host = new URL(url).hostname; } catch { return; }
+  const b = bucketFor(host);
+  b.penalty = Math.min(b.penalty * 2, MAX_PENALTY);
+  const cooldown = Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0
+    ? retryAfterSeconds * 1000
+    : 5000;
+  b.nextSlot = Math.max(b.nextSlot, Date.now() + cooldown);
+  return b.penalty;
+}
+
+/** Effective (post-penalty) rate for a host, for logging. */
+export function effectiveLimit(url) {
+  let host; try { host = new URL(url).hostname; } catch { return null; }
+  return getDomainLimit(url) / bucketFor(host).penalty;
 }
 
 /**
@@ -73,21 +142,11 @@ export async function rateLimitedFetch(url, opts = {}) {
   try { host = new URL(url).hostname; } catch { host = 'unknown'; }
   const limit = getDomainLimit(url);
 
-  if (!_domainBuckets.has(host)) _domainBuckets.set(host, { last: 0, count: 0 });
-  const bucket = _domainBuckets.get(host);
-
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
-    // Rate-limit gate, evaluated per attempt so retries also yield to the bucket.
-    const now = Date.now();
-    if (now - bucket.last > 1000) { bucket.count = 0; bucket.last = now; }
-    if (bucket.count >= limit) {
-      const wait = 1000 - (now - bucket.last);
-      if (wait > 0) await new Promise(r => setTimeout(r, wait));
-      bucket.count = 0;
-      bucket.last = Date.now();
-    }
-    bucket.count++;
+    // Rate gate, evaluated per attempt so retries queue behind fresh requests
+    // rather than jumping ahead of them.
+    await claimSlot(host, limit);
 
     const controller = new AbortController();
     const t = setTimeout(() => controller.abort(), timeout);
@@ -102,6 +161,13 @@ export async function rateLimitedFetch(url, opts = {}) {
         // worth retrying with backoff.
         if (res.status >= 400 && res.status < 500 && res.status !== 429) {
           throw new Error(`HTTP ${res.status}`);
+        }
+        // A 429 is the host telling us our RATE is wrong. Retrying at the same
+        // rate is the one response guaranteed not to work — slow this host down
+        // for every subsequent caller, not just this retry.
+        if (res.status === 429) {
+          const ra = Number(res.headers.get('retry-after'));
+          noteRateLimited(url, ra);
         }
         lastErr = new Error(`HTTP ${res.status}`);
       } else {
