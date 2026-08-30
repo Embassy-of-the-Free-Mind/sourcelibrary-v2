@@ -156,9 +156,9 @@ async function main(): Promise<number> {
       const fromTitle = generateBookSlug(title, author, null);
 
       // If the generator itself can only produce a placeholder, this book has
-      // nothing to build a URL from and needs metadata, not a rename. Leaving it
-      // at /book/unknown-N is worse than nothing, but moving it to another
-      // meaningless URL is not better — and it would burn the redirect.
+      // nothing to build a URL from: it needs metadata, not a rename. Moving it
+      // from one meaningless URL to another buys nothing and spends the one
+      // redirect the old address gets.
       const usable = [fromDisplay, fromTitle].filter((c) => c && !isPlaceholderSlug(c));
       if (usable.length === 0) {
         skipped.push(`${book.id} — nothing to build a slug from: "${(displayTitle || title).slice(0, 50)}"`);
