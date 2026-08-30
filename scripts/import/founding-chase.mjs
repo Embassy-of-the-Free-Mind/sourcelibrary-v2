@@ -12,13 +12,18 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+// normalizeTitle is now the ONE shared dedup-key implementation (#4444). The
+// local normalizeAuthor below has DRIFTED from src/lib/dedup.ts — it strips NO
+// honorifics and NO life dates at all (the third of the three author variants
+// #4444 measured) — and is left in place deliberately:
+// swapping it would change this script's dedup keys. See #4444 for the plan.
+import { normalizeTitle } from '../lib/dedup-normalize.mjs';
 const COMMIT = process.argv.includes('--commit');
 const BOOKS = [
   { ia: 'bim_early-english-books-1641-1700_a-letter-concerning-tole_locke-john_1689', title: 'A Letter Concerning Toleration', author: 'John Locke', language: 'English', published: '1689' },
   { ia: 'bim_eighteenth-century_commentaries-on-the-laws_blackstone-william-sir_1765_2', title: 'Commentaries on the Laws of England, Vol. 2', author: 'William Blackstone', language: 'English', published: '1766' },
   { ia: 'bim_eighteenth-century_commentaries-on-the-laws_blackstone-william-sir_1765_3', title: 'Commentaries on the Laws of England, Vol. 3', author: 'William Blackstone', language: 'English', published: '1768' },
 ];
-function normalizeTitle(t){return t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/^(the|a|an|der|die|das|de|le|la|les|il|lo|gli|i|el|los|las)\s+/i,'').replace(/\s*[\(\[:]?\s*(vol\.?\s*\d+|tomus?\s*\d+|part\.?\s*\d+|band\s*\d+|tome?\s*\d+)[\)\]]?\s*$/i,'').replace(/[^\w\s]/g,'').replace(/\s+/g,' ').trim();}
 function normalizeAuthor(a){const c=a.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^\w\s]/g,'').replace(/\s+/g,' ').trim();return c.split(' ').filter(w=>w.length>0).sort().join(' ');}
 function slugify(t,m=70){return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').substring(0,m).replace(/-$/,'');}
 async function uniqueSlug(db,base){let s=base,i=2;while(await db.collection('books').findOne({slug:s},{projection:{_id:1}}))s=`${base}-${i++}`;return s;}
