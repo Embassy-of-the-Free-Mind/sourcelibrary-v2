@@ -47,8 +47,17 @@ concentrated on the days a recovery ran (5,000 on 2026-04-20, 2,051 on
 2026-03-24, 1,593 on 2026-04-12 …).
 
 `src/app/api/books/restore/[id]/route.ts` does this on purpose —
-`// Restore book (generate new _id to avoid conflicts)`. It is not a bug in the
-restore route; it is a fact about the corpus that every *reader* has to know.
+`// Restore book (generate new _id to avoid conflicts)` — and deletes the ledger
+row on success, which is why a re-created book leaves no trace in
+`deleted_books`. It is not a bug in that route; it is a fact about the corpus
+that every *reader* has to know.
+
+But **don't blame the restore route for the 16,343.** It stamps `restored_at`
+and `restored_from` on everything it writes, and only **15** books carry
+`restored_at` (all 2026-05-12). The rest were re-created by bulk recovery
+scripts and re-imports that preserved `created_at`, slug and pages while minting
+a fresh `_id`. The mechanism class is what matters — *any* path that re-creates a
+book document breaks every `_id`-keyed reference to it — not which script ran.
 
 ---
 
