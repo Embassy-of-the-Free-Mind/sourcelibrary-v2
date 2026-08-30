@@ -309,6 +309,19 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
   // Terms always shown
   result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi, '<term>$1</term>');
 
+  // Single-bracket runs are the translator speaking — supplied words and
+  // stage directions ("[that is, Mercury]", "[The remainder is blank]").
+  // Untouched, they rendered as body text and read as if the author wrote
+  // them (#4385). With notes on, mark them as interpolations (brackets kept —
+  // the scholarly convention IS the brackets); with notes off, drop them like
+  // the rest of the editorial voice. Conservative match: single line, no
+  // nesting, never a markdown link ("[text](url)"), and a lacuna mark such as
+  // "[…]" always survives — it reports missing text, not commentary.
+  const interpPattern = /(?<!\[)\[([^\[\]\n]{1,240})\](?!\]|\()/g;
+  result = showNotes
+    ? result.replace(interpPattern, '<interp>[$1]</interp>')
+    : result.replace(interpPattern, (m, inner) => (/^[\s.…·—–-]*$/.test(inner) ? m : ''));
+
   return result;
 }
 
@@ -819,6 +832,15 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         term: ({ children }: any) => (
           <span className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded mx-0.5`} title="Technical term">
             <em>{children}</em>
+          </span>
+        ),
+        // Translator's interpolation — single brackets in the translation.
+        // Renders children either way: the bracketed words can be load-bearing
+        // ("he [Hermes] said"), so no layer may delete them behind a styling
+        // tag; hiding is preprocessBracketTags' decision, made before parsing.
+        interp: ({ children }: any) => (
+          <span className={NOTE_TAG_STYLES.interp} title="Translator's addition — not in the original">
+            {children}
           </span>
         ),
         'image-desc': ({ children }: any) => showNotes ? (

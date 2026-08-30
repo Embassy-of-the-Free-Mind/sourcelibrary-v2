@@ -292,7 +292,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
-  srcOverride, nativeSrcOverride, altOverride,
+  srcOverride, nativeSrcOverride, altOverride, onNaturalSize,
 }: {
   page: Page;
   book: Book;
@@ -318,6 +318,10 @@ export function ScanViewer({
   nativeSrcOverride?: string;
   /** Alt text to pair with srcOverride — the default alt describes a scan. */
   altOverride?: string;
+  /** Reports the loaded image's natural dimensions, so a parent can size its
+   *  pane to the page's own shape (the mobile fit-to-width pane needs the
+   *  aspect ratio, which only the loaded image knows). */
+  onNaturalSize?: (size: { w: number; h: number }) => void;
 }) {
   const t = getReaderStrings(useLocale()).panes;
   const resolved = resolveScanUrls(page);
@@ -362,6 +366,7 @@ export function ScanViewer({
     const el = imgRef.current;
     if (el?.complete && el.naturalWidth) {
       natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+      onNaturalSize?.(natural.current);
       measure();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -618,6 +623,7 @@ export function ScanViewer({
           onLoad={e => {
             const el = e.currentTarget;
             natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+            onNaturalSize?.(natural.current);
             measure();
           }}
           className={fit ? 'absolute top-0 left-0' : 'max-h-full max-w-full object-contain'}
