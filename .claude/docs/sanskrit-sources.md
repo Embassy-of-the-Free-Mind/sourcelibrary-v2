@@ -21,6 +21,41 @@ Compiled 2026-08-28. Every access pattern marked VERIFIED was exercised by a liv
 | — | **SLUB Dresden / Heidelberg** | Negligible Sanskrit scan holdings (probed 2026-08-28: JS-shell search pages, no confirmed Sanskrit example). Heidelberg IIIF pattern `digi.ub.uni-heidelberg.de/diglit/iiif/{id}/manifest` exists for their own material | — | — | Deprioritize | n/a |
 | — | **Rare Book Society of India** | **Not an IA channel** — `collection:rarebooksocietyofindia` => 0, no collection object found (VERIFIED). It is a web/Facebook community | — | — | Drop from plans | n/a |
 
+## Indian MUSEUM manuscripts are already on Internet Archive, CC0 — check there first
+
+Measured 2026-08-30, and it reframes the whole "can we get into an Indian museum
+portal" question. eGangotri is already digitising state museum manuscript
+collections and releasing them **CC0**, complete, at far higher resolution than
+any museum portal serves.
+
+Worked example — the **Kularnava Tantra in Sharada script**. The National Museum
+portal record (`nat_del-53-17-269-29567`) serves 3 watermarked folios at
+1240x1800, "All rights reserved". The same text, as complete manuscripts:
+
+| | museumsofindia | Internet Archive / eGangotri |
+|---|---|---|
+| item | `nat_del-53-17-269-29567` | `439KularnavaMahaRahasyaTantraShastraDAMSharadaPaper.pdf` |
+| folios served | 3 (of 4 catalogued) | **26 canvases, complete** |
+| resolution | 1240x1800 (2.2 MP) | **4299x5812 (25 MP)** — 11x the pixels |
+| licence | "Copyright, All rights reserved" + Ministry seal | **CC0**, stated in the image footer |
+| holder | National Museum, New Delhi | **Dogra Art Museum, Jammu** — also a state museum |
+| our access | blocked (robots.txt, no enumeration) | normal IA import path |
+
+Counts behind that (IA advancedsearch, `mediatype:texts`):
+
+- `"Dogra Art Museum"` → **56 items, all Sharada**, CC0, digitised by eGangotri.
+  A state museum's manuscript collection, already open.
+- `creator:("eGangotri")` → **16,882**, of which **16,619 carry a public-domain
+  licenceurl (98.4%)**.
+- eGangotri + Sharada → **1,537** items: the Kashmiri Saiva/Sakta corpus.
+- Kularnava → 104 · Razmnama → 29 · Madhumalati → 21.
+
+**The rule this gives us: before pursuing any Indian institution for scans,
+search IA for the same collection first.** The museums whose material is
+genuinely locked are a smaller set than the portals suggest, and the open copy
+is usually better — higher resolution, no watermark, CC0, and complete rather
+than sampled.
+
 ## Museums of India / JATAN (museumsofindia.gov.in) — real manuscripts, published as SAMPLES
 
 Assessed 2026-08-30 across four live records, **by opening the images and
