@@ -12,6 +12,7 @@
 import { nanoid } from 'nanoid';
 import { getDb } from './mongodb';
 import { enqueuePagesForJob } from './queue-utils';
+import { getModelForBook } from './types/ai-models';
 import type { JobStatus } from './types/job';
 
 const PREVIEW_PAGE_COUNT = 25;
@@ -43,6 +44,21 @@ export async function queuePreviewOcr(
 
     if (pages.length === 0) return;
 
+    // Pin the model on the job. The OCR worker falls back to DEFAULT_MODEL
+    // (full flash) when `config.model` is absent, so leaving it unset routed
+    // EVERY preview job to the expensive model regardless of language — during
+    // the 2026-08-27 acquisition push that was 4,450 Latin-script books at
+    // ~6x the flash-lite rate. `getModelForBook` still returns full flash for
+    // BPH, non-Latin scripts, and unknown language, so the safe default is
+    // preserved; only the languages the routing rule already trusts get lite.
+    const book = await db
+      .collection('books')
+      .findOne(
+        { id: bookId },
+        { projection: { language: 1, 'image_source.provider': 1 } },
+      );
+    const model = getModelForBook(book as Parameters<typeof getModelForBook>[0]);
+
     const pageIds = pages.map((p) => p.id);
     const jobId = nanoid(12);
 
@@ -61,6 +77,7 @@ export async function queuePreviewOcr(
       config: {
         page_ids: pageIds,
         preview: true,
+        model,
       },
       initiated_by: 'import_preview',
       created_at: new Date(),
@@ -77,7 +94,7 @@ export async function queuePreviewOcr(
     await enqueuePagesForJob(bookId, pageIds, 'ocr', jobId);
 
     console.log(
-      `[preview-ocr] Queued ${pageIds.length} pages for preview OCR on book ${bookId}`,
+      `[preview-ocr] Queued ${pageIds.length} pages for preview OCR on book ${bookId} (model: ${model})`,
     );
   } catch (err) {
     // Non-blocking — log and continue
