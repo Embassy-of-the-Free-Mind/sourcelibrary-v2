@@ -61,7 +61,8 @@ const UNATTENDED = [
   { match: 'pipeline-orchestrator.mjs', spends: true, gated: true,
     note: 'per-phase budgetAllowsDispatch; verified structurally by check A' },
   { match: 'translate-worker.mjs', spends: true, gated: true,
-    note: 'self-dispatch gated (#3835)' },
+    note: 'whole run gated in main(), not just selfDispatch — see check C',
+    mainGate: 'scripts/workers/translate-worker.mjs' },
   { match: 'enrich-worker.mjs', spends: true, gated: true, note: 'gated (#3855)' },
   { match: 'embed-gemini.mjs', spends: true, gated: true, note: 'pause + dial (#3855)' },
   { match: 'batch-collector.mjs', spends: false, gated: false,
@@ -142,6 +143,29 @@ for (let n = 0; n < phaseOpens.length; n++) {
       kind: 'UNGATED_PHASE',
       what: `orchestrator Phase ${phase} (line ${idx + 1})`,
       why: 'reaches a Gemini call but never calls budgetAllowsDispatch',
+    });
+  }
+}
+
+// ── Check C: a worker's MAIN flow must gate, not merely a helper ───────────
+// This check exists because the first version of this audit passed
+// translate-worker on the strength of the file mentioning budgetAllowsDispatch
+// at all. It did — inside selfDispatch(). Its main() separately picked up
+// already-queued work and asked nothing, and on the 2026-08-30 relight that
+// drained 5,011 orphaned jobs through a $5 ceiling. Presence of a guard is not
+// coverage by it; the absence of a marker is not the absence of a path.
+for (const u of UNATTENDED.filter((x) => x.mainGate)) {
+  const src = read(u.mainGate);
+  const mainIdx = src.search(/async function main\s*\(/);
+  if (mainIdx < 0) {
+    findings.push({ kind: 'NO_MAIN', what: u.mainGate, why: 'expected an async main() to check' });
+    continue;
+  }
+  if (!/budgetAllowsDispatch/.test(src.slice(mainIdx))) {
+    findings.push({
+      kind: 'MAIN_UNGATED',
+      what: u.mainGate,
+      why: 'main() reaches paid work without calling budgetAllowsDispatch — a helper-only gate leaves queued work ungoverned',
     });
   }
 }
