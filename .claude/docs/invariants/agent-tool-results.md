@@ -98,3 +98,40 @@ known data hazards (unreliable fields, sparse coverage, lanes a filter cannot
 reach) and the narrowing strategy in the description of the tool and of the
 specific parameter they poison. `get_quote` teaching citation practice and
 `year_from`'s artwork-year caution are the house pattern.
+
+---
+
+## A write tool fabricates identifiers too, and those land in your database
+
+The sections above are about what a model invents in its *output*. The same
+failure runs backwards through any tool that lets a model write *into* a store.
+
+`propose_collection` takes a `book_ids[]` array and `POST /api/collection-proposals`
+inserts it verbatim: no existence check, no resolution, nothing. Of the two
+proposals that accumulated there, **each contained exactly one book id that
+matches no record in `books` or in `deleted_books`** — `698420e1…` and
+`69b51e49…`, invented whole. They are well-formed 24-character hex, they sit in
+the correct id-space, and one of them (`69b51e49ff09e4fe943ab558`) falls inside a
+real import batch, with genuine neighbours two characters away. Nothing about
+them looks wrong.
+
+The damage is quiet because the approve path is quiet. `POST
+/api/collection-proposals/[id]` with `action:'approve'` hands `proposal.book_ids`
+straight to `createCollection()`, whose `updateMany({_id:{$in:…}})` simply matches
+fewer documents than it was given and reports no error. A 33-book collection
+becomes a 32-book collection, the page renders, the counts agree with each other,
+and the missing work is invisible — you cannot tell a book the curator dropped
+from a book the model hallucinated.
+
+**Resolve every model-supplied identifier before acting on it, and fail loudly on
+the gap.** `updateMany` matching fewer docs than ids is not a warning, it is a
+silent truncation. `scripts/create-proposed-collections-2026-08.mjs` does this:
+it fetches all ids first, diffs against what it asked for, and throws with the
+unresolved list rather than building a short collection.
+
+And when you repair one, **record which id was fabricated and what you did**. The
+two here needed opposite treatments: the Saint-Martin entry was unambiguous from
+the rationale (which cites him, and whose *sequel* was already in the list) so it
+was substituted, while the "Postel (1635)" entry was dropped outright — Postel
+died in 1581, so the date is invented too and there is no record to substitute.
+A silent substitution is a second fabrication, just one with better manners.
