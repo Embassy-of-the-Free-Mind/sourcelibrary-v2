@@ -67,9 +67,6 @@ const JSON_OUT = args.includes('--json') ? args[args.indexOf('--json') + 1] : nu
 const NO_SUPABASE = args.includes('--no-supabase');
 const SAMPLE = args.includes('--sample');
 
-const uri = process.env.MONGODB_URI;
-if (!uri) { console.error('MONGODB_URI not set — cannot audit. This is UNKNOWN, not clean.'); process.exit(2); }
-
 const HEX24 = /^[0-9a-f]{24}$/;
 
 /** Pull one book-id-shaped token out of a reader path like /book/<id>/page/3. */
@@ -79,9 +76,15 @@ export function bookIdFromPath(path) {
   return m ? decodeURIComponent(m[1]) : null;
 }
 
-const client = new MongoClient(uri);
+let client;
 
 async function main() {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    console.error('MONGODB_URI not set — cannot audit. This is UNKNOWN, not clean.');
+    return 2;
+  }
+  client = new MongoClient(uri);
   await client.connect();
   const db = client.db('bookstore');
 
@@ -293,13 +296,21 @@ async function main() {
   return allUnresolved.size === 0 ? 0 : 1;
 }
 
-let code = 2;
-try {
-  code = await main();
-} catch (err) {
-  console.error('audit failed (UNKNOWN, not clean):', err.message);
-  code = 2;
-} finally {
-  await client.close().catch(() => {});
+// Run only when invoked directly. `bookIdFromPath` is exported for reuse, and
+// a module that sweeps the corpus and calls process.exit() the moment someone
+// imports it is not reusable — importing it once already cost a full run.
+const invokedDirectly =
+  process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+
+if (invokedDirectly) {
+  let code = 2;
+  try {
+    code = await main();
+  } catch (err) {
+    console.error('audit failed (UNKNOWN, not clean):', err.message);
+    code = 2;
+  } finally {
+    await client?.close().catch(() => {});
+  }
+  process.exit(code);
 }
-process.exit(code);
