@@ -33,6 +33,7 @@ import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { extractPageType, extractColumns } from '../lib/ocr-result-parse.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -219,11 +220,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
   };
 }
 
-// --- Extract metadata from OCR text ---
-function extractPageType(text) {
-  const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
-  return match ? match[1].toLowerCase().trim() : null;
-}
+// --- Extract metadata from OCR text: shared via scripts/lib/ocr-result-parse.mjs (#4443) ---
 
 /** Check if this page is a digitizer insert — via OCR tag, body-text, or meta-descriptor fallback. */
 function isDigitizerPage(pageType, ocrText) {
@@ -237,13 +234,9 @@ function isDigitizerPage(pageType, ocrText) {
   return false;
 }
 
-function extractColumns(text) {
-  const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
-  if (!match) return null;
-  const n = parseInt(match[1], 10);
-  return n >= 2 ? n : null;
-}
-
+// NOTE: parses `<image>` sub-tags, which the current OCR prompt does not emit —
+// a different parser from the canonical `parseDetectedImages`, not a fork of it.
+// Deliberately out of scope for #4443; see #4445.
 function parseDetectedImages(text) {
   const imageBlocks = text.match(/<detected-images>[\s\S]*?<\/detected-images>/gi);
   if (!imageBlocks) return [];
@@ -292,7 +285,7 @@ async function processPage(page, promptText, db) {
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
-    const pageType = extractPageType(result.text);
+    const pageType = extractPageType(result.text, { validate: false });
     const columns = extractColumns(result.text);
     const detectedImages = parseDetectedImages(result.text);
 
