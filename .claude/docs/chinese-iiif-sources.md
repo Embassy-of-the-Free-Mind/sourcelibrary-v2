@@ -4,7 +4,7 @@ Compiled 2026-06-01. All manifest URLs were fetched and confirmed to return IIIF
 
 | # | Repository | Scope / Strength | IIIF manifest access (confirmed example) | Search | Access / License / Anti-scraping | Ease |
 |---|------------|------------------|------------------------------------------|--------|-----------------------------------|:---:|
-| 1 | **NDL Digital Collections** (Japan) | Huge; many Chinese/kanbun works held in Japan | `https://www.dl.ndl.go.jp/api/iiif/{PID}/manifest.json` — e.g. `…/2533396/manifest.json` | OpenSearch/SRU `https://iss.ndl.go.jp/api/opensearch?...` | Public, no login. Many PD; some domestic-only (geo-gated). **Gotcha: search often returns union-catalog records WITHOUT a digitized PID — only items with a real PID have a manifest.** | 5 |
+| 1 | **NDL Digital Collections** (Japan) | Huge; many Chinese/kanbun works held in Japan | `https://www.dl.ndl.go.jp/api/iiif/{PID}/manifest.json` — e.g. `…/2533396/manifest.json` | **Enumeration is UNSOLVED — see note below.** `iss.ndl.go.jp` 303s to `ndlsearch.ndl.go.jp/api/opensearch`, which is the UNION CATALOGUE and is a different system from the digitised collection | Public, no login. Many PD; some domestic-only (geo-gated). **Gotcha, re-measured 2026-08-30 and worse than previously written: the OpenSearch API does not merely *often* return records without a digitised PID — for Daoist queries it returned NO `ndljp/pid/` identifiers at all** (道藏: 50 records, 0 PIDs; item links are `ndlsearch.ndl.go.jp/books/R1000…` union records). It also rate-limits hard: 429 after ~5 queries, timeouts before that. Manifests themselves are fine — `…/api/iiif/2533396/manifest.json` returns 200 in 35ms — so the gap is DISCOVERY, not access. `www.dl.ndl.go.jp/api/opensearch` exists but 405s on GET. | 3 |
 | 2 | **Waseda Kotenseki** 古典籍総合データベース | ~300k JP & Chinese classics. **CORRECTED 2026-08-28 (enumeration audit, #4311):** shelfmarks are *iroha*-ordered subject classes, **`chi*` = 芸術/Arts (chi06 = calligraphy), NOT "Chinese"** — Chinese classics live under ro12 経学 (1,229), ro13 諸子/Laozi/Zhuangzi (677), ya09 医学古方 (700), ni05 天文暦学 (440), bunko19 風陵文庫 popular religion/baojuan (1,685); ha06 道教 has only 7 | `https://iiif.archive.waseda.jp/iiif/manifest/ktnsk/{id}/manifest.json` (v2) — **but the IIIF host is a 443-manifest highlights set (open Apache index), not a digitization frontier: of 253 mission-relevant candidates verified, 4 had manifests, and those are 1–5-canvas exhibition samples.** Full-page JPEGs are openly served under `archive.wul.waseda.ac.jp/kosho/{prefix}/{id}/` for every record — usable only if a kosho directory-walker importer is built (no manifest = no page list; must walk the dir). | wul.waseda.ac.jp/kotenseki/ — `search.php?cndbn={term}&szlmt=500` matches titles+notes+classification (e.g. `cndbn=道家類`); category browse via `html/{prefix}/index.html`, record metadata in each page's `DCSET` comment block. See `scripts/import/waseda-daoist-candidates.{json,notes.md}` | Public, no login. Research/educational OK w/ credit. | **1 (via IIIF) / 3 (if kosho walker built)** |
 | 3 | **Harvard-Yenching / CURIOSity "Chinese Rare Books"** | 9,600+ Chinese rare books, 13th–19th c. — classics, history, philosophy, manuscripts | **`https://nrs.harvard.edu/urn-3:FHCL:{id}:MANIFEST`** (IIIF v2; confirmed 2026-06-01) — e.g. `…FHCL:25667336:MANIFEST` = 道言內外秘訣全書, 850 canvases. `{id}` is in each record-page DOM. | Browser-search `curiosity.lib.harvard.edu/chinese-rare-books/catalog?q={CJK}` (JS SPA — fetch 403s; drive a real browser, read manifest from DOM). | Public, no login. **Rate-limits manifest fetches (429) — space imports out; `/api/import/iiif` fetches server-side so client retries don't help.** | 4 |
 | 4 | **Kyoto University RMDA** | ~25,900 titles / 2.1M images. Seike Collection (2,654 Chinese Confucian/classical), Fujikawa (medical), NTL Taiwan rare classics | `https://rmda.kulib.kyoto-u.ac.jp/iiif/metadata_manifest/{ID}/manifest.json` — e.g. `…/RB00013994/manifest.json` (v3) | Browse by collection (rmda.kulib.kyoto-u.ac.jp/en); item pages carry `?manifest=` | Public, no login. CC-style per item. **v3 manifests — importer must handle v2+v3.** | 4 |
@@ -23,6 +23,26 @@ Compiled 2026-06-01. All manifest URLs were fetched and confirmed to return IIIF
 | — | **ctext.org** | Largest open premodern-Chinese digital library; scanned "Library" wiki | **No IIIF; hostile to automation** (captcha, temp-bans, bulk needs key). Do NOT auto-import. | Site search | Read-only; auto-download prohibited. | n/a |
 
 ## Guidance
+### Daoist wave 1: why it is still not enumerable (measured 2026-08-30)
+
+All three recommended sources are blocked at the DISCOVERY step, not at import.
+Manifest fetching and the import routes work fine in every case — what is missing
+is a way to get a list of Daoist item ids.
+
+- **NDL** — the OpenSearch API is the union catalogue and surfaced zero digitised
+  PIDs across four Daoist queries before rate-limiting us (429). The digitised
+  collection needs its own search endpoint; `www.dl.ndl.go.jp/api/opensearch`
+  answers 405 to a plain GET. Unsolved.
+- **Harvard-Yenching** — discovery is a JS SPA whose fetch endpoint 403s. Needs a
+  real browser session, as this doc already says. Not attemptable headlessly.
+- **Kyoto RMDA** — manifests resolve by known id
+  (`…/iiif/metadata_manifest/RB00013994/manifest.json` → 200) but browse is HTML
+  with no search API, so ids must be scraped from collection pages first.
+
+The productive Chinese channel remains **IA `universallibrary`** (the normal IA
+import path), which is how the existing Daoist batches were sourced. Route a new
+wave there unless someone first solves one of the three above.
+
 For **Daoist/alchemical + classical Chinese**, prioritize the three clean, scriptable public-IIIF sources: **Kyoto RMDA (Seike)**, **NDL (items with real PIDs)**, **Harvard-Yenching**. (**Waseda was demoted 2026-08-28** — its IIIF turned out to be a 443-manifest highlights set with ~0 overlap with Daoist/medical subjects; see its corrected row. The 253-record candidate list from the audit is at `scripts/import/waseda-daoist-candidates.json`, actionable only via a kosho directory-walker.) **Bodleian Sinica** and **Cambridge** are strong second-tier for rarer European-held items. Budget extra engineering (headless browser / hard throttling) for **IDP, Gallica, Princeton, NCL-Taiwan**. For Daoist canonical *texts* (Daozang, Daozang jiyao), pair scanned editions from the IIIF sources with **Kanripo/CBETA** transcriptions — but Kanripo is a text/git harvest, not a manifest import. Avoid auto-importing from **ctext.org / NLC China / CADAL's own portal** (no public IIIF, anti-scraping or member-gated) — but CADAL content mirrored on **Internet Archive** (`universallibrary`) is fair game via the normal IA import path (see gap analysis below).
 
 ## Is NLC/CADAL-in-China actually needed? (gap analysis, 2026-06-06)
