@@ -349,3 +349,35 @@ outside this repo entirely.
 known-absent item looked up in the authoritative source beats any amount of reasoning about
 aggregates. Corollary: everything *measured* in that audit held up; everything *inferred* from
 absence did not.
+
+## A detector tuned by one programme is an actuator against another
+
+Two programmes in this repo pointed at the same R2 objects with opposite
+intentions, and neither could see the other (#4406).
+
+- **#2651** regenerates each page's `display_photo` from the master at
+  `min(2000, native)` so the keyed provenance watermark survives recompression.
+- **#3005 Pass 1** flags a `display_photo` that is **≥90% of its master** as
+  "never downsized" and regenerates it to 1200px.
+
+A baked variant measures **100–122%** of its master. So every provenance-marked
+page is, by #3005's definition, textbook bloat — and `regen-display-bloat.mjs`
+would have force-overwritten each one with an unmarked 1200px variant it cannot
+re-sign (it has no key and no edition id at that point). The detector was
+correct on the day it was written; a *different* programme then changed the
+population underneath it, and a threshold that used to mean "nobody downsized
+this" came to mean "somebody marked this."
+
+**The rule: a threshold encodes an assumption about who else writes to the
+population.** Before running any sweep that overwrites or deletes on a measured
+property, ask *what else writes here, and would its output look like my
+detector's positive class?* Then make the guard explicit and **counted** — the
+executor now HEADs the display key, skips objects carrying `provenance`
+metadata, reports them as `marked=N`, and requires `--force-unmark`. A silent
+skip would have been the same failure in the other direction.
+
+Corollary, and the reason this pairs with the section above: the collision is
+invisible from either issue thread. Neither #2651 nor #3005 mentions the other,
+and both are individually well-reasoned. **Shared mutable state is discovered by
+reading the writers, not the plans** — same lesson as the two sessions that both
+wrote `locus_anchors`, one object store instead of one collection.
