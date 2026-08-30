@@ -144,6 +144,10 @@ export interface ReaderStrings {
     feedbackBlurb: string;
     menu: string;
     menuBlurb: string;
+    /** Section headers for the mobile More sheet (#4385 follow-up). */
+    groupRead: string;
+    groupPage: string;
+    groupReader: string;
   };
 
   /** Scan / OCR / translation panes: view toggle, zoom, lens, notes, trace, copy. */
@@ -593,6 +597,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       feedbackBlurb: 'Tell us about this page or the reader',
       menu: 'Menu',
       menuBlurb: 'The rest of the library, and your account',
+      groupRead: 'Read',
+      groupPage: 'This page',
+      groupReader: 'Reader',
     },
     panes: {
       viewScan: 'Scan',
@@ -960,6 +967,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       feedbackBlurb: 'Cuéntanos algo sobre esta página o sobre el lector',
       menu: 'Menú',
       menuBlurb: 'El resto de la biblioteca, y tu cuenta',
+      groupRead: 'Leer',
+      groupPage: 'Esta página',
+      groupReader: 'Lector',
     },
     panes: {
       viewScan: 'Escaneo',
