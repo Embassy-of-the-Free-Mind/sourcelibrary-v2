@@ -44,7 +44,33 @@ const ARCHIVER_DIRS = ['scripts/workers', 'scripts/catalog-coverage', 'scripts/m
  * upload helpers rather than by filename, so a differently-named writer is
  * still caught.
  */
+/**
+ * A file is a "page-master writer" if it constructs a page-master R2 key or goes
+ * through the shared variant helper.
+ *
+ * This pattern is TIGHT ON PURPOSE, and its blind spot is named below rather
+ * than left implicit. Two looser drafts were tried and both were worse:
+ * matching any upload call swept in CSV snapshots, thumbnail generators and
+ * blob migrations; matching the string `archived_photo` swept in every audit
+ * and watchdog that merely PROJECTS the field. Neither over-match is safe,
+ * because a guard that flags twenty innocent files gets an allowlist bolted on
+ * and stops meaning anything.
+ *
+ * The cost of tightness is EXTRA_WRITERS: writers whose key is a variable are
+ * invisible to it. archive-ia-bulk.mjs was exactly that — a major writer,
+ * recording nothing, missed by the first version of this test.
+ */
 const WRITES_PAGE_IMAGES = /uploadPageVariants|storagePut\(\s*`?pages\/|uploadToR2\(\s*`?(archived|pages)\//;
+
+/**
+ * Known page-master writers the pattern above cannot see (variable key paths).
+ * Verified by hand. If you add a writer that builds its key in a variable, add
+ * it here — the alternative is that it is silently exempt, which is the exact
+ * failure this whole file exists to prevent.
+ */
+const EXTRA_WRITERS = [
+  'scripts/maintenance/archive-ia-bulk.mjs',  // key built into a const, then uploadToR2(key, buf)
+];
 
 /** Records the dimensions of the object it just wrote. */
 const RECORDS_STORED = /image_width|displayWidth/;
@@ -86,6 +112,7 @@ const NATIVE_WIDTH_DEBT = new Set([
   'scripts/workers/backfill-hires-illustrations.mjs',
   'scripts/maintenance/archive-unarchived-books.ts',
   'scripts/maintenance/repair-bulk-jp2-offset.mjs',  // one-off #3368 repair; refetches, but records stored width only
+  'scripts/maintenance/archive-ia-bulk.mjs',        // archive.org is not a silent capper: /full/full/ is the master, no native width to chase
 ]);
 
 function listArchivers(): string[] {
@@ -115,7 +142,7 @@ function listArchivers(): string[] {
   return found.sort();
 }
 
-const archivers = listArchivers();
+const archivers = [...new Set([...listArchivers(), ...EXTRA_WRITERS])].sort();
 const read = (f: string) => readFileSync(path.join(PROJECT_ROOT, f), 'utf8');
 
 describe('archivers record what they stored and what was available (#4406)', () => {
@@ -125,6 +152,8 @@ describe('archivers record what they stored and what was available (#4406)', () 
     expect(archivers.length).toBeGreaterThan(5);
     expect(archivers).toContain('scripts/catalog-coverage/archive-acquired.ts');
     expect(archivers).toContain('scripts/workers/archive-eap.mjs');
+    // The blind-spot list must actually be reachable, or it is decoration too.
+    expect(archivers).toContain('scripts/maintenance/archive-ia-bulk.mjs');
   });
 
   it('every page-image writer records the dimensions it stored', () => {

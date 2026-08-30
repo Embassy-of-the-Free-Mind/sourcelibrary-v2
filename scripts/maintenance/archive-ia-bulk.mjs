@@ -338,6 +338,17 @@ async function processBook(book, db) {
 
         // Update MongoDB
         const update = { $set: { archived_photo: url } };
+        // Record what we stored (#4406). Free — sharp has already decoded this
+        // buffer for the thumbnail — and without it nothing downstream can say
+        // what we hold without re-reading the object from R2. This is the IA
+        // route of archive-acquired.ts; archive.org does not silently cap, so
+        // there is no native width to chase, but the stored side still has to
+        // be written down or the MASTER tier stays a sampled network probe.
+        try {
+          const meta = await sharp(jpegBuffer).metadata();
+          if (meta.width) update.$set.image_width = meta.width;
+          if (meta.height) update.$set.image_height = meta.height;
+        } catch { /* dimensions are a nice-to-have; never fail an archive over them */ }
         if (thumbnailUrl) update.$set.thumbnail_blob = thumbnailUrl;
         await db.collection('pages').updateOne({ _id: page._id }, update);
 
