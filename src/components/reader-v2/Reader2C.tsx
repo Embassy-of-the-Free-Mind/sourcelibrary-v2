@@ -2442,13 +2442,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const readMobileAnchor = useCallback(() => {
     const el = mobileMainRef.current;
     if (!el) return null;
+    // You haven't moved: there is no pane to hold, and a turn starts at the top.
     if (el.scrollTop < 24) return null;
-    const probe = el.getBoundingClientRect().top + 8;
+    const box = el.getBoundingClientRect();
+    // The deepest pane you have brought up the screen — NOT the pane at the top
+    // edge. Plenty of pages are too short for the translation to ever reach the
+    // top, and reading one meant no anchor at all: the pane sat at the foot of
+    // the screen, which is exactly the case a turn used to throw away.
+    const reached = box.bottom - box.height * 0.25;
+    let anchor: string | null = null;
     for (const section of el.querySelectorAll<HTMLElement>('[data-reader-section]')) {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= probe && rect.bottom > probe) return section.dataset.readerSection ?? null;
+      if (section.getBoundingClientRect().top <= reached) anchor = section.dataset.readerSection ?? null;
     }
-    return null;
+    return anchor;
   }, []);
 
   useEffect(() => {
