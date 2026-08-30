@@ -62,10 +62,37 @@ are what produced the 3.5× spread.
   incomplete are actually complete.** `archive-bulk.mjs` still selects its work
   by that counter. Validate a completion claim against the pages, never the
   book doc.
-- **Below-master is real and large.** The MASTER tier reads **~11% of pages
-  below native resolution** (mean stored/native width ratio 0.958). Against
-  20.18M pages that is ~2.2M — arrived at independently, and within 5% of
-  #3186's 2.1M. It serves fine and it cannot be regenerated larger.
+- **Below-master is real and large — and the size is NOT known.** An earlier
+  version of this line said "~11% of pages below native resolution (mean ratio
+  0.958)". **That does not reproduce.** Re-run the same day on two independent
+  samples it gave **63.8%** (400 pages / 1,200 books, mean 0.605) and **42.8%**
+  (250 / 500, mean 0.732). Three answers, one instrument, one day. Do not quote
+  a single figure for this until the recording below makes it a query. What is
+  certain: it serves fine, it cannot be regenerated larger, and it is much more
+  than 11%.
+- **The pages we could MEASURE were the pages we archived CORRECTLY (#4406).**
+  Answering "is this a master?" needs stored width AND native width. The corpus
+  records stored on 66.7% of pages and native on **7.7%** — and that 7.7% is
+  almost exactly the set `archive-eap.mjs` handled, the one worker that both
+  tile-stitches to native *and* records `iiif_info`. Measured over it, the
+  corpus reads **95.2% full-resolution**: true of the subset, meaningless as a
+  corpus number. A selection effect this clean is why the debt stayed invisible
+  for months. The fix is not a better sample, it is recording both numbers at
+  archive time.
+- **`fetchNativeWidth` used to grade capped pages as perfect masters.** Its
+  fallback asks the source for `/full/full/` and calls the answer native. On the
+  seven `SILENT_CAP_HOSTS` that request *is* the cap, so the probe read the cap
+  as native, the stored copy matched it exactly, ratio 1.0, master. The error
+  ran toward good news on precisely the population where the debt lives. It now
+  returns `null` (undecidable) for those hosts rather than a flattering number.
+- **Measured per provider, 14 pages each, against the source's own info.json:**
+  EAP/BL **11/14 at full res** (median ratio 1.000) — it goes through the worker
+  that stitches. e-rara **0/14** (median **0.667**, ~44% of the pixels, 1.92M
+  pages). The difference between those two rows is not the source, it is
+  whether the worker was built to defeat the cap. Positive control on
+  Manchester: `/full/full/` returns 1366x2000 = **29% of native width**;
+  tile-stitching the same page returns 4782x7000 = **100%**, a 12x pixel
+  recovery, available today.
 - **An audit must not become an incident.** The MASTER tier reads bytes from
   the source institution's server. Three hosts blocked us inside 48 hours in
   August 2026 (#4395 MDZ; plus the IA and Wellcome incidents). The audit runs
@@ -75,6 +102,31 @@ are what produced the 3.5× spread.
   `/full/1200,/` source URL reports 1200 as "native", and every derivative then
   grades itself a perfect master. `fetchNativeWidth()` applies
   `upgradeToFullRes` first. This is the same class of error as #3186 itself.
+
+## Make it a query, not a probe
+
+The MASTER tier is sampled, slow and rate-limited **only because the two numbers
+it compares were never written down**. Both halves are now being fixed, and the
+order matters:
+
+1. **Stored width — free, ours, corpus-wide.** `scripts/maintenance/backfill-stored-dimensions.mjs`
+   reads the JPEG SOF header of each archived object **directly from R2**, not
+   through `images.sourcelibrary.org`. Through the CDN this is 2.5/s and would
+   take a month, and it would dump millions of cold edge fills — the thundering
+   herd #2651 refused to trigger with a purge. Origin reads with a 12 KB first
+   range (escalating only when EXIF pushes SOF past it) avoid both.
+2. **Native width — must be recorded AT ARCHIVE TIME.** No sweep can backfill it
+   cheaply, because getting it means asking the institution, which is the cost
+   we are trying to stop paying. Every archiver that writes a master must record
+   `iiif_info.width/height` beside `image_width/image_height`. `archive-acquired.ts`
+   and `archive-eap.mjs` do. The rest do not yet — that is the remaining work,
+   and until it lands the corpus keeps minting pages whose resolution can only
+   be checked by going back to the source.
+
+**The rule: an archiver that cannot say what it stored, and what was available,
+has not finished archiving.** A master is a claim, and a claim needs evidence
+recorded at the moment it is made — the same discipline the first-translation
+badges already apply to a much less expensive assertion.
 
 ## When you add a page-image field or R2 key
 

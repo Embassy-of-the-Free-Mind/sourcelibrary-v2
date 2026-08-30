@@ -21,7 +21,10 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
-import { upgradeToFullRes, rateLimitedFetch } from '../lib/iiif-utils.mjs';
+import {
+  upgradeToFullRes, rateLimitedFetch,
+  fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS,
+} from '../lib/iiif-utils.mjs';
 const execFileP = promisify(execFile);
 const CONCURRENCY = parseInt(process.argv[process.argv.indexOf('--concurrency') + 1] || '6');
 
@@ -74,52 +77,64 @@ async function main() {
     }
   };
 
-  // ── Heartbeat ────────────────────────────────────────────────────────────
-  // This run emitted NOTHING between start and finish. At the post-#4395 rate a
-  // batch of 40 books is ~1.4 hours of silence, during which a healthy run and a
-  // hung one are indistinguishable — on 2026-08-30 a stalled run held the
-  // flock for 1h24m and silently no-op'd every subsequent cron, and the only way
-  // to tell progress from a hang was to query Mongo by hand.
-  //
-  // A silent long-running script reads as a hang; the fix is a heartbeat, not an
-  // index (invariants/archive-fetch-failures.md, same lesson from the corpus
-  // sweeps that were killed mid-run for looking dead). Counters are page-grain
-  // because book-grain moves too slowly to distinguish "working" from "stuck".
-  const runStart = Date.now();
-  let pagesDone = 0;
-  let pagesFailed = 0;
-  let booksDone = 0;
-  let workTotal = 0;
-  let currentHost = '-';
-  const hb = setInterval(() => {
-    const mins = (Date.now() - runStart) / 60000;
-    const rate = mins > 0 ? pagesDone / (mins * 60) : 0;
-    const thr = [...hostThrottles.entries()].map(([h, n]) => `${h.split('.')[0]}:${n}`).join(' ');
-    log(`heartbeat ${mins.toFixed(1)}m | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed | ${rate.toFixed(2)} pages/s | host ${currentHost}${thr ? ` | throttled ${thr}` : ''}`);
-  }, 60_000);
-  // Never let the heartbeat hold the process open past the work.
-  if (typeof hb.unref === 'function') hb.unref();
-
   async function archiveIiif(bookId: string) {
     const ps = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1 } }).toArray();
     for (let i = 0; i < ps.length; i += 6) {
       await Promise.all(ps.slice(i, i + 6).map(async (p: any) => {
         const url = upgradeToFullRes(p.photo_original || p.photo);
-        try { currentHost = new URL(url).hostname; } catch { /* keep previous */ }
         try {
-          const buf = await rateLimitedFetch(url);
+          // `/full/full/` is a REQUEST, not a guarantee. Seven hosts silently
+          // cap the response below native — measured losses up to 8.69x (Kyoto),
+          // 5.92x (TU Delft), 3.25x (Manchester) — and until #4406 the only
+          // callers that defeated the cap were archive-eap.mjs and the repair
+          // sweep. Everything else stored the capped derivative AS the master,
+          // permanently, because nothing ever compared what we asked for against
+          // what came back.
+          //
+          // info.json is fetched ONLY for hosts already known to cap. That keeps
+          // request volume unchanged for the ~78% of pages from honest hosts —
+          // three institutions blocked us inside 48 hours in August 2026, so an
+          // extra probe per page is not free. New cappers are found by the
+          // sampled audit (scripts/audit/archive-coverage.mjs) and added to
+          // SILENT_CAP_HOSTS, which is what makes them take effect here.
+          const capSuspect = SILENT_CAP_HOSTS.some((h: string) => url.includes(h));
+          const info = capSuspect ? await fetchIiifInfo(url).catch(() => null) : null;
+
+          let buf: Buffer;
+          let stitchedTiles = 0;
+          if (info && shouldTileStitch(info, url)) {
+            const stitch = await fetchIiifNativeRes(url, { info });
+            buf = stitch.buffer;
+            stitchedTiles = stitch.tiles;
+          } else {
+            buf = await rateLimitedFetch(url);
+          }
+
           // Archive at source fidelity: no resolution cap (#3897, matches archive-ia-bulk).
           const jpg = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
           const padded = String(p.page_number).padStart(4, '0');
           const blob = await storagePut(`pages/${bookId}/${padded}.jpg`, jpg, { contentType: 'image/jpeg', access: 'public' });
           const upd: any = { $set: { archived_photo: blob.url } };
+          // Record what we actually stored, and (when we know it) what the source
+          // says native is. Without this, "did we get the master?" can only be
+          // answered by re-fetching from the institution — which is why the
+          // MASTER tier is sampled rather than known, and why this debt went
+          // uncounted for months. Stored dims are free: sharp already decoded it.
+          try {
+            const dims = await sharp(jpg).metadata();
+            if (dims.width) upd.$set.image_width = dims.width;
+            if (dims.height) upd.$set.image_height = dims.height;
+          } catch { /* dimensions are a nice-to-have; never fail an archive over them */ }
+          if (info?.width) {
+            upd.$set['iiif_info.width'] = info.width;
+            upd.$set['iiif_info.height'] = info.height;
+          }
+          if (stitchedTiles) upd.$set.stitched_tiles = stitchedTiles;
           try { const th = await sharp(buf).rotate().resize(150, null, { withoutEnlargement: true }).jpeg({ quality: 60 }).toBuffer(); upd.$set.thumbnail_blob = (await storagePut(`pages/${bookId}/${padded}-thumb.jpg`, th, { contentType: 'image/jpeg', access: 'public' })).url; } catch {}
           await pages.updateOne({ _id: p._id }, upd);
-          pagesDone++;
           hostFailures.clear(); // a success clears the streak
         } catch (e) {
           if (e instanceof HostBlocked) throw e;
-          pagesFailed++;
           noteFailure(url, e); // rethrows HostBlocked once the host looks blocked
         }
       }));
@@ -175,27 +190,19 @@ async function main() {
     }
   }
   let blocked: Error | null = null;
-  workTotal = todo.length;
-  log(`starting: ${workTotal} book(s), concurrency ${CONCURRENCY} — heartbeat every 60s`);
   for (let i = 0; i < todo.length && !blocked; i += CONCURRENCY) {
-    await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w)
-      .then(() => { booksDone++; })
-      .catch((e) => {
-        booksDone++;
-        // Per-book failures stay swallowed (one bad book must not stop a sweep),
-        // but a blocked HOST is a verdict about the source: stop the whole run
-        // and say so, rather than grinding out thousands of doomed requests.
-        if (e instanceof HostBlocked) blocked = e;
-      })));
+    await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w).catch((e) => {
+      // Per-book failures stay swallowed (one bad book must not stop a sweep),
+      // but a blocked HOST is a verdict about the source: stop the whole run
+      // and say so, rather than grinding out thousands of doomed requests.
+      if (e instanceof HostBlocked) blocked = e;
+    })));
   }
-  clearInterval(hb);
   const remaining = PROVIDER
     ? await books.countDocuments({ 'image_source.provider': PROVIDER, pages_count: { $gt: 0 }, archive_status: { $ne: 'archive_complete' } })
     : await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
   const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
-  const runMins = (Date.now() - runStart) / 60000;
-  const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-  log(`archive-acquired: complete ${ok}, partial ${partial} | pages ${pagesDone} ok, ${pagesFailed} failed in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s) | un-archived acquired remaining ${remaining}${throttled ? ` | throttled ${throttled}` : ''}`);
+  log(`archive-acquired: complete ${ok}, partial ${partial} | un-archived acquired remaining ${remaining}${throttled ? ` | throttled ${throttled}` : ''}`);
   if (blocked) {
     // Exit non-zero so a wrapper loop stops instead of re-running into the block.
     log(`ABORTED — SOURCE BLOCKED: ${(blocked as Error).message}`);

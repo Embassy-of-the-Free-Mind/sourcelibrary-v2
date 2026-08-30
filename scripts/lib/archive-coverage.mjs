@@ -41,7 +41,7 @@
  * (`pages_archived` lies in both directions, and archive-bulk selects by it).
  */
 
-import { fetchIiifInfo, upgradeToFullRes } from './iiif-utils.mjs';
+import { fetchIiifInfo, upgradeToFullRes, SILENT_CAP_HOSTS } from './iiif-utils.mjs';
 
 export const R2_HOST = 'images.sourcelibrary.org';
 const R2_URL_RE = /^https:\/\/images\.sourcelibrary\.org\//;
@@ -196,6 +196,24 @@ export async function fetchNativeWidth(sourceUrl, opts = {}) {
     const info = await fetchIiifInfo(sourceUrl, opts);
     if (info?.width) return info.width;
   } catch { /* fall through to the header probe */ }
+
+  // THE FALLBACK IS BLIND ON EXACTLY THE HOSTS THAT MATTER (#4406).
+  //
+  // It asks the source for `/full/full/` and calls the width that comes back
+  // "native". On the seven hosts in SILENT_CAP_HOSTS that request is quietly
+  // capped — Kyoto returns 1/8.69 of native, TU Delft 1/5.92, Manchester 1/3.25
+  // — so the probe reads the CAP as native, the stored copy matches it exactly,
+  // and a page we hold at an eighth of its true resolution grades as a perfect
+  // master. The error runs in the flattering direction, on the precise
+  // population where preservation debt is concentrated.
+  //
+  // The header comment above already names this failure for the `/full/1200,/`
+  // case and fixes it with upgradeToFullRes. That fix cannot work here, because
+  // the URL looks correct and the SERVER is what caps. So: refuse to answer.
+  // An honest `null` becomes `no-native-dims` and is excluded from the ratio,
+  // which is the same discipline classifyPageRecord applies when it cannot tell
+  // a master from a derivative by key.
+  if (SILENT_CAP_HOSTS.some((h) => String(sourceUrl).includes(h))) return null;
 
   try {
     const dims = await probeStoredDimensions(upgradeToFullRes(sourceUrl), opts);
