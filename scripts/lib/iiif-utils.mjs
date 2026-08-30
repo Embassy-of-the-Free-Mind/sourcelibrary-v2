@@ -84,7 +84,7 @@ function bucketFor(host) {
  * so concurrent callers queue instead of colliding. Slots are real backpressure:
  * the 60th caller genuinely waits its turn rather than jumping the line.
  */
-async function claimSlot(host, limit) {
+export async function claimSlot(host, limit) {
   const b = bucketFor(host);
   const interval = 1000 / Math.max(limit / b.penalty, 0.05);
   const now = Date.now();
