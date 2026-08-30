@@ -320,6 +320,24 @@ reads all three:
   it. Any time a read rule widens, the detectors watching it are writers too:
   re-run each and confirm its SCOPE moved.
 
+- **A COUNTER cannot tell a dead source from a dead service — keep the reason.**
+  A batch loop that tallies failures without recording *why* produces the least
+  actionable output there is: `0 embedded, 60 failed`, repeated. On 2026-08-21
+  that line cost an hour of eliminating the CLIP server (healthy: 222ms for one
+  image, 978ms for a batch of ten), the batch size, and the Postgres write —
+  before the real cause surfaced, which was that **1,596 gallery rows carry a
+  dead `extracted_url`** and every fetch 404'd (#4185). The reason had been
+  available the entire time: the server returns
+  `result.error = "fetch 404 for <url>"`, and the failure branch was a bare
+  `failed++` that discarded it. The asymmetry is what makes this expensive — the
+  SERVICE is the first thing anyone suspects and the least often at fault, so a
+  bare counter points every reader at the wrong layer first. Keep a **bounded**
+  sample of `{id, input, reason}` (cap it, so a run where everything fails does
+  not become its own problem), and when `succeeded === 0 && failed > 0` say so
+  explicitly and name the source as the place to look. Same family as "absence
+  is not failure — no silent skips" (#3740): here the skip was counted but
+  unexplained, which reads as a working instrument reporting a broken world.
+
 **Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
 an *error message* rather than a *measurement*. Read the body before believing the
 title — and when a watchdog has filed the same title on a regular cadence with no
