@@ -87,3 +87,37 @@ STABLE and is rejected (`42P17`), which is why these use `COALESCE(x,'') || ' '`
 `add-bph-diacritic-normalization.sql` shows `concat_ws` and **does not match
 deployed reality** — read `pg_get_expr` off the live column, not the migration
 file.
+
+---
+
+## Artworks share the `books` collection, so every lane must exclude them (#4415, 2026-08-30)
+
+24,912 of ~110,058 `books_catalog` rows are artworks — museum prints, paintings,
+drawings — living in the same collection as texts. **A lane that filters only on
+`visible` + `pages_count > 0` serves them as books.** The books lane did exactly
+that for 97 rows: searching *stela* returned 8 Met objects with `pages_count: 0`
+and pushed the five *Hieroglyphic Texts from Egyptian Stelae* volumes we actually
+hold off the page. The **semantic** lane had no gate at all and was serving
+`T13 Tarot` — `visible: false` in Mongo — to the public.
+
+Three traps, all of which bit during the fix:
+
+- **Do not filter on "`resource_type` is set."** One live book (*Babad Tanah
+  Djawi lan Tanah-Tanah ing Sakiwa-Tengenipoen*) is `content_type: 'text'` with
+  `resource_type: 'text'`, and that filter hides it. Use the shared
+  `isArtworkRecord()` in `src/lib/artwork-record.ts`: an explicit **non-artwork**
+  `content_type` always wins. Keep that record as the negative control — a fix
+  that stops returning it is a regression, not a fix.
+- **PostgREST `.not(col,'eq',v)` drops NULL rows** to three-valued logic. 19,432
+  live books have a NULL `content_type`; a plain negation deletes them from
+  results. Use the chained `or` form (`NON_ARTWORK_FILTERS` in
+  `src/lib/books-catalog.ts`).
+- **A lane check that reads a field the route strips is vacuous.** The first
+  "no artworks in the books lane" assertion passed against a response that never
+  carries the field. Run the positive control — disable the filter, watch the Met
+  stelae come back — or the green check means nothing. See
+  `tests-that-are-not-guards.md`.
+
+Corollary for counting, not just serving: any aggregate over `books` inflates
+unless it excludes artworks. A naive author query for "William Blake" returns
+777 records, of which **776 are prints and drawings**.
