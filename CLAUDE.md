@@ -132,6 +132,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 
 **Data & corpus**
 - Archivers/importers, `archived_photo`, "failed to fetch" triage → `archive-fetch-failures.md`
+- Quoting archive/R2 coverage, an archiver's "is this book done?" check, a new page-image field → `archive-coverage.md` (**"archived" is three questions — RECORD/FILE/MASTER; never sum them**)
 - Two artifacts that must line up (page images vs OCR, splits vs text) → `paired-artifacts.md`
 - `visible` / `hidden` / `hidden_reason`, homepage stats, FT badge gating, **a count shown on a card** → `visibility-and-stats.md`
 - `books.author`, `author_id`, the `authors` thesaurus, `/author/[slug]` → `author-identity.md`
