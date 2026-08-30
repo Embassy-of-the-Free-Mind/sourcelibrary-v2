@@ -11,6 +11,7 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { extractPageType, extractColumns, parseMultiPageOcr } from '../lib/ocr-result-parse.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -42,11 +43,7 @@ const abandonArg = args.find(a => a.startsWith('--abandon-stale='));
 const ABANDON_STALE_DAYS = abandonArg ? parseInt(abandonArg.split('=')[1], 10) : null;
 const DRY_RUN = args.includes('--dry-run');
 
-// --- OCR metadata extraction (mirrors defaults.ts) ---
-function extractPageType(text) {
-  const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
-  return match ? match[1].toLowerCase().trim() : null;
-}
+// --- OCR metadata extraction: shared with defaults.ts via scripts/lib/ocr-result-parse.mjs (#4443) ---
 
 /** Check if this page is a digitizer insert — via OCR tag, body-text, or meta-descriptor fallback. */
 function isDigitizerPage(pageType, ocrText) {
@@ -62,13 +59,13 @@ function isDigitizerPage(pageType, ocrText) {
   return false;
 }
 
-function extractColumns(text) {
-  const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
-  if (!match) return null;
-  const n = parseInt(match[1], 10);
-  return n >= 2 ? n : null;
-}
-
+// NOTE: this parses `<image>` sub-tags, which the CURRENT OCR prompt does not
+// emit — it asks for a JSON array inside `<detected-images>`. It is therefore a
+// different parser from the canonical `parseDetectedImages` in defaults.ts, not a
+// fork of it, and was deliberately left out of the #4443 consolidation. Measured
+// 2026-08-31: of 200 sampled pages holding a `<detected-images>` block, 200 were
+// JSON-shaped and 0 XML-shaped, so this returns [] on current-prompt output. See
+// #4445.
 function parseDetectedImages(text) {
   const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
   if (!match) return [];
@@ -97,19 +94,6 @@ function parseDetectedImages(text) {
     images.push(image);
   }
   return images;
-}
-
-function parseMultiPageOcr(text) {
-  const results = new Map();
-  const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    const pageId = match[1];
-    let content = match[2].trim();
-    content = content.replace(/<\/page>\s*$/, '').trim();
-    if (content) results.set(pageId, content);
-  }
-  return results;
 }
 
 // --- Gemini API ---
@@ -210,7 +194,7 @@ async function processOneJob(db, job) {
         const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         const usage = result.response?.usageMetadata;
-        const parsed = parseMultiPageOcr(text);
+        const parsed = parseMultiPageOcr(text, { lenient: true });
         for (const [pageId, ocrText] of parsed) {
           pageResults.push({ pageId, text: ocrText, usage });
         }
@@ -257,7 +241,7 @@ async function processOneJob(db, job) {
       if (text.length > 25000) { failCount++; continue; }
 
       if (job.type === 'ocr') {
-        const pageType = extractPageType(text);
+        const pageType = extractPageType(text, { validate: false });
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
 
