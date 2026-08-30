@@ -2486,6 +2486,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         el.scrollTop = 0;
       }
       lastScrollY.current = el.scrollTop;
+      barIntent.current = 0;
     };
     place();
 
@@ -2570,24 +2571,38 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   }, [leftPanel, keyboardInset, isDesktop]);
 
   // Mobile title bar yields to the reading: it slides away as you read down
-  // and comes back the moment you scroll up. The threshold keeps a jittery
-  // finger from flickering it, and the top of the page always shows it.
+  // and comes back when you scroll up. Height, contents and visibility all
+  // move on this one curve and duration — they used to run at 200ms, 150ms
+  // and instantly, so the bar arrived in pieces and left in one cut.
+  const BAR_MS = 240;
+  const BAR_EASE = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
   const [barHidden, setBarHidden] = useState(false);
   const lastScrollY = useRef(0);
+  /**
+   * Scrolling that has kept going the same way, in pixels: up is negative.
+   * Six pixels of movement used to be enough to throw the whole bar back on
+   * screen, and momentum alone can produce that, so it appeared out of
+   * nothing. Turning it takes a deliberate stretch of scrolling now, and
+   * changing direction starts the count again.
+   */
+  const barIntent = useRef(0);
   const onMobileScroll = useCallback(() => {
     const el = mobileMainRef.current;
     if (!el) return;
     const y = el.scrollTop;
     const delta = y - lastScrollY.current;
+    lastScrollY.current = y;
+    if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
+    if (delta === 0) return;
+    if ((delta > 0) !== (barIntent.current > 0)) barIntent.current = 0;
+    barIntent.current += delta;
     // At the foot of the page the pager appears, and that is exactly when a
     // reader wants the whole set of ways out — next, previous, or back to the
     // book — so the bar comes back with it rather than staying hidden.
     const atFoot = el.scrollHeight - (y + el.clientHeight) < 80;
-    if (y < 48 || atFoot) setBarHidden(false);
-    else if (delta > 6) setBarHidden(true);
-    else if (delta < -6) setBarHidden(false);
-    lastScrollY.current = y;
-    if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
+    if (y < 48 || atFoot) { setBarHidden(false); barIntent.current = 0; }
+    else if (barIntent.current > 16) setBarHidden(true);
+    else if (barIntent.current < -28) setBarHidden(false);
   }, [readMobileAnchor]);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
@@ -3360,7 +3375,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         {/* Clipping is only needed while the bar is collapsing. Left on, it
             cut off the account menu, which opens downward out of the header. */}
         <header
-          className="shrink-0 transition-[height] duration-200 ease-out relative z-[60]"
+          className="shrink-0 relative z-[60]"
           style={{
             background: INK,
             color: '#fdfcf9',
@@ -3370,6 +3385,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             // focusable back-link and menu button, and aria-hidden over them
             // made that worse rather than better.
             visibility: barHidden ? 'hidden' : 'visible',
+            // visibility is in the transition on purpose. It is a discrete
+            // property, so transitioning it holds the old value for the whole
+            // duration instead of applying at once — without that the contents
+            // were cut off the screen while the bar was still closing.
+            transition: `height ${BAR_MS}ms ${BAR_EASE}, visibility ${BAR_MS}ms ${BAR_EASE}`,
           }}
         >
           {/* The row fades with the bar rather than being revealed by it.
@@ -3377,8 +3397,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               at full strength in a 4px-tall box, so the avatar — the tallest
               thing in the row — appeared first and the rest caught up. */}
           <div
-            className="flex items-center gap-2.5 h-[52px] px-3 transition-opacity duration-150"
-            style={{ opacity: barHidden ? 0 : 1 }}
+            className="flex items-center gap-2.5 h-[52px] px-3"
+            style={{
+              opacity: barHidden ? 0 : 1,
+              transition: `opacity ${BAR_MS}ms ${BAR_EASE}`,
+            }}
           >
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
             {/* Sized to match the account avatar beside it — the two circles
