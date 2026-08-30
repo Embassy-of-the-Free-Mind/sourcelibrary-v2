@@ -202,6 +202,19 @@ export async function rateLimitedFetch(url, opts = {}) {
 export function upgradeToFullRes(url) {
   if (!url || typeof url !== 'string') return url;
   try {
+    // A IIIF Image path is /{region}/{size}/{rotation}/{quality}.{format}. When
+    // `size` is ALREADY `full` there is nothing to upgrade — and saying so here
+    // is load-bearing, because several per-host rules below match on
+    // `/full/<digits>/` without anchoring to the size segment. On a URL like
+    //   .../f1/full/full/0/default.jpg
+    // those rules match the ROTATION (`/0/`) and rewrite it to `full`, yielding
+    //   .../f1/full/full/full/default.jpg
+    // which is an invalid rotation and 404s. Measured 2026-08-30: every Gallica
+    // page whose stored URL was already `/full/full/0/...` was unfetchable for
+    // this reason — 0 of 28 sampled books could be archived, while the STORED
+    // url returned 200 the moment it was requested unmodified. MDZ escaped only
+    // because its rule happens to require a comma (`/full/2000,/`).
+    if (/\/full\/full\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) return url;
     // Harvard MPS rate-limits /full/full/ much more aggressively than /full/2000,/
     // — at 1 req/s the full-res endpoint still 429s out (5 cold-start fails =
     // circuit breaker, 0 successes). The existing 2000px variant in the photo
@@ -215,11 +228,15 @@ export function upgradeToFullRes(url) {
     if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) {
       return url.replace(/\/full\/\d+,\//, '/full/full/');
     }
-    if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\//)) {
-      return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
+    // Both of these anchor on the rotation+quality suffix so the size segment is
+    // the only thing they can rewrite. The early return above already prevents
+    // the observed 404s; this keeps the rules correct on their own terms rather
+    // than relying on a guard elsewhere in the function.
+    if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\/\d+\/[a-z]+\./i)) {
+      return url.replace(/\/full\/\d+,?\d*\/(\d+\/[a-z]+\.)/i, '/full/full/$1');
     }
-    if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\//)) {
-      return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
+    if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\/\d+\/[a-z]+\./i)) {
+      return url.replace(/\/full\/\d+,?\d*\/(\d+\/[a-z]+\.)/i, '/full/full/$1');
     }
     // NDL Japan returns HTTP 500 on /full/max/ (IIIF v3 syntax their server
     // doesn't honor); /full/full/ returns the native-resolution image. Many
