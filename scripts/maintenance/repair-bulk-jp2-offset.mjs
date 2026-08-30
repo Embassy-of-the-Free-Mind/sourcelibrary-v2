@@ -190,7 +190,15 @@ async function repairBook(db, bookId) {
         const buf = await fetchBuf(fullRes(p.photo_original || p.photo));
         // Everything versions (#3756): keep the pre-repair object reachable
         await preserveObjectVersion(s3, process.env.R2_BUCKET_NAME, `archived/${bookId}/${p.page_number}.jpg`);
-        await uploadPageVariants(buf, bookId, p.page_number, uploadToR2);
+        const urls = await uploadPageVariants(buf, bookId, p.page_number, uploadToR2);
+        // Record what we stored (#4406). Free — the buffer is already decoded —
+        // and without it nothing downstream can tell what this repair produced.
+        const dims = {};
+        if (urls.width) dims.image_width = urls.width;
+        if (urls.height) dims.image_height = urls.height;
+        if (Object.keys(dims).length) {
+          await db.collection('pages').updateOne({ _id: p._id }, { $set: dims });
+        }
         done++;
         if (done % 25 === 0) console.log(`    … ${done}/${targets.length}`);
       } catch (err) {
