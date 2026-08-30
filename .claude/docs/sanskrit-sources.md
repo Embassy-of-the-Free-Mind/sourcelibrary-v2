@@ -21,6 +21,104 @@ Compiled 2026-08-28. Every access pattern marked VERIFIED was exercised by a liv
 | — | **SLUB Dresden / Heidelberg** | Negligible Sanskrit scan holdings (probed 2026-08-28: JS-shell search pages, no confirmed Sanskrit example). Heidelberg IIIF pattern `digi.ub.uni-heidelberg.de/diglit/iiif/{id}/manifest` exists for their own material | — | — | Deprioritize | n/a |
 | — | **Rare Book Society of India** | **Not an IA channel** — `collection:rarebooksocietyofindia` => 0, no collection object found (VERIFIED). It is a web/Facebook community | — | — | Drop from plans | n/a |
 
+## Indian MUSEUM manuscripts are already on Internet Archive, CC0 — check there first
+
+Measured 2026-08-30, and it reframes the whole "can we get into an Indian museum
+portal" question. eGangotri is already digitising state museum manuscript
+collections and releasing them **CC0**, complete, at far higher resolution than
+any museum portal serves.
+
+Worked example — the **Kularnava Tantra in Sharada script**. The National Museum
+portal record (`nat_del-53-17-269-29567`) serves 3 watermarked folios at
+1240x1800, "All rights reserved". The same text, as complete manuscripts:
+
+| | museumsofindia | Internet Archive / eGangotri |
+|---|---|---|
+| item | `nat_del-53-17-269-29567` | `439KularnavaMahaRahasyaTantraShastraDAMSharadaPaper.pdf` |
+| folios served | 3 (of 4 catalogued) | **26 canvases, complete** |
+| resolution | 1240x1800 (2.2 MP) | **4299x5812 (25 MP)** — 11x the pixels |
+| licence | "Copyright, All rights reserved" + Ministry seal | **CC0**, stated in the image footer |
+| holder | National Museum, New Delhi | **Dogra Art Museum, Jammu** — also a state museum |
+| our access | blocked (robots.txt, no enumeration) | normal IA import path |
+
+Counts behind that (IA advancedsearch, `mediatype:texts`):
+
+- `"Dogra Art Museum"` → **56 items, all Sharada**, CC0, digitised by eGangotri.
+  A state museum's manuscript collection, already open.
+- `creator:("eGangotri")` → **16,882**, of which **16,619 carry a public-domain
+  licenceurl (98.4%)**.
+- eGangotri + Sharada → **1,537** items: the Kashmiri Saiva/Sakta corpus.
+- Kularnava → 104 · Razmnama → 29 · Madhumalati → 21.
+
+**The rule this gives us: before pursuing any Indian institution for scans,
+search IA for the same collection first.** The museums whose material is
+genuinely locked are a smaller set than the portals suggest, and the open copy
+is usually better — higher resolution, no watermark, CC0, and complete rather
+than sampled.
+
+## Museums of India / JATAN (museumsofindia.gov.in) — real manuscripts, published as SAMPLES
+
+Assessed 2026-08-30 across four live records, **by opening the images and
+probing the file server**. Two earlier readings of this source were wrong and
+the corrections are the useful part.
+
+**Wrong reading 1: "artwork, not books."** Derived from `Object Type: Miniature
+Paintings` on the Allahabad *Madhumalti* record. Opening the images showed
+text-bearing folios — one illustrated leaf with 11 lines of Devanagari verse
+around an inset miniature, one leaf of pure text (~22 lines, numbered stanzas,
+folio number 15 in the margin). The object type records **the gallery an object
+is displayed in**, not what the artifact is; other records in the same portal
+are typed `Manuscript` outright. Never classify a museum-catalogued manuscript
+from its object type.
+
+**Wrong reading 2: "one record = one book."** The real blocker, found by
+probing rather than by reading the page:
+
+| record | catalogued | images served |
+|---|---|---|
+| `nat_del-58-52-1-4801` Razm Nama (Persian Mahabharata, 1725-35) | **139 folios, 123 illustrations** | **3** |
+| `nat_del-53-17-269-29567` Kularnava (Sanskrit, Sharada, Shaktism) | 4 folios | 3 |
+| `alh_ald-AM-MIN-361-ix-1453` Madhumalti | - | 2 |
+| `im_kol-R-14591-791--57742` Shahnama leaf | - | 1 |
+
+**One URL is one museum ACCESSION RECORD — an object with N documentation
+photographs — not a book with N pages.** `_04_h` through `_139_h` return 404 on
+the Razm Nama, so the 3 images are the whole published set, not lazy-loading.
+The `Number of folios` field is catalogue data about the physical object; it is
+NOT a promise of that many images, and the two differ by 46x on the best record
+here. **A readable edition cannot be assembled from this portal**, because the
+pages are not published. Single-leaf records (the Kolkata Shahnama) are complete
+as objects, but a detached leaf is an artwork-scale unit, not a book.
+
+**Masters exist and are far better than what is served.** EXIF on the National
+Museum images retains the original capture: **7360x4912, Nikon D800** (36 MP).
+The served derivative caps at 1800px on the long edge (~500 KB-1.1 MB); only
+`_h` and a 300x400 `_l` exist, and `_o`/`_f`/`_m`/`_xl`/`_orig`/`_full`/bare all
+404. So an institutional request would ask them to share captures they already
+hold, not to digitise anything.
+
+**Metadata is the best-structured of any source in this doc** — 25+ fields, and
+for manuscripts specifically: language, script (Sharada, Nastaliq), subject,
+number of folios, number of illustrations, scribe, patron/dynasty, provenance,
+origin place, find place, style, school, technique, dimensions.
+
+**Every image is watermarked in the pixels** — museum name plus a Ministry of
+Culture, Government of India seal, and "Copyright, All rights reserved".
+
+**Not harvestable, on two counts beyond the sampling.** `robots.txt` is a
+blanket `User-agent: * / Disallow: /`, and discovery is a JS SPA whose data
+endpoint (`/repository/search/basic/fetch`) 404s to non-browser callers; the
+sitemap is 80 chrome pages with no record URLs. Record pages ARE server-rendered
+and fully readable **given an id**, which is the part that cannot be obtained.
+
+**Verdict: a partnership target with a concrete ask, not an import channel.**
+The holdings are genuinely on-mission — Sanskrit Shakta tantra in Sharada,
+Persian court manuscripts, illustrated vernacular romances — and the ask is
+specific: full folio sets at master resolution for named manuscripts. The Razm
+Nama alone (Akbar-tradition Persian Mahabharata, 139 folios, 123 illustrations)
+would be a significant acquisition. Scripting around any of the three blockers
+would be both futile (the pages are not there) and against their stated wishes.
+
 ## E-text repositories (pairing material, NOT scan imports)
 
 Like Kanripo/CBETA for Chinese: these give transcribed text to pair with scanned editions (OCR ground truth, work-identity anchoring, first-translation research). They do not enter the image pipeline.
