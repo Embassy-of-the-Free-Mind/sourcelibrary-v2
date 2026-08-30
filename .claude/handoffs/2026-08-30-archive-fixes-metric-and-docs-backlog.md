@@ -128,3 +128,89 @@ Do not route around a block — three hosts blocked us inside 48 hours in August
 fix a timeout by requesting a smaller IIIF size (#3186). Never quote coverage without its
 tier (`invariants/archive-coverage.md`). The pipeline stays paused; none of this spends AI
 budget.
+
+---
+
+## Addendum — everything after the handoff above was written
+
+### Also merged
+
+| PR | What |
+|---|---|
+| #4425 | Enforce the CLAUDE.md word budget + invariant routing (with negative controls) |
+| #4429 | A committed archiver runner — bound the run, never skip silently |
+| #4431 | **Restore the heartbeat**, and guard it |
+
+### The heartbeat was silently deleted and restored the same day
+
+#4421 shipped the heartbeat in the morning. **#4428 (another session, "make resolution
+debt measurable") deleted it** — every heartbeat line is a `-` in `f2049bbc9`. GitHub
+reported that PR `MERGEABLE`, nothing failed, and it was found only because a later
+production run emitted no heartbeat lines.
+
+**Correcting a wrong first diagnosis:** I initially called this a stale-branch race. It was
+not. `git merge-base` shows #4428's branch was **fully up to date** — its merge-base with
+the heartbeat commit *is* the heartbeat commit. The branch had the heartbeat and removed
+it, most likely by rewriting the whole file region rather than editing it, which silently
+discards anything the writer did not know was there.
+
+That matters for what to do about it: since the branch was current, it *would* have
+contained the new guard and *would* have gone red in its own CI.
+
+### The finding that outranks the incident — a decision is open
+
+**`main` has no branch protection and no rulesets.** Status checks are purely advisory.
+
+So #4428 would have shown five failing tests and merged anyway. Today's four new guards,
+plus the 214 tests already in the suite, are all currently **suggestions**. Every invariant
+this repo has bothered to encode as a test is unenforced.
+
+**Open decision for Derek** (asked, not answered): make `test` a required status check on
+`main`. One setting; converts the whole suite from advisory to binding; the only change
+that would actually have stopped #4428. Cost: ~10 concurrent sessions against a ~5-minute
+test run means slower merges, and emergencies need an admin override.
+
+Deliberately NOT recommended: "require branches up to date" (would not have helped —
+the branch already was, and it adds constant rebase churn at this session count) and
+CODEOWNERS (every PR is authored by the same account, so required review cannot
+distinguish sessions).
+
+### Archiver is live, steady, and observable — verified end to end
+
+The crontab now runs the committed runner (`45 * * * *`), old crontab backed up at
+`/root/cron.bak.2026-08-30-archiver`. Confirmed from a real cron run:
+
+```
+14:54:03 heartbeat  9.0m | books 4/240 | pages 766 ok, 38 failed | 1.42 pages/s | host api.digitale-sammlungen.de | throttled gallica:4
+14:59:03 heartbeat 14.0m | books 4/240 | pages 824 ok, 53 failed | 0.98 pages/s | host iiif.archive.org | throttled gallica:6
+2026-08-30T15:00:02Z run exited 143
+```
+
+**824 pages in 14 minutes (~1 page/s)** against ~10 books/hour that morning. All previously
+silent paths now report: ceiling kills, source-blocked, `SKIPPED — lock held`, and even a
+SIGTERM (`exited 143`).
+
+Confirming it took three attempts, and each failure was a different way "merged" does not
+mean "in effect":
+1. the run predated the heartbeat merge;
+2. **the deploy landed at 13:45:03, two seconds after the cron started at 13:45:01**;
+3. killed the stale run, started fresh on deployed code — worked.
+
+Together with the deploy filter that never fired (#4407) and the concurrent revert (#4428),
+that is **three distinct mechanisms in one day** by which a merge failed to take effect.
+The habit that caught all three: check the end state — the box's SHA, the file's content,
+the log — never the merge status.
+
+### Acquisition quality — the question Derek actually cared about
+
+Measured on today's 879 imports: **0.6%** same title+author twice within the batch, **0.7%**
+already present in the older corpus, and the gate correctly **held 1,873 (22.2%)** as
+already-owned. Edition-level dedup is working.
+
+The gap: **all 879 have `work_id: none`.** Edition dedup runs at import; work-level linking
+does not (#2318). So "do we already hold this *work*, in another edition or translation?"
+is not being asked automatically.
+
+Acquisition legitimately runs ahead of archiving — that is by design, the queue is the
+buffer. Derek's framing: acquire good stuff, not duplicates; keep archiving steady if slow.
+Both now hold.
