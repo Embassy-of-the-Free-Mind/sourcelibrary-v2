@@ -50,6 +50,7 @@ import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import { filterPublishedEntityTerms } from '@/lib/entity-publish';
 import LikeButton from '@/components/ui/LikeButton';
+import SaveToListButton from '@/components/ui/SaveToListButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { BookShare } from '@/components/ui/ShareButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -1606,10 +1607,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   <BookOpen className="w-4 h-4" />{t.readThisBook}
                 </Link>
               )}
-              <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
+              <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-4 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
                   <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
+                  <SaveToListButton key="save" targetType="book" targetId={book.id} size="sm" className="!text-stone-100" />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
                   <div key={i} className="h-10 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.55)', borderColor: 'rgba(245,240,232,0.2)' }}>{el}</div>
@@ -1770,6 +1772,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
                   <div className="flex items-center gap-2.5 px-2 py-1.5">
                     <BookAnalytics bookId={book.id} className="!text-stone-200" />
+                    <SaveToListButton targetType="book" targetId={book.id} size="sm" className="!text-stone-200" />
                     <LikeButton targetType="book" targetId={book.id} size="sm" showCount={true} className="!text-stone-200" />
                   </div>
                 </div>
