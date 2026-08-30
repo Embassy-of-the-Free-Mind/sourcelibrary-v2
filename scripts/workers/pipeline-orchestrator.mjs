@@ -2917,6 +2917,12 @@ async function run() {
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (AR screen → Gemini confirm) ---');
 
+      // The AR screen is free; only the confirm spends. Asked once per cycle so
+      // the free screen keeps running when the dial is closed — gating the whole
+      // phase would stop `split_checked` being written, and Phase 1.5 requires
+      // it, so a closed dial would silently stall preview OCR as well.
+      const splitConfirmAllowed = await budgetAllowsDispatch(db, 'Phase 1.25 (split confirm)', { bypass: !!BOOK_OVERRIDE });
+
       // Scoped mode raises the window so allowlisted books behind the backlog
       // aren't stranded (work stays confined by applyBookOverride below). The
       // module-level phase limits get this raise already; phase-local consts
@@ -3016,6 +3022,12 @@ async function run() {
 
           // AR > threshold — confirm with Gemini before flagging for spread-aware OCR.
           // This prevents wasting the spread OCR prompt on foldouts, maps, and wide tables.
+          if (!splitConfirmAllowed) {
+            // Leave the book unmarked rather than marking it checked without
+            // having checked it — it should be retried once the dial reopens.
+            console.log(`    ${label}: AR=${detectedAr.toFixed(2)}, confirm SKIPPED (spend ceiling) — leaving unchecked`);
+            continue;
+          }
           console.log(`    ${label}: AR=${detectedAr.toFixed(2)}, confirming with Gemini...`);
 
           if (DRY_RUN) {
@@ -3190,7 +3202,11 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // Books stay at `archive_complete`: a 25-page sample is not a finished OCR
     // pass, and `advanceStatus: false` stops the collector from recording it as
     // one and skipping the remaining pages.
-    if (shouldRun(1.5)) {
+    //
+    // Dial-gated. Phase 1.5 spends, so it must ask — it was outside the dial
+    // while it was inline realtime, which meant the one phase that runs every
+    // two minutes was the one phase the ceiling could not stop.
+    if (shouldRun(1.5) && await budgetAllowsDispatch(db, 'Phase 1.5 (preview OCR)', { bypass: !!BOOK_OVERRIDE })) {
       console.log('\n--- Phase 1.5: Preview OCR (flash-lite batch, first 25 pages) ---');
 
       const previewRetryCutoff = new Date(Date.now() - PREVIEW_BATCH_RETRY_HOURS * 60 * 60 * 1000);
@@ -3298,7 +3314,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // language, description, display_title, categories, source_work_dates, FT pre-screen.
     // Also does catalog cross-reference (USTC/EFM) for year/place/publisher.
     // Writes ai_metadata and updates book fields at medium+ confidence.
-    if (shouldRun(1.6) || shouldRun(1.5)) {
+    if ((shouldRun(1.6) || shouldRun(1.5)) && await budgetAllowsDispatch(db, 'Phase 1.6 (metadata classification)', { bypass: !!BOOK_OVERRIDE })) {
       console.log('\n--- Phase 1.6: AI metadata classification ---');
 
       const metadataApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
@@ -4367,7 +4383,7 @@ Rules:
 
     // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on ocr_complete books) ──
     // Not a pipeline state — just enriches pages before translation. Cheap & fast (text-only, lite model).
-    if (shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) {
+    if ((shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) && await budgetAllowsDispatch(db, 'Phase 3.7 (transliteration)', { bypass: !!BOOK_OVERRIDE })) {
       console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
 
       // Find ocr_complete books with non-Latin languages
@@ -4900,7 +4916,7 @@ Rules:
     }
 
     // ── Phase 8: Image extraction (chapters_complete -> images_submitted/complete) ──
-    if (shouldRun(8)) {
+    if (shouldRun(8) && await budgetAllowsDispatch(db, 'Phase 8 (image extraction)', { bypass: !!BOOK_OVERRIDE })) {
       console.log('\n--- Phase 8: Image extraction ---');
 
       const USE_BATCH = process.env.IMAGE_EXTRACTION_USE_BATCH !== 'false'; // Default: true (batch)
