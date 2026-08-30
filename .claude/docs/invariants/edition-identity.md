@@ -181,3 +181,62 @@ and nothing downstream of it can be trusted.
   work_id over-split, now **detected automatically from below** instead of
   hunted by hand. This is the argument for building layers bottom-up: the
   edition layer falsifies the work layer for free.
+
+---
+
+## The acquisition gate (copy layer) — 2026-08-30
+
+**Read this half when:** you are writing an importer, adding an import route, or
+about to conclude that acquisition dedupe "already runs."
+
+Acquisition dedupe is a **different problem from merging**. At acquisition time a
+false positive is cheap — we decline a book we may already hold, and nothing is
+destroyed. A wrong `duplicate_of` merge HIDES a real book. So the gate is
+deliberately not tuned for precision: the two things that were actually wrong
+were that it did not always run, and that a NO left no trace.
+
+**Where the gate lives.** `acquisitionGate()` in `src/lib/acquisition-guard.ts`
+(TS, used by all ten `/api/import/*` routes) and `insertBookIfNew()` in
+`scripts/lib/acquire-book.mjs` (the direct importers). Call one of them instead
+of a bare `checkDuplicate()` on any path that creates a book.
+
+Three rules, each from a measurement over the 139 same-fingerprint groups in
+`books` on 2026-08-30:
+
+- **A check-then-insert is not a gate under concurrency.** 80 of those 139 groups
+  (58%) have every member created within five seconds of each other, dozens
+  within a single millisecond. `scripts/catalog-coverage/acquire-gap-batch.mjs`
+  runs at `CONCURRENCY = 10`, and ten USTC works resolving to the same scan all
+  passed `checkDuplicate()` before any of them inserted. The gate claims the
+  candidate's fingerprints in `acquisition_claims` (unique `_id`), so exactly one
+  writer wins. **Tell:** members of a duplicate group whose `created_at` differ by
+  milliseconds — that is a race, not a missing check, and adding a check will not
+  fix it.
+- **A fingerprint is a SET, not a string.** `sourceFingerprint()` picks one
+  identifier by priority, so the same IA object arriving as `ia:<id>` and as
+  `iiif:…/iiif/<id>/manifest.json` was two books to tier 1 — the tier that
+  cannot be wrong. `sourceFingerprints()` holds every identifier a record
+  carries, including ones derived back out of its URLs, and tier 1 matches on
+  intersection. It finds 268 groups where the scalar finds 139.
+  **The exclusions are load-bearing, not oversights:** bare `dc:` values (LCCN and
+  OCLC identify a bibliographic RECORD, not a scan — every volume of one serial
+  shares them; and `dc_identifier` is a bare STRING on 89,772 books, so `[0]` is a
+  single character), and numeric path segments scraped from arbitrary URLs. Each
+  merged tens of thousands of distinct books in the dry run. Pinned as negative
+  tests in `tests/unit/source-fingerprints.test.ts`; widen only with a dry run
+  over the live corpus first.
+- **A skip must be a row, not a line of stdout.** Every decision lands in
+  `dedup_skips` with the candidate's identity, the matched book, the tier, and
+  an `evidence` grade. `edition_key_no_year` is the one to review: **81% of
+  edition-key-only decisions have no publication year on at least one side**, so
+  they rest on normalized title + surname alone — weaker than the
+  "same author, same title, same year" rule of thumb the gate is meant to encode.
+  Nothing automated reads `dedup_skips` or `acquisition_claims`; deliberately kept
+  out of `dedup_shadow_decisions`, which an agreement audit computes percentages
+  over.
+
+**Standing detector:** `node scripts/audit/duplicate-fingerprint-groups.mjs --detect`
+exits 2 when a same-fingerprint group appears that is not in
+`scripts/audit/baselines/duplicate-fingerprints.json`. It reports; it never
+merges, hides, or deletes. Re-baseline with `--update-baseline` once a human has
+looked.
