@@ -77,11 +77,38 @@ async function main() {
     }
   };
 
+  // ── Heartbeat ────────────────────────────────────────────────────────────
+  // This run emits nothing between start and finish. At the post-#4395 rate a
+  // batch of 40 books is over an hour of silence, during which a healthy run and
+  // a hung one are indistinguishable — on 2026-08-30 a stalled run held the
+  // flock for 1h24m and silently no-op'd every subsequent cron, and the only way
+  // to tell progress from a hang was to query Mongo by hand.
+  //
+  // A silent long-running script reads as a hang; the fix is a heartbeat, not an
+  // index (invariants/archive-fetch-failures.md). Counters are PAGE-grain
+  // because book-grain moves too slowly to separate "working" from "stuck": a
+  // 250-page book is minutes of apparent silence on its own.
+  const runStart = Date.now();
+  let pagesDone = 0;
+  let pagesFailed = 0;
+  let booksDone = 0;
+  let workTotal = 0;
+  let currentHost = '-';
+  const hb = setInterval(() => {
+    const mins = (Date.now() - runStart) / 60000;
+    const rate = mins > 0 ? pagesDone / (mins * 60) : 0;
+    const thr = [...hostThrottles.entries()].map(([h, n]) => `${h.split('.')[0]}:${n}`).join(' ');
+    log(`heartbeat ${mins.toFixed(1)}m | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed | ${rate.toFixed(2)} pages/s | host ${currentHost}${thr ? ` | throttled ${thr}` : ''}`);
+  }, 60_000);
+  // Never let the heartbeat hold the process open past the work.
+  if (typeof hb.unref === 'function') hb.unref();
+
   async function archiveIiif(bookId: string) {
     const ps = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1 } }).toArray();
     for (let i = 0; i < ps.length; i += 6) {
       await Promise.all(ps.slice(i, i + 6).map(async (p: any) => {
         const url = upgradeToFullRes(p.photo_original || p.photo);
+        try { currentHost = new URL(url).hostname; } catch { /* keep previous */ }
         try {
           // `/full/full/` is a REQUEST, not a guarantee. Seven hosts silently
           // cap the response below native — measured losses up to 8.69x (Kyoto),
@@ -132,9 +159,11 @@ async function main() {
           if (stitchedTiles) upd.$set.stitched_tiles = stitchedTiles;
           try { const th = await sharp(buf).rotate().resize(150, null, { withoutEnlargement: true }).jpeg({ quality: 60 }).toBuffer(); upd.$set.thumbnail_blob = (await storagePut(`pages/${bookId}/${padded}-thumb.jpg`, th, { contentType: 'image/jpeg', access: 'public' })).url; } catch {}
           await pages.updateOne({ _id: p._id }, upd);
+          pagesDone++;
           hostFailures.clear(); // a success clears the streak
         } catch (e) {
           if (e instanceof HostBlocked) throw e;
+          pagesFailed++;
           noteFailure(url, e); // rethrows HostBlocked once the host looks blocked
         }
       }));
@@ -190,19 +219,27 @@ async function main() {
     }
   }
   let blocked: Error | null = null;
+  workTotal = todo.length;
+  log(`starting: ${workTotal} book(s), concurrency ${CONCURRENCY} — heartbeat every 60s`);
   for (let i = 0; i < todo.length && !blocked; i += CONCURRENCY) {
-    await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w).catch((e) => {
-      // Per-book failures stay swallowed (one bad book must not stop a sweep),
-      // but a blocked HOST is a verdict about the source: stop the whole run
-      // and say so, rather than grinding out thousands of doomed requests.
-      if (e instanceof HostBlocked) blocked = e;
-    })));
+    await Promise.all(todo.slice(i, i + CONCURRENCY).map(w => processBook(w)
+      .then(() => { booksDone++; })
+      .catch((e) => {
+        booksDone++;
+        // Per-book failures stay swallowed (one bad book must not stop a sweep),
+        // but a blocked HOST is a verdict about the source: stop the whole run
+        // and say so, rather than grinding out thousands of doomed requests.
+        if (e instanceof HostBlocked) blocked = e;
+      })));
   }
+  clearInterval(hb);
   const remaining = PROVIDER
     ? await books.countDocuments({ 'image_source.provider': PROVIDER, pages_count: { $gt: 0 }, archive_status: { $ne: 'archive_complete' } })
     : await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
   const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
-  log(`archive-acquired: complete ${ok}, partial ${partial} | un-archived acquired remaining ${remaining}${throttled ? ` | throttled ${throttled}` : ''}`);
+  const runMins = (Date.now() - runStart) / 60000;
+  const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
+  log(`archive-acquired: complete ${ok}, partial ${partial} | pages ${pagesDone} ok, ${pagesFailed} failed in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s) | un-archived acquired remaining ${remaining}${throttled ? ` | throttled ${throttled}` : ''}`);
   if (blocked) {
     // Exit non-zero so a wrapper loop stops instead of re-running into the block.
     log(`ABORTED — SOURCE BLOCKED: ${(blocked as Error).message}`);
