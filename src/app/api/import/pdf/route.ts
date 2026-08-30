@@ -7,7 +7,6 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { execFileSync } from 'child_process';
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
@@ -310,7 +309,6 @@ export const POST = withCuratorAuth(async (request) => {
     await db.collection('pages').insertMany(pageDocs);
 
     // 6. Post-import hooks (all non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     logAuditEvent({
       action: 'book_imported',

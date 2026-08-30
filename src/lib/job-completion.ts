@@ -11,7 +11,6 @@
 import { getDb } from '@/lib/mongodb';
 import type { PageJobType } from '@/lib/types/job';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
-import { queuePreviewTranslation } from '@/lib/preview-translate';
 import { revalidateBook } from '@/lib/revalidate';
 
 /** Type alias for the Db returned by getDb() */
@@ -153,15 +152,12 @@ async function handleJobCompletion(
 
       console.log(`${logPrefix} Updated book ${bookId}: pages_ocr = ${totalPagesWithOcr}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
 
-      // If this was a preview OCR job, automatically queue preview translation
-      const completedJob = await jobs.findOne({ id: jobId }, { projection: { config: 1, book_title: 1 } });
-      if (completedJob?.config?.preview) {
-        console.log(`${logPrefix} Preview OCR complete for ${bookId} — triggering preview translation`);
-        // Non-blocking — fire and forget
-        queuePreviewTranslation(db, bookId, completedJob.book_title || '').catch(err => {
-          console.error(`${logPrefix} Preview translation trigger failed for ${bookId}:`, err);
-        });
-      }
+      // NOTE: a completed OCR job used to auto-trigger preview TRANSLATION here.
+      // Both halves of that import-time shortcut are gone (see the removal of
+      // src/lib/preview-ocr.ts): they enqueued Gemini work straight onto the
+      // SQS/Lambda realtime path, which consults neither the processing pause
+      // nor the daily dial. Translation now comes from the orchestrator's
+      // dial-gated phases like every other book's.
 
       break;
     }

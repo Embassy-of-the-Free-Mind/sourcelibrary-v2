@@ -4,7 +4,6 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { computeProcessingPriority } from '@/lib/processing-priority';
 import { sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 import { computeIdentityFields } from '@/lib/identity-fields';
@@ -505,9 +504,6 @@ export async function importBookFromIIIF(
     book_id: bookIdStr,
     source: config.provider,
   }).catch((e) => console.warn(`[Import] manifest store failed for ${bookIdStr}: ${e?.message}`));
-
-  // Queue preview OCR for early metadata enrichment (non-blocking)
-  queuePreviewOcr(bookIdStr, config.title).catch(() => {});
 
   // Queue split detection check (non-blocking)
   const baseUrl = process.env.NEXT_PUBLIC_URL || process.env.VERCEL_URL
