@@ -118,7 +118,47 @@ export const POST = withCuratorAuth(async (request, session) => {
       }
     }
 
-    // 4. Cross-check: if imagecount or jp2 differs wildly from IIIF, trust IIIF
+    // 4. scandata.xml — the leaf list, for items whose images ship ONLY as a
+    // _jp2.zip. Steps 1-3 all miss that shape: IA's IIIF service does not
+    // answer for these items, `imagecount` is absent from their metadata, and
+    // there are no loose .jp2 files to count because they are inside the zip.
+    //
+    // Measured on the eGangotri Sharada corpus (#4311): 739 of 1,507 candidates
+    // failed here, and a 14-item sample was unanimous — 0/14 resolved via IIIF,
+    // 0/14 had imagecount, 0/14 had loose .jp2, and 14/14 had scandata.xml.
+    // Retrying was useless; the chain simply had no step that fit. This is the
+    // same shape as the DLI/Public Library of India mirror, so it unblocks that
+    // channel too.
+    if (pageCount === 0) {
+      const scandata = files.find((f: { name: string }) => /scandata\.xml$/i.test(f.name));
+      if (scandata) {
+        try {
+          const sdRes = await fetch(
+            `https://archive.org/download/${ia_identifier}/${encodeURIComponent(scandata.name)}`,
+            { signal: AbortSignal.timeout(20000) }
+          );
+          if (sdRes.ok) {
+            const xml = await sdRes.text();
+            // Count <page> elements, ignoring any leaf marked as not part of
+            // the book body — IA marks inserts/colour targets this way and
+            // counting them would inflate the page count.
+            const leaves = xml.match(/<page\b[^>]*>/gi) || [];
+            const excluded = (xml.match(/<addToAccessFormats>\s*false\s*<\/addToAccessFormats>/gi) || []).length;
+            const n = leaves.length - excluded;
+            if (n > 1) {
+              pageCount = n;
+              pageCountSource = 'scandata';
+            }
+          }
+        } catch {
+          // scandata unreachable — fall through to the error below, which is
+          // still the right outcome: better to refuse than to import a book
+          // whose length we are guessing at.
+        }
+      }
+    }
+
+    // 5. Cross-check: if imagecount or jp2 differs wildly from IIIF, trust IIIF
     // (this catches the inflation bug where metadata reports 2-20x too many pages)
 
     if (pageCount === 0) {
