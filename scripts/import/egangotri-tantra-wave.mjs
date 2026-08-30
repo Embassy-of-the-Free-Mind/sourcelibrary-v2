@@ -161,10 +161,16 @@ async function main() {
         language: 'Sanskrit',
         original_language: 'Sanskrit',
         'field_provenance.language': { source: 'manual_curator_override', value: 'Sanskrit', reason: 'eGangotri Indic MS; IA language signals unreliable (#4311)' },
-        ...(meta.script ? { script: meta.script } : {}),
         updated_at: new Date(),
       },
-      ...(meta.subject ? { $addToSet: { categories: meta.subject } } : {}),
+      // Script and subject go into `categories`, which is a WHITELISTED field.
+      // An earlier cut wrote `books.script`, which is not in
+      // scripts/lib/books-known-fields.json — i.e. it silently minted a new
+      // column on `books`, which is the #3969 defect. A sweep records a value
+      // in an existing field or a ROW, never a new column.
+      ...(meta.script || meta.subject
+        ? { $addToSet: { categories: { $each: [meta.subject, meta.script].filter(Boolean) } } }
+        : {}),
     });
     const after = await books.findOne({ id: bookId }, { projection: { language: 1, pages_count: 1, visible: 1, hidden: 1, title: 1 } });
     console.log(`  OK ${p.ia_identifier} → ${bookId} | ${after?.title?.slice(0, 46)} | lang=${after?.language} pages=${after?.pages_count} visible=${after?.visible} hidden=${after?.hidden} (lang-fix modified=${upd.modifiedCount})`);
