@@ -21,37 +21,68 @@ Compiled 2026-08-28. Every access pattern marked VERIFIED was exercised by a liv
 | — | **SLUB Dresden / Heidelberg** | Negligible Sanskrit scan holdings (probed 2026-08-28: JS-shell search pages, no confirmed Sanskrit example). Heidelberg IIIF pattern `digi.ub.uni-heidelberg.de/diglit/iiif/{id}/manifest` exists for their own material | — | — | Deprioritize | n/a |
 | — | **Rare Book Society of India** | **Not an IA channel** — `collection:rarebooksocietyofindia` => 0, no collection object found (VERIFIED). It is a web/Facebook community | — | — | Drop from plans | n/a |
 
-## Museums of India / JATAN (museumsofindia.gov.in) — an ARTWORK source, not a books source
+## Museums of India / JATAN (museumsofindia.gov.in) — real manuscripts, published as SAMPLES
 
-Assessed 2026-08-30 against a live record (`alh_ald-AM-MIN-361-ix-1453`,
-*Madhumalti*, Allahabad Museum). Recorded here because the name suggests Indian
-manuscripts and the answer is "yes, but not as books".
+Assessed 2026-08-30 across four live records, **by opening the images and
+probing the file server**. Two earlier readings of this source were wrong and
+the corrections are the useful part.
 
-- **Metadata is excellent** — the best-structured of any source in this doc: 25+
-  museum fields including accession number, gallery, object type, main material,
-  manufacturing technique, artist + nationality + life dates, country,
-  provenance, origin place, find place, scribe, style, school, patron/dynasty,
-  period, inscription, tribe, costume, culture, dimensions, and brief + detailed
-  descriptions.
-- **Images are capped at 1240x1800** (~2.2 MP, ~500 KB). Exactly two variants
-  exist: `_h` and a 300x400 `_l` thumbnail; `_o`/`_f`/`_orig`/`_full`/bare all
-  404. There is no master, no original, no IIIF. At the record's stated
-  20.32 x 11.43 cm that is roughly 225-275 DPI — usable, but there is nothing
-  better to ask for, so this cannot satisfy the native-resolution norm (#3186).
-- **The unit is a PAINTING.** `Object Type: Miniature Paintings`,
-  `Gallery Name: Miniature Painting`. The record is two images of leaves from a
-  manuscript, catalogued as an artwork accession, with no related-record links
-  and no manuscript grouping. Imported, these are `/artwork/` records, not
-  paginated reading editions. NOT a route to Sanskrit texts.
-- **Not harvestable as it stands, on two counts.** `robots.txt` is a blanket
-  `User-agent: * / Disallow: /`, and discovery is a JS SPA whose data endpoint
-  (`/repository/search/basic/fetch`) 404s to non-browser callers — the sitemap
-  is 80 pages of chrome with no record URLs. Record pages ARE server-rendered
-  and readable *if you already know the id*, which is the part we cannot get.
-- **Verdict:** worth an institutional approach if we ever want Indian miniature
-  painting for the gallery — the provenance metadata would be a genuine
-  upgrade on our artwork corpus. It is not an acquisition channel for texts,
-  and it should not be scripted without permission.
+**Wrong reading 1: "artwork, not books."** Derived from `Object Type: Miniature
+Paintings` on the Allahabad *Madhumalti* record. Opening the images showed
+text-bearing folios — one illustrated leaf with 11 lines of Devanagari verse
+around an inset miniature, one leaf of pure text (~22 lines, numbered stanzas,
+folio number 15 in the margin). The object type records **the gallery an object
+is displayed in**, not what the artifact is; other records in the same portal
+are typed `Manuscript` outright. Never classify a museum-catalogued manuscript
+from its object type.
+
+**Wrong reading 2: "one record = one book."** The real blocker, found by
+probing rather than by reading the page:
+
+| record | catalogued | images served |
+|---|---|---|
+| `nat_del-58-52-1-4801` Razm Nama (Persian Mahabharata, 1725-35) | **139 folios, 123 illustrations** | **3** |
+| `nat_del-53-17-269-29567` Kularnava (Sanskrit, Sharada, Shaktism) | 4 folios | 3 |
+| `alh_ald-AM-MIN-361-ix-1453` Madhumalti | - | 2 |
+| `im_kol-R-14591-791--57742` Shahnama leaf | - | 1 |
+
+**One URL is one museum ACCESSION RECORD — an object with N documentation
+photographs — not a book with N pages.** `_04_h` through `_139_h` return 404 on
+the Razm Nama, so the 3 images are the whole published set, not lazy-loading.
+The `Number of folios` field is catalogue data about the physical object; it is
+NOT a promise of that many images, and the two differ by 46x on the best record
+here. **A readable edition cannot be assembled from this portal**, because the
+pages are not published. Single-leaf records (the Kolkata Shahnama) are complete
+as objects, but a detached leaf is an artwork-scale unit, not a book.
+
+**Masters exist and are far better than what is served.** EXIF on the National
+Museum images retains the original capture: **7360x4912, Nikon D800** (36 MP).
+The served derivative caps at 1800px on the long edge (~500 KB-1.1 MB); only
+`_h` and a 300x400 `_l` exist, and `_o`/`_f`/`_m`/`_xl`/`_orig`/`_full`/bare all
+404. So an institutional request would ask them to share captures they already
+hold, not to digitise anything.
+
+**Metadata is the best-structured of any source in this doc** — 25+ fields, and
+for manuscripts specifically: language, script (Sharada, Nastaliq), subject,
+number of folios, number of illustrations, scribe, patron/dynasty, provenance,
+origin place, find place, style, school, technique, dimensions.
+
+**Every image is watermarked in the pixels** — museum name plus a Ministry of
+Culture, Government of India seal, and "Copyright, All rights reserved".
+
+**Not harvestable, on two counts beyond the sampling.** `robots.txt` is a
+blanket `User-agent: * / Disallow: /`, and discovery is a JS SPA whose data
+endpoint (`/repository/search/basic/fetch`) 404s to non-browser callers; the
+sitemap is 80 chrome pages with no record URLs. Record pages ARE server-rendered
+and fully readable **given an id**, which is the part that cannot be obtained.
+
+**Verdict: a partnership target with a concrete ask, not an import channel.**
+The holdings are genuinely on-mission — Sanskrit Shakta tantra in Sharada,
+Persian court manuscripts, illustrated vernacular romances — and the ask is
+specific: full folio sets at master resolution for named manuscripts. The Razm
+Nama alone (Akbar-tradition Persian Mahabharata, 139 folios, 123 illustrations)
+would be a significant acquisition. Scripting around any of the three blockers
+would be both futile (the pages are not there) and against their stated wishes.
 
 ## E-text repositories (pairing material, NOT scan imports)
 
