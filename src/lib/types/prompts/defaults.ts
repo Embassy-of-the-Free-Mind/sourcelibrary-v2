@@ -5,7 +5,14 @@ import { VALID_IMAGE_TYPES } from "../../gallery-image-types";
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
 export const PROMPT_VERSION = 'v6.1.2026-05';
 
-const VALID_PAGE_TYPES = new Set([
+/**
+ * Page-type vocabulary accepted from the model.
+ *
+ * Exported so the scripts-side twin (`scripts/lib/ocr-result-parse.mjs`) can be
+ * pinned against it — six scripts each carried a private, separately-drifted copy
+ * of this set until #4443.
+ */
+export const VALID_PAGE_TYPES = new Set([
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
   'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
   'digitizer-insert', 'exlibris', 'bookplate',
@@ -27,17 +34,38 @@ export const IMAGE_CANDIDATE_PAGE_TYPES = [
   'illustration', 'diagram', 'map', 'frontispiece', 'mixed',
 ];
 
-/** Extract <page-type> from OCR text. Returns undefined if not found or invalid. */
-export function extractPageType(ocrText: string): string | undefined {
-  const match = ocrText.match(/<page-type>([\s\S]*?)<\/page-type>/i);
+/**
+ * Extract <page-type> from OCR text. Returns undefined if not found or invalid.
+ *
+ * `validate: false` returns whatever the model emitted (trimmed, lower-cased)
+ * without screening it against VALID_PAGE_TYPES. That is not a preference — it
+ * is what four batch collectors have always done (#4443), and the vocabularies
+ * genuinely disagree: the OCR prompt offers `musical-score`, `table` and
+ * `cover`, which VALID_PAGE_TYPES does not list. Flipping those callers to
+ * validating would silently stop three prompt-sanctioned types from being
+ * recorded, so the divergence is a parameter here rather than a fork out there.
+ * See #4444 for closing the vocabulary gap itself.
+ */
+export function extractPageType(
+  ocrText: string,
+  { validate = true }: { validate?: boolean } = {},
+): string | undefined {
+  const match = ocrText?.match(/<page-type>([\s\S]*?)<\/page-type>/i);
   if (!match) return undefined;
   const type = match[1].trim().toLowerCase();
+  if (!validate) return type || undefined;
   return VALID_PAGE_TYPES.has(type) ? type : undefined;
 }
 
-/** Extract <columns>N</columns> from OCR text. Returns undefined if not found or 1. */
+/**
+ * Extract <columns>N</columns> from OCR text. Returns undefined if not found or 1.
+ *
+ * The `\s*` padding matches what every scripts-side copy accepted; without it
+ * `<columns> 2 </columns>` parses as single-column. Strictly wider than the
+ * pre-#4443 pattern — every input that matched before still matches.
+ */
 export function extractColumns(ocrText: string): number | undefined {
-  const match = ocrText.match(/<columns>(\d+)<\/columns>/i);
+  const match = ocrText?.match(/<columns>\s*(\d+)\s*<\/columns>/i);
   if (!match) return undefined;
   const n = parseInt(match[1], 10);
   return n > 1 ? n : undefined;
@@ -124,9 +152,31 @@ export function parseDetectedImages(ocrText: string): DetectedImage[] {
 /**
  * Parse multi-page OCR response. Expects <page id="PAGE_ID">...</page> blocks.
  * Returns a Map of pageId → OCR text.
+ *
+ * `lenient: true` is the batch-collector dialect (#4443), and it differs in four
+ * ways that all exist for one reason — a truncated Gemini batch response drops
+ * the final `</page>`, and the strict parser silently discards that page's text
+ * even though we already paid to generate it:
+ *   1. accepts any whitespace in `<page   id="…">`, not one literal space;
+ *   2. does not require `</page>` — a block runs to the next `<page id=` or EOF;
+ *   3. strips a trailing `</page>` left over from (2);
+ *   4. omits pages whose content is empty after trimming.
+ * Callers on the request path keep the strict default.
  */
-export function parseMultiPageOcr(text: string): Map<string, string> {
+export function parseMultiPageOcr(
+  text: string,
+  { lenient = false }: { lenient?: boolean } = {},
+): Map<string, string> {
   const results = new Map<string, string>();
+  if (lenient) {
+    const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const content = match[2].trim().replace(/<\/page>\s*$/, '').trim();
+      if (content) results.set(match[1], content);
+    }
+    return results;
+  }
   const regex = /<page id="([^"]+)">([\s\S]*?)<\/page>/g;
   let match;
   while ((match = regex.exec(text)) !== null) {
