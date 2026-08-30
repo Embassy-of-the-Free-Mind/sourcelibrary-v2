@@ -6,7 +6,6 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
@@ -583,9 +582,6 @@ export const POST = withCuratorAuth(async (request, session) => {
       book_id: bookIdStr,
       source: (provider as string) || 'iiif',
     }).catch((e) => console.warn(`[IIIF Import] manifest store failed for ${bookIdStr}: ${e?.message}`));
-
-    // Queue preview OCR for early metadata enrichment (non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     // Notify search engines of new book via IndexNow (non-blocking)
     notifyBookImport(bookIdStr, slug).catch(console.error);

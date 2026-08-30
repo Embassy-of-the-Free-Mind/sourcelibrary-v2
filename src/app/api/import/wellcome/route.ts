@@ -7,7 +7,6 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 
@@ -325,9 +324,6 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     await db.collection('pages').insertMany(pageDocs);
-
-    // Queue preview OCR for early metadata enrichment (non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     // Audit log (non-blocking)
     logAuditEvent({
