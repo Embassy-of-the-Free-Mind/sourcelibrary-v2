@@ -94,7 +94,7 @@ function calculateCost(model, inputTokens, outputTokens) {
 
 // NOTE: parses `<image>` sub-tags, which the current OCR prompt does not emit —
 // a different parser from the canonical `parseDetectedImages`, not a fork of it.
-// Deliberately out of scope for #4443; see #4445.
+// Deliberately out of scope for #4443; see #4456.
 function parseDetectedImages(text) {
   const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
   if (!match) return [];

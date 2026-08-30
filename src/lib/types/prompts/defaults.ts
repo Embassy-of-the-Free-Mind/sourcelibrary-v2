@@ -44,7 +44,7 @@ export const IMAGE_CANDIDATE_PAGE_TYPES = [
  * `cover`, which VALID_PAGE_TYPES does not list. Flipping those callers to
  * validating would silently stop three prompt-sanctioned types from being
  * recorded, so the divergence is a parameter here rather than a fork out there.
- * See #4444 for closing the vocabulary gap itself.
+ * See #4455 for closing the vocabulary gap itself.
  */
 export function extractPageType(
   ocrText: string,

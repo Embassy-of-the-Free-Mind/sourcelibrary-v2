@@ -50,7 +50,7 @@ export const VALID_PAGE_TYPES = new Set([
  * disagree: the OCR prompt offers `musical-score`, `table` and `cover`, none of
  * which VALID_PAGE_TYPES lists. Flipping those callers to validating would
  * silently stop three prompt-sanctioned types from being recorded, so the
- * divergence is a parameter rather than a fork. See #4444 for the gap itself.
+ * divergence is a parameter rather than a fork. See #4455 for the gap itself.
  *
  * Unlike the TS canonical this tolerates a non-string argument, because
  * `split-book.mjs` passes `page.ocr`, which is null on an un-OCR'd page.

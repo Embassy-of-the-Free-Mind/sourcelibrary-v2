@@ -144,7 +144,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
 
 // NOTE: parses `<image>` sub-tags, which the current OCR prompt does not emit —
 // a different parser from the canonical `parseDetectedImages`, not a fork of it.
-// Deliberately out of scope for #4443; see #4445.
+// Deliberately out of scope for #4443; see #4456.
 function parseDetectedImages(text) {
   const imageBlocks = text.match(/<detected-images>[\s\S]*?<\/detected-images>/gi);
   if (!imageBlocks) return [];

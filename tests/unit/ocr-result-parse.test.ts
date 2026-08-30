@@ -45,7 +45,7 @@ const pageTypeFixtures: Record<string, string> = {
   padded: '<page-type>  Frontispiece  </page-type>',
   uppercaseTag: '<PAGE-TYPE>blank</PAGE-TYPE>',
   multiline: '<page-type>\ntext\n</page-type>',
-  // Offered by the OCR prompt, absent from VALID_PAGE_TYPES — see #4444.
+  // Offered by the OCR prompt, absent from VALID_PAGE_TYPES — see #4455.
   promptOnly: '<page-type>musical-score</page-type>',
   promptOnlyTable: '<page-type>table</page-type>',
   promptOnlyCover: '<page-type>cover</page-type>',
@@ -145,7 +145,7 @@ describe('extractPageType behaviour', () => {
       .toBe('a page of some kind');
   });
 
-  it('the three prompt-only types are the measured vocabulary gap (#4444)', () => {
+  it('the three prompt-only types are the measured vocabulary gap (#4455)', () => {
     // The OCR prompt offers musical-score / table / cover and the reader renders
     // them (tests/unit/page-type-vocabulary.test.ts), but VALID_PAGE_TYPES does
     // not list them — which is why the four unvalidated collectors could NOT be

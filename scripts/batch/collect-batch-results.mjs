@@ -65,7 +65,7 @@ function isDigitizerPage(pageType, ocrText) {
 // fork of it, and was deliberately left out of the #4443 consolidation. Measured
 // 2026-08-31: of 200 sampled pages holding a `<detected-images>` block, 200 were
 // JSON-shaped and 0 XML-shaped, so this returns [] on current-prompt output. See
-// #4445.
+// #4456.
 function parseDetectedImages(text) {
   const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
   if (!match) return [];
