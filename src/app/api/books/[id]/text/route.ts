@@ -11,6 +11,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef } from '@/lib/bot-attribution';
 import { getTranslation } from '@/lib/page-translations';
+import { isMeteredAnonRequest } from '@/lib/metered-gate';
 
 // This route serves quotable page text (get_book_text tells agents to "copy
 // verbatim from the translation field"), so it MUST strip the AI editorial
@@ -119,9 +120,13 @@ export const GET = withApiAuth(async (
 
     const resolvedBookId = book.id || bookId;
 
-    // Bot gating: non-trusted bots get the first 20% of pages from any book
+    // Bot gating: non-trusted bots get the first 20% of pages from any book.
+    // When METERED_READER=1 the same clamp applies to anonymous humans
+    // (#4357) — this route is the highest-volume text egress and would
+    // otherwise hand the reader wall's content out the side door.
     const isBotRequest = isBot(request) && !(await isTrustedBot(request));
-    const botPageLimit = isBotRequest ? botMaxPage(book.pages_count || 0) : undefined;
+    const meteredAnon = !isBotRequest && (await isMeteredAnonRequest(request));
+    const botPageLimit = isBotRequest || meteredAnon ? botMaxPage(book.pages_count || 0) : undefined;
 
     // Provenance. Two layers, deliberately different in reach:
     //   - the INVISIBLE imprimatur goes on every page of every response (this

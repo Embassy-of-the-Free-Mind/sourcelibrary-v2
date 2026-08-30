@@ -7,8 +7,9 @@ import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
-import { isNativeEdition, localizedEditionFilter, type LocalizedBookMap } from '@/lib/localized';
-import { spanishReaderHref } from '@/lib/es-collections';
+import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
+import { localizedEditionFilter } from '@/lib/localized';
+import type { Locale } from '@/lib/locale-path';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -692,98 +693,31 @@ async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast |
   };
 }
 
+// ---------- The Spanish collection card (the /es "Leer en español" band) ----------
+// One card linking to /es/collections/en-espanol, the same block /es/collections
+// leads with. The band used to be a 15-cover slider plus counts; a single
+// door into the full list was the call (#4158 → #4161 → here).
+
 /**
- * How much of the library a Spanish reader can actually read.
+ * How many books in each collection can be read in `lang` — the "· 57 en
+ * español" half of the homepage grid's count line.
  *
- * Stated on the page because the honest answer is "a small, growing corner":
- * 103 books of 37,821. A Spanish front door that shows fifteen covers and says
- * nothing about scale implies a Spanish library, and the reader finds out by
- * clicking. Counted live rather than hard-coded — the number grows every time
- * the worker runs.
+ * Same selection rule as `/es/collections` (`localizedEditionFilter`): a book
+ * counts if it was TRANSLATED into the language or WRITTEN in it. Sharing the
+ * filter is what stops the homepage card and the collections card from
+ * disagreeing about the same collection. Indexed off the small set of books
+ * that have an edition, never by scanning collections × books.
  */
-export interface SpanishCounts { books: number; pages: number }
-
-async function getSpanishCounts(): Promise<SpanishCounts | null> {
+async function getLocalizedCollectionCounts(lang: Exclude<Locale, 'en'>): Promise<Record<string, number>> {
   const db = await getReadDb();
-  const [row] = await db.collection('books').aggregate<{ books: number; pages: number }>([
-    { $match: { pages_translated_es: { $gt: 0 }, visible: true, pages_count: { $gt: 0 } } },
-    { $group: { _id: null, books: { $sum: 1 }, pages: { $sum: '$pages_translated_es' } } },
-    { $project: { _id: 0, books: 1, pages: 1 } },
+  const rows = await db.collection('books').aggregate<{ _id: string; count: number }>([
+    { $match: { ...localizedEditionFilter(lang), visible: true, pages_count: { $gt: 0 } } },
+    { $unwind: '$collections' },
+    { $group: { _id: '$collections', count: { $sum: 1 } } },
   ], { maxTimeMS: 8000 }).toArray();
-  return row ?? null;
-}
-
-// ---------- Aggregate ----------
-
-// ---------- Books with a Spanish edition (the /es "Leer en español" band) ----------
-
-/** Slug of the curated collection that gathers every book with a Spanish edition. */
-export const SPANISH_COLLECTION_SLUG = 'en-espanol';
-const SPANISH_BOOKS_COUNT = 15;
-
-// Minimal card shape for the slider: BookSlider's MiniBook plus the Spanish
-// counter that switches on the card's "Español" tag.
-export interface SpanishBook {
-  id: string;
-  slug?: string;
-  title: string;
-  display_title?: string;
-  author?: string;
-  year?: number;
-  language?: string;
-  pages_count?: number;
-  pages_ocr?: number;
-  pages_translated?: number;
-  pages_translated_es?: number;
-  localized?: LocalizedBookMap;
-  is_first_translation?: boolean;
-  ft_disposition?: string;
-  thumbnail?: string;
-  thumbnail_blob?: string;
-  image_display?: string;
-  image_thumb?: string;
-  /** Straight into the reader in Spanish (first chapter / first readable page). */
-  href: string;
-}
-
-// Most-read first (`read_count`), so the band leads with what Spanish readers
-// are most likely to be looking for. `pages_translated_es` is the book-level
-// counter kept by scripts/maintenance/sync-pages-translated-es.mjs — the per-
-// page fields are not indexed and must never be scanned on a request path.
-//
-// The band selects through localizedEditionFilter('es'), so it holds books that
-// are in Spanish EITHER WAY: translated into it, or written in it. A Spanish
-// original has no counter and never will, and selecting on the counter alone
-// hid 67 live books — Cogolludo, Landa, Aguilar — from the Spanish homepage.
-// Books with a counter still sort first; a native edition has none, so within a
-// read_count tie it follows, which is the right order for a band whose subject
-// is our Spanish editions.
-async function getSpanishBooks(): Promise<SpanishBook[]> {
-  const db = await getReadDb();
-  const books = await db.collection('books').find(
-    {
-      ...localizedEditionFilter('es'),
-      visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' },
-    },
-    {
-      projection: {
-        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1,
-        pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, localized: 1,
-        is_first_translation: 1, ft_disposition: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
-        'chapters.pageNumber': 1,
-      },
-      sort: { read_count: -1, pages_translated_es: -1 },
-      limit: SPANISH_BOOKS_COUNT,
-      maxTimeMS: 8000,
-    },
-  ).toArray();
-  // The card opens the Spanish reader directly — the English book page would
-  // drop the reader out of the Spanish experience (until #4082 gives it a twin).
-  type Raw = Omit<SpanishBook, 'href'> & { chapters?: { pageNumber?: number }[] };
-  return JSON.parse(JSON.stringify((books as unknown as Raw[]).map(({ chapters, ...b }) => ({
-    ...b,
-    href: spanishReaderHref({ ...b, chapters }),
-  })))) as SpanishBook[];
+  const out: Record<string, number> = {};
+  for (const r of rows) if (typeof r._id === 'string') out[r._id] = r.count;
+  return out;
 }
 
 // ---------- Aggregate ----------
@@ -797,10 +731,14 @@ export interface HomeData {
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
   featuredPodcast: FeaturedPodcast | null;
-  /** Books with a Spanish edition, most-read first. Empty on the English homepage. */
-  spanishBooks: SpanishBook[];
-  /** Size of the Spanish corpus, for the honest scale line. Null off /es. */
-  spanishCounts: SpanishCounts | null;
+  /** The `en-espanol` collection card. Null on the English homepage. */
+  spanishCollection: EsSpanishCollectionCard | null;
+  /**
+   * Books readable in the page's language, per collection slug — what the grid
+   * card's "· N en español" line reads. Empty on the English homepage, where
+   * every book is already in the page's language and the line would be noise.
+   */
+  localizedCollectionCounts: Record<string, number>;
 }
 
 // `lang` selects the podcast episode's language and the Spanish-edition band,
@@ -808,7 +746,7 @@ export interface HomeData {
 // keeps the two homepages structurally identical (see the note at the top of
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishBooks, spanishCounts] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishCollection, localizedCollectionCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -816,9 +754,11 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getFeaturedPodcast(lang), 8000, null),
-    lang === 'es' ? withTimeout(getSpanishBooks(), 8000, [] as SpanishBook[]) : Promise.resolve([] as SpanishBook[]),
-    lang === 'es' ? withTimeout(getSpanishCounts(), 8000, null) : Promise.resolve(null),
+    lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
+    lang === 'en'
+      ? Promise.resolve({} as Record<string, number>)
+      : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishBooks, spanishCounts };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishCollection, localizedCollectionCounts };
 }

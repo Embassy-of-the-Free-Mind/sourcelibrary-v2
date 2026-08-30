@@ -37,6 +37,21 @@
  *                 blind to those pages, so they are never offered to the vision
  *                 model and read as "extracted, empty" permanently. Also skips
  *                 pages already examined.
+ *   --all-pages   Offer EVERY never-examined page (page_number > 0, no
+ *                 detected_images) to the vision model — no marker, no
+ *                 page_type needed. For books whose OCR vintage has neither
+ *                 (the worker sees "no candidates" and stamps them
+ *                 images_complete on first touch, #4241). Requires --book.
+ *   --reconcile   No vision calls. Re-crop + re-materialize books whose
+ *                 recovered pages have no gallery_images doc. The corpus scan
+ *                 selects on `detected_images_count > 0` — a field written BY
+ *                 materialization — so a book whose FIRST materialization died
+ *                 is invisible to it (#4241). For that case use:
+ *   --reconcile --book=ID
+ *                 targeted repair of one book: skips the rollup-field gate and
+ *                 considers ANY qualifying detection (not just miss_recheck_at
+ *                 pages), so worker-written detections that never materialized
+ *                 are repaired too.
  */
 
 import { MongoClient } from 'mongodb';
@@ -71,6 +86,20 @@ const ANY_MARKER = args.includes('--any-marker');
 // Also accept pages the page-typer already called an illustration, whether or
 // not OCR left a marker behind — see pageIsWorkerCandidate() below.
 const PAGE_TYPE_CANDIDATES = args.includes('--page-type-candidates');
+// Offer EVERY never-examined page to the vision model, no marker or page_type
+// required. For books whose OCR vintage predates the <image-desc> convention
+// AND whose pages were never typed, every gate above sees zero candidates —
+// the production worker then stamps the book images_complete on first touch
+// and it exits the queue forever (the Utriusque Cosmi Vol. 2 case, #4241:
+// 700pp of plates, page_type null on every page, no markers). Requires --book:
+// this is a per-book recovery tool, not a corpus sweep — an unbounded all-pages
+// vision pass over the library would be a five-figure spend.
+const ALL_PAGES = args.includes('--all-pages');
+
+if (ALL_PAGES && !getArg('book', null)) {
+  console.error('FATAL: --all-pages requires --book=ID (per-book recovery only, never a corpus sweep)');
+  process.exit(1);
+}
 
 const MODEL = 'gemini-3-flash-preview';
 const TRIVIAL = new Set(['symbol', 'stamp', 'ornament', 'blank', 'exlibris', 'bookplate', 'decorative', "printer's mark", 'photograph', 'photographic']);
@@ -152,7 +181,7 @@ function pageIsWorkerCandidate(page) {
 }
 
 async function main() {
-  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} anyMarker=${ANY_MARKER} pageTypeCandidates=${PAGE_TYPE_CANDIDATES} keys=${API_KEYS.length}`);
+  console.log(`[reextract-missed] start ${new Date().toISOString()} | apply=${APPLY} limit=${LIMIT} conc=${CONCURRENCY} anyMarker=${ANY_MARKER} pageTypeCandidates=${PAGE_TYPE_CANDIDATES} allPages=${ALL_PAGES} keys=${API_KEYS.length}`);
   const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 5 });
   await client.connect();
   const db = client.db('bookstore');
@@ -185,16 +214,18 @@ async function main() {
       // for --page-type-candidates: page_type alone is weaker evidence than a
       // high-significance marker, so don't spend a second vision call on a page
       // some earlier pass already looked at and found empty.
-      ...(ANY_MARKER || PAGE_TYPE_CANDIDATES ? { image_extraction_updated_at: { $exists: false } } : {}),
+      ...(ANY_MARKER || PAGE_TYPE_CANDIDATES || ALL_PAGES ? { image_extraction_updated_at: { $exists: false } } : {}),
     }, { projection: { id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, display_photo: 1, crop: 1, split_from_spread: 1, 'ocr.data': 1 } }).toArray();
     for (const p of pages) {
       // Require the high-significance non-trivial OCR marker — the precise
       // "genuine miss" signal the pilot measured at ~63% recovery. (page_type
       // alone is a weaker signal and dilutes yield.) --page-type-candidates
       // trades that yield for coverage of typed pages OCR never marked up.
-      const accept = PAGE_TYPE_CANDIDATES
-        ? pageIsWorkerCandidate(p)
-        : pageHasNonTrivialHighSigMarker(p.ocr?.data);
+      const accept = ALL_PAGES
+        ? true
+        : PAGE_TYPE_CANDIDATES
+          ? pageIsWorkerCandidate(p)
+          : pageHasNonTrivialHighSigMarker(p.ocr?.data);
       if (!accept) continue;
       // Keep only the fields getPageSource() needs — drop ocr.data so a 56K-page
       // full sweep doesn't hold the entire OCR corpus in memory.
@@ -304,27 +335,48 @@ async function thumbnailAndMaterialize(db, bid) {
 }
 
 // ── Reconcile: re-crop + re-materialize books whose recovered pages have no gallery_images doc ──
+// Returns true when the book had a gap (i.e. thumbnailAndMaterialize was attempted).
+async function bookHasGalleryGap(db, bookId, { anyDetection }) {
+  // recovered pages with a gallery-worthy detection (these MUST end up visible)
+  const recovered = await db.collection('pages').find(
+    {
+      book_id: bookId,
+      ...(anyDetection ? {} : { miss_recheck_at: { $exists: true } }),
+      detected_images: { $elemMatch: { bbox: { $exists: true }, gallery_quality: { $gte: 0.5 } } },
+    },
+    { projection: { id: 1, detected_images: 1 } }
+  ).toArray();
+  if (!recovered.length) return false;
+  const haveGallery = new Set(await db.collection('gallery_images').distinct('page_id', { book_id: bookId }));
+  // A page needs repair if it has no gallery doc, OR a qualifying detection has no
+  // extracted_url crop yet (thumbnails never ran → it'd be filtered from the gallery).
+  return recovered.some(p =>
+    !haveGallery.has(p.id) ||
+    (p.detected_images || []).some(d => d?.bbox && (d.gallery_quality ?? 0) >= 0.5 && !d.extracted_url)
+  );
+}
+
 async function reconcile(db) {
+  if (ONLY_BOOK) {
+    // Targeted repair. No `detected_images_count` gate (that field is written by
+    // materialization itself, so a book whose first materialization failed never has
+    // it) and no miss_recheck_at requirement (the failed run may have been the
+    // production worker's, which doesn't stamp it).
+    console.log(`[reconcile] targeted repair of ${ONLY_BOOK}…`);
+    const gap = await bookHasGalleryGap(db, ONLY_BOOK, { anyDetection: true });
+    if (!gap) { console.log('[reconcile] done. No gap — gallery already consistent with detections.'); return; }
+    await thumbnailAndMaterialize(db, ONLY_BOOK);
+    const rows = await db.collection('gallery_images').countDocuments({ book_id: ONLY_BOOK });
+    console.log(`[reconcile] done. Gap repaired; gallery_images rows now: ${rows}`);
+    return;
+  }
   console.log('[reconcile] scanning Case-3 books for recovered pages missing gallery docs…');
   const cursor = db.collection('books').find({ visible: true, detected_images_count: { $gt: 0 } }, { projection: { id: 1 } }).sort({ _id: 1 });
   let scanned = 0, gapBooks = 0, fixed = 0, failed = 0;
   for await (const book of cursor) {
     scanned++;
     if (scanned % 1000 === 0) console.log(`  …scanned ${scanned} books, ${gapBooks} gap, ${fixed} fixed, ${failed} failed`);
-    // recovered pages with a gallery-worthy detection (these MUST end up visible)
-    const recovered = await db.collection('pages').find(
-      { book_id: book.id, miss_recheck_at: { $exists: true }, detected_images: { $elemMatch: { bbox: { $exists: true }, gallery_quality: { $gte: 0.5 } } } },
-      { projection: { id: 1, detected_images: 1 } }
-    ).toArray();
-    if (!recovered.length) continue;
-    const haveGallery = new Set(await db.collection('gallery_images').distinct('page_id', { book_id: book.id }));
-    // A page needs repair if it has no gallery doc, OR a qualifying detection has no
-    // extracted_url crop yet (thumbnails never ran → it'd be filtered from the gallery).
-    const gap = recovered.some(p =>
-      !haveGallery.has(p.id) ||
-      (p.detected_images || []).some(d => d?.bbox && (d.gallery_quality ?? 0) >= 0.5 && !d.extracted_url)
-    );
-    if (!gap) continue;
+    if (!await bookHasGalleryGap(db, book.id, { anyDetection: false })) continue;
     gapBooks++;
     try { await thumbnailAndMaterialize(db, book.id); fixed++; }
     catch (e) { failed++; console.error(`  [reconcile-fail] ${book.id}: ${e.codeName || ''} ${e.message}`); }

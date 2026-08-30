@@ -52,6 +52,8 @@ function transformBook(book) {
     pages_count: book.pages_count || 0,
     pages_ocr: book.pages_ocr || 0,
     pages_translated: book.pages_translated || 0,
+    // #4166 — paired with `pages_translated_es: 1` in the projection below.
+    pages_translated_es: book.pages_translated_es || 0,
     pages_blank: book.pages_blank || 0,
     is_first_translation: book.is_first_translation === true,
     visible: book.visible === true,
@@ -107,7 +109,7 @@ const projection = {
   id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
   read_count: 1, pages_blank: 1,
-  pages_count: 1, pages_ocr: 1, pages_translated: 1,
+  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1,
   is_first_translation: 1, visible: 1, quality_score: 1,
   last_translation_at: 1, updated_at: 1, created_at: 1,
   categories: 1, collections: 1, collection_relevance: 1,

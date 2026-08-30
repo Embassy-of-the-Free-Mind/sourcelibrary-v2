@@ -7,7 +7,14 @@
 #   - /root/backups/books-weekly/  — snapshot every Sunday, kept forever (point-in-time)
 #
 # Only backs up book metadata (books, books_warehouse, deleted_books).
-# Images live on R2; pages can be re-OCR'd from R2 if needed.
+#
+# The TEXT (pages, page_revisions, chapter_texts, entities, …) is covered by its
+# sibling, backup-corpus-text.sh — NOT by this script. An earlier version of this
+# comment read "pages can be re-OCR'd from R2 if needed", which left ~20.6M pages
+# of OCR and translation with no offsite copy for months. It is true in the narrow
+# sense and expensive in the real one: re-OCR re-spends the model budget and still
+# cannot regenerate human corrections, page_revisions, or first-translation
+# evidence. See .claude/docs/preservation-policy.md, principle 2.
 #
 # Restore: mongorestore --uri="$MONGODB_URI" --db=bookstore --gzip --dir=/root/backups/books-latest/bookstore
 

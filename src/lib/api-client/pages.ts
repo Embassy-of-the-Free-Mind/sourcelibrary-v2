@@ -21,11 +21,16 @@ import type {
  */
 export const pages = {
   /**
-   * Get a single page by ID
+   * Get a single page by ID.
+   *
+   * `cite` (#4357): citation token from a /q/ quote link — the server
+   * serves this one page ungated to a valid token even past the metered
+   * reader's free sample.
    */
-  get: async (id: string): Promise<Page> => {
+  get: async (id: string, opts?: { cite?: string }): Promise<Page> => {
     const tenant = getTenantSlug();
-    return await apiClient.get(`/api/${tenant}/pages/${id}`);
+    const query = opts?.cite ? `?cite=${encodeURIComponent(opts.cite)}` : '';
+    return await apiClient.get(`/api/${tenant}/pages/${id}${query}`);
   },
 
   /**

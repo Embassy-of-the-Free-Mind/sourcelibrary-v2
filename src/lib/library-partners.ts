@@ -330,6 +330,15 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     color: 'sage',
     heroImageOverride: 'https://images.sourcelibrary.org/hero/penn_colenda.jpg',
   },
+  'byu': {
+    slug: 'byu',
+    name: 'Brigham Young University, L. Tom Perry Special Collections',
+    shortName: 'BYU',
+    providerKey: 'byu',
+    url: 'https://sc.lib.byu.edu',
+    description: 'The L. Tom Perry Special Collections at Brigham Young University holds the William Gates papers (MSS 279) — the working archive of the Maya scholar and publisher William E. Gates (1863-1940), who spent decades photographing and photostatting Mesoamerican manuscripts. For several of the Books of Chilam Balam, the Yucatec Maya manuscript books of prophecy, chronicle, medicine and the calendar, the copies Gates made are the only surviving witness to originals that have since been lost.',
+    color: 'violet',
+  },
   'huntington': {
     slug: 'huntington',
     name: 'Huntington Library',

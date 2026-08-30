@@ -85,10 +85,20 @@ const TRANSLATED_COUNTER: Record<Exclude<Locale, 'en'>, string> = {
  * "Spanish / Latin", "Spanish / French", "Nahuatl-Spanish", "Old Spanish", and
  * "Spanish in Hebrew characters" — Judeo-Spanish in Hebrew script, which a
  * Spanish reader cannot read at all and which a substring match would happily
- * claim. A half-Spanish page is a weaker promise than `/es` makes, and a
- * bilingual edition is its own question (the Ximénez Popol Vuh carries K'iche'
- * and Spanish in parallel columns and is catalogued under K'iche'). Widen this
- * only with a decision about what a bilingual page owes a Spanish reader.
+ * claim. A half-Spanish page is a weaker promise than `/es` makes.
+ *
+ * A BILINGUAL edition stays out of this pattern, and now for a positive reason
+ * rather than an unanswered one. This comment used to end "widen this only with
+ * a decision about what a bilingual page owes a Spanish reader"; the decision
+ * was taken on 2026-08-25 and it is **the Spanish COLUMN, not the page**. What
+ * made "half-Spanish" too weak a promise was measuring the wrong unit — the page
+ * is half Spanish, the column is all of it, and the OCR prompt already marks the
+ * boundary with `<column-break/>`. So a bilingual edition is served by
+ * extracting that column into `pages.translations.es` with
+ * `source: 'source-column'` (`scripts/lib/source-column.mjs`,
+ * `scripts/maintenance/extract-source-columns.mjs`), which makes it a book with
+ * a real counter and leaves THIS pattern to mean exactly what it says. See
+ * `.claude/handoffs/2026-08-25-bilingual-source-columns.md`.
  *
  * ONE pattern, exported, because the same set has to be selected in Mongo
  * (`{ language: NATIVE_EDITION_LANGUAGE.es }`) and tested in JS. Two copies of
@@ -131,8 +141,11 @@ export function localizedEditionFilter(lang: Exclude<Locale, 'en'>): Record<stri
  * (`NATIVE_EDITION_LANGUAGE`). Either way the promise `/es` makes is kept. A
  * title gloss alone is still chrome, not an edition.
  *
- * Returns `null` when the payload cannot answer — both inputs are Mongo fields
- * and the Supabase catalog fast-path carries neither. Callers must treat `null`
+ * Returns `null` when the payload cannot answer — a hand-built card object, a
+ * narrowed API select, anything carrying neither input. (The Supabase catalog
+ * fast-path carries both since #4166; it carried only `language` before, which
+ * is worse than carrying neither: half a signal answers confidently and
+ * wrongly.) Callers must treat `null`
  * as "ask, or do nothing", NEVER as false: reading an absent field as "no
  * Spanish edition" would 307 a genuinely Spanish book to English, which is the
  * absence-is-not-failure trap this codebase keeps re-learning. Note both fields

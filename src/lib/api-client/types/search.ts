@@ -33,9 +33,39 @@ export interface SearchResult {
   image_display?: string;
   image_thumb?: string;
   quality_score?: number;
+  /**
+   * The work this edition belongs to, when it has one. Exposed so a CLIENT that
+   * merges two independently-fetched lanes can dedup at the work grain — the
+   * `/search` page fetches its keyword and conceptual lanes separately and
+   * could only compare book ids, which let one more copy of a collapsed work
+   * back onto the first screen (#4300).
+   */
+  work_id?: string;
+  /**
+   * Present when this row stands in for other editions/copies that the
+   * work-grain collapse removed from the list (#4300). `editions` counts what
+   * `/work/[id]` renders — the set the link actually reaches — never the number
+   * of rows collapsed, which is reported separately. Absent under a tenant
+   * context: an edition census across the global library is not a partner
+   * reading room's claim to make.
+   */
+  work_group?: {
+    work_id: string;
+    href: string;
+    editions: number;
+    collapsed_in_results: number;
+  };
 }
 
 export interface SearchFilters {
+  /**
+   * TEXT language of the answer — an ISO code picking which edition of each
+   * page to search and quote back (`page_texts.lang`). Distinct from
+   * `language`, which filters by the BOOK's edition language. Anything but
+   * `en` also narrows the request to books that HAVE that edition, so every
+   * result is openable in it (#4095, invariants/search-filters-and-lanes.md).
+   */
+  lang?: string;
   language?: string;
   library?: string;
   date_from?: string;

@@ -7,6 +7,7 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
+import UserMenu from '@/components/layout/UserMenu';
 import RevisionHistory from '@/components/reader/RevisionHistory';
 import {
   Loader2,
@@ -30,7 +31,8 @@ import {
   AlertCircle,
   Crosshair,
 } from 'lucide-react';
-import { useReaderPreferences, type ReaderTheme } from '@/hooks/useReaderPreferences';
+import { useReaderPreferences, type ReaderTheme, type ReaderFount } from '@/hooks/useReaderPreferences';
+import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import AiBadge from '@/components/ui/AiBadge';
@@ -57,19 +59,8 @@ import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
+import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 
-// Languages that use non-Latin scripts and benefit from transliteration
-const NON_LATIN_LANGUAGES = new Set([
-  'greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
-  'syriac', 'chinese', 'japanese', 'korean', 'sanskrit',
-  'armenian', 'georgian', 'ethiopic', 'coptic', 'tibetan',
-  'russian', 'church slavonic'
-]);
-
-function hasNonLatinScript(language?: string): boolean {
-  if (!language) return false;
-  return NON_LATIN_LANGUAGES.has(language.toLowerCase());
-}
 
 // Helper to format edit source info
 // EditSourceBadge removed — source info folded into RevisionHistory trigger
@@ -520,7 +511,9 @@ export default function TranslationEditor({
     translation: page.translation?.data || '',
     summary: page.summary?.data || '',
   });
-  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme } = useReaderPreferences();
+  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme, fount, setFount } = useReaderPreferences();
+  // Does this book have a facsimile of its own type? (src/lib/fonts/aldine-fount.ts)
+  const hasFount = isAldineFount(book.id);
 
   // Modernized text toggle
   const [modernizedMode, setModernizedMode] = useState(() => {
@@ -639,6 +632,10 @@ export default function TranslationEditor({
   const [transliterationLoading, setTransliterationLoading] = useState(false);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
+  // Liked state of the CURRENT page, reported by the LikeButtons (#4126) so
+  // the footer line can swap "to save it to your favorites" → "Saved to your
+  // favorites". Both the toolbar and footer hearts report here.
+  const [pageLiked, setPageLiked] = useState(false);
   // Full book doc for the edition-info section of the metadata panel. The reader
   // route only ships a slim book projection, so the bibliographic fields are
   // fetched on demand — once per book, the first time the panel opens.
@@ -858,6 +855,17 @@ export default function TranslationEditor({
   const isNonLatin = hasNonLatinScript(book.language);
   const hasTransliteration = !!(page.transliteration?.data || transliterationText);
   const hasGermanSource = !!page.translation?.german_source;
+  /**
+   * How many columns the TRANSLATION panel should render in.
+   *
+   * `page.columns` describes the LEAF, and NotesRenderer uses it as a fallback:
+   * with no `<column-break/>` in the text it splits at the paragraph midpoint to
+   * mirror the scan. That is wrong for a source-column edition, where the text
+   * IS one column of a two-column page — rendering it as two would tell the
+   * reader the leaf carried two columns of Spanish when it carried one of
+   * Spanish beside one of Nahuatl or K'iche'.
+   */
+  const translationColumns = page.translation?.source === 'source-column' ? 1 : page.columns;
   const shouldShowRequestTranslation = shouldShowTranslationRequestCta({
     ocrText,
     translationText,
@@ -1238,7 +1246,7 @@ export default function TranslationEditor({
     const isFullyTranslated = ocrText && translationText;
 
     return (
-      <div className="h-screen flex flex-col" data-reader-theme={theme} style={{ background: 'var(--bg-cream)' }}>
+      <div className="h-screen flex flex-col" data-reader-theme={theme} data-reader-fount={hasFount ? fount : undefined} style={{ background: 'var(--bg-cream)' }}>
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
@@ -1353,6 +1361,17 @@ export default function TranslationEditor({
                 </span>
               )}
             </div>
+
+            {/* Account/sign-in — the reader was the one surface with no route
+                back to /favorites and no visible sign-in state (#4126). After
+                the page navigator so the highest-frequency control keeps its
+                position; on mobile this lives in row 2 instead. Never in
+                partner embeds. */}
+            {!isEmbedded && (
+              <div className="hidden sm:block shrink-0">
+                <UserMenu />
+              </div>
+            )}
           </div>
 
           {/* Row 2: Panel toggles ... Mode toggle + Like */}
@@ -1502,6 +1521,38 @@ export default function TranslationEditor({
                           </button>
                         ))}
                       </div>
+                      {/* Books we hold a facsimile of their own type (#4083): let the
+                          reader choose the book's letterforms or the library's reading face. */}
+                      {hasFount && (
+                        <>
+                          <div className="text-[10px] uppercase tracking-widest text-center mt-4 mb-3" style={{ color: 'var(--text-muted)' }}>{rs.typeface}</div>
+                          <div className="flex items-center justify-between gap-2">
+                            {([
+                              ['original', rs.typeOriginal, rs.typeOriginalTitle, 'var(--font-aldine-aetna), var(--font-cardo), Georgia, serif'],
+                              ['modern', rs.typeModern, rs.typeModernTitle, "'Newsreader', Georgia, serif"],
+                            ] as [ReaderFount, string, string, string][]).map(([key, label, hint, family]) => (
+                              <button
+                                key={key}
+                                onClick={() => setFount(key)}
+                                className="flex-1 flex flex-col items-center gap-1 py-2 rounded-lg border-2 transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                                style={{
+                                  background: 'var(--bg-white)',
+                                  color: 'var(--text-primary)',
+                                  borderColor: fount === key ? 'var(--accent-rust)' : 'var(--border-light)',
+                                }}
+                                aria-pressed={fount === key}
+                                title={hint}
+                              >
+                                <span className="text-base leading-none" style={{ fontFamily: family }}>Aa</span>
+                                <span className="text-[10px]">{label}</span>
+                              </button>
+                            ))}
+                          </div>
+                          <p className="text-[10px] leading-snug mt-2 text-center" style={{ color: 'var(--text-muted)' }}>
+                            {rs.typeCaption}
+                          </p>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
@@ -1546,6 +1597,7 @@ export default function TranslationEditor({
                   bookId={book.id}
                   size="sm"
                   showCount={true}
+                  onLikedChange={setPageLiked}
                 />
                 <ShareButton
                   title={book.display_title || book.title}
@@ -1603,6 +1655,12 @@ export default function TranslationEditor({
                   tenantSlug={params?.tenant || undefined}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full text-sm"
                 />
+                {/* Mobile home of the account menu — row 1 is too tight there (#4126). */}
+                {!isEmbedded && (
+                  <div className="sm:hidden ml-1">
+                    <UserMenu />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -2118,7 +2176,7 @@ export default function TranslationEditor({
                               {MANUSCRIPT_OCR_FLAG.label}
                             </summary>
                             <div className="prose-manuscript leading-relaxed mt-3" style={{ color: 'var(--text-muted)' }}>
-                              <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                              <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={translationColumns} pageType={page.page_type} />
                             </div>
                           </details>
                         )}
@@ -2129,7 +2187,7 @@ export default function TranslationEditor({
                         // Convert <section-intro> tags to <note> tags so NotesRenderer styles them as green editorial notes
                         const processedText = modernizedText
                           .replace(/<section-intro>([\s\S]*?)<\/section-intro>/g, '\n\n<note>$1</note>\n\n');
-                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={page.columns} pageType={page.page_type} />;
+                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={translationColumns} pageType={page.page_type} />;
                       })()
                     ) : translationText ? (
                       <>
@@ -2142,7 +2200,7 @@ export default function TranslationEditor({
                           bookYear={book.published}
                           doi={book.doi}
                         >
-                          <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                          <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={translationColumns} pageType={page.page_type} />
                         </HighlightSelection>
                         <TranslationFeedbackPrompt
                           bookId={book.id}
@@ -2316,7 +2374,13 @@ export default function TranslationEditor({
 
         {/* Footer: like + nav hint + search */}
         <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-3 flex-wrap text-xs">
+          {/* The like line states the payoff BEFORE the click and gives the
+              like a route back: "[♥ Like this page] to save it to your
+              favorites" → "[♥] Saved to your favorites" (#4126). The
+              /favorites link is a sibling of the button, never nested inside
+              it (nested interactives are an a11y fail and a mis-tap magnet);
+              embeds keep the bare button — there is no /favorites there. */}
+          <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-1.5 flex-wrap text-xs" aria-live="polite">
             <LikeButton
               key={`footer-${page.id}`}
               targetType="page"
@@ -2324,8 +2388,21 @@ export default function TranslationEditor({
               bookId={book.id}
               size="sm"
               showCount={true}
-              label={rs.likeThisPage}
+              label={pageLiked && !isEmbedded ? undefined : rs.likeThisPage}
+              onLikedChange={setPageLiked}
             />
+            {!isEmbedded && (
+              <span style={{ color: 'var(--text-muted)' }}>
+                {pageLiked ? rs.likeSavedPrefix : rs.likeSavePrefix}{' '}
+                <a
+                  href="/favorites"
+                  className="underline underline-offset-2 hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {rs.likeFavoritesWord}
+                </a>
+              </span>
+            )}
           </div>
           {showNavHint && (
             <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">

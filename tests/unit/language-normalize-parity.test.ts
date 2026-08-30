@@ -101,6 +101,16 @@ describe('language families', () => {
     expect(languageFamily('Latin')).toBe('Latin');
   });
 
+  it('folds every Chinese script/register variant into one family', () => {
+    // A Japanese go manual came back tagged Chinese 44% / Japanese 36% /
+    // Classical Chinese 12% / Traditional Chinese 8%: four labels, one text.
+    for (const v of ['Classical Chinese', 'Literary Chinese', 'Traditional Chinese', 'Simplified Chinese', 'Mandarin']) {
+      expect(sameLanguageFamily('Chinese', v), v).toBe(true);
+    }
+    // …but Japanese is a different language, even when written in kanji.
+    expect(sameLanguageFamily('Chinese', 'Japanese')).toBe(false);
+  });
+
   it('does not merge genuinely different languages', () => {
     expect(sameLanguageFamily('Latin', 'Greek')).toBe(false);
     expect(sameLanguageFamily('Chinese', 'Korean')).toBe(false);

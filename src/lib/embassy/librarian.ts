@@ -6,7 +6,13 @@ import {
   findEmbeddedImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
-import type { Locale } from '@/lib/locale-path';
+import { PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
+import {
+  localizedTitle,
+  localizedEditionFilter,
+  isNativeEdition,
+  type LocalizedBookMap,
+} from '@/lib/localized';
 import { GoogleGenAI, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
@@ -14,6 +20,7 @@ import { logAiUsage } from '@/lib/log-ai-usage';
 import { supabase } from '@/lib/supabase';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { authorSlug } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL } from '@/lib/clip';
 import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
@@ -183,6 +190,24 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
         collection: { type: Type.STRING, description: 'Optional. A collection slug from the "Collections" list in your instructions to FOCUS the search on. Results are weighted toward that collection but still include strong matches from the rest of the library — it is a lean, not a filter. Set this whenever the user\'s question is clearly about one collection\'s subject (e.g. a question about fungi or mushrooms → "mycology"; about tarot or planetary seals → "astrology"). Pick the single most relevant slug; if unsure or the topic spans the whole library, omit it.' },
       },
       required: ['query'],
+    },
+  },
+  {
+    name: 'browse_catalog',
+    description: 'Browse the CATALOGUE by filter and get an EXACT count — "what do you have in Spanish", "how many books from before 1600", "list everything in the astrology collection", "how many first translations". This answers how-many / show-me-everything questions that `search` structurally cannot: search returns only the strongest matching PASSAGES, so counting books from its results undercounts the shelf by orders of magnitude. Returns the real total, a representative list with links, and a browse URL for the rest.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        language: { type: Type.STRING, description: 'The language the edition is PRINTED in, named in English: "Spanish", "Latin", "Greek", "Chinese", "Tibetan". This is the language on the leaves of the scan — a Latin book we translated into English is still "Latin". Use this for "books published/written in X".' },
+        readable_in: { type: Type.STRING, description: 'Two-letter code of a language the reader can READ the book in — currently only "es". Matches books written in Spanish PLUS books we have translated into Spanish. This, not `language`, is what "libros en español" / "books available in Spanish" means.' },
+        collection: { type: Type.STRING, description: 'A collection slug from the "Collections" list in your instructions. Here it is a hard FILTER (in `search` the same argument is only a lean).' },
+        author: { type: Type.STRING, description: 'Match part of the author name as catalogued (e.g. "Ficino", "Paracelsus").' },
+        year_from: { type: Type.NUMBER, description: 'Earliest publication year, inclusive. ~13% of books carry no parsed year and drop out whenever either year bound is set — the result says so.' },
+        year_to: { type: Type.NUMBER, description: 'Latest publication year, inclusive.' },
+        first_translation: { type: Type.BOOLEAN, description: 'Only books carrying the first-translation badge.' },
+        sort: { type: Type.STRING, description: 'oldest (default) | newest | title | most_translated' },
+        limit: { type: Type.NUMBER, description: 'How many books to list back, 1-30 (default 15). The total count is exact no matter how few are listed.' },
+      },
     },
   },
   {
@@ -596,6 +621,274 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
   };
 }
 
+// ── Catalogue Browse ──────────────────────────────────────────────────
+
+/**
+ * The shelf, not the passages.
+ *
+ * `search` ranks passages, so every "what do you have in X / how many / list
+ * them all" question used to be answered from whatever the top few hits
+ * happened to be: asked for "all the books published in Spanish" the Librarian
+ * replied with 5 books drawn from 8 passages, against a shelf of 74. A count is
+ * a different query from a relevance ranking, and this is it — filter, exact
+ * count, a representative page of rows, and the browse URL showing the rest.
+ */
+
+const BROWSE_MAX_LIMIT = 30;
+const BROWSE_DEFAULT_LIMIT = 15;
+
+interface BrowseRow {
+  id: string;
+  slug?: string;
+  title?: string;
+  display_title?: string;
+  localized?: LocalizedBookMap | null;
+  author?: string;
+  author_id?: string;
+  year?: number;
+  published?: string;
+  language?: string;
+  pages_count?: number;
+  pages_translated?: number;
+  pages_translated_es?: number;
+  is_first_translation?: boolean;
+}
+
+function escapeRegex(input: string): string {
+  return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** Live, main-site books only — the same set every public browse surface counts. */
+function browseBaseFilter(): Record<string, unknown> {
+  return { visible: true, pages_count: { $gt: 0 }, ...tenantVisibilityFilter() };
+}
+
+// The catalogued `language` values with their live counts. Cached because the
+// model asks for "Spanish" the same way on every thread and the histogram moves
+// by a handful of books a week.
+let languageHistogramCache: { at: number; rows: Array<{ language: string; count: number }> } | null = null;
+
+async function languageHistogram(): Promise<Array<{ language: string; count: number }>> {
+  if (languageHistogramCache && Date.now() - languageHistogramCache.at < 600_000) {
+    return languageHistogramCache.rows;
+  }
+  const db = await getDb();
+  const rows = await db.collection('books').aggregate<{ _id: string; n: number }>([
+    { $match: { ...browseBaseFilter(), language: { $type: 'string', $ne: '' } } },
+    { $group: { _id: '$language', n: { $sum: 1 } } },
+    { $sort: { n: -1 } },
+  ], { maxTimeMS: 20000 }).toArray();
+  languageHistogramCache = { at: Date.now(), rows: rows.map(r => ({ language: r._id, count: r.n })) };
+  return languageHistogramCache.rows;
+}
+
+/**
+ * Map what the model typed to the values actually in the catalogue.
+ *
+ * Exact (case-insensitive) first, because that is what `/languages/<slug>`
+ * counts — a tool that reports 74 and links a page showing 68 is a worse answer
+ * than one that reports 68. Compound values ("Old Spanish", "Spanish / Latin",
+ * "Nahuatl-Spanish") are separate shelves and come back as `variants` for the
+ * model to mention, never silently folded into the total.
+ */
+async function resolveLanguageValues(input: string): Promise<{
+  matched: string[];
+  variants: Array<{ language: string; count: number }>;
+  suggestions: string[];
+}> {
+  const hist = await languageHistogram();
+  const wanted = input.trim().toLowerCase();
+  const exact = hist.filter(r => r.language.trim().toLowerCase() === wanted);
+  const word = new RegExp(`(^|[^a-z])${escapeRegex(wanted)}([^a-z]|$)`, 'i');
+  const near = hist.filter(r => r.language.trim().toLowerCase() !== wanted && word.test(r.language));
+  if (exact.length > 0) return { matched: exact.map(r => r.language), variants: near, suggestions: [] };
+  // No exact shelf: fall back to the compound ones so "Nahuatl" still answers.
+  if (near.length > 0) return { matched: near.map(r => r.language), variants: [], suggestions: [] };
+  return { matched: [], variants: [], suggestions: hist.slice(0, 12).map(r => `${r.language} (${r.count})`) };
+}
+
+interface BrowseArgs {
+  language?: string;
+  readable_in?: string;
+  collection?: string;
+  author?: string;
+  year_from?: number;
+  year_to?: number;
+  first_translation?: boolean;
+  sort?: string;
+  limit?: number;
+}
+
+const BROWSE_SORTS: Record<string, Record<string, 1 | -1>> = {
+  oldest: { year: 1, title: 1 },
+  newest: { year: -1, title: 1 },
+  title: { title: 1 },
+  most_translated: { pages_translated: -1, title: 1 },
+};
+
+async function executeBrowseCatalog(args: BrowseArgs, lang: Locale): Promise<{
+  total: number;
+  rows: BrowseRow[];
+  filterLabel: string;
+  browseUrl: string | null;
+  notes: string[];
+  sort: string;
+}> {
+  const db = await getDb();
+  const conditions: Record<string, unknown>[] = [browseBaseFilter()];
+  const labels: string[] = [];
+  const notes: string[] = [];
+  // Only a single-axis filter has a browse page showing exactly the same set.
+  // Anything narrower gets no URL rather than one that quietly means something
+  // else.
+  let linkable: { kind: 'language' | 'collection' | 'readable'; value: string } | null = null;
+
+  const languageInput = (args.language || '').trim();
+  if (languageInput) {
+    const { matched, variants, suggestions } = await resolveLanguageValues(languageInput);
+    if (matched.length === 0) {
+      notes.push(`No shelf is catalogued as "${languageInput}". The largest languages we do hold: ${suggestions.join(', ')}.`);
+      conditions.push({ language: '__no_such_language__' });
+    } else {
+      conditions.push(matched.length === 1 ? { language: matched[0] } : { language: { $in: matched } });
+      linkable = { kind: 'language', value: matched[0] };
+    }
+    labels.push(`printed in ${matched.length > 0 ? matched.join(' / ') : languageInput}`);
+    if (variants.length > 0) {
+      // "Latin" has 22 compound shelves; the whole list is noise in a prompt.
+      const shown = variants.slice(0, 6).map(v => `${v.language} (${v.count})`).join(', ');
+      const rest = variants.length > 6 ? `, and ${variants.length - 6} more` : '';
+      notes.push(`Counted only books catalogued exactly as "${matched[0]}". Related shelves NOT in this total: ${shown}${rest}.`);
+    }
+  }
+
+  const readable = (args.readable_in || '').trim().toLowerCase();
+  if (readable) {
+    if (readable === 'en') {
+      notes.push('English is the root edition — nearly every book is readable in English, so `readable_in: "en"` was ignored.');
+    } else if ((PREFIXED_LOCALES as string[]).includes(readable)) {
+      // Native original OR pages translated into that language — the same
+      // predicate every /es surface gates on (src/lib/localized.ts), so this
+      // total matches what the reader can actually open.
+      conditions.push(localizedEditionFilter(readable as Exclude<Locale, 'en'>));
+      labels.push(`readable in ${LANG_NAMES[readable as Locale] || readable}`);
+      linkable = { kind: 'readable', value: readable };
+    } else {
+      notes.push(`We do not publish editions in "${readable}" yet — that filter was ignored.`);
+    }
+  }
+
+  const collectionInput = (args.collection || '').trim();
+  if (collectionInput) {
+    const { resolveCollectionSlug } = await import('@/lib/embassy/collection-catalog');
+    const slug = await resolveCollectionSlug(collectionInput);
+    if (slug) {
+      conditions.push({ collections: slug });
+      labels.push(`in the "${slug}" collection`);
+      linkable = { kind: 'collection', value: slug };
+    } else {
+      notes.push(`No collection matches "${collectionInput}" — that filter was ignored.`);
+    }
+  }
+
+  const author = (args.author || '').trim();
+  if (author) {
+    conditions.push({ author: new RegExp(escapeRegex(author), 'i') });
+    labels.push(`author matching "${author}"`);
+    linkable = null;
+  }
+
+  const yearFrom = typeof args.year_from === 'number' ? Math.round(args.year_from) : null;
+  const yearTo = typeof args.year_to === 'number' ? Math.round(args.year_to) : null;
+  if (yearFrom !== null || yearTo !== null) {
+    const range: Record<string, number> = {};
+    if (yearFrom !== null) range.$gte = yearFrom;
+    if (yearTo !== null) range.$lte = yearTo;
+    conditions.push({ year: range });
+    labels.push(`published ${yearFrom ?? '…'}–${yearTo ?? '…'}`);
+    notes.push('Books with no parsed publication year are excluded from a year-bounded count.');
+    linkable = null;
+  }
+
+  if (args.first_translation) {
+    conditions.push({ is_first_translation: true });
+    labels.push('first translations');
+    linkable = null;
+  }
+
+  const filter = conditions.length === 1 ? conditions[0] : { $and: conditions };
+  const sortKey = BROWSE_SORTS[args.sort || ''] ? (args.sort as string) : 'oldest';
+  const limit = Math.min(Math.max(Math.round(args.limit ?? BROWSE_DEFAULT_LIMIT), 1), BROWSE_MAX_LIMIT);
+
+  const [total, rows] = await Promise.all([
+    db.collection('books').countDocuments(filter, { maxTimeMS: 20000 }),
+    db.collection('books').find(filter, {
+      projection: {
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, localized: 1, author: 1, author_id: 1,
+        year: 1, published: 1, language: 1, pages_count: 1, pages_translated: 1,
+        pages_translated_es: 1, is_first_translation: 1,
+      },
+      sort: BROWSE_SORTS[sortKey],
+      limit,
+      maxTimeMS: 20000,
+      collation: { locale: 'en', strength: 1 },
+    }).toArray() as unknown as Promise<BrowseRow[]>,
+  ]);
+
+  const base = siteBase(lang);
+  let browseUrl: string | null = null;
+  if (linkable?.kind === 'collection') {
+    browseUrl = `${base}/collections/${linkable.value}`;
+  } else if (linkable?.kind === 'readable' && linkable.value === 'es') {
+    browseUrl = `${base}/collections/en-espanol`;
+  } else if (linkable?.kind === 'language') {
+    // /languages/<slug> has no localized twin (LOCALIZED_PATTERNS in
+    // locale-path.ts), so it is always the unprefixed URL — an /es/languages/…
+    // link would 404.
+    browseUrl = `https://sourcelibrary.org/languages/${linkable.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+  } else if (labels.length === 0) {
+    browseUrl = `${base}/collections`;
+  }
+
+  return { total, rows, filterLabel: labels.join(', ') || 'the whole library', browseUrl, notes, sort: sortKey };
+}
+
+/**
+ * The rows as the model should see them: the title to show, the link, and how
+ * much of the book is readable in THIS conversation's language.
+ */
+function formatBrowseRows(rows: BrowseRow[], lang: Locale): string {
+  const base = siteBase(lang);
+  // Clamped: the per-language counters can exceed pages_count (a split spread
+  // translates into more rows than the book counts pages), and "149% in
+  // Spanish" is not a number to hand a reader.
+  const pct = (done: number, total: number) => (total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0);
+  return rows.map(b => {
+    const shown = localizedTitle(b, lang);
+    const original = b.title && b.title !== shown ? ` [original title: ${b.title}]` : '';
+    const year = b.year || (b.published || '').trim();
+    const pages = b.pages_count || 0;
+    let readable: string;
+    if (lang === 'en') {
+      readable = `${pct(b.pages_translated || 0, pages)}% in English`;
+    } else if (isNativeEdition(b as unknown as Record<string, unknown>, lang)) {
+      readable = `original ${LANG_NAMES[lang]} edition`;
+    } else {
+      readable = `${pct(lang === 'es' ? (b.pages_translated_es || 0) : 0, pages)}% in ${LANG_NAMES[lang]}`;
+    }
+    const bits = [b.language, `${pages} pp`, readable];
+    if (b.is_first_translation) bits.push('first translation');
+    // The resolvable author link, same rule as `search`: prefer the thesaurus
+    // id, else the slug of the stored name — and ALWAYS unprefixed, because
+    // /author/<slug> has no localized twin. A Spanish turn that got only a name
+    // here invented `/es/author/alfonso-x-el-sabio`, which 404s twice over.
+    const authorPart = b.author
+      ? `[${b.author}](https://sourcelibrary.org/author/${b.author_id || authorSlug(b.author)})`
+      : 'Unknown';
+    return `- "${shown}"${original} by ${authorPart}${year ? ` (${year})` : ''} — ${bits.filter(Boolean).join(', ')} — ${base}/book/${b.slug || b.id}`;
+  }).join('\n');
+}
+
 // ── Tool Router ───────────────────────────────────────────────────────
 
 async function executeTool(
@@ -669,6 +962,23 @@ async function executeTool(
         step: { type: 'tool_result', name: 'search', query, found: totalFound,
           summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books${focusNote}` : `No results${focusNote}` },
         sources,
+      };
+    }
+
+    case 'browse_catalog': {
+      const data = await executeBrowseCatalog(args as BrowseArgs, lang);
+      let context = `Catalogue browse — ${data.total} book${data.total === 1 ? '' : 's'} match: ${data.filterLabel}. This count is EXACT and covers the whole library — report IT as the answer, never the number of rows listed below.\n`;
+      if (data.notes.length > 0) context += `${data.notes.map(n => `Note: ${n}`).join('\n')}\n`;
+      if (data.rows.length > 0) {
+        context += `\nShowing ${data.rows.length} of ${data.total} (${data.sort} first):\n${formatBrowseRows(data.rows, lang)}\n`;
+      }
+      context += data.browseUrl
+        ? `\nBrowse all ${data.total} here — link this so the reader can see the rest: ${data.browseUrl}\n`
+        : '\nThere is NO page that lists exactly this filter. Do not write a browse link for it — no URL you compose will exist. Say the total in prose instead.\n';
+      return {
+        result: { found: data.total, context },
+        step: { type: 'tool_result', name: 'browse_catalog', query: data.filterLabel, found: data.total,
+          summary: `${data.total} books — ${data.filterLabel}` },
       };
     }
 
@@ -908,6 +1218,8 @@ Searching: the search index is English, so write your **search queries in Englis
 
 Quotations: each passage a tool returns is tagged \`[text: ${name} edition]\` or \`[text: English only …]\`. Quote the ${name} edition text verbatim when you have it. When a passage is English only, quote it in English inside the blockquote and say in ${name} that this page has not been translated into ${name} yet — do NOT translate the English yourself and present it as a quotation. Paraphrasing in ${name} outside the blockquote is fine. The "original language" rule below still applies: Latin, German, Hebrew etc. can sit alongside.
 
+What the library HOLDS in ${name} — "how many books do you have in ${name}", "show me everything in ${name}" — goes to **browse_catalog**, never to \`search\`, which only ranks passages and would answer a shelf of hundreds with the handful it happened to match. Two different questions live here and the tool takes both: \`readable_in: "${lang}"\` is what a reader means (books written in ${name} PLUS the ones we have translated into it), while \`language: "${name}"\` is the narrower "printed in ${name}". Prefer \`readable_in\`, and say which one you counted.
+
 Links: the tool results give URLs under \`${base}/book/…\` — copy them exactly as given (the \`/${lang}\` prefix keeps the reader in the ${name} site). Page links use the same prefix: [Página N](${base}/book/SLUG?page=N).
 
 `;
@@ -944,6 +1256,8 @@ On follow-up messages (message #3+), never present choices — the user has esta
 Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use the **search** tool for everything text-based — it fuses keyword and semantic matching so you don't have to choose between them. Note that **search covers books and their pages only — it does NOT return the standalone artworks**; those live in a separate index reachable only via search_artworks (and page illustrations via search_images). So a question the 23,000+ artworks could answer will come back empty from search alone — reach for search_artworks explicitly. Use search_wikipedia for outside context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
 
 For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 23,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
+
+**Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.

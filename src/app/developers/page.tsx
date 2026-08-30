@@ -2,7 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
+import { API_LIMITS } from '@/lib/api-limits';
 import toolManifest from '../../../scripts/audit/mcp-directory-contract.tools.json';
+import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 
 // One row per MCP tool, in the order the table shows them. The blurbs are
 // human one-liners — the agent-facing descriptions live in
@@ -143,9 +145,66 @@ export default function DevelopersPage() {
           <h2 className="text-lg font-semibold text-primary mb-2">Building something? Grab a free key.</h2>
           <p className="text-secondary mb-6">
             The endpoints work without one — keys lift rate limits, give your traffic attribution, and help us learn what
-            people are building so we can keep this open and free. Takes a minute.
+            people are building so we can keep this open and free. Takes a minute. Bulk page-image downloads need one:
+            send it as <code className="text-sm">Authorization: Bearer sl_data_…</code> on <code className="text-sm">/api/image</code> requests
+            (anonymous scripts are capped per day; paid tiers are uncapped — see the rate card on the licensing page).
           </p>
           <ApiKeyRequestForm />
+        </div>
+      </section>
+
+      {/* Published limits — rendered from src/lib/api-limits.ts, the single
+          source of truth the enforcement code also reads (#4366). */}
+      <section className="mb-16">
+        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
+          <h2 className="text-lg font-semibold text-primary mb-3">Rate limits &amp; daily budgets</h2>
+          <p className="text-secondary text-sm mb-4">
+            Budgets are rolling 24-hour windows across the text and quote tools; images have their own
+            equal pool. Identity is always an upgrade: a free key out-ranks staying anonymous.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="text-secondary border-b border-border-light">
+                  <th className="py-2 pr-4 font-medium">Caller</th>
+                  <th className="py-2 pr-4 font-medium">Pages / day</th>
+                  <th className="py-2 pr-4 font-medium">Images / day</th>
+                  <th className="py-2 font-medium">Requests</th>
+                </tr>
+              </thead>
+              <tbody className="text-primary">
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Anonymous</td>
+                  <td className="py-2 pr-4">{API_LIMITS.anon.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.anon.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.anon.requestsPerHour}/hour</td>
+                </tr>
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Signed in (free)</td>
+                  <td className="py-2 pr-4">{API_LIMITS.session.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.session.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.session.requestsPerHour.toLocaleString()}/hour</td>
+                </tr>
+                <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Free API key</td>
+                  <td className="py-2 pr-4">{API_LIMITS.explorerKey.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.explorerKey.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.explorerKey.requestsPerMinute}/minute</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4">Paid tiers</td>
+                  <td className="py-2 pr-4">Uncapped</td>
+                  <td className="py-2 pr-4">Uncapped</td>
+                  <td className="py-2">60–1,000/minute by tier</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-secondary text-xs mt-3">
+            Your own meter: <code>GET /api/dataset/v1/usage</code> with your key. Verified search crawlers
+            and user-directed assistant fetches are never limited. Full-tier keys can request images without
+            the visible provenance marks (<code>&amp;clean=1</code> on <code>/api/image</code>).
+          </p>
         </div>
       </section>
 
@@ -173,7 +232,7 @@ export default function DevelopersPage() {
         <h2 className="text-2xl font-semibold text-primary mb-2">MCP Server</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           Gives Claude (and any MCP client) direct access to the full collection &mdash;
-          search, read, quote, and browse 150,000+ illustrations. The endpoint is plain JSON-RPC
+          search, read, quote, and browse {IMAGE_CORPUS_STATS.illustrations} illustrations. The endpoint is plain JSON-RPC
           over HTTP, so you can also call it from any HTTP client without an MCP library
           (see the snippets above). Pick whichever path fits.
         </p>
@@ -462,7 +521,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search 150,000+ historical illustrations</td>
+                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>

@@ -107,7 +107,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 // Many archives (e-rara, some Bodleian endpoints, Wellcome, Vatican) reject
 // requests without a User-Agent — Node's default UA gets blocked. Match the
 // UA the IA bulk archiver uses so per-provider policies are consistent.
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 // Abort only when a connection goes QUIET this long — never merely because a file
 // is big. Overridable per-run; raising it does not slow healthy fetches.

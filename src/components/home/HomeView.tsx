@@ -9,7 +9,8 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { type HomeData, SPANISH_COLLECTION_SLUG } from '@/lib/home-data';
+import { type HomeData } from '@/lib/home-data';
+import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
 import { localePath } from '@/lib/locale-path';
 
@@ -23,8 +24,17 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishBooks, spanishCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts, featuredPodcast, spanishCollection, localizedCollectionCounts } = data;
   const nf = (n: number) => n.toLocaleString(t.locale);
+  // The grid card's count line. On /es it says how many of the collection's
+  // books can actually be READ in Spanish — the same thing /es/collections
+  // tells you, and the only number on the card a Spanish visitor can act on.
+  // Empty on `/`, where every book is already in the page's language.
+  const countLabel = (slug: string, bookCount: number) => {
+    const localized = localizedCollectionCounts[slug] ?? 0;
+    const base = `${nf(bookCount)} ${t.booksLabel}`;
+    return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
+  };
 
   return (
     <div className="min-h-screen">
@@ -35,39 +45,27 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
 
       {/* Read in Spanish — the first thing under the hero on /es, because it is
           the one section whose BOOKS (not just chrome) are in the visitor's
-          language. Most-read first; the reader opens these in Spanish because
-          /es stores the reading-language preference (ReadingLanguagePreference).
-          spanishBooks is empty on the English homepage, so nothing renders there. */}
-      {spanishBooks.length > 0 && (
-        <section className="bg-white py-16 md:py-24">
+          language. One card, the same block /es/collections leads with, opening
+          the full Spanish list; the `/es` prefix on the link is the only thing
+          that decides reading language (.claude/docs/i18n.md rule 6).
+          spanishCollection is null on the English homepage, so nothing renders there. */}
+      {spanishCollection && (
+        <section className="bg-white py-10 md:py-14">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-            <div className="flex items-end justify-between gap-4 mb-3">
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
-                {t.spanishHeading}
-              </h2>
-              <Link
-                href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)}
-                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
-              >
-                {t.spanishViewAll} &rarr;
-              </Link>
-            </div>
-            <p className="text-muted mb-2 max-w-2xl">
-              {t.spanishSubtitle}
-            </p>
-            {/* Say the size. Fifteen covers and no number implies a Spanish
-                library; the reader would otherwise find out by clicking. */}
-            {spanishCounts && (
-              <p className="text-sm text-muted/80 mb-6 max-w-2xl">
-                {t.spanishScale(nf(spanishCounts.books), nf(spanishCounts.pages), nf(counts.totalBooks))}
-              </p>
-            )}
-            <BookSlider books={spanishBooks as unknown as MiniBook[]} lang={lang} />
-            <div className="mt-6 sm:hidden">
-              <Link href={lp(`/collections/${SPANISH_COLLECTION_SLUG}`)} className="text-sm text-accent-rust hover:underline">
-                {t.spanishViewAll} &rarr;
-              </Link>
-            </div>
+            <Link
+              href={lp(`/collections/${spanishCollection.slug}`)}
+              className="group grid sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-0 overflow-hidden rounded-lg border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow]"
+            >
+              <div className="relative aspect-square sm:aspect-auto sm:min-h-[220px]">
+                <CollectionCardImage candidates={spanishCollection.imageCandidates} alt="" sizes="(max-width: 640px) 100vw, 33vw" priority />
+              </div>
+              <div className="p-6 sm:p-8 flex flex-col justify-center">
+                <p className="text-xs uppercase tracking-[0.2em] text-accent-rust mb-2">{t.spanishHeading}</p>
+                <h2 className="text-2xl sm:text-3xl font-display text-primary mb-2 group-hover:text-accent-rust transition-colors">{spanishCollection.name}</h2>
+                <p className="text-muted leading-relaxed mb-4">{t.spanishSubtitle}</p>
+                <p className="text-sm text-secondary">{nf(spanishCollection.bookCount)} {t.booksLabel} &rarr;</p>
+              </div>
+            </Link>
           </div>
         </section>
       )}
@@ -83,9 +81,9 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               <p className="text-muted mt-2">
                 <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
                 {' '}&middot;{' '}
-                <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
+                <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.translatedToEnglish)} {t.translationsLabel}</Link>
                 {' '}&middot;{' '}
-                <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
+                <Link href={lp('/search?first_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.firstTranslationCount)} {t.firstTimeLabel}</Link>
                 {counts.artworkCount > 0 && (
                   <>
                     {' '}&middot;{' '}
@@ -132,7 +130,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                    {col.book_count} {t.booksLabel}
+                    {countLabel(col.slug, col.book_count)}
                   </p>
                   <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white group-hover:text-accent-gold transition-colors line-clamp-2">
                     {collectionName(lang, col.slug, col.name)}
@@ -177,7 +175,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
       {/* Recently looked at — personalized slider from the signed-in reader's
           history, tucked right under the collections grid. Self-hides for
           anonymous visitors and readers with no history. */}
-      <RecentlyRead />
+      <RecentlyRead lang={lang} />
 
       {/* Recently translated — the same slider as the Mycology collection's
           "First translations" band, auto-filled with the 15 works most recently
@@ -200,7 +198,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             <p className="text-muted mb-6 max-w-2xl">
               {t.recentlyTranslatedSubtitle}
             </p>
-            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} />
+            <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}
@@ -451,7 +449,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           </div>
 
           {/* Free account nudge — for anonymous users only */}
-          <SignUpCTA variant="inline" />
+          <SignUpCTA variant="inline" lang={lang} />
         </div>
       </section>
 
@@ -464,7 +462,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           <p className="text-stone-500 text-sm mb-8">
             {t.searchStats(nf(counts.totalBooks), nf(counts.authorCount), counts.languageCount)}
           </p>
-          <form action="/search" method="get" className="relative max-w-lg mx-auto mb-6">
+          <form action={lp('/search')} method="get" className="relative max-w-lg mx-auto mb-6">
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>

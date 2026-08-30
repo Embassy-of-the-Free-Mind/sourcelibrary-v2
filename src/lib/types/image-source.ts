@@ -53,6 +53,7 @@ export type ImageSourceProvider =
   | 'eap'            // British Library Endangered Archives Programme
   | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
   | 'tu_darmstadt'   // Technische Universität Darmstadt (ULB)
+  | 'byu'            // Brigham Young University, L. Tom Perry Special Collections
   | 'contentdm'      // OCLC CONTENTdm
   | 'ia'             // Internet Archive (alternate key)
   | 'library'

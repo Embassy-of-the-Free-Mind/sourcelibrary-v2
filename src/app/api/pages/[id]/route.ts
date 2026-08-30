@@ -8,6 +8,8 @@ import { createRevision } from '@/lib/page-revisions';
 import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/steganographia';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
+import { gatePagesForRequest } from '@/lib/metered-gate';
+import { verifyCitationToken } from '@/lib/citation-token';
 
 export const preferredRegion = 'fra1';
 
@@ -76,6 +78,15 @@ export async function GET(
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+
+    // Metered reader (#4357): strip gated text for anonymous callers beyond
+    // the book's free sample. Exempt: tenant-scoped requests (proxy-injected
+    // tenantId = partner reading room) and a valid citation token for THIS
+    // page (?cite=… from a /q/ shortlink — published citations must always
+    // resolve). No-op unless METERED_READER=1.
+    [page] = await gatePagesForRequest(db, request, [page], {
+      exempt: !!tenantId || verifyCitationToken(id, searchParams.get('cite')),
+    });
 
     // Reader-path provenance: translation carries the invisible imprimatur.
     // Deterministic (no ref), so the cache header below stays valid.

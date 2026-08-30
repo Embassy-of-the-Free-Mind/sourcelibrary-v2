@@ -149,3 +149,6 @@ scripts/eval/results/ft-enum-*.json
 # for free from Mongo via scripts/eval/revision-agreement-corpus.mjs).
 # The summary JSON + markdown reports beside it ARE committed.
 scripts/eval/results/revision-agreement-corpus-*.jsonl
+
+# Per-run import ledgers (progress state, not source)
+scripts/import/*-ledger.jsonl

@@ -5,11 +5,15 @@ import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
+import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
+import { pickLimit } from '@/lib/api-budget';
+import { getPagesServedLast24h, logApiUsage } from '@/lib/api-usage';
 import { pageContinuity, continuityHint } from '@/lib/page-continuity';
 import { classifyApiError } from '@/lib/mcp-errors';
 import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limits';
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
+import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -325,8 +329,17 @@ async function getBook(args: Record<string, unknown>) {
   // full display URL rides alongside for callers that want to link it.
   const coverThumb = (result.image_thumb || result.thumbnail_blob || result.image_display || result.thumbnail) as string | undefined;
   const coverFull = (result.image_display || result.thumbnail || result.image_thumb || result.thumbnail_blob) as string | undefined;
+  // #4288: an artwork id resolves here too (/book/<id> 308s to /artwork/<slug>),
+  // and on ~12.2K such records `display_title` is an AI caption of the image
+  // rather than a title anyone published. Say so in prose next to the title.
+  const resolvedTitle = resolveTitle(result as Parameters<typeof resolveTitle>[0]);
+  const titleNote = titleProvenanceNote(result as Parameters<typeof resolveTitle>[0]);
   return {
-    id: result.id, title: result.display_title || result.title, author: result.author,
+    id: result.id, title: resolvedTitle.display, author: result.author,
+    ...(resolvedTitle.isDescriptive
+      ? { title_is_descriptive: true, source_record_title: resolvedTitle.citation }
+      : {}),
+    ...(titleNote ? { title_note: titleNote } : {}),
     ...(coverThumb ? { cover_thumb_url: coverThumb } : {}),
     ...(coverFull ? { cover_image_url: coverFull } : {}),
     language: result.language, published: result.published, year: result.year,
@@ -551,6 +564,25 @@ function ocrOriginalQuote(result: Record<string, unknown>): boolean {
   return quote?.text_source === 'ocr_original';
 }
 
+// The requested edition IS on the leaf — a bilingual manuscript whose parallel
+// column is already in that language. The words are the historical translator's
+// (Ximenez's Spanish of 1701, Sahagun's of 1577), not ours, and their period
+// spelling is evidence rather than OCR noise. Without this an agent presents a
+// sixteenth-century source as "the Spanish translation" and tidies the spelling
+// on the way, which is a misattribution the reader cannot see.
+const SOURCE_COLUMN_TIP =
+  'This text is NOT our translation. This is a bilingual manuscript, and the column of the leaf you ' +
+  'asked for is already in this language — transcribed from the scan, uncorrected. Attribute the ' +
+  'wording to the historical translator or scribe named in the book record (see `author`), never to ' +
+  'Source Library, and quote the period spelling as it stands rather than modernising it; if you do ' +
+  'modernise, say that the modernisation is yours. `transcription_note` on the quote states the same. ' +
+  'Where the exact wording carries weight, call again with include_image: true and read the leaf.';
+
+function sourceColumnQuote(result: Record<string, unknown>): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  return quote?.text_source === 'source_column';
+}
+
 /**
  * The verbatim text of a quote response, whichever field holds it. Reading
  * `translation` alone made continuity unfireable on English-original pages —
@@ -606,9 +638,31 @@ async function getQuote(args: Record<string, unknown>) {
   const hint = continuityHint(continuity, Number(args.page));
 
   const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
+  if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
   if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
+
+  // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
+  // each read their own copy of this guidance and fixes do not propagate.
+  const holdingCopy = (result.citation as Record<string, unknown> | undefined)?.copy as
+    | { statement?: string }
+    | undefined;
+  if (holdingCopy?.statement) {
+    tips.push(
+      `The scanned images reproduce one physical copy: "${holdingCopy.statement}". ` +
+        'When citing copy-specific evidence (marginalia, provenance marks, hand-coloring), include that clause in the citation.',
+    );
+  }
+
+  // Marginalia (#4362) — same logic in mcp-server/src/api.ts (fixes do not
+  // propagate between the two servers).
+  if ((quote as Record<string, unknown> | undefined)?.contains_marginalia === true) {
+    tips.push(
+      'This page carries MARGINAL text (<margin>…</margin>). A marginal note exists only in this ' +
+        "physical copy — when quoting from one, say 'marginal annotation' and follow quote.marginalia_note.",
+    );
+  }
 
   return {
     ...withCitationLink(result),
@@ -620,7 +674,11 @@ async function getQuote(args: Record<string, unknown>) {
 
 // Assemble a multi-passage dossier in one round-trip: fetch several pages of a
 // single book by explicit list (pages:[...]) or inclusive range (from/to).
-async function getQuotes(args: Record<string, unknown>) {
+async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?: boolean }) {
+  // Past QUOTE_CLEAN_PAGES_PER_DAY quote-lane pages in 24h the zero-width
+  // provenance marks stay in the text: at that volume this is a corpus pull,
+  // not citation work. The text remains verbatim-correct either way.
+  const stripMarks = opts?.keepQuoteMarks ? (s: string) => s : stripProvenanceMarks;
   const bookId = String(args.book_id);
   const batchLang = langArg(args);
   let pageNums: number[] = [];
@@ -653,9 +711,9 @@ async function getQuotes(args: Record<string, unknown>) {
           quotableText(q),
           typeof q?.original === 'string' ? q.original : null,
         );
-        if (q && typeof q.translation === 'string') q.translation = stripProvenanceMarks(q.translation);
-        if (q && typeof q.original === 'string') q.original = stripProvenanceMarks(q.original);
-        if (q && typeof q.romanized === 'string') q.romanized = stripProvenanceMarks(q.romanized);
+        if (q && typeof q.translation === 'string') q.translation = stripMarks(q.translation);
+        if (q && typeof q.original === 'string') q.original = stripMarks(q.original);
+        if (q && typeof q.romanized === 'string') q.romanized = stripMarks(q.romanized);
         const hint = continuityHint(continuity, page);
         return { ...withCitationLink(result), continuity, ...(hint ? { continuity_hint: hint } : {}) };
       } catch (err) {
@@ -684,6 +742,7 @@ async function getQuotes(args: Record<string, unknown>) {
   const tips: string[] = [];
   if (anyTranslationText || !anyOcrOriginal) tips.push(QUOTE_TIP);
   if (anyOcrOriginal) tips.push(OCR_ORIGINAL_TIP);
+  if (settled.some((x) => sourceColumnQuote(x as Record<string, unknown>))) tips.push(SOURCE_COLUMN_TIP);
   if (anyRomanized) tips.push(ROMANIZED_TIP);
   // A batch can be mixed — the Spanish worker's length guard skipped ~30 pages
   // across 17 books — so one fallback in the range is enough to warn about.
@@ -695,6 +754,9 @@ async function getQuotes(args: Record<string, unknown>) {
     pages_requested: pageNums,
     quotes: settled,
     tip: tips.join('\n\n'),
+    ...(opts?.keepQuoteMarks ? {
+      provenance_note: 'High-volume quote access: this text retains Source Library\'s invisible provenance marks (zero-width characters). It reads and quotes identically. Clean text at volume is a licensed product — see https://sourcelibrary.org/licensing.',
+    } : {}),
   };
 }
 
@@ -711,6 +773,9 @@ async function searchImages(args: Record<string, unknown>) {
   if (args.min_quality !== undefined) params.set('minQuality', String(args.min_quality));
   const limit = Math.min(Number(args.limit) || 20, 50);
   params.set('limit', String(limit));
+  const offset = Math.max(0, Math.floor(Number(args.offset) || 0));
+  if (offset) params.set('offset', String(offset));
+  if (args.iconclass) params.set('iconclass', String(args.iconclass));
 
   // Search both gallery illustrations AND artworks (paintings/prints) in parallel.
   // The artwork lane supports type/subject/figure/symbol/year filters and MUST
@@ -730,12 +795,27 @@ async function searchImages(args: Record<string, unknown>) {
 
   const [galleryResult, artworkResult] = await Promise.all([
     apiGet('/gallery', params) as Promise<Record<string, unknown>>,
-    args.query && !args.book_id
+    // The artwork lane has no offset support — include it on the first page
+    // only, so paging doesn't re-serve the same artworks on every call.
+    // Also skip it when an iconclass filter is set: the artwork lane cannot
+    // apply it, and unfiltered results merged into a filtered request is the
+    // silent no-op disease #3936 was about.
+    args.query && !args.book_id && !args.iconclass && offset === 0
       ? (apiGet('/artwork/search', artworkParams) as Promise<Record<string, unknown>>).catch(() => ({ items: [] }))
       : Promise.resolve({ items: [] }),
   ]);
 
   const galleryImages = (galleryResult.items as Array<Record<string, unknown>>)?.map((item) => ({
+    // Explicit citability flag (#4287): book_illustration = extracted from a
+    // scanned page, citable with book_id + page; artwork = standalone museum
+    // record, display/context only. Agents previously had to infer this from
+    // which fields happened to be present.
+    source_type: item.source === 'artwork' ? 'artwork' : 'book_illustration',
+    // Iconclass notations where the classifier has run (~2,500 of 206K images
+    // as of 2026-08 — sparse, so absence means unclassified, not unthemed).
+    ...((item.metadata as { iconclass?: string[] } | undefined)?.iconclass?.length
+      ? { iconclass: (item.metadata as { iconclass: string[] }).iconclass }
+      : {}),
     description: item.description, type: item.type, quality: item.galleryQuality,
     book: { title: item.bookTitle, author: item.author, year: item.year },
     page: item.pageNumber, image_url: item.imageUrl,
@@ -755,12 +835,48 @@ async function searchImages(args: Record<string, unknown>) {
       : undefined,
   })) || [];
 
-  const artworks = (artworkResult.items as Array<Record<string, unknown>>)?.map((item) => ({
-    description: item.title, type: 'artwork',
-    artist: item.artist, medium: item.medium,
-    year: item.year, image_url: item.image_url,
-    url: item.url,
-  })) || [];
+  // #4288 item 1. Two things were wrong here and both made a model assert a
+  // work that does not exist:
+  //   1. the artwork's title was emitted under the key `description`, so a
+  //      client had no `title` at all and read the caption as the work's name;
+  //   2. `/api/artwork/search` hands back `display_title || title`, which on
+  //      ~12.2K artwork records is a label a vision model wrote by LOOKING AT
+  //      THE PICTURE ("The Macrocosm and the Human Intellect" over a Fludd
+  //      engraving catalogued as "El cerebro según Fludd"). Emitted next to a
+  //      real author and a real year, it reads as a bibliographic claim.
+  // A field a model cannot interpret it will paper over, so the warning is
+  // prose, not a boolean (see .claude/docs/invariants/agent-tool-results.md).
+  const artworks = (artworkResult.items as Array<Record<string, unknown>>)?.map((item) => {
+    const provenance = item.title_provenance as string | undefined;
+    const sourceTitle = item.source_record_title as string | undefined;
+    return {
+      source_type: 'artwork',
+      title: item.title,
+      // Keep `description` populated for clients written against the old shape.
+      description: item.title,
+      ...(provenance === 'descriptive'
+        ? {
+          title_is_descriptive: true,
+          source_record_title: sourceTitle,
+          title_note:
+            'The `title` above is a description of the image generated by AI, not a title this work was published under. '
+            + 'Do not cite it as a work title'
+            + (sourceTitle ? `; the title on the source record is "${sourceTitle}".` : '.'),
+        }
+        : {}),
+      ...(provenance === 'derived' && sourceTitle && sourceTitle !== item.title
+        ? { source_record_title: sourceTitle }
+        : {}),
+      type: 'artwork',
+      // `/api/artwork/search` returns `author`, not `artist` — reading `item.artist`
+      // emitted `undefined` on every row, so the artwork lane has never carried an
+      // attribution at all. Prefer the real key, keep the old one as a fallback.
+      artist: item.author ?? item.artist,
+      medium: item.medium,
+      year: item.year, image_url: item.image_url,
+      url: item.url,
+    };
+  }) || [];
 
   // Gallery illustrations first — the in-book plates are this library's
   // distinctive asset. Artworks (museum layer) follow. The old artwork-first
@@ -799,9 +915,21 @@ async function searchImages(args: Record<string, unknown>) {
   }
 
   const total = (galleryResult.total as number || 0) + artworks.length;
+  // Pagination signal (#4287): before this, a caller saw total: 22767,
+  // showing: 12 with no way to reach result 13 except raising limit to 50.
+  const galleryShown = Math.min(galleryImages.length, limit);
+  const hasMore = galleryResult.hasMore === true;
   return {
     total,
     showing: allImages.length,
+    offset,
+    ...(hasMore
+      ? {
+          next_offset: offset + galleryShown,
+          remaining: Math.max(0, (galleryResult.total as number || 0) - offset - galleryShown),
+          pagination_note: `More results exist — call again with offset=${offset + galleryShown} to continue (book-illustration lane only; narrow the query or add filters if you are surveying rather than exhausting).`,
+        }
+      : {}),
     images: allImages,
     ...(thumbNote ? { thumbnails_note: thumbNote } : {}),
     // An empty scoped result must SAY so — silently returning nothing (or,
@@ -975,7 +1103,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book_text',
     title: 'Read Book Text',
-    description: 'READ PIPELINE step 2 — READ. Read a book\'s text. Call get_book first (step 1) for the chapter list, then come here. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation). Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). When you find passages worth quoting, hand the page numbers to get_quote / get_quotes (step 3) for verbatim text + a citation link. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Budget limits apply to anonymous callers (~50 pages per 24h); sign in at sourcelibrary.org/auth/signin or get an API key at sourcelibrary.org/developers for higher limits.',
+    description: 'READ PIPELINE step 2 — READ. Read a book\'s text. Call get_book first (step 1) for the chapter list, then come here. Preferred: use the chapter param to read one chapter at a time (includes [Page N] markers for citation). Alternatively, use from/to for explicit page ranges (e.g. from=1 to=50). When you find passages worth quoting, hand the page numbers to get_quote / get_quotes (step 3) for verbatim text + a citation link. TRUNCATION: the response always includes truncated: true/false. When truncated=true, the truncation_note field gives the exact next from/to values to call — this means content was cut short by a page-budget limit, NOT that the book ended. An AI agent MUST NOT infer end-of-book from pages_returned alone; check truncated first. Daily page budgets apply across get_book_text/get_quote/get_quotes: anonymous 500 pages/24h, signed-in 1,000, free Explorer keys 2,000, paid keys uncapped — sign in at sourcelibrary.org/auth/signin or get a key at sourcelibrary.org/developers. Corpus-scale text belongs on the dataset API (sourcelibrary.org/dataset), not on this tool.',
     annotations: { title: 'Read Book Text', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1025,7 +1153,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quotes',
     title: 'Get Quotes (batch)',
-    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface.',
+    description: 'READ PIPELINE step 3 — CITE, in batch. Get verbatim text + citation_link for SEVERAL pages of a single book in one round-trip, to assemble a multi-passage dossier. Specify either pages (an explicit array, e.g. [12, 40, 41]) or an inclusive from/to range. Max 25 pages per call. Each entry carries its own citation_link to present alongside the quote, and — on non-Latin-script pages that have one — a romanized layer to show between the original and the translation (AI apparatus, not a transcription). Every entry also carries `text_source`: `translation` normally, or `ocr_original` on a leaf that is already English, where the verbatim text is `original` and must be attributed as the source\'s own words rather than as a translation. One batch can mix both — a Latin volume can hold an English preface. Batch pages count toward the shared daily page budget (see get_book_text); this is a citation tool, and corpus-scale extraction belongs on the dataset API (sourcelibrary.org/dataset).',
     annotations: { title: 'Get Quotes (batch)', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1043,7 +1171,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     title: 'Search Images',
-    description: 'Search 110,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image\'s url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates.',
+    description: `Search ${IMAGE_CORPUS_STATS.illustrations} historical illustrations, emblems, engravings, diagrams, AND ${IMAGE_CORPUS_STATS.artworks} artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year. Results interleave two collections: illustrations extracted from book pages (each with a page number and book link) and standalone museum artworks (type: "artwork"). The first few results also return as inline images YOU can see. Hosts that support MCP Apps render an in-chat image gallery for this tool automatically; on other clients images may sit inside the collapsed tool-result view, so never tell the user images are "rendered above" unless the gallery appeared — describe what you see and give each image's url link instead. Every image_url is public and stable — an HTML page that references them directly works in any online browser. If images.length is 0, read the note field — an empty result under a book_id filter means that book has no EXTRACTED images yet, not that the physical book has no plates. A broad query can match tens of thousands (read total): narrow with type/subject/symbol/iconclass or page with offset instead of raising limit. On museum-artwork results, a title_is_descriptive flag means the title is an AI description of the picture rather than a title the work was published under — cite such a record by its source_record_title, never by the descriptive one (#4288).`,
     annotations: { title: 'Search Images', ...READ_ONLY },
     // MCP Apps (2026-01-26): hosts that support in-chat UI fetch this ui://
     // resource and render the gallery grid in the conversation (#3978).
@@ -1054,9 +1182,12 @@ const TOOLS: Tool[] = [
         query: { type: 'string', description: 'Text search (e.g., "ouroboros", "tree of life")' },
         type: { type: 'string', description: 'Image type (woodcut, engraving, emblem, diagram). Best-effort: the medium metadata on museum artworks is unnormalized, so treat results as ranked rather than strictly filtered.' },
         subject: { type: 'string' }, figure: { type: 'string' }, symbol: { type: 'string' },
-        year_from: { type: 'number' }, year_to: { type: 'number' },
+        year_from: { type: 'number', description: 'CAUTION: reliable only for book illustrations (source_type "book_illustration"). On museum-artwork records the year field is dirty — some 17th-century works carry ingest years like 2014, and null years bypass the range check entirely — so never draw a chronological conclusion from a year-filtered artwork result (#4288 tracks the cleanup).' },
+        year_to: { type: 'number', description: 'See year_from — same reliability caution applies.' },
         book_id: { type: 'string', description: 'Only return images extracted from this book\'s pages. Excludes the museum-artwork collection (artworks do not belong to books).' },
         limit: { type: 'number', description: 'Max results (default 20, max 50)' },
+        offset: { type: 'number', description: 'Skip this many book-illustration results — page through a large result set instead of raising limit. The response echoes offset and returns next_offset while more remain. Offsets > 0 return the gallery lane only (the museum-artwork lane has no pagination and is included only on the first page).' },
+        iconclass: { type: 'string', description: 'Filter by Iconclass notation, prefix-matched ("49" matches 49G22, 49E39, …). Coverage is SPARSE: only ~2,500 of 206K images carry a notation, so an empty result means the classifier has not run on matching images, NOT that the subject is absent from the corpus — retry with a text query before concluding anything. Book-illustration lane only (artworks are excluded when this filter is set). Matching results return their notations in an iconclass array.' },
         include_thumbnail_base64: { type: 'boolean', description: 'Embed each result\'s image as a thumbnail_data_uri (data:image/jpeg;base64,…, ~1000px) directly in the JSON. ONLY useful when your harness consumes tool results programmatically (API/SDK agents that can save the bytes without retyping them) — as a chat assistant you CANNOT copy hundreds of KB of base64 into a file, so do not request this for that purpose. To build a self-contained page from chat instead: fetch the public image_url values with your execution sandbox (if egress is blocked, ask the user to allowlist images.sourcelibrary.org in their network settings), or reference the CDN URLs directly — they are public and stable, so the page works in any online browser. First 6 results only; inline image blocks are suppressed in this mode to keep the payload bounded.' },
       },
     },
@@ -1064,7 +1195,7 @@ const TOOLS: Tool[] = [
   {
     name: 'submit_feedback',
     title: 'Submit Feedback',
-    description: 'Submit feedback, bug reports, or feature requests to the Source Library team.',
+    description: 'Submit feedback, bug reports, or feature requests to the Source Library team. Before proposing NEW functionality, read https://sourcelibrary.org/llms.txt and https://sourcelibrary.org/developers — several past submissions proposed building things that already exist (IIIF manifests, Content Search, DTS), which wastes reviewer time. State in the report which docs you checked. Bug reports with record IDs and reproducing queries are the most actionable kind.',
     annotations: { title: 'Submit Feedback', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
@@ -1145,7 +1276,51 @@ const TOOLS: Tool[] = [
 
 type ToolArgs = Record<string, unknown>;
 
-async function handleToolCall(name: string, args: ToolArgs) {
+// ── Page-budget enforcement for the text-bearing tools ─────────────
+// The MCP route proxies to its own REST API server-side, so downstream
+// per-identity gates (e.g. /text's daily page budget) see the PROXY as the
+// caller — one shared anonymous identity for every MCP user — and can never
+// bite per-caller. The only place the real caller identity exists is here.
+// Enforced on the three tools that return page text at volume; searches and
+// snippets stay ungated. See #4288-adjacent harvesting notes and the ops
+// strategy memo 2026-08-27.
+const PAGE_BUDGET_TOOLS = new Set(['get_book_text', 'get_quote', 'get_quotes']);
+// Below this many quote-lane pages in 24h, get_quotes serves provenance-
+// stripped text (citation work). Above it, the zero-width marks stay in —
+// "one page is a citation, hundreds is a corpus pull" — text is still
+// verbatim-correct for reading and quoting.
+const QUOTE_CLEAN_PAGES_PER_DAY = Number(process.env.MCP_QUOTE_CLEAN_PAGES_PER_DAY || 100);
+
+function pageBudgetExceededResult(used: number, limit: number, identity: ApiIdentity) {
+  const next = identity.kind === 'anon'
+    ? 'Sign in free at https://sourcelibrary.org/auth/signin for a higher limit, or get an API key at https://sourcelibrary.org/developers.'
+    : 'Get or upgrade an API key at https://sourcelibrary.org/developers — bulk export belongs on https://sourcelibrary.org/dataset.';
+  return {
+    error: `Daily page budget reached (${used}/${limit} pages of text in the last 24h across get_book_text/get_quote/get_quotes). ${next}`,
+    budget: { used, limit },
+    licensing_url: 'https://sourcelibrary.org/licensing',
+    note: 'Search and single-snippet tools remain available. Corpus-scale text access is a licensed product — see /licensing.',
+  };
+}
+
+function pagesServedByTool(name: string, result: unknown): number {
+  const r = result as Record<string, unknown> | null;
+  if (!r || typeof r !== 'object' || r.error) return 0;
+  if (name === 'get_quote') return r.quote ? 1 : 0;
+  if (name === 'get_quotes') {
+    const quotes = r.quotes as Array<Record<string, unknown>> | undefined;
+    return Array.isArray(quotes) ? quotes.filter((q) => q && q.quote).length : 0;
+  }
+  if (name === 'get_book_text') {
+    const n = Number(r.pages_returned);
+    if (Number.isFinite(n) && n > 0) return n;
+    const pages = r.pages as unknown[] | undefined;
+    return Array.isArray(pages) ? pages.length : 0;
+  }
+  return 0;
+}
+
+async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMarks?: boolean }) {
   switch (name) {
     case 'search_library': return searchLibrary(args);
     case 'search_translations':
@@ -1158,7 +1333,7 @@ async function handleToolCall(name: string, args: ToolArgs) {
     case 'get_locus': return getLocus(args);
     case 'get_book_text': return getBookText(args);
     case 'get_quote': return getQuote(args);
-    case 'get_quotes': return getQuotes(args);
+    case 'get_quotes': return getQuotes(args, opts);
     case 'search_images': return searchImages(args);
     case 'submit_feedback': return submitFeedback(args);
     case 'share_findings': return shareFindings(args);
@@ -1173,7 +1348,10 @@ async function handleToolCall(name: string, args: ToolArgs) {
 
 async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
   try {
-    const resp = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    // Self-referential /api/image fetches must carry the internal signature or
+    // the image gate budgets this server like an anonymous scraper (#4356).
+    const { signImageProxyUrl } = await import('@/lib/image-proxy-auth');
+    const resp = await fetch(signImageProxyUrl(url), { signal: AbortSignal.timeout(5000) });
     if (!resp.ok) return null;
     const contentType = resp.headers.get('content-type') || 'image/jpeg';
     const mimeType = contentType.split(';')[0].trim();
@@ -1335,7 +1513,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
   };
 }
 
-function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity }) {
+function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest }) {
   const server = new Server(
     { name: 'source-library', version: SERVER_VERSION },
     {
@@ -1437,7 +1615,49 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
     const argsObj = (args || {}) as ToolArgs;
     const started = Date.now();
     try {
-      const result = await handleToolCall(name, argsObj);
+      // Per-caller daily page budget on the text-bearing tools, enforced HERE
+      // because the real caller identity never survives the internal proxy.
+      // Same tiering as /text (pickLimit): paid keys uncapped, anon 500/day.
+      let usedPages24h: number | null = null;
+      let toolOpts: { keepQuoteMarks?: boolean } | undefined;
+      if (PAGE_BUDGET_TOOLS.has(name)) {
+        const { limit } = pickLimit(reqContext.identity);
+        if (Number.isFinite(limit)) {
+          usedPages24h = await getPagesServedLast24h({
+            identity: reqContext.identity, request: reqContext.request,
+          });
+          if (usedPages24h >= limit) {
+            const refusal = pageBudgetExceededResult(usedPages24h, limit, reqContext.identity);
+            logApiUsage({
+              request: reqContext.request, identity: reqContext.identity,
+              route: `mcp:${name}`, status: 429, ms: Date.now() - started,
+              wouldBlock: true, blocked: true, reason: 'page_budget',
+            });
+            logMcpToolCall({
+              tool: name, args: argsObj, ms: Date.now() - started,
+              ip: reqContext.ip, userAgent: reqContext.userAgent,
+            });
+            return { content: [{ type: 'text' as const, text: JSON.stringify(refusal, null, 2) }] };
+          }
+        }
+        if (name === 'get_quotes' && usedPages24h !== null && usedPages24h > QUOTE_CLEAN_PAGES_PER_DAY) {
+          toolOpts = { keepQuoteMarks: true };
+        }
+      }
+
+      const result = await handleToolCall(name, argsObj, toolOpts);
+      // Record pages served under the REAL caller identity so the budget
+      // above has something to sum. Fire-and-forget, like all usage logging.
+      if (PAGE_BUDGET_TOOLS.has(name)) {
+        const pagesServed = pagesServedByTool(name, result);
+        if (pagesServed > 0) {
+          logApiUsage({
+            request: reqContext.request, identity: reqContext.identity,
+            route: `mcp:${name}`, status: 200, ms: Date.now() - started,
+            wouldBlock: false, blocked: false, pagesServed,
+          });
+        }
+      }
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
@@ -1566,6 +1786,7 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
       ip: getClientIp(req),
       userAgent: req.headers.get('user-agent'),
       identity,
+      request: req,
     });
     await server.connect(transport);
     try {

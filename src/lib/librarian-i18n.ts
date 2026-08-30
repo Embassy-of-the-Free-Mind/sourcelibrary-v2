@@ -9,6 +9,7 @@
 
 import type { Metadata } from 'next';
 import type { Locale } from './locale-path';
+import { siteOgImage, OG_LOCALE } from './og-locale';
 
 export interface LibrarianStrings {
   /** <title> / og:title */
@@ -112,6 +113,7 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
       search: 'Searching the collection',
       search_collection: 'Searching the collection',
       search_semantic: 'Semantic search',
+      browse_catalog: 'Counting the shelves',
       search_wikipedia: 'Checking Wikipedia',
       search_images: 'Searching illustrations',
       search_artworks: 'Searching artworks',
@@ -225,6 +227,7 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
       search: 'Buscando en la colección',
       search_collection: 'Buscando en la colección',
       search_semantic: 'Búsqueda semántica',
+      browse_catalog: 'Contando los estantes',
       search_wikipedia: 'Consultando Wikipedia',
       search_images: 'Buscando ilustraciones',
       search_artworks: 'Buscando obras de arte',
@@ -278,13 +281,22 @@ export function librarianMetadata(lang: Locale): Metadata {
       languages: { en: '/librarian', es: '/es/librarian', 'x-default': '/librarian' },
     },
     openGraph: {
-      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+      images: [siteOgImage(lang)],
       title: t.metaTitle,
       description: t.metaDescription,
       siteName: 'Source Library',
       type: 'website',
-      locale: lang === 'es' ? 'es_ES' : 'en_US',
+      locale: OG_LOCALE[lang],
       url: `https://sourcelibrary.org${path}`,
+    },
+    // Without this the root layout's English `twitter` block survives, and the
+    // clients that prefer twitter:image preview the Spanish librarian in English.
+    twitter: {
+      card: 'summary_large_image',
+      site: '@SourceLibrary_',
+      title: t.metaTitle,
+      description: t.metaDescription,
+      images: [siteOgImage(lang)],
     },
   };
 }

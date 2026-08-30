@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
@@ -168,18 +169,41 @@ export async function POST(
       bookTitle,
       bookAuthor,
       pageNumber,
-      customPrompt,
-      authorSearchTerms,
-      personaName
     } = body;
 
-    if (!question) {
+    if (!question || typeof question !== 'string') {
       return NextResponse.json({ error: 'Question is required' }, { status: 400 });
+    }
+    if (question.length > 2000) {
+      return NextResponse.json({ error: 'Question is too long' }, { status: 400 });
     }
 
     if (!pageText) {
       return NextResponse.json({ error: 'Page text is required' }, { status: 400 });
     }
+
+    // Every call here spends money on Gemini, and the reader offers the
+    // Librarian to anonymous visitors, so this is the one place an anonymous
+    // request can run up a bill. Bots do not get the usual bypass: the UA
+    // check is a substring match on a spoofable header, and a crawler has no
+    // reason to ask a question about a page it is only indexing.
+    const gate = await anonActionGate(request, { name: 'page-ask', limit: 10, allowBotBypass: false });
+    if (!gate.allowed) {
+      return NextResponse.json(
+        { error: `You have reached the hourly limit for questions. Sign in (free) to keep going: ${SIGNIN_URL}`, retry_after: gate.retryAfter },
+        { status: 429, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : undefined },
+      );
+    }
+
+    // Caps on what a caller can put in the prompt. `question` and `pageText`
+    // are already bounded below; the conversation was not bounded at all, so a
+    // single request could carry an arbitrary number of input tokens.
+    const safeHistory: Message[] = Array.isArray(history)
+      ? history
+          .filter((m: Message) => m && typeof m.content === 'string')
+          .slice(-12)
+          .map((m: Message) => ({ role: m.role, content: m.content.slice(0, 4000) }))
+      : [];
 
     const model = getGeminiClient().getGenerativeModel({ model: DEFAULT_MODEL });
 
@@ -190,8 +214,8 @@ export async function POST(
     ].filter(Boolean).join(' ') || 'a historical text';
 
     // Build conversation history for context
-    const conversationHistory = history.length > 0
-      ? history.map((msg: Message) =>
+    const conversationHistory = safeHistory.length > 0
+      ? safeHistory.map((msg: Message) =>
           `${msg.role === 'user' ? 'Reader' : 'Assistant'}: ${msg.content}`
         ).join('\n\n') + '\n\n'
       : '';
@@ -208,8 +232,11 @@ export async function POST(
       authorSources = formatSourcesForPrompt(sources);
     }
 
-    // Use custom prompt if provided, otherwise use default
-    const promptTemplate = customPrompt || DEFAULT_PROMPT;
+    // The prompt is ours. This used to accept a caller-supplied `customPrompt`
+    // that REPLACED the template outright, which made an unauthenticated route
+    // into a general-purpose Gemini proxy on the site's API key. No caller in
+    // this repo ever sent one.
+    const promptTemplate = DEFAULT_PROMPT;
 
     // Replace variables in the prompt
     const prompt = promptTemplate

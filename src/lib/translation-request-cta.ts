@@ -29,6 +29,7 @@ export function shouldShowTranslationRequestCta({
   modernizedText,
   bookPagesTranslated,
   bookPagesCount,
+  bookLanguage,
 }: {
   ocrText?: string | null;
   translationText?: string | null;
@@ -37,8 +38,13 @@ export function shouldShowTranslationRequestCta({
   modernizedText?: string | null;
   bookPagesTranslated?: number | null;
   bookPagesCount?: number | null;
+  /** The book's own language. An English book has nothing to translate into. */
+  bookLanguage?: string | null;
 }) {
   if (!isNonEmptyText(ocrText)) return false;
+  // 2,447 public books are already in English. Offering to translate one is
+  // nonsense to the reader and a wasted queue slot if anyone takes it up.
+  if ((bookLanguage || '').toLowerCase().startsWith('english')) return false;
   if (hasExistingTranslationContent({ translationText, translationData, translationUpdatedAt, modernizedText })) {
     return false;
   }

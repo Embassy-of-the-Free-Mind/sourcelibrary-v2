@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { semanticArtworkSearch } from '@/lib/semantic-search';
+import { resolveTitle } from '@/lib/title-provenance';
 
 export const maxDuration = 30;
 
@@ -181,6 +182,10 @@ export async function GET(request: NextRequest) {
 
 const artworkProjection = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+  // #4288: the stamp that says whether `display_title` is the source record's
+  // title or a label a vision model wrote from the image. Without it in the
+  // projection every consumer treats the two as the same kind of thing.
+  'field_provenance.display_title': 1, content_type: 1,
   published: 1, year: 1, resource_type: 1, medium: 1,
   thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   image_full: 1, summary: 1, current_location: 1, collections: 1,
@@ -190,6 +195,15 @@ interface ArtworkRow {
   id: string;
   source: 'artwork';
   title: string;
+  /**
+   * Where `title` came from (#4288). `descriptive` means a vision model wrote
+   * it by looking at the image — it is a caption, not a work anyone published,
+   * and must not be cited as one. `source` means the museum/Commons record's
+   * own title. `derived` means it was mechanically shortened from that title.
+   */
+  title_provenance: 'source' | 'descriptive' | 'derived';
+  /** The title on the source record — the one that is safe to cite. */
+  source_record_title: string;
   author: string | null;
   published: string | null;
   year: number | null;
@@ -220,7 +234,10 @@ function shapeArtworkRow(
   }
 ): ArtworkRow {
   const slug = (doc.slug as string) || (doc.id as string);
-  const title = (doc.display_title as string) || (doc.title as string);
+  // Resolve, don't collapse (#4288): `display_title || title` erases the
+  // difference between a museum's title and an AI caption of the picture.
+  const resolvedTitle = resolveTitle(doc as Parameters<typeof resolveTitle>[0]);
+  const title = resolvedTitle.display;
   const description = semantic?.summary_text
     || (typeof doc.summary === 'string' ? (doc.summary as string) : null);
   const thumbnail = (doc.image_thumb as string) || (doc.thumbnail_blob as string)
@@ -232,6 +249,8 @@ function shapeArtworkRow(
     id: doc.id as string,
     source: 'artwork',
     title,
+    title_provenance: resolvedTitle.provenance,
+    source_record_title: resolvedTitle.citation,
     author: (doc.author as string) ?? null,
     published: (doc.published as string) ?? null,
     year: (doc.year as number) ?? null,

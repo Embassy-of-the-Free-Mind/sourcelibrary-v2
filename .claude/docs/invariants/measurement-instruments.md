@@ -306,6 +306,37 @@ reads all three:
 - **Verify a detector by making it fail.** The only proof the wiring works is
   running it with the input removed and seeing red. A green scheduled run proves
   nothing about a detector whose failure mode is silence.
+- **And check WHAT it counted, not just that it ran.** The rule above catches a
+  detector that cannot run. It does not catch the worse case: one that runs
+  perfectly, exits `0`, and is measuring a corpus that excludes the failure.
+  `page-texts-coverage.mjs` exists to catch "an unembedded book and a book with
+  no matches return the same empty list", and it selected books by
+  `pages_translated_es > 0` — which is `0` for a book *written* in Spanish and
+  always will be. So all 68 native books sat outside its own denominator and it
+  reported clean over 19,489 unfindable pages (#4146/#4186). Making it fail
+  would have passed: break a book **in** its scope and it goes red, which proves
+  nothing about the books outside. **The tell is the scope line, not the exit
+  code** — 107 books before the fix, 175 after. Print the denominator and read
+  it. Any time a read rule widens, the detectors watching it are writers too:
+  re-run each and confirm its SCOPE moved.
+
+- **A COUNTER cannot tell a dead source from a dead service — keep the reason.**
+  A batch loop that tallies failures without recording *why* produces the least
+  actionable output there is: `0 embedded, 60 failed`, repeated. On 2026-08-21
+  that line cost an hour of eliminating the CLIP server (healthy: 222ms for one
+  image, 978ms for a batch of ten), the batch size, and the Postgres write —
+  before the real cause surfaced, which was that **1,596 gallery rows carry a
+  dead `extracted_url`** and every fetch 404'd (#4185). The reason had been
+  available the entire time: the server returns
+  `result.error = "fetch 404 for <url>"`, and the failure branch was a bare
+  `failed++` that discarded it. The asymmetry is what makes this expensive — the
+  SERVICE is the first thing anyone suspects and the least often at fault, so a
+  bare counter points every reader at the wrong layer first. Keep a **bounded**
+  sample of `{id, input, reason}` (cap it, so a run where everything fails does
+  not become its own problem), and when `succeeded === 0 && failed > 0` say so
+  explicitly and name the source as the place to look. Same family as "absence
+  is not failure — no silent skips" (#3740): here the skip was counted but
+  unexplained, which reads as a working instrument reporting a broken world.
 
 **Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
 an *error message* rather than a *measurement*. Read the body before believing the
@@ -315,6 +346,59 @@ one acting on it, suspect the watchdog before the corpus.
 Related: the same self-referential shape as the error reporter that reported its
 own failures (#4045/#4047), and the inverse of "absence is not failure — no silent
 skips" (#3740): here the failure was not silent, it was *disguised as a finding*.
+
+## The absence of a marker is not the absence of the mechanism
+
+A cost-and-analytics audit on 2026-08-05/07 produced **six retractions, every one the same shape**: a
+missing thing was read as a missing behaviour, when the behaviour lived somewhere unlooked-at — often
+outside this repo entirely.
+
+- No Cloudflare receipt email ⇒ "billed to another mailbox." Cloudflare *states* it sends none;
+  invoices are dashboard-only, as are Supabase's and Atlas's.
+- No `skewProtection` in `next.config.ts`/`vercel.json` ⇒ "the feature is off." It is a **Vercel
+  project setting**, was on, and the real defect was that its window was *shorter than the CDN TTL*.
+- No `traffic_class` field on `analytics_pageviews` rows ⇒ "unclassified." The route classifies and
+  **drops** non-human before the insert, so every stored row is human by filtering — this one nearly
+  merged a wrong "correction" to a doc that was right.
+- An unfamiliar model id read as a third model ⇒ lite usage under-counted **40×**
+  (`gemini-3.1-flash-lite-preview` is an alias; the orchestrator says so in a comment).
+
+**Before concluding from a shape in the data, find the code path or the vendor's own page.** One
+known-absent item looked up in the authoritative source beats any amount of reasoning about
+aggregates. Corollary: everything *measured* in that audit held up; everything *inferred* from
+absence did not.
+
+## A detector tuned by one programme is an actuator against another
+
+Two programmes in this repo pointed at the same R2 objects with opposite
+intentions, and neither could see the other (#4406).
+
+- **#2651** regenerates each page's `display_photo` from the master at
+  `min(2000, native)` so the keyed provenance watermark survives recompression.
+- **#3005 Pass 1** flags a `display_photo` that is **≥90% of its master** as
+  "never downsized" and regenerates it to 1200px.
+
+A baked variant measures **100–122%** of its master. So every provenance-marked
+page is, by #3005's definition, textbook bloat — and `regen-display-bloat.mjs`
+would have force-overwritten each one with an unmarked 1200px variant it cannot
+re-sign (it has no key and no edition id at that point). The detector was
+correct on the day it was written; a *different* programme then changed the
+population underneath it, and a threshold that used to mean "nobody downsized
+this" came to mean "somebody marked this."
+
+**The rule: a threshold encodes an assumption about who else writes to the
+population.** Before running any sweep that overwrites or deletes on a measured
+property, ask *what else writes here, and would its output look like my
+detector's positive class?* Then make the guard explicit and **counted** — the
+executor now HEADs the display key, skips objects carrying `provenance`
+metadata, reports them as `marked=N`, and requires `--force-unmark`. A silent
+skip would have been the same failure in the other direction.
+
+Corollary, and the reason this pairs with the section above: the collision is
+invisible from either issue thread. Neither #2651 nor #3005 mentions the other,
+and both are individually well-reasoned. **Shared mutable state is discovered by
+reading the writers, not the plans** — same lesson as the two sessions that both
+wrote `locus_anchors`, one object store instead of one collection.
 
 ## A third-party search endpoint can ignore your query and still return 200
 

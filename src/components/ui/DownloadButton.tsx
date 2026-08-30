@@ -21,12 +21,19 @@ interface DownloadButtonProps {
   variant?: 'default' | 'header';
   /** Hide the "Download" label + chevron — show only the icon. */
   iconOnly?: boolean;
+  /**
+   * Render the format list inline, with no trigger button and no popup. For
+   * surfaces that ARE the download surface — the reader's Download drawer is
+   * already a panel you opened on purpose, so making you press a button to
+   * reveal a menu inside it is one gesture too many.
+   */
+  inline?: boolean;
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false, inline = false }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(inline);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [hasAccess, setHasAccess] = useState(false);
   const [accessChecked, setAccessChecked] = useState(false);
@@ -203,20 +210,24 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     : "flex items-center gap-2 px-4 py-2 bg-accent-gold/80 hover:bg-accent-rust text-white rounded-lg font-medium text-sm transition-colors";
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={buttonClass}
-      >
-        <Download className="w-4 h-4" />
-        {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
-      </button>
+    <div className={inline ? '' : 'relative'} ref={dropdownRef}>
+      {!inline && (
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={buttonClass}
+        >
+          <Download className="w-4 h-4" />
+          {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
+        </button>
+      )}
 
       {isOpen && (
         <>
         {/* Backdrop (mobile) — tap to dismiss */}
-        <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />
-        <div className="fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]">
+        {!inline && <div onClick={() => setIsOpen(false)} className="fixed inset-0 z-[9998] bg-black/30 sm:hidden" />}
+        <div className={inline
+          ? 'w-full bg-transparent border-0 shadow-none py-0'
+          : 'fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]'}>
           {/* Header with close (mobile bottom sheet) */}
           <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
             <span className="text-[15px] font-semibold text-stone-900">Download</span>
@@ -258,23 +269,23 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           <div className="px-3 py-2 flex items-center justify-between border-b border-stone-100">
             <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">TXT</span>
-            <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
+            <span className="text-[10px] font-medium text-stone-500 uppercase tracking-wide">Free with sign-in</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="translation" label="English Translation" desc="Translated text only"
-              icon={<Languages className="w-4 h-4 text-status-success shrink-0" />}
+              icon={<Languages className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="ocr" label="Original Text (OCR)" desc="Source language transcription"
-              icon={<FileText className="w-4 h-4 text-blue-600 shrink-0" />}
+              icon={<FileText className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasOcr && (
             <FormatOption format="both" label="Complete (Both)" desc="Original + translation per page"
-              icon={<Layers className="w-4 h-4 text-purple-600 shrink-0" />}
+              icon={<Layers className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           </div>
@@ -285,12 +296,12 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Scan facing its translation, like the reader"
-              icon={<FileType className="w-4 h-4 text-emerald-700" />}
+              icon={<FileType className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && (
             <FormatOption format="pdf-translation" label="English Translation (PDF)" desc="Translated text only"
-              icon={<FileType className="w-4 h-4 text-status-success" />}
+              icon={<FileType className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
 
@@ -301,12 +312,12 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
           {hasTranslations && (
             <FormatOption format="epub-translation" label="English Translation" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-status-success shrink-0" />}
+              icon={<BookOpen className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasOcr && (
             <FormatOption format="epub-ocr" label="Original Text (OCR)" desc="E-reader format"
-              icon={<BookOpen className="w-4 h-4 text-blue-600 shrink-0" />}
+              icon={<BookOpen className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {/* Menu consolidation (#3920): epub-parallel and epub-parallel-fxl rows
@@ -317,18 +328,18 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               format keys remain valid on the routes for old links and scripts. */}
           {hasTranslations && hasOcr && (
             <FormatOption format="epub-both" label="Complete (Both)" desc="Original + translation, page by page"
-              icon={<BookOpen className="w-4 h-4 text-purple-600 shrink-0" />}
+              icon={<BookOpen className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && (
             <FormatOption format={hasOcr ? 'epub-bilingual' : 'epub-scholarly'} label="Scholarly Edition"
               desc={hasOcr ? 'Original + translation with introduction & apparatus' : 'With introduction & apparatus'}
-              icon={<GraduationCap className="w-4 h-4 text-stone-700 shrink-0" />}
+              icon={<GraduationCap className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           {hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation (fixed layout)"
-              icon={<Image className="w-4 h-4 text-emerald-700" />}
+              icon={<Image className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           </div>
@@ -338,20 +349,20 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               <div className="px-3 py-2 border-t border-stone-100 mt-2 flex items-center justify-between">
                 <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">Page Scans</span>
                 {ncImagesFree && (
-                  <span className="text-[10px] font-medium text-emerald-700 uppercase tracking-wide">Free with sign-in</span>
+                  <span className="text-[10px] font-medium text-stone-500 uppercase tracking-wide">Free with sign-in</span>
                 )}
               </div>
               {/* epub-images row removed (#3920) — 44 clicks/90d vs 191 for the
                   ZIP; the key stays valid on the routes. */}
               <FormatOption format="images-zip" label="Download Scans (ZIP)" desc="All page images, lossless"
-                icon={<Image className="w-4 h-4 text-stone-600" />}
+                icon={<Image className="w-4 h-4 text-[var(--text-secondary)]" />}
                 onDownload={handleDownload} downloading={downloading} />
             </>
           )}
           {hasImages && imageRestricted && (
             <div className="px-3 py-2 border-t border-stone-100 mt-2">
               <p className="text-xs text-stone-400">
-                Image downloads unavailable &mdash; the source institution has not released the scans under a redistributable license. View images on the book page.
+                Image downloads are unavailable: the source institution has not released these scans under a redistributable licence. The images are on the book page.
               </p>
             </div>
           )}

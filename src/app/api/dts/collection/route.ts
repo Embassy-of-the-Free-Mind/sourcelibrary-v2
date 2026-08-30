@@ -18,6 +18,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { resolveImprintPlace, IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { API_LIMITS } from '@/lib/api-limits';
 
 const BASE = 'https://sourcelibrary.org';
 const PAGE_SIZE = 50;
@@ -117,6 +119,12 @@ function bookToResource(book: Record<string, unknown>) {
 }
 
 export async function GET(request: NextRequest) {
+  // Public and keyless by design, but not unmetered (#4366): a light
+  // per-IP ceiling far above any reader or viewer, low enough to blunt scripts.
+  const _rl = checkRateLimit({ name: 'dts-read', limit: API_LIMITS.publicReads.dtsPerMinute, windowSeconds: 60 }, getClientIp(request));
+  if (!_rl.allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(_rl.retryAfter) } });
+  }
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

@@ -315,7 +315,15 @@ export async function GET(request: NextRequest) {
 
       // Fallback: $text index (covers description, book_title, book_author)
       if (textItems.length === 0) {
-        filter.$text = { $search: searchQuery };
+        // Multi-word queries: quote the phrase so $text requires the words
+        // together. Bare $text ORs tokens, so "zzzqxv nonexistent" matched 12
+        // rows whose captions contain the word "nonexistent" — garbage served
+        // as if it matched the query (#4338). Single words keep OR semantics
+        // (there is nothing to OR).
+        const phraseQuery = /\s/.test(searchQuery)
+          ? `"${searchQuery.replace(/"/g, '')}"`
+          : searchQuery;
+        filter.$text = { $search: phraseQuery };
         const sortOrder: Record<string, any> = { score: { $meta: 'textScore' }, gallery_quality: -1 };
         const projection = { _id: 0, score: { $meta: 'textScore' as const } };
         textItems = await db.collection('gallery_images')

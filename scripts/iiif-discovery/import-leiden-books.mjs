@@ -37,7 +37,8 @@
 import { ObjectId } from 'mongodb';
 import { chromium } from 'playwright';
 import { getScriptClient } from '../lib/mongo.mjs';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -125,7 +126,7 @@ for (const c of cands) {
   const slug = await uniqueSlug(slugify(title));
   const bookId = new ObjectId();
   const now = new Date();
-  const bookDoc = makeBookDoc({
+  const fields = {
     _id: bookId, id: bookId.toHexString(), slug,
     title, display_title: title, author,
     language: c.language && c.language !== 'Unknown' ? c.language : 'Unknown',
@@ -150,9 +151,15 @@ for (const c of cands) {
     ...(c.metadata?.subject_geographic ? { subject_geographic: c.metadata.subject_geographic } : {}),
     source_fingerprint: fp, normalized_title: normalizeTitle(title), normalized_author: normalizeAuthor(author),
     created_at: now, updated_at: now,
-  });
+  };
+  let bookDoc;
   try {
-    await db.collection('books').insertOne(bookDoc);
+    const acquired = await insertBookIfNew(db, fields, {
+      importer: 'script:iiif-discovery/import-leiden-books', sourceIdentifier: `leiden:item:${id}`, sourceUrl: c.manifest_url,
+    });
+    // The gate declined this candidate; the reason is a row in `dedup_skips`.
+    if (!acquired.inserted) { skipped++; console.log(`  SKIP ${title.slice(0, 40)} — ${acquired.message}`); continue; }
+    bookDoc = acquired.doc;
     const CHUNK = 500;
     for (let s = 0; s < pages.length; s += CHUNK) {
       const docs = pages.slice(s, s + CHUNK).map((p, k) => { const pid = new ObjectId(); return makePageDoc({ _id: pid, id: pid.toHexString(), book_id: bookDoc.id, page_number: s + k + 1, photo: p.photo, photo_original: p.photo, thumbnail: p.thumbnail, created_at: now, updated_at: now }); });

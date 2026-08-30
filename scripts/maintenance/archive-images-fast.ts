@@ -81,7 +81,7 @@ try {
 } catch {}
 
 // User-Agent for polite scraping — identifies us to library servers
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 // Per-domain rate limiting (requests per second)
 const DOMAIN_RATE_LIMITS: Record<string, number> = {

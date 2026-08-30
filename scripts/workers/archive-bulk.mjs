@@ -66,7 +66,7 @@ if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 try { execSync('which opj_decompress', { stdio: 'pipe' }); }
 catch { console.error('opj_decompress not found. Install: apt-get install libopenjp2-tools'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const s3 = new S3Client({
   region: 'auto',

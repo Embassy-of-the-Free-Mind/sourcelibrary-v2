@@ -10,7 +10,8 @@ PEACE framework (`/peace`).
 
 **Bulk data lives in `scripts/output/experience-map/` — which is gitignored.**
 Only the pipeline is tracked here. Regenerating the data costs ~$3 in
-`gemini-3.1-flash-lite` calls; embeddings are free-tier.
+`gemini-3.1-flash-lite` calls, plus a few cents of embedding — which is BILLED,
+not free-tier (see `.claude/docs/embeddings.md`).
 
 ## Pipeline
 

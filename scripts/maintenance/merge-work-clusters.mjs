@@ -1,7 +1,8 @@
 #!/usr/bin/env npx tsx
 /**
  * merge-work-clusters.mjs — same-work cluster detection + merge for fragmented
- * work_ids (#3759). Successor to merge-duplicate-work-ids.mjs: adds the canon
+ * work_ids (#3759). Successor to merge-duplicate-work-ids.mjs (deleted 2026-08,
+ * in git history): adds the canon
  * registry as a gold seed, writes work_id_aliases for redirects + provenance,
  * and queues MEDIUM-confidence candidates for review instead of dropping them.
  *

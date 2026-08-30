@@ -39,6 +39,16 @@ const CODE3 = {
 const SYNONYM = {
   geez: "Ge'ez", "ge'ez": "Ge'ez", 'ge’ez': "Ge'ez", ethiopic: "Ge'ez",
   'quiche maya': "K'iche' Maya", 'quiché maya': "K'iche' Maya",
+  // The OCR model writes the language of the Popol Vuh with the MODIFIER LETTER
+  // APOSTROPHE (U+02BC, "Kʼicheʼ") — the linguistically correct saltillo — while
+  // the catalogue writes ASCII. Without both spellings a tally over page tags
+  // counts one language twice and reports a bilingual book as trilingual, which
+  // is the non-latin-text-operations trap in miniature: the fold has to happen on
+  // BOTH sides or the comparison is meaningless.
+  "k'iche'": "K'iche' Maya", 'kʼicheʼ': "K'iche' Maya",
+  "k'iche": "K'iche' Maya", 'kʼiche': "K'iche' Maya",
+  "k'iche' maya": "K'iche' Maya", 'kʼicheʼ maya': "K'iche' Maya",
+  quiche: "K'iche' Maya", 'quiché': "K'iche' Maya",
   castilian: 'Spanish', flemish: 'Dutch',
   hellenistic: 'Greek', attic: 'Greek', koine: 'Greek',
   'high german': 'German', 'low german': 'German',
@@ -78,7 +88,12 @@ const VARIANT_PREFIX = /^(ancient|modern|classical|koine|medieval|mediaeval|late
  * the OCR model emitting two labels for one text, not a facing-page edition.
  */
 const FAMILY = {
+  // Script and register variants of Chinese. "Traditional Chinese" was missing
+  // until a Japanese go manual came back tagged Chinese 44% / Japanese 36% /
+  // Classical Chinese 12% / Traditional Chinese 8% — four labels, one text.
   'Classical Chinese': 'Chinese', 'Literary Chinese': 'Chinese',
+  'Traditional Chinese': 'Chinese', 'Simplified Chinese': 'Chinese',
+  'Mandarin': 'Chinese', 'Kanbun': 'Chinese',
   'Old English': 'English', 'Middle English': 'English',
   'Old French': 'French', 'Middle French': 'French',
   'Middle High German': 'German', 'Old High German': 'German',

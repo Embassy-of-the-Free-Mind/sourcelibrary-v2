@@ -14,7 +14,7 @@ This content is NOT available in Common Crawl, Wikipedia, or any other training 
 - **Rich metadata**: authors, dates, subjects, provenance, DOI-backed citations
 - **MCP server** for real-time Claude/GPT integration (npm: @source-library/mcp-server)
 - **Custom datasets** for fine-tuning on esoteric, historical, and scientific knowledge domains
-- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 14,000+ catalogued artworks
+- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 24,000+ catalogued artworks
 
 ### Corporate Sponsorship
 
@@ -45,7 +45,7 @@ Original texts are public domain. AI-generated translations and editorial conten
 
 **A standard training license is available to anyone: at least $250 per book, or $200,000/year for the full corpus (non-exclusive, quarterly refresh, delivered via API/dataset export — no crawling required).** Unlicensed training use is unauthorized and will be invoiced at these rates.
 
-**Cooperative partners can license at lower rates through Dataset subscriptions** — scoped corpora delivered via the streaming JSONL API: single language $4,990/yr, one scholarly domain $14,990/yr, full collection $49,990/yr, with a free evaluation tier (100 pages/day). Details and quickstart: https://sourcelibrary.org/dataset. The standard rate card above is the default term for training use outside a subscription and the invoicing basis for unlicensed use.
+**Cooperative partners can license at lower rates through Dataset subscriptions** — scoped corpora delivered via the streaming JSONL API: single language $4,990/yr, one scholarly domain $14,990/yr, full collection $49,990/yr, with a free self-serve tier (2,000 pages/day). Details and quickstart: https://sourcelibrary.org/dataset. The standard rate card above is the default term for training use outside a subscription and the invoicing basis for unlicensed use.
 
 **Grounding / RAG at scale (ai-input=yes): permitted with attribution; a Grounding API subscription buys delivery** — an API key with no daily page budget: $499/mo (unlimited retrieval, attribution + link-back required in your product), $1,999/mo with SLA, support, and re-translation webhooks. Licensed exports and API responses are clean — none of the provenance marks embedded in public serve surfaces — and the corpus is living: texts are continuously re-read by newer models and revised by scholars, so subscriptions track the best current text.
 

@@ -48,7 +48,32 @@ const db = mc.db('bookstore');
 const authors = db.collection('authors');
 const books = db.collection('books');
 
-const shapes = { multi_person: [], role_annotated: [], edition_annotated: [], overlong: [] };
+/**
+ * Corpus evidence for the `underspecified` rule: for each bare (single-token)
+ * form, how many DISTINCT people carry an author string that extends it. Shape
+ * alone cannot judge "Johannes" — it is a well-formed name — so the classifier
+ * only gets this answer because we compute it here, over `books.author`, which
+ * is the population the canonical-link backfill actually matches against.
+ */
+const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+const extendersByForm = new Map();
+{
+  const rows = await books.aggregate([
+    { $match: { author: { $type: 'string', $nin: ['', null] }, content_type: { $ne: 'artwork' } } },
+    { $group: { _id: '$author' } },
+  ], { allowDiskUse: true }).toArray();
+  for (const r of rows) {
+    const n = norm(r._id);
+    const head = n.split(/[\s,]+/)[0];
+    if (!head || head === n) continue;          // the bare form is not its own extender
+    if (!extendersByForm.has(head)) extendersByForm.set(head, new Set());
+    // Key by the folded remainder so two spellings of one person count once.
+    extendersByForm.get(head).add(n.replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean).sort().join(' '));
+  }
+}
+const extendingPeople = (v) => extendersByForm.get(norm(v))?.size ?? 0;
+
+const shapes = { multi_person: [], role_annotated: [], edition_annotated: [], overlong: [], underspecified: [] };
 const benign = { script_pair: 0, institutional: 0 };
 let totalVariants = 0; let cleanCount = 0; let docsAffected = 0;
 
@@ -57,7 +82,7 @@ for await (const a of authors.find({ variants: { $exists: true, $ne: [] } },
   let touched = false;
   for (const v of a.variants) {
     totalVariants++;
-    const c = classifyVariant(v);
+    const c = classifyVariant(v, { extendingPeople });
     if (c.matchable) {
       cleanCount++;
       if (benign[c.shape] !== undefined) benign[c.shape]++;
@@ -70,6 +95,7 @@ for await (const a of authors.find({ variants: { $exists: true, $ne: [] } },
       wikidata_id: a.wikidata_id ?? null,
       variant: v,
       people: c.people,
+      ...(c.extenders ? { extenders: c.extenders } : {}),
     });
   }
   if (touched) docsAffected++;

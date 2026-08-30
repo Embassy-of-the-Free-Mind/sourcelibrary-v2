@@ -1,0 +1,137 @@
+# Agent tool results — what the model does with what you hand it
+
+**Read this when:** adding or changing a tool the Librarian or the public MCP
+server can call (`src/lib/embassy/librarian.ts`, `src/app/api/mcp/route.ts`), or
+changing the text a tool returns. Companion to `measurement-instruments.md`
+(which is about numbers you quote) — this is about the string a model reads.
+
+---
+
+## A ranker cannot answer a cardinality question
+
+`search` returns the strongest matching passages. That is a top-k list, and a
+top-k list cannot answer "how many" or "show me all" **no matter how good the
+ranking is** — the shape of the answer is wrong, not its quality.
+
+Until #4154 the Librarian's only view of the catalogue was `search`, so it
+answered *"can you find me all the book published in spanish?"* with **5 books**,
+assembled from the 8 passages that happened to rank highest, against a shelf of
+67 printed in Spanish and 146 a Spanish reader can open. Same failure for "how
+many books before 1600", "everything in the astrology collection", "how many
+first translations". `browse_catalog` is the second tool that answers those:
+filter, exact count, a representative page, and the browse URL.
+
+**When a question class needs a different query shape, give it a different
+tool.** Prompt wording cannot make a ranker count.
+
+## Silence in a tool result is an invitation to fabricate
+
+Both defects below were invisible in the code and in the query measurements —
+they only appeared in a real turn against a preview deploy. Both are the same
+mistake: the result *omitted* something instead of *saying it was absent*.
+
+1. **Rows carried author names but no author URL.** The model wrote
+   `https://sourcelibrary.org/es/author/alfonso-x-el-sabio` — wrong twice over:
+   the slug was invented, and `/author` has no localized twin, so the `/es`
+   prefix 404s on its own. Fix: hand over the resolvable link
+   (`books.author_id`, else `authorSlug(book.author)`), always unprefixed.
+2. **A filter with no browse page produced no browse line.** The model composed
+   `sourcelibrary.org/books?year_to=1599`, a 404. Fix: the result now says *"There
+   is NO page that lists exactly this filter. Do not write a browse link for
+   it."*
+
+Only `/book/<slug>` links are verified after the fact (`citation-fixes.ts`
+rewrites bad book slugs; `LINK_PATTERNS` there does not cover `/author`,
+`/collections`, or anything else). **So every non-book URL has to be correct at
+the moment the model receives it** — there is no net under it.
+
+Rules that follow, for any new tool:
+
+- Hand over **URLs, never the ingredients of a URL**. A name plus the knowledge
+  that `/author/<slug>` exists is a fabrication waiting to happen.
+- Emit a URL only when a page shows **exactly** the set you counted. Anything
+  narrower gets no link and an explicit "there is no such page" — never a link
+  that quietly means something else.
+- Locale-prefix a link only if the shape is in `LOCALIZED_PATTERNS`
+  (`src/lib/locale-path.ts`). `/book/<slug>` and `/collections/<slug>` have `/es`
+  twins; `/author/<slug>`, `/languages/<slug>` and `/browse/*` do not.
+- State the absence, out loud, in the words you want the model to obey. "No
+  results" beats an empty field; "do not link this" beats no link.
+
+## Count and link must agree
+
+A tool that reports 74 and links a page listing 67 is a worse answer than one
+that reports 67. `browse_catalog` resolves a language to the **exact** catalogued
+value because that is what `/languages/<slug>` counts, and returns the compound
+shelves ("Old Spanish", "Spanish / Latin", "Nahuatl-Spanish") as *named variants
+with their own counts* rather than folding them into the total. Same reason the
+tenant filter is applied: the number must describe the shelf the reader can
+actually reach from the link beside it.
+
+## Verify a tool by running a turn, not by reading the code
+
+`npx tsc --noEmit` passed, the queries were measured correct against production,
+and the tool still produced two fabricated 404s the first time a model used it.
+Push the branch, let Vercel build the preview, and POST a real question to
+`/api/embassy/chat` (`{"message": "...", "lang": "es", "visibility": "private",
+"stream": true}` — anonymous is allowed, 5/hour/IP). Then **curl every URL in the
+answer**. That is the only step that finds this class of bug.
+
+Note `next dev` cannot stand in for it in a worktree: the shared `node_modules`
+symlink points outside the worktree root and Turbopack panics on it
+("Symlink [project]/node_modules is invalid, it points out of the filesystem
+root"). Preview deploys are the practical loop.
+
+## Tool descriptions are the only lever that acts before the mistake
+
+From an agent's own postmortem of its session (feedback, 2026-08-27): it
+asserted three false things with full confidence — no IIIF MCP servers exist
+(two do), visual-similarity over collections is unprecedented (it isn't), we
+lack IIIF endpoints (we ship them) — and each was caught only because a human
+pushed back. An unprompted agent files all three and moves on.
+
+/llms.txt, /developers, and result-payload notes all correct errors *after*
+they're made or only if consulted. The tool description is read every single
+time, by every client, before every call. **Treat descriptions as the primary
+documentation surface for agent consumers, not as parameter labels**: put the
+known data hazards (unreliable fields, sparse coverage, lanes a filter cannot
+reach) and the narrowing strategy in the description of the tool and of the
+specific parameter they poison. `get_quote` teaching citation practice and
+`year_from`'s artwork-year caution are the house pattern.
+
+---
+
+## A write tool fabricates identifiers too, and those land in your database
+
+The sections above are about what a model invents in its *output*. The same
+failure runs backwards through any tool that lets a model write *into* a store.
+
+`propose_collection` takes a `book_ids[]` array and `POST /api/collection-proposals`
+inserts it verbatim: no existence check, no resolution, nothing. Of the two
+proposals that accumulated there, **each contained exactly one book id that
+matches no record in `books` or in `deleted_books`** — `698420e1…` and
+`69b51e49…`, invented whole. They are well-formed 24-character hex, they sit in
+the correct id-space, and one of them (`69b51e49ff09e4fe943ab558`) falls inside a
+real import batch, with genuine neighbours two characters away. Nothing about
+them looks wrong.
+
+The damage is quiet because the approve path is quiet. `POST
+/api/collection-proposals/[id]` with `action:'approve'` hands `proposal.book_ids`
+straight to `createCollection()`, whose `updateMany({_id:{$in:…}})` simply matches
+fewer documents than it was given and reports no error. A 33-book collection
+becomes a 32-book collection, the page renders, the counts agree with each other,
+and the missing work is invisible — you cannot tell a book the curator dropped
+from a book the model hallucinated.
+
+**Resolve every model-supplied identifier before acting on it, and fail loudly on
+the gap.** `updateMany` matching fewer docs than ids is not a warning, it is a
+silent truncation. `scripts/create-proposed-collections-2026-08.mjs` does this:
+it fetches all ids first, diffs against what it asked for, and throws with the
+unresolved list rather than building a short collection.
+
+And when you repair one, **record which id was fabricated and what you did**. The
+two here needed opposite treatments: the Saint-Martin entry was unambiguous from
+the rationale (which cites him, and whose *sequel* was already in the list) so it
+was substituted, while the "Postel (1635)" entry was dropped outright — Postel
+died in 1581, so the date is invented too and there is no record to substitute.
+A silent substitution is a second fabrication, just one with better manners.

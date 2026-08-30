@@ -254,7 +254,23 @@ export function authorSlug(author: string): string {
     .replace(/-{2,}/g, '-');
 }
 
-export function authorUrl(author: string): string | null {
+/**
+ * URL for a book's author page.
+ *
+ * Prefer `authorId` (`books.author_id`, the canonical FK) over the byline
+ * string whenever it is present. The byline is what a CATALOGUE said; the
+ * canonical link is who we decided that means, and the two diverge exactly
+ * where it matters. Slugifying the byline sends every book bylined "Thomas" to
+ * `/author/thomas` — Aquinas and Thomas à Kempis alike — so the reader is told
+ * a work is by whoever that bare form happens to resolve to (#4318).
+ *
+ * It also makes the link independent of the thesaurus's MATCH surface. Bare
+ * forenames had to be withdrawn from `variants[]` because they claimed every
+ * namesake; a byline-derived URL would then dead-end, while `author_id` keeps
+ * pointing at the right person.
+ */
+export function authorUrl(author: string, authorId?: string | null): string | null {
+  if (authorId) return `/author/${authorId}`;
   if (!author || author === 'Unknown' || author === 'Anonymous') return null;
   return `/author/${authorSlug(author)}`;
 }

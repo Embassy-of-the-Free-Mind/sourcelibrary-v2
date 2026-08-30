@@ -211,6 +211,7 @@ export async function generateMetadata({
   const author = page.book?.author;
   const year = page.book?.published;
   const description = detection.description || 'Historical illustration';
+  const plateUrl = (page as { enhanced_photo?: string }).enhanced_photo || page.cropped_photo || page.archived_photo || page.photo;
 
   // Short title: first sentence (up to 70 chars) for social card headline
   const firstSentence = description.split(/\.\s/)[0];
@@ -241,11 +242,19 @@ export async function generateMetadata({
       type: 'article',
       siteName: 'Source Library',
       locale: 'en_US',
+      // The actual scan, not the generated template card: a 200k-image
+      // collection was presenting the same card in every link preview and to
+      // every og-reading crawler (#4286). When no image resolves, omit the key
+      // so the file-convention opengraph-image card fills in.
+      ...(plateUrl ? { images: [{ url: plateUrl, alt: shortTitle }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title: ogTitle,
       description,
+      // Per the shallow-merge invariant, X reads twitter.images (the root
+      // layout's generic logo would win without this).
+      ...(plateUrl ? { images: [plateUrl] } : {}),
     },
   };
 }
@@ -284,6 +293,34 @@ export default async function ImageLayout({
         imageUrl={imageUrl}
         book={page.book}
       />
+      {/* Server-rendered content for non-JS consumers (#4286). The viewer is a
+          client component, so without this the served HTML carried nav, footer
+          and meta tags but no image, caption, or book link — crawlers and LLM
+          retrieval bots (which fetch raw HTML and do not run JS) saw an empty
+          body on the canonical citable page for every plate. noscript keeps it
+          out of the JS-rendered view; the markup itself is what raw-HTML
+          fetchers read. */}
+      <noscript>
+        <figure className="max-w-3xl mx-auto p-6 text-white">
+          {imageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={imageUrl} alt={detection.description || 'Historical illustration'} style={{ maxWidth: '100%', height: 'auto' }} />
+          )}
+          <figcaption className="mt-4 space-y-2 text-sm">
+            <p>{detection.description}</p>
+            {detection.museum_description && <p>{detection.museum_description}</p>}
+            <p>
+              From{' '}
+              <a href={`/book/${page.book?.slug || page.book?.id || page.book_id}?page=${page.page_number}`} className="underline">
+                {page.book?.display_title || page.book?.title || 'the source volume'}
+                {page.book?.author ? ` by ${page.book.author}` : ''}
+                {page.book?.published ? ` (${page.book.published})` : ''}
+              </a>
+              , page {page.page_number}.
+            </p>
+          </figcaption>
+        </figure>
+      </noscript>
       {children}
     </div>
   );

@@ -10,6 +10,8 @@ import { isRTLLanguage } from '@/lib/types';
 import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 import { cleanOcrArtifacts } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
+import { useLocale } from '@/lib/i18n';
+import { getReaderStrings } from '@/lib/reader-strings';
 import { applyNotesOff } from '@/lib/notes-off';
 import AiBadge from '@/components/ui/AiBadge';
 
@@ -277,6 +279,24 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   return { cleanText: result, metadata };
 }
 
+/**
+ * Every element ReactMarkdown may render. `unwrapDisallowed` SILENTLY strips
+ * a tag not on this list while keeping its children — the text still reads
+ * fine, only the styling vanishes, which is how <interp> shipped invisible
+ * (#4385): the preprocessor emitted it, no component ever received it, and
+ * nothing errored. tests/unit/translator-interpolations.test.ts pins that
+ * every tag the preprocessing emits is on this list.
+ */
+export const NOTES_ALLOWED_ELEMENTS = [
+  'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
+  'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
+  'table', 'thead', 'tbody', 'tr', 'th', 'td',
+  'span', 'div', 'sup',
+  // XML annotation elements (new syntax)
+  'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc', 'interp',
+];
+
 // Pre-process bracket note tags to XML tags before ReactMarkdown sees them
 // Converts [[tag: content]] to <tag>content</tag> which rehype-raw handles
 function preprocessBracketTags(text: string, showNotes: boolean): string {
@@ -306,6 +326,19 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
 
   // Terms always shown
   result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi, '<term>$1</term>');
+
+  // Single-bracket runs are the translator speaking — supplied words and
+  // stage directions ("[that is, Mercury]", "[The remainder is blank]").
+  // Untouched, they rendered as body text and read as if the author wrote
+  // them (#4385). With notes on, mark them as interpolations (brackets kept —
+  // the scholarly convention IS the brackets); with notes off, drop them like
+  // the rest of the editorial voice. Conservative match: single line, no
+  // nesting, never a markdown link ("[text](url)"), and a lacuna mark such as
+  // "[…]" always survives — it reports missing text, not commentary.
+  const interpPattern = /(?<!\[)\[([^\[\]\n]{1,240})\](?!\]|\()/g;
+  result = showNotes
+    ? result.replace(interpPattern, '<interp>[$1]</interp>')
+    : result.replace(interpPattern, (m, inner) => (/^[\s.…·—–-]*$/.test(inner) ? m : ''));
 
   return result;
 }
@@ -704,15 +737,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkBreaks]}
       rehypePlugins={[rehypeRaw]}
-      allowedElements={[
-        'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
-        'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
-        'table', 'thead', 'tbody', 'tr', 'th', 'td',
-        'span', 'div', 'sup',
-        // XML annotation elements (new syntax)
-        'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc'
-      ]}
+      allowedElements={NOTES_ALLOWED_ELEMENTS}
       unwrapDisallowed={true}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       components={{
@@ -817,6 +842,15 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         term: ({ children }: any) => (
           <span className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded mx-0.5`} title="Technical term">
             <em>{children}</em>
+          </span>
+        ),
+        // Translator's interpolation — single brackets in the translation.
+        // Renders children either way: the bracketed words can be load-bearing
+        // ("he [Hermes] said"), so no layer may delete them behind a styling
+        // tag; hiding is preprocessBracketTags' decision, made before parsing.
+        interp: ({ children }: any) => (
+          <span className={NOTE_TAG_STYLES.interp} title="Translator's addition — not in the original">
+            {children}
           </span>
         ),
         'image-desc': ({ children }: any) => showNotes ? (
@@ -936,6 +970,8 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
     return null;
   }, [processedText, columns]);
 
+  const readerStrings = getReaderStrings(useLocale()).panes;
+
   // Determine text direction from language prop or extracted metadata
   const effectiveLanguage = language || metadata.language;
   const isRTL = isRTLLanguage(effectiveLanguage);
@@ -953,7 +989,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   if (isDescriptionOnly && !showNotes) {
     return (
       <div className={`text-[var(--text-muted)] italic text-sm ${className}`}>
-        {formatPageTypeLabel(metadata.pageType || pageType || 'Image')} page — toggle Notes to see description
+        {readerStrings.descriptionHidden(formatPageTypeLabel(metadata.pageType || pageType || 'Image'))}
       </div>
     );
   }
