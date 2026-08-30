@@ -467,6 +467,21 @@ body:has([data-reader-v2]) {
    facsimile is worse than the abrupt swap it replaced. */
 .rv2-page-in { animation: rv2-page-in 200ms ease-out both; }
 
+/* The phone column swapped pages instantly, which on a swipe reads as a jolt
+   rather than as having moved. The new page arrives from the side you sent it,
+   far enough to say a page went by and no further. X only, for the same reason
+   the fade above is opacity only: a vertical rise moves text under the eye. */
+@keyframes rv2-turn-next {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes rv2-turn-prev {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+.rv2-turn-next { animation: rv2-turn-next 190ms ease-out both; }
+.rv2-turn-prev { animation: rv2-turn-prev 190ms ease-out both; }
+
 /* Panel contents arrive just after the panel itself, so switching tools reads
    as one movement instead of two things appearing at once. */
 @keyframes rv2-panel-body-in {
@@ -499,6 +514,7 @@ body:has([data-reader-v2]) {
 @media (prefers-reduced-motion: reduce) {
   .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in,
   .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in,
+  .rv2-turn-next, .rv2-turn-prev,
   .rv2-menu-ground, .rv2-menu-item { animation: none; }
 }
 

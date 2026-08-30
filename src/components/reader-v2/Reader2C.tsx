@@ -55,6 +55,12 @@ import type { CdliWitness } from '@/lib/types/book';
 // scrolls. Design handoff: design_handoff_reader_page/README.md § 2c.
 
 const INK = 'var(--bg-dark)';
+/** Height of the floating mobile title bar, and of the lead-in the column
+ *  keeps for it. One number: the bar covers the top of the column, so
+ *  anything that scrolls a pane to the top has to clear it. */
+const BAR_H = 52;
+/** How long a scroll up has to have been meant before the bar comes back. */
+const BAR_SHOW_DELAY_MS = 280;
 const STRIP_KEY = 'sl-reader-v2c-strip';
 /** Mobile toolbar height — one row of four tools. */
 const MOBILE_TOOLBAR_H = 52;
@@ -2425,6 +2431,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * time. Turning a page from inside a pane now keeps you in that pane.
    */
   const mobileAnchor = useRef<string | null>(null);
+  // A swipe is "carry on reading" and keeps your pane. Every other way of
+  // changing page — the pager, the filmstrip, Contents, a typed page number —
+  // is a deliberate move, and lands at the top of the reader.
+  const keepPaneOnTurn = useRef(false);
+  // Which way the last turn went, so the new page can arrive from that side.
+  // Taken from the index rather than from the swipe, so the pager, the
+  // filmstrip and a jump all animate the same way a swipe does.
+  const lastIndex = useRef(r.currentIndex);
   // Restoring the anchor scrolls the column, and that scroll must not be read
   // back as a reading move — on a short page the restore clamps at the foot,
   // which would re-read the anchor as the scan and lose the pane on the next
@@ -2434,13 +2448,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const readMobileAnchor = useCallback(() => {
     const el = mobileMainRef.current;
     if (!el) return null;
+    // You haven't moved: there is no pane to hold, and a turn starts at the top.
     if (el.scrollTop < 24) return null;
-    const probe = el.getBoundingClientRect().top + 8;
+    const box = el.getBoundingClientRect();
+    // The deepest pane you have brought up the screen — NOT the pane at the top
+    // edge. Plenty of pages are too short for the translation to ever reach the
+    // top, and reading one meant no anchor at all: the pane sat at the foot of
+    // the screen, which is exactly the case a turn used to throw away.
+    const reached = box.bottom - box.height * 0.25;
+    let anchor: string | null = null;
     for (const section of el.querySelectorAll<HTMLElement>('[data-reader-section]')) {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= probe && rect.bottom > probe) return section.dataset.readerSection ?? null;
+      if (section.getBoundingClientRect().top <= reached) anchor = section.dataset.readerSection ?? null;
     }
-    return null;
+    return anchor;
   }, []);
 
   useEffect(() => {
@@ -2456,7 +2476,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     const el = mobileMainRef.current;
     if (!el) return;
     // Read once: the two passes below must place the SAME pane.
-    const anchor = mobileAnchor.current;
+    const anchor = keepPaneOnTurn.current ? mobileAnchor.current : null;
+    keepPaneOnTurn.current = false;
     anchorLock.current = Date.now() + 250;
     const place = () => {
       // No anchor, or the new page hasn't got that pane (plenty have no
@@ -2465,19 +2486,40 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         ? el.querySelector<HTMLElement>(`[data-reader-section="${anchor}"]`)
         : null;
       if (target) {
-        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top;
+        // Under the bar, not under the top edge of the column: the bar floats
+        // over the column and is always back on screen for a new page, so
+        // aligning to the edge would put the first line behind it.
+        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top - BAR_H;
         el.scrollTop = Math.max(0, el.scrollTop + delta);
       } else {
         el.scrollTop = 0;
       }
       lastScrollY.current = el.scrollTop;
+      barIntent.current = 0;
     };
     place();
+
+    // Slide the panes in from the side the turn came from. Restarting the
+    // animation by hand rather than keying the elements: a new key would
+    // remount the column, and the scan would be re-fetched and re-decoded on
+    // every page turn.
+    const back = r.currentIndex < lastIndex.current;
+    lastIndex.current = r.currentIndex;
+    for (const pane of Array.from(el.querySelectorAll<HTMLElement>(':scope > section'))) {
+      pane.classList.remove('rv2-turn-next', 'rv2-turn-prev');
+      void pane.offsetWidth; // reflow, or the class swap is coalesced and nothing plays
+      pane.classList.add(back ? 'rv2-turn-prev' : 'rv2-turn-next');
+    }
+
     // The title bar comes back on a turn and the new text settles a beat
     // later; both change how far the column can scroll, so a position taken
     // in this pass alone lands short of where it was asked to go.
     const raf = requestAnimationFrame(place);
     return () => cancelAnimationFrame(raf);
+    // The RENDERED page only. On an uncached turn the index moves a fetch
+    // ahead of the content, and keying on it too would play the animation
+    // over the outgoing page and then again over the new one.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [r.currentPage.id]);
 
   /**
@@ -2538,25 +2580,63 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   }, [leftPanel, keyboardInset, isDesktop]);
 
   // Mobile title bar yields to the reading: it slides away as you read down
-  // and comes back the moment you scroll up. The threshold keeps a jittery
-  // finger from flickering it, and the top of the page always shows it.
+  // and comes back when you scroll up. Height, contents and visibility all
+  // move on this one curve and duration — they used to run at 200ms, 150ms
+  // and instantly, so the bar arrived in pieces and left in one cut.
+  const BAR_MS = 240;
+  const BAR_EASE = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
   const [barHidden, setBarHidden] = useState(false);
   const lastScrollY = useRef(0);
+  /**
+   * Scrolling that has kept going the same way, in pixels: up is negative.
+   * Six pixels of movement used to be enough to throw the whole bar back on
+   * screen, and momentum alone can produce that, so it appeared out of
+   * nothing. Turning it takes a deliberate stretch of scrolling now, and
+   * changing direction starts the count again.
+   */
+  const barIntent = useRef(0);
+  /**
+   * The bar waits before coming back. Meeting the threshold mid-scroll and
+   * appearing on the spot put it on screen while the reader was still moving,
+   * which is what made it feel like it jumped out. Leaving is not delayed:
+   * getting out of the way should be immediate.
+   */
+  const barShowTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancelBarShow = useCallback(() => {
+    if (barShowTimer.current !== null) {
+      clearTimeout(barShowTimer.current);
+      barShowTimer.current = null;
+    }
+  }, []);
+  const showBarSoon = useCallback(() => {
+    if (barShowTimer.current !== null) return; // already on its way
+    barShowTimer.current = setTimeout(() => {
+      barShowTimer.current = null;
+      setBarHidden(false);
+    }, BAR_SHOW_DELAY_MS);
+  }, []);
+  useEffect(() => cancelBarShow, [cancelBarShow]);
+
   const onMobileScroll = useCallback(() => {
     const el = mobileMainRef.current;
     if (!el) return;
     const y = el.scrollTop;
     const delta = y - lastScrollY.current;
+    lastScrollY.current = y;
+    if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
+    if (delta === 0) return;
+    if ((delta > 0) !== (barIntent.current > 0)) barIntent.current = 0;
+    barIntent.current += delta;
     // At the foot of the page the pager appears, and that is exactly when a
     // reader wants the whole set of ways out — next, previous, or back to the
     // book — so the bar comes back with it rather than staying hidden.
     const atFoot = el.scrollHeight - (y + el.clientHeight) < 80;
-    if (y < 48 || atFoot) setBarHidden(false);
-    else if (delta > 6) setBarHidden(true);
-    else if (delta < -6) setBarHidden(false);
-    lastScrollY.current = y;
-    if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
-  }, [readMobileAnchor]);
+    // The top of a page is where the bar lives: no wait there, it is the
+    // resting state rather than something arriving.
+    if (y < 48) { cancelBarShow(); setBarHidden(false); barIntent.current = 0; }
+    else if (barIntent.current > 16) { cancelBarShow(); setBarHidden(true); }
+    else if (barIntent.current < -28 || atFoot) showBarSoon();
+  }, [readMobileAnchor, cancelBarShow, showBarSoon]);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.
@@ -2597,14 +2677,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     }
     swipeRef.current = { x, y, axis: null };
   };
-  // The turn was invisible: the old pager swapped pages instantly, with
-  // nothing moving under the finger, and readers reported the gesture as
-  // absent (#4385). Now a locked horizontal drag pulls the whole column a
-  // little (with resistance), a released drag snaps back, and a committed
-  // turn slides the new page in from the side it came from. Direct style
-  // writes, not state — a re-render per touchmove is exactly the jank the
-  // scan viewer's compositing comments warn about.
-  const pendingTurnAnim = useRef<null | 'next' | 'prev'>(null);
+  // Nothing moved under the finger during a drag, so the gesture read as
+  // absent (#4385). A locked horizontal drag now pulls the whole column a
+  // little (with resistance) and a released drag snaps back; the arrival of
+  // the new page is animated separately (#4384's slide-in, direction taken
+  // from the page index). Direct style writes, not state — a re-render per
+  // touchmove is exactly the jank the scan viewer's compositing comments
+  // warn about.
   const dragFollow = (dx: number | null) => {
     const el = mobileMainRef.current;
     if (!el) return;
@@ -2634,34 +2713,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     const t = e.changedTouches[0];
     const dx = t.clientX - s.x;
     if (Math.abs(dx) < 45) return;
-    // Only queue the slide-in when the turn will actually happen — at either
-    // end of the book a stale queued direction would animate some later,
-    // unrelated page change.
-    const canTurn = dx < 0
-      ? r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1
-      : r.currentIndex > 0;
-    if (canTurn) pendingTurnAnim.current = dx < 0 ? 'next' : 'prev';
-    if (dx < 0) r.goNext(); else r.goPrev();
+    if (dx < 0) {
+      if (!nextPage) return;
+      keepPaneOnTurn.current = true;
+      r.goNext();
+    } else {
+      if (!prevPage) return;
+      keepPaneOnTurn.current = true;
+      r.goPrev();
+    }
   };
   const onTouchCancel = () => {
     swipeRef.current = null;
     dragFollow(null);
   };
-  useEffect(() => {
-    const dir = pendingTurnAnim.current;
-    pendingTurnAnim.current = null;
-    if (!dir) return;
-    const el = mobileMainRef.current;
-    if (!el || typeof el.animate !== 'function') return;
-    el.animate(
-      [
-        { transform: `translateX(${dir === 'next' ? 26 : -26}px)`, opacity: 0.55 },
-        { transform: 'translateX(0)', opacity: 1 },
-      ],
-      { duration: 200, easing: 'ease-out' },
-    );
-  }, [r.currentPageId]);
-
   // Filmstrip: keep the current page centred
   const stripRef = useRef<HTMLDivElement>(null);
   const stripMobileRef = useRef<HTMLDivElement>(null);
@@ -3380,20 +3445,29 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       </div>
 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
-      <div className="lg:hidden flex flex-col flex-1 min-h-0">
-        {/* Clipping is only needed while the bar is collapsing. Left on, it
-            cut off the account menu, which opens downward out of the header. */}
+      <div className="lg:hidden relative flex flex-col flex-1 min-h-0">
+        {/* The bar floats over the column rather than sitting above it in the
+            flow. It used to animate its own height, which resized the scroller
+            under the reader and shoved the text down the screen every time it
+            came back. The column carries a permanent lead-in of the same
+            height instead, so at the top of a page nothing looks different and
+            nothing ever moves. */}
         <header
-          className="shrink-0 transition-[height] duration-200 ease-out relative z-[60]"
+          className="absolute top-0 left-0 right-0 z-[60]"
           style={{
+            height: BAR_H,
             background: INK,
             color: '#fdfcf9',
-            height: barHidden ? 0 : 52,
-            overflow: barHidden ? 'hidden' : 'visible',
-            // Same reason as the filmstrips: a 0-height bar still held a
-            // focusable back-link and menu button, and aria-hidden over them
-            // made that worse rather than better.
+            transform: barHidden ? 'translateY(-100%)' : 'none',
+            // Same reason as the filmstrips: a bar off the top of the screen
+            // still held a focusable back-link and menu button, and aria-hidden
+            // over them made that worse rather than better.
             visibility: barHidden ? 'hidden' : 'visible',
+            // visibility is in the transition on purpose. It is a discrete
+            // property, so transitioning it holds the old value for the whole
+            // duration instead of applying at once — without that the contents
+            // were cut off the screen while the bar was still leaving.
+            transition: `transform ${BAR_MS}ms ${BAR_EASE}, visibility ${BAR_MS}ms ${BAR_EASE}`,
           }}
         >
           {/* The row fades with the bar rather than being revealed by it.
@@ -3401,8 +3475,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               at full strength in a 4px-tall box, so the avatar — the tallest
               thing in the row — appeared first and the rest caught up. */}
           <div
-            className="flex items-center gap-2.5 h-[52px] px-3 transition-opacity duration-150"
-            style={{ opacity: barHidden ? 0 : 1 }}
+            className="flex items-center gap-2.5 h-[52px] px-3"
+            style={{
+              opacity: barHidden ? 0 : 1,
+              transition: `opacity ${BAR_MS}ms ${BAR_EASE}`,
+            }}
           >
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
             {/* Sized to match the account avatar beside it — the two circles
@@ -3447,6 +3524,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           className="flex-1 min-h-0 overflow-y-auto flex flex-col"
           style={{
             overscrollBehavior: 'contain',
+            // The turn animation slides the panes in from the side, and a pane
+            // sitting 14px to the right is 14px of scrollable width the browser
+            // will scroll sideways to reach — the turn jiggled and could be
+            // left horizontally scrolled if you touched it mid-flight.
+            overflowX: 'hidden',
             background: lastSurface,
             // No scroll-snap here. A proximity snap on the pager made the
             // scroller grab at the finger near the foot of every page, which
@@ -3459,6 +3541,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           onTouchEnd={onTouchEnd}
           onTouchCancel={onTouchCancel}
         >
+          {/* The floating bar's share of the column. Fixed, so the reading
+              area never changes size and the text never shifts. */}
+          <div className="shrink-0" style={{ height: BAR_H }} aria-hidden="true" />
           {r.views.scan && !scan.display && !witness && (
             /* No facsimile: one quiet line instead of a scan-sized empty bed.
                The full-height placeholder read as an image that failed to
