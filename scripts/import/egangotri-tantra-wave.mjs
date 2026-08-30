@@ -67,7 +67,15 @@ const SUBJECTS = ['Tantra', 'Jyotish', 'Ayurveda', 'Vaidyaka', 'Dharmashastra', 
  * harder here would only produce confident wrong titles.
  */
 export function parseFilename(raw) {
-  const t = String(raw || '').replace(/\bE\s*Gangotri\s*(Digital\s*Preservation\s*Trust)?\b/gi, ' ').replace(/\s{2,}/g, ' ').trim();
+  const t = String(raw || '')
+    // the trust signs its own uploads; that is provenance, not a title
+    .replace(/\bE\s*Gangotri\b/gi, ' ')
+    .replace(/\bDigital\s*Preservation\s*(Trust|Foundation)\b/gi, ' ')
+    // leading SCAN date, not a date of the work: "04 04 2023 …", "1 July …",
+    // "18 May …". Anchored to the start so a date inside a title survives.
+    .replace(/^\s*\d{1,2}[\s.\-/]+\d{1,2}[\s.\-/]+\d{2,4}\s+/, '')
+    .replace(/^\s*\d{1,2}\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+/i, '')
+    .replace(/\s{2,}/g, ' ').trim();
   const script = (t.match(new RegExp(`\\b(${SCRIPTS.join('|')})\\b`, 'i')) || [])[1] || null;
   const subject = (t.match(new RegExp(`\\b(${SUBJECTS.join('|')})\\w*\\b`, 'i')) || [])[1] || null;
 
