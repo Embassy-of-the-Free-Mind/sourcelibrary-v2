@@ -132,6 +132,7 @@ relative to `.claude/docs/invariants/`. When in doubt, read the one that looks c
 they open with a "Read this when" line so you can bail in two seconds.
 
 **Data & corpus**
+- **Deleting anything, or "is it safe?" → `../preservation-policy.md`** (**TEXT is the irreplaceable half — 1.8% of bytes**)
 - Archivers/importers, `archived_photo`, "failed to fetch" triage → `archive-fetch-failures.md`
 - Quoting archive/R2 coverage, an archiver's "is this book done?" check, a new page-image field → `archive-coverage.md` (**"archived" is three questions — RECORD/FILE/MASTER; never sum them**)
 - Two artifacts that must line up (page images vs OCR, splits vs text) → `paired-artifacts.md`
