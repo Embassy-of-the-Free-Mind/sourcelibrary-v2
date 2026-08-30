@@ -107,7 +107,7 @@ Audited 2026-05-14. Every Mongo→Supabase write path in the codebase:
 
 | # | Path | Trigger | Schedule | Fields | Status |
 |---|---|---|---|---|---|
-| 1 | MongoDB books → `books_catalog` | Hetzner `scripts/workers/sync-books-catalog.mjs` | every 5 min, last-10-min window | ~40 fields incl. `thumbnail`, `thumbnail_blob`, title, author, language, pages_count, pages_ocr/translated/blank, categories, collections, cover_image, summary_text, doi, published, place_published, publisher | ⚠️ window-only, no retry; **missing `held_by`, `image_display`, `image_thumb`** |
+| 1 | MongoDB books → `books_catalog` | Hetzner `scripts/workers/sync-books-catalog.mjs` | every 5 min, watermark: `updated_at > max(books_catalog.updated_at)` (corrected 2026-08-31 — it is not a fixed window) | ~40 fields incl. `thumbnail`, `thumbnail_blob`, title, author, language, pages_count, pages_ocr/translated/blank, categories, collections, cover_image, summary_text, doi, published, place_published, publisher | ⚠️ window-only, no retry; **missing `held_by`, `image_display`, `image_thumb`** |
 | 2 | MongoDB books → `books_catalog` | PATCH `/api/books/[id]` → `mirrorBookToCatalog()` | on curator edit | ~11 fields: title, display_title, author, thumbnail, thumbnail_blob, language, published, categories, publisher, place_published, doi | ⚠️ **only fires from the PATCH route**; direct DB updates from `scripts/` bypass it |
 | 3 | MongoDB books → `bph_works.sl_book_id` | Vercel cron `/api/cron/sync-bph-sl-book-ids` | every 6h | `sl_book_id`, `sl_book_slug` | ✓ Honors `bph_catalog_link: false` opt-out (PR #1752, 2026-05-14) |
 | 4 | MongoDB pages → `pages_images` | Hetzner `scripts/workers/supabase-sync.mjs` | every 5 min, last-10-min window | id, book_id, page_number, archived_photo, display_photo, thumbnail_blob | ⚠️ window-only; no retry/backfill if a sync window misses a row |
@@ -131,9 +131,20 @@ Mitigations to consider:
 - Extract `mirrorBookToCatalog` to a shared module any maintenance script can import.
 - Or have the Hetzner sync use `supabase_synced_at < mongo updated_at` instead of a fixed 10-min window.
 
-### B. Hetzner sync uses a fixed last-10-min window with no retry
+### B. Hetzner sync selects on `updated_at` with no retry
 
-`scripts/workers/sync-books-catalog.mjs` and `supabase-sync.mjs` look at MongoDB documents whose `updated_at > now() - 10 min`. There's no record of which rows have been mirrored — if a tick fails mid-batch, the missed rows are stranded until *another* edit re-bumps `updated_at`. Same shape applies to `pages_images`.
+`supabase-sync.mjs` looks at MongoDB documents whose `updated_at > now() - 10 min`;
+`sync-books-catalog.mjs` uses a watermark instead — `updated_at > max(books_catalog.updated_at)`
+(`getLastSyncTime()`). Either way there's no record of which rows have been mirrored — if a tick
+fails mid-batch the missed rows are stranded until *another* edit re-bumps `updated_at`, and under
+the watermark the miss is permanent because the watermark still advances. Same shape applies to
+`pages_images`.
+
+**Corollary — a write that does not bump `updated_at` never reaches the mirror at all.** That is
+#4399: `$addToSet: { collections: slug }` tagged books in Mongo, and the collection's works grid
+(served from `books_catalog`) stayed empty. `books.collections` is now written only through
+`src/lib/collection-tagging.ts`, which owns the operator and the bump together. Read-side detector
+for both classes of drift: `node scripts/audit/collections-catalog-drift.mjs`.
 
 Mitigations to consider:
 - Track `supabase_synced_at` on MongoDB docs and pick the diff each tick.
