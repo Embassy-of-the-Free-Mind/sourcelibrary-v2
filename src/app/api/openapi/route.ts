@@ -223,8 +223,9 @@ const SPEC = {
     '/dataset/v1/pages': {
       get: {
         summary: 'Bulk page text as streaming JSONL (requires API key)',
-        description: 'One JSON record per line. Text carries the invisible provenance colophon including your key reference.',
-        parameters: [q('language', 'Filter by book language'), q('cluster', 'Taxonomy cluster'), q('from_year', 'Year range start', { type: 'integer' }), q('to_year', 'Year range end', { type: 'integer' }), q('content', 'ocr | translation | both'), q('offset', 'Offset', { type: 'integer' }), q('limit', 'Limit ≤10000 (default 1000)', { type: 'integer' })],
+        description:
+          'One JSON record per line. Text carries the invisible provenance colophon including your key reference. To walk the corpus use the `after` keyset cursor: echo the X-Next-Cursor response header back as `after` until it is no longer returned. Deep `offset` values are slow by construction and can exceed the request deadline.',
+        parameters: [q('language', 'Filter by book language'), q('cluster', 'Taxonomy cluster'), q('from_year', 'Year range start', { type: 'integer' }), q('to_year', 'Year range end', { type: 'integer' }), q('content', 'ocr | translation | both'), q('after', 'Keyset cursor "<book_id>:<page_number>" from the X-Next-Cursor header — preferred over offset'), q('offset', 'Offset (shallow reads only; ignored when `after` is given)', { type: 'integer' }), q('limit', 'Limit ≤10000 (default 1000)', { type: 'integer' })],
         responses: { '200': { description: 'JSONL stream', content: { 'application/x-ndjson': {} } } },
         security: [{ apiKey: [] }],
       },

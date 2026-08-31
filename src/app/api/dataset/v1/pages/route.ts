@@ -9,6 +9,27 @@ import { keyRef } from '@/lib/bot-attribution';
 export const maxDuration = 30;
 
 /**
+ * Keyset cursor over the (book_id, page_number) sort key: "<book_id>:<page>".
+ * Returns a Mongo clause selecting everything strictly after that point, or
+ * null for an absent/malformed cursor (which falls back to `offset` rather
+ * than erroring — a bad cursor should not lose a caller their whole walk).
+ */
+function parseCursor(after: string | null): Record<string, unknown> | null {
+  if (!after) return null;
+  const sep = after.lastIndexOf(':');
+  if (sep <= 0) return null;
+  const bookId = after.slice(0, sep);
+  const pageNumber = parseInt(after.slice(sep + 1), 10);
+  if (!bookId || !Number.isFinite(pageNumber)) return null;
+  return {
+    $or: [
+      { book_id: { $gt: bookId } },
+      { book_id: bookId, page_number: { $gt: pageNumber } },
+    ],
+  };
+}
+
+/**
  * GET /api/dataset/v1/pages
  *
  * Streaming JSONL endpoint for dataset pages.
@@ -20,7 +41,12 @@ export const maxDuration = 30;
  *   from_year - minimum publication year
  *   to_year   - maximum publication year
  *   content   - ocr, translation, or both (default: both)
- *   offset    - pagination offset (default: 0)
+ *   after     - keyset cursor "<book_id>:<page_number>"; USE THIS to walk the
+ *               corpus. Echo the X-Next-Cursor response header back until it
+ *               stops being returned. Constant-time; offset is not.
+ *   offset    - pagination offset (default: 0). Fine for shallow reads; at
+ *               deep offsets it walks every skipped document and will exceed
+ *               maxDuration. Ignored when `after` is supplied.
  *   limit     - max records (default: 1000, max: 10000)
  */
 export async function GET(request: NextRequest) {
@@ -129,12 +155,25 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // Query pages
+  // Query pages.
+  // Two pagination modes. `after` is a keyset cursor on the sort key
+  // (book_id, page_number) and is the one to use for walking the corpus:
+  // measured on prod, offset=50000 costs 12.2s and grows linearly (it walks
+  // every skipped doc), while the equivalent cursor read is 155ms and flat,
+  // because {book_id:1, page_number:1} is indexed. At a few hundred thousand
+  // rows in, offset alone exceeds this route's 30s maxDuration. `offset` is
+  // kept for compatibility and for shallow reads.
+  const cursorClause = parseCursor(searchParams.get('after'));
+  const pageQuery = {
+    $and: [
+      { book_id: { $in: bookIds } },
+      pageFilter,
+      ...(cursorClause ? [cursorClause] : []),
+    ],
+  };
+
   const pages = await db.collection('pages')
-    .find({
-      book_id: { $in: bookIds },
-      ...pageFilter,
-    })
+    .find(pageQuery)
     .project({
       book_id: 1,
       page_number: 1,
@@ -142,7 +181,7 @@ export async function GET(request: NextRequest) {
       'translation.data': 1,
     })
     .sort({ book_id: 1, page_number: 1 })
-    .skip(offset)
+    .skip(cursorClause ? 0 : offset)
     .limit(limit)
     .toArray();
 
@@ -196,9 +235,18 @@ export async function GET(request: NextRequest) {
     ip_address: request.headers.get('x-forwarded-for') || 'unknown',
   });
 
+  // Keyset cursor for the next page. Derived from the last PAGE row, not the
+  // last emitted line: a row whose book was filtered out still advances the
+  // scan, and dropping it from the cursor would replay it forever.
+  const lastPage = pages[pages.length - 1];
+  const nextCursor = pages.length === limit && lastPage
+    ? `${String(lastPage.book_id)}:${lastPage.page_number}`
+    : null;
+
   return new Response(lines.join('\n') + (lines.length ? '\n' : ''), {
     status: 200,
     headers: {
+      ...(nextCursor ? { 'X-Next-Cursor': nextCursor } : {}),
       'Content-Type': 'application/x-ndjson',
       'X-Total-Records': String(lines.length),
       'X-Offset': String(offset),
