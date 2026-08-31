@@ -564,6 +564,21 @@ source-library search "alchemy" --json | jq .results`}
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/works</td>
+                  <td className="py-2.5 text-secondary">Works held in many editions across centuries — witness counts and year spans. Feed work_id back to /books/library.</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/libraries</td>
+                  <td className="py-2.5 text-secondary">Contributing institutions with book counts — resolves the library= filter values into named libraries</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/facets</td>
+                  <td className="py-2.5 text-secondary">Topic vocabulary (tradition, domain, form, sphere, era, mode) and books by facet; ?counts=true for the vocabulary with counts</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/distributions</td>
                   <td className="py-2.5 text-secondary">Counts by language, category, collection, library, and decade — same filters as /books/library (no free-text search). Built for charts and timelines.</td>
                 </tr>
