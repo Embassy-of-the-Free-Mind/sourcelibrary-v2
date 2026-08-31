@@ -297,6 +297,7 @@ async function listBooks(args: Record<string, unknown>) {
   // Canonical author slug — every row of every listing carries author_id, so a
   // follow-up "all books by this person" call needs no separate lookup.
   if (args.author_id) params.set('author_id', String(args.author_id));
+  if (args.edition_key) params.set('edition_key', String(args.edition_key));
   if (typeof args.year_from === 'number' && Number.isFinite(args.year_from)) params.set('year_from', String(Math.trunc(args.year_from)));
   if (typeof args.year_to === 'number' && Number.isFinite(args.year_to)) params.set('year_to', String(Math.trunc(args.year_to)));
   // `has_edition` filters by a language the book can be READ in; `language`
@@ -314,6 +315,12 @@ async function listBooks(args: Record<string, unknown>) {
     published: b.published, year: b.year ?? null,
     pages_count: b.pages_count, pages_translated: b.pages_translated,
     translation_percent: b.translation_percent,
+    // Identity ids so a follow-up call needs no per-book lookup: work_id feeds
+    // list_editions, edition_key feeds edition_key= (other scans of THIS
+    // printing). The key is only emitted at full quality — a lower-quality key
+    // would merge printings across centuries (edition-identity.md).
+    ...(b.work_id ? { work_id: b.work_id } : {}),
+    ...(b.edition_key && b.edition_key_quality === 'full' ? { edition_key: b.edition_key } : {}),
     // Canonical author slug + resolvable URL (agent-tool-results.md: an
     // omitted URL is one the model invents — hand over the real one, always
     // unprefixed). authorSlug() is the sanctioned fallback for unlinked rows.
@@ -1100,6 +1107,7 @@ const TOOLS: Tool[] = [
       properties: {
         search: { type: 'string', description: 'Free-text filter matching title or author (relevance-ranked, may include title matches). For exactly one person\'s books use author_id instead.' },
         author_id: { type: 'string', description: 'Canonical author slug, e.g. "jan-hus" — filters to exactly that person\'s books via the author thesaurus (variant slugs resolve to the canonical person). Every book row in results carries its author_id; the response echoes the canonicalized author.' },
+        edition_key: { type: 'string', description: 'Other digitizations of ONE printing — pass the edition_key from a result row. Only full-quality keys match on both sides, so this answers "what other scans of this exact edition do you hold?" and never merges different printings of the same title.' },
         year_from: { type: 'number', description: 'Earliest edition year (inclusive). Matches only books with a known numeric year — ~60% of the library.' },
         year_to: { type: 'number', description: 'Latest edition year (inclusive).' },
         language: { type: 'string' }, category: { type: 'string' },
