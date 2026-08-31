@@ -2659,6 +2659,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * wants — the header plus its scroller's full content — and animate to it.
    */
   const sheetOpen = !!leftPanel && !isDesktop;
+  /**
+   * Whether the sheet's list runs on past its bottom edge. On a 568px phone
+   * ten grouped items do not fit, and the list happened to cut cleanly at a
+   * hairline divider — which reads as the end of the menu rather than as more
+   * to come, so Reading settings and Send feedback looked like they did not
+   * exist. A fade over the last few pixels says the list continues.
+   */
+  const [sheetHasMore, setSheetHasMore] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
   /**
    * Pull the sheet down to put it away. It opened with one way out: a 16px
@@ -2701,6 +2709,23 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     el.style.transition = '';
     el.style.transform = '';
   }, [leftPanel]);
+
+  // The scroller belongs to whichever panel is mounted, so find it rather than
+  // holding a ref to it, and watch the content too: panels fetch.
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    if (!sheet || !leftPanel) { setSheetHasMore(false); return; }
+    const body = sheet.querySelector<HTMLElement>('[class*="overflow-y-auto"]');
+    if (!body) { setSheetHasMore(false); return; }
+    const measure = () => setSheetHasMore(body.scrollHeight - body.scrollTop - body.clientHeight > 8);
+    measure();
+    body.addEventListener('scroll', measure, { passive: true });
+    const ro = new ResizeObserver(measure);
+    ro.observe(body);
+    for (const child of Array.from(body.children)) ro.observe(child);
+    return () => { body.removeEventListener('scroll', measure); ro.disconnect(); };
+    // The observer covers the sheet being resized, so its height is not a dep.
+  }, [leftPanel]);
   const [sheetHeight, setSheetHeight] = useState<number | null>(null);
   useLayoutEffect(() => {
     if (!leftPanel || isDesktop) { setSheetHeight(null); return; }
@@ -2720,8 +2745,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     if (!sheet) return;
     const measure = () => {
       const header = sheet.firstElementChild as HTMLElement | null;
-      const body = sheet.lastElementChild as HTMLElement | null;
-      if (!header || !body) return;
+      // Skip the fade overlay: it is a later sibling of the panel and 36px
+      // tall, and measured as the body it sized the whole sheet to 113px.
+      const body = Array.from(sheet.children)
+        .filter((c): c is HTMLElement => c instanceof HTMLElement && c.dataset.sheetFade === undefined)
+        .pop() ?? null;
+      if (!header || !body || body === header) return;
       setSheetHeight(Math.min(cap, Math.ceil(header.offsetHeight + body.scrollHeight)));
     };
     measure();
@@ -4024,6 +4053,19 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               )}
             </div>
             <PanelContent panel={leftPanel} {...panelProps} />
+            {/* Over the foot of the sheet, not inside the scroller: a mask on
+                the scroller itself would fade the last row at the end of the
+                list too, which is exactly when there is nothing left to say. */}
+            <div
+              aria-hidden="true"
+              data-sheet-fade=""
+              className="pointer-events-none absolute left-0 right-0 bottom-0 transition-opacity duration-200"
+              style={{
+                height: 36,
+                opacity: sheetHasMore ? 1 : 0,
+                background: `linear-gradient(to top, ${SURFACE.panel}, transparent)`,
+              }}
+            />
           </div>
         )}
 
