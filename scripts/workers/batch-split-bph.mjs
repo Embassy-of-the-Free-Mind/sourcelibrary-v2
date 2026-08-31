@@ -35,7 +35,24 @@ import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 // --- Config ---
 const ASPECT_RATIO_THRESHOLD = 1.2; // w/h > 1.2 = spread
 const OVERLAP_PX = 10; // pixels of overlap at split point (0-1000 scale)
-const CROPPED_MAX_WIDTH = 2000; // max width for cropped halves
+/**
+ * The cropped half IS the master for a split book — do not cap it (#4406).
+ *
+ * This was `CROPPED_MAX_WIDTH = 2000`, applied to both halves. That is not a
+ * derivative cap: `getPageSource()` returns `cropped_photo` FIRST, and the
+ * splitter overwrites `archived_photo` with the half, so for a split book the
+ * 2000px crop is the highest-resolution copy the system holds.
+ *
+ * It matters most here of anywhere. BPH is tier 0 — no public re-acquisition
+ * path, no `ia_identifier`, nothing to re-fetch from if the crop is all we kept
+ * (see .claude/docs/preservation-policy.md). Halving a spread and capping each
+ * half at 2000px turns a 6000px scan into two ~2000px ones and discards the rest
+ * permanently.
+ *
+ * Now: crop and keep. `extract()` alone, no resize. The display and thumb
+ * variants generated below are still sized — those are derivatives and are
+ * supposed to be small.
+ */
 const CROPPED_QUALITY = 90;
 const DISPLAY_WIDTH = 1200;
 const DISPLAY_QUALITY = 85;
@@ -316,14 +333,12 @@ async function processBook(r2, db, book) {
       // Crop left half
       const leftBuf = await sharp(buf)
         .extract({ left: 0, top: 0, width: splitX + Math.round(OVERLAP_PX * imgWidth / 1000), height: imgHeight })
-        .resize(CROPPED_MAX_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
         .jpeg({ quality: CROPPED_QUALITY, progressive: true })
         .toBuffer();
 
       // Crop right half
       const rightBuf = await sharp(buf)
         .extract({ left: Math.max(0, splitX - Math.round(OVERLAP_PX * imgWidth / 1000)), top: 0, width: imgWidth - splitX + Math.round(OVERLAP_PX * imgWidth / 1000), height: imgHeight })
-        .resize(CROPPED_MAX_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
         .jpeg({ quality: CROPPED_QUALITY, progressive: true })
         .toBuffer();
 

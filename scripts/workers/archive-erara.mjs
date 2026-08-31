@@ -36,8 +36,35 @@ const BOOK_CONCURRENCY = parseInt(getArg('concurrency') || '2', 10);
 const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10);
 const DRY_RUN = hasFlag('dry-run');
 const JPEG_QUALITY = 85;
-const MAX_DIMENSION = 3000;
-const PDF_DPI = 200;  // Good balance of quality vs size
+/**
+ * Safety valve, not a quality ceiling (#4406). Was `MAX_DIMENSION = 3000` with a
+ * silent downsize; now we store what the rasterization produced and SKIP loudly
+ * above a pathological size, so a gap is visible instead of a shrink being silent.
+ */
+const PATHOLOGICAL_DIMENSION = 30000;
+
+/**
+ * PDF rasterization density.
+ *
+ * Was 200, commented "Good balance of quality vs size" — a trade of preservation
+ * quality for file size, made once and inherited by 1.92M pages, everything OCR
+ * read, everything translated from it, and everything a reader can zoom into.
+ * Measured 2026-08-30: e-rara pages sampled 0/14 at full resolution against the
+ * source's own info.json, median ratio 0.667 — we held ~44% of the pixels.
+ *
+ * 400 is the preservation floor for printed text (FADGI/Metamorfoze both treat
+ * 400 ppi as the working minimum for reformatted print), and it doubles the
+ * linear resolution of what we captured before. It is not a free change — the
+ * files are roughly 4x the pixels — but a master is the thing you cannot
+ * re-derive, and e-rara is a partner whose IIIF endpoint we do not currently
+ * use for archiving.
+ *
+ * THE REAL FIX IS UPSTREAM OF THIS NUMBER. Rasterizing a PDF is a lossy path we
+ * chose for convenience; e-rara serves IIIF, which tile-stitching can pull at
+ * true native resolution (see fetchPageMaster). Raising the DPI narrows the gap;
+ * it does not close it. Tracked on #4406 alongside #3186's parked e-rara lane.
+ */
+const PDF_DPI = parseInt(process.env.ERARA_PDF_DPI || '400', 10);
 const DELAY_BETWEEN_DOWNLOADS_MS = 2000;  // Polite delay between PDF downloads
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -235,12 +262,11 @@ async function processBook(book, db) {
         if (idx >= workItems.length) break;
         const { page, srcFile } = workItems[idx];
         try {
-          let sharpInst = sharp(srcFile);
+          const sharpInst = sharp(srcFile);
           const meta = await sharpInst.metadata();
-          if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-            sharpInst = sharp(srcFile).resize(MAX_DIMENSION, MAX_DIMENSION, {
-              fit: 'inside', withoutEnlargement: true,
-            });
+          // No downsize: store what the rasterization produced. See PATHOLOGICAL_DIMENSION.
+          if (meta.width > PATHOLOGICAL_DIMENSION || meta.height > PATHOLOGICAL_DIMENSION) {
+            throw new Error(`pathological dimensions ${meta.width}x${meta.height} — skipped, not downsized (#4406)`);
           }
           const jpegBuffer = await sharpInst.jpeg({ quality: JPEG_QUALITY }).toBuffer();
 
