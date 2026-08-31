@@ -130,3 +130,52 @@ written down once and never re-checked.
 **The durable fix in every case was making the system record what it actually did**, so
 the next person does not have to re-derive it from the outside — and, where the property
 is mechanical, asserting it in a test rather than a sentence.
+
+---
+
+## Day 2 addendum — 2026-08-31
+
+**Merged:** #4434 (`73554f7d`) and #4435 (`ff6a5af6`). Both docs/scripts-only, so the
+ignored-build-step correctly skipped a deploy — no purge owed.
+
+**Two corrections to day 1, both found by asking whether the fix had done anything:**
+
+- **"The archiver running right now is fixed" was too broad.** `archive-acquired.ts` has
+  two routes: `erara|iiif|mdz|gallica` → `archiveIiif()` (the path #4428 fixed), and
+  everything else → `archive-ia-bulk.mjs`, a separate script never touched. Most
+  acquisitions take the second route and it recorded no dimensions at all. Now records
+  `image_width/height` from the buffer sharp already decoded for the thumbnail.
+  archive.org does not silently cap, so there is no native width to chase — it is on
+  `NATIVE_WIDTH_DEBT` with that reason.
+- **The guard could not see it.** `WRITES_PAGE_IMAGES` matched a LITERAL key path;
+  archive-ia-bulk builds its key into a const first, so the largest un-recording writer
+  in the repo was silently exempt from the test written to catch exactly that. Two
+  looser patterns were tried and both were worse (any upload call swept in CSV snapshots
+  and thumbnailers; the string `archived_photo` swept in every audit that merely
+  projects it). Pattern stays tight; the blind spot is now `EXTRA_WRITERS`, hand-verified,
+  and the guards-the-guard test asserts that list is reachable so it cannot rot either.
+
+**The backfill's `unreadable=69` were PNGs named `.jpg`,** served with an `image/jpeg`
+content-type (book `6836f8ee811c8ab472a49e36`, magic `89504E47`). A JPEG-only parser
+returns null on them forever — an honest counter nobody could interpret, which is the
+shape of every problem in this issue. Parser now reads magic bytes, not the extension or
+the content-type, both of which lie here. Verified on the same sample: 69 → 0.
+
+## RUNNING RIGHT NOW — pick this up
+
+`backfill-stored-dimensions.mjs --apply --concurrency 24`, detached on Hetzner,
+log `/var/log/sourcelibrary/backfill-dimensions.log`.
+
+- Target ~5.42M pages (28.1% of pages archived on our R2 had no recorded width).
+- At 2026-08-31 evening: **2,672,000 scanned / 2,671,349 recorded, 0 failed, 0
+  unreadable, ~90/s** — roughly half done, ETA ~9h.
+- Resumable and idempotent: it re-selects whatever still lacks a width and walks `_id`
+  ascending, so a death costs only the in-flight batch. Re-run the same command.
+- **When it finishes**, the STORED half of "are we holding the master?" becomes one query
+  instead of a rate-limited probe. The NATIVE half still needs the six remaining
+  archivers to record at fetch time — that is the highest-value remaining work, because
+  it is the half that can never be backfilled.
+- `not-ours` (651 so far) = pages whose `archived_photo` points somewhere other than our
+  R2. Skipped deliberately rather than probing a partner. Worth a look afterwards: a page
+  claiming an "archive" that lives on someone else's host is the derivative-only state
+  wearing a disguise.
