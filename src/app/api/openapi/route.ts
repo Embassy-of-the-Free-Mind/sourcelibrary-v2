@@ -114,6 +114,47 @@ const SPEC = {
         responses: jsonResponse('{ total, facets: { languages, categories, collections, libraries, decades }, author? } — each facet a [{value, count}] list'),
       },
     },
+    '/works': {
+      get: {
+        summary: 'List works held in several editions across several centuries',
+        description:
+          'The bootstrap for work-level browsing: returns work_id, witness count, year span, languages and libraries. Feed work_id back to /books/library?work_id= for the witness list. Same set as the /works page.',
+        parameters: [
+          q('sort', 'span (default) | witnesses | earliest | title'),
+          q('limit', 'Max works (index is ~400 entries)', { type: 'integer' }),
+          q('offset', 'Pagination offset', { type: 'integer' }),
+        ],
+        responses: jsonResponse('{ total, offset, limit, works: [{ work_id, slug, title, author, witnesses, earliest, latest, span, languages, libraries, pages_total, url, books_url }] }'),
+      },
+    },
+    '/libraries': {
+      get: {
+        summary: 'Contributing-library directory with book counts',
+        description:
+          'Resolves the `library=` filter values used by /search and /books/library into named institutions (display name, URL, per-library book count and languages).',
+        parameters: [q('include_unpartnered', 'false to return only catalogued partner institutions (default true)')],
+        responses: jsonResponse('{ total, libraries: [{ provider, name, url, book_count, languages, books_url, page_url? }] }'),
+      },
+    },
+    '/books/facets': {
+      get: {
+        summary: 'Faceted-tag vocabulary and books by facet (topics)',
+        description:
+          'The 6-facet Llullian vocabulary (tradition, domain, form, sphere, era, mode) behind /topics. `counts=true` returns the vocabulary plus per-value counts; otherwise returns paginated books matching the facet filters. Facets are AND-ed across facets, OR-ed within one. Global for ordinary callers; scoped automatically on a tenant subdomain.',
+        parameters: [
+          q('counts', 'true — return vocabulary + value counts instead of books'),
+          q('tradition', 'Comma-separated tradition tags (any-of), e.g. hermetic,alchemical'),
+          q('domain', 'Comma-separated domain tags'),
+          q('form', 'Comma-separated form tags'),
+          q('sphere', 'Comma-separated sphere tags'),
+          q('era', 'Comma-separated era tags'),
+          q('mode', 'Comma-separated mode tags'),
+          q('page', 'Page number (default 1)', { type: 'integer' }),
+          q('limit', 'Results per page (default 50, max 200)', { type: 'integer' }),
+        ],
+        responses: jsonResponse('{ total, activeFilters, counts?, vocabulary?, books?, page, limit, pages }'),
+      },
+    },
     '/books/{id}': {
       get: {
         summary: 'Book metadata, AI reading summary, chapters, editions, DOI',
