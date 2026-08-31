@@ -7,23 +7,36 @@
  * hundreds, against a partner that rate-limits at 2/s and 403s datacenter IPs
  * (this worker is Mac-only for that reason). Those remain good reasons.
  *
- * ⚠ IT IS NOT "FULL QUALITY", WHICH THIS HEADER USED TO CLAIM (#4406).
+ * ⚠ "FULL QUALITY" IS TOO STRONG, BUT THE RESULT IS UNEVEN, NOT UNIFORMLY BAD.
  *
- * Measured 2026-08-30 against e-rara's own info.json: 14 sampled pages, **0 of 14
- * at full resolution**, median stored/native width ratio **0.667** — about 44% of
- * the pixels the source will serve. The claim was written when the trade-off was
- * chosen and never re-tested, and 1.92M pages (~9% of the corpus) were archived
- * under it, with OCR, translation and reader zoom all inheriting the result.
+ * Measured 2026-08-31 against e-rara's own info.json — 30 pages, ONE PER BOOK, so
+ * the sample is not one book counted thirty times:
  *
- * PDF_DPI is now 400 rather than 200, which roughly doubles the linear
- * resolution. That NARROWS the gap; it does not close it. Closing it means
- * per-page IIIF with tile-stitching (fetchPageMaster) — real native resolution,
- * and it would also eliminate the cover-sheet offset that corrupted 323 books
- * (#3186), because the archived image and `photo_original` would finally come
- * from the same sequence. The cost is ~hundreds of requests per book instead of
- * one: at e-rara's 2/s that is on the order of 267 hours for the existing corpus,
- * from a residential IP, against a partner already sensitive to load. That is a
- * conversation to have with them, not a switch to flip unilaterally.
+ *     at full resolution (>=0.95 of native)   19/30  (63%)
+ *     below master                            11/30
+ *     stored/native ratio   p10 0.59   median 1.14   p90 1.34
+ *     worst 0.28            best 1.48
+ *
+ * So the median page holds MORE width than the IIIF service reports as native —
+ * the PDF evidently embeds images larger than that endpoint serves — while about
+ * a third sit below it, one at barely a quarter. The honest summary is UNEVEN.
+ *
+ * A first pass had reported "0 of 14 at full resolution, median 0.667" and that
+ * number reached a commit message, a PR, an invariant doc and this header before
+ * anything checked it. It was 14 pages that were probably a handful of books
+ * repeated — the same clustering that made the corpus-wide figure read 11%, then
+ * 42.8%, then 63.8% on three runs of one instrument. **Sample one page per book,
+ * or a page count will impersonate an independent sample.**
+ *
+ * PDF_DPI is 400 rather than 200. The justification is NOT the withdrawn number:
+ * it is that ratios above 1.0 show the PDF carries more resolution than a 200-DPI
+ * rasterization extracts, so sampling it harder recovers real detail — and the
+ * worst cases (0.28) are exactly where that matters. Per-page IIIF with
+ * tile-stitching (fetchPageMaster) would still be the ceiling-free answer and
+ * would eliminate the #3186 cover-sheet offset as a side effect, but it costs
+ * hundreds of requests per book instead of one — on the order of 267 hours at
+ * e-rara's 2/s — from a residential IP, against a partner already sensitive to
+ * load. That is a conversation with them, not a switch to flip unilaterally.
  *
  * PDF URL pattern: https://www.e-rara.ch/download/pdf/{manifestId}
  * Manifest ID extracted from: https://www.e-rara.ch/i3f/v21/{manifestId}/manifest
