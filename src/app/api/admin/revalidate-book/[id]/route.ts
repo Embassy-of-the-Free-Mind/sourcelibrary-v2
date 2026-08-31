@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import { isRevalidateAuthorized } from '@/lib/revalidate-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,10 +13,8 @@ export async function POST(
 ) {
   const { id } = await params;
 
-  // Optional: verify a simple shared secret for pipeline calls
-  const authHeader = request.headers.get('x-revalidate-secret');
-  const secret = process.env.REVALIDATE_SECRET;
-  if (secret && authHeader !== secret) {
+  // Shared secret for pipeline calls — fail-closed (see src/lib/revalidate-auth.ts).
+  if (!isRevalidateAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
