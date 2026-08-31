@@ -150,6 +150,26 @@ const nextConfig: NextConfig = {
           { key: 'TDM-Policy', value: 'https://sourcelibrary.org/licensing' },
         ],
       },
+      // CORS for the PUBLIC READ API (#4491). /developers advertises "direct
+      // HTTP access, no authentication", but without these headers a browser
+      // app on another domain cannot call any of it — only server-side callers
+      // could. Scoped to the public read surface, NOT blanket /api: auth,
+      // admin, and write routes keep the browser same-origin default.
+      // `Access-Control-Allow-Origin: *` never enables credentialed requests
+      // (browsers refuse to send cookies to a `*` origin), so cookie-gated
+      // routes gain nothing even if a path were added here by mistake.
+      // POST is for /api/mcp (JSON-RPC); the Mcp-* headers are its session
+      // protocol, exposed so browser MCP clients can read the session id.
+      {
+        source: '/api/:root(search|books|gallery|collections|catalog|verify|mcp|image|locus|ngrams)/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET, POST, OPTIONS' },
+          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization, Mcp-Session-Id, Mcp-Protocol-Version' },
+          { key: 'Access-Control-Expose-Headers', value: 'Mcp-Session-Id' },
+          { key: 'Access-Control-Max-Age', value: '86400' },
+        ],
+      },
       // Prevent Cloudflare from caching RSC (React Server Component) responses.
       // CF Free ignores Vary: RSC, so an RSC payload can poison the cache and
       // get served to browsers as raw flight data instead of HTML.
