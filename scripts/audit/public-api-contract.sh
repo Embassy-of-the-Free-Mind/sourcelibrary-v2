@@ -8,8 +8,14 @@
 # collection counts. Each case pins a behaviour we broke or nearly broke once.
 #
 # Usage:
-#   scripts/audit/public-api-contract.sh                     # prod
-#   BASE=https://<preview>.vercel.app scripts/audit/public-api-contract.sh
+#   scripts/audit/public-api-contract.sh                     # prod (intended)
+#   BASE=https://<preview>.vercel.app AUTH=$CRON_SECRET ...  # preview, partial
+#
+# PROD IS THE REAL TARGET, because the contract being tested IS the anonymous
+# experience. A preview gates anonymous book content (403), so content cases
+# come back empty there even with AUTH — several are written as standalone
+# python that does not carry the header. Use a preview run to smoke the
+# NON-content cases (CORS, openapi, off-infra hosts) and prod for the rest.
 #
 # Exits non-zero with the number of failures, so it works as a smoke gate.
 #
@@ -29,6 +35,12 @@
 #     tenant-lockdown leak).
 UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
 BASE="${BASE:-https://sourcelibrary.org}"
+# Preview deployments gate anonymous book content (403), so every content case
+# comes back EMPTY there — indistinguishable from throttling. Pass a bearer to
+# smoke a preview:
+#   BASE=https://<preview>.vercel.app AUTH=$CRON_SECRET scripts/audit/public-api-contract.sh
+AUTH_HEADER=()
+[[ -n "$AUTH" ]] && AUTH_HEADER=(-H "Authorization: Bearer $AUTH")
 CB="cb=$(date +%s)"
 pass=0; fail=0
 t() { # t <name> <cmd-that-prints-1-for-ok>
@@ -38,8 +50,8 @@ t() { # t <name> <cmd-that-prints-1-for-ok>
   else echo "FAIL  $name (got: $out)"; fail=$((fail+1)); fi
 }
 
-j() { curl -s --max-time 40 -A "$UA" "$1" | python3 -c "$2" 2>/dev/null; }
-hdr() { curl -s -D - -o /dev/null --max-time 30 -A "$UA" "${@:2}" "$1"; }
+j() { curl -s --max-time 60 -A "$UA" "${AUTH_HEADER[@]}" "$1" | python3 -c "$2" 2>/dev/null; }
+hdr() { curl -s -D - -o /dev/null --max-time 30 -A "$UA" "${AUTH_HEADER[@]}" "${@:2}" "$1"; }
 
 # 1. author filter: canonical slug
 t "library author_id canonical (113 Böhme)" \
@@ -182,6 +194,37 @@ print(1 if d['items'] and a=={'Hendrick Goltzius'} else a)"
 t "artwork placeholder artist rejected" \
   j "$BASE/api/artwork/search?artist=Various&$CB" \
   "import json,sys; d=json.load(sys.stdin); print(1 if d['total']==0 else d['total'])"
+
+# 22-24. No public endpoint may hand back an IMAGE URL on someone else's
+# server. We hold a copy of every page and 99% of artwork images, so a
+# third-party image host in a response is a fan-out onto a partner library —
+# how an external consumer ended up refusing to harvest at all. Landing pages
+# (current_location, attribution.item_url, DOIs) are CREDIT and stay: the test
+# looks only for image-shaped URLs.
+img_hosts_off_infra() {
+  curl -s --max-time 90 -A "$UA" "${AUTH_HEADER[@]}" "$1" | python3 -c "
+import sys,re,collections
+raw=sys.stdin.read()
+imgs =re.findall(r'https?://([a-zA-Z0-9.\-]+)[^\"]*?\.(?:jpg|jpeg|png|tif|jp2)(?:\?|\")', raw, re.I)
+imgs+=re.findall(r'https?://([a-zA-Z0-9.\-]+)[^\"]*?/(?:iiif|full)/', raw, re.I)
+off=sorted({h for h in imgs if 'sourcelibrary.org' not in h})
+print(1 if not off else off[:4])
+"
+}
+t "book pages: no off-infra image hosts" \
+  img_hosts_off_infra "$BASE/api/books/history-of-both-worlds-macrocosm-fludd?$CB"
+t "gallery: no off-infra image hosts" \
+  img_hosts_off_infra "$BASE/api/gallery?limit=25&$CB"
+
+# 25. minQuality must actually move the number — it was silently clamped to the
+# browse floor, so an explicit request returned the default set.
+t "gallery minQuality is honoured" \
+  sh -c "curl -s --max-time 90 -A '$UA' '$BASE/api/gallery?limit=2&minQuality=0.7' | python3 -c \"
+import json,sys; a=json.load(sys.stdin)['total']
+import urllib.request
+r=urllib.request.Request('$BASE/api/gallery?limit=2', headers={'User-Agent':'$UA'})
+b=json.load(urllib.request.urlopen(r,timeout=90))['total']
+print(1 if a > b else (a,b))\""
 
 echo; echo "== $pass passed, $fail failed"
 exit $fail
