@@ -17,6 +17,11 @@ export interface MergedBrowseOpts {
   offset: number;
   imageType?: string | null;
   minQuality?: number;
+  /**
+   * True when the CALLER set minQuality themselves. Without this the default
+   * browse's 0.82 floor silently overrides an explicit request — see qFloor.
+   */
+  qualityExplicit?: boolean;
   maxPerBook?: number;
   yearStart?: number | null;
   yearEnd?: number | null;
@@ -73,14 +78,22 @@ export async function mergedGalleryBrowse(
   const {
     tenantId, source, limit, offset,
     imageType = null, minQuality = 0.7, maxPerBook = 3,
-    yearStart = null, yearEnd = null, visitorId = null,
+    yearStart = null, yearEnd = null, visitorId = null, qualityExplicit = false,
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
   const pageIndex = Math.floor(offset / Math.max(1, limit));
   // The natural-aspect masonry shows full pages, so raise the quality floor for
   // the merged browse — blank/low-content plates the old square crop hid now
-  // read as empty tiles. (Explicit type/quality filters still honor the request.)
-  const qFloor = imageType ? minQuality : Math.max(minQuality, 0.82);
+  // read as empty tiles.
+  //
+  // "Explicit type/quality filters still honor the request" was the stated
+  // intent, but only the TYPE half was implemented: an explicit minQuality was
+  // silently overridden by the 0.82 floor, so a caller passing minQuality=0.5
+  // got exactly the same set as one passing nothing, and ~88,000 images stayed
+  // unreachable however they asked. `qualityExplicit` implements the half that
+  // was documented and missing. The floor still applies to the DEFAULT browse,
+  // which is what it was for.
+  const qFloor = (imageType || qualityExplicit) ? minQuality : Math.max(minQuality, 0.82);
   // Artworks must actually have an image, else they render as blank tiles.
   const artHasImage = { $or: [
     { image_display: { $nin: [null, ''] } },

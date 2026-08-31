@@ -165,6 +165,8 @@ export async function GET(request: NextRequest) {
       const merged = await mergedGalleryBrowse(db, {
         tenantId, source: sourceParam as 'all' | 'artwork', limit, offset,
         imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId: visitorIdForMerge,
+        // Honour an explicitly-requested floor instead of silently clamping it.
+        qualityExplicit: searchParams.get('minQuality') !== null,
       });
       const mergedFilters = await getGalleryFilters(db).catch(() => ({ types: [], subjects: [], yearRange: { minYear: null, maxYear: null } }));
       return NextResponse.json({
