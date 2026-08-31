@@ -27,7 +27,7 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
-import { extractPageType, extractColumns, parseMultiPageOcr } from '../lib/ocr-result-parse.mjs';
+import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -92,38 +92,10 @@ function calculateCost(model, inputTokens, outputTokens) {
 
 // ── OCR metadata extraction: shared with defaults.ts via scripts/lib/ocr-result-parse.mjs (#4443) ──
 
-// NOTE: parses `<image>` sub-tags, which the current OCR prompt does not emit —
-// a different parser from the canonical `parseDetectedImages`, not a fork of it.
-// Deliberately out of scope for #4443; see #4456.
-function parseDetectedImages(text) {
-  const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
-  if (!match) return [];
-  const imagesText = match[1].trim();
-  const images = [];
-  const imgRegex = /<image>([\s\S]*?)<\/image>/g;
-  let imgMatch;
-  while ((imgMatch = imgRegex.exec(imagesText)) !== null) {
-    const imgContent = imgMatch[1];
-    const getTag = (tag) => {
-      const m = imgContent.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
-      return m ? m[1].trim() : null;
-    };
-    const bbox = getTag('bbox');
-    const image = {
-      type: getTag('type') || 'illustration',
-      description: getTag('description') || '',
-      subject: getTag('subject')?.split(',').map(s => s.trim()).filter(Boolean) || [],
-    };
-    if (bbox) {
-      const coords = bbox.split(',').map(Number);
-      if (coords.length === 4) {
-        image.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
-      }
-    }
-    images.push(image);
-  }
-  return images;
-}
+// `parseDetectedImages` now comes from scripts/lib/ocr-result-parse.mjs (#4456).
+// The local copy walked `<image>` sub-tags, a shape no OCR prompt here has ever
+// asked for, so it returned [] on every page and the `length > 0` guard at the
+// write site turned that into silence.
 
 /**
  * Parse image extraction response — expects a JSON array of detected images.

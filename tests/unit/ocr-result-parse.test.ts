@@ -29,6 +29,7 @@ import {
   extractColumns,
   extractScriptType,
   parseMultiPageOcr,
+  parseDetectedImages,
 } from '@/lib/types/prompts/defaults';
 import {
   PROMPT_VERSION as PROMPT_VERSION_JS,
@@ -37,6 +38,7 @@ import {
   extractColumns as extractColumnsJs,
   extractScriptType as extractScriptTypeJs,
   parseMultiPageOcr as parseMultiPageOcrJs,
+  parseDetectedImages as parseDetectedImagesJs,
 } from '../../scripts/lib/ocr-result-parse.mjs';
 
 /** One fixture per real-world shape the six copies disagreed on. */
@@ -84,6 +86,53 @@ const multiPageFixtures: Record<string, string> = {
   none: 'no page blocks here',
 };
 
+/**
+ * `<detected-images>` fixtures (#4456). The block the current prompt asks for is a
+ * JSON array; `xmlWalkerShape` is the format the five scripts-side copies parsed,
+ * which the prompt has never asked for and which zero production pages hold — it
+ * is here to pin that BOTH implementations now ignore it identically.
+ */
+const detectedImagesFixtures: Record<string, string> = {
+  full: `body\n<detected-images>\n[{"description": "Alchemical emblem, king and queen", "type": "emblem", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Striking allegorical scene", "confidence": 0.9, "museum_description": "A crowned pair...", "metadata": {"subjects": ["alchemy"], "figures": ["king", 7], "symbols": ["sun"], "style": "baroque", "technique": "engraving"}}]\n</detected-images>`,
+  minimal: '<detected-images>[{"description": "a woodcut"}]</detected-images>',
+  twoImages: '<detected-images>[{"description": "one", "type": "map"}, {"description": "two", "type": "portrait"}]</detected-images>',
+  uppercaseTag: '<DETECTED-IMAGES>[{"description": "shouted"}]</DETECTED-IMAGES>',
+  // Model emitted a type outside the gallery vocabulary — dropped, image kept.
+  invalidType: '<detected-images>[{"description": "x", "type": "woodcut-ish"}]</detected-images>',
+  // Reasoning-as-value, the #3419 failure shape.
+  narratedType: '<detected-images>[{"description": "x", "type": "diagram - wait, must be one of the list"}]</detected-images>',
+  outOfRangeQuality: '<detected-images>[{"description": "x", "gallery_quality": 1.7}]</detected-images>',
+  negativeQuality: '<detected-images>[{"description": "x", "gallery_quality": -0.4}]</detected-images>',
+  partialBbox: '<detected-images>[{"description": "x", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7}}]</detected-images>',
+  stringBbox: '<detected-images>[{"description": "x", "bbox": {"x": "0.1", "y": 0.2, "width": 0.7, "height": 0.5}}]</detected-images>',
+  // The old pixel four-tuple. Not a bbox this parser recognises — must be dropped,
+  // never coerced (detected_images.bbox is read as fractional).
+  pixelBbox: '<detected-images>[{"description": "x", "bbox": {"x1": 10, "y1": 20, "x2": 900, "y2": 1400}}]</detected-images>',
+  noDescription: '<detected-images>[{"type": "emblem", "bbox": {"x": 0, "y": 0, "width": 1, "height": 1}}]</detected-images>',
+  mixedValidity: '<detected-images>[{"type": "emblem"}, {"description": "kept"}]</detected-images>',
+  notAnArray: '<detected-images>{"description": "an object, not an array"}</detected-images>',
+  malformedJson: '<detected-images>[{"description": "truncated mid-</detected-images>',
+  emptyArray: '<detected-images>[]</detected-images>',
+  padded: '<detected-images>\n\n  [{"description": "padded"}]  \n\n</detected-images>',
+  // What the five scripts-side walkers were written for.
+  xmlWalkerShape: '<detected-images><image><description>emblem</description><type>emblem</type><bbox>10,20,900,1400</bbox></image></detected-images>',
+  xmlWalkerBoundingBox: '<detected-images><image><description>emblem</description><type>emblem</type><bounding-box>10,20,900,1400</bounding-box></image></detected-images>',
+  absent: 'a text-only page, block omitted as the prompt instructs',
+};
+
+/**
+ * `detected_at` is `new Date()` at parse time, so two runs never produce equal
+ * objects. Normalise it away — and assert it was a Date, which is the part that
+ * matters (it is written to Mongo as the provenance stamp).
+ */
+function normalizeDetected(images: Array<Record<string, unknown>>) {
+  return images.map((img) => {
+    expect(img.detected_at).toBeInstanceOf(Date);
+    const { detected_at: _dropped, ...rest } = img;
+    return rest;
+  });
+}
+
 describe('TS canonical and scripts JS twin agree — extractPageType', () => {
   it('validating mode returns identical results for every fixture', () => {
     for (const [name, text] of Object.entries(pageTypeFixtures)) {
@@ -122,6 +171,13 @@ describe('TS canonical and scripts JS twin agree — the rest', () => {
         expect([...parseMultiPageOcrJs(text, { lenient })], `${name}/lenient=${lenient}`)
           .toEqual([...parseMultiPageOcr(text, { lenient })]);
       }
+    }
+  });
+
+  it('parseDetectedImages', () => {
+    for (const [name, text] of Object.entries(detectedImagesFixtures)) {
+      expect(normalizeDetected(parseDetectedImagesJs(text)), name)
+        .toEqual(normalizeDetected(parseDetectedImages(text)));
     }
   });
 
@@ -219,6 +275,91 @@ describe('parseMultiPageOcr behaviour', () => {
 });
 
 /**
+ * `parseDetectedImages` behaviour (#4456).
+ *
+ * The defect this closes was not a wrong value — it was `[]` on every page, from a
+ * parser written for a format the prompt does not emit, behind a
+ * `if (detectedImages.length > 0)` guard that made the loss silent. The first test
+ * here is the one that would have caught it: the JSON shape the prompt actually
+ * asks for must yield a non-empty result.
+ */
+describe('parseDetectedImages behaviour', () => {
+  it('parses the shape the OCR prompt asks for — the case that returned [] (#4456)', () => {
+    const [img] = parseDetectedImages(detectedImagesFixtures.full);
+    expect(img.description).toBe('Alchemical emblem, king and queen');
+    expect(img.type).toBe('emblem');
+    expect(img.bbox).toEqual({ x: 0.1, y: 0.2, width: 0.7, height: 0.5 });
+    expect(img.gallery_quality).toBe(0.85);
+    expect(img.gallery_rationale).toBe('Striking allegorical scene');
+    expect(img.confidence).toBe(0.9);
+    expect(img.museum_description).toBe('A crowned pair...');
+    expect(img.metadata).toEqual({
+      subjects: ['alchemy'],
+      figures: ['king'], // the non-string is filtered out
+      symbols: ['sun'],
+      style: 'baroque',
+      technique: 'engraving',
+    });
+    expect(img.detection_source).toBe('ocr_tag');
+    expect(img.detected_at).toBeInstanceOf(Date);
+  });
+
+  it('the `<image>` sub-tag shape yields nothing — no fallback was kept', () => {
+    // Both walkers the five scripts carried are represented. Zero production
+    // pages hold this shape, and no prompt in this repo asks for it, so parsing
+    // it would be dead code that the TS canonical does not have.
+    expect(parseDetectedImages(detectedImagesFixtures.xmlWalkerShape)).toEqual([]);
+    expect(parseDetectedImages(detectedImagesFixtures.xmlWalkerBoundingBox)).toEqual([]);
+  });
+
+  it('an image with no description is dropped, and does not take its siblings with it', () => {
+    expect(parseDetectedImages(detectedImagesFixtures.noDescription)).toEqual([]);
+    const mixed = parseDetectedImages(detectedImagesFixtures.mixedValidity);
+    expect(mixed.map((i) => i.description)).toEqual(['kept']);
+  });
+
+  it('a type outside the gallery vocabulary is omitted, the image is kept', () => {
+    // Including the reasoning-as-value shape from #3419 — narration must never
+    // land in `type`.
+    for (const key of ['invalidType', 'narratedType'] as const) {
+      const [img] = parseDetectedImages(detectedImagesFixtures[key]);
+      expect(img.description, key).toBe('x');
+      expect(img.type, key).toBeUndefined();
+    }
+  });
+
+  it('gallery_quality is clamped to 0..1', () => {
+    expect(parseDetectedImages(detectedImagesFixtures.outOfRangeQuality)[0].gallery_quality).toBe(1);
+    expect(parseDetectedImages(detectedImagesFixtures.negativeQuality)[0].gallery_quality).toBe(0);
+  });
+
+  it('a bbox is all-or-nothing, and the pixel four-tuple is not a bbox', () => {
+    // `detected_images.bbox` is read as fractional x/y/width/height. A partial or
+    // wrong-shaped box is dropped rather than half-filled or coerced — a pixel
+    // `{x1,y1,x2,y2}` read as fractions would crop the whole page.
+    for (const key of ['partialBbox', 'stringBbox', 'pixelBbox'] as const) {
+      expect(parseDetectedImages(detectedImagesFixtures[key])[0].bbox, key).toBeUndefined();
+    }
+  });
+
+  it('malformed JSON, a non-array, and an absent block all give []', () => {
+    for (const key of ['malformedJson', 'notAnArray', 'emptyArray', 'absent'] as const) {
+      expect(parseDetectedImages(detectedImagesFixtures[key]), key).toEqual([]);
+    }
+  });
+
+  it('matches case-insensitively and tolerates padding inside the block', () => {
+    expect(parseDetectedImages(detectedImagesFixtures.uppercaseTag)[0].description).toBe('shouted');
+    expect(parseDetectedImages(detectedImagesFixtures.padded)[0].description).toBe('padded');
+  });
+
+  it('keeps every image in the array, in order', () => {
+    expect(parseDetectedImages(detectedImagesFixtures.twoImages).map((i) => i.description))
+      .toEqual(['one', 'two']);
+  });
+});
+
+/**
  * Scripts-only hardening: `split-book.mjs` calls extractPageType with `page.ocr`,
  * which is null on an un-OCR'd page. The twin must not throw there.
  */
@@ -229,5 +370,11 @@ describe('twin tolerates the nullish input scripts actually pass', () => {
   });
   it('extractColumns(null) is undefined', () => {
     expect(extractColumnsJs(null)).toBeUndefined();
+  });
+  it('parseDetectedImages(null) is [], not a TypeError', () => {
+    // The TS canonical does `ocrText.match(...)` and throws here; the collectors
+    // read `ocr.data` off documents where it can be absent.
+    expect(parseDetectedImagesJs(null)).toEqual([]);
+    expect(parseDetectedImagesJs(undefined)).toEqual([]);
   });
 });
