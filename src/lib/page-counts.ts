@@ -33,7 +33,7 @@ const TRANSLATABLE_COND = {
 
 /**
  * Aggregation pipeline returning
- * { total, with_ocr, with_translation, translatable, translated_translatable }
+ * { total, with_ocr, with_translation, translatable, translated_translatable, blank }
  * for the VISIBLE pages of one book. Mirror of the .mjs implementation.
  */
 export function buildVisiblePageCountPipeline(bookId: string): Document[] {
@@ -78,6 +78,22 @@ export function buildVisiblePageCountPipeline(bookId: string): Document[] {
         // must write `pages_translatable` too, or it goes stale while they move.
         translatable: {
           $sum: { $cond: [TRANSLATABLE_COND, 1, 0] },
+        },
+        // Pages that legitimately carry no translation — the `pages_blank` counter.
+        // Named for the historical field; the set is every never-translated type that
+        // nonetheless has OCR, which is what the translation job has always recorded.
+        blank: {
+          $sum: {
+            $cond: [
+              { $and: [
+                { $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] },
+                { $ne: ['$ocr.data', null] },
+                { $ne: ['$ocr.data', ''] },
+                { $ifNull: ['$ocr.data', false] },
+              ] },
+              1, 0,
+            ],
+          },
         },
         translated_translatable: {
           $sum: {
