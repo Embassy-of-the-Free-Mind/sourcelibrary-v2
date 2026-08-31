@@ -164,4 +164,4 @@ export const GET = withApiAuth(async (
     console.error('Error in /api/vectors:', error);
     return NextResponse.json({ error: 'Failed to read vectors' }, { status: 500 });
   }
-});
+}, { route: 'vectors.get' });
