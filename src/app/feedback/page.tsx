@@ -14,26 +14,44 @@ interface FeedbackItem {
   email: string | null;
   created_at: string;
   read: boolean;
+  /** Set from the SourceLibrary-MCP user-agent at submit time. Absent on pre-backfill rows. */
+  channel?: 'mcp' | 'web' | null;
 }
+
+/**
+ * Humans / Agents split. The public MCP `submit_feedback` tool writes rows that are
+ * long, high-volume and confidently wrong at a nontrivial rate, so they must not sit
+ * mixed in with the scarce human notes that are actually owed a reply. `/admin/feedback`
+ * has had this split since the channel field landed; this page never got it.
+ *
+ * 'web' is the default view AND matches rows with no `channel` at all, so anything
+ * predating the backfill still lists as human rather than disappearing.
+ */
+type Channel = 'web' | 'mcp' | 'all';
 
 export default function FeedbackPage() {
   const [items, setItems] = useState<FeedbackItem[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [channel, setChannel] = useState<Channel>('web');
+  const [channelCounts, setChannelCounts] = useState<{ web: number; mcp: number }>({ web: 0, mcp: 0 });
 
   useEffect(() => {
-    fetch('/api/feedback?limit=100')
+    setLoading(true);
+    const channelParam = channel === 'all' ? '' : `&channel=${channel}`;
+    fetch(`/api/feedback?limit=100${channelParam}`)
       .then(r => r.json())
       .then(data => {
         setItems(data.feedback || []);
         setTotal(data.total || 0);
+        setChannelCounts(data.channel_counts || { web: 0, mcp: 0 });
         setLoading(false);
       })
       .catch(() => {
         toast.error('Failed to load feedback');
         setLoading(false);
       });
-  }, []);
+  }, [channel]);
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
@@ -52,13 +70,45 @@ export default function FeedbackPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-6 py-8">
+        {/* Wraps rather than scrolls: three short pills fit two-up on a 320px screen. */}
+        <div className="flex flex-wrap gap-2 mb-6" role="tablist" aria-label="Feedback source">
+          {([
+            ['web', `Humans (${channelCounts.web})`],
+            ['mcp', `Agents (${channelCounts.mcp})`],
+            ['all', 'All'],
+          ] as [Channel, string][]).map(([c, label]) => {
+            const active = channel === c;
+            return (
+              <button
+                key={c}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setChannel(c)}
+                className="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+                style={{
+                  background: active ? 'rgba(158, 74, 58, 0.1)' : 'var(--bg-white)',
+                  border: `1px solid ${active ? 'var(--accent-rust)' : 'var(--border-light)'}`,
+                  color: active ? 'var(--accent-rust)' : 'var(--text-muted)',
+                }}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
         {loading ? (
           <div className="py-12"><BookLoader size="xs" /></div>
         ) : items.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-lg" style={{ color: 'var(--text-muted)' }}>No feedback yet.</p>
+            <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
+              {channel === 'mcp' ? 'No agent feedback yet.' : 'No feedback yet.'}
+            </p>
             <p className="text-sm mt-2" style={{ color: 'var(--text-faint)' }}>
-              Feedback submitted from the footer will appear here.
+              {channel === 'mcp'
+                ? 'Reports from the public MCP submit_feedback tool will appear here.'
+                : 'Feedback submitted from the footer will appear here.'}
             </p>
           </div>
         ) : (
@@ -76,6 +126,16 @@ export default function FeedbackPage() {
                   {item.message}
                 </p>
                 <div className="flex flex-wrap items-center gap-3 text-xs" style={{ color: 'var(--text-faint)' }}>
+                  {/* Only shown under "All", where the two kinds are interleaved and the
+                      distinction is otherwise invisible. */}
+                  {channel === 'all' && item.channel === 'mcp' && (
+                    <span
+                      className="px-1.5 py-0.5 rounded font-medium"
+                      style={{ background: 'rgba(158, 74, 58, 0.1)', color: 'var(--accent-rust)' }}
+                    >
+                      agent
+                    </span>
+                  )}
                   {item.name && <span style={{ color: 'var(--text-muted)' }}>{item.name}</span>}
                   {item.email && <span>{item.email}</span>}
                   {item.page && (
