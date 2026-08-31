@@ -446,7 +446,11 @@ body:has([data-reader-v2]) {
   from { transform: translateY(14px); opacity: 0; }
   to   { transform: none; opacity: 1; }
 }
-.rv2-slide-up { animation: rv2-slide-up 0.22s ease-out both; }
+/* `backwards`, not `both`, for the same reason as the turn animations below:
+   a filled-forwards animation keeps applying transform:none afterwards, and an
+   animated property beats an inline style — the pull-to-dismiss would track
+   the finger in JS while the sheet sat perfectly still. */
+.rv2-slide-up { animation: rv2-slide-up 0.22s ease-out backwards; }
 /* The page strip slides in by its own height, so the travel reads the same on
    a 92px desktop strip and a 96px phone one. Short on purpose. */
 @keyframes rv2-strip-in {
@@ -485,6 +489,18 @@ body:has([data-reader-v2]) {
    transform would be silently ignored for the rest of the session — the swipe
    would stop moving anything under the finger after the first page turn. The
    end state here is the natural state, so there is nothing to hold. */
+/* Ground behind the mobile sheet. Dark enough to lift the sheet off the page
+   and to say "tap anywhere to get out of this", light enough that the reading
+   underneath is still legibly there. */
+@keyframes rv2-scrim-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.rv2-scrim {
+  background: rgba(30, 20, 8, 0.28);
+  animation: rv2-scrim-in 180ms ease-out both;
+}
+
 .rv2-turn-next { animation: rv2-turn-next 190ms ease-out backwards; }
 .rv2-turn-prev { animation: rv2-turn-prev 190ms ease-out backwards; }
 
@@ -520,7 +536,7 @@ body:has([data-reader-v2]) {
 @media (prefers-reduced-motion: reduce) {
   .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in,
   .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in,
-  .rv2-turn-next, .rv2-turn-prev,
+  .rv2-turn-next, .rv2-turn-prev, .rv2-scrim,
   .rv2-menu-ground, .rv2-menu-item { animation: none; }
 }
 

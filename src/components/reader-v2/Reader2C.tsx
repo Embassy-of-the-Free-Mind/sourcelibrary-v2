@@ -67,6 +67,8 @@ const STRIP_KEY = 'sl-reader-v2c-strip';
 const MOBILE_TOOLBAR_H = 52;
 /** Breathing room kept above a mobile sheet, so it never meets the top edge. */
 const SHEET_TOP_GAP = 24;
+/** How far the sheet has to be pulled down before letting go puts it away. */
+const SHEET_DISMISS_PULL = 90;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -2656,7 +2658,49 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * with no height of its own snaps between sizes, so measure what the content
    * wants — the header plus its scroller's full content — and animate to it.
    */
+  const sheetOpen = !!leftPanel && !isDesktop;
   const sheetRef = useRef<HTMLDivElement>(null);
+  /**
+   * Pull the sheet down to put it away. It opened with one way out: a 16px
+   * glyph tucked under the site header, at the far end of a panel you had just
+   * scrolled to the bottom of. A sheet you can push away with the thumb that
+   * opened it is the whole point of a sheet.
+   */
+  const sheetDrag = useRef<{ y: number; dy: number } | null>(null);
+  const onSheetDragStart = (e: React.TouchEvent) => {
+    if (e.touches.length !== 1) { sheetDrag.current = null; return; }
+    sheetDrag.current = { y: e.touches[0].clientY, dy: 0 };
+    const el = sheetRef.current;
+    if (el) el.style.transition = 'none';
+  };
+  const onSheetDragMove = (e: React.TouchEvent) => {
+    const s = sheetDrag.current;
+    const el = sheetRef.current;
+    if (!s || !el || e.touches.length !== 1) return;
+    // Downward only: dragging up would tear the sheet off its own bottom edge.
+    s.dy = Math.max(0, e.touches[0].clientY - s.y);
+    el.style.transform = `translateY(${s.dy}px)`;
+  };
+  const onSheetDragEnd = () => {
+    const s = sheetDrag.current;
+    const el = sheetRef.current;
+    sheetDrag.current = null;
+    if (!s || !el) return;
+    el.style.transition = 'transform 200ms ease-out';
+    if (s.dy > SHEET_DISMISS_PULL) {
+      el.style.transform = `translateY(${el.offsetHeight}px)`;
+      window.setTimeout(() => setLeftPanel(null), 170);
+    } else {
+      el.style.transform = '';
+    }
+  };
+  // A sheet that closed mid-pull would open again already pushed down.
+  useEffect(() => {
+    const el = sheetRef.current;
+    if (!el) return;
+    el.style.transition = '';
+    el.style.transform = '';
+  }, [leftPanel]);
   const [sheetHeight, setSheetHeight] = useState<number | null>(null);
   useLayoutEffect(() => {
     if (!leftPanel || isDesktop) { setSheetHeight(null); return; }
@@ -3603,11 +3647,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             height: BAR_H,
             background: INK,
             color: '#fdfcf9',
-            transform: barHidden ? 'translateY(-100%)' : 'none',
+            // Also away while a sheet is open. The sheet is a modal with its
+            // own title and its own way out, and it is tall enough to reach
+            // the top of the screen — where it slid UNDER this bar, taking the
+            // grab handle with it and clipping the close button into a flat
+            // white square. Nothing to collide with, and the sheet gets the
+            // height back.
+            transform: barHidden || sheetOpen ? 'translateY(-100%)' : 'none',
             // Same reason as the filmstrips: a bar off the top of the screen
             // still held a focusable back-link and menu button, and aria-hidden
             // over them made that worse rather than better.
-            visibility: barHidden ? 'hidden' : 'visible',
+            visibility: barHidden || sheetOpen ? 'hidden' : 'visible',
             // visibility is in the transition on purpose. It is a discrete
             // property, so transitioning it holds the old value for the whole
             // duration instead of applying at once — without that the contents
@@ -3883,6 +3933,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             the keyboard is up it sits directly on the keyboard instead (the
             toolbar and strip are behind it), so the field being typed in and
             its results stay on screen. */}
+        {/* Something to tap that is not a 16px glyph. The sheet had no ground
+            behind it, so the only way out was the corner button — with a panel
+            of content between your thumb and it. */}
+        {leftPanel && !isDesktop && (
+          <button
+            type="button"
+            aria-label={t.panels.closeAria(leftPanelTitle)}
+            onClick={() => setLeftPanel(null)}
+            className="fixed left-0 right-0 top-0 z-40 rv2-scrim"
+            style={{ bottom: keyboardInset > 0 ? keyboardInset : MOBILE_TOOLBAR_H }}
+          />
+        )}
         {leftPanel && !isDesktop && (
           <div
             ref={sheetRef}
@@ -3903,29 +3965,60 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             role="dialog"
             aria-labelledby="rv2-sheet-title"
           >
-            <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
+            {/* The header is also the grip: the handle says the sheet can be
+                pushed away, and the whole band answers the drag, so the pull
+                works wherever the thumb lands rather than on a 4px bar. */}
+            <div
+              className="shrink-0 px-4 pb-2.5 border-b select-none"
+              style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG, touchAction: 'none' }}
+              onTouchStart={onSheetDragStart}
+              onTouchMove={onSheetDragMove}
+              onTouchEnd={onSheetDragEnd}
+              onTouchCancel={onSheetDragEnd}
+            >
+              {/* Square, like everything else here: globals.css flattens every
+                  rounded-* utility site-wide with !important, so a pill grip or
+                  a round close button silently becomes a block. */}
+              <div className="flex justify-center pt-2.5 pb-2">
+                <span
+                  aria-hidden="true"
+                  className="block"
+                  style={{ width: 40, height: 4, background: 'color-mix(in srgb, var(--bg-dark) 22%, transparent)' }}
+                />
+              </div>
               {/* One fixed row: back (when there is somewhere to go back to),
                   title, close. Close holds the top-right corner whatever else
                   is in the row — it used to shift down whenever a back button
                   appeared above it. */}
-              <div className="flex items-center gap-1.5 min-h-[28px]">
+              <div className="flex items-center gap-2 min-h-[44px]">
                 {MORE_TOOLS.some(k => k === leftPanel) && (
                   <button
                     type="button"
                     aria-label={t.panels.backToMore}
                     onClick={() => setLeftPanel('more')}
-                    className="w-11 h-11 -ml-3 shrink-0 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
-                    style={{ color: 'var(--text-muted)' }}
+                    className="w-11 h-11 shrink-0 -ml-1.5 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                    style={{ color: 'var(--text-secondary)' }}
                   >
-                    <ChevronLeft size={17} />
+                    <ChevronLeft size={20} />
                   </button>
                 )}
-                <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
-                <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
-                  className="w-11 h-11 -mr-3 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
+                <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate !text-[12px] tracking-[0.13em]" style={{ color: 'var(--text-primary)' }}>{leftPanelTitle}</CapsLabel>
+                {/* 20px in a 44px target, on the header's own ground. A 16px
+                    cross on a bare band read as decoration rather than the way
+                    out — and it is no longer the only way out: the ground
+                    behind the sheet and a pull on this bar both close it. */}
+                <button
+                  type="button"
+                  aria-label={t.panels.closeAria(leftPanelTitle)}
+                  onClick={() => setLeftPanel(null)}
+                  className="w-11 h-11 shrink-0 -mr-1.5 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  <X size={20} />
+                </button>
               </div>
               {leftPanelBlurb && (
-                <p className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
+                <p className="mt-0.5 pr-10 pb-1 font-sans text-[12.5px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                   {leftPanelBlurb}
                 </p>
               )}
