@@ -417,6 +417,8 @@ source-library search "alchemy" --json | jq .results`}
 
         <div className="bg-stone-100 rounded-lg px-4 py-2 mb-6 inline-block">
           <code className="text-stone-700">Base URL: <span className="text-accent-rust">https://sourcelibrary.org/api</span></code>
+          <span className="text-stone-500 text-sm ml-3">·</span>
+          <a href="/api/openapi" className="text-accent-rust text-sm ml-3 hover:underline">OpenAPI spec (JSON)</a>
         </div>
 
         <div className="space-y-6">

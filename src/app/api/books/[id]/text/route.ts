@@ -155,6 +155,15 @@ export const GET = withApiAuth(async (
       url: `https://sourcelibrary.org/book/${resolvedBookId}`,
     };
 
+    // Budget visibility headers: consumers pacing themselves need the numbers,
+    // not just the 429 (#4491 polish). `used` is the prior-24h count at check
+    // time — it does not include this request. limit -1 = unlimited tier, no
+    // headers.
+    const budgetHdrs: Record<string, string> =
+      budget.limit > 0
+        ? { 'X-Daily-Pages-Limit': String(budget.limit), 'X-Daily-Pages-Used': String(budget.used) }
+        : {};
+
     // Per-request page cap. The daily budget check above only sees the PRIOR 24h
     // total, so a single large from/to range (or an unbounded request) could serve
     // far past the cap in ONE call. Clamp this request to the remaining budget for
@@ -243,6 +252,7 @@ export const GET = withApiAuth(async (
             'Content-Type': 'text/plain; charset=utf-8',
             'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
             'X-Pages-Served': String(chapterPageCount),
+            ...budgetHdrs,
           },
         });
       }
@@ -271,6 +281,7 @@ export const GET = withApiAuth(async (
         headers: {
           'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
           'X-Pages-Served': String(chapterPageCount),
+            ...budgetHdrs,
         },
       });
     }
@@ -395,6 +406,7 @@ export const GET = withApiAuth(async (
           // to ordinary readers.
           'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
           'X-Pages-Served': String(pages.length),
+          ...budgetHdrs,
         },
       });
     }
@@ -521,6 +533,7 @@ export const GET = withApiAuth(async (
         // bot refs shipped).
         'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
         'X-Pages-Served': String(pagesWithContent.length),
+        ...budgetHdrs,
       },
     });
   } catch (error) {
