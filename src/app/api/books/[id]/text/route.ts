@@ -9,7 +9,7 @@ import { isBookReadable } from '@/lib/book-access';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
-import { attributionBlock, attributionMeta, clientKeyFor, extractionRef } from '@/lib/bot-attribution';
+import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
 import { getTranslation } from '@/lib/page-translations';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 
@@ -137,9 +137,17 @@ export const GET = withApiAuth(async (
     //     callers. Verified search crawlers, user-initiated assistant fetches,
     //     signed-in readers and key holders never see it, so indexing and
     //     ordinary reading are untouched.
-    // The ref ties a recovered passage to an extraction campaign; it is
-    // pseudonymous and recomputable from api_usage (see bot-attribution.ts).
-    const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date()) : undefined;
+    // The ref ties a recovered passage to its puller. Two flavors:
+    //   - bots get a pseudonymous monthly campaign ref (recomputable from
+    //     api_usage, see bot-attribution.ts);
+    //   - API-keyed callers get a STABLE key-derived ref (#4491): a key is
+    //     attribution by design, so keyed egress carries it in the invisible
+    //     colophon — identity upgrades the marking, it never adds visible
+    //     marks. Any response carrying a ref is served private/no-store
+    //     below, so one caller's ref can never be shared-cached to another.
+    const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date())
+      : identity.kind === 'apikey' && identity.apiKeyId ? keyRef(identity.apiKeyId)
+      : undefined;
     const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
     const bookSubject = {
       title: book.display_title || book.title,
@@ -507,7 +515,11 @@ export const GET = withApiAuth(async (
 
     return NextResponse.json(result, {
       headers: {
-        'Cache-Control': 'public, max-age=3600',
+        // Ref-carrying bodies are per-caller — a shared cache would serve one
+        // caller's ref to everyone. The other branches already guard this; the
+        // JSON branch was the one unconditional `public` left (latent since
+        // bot refs shipped).
+        'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
         'X-Pages-Served': String(pagesWithContent.length),
       },
     });

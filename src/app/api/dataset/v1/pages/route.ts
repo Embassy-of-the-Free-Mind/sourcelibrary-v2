@@ -3,6 +3,8 @@ import { getReadDb } from '@/lib/mongodb';
 import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
 import { logAccess, getDailyPageCount } from '@/lib/dataset/access-logger';
 import { DatasetPageRecord } from '@/lib/dataset/types';
+import { markForExport } from '@/lib/provenance';
+import { keyRef } from '@/lib/bot-attribution';
 
 export const maxDuration = 30;
 
@@ -102,14 +104,20 @@ export async function GET(request: NextRequest) {
     ];
   }
 
-  // Get matching book IDs with metadata
+  // Get matching book IDs with metadata.
+  // pages.book_id holds the PUBLIC string id (books.id), never the ObjectId —
+  // joining on _id matches nothing and this endpoint served 0 records for
+  // every query until 2026-08-31 (books.id ≠ _id, see
+  // book-deletion-and-identity.md). Positive control before shipping a change
+  // here: one known-good language filter must return rows.
   const books = await db.collection('books')
     .find(bookFilter)
-    .project({ _id: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, 'taxonomy.cluster': 1, 'taxonomy.subcluster': 1 })
+    .project({ _id: 1, id: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, 'taxonomy.cluster': 1, 'taxonomy.subcluster': 1 })
     .toArray();
 
-  const bookMap = new Map(books.map(b => [String(b._id), b]));
-  const bookIds = books.map(b => b._id);
+  const publicId = (b: { id?: string; _id?: unknown }) => b.id || String(b._id);
+  const bookMap = new Map(books.map(b => [publicId(b), b]));
+  const bookIds = books.map(publicId);
 
   if (bookIds.length === 0) {
     return new Response('', {
@@ -138,7 +146,16 @@ export async function GET(request: NextRequest) {
     .limit(limit)
     .toArray();
 
-  // Build JSONL
+  // Build JSONL. Every text field carries the invisible provenance imprimatur
+  // with a key-derived ref (#4491): this is the KEYED bulk egress, and a key
+  // is attribution by design — the mark names the consumer that pulled the
+  // passage. Invisible, deliberately strippable (attribution, not DRM); a
+  // negotiated bit-clean corpus is delivered offline, never through this
+  // endpoint.
+  const ref = keyRef(String(apiKey._id));
+  const markText = (text: string | undefined, bookId: string) =>
+    text ? markForExport(text, bookId, { ref }) : null;
+
   const bookIdsAccessed = new Set<string>();
   const lines: string[] = [];
 
@@ -153,8 +170,8 @@ export async function GET(request: NextRequest) {
       book_id: bookId,
       page_number: page.page_number,
       language: book.language || 'Unknown',
-      original_text: page.ocr?.data || null,
-      english_translation: page.translation?.data || null,
+      original_text: markText(page.ocr?.data, bookId),
+      english_translation: markText(page.translation?.data, bookId),
       book_title: book.title || '',
       author: book.author || '',
       year: book.year || null,

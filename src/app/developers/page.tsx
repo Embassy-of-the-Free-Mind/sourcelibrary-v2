@@ -204,6 +204,9 @@ export default function DevelopersPage() {
             Your own meter: <code>GET /api/dataset/v1/usage</code> with your key. Verified search crawlers
             and user-directed assistant fetches are never limited. Full-tier keys can request images without
             the visible provenance marks (<code>&amp;clean=1</code> on <code>/api/image</code>).
+            Text served to a key carries an invisible provenance colophon that includes your key&apos;s
+            reference — attribution, not tracking: it names the edition and the puller, decodes to a
+            readable note, and strips with any Unicode normalization pass.
           </p>
         </div>
       </section>
