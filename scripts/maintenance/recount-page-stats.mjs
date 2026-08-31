@@ -36,6 +36,10 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+
+/** The canonical never-translated page types, from translate-core (one source of truth). */
+const SKIP_TYPES = SKIP_TRANSLATION_PAGE_TYPES;
 
 const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
@@ -46,6 +50,19 @@ if (!STALE && slugs.length === 0) {
   console.error('Usage: --slug <slug> [--slug <slug>...] | --stale   [--apply]');
   process.exit(1);
 }
+
+/** Shared translatability condition — used by BOTH the denominator and its numerator. */
+const TRANSLATABLE = {
+  $and: [
+    { $ne: ['$ocr.data', null] },
+    { $ne: ['$ocr.data', ''] },
+    { $ifNull: ['$ocr.data', false] },
+    { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TYPES] }] },
+    { $ne: ['$translation.recitation_blocked', true] },
+    { $ne: ['$translation.safety_blocked', true] },
+    { $ne: ['$ocr.recitation_blocked', true] },
+  ],
+};
 
 const COUNT_PIPELINE = (bookId) => [
   { $match: { book_id: bookId, page_number: { $gt: 0 } } },
@@ -83,6 +100,42 @@ const COUNT_PIPELINE = (bookId) => [
           ],
         },
       },
+      // `pages_translatable` — the honest denominator for translation completeness
+      // (#4442). Mirrors translatablePageFilter() in scripts/lib/translate-core.mjs:
+      // a page counts only if it has OCR to translate and is not a type that will
+      // never be translated. Expressed inline rather than imported because this
+      // runs as one server-side aggregation per book; the two must be kept in step,
+      // and tests/unit/page-counts.test.ts is where that is pinned.
+      //
+      // The regex-only case (isBlankFromOcr — old OCR that describes a blank page
+      // without carrying page_type 'blank') is NOT expressible here, so this count
+      // is a slight OVER-estimate of translatable pages. That is the safe direction:
+      // it understates completeness rather than claiming work is finished.
+      translatable: {
+        $sum: { $cond: [TRANSLATABLE, 1, 0] },
+      },
+      // The numerator that goes with that denominator. `with_translation` is NOT it:
+      // a blank page carries a translation PLACEHOLDER, so it counts as translated
+      // while being excluded from `translatable` — and the ratio then exceeds 100%.
+      // Measured on the first run of this script: Hugh of Santalla reported 105.6%,
+      // the Rosarium 102.0%. The numerator must exclude whatever the denominator
+      // excludes; see invariants/numerator-denominator.md.
+      translated_translatable: {
+        $sum: {
+          $cond: [
+            {
+              $and: [
+                TRANSLATABLE,
+                { $ne: ['$translation.data', null] },
+                { $ne: ['$translation.data', ''] },
+                { $ifNull: ['$translation.data', false] },
+              ],
+            },
+            1,
+            0,
+          ],
+        },
+      },
     },
   },
 ];
@@ -99,7 +152,7 @@ const query = STALE
 
 const candidates = await books
   .find(query)
-  .project({ _id: 1, id: 1, slug: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1 })
+  .project({ _id: 1, id: 1, slug: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translatable: 1 })
   .toArray();
 
 console.log(`Scanning ${candidates.length} book(s)…`);
@@ -115,14 +168,20 @@ for (const book of candidates) {
   const same =
     (book.pages_count ?? 0) === counts.total &&
     (book.pages_ocr ?? 0) === counts.with_ocr &&
-    (book.pages_translated ?? 0) === counts.with_translation;
+    (book.pages_translated ?? 0) === counts.with_translation &&
+    (book.pages_translatable ?? null) === counts.translatable;
   if (same) continue;
 
   drifted++;
   console.log(
     `${book.slug}\n  pages       ${book.pages_count ?? 0} → ${counts.total}` +
       `\n  ocr         ${book.pages_ocr ?? 0} → ${counts.with_ocr}` +
-      `\n  translated  ${book.pages_translated ?? 0} → ${counts.with_translation}`,
+      `\n  translated  ${book.pages_translated ?? 0} → ${counts.with_translation}` +
+      `\n  translatable ${book.pages_translatable ?? '—'} → ${counts.translatable}` +
+      (counts.translatable > 0
+        ? `   (${((100 * counts.translated_translatable) / counts.translatable).toFixed(1)}% of translatable` +
+          `, vs ${((100 * counts.with_translation) / Math.max(counts.total, 1)).toFixed(1)}% of all pages)`
+        : ''),
   );
 
   if (APPLY) {
@@ -133,6 +192,7 @@ for (const book of candidates) {
           pages_count: counts.total,
           pages_ocr: counts.with_ocr,
           pages_translated: counts.with_translation,
+          pages_translatable: counts.translatable,
           updated_at: new Date(),
         },
       },
