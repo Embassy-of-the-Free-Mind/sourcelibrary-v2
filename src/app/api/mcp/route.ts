@@ -14,6 +14,7 @@ import { MAX_FEEDBACK_MESSAGE, MIN_FEEDBACK_MESSAGE } from '@/lib/feedback-limit
 import { stripProvenanceMarks } from '@/lib/provenance';
 import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edition-language';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
+import { authorSlug } from '@/lib/slugify';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
 import {
   CallToolRequestSchema,
@@ -293,6 +294,11 @@ async function listBooks(args: Record<string, unknown>) {
   if (args.search) params.set('search', String(args.search));
   if (args.language) params.set('language', String(args.language));
   if (args.category) params.set('category', String(args.category));
+  // Canonical author slug — every row of every listing carries author_id, so a
+  // follow-up "all books by this person" call needs no separate lookup.
+  if (args.author_id) params.set('author_id', String(args.author_id));
+  if (typeof args.year_from === 'number' && Number.isFinite(args.year_from)) params.set('year_from', String(Math.trunc(args.year_from)));
+  if (typeof args.year_to === 'number' && Number.isFinite(args.year_to)) params.set('year_to', String(Math.trunc(args.year_to)));
   // `has_edition` filters by a language the book can be READ in; `language`
   // filters by the language printed on its leaves. A Latin book with a Spanish
   // edition matches both.
@@ -305,8 +311,16 @@ async function listBooks(args: Record<string, unknown>) {
   const result = await apiGet('/books/library', params) as Record<string, unknown>;
   const books = (result.books as Array<Record<string, unknown>>)?.map((b) => ({
     id: b.id, title: b.display_title || b.title, author: b.author, language: b.language,
-    published: b.published, pages_count: b.pages_count, pages_translated: b.pages_translated,
+    published: b.published, year: b.year ?? null,
+    pages_count: b.pages_count, pages_translated: b.pages_translated,
     translation_percent: b.translation_percent,
+    // Canonical author slug + resolvable URL (agent-tool-results.md: an
+    // omitted URL is one the model invents — hand over the real one, always
+    // unprefixed). authorSlug() is the sanctioned fallback for unlinked rows.
+    ...(b.author_id || b.author ? {
+      author_id: b.author_id || authorSlug(String(b.author)),
+      author_url: `https://sourcelibrary.org/author/${b.author_id || authorSlug(String(b.author))}`,
+    } : {}),
     ...(params.get('has_edition') ? {
       [`pages_translated_${params.get('has_edition')}`]: b[`pages_translated_${params.get('has_edition')}`],
       // The reader URL for that edition, which only exists because the filter
@@ -318,6 +332,9 @@ async function listBooks(args: Record<string, unknown>) {
   return {
     total: result.total, showing: books?.length || 0,
     ...(params.get('has_edition') ? { has_edition: params.get('has_edition') } : {}),
+    // Canonicalized author echo when filtering by author_id (null-safe: the
+    // route omits it unless the filter was applied).
+    ...(result.author !== undefined ? { author: result.author } : {}),
     books,
   };
 }
@@ -1076,12 +1093,15 @@ const TOOLS: Tool[] = [
   {
     name: 'list_books',
     title: 'List Books',
-    description: 'BROWSES/FILTERS THE CATALOG by metadata (author/title fragment, language, category, translation recency) — no content/topic matching. PICK THIS to see WHAT EXISTS by an author or in a tradition. Returns books with title, author, language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
+    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, author/title fragment via search, language, category, year range, translation recency) — no content/topic matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
     annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
-        search: { type: 'string', description: 'Filter by title or author' },
+        search: { type: 'string', description: 'Free-text filter matching title or author (relevance-ranked, may include title matches). For exactly one person\'s books use author_id instead.' },
+        author_id: { type: 'string', description: 'Canonical author slug, e.g. "jan-hus" — filters to exactly that person\'s books via the author thesaurus (variant slugs resolve to the canonical person). Every book row in results carries its author_id; the response echoes the canonicalized author.' },
+        year_from: { type: 'number', description: 'Earliest edition year (inclusive). Matches only books with a known numeric year — ~60% of the library.' },
+        year_to: { type: 'number', description: 'Latest edition year (inclusive).' },
         language: { type: 'string' }, category: { type: 'string' },
         has_edition: { type: 'string', description: 'ISO code — return only books READABLE in that language, e.g. "es". Different from `language`, which is the language printed on the leaves of the scan: a Latin book with a Spanish edition matches language="Latin" AND has_edition="es". Each result then also carries url_localized.' },
         sort: { type: 'string', enum: ['recent-translation', 'recent', 'title-asc', 'title-desc'] },

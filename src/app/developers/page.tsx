@@ -490,6 +490,55 @@ source-library search "alchemy" --json | jq .results`}
             </div>
           </div>
 
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
+                <code className="text-primary">/books/library</code>
+              </div>
+              <p className="text-secondary text-sm mt-1">Browse and filter the catalogue. Every row carries id, slug, title, author, author_id, language, year, and translation progress.</p>
+            </div>
+            <div className="p-4">
+              <table className="w-full text-sm">
+                <tbody>
+                  <tr className="border-b border-stone-100">
+                    <td className="py-2 font-mono text-accent-rust">author_id</td>
+                    <td className="py-2 text-muted">string</td>
+                    <td className="py-2 text-secondary">Canonical author slug — exactly that person&apos;s books. Discover slugs via /catalog/author-search; the response echoes the canonicalized author.</td>
+                  </tr>
+                  <tr className="border-b border-stone-100">
+                    <td className="py-2 font-mono text-accent-rust">year_from / year_to</td>
+                    <td className="py-2 text-muted">number</td>
+                    <td className="py-2 text-secondary">Edition-year range (numeric year only; books without a known year never match)</td>
+                  </tr>
+                  <tr className="border-b border-stone-100">
+                    <td className="py-2 font-mono text-accent-rust">language / category / collection / library</td>
+                    <td className="py-2 text-muted">string</td>
+                    <td className="py-2 text-secondary">Edition language, category, collection slug, contributing library</td>
+                  </tr>
+                  <tr className="border-b border-stone-100">
+                    <td className="py-2 font-mono text-accent-rust">search</td>
+                    <td className="py-2 text-muted">string</td>
+                    <td className="py-2 text-secondary">Free-text over titles and authors (relevance-ranked)</td>
+                  </tr>
+                  <tr className="border-b border-stone-100">
+                    <td className="py-2 font-mono text-accent-rust">work_id / has_translation / first_translation / has_edition</td>
+                    <td className="py-2 text-muted">mixed</td>
+                    <td className="py-2 text-secondary">Editions of one work; only translated books; only first translations; only books readable in an ISO language (e.g. es)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 font-mono text-accent-rust">sort / limit / skip</td>
+                    <td className="py-2 text-muted">mixed</td>
+                    <td className="py-2 text-secondary">recent-translation (default), recent, title-asc, title-desc, date_asc, date_desc; pagination via limit (≤200) + skip, total in every response</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="mt-4 bg-stone-900 rounded-lg p-3">
+                <code className="text-stone-300 text-sm">GET /books/library?author_id=jakob-bohme&amp;sort=date_asc</code>
+              </div>
+            </div>
+          </div>
+
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <tbody className="divide-y divide-stone-100">
@@ -500,8 +549,18 @@ source-library search "alchemy" --json | jq .results`}
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/library</td>
-                  <td className="py-2.5 text-secondary">Browse with language/category/collection filters</td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/catalog/author-search?q=</td>
+                  <td className="py-2.5 text-secondary">Find canonical authors by name — returns author_id slugs (for /books/library) plus VIAF/Wikidata anchors</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery/collections</td>
+                  <td className="py-2.5 text-secondary">List curated image collections (visual + thematic) with cover images and counts</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery/collections/:slug</td>
+                  <td className="py-2.5 text-secondary">One image collection with resolved items — imageCount always equals items delivered</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
