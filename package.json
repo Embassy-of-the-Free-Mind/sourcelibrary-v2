@@ -109,7 +109,7 @@
     "@vitest/coverage-v8": "^4.1.11",
     "babel-plugin-react-compiler": "1.0.0",
     "baseline-browser-mapping": "^2.11.16",
-    "commander": "^14.0.2",
+    "commander": "^15.0.0",
     "dotenv-cli": "^11.0.0",
     "esbuild": "^0.28.2",
     "eslint": "^10",
