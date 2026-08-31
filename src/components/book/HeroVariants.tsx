@@ -23,6 +23,7 @@ export default function HeroVariants({
   actions,
   pageThumbs = [],
   mosaicUrl,
+  upgradeUrl,
 }: {
   cover: ReactNode;
   meta: ReactNode;
@@ -32,6 +33,11 @@ export default function HeroVariants({
   pageThumbs?: string[];
   /** A single pre-composited tiled background image (preferred over pageThumbs). */
   mosaicUrl?: string;
+  /** Set when this book's STORED mosaic is short of a full 10x4 grid and the
+   *  book has the pages to do better. Pinged once after the current background
+   *  has painted, so this reader keeps the instant image and the NEXT visitor
+   *  gets the fuller one. Absent for books already at a full grid. */
+  upgradeUrl?: string;
 }) {
   const single = pageThumbs[0];
   const [bgSrc, setBgSrc] = useState<string | undefined>(mosaicUrl || single);
@@ -49,6 +55,28 @@ export default function HeroVariants({
   const reveal = () => {
     requestAnimationFrame(() => requestAnimationFrame(() => setRevealed(true)));
   };
+
+  // Background self-repair for a short mosaic. Deliberately fire-and-forget and
+  // deliberately AFTER the background has painted: this reader sees the stored
+  // image immediately and never waits on the rebuild — it exists to improve the
+  // NEXT visit. The server enforces the cooldown and the attempt cap, so a
+  // popular book can't rebuild in a loop; the ref just avoids firing twice from
+  // one mount. Errors are ignored on purpose (a failed upgrade is a no-op, and
+  // the hero is already showing the right thing).
+  const upgradeFired = useRef(false);
+  useEffect(() => {
+    if (!upgradeUrl || !revealed || upgradeFired.current) return;
+    upgradeFired.current = true;
+    const t = setTimeout(() => {
+      // Deliberately NOT `cache: 'no-store'`: when the server decides there is
+      // nothing to do it answers with a week-long Cache-Control, so the browser
+      // and the CDN absorb every repeat ping and the function is never reached.
+      // Forcing no-store here would turn a cached no-op into ~11k live
+      // invocations a day.
+      fetch(upgradeUrl, { method: 'GET', keepalive: true }).catch(() => {});
+    }, 2000); // let the page settle first — this is the lowest-priority work here
+    return () => clearTimeout(t);
+  }, [upgradeUrl, revealed]);
 
   // Subtle scroll parallax — the bg + tint drift slower than the page.
   const sectionRef = useRef<HTMLElement>(null);

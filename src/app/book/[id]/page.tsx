@@ -67,6 +67,7 @@ import { firstTranslationClause } from '@/lib/first-translation-labels';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
 import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
+import { shouldOfferMosaicUpgrade } from '@/lib/hero-mosaic-upgrade';
 import AboutVariants from '@/components/book/AboutVariants';
 import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import PlusToggle from '@/components/book/PlusToggle';
@@ -1595,6 +1596,25 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             (book as unknown as { hero_mosaic_version?: number }).hero_mosaic_version === HERO_MOSAIC_VERSION
               ? (book as unknown as { hero_mosaic_url?: string }).hero_mosaic_url
               : `/api/books/${book.id}/hero-mosaic`
+          }
+          /* A stored mosaic can be SHORT of the full 10x4 — its grid was fixed
+             by how many tiles survived fetching when it was generated, not by
+             how many pages the book has, and nothing retries it. Measured on
+             production: ~30% of cached mosaics are short, nearly all of them
+             with 40+ unused pages. Rather than bump the cache version (which
+             would rebuild the ~70% that are fine), offer a one-shot background
+             rebuild: this reader keeps the instant stored image, the next one
+             gets the fuller grid. The predicate reads only fields already on
+             the book doc, so it costs the ISR render nothing. */
+          upgradeUrl={
+            shouldOfferMosaicUpgrade({
+              tiles: (book as unknown as { hero_mosaic_tiles?: number }).hero_mosaic_tiles,
+              maxed: (book as unknown as { hero_mosaic_maxed?: boolean }).hero_mosaic_maxed,
+              pagesCount: (book as unknown as { pages_count?: number }).pages_count,
+              source: (book as unknown as { hero_mosaic_source?: string }).hero_mosaic_source,
+            })
+              ? `/api/books/${book.id}/hero-mosaic?upgrade=1`
+              : undefined
           }
           actions={(
             /* Mobile-only: pinned to the foot of the hero (desktop keeps these

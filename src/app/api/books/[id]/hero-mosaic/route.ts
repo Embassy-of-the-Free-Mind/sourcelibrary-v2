@@ -6,9 +6,16 @@ import sharp from 'sharp';
 export const runtime = 'nodejs';
 import { getDb } from '@/lib/mongodb';
 import { storagePut } from '@/lib/storage';
+import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import { measureStoredGrid } from '@/lib/hero-mosaic-measure';
 import { images } from '@/lib/api-client/images';
 import { type PageImageFields } from '@/lib/page-image-url';
 import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
+import {
+  MOSAIC_FULL_TILES,
+  mosaicUpgradeCooledDown,
+  nextUpgradeVerdict,
+} from '@/lib/hero-mosaic-upgrade';
 
 /**
  * GET /api/books/[id]/hero-mosaic
@@ -20,6 +27,16 @@ import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
  * a good mosaic (too few *distinct* pages — e.g. every "thumb" fell back to the
  * same cover), we cache a negative result and 404 so the hero shows a plain
  * dark panel instead of a wall of identical tiles.
+ *
+ * ?upgrade=1 — background self-repair, fired by the hero once the stored image
+ * has painted (so nobody waits on it). The grid shape is fixed by how many
+ * tiles survived fetching AT GENERATION TIME, so a run where some page fetches
+ * flaked leaves a permanent 10x2 on a book with hundreds of usable pages, and
+ * the version short-circuit means nothing ever retries. This mode rebuilds such
+ * a book once and overwrites its mosaic, so the NEXT visitor gets the fuller
+ * grid. It refuses to run when the stored grid is already full, when the book
+ * can't do better, or within the cooldown — see lib/hero-mosaic-upgrade.ts.
+ * Never a version bump: that would rebuild the ~70% that are already correct.
  */
 
 const MOSAIC_VERSION = HERO_MOSAIC_VERSION; // shared with the book page (cache-buster)
@@ -127,14 +144,66 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const { id } = await params;
     const db = await getDb();
 
+    const upgrade = request.nextUrl.searchParams.get('upgrade') === '1';
+
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { _id: 0, id: 1, hero_mosaic_url: 1, hero_mosaic_version: 1 } },
+      {
+        projection: {
+          _id: 0, id: 1, hero_mosaic_url: 1, hero_mosaic_version: 1,
+          hero_mosaic_tiles: 1, hero_mosaic_maxed: 1, hero_mosaic_upgrade_at: 1,
+          hero_mosaic_upgrade_attempts: 1, hero_mosaic_source: 1,
+        },
+      },
     );
     if (!book?.id) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
 
-    // Up-to-date cache: redirect to the stored image, or 404 the negative result.
-    if (book.hero_mosaic_version === MOSAIC_VERSION) {
+    const priorTiles = typeof book.hero_mosaic_tiles === 'number' ? book.hero_mosaic_tiles : null;
+    const attempts = typeof book.hero_mosaic_upgrade_attempts === 'number' ? book.hero_mosaic_upgrade_attempts : 0;
+
+    if (upgrade) {
+      // Refuse fast and cheaply — this endpoint is fired by every visitor to an
+      // eligible book, so the no-op path must cost one indexed read.
+      if (book.hero_mosaic_maxed) return upgradeSkipped('maxed');
+      const storedSource = book.hero_mosaic_source as string | undefined;
+      // A plate-tiled mosaic is never "already full": the book should be
+      // showing its pages, and those are usually fetchable by now.
+      if (storedSource !== 'plates' && priorTiles !== null && priorTiles >= MOSAIC_FULL_TILES) {
+        return upgradeSkipped('already-full');
+      }
+      if (!mosaicUpgradeCooledDown(book.hero_mosaic_upgrade_at as Date | null, Date.now())) {
+        return upgradeSkipped('cooldown');
+      }
+      // Claim the slot BEFORE the expensive work, so concurrent visitors to the
+      // same book fall into the cooldown branch above instead of all rebuilding.
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { hero_mosaic_upgrade_at: new Date() } },
+      ).catch(() => {});
+
+      // Unknown grid (every mosaic built before the generator recorded it):
+      // MEASURE the stored image rather than rebuilding it. One fetch + decode
+      // settles whether this book needs anything at all, and ~70% of them do
+      // not — that is what keeps this from becoming a full-corpus regen.
+      if (priorTiles === null && book.hero_mosaic_url) {
+        const measured = await measureStoredGrid(book.hero_mosaic_url as string);
+        if (measured !== null) {
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: { hero_mosaic_tiles: measured } },
+          ).catch(() => {});
+          // Only a page-tiled mosaic can be settled by its size alone. A stored
+          // mosaic with no recorded source predates the field; measuring can't
+          // tell pages from plates, so a full grid is accepted as done and the
+          // plate case is caught on the next build, which does record it.
+          if (measured >= MOSAIC_FULL_TILES && storedSource !== 'plates') {
+            return upgradeSkipped('measured-full', measured);
+          }
+        }
+      }
+      // Fall through: rebuild below, then judge the result.
+    } else if (book.hero_mosaic_version === MOSAIC_VERSION) {
+      // Up-to-date cache: redirect to the stored image, or 404 the negative result.
       return book.hero_mosaic_url ? redirectToMosaic(book.hero_mosaic_url) : noMosaic();
     }
 
@@ -279,7 +348,9 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Shape the grid to the hero's aspect (never repeated, always background-cover
     // filled). Short tiles get more rows / fewer columns so the block is never a
     // 1-row wide strip. Rows are laid out top-aligned at true dimensions.
-    void usingPlates;
+    // Which pool we tiled from is recorded below: a plates fallback is a
+    // symptom of page images being briefly unfetchable, and it must be
+    // revisitable once they land. It used to be discarded here.
     const medH = kept.map(t => t.height).sort((a, b) => a - b)[Math.floor(kept.length / 2)] || MAX_TILE_H;
     const { cols: rowCols, rows: numRows } = chooseGrid(kept.length, medH);
     const used = kept.slice(0, rowCols * numRows);
@@ -309,16 +380,62 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       .avif({ quality: AVIF_QUALITY, effort: 5 })
       .toBuffer();
 
-    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.avif`;
+    // The tile count is part of the key. Overwriting one immutable-ish object
+    // would leave the CDN serving the OLD image after an upgrade — the whole
+    // point is that the next visitor sees the fuller grid. A rebuild that lands
+    // on the same shape reuses the same key, which is correct: nothing changed.
+    const builtTiles = rowCols * numRows;
+    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}-${builtTiles}.avif`;
     const uploaded = await storagePut(key, composed, { contentType: 'image/avif', allowOverwrite: true });
 
-    await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: uploaded.url, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_at: new Date() } }).catch(() => {});
+    // Record the grid we actually built. Without this the shape is only
+    // recoverable by decoding the stored image, which is why 12,660 cached
+    // mosaics had to be measured one at a time to find the short ones.
+    const fields: Record<string, unknown> = {
+      hero_mosaic_url: uploaded.url,
+      hero_mosaic_version: MOSAIC_VERSION,
+      hero_mosaic_at: new Date(),
+      hero_mosaic_tiles: builtTiles,
+      hero_mosaic_cols: rowCols,
+      hero_mosaic_rows: numRows,
+      hero_mosaic_source: usingPlates ? 'plates' : 'pages',
+    };
+    if (upgrade) {
+      const verdict = nextUpgradeVerdict(priorTiles, builtTiles, attempts, {
+        before: book.hero_mosaic_source as string | undefined,
+        after: usingPlates ? 'plates' : 'pages',
+      });
+      fields.hero_mosaic_maxed = verdict.maxed;
+      fields.hero_mosaic_upgrade_attempts = verdict.attempts;
+    }
+    await db.collection('books').updateOne({ id: book.id }, { $set: fields }).catch(() => {});
 
+    if (upgrade) {
+      // Most books reach their mosaic through THIS route, whose 302 is edge
+      // cached for a week. Without dropping it, the next visitor follows the
+      // stale redirect to the old key and the rebuild is invisible.
+      if (builtTiles !== priorTiles) {
+        await purgeCloudflareUrls([`/api/books/${book.id}/hero-mosaic`]).catch(() => {});
+      }
+      return NextResponse.json(
+        { upgraded: true, before: priorTiles, after: builtTiles, cols: rowCols, rows: numRows },
+        { headers: { 'Cache-Control': 'no-store' } },
+      );
+    }
     return redirectToMosaic(uploaded.url);
   } catch (error) {
     console.error('[hero-mosaic] generation error:', error);
     return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed' }, { status: 500 });
   }
+}
+
+function upgradeSkipped(reason: string, tiles?: number) {
+  const res = NextResponse.json({ upgraded: false, reason, tiles });
+  res.headers.set(
+    'Cache-Control',
+    reason === 'cooldown' ? 'no-store' : 'public, max-age=3600, s-maxage=604800',
+  );
+  return res;
 }
 
 function redirectToMosaic(url: string) {
