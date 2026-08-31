@@ -75,16 +75,30 @@ text is `weak`, never proof of a first.
 
 ---
 
-## MANDATORY: report your search capability
+## MANDATORY: declare your instrument, and positive-control every absence
 
-Before anything else, state in `reasoning` whether `WebSearch` actually worked
-for you. If WebSearch is unavailable (session budget exhausted, tool blocked),
-you **may not** return any first-family verdict (`first_no_prior`,
-`first_from_source`, `first_complete`, `first_modern`). Return `unverifiable`
-with `evidence_strength: weak` and say why.
+**1. Declare search availability.** State in `reasoning` whether `WebSearch`
+actually worked for you. If it was refused (session budget exhausted, tool
+blocked), say so explicitly and log the refused queries in `queries_run` — an
+instrument that silently stopped working is worse than one that never ran.
 
-Rationale: WebFetch alone cannot *discover* a prior — it can only confirm one
-whose URL you already know, and the major catalogues (WorldCat, HathiTrust)
-refuse direct fetches. An absence produced without search is unbounded, and it
-is indistinguishable on the page from a well-bounded one. That is the single
-most dangerous output this process can produce.
+**2. No absence without a positive control.** You may return a first-family
+verdict (`first_no_prior`, `first_from_source`, `first_complete`,
+`first_modern`) ONLY if you can show the same instrument that returned nothing
+for this work *does* return something on a control query. Record both in
+`sources_consulted`. Without a passing control, a "0 results" is
+indistinguishable from a broken probe — and this project has already been burned
+by a WorldCat page whose "No results" text turned out to be boilerplate served
+behind a bot challenge. If you cannot control the probe, return `unverifiable`
+with `evidence_strength: weak`.
+
+**Structured catalogue APIs are a legitimate substitute for WebSearch** and are
+often *better* than it: K10plus SRU (`pica.spr=eng` is a direct negative test for
+an English edition), CiNii Books OpenSearch for East Asian works, CrossRef,
+OpenAlex, Open Library and Harvard LibraryCloud all answer without a bot gate.
+The requirement is a controlled probe, not a particular tool.
+
+Rationale: WebFetch alone cannot *discover* a prior whose URL you do not already
+know, and WorldCat/HathiTrust refuse direct fetches. An uncontrolled absence is
+unbounded, and on the page it looks exactly like a well-bounded one. That is the
+single most dangerous output this process can produce.
