@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { BPH_COLLECTIONS, EXCLUDED_COLLECTIONS } from '@/lib/kdp-scoring';
+import { translationPercent } from '@/lib/translation-completeness';
 
 /**
  * GET /api/admin/kdp — Dashboard data: ranked candidates with scores + publication status
@@ -74,7 +75,13 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
       thumbnail: b.thumbnail_blob || b.thumbnail,
       pages_count: b.pages_count || 0,
       pages_translated: b.pages_translated || 0,
-      translation_pct: b.pages_count ? Math.round((b.pages_translated || 0) / Math.max(b.pages_count - (b.pages_blank || 0), 1) * 100) : 0,
+      // `b` is an untyped Mongo document here; the helper's shape is the contract.
+      translation_pct: translationPercent({
+        pages_count: b.pages_count,
+        pages_translated: b.pages_translated,
+        pages_translatable: b.pages_translatable,
+        pages_blank: b.pages_blank,
+      }),
       read_count: b.read_count || 0,
       kdp_score: b.kdp_score || 0,
       kdp_score_breakdown: b.kdp_score_breakdown || null,
