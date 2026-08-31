@@ -74,16 +74,20 @@ export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'd
  * `pages_count` is the wrong denominator and always has been: it counts every
  * visible page, including ones no amount of money will ever translate.
  *
- * Measured 2026-08-31 on an unrestricted random sample of 800 live books:
- * **11.4%** are complete by the naive measure (`pages_translated >= pages_count`,
- * which matches the exact corpus figure of 10.2%), while **49.9%** have every
- * translatable page translated. Roughly half the library is finished and says it
- * is not.
+ * EXACT, corpus-wide, after the 2026-08-31 backfill — every live book now carries
+ * `pages_translatable`, so this is a count and not an estimate:
  *
- * Do not repeat the earlier "~41%" figure. It came from extrapolating a sample
- * restricted to books with a 1-25 page apparent tail, which structurally cannot
- * see a complete book carrying a hundred pages of plates — and so undercounted.
- * A sample frame chosen for one question is rarely valid for the next one.
+ *   complete by the naive measure (pages_translated >= pages_count):  3,244  10.2%
+ *   complete by the honest measure (>= pages_translatable):          14,984  47.2%
+ *   nothing translatable at all (no OCR yet, or all plates):          1,563   4.9%
+ *
+ * **11,740 finished books currently display as unfinished.**
+ *
+ * Two earlier figures for this are wrong and should not be repeated. "~41%" came
+ * from extrapolating a sample restricted to books with a 1-25 page apparent tail,
+ * which structurally cannot see a complete book carrying a hundred pages of plates.
+ * "49.9%" was an unrestricted 800-book sample — sound method, just superseded by the
+ * exact count. A sample frame chosen for one question is rarely valid for the next.
  *
  * A page qualifies only if it has OCR to translate from, is not a never-translated
  * type, and has not been permanently refused by the model.
