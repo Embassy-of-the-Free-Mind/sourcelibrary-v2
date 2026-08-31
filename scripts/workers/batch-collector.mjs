@@ -27,6 +27,7 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
+import { extractPageType, extractColumns, parseMultiPageOcr } from '../lib/ocr-result-parse.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -89,26 +90,11 @@ function calculateCost(model, inputTokens, outputTokens) {
   return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
 }
 
-// ── OCR metadata extraction (mirrors defaults.ts) ──
+// ── OCR metadata extraction: shared with defaults.ts via scripts/lib/ocr-result-parse.mjs (#4443) ──
 
-function extractPageType(text) {
-  const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
-  if (!match) return null;
-  const type = match[1].toLowerCase().trim();
-  const valid = new Set([
-    'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
-    'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
-  ]);
-  return valid.has(type) ? type : null;
-}
-
-function extractColumns(text) {
-  const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
-  if (!match) return null;
-  const n = parseInt(match[1], 10);
-  return n >= 2 ? n : null;
-}
-
+// NOTE: parses `<image>` sub-tags, which the current OCR prompt does not emit —
+// a different parser from the canonical `parseDetectedImages`, not a fork of it.
+// Deliberately out of scope for #4443; see #4456.
 function parseDetectedImages(text) {
   const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
   if (!match) return [];
@@ -176,19 +162,6 @@ function normalizeBbox(raw) {
     };
   }
   return { x, y, width, height };
-}
-
-function parseMultiPageOcr(text) {
-  const results = new Map();
-  const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    const pageId = match[1];
-    let content = match[2].trim();
-    content = content.replace(/<\/page>\s*$/, '').trim();
-    if (content) results.set(pageId, content);
-  }
-  return results;
 }
 
 // ── Gemini API ──
@@ -377,7 +350,7 @@ async function processOneJob(db, job) {
         if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
         const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
-        const parsed = parseMultiPageOcr(text);
+        const parsed = parseMultiPageOcr(text, { lenient: true });
         // One response covers N pages and reports one usageMetadata — split it
         // evenly for the per-page stamp so pages.ocr.input_tokens doesn't claim
         // the whole request's tokens N times over.
@@ -553,6 +526,10 @@ async function processOneJob(db, job) {
           blankRefusedCount++;
           continue;
         }
+        // Validating, as this collector's private copy always did — but against
+        // the current vocabulary rather than the 14-value set it had frozen at.
+        // That set had lost `digitizer-insert`, so this collector could not
+        // record the one page type the digitizer guards downstream read (#4443).
         const pageType = extractPageType(text);
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
