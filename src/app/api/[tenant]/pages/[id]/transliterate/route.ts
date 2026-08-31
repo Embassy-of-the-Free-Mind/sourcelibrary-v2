@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { anonActionGate } from '@/lib/anon-gate';
+import { anonActionGate, SIGNIN_URL } from '@/lib/anon-gate';
 import { performTransliteration } from '@/lib/ai';
 import { resolveTenantId } from '@/lib/tenant-context';
 
@@ -109,7 +109,16 @@ export async function POST(
     const gate = await anonActionGate(request, { name: 'transliterate', limit: 15, allowBotBypass: false });
     if (!gate.allowed) {
       return NextResponse.json(
-        { error: 'Transliteration limit reached. Sign in (free) to keep going.', retry_after: gate.retryAfter },
+        {
+          error: 'Transliteration limit reached. Sign in (free) to keep going.',
+          // Machine-readable so the reader UI can render a sign-in CTA instead
+          // of an error toast. The panel auto-fires this route, so a wall that
+          // only says something in prose shows readers a failure for something
+          // they did nothing wrong to hit. Same shape as search/unified.
+          code: 'SIGNIN_REQUIRED',
+          sign_in: SIGNIN_URL,
+          retry_after: gate.retryAfter,
+        },
         { status: 429, headers: gate.retryAfter ? { 'Retry-After': String(gate.retryAfter) } : undefined },
       );
     }

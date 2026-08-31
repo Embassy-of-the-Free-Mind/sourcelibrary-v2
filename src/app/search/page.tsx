@@ -29,6 +29,7 @@ import {
   type IndexSearchResult,
   type GalleryItem,
   type Collection,
+  type ApiClientError,
 } from '@/lib/api-client';
 import { tenantBookUrl } from '@/lib/slugify';
 import { matchKnownEntity } from '@/lib/known-entities';
@@ -601,10 +602,15 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             if (oldest) searchCache.current.delete(oldest[0]);
           }
         } catch (err) {
+          const apiErr = err as ApiClientError;
           const msg = err instanceof Error ? err.message : String(err);
           // Anonymous free-search allowance exhausted — show the sign-in wall
           // and stop (don't fire the parallel agents or report an error).
-          if (/free searches this hour/i.test(msg) || /SIGNIN_REQUIRED/.test(msg)) {
+          // Keyed on the machine-readable code the route sends, not on the
+          // wording of the copy: the api-client interceptor carries `code`
+          // through now, and a regex over user-facing prose silently stops
+          // matching the first time that prose is reworded.
+          if (apiErr?.code === 'SIGNIN_REQUIRED') {
             setSignInRequired(true);
             setBookResults([]); setBookTotal(0);
             setIndexResults([]); setIndexTotal(0);
