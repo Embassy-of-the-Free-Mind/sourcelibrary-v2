@@ -16,7 +16,13 @@ export function generateBookSlug(
   author: string,
   displayTitle?: string | null
 ): string {
-  const titleSource = displayTitle || title;
+  // A sentinel is the ABSENCE of a title, not a title. Reading it as text is
+  // what put 112 ETCSL books at /book/unknown-N (#4389): the importer slugged a
+  // record whose English title field held the literal string "Unknown", which
+  // sanitizes to the perfectly legal-looking slug "unknown", so no fallback
+  // branch ever fired and nothing looked broken. Skipping the sentinel here
+  // means the next source (the original title, then the author) gets its turn.
+  const titleSource = isNonTitle(displayTitle) ? (isNonTitle(title) ? '' : title) : displayTitle || '';
   const slugTitle = slugifyText(titleSource, 60);
   const authorLast = extractLastName(author);
   const slugAuthor = slugifyText(authorLast, 20);
@@ -41,21 +47,71 @@ export function generateBookSlug(
 }
 
 /**
+ * Catalogue sentinels that mean "we do not have a title", written into a title
+ * field as if they were one. Every one of these sanitizes to a legal-looking
+ * slug, which is exactly why they are dangerous: nothing downstream can tell
+ * `/book/unknown-7` from a book actually called "Unknown".
+ *
+ * Compared after lowercasing, trimming, and stripping wrapping brackets and
+ * trailing punctuation — catalogues write "[unknown]", "Unknown.", "n/a".
+ */
+const NON_TITLE_SENTINELS = new Set([
+  'unknown', 'unknown title', 'title unknown', 'untitled', 'no title',
+  // 'n a' is the slug form of 'n/a' — isPlaceholderSlug hyphen-splits before
+  // testing, so both spellings have to be here.
+  'none', 'na', 'n/a', 'n a', 'nil', 'null', 'undefined', 'missing', 'not known',
+  'onbekend', 'sans titre', 'ohne titel', 'senza titolo', 'sin titulo',
+  '?', '??', '???', '-', '--', '.', '_',
+]);
+
+/**
+ * Is this string a "we do not know" marker rather than a title?
+ *
+ * Empty/absent counts too, so callers can use it as a single "nothing usable
+ * here" test. See NON_TITLE_SENTINELS and #4389.
+ */
+export function isNonTitle(text: string | null | undefined): boolean {
+  if (!text) return true;
+  const normalized = text
+    .trim()
+    .replace(/^[[({<"'\s]+|[\])}>"'.,;:\s]+$/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!normalized) return true;
+  return NON_TITLE_SENTINELS.has(normalized);
+}
+
+/**
+ * The base of a slug, with a dedupe suffix removed: "unknown-7" → "unknown",
+ * "atalanta-fugiens-maier-5" → "atalanta-fugiens-maier".
+ */
+function slugBase(slug: string): string {
+  return slug.replace(/-\d+$/, '');
+}
+
+/**
  * Is this slug a placeholder or a malformed leftover rather than a real,
  * readable URL segment?
  *
  * Catches: missing/empty, the literal string "undefined", the "untitled"
- * family, and anything with no Latin letter at all — the class that produced
- * ~85 visible books sitting at URLs like /book/-10 and /book/-13, written by
- * an import that bypassed generateBookSlug entirely.
+ * family, a sentinel base with a dedupe counter on it ("unknown-7" — #4389),
+ * and anything with no Latin letter at all — the class that produced ~85
+ * visible books sitting at URLs like /book/-10 and /book/-13, written by an
+ * import that bypassed generateBookSlug entirely.
  *
- * Used by the repair sweep and by the enrichment path that regenerates a slug
- * once a book finally has a display_title.
+ * The counter is stripped before the sentinel test, but only a NUMERIC one:
+ * "unknown-pleasures" is a real title and stays a real slug.
+ *
+ * Used by the repair sweeps, by scripts/audit/book-slug-placeholders.ts, and
+ * by the enrichment path that regenerates a slug once a book finally has a
+ * display_title.
  */
 export function isPlaceholderSlug(slug: string | null | undefined): boolean {
   if (!slug) return true;
   if (slug === 'undefined' || slug === 'null') return true;
   if (/^untitled(-|$)/.test(slug)) return true;
+  if (NON_TITLE_SENTINELS.has(slugBase(slug).replace(/-/g, ' '))) return true;
   return !/[a-z]/.test(slug);
 }
 
@@ -131,7 +187,13 @@ function extractLastName(author: string): string {
   if (!author || /^unknown\b/i.test(author.trim())) {
     return 'unknown';
   }
-  if (author === 'Anonymous') {
+  // "Anonymous Sumerian", "Anonymous (Egyptian)", "Anonymous Yucatec Maya
+  // scribes" — 661 books carry a qualified anonymity marker, and the last-word
+  // rule below reads the qualifier as a surname: /book/a-balbale-to-inana-sumerian
+  // presents a language as the author. Same defect as "Unknown artist" →
+  // "-artist" above, one word over. The bare "Anonymous" case is unchanged and
+  // deliberate — an anonymous early-modern imprint is a real attribution.
+  if (/^anonymous\b/i.test(author.trim())) {
     return 'anonymous';
   }
 

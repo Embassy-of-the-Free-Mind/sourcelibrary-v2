@@ -48,6 +48,41 @@ it into either verdict — a missing flag must not read as a clean one.
   against 校正 / 註, Arabic تأليف and لـ against حققه and the scribe's كتبه, and
   the Sanskrit and Tibetan colophon forms.
 
+## The unjudgeable input is not always empty — sometimes it is a sentinel
+
+*Added 2026-08-31 after #4389.*
+
+Every case above fails **loudly-ish**: the operation returns nothing, and the
+bug is that nothing got read as a negative. There is a worse shape, because it
+never returns nothing at all.
+
+An ETCSL import built each book's slug from an English-title field that held
+the literal string `"Unknown"` wherever the English title had not been
+resolved. `slugify("Unknown")` is `"unknown"` — a well-formed, readable,
+entirely legal slug. No fallback branch fired. Nothing was empty, nothing threw,
+nothing looked wrong at any point downstream. The importer's own dedupe counter
+finished the job, and **112 books went live at `/book/unknown-1` …
+`/book/unknown-111`** with good titles sitting one field over, for six months,
+until an MCP client noticed.
+
+**The rule.** A catalogue sentinel — `Unknown`, `Untitled`, `n/a`, `?`,
+`Onbekend`, `[no title]` — is the ABSENCE of a value written in the shape of
+one. Test for it *before* the value reaches a normaliser, because after
+normalisation it is indistinguishable from data. `isNonTitle()` in
+`src/lib/slugify.ts` is the reference list; reuse it rather than growing a
+second one.
+
+**The tell**: an output that is perfectly well-formed and identical across many
+records. Sameness at scale is the signature — 112 slugs sharing one stem is not
+a coincidence, and no shape check can find it, because each one is individually
+valid.
+
+**The corollary for detectors.** A guard written against the empty case will not
+fire here. `isPlaceholderSlug` had caught `-10` and `untitled-3` for months and
+was blind to `unknown-7`, because that string has letters, no leading hyphen,
+and reads like English. If a rule exists to catch "nothing usable got through",
+enumerate the sentinels it must also catch.
+
 ## The test that would have caught all six
 
 A unit fixture of the same assertion in Chinese, Arabic, Hebrew and Devanagari,
