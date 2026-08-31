@@ -13,6 +13,7 @@ import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
 
 export const preferredRegion = 'fra1';
 
@@ -174,35 +175,29 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
 
     const bookId = book.id || book._id.toString();
 
-    // SOFT DELETE by default - archive to deleted_books collection
+    // SOFT DELETE by default - archive to deleted_books collection.
+    // Goes through deleteBookArchived() so the archive row is read back before
+    // anything is removed — `deleted_books` IS the recovery path (#4450).
     if (!confirmPermanent) {
-      // Get all pages for archival
-      const pages = await db.collection('pages').find({ book_id: bookId }).maxTimeMS(30000).toArray();
-
-      // Archive book with its pages
-      await db.collection('deleted_books').insertOne({
-        ...book,
-        pages,
-        deleted_at: new Date(),
-        original_id: book._id
-      });
-
-      // Remove from active collections
-      await db.collection('pages').deleteMany({ book_id: bookId });
-      await db.collection('books').deleteOne({ _id: book._id });
+      const deleted = await deleteBookArchived(
+        db,
+        book,
+        `admin delete via DELETE /api/books/${id} (${session?.user?.email ?? 'unknown'})`
+      );
+      const pagesArchived = deleted?.pagesArchived ?? 0;
 
       // Audit log (non-blocking)
       logAuditEvent({
         action: 'book_deleted',
         book_id: bookId,
         book_title: book.title,
-        pages_affected: pages.length,
+        pages_affected: pagesArchived,
         metadata: { recoverable: true },
       });
 
       return NextResponse.json({
         success: true,
-        message: `Archived "${book.title}" with ${pages.length} pages`,
+        message: `Archived "${book.title}" with ${pagesArchived} pages`,
         bookId,
         recoverable: true,
         hint: 'POST /api/books/restore/{id} to recover'
@@ -246,21 +241,26 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
       });
     }
 
-    // Book is not archived - permanent delete from active (should be rare)
-    const pagesResult = await db.collection('pages').deleteMany({ book_id: bookId });
-    await db.collection('books').deleteOne({ _id: book._id });
+    // Book is not archived - permanent delete from active (should be rare).
+    // Named `purgeBookUnarchived` so this deliberate, unrecoverable path can
+    // never be mistaken for an ordinary deleteOne when read or grepped (#4450).
+    const purged = await purgeBookUnarchived(
+      db,
+      book,
+      `operator purge via DELETE /api/books/${id}?confirm=PERMANENTLY_DELETE (${session?.user?.email ?? 'unknown'})`
+    );
 
     logAuditEvent({
       action: 'book_deleted_permanent',
       book_id: bookId,
       book_title: book.title,
-      pages_affected: pagesResult.deletedCount,
+      pages_affected: purged?.pagesDeleted ?? 0,
       metadata: { recoverable: false, source: 'active' },
     });
 
     return NextResponse.json({
       success: true,
-      message: `PERMANENTLY deleted "${book.title}" and ${pagesResult.deletedCount} pages`,
+      message: `PERMANENTLY deleted "${book.title}" and ${purged?.pagesDeleted ?? 0} pages`,
       bookId,
       recoverable: false,
       warning: 'This action cannot be undone'
