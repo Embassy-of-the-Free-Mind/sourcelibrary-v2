@@ -2,8 +2,28 @@
 /**
  * Bulk e-rara Archive Worker (PDF download)
  *
- * Downloads full PDF per book instead of individual IIIF page requests.
- * ~10-50x faster than per-page IIIF, politer (1 request vs hundreds), full quality.
+ * Downloads a full PDF per book instead of individual IIIF page requests.
+ * ~10-50x faster than per-page IIIF, and far politer: 1 request instead of
+ * hundreds, against a partner that rate-limits at 2/s and 403s datacenter IPs
+ * (this worker is Mac-only for that reason). Those remain good reasons.
+ *
+ * ⚠ IT IS NOT "FULL QUALITY", WHICH THIS HEADER USED TO CLAIM (#4406).
+ *
+ * Measured 2026-08-30 against e-rara's own info.json: 14 sampled pages, **0 of 14
+ * at full resolution**, median stored/native width ratio **0.667** — about 44% of
+ * the pixels the source will serve. The claim was written when the trade-off was
+ * chosen and never re-tested, and 1.92M pages (~9% of the corpus) were archived
+ * under it, with OCR, translation and reader zoom all inheriting the result.
+ *
+ * PDF_DPI is now 400 rather than 200, which roughly doubles the linear
+ * resolution. That NARROWS the gap; it does not close it. Closing it means
+ * per-page IIIF with tile-stitching (fetchPageMaster) — real native resolution,
+ * and it would also eliminate the cover-sheet offset that corrupted 323 books
+ * (#3186), because the archived image and `photo_original` would finally come
+ * from the same sequence. The cost is ~hundreds of requests per book instead of
+ * one: at e-rara's 2/s that is on the order of 267 hours for the existing corpus,
+ * from a residential IP, against a partner already sensitive to load. That is a
+ * conversation to have with them, not a switch to flip unilaterally.
  *
  * PDF URL pattern: https://www.e-rara.ch/download/pdf/{manifestId}
  * Manifest ID extracted from: https://www.e-rara.ch/i3f/v21/{manifestId}/manifest
