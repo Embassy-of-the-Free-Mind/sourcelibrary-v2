@@ -96,7 +96,7 @@ export async function finalizeCaches({ paths, execute }) {
   if (!execute) {
     console.log('\nNOW RUN (finalize was not requested):');
     console.log('  node scripts/workers/sync-books-catalog.mjs');
-    console.log(`  curl -s -X POST https://sourcelibrary.org/api/admin/revalidate -H "x-revalidate-secret: $REVALIDATE_SECRET" -H "Content-Type: application/json" --data '${body}'`);
+    console.log(`  curl -s -X POST https://sourcelibrary.org/api/admin/revalidate -H "x-revalidate-secret: $CRON_SECRET" -H "Content-Type: application/json" --data '${body}'`);
     return;
   }
   console.log('\nfinalize: syncing Supabase catalog…');
@@ -108,7 +108,7 @@ export async function finalizeCaches({ paths, execute }) {
   const res = await fetch('https://sourcelibrary.org/api/admin/revalidate', {
     method: 'POST',
     headers: {
-      'x-revalidate-secret': process.env.REVALIDATE_SECRET || '',
+      'x-revalidate-secret': process.env.REVALIDATE_SECRET || process.env.CRON_SECRET || '',
       'Content-Type': 'application/json',
       'User-Agent': 'Mozilla/5.0 (sourcelibrary maintenance; triage-apply)',
     },
