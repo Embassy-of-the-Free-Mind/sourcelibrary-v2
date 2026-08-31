@@ -2595,6 +2595,35 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     // authority to /artwork rather than keep indexing both. redirect() defaults to
     // a temporary 307, which consolidates nothing — the whole point of the change.
     if (artSlug) permanentRedirect(`/artwork/${artSlug}`);
+
+    // A slug that was RENAMED keeps working through `slug_aliases`
+    // (findBookByIdOrSlug resolves them on its miss path), but until now it kept
+    // working at the OLD address: the proxy only sends a /book/<segment> to the
+    // book-slug resolver when `looksLikeBookId(segment)` is true, and that is
+    // false for every slug-shaped segment — which is every alias a slug repair
+    // creates. So the ~276 books renamed by earlier sweeps, and the 112 renamed
+    // by #4389, each had two live URLs emitting self-referential canonicals.
+    // Confirmed against production before the change: /book/1-10, a real alias
+    // on a real book, returned 200 rather than a redirect.
+    // The redirect belongs here rather than in the proxy because deciding it
+    // needs the resolved book, and the proxy would have to pay a DB lookup on
+    // every book page view to learn what one string compare answers here.
+    //
+    // 308, for the same reason as the artwork case above: this is a permanent
+    // canonicalisation and search engines must move authority to the new URL.
+    // Costs one string comparison on the canonical path, where it is false.
+    // Localized twins are handled by their own branch above (307/308 there).
+    //
+    // The shape guard is a loop guard: a slug carrying a character that the
+    // router re-encodes would never compare equal to the incoming segment, so
+    // the redirect would fire again on its own target. Only redirect TO a
+    // segment that survives a round trip unchanged.
+    if (lang === 'en') {
+      const canonicalSlug = (earlyBook as { slug?: string }).slug;
+      if (canonicalSlug && id !== canonicalSlug && /^[a-z0-9][a-z0-9._~-]*$/i.test(canonicalSlug)) {
+        permanentRedirect(`/book/${canonicalSlug}`);
+      }
+    }
   }
 
   return (

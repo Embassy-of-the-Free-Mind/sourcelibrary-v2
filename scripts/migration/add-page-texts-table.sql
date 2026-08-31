@@ -22,10 +22,20 @@
 -- HNSW returns the globally nearest N vectors and a WHERE clause filters them
 -- AFTERWARDS, so a `lang = 'es'` predicate against one shared index would strip
 -- the result set to zero whenever the query's true neighbours are in another
--- language. That is exactly the cross-lingual bug fixed in match_semantic in
--- May 2026 (see add-match-semantic-rpc.sql), and a partial index per language
--- makes it structurally impossible: `WHERE lang = 'es'` matches the index
--- predicate, so the scan happens inside that language.
+-- language. That is exactly the cross-lingual bug match_semantic was BELIEVED
+-- to have fixed in May 2026 — it was not; the fix was inert until #4439 (see
+-- add-match-semantic-rpc.sql). A partial index per language makes it
+-- structurally impossible instead of relying on a branch: `WHERE lang = 'es'`
+-- matches the index predicate, so the scan happens inside that language. That
+-- distinction is the lesson of #4439 — this design was right for the right
+-- reason, and it is the pattern to reach for if `page_translations` ever needs
+-- a per-language index of its own.
+--
+-- NOTE (#4439): the protection above covers `filter_lang` (which TEXT to read)
+-- and nothing else. `match_page_texts` also takes filter_language /
+-- filter_languages / filter_exclude_languages — the BOOK's language — and those
+-- are post-filtered over the partial index's candidates, with the same silent
+-- zero. Fixed in fix-semantic-language-prefilter.sql.
 --
 -- Adding a language therefore means running the runner again with --lang=<iso>;
 -- until you do, that language's rows are searched by sequential scan (correct,

@@ -75,9 +75,22 @@ const s3 = new S3Client({
 });
 const BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
 
-/** Parse JPEG SOF dimensions out of a buffer. Returns null if not found yet. */
-function sofDims(buf) {
-  if (buf.length < 4 || buf[0] !== 0xFF || buf[1] !== 0xD8) return null; // not JPEG
+/**
+ * Parse image dimensions out of a header buffer. JPEG (SOF) and PNG (IHDR).
+ *
+ * PNG is here because the corpus stores some of them under `.jpg` keys with an
+ * `image/jpeg` content-type — book 6836f8ee811c8ab472a49e36 is 69 such pages,
+ * found when they turned up as an unexplained `unreadable` bucket in the pilot.
+ * A JPEG-only parser returns null on them forever, so they would have sat
+ * dimensionless with nothing saying why. Trusting the extension or the
+ * content-type would have been worse; the magic bytes are the only honest test.
+ */
+function imageDims(buf) {
+  // PNG: 8-byte signature, then IHDR with width/height as big-endian uint32.
+  if (buf.length >= 24 && buf.readUInt32BE(0) === 0x89504E47 && buf.readUInt32BE(4) === 0x0D0A1A0A) {
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+  }
+  if (buf.length < 4 || buf[0] !== 0xFF || buf[1] !== 0xD8) return null; // not JPEG either
   let i = 2;
   while (i < buf.length - 9) {
     if (buf[i] !== 0xFF) { i++; continue; }
@@ -110,7 +123,7 @@ const toBuf = async (body) => {
 async function probeR2Dimensions(key) {
   for (const range of ['bytes=0-12287', 'bytes=0-196607']) {
     const o = await s3.send(new GetObjectCommand({ Bucket: BUCKET, Key: key, Range: range }));
-    const dims = sofDims(await toBuf(o.Body));
+    const dims = imageDims(await toBuf(o.Body));
     if (dims) return dims;
   }
   return null;

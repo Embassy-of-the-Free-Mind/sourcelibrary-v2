@@ -1240,6 +1240,28 @@ async function main() {
     await client.close();
     return;
   }
+
+  // The dial gates the whole RUN, not just selfDispatch (#4436 follow-up).
+  // selfDispatch was gated because it creates new work; but main() also picks
+  // up books already at translate_submitted/translate_partial and resumes
+  // orphaned jobs, and neither asked. On the 2026-08-30 relight that gap was
+  // live: 5,011 preview-translate jobs queued before the dial existed drained
+  // straight through a $5 ceiling while the guard correctly logged "CEILING
+  // REACHED — no new dispatch". Both were true; the ceiling only governed
+  // dispatch, and the expensive path was consumption.
+  //
+  // A queue is stored spend. Anything that turns a queued job into Gemini
+  // calls has to ask, or the dial only limits how fast we ENQUEUE money.
+  if (!await budgetAllowsDispatch(db, 'translate-worker run', { control })) {
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-translate-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      pages_saved: 0, actions: { books_processed: 0, skip_reason: 'daily budget ceiling reached' },
+      errors: [], error_count: 0, summary: 'skipped: daily budget ceiling reached',
+    }).catch(() => {});
+    await client.close();
+    return;
+  }
   // When globally paused with a scope, confine candidate selection to it
   // (module-level SCOPE_FILTER read by selfDispatch).
   if (control?.paused && hasScope(control)) {

@@ -32,9 +32,10 @@ language is a key, not a feature.
 - **The vector index is PARTIAL, one per language** (`page_texts_embedding_es_idx`).
   HNSW returns the globally nearest N and filters afterwards, so a shared index
   plus `WHERE lang = 'es'` would strip results to zero whenever the true
-  neighbours are in another language — the same cross-lingual bug fixed in
-  `match_semantic` in May 2026. A partial index makes it structurally
-  impossible. **Adding a language means running
+  neighbours are in another language — the same cross-lingual bug `match_semantic`
+  was believed to have fixed in May 2026 and had not (#4439). A partial index
+  makes it structurally impossible, which is why this half is sound and the
+  branch-based half was not. **Adding a language means running
   `scripts/migration/add-page-texts-table.mjs --lang=<iso>` again**; until you
   do, that language is searched by sequential scan (correct, just slower).
 - **There is a lexical lane too**, which the English store does not have here:
@@ -108,6 +109,36 @@ Baseline at 2026-05-26 (after first cleanup pass): 338 truly orphaned rows total
 - Page-level: `node scripts/workers/embed-gemini.mjs --book <id>` re-embeds a specific book.
 - Book-level: enrich-worker Phase 6.5 handles it during enrichment. To force, re-run enrichment for the book.
 - Artwork / gallery / clip: idempotent backfill scripts in `scripts/migration/` — delete the row(s) and re-run the cron.
+
+### A language filter over an HNSW index is a post-filter until proven otherwise (#4439)
+
+**Rule: an `ORDER BY embedding <=> q LIMIT n` with a WHERE predicate is a
+post-filter, whatever the surrounding code says.** The predicate runs on
+candidates the index already chose, so the filter's recall tracks that value's
+share of the table rather than the query. `match_semantic`, `match_page_texts`
+and `match_books_semantic` all have this shape, and `match_semantic` carried a
+comment claiming it had been fixed in May 2026 — a plpgsql `IF` branch that ends
+in the same `ORDER BY`. A branch is not a plan.
+
+**Tell:** the dominant language works perfectly and a non-dominant one returns
+zero — *fast*. 60ms is not a scan of 4.5M rows; it is an index scan whose
+candidates all failed the filter. Measured 2026-08-31: Chinese (2.2% of
+`page_translations`), Arabic (1.2%) and Sanskrit (3.2%) filters returned 0 rows
+on queries the corpus answers well, while Latin (36%) returned a full page.
+
+**How to test it:** never with the dominant value. Assert that a filter for a
+NON-dominant value returns rows on a query whose unfiltered hits are all
+elsewhere — `scripts/audit/semantic-language-filter-recall.mjs`. And control the
+instrument: check the rows exist in the TABLE, and that the unfiltered arm
+returns something, before reading an empty filtered result as a defect.
+
+**The two structural fixes**, in preference order: a PARTIAL index per value, so
+the predicate matches the index predicate and the scan happens inside it (what
+`page_texts` does for `lang`); or pgvector's `hnsw.iterative_scan` (≥ 0.8.0),
+which keeps walking the graph until enough rows survive the filter. A
+fenced exact pre-filter (`OFFSET 0` + `enable_indexscan = off`) is correct on any
+version but costs a scan of everything the predicate admits — 47.6s measured for
+an `exclude_languages` query. Migration: `scripts/migration/fix-semantic-language-prefilter.sql`.
 
 ### Index health
 The HNSW index has to be present and the planner has to choose it — `CREATE INDEX` succeeds silently even when it produces an unusable index above the dim cap. Always `EXPLAIN ANALYZE` a real `match_*` query after touching a vector column or index. See `lesson_pgvector_hnsw_dim_cap.md` and `lesson_silent_probe_failures.md`.

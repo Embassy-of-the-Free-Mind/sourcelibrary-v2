@@ -32,6 +32,8 @@ import { MongoClient } from 'mongodb';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// Dedup-key normalizers: ONE implementation, shared with src/lib/dedup.ts (#4444).
+import { normalizeTitle, normalizeAuthor } from '../lib/dedup-normalize.mjs';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dir, 'output');
@@ -47,23 +49,6 @@ const argNum = (flag, def) => { const i = args.indexOf(flag); return i >= 0 ? pa
 const FROM = argNum('--from', 1450);
 const TO = argNum('--to', 1700);
 
-// ---- normalization: mirror of src/lib/dedup.ts (keep in sync) ----
-function normalizeTitle(title = '') {
-  return title.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-    .replace(/^(the|a|an|der|die|das|de|le|la|les|il|lo|gli|i|el|los|las)\s+/i, '')
-    .replace(/\s*[\(\[:]?\s*(vol\.?\s*\d+|tomus?\s*\d+|part\.?\s*\d+|band\s*\d+|tome?\s*\d+)[\)\]]?\s*$/i, '')
-    .replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
-}
-function normalizeAuthor(author = '') {
-  const cleaned = author.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-    .replace(/\b(dr|prof|rev|saint|st|sir|fr|bp)\b\.?\s*/g, '')
-    .replace(/\s*\([\d\s\-–,?.]+\)\s*/g, '')
-    .replace(/,\s*[\d\s\-–?.]+$/, '')
-    .replace(/[\[\]]/g, '')
-    .replace(/\b(born|died|fl\.?|circa|ca?\.?)\s*\d{3,4}\b/g, '')
-    .replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
-  return cleaned.split(' ').filter(w => w.length > 0).sort().join(' ');
-}
 const firstStr = (v) => Array.isArray(v) ? (v[0] ?? '') : (v ?? '');
 
 // =====================================================================

@@ -14,34 +14,12 @@
  */
 
 // ---- dedup.ts ports (ASCII semantics — deliberate, see TS header) ----------
+// The two dedup-key normalizers used to be pasted here as well. They now live
+// in ONE scripts-side module so every importer in scripts/ shares them
+// (#4444); re-exported so existing callers of this file are unaffected.
 
-export function normalizeTitle(title) {
-  return String(title || '')
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/^(the|a|an|der|die|das|de|le|la|les|il|lo|la|gli|i|el|los|las)\s+/i, '')
-    .replace(/\s*[\(\[:]?\s*(vol\.?\s*\d+|tomus?\s*\d+|part\.?\s*\d+|band\s*\d+|tome?\s*\d+)[\)\]]?\s*$/i, '')
-    .replace(/[^\w\s]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-export function normalizeAuthor(author) {
-  const cleaned = String(author || '')
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/\b(dr|prof|rev|saint|st|sir|fr|bp)\b\.?\s*/g, '')
-    .replace(/\s*\([\d\s\-–,?.]+\)\s*/g, '')
-    .replace(/,\s*[\d\s\-–?.]+$/, '')
-    .replace(/[\[\]]/g, '')
-    .replace(/\b(born|died|fl\.?|circa|ca?\.?)\s*\d{3,4}\b/g, '')
-    .replace(/[^\w\s]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-  return cleaned.split(' ').filter((w) => w.length > 0).sort().join(' ');
-}
+export { normalizeTitle, normalizeAuthor } from './dedup-normalize.mjs';
+import { normalizeTitle, normalizeAuthor } from './dedup-normalize.mjs';
 
 const LATIN_ORDINALS = {
   primus: 1, prima: 1, secundus: 2, secunda: 2, tertius: 3, tertia: 3,

@@ -133,6 +133,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 
 **Data & corpus**
 - **Deleting anything, or "is it safe?" → `../preservation-policy.md`** (**TEXT is the irreplaceable half — 1.8% of bytes**)
+- Removing a book from `books`, or concluding one is MISSING → `book-deletion-and-identity.md` (**use `deleteBookArchived()`, never a raw `books.deleteOne`; and look a book up by `id` OR `_id` — 16,343 books have a re-minted `_id` and are invisible to an `_id`-only lookup while serving readers normally**)
 - Archivers/importers, `archived_photo`, "failed to fetch" triage → `archive-fetch-failures.md`
 - Quoting archive/R2 coverage, an archiver's "is this book done?" check, a new page-image field → `archive-coverage.md` (**"archived" is three questions — RECORD/FILE/MASTER; never sum them**)
 - Two artifacts that must line up (page images vs OCR, splits vs text) → `paired-artifacts.md`
@@ -168,7 +169,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - A query behind an API route, especially over `pages` / `entities` → `request-path-queries.md`
 - Search filters, a new search lane, indexing a column into a public search surface → `search-filters-and-lanes.md`
 - Client components on ISR routes, reader panels, root layout, page `metadata`, **or a route-level `redirect()`/`notFound()`** → `rendering-and-seo.md`
-- A localized route (`/es/…`), a title/name/intro in another language, a field holding translated metadata, adding a language → `../i18n.md` (**one `localized` map per record, never `title_<lang>` columns**; the locale is the URL prefix and stays)
+- A localized route (`/es/…`), a title/name/intro in another language, a field holding translated metadata, adding a language → `../i18n.md` (**one `localized` map per record, never `title_<lang>` columns**; the locale is the URL prefix and stays) — and for a **formatted number** in a localized view, `localized-surfaces.md` (**a literal `€1,000` reads as one euro in `es-ES`**)
 
 **Measuring anything**
 - Quoting a usage number, analytics read/write paths, alarms, health probes, **a scheduled detector that files its findings as issues**, using a model as a judge/screen, or **any ranked/related list a reader reads as meaningful** (connections, recommendations, "see also") → `measurement-instruments.md`
@@ -218,7 +219,6 @@ If `code-review-graph` is installed (per-machine, see `.claude/docs/code-review-
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
-- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`, at `src/app/rithmomachia`), not dead code.
 
 ## Knowledge Maintenance
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.

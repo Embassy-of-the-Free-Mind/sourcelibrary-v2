@@ -109,3 +109,51 @@ jobs:
         run: |
           echo "::error::bulk-archive-alignment could not run (exit ${{ steps.run.outputs.fired }}) — no sample was measured. Check the MONGODB_URI repo secret."
           exit 1
+
+  placeholder-slugs:
+    # Daily cron + manual runs. A book's slug IS its public address, and #4389
+    # showed the failure is silent by construction: the fallback produces a
+    # string that looks exactly like a real slug, so 111 books sat at
+    # /book/unknown-N for six months with good titles one field over.
+    if: github.event.schedule != '0 7 * * 1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Check for placeholder book slugs
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          npx tsx scripts/audit/book-slug-placeholders.ts > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+      # One open issue at a time. The finding is deterministic and stays true
+      # until someone repairs it, so filing daily would bury the first report
+      # under 30 copies of itself.
+      - name: File findings
+        if: steps.run.outputs.fired == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Placeholder book slugs are live"
+          OPEN=$(gh issue list --state open --search "in:title $TITLE" --json title --jq "[.[] | select(.title == \"$TITLE\")] | length")
+          if [ "$OPEN" != "0" ]; then
+            echo "An open '$TITLE' issue already exists — not filing another."
+            exit 0
+          fi
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "A visible book is published at a URL that says nothing about it (/book/unknown-7, /book/untitled-3, /book/-9). The slug is the public, citable address, so this is a broken page address, not a cosmetic issue. Repair with scripts/maintenance/repair-book-slugs.ts (dry run by default) — it preserves the old slug as an alias. See #4389." \
+            "$(cat report.txt)")
+          gh issue create --title "$TITLE" --body "$BODY" --label data-quality
+      # Exit 2 means the detector never reached the database. A silent green run
+      # is indistinguishable from "checked, found nothing".
+      - name: Fail if the detector could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::book-slug-placeholders could not run (exit ${{ steps.run.outputs.fired }}) — no finding was measured. Check the MONGODB_URI repo secret."
+          exit 1
