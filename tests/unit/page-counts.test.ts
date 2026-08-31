@@ -74,7 +74,36 @@ describe('page-counts convention (#3293)', () => {
       total: 3,
       with_ocr: 3,
       with_translation: 2,
+      // All three visible pages have OCR and none is a never-translated type,
+      // so all three are translatable; two of them carry a translation.
+      translatable: 3,
+      translated_translatable: 2,
     });
+  });
+
+  it('translatable excludes what can never be translated, and its numerator matches', () => {
+    // The #4442 denominator. A blank leaf carries a translation PLACEHOLDER, so
+    // counting it in the numerator while excluding it from the denominator is what
+    // pushed real books past 100% (the Blue Qur'an at 1000%, Hugh of Santalla at
+    // 105.6%). Both must exclude it.
+    const pages = [
+      { page_number: 1, ocr: { data: 'a' }, translation: { data: 'A' } },
+      { page_number: 2, ocr: { data: 'b' }, page_type: 'blank', translation: { data: '[Blank page]' } },
+      { page_number: 3, ocr: { data: 'c' }, page_type: 'bookplate', translation: { data: 'C' } },
+      { page_number: 4, ocr: { data: 'd' } }, // translatable, not yet translated
+      { page_number: 5 }, // no OCR — nothing to translate from
+      { page_number: 6, ocr: { data: 'f' }, ocrRecitation: true },
+    ];
+    // page 6 is refused by the model — expressed the way the writers store it
+    (pages[5] as Record<string, unknown>).ocr = { data: 'f', recitation_blocked: true };
+
+    const stats = countVisiblePageStats(pages);
+    expect(stats.translatable).toBe(2); // pages 1 and 4 only
+    expect(stats.translated_translatable).toBe(1); // page 1
+    // The ratio can never exceed 1 — the property the old numerator violated.
+    expect(stats.translated_translatable).toBeLessThanOrEqual(stats.translatable);
+    // And the blank leaf's placeholder is still excluded from pages_translated.
+    expect(stats.with_translation).toBe(2); // pages 1 and 3 (bookplate is not 'blank')
   });
 
   it('regression: hidden translated pages do not fabricate a low translated count', () => {

@@ -59,8 +59,55 @@ export function isTranslatedPage(page) {
 }
 
 /**
- * Aggregation pipeline that returns { total, with_ocr, with_translation }
- * for the VISIBLE pages of one book. Used by the batch collectors.
+ * Page types that will never carry a translation, whatever we spend.
+ *
+ * Kept as a literal rather than imported from `translate-core.mjs` because that
+ * module imports THIS one; the two must stay in step and
+ * `tests/unit/page-counts.test.ts` is where that is asserted.
+ */
+export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+
+/**
+ * True iff a page is work the translator could actually do — the honest
+ * DENOMINATOR for translation completeness (#4442).
+ *
+ * `pages_count` is the wrong denominator and always has been: it counts every
+ * visible page, including ones no amount of money will ever translate. Measured
+ * 2026-08-31 on 150 random live books with a small apparent tail, only **12.8%**
+ * of that tail was real work and **79%** of the books were already complete and
+ * merely counted wrong. Corpus-wide the library reported 10.2% of live books
+ * fully translated when roughly 41% actually were.
+ *
+ * A page qualifies only if it has OCR to translate from, is not a never-translated
+ * type, and has not been permanently refused by the model.
+ */
+export function isTranslatablePageForCount(page) {
+  if (!isVisiblePage(page)) return false;
+  if (!hasOcr(page)) return false;
+  if (NEVER_TRANSLATED_PAGE_TYPES.includes(page?.page_type ?? '')) return false;
+  if (page?.translation?.recitation_blocked === true) return false;
+  if (page?.translation?.safety_blocked === true) return false;
+  if (page?.ocr?.recitation_blocked === true) return false;
+  return true;
+}
+
+/** Mongo twin of isTranslatablePageForCount(), shared by the denominator and its numerator. */
+const TRANSLATABLE_COND = {
+  $and: [
+    { $ne: ['$ocr.data', null] },
+    { $ne: ['$ocr.data', ''] },
+    { $ifNull: ['$ocr.data', false] },
+    { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] }] },
+    { $ne: ['$translation.recitation_blocked', true] },
+    { $ne: ['$translation.safety_blocked', true] },
+    { $ne: ['$ocr.recitation_blocked', true] },
+  ],
+};
+
+/**
+ * Aggregation pipeline that returns
+ * { total, with_ocr, with_translation, translatable, translated_translatable }
+ * for the VISIBLE pages of one book. Used by the batch collectors and the recount.
  */
 export function buildVisiblePageCountPipeline(bookId) {
   return [
@@ -97,6 +144,29 @@ export function buildVisiblePageCountPipeline(bookId) {
             ],
           },
         },
+        // The honest denominator and ITS matching numerator (#4442). Mirrors
+        // isTranslatablePageForCount(). `translatable` is what could ever be
+        // translated; `translated_translatable` is how much of that has been —
+        // and it is deliberately NOT `with_translation`, because a numerator
+        // must exclude whatever its denominator excludes. Getting that wrong is
+        // what produced the Blue Qur'an's 1000% above, and a 105.6% reading on
+        // Hugh of Santalla while this was being written.
+        translatable: {
+          $sum: { $cond: [TRANSLATABLE_COND, 1, 0] },
+        },
+        translated_translatable: {
+          $sum: {
+            $cond: [
+              { $and: [
+                TRANSLATABLE_COND,
+                { $ne: ['$translation.data', null] },
+                { $ne: ['$translation.data', ''] },
+                { $ifNull: ['$translation.data', false] },
+              ] },
+              1, 0,
+            ],
+          },
+        },
       },
     },
   ];
@@ -109,9 +179,12 @@ export function buildVisiblePageCountPipeline(bookId) {
  */
 export function countVisiblePageStats(pages) {
   const visible = (pages ?? []).filter(isVisiblePage);
+  const translatable = visible.filter(isTranslatablePageForCount);
   return {
     total: visible.length,
     with_ocr: visible.filter(hasOcr).length,
     with_translation: visible.filter(isTranslatedPage).length,
+    translatable: translatable.length,
+    translated_translatable: translatable.filter(hasTranslation).length,
   };
 }
