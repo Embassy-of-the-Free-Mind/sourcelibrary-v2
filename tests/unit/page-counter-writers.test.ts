@@ -22,7 +22,7 @@
  * ADDING A WRITER: import `page-counts` and use `buildVisiblePageCountPipeline` (or
  * `countVisiblePageStats` if you already hold the pages).
  *
- * The 34 pre-existing divergent writers are captured in
+ * The pre-existing divergent writers are captured in
  * `tests/fixtures/page-counter-writers-baseline.json` — a ratchet that may shrink and
  * must not grow (#4499). If a file genuinely writes a counter without deriving it —
  * zeroing on clear, say — it still belongs in the baseline with that noted, because
@@ -129,7 +129,7 @@ describe('book page-counter writers', () => {
     const stillDivergent = counterWriters().filter(r => !r.usesLib).map(r => r.file);
     const notInBaseline = stillDivergent.filter(f => !BASELINE.includes(f));
     expect(notInBaseline).toEqual([]);
-    expect(BASELINE.length).toBeLessThanOrEqual(34);
+    expect(BASELINE.length).toBeLessThanOrEqual(32);
   });
 
   it('finds writers at all (guards against the matcher silently matching nothing)', () => {

@@ -10,7 +10,7 @@
     "never by regenerating this file to make a new offender disappear. Burn-down: #4499."
   ],
   "generated_at": "2026-08-31",
-  "count": 34,
+  "count": 32,
   "files": [
     "scripts/dedup-apply-approved.mjs",
     "scripts/dedup-autoapply.mjs",
@@ -43,8 +43,6 @@
     "src/app/api/pages/[id]/route.ts",
     "src/app/api/pages/[id]/split/route.ts",
     "src/app/api/pages/batch-split/route.ts",
-    "src/app/api/process/route.ts",
-    "src/lib/page-split/dedup-overlapping-pages.ts",
-    "src/lib/page-split/detect-ghost-pages.ts"
+    "src/app/api/process/route.ts"
   ]
 }
