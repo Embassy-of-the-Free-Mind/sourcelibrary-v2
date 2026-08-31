@@ -399,3 +399,32 @@ invisible from either issue thread. Neither #2651 nor #3005 mentions the other,
 and both are individually well-reasoned. **Shared mutable state is discovered by
 reading the writers, not the plans** — same lesson as the two sessions that both
 wrote `locus_anchors`, one object store instead of one collection.
+
+## The CDN's own machinery writes rows into the traffic it measures (fake Early Hints 504s)
+
+On 2026-08-31 Cloudflare zone analytics showed **1.49M "504 Gateway Timeout" rows in 24h** — 10% of
+all edge traffic, apparently doubling week-over-week. It read as a worsening origin outage. It was
+nothing: with the zone's **Early Hints** feature ON (Speed → Optimization), Cloudflare's Early Hints
+machinery logs synthetic request rows stamped `userAgent: "nginx-ssl early hints"` (also
+`"bastion early hints"`), `edgeResponseStatus: 504`, `originResponseStatus: 0`. They shadow real
+visits roughly 1:1 on hot paths, so they *scale with success*.
+
+How it was proven harmless — the checks to repeat before believing an edge error rate:
+
+- **Latency is the lie detector.** avg `edgeTimeToFirstByteMs` on the "504s" was **4.2ms**. A real
+  gateway timeout spends tens of seconds waiting. A 4ms 504 never contacted anything.
+- **The ASN mix was the reader audience** (Comcast, Verizon, Charter, T-Mobile, Facebook's link
+  scraper) — not a fleet. Rows that shadow real traffic distribute like real traffic.
+- **The origin answered when actually asked**: 9.5M genuine 200s/day at 180ms avg TTFB, and curl of
+  the top "failing" paths returned 200 in 120–430ms.
+
+**Rule: any error-rate query over Cloudflare zone analytics must exclude `userAgent` containing
+"early hints" before quoting a 5xx number.** Same family as the PostHog bot-fleet inflation above —
+the instrument records things that are not visits, silently, in the direction that invites a
+confident wrong conclusion (here: "production is failing").
+
+Practical notes: none of the repo's static CF tokens (`CF_API_TOKEN`, `CF_ANALYTICS_TOKEN`,
+`CLOUDFLARE_API_TOKEN`) carries zone `analytics.read` — but the Cloudflare plugin MCP
+(`mcp__plugin_cloudflare_cloudflare-api__execute`) can POST GraphQL to `/graphql` under its own
+OAuth and read everything. Zone analytics retain only ~7 days (a range older than 1w1d is rejected),
+so anything worth keeping must be quoted out the week it happens.
