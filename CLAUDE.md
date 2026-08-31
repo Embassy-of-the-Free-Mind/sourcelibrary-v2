@@ -115,12 +115,12 @@ it makes needs a person. Related: `.claude/docs/invariants/first-translation-cla
 
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore`, NOT `sourcelibrary_research`. Measured 2026-08-30: **109,567** total docs, **47,483** `visible: true` — but **15,752 of those are artwork records with `pages_count: 0`, so the honest "books you can read" number is 31,731** (`visible: true && pages_count > 0`). Also **84,574** with `pages_count > 0` (actually processed), **61,829** with `pages_ocr > 0` (20.2M pages ingested, 6.45M transcribed, 5.05M translated). Re-measure before quoting — these drift by thousands a month, and the 2026-05-26 vintage of this line was off by up to 5× (`pages_count > 0` read ~15K against a true 74.7K) before anyone noticed. The `tier` field is legacy (only used by `src/app/page.tsx` homepage ranking via `highlighted_books` collection entries); current canonical "live" filter across all public APIs is `visible: true && pages_count > 0` (see `/api/books/library`).
+- Production database: `bookstore`, NOT `sourcelibrary_research`. **Re-measure before quoting any corpus count** — the 2026-05-26 vintage of this line was off by up to 5x before anyone noticed, and `visible: true` alone overstates readable books by ~15.7K artwork records. Canonical "live" filter: `visible: true && pages_count > 0`. Current figures and the `tier` legacy note -> `.claude/docs/invariants/visibility-and-stats.md`.
 - **supabase-js silently caps every response at 1,000 rows** — no error, no warning, just a truncated array (truncation order follows the query plan, so it can look systematic, e.g. alphabetical). Any `.select()` that can exceed 1K rows needs `.range()` pagination or must be split into per-key queries. This zeroed whole corpora on `/api/ngrams` while reporting `found=true` (PR #3208) — the bug shape is "some keys work, others silently empty."
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
-- OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
+- OCR/Translation routing (`getModelForBook`): `gemini-3-flash-preview` for BPH, **non-Latin scripts, and unknown/absent language**; `gemini-3.1-flash-lite` only for the Latin-script allowlist. The cheap model does not fail on low-resource scripts — it invents plausible text. See `src/lib/types/ai-models.ts`.
 - **Grounded search: flash-lite does NOT ground** (0/189 measured 2026-08-10 — empty `groundingMetadata` while the prose claims "extensive searches"). Use `gemini-3-flash-preview` with an explicit positive `thinkingBudget` (512 → 6/6 grounded, ~$0.003/book; unbounded ≈ $0.19/book; `-1` silently suppresses grounding). Verify groundedness from `queries[]` on written rows, never from response prose.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
@@ -185,6 +185,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Adding or changing a Librarian / MCP tool, or the text one returns → `agent-tool-results.md` (**a ranker cannot answer "how many"**, and a URL you leave out is one the model will invent — two 404s came out of the first live turn)
 
 **Writing a sweep, an import, or a new field**
+- Anything that calls Gemini from a worker or cron, a new `hetzner-crontab`/`vercel.json` line, or "why didn't the daily budget hold?" -> `spend-controls.md` (**a queue is stored spend**; the dial has failed four distinct ways, and they look identical from outside)
 - Running any script/worker under `secret-lover run`, or running one **from a worktree**, or a job that reports a store as empty → `credential-injection.md` (**secret-lover reports an unreadable secret as a missing one and runs anyway**; a worktree resolves to the wrong project and gets zero secrets)
 - Adding a field to `books`/`pages`, writing a maintenance sweep, or touching `book-docs.mjs`/`sweep-log.mjs`/`field-sprawl.mjs` → `field-sprawl.md` (**a sweep records a ROW, not a COLUMN**; consolidation without enforcement re-polluted 4.16M rows in 3 months)
 
