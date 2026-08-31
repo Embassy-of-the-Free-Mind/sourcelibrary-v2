@@ -22,3 +22,24 @@ Lessons from PR #2055 (see `.claude/handoffs/`). The homepage and most public su
 - **`gallery_images.book_visible` drifts in BOTH directions, and only one direction is a leak.** It is denormalised from `books.visible` and refreshed by the sync worker only when a book's **pages** change, so a bare visibility flip never reaches it. Measured 2026-08-18: 1,217 rows claimed `book_visible: true` for a hidden book (art leaking, fixed), and **6,760 claimed `false` for a visible book** (art suppressed that should show, left alone). Repair the leak direction freely; the suppressed direction *publishes* images and is a curation decision, not a data fix. Don't "correct" both in one sweep and call it hygiene.
 - **Authored prose inside a collection doc is a takedown surface.** The Kloss takedown swept books, Supabase, `gallery_images.book_visible`, collection `visible` flags, the tenant and code references — but not `description` / `expanded_description` / `highlighted_books` / `featured_images` / `hero_image`, which are hand-written and cite specific books by id. `/collections/freemasonry` therefore stayed live for six weeks naming "the Kloss Library, one of the most important Masonic research collections ever assembled" and linking 13 removed books, every link dead. **Any removal has to grep the authored fields, not just the flags** — a hidden book stops rendering, but a sentence *about* it does not.
 - **A card must count what its TARGET page renders, not what the collection holds.** `collections` carries three counters — `book_count` (translated/readable), `total_book_count` (all visible member texts, #3176), `artwork_count` — and nothing ties a counter to the view that consumes it, so a card is free to pick the wrong one. A `collection_type: 'visual_art'` collection renders artworks and *nothing else* (`isArtCollection`), so its book counters describe texts the reader can never reach from it. Until #4106 the sub-collection child cards on `/collections/[id]` showed `total_book_count ?? book_count`, inherited their noun from the **parent** collection, and sorted the grid by `book_count` — so `school-of-athens` advertised **"518 books"** above a page showing **30 works**, and sorted second in Classical Philosophy. Measured across all 284 child cards, **19 art children were mislabelled**; School of Athens was the only over-count and the rest simply vanished (`esoteric-engravers` showing 0 against ~1,600 artworks, `portraits-tradition` 0 against ~1,600). The fix is per-child, not global: `childCardCount()` labels and sorts by the child's own `collection_type`, and `collectionCountLabel()` takes an optional third `collectionType` that drops the text half for `visual_art`. **Before adding a count to any card, open the page it links to and ask which query fills it** — `/collections` and the homepage grids escaped this only because they exclude `visual_art` at the query level, not because they got the counter right. Corollary, still open as a curation call (#4107): the 518 texts tagged `school-of-athens` are legitimate editions that no surface lists, so a counter can also be *honest about data that no page will ever show*. Second instance, 2026-08-30: on a newly built collection `book_count` counted every tagged, visible, paginated member (33) while the grid rendered 32, because the grid is `browseBooks` over Supabase and serves *readable* books — Carey's *Principles of Social Science* (497pp, 300 OCR'd, **0 translated**) is a legitimate member that no page will show. `book_count` is the readable subset, `total_book_count` is the membership; computing the former as "live members" silently overstates it by however many members are untranslated. Caught only by diffing the live grid against Mongo membership after the write, which is the check worth running: **do not validate a counter against the query you just wrote, validate it against the read path**.
+
+## Corpus counts (demoted from `CLAUDE.md` 2026-08-31)
+
+**Measured 2026-08-30 — re-measure before quoting; these drift by thousands a
+month.** The 2026-05-26 vintage of this paragraph was off by up to 5x
+(`pages_count > 0` read ~15K against a true 74.7K) and sat wrong for months
+because nobody re-ran it.
+
+- **109,567** total docs in `bookstore`
+- **47,483** `visible: true` — but **15,752 are artwork records with
+  `pages_count: 0`**, so the honest "books you can read" figure is **31,731**
+  (`visible: true && pages_count > 0`)
+- **84,574** with `pages_count > 0` (actually processed)
+- **61,829** with `pages_ocr > 0` — 20.2M pages ingested, 6.45M transcribed,
+  5.05M translated
+
+The canonical "live" filter across all public APIs is
+`visible: true && pages_count > 0` (see `/api/books/library`). The `tier` field
+is **legacy** — its only remaining reader is `src/app/page.tsx` homepage ranking
+via `highlighted_books` collection entries.
+
