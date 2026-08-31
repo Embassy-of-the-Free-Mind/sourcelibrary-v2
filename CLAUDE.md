@@ -169,7 +169,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - A query behind an API route, especially over `pages` / `entities` → `request-path-queries.md`
 - Search filters, a new search lane, indexing a column into a public search surface → `search-filters-and-lanes.md`
 - Client components on ISR routes, reader panels, root layout, page `metadata`, **or a route-level `redirect()`/`notFound()`** → `rendering-and-seo.md`
-- A localized route (`/es/…`), a title/name/intro in another language, a field holding translated metadata, adding a language → `../i18n.md` (**one `localized` map per record, never `title_<lang>` columns**; the locale is the URL prefix and stays)
+- A localized route (`/es/…`), a title/name/intro in another language, a field holding translated metadata, adding a language → `../i18n.md` (**one `localized` map per record, never `title_<lang>` columns**; the locale is the URL prefix and stays) — and for a **formatted number** in a localized view, `localized-surfaces.md` (**a literal `€1,000` reads as one euro in `es-ES`**)
 
 **Measuring anything**
 - Quoting a usage number, analytics read/write paths, alarms, health probes, **a scheduled detector that files its findings as issues**, using a model as a judge/screen, or **any ranked/related list a reader reads as meaningful** (connections, recommendations, "see also") → `measurement-instruments.md`
