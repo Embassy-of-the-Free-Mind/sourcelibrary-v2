@@ -161,7 +161,7 @@ const nextConfig: NextConfig = {
       // POST is for /api/mcp (JSON-RPC); the Mcp-* headers are its session
       // protocol, exposed so browser MCP clients can read the session id.
       {
-        source: '/api/:root(search|books|gallery|collections|catalog|verify|mcp|image|locus|ngrams|openapi|dataset)/:path*',
+        source: '/api/:root(search|books|gallery|collections|catalog|verify|mcp|image|locus|ngrams|openapi|dataset|works|libraries|vectors)/:path*',
         headers: [
           { key: 'Access-Control-Allow-Origin', value: '*' },
           { key: 'Access-Control-Allow-Methods', value: 'GET, POST, OPTIONS' },

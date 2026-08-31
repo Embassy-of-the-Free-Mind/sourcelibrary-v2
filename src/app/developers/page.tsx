@@ -564,6 +564,11 @@ source-library search "alchemy" --json | jq .results`}
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/vectors/:store</td>
+                  <td className="py-2.5 text-secondary">Embedding vectors — books, gallery, clip (visual), artworks. For your own UMAP, clustering, or nearest-neighbour work.</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/works</td>
                   <td className="py-2.5 text-secondary">Works held in many editions across centuries — witness counts and year spans. Feed work_id back to /books/library.</td>
                 </tr>
@@ -632,27 +637,38 @@ source-library search "alchemy" --json | jq .results`}
         </p>
 
         <div className="bg-white rounded-xl border border-border-light p-6 max-w-2xl">
-          <h3 className="text-base font-semibold text-primary mb-2">Fetching page images: use our copy, not the library&apos;s</h3>
+          <h3 className="text-base font-semibold text-primary mb-2">Page images: every URL we return is ours</h3>
           <p className="text-secondary text-sm mb-3">
-            Every page object carries two kinds of image URL, and only one of them is yours to fetch.
+            Each page in an API response carries three image URLs, all on{' '}
+            <code>images.sourcelibrary.org</code>:
           </p>
           <ul className="text-secondary text-sm space-y-2 mb-3">
             <li>
-              <code className="text-accent-rust">display_photo</code> / <code className="text-accent-rust">archived_photo</code> —
-              on <code>images.sourcelibrary.org</code>. We hold a copy of <strong>every</strong> page image,
-              so these always resolve. Fetch these.
+              <code className="text-accent-rust">image_full</code> — the full-resolution master.
+              Use this for archival work. It <strong>equals or exceeds</strong> what the originating
+              library serves: measured page-for-page, Göttingen is 3651×4652 on both sides, and our
+              Morgan master is 8308×10576 against 2000×2546 at the source.
             </li>
             <li>
-              <code>photo</code> / <code>photo_original</code> / <code>thumbnail</code> —
-              the <strong>originating institution&apos;s</strong> server (archive.org, the Bavarian State Library,
-              the British Library, e-rara, Gallica, Harvard and around fifteen others). These are
-              provenance — they record where a scan came from. They are not a download path.
+              <code className="text-accent-rust">image_display</code> — a ~2000px variant for viewers.
+            </li>
+            <li>
+              <code className="text-accent-rust">image_thumb</code> — thumbnail.
             </li>
           </ul>
+          <p className="text-secondary text-sm mb-3">
+            We deliberately do <strong>not</strong> hand back the originating institution&apos;s own
+            image URLs. Roughly three quarters of the corpus was digitized by other libraries —
+            archive.org, the Bavarian State Library, the British Library, e-rara, Gallica, Harvard
+            and around fifteen more — and passing their per-page endpoints to every API consumer
+            would turn this API into a fan-out onto institutions that gave us access. You would get
+            blocked there; so would we.
+          </p>
           <p className="text-secondary text-sm">
-            Bulk-fetching the second kind sends thousands of requests to libraries that gave us
-            access, and gets your address blocked there long before you finish. There is no reason
-            to: we mirror all of it.
+            Provenance is not lost: the book carries an <code>attribution</code> object naming the
+            institution and linking to the item on their site. Credit the library, don&apos;t hammer
+            it. The rare page we hold no copy of is marked <code>image_unavailable</code> rather
+            than filled in with someone else&apos;s URL.
           </p>
         </div>
       </section>
