@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { createCollection } from '@/lib/create-collection';
+import { tagBooksIntoCollection } from '@/lib/collection-tagging';
 
 export const maxDuration = 30;
 
@@ -105,11 +106,10 @@ export const PATCH = withAuth(async (request) => {
         try { return new ObjectId(id); } catch { return null; }
       }).filter(Boolean);
 
-      const tagResult = await db.collection('books').updateMany(
-        { $or: [{ _id: { $in: bookObjectIds } }, { id: { $in: addBookIds } }] },
-        { $addToSet: { collections: slug } }
-      );
-      booksTagged = tagResult.modifiedCount;
+      const tagResult = await tagBooksIntoCollection(db, slug, {
+        $or: [{ _id: { $in: bookObjectIds } }, { id: { $in: addBookIds } }],
+      });
+      booksTagged = tagResult.changedCount;
 
       // Update book_count on collection (same filter as detail page)
       const bookCount = await db.collection('books').countDocuments({
