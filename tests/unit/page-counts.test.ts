@@ -78,6 +78,7 @@ describe('page-counts convention (#3293)', () => {
       // so all three are translatable; two of them carry a translation.
       translatable: 3,
       translated_translatable: 2,
+      blank: 0,
     });
   });
 
@@ -104,6 +105,8 @@ describe('page-counts convention (#3293)', () => {
     expect(stats.translated_translatable).toBeLessThanOrEqual(stats.translatable);
     // And the blank leaf's placeholder is still excluded from pages_translated.
     expect(stats.with_translation).toBe(2); // pages 1 and 3 (bookplate is not 'blank')
+    // pages_blank counts never-translated types that carry OCR: the blank and the bookplate.
+    expect(stats.blank).toBe(2);
   });
 
   it('regression: hidden translated pages do not fabricate a low translated count', () => {
