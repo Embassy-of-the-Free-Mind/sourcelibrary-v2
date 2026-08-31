@@ -19,7 +19,7 @@
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { extractPageType, extractColumns } from '../lib/ocr-result-parse.mjs';
+import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -142,34 +142,10 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
 
 // --- Extract metadata from OCR text: shared via scripts/lib/ocr-result-parse.mjs (#4443) ---
 
-// NOTE: parses `<image>` sub-tags, which the current OCR prompt does not emit —
-// a different parser from the canonical `parseDetectedImages`, not a fork of it.
-// Deliberately out of scope for #4443; see #4456.
-function parseDetectedImages(text) {
-  const imageBlocks = text.match(/<detected-images>[\s\S]*?<\/detected-images>/gi);
-  if (!imageBlocks) return [];
-  const images = [];
-  for (const block of imageBlocks) {
-    const imageMatches = block.match(/<image>[\s\S]*?<\/image>/gi);
-    if (!imageMatches) continue;
-    for (const imgBlock of imageMatches) {
-      const desc = imgBlock.match(/<description>([\s\S]*?)<\/description>/i)?.[1]?.trim();
-      const type = imgBlock.match(/<type>([\s\S]*?)<\/type>/i)?.[1]?.trim();
-      const bbox = imgBlock.match(/<bounding-box>([\s\S]*?)<\/bounding-box>/i)?.[1]?.trim();
-      if (desc || type) {
-        const img = { description: desc || '', type: type || 'illustration' };
-        if (bbox) {
-          const coords = bbox.split(',').map(s => parseInt(s.trim(), 10));
-          if (coords.length === 4 && coords.every(c => !isNaN(c))) {
-            img.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
-          }
-        }
-        images.push(img);
-      }
-    }
-  }
-  return images;
-}
+// `parseDetectedImages` now comes from scripts/lib/ocr-result-parse.mjs (#4456).
+// The local copy walked `<image>` sub-tags with a `<bounding-box>` child, a shape
+// no OCR prompt here has ever asked for, so it returned [] on every page and the
+// `length > 0` guard below turned that into silence.
 
 // --- Process one page ---
 async function processPage(page, promptText, db) {
