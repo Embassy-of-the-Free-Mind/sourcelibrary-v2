@@ -9,8 +9,12 @@ export async function revalidateBook(bookId: string): Promise<boolean> {
 
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-    if (process.env.REVALIDATE_SECRET) {
-      headers['x-revalidate-secret'] = process.env.REVALIDATE_SECRET;
+    // The route fails CLOSED since #4470 — a missing secret is a guaranteed 401,
+    // not a pass. CRON_SECRET is always set server-side; REVALIDATE_SECRET wins
+    // if someone configures it.
+    const secret = process.env.REVALIDATE_SECRET || process.env.CRON_SECRET;
+    if (secret) {
+      headers['x-revalidate-secret'] = secret;
     }
 
     const res = await fetch(`${baseUrl}/api/admin/revalidate-book/${bookId}`, {
