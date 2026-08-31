@@ -121,3 +121,46 @@ Three traps, all of which bit during the fix:
 Corollary for counting, not just serving: any aggregate over `books` inflates
 unless it excludes artworks. A naive author query for "William Blake" returns
 777 records, of which **776 are prints and drawings**.
+
+---
+
+## A filter over a vector index is a post-filter until proven otherwise (#4439)
+
+`ORDER BY embedding <=> query LIMIT n` plus a WHERE predicate does not filter
+then rank. It ranks — via the HNSW index — then filters what the index handed
+back. So the predicate's **recall tracks that value's share of the table, not
+the query**. On `page_translations` that means Latin (36% of rows) filters
+perfectly and Chinese (2.2%) returns nothing, on the same query, in 60ms.
+
+Three things generalise past this table:
+
+- **A branch is not a plan.** `match_semantic` had carried, since 2026-05-17, a
+  correct diagnosis of this exact bug and an `IF has_language_filter THEN`
+  branch written to avoid it. Both branches ended in the same `ORDER BY … LIMIT`,
+  so both used the index. The comment said sequential scan; the planner had
+  never heard of the comment. **Verify a plan change with `EXPLAIN ANALYZE`, or
+  by a latency that could only come from the plan you intended.**
+- **Fast zero is the tell.** No scan of 4.5M rows returns in 60ms. When a filter
+  returns empty far quicker than the work it claims to have done, it did not do
+  that work.
+- **Test with the rare value, never the common one.** A test that asserts
+  `language: 'Latin'` returns rows passes against the broken function. The
+  mechanism-pinning form is: a filter for a NON-dominant value must return rows
+  on a query whose unfiltered hits are all dominant —
+  `scripts/audit/semantic-language-filter-recall.mjs`. Control the instrument
+  too (do the rows exist in the table? does the unfiltered arm return anything?)
+  or you cannot tell a broken filter from an honest absence.
+
+Structural fixes, in preference order: a **partial index per value** so the
+predicate matches the index predicate (`page_texts` does this for `lang`);
+pgvector **`hnsw.iterative_scan`** (≥ 0.8.0), which keeps walking until enough
+rows survive; or a fenced exact pre-filter, which is correct on any version and
+costs a scan of everything the predicate admits. Details, measurements and the
+migration: `scripts/migration/fix-semantic-language-prefilter.sql` and
+`.claude/docs/embeddings.md`.
+
+This is at minimum a partial cause of #3514 — retrieval reproducing the very
+narrowing the library exists to undo. `exclude_languages` is documented on
+`search_concept` and `search_translations` as the way "to surface non-Western
+sources"; until this is fixed it does the opposite of that more reliably than
+it does it.
