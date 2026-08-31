@@ -4,6 +4,7 @@ import { buildBookSearchStage } from '@/lib/atlas-search';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { translationPercent } from '@/lib/translation-percent';
 import { buildSortStage, type SortOption } from '@/lib/book-sort';
+import { resolveAuthorBookFilter } from '@/lib/author-thesaurus';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -38,6 +39,18 @@ export async function GET(request: NextRequest) {
     // matches `language=Latin` AND `has_edition=es`.
     const hasEditionParam = (searchParams.get('has_edition') || '').trim().toLowerCase();
     const hasEdition = /^[a-z]{2,3}$/.test(hasEditionParam) && hasEditionParam !== 'en' ? hasEditionParam : '';
+    // `author_id=<slug>`: exactly one person's books, resolved through the
+    // authors thesaurus (variant slugs and merge tombstones follow to the
+    // canonical person; membership is the same 3-key union as /author/[slug]).
+    // Slugs come from /api/catalog/author-search or from `author_id` on rows.
+    const authorIdParam = (searchParams.get('author_id') || '').trim();
+    // Numeric edition-year range. Matches the `year` field only — the free-text
+    // `published` is not comparable (see search-filters-and-lanes.md); books
+    // without a numeric year (~40% of live books) never match a year filter.
+    const yearFromRaw = parseInt(searchParams.get('year_from') || '', 10);
+    const yearToRaw = parseInt(searchParams.get('year_to') || '', 10);
+    const yearFrom = Number.isFinite(yearFromRaw) ? yearFromRaw : null;
+    const yearTo = Number.isFinite(yearToRaw) ? yearToRaw : null;
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
     const { slug: tenantSlugHeader, id: tenantIdHeader } = getTenantContextFromRequest(request);
     const tenantSlugParam = searchParams.get('tenant_slug') || '';
@@ -55,7 +68,7 @@ export async function GET(request: NextRequest) {
 
     // Serve cached response for cacheable requests (no text search, reasonable pagination)
     const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|he:${hasEdition}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}`;
+    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|he:${hasEdition}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}|a:${authorIdParam}|yf:${yearFrom}|yt:${yearTo}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -69,6 +82,24 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getReadDb();
+
+    // Resolve the author filter FIRST: an unknown slug returns an empty page
+    // (with author: null) rather than silently dropping the filter — an
+    // ignored filter would serve the whole library labeled as one person's
+    // books (search-filters-and-lanes.md).
+    let authorFilter: Awaited<ReturnType<typeof resolveAuthorBookFilter>> = null;
+    if (authorIdParam) {
+      authorFilter = await resolveAuthorBookFilter(db, authorIdParam);
+      if (!authorFilter) {
+        return NextResponse.json(
+          { books: [], total: 0, author: null, skip, limit },
+          { headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' } },
+        );
+      }
+    }
+    const yearMatch: Record<string, unknown> | null = (yearFrom !== null || yearTo !== null)
+      ? { year: { ...(yearFrom !== null ? { $gte: yearFrom } : {}), ...(yearTo !== null ? { $lte: yearTo } : {}) } }
+      : null;
 
     // When a search term is present, use Atlas Search ($search must be first stage).
     // Language, category, firstTranslation are pushed as Atlas Search filters.
@@ -90,6 +121,8 @@ export async function GET(request: NextRequest) {
         // omits `search` is inert exactly where it is most likely to be used,
         // and reads as active either way (search-filters-and-lanes.md).
         ...(hasEdition ? [{ $match: { [`pages_translated_${hasEdition}`]: { $gt: 0 } } }] : []),
+        ...(authorFilter ? [{ $match: authorFilter.match }] : []),
+        ...(yearMatch ? [{ $match: yearMatch }] : []),
         ...(tenantId ? [{ $match: { tenantId } }] : []),
       ];
     } else {
@@ -106,6 +139,8 @@ export async function GET(request: NextRequest) {
       if (firstTranslation) matchConditions.push({ is_first_translation: true });
       if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
       if (hasEdition) matchConditions.push({ [`pages_translated_${hasEdition}`]: { $gt: 0 } });
+      if (authorFilter) matchConditions.push(authorFilter.match);
+      if (yearMatch) matchConditions.push(yearMatch);
       pipelineStart = [{ $match: { $and: matchConditions } }];
     }
 
@@ -156,6 +191,11 @@ export async function GET(request: NextRequest) {
       title: 1,
       display_title: 1,
       author: 1,
+      // Canonical author slug + numeric edition year: without these a consumer
+      // can SORT by year and SEARCH authors but never see either value —
+      // `published` is free text and `author` is an uncanonicalized string.
+      author_id: 1,
+      year: 1,
       thumbnail: 1, image_display: 1,
       thumbnail_blob: 1, image_thumb: 1,
       language: 1,
@@ -217,7 +257,13 @@ export async function GET(request: NextRequest) {
       tenant_slug: book.tenantId ? tenantSlugMap.get(book.tenantId) || null : null,
     }));
 
-    const responseData = JSON.stringify({ books: booksWithTenantSlug, total });
+    const responseData = JSON.stringify({
+      books: booksWithTenantSlug,
+      total,
+      // Echo the canonicalized author when filtering, so a caller that passed
+      // a variant slug learns the canonical one.
+      ...(authorFilter ? { author: { id: authorFilter.canonicalSlug, name: authorFilter.canonicalName } } : {}),
+    });
 
     // Cache cacheable views
     if (isCacheable) {
