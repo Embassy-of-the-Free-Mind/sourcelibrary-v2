@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import { isRevalidateAuthorized } from '@/lib/revalidate-auth';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -18,12 +19,11 @@ export const maxDuration = 60;
  *   or { "collections": true }  — revalidate all collection pages
  *   or { "all": true }          — revalidate all content pages
  *
- * Auth: x-revalidate-secret header or admin session
+ * Auth: x-revalidate-secret header or Bearer secret (REVALIDATE_SECRET or
+ * CRON_SECRET) — fail-closed, see src/lib/revalidate-auth.ts.
  */
 export async function POST(request: NextRequest) {
-  const authHeader = request.headers.get('x-revalidate-secret');
-  const secret = process.env.REVALIDATE_SECRET;
-  if (secret && authHeader !== secret) {
+  if (!isRevalidateAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
