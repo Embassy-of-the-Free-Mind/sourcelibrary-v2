@@ -89,12 +89,19 @@ export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'd
  * "49.9%" was an unrestricted 800-book sample — sound method, just superseded by the
  * exact count. A sample frame chosen for one question is rarely valid for the next.
  *
- * A page qualifies only if it has OCR to translate from, is not a never-translated
- * type, and has not been permanently refused by the model.
+ * A page qualifies unless it is a never-translated type or the model has permanently
+ * refused it.
+ *
+ * CRUCIALLY, a page with no OCR yet still counts. "Not yet OCR'd" is PENDING work, not
+ * IMPOSSIBLE work, and excluding it is how a book gets badged finished while half of it
+ * is blank. The first version of this did exactly that: Theatrum Chemicum vol. 6 —
+ * 4,198 pages, only 2,003 OCR'd — displayed 100% translated with 2,195 pages carrying
+ * no text at all, and 1,701 books (11.4% of everything badged complete) had more than
+ * a fifth of the book un-OCR'd. Overstating completeness is a worse failure than the
+ * understatement this field exists to fix, because a reader can see it.
  */
 export function isTranslatablePageForCount(page) {
   if (!isVisiblePage(page)) return false;
-  if (!hasOcr(page)) return false;
   if (NEVER_TRANSLATED_PAGE_TYPES.includes(page?.page_type ?? '')) return false;
   if (page?.translation?.recitation_blocked === true) return false;
   if (page?.translation?.safety_blocked === true) return false;
@@ -105,9 +112,8 @@ export function isTranslatablePageForCount(page) {
 /** Mongo twin of isTranslatablePageForCount(), shared by the denominator and its numerator. */
 const TRANSLATABLE_COND = {
   $and: [
-    { $ne: ['$ocr.data', null] },
-    { $ne: ['$ocr.data', ''] },
-    { $ifNull: ['$ocr.data', false] },
+    // No `ocr.data` requirement — see isTranslatablePageForCount. A page awaiting OCR
+    // is pending work and belongs in the denominator.
     { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] }] },
     { $ne: ['$translation.recitation_blocked', true] },
     { $ne: ['$translation.safety_blocked', true] },

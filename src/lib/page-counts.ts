@@ -21,9 +21,9 @@ export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'd
 /** Shared by the `translatable` denominator and its numerator, so they cannot drift. */
 const TRANSLATABLE_COND = {
   $and: [
-    { $ne: ['$ocr.data', null] },
-    { $ne: ['$ocr.data', ''] },
-    { $ifNull: ['$ocr.data', false] },
+    // No `ocr.data` requirement: a page awaiting OCR is PENDING work, not impossible
+    // work, and excluding it badges half-OCR'd books as 100% translated. Mirror of the
+    // .mjs rule — keep the two in step.
     { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] }] },
     { $ne: ['$translation.recitation_blocked', true] },
     { $ne: ['$translation.safety_blocked', true] },
