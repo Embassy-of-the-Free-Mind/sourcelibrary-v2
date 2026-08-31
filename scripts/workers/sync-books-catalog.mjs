@@ -89,6 +89,10 @@ function transformBook(book) {
     // catalog-fed /es card. Move the two together, always.
     pages_translated_es: book.pages_translated_es || 0,
     pages_blank: book.pages_blank || 0,
+    // The honest denominator (#4442). Null rather than 0 when absent, so the read-side
+    // helper can tell "not recounted yet" from "genuinely nothing translatable" — 0
+    // means a book of plates and must not be confused with a missing value.
+    pages_translatable: typeof book.pages_translatable === 'number' ? book.pages_translatable : null,
     is_first_translation: book.is_first_translation === true,
     // LISTING predicate: matches the canonical public-listing filter
     // (visible: true), so Mongo's unset-visible legacy books collapse to
@@ -148,13 +152,21 @@ function transformBook(book) {
     description: book.ai_metadata?.description || book.description || null,
     subject_keywords: Array.isArray(book.subject_keywords) ? book.subject_keywords : null,
     // Computed columns
+    // Mirrors src/lib/translation-completeness.ts — same denominator, same clamp.
+    // These are STORED, so an unclamped value here outlives the request that made it:
+    // the Blue Quran's 1000% and the 6,228 books once over 100 were read from columns
+    // like this one. Prefer pages_translatable; fall back to count - blank.
     translation_pct: (() => {
-      const denom = (book.pages_count || 0) - (book.pages_blank || 0);
-      return denom > 0 ? Math.round(((book.pages_translated || 0) / denom) * 100) : 0;
+      const denom = typeof book.pages_translatable === 'number'
+        ? book.pages_translatable
+        : (book.pages_count || 0) - (book.pages_blank || 0);
+      if (denom <= 0) return 0;
+      return Math.min(100, Math.round(((book.pages_translated || 0) / denom) * 100));
     })(),
     ocr_pct: (() => {
       const denom = (book.pages_count || 0) - (book.pages_blank || 0);
-      return denom > 0 ? Math.round(((book.pages_ocr || 0) / denom) * 100) : 0;
+      if (denom <= 0) return 0;
+      return Math.min(100, Math.round(((book.pages_ocr || 0) / denom) * 100));
     })(),
     pipeline_status: book.pipeline_auto?.status || null,
     needs_splitting: book.needs_splitting === true,
@@ -200,7 +212,7 @@ const projection = {
   id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
   read_count: 1, pages_blank: 1,
-  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1,
+  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, pages_translatable: 1,
   is_first_translation: 1, visible: 1, quality_score: 1,
   last_translation_at: 1, updated_at: 1, created_at: 1,
   categories: 1, collections: 1, collection_relevance: 1,
