@@ -183,8 +183,18 @@ export async function GET(request: NextRequest) {
     if (hasMore) docs.splice(limit);
 
     const items = docs.map(d => shapeArtworkRow(d));
+    // A REAL count on the browse lane, not the limit+1 probe this used to
+    // report. That probe answered "how many works by Goltzius?" with `3` when
+    // the answer is 685 — tolerable while the only browse was an infinite
+    // scroll, misleading now that `artist=` makes cardinality the natural
+    // question a caller asks (agent-tool-results.md: a top-k list cannot
+    // answer "how many"). The q-lane above stays an estimate by construction —
+    // it ranks, so its total is "matches we retrieved", not "matches that
+    // exist".
+    const total = await db.collection('books').countDocuments(filter, { maxTimeMS: 10000 });
+
     return NextResponse.json({
-      total: hasMore ? offset + items.length + 1 : offset + items.length,
+      total,
       showing: items.length,
       items,
     }, {
