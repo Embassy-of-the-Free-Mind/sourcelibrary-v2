@@ -21,6 +21,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { normalizeTitle, normalizeAuthor } from '../lib/dedup-normalize.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 
@@ -46,20 +47,6 @@ const BOOKS = [
 
 const COLLECTIONS_TAG = []; // collection pages not built yet; leave untagged for now
 
-function normalizeTitle(title) {
-  return title.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-    .replace(/^(the|a|an|der|die|das|de|le|la|les|il|lo|gli|i|el|los|las)\s+/i, '')
-    .replace(/\s*[\(\[:]?\s*(vol\.?\s*\d+|tomus?\s*\d+|part\.?\s*\d+|band\s*\d+|tome?\s*\d+)[\)\]]?\s*$/i, '')
-    .replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
-}
-function normalizeAuthor(author) {
-  const cleaned = author.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-    .replace(/\b(dr|prof|rev|saint|st|sir|fr|bp)\b\.?\s*/g, '')
-    .replace(/\s*\([\d\s\-–,?.]+\)\s*/g, '').replace(/,\s*[\d\s\-–?.]+$/, '')
-    .replace(/[\[\]]/g, '').replace(/\b(born|died|fl\.?|circa|ca?\.?)\s*\d{3,4}\b/g, '')
-    .replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
-  return cleaned.split(' ').filter(w => w.length > 0).sort().join(' ');
-}
 function slugify(text, maxLen = 70) {
   return text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-')
