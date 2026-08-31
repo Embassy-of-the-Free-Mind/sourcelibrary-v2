@@ -205,8 +205,13 @@ img_hosts_off_infra() {
   curl -s --max-time 90 -A "$UA" "${AUTH_HEADER[@]}" "$1" | python3 -c "
 import sys,re,collections
 raw=sys.stdin.read()
+# IMAGE-SHAPED ONLY. A bare /iiif/ match is too broad: it flags a
+# manifest.json, which is an interop DOCUMENT describing the object, not a file
+# to fetch - the same category as a DOI or a catalogue landing page, and worth
+# keeping for scholars. What must never appear is an image FILE or a IIIF Image
+# API request, which always carries a /full/ region segment.
 imgs =re.findall(r'https?://([a-zA-Z0-9.\-]+)[^\"]*?\.(?:jpg|jpeg|png|tif|jp2)(?:\?|\")', raw, re.I)
-imgs+=re.findall(r'https?://([a-zA-Z0-9.\-]+)[^\"]*?/(?:iiif|full)/', raw, re.I)
+imgs+=re.findall(r'https?://([a-zA-Z0-9.\-]+)[^\"]*?/full/[^\"]*?/', raw, re.I)
 off=sorted({h for h in imgs if 'sourcelibrary.org' not in h})
 print(1 if not off else off[:4])
 "
