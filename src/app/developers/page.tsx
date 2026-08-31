@@ -527,6 +527,11 @@ source-library search "alchemy" --json | jq .results`}
                     <td className="py-2 text-secondary">Free-text over titles and authors (relevance-ranked)</td>
                   </tr>
                   <tr className="border-b border-stone-100">
+                    <td className="py-2 font-mono text-accent-rust">edition_key</td>
+                    <td className="py-2 text-muted">string</td>
+                    <td className="py-2 text-secondary">Other digitizations of one printing. Take the value from a result row; only full-quality keys match, so different printings of a title are never merged.</td>
+                  </tr>
+                  <tr className="border-b border-stone-100">
                     <td className="py-2 font-mono text-accent-rust">work_id / has_translation / first_translation / has_edition</td>
                     <td className="py-2 text-muted">mixed</td>
                     <td className="py-2 text-secondary">Editions of one work; only translated books; only first translations; only books readable in an ISO language (e.g. es)</td>

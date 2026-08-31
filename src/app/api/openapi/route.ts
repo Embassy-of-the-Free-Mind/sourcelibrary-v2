@@ -71,9 +71,10 @@ const SPEC = {
       get: {
         summary: 'Browse and filter the catalog',
         description:
-          'Every row carries id, slug, title, author, author_id (canonical), language, year (numeric, when known), published (free text), and translation progress. When author_id is passed the response echoes the canonicalized author; an unknown slug returns an empty page with author: null.',
+          'Every row carries id, slug, title, author, author_id (canonical), work_id, edition_key + edition_key_quality, language, year (numeric, when known), published (free text), and translation progress. When author_id is passed the response echoes the canonicalized author; an unknown slug returns an empty page with author: null.',
         parameters: [
           q('author_id', "Canonical author slug — exactly that person's books. Discover via /catalog/author-search", { example: 'jakob-bohme' }),
+          q('edition_key', 'Other digitizations of one printing (full-quality keys only)'),
           q('year_from', 'Edition-year range start (numeric year only)', { type: 'integer' }),
           q('year_to', 'Edition-year range end (inclusive)', { type: 'integer' }),
           q('language', 'Edition language (the language printed on the leaves)'),

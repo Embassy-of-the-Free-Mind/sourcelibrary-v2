@@ -44,6 +44,12 @@ export async function GET(request: NextRequest) {
     // canonical person; membership is the same 3-key union as /author/[slug]).
     // Slugs come from /api/catalog/author-search or from `author_id` on rows.
     const authorIdParam = (searchParams.get('author_id') || '').trim();
+    // `edition_key=<key>`: other digitizations of ONE printing. Gated to
+    // full-quality keys on BOTH sides, exactly as the reader-facing "other
+    // scans of this edition" rail is (isTrustedEditionKey) — a `no-year` key
+    // collapses every printing of a title across centuries into one set, which
+    // is fine for a review queue and wrong for a public answer.
+    const editionKeyParam = (searchParams.get('edition_key') || '').trim();
     // Numeric edition-year range. Matches the `year` field only — the free-text
     // `published` is not comparable (see search-filters-and-lanes.md); books
     // without a numeric year (~40% of live books) never match a year filter.
@@ -68,7 +74,7 @@ export async function GET(request: NextRequest) {
 
     // Serve cached response for cacheable requests (no text search, reasonable pagination)
     const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|he:${hasEdition}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}|a:${authorIdParam}|yf:${yearFrom}|yt:${yearTo}`;
+    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|he:${hasEdition}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}|a:${authorIdParam}|yf:${yearFrom}|yt:${yearTo}|ek:${editionKeyParam}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -97,6 +103,9 @@ export async function GET(request: NextRequest) {
         );
       }
     }
+    const editionMatch: Record<string, unknown> | null = editionKeyParam
+      ? { edition_key: editionKeyParam, edition_key_quality: 'full' }
+      : null;
     const yearMatch: Record<string, unknown> | null = (yearFrom !== null || yearTo !== null)
       ? { year: { ...(yearFrom !== null ? { $gte: yearFrom } : {}), ...(yearTo !== null ? { $lte: yearTo } : {}) } }
       : null;
@@ -122,6 +131,7 @@ export async function GET(request: NextRequest) {
         // and reads as active either way (search-filters-and-lanes.md).
         ...(hasEdition ? [{ $match: { [`pages_translated_${hasEdition}`]: { $gt: 0 } } }] : []),
         ...(authorFilter ? [{ $match: authorFilter.match }] : []),
+        ...(editionMatch ? [{ $match: editionMatch }] : []),
         ...(yearMatch ? [{ $match: yearMatch }] : []),
         ...(tenantId ? [{ $match: { tenantId } }] : []),
       ];
@@ -140,6 +150,7 @@ export async function GET(request: NextRequest) {
       if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
       if (hasEdition) matchConditions.push({ [`pages_translated_${hasEdition}`]: { $gt: 0 } });
       if (authorFilter) matchConditions.push(authorFilter.match);
+      if (editionMatch) matchConditions.push(editionMatch);
       if (yearMatch) matchConditions.push(yearMatch);
       pipelineStart = [{ $match: { $and: matchConditions } }];
     }
@@ -196,6 +207,15 @@ export async function GET(request: NextRequest) {
       // `published` is free text and `author` is an uncanonicalized string.
       author_id: 1,
       year: 1,
+      // The rest of the identity stack (#4509). `work_id` was filterable via
+      // ?work_id= but never returned, so a consumer could not learn a book's
+      // work without a per-book call — the same defect the author facet had.
+      // `edition_key_quality` ships beside the key because only 'full' is
+      // trustworthy: with the year slot empty a key merges every printing of a
+      // title across centuries (edition-identity.md).
+      work_id: 1,
+      edition_key: 1,
+      edition_key_quality: 1,
       thumbnail: 1, image_display: 1,
       thumbnail_blob: 1, image_thumb: 1,
       language: 1,
