@@ -57,3 +57,69 @@ confident verdicts on books 1, 2 and 3 — because a searcher given a title and 
 author has no way to discover that the title does not describe the book. If that
 happens, it is not an oracle failure; it is evidence that **an identity screen
 must run before the search tier**, not after it.
+
+---
+
+# Tier 2 vs Tier 3 — the comparison
+
+15 of 16 oracle verdicts returned (Han Yu still running). Scored on **direction**
+(first-family vs not-first vs unassessable), not on the exact 8-value verdict.
+
+| # | Book | Tier 3 (me, from our scans) | Tier 2 (oracle, from the web) | |
+|---|---|---|---|---|
+| 1 | Wei Yuan, *Haiguo Tuzhi* | `needs_review` — wrong juan | `first_complete` (juan 41 = France) | **DISAGREE** |
+| 2 | Drametse "same as vol.187" | `needs_review` — unidentified | `needs_review` — and only 25/32 sheets Englished | agree |
+| 3 | Gangtey, *Jam dpal nag po* | `needs_review` — language mismatch | `first_no_prior` (Bhutanese Black Mañjuśrī cycle) | **DISAGREE** |
+| 4 | Bar Hebraeus, *Ascension* | first (moderate) | `first_no_prior` strong | agree |
+| 5 | Socinus, *Bibl. Fratrum Polonorum* | first (moderate) | `first_complete` — partial priors only | agree |
+| 6 | Lazarone, *Quaestiones* | `first_no_prior` | `first_no_prior` strong | agree |
+| 7 | Porphyry + Aristotle, Vat. gr. 243 | not `first_no_prior` | `not_first` | agree |
+| 8 | Bauhin, *Apotherapeia* | `first_no_prior` | `first_no_prior` strong | agree |
+| 9 | Jāmī, *Al-Durra al-Fākhira* | `not_first` (Heer) | `not_first` (Heer 1979, SUNY) | agree |
+| 10 | Averroes, *Physics* V (Hebrew) | first_from_source cand. (low) | `first_complete` strong | agree |
+| 11 | Avicenna, *Canon* | `not_first` | `not_first` (Kazi set 1999–2015) | agree |
+| 12 | Han Yu, *Changli ji* | `not_first` | *(pending)* | — |
+| 13 | Tacitus, *Opera* | `not_first` | `not_first` | agree |
+| 14 | Lucan, *Pharsalia* | `not_first` | `not_first` | agree |
+| 15 | Plato, *Platonis Opera* | `not_first` | `not_first` | agree |
+| 16 | *Auctoritates Aristotelis* | `needs_review`, leaning no-prior | `first_no_prior` strong | agree (direction) |
+
+**13 agree, 2 disagree.** Both disagreements are the identity cases named in the
+prediction above, which was written before any oracle reported.
+
+## The two disagreements, verified against our pages
+
+I did not take my own first read as settled — a four-page sample can be
+unrepresentative. I re-sampled evenly across both books.
+
+**Wei Yuan (badged).** Catalogued 海國圖志(41). Across all 84 pages the running
+headers read **卷八十** (juan 80) — 籌海總論四, 籌海篇四, 夷情備采上. Juan 80 is the
+maritime-defence discussion; juan 41, which the oracle correctly researched, is
+the section on France. **The oracle returned a confident verdict about a text
+this book does not contain.** Its research was good — it found ctext's
+self-declared AI translation and Wade's 1850 English of the Japan juan — and
+aimed at the wrong target.
+
+**Gangtey (badged).** Catalogued Tibetan. Pages 1–46 are **Sanskrit** in
+Newari/Prachalit/Ranjana script; pages 61–181 are Tibetan. The volume mixes two
+scripts and traditions under one Tibetan title. The oracle researched the
+Tibetan Black Mañjuśrī cycle thoroughly and never saw the Sanskrit quarter.
+
+## What this measures
+
+The oracle is not weak here — on the other 13 it was excellent, and repeatedly
+better than me: it ran explicit negative tests (K10plus `spr=eng` → 0 English
+Bauhin records), positive controls (English Bar Hebraeus *does* surface, so the
+null is controlled), and it caught that a WorldCat "No results" was **boilerplate
+behind a Cloudflare challenge** and refused to count it either way. On Averroes it
+read our own OCR through the MCP server to confirm a lemmatic commentary
+structure, then found the Cologne Averroes Edition stating the Long Commentary is
+still unedited.
+
+The failure is structural, not qualitative: **a searcher handed a title and an
+author cannot discover that the title does not describe the book.** No increase
+in search effort fixes it, because the error is upstream of the search.
+
+**Conclusion for the pipeline: an identity screen must run BEFORE the search
+tier, not after it.** Two of five badged books in this slice are unassessable for
+that reason. Both currently render a public first-translation claim.
