@@ -50,6 +50,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -238,11 +239,13 @@ async function main() {
       await waitForToken();
       const url = page.photo_original || page.photo;
       try {
-        const buffer = await downloadImage(url);
-        const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
-        const dimFields = {};
-        if (urls.width) dimFields.image_width = urls.width;
-        if (urls.height) dimFields.image_height = urls.height;
+        // fetchPageMaster, not downloadImage directly: `/full/full/` is a request,
+        // and seven hosts answer it with something smaller and no error. It keeps
+        // THIS worker's retry/UA policy (downloadImage is passed straight through)
+        // and adds the tile-stitch route plus the native dimensions (#4406).
+        const master = await fetchPageMaster(url, { download: downloadImage });
+        const urls = await uploadPageVariants(master.buffer, page.book_id, page.page_number, uploadToR2);
+        const dimFields = dimensionFields({ width: urls.width, height: urls.height }, master);
         await db.collection('pages').updateOne({ _id: page._id }, {
           $set: {
             archived_photo: urls.archived, display_photo: urls.display, thumbnail_blob: urls.thumb,
