@@ -36,10 +36,7 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
-
-/** The canonical never-translated page types, from translate-core (one source of truth). */
-const SKIP_TYPES = SKIP_TRANSLATION_PAGE_TYPES;
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
@@ -50,95 +47,6 @@ if (!STALE && slugs.length === 0) {
   console.error('Usage: --slug <slug> [--slug <slug>...] | --stale   [--apply]');
   process.exit(1);
 }
-
-/** Shared translatability condition — used by BOTH the denominator and its numerator. */
-const TRANSLATABLE = {
-  $and: [
-    { $ne: ['$ocr.data', null] },
-    { $ne: ['$ocr.data', ''] },
-    { $ifNull: ['$ocr.data', false] },
-    { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TYPES] }] },
-    { $ne: ['$translation.recitation_blocked', true] },
-    { $ne: ['$translation.safety_blocked', true] },
-    { $ne: ['$ocr.recitation_blocked', true] },
-  ],
-};
-
-const COUNT_PIPELINE = (bookId) => [
-  { $match: { book_id: bookId, page_number: { $gt: 0 } } },
-  {
-    $group: {
-      _id: null,
-      total: { $sum: 1 },
-      with_ocr: {
-        $sum: {
-          $cond: [
-            {
-              $and: [
-                { $ne: ['$ocr.data', null] },
-                { $ne: ['$ocr.data', ''] },
-                { $ifNull: ['$ocr.data', false] },
-              ],
-            },
-            1,
-            0,
-          ],
-        },
-      },
-      with_translation: {
-        $sum: {
-          $cond: [
-            {
-              $and: [
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] },
-              ],
-            },
-            1,
-            0,
-          ],
-        },
-      },
-      // `pages_translatable` — the honest denominator for translation completeness
-      // (#4442). Mirrors translatablePageFilter() in scripts/lib/translate-core.mjs:
-      // a page counts only if it has OCR to translate and is not a type that will
-      // never be translated. Expressed inline rather than imported because this
-      // runs as one server-side aggregation per book; the two must be kept in step,
-      // and tests/unit/page-counts.test.ts is where that is pinned.
-      //
-      // The regex-only case (isBlankFromOcr — old OCR that describes a blank page
-      // without carrying page_type 'blank') is NOT expressible here, so this count
-      // is a slight OVER-estimate of translatable pages. That is the safe direction:
-      // it understates completeness rather than claiming work is finished.
-      translatable: {
-        $sum: { $cond: [TRANSLATABLE, 1, 0] },
-      },
-      // The numerator that goes with that denominator. `with_translation` is NOT it:
-      // a blank page carries a translation PLACEHOLDER, so it counts as translated
-      // while being excluded from `translatable` — and the ratio then exceeds 100%.
-      // Measured on the first run of this script: Hugh of Santalla reported 105.6%,
-      // the Rosarium 102.0%. The numerator must exclude whatever the denominator
-      // excludes; see invariants/numerator-denominator.md.
-      translated_translatable: {
-        $sum: {
-          $cond: [
-            {
-              $and: [
-                TRANSLATABLE,
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] },
-              ],
-            },
-            1,
-            0,
-          ],
-        },
-      },
-    },
-  },
-];
 
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
@@ -162,7 +70,7 @@ let written = 0;
 
 for (const book of candidates) {
   const bookId = book.id || String(book._id);
-  const [counts] = await pages.aggregate(COUNT_PIPELINE(bookId)).toArray();
+  const [counts] = await pages.aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
   if (!counts) continue;
 
   const same =
