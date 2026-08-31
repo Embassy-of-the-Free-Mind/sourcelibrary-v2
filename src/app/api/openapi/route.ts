@@ -158,8 +158,10 @@ const SPEC = {
     '/books/{id}': {
       get: {
         summary: 'Book metadata, AI reading summary, chapters, editions, DOI',
+        description:
+          'IMAGE URLS — read this before fetching any. Each page carries BOTH our copy and the originating institution\'s URL. Use `display_photo` (or `archived_photo`): those are on images.sourcelibrary.org, we hold a copy of every page, and they are the only ones you should fetch in bulk. `photo`, `photo_original` and `thumbnail` point at the SOURCE institution — archive.org, the Bavarian State Library, the British Library, e-rara, Gallica, Harvard and ~15 others — and are provenance metadata, not a download path. Harvesting those hammers libraries that gave us access and will get you (and us) blocked.',
         parameters: [pathId('Book id or slug')],
-        responses: jsonResponse('Book record'),
+        responses: jsonResponse('Book record, including pages[] with both our image URLs and source provenance URLs'),
       },
     },
     '/books/{id}/text': {
@@ -218,10 +220,13 @@ const SPEC = {
           q('book', 'Restrict to one book id'),
           q('semantic', 'true — semantic (meaning-based) matching'),
           q('visual', 'true — CLIP visual similarity mode'),
-          q('limit', 'Max results (default 24)', { type: 'integer' }),
+          q('maxPerBook', 'Illustrations per source book (DEFAULT 3). The default keeps one heavily-illustrated volume from dominating the browse — raise it (e.g. 1000) to enumerate the corpus, or most images stay unreachable however far you paginate.', { type: 'integer' }),
+          q('minQuality', 'Minimum gallery_quality, 0–1 (default 0.7). Lower it to include rougher extractions.', { type: 'number' }),
+          q('source', 'all (default) | artwork — the default browse interleaves book illustrations with standalone artworks'),
+          q('limit', 'Max results (default 24, max 200)', { type: 'integer' }),
           q('offset', 'Pagination offset', { type: 'integer' }),
         ],
-        responses: jsonResponse('Illustration records with image URLs and source books'),
+        responses: jsonResponse('Illustration records with image URLs and source books. `total` counts the set your parameters actually select — raising maxPerBook raises it.'),
       },
     },
     '/gallery/collections': {
