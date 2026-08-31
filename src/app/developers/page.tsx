@@ -610,7 +610,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations</td>
+                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations. Enumerating the corpus? Pass <code className="text-xs">maxPerBook=1000</code> — it defaults to 3 per book so no single volume dominates the browse.</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
