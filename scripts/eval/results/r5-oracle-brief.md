@@ -72,3 +72,19 @@ positively found OR absence was confirmed in competent tradition-appropriate
 sources; `moderate` for a well-searched bounded absence; `weak` if competent
 sources could not be searched. A blind Western-catalogue miss on a non-Western
 text is `weak`, never proof of a first.
+
+---
+
+## MANDATORY: report your search capability
+
+Before anything else, state in `reasoning` whether `WebSearch` actually worked
+for you. If WebSearch is unavailable (session budget exhausted, tool blocked),
+you **may not** return any first-family verdict (`first_no_prior`,
+`first_from_source`, `first_complete`, `first_modern`). Return `unverifiable`
+with `evidence_strength: weak` and say why.
+
+Rationale: WebFetch alone cannot *discover* a prior — it can only confirm one
+whose URL you already know, and the major catalogues (WorldCat, HathiTrust)
+refuse direct fetches. An absence produced without search is unbounded, and it
+is indistinguishable on the page from a well-bounded one. That is the single
+most dangerous output this process can produce.
