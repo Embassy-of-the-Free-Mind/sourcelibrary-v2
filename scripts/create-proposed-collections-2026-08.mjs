@@ -368,7 +368,7 @@ async function main() {
     console.log('');
     console.log('2. Revalidate ISR + purge the CDN for the new paths:');
     console.log('     curl -s -X POST https://sourcelibrary.org/api/admin/revalidate \\');
-    console.log('       -H "x-revalidate-secret: $REVALIDATE_SECRET" -H "Content-Type: application/json" \\');
+    console.log('       -H "x-revalidate-secret: $CRON_SECRET" -H "Content-Type: application/json" \\');
     console.log('       --data \'{"collections": true, "paths": ["/collections", "/collections/harmonia-mundi-economic-order", "/collections/picturing-the-world-1450-1750"]}\'');
     console.log('');
     console.log('3. Verify the GRID is non-empty, not just book_count. A correct book_count');

@@ -596,8 +596,17 @@ if (book.tenantId && book.tenantId !== 'default') {
 
 for (const path of revalidatePaths) {
   try {
-    const revalUrl = `https://sourcelibrary.org/api/admin/revalidate?path=${encodeURIComponent(path)}&secret=${process.env.REVALIDATION_SECRET || ''}`;
-    const resp = await fetch(revalUrl, { signal: AbortSignal.timeout(10000) });
+    // POST with the shared secret — the old form (GET + ?secret= query param)
+    // hit a POST-only route and never revalidated anything (#4470).
+    const resp = await fetch('https://sourcelibrary.org/api/admin/revalidate', {
+      method: 'POST',
+      headers: {
+        'x-revalidate-secret': process.env.CRON_SECRET || '',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ paths: [path] }),
+      signal: AbortSignal.timeout(10000),
+    });
     console.log(`  Revalidated ${path}: ${resp.status}`);
   } catch (e) {
     console.log(`  Revalidation failed for ${path}: ${e.message?.slice(0, 40)}`);
