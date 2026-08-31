@@ -179,3 +179,67 @@ log `/var/log/sourcelibrary/backfill-dimensions.log`.
   R2. Skipped deliberately rather than probing a partner. Worth a look afterwards: a page
   claiming an "archive" that lives on someone else's host is the derivative-only state
   wearing a disguise.
+
+---
+
+## Day 2 evening — the ceilings came off, and a number of mine came out
+
+**Merged:** #4468 (`394d7376`), #4472 (`e085e4d8`), #4473 (`aefd9035`).
+**Open:** #4478 (e-rara header + the withdrawal below).
+
+**#4472 — six archivers, done.** `fetchPageMaster()` in `iiif-utils.mjs`, adopted by
+archive-iiif-local / archive-ocr / archive-gallica / backfill-hires-illustrations /
+archive-unarchived-books. It does NOT own the download: each worker keeps its own
+retry/UA/rate policy (MDZ 2/s, Vatican 0.1/s, Harvard MPS 1/s after 294 books got
+three-strike-blocked) and passes it in; the helper adds only the tile-stitch route on
+known cappers and the native dimensions. `NATIVE_WIDTH_DEBT` went **7 → 4**, and the
+four remaining are legitimate: archive-bulk and archive-erara read local files,
+archive-ia-bulk fetches from a host that does not cap, repair-bulk-jp2-offset is a
+one-off. Also removed archive-gallica's private `upgradeToFullRes`, which was
+gallica-only and silently no-op'd on every other host it touches.
+
+**#4473 — no resolution ceilings on masters (Derek's call).** The audit found five,
+not the two I had flagged:
+
+| file | ceiling |
+|---|---|
+| archive-bulk | `MAX_DIMENSION = 3000`, no comment, two sites |
+| archive-erara | `MAX_DIMENSION = 3000` |
+| archive-erara | `PDF_DPI = 200` — "Good balance of quality vs size" |
+| **batch-split-bph** | **`CROPPED_MAX_WIDTH = 2000`** |
+| rearchive-iiif-manifest | `--max-width 6000` default, on a RECOVERY path |
+
+**batch-split-bph was the important one and was hiding in plain sight.** That crop is
+not a derivative: `getPageSource()` returns `cropped_photo` FIRST and the splitter
+overwrites `archived_photo` with the half, so for a split book the 2000px crop IS the
+highest-resolution copy held — on BPH, which is tier 0 with no re-acquisition path.
+Replaced by a SAFETY VALVE (skip loudly above 30000px, never shrink quietly).
+Guarded by `tests/unit/no-master-resolution-ceilings.test.ts`, negative-controlled
+both directions. Costs R2 storage on future archiving; existing masters unchanged.
+
+**THE CORRECTION THAT MATTERS MOST.** I reported "e-rara 0/14 at full resolution,
+median 0.667, ~44% of the pixels" and repeated it into a commit message, a PR, an
+invariant doc and a code comment. **Withdrawn.** Re-measured across 30 pages ONE PER
+BOOK: **19/30 (63%) at full resolution, median ratio 1.14**, p10 0.59, worst 0.28,
+best 1.48. The median page holds MORE width than the IIIF service calls native. The
+word is **uneven**, not lossy.
+
+The bad figure came from 14 pages that were very likely a handful of books repeated.
+**Pages within a book share a capture path — they are ONE observation, not N.** I had
+diagnosed exactly this clustering the day before for the corpus-wide figure
+(11% / 42.8% / 63.8% from one instrument) and then walked into it myself. Naming a
+bias does not immunise you against it. The rule now lives in `archive-coverage.md`,
+which also separates the two claim types that were muddled in one bullet: Manchester's
+29% -> 100% is a single page establishing a MECHANISM (one case can); a RATE needs the
+per-book sample.
+
+`PDF_DPI` stays 400, on corrected reasoning: ratios above 1.0 show the PDF carries
+more resolution than a 200-DPI rasterization extracts, so the 0.28 cases genuinely
+benefit. Not because of the withdrawn number.
+
+**`not-ours` resolved, benign.** Of 3,000 pages whose `archived_photo` is not on our
+R2: **2,943 are `failed:` markers** (a recorded failure, not a claimed archive) and
+**57 are Vercel Blob residue** from the completed migration. No preservation problem.
+
+**Backfill still running:** 3.40M / 5.42M, ~88/s, 0 failed, 0 unreadable.
+Resume with the same command; it re-selects whatever still lacks a width.
