@@ -428,3 +428,40 @@ Practical notes: none of the repo's static CF tokens (`CF_API_TOKEN`, `CF_ANALYT
 (`mcp__plugin_cloudflare_cloudflare-api__execute`) can POST GraphQL to `/graphql` under its own
 OAuth and read everything. Zone analytics retain only ~7 days (a range older than 1w1d is rejected),
 so anything worth keeping must be quoted out the week it happens.
+
+## A third-party search endpoint can ignore your query and still return 200
+
+On 2026-08-21, IA's `services/search/v1/scrape` **silently ignored `q`
+entirely**: `mediatype:texts`, `petrarca` and `collection:europeanlibraries` all
+returned the identical unfiltered first page (items beginning `0-...`). Every
+call was HTTP 200 with well-formed JSON. The same endpoint had answered
+`identifier:ita-bnc-ald-*` correctly an hour earlier, so this was degradation,
+not a syntax error on our side.
+
+The failure mode is the dangerous direction: a search hunting for copies of a
+book returns nothing matching, which reads as **"not held anywhere"** — a
+confident negative finding, produced by an instrument that was not searching.
+An acquisition hunt across 17 editions reported 0/17 found and was entirely
+artifact.
+
+**The tell was a sanity floor, not an error:** "petrarca returns 1 item on all of
+Internet Archive" is impossible. Carry a magnitude expectation for at least one
+query and check it.
+
+Rules for any third-party search you draw conclusions from:
+
+- **Positive control, every run.** Query something you *know* the endpoint holds
+  and abort the run if it comes back empty. `scripts/audit/` probes in this repo
+  do this; copy the pattern.
+- **Per-item control where you can.** Hunting for other copies of book X, require
+  the query to return **X itself**. Then a zero is a real zero. All 17 queries
+  passed this on the retry, which is the only reason the second result is
+  trustworthy.
+- **Prefer `advancedsearch.php` over `scrape` for searching.** `scrape` is fine
+  for enumerating a known identifier prefix; it also rejects `count` < 100 with
+  HTTP 400, which — if unchecked — turns every query into a silent zero.
+- **Distinguish "query returned nothing" from "query did not run."** Log the
+  endpoint's own reported total alongside your filtered count.
+
+Same shape as the guard-reads-the-wrong-store entry above: the instrument was
+healthy-looking and pointed at nothing.

@@ -240,3 +240,54 @@ exits 2 when a same-fingerprint group appears that is not in
 `scripts/audit/baselines/duplicate-fingerprints.json`. It reports; it never
 merges, hides, or deletes. Re-baseline with `--update-baseline` once a human has
 looked.
+
+## An acquisition gap computed at the COPY layer is not a gap
+
+A digitised-library collection usually has **one item per physical copy**, not
+one per edition — the layer table at the top of this file, applied to a source
+catalogue rather than to our own. BNCF's Aldine collection on Internet Archive
+is 739 items but **606 distinct editions**; the 1501 Martial appears three times
+(shelfmarks `Ald.1.1.1`, `Ald.3.2.19`, `Ald.3.2.20`), one EDIT16 number, one
+fingerprint.
+
+Our import dedup is manifestation-level (`ia_identifier` / `source_fingerprint`)
+and **structurally cannot** see this: a second copy genuinely is a different scan
+of a different physical object, so every duplicate copy classifies as NEW. On
+2026-08-21 "104 missing Aldines" was taken at face value and 10 books imported;
+**6 were second copies of editions already held** (#4123, #4125). The real gap
+was ~72 editions, and ~50 of *those* were already in the library from other
+institutions' scans.
+
+**Before importing from any single-institution collection:**
+
+1. **Group the candidate list into editions first.** The key is bibliographic,
+   not textual: an **EDIT16 CNC** number, else the **ISBD fingerprint** (it
+   encodes characters at fixed signature positions, so it identifies a
+   printing). Both sit in the IA item's `notes`. Tool:
+   `scripts/audit/bncf-aldine-edition-gap.mjs`.
+2. **Match the survivors against the WHOLE catalogue, not just that source's own
+   items.** The audit that only compared IA items to each other reported 75
+   unheld editions; ~50 were already held from BSB Munich, Ghent, Zürich, Johns
+   Hopkins, Tufts and Google Books `bub_gb_*`.
+3. **Never quote coverage as an item ratio.** It flatters you on held duplicates
+   *and* overstates what is missing. Quote editions held / editions known.
+
+Identical fingerprint ⇒ same printing; differing shelfmarks then just mean two
+copies on two shelves, and near-identical page counts corroborate (400 vs 396 —
+binding and flyleaves). Duplicates found after import get the corpus convention:
+`hidden`, `visible:false`, `hidden_reason:'same_edition_duplicate'`,
+`duplicate_of:<kept id>` — never deleted, since the scan stays an other-copy rail.
+
+**Attribution evidence lives in the source item, not in our fields.** Our
+`books.publisher` / `dublin_core` are usually empty for `bub_gb_*` imports, while
+every `ita-bnc-ald` item carries `publisher` **and** an `imprint` field. Fetch
+`archive.org/metadata/<id>`. For the Aldine case the decisive strings are an
+Aldo/Manuzio/"ex Bibliotheca Aldina"/"presso Aldo" imprint, the
+**anchor-and-dolphin** device (`ancora ... delfino`), or a citation to
+**Renouard, *Annales de l'imprimerie des Alde***. Beware false contradictions:
+"in aedibus Populi Romani" is the Roman press Paolo Manuzio directed from 1561,
+not evidence against an Aldine attribution.
+
+**Short titles defeat token matchers.** "Il Petrarca." has one token of ≥5
+characters, so a matcher requiring two shared tokens reports a false gap. Treat
+any "no match" bucket as an upper bound, never as a work list.
