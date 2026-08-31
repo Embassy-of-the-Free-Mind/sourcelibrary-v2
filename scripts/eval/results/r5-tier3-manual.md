@@ -62,7 +62,7 @@ must run before the search tier**, not after it.
 
 # Tier 2 vs Tier 3 — the comparison
 
-15 of 16 oracle verdicts returned (Han Yu still running). Scored on **direction**
+All 16 oracle verdicts returned. Scored on **direction**
 (first-family vs not-first vs unassessable), not on the exact 8-value verdict.
 
 | # | Book | Tier 3 (me, from our scans) | Tier 2 (oracle, from the web) | |
@@ -78,13 +78,13 @@ must run before the search tier**, not after it.
 | 9 | Jāmī, *Al-Durra al-Fākhira* | `not_first` (Heer) | `not_first` (Heer 1979, SUNY) | agree |
 | 10 | Averroes, *Physics* V (Hebrew) | first_from_source cand. (low) | `first_complete` strong | agree |
 | 11 | Avicenna, *Canon* | `not_first` | `not_first` (Kazi set 1999–2015) | agree |
-| 12 | Han Yu, *Changli ji* | `not_first` | *(pending)* | — |
+| 12 | Han Yu, *Changli ji* | `not_first` | `not_first` (Giles 1884; Columbia UP 2022) | agree |
 | 13 | Tacitus, *Opera* | `not_first` | `not_first` | agree |
 | 14 | Lucan, *Pharsalia* | `not_first` | `not_first` | agree |
 | 15 | Plato, *Platonis Opera* | `not_first` | `not_first` | agree |
 | 16 | *Auctoritates Aristotelis* | `needs_review`, leaning no-prior | `first_no_prior` strong | agree (direction) |
 
-**13 agree, 2 disagree.** Both disagreements are the identity cases named in the
+**14 agree, 2 disagree.** Both disagreements are the identity cases named in the
 prediction above, which was written before any oracle reported.
 
 ## The two disagreements, verified against our pages
