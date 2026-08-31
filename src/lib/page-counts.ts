@@ -15,9 +15,26 @@ import type { Document } from 'mongodb';
 /** Match fragment selecting only visible (renderable) pages. */
 export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } } as const;
 
+/** Page types that will never carry a translation. Mirror of the .mjs list. */
+export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+
+/** Shared by the `translatable` denominator and its numerator, so they cannot drift. */
+const TRANSLATABLE_COND = {
+  $and: [
+    { $ne: ['$ocr.data', null] },
+    { $ne: ['$ocr.data', ''] },
+    { $ifNull: ['$ocr.data', false] },
+    { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] }] },
+    { $ne: ['$translation.recitation_blocked', true] },
+    { $ne: ['$translation.safety_blocked', true] },
+    { $ne: ['$ocr.recitation_blocked', true] },
+  ],
+};
+
 /**
- * Aggregation pipeline returning { total, with_ocr, with_translation } for
- * the VISIBLE pages of one book. Mirror of the .mjs implementation.
+ * Aggregation pipeline returning
+ * { total, with_ocr, with_translation, translatable, translated_translatable }
+ * for the VISIBLE pages of one book. Mirror of the .mjs implementation.
  */
 export function buildVisiblePageCountPipeline(bookId: string): Document[] {
   return [
@@ -51,6 +68,25 @@ export function buildVisiblePageCountPipeline(bookId: string): Document[] {
                 { $ne: ['$translation.data', ''] },
                 { $ifNull: ['$translation.data', false] },
                 { $ne: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
+              ] },
+              1, 0,
+            ],
+          },
+        },
+        // The honest denominator for translation completeness (#4442) and its
+        // matching numerator. Any writer that updates the three counters above
+        // must write `pages_translatable` too, or it goes stale while they move.
+        translatable: {
+          $sum: { $cond: [TRANSLATABLE_COND, 1, 0] },
+        },
+        translated_translatable: {
+          $sum: {
+            $cond: [
+              { $and: [
+                TRANSLATABLE_COND,
+                { $ne: ['$translation.data', null] },
+                { $ne: ['$translation.data', ''] },
+                { $ifNull: ['$translation.data', false] },
               ] },
               1, 0,
             ],
