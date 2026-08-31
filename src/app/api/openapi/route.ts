@@ -158,8 +158,10 @@ const SPEC = {
     '/books/{id}': {
       get: {
         summary: 'Book metadata, AI reading summary, chapters, editions, DOI',
+        description:
+          'IMAGE URLS — read this before fetching any. Each page carries BOTH our copy and the originating institution\'s URL. Use `display_photo` (or `archived_photo`): those are on images.sourcelibrary.org, we hold a copy of every page, and they are the only ones you should fetch in bulk. `photo`, `photo_original` and `thumbnail` point at the SOURCE institution — archive.org, the Bavarian State Library, the British Library, e-rara, Gallica, Harvard and ~15 others — and are provenance metadata, not a download path. Harvesting those hammers libraries that gave us access and will get you (and us) blocked.',
         parameters: [pathId('Book id or slug')],
-        responses: jsonResponse('Book record'),
+        responses: jsonResponse('Book record, including pages[] with both our image URLs and source provenance URLs'),
       },
     },
     '/books/{id}/text': {

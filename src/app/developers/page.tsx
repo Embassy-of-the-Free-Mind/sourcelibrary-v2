@@ -630,6 +630,31 @@ source-library search "alchemy" --json | jq .results`}
           Pulling OCR text, translations, or page-level data in bulk? That tier is keyed — use the
           form above to request one, or email us with what you&apos;re building. Reviewed within 24 hours.
         </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 max-w-2xl">
+          <h3 className="text-base font-semibold text-primary mb-2">Fetching page images: use our copy, not the library&apos;s</h3>
+          <p className="text-secondary text-sm mb-3">
+            Every page object carries two kinds of image URL, and only one of them is yours to fetch.
+          </p>
+          <ul className="text-secondary text-sm space-y-2 mb-3">
+            <li>
+              <code className="text-accent-rust">display_photo</code> / <code className="text-accent-rust">archived_photo</code> —
+              on <code>images.sourcelibrary.org</code>. We hold a copy of <strong>every</strong> page image,
+              so these always resolve. Fetch these.
+            </li>
+            <li>
+              <code>photo</code> / <code>photo_original</code> / <code>thumbnail</code> —
+              the <strong>originating institution&apos;s</strong> server (archive.org, the Bavarian State Library,
+              the British Library, e-rara, Gallica, Harvard and around fifteen others). These are
+              provenance — they record where a scan came from. They are not a download path.
+            </li>
+          </ul>
+          <p className="text-secondary text-sm">
+            Bulk-fetching the second kind sends thousands of requests to libraries that gave us
+            access, and gets your address blocked there long before you finish. There is no reason
+            to: we mirror all of it.
+          </p>
+        </div>
       </section>
 
       {/* Citations */}
