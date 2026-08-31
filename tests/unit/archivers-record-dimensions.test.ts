@@ -40,11 +40,6 @@ const PROJECT_ROOT = path.resolve(__dirname, '../..');
 const ARCHIVER_DIRS = ['scripts/workers', 'scripts/catalog-coverage', 'scripts/maintenance', 'scripts/migration'];
 
 /**
- * A file is an "archiver" if it writes a page image to storage. Detected by the
- * upload helpers rather than by filename, so a differently-named writer is
- * still caught.
- */
-/**
  * A file is a "page-master writer" if it constructs a page-master R2 key or goes
  * through the shared variant helper.
  *
@@ -73,7 +68,7 @@ const EXTRA_WRITERS = [
 ];
 
 /** Records the dimensions of the object it just wrote. */
-const RECORDS_STORED = /image_width|displayWidth/;
+const RECORDS_STORED = /image_width|displayWidth|dimensionFields\(/;
 
 /**
  * Records what the SOURCE said was available — the half that cannot be backfilled.
@@ -84,7 +79,7 @@ const RECORDS_STORED = /image_width|displayWidth/;
  * import is asserting that a symbol is in scope, not that a value is written.
  * See invariants/tests-that-are-not-guards.md.
  */
-const RECORDS_NATIVE = /['"`]?iiif_info\.width['"`]?\s*[:=]|iiif_info\.width'\]\s*=/;
+const RECORDS_NATIVE = /['"`]?iiif_info\.width['"`]?\s*[:=]|iiif_info\.width'\]\s*=|dimensionFields\(/;
 
 /**
  * Only writers that actually FETCH from a remote source can record a native
@@ -106,11 +101,6 @@ const FETCHES_FROM_SOURCE = /rateLimitedFetch|downloadImage|await fetch\(|downlo
 const NATIVE_WIDTH_DEBT = new Set([
   'scripts/workers/archive-bulk.mjs',
   'scripts/workers/archive-erara.mjs',      // PDF rasterization at PDF_DPI=200; no IIIF fetch at all
-  'scripts/workers/archive-gallica.mjs',
-  'scripts/workers/archive-iiif-local.mjs',
-  'scripts/workers/archive-ocr.mjs',
-  'scripts/workers/backfill-hires-illustrations.mjs',
-  'scripts/maintenance/archive-unarchived-books.ts',
   'scripts/maintenance/repair-bulk-jp2-offset.mjs',  // one-off #3368 repair; refetches, but records stored width only
   'scripts/maintenance/archive-ia-bulk.mjs',        // archive.org is not a silent capper: /full/full/ is the master, no native width to chase
 ]);

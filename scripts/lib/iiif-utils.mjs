@@ -435,3 +435,79 @@ export function shouldTileStitch(info, photoUrl) {
   if (info.maxArea && info.maxArea < info.width * info.height) return true;
   return false;
 }
+
+/**
+ * Fetch the best master a source will actually give us, and say what was available.
+ *
+ * `/full/full/` is a REQUEST, not a guarantee. The seven hosts in SILENT_CAP_HOSTS
+ * answer it with something smaller and no error — Kyoto at 1/8.69 of native, TU
+ * Delft 1/5.92, Manchester 1/3.25 — so an archiver that just fetches and stores is
+ * quietly banking a derivative as its master. Before #4406 the only callers that
+ * defeated that were archive-eap.mjs and the rearchive sweep; every other archiver
+ * was missing the same three lines, which is why this is a helper rather than a
+ * sixth copy of them.
+ *
+ * It deliberately does NOT own the download. Each archiver has its own retry,
+ * timeout and User-Agent policy tuned to its provider, and replacing those would be
+ * a larger and riskier change than the one being made — so the caller passes
+ * `download` and keeps its behaviour for the common path. The helper adds exactly
+ * two things: the tile-stitch route when a host is known to cap, and the native
+ * dimensions so the archiver can WRITE DOWN what was on offer.
+ *
+ * info.json is fetched ONLY for hosts already known to cap. That keeps request
+ * volume unchanged for the ~78% of pages from honest sources — three institutions
+ * blocked us inside 48 hours in August 2026, so an extra probe per page is not free.
+ * New cappers are found by scripts/audit/archive-coverage.mjs and added to
+ * SILENT_CAP_HOSTS, which is what makes them take effect here.
+ *
+ * @param {string} url - the page's source URL (any size form; upgraded internally)
+ * @param {{ download: (url: string) => Promise<Buffer>, info?: object }} opts
+ * @returns {Promise<{buffer: Buffer, nativeWidth: number|null, nativeHeight: number|null, stitchedTiles: number, url: string}>}
+ */
+export async function fetchPageMaster(url, opts = {}) {
+  const { download } = opts;
+  if (typeof download !== 'function') {
+    throw new Error('fetchPageMaster: opts.download is required (the caller owns its own retry/UA policy)');
+  }
+  const fullUrl = upgradeToFullRes(url);
+  const capSuspect = SILENT_CAP_HOSTS.some((h) => String(fullUrl).includes(h));
+  const info = opts.info ?? (capSuspect ? await fetchIiifInfo(fullUrl).catch(() => null) : null);
+
+  if (info && shouldTileStitch(info, fullUrl)) {
+    const stitch = await fetchIiifNativeRes(fullUrl, { info });
+    return {
+      buffer: stitch.buffer,
+      nativeWidth: stitch.width ?? info.width ?? null,
+      nativeHeight: stitch.height ?? info.height ?? null,
+      stitchedTiles: stitch.tiles || 0,
+      url: fullUrl,
+    };
+  }
+
+  return {
+    buffer: await download(fullUrl),
+    nativeWidth: info?.width ?? null,
+    nativeHeight: info?.height ?? null,
+    stitchedTiles: 0,
+    url: fullUrl,
+  };
+}
+
+/**
+ * The `$set` fields an archiver should write beside `archived_photo`, given what
+ * fetchPageMaster returned and the dimensions of what was actually stored.
+ *
+ * Centralised so six archivers cannot drift on field names — `image_width` vs
+ * `width` vs `iiif_info.width` is exactly the field sprawl this repo keeps paying
+ * for (#3969). Omits anything unknown rather than writing a zero: a wrong number
+ * here is worse than a missing one, because the MASTER tier trusts it.
+ */
+export function dimensionFields(stored, master) {
+  const out = {};
+  if (stored?.width) out.image_width = stored.width;
+  if (stored?.height) out.image_height = stored.height;
+  if (master?.nativeWidth) out['iiif_info.width'] = master.nativeWidth;
+  if (master?.nativeHeight) out['iiif_info.height'] = master.nativeHeight;
+  if (master?.stitchedTiles) out.stitched_tiles = master.stitchedTiles;
+  return out;
+}
