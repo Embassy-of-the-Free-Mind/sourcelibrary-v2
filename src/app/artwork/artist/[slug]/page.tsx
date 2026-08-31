@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
+import { artistAuthorRegex, artistTokens } from '@/lib/artist-match';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -15,12 +16,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Names that should not generate artist pages
-const NON_ARTIST_NAMES = ['Various', 'Unknown', 'Anonymous', 'Splendor Solis'];
-
-function isNonArtist(name: string): boolean {
-  return NON_ARTIST_NAMES.some(n => name.toLowerCase().startsWith(n.toLowerCase()));
-}
+// isNonArtist + the author regex live in src/lib/artist-match.ts so the
+// `artist=` filter on /api/artwork/search resolves exactly this set (#4509).
 
 async function getArtist(slug: string) {
   const db = await getReadDb();
@@ -28,18 +25,10 @@ async function getArtist(slug: string) {
   // Slug can be "Leonardo-da-Vinci" (dashes) or "Leonardo%20da%20Vinci" (encoded)
   const artistName = decodeURIComponent(slug).replace(/-/g, ' ');
 
-  // Don't generate pages for non-artist names
-  if (isNonArtist(artistName)) return null;
-
-  // Link builders write author.replace(/\s+/g, '-'), which makes a slug dash
-  // ambiguous: it may stand for a space OR a real hyphen in the name
-  // ("Abbas Al-Musavi" → "Abbas-Al-Musavi"). Matching with every dash turned
-  // into a literal space could never resolve hyphenated names (404 log,
-  // 2026-08). Match each dash-or-space position as either character instead.
-  const tokens = decodeURIComponent(slug).split(/[-\s]+/).filter(Boolean)
-    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  if (tokens.length === 0) return null;
-  const authorRegex = { $regex: `^${tokens.join('[-\\s]+')}$`, $options: 'i' };
+  // Placeholder-name rejection and the dash-or-space regex both live in
+  // artist-match.ts — see there for why a dash cannot be treated as a space.
+  const authorRegex = artistAuthorRegex(slug);
+  if (!authorRegex) return null;
 
   // Fetch artworks and books by this author in parallel
   const [artworks, books] = await Promise.all([
@@ -69,7 +58,7 @@ async function getArtist(slug: string) {
   // Also check reversed name format for books (e.g. "Dürer, Albrecht")
   let allBooks = books;
   if (books.length === 0 && !artistName.includes(',')) {
-    const parts = tokens;
+    const parts = artistTokens(slug);
     if (parts.length >= 2) {
       // Same dash-or-space matching as above, with the surname moved in front.
       const reversedPattern = `^${parts[parts.length - 1]},[-\\s]+${parts.slice(0, -1).join('[-\\s]+')}$`;
