@@ -62,7 +62,8 @@ const HELD = [
   { n: 'N10', id: '6a909543ac1fcc717ba30057', note: 'Angelus de Clavasio, Summa de casibus conscientiae' },
   { n: 'N11', id: '6a3a3b546f5a257530ce0ec9', note: 'Summa Sylvestrina, 1539 (list asks for Plantin 1569)' },
   { n: 'N12', id: '6a3a3ba8862ce9a5b4d75da1', note: 'Navarrus, Enchiridion, Antwerp: Plantin 1575 — EXACT edition requested' },
-  { n: 'N13', id: '6a42b94e5207af7c42f67cc8', note: 'Suárez, Disputationum de censuris, 1606 — nearest held Suárez; NOT De poenitentia' },
+  { n: 'N13', id: '6a96cc5a3ac6c47a6318a539', note: 'Suárez, Opera omnia t. XXII (Vivès, Paris) — ACQUIRED 2026-09-01 from IA rpfranciscisuare22su; title page verified to carry De virtute poenitentiae … through Indulgentiis' },
+  { id: '6a42b94e5207af7c42f67cc8', note: 'Suárez, Disputationum de censuris, 1606 — adjacent, NOT De poenitentia' },
 
   // --- the surrounding tradition ---
   { id: '69dbc8731040d1d5e2099c44', note: 'Bartholomaeus de Chaimis, Confessionale, 1482 — visible, translated' },
@@ -100,8 +101,28 @@ const GAPS = [
   { n: 'N03', want: 'Alain de Lille, Liber poenitentialis (long redaction)', witnesses: 'Lilienfeld 144 (undigitized); fallback BSB Clm 4616 (= collated M)' },
   { n: 'N04', want: 'Robert of Flamborough, Liber poenitentialis (Form 3)', witnesses: 'Arsenal Ms-769 (undigitized); fallback CCCC 441, Parker Library' },
   { n: 'N07', want: 'Berthold von Freiburg, Rechtssumme', witnesses: 'Bämler, Augsburg 1472' },
-  { n: 'N13', want: 'Suárez, De poenitentia (disp. I-LVII, through Indulgences)', witnesses: 'Vivès Opera omnia t. 22; control: Cardon 1613 t. IV. Held Suárez t.22/23 (Venice 1751) are the Metaphysical Disputations, not this.' },
 ];
+
+/**
+ * Acquisition notes for the remaining gaps, from a source sweep on 2026-09-01.
+ * Recorded because "not found" is only useful with the search attached.
+ *   N01  Burchard: no standalone scan on IA. The text is in Migne PL 140 (public
+ *        domain) but that is an edition, not the Bamberg/Clm witness asked for.
+ *   N02  Bartholomew of Exeter: nothing on IA. Morey's 1937 edition is still in
+ *        copyright; the base MS is BL Cotton Vitellius A.XII, and the BL's IIIF
+ *        has been degraded since the 2023 cyber-attack.
+ *   N03  Alain de Lille: Longère's critical edition of the long redaction IS on
+ *        IA (alaindelillelibe0000jean) but is `access-restricted-item: true`,
+ *        lending-only, 1965 Nauwelaerts — in copyright, NOT importable. The
+ *        list's own fallback (BSB Clm 4616) needs a BSB manuscript id.
+ *   N04  Robert of Flamborough: nothing on IA (the hits are Flamborough Head).
+ *        Firth's 1971 edition is in copyright; CCCC 441 needs a Parker id.
+ *   N07  Berthold, Rechtssumme: nothing on IA. Bämler 1472 needs a BSB id.
+ * Four of the five therefore need an institutional IIIF manifest id, and three
+ * separate BSB lookup endpoints (search UI, api search, OPACplus/SRU) failed to
+ * resolve a Clm shelfmark programmatically — that lookup is the open blocker.
+ */
+
 
 const client = new MongoClient(uri);
 await client.connect();
