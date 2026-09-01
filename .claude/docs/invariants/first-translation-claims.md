@@ -2,6 +2,22 @@
 
 **Read this when:** Asserting, badging, or counting "first translation" — or working on `search_efforts` / `reference_translations` / the FT reference set.
 
+> **FIRST, read `.claude/docs/ft-eval-runs-ledger.md`** — one row per measurement
+> ever run on this system, with what it concluded and where the artifact is. A
+> 2026-09-01 session re-derived four things the project already knew (a 13-month-old
+> duplicate issue, a verified re-OCR fix, a pilot that had already converged, and
+> the evidence-store map) because it read the code before reading the record. The
+> first question on FT work is *what has already been tried*, not *what does the
+> code do*. Why this keeps happening: `.claude/docs/ft-organization-assessment.md`.
+>
+> **The evidence layer is 13 stores, and the obvious one is usually the wrong one.**
+> `books.prior_translation` (676 books) is a narrow reader-facing CREDIT field. The
+> actual evidence store is `priors[]` on the attempt ledger — **11,323 books**, 6,608
+> with a named translator, 3,227 with a URL. `books.first_translation.priors` is
+> empty (0); `translation_verification` carries its own 16 sub-keys including
+> `translations` and `search_evidence` on 13,865 books. Measuring one store and
+> reporting it as the total produced a wrong number for Derek on 2026-09-01.
+
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
 ---
