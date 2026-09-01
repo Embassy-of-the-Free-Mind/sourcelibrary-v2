@@ -2,6 +2,13 @@
 
 **Read this when:** Asserting, badging, or counting "first translation" — or working on `search_efforts` / `reference_translations` / the FT reference set.
 
+> **DEMOLITION 2026-09-01 (#4536):** the book-grain machinery this doc's incidents
+> came from (derive → reconcile valve, both FT crons, Phase 1.6's public-boolean
+> write) is retired and deleted. `books.is_first_translation` is FROZEN except
+> through Translation Card review (`translation-card-method.md`). The evidence
+> layer below (attempts ledger, search_efforts, transcripts) is unchanged and
+> still binding; references to the derive/valve mechanics are history.
+
 > **FIRST, read `.claude/docs/ft-eval-runs-ledger.md`** — one row per measurement
 > ever run on this system, with what it concluded and where the artifact is. A
 > 2026-09-01 session re-derived four things the project already knew (a 13-month-old

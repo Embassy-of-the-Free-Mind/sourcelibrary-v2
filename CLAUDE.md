@@ -98,7 +98,8 @@ sits two hops downstream of the decision is not a sign-off. Prefer a shape where
 human reviews the *diff* at the point the change becomes visible (see #3726 Tier 3 for
 the pattern). Corollary: **a valve that only removes claims can never undo its own
 error** — `--only-demotions` is right for an unattended job, and it means every mistake
-it makes needs a person. Related: `.claude/docs/invariants/first-translation-claims.md`.
+it makes needs a person. (The FT loop in this incident was retired 2026-09-01, #4536 —
+the principle outlives it.) Related: `.claude/docs/invariants/first-translation-claims.md`.
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
