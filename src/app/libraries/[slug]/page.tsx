@@ -3,7 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
-import { getPartnerBySlug } from '@/lib/library-partners';
+import { getPartnerBySlug, getProviderKeys } from '@/lib/library-partners';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
 import LibrarySchema from '@/components/seo/LibrarySchema';
 
@@ -99,12 +99,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // ---------- Data fetching ----------
 
 async function fetchLibraryData(
-  providerKey: string,
+  // All provider keys for the partner — canonical + aliases (ndl/ndl_japan,
+  // mdz/bsb). Single-element for most partners.
+  providerKeys: string[],
   sort: string,
   language: string,
   offset: number,
   q?: string
 ): Promise<Pick<SharedLibraryViewProps, 'books' | 'total' | 'topBooks' | 'languages' | 'galleryImages' | 'contributingLibraries'>> {
+  const providerKey = providerKeys.length === 1 ? providerKeys[0] : providerKeys;
   // Every query is independently guarded: one slow/failing catalog call must
   // degrade its own slice, never 500 the whole page.
   const safe = async <T,>(fn: () => Promise<T>, fallback: T): Promise<T> => {
@@ -189,7 +192,7 @@ async function fetchLibraryData(
       .from('books_catalog')
       .select('contributing_library')
       .eq('visible', true)
-      .eq('image_source_provider', providerKey)
+      .in('image_source_provider', providerKeys)
       .gt('pages_count', 0)
       .gt('pages_translated', 0)
       .not('contributing_library', 'is', null);
@@ -266,7 +269,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
 
   // Fetch data — catalog data only for BPH
   const [libraryData, digitizedUbns, catalogTotal] = await Promise.all([
-    fetchLibraryData(partner.providerKey, sort, language, offset, q || undefined),
+    fetchLibraryData(getProviderKeys(partner), sort, language, offset, q || undefined),
     isBph ? fetchBphDigitizedMap() : Promise.resolve({}),
     isBph ? fetchBphCatalogTotal() : Promise.resolve(0),
   ]);

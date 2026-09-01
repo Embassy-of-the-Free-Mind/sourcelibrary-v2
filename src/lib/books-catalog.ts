@@ -141,7 +141,9 @@ export async function browseBooks(opts: {
   language?: string;
   collection?: string;
   category?: string;
-  provider?: string;
+  /** One provider key, or several that belong to the same partner
+   *  (see getProviderKeys in library-partners.ts). */
+  provider?: string | string[];
   library?: string;
   firstTranslation?: boolean;
   hasTranslation?: boolean;
@@ -181,7 +183,11 @@ export async function browseBooks(opts: {
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);
   if (opts.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
-  if (opts.provider) query = query.eq('image_source_provider', opts.provider);
+  if (opts.provider) {
+    query = Array.isArray(opts.provider)
+      ? query.in('image_source_provider', opts.provider)
+      : query.eq('image_source_provider', opts.provider);
+  }
   if (opts.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
   if (opts.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
@@ -337,12 +343,16 @@ export async function fetchAllVisibleCatalogRows<T = Record<string, unknown>>(
 }
 
 export async function getLanguageCounts(filter: {
-  provider?: string;
+  provider?: string | string[];
   collection?: string;
 }): Promise<{ lang: string; count: number }[]> {
   const rows = await fetchAllVisibleCatalogRows<{ language: string | null }>('language', (q) => {
     let query = q;
-    if (filter.provider) query = query.eq('image_source_provider', filter.provider);
+    if (filter.provider) {
+      query = Array.isArray(filter.provider)
+        ? query.in('image_source_provider', filter.provider)
+        : query.eq('image_source_provider', filter.provider);
+    }
     if (filter.collection) query = query.contains('collections', [filter.collection]);
     return query;
   });
