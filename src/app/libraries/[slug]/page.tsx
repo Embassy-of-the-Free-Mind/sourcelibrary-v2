@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
-import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
+import { browseBooks, countBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import { getPartnerBySlug, getProviderKeys } from '@/lib/library-partners';
 import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
@@ -121,8 +121,9 @@ async function fetchLibraryData(
   // pages_count>0 first (fast + safe, even over huge providers); only if that
   // yields NOTHING (e.g. an art-only provider like the Met, whose single-object
   // items have pages_count:0) fall back to including page-less artworks. Never
-  // exactCount (it times out over big providers and empties the page).
-  const fetchGrid = async (): Promise<BrowseResult> => {
+  // exactCount on the GRID query (it times out over big providers and empties
+  // the page) — the exact total comes from a separate head-only countBooks below.
+  const fetchGrid = async (): Promise<BrowseResult & { usedArtworkFallback: boolean }> => {
     const paged = await safe(() => browseBooks({
       provider: providerKey,
       language: language || undefined,
@@ -131,8 +132,8 @@ async function fetchLibraryData(
       offset,
       limit: PER_PAGE_LOCAL,
     }), emptyResult);
-    if (paged.books.length > 0) return paged;
-    return safe(() => browseBooks({
+    if (paged.books.length > 0) return { ...paged, usedArtworkFallback: false };
+    const fallback = await safe(() => browseBooks({
       provider: providerKey,
       language: language || undefined,
       search: q && q.length >= 2 ? q : undefined,
@@ -141,6 +142,7 @@ async function fetchLibraryData(
       limit: PER_PAGE_LOCAL,
       hasPages: false,
     }), paged);
+    return { ...fallback, usedArtworkFallback: true };
   };
   const fetchSample = async (): Promise<BrowseResult> => {
     const paged = await safe(() => browseBooks({ provider: providerKey, sort: 'popular', limit: 50 }), emptyResult);
@@ -152,10 +154,24 @@ async function fetchLibraryData(
   // heavy enough that running them concurrently starved/timed-out the grid query
   // and emptied the page. Books first, then the supporting data.
   const booksResult = await fetchGrid();
-  const [languages, sampleResult] = await Promise.all([
+  // browseBooks defaults to Postgres's 'planned'/'estimated' count to dodge
+  // statement timeouts, but the estimate is off by 2-3x on provider filters
+  // (MDZ showed "5,596 books" against a true 2,104). A head-only exact count
+  // on the same filters measures 1.5-3.5s — fine under 24h ISR — so overwrite
+  // the estimate with the truth; on failure keep the estimate rather than 0.
+  const [languages, sampleResult, exactTotal] = await Promise.all([
     safe(() => getLanguageCounts({ provider: providerKey }), [] as Array<{ lang: string; count: number }>),
     fetchSample(),
+    safe(() => countBooks({
+      provider: providerKey,
+      language: language || undefined,
+      search: q && q.length >= 2 ? q : undefined,
+      // Count the same set the grid rendered: pages_count>0 normally, or the
+      // page-less-artworks fallback set when fetchGrid took that branch.
+      hasPages: booksResult.usedArtworkFallback ? false : undefined,
+    }), null as number | null),
   ]);
+  if (exactTotal !== null) booksResult.total = exactTotal;
 
   const sampleBookIds = sampleResult.books.map(b => b.id);
 

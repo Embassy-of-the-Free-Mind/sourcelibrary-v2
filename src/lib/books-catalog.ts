@@ -279,11 +279,14 @@ async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
  */
 export async function countBooks(filter: {
   language?: string;
-  provider?: string;
+  provider?: string | string[];
   collection?: string;
   firstTranslation?: boolean;
   hasPages?: boolean;
   hasTranslation?: boolean;
+  /** Same fuzzy title/author match browseBooks applies for its `search` opt —
+   *  pass the identical value so a count matches its grid. */
+  search?: string;
 }): Promise<number> {
   let query = supabase
     .from('books_catalog')
@@ -293,9 +296,14 @@ export async function countBooks(filter: {
   if (filter.hasPages !== false) query = query.gt('pages_count', 0);
   if (filter.hasTranslation) query = query.gt('pages_translated', 0);
   if (filter.language) query = query.eq('language', filter.language);
-  if (filter.provider) query = query.eq('image_source_provider', filter.provider);
+  if (filter.provider) {
+    query = Array.isArray(filter.provider)
+      ? query.in('image_source_provider', filter.provider)
+      : query.eq('image_source_provider', filter.provider);
+  }
   if (filter.collection) query = query.contains('collections', [filter.collection]);
   if (filter.firstTranslation) query = query.eq('is_first_translation', true);
+  if (filter.search) { const s = sanitizeFilterValue(filter.search); query = query.or(`title.ilike.%${s}%,display_title.ilike.%${s}%,author.ilike.%${s}%`); }
 
   const { count } = await query;
   return count || 0;
