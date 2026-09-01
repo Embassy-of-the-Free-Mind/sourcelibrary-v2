@@ -163,6 +163,10 @@ const byId = Object.fromEntries((await db.collection('books')
     { projection: { id: 1, title: 1, language: 1, visible: 1 } })
   .toArray()).map((b) => [b.id, b]));
 
+// Everything below is network-bound over minutes; an idle Atlas connection gets
+// reset out from under us. Read what we need, then let go of the database.
+await client.close();
+
 console.log(`Sampled ${pages.length} pages${LANGUAGE ? ` (${LANGUAGE})` : ''}${COHORT_ONLY ? ' from the upgraded_at cohort' : ''}\n`);
 
 const results = await mapLimit(pages, CONCURRENCY, async (p) => {
@@ -225,5 +229,3 @@ if (LIST) {
       + `${r.hasOcr ? 'HAS-OCR' : ''} ${ocrSource(r)}`);
   }
 }
-
-await client.close();
