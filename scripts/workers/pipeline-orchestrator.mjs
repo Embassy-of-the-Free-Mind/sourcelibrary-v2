@@ -26,7 +26,7 @@ import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -2461,11 +2461,12 @@ async function run() {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
 
   // ── Selective unpause ──────────────────────────────────────────────
-  // Process specific books even while globally paused. Driven by
-  // system_config.processing_control.allow_book_ids[] / allow_collections[].
-  // When a scope is set, the global pause is bypassed but EVERY phase is
-  // confined to the allowlisted books (via applyBookOverride below). An
-  // empty scope means the pause is a full stop, unchanged. The free
+  // Process specific books even while the line is otherwise stopped. Driven by
+  // system_config.processing_control.allow_book_ids[] / allow_collections[] /
+  // allow_scopes{}. A configured scope CONFINES the run only when the line is
+  // stopped for everyone else — globally paused (#2610), or the daily dial is
+  // closed and a scope envelope is open (#4540). When the line is open, scoped
+  // books flow with everything else and unscoped books are unaffected. The free
   // archiving workers already do this per-book (archive-bulk --book-id,
   // archive-iiif-local --ignore-pause); this brings the paid path in line.
   const { bookIds: _scopeBookIds, collections: _scopeCollections } = getScopeConfig(control);
@@ -2476,10 +2477,7 @@ async function run() {
       .toArray();
     for (const b of scoped) _scopeIds.add(String(b.id));
   }
-  const SCOPED_MODE = _scopeIds.size > 0;
-  // SCOPE_ACTIVE gates the per-phase applyBookOverride calls — true for either
-  // a single --book override (existing behavior) or a config-driven allowlist.
-  const SCOPE_ACTIVE = !!BOOK_OVERRIDE || SCOPED_MODE;
+  const SCOPE_CONFIGURED = _scopeIds.size > 0;
 
   if (RECOVERY_ONLY && !shouldBypassPause(control, { bookOverride: !!BOOK_OVERRIDE })) {
     console.log('[pipeline-orchestrator] PAUSED, but this is a recovery-only run (--phase 8.5): rolling back stuck statuses spends nothing, so it proceeds.');
@@ -2497,8 +2495,25 @@ async function run() {
     await client.close();
     return;
   }
+  // ── Run mode (#4540): measure the dial once, decide the lane ──
+  // ENVELOPE MODE: the global dial is closed but a scope envelope has room —
+  // the run proceeds confined to the envelope-open books only. The decision is
+  // made at run START so confinement and dispatch can never disagree: if the
+  // dial closes mid-run and an envelope opens, this run's phases refuse and
+  // the NEXT run (2 min) enters envelope mode with candidates confined.
+  const _startGate = await budgetAllowsDispatchScoped(db, 'run start (mode decision)', { bypass: !!BOOK_OVERRIDE, control });
+  const ENVELOPE_MODE = !!(_startGate.allowed && _startGate.envelopeIds);
+  if (ENVELOPE_MODE) {
+    for (const id of [..._scopeIds]) if (!_startGate.envelopeIds.has(id)) _scopeIds.delete(id);
+    console.log(`[pipeline-orchestrator] ENVELOPE MODE: global dial closed, scope envelope(s) open — processing ONLY ${_scopeIds.size} envelope book(s).`);
+  }
+  const SCOPED_MODE = SCOPE_CONFIGURED && (!!control?.paused || ENVELOPE_MODE);
+  // SCOPE_ACTIVE gates the per-phase applyBookOverride calls — true for either
+  // a single --book override (existing behavior) or a confining scope.
+  const SCOPE_ACTIVE = !!BOOK_OVERRIDE || SCOPED_MODE;
+
   if (control?.paused && SCOPED_MODE) {
-    console.log(`[pipeline-orchestrator] PAUSED globally, but selective-unpause scope is active — processing ONLY ${_scopeIds.size} allowlisted book(s) (allow_book_ids + allow_collections).`);
+    console.log(`[pipeline-orchestrator] PAUSED globally, but selective-unpause scope is active — processing ONLY ${_scopeIds.size} allowlisted book(s) (allow_book_ids + allow_collections + allow_scopes).`);
   }
 
   // DB health probe — adjusts submission limits based on Atlas load
@@ -2573,6 +2588,24 @@ async function run() {
       return normalBooks.filter(b => _scopeIds.has(String(b.id || b._id)));
     }
     return normalBooks;
+  }
+
+  /**
+   * Per-phase paid-dispatch gate (#4540). Wraps budgetAllowsDispatchScoped so
+   * every paid phase re-measures (the dial can close mid-run as spend lands),
+   * with one safety rule: envelope-lane dispatch is honored ONLY when the run
+   * started in envelope mode — that is the only case where the phase's
+   * candidates are already confined to the envelope books. A lane that opens
+   * mid-run waits for the next run rather than dispatching unconfined.
+   */
+  async function budgetAllowsDispatchForPhase(label) {
+    const g = await budgetAllowsDispatchScoped(db, label, { bypass: !!BOOK_OVERRIDE });
+    if (!g.allowed) return false;
+    if (g.envelopeIds && !ENVELOPE_MODE) {
+      console.log(`  [spend-guard] ${label}: envelope lane opened mid-run, but this run's candidates are not confined — deferring scoped dispatch to the next run.`);
+      return false;
+    }
+    return true;
   }
 
   const log = {
@@ -2921,7 +2954,7 @@ async function run() {
       // the free screen keeps running when the dial is closed — gating the whole
       // phase would stop `split_checked` being written, and Phase 1.5 requires
       // it, so a closed dial would silently stall preview OCR as well.
-      const splitConfirmAllowed = await budgetAllowsDispatch(db, 'Phase 1.25 (split confirm)', { bypass: !!BOOK_OVERRIDE });
+      const splitConfirmAllowed = await budgetAllowsDispatchForPhase('Phase 1.25 (split confirm)');
 
       // Scoped mode raises the window so allowlisted books behind the backlog
       // aren't stranded (work stays confined by applyBookOverride below). The
@@ -3206,7 +3239,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // Dial-gated. Phase 1.5 spends, so it must ask — it was outside the dial
     // while it was inline realtime, which meant the one phase that runs every
     // two minutes was the one phase the ceiling could not stop.
-    if (shouldRun(1.5) && await budgetAllowsDispatch(db, 'Phase 1.5 (preview OCR)', { bypass: !!BOOK_OVERRIDE })) {
+    if (shouldRun(1.5) && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
       console.log('\n--- Phase 1.5: Preview OCR (flash-lite batch, first 25 pages) ---');
 
       const previewRetryCutoff = new Date(Date.now() - PREVIEW_BATCH_RETRY_HOURS * 60 * 60 * 1000);
@@ -3314,7 +3347,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // language, description, display_title, categories, source_work_dates, FT pre-screen.
     // Also does catalog cross-reference (USTC/EFM) for year/place/publisher.
     // Writes ai_metadata and updates book fields at medium+ confidence.
-    if ((shouldRun(1.6) || shouldRun(1.5)) && await budgetAllowsDispatch(db, 'Phase 1.6 (metadata classification)', { bypass: !!BOOK_OVERRIDE })) {
+    if ((shouldRun(1.6) || shouldRun(1.5)) && await budgetAllowsDispatchForPhase('Phase 1.6 (metadata classification)')) {
       console.log('\n--- Phase 1.6: AI metadata classification ---');
 
       const metadataApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
@@ -3848,7 +3881,7 @@ Rules:
     // Two-pass strategy:
     //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
     //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
-    if (shouldRun(2) && await budgetAllowsDispatch(db, 'Phase 2 (OCR submit)', { bypass: !!BOOK_OVERRIDE })) {
+    if (shouldRun(2) && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       // Ordering gate: never OCR a book before Phase 1.97 has deduped it, else
@@ -4374,7 +4407,7 @@ Rules:
 
     // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on ocr_complete books) ──
     // Not a pipeline state — just enriches pages before translation. Cheap & fast (text-only, lite model).
-    if ((shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) && await budgetAllowsDispatch(db, 'Phase 3.7 (transliteration)', { bypass: !!BOOK_OVERRIDE })) {
+    if ((shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) && await budgetAllowsDispatchForPhase('Phase 3.7 (transliteration)')) {
       console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
 
       // Find ocr_complete books with non-Latin languages
@@ -4457,7 +4490,7 @@ Rules:
     // ── Phase 4: Dispatch translation to Lambda via SQS FIFO ──
     // Hetzner focuses on OCR; Lambdas scale out translation.
     // Creates a job record, enqueues pages to SQS FIFO, Lambdas process sequentially per book.
-    if (shouldRun(4) && await budgetAllowsDispatch(db, 'Phase 4 (translation dispatch)', { bypass: !!BOOK_OVERRIDE })) {
+    if (shouldRun(4) && await budgetAllowsDispatchForPhase('Phase 4 (translation dispatch)')) {
       console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
       // Zombie job reaper: cancel ANY job stuck in processing with no update for >1h.
@@ -4907,7 +4940,7 @@ Rules:
     }
 
     // ── Phase 8: Image extraction (chapters_complete -> images_submitted/complete) ──
-    if (shouldRun(8) && await budgetAllowsDispatch(db, 'Phase 8 (image extraction)', { bypass: !!BOOK_OVERRIDE })) {
+    if (shouldRun(8) && await budgetAllowsDispatchForPhase('Phase 8 (image extraction)')) {
       console.log('\n--- Phase 8: Image extraction ---');
 
       const USE_BATCH = process.env.IMAGE_EXTRACTION_USE_BATCH !== 'false'; // Default: true (batch)
