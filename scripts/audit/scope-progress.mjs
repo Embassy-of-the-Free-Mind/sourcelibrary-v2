@@ -198,15 +198,21 @@ await withMongo(async (db) => {
   const books = await db.collection('books')
     .find({ id: { $in: ids } })
     .project({
-      id: 1, title: 1, resource_type: 1, visible: 1, hidden: 1, processing_priority: 1,
+      id: 1, title: 1, resource_type: 1, content_type: 1, visible: 1, hidden: 1, processing_priority: 1,
       pages_count: 1, pages_archived: 1, pages_ocr: 1, pages_translated: 1, pages_translatable: 1,
       summary: 1, chapters: 1, detected_images_count: 1, cover_page: 1, pipeline_auto: 1,
     })
     .toArray();
   const foundIds = new Set(books.map((b) => b.id));
   const missing = ids.filter((id) => !foundIds.has(id));
-  const artworks = books.filter((b) => b.resource_type);
-  const texts = books.filter((b) => !b.resource_type);
+  // Mirrors the orchestrator's ARTWORK_MATCH: content_type is AUTHORITATIVE
+  // ('book' is never artwork, even with an object-ish resource_type — textual
+  // papyri); resource_type is only a fallback, and only for the artwork types.
+  const ARTWORK_TYPES = new Set(['painting', 'print', 'drawing', 'fresco', 'object']);
+  const isArtwork = (b) => b.content_type !== 'book'
+    && (b.content_type === 'artwork' || ARTWORK_TYPES.has(b.resource_type));
+  const artworks = books.filter(isArtwork);
+  const texts = books.filter((b) => !isArtwork(b));
 
   const verified = flag('verify') ? await verifyFromPages(db, texts.map((b) => b.id)) : null;
 
