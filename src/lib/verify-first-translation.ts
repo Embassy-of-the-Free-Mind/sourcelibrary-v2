@@ -839,7 +839,7 @@ export async function verifyFirstTranslation(
     triggered_by?: GeminiTrigger;
     /**
      * Also write `is_first_translation` (the public badge boolean). Default false:
-     * the badge is owned by scripts/maintenance/reconcile-first-translation-flag.ts,
+     * the badge is owned by scripts/maintenance/reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead],
      * which applies verified-only gating; this function writes evidence
      * (`translation_verification`) and returns the would-be flag for the caller.
      * Only opt in for non-public collections (books_warehouse). See #3726.

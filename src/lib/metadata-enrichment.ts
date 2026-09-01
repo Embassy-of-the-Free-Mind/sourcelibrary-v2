@@ -399,12 +399,11 @@ export async function enrichBookMetadata(
     changes.push({ field: 'subject_keywords', previous: null, new_value: parsed.subject_keywords });
   }
 
-  // First translation: derive top-level boolean
-  if (parsed.first_translation?.status) {
-    const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
-    updates.is_first_translation = isFirst;
-    changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
-  }
+  // First translation: the public boolean is no longer written from content
+  // enrichment (#3881/#4536) — the sanctioned path to the badge is the reviewed
+  // Translation Card. The content opinion stays in ai_metadata.first_translation.
+  // (This helper's only importer is an _archived route; the live twin in
+  // pipeline-orchestrator.mjs got the same change.)
 
   // Source work dates: save compositional timeline
   if (parsed.source_work_dates && Array.isArray(parsed.source_work_dates.layers)) {

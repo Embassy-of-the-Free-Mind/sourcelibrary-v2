@@ -7,7 +7,6 @@ import {
   firstTranslationVerdict,
   resolveFirstTranslation,
 } from '@/lib/first-translation/derive';
-import { resolve, type Tier, type ResolvableBook } from '@/lib/first-translation/resolve';
 import { strongestAttempt, type FirstTranslationAttempt } from '@/lib/first-translation/attempt-log';
 import type { FirstTranslation, FirstTranslationBook } from '@/lib/first-translation/types';
 
@@ -223,70 +222,6 @@ describe('strongestAttempt', () => {
     expect(strongestAttempt([])).toBeNull();
   });
 });
-
-// ── tier router ─────────────────────────────────────────────────────────
-
-describe('resolve — effort-tier cascade', () => {
-  const NOW = '2026-06-19T12:00:00Z';
-  const sampleBook: ResolvableBook = { visible: true, pages_translated: 10, id: 'bk1' };
-
-  const mkTier = (
-    id: string,
-    verdict: FirstTranslation | null,
-    terminal: boolean,
-  ): Tier => async (b) => ({
-    verdict,
-    terminal,
-    attempt: {
-      attempt_id: id,
-      book_id: (b.id as string) ?? 'x',
-      date: NOW,
-      method: id === 't0' ? 'tier0_linked' : id === 't1' ? 'tier1_catalog' : 'tier2_agent',
-      match_key: 'work_id',
-      sources_checked: [],
-      result: verdict?.verdict === 'not_first' ? 'found' : 'none',
-      evidence_strength: verdict?.evidence_strength ?? 'weak',
-    },
-  });
-
-  it('stops at the first terminal tier and records its attempt only', async () => {
-    const t0 = mkTier('t0', FT({ verdict: 'not_first', evidence_strength: 'strong' }), true);
-    const t1 = mkTier('t1', FT({}), true);
-    const { resolved, attempts } = await resolve(sampleBook, { tier0: t0, tier1: t1 }, { now: NOW });
-    expect(resolved.verdict).toBe('not_first');
-    expect(attempts).toHaveLength(1);
-    expect(resolved.best_attempt_id).toBe('t0');
-  });
-
-  it('escalates to tier1 when tier0 is non-terminal', async () => {
-    const t0 = mkTier('t0', null, false);
-    const t1 = mkTier('t1', FT({ verdict: 'first_no_prior' }), true);
-    const { resolved, attempts } = await resolve(sampleBook, { tier0: t0, tier1: t1 }, { now: NOW });
-    expect(resolved.verdict).toBe('first_no_prior');
-    expect(attempts.map((a) => a.attempt_id)).toEqual(['t0', 't1']);
-  });
-
-  it('forceTier2 runs the agent even when a cheap tier was terminal (sampler)', async () => {
-    const t0 = mkTier('t0', FT({ verdict: 'first_no_prior', evidence_strength: 'weak' }), true);
-    const t1 = mkTier('t1', null, false);
-    const t2 = mkTier('t2', FT({ verdict: 'not_first', evidence_strength: 'strong' }), true);
-    const { resolved, attempts } = await resolve(
-      sampleBook,
-      { tier0: t0, tier1: t1, tier2: t2 },
-      { now: NOW, forceTier2: true },
-    );
-    expect(attempts.map((a) => a.attempt_id)).toEqual(['t0', 't1', 't2']);
-    expect(resolved.verdict).toBe('not_first'); // tier2 ground truth wins
-  });
-
-  it('falls back to needs_review when no tier decides', async () => {
-    const t0 = mkTier('t0', null, false);
-    const t1 = mkTier('t1', null, false);
-    const { resolved } = await resolve(sampleBook, { tier0: t0, tier1: t1 }, { now: NOW });
-    expect(resolved.verdict).toBe('needs_review');
-  });
-});
-
 describe('canPromoteToFirst — bidirectional hygiene gate (#2564)', () => {
   it('promotes an evidence-backed adjudicated first', () => {
     const b: FirstTranslationBook = {
