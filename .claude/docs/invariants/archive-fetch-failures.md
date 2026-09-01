@@ -53,3 +53,29 @@ the direction that looks like success*.
   long-running script reads as a hang (two full scans were killed before
   emitting a line). The fix is a heartbeat, not an index: indexing
   `archived_photo` would add ~1.5 GB to a hot collection to serve a rare sweep.
+- **A fetched tile pasted onto a prepared canvas must be checked for EXTENT, or
+  a short read becomes invisible data loss.** `fetchIiifNativeRes` composited
+  IIIF region tiles at `left = col*chunk` onto a **white** canvas and never
+  looked at what came back. `rearchive-iiif-fullres.mjs` sized the stride from
+  `pageInfo.maxWidth || 2000` — and EAP advertises *nothing*, so the fallback
+  invented 2000 while EAP serves 1200. Every cell was short by 0.6 linear /
+  0.36 area: masters that are 63.5% pure white, every line of text truncated at
+  a gutter and resuming 800px later. It rewrote `photo` as well as
+  `archived_photo`, so readers, IIIF and OCR all got the gapped image. 80,981
+  pages / 167 Tibetan books, 74,344 of them carrying a published translation the
+  model invented off a two-thirds-blank folio (#4523, #4534).
+  **Nothing downstream could see it**: R2 served a real, complete, 200-OK JPEG,
+  and the blank-page guard keys on ink coverage while these leaves are dense. A
+  hole in a page image has no detector, so it has to fail at the write boundary
+  — `tileFits()` in `scripts/lib/iiif-utils.mjs` now refuses any tile that does
+  not fill its cell, and the stitcher probes one tile to learn the server's real
+  cap instead of believing its advertisement.
+  Two corollaries worth more than the incident: **an advertised limit is a hint,
+  and on `SILENT_CAP_HOSTS` a known lie — probe, never trust** (a `|| 2000`
+  fallback is the same bug wearing a default's clothes); and when you go looking
+  for the damage afterwards, **key on GEOMETRY, not quantity**. The first
+  detector screened on "lots of pure white" and reported 63.6% of Tibetan pages
+  broken — mostly BDRC pecha scans, long thin folios on a white ground that are
+  legitimately 75–96% white. The signature is an interior full-span white band
+  ≥200px on BOTH axes; margins touch the border, gutters do not. Standing
+  detector: `scripts/audit/tile-stitch-gutters.mjs`.
