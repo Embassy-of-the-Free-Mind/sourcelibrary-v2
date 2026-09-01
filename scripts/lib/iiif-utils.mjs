@@ -321,6 +321,21 @@ async function fetchIiifTile(serviceBase, x, y, w, h, opts) {
 }
 
 /**
+ * Does a returned tile actually fill the cell it was requested for?
+ *
+ * A `false` here means the server downscaled the region behind our back, and
+ * compositing it would leave canvas showing through. ±1px because IIIF servers
+ * round a scaled region's height differently; anything larger is a real cap.
+ *
+ * Split out from the stitch loop so the invariant is testable without a network
+ * (#4523 — the failure it guards is silent everywhere downstream).
+ */
+export function tileFits(reqW, reqH, gotW, gotH) {
+  if (!gotW || !gotH) return false;
+  return Math.abs(gotW - reqW) <= 1 && Math.abs(gotH - reqH) <= 1;
+}
+
+/**
  * Fetch a IIIF image at native pixel resolution, stitching tiles when the
  * server caps single-request output below the master dimensions.
  *
@@ -328,13 +343,26 @@ async function fetchIiifTile(serviceBase, x, y, w, h, opts) {
  *  1. Fetch info.json to learn the true master size.
  *  2. Pick a per-request chunk size: min(1024, info.maxWidth ?? 1024, info.maxHeight ?? 1024).
  *     (1024 is the empirically-largest output that BL/EAP returns at native pixel density.)
- *  3. Tile across (cols × rows), fetch each chunk, composite with sharp.
+ *  3. PROBE one chunk and shrink the stride to whatever the server actually
+ *     served — the advertised cap is a hint, and on SILENT_CAP_HOSTS a lie.
+ *  4. Tile across (cols × rows), fetch each chunk, verify its dimensions,
+ *     composite with sharp.
  *
  * If the server already serves /full/full/ at native, this still works
  * (it'd be 1 tile of size = master). Callers that know native is reachable
  * can skip this and use the simpler path.
  *
- * Throws on failure of any tile fetch.
+ * Throws on failure of any tile fetch, and on any tile whose returned size
+ * does not match the region requested.
+ *
+ * WHY THE SIZE CHECK (#4523): the canvas is painted white and `composite`
+ * places a short tile at the cell's top-left, so a silently-downscaled tile
+ * leaves a white gutter instead of an error. `rearchive-iiif-fullres.mjs`
+ * passed `maxChunk` from EAP's *advertised* 2000px while EAP serves 1200,
+ * giving a 0.6 linear / 0.36 area coverage — masters that are 64% white.
+ * ~30% of OCR-bearing Tibetan pages were archived that way in July 2026 and
+ * the OCR model read them as complete pages and invented the missing text.
+ * A gap in a page image has no downstream detector; it must fail here.
  *
  * @param {string} photoUrl   A IIIF Image API URL anywhere in the service
  *                            (used to derive the service base).
@@ -356,10 +384,34 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
 
   // Cap chunk by server-advertised maxWidth/maxHeight (some IIIF v3 servers do
   // honor sizeByConfinedWh and announce a higher cap).
+  //
+  // The advertised cap is a HINT, never a contract — this whole function exists
+  // because SILENT_CAP_HOSTS lie about it. The probe below is what actually
+  // decides the stride. See #4523 / assertTileFits.
   let chunk = opts.maxChunk ?? 1024;
   if (info.maxWidth) chunk = Math.min(chunk, info.maxWidth);
   if (info.maxHeight) chunk = Math.min(chunk, info.maxHeight);
   if (chunk < 256) chunk = 256;
+
+  // PROBE: ask for one full-size chunk and see what actually comes back. A host
+  // that silently downscales returns a SMALLER image for the same region; if we
+  // then step the grid by the requested size, every tile lands at 60% scale in
+  // the top-left of its cell and the rest of the cell stays canvas-white. That
+  // is exactly how ~89k Tibetan pages were archived two-thirds blank (#4523).
+  if (W > chunk || H > chunk) {
+    const probeW = Math.min(chunk, W);
+    const probeH = Math.min(chunk, H);
+    const probe = await fetchIiifTile(serviceBase, 0, 0, probeW, probeH, opts);
+    const meta = await sharp(probe).metadata();
+    if (meta.width && meta.width < probeW) {
+      // Server capped us. Its real per-request ceiling is what it just returned.
+      const served = meta.width;
+      if (served < 256) {
+        throw new Error(`tile-stitch: server caps output at ${served}px — too small to stitch ${W}x${H}`);
+      }
+      chunk = served;
+    }
+  }
 
   const cols = Math.ceil(W / chunk);
   const rows = Math.ceil(H / chunk);
@@ -375,6 +427,16 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
       const w = Math.min(chunk, W - x);
       const h = Math.min(chunk, H - y);
       const buf = await fetchIiifTile(serviceBase, x, y, w, h, opts);
+      // Fail loudly rather than paste a short tile and leave a white gutter.
+      // A gap in a page image is invisible downstream: OCR reads it as a real
+      // page and invents text to fill the silence.
+      const meta = await sharp(buf).metadata();
+      if (!tileFits(w, h, meta.width, meta.height)) {
+        throw new Error(
+          `tile-stitch: requested ${w}x${h} at (${x},${y}) but server returned `
+          + `${meta.width}x${meta.height} — refusing to composite a gapped master`,
+        );
+      }
       composites.push({ input: buf, left: x, top: y });
       done++;
       if (opts.onProgress) opts.onProgress(done, totalTiles);
@@ -394,7 +456,7 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
     .jpeg({ quality: 92, mozjpeg: true })
     .toBuffer();
 
-  return { buffer: stitched, width: W, height: H, tiles: totalTiles };
+  return { buffer: stitched, width: W, height: H, tiles: totalTiles, chunk };
 }
 
 /**
