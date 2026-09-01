@@ -1,4 +1,5 @@
 import { getDb } from '@/lib/mongodb';
+import { anonymizeIp } from '@/lib/anonymize-ip';
 import { DatasetAccessLog } from './types';
 
 const COLLECTION = 'dataset_access_log';
@@ -12,6 +13,11 @@ export async function logAccess(
   opts?: { countPages?: boolean },
 ): Promise<void> {
   const db = await getDb();
+
+  // Anonymize at the write boundary so no call site can forget. The caller is
+  // already identified by api_key_id; a full IP adds nothing the compliance
+  // log needs, and /privacy promises we don't store full IPs.
+  entry.ip_address = anonymizeIp(entry.ip_address);
 
   // Fire-and-forget — don't block the API response
   Promise.all([
