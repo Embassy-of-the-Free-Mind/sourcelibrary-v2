@@ -5,7 +5,7 @@ import {
   langKey,
   type CatalogPrior,
 } from '@/lib/first-translation/tier0-catalog';
-import type { ResolvableBook, ResolveContext } from '@/lib/first-translation/resolve';
+import type { ResolvableBook, ResolveContext } from '@/lib/first-translation/tier';
 
 const ctx: ResolveContext = { now: '2026-06-27T00:00:00.000Z' };
 

@@ -540,7 +540,7 @@ async function main() {
                 match_score: matches[0].score,
               },
               // No is_first_translation write: a title-match score is a lead, not a
-              // verified demotion. The badge is owned by reconcile-first-translation-flag.ts (#3726).
+              // verified demotion. The badge is owned by reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] (#3726).
               updated_at: new Date(),
             },
           });

@@ -202,7 +202,7 @@ async function main() {
       await collection.bulkWrite(ops);
       // Deliberately does NOT write books.is_first_translation. An unverified
       // classification is a lead, not a verdict — the public badge is owned by
-      // scripts/maintenance/reconcile-first-translation-flag.ts (#3726).
+      // scripts/maintenance/reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] (#3726).
     }
 
     console.log(`  Saved ${ops.length} results. Running totals: ${JSON.stringify(stats)}`);

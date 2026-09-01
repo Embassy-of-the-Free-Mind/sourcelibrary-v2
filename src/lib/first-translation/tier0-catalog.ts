@@ -22,7 +22,7 @@
  * I/O is injected (a `CatalogLookup`), keeping this module pure and unit-testable
  * and keeping the Mongo query in the caller — exactly the resolve.ts contract.
  */
-import type { Tier, ResolvableBook } from './resolve';
+import type { Tier, ResolvableBook } from './tier';
 import type { FirstTranslationAttempt, PriorTranslation } from './attempt-log';
 import { makeAttemptId } from './attempt-log';
 import type { FirstTranslation, MatchKey } from './types';

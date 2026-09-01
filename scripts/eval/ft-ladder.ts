@@ -40,7 +40,7 @@ import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { makeTier0Catalog, type CatalogPrior, type CatalogLookup } from '@/lib/first-translation/tier0-catalog';
-import type { ResolvableBook } from '@/lib/first-translation/resolve';
+import type { ResolvableBook } from '@/lib/first-translation/tier';
 import { appendAttempt, makeAttemptId, type FirstTranslationAttempt, type PriorTranslation } from '@/lib/first-translation/attempt-log';
 import { renderRubric, routeBook, postSearchRoute } from '@/lib/first-translation/casebook';
 import {
