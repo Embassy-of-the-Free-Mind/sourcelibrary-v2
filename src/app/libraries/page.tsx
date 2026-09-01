@@ -197,7 +197,7 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
             {count.toLocaleString('en-US')} books
           </span>
           {topLangs && (
-            <span className={`inline-flex items-center gap-1.5 text-xs text-white/60 min-w-0 ${isCompact ? 'hidden md:inline-flex' : ''}`}>
+            <span className={`items-center gap-1.5 text-xs text-white/60 min-w-0 ${isCompact ? 'hidden md:inline-flex' : 'inline-flex'}`}>
               <Globe className="w-3 h-3 shrink-0" />
               <span className="truncate">{topLangs}</span>
             </span>
