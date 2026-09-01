@@ -429,6 +429,17 @@ export const posts: BlogPost[] = [
     image: 'https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg',
   },
   {
+    slug: 'reading-or-generating',
+    title: 'Reading, or Generating?',
+    subtitle: 'We kept every page our OCR ever overwrote — 191,221 of them. The models fail on unfamiliar letterforms rather than unfamiliar languages, and the dangerous failure is the fluent one.',
+    date: '6 August 2026',
+    readTime: '12 min read',
+    tag: 'Technical',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/fec0b295-0795-440f-a467-434e17ba2a8e/74.jpg',
+    imageAlt: 'A page of Asis rimonim, a Kabbalistic manuscript in Hebrew cursive that our OCR could not read',
+  },
+  {
     slug: 'rashi-ocr',
     title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew',
     subtitle: 'Gemini reads Arabic, Sanskrit, and Chinese fine. On Rashi script it hallucinates — and our quality metrics gave it a passing grade.',
