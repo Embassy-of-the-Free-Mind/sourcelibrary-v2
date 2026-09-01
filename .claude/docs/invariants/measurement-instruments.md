@@ -338,10 +338,33 @@ reads all three:
   is not failure — no silent skips" (#3740): here the skip was counted but
   unexplained, which reads as a working instrument reporting a broken world.
 
+- **A finding must be ACTIONABLE, or the dedupe that protects your inbox becomes
+  a mute button.** `book-slug-placeholders` fired on every placeholder book slug,
+  and `corpus-integrity-watch.yml` files **one open issue at a time** — correct on
+  its own, since a deterministic finding filed daily buries the first report under
+  30 copies. But after the #4521 repair, 38 of the 39 remaining bad URLs were
+  waiting on an English `display_title` (#4390), not on slug logic: nothing the
+  repair sweep can touch, ever. So the issue stays open forever, and the *next*
+  importer that bypasses `generateBookSlug` — the regression the detector exists
+  for — files **nothing**. The alarm was masked by its own backlog. Worse, the
+  issue body said "Repair with `repair-book-slugs.ts`", which was now false for
+  every row in it: the next reader runs the sweep, gets 0 renames, and re-derives
+  the whole triage. **Split "broken" from "fixable" and fire only on fixable**
+  (#4530): `classifySlugRepair` in `src/lib/book-slug-repair.ts` returns
+  `repairable` vs a named blocker, the repairable count drives the exit code, and
+  the blocked tail is *reported with its reason and its owning issue* so it reads
+  as a known backlog rather than N mysterious rows. **Put the triage in ONE module
+  the detector and its repair tool both import** — a detector that disagrees with
+  its own sweep reports work that cannot be done, which is the failure itself.
+  **Tell:** a standing detector whose count never reaches zero, or an auto-filed
+  issue whose remedy you have already run.
+
 **Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
 an *error message* rather than a *measurement*. Read the body before believing the
 title — and when a watchdog has filed the same title on a regular cadence with no
-one acting on it, suspect the watchdog before the corpus.
+one acting on it, suspect the watchdog before the corpus. Conversely, a watchdog
+that filed **once** and has been quiet since may be muzzled by its own open issue
+rather than satisfied: check whether its finding is still actionable.
 
 Related: the same self-referential shape as the error reporter that reported its
 own failures (#4045/#4047), and the inverse of "absence is not failure — no silent
