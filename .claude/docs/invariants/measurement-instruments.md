@@ -465,3 +465,38 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## A monitor must not share a failure domain with what it monitors
+
+On 2026-08-31 06:41 the Hetzner box went global-OOM and systemd's oom-kill took
+down **`cron.service` itself**. Archiving stopped, the hourly `auto-pull` that
+deploys `main` stopped, health snapshots stopped — for **25 hours**, and nobody
+knew. It was found only because someone went looking for an unrelated answer.
+
+Every check that would have reported it **was a cron on that box**. The daily
+health snapshot could not run. The archive log did not fill with errors; it sat
+at **0 bytes**, which reads exactly like "nothing to do" — and the very script
+writing it carries a header explaining that a held lock and an empty queue are
+indistinguishable in the log, a distinction it was rewritten to fix. It fixed
+the case where the script *runs*. A script that is never invoked says nothing at
+all, and silence had already been established as normal.
+
+- **Site the watchdog outside the blast radius.** `scheduler-liveness.mjs` runs
+  on **GitHub Actions** — not Hetzner (dies with it), not Vercel (the other
+  single point of failure). If you cannot name a failure that would take out the
+  subject but not the monitor, you have not built a monitor.
+- **Absence of an alarm is not health; it is usually no signal at all.** Prefer a
+  *liveness* assertion ("something reported within N hours") over an *error*
+  assertion ("no failures were logged"). The second cannot fire when the
+  reporter is dead, which is precisely when you need it.
+- **"Could not measure" must be as loud as "broken."** `scheduler-liveness.mjs`
+  exits 2 on an unreachable database and the workflow fails the run — an
+  unreadable store must never look like a quiet, well-behaved pipeline.
+- **Positive-control the alarm, not just the metric.** Force the thresholds and
+  watch it fire before trusting it. Doing that here caught a watchdog that read
+  `started_at` on rows which do not carry it and called a *live* system "never
+  ran" — a false alarm ships as noise, and noise trains the reader to ignore the
+  one true alert. Same rule as the negative control in
+  `tests-that-are-not-guards.md`: an alert never seen firing is a decoration.
+
+Incident and the remaining asks (`Restart=always`, log-silence alarm): #4528.
