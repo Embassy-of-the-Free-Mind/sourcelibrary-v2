@@ -120,7 +120,8 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
   languages: string[];
   size?: 'hero' | 'featured' | 'normal';
 }) {
-  const topLangs = languages.slice(0, 4).join(', ');
+  const isCompact = size === 'normal';
+  const topLangs = languages.slice(0, isCompact ? 3 : 4).join(', ');
   const isHero = size === 'hero';
   const isFeatured = size === 'featured';
 
@@ -156,7 +157,7 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
       <div className={`absolute inset-0 ${
         isHero || isFeatured
           ? 'bg-gradient-to-r from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.5)] to-transparent'
-          : 'bg-gradient-to-t from-[rgba(26,22,18,0.88)] via-[rgba(26,22,18,0.3)] to-transparent'
+          : 'bg-gradient-to-t from-[rgba(26,22,18,0.95)] via-[rgba(26,22,18,0.55)] via-40% to-transparent'
       }`} />
 
       {/* Content */}
@@ -177,23 +178,28 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
           {partner.name}
         </h2>
 
-        <p className={`text-white/70 leading-relaxed ${
-          isHero ? 'mt-2 text-base md:text-lg line-clamp-3' :
-          isFeatured ? 'mt-2 text-sm md:text-base line-clamp-2' :
-          'mt-1 text-xs line-clamp-2 hidden sm:block'
-        }`}>
-          {partner.description}
-        </p>
+        {/* Descriptions only on the large cards — on small tiles they overflow the
+            image and land on unreadably light scan backgrounds. The tile links to
+            /libraries/[slug], which carries the full description. */}
+        {!isCompact && (
+          <p className={`text-white/70 leading-relaxed ${
+            isHero ? 'mt-2 text-base md:text-lg line-clamp-3' : 'mt-2 text-sm md:text-base line-clamp-2'
+          }`}>
+            {partner.description}
+          </p>
+        )}
 
-        <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 ${isHero || isFeatured ? 'mt-5' : 'mt-2'}`}>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
+        <div className={`flex items-center gap-x-3 gap-y-1 min-w-0 ${
+          isCompact ? 'mt-2 flex-nowrap' : 'mt-5 flex-wrap'
+        }`}>
+          <span className="inline-flex shrink-0 items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
             <BookOpen className="w-3 h-3" />
             {count.toLocaleString('en-US')} books
           </span>
           {topLangs && (
-            <span className="inline-flex items-center gap-1.5 text-xs text-white/50">
-              <Globe className="w-3 h-3" />
-              {topLangs}
+            <span className={`items-center gap-1.5 text-xs text-white/60 min-w-0 ${isCompact ? 'hidden md:inline-flex' : 'inline-flex'}`}>
+              <Globe className="w-3 h-3 shrink-0" />
+              <span className="truncate">{topLangs}</span>
             </span>
           )}
         </div>
@@ -268,7 +274,7 @@ export default async function LibrariesPage() {
             Libraries and platforms whose digitized collections we import, translate, and preserve.
           </p>
 
-          <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
             {rest.map((partner) => (
               <PartnerCard
                 key={partner.slug}
