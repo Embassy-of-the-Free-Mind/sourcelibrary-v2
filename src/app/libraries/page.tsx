@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Library, ExternalLink, BookOpen, Globe } from 'lucide-react';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
+import HeroScrim from '@/components/HeroScrim';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import type { Metadata } from 'next';
 
@@ -219,13 +220,23 @@ export default async function LibrariesPage() {
     fetchContributingLibraries().catch((err) => { console.error('Libraries contributing fetch failed:', err); return [] as ContributingLibrary[]; }),
   ]);
 
-  const partners = stats
-    .map(s => {
-      const partner = getPartnerByProvider(s.provider);
-      if (!partner) return null;
-      return { ...partner, count: s.count, languages: s.languages, heroImage: partner.heroImageOverride || s.heroImage };
-    })
-    .filter(Boolean) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
+  // Group provider stats by PARTNER, not by provider key: some institutions
+  // imported books under two keys over time (ndl + ndl_japan, mdz + bsb) and
+  // must render as one tile with summed counts, not duplicates.
+  const byPartnerSlug = new Map<string, typeof LIBRARY_PARTNERS[string] & { count: number; languageSet: Set<string>; heroImage?: string }>();
+  for (const s of stats) {
+    const partner = getPartnerByProvider(s.provider);
+    if (!partner) continue;
+    const entry = byPartnerSlug.get(partner.slug)
+      || { ...partner, count: 0, languageSet: new Set<string>(), heroImage: partner.heroImageOverride };
+    entry.count += s.count;
+    for (const lang of s.languages) entry.languageSet.add(lang);
+    if (!entry.heroImage) entry.heroImage = s.heroImage;
+    byPartnerSlug.set(partner.slug, entry);
+  }
+  const partners = [...byPartnerSlug.values()]
+    .map(({ languageSet, ...p }) => ({ ...p, languages: [...languageSet].sort() }))
+    .sort((a, b) => b.count - a.count) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
 
   const totalBooks = partners.reduce((s, p) => s + p.count, 0);
   const totalInstitutions = contributingLibraries.length;
@@ -239,10 +250,24 @@ export default async function LibrariesPage() {
     <div className="min-h-screen bg-stone-50">
       <SiteHeader variant="light" />
 
-      {/* Hero: dark gradient header */}
-      <div className="relative overflow-hidden text-white py-16 md:py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
-        <div className="relative max-w-[var(--container-wide)] mx-auto px-6">
+      {/* Hero: a tiled mosaic of the partners' own scans under the shared
+          HeroScrim — the same treatment as the book-page hero, so the two
+          surfaces read as one design. Falls back to the dark base color if
+          images are missing. */}
+      <div className="relative overflow-hidden text-white" style={{ background: '#14100c' }}>
+        <div className="absolute inset-0 grid grid-cols-3 grid-rows-4 md:grid-cols-6 md:grid-rows-2">
+          {partners
+            .map(p => p.heroImage)
+            .filter((src): src is string => !!src)
+            .slice(0, 12)
+            .map((src, i) => (
+              <div key={src} className="relative">
+                <Image src={src} alt="" fill sizes="(max-width: 768px) 34vw, 17vw" className="object-cover" priority={i < 6} />
+              </div>
+            ))}
+        </div>
+        <HeroScrim />
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 py-20 md:py-28" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">Libraries</h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">
             {totalBooks.toLocaleString('en-US')} books sourced from {partners.length} libraries and archives
