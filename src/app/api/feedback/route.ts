@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createHash } from 'crypto';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { guardPublicSubmission } from '@/lib/public-submission-guard';
@@ -44,7 +45,10 @@ export async function POST(request: NextRequest) {
     // cf-connecting-ip first: behind the CDN, x-forwarded-for is a Cloudflare
     // edge node, so reading it first filed every submission under ~15 shared
     // addresses (#3491). Same helper the limiter above keys on.
-    const ip = getClientIp(request);
+    // Stored as a truncated hash, not the raw address (same scheme as
+    // api-usage/mcp-usage): same submitter → same hash, so abuse triage still
+    // correlates, but no full IP is retained. /privacy promises this.
+    const ipHash = createHash('sha256').update(getClientIp(request)).digest('hex').slice(0, 16);
     const trimmedEmail = email?.trim()?.toLowerCase() || null;
     const wantsHelp = wantsToHelp === true;
 
@@ -62,7 +66,7 @@ export async function POST(request: NextRequest) {
       page: page || null,
       name: name?.trim() || null,
       email: trimmedEmail,
-      ip,
+      ip_hash: ipHash,
       user_agent: userAgent,
       channel,
       created_at: new Date(),
@@ -84,7 +88,7 @@ export async function POST(request: NextRequest) {
             languages: [],
             interests: [],
             source: 'feedback_widget',
-            ip,
+            ip_hash: ipHash,
             created_at: new Date(),
             contacted: false,
           },
