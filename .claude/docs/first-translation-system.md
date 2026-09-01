@@ -25,7 +25,7 @@
 > no prior" was written without that measurement and should be re-derived. The
 > verdict model, the badge, and the writer topology below remain accurate.
 
-> **Scaling verification across the whole corpus (tiered census methodology — models, prompts, tools, cost, the ~5,000 estimate): [`first-translation-census-methodology.md`](./first-translation-census-methodology.md).**
+> **Scaling verification across the whole corpus (tiered census methodology — models, prompts, tools, cost, the ~5,000 estimate — SUPERSEDED by round 5's ~8,565, PR #4524): [`first-translation-census-methodology.md`](./first-translation-census-methodology.md).**
 
 **Related issues:** [#2567](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2567) (cluster map / tracking) · [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter — central gap) · [#2352](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2352) (work-keyed translation index) · [#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564) (measurement + effort-routing + single-writer) · [#2264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2264) (work resolver) · [#2453](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2453) (works catalog) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
 

@@ -42,7 +42,7 @@
 
 - **Canonical vs scratch.** Where several files share a stem, the canonical one is tagged above (`-final` usually wins; `-merged`/`-rerun`/`-partial`/`-raw` are stages). Don't cite a non-final copy.
 - **Two different kinds of eval.** *Grade-the-pile* (#2876) scores **stored** verdicts at zero token cost. *Run-the-method* (the Tier-2 censuses, the 7-book test, the planned #2880) **runs searches live** and costs tokens. They answer different questions — don't conflate "58.9% disposition precision" (the old pile) with the accuracy of the live search.
-- **The over-claim rate (462-study, ~46% genuine) and the unbadged recall (~25%) are the two load-bearing numbers** behind "≈5,000 genuine firsts, composed of substantially different books" (history doc).
+- **The over-claim rate (462-study, ~46% genuine) and the unbadged recall (~25%) are the two load-bearing numbers** behind the SUPERSEDED "≈5,000 genuine firsts" (history doc) — the canonical corpus estimate is now the round-5 row above (~8,565, CI 7,362–9,768).
 - **What's missing and why #2880 exists:** no run has done the **Gemini-vs-Claude live head-to-head on a properly stratified, oracle-labeled whole-corpus sample**. The 2026-06-19 sonnet-vs-gemini set (106) is the closest precursor but was small and Gemini erred on 1/3. Recall of the live search remains unmeasured (the `catalog.completeness` blocker).
 
 ## Provenance
