@@ -14,6 +14,13 @@
  *      generateBookSlug fix in src/lib/slugify.ts, which stops a non-Latin
  *      title from minting new ones.
  *
+ * WHICH OF THOSE THIS SWEEP CAN ACTUALLY FIX is decided by
+ * `classifySlugRepair` in src/lib/book-slug-repair.ts — holdbacks, "nothing
+ * Latin-script to build from", "the slug already says what the record says".
+ * That module is shared with scripts/audit/book-slug-placeholders.ts, the
+ * detector that REPORTS this work, so the two cannot drift into disagreeing
+ * about what is repairable (#4521). Change the rule there, not here.
+ *
  * Renaming a slug changes a public URL, so the old one is pushed onto
  * `slug_aliases` in the SAME update. findBookByIdOrSlug resolves aliases on
  * its miss path and the caller 301s to the canonical slug, so existing links,
@@ -41,7 +48,8 @@
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { MongoClient, type Db } from 'mongodb';
-import { generateBookSlug, appendSlugSuffix, isGenericAuthor, isPlaceholderSlug } from '@/lib/slugify';
+import { appendSlugSuffix, isPlaceholderSlug } from '@/lib/slugify';
+import { classifySlugRepair } from '@/lib/book-slug-repair';
 
 const APPLY = process.argv.includes('--apply');
 const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
@@ -50,25 +58,6 @@ const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
 // those books, so the next incremental catalog sync picks them up.
 const RESYNC = process.argv.includes('--resync-catalog');
 const OUT_DIR = join(process.cwd(), 'scripts', 'output');
-
-/**
- * Books where the author fallback would publish a WRONG name, so no slug is
- * better than the one this sweep would mint. Editorial decisions, not a rule
- * the generator can infer — recorded here so a later run does not re-propose
- * them and a later reader knows why.
- *
- * extractLastName takes the final word of an unpunctuated author, which is the
- * surname in Western order and the GIVEN name in Chinese order. That is right
- * for "Katsushika Hokusai" (Hokusai is the art name) and wrong for "Qiu Ying"
- * (family name Qiu). Fixing name order corpus-wide is its own change; these
- * books belong to the same tail as the 34 skipped above — they need an English
- * `display_title` from enrichment, which produces a slug describing the work
- * rather than half-naming its maker.
- */
-const SKIP_IDS = new Set<string>([
-  // 漢宮春曉 handscroll, Qiu Ying — would become /book/ying.
-  '69e53627ce6791c1bca7d814',
-]);
 
 interface BookRow {
   _id: unknown;
@@ -179,48 +168,18 @@ async function main() {
 
   for (const book of broken) {
     const title = book.display_title || book.title || '';
-
     const bookId = book.id || String(book._id);
-    if (SKIP_IDS.has(bookId)) {
-      skipped.push(`${bookId} — held back deliberately, see SKIP_IDS: "${title.slice(0, 40)}"`);
+
+    // The whole triage — holdbacks, "nothing to build from", "no gain" — lives
+    // in src/lib/book-slug-repair.ts, shared with the detector that reports
+    // this work. A detector disagreeing with its own repair tool reports work
+    // that cannot be done; see the header there (#4521).
+    const verdict = classifySlugRepair({ ...book, id: bookId });
+    if (!verdict.repairable || !verdict.slug) {
+      skipped.push(`${bookId} — ${verdict.reason}: "${title.slice(0, 40)}"`);
       continue;
     }
-
-    const base = generateBookSlug(book.title || '', book.author || '', book.display_title);
-
-    // generateBookSlug already falls back to the author, then to "untitled".
-    // If we land on a placeholder anyway (no Latin characters anywhere in
-    // title OR author), leave the book alone rather than moving it from one
-    // meaningless URL to another — it needs a display_title first, which is
-    // the enrichment pipeline's job, not this sweep's.
-    if (isPlaceholderSlug(base)) {
-      skipped.push(`${book.id} — nothing to build a slug from: "${title.slice(0, 40)}"`);
-      continue;
-    }
-
-    // A book that ALREADY has a URL only earns a rename if the new slug says
-    // something the old one didn't. Titles like "216" or "2-13" sanitize to
-    // themselves, so /book/216 would become /book/216-anonymous: a changed
-    // URL, no new information, and a redirect to maintain forever. Those are
-    // a metadata problem, not a slug problem.
-    //
-    // The title is not the only source, though, and reading it as the only one
-    // is what left 7 visible books stranded at /book/-9, /book/-14, /book/-15,
-    // /book/-16, /book/-22, /book/-23 and /book/306-5741 after the first sweep
-    // (#4521). generateBookSlug falls back to the AUTHOR when the title is
-    // entirely non-Latin, and for a Japanese print or a Russian painting that
-    // author is usually written in Latin script - Yoshitoshi, Hokusai, Utagawa
-    // Yoshiiku, Kawanabe Kyosai, Ivan Akimov, Qiu Ying. Those renames DO add
-    // information, so the skip needs both halves: no Latin title AND no named
-    // author. A book with NO slug is the
-    // opposite case — any readable segment beats /book/<objectid>.
-    const titleHasLetters = /[a-z]/i.test(
-      title.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
-    );
-    if (book.slug && !titleHasLetters && isGenericAuthor(book.author)) {
-      skipped.push(`${book.id} — slug "${book.slug}" gains nothing: non-Latin title, no named author`);
-      continue;
-    }
+    const base = verdict.slug;
 
     const to = await reserveSlug(db, base, taken);
     plan.push({
