@@ -41,7 +41,7 @@
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { MongoClient, type Db } from 'mongodb';
-import { generateBookSlug, appendSlugSuffix, isPlaceholderSlug } from '@/lib/slugify';
+import { generateBookSlug, appendSlugSuffix, isGenericAuthor, isPlaceholderSlug } from '@/lib/slugify';
 
 const APPLY = process.argv.includes('--apply');
 const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
@@ -50,6 +50,25 @@ const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
 // those books, so the next incremental catalog sync picks them up.
 const RESYNC = process.argv.includes('--resync-catalog');
 const OUT_DIR = join(process.cwd(), 'scripts', 'output');
+
+/**
+ * Books where the author fallback would publish a WRONG name, so no slug is
+ * better than the one this sweep would mint. Editorial decisions, not a rule
+ * the generator can infer — recorded here so a later run does not re-propose
+ * them and a later reader knows why.
+ *
+ * extractLastName takes the final word of an unpunctuated author, which is the
+ * surname in Western order and the GIVEN name in Chinese order. That is right
+ * for "Katsushika Hokusai" (Hokusai is the art name) and wrong for "Qiu Ying"
+ * (family name Qiu). Fixing name order corpus-wide is its own change; these
+ * books belong to the same tail as the 34 skipped above — they need an English
+ * `display_title` from enrichment, which produces a slug describing the work
+ * rather than half-naming its maker.
+ */
+const SKIP_IDS = new Set<string>([
+  // 漢宮春曉 handscroll, Qiu Ying — would become /book/ying.
+  '69e53627ce6791c1bca7d814',
+]);
 
 interface BookRow {
   _id: unknown;
@@ -160,6 +179,13 @@ async function main() {
 
   for (const book of broken) {
     const title = book.display_title || book.title || '';
+
+    const bookId = book.id || String(book._id);
+    if (SKIP_IDS.has(bookId)) {
+      skipped.push(`${bookId} — held back deliberately, see SKIP_IDS: "${title.slice(0, 40)}"`);
+      continue;
+    }
+
     const base = generateBookSlug(book.title || '', book.author || '', book.display_title);
 
     // generateBookSlug already falls back to the author, then to "untitled".
@@ -176,13 +202,23 @@ async function main() {
     // something the old one didn't. Titles like "216" or "2-13" sanitize to
     // themselves, so /book/216 would become /book/216-anonymous: a changed
     // URL, no new information, and a redirect to maintain forever. Those are
-    // a metadata problem, not a slug problem. A book with NO slug is the
+    // a metadata problem, not a slug problem.
+    //
+    // The title is not the only source, though, and reading it as the only one
+    // is what left 7 visible books stranded at /book/-9, /book/-14, /book/-15,
+    // /book/-16, /book/-22, /book/-23 and /book/306-5741 after the first sweep
+    // (#4521). generateBookSlug falls back to the AUTHOR when the title is
+    // entirely non-Latin, and for a Japanese print or a Russian painting that
+    // author is usually written in Latin script - Yoshitoshi, Hokusai, Utagawa
+    // Yoshiiku, Kawanabe Kyosai, Ivan Akimov, Qiu Ying. Those renames DO add
+    // information, so the skip needs both halves: no Latin title AND no named
+    // author. A book with NO slug is the
     // opposite case — any readable segment beats /book/<objectid>.
     const titleHasLetters = /[a-z]/i.test(
       title.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
     );
-    if (book.slug && !titleHasLetters) {
-      skipped.push(`${book.id} — slug "${book.slug}" already matches its title, no gain`);
+    if (book.slug && !titleHasLetters && isGenericAuthor(book.author)) {
+      skipped.push(`${book.id} — slug "${book.slug}" gains nothing: non-Latin title, no named author`);
       continue;
     }
 
