@@ -103,10 +103,15 @@ const tokens = (s) => norm(s).split(' ').filter((t) => t.length > 2 && !STOP.has
 function titleScore(ourTitle, rowUniform, rowTitle) {
   const a = new Set(tokens(ourTitle));
   if (!a.size) return 0;
+  // A SINGLE shared content word on a short title reads as 0.5 and is usually
+  // noise: `Philosophie der Kunst` vs `Zur Geschichte der neueren Philosophie`
+  // overlap only on {philosophie}. Require two matching tokens whenever our
+  // title has two to give.
   const cover = (t) => {
     const b = new Set(tokens(t));
     if (!b.size) return 0;
     let hit = 0; for (const x of a) if (b.has(x)) hit++;
+    if (hit < 2 && a.size >= 2) return 0;
     return hit / a.size;
   };
   const u = String(rowUniform || '').trim();
