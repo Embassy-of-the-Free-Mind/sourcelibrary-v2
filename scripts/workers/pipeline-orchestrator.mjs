@@ -3961,7 +3961,10 @@ Rules:
             // processing_priority (#3756): explicit queue weight, higher first
             // (absent sorts last under -1). Existing ordering kept as tiebreak.
             { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            // language + image_source.provider must survive the projection:
+            // getOcrModelForBook reads both, and a missing language reads as
+            // "unknown script" and routes EVERY book to flash-preview (~2.75x).
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
@@ -4067,7 +4070,8 @@ Rules:
           }},
           // processing_priority (#3756): explicit queue weight, higher first.
           { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
+          // language + image_source.provider must survive the projection (see Pass 1).
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
