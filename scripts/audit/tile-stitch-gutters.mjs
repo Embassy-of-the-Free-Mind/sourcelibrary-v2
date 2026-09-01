@@ -66,13 +66,23 @@ const LIST = process.argv.includes('--list');
  * with a missing stride has a white stripe through the middle.
  *
  * So: find rows and columns that are >=98% pure white, keep only runs that
- * touch neither edge, and require one at least 32px thick. Confirmed cohort
- * sits at exactly white=0.635 on 3888x2592 — a 1200px payload in a 2000px cell,
- * 1 - 0.6^2 — with interior bands at x[1200,2000) and y[1200,2000).
+ * touch neither edge, require one on BOTH axes, and require them to be THICK.
+ * A stitch gutter is (stride - payload) wide — hundreds of pixels. The white
+ * strip between two folio fragments in a pecha composite is tens. 200px splits
+ * them cleanly; measured on 140 Tibetan pages it kept every member of the
+ * confirmed cohort and dropped 13 of the 14 pecha false positives.
+ *
+ * The confirmed cohort's geometry is unmistakable once you print the bands:
+ *
+ *   3888x2592  white=0.635  x[1200,2000)              y[1200,2000)
+ *   3504x2336  white=0.623  x[1200,2000)              y[1200,2000)
+ *   4752x3168  white=0.603  x[1200,2000) x[3200,4000) y[1200,2000)
+ *
+ * A 2000px stride carrying a 1200px payload, on every axis, on every book.
  */
 const WHITE_LEVEL = 250;
 const BAND_PURITY = 0.98;
-const MIN_BAND_PX = 32;
+const MIN_BAND_PX = 200;
 
 function interiorBands(profile) {
   const runs = [];
