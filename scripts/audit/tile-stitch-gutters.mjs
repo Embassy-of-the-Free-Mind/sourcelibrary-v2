@@ -202,6 +202,16 @@ const p = gutter.length / (ok.length || 1);
 const halfWidth = 1.96 * Math.sqrt((p * (1 - p)) / (ok.length || 1));
 
 console.log(`fetched ${ok.length}, errors ${errs}`);
+if (errs) {
+  // A page we could not fetch is UNKNOWN, not clean. Print why, so a run that
+  // failed to measure anything cannot be read as a run that found nothing.
+  const kinds = {};
+  for (const r of results.filter((x) => x.err)) kinds[r.err] = (kinds[r.err] || 0) + 1;
+  for (const [k, n] of Object.entries(kinds).sort((a, b) => b[1] - a[1]).slice(0, 8)) {
+    console.log(`    ${n} x ${k}`);
+  }
+  if (errs > ok.length) console.log('    ^ MORE FAILURES THAN MEASUREMENTS — this run measured almost nothing');
+}
 console.log(`GUTTERED (interior full-span white band): ${gutter.length}/${ok.length} = ${pct(gutter.length, ok.length)}`);
 console.log(`  95% CI ${pct(Math.max(0, p - halfWidth), 1)} - ${pct(Math.min(1, p + halfWidth), 1)}`);
 console.log(`  of those, carrying OCR text: ${gutter.filter((r) => r.hasOcr).length}`);
