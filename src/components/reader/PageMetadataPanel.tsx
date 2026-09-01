@@ -228,6 +228,19 @@ export default function PageMetadataPanel({
             </div>
           )}
 
+          {/* Standing honesty notice for Tibetan transcriptions (#4523): repeat
+              OCR runs on the same folio disagree on most of the text, so the
+              transcription is not a verified reading. The image is authoritative. */}
+          {/tibetan/i.test(ocrMeta.language || page.ocr?.language || editionBook?.language || '') && (
+            <div className="mx-4 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900">
+              <strong>Unverified transcription:</strong> automated reading of
+              Tibetan — especially handwritten manuscripts — has tested
+              unreliable in this collection. Treat the page image as the
+              authoritative source; the transcription and its translation may
+              not correspond to it.
+            </div>
+          )}
+
           {/* Summary if present */}
           {translationMeta.summary && (
             <div className="mx-4 mt-4 p-3 bg-accent-gold/8 border border-accent-gold/20 rounded-lg text-sm text-accent-gold-dark">
