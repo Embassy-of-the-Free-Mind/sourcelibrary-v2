@@ -29,14 +29,14 @@
  *   - --verify counts pages with non-empty ocr.data / translation.data. Blank pages
  *     carry a translation placeholder, so verified translation counts can read a
  *     touch high; the point of --verify is catching ZEROS behind a confident counter.
- *   - The dial is global: a scope here bypasses the PAUSE (selective-unpause) but
- *     NOT the spend ceiling — that gap is #4540. The gates header says which
- *     ceiling is currently binding so the report never implies motion that
- *     cannot happen.
+ *   - Gates: a scope without a budget envelope bypasses the PAUSE only; a scope
+ *     WITH budget_usd (#4540) also opens a confined lane past the closed daily
+ *     dial, on its own measured ceiling. The gates header says which ceiling is
+ *     currently binding so the report never implies motion that cannot happen.
  */
 
 import { withMongo } from '../lib/mongo.mjs';
-import { getTodaySpendUsd, readDailyBudgetUsd } from '../lib/spend-guard.mjs';
+import { getTodaySpendUsd, readDailyBudgetUsd, readScopeEnvelopes, getScopeSpendUsd } from '../lib/spend-guard.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -149,6 +149,26 @@ await withMongo(async (db) => {
   const budget = readDailyBudgetUsd(control);
   const spend = await getTodaySpendUsd(db);
   const dialOpen = budget !== null && !spend.meterError && spend.usd < budget;
+  // Envelope lanes (#4540): a scope with budget_usd can dispatch past a
+  // closed global dial, on its own measured ceiling.
+  const envelopes = [];
+  for (const env of readScopeEnvelopes(control)) {
+    const envIds = new Set(env.book_ids);
+    if (env.collections.length) {
+      const rows = await db.collection('books').find({ collections: { $in: env.collections } }).project({ id: 1 }).toArray();
+      for (const b of rows) envIds.add(String(b.id));
+    }
+    const s = await getScopeSpendUsd(db, { ids: [...envIds], since: env.created_at });
+    envelopes.push({
+      tag: env.tag,
+      budget_usd: env.budget_usd,
+      spent_usd: Number(s.usd.toFixed(2)),
+      books: envIds.size,
+      open: !s.meterError && s.usd < env.budget_usd,
+      meter_error: s.meterError || null,
+    });
+  }
+
   const gates = {
     paused: !!control.paused,
     paused_phases: control.paused_phases || [],
@@ -157,6 +177,7 @@ await withMongo(async (db) => {
     meter_error: spend.meterError || null,
     dial_open: dialOpen,
     scopes: Object.keys(control.allow_scopes || {}),
+    envelopes,
     legacy_allow_book_ids: (control.allow_book_ids || []).length,
   };
 
@@ -166,8 +187,11 @@ await withMongo(async (db) => {
     console.log(`  paused: ${gates.paused}${gates.paused_phases.length ? ` (phases: ${gates.paused_phases.join(', ')})` : ''}`);
     console.log(`  dial:   $${gates.spent_today_usd} spent / ${budget === null ? 'UNSET (default-closed)' : '$' + budget} today → ${dialOpen ? 'OPEN' : 'CLOSED — no paid dispatch'}${gates.meter_error ? ` [METER ERROR: ${gates.meter_error}]` : ''}`);
     console.log(`  allow_scopes: ${gates.scopes.length ? gates.scopes.join(', ') : '(none)'}  legacy allow_book_ids: ${gates.legacy_allow_book_ids}`);
+    for (const e of envelopes) {
+      console.log(`    envelope ${e.tag}: $${e.spent_usd}/$${e.budget_usd} → ${e.meter_error ? `METER ERROR: ${e.meter_error}` : e.open ? 'OPEN' : 'SPENT'} (${e.books} books)`);
+    }
     console.log('\nPass --scope <tag>, --collection <slug>, or --books id1,id2 for per-book progress.');
-    console.log('NOTE: a scope bypasses the PAUSE only — the spend dial is global (#4540).');
+    console.log('NOTE: a scope without a budget envelope bypasses the PAUSE only; an envelope (#4540) also opens a confined lane past the closed dial. Manage with scripts/maintenance/set-scope.mjs.');
     return;
   }
 
@@ -210,7 +234,10 @@ await withMongo(async (db) => {
   }
 
   console.log(`Scope progress — ${source} (${texts.length} text books${artworks.length ? `, ${artworks.length} artwork records excluded` : ''})${verified ? ' [verified from pages]' : ' [book counters]'}`);
-  console.log(`Gates: paused=${gates.paused}  dial ${dialOpen ? 'OPEN' : 'CLOSED'} ($${gates.spent_today_usd}/${budget === null ? 'unset' : '$' + budget})  — a scope bypasses the pause, NOT the dial (#4540)\n`);
+  const envNote = envelopes.length
+    ? envelopes.map((e) => `${e.tag} $${e.spent_usd}/$${e.budget_usd} ${e.open ? 'OPEN' : 'SPENT'}`).join('; ')
+    : 'none (books wait on the global dial)';
+  console.log(`Gates: paused=${gates.paused}  dial ${dialOpen ? 'OPEN' : 'CLOSED'} ($${gates.spent_today_usd}/${budget === null ? 'unset' : '$' + budget})  envelopes: ${envNote}\n`);
   if (missing.length) console.log(`⚠ ${missing.length} ids not found in books (check id vs _id): ${missing.join(', ')}\n`);
 
   for (const r of reports) {
