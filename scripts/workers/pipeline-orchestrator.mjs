@@ -3548,27 +3548,18 @@ Rules:
               updates.subject_keywords = parsed.subject_keywords;
             }
 
-            // First translation: derive boolean + refine pipeline flag.
-            // CATALOG PRECEDENCE (#1974): this is a content-based read of the
-            // book's own pages — it CANNOT establish whether someone else already
-            // published a translation, which is a catalog fact. So it must never
-            // overwrite a catalog-grounded determination. Re-enrichment was
-            // clobbering correct catalog verdicts and manufacturing false "first
-            // translation" claims. Authoritative sources are the catalog-grounded
-            // ones (catalog_search / catalog_and_llm from search+validate-
-            // translation-evidence, and the deliberate canonical_kanjur tag) — NOT
-            // gemini_knowledge_lookup, which is itself memory-based. The content
-            // opinion is still preserved in ai_metadata.first_translation below.
+            // First translation: refine the INTERNAL pipeline flag only.
+            // The public boolean is no longer written here (#3881/#4536,
+            // 2026-09-01): a content-based read of the book's own pages cannot
+            // establish whether someone else already published a translation —
+            // that is a catalog fact, and the sanctioned path to the public
+            // badge is the reviewed Translation Card (work_translation_history).
+            // pipeline_auto.likely_first_translation stays: it is a routing
+            // signal (enrichment priority sort keys read it), never rendered.
             if (parsed.first_translation?.status) {
-              const CATALOG_GROUNDED_SOURCES = ['catalog_search', 'catalog_and_llm', 'canonical_kanjur'];
-              if (CATALOG_GROUNDED_SOURCES.includes(book.translation_verification?.source)) {
-                changes.push({ field: 'is_first_translation', skipped: 'deferred_to_catalog_verification', verification_source: book.translation_verification.source, content_status: parsed.first_translation.status });
-              } else {
-                const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
-                updates.is_first_translation = isFirst;
-                updates['pipeline_auto.likely_first_translation'] = isFirst;
-                changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
-              }
+              const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
+              updates['pipeline_auto.likely_first_translation'] = isFirst;
+              changes.push({ field: 'pipeline_auto.likely_first_translation', previous: book.pipeline_auto?.likely_first_translation ?? null, new_value: isFirst, public_badge_skipped: 'ft_demolition_3881' });
             }
 
             // Source work dates

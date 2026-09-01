@@ -82,6 +82,6 @@ for (const bid of demoteIds) {
 }
 
 console.log(`not_applicable: ${stats.na} | not_first: ${stats.nf} | notFound: ${stats.notFound} | no-classification: ${stats.skippedNoClass}`);
-if (!APPLY) console.log(`\nDRY-RUN. Would write ${stats.na + stats.nf} verdicts. Re-run --apply, then reconcile-first-translation-flag.ts --ids=<ids> --apply`);
+if (!APPLY) console.log(`\nDRY-RUN. Would write ${stats.na + stats.nf} verdicts. Re-run --apply, then reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] --ids=<ids> --apply`);
 else console.log(`\nAPPLIED. Wrote ${stats.wrote} verdicts + attempts. NOW: reconcile-first-translation-flag.ts --ids=<ids> --apply`);
 await c.close();

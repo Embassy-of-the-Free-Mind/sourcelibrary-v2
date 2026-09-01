@@ -2,6 +2,15 @@
 
 *Source of truth for "how do we decide a book is a first English translation, and how is that counted?" Last reconciled against live code + production data 2026-06-01. Sibling: `.claude/docs/author-identity-system.md`.*
 
+> ## ⚠️ 2026-09-01 — the book-grain machinery this document describes is RETIRED (#4536)
+>
+> The nightly derive→reconcile actuators are off and their scripts deleted
+> (`derive-ft-verdict-from-attempts.ts`, `reconcile-first-translation-flag.ts`,
+> `derive-from-evidence.ts`). `books.is_first_translation` is frozen except
+> through the **Translation Card** (`work_translation_history`) review process —
+> see `.claude/docs/translation-card-method.md`. Read what follows as history of
+> how the stored verdicts were produced, not as the live mechanism.
+
 > ## ⚠️ 2026-08-01 — read [`first-translation-reference-set.md`](./first-translation-reference-set.md) before trusting any absence claim here
 >
 > An **evidence layer beneath this whole document** shipped in PR #3463 (#3459),

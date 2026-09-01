@@ -110,9 +110,9 @@ async function main() {
   if (APPLY) {
     console.log(`\nAttempts written: ${written}   already present: ${existing}`);
     console.log('\nNothing public has changed yet. To materialise:');
-    console.log('  npx tsx scripts/maintenance/derive-ft-verdict-from-attempts.ts            # dry-run, review');
+    console.log('  npx tsx scripts/maintenance/derive-ft-verdict-from-attempts.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead]            # dry-run, review');
     console.log('  npx tsx scripts/maintenance/derive-ft-verdict-from-attempts.ts --apply    # writes the verdict only');
-    console.log('  npx tsx scripts/maintenance/reconcile-first-translation-flag.ts --only-demotions --verdict=not_first,not_applicable --resolver=tier2_agent,human           # dry-run');
+    console.log('  npx tsx scripts/maintenance/reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] --only-demotions --verdict=not_first,not_applicable --resolver=tier2_agent,human           # dry-run');
     console.log('  ... add --apply to flip the badges.  (The 05:30 cron runs exactly this pair unattended.)');
   } else {
     console.log('\nDRY-RUN — no writes. Re-run with --apply to append the attempts.');

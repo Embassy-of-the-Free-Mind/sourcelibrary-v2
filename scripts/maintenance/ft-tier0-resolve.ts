@@ -8,7 +8,7 @@
  * Dry-run by default. With --apply it writes ONLY the verdict (book.first_translation
  * = not_first) + appends the attempt — it does NOT flip is_first_translation. The
  * single-writer reconcile materializes the demote afterwards:
- *   npx tsx scripts/maintenance/reconcile-first-translation-flag.ts --apply
+ *   npx tsx scripts/maintenance/reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] --apply
  * (gate on Derek's sign-off). This keeps the single-writer invariant (#2564).
  *
  * Only `completeness: complete` catalog rows can be decisive, so we load those
@@ -21,7 +21,7 @@
  */
 import { getDb } from '@/lib/mongodb';
 import { makeTier0Catalog, type CatalogPrior, type CatalogLookup } from '@/lib/first-translation/tier0-catalog';
-import type { ResolvableBook } from '@/lib/first-translation/resolve';
+import type { ResolvableBook } from '@/lib/first-translation/tier';
 import { appendAttempt } from '@/lib/first-translation/attempt-log';
 
 const APPLY = process.argv.includes('--apply');
