@@ -27,8 +27,18 @@ export function generateBookSlug(
   const authorLast = extractLastName(author);
   const slugAuthor = slugifyText(authorLast, 20);
 
+  // A title segment has to contain a LETTER to be a title. A non-Latin title
+  // does not always sanitize to the empty string the branch below assumes:
+  // catalogue titles carry measurements, and "​漢宮春曉, 卷, 絹本設色, 纵30.6厘米
+  // 横574.1厘米" left "30-6-574-1" behind — the scroll's dimensions in
+  // centimetres, minted as /book/30-6-574-1-ying (#4521). Digits that survived
+  // a script the slugifier cannot read are debris, not information, and
+  // isPlaceholderSlug already treats a letterless slug as broken, so producing
+  // one here just hands the repair sweep its own work back.
+  const titleIsReadable = /[a-z]/.test(slugTitle);
+
   if (!slugAuthor || slugAuthor === 'unknown') {
-    return slugTitle || 'untitled';
+    return titleIsReadable ? slugTitle : 'untitled';
   }
 
   // slugifyText keeps only [a-z0-9], so a title written entirely in Greek,
@@ -39,7 +49,7 @@ export function generateBookSlug(
   // non-Latin title degrades to a plain readable segment instead of a broken
   // one. Prefer giving these books an English `display_title`: the generator
   // reads it first, and it produces a genuinely descriptive slug.
-  if (!slugTitle) {
+  if (!titleIsReadable) {
     return slugAuthor;
   }
 
@@ -205,6 +215,31 @@ function extractLastName(author: string): string {
   // "First Last" format — take last word
   const parts = author.trim().split(/\s+/);
   return parts[parts.length - 1];
+}
+
+/**
+ * Does this author field name somebody, or is it a stand-in for "we do not
+ * know"?
+ *
+ * Used by the repair sweeps to decide whether re-slugging a book whose title
+ * is entirely non-Latin gains anything. generateBookSlug falls back to the
+ * author for those titles, and the answer differs sharply by author:
+ * "Katsushika Hokusai" turns /book/-15 into a URL that names the artist, while
+ * "Anonymous" would only turn /book/216 into /book/216-anonymous — a changed
+ * public URL carrying no new information, plus a redirect to maintain forever.
+ *
+ * Compared on the SLUGIFIED surname, so the qualified spellings catalogues
+ * actually write — "未詳 (Unknown)", "Unknown artist", "Anonymous Sumerian" —
+ * all fold to the same answer as the bare word. Note this is deliberately
+ * stricter than extractLastName's own policy: that function keeps "anonymous"
+ * in the slug on purpose (an anonymous early-modern imprint is a real
+ * attribution), and this predicate is only about whether the segment is worth
+ * *renaming an existing URL* for.
+ */
+export function isGenericAuthor(author: string | null | undefined): boolean {
+  if (!author) return true;
+  const surname = slugifyText(extractLastName(author), 20);
+  return !surname || surname === 'unknown' || surname === 'anonymous' || surname === 'anon';
 }
 
 /**
