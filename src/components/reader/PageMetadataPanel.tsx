@@ -189,6 +189,23 @@ function TagList({ tags, color = 'stone' }: { tags: string[]; color?: 'stone' | 
   );
 }
 
+/**
+ * Scripts whose automated transcription has tested unreliable here, each
+ * earning a standing notice on the page. Matched against the page's detected
+ * OCR language, then the edition's.
+ *
+ * - Tibetan (#4523): repeat OCR runs on the same folio agree on only 31-35% of
+ *   the text, against 87-93% for printed Latin — the reading is not verified.
+ * - Egyptian hieroglyphs (#4584): the transcription phase leaves glyph blocks
+ *   unread, and the translation phase has been observed supplying invented
+ *   text in their place (Urkunden IV p.24 rendered twenty unread lines as
+ *   twenty lines of English funerary formulae).
+ */
+const UNVERIFIED_TRANSCRIPTION_SCRIPTS: Array<{ match: RegExp; label: string }> = [
+  { match: /tibetan/i, label: 'Tibetan — especially handwritten manuscripts —' },
+  { match: /hieroglyph/i, label: 'Egyptian hieroglyphs' },
+];
+
 export default function PageMetadataPanel({
   page,
   onClose,
@@ -228,18 +245,22 @@ export default function PageMetadataPanel({
             </div>
           )}
 
-          {/* Standing honesty notice for Tibetan transcriptions (#4523): repeat
-              OCR runs on the same folio disagree on most of the text, so the
-              transcription is not a verified reading. The image is authoritative. */}
-          {/tibetan/i.test(ocrMeta.language || page.ocr?.language || editionBook?.language || '') && (
-            <div className="mx-4 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900">
-              <strong>Unverified transcription:</strong> automated reading of
-              Tibetan — especially handwritten manuscripts — has tested
-              unreliable in this collection. Treat the page image as the
-              authoritative source; the transcription and its translation may
-              not correspond to it.
-            </div>
-          )}
+          {/* Standing honesty notice for scripts whose automated transcription
+              has tested unreliable in this collection. The page image is the
+              authoritative object; the transcription may not correspond to it. */}
+          {(() => {
+            const lang = ocrMeta.language || page.ocr?.language || editionBook?.language || '';
+            const notice = UNVERIFIED_TRANSCRIPTION_SCRIPTS.find((s) => s.match.test(lang));
+            if (!notice) return null;
+            return (
+              <div className="mx-4 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900">
+                <strong>Unverified transcription:</strong> automated reading of{' '}
+                {notice.label} has tested unreliable in this collection. Treat the
+                page image as the authoritative source; the transcription and its
+                translation may not correspond to it.
+              </div>
+            );
+          })()}
 
           {/* Summary if present */}
           {translationMeta.summary && (
