@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS } from '@/lib/types';
 import type { Prompt, PromptType } from '@/lib/types';
 import { withAuth, getSession } from '@/lib/auth-helpers';
-import { promptContentHash } from '@/lib/prompts';
+import { promptContentHash, nextPromptVersion } from '@/lib/prompts';
 
 // Helper to extract variables from prompt text
 function extractVariables(text: string): string[] {
@@ -97,13 +97,13 @@ export const POST = withAuth(async (request: NextRequest) => {
     const db = await getDb();
     const collection = db.collection('prompts');
 
-    // Get the latest version for this name
+    // Version arithmetic goes through the shared helper: `latestVersion.version + 1`
+    // turned `'v1'` into `'v11'` and a missing field into `NaN` (#3614).
     const latestVersion = await collection.findOne(
-      { name },
-      { sort: { version: -1 } }
+      { type, name },
+      { sort: { version: -1, created_at: -1 } }
     );
-
-    const newVersion = latestVersion ? latestVersion.version + 1 : 1;
+    const newVersion = await nextPromptVersion(collection, type, name);
     const variables = extractVariables(promptText);
 
     // If setting as default, unset current default for this type
