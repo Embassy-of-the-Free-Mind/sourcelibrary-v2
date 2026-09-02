@@ -53,8 +53,14 @@ export function isBookScopedUrl(url: string | null | undefined, bookId: string):
   if (typeof url !== 'string' || !url.startsWith('http')) return true;
   // A shared-key segment is always wrong, under any prefix.
   if (/\/(undefined|null|NaN)\//.test(url)) return false;
-  // Only judge our own page-image prefixes; other assets are not book-scoped.
-  if (!/\/(archived|pages|thumbnails)\//.test(url)) return true;
+  // Only judge our own page-image prefixes; other assets (gallery/, artwork/,
+  // manuscripts/) are not book-scoped and must not be flagged.
+  //
+  // `cropped/` and `uploads/` were added for #4376 — leaving them out let a
+  // `cropped/<another book's id>/<page>.jpg` cover pass as fine. Both measured
+  // corpus-wide first (2026-09-02): `uploads/` zero mismatches, `cropped/` one
+  // book. Keep in lockstep with the .mjs twin.
+  if (!/\/(archived|pages|thumbnails|cropped|uploads)\//.test(url)) return true;
   if (!bookId) return false;
   // Both `archived/<bookId>/<N>.jpg` and `archived/<bookId>-<NNNN>.jpg` are real,
   // book-scoped conventions here. Require the id to sit between delimiters rather
