@@ -62,6 +62,8 @@ Every collection page opens with a **three-part intro**. Same structure everywhe
    - **No date spans or years.** Not "from 1533 to 1678," not "a fourteenth-century treatise to a 1927 bibliography." Describe range by **era** ("from Renaissance occult philosophy to the great Baroque folios," "from medieval manuscripts to the foundations of modern scholarship").
    - Named *works* may anchor the span ("from the Canon to Leclerc's history") as long as no year is attached.
 
+11c. **Every work you name is clickable.** Parts 2 and 3 name real works (rule 7); each of those names must link to its book page. Write inline `[Short Title](/book/<slug>)` using slugs read back from the collection's own books, or cover the mention in `mentioned_books`. **Internal hrefs only** — an absolute `https://sourcelibrary.org/...` is not parsed and renders as literal brackets, and so do `**bold**` and `*italic*` (emphasis is not parsed — the Part 1 hook is marked bold in this guide's examples to show structure, never by typing asterisks into the field). Don't assume auto-linking covers it: the renderer looks for a book's *full* title inside the prose, and these intros name short forms. Mechanism and verification: `.claude/docs/collection-description-linking.md`.
+
 12. **No em-dashes.** Use commas, colons, or full stops. (Site style.)
 
 13. **Vary paragraph openings.** Parts 2 and 3 should not begin the same way ("This collection…") every time, across the page or across collections.

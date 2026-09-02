@@ -236,11 +236,13 @@ Structure each verified quote as:
 
 > **Authoritative editorial rules: `.claude/docs/collection-intro-writing-rules.md`.** For the page-opening intro, that doc is the source of truth and supersedes the brief notes below where they differ (it forbids restating counts/years — the header owns those — bans foil/oppressor framing and proper nouns in the hook, and defines the required three-part structure). Read it before writing any collection prose.
 
+> **Every work you name must be clickable — see `.claude/docs/collection-description-linking.md`.** Write inline `[Short Title](/book/<slug>)` links (internal hrefs only; an absolute `https://sourcelibrary.org/...` renders as literal brackets), or cover the mention in `mentioned_books` at Step 6. Don't assume auto-linking catches it: the renderer looks for the book's *full* title inside your prose, and long Latin titles never appear verbatim in good copy.
+
 Write 2-3 paragraphs of editorial context. Structure:
 
-**Paragraph 1:** What this collection is and why it matters. Situate it in intellectual history. Mention 2-3 key texts by title (these will auto-link via `mentioned_books`).
+**Paragraph 1:** What this collection is and why it matters. Situate it in intellectual history. Mention 2-3 key texts by title, each linked.
 
-**Paragraph 2:** What makes Source Library's collection distinctive — edition quality, language coverage, rare texts. Include 1-2 short quotes from actual translated passages, with the book title mentioned so it links.
+**Paragraph 2:** What makes Source Library's collection distinctive — edition quality, language coverage, rare texts. Include 1-2 short quotes from actual translated passages, with the book title mentioned and linked.
 
 **Paragraph 3 (optional):** Reading path or thematic threads. What someone new to this field should start with.
 
@@ -276,13 +278,15 @@ Interesting, rare, or unusual texts. Notes should be 1 sentence.
 
 ### Step 6: Build mentioned_books Mappings
 
-For every book title referenced in the `expanded_description`, create a `mentioned_books` entry:
+For every book title referenced in the `expanded_description` that you did **not** already wrap in an inline `[Title](/book/<slug>)` link at Step 4, create a `mentioned_books` entry:
 
 ```json
 { "text": "Turba Philosophorum", "book_id": "actual-book-id-here" }
 ```
 
-The `text` must be the **exact string** as it appears in the description. `linkBookTitles()` does regex matching — longest match first, case-sensitive.
+The `text` must appear verbatim in the description. `linkBookTitles()` regex-matches it **case-insensitively** (`gi`), longest `text` first, so list long-form phrases before short-form fallbacks — an earlier match claims its span and later ones only fill unclaimed text.
+
+**Then check the coverage is total:** list every work named in the description and confirm each one is either inline-linked or covered here. Any name left over ships as a dead reference (#1867).
 
 ### Step 7: Audit & Curate Artworks (Visual Art Section)
 
@@ -545,3 +549,4 @@ Match this level of richness for every collection.
 6. **Don't forget to verify book IDs are real.** Always fetch book data before referencing IDs.
 7. **Don't ignore the Visual Art section.** Artwork imports from Rijksmuseum/Wikimedia often bring in text-heavy pages, duplicates, and off-topic prints. Always run the artwork audit (Step 7) when curating collections that have artworks.
 8. **Don't remove artworks from the database — only from collections.** Use `$pull: { collections: slug }` to untag, never `deleteOne`.
+9. **Don't leave a named work unlinked.** Every book the description names must be inline-linked or in `mentioned_books`. And don't write absolute `https://sourcelibrary.org/book/...` hrefs or Markdown emphasis into a description — neither is parsed, both render as literal punctuation. See `.claude/docs/collection-description-linking.md`.
