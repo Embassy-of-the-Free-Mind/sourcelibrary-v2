@@ -259,11 +259,11 @@ async function main() {
             ...dimFields,
             'archive_metadata.archived_at': new Date(),
             'archive_metadata.source_url': url,
-            'archive_metadata.bytes': buffer.byteLength,
+            'archive_metadata.bytes': master.buffer.byteLength,
             updated_at: new Date(),
           },
         });
-        archived++; totalBytes += buffer.byteLength; touchedBookIds.add(page.book_id);
+        archived++; totalBytes += master.buffer.byteLength; touchedBookIds.add(page.book_id);
         consecutiveFails = 0; bookFails.delete(page.book_id);
       } catch (err) {
         failed++; consecutiveFails++;
