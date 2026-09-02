@@ -182,7 +182,13 @@ async function main() {
   // state the book is in. Same predicate archive-harvard.mjs and archive-bulk.mjs
   // already use. Safe because mayAdvanceToArchiveComplete() refuses to move an
   // advanced book backward — see that function.
-  const bookFilter = ANY_STATUS
+  // --book-ids=a,b,c: targeted one-off, same intent as archive-bulk's --book-id.
+  // Named books jump the (multi-thousand-book) queue; provider filter is dropped
+  // for them — this worker archives whatever photo URL the page carries anyway.
+  const BOOK_IDS = (getArg('book-ids') || '').split(',').map(s => s.trim()).filter(Boolean);
+  const bookFilter = BOOK_IDS.length
+    ? { id: { $in: BOOK_IDS }, pages_count: { $gt: 0 } }
+    : ANY_STATUS
     ? {
         'image_source.provider': { $in: PROVIDERS },
         pages_count: { $gt: 0 },
@@ -193,6 +199,7 @@ async function main() {
         'image_source.provider': { $in: PROVIDERS },
         pages_count: { $gt: 0 },
       };
+  if (BOOK_IDS.length) console.log(`[archive-iiif] Targeted run: ${BOOK_IDS.length} book(s) by --book-ids.`);
 
   const books = await db.collection('books')
     .find(bookFilter, { projection: { id: 1, title: 1, pages_count: 1, pages_archived: 1, 'pipeline_auto.status': 1 } })
