@@ -12,6 +12,12 @@ export interface LibraryPartner {
    *  a duplicate tile. Query with getProviderKeys(partner), never providerKey
    *  alone, on any surface that filters books by provider. */
   aliasProviderKeys?: ImageSourceProvider[];
+  /** 'platform' marks an aggregator or digital portal (Internet Archive,
+   *  Google Books, e-rara…) whose scans depict books physically held
+   *  ELSEWHERE — the holders are credited per-book via contributing_library.
+   *  Unset means a holding institution: the library/museum both owns and
+   *  digitized what we show. /libraries renders the two as separate sections. */
+  kind?: 'platform';
   url: string;
   description: string;
   color: 'rust' | 'sage' | 'violet' | 'gold';
@@ -36,6 +42,7 @@ export interface LibraryPartner {
 export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   'internet-archive': {
     slug: 'internet-archive',
+    kind: 'platform',
     name: 'Internet Archive',
     shortName: 'IA',
     providerKey: 'internet_archive',
@@ -103,6 +110,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'e-rara': {
     slug: 'e-rara',
+    kind: 'platform',
     name: 'e-rara',
     shortName: 'e-rara',
     providerKey: 'e-rara',
@@ -145,6 +153,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'google-books': {
     slug: 'google-books',
+    kind: 'platform',
     name: 'Google Books',
     shortName: 'Google',
     providerKey: 'google_books',
@@ -155,6 +164,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'hathi-trust': {
     slug: 'hathi-trust',
+    kind: 'platform',
     name: 'HathiTrust Digital Library',
     shortName: 'HathiTrust',
     providerKey: 'hathi_trust',
@@ -164,6 +174,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'europeana': {
     slug: 'europeana',
+    kind: 'platform',
     name: 'Europeana',
     shortName: 'Europeana',
     providerKey: 'europeana',
@@ -226,6 +237,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'e-codices': {
     slug: 'e-codices',
+    kind: 'platform',
     name: 'e-codices',
     shortName: 'e-codices',
     providerKey: 'e-codices',
@@ -286,6 +298,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'imslp': {
     slug: 'imslp',
+    kind: 'platform',
     name: 'IMSLP / Petrucci Music Library',
     shortName: 'IMSLP',
     providerKey: 'imslp',
@@ -395,6 +408,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'bdrc': {
     slug: 'bdrc',
+    kind: 'platform',
     name: 'Buddhist Digital Resource Center',
     shortName: 'BDRC',
     providerKey: 'bdrc',
@@ -441,6 +455,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'qatar-digital-library': {
     slug: 'qatar-digital-library',
+    kind: 'platform',
     name: 'Qatar Digital Library',
     shortName: 'QDL',
     providerKey: 'qdl',
@@ -461,6 +476,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'sat-daizokyo': {
     slug: 'sat-daizokyo',
+    kind: 'platform',
     name: 'SAT Daizokyo',
     shortName: 'SAT',
     providerKey: 'sat_daizokyo',
@@ -480,6 +496,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'oraec': {
     slug: 'oraec',
+    kind: 'platform',
     name: 'ORAEC (Ancient Egyptian Texts)',
     shortName: 'ORAEC',
     providerKey: 'oraec',

@@ -241,10 +241,14 @@ export default async function LibrariesPage() {
   const totalBooks = partners.reduce((s, p) => s + p.count, 0);
   const totalInstitutions = contributingLibraries.length;
 
-  // Separate BPH (home library) and IA (featured) from the rest
+  // The page credits two different kinds of source, in two sections: HOLDING
+  // institutions (they own and digitized what we show) and digital PLATFORMS
+  // (aggregators whose scans depict books physically held elsewhere — those
+  // holders appear in Contributing Institutions below). BPH keeps its
+  // home-library hero at the top.
   const bph = partners.find(p => p.providerKey === 'bph');
-  const ia = partners.find(p => p.providerKey === 'internet_archive');
-  const rest = partners.filter(p => p.providerKey !== 'bph' && p.providerKey !== 'internet_archive');
+  const holdingLibraries = partners.filter(p => p.providerKey !== 'bph' && p.kind !== 'platform');
+  const platforms = partners.filter(p => p.kind === 'platform');
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -285,22 +289,16 @@ export default async function LibrariesPage() {
           </section>
         )}
 
-        {/* Internet Archive — Featured (full-width spread) */}
-        {ia && (
-          <section className="mb-12">
-            <PartnerCard partner={ia} heroImage={ia.heroImage} count={ia.count} languages={ia.languages} size="featured" />
-          </section>
-        )}
-
-        {/* Other Digital Sources — 2-column grid */}
+        {/* Holding libraries — institutions that own and digitized the books */}
         <section className="mb-16">
-          <h2 className="text-2xl font-display text-primary mb-2">Digital Sources</h2>
-          <p className="text-sm text-muted mb-6">
-            Libraries and platforms whose digitized collections we import, translate, and preserve.
+          <h2 className="text-2xl font-display text-primary mb-2">Libraries &amp; Archives</h2>
+          <p className="text-sm text-muted mb-6 max-w-3xl">
+            The institutions whose collections we read from — each holds the books it digitized.
+            Every card links to their holdings on Source Library.
           </p>
 
           <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
-            {rest.map((partner) => (
+            {holdingLibraries.map((partner) => (
               <PartnerCard
                 key={partner.slug}
                 partner={partner}
@@ -311,6 +309,29 @@ export default async function LibrariesPage() {
             ))}
           </div>
         </section>
+
+        {/* Digital platforms — aggregators; the physical holders are credited below */}
+        {platforms.length > 0 && (
+          <section className="mb-16">
+            <h2 className="text-2xl font-display text-primary mb-2">Digital Archives &amp; Platforms</h2>
+            <p className="text-sm text-muted mb-6 max-w-3xl">
+              Portals and aggregators through which we source scans. The books themselves live in
+              the contributing institutions credited beneath — and on each book&apos;s own page.
+            </p>
+
+            <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+              {platforms.map((partner) => (
+                <PartnerCard
+                  key={partner.slug}
+                  partner={partner}
+                  heroImage={partner.heroImage}
+                  count={partner.count}
+                  languages={partner.languages}
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Contributing Institutions */}
         {contributingLibraries.length > 0 && (
