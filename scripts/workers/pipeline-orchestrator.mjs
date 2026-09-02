@@ -3374,12 +3374,17 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'ai_metadata.enriched_at': { $exists: false },
         })
         .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
+        // place_of_publication + publisher must survive the projection:
+        // verifyMetadataInline guards on them ("only fill if absent"), and a
+        // projected-away field made the guard always pass — overwriting real
+        // values and recording previous_value: null in field_provenance.
         .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1,
                    description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1,
+                   place_of_publication: 1, publisher: 1,
                    field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 });
+      if (SCOPE_ACTIVE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, place_of_publication: 1, publisher: 1, field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 });
 
       console.log(`  Books ready for AI metadata: ${readyForMetadata.length}`);
       let metadataEnriched = 0;
@@ -3968,7 +3973,7 @@ Rules:
             { $limit: ocrLimit },
           ])
           .toArray();
-        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
+        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, image_source: 1, pipeline_auto: 1 });
 
         const dedupedPreview = await filterDuplicateWorks(db, previewCandidates);
 
@@ -4075,7 +4080,7 @@ Rules:
           { $limit: ocrLimit },
         ])
         .toArray() : [];
-      if (SCOPE_ACTIVE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, image_source: 1, pipeline_auto: 1 });
 
       const dedupedFull = await filterDuplicateWorks(db, readyForOcr);
 
@@ -4176,9 +4181,12 @@ Rules:
 
       let ocrPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
-        .project({ id: 1, title: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
+        // thumbnail_source must survive the projection: the early-cover guard
+        // below reads it, and a missing field made "!== 'manual'" always true —
+        // silently overwriting human-chosen covers on every run.
+        .project({ id: 1, title: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
-      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, thumbnail_source: 1, pipeline_auto: 1 });
 
       console.log(`  Books waiting for OCR: ${ocrPending.length}`);
 
@@ -4605,10 +4613,13 @@ Rules:
           // then first translations, then speed tier. Descending sort puts books
           // without the field last.
           { $sort: { processing_priority: -1, _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+          // pages_ocr must survive the projection: the "OCR incomplete" guard
+          // reads it, and a projected-away field read as 0 — bouncing every
+          // fully-translated >30-page book back to archive_complete forever.
+          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
-        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1, image_source: 1 });
+        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, pipeline_auto: 1, image_source: 1 });
 
         // If no fresh books, re-queue partially-translated books (gap-fill)
         // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.
@@ -4626,13 +4637,13 @@ Rules:
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
             // processing_priority + pages_translated must survive the projection
             // for the sort below to see them (#3756).
-            { $project: { id: 1, title: 1, pages_count: 1, pages_translated: 1, processing_priority: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
             // Reader requests first (#3750) — see the fresh-books sort above.
             { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
-          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1 });
+          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, language: 1, image_source: 1, pipeline_auto: 1 });
           if (partialBooks.length > 0) {
             console.log(`  No fresh books — gap-filling ${partialBooks.length} under-translated books`);
           }
@@ -5447,7 +5458,7 @@ Rules:
         .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1 });
+      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1, content_type: 1 });
 
       console.log(`  Books ready to finalize: ${readyToFinalize.length}`);
 

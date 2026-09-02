@@ -1294,7 +1294,10 @@ async function main() {
   // Grouping similar workloads per batch minimizes convoy tail waste.
   // Books with <10 pages remaining are auto-completed (overhead not worth it).
   const MIN_REMAINING = 1;
-  const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
+  // last_translation_at must survive the projection: the circuit breaker
+  // branches on it, and a projected-away field made both breaker conditions
+  // permanently false — zero-progress books re-billed forever, never parked.
+  const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1, last_translation_at: 1 };
 
   // Auto-complete near-zero books — job setup overhead exceeds the work
   const nearZero = await db.collection('books').aggregate([

@@ -1547,7 +1547,15 @@ async function main() {
       books = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete', ...SCOPE_FILTER })
         .sort({ is_first_translation: -1, pages_count: 1, 'pipeline_auto.retry_count': 1 })  // First translations first, then small books
-        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
+        // The embedding path (composeBookEmbeddingText + upsertBookEmbedding)
+        // reads far more than the enrich loop itself: published/categories go
+        // into the embedded text, content_type + commons_* + resource_type +
+        // medium are the whole descriptive signal for artworks, quality_score/
+        // collections land in the stored metadata. Projected away, artworks got
+        // generic embeddings and book_embeddings.year/categories were always
+        // null/[] — the single-book --book lane (unprojected findOne) was
+        // correct while this batch lane silently wasn't.
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, published: 1, categories: 1, quality_score: 1, content_type: 1, resource_type: 1, medium: 1, collections: 1, commons_description: 1, commons_categories: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
         .toArray();
     }
