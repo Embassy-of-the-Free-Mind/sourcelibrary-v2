@@ -44,7 +44,9 @@ prompts/
 
 **MongoDB `prompts` collection (source of truth for which version is active):**
 - Each prompt has: `name`, `type`, `version`, `is_default`, `content`, `content_hash`
-- Only one prompt per `(type, name)` should have `is_default: true`
+- `type` is one of: `ocr`, `translation`, `summary`, `image_extraction`, `english_modernization`
+- **Exactly one row per `type` has `is_default: true`** — not per `(type, name)`. Every lookup in the codebase is `findOne({ type, is_default: true })` (17 call sites; most pass no sort at all), so a second default makes the choice depend on natural order rather than intent. Enforced by a unique partial index on `{ type: 1 }` where `is_default: true`, so a duplicate now fails with E11000 instead of silently forking provenance (#3614).
+- **`version` is a NUMBER, never a string.** `'v1'` and `1` coexisting made every `sort({ version: -1 })` follow BSON type order, and printed defaults as `vundefined` and `vv1`. Pre-versioning rows from 2025-12 carry `version: 0`.
 - Old versions are NEVER deleted — they're the audit trail
 
 **Inline prompts** for index/summary generation are versioned via the `INDEX_PROMPT_VERSION` constant in `src/app/api/books/[id]/index/route.ts` (and the tenant variant) and the corresponding constant in `scripts/workers/enrich-worker.mjs`. Bump these when the prompt strings in those files change. The version is logged to `gemini_usage.prompt_version` and stored on the resulting `book.summary.prompt_version`.
@@ -91,22 +93,34 @@ For batch jobs the four fields are stamped on the `batch_jobs` row at submission
 ### How to create a new prompt version
 
 1. Query max version: `db.prompts.find({ type: 'TYPE', name: 'NAME' }).sort({ version: -1 }).limit(1)`
-2. Insert new doc with `version: max + 1`, `is_default: true`
-3. Set `is_default: false` on the old version
-4. VERIFY: `db.prompts.countDocuments({ type: 'TYPE', name: 'NAME', is_default: true })` must be exactly 1
+2. Insert new doc with `version: max + 1` **as a number**, `is_default: true`, and a `content_hash`
+3. Set `is_default: false` on the old default FIRST — the unique index rejects the insert otherwise
+4. VERIFY: `db.prompts.countDocuments({ type: 'TYPE', is_default: true })` must be exactly 1
 5. Save the prompt content to `prompts/` directory in git
-6. **NEVER edit or delete old versions**
+6. Update the table below, or `doc-enum-drift.mjs` will fail the next run
+7. **NEVER edit or delete old versions**
 
-### Current defaults (as of audit)
+Prefer the API (`POST /api/prompts`, `PATCH /api/prompts/[id]`, `POST /api/prompts/[id]` to set default) — it does steps 2–4 for you, including the version arithmetic that a hand-rolled insert got wrong twice.
+
+### Current defaults
+
+Verified against production by `node scripts/audit/doc-enum-drift.mjs` — this table is checked, not remembered. Last confirmed 2026-09-02.
 
 | Type | Name | Version | Key features |
 |------|------|---------|-------------|
-| OCR | Standard OCR | v10 | `<script>` tag, calibrated `<unclear>` (5-15%), manuscript rules |
-| Translation | Standard Translation | v8 | XML tags (`<note>`, `<term>`, `<gloss>`), no brackets, multilingual |
-| Translation | Latin | v2 | Neo-Latin specific |
-| Translation | German | v2 | Early Modern German specific |
-| Translation | Cuneiform | v1 | Sumerian/Akkadian specific |
+| `ocr` | Standard OCR | v15 | `<script>` tag, calibrated `<unclear>` (5-15%), manuscript rules |
+| `translation` | Standard Translation | v12 | XML tags (`<note>`, `<term>`, `<gloss>`), no brackets, multilingual |
+| `summary` | Standard Summary | v1 | Page-level 3–5 sentence summary, `<meta>` continuity marker |
+| `image_extraction` | Image Extraction | v2 | Illustration detection + museum-style metadata |
+| `english_modernization` | English Modernization | v1 | English books are modernized, not translated |
+
+Non-default prompts are selected by book language, not by the flag above (`LANGUAGE_OCR_PROMPT_NAMES` / `LANGUAGE_TRANSLATION_PROMPT_NAMES` in `src/lib/prompts.ts`): Latin OCR (Neo-Latin) v4, German OCR (Fraktur) v5, Hebrew OCR v1, Arabic OCR v1, Latin Translation (Neo-Latin) v2, German Translation (Early Modern) v3, Hebrew Translation v1, Arabic Translation v1, Cuneiform OCR/Translation v1.
+
+| Type | Name | Version | Key features |
+|------|------|---------|-------------|
 | Index/Summary | Inline | INDEX_PROMPT_VERSION = 'inline-2026-05' | Themes/quotes/people/places/concepts batch extraction |
+
+That last one is not in `prompts` at all — it is a constant in the route/worker, so it has no `is_default` and the audit cannot cover it. Bump it by hand.
 
 ## 2. Page Revisions — What Was on This Page Before?
 
