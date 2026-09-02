@@ -60,8 +60,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return { title: 'Collection Not Found - Source Library' };
     }
 
+    // Flatten inline markdown links the same way the JSON-LD description does —
+    // the page body renders them as <Link>s, but a meta/og description is plain
+    // text and would otherwise publish raw `[anchor](/book/slug)` syntax into
+    // search results and social cards.
     const description = collection.description
-      ? String(collection.description).slice(0, 200)
+      ? stripMarkdownLinks(String(collection.description)).slice(0, 200)
       : `Browse the ${collection.name} collection on Source Library.`;
 
     // Social-card image: the curated hero plate, falling back to the site
