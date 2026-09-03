@@ -2,6 +2,7 @@
 
 import { useWebMCPTools } from '@/hooks/useWebMCPTools';
 import { textResult, type WebMCPTool } from '@/lib/webmcp';
+import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import type { useReaderV2 } from './useReaderV2';
 
 type ReaderState = ReturnType<typeof useReaderV2>;
@@ -58,8 +59,16 @@ export default function ReaderWebMCP({ r }: { r: ReaderState }) {
         inputSchema: { type: 'object', properties: {} },
         annotations: { readOnlyHint: true },
         execute: () => {
-          const ocr = currentPage.ocr?.data?.trim();
-          const translation = currentPage.translation?.data?.trim();
+          // A tool result is a quotable text surface: route it through
+          // stripEditorialWrappers like every other one (quote/search/text/
+          // IIIF), or the AI-written <meta>/<warning>/… page descriptions get
+          // served to the agent as if they were words on the page.
+          const ocr = currentPage.ocr?.data
+            ? stripEditorialWrappers(currentPage.ocr.data).trim()
+            : '';
+          const translation = currentPage.translation?.data
+            ? stripEditorialWrappers(currentPage.translation.data).trim()
+            : '';
           const parts = [
             `${bookLabel}, page ${currentPage.page_number} of ${totalPages}.`,
           ];
