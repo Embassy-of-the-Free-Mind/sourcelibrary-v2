@@ -11,7 +11,14 @@ interface Section { id: string; label: string }
  * to a "Jump to ▾" dropdown on tablet/mobile. Share and Embed open popovers
  * (copy-link + targets / section selector + iframe snippet). Existing tokens only.
  */
-export default function CollectionAnchorBar({ sections, slug }: { sections: Section[]; slug: string }) {
+export default function CollectionAnchorBar({ sections, slug, tone = 'light' }: { sections: Section[]; slug: string; tone?: 'light' | 'dark' }) {
+  // 'dark' sets the bar in the dark navbar's colour (bg-dark) so it reads as a
+  // continuation of the header under a dark hero. Popovers stay white.
+  const dark = tone === 'dark';
+  const linkCls = dark ? 'text-white/80 hover:text-white transition-colors' : 'text-secondary hover:text-accent-rust transition-colors';
+  const pillCls = dark
+    ? 'inline-flex items-center gap-1.5 text-sm text-white/85 border border-white/25 rounded-full px-3 py-1.5 hover:bg-white/10 transition-colors'
+    : 'inline-flex items-center gap-1.5 text-sm text-secondary border border-border-light rounded-full px-3 py-1.5 hover:bg-warm transition-colors';
   const [open, setOpen] = useState<null | 'jump' | 'share' | 'embed'>(null);
   const [copied, setCopied] = useState(false);
   const [embedTarget, setEmbedTarget] = useState('collection');
@@ -42,20 +49,20 @@ export default function CollectionAnchorBar({ sections, slug }: { sections: Sect
     trackEvent('share', { channel, url: pageUrl, surface: 'collection_anchor_bar' });
 
   return (
-    <nav aria-label="On this page" className="border-y border-border-light bg-cream">
+    <nav aria-label="On this page" className={dark ? 'border-y border-white/10 bg-dark' : 'border-y border-border-light bg-cream'}>
       <div ref={rootRef} className="max-w-[1500px] mx-auto px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
         {/* Jump links — inline on desktop */}
         <div className="hidden lg:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-          <span className="text-muted">On this page</span>
+          <span className={dark ? 'text-white/50' : 'text-muted'}>On this page</span>
           {sections.map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="text-secondary hover:text-accent-rust transition-colors">{s.label}</a>
+            <a key={s.id} href={`#${s.id}`} className={linkCls}>{s.label}</a>
           ))}
         </div>
 
         {/* Jump dropdown — tablet/mobile */}
         <div className="relative lg:hidden">
           <button type="button" onClick={() => setOpen(open === 'jump' ? null : 'jump')}
-            className="inline-flex items-center gap-1 text-sm text-secondary hover:text-accent-rust">
+            className={`inline-flex items-center gap-1 text-sm ${dark ? 'text-white/85 hover:text-white' : 'text-secondary hover:text-accent-rust'}`}>
             Jump to <ChevronDown className={`w-4 h-4 transition-transform ${open === 'jump' ? 'rotate-180' : ''}`} />
           </button>
           {open === 'jump' && (
@@ -70,7 +77,7 @@ export default function CollectionAnchorBar({ sections, slug }: { sections: Sect
         {/* Share / Embed */}
         <div className="flex items-center gap-2">
           <div className="relative">
-            <button type="button" onClick={() => setOpen(open === 'share' ? null : 'share')} className="inline-flex items-center gap-1.5 text-sm text-secondary border border-border-light rounded-full px-3 py-1.5 hover:bg-warm transition-colors">
+            <button type="button" onClick={() => setOpen(open === 'share' ? null : 'share')} className={pillCls}>
               <Share2 className="w-3.5 h-3.5" /> Share
             </button>
             {open === 'share' && (
@@ -93,7 +100,7 @@ export default function CollectionAnchorBar({ sections, slug }: { sections: Sect
           </div>
 
           <div className="relative">
-            <button type="button" onClick={() => setOpen(open === 'embed' ? null : 'embed')} className="inline-flex items-center gap-1.5 text-sm text-secondary border border-border-light rounded-full px-3 py-1.5 hover:bg-warm transition-colors">
+            <button type="button" onClick={() => setOpen(open === 'embed' ? null : 'embed')} className={pillCls}>
               <Code2 className="w-3.5 h-3.5" /> Embed
             </button>
             {open === 'embed' && (

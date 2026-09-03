@@ -45,7 +45,7 @@ const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
 const OG_TITLE = 'Slime Moulds — Source Library';
-const OG_DESC = 'One cell that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. The books that first drew, named and puzzled over the slime moulds, from Panckow in 1654 to the first monograph of 1875.';
+const OG_DESC = 'One cell that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. These are the books that first drew, named and puzzled over the slime moulds, from Panckow in 1654 to the first monograph of 1875.';
 // The book pinned as the featured work. Rendered only when it is actually in
 // the collection, so the authored copy below can never sit under another title.
 const FEATURED_SLUG_PREFIX = 'sluzowce-mycetozoa-monografia';
@@ -371,7 +371,7 @@ export default async function SlimeMouldsCollectionPage() {
       {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
       <ConditionalSiteHeader variant="dark" />
       {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden min-h-[60vh] md:min-h-[75vh] flex items-end" style={{ background: '#14100c' }}>
+      <section className="relative overflow-hidden min-h-[60vh] md:min-h-[75vh] flex items-center" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         {/* The collage is filtered to actual slime mould plates; the route falls
             back to the collection's full plate set while too few are extracted. */}
@@ -387,40 +387,51 @@ export default async function SlimeMouldsCollectionPage() {
           <HeroScrim />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-12 pb-10">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/60 mb-6">
-            <Link href="/collections" className="hover:text-white/90 transition-colors">Collections</Link>
+        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-16" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
+          {/* Breadcrumb set as the book hero's author eyebrow (same size, tracking
+              and rust), so the collection hero carries the brand red where the
+              book hero does. The parent's name is the collection record's own
+              name, so mycology reads "Fungi & Mycology" here. */}
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-3 md:mb-4" style={{ color: '#d98a72' }}>
+            <Link href="/collections" className="hover:opacity-80 transition-opacity">Collections</Link>
             {parent && (
               <>
-                <span className="text-white/30">/</span>
-                <Link href={parentHref} className="hover:text-white/90 transition-colors">{parent.name}</Link>
+                <span style={{ opacity: 0.5 }}>/</span>
+                <Link href={parentHref} className="hover:opacity-80 transition-opacity">{parent.name}</Link>
               </>
             )}
           </nav>
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Slime Moulds</h1>
-          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">One cell, big enough to see, that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. The books that first drew, named and puzzled over it, from a seventeenth-century herbal to the first monograph of 1875.</p>
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Stat chips take the book hero's status-row colours in the same
-                left-to-right order it uses (OCR blue, Translated green, First
-                translation gold), so the two rows read as one system. Same hex
-                values as book/[id] page.tsx. Languages, when present, stay
-                neutral cream. */}
-            <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#8fbfe6', borderColor: 'rgba(143,191,230,0.4)' }}>{total.toLocaleString('en-US')} works</span>
+          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">One cell, big enough to see, that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. These are the books that first drew, named and puzzled over it, from a seventeenth-century herbal to the first monograph of 1875.</p>
+          {/* Stats set exactly as the book hero's status row (size, weight,
+              colours, order: blue, green, gold), no boxes. Same hex values as
+              book/[id] page.tsx. Languages, when present, stay neutral cream. */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
+            <span style={{ color: '#8fbfe6' }}>{total.toLocaleString('en-US')} works</span>
             {ftCount > 0 && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#86c98f', borderColor: 'rgba(134,201,143,0.4)' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
+              <span style={{ color: '#86c98f' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
             )}
             {dateRange && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e0b46a', borderColor: 'rgba(224,180,106,0.42)' }}>{dateRange.min} – {dateRange.max}</span>
+              <span style={{ color: '#e0b46a' }}>{dateRange.min} – {dateRange.max}</span>
             )}
             {languages.length > 0 && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e8e2d6', borderColor: 'rgba(232,226,214,0.3)' }}>{languages.join(' · ')}</span>
+              <span style={{ color: '#e8e2d6' }}>{languages.join(' · ')}</span>
             )}
           </div>
+          {/* The book hero's rust "Read this book" button, pointed at the
+              collection's centrepiece. Absent until Rostafiński is visible. */}
+          {featured && (
+            <div className="mt-6">
+              <Link href={featuredHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d', textShadow: 'none' }}>
+                <BookOpen className="w-[18px] h-[18px]" />Read the first monograph
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
       {/* ===== Anchor row (client: jump collapse + Share/Embed popovers) ===== */}
-      <CollectionAnchorBar sections={sections} slug={SLUG} />
+      <CollectionAnchorBar sections={sections} slug={SLUG} tone="dark" />
 
       {/* ===== Introduction ===== */}
       <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
