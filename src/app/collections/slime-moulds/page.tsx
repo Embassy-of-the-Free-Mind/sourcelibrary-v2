@@ -35,8 +35,12 @@ import { countGalleryImages, galleryFilter, galleryHref, isLinkableScope, NO_PER
  * conditionally and will fill in on their own.
  */
 
+// ISR, not force-dynamic. The CDN rule for /collections/* caches the page
+// publicly for 24h regardless, so force-dynamic bought nothing but a render
+// per edge miss (tests/unit/dynamic-routes-not-edge-cached.test.ts). The
+// artwork pages already prerender from Mongo this way. Purge the path after a
+// membership change, as the import script says.
 export const revalidate = 86400;
-export const dynamic = 'force-dynamic';
 
 const SLUG = 'slime-moulds';
 // Primary action = dark button (existing --bg-dark token), never the violet btn-primary.
