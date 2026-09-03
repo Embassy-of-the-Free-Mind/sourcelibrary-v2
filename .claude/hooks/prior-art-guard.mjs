@@ -223,7 +223,14 @@ function main() {
   try { payload = fs.readFileSync(0, 'utf8'); } catch { process.exit(0); }
   let tool, input;
   try { const d = JSON.parse(payload); tool = d.tool_name; input = d.tool_input || {}; } catch { process.exit(0); }
-  if (tool !== 'Write') process.exit(0);
+  // Trust the MATCHER, not the field. branch-guard.sh reads only tool_input and
+  // relies on its `matcher: Bash` registration; requiring tool_name === 'Write'
+  // here would mean that if the payload ever omits that field the guard exits 0
+  // forever and never fires — a silent no-op that looks exactly like "no
+  // duplicates found". Bail only on a POSITIVE mismatch.
+  if (tool && tool !== 'Write') process.exit(0);
+  // Without a file_path there is nothing to check either way.
+  if (!input || typeof input.file_path !== 'string') process.exit(0);
 
   const target = input.file_path;
   const content = input.content || '';
