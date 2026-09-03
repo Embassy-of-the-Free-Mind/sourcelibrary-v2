@@ -324,7 +324,7 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, scanCount, languageCount, gallery: galleryRawList, featured, featuredPages, parent, featuredPlateCount, featuredPlatesHref } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, gallery: galleryRawList, featured, featuredPages, parent, featuredPlateCount, featuredPlatesHref } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   // Editor curation runs last: it decides order and exclusions on top of the
   // relevance filter, so a hidden image is hidden however well it scored.
@@ -420,17 +420,6 @@ export default async function SlimeMouldsCollectionPage() {
             )}
             {ftCount > 0 && (
               <span style={{ color: '#e0b46a' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
-            )}
-            {/* Trial stats (2026-09-02): languages, scans, plates. Colours continue
-                the row: lilac, cream, rust. Keep the ones that earn their place. */}
-            {languageCount > 0 && (
-              <span style={{ color: '#cdb8e8' }}>{languageCount} language{languageCount === 1 ? '' : 's'}</span>
-            )}
-            {scanCount > 0 && (
-              <span style={{ color: '#e8e2d6' }}>{scanCount.toLocaleString('en-US')} scans</span>
-            )}
-            {galleryAllCount > 0 && (
-              <span style={{ color: '#d98a72' }}>{galleryAllCount.toLocaleString('en-US')} plates</span>
             )}
           </div>
         </div>
