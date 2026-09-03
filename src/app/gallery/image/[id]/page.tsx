@@ -45,6 +45,7 @@ const DeepZoomOverlay = lazy(() => import('@/components/artwork/DeepZoomOverlay'
 import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
 import { trackEvent } from '@/lib/track-event';
+import { toast } from 'sonner';
 
 /** In-memory cache for prefetched gallery image API responses */
 const prefetchCache = new Map<string, Promise<GalleryImageDetail>>();
@@ -636,15 +637,69 @@ export default function ImageDetailPage({
 
   const [downloading, setDownloading] = useState(false);
 
-  const triggerDownload = async (fetchUrl: string, suffix?: string) => {
-    const res = await fetch(fetchUrl);
-    const blob = await res.blob();
+  /**
+   * Save a blob under a real filename.
+   *
+   * The anchor goes into the document and the object URL is revoked on a later
+   * tick: a detached anchor plus an immediate revoke is a race the browser
+   * sometimes loses, and losing it looks exactly like a dead button.
+   */
+  const saveBlob = (blob: Blob, suffix?: string) => {
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = url;
     const bookSlug = data!.book.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 40);
     a.download = `source-library-${bookSlug}-p${data!.pageNumber}${suffix || ''}.jpg`;
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(a.href);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  };
+
+  /**
+   * Fetch an image for download, cross-origin included.
+   *
+   * Our own images live on images.sourcelibrary.org, which is a DIFFERENT
+   * ORIGIN from the page. That fetch needs two permissions and had neither
+   * until 2026-09-03: the bucket must send `Access-Control-Allow-Origin` (now
+   * set on R2) and our CSP must list the host in `connect-src` (now in
+   * next.config.ts). Both buttons therefore threw on every click, and the
+   * `window.open` fallback ran after an `await` — no longer a user gesture, so
+   * the popup blocker ate it and nothing at all happened (#4630, Corey, 2026-09-03).
+   *
+   * The /api/image proxy is the belt-and-braces path: same-origin, so it works
+   * whatever the CDN is sending today. It re-encodes and stamps the visible
+   * provenance mark, so it is a fallback, not the default.
+   */
+  const fetchImageBlob = async (sourceUrl: string, proxyWidth: number): Promise<Blob> => {
+    const sameOrigin = (() => {
+      try {
+        return new URL(sourceUrl, window.location.href).origin === window.location.origin;
+      } catch {
+        return false;
+      }
+    })();
+
+    if (sameOrigin) {
+      const res = await fetch(sourceUrl);
+      if (!res.ok) throw new Error(`Download failed (${res.status})`);
+      return res.blob();
+    }
+
+    try {
+      const direct = await fetch(sourceUrl, { mode: 'cors' });
+      // An error body must never be saved as a .jpg — that is how a download
+      // becomes a file that "won't open" (DownloadButton, 2026-07-02).
+      if (direct.ok) return await direct.blob();
+    } catch {
+      // CORS or CSP refused it; fall through to the same-origin proxy.
+    }
+
+    const proxied = await fetch(
+      `/api/image?url=${encodeURIComponent(sourceUrl)}&w=${proxyWidth}&q=90`,
+    );
+    if (!proxied.ok) throw new Error(`Download failed (${proxied.status})`);
+    return proxied.blob();
   };
 
   const downloadImage = async () => {
@@ -653,16 +708,12 @@ export default function ImageDetailPage({
 
     // Quick download: use existing extracted image
     const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
-    const isExternal = sourceUrl.startsWith('http') && !sourceUrl.includes('vercel-storage.com') && !sourceUrl.includes('sourcelibrary.org');
-    const fetchUrl = isExternal
-      ? `/api/image?url=${encodeURIComponent(sourceUrl)}&w=2000&q=90`
-      : sourceUrl;
 
     try {
-      await triggerDownload(fetchUrl);
+      saveBlob(await fetchImageBlob(sourceUrl, 2000));
       sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
     } catch {
-      window.open(sourceUrl, '_blank');
+      toast.error('Download failed — please try again.');
     }
   };
 
@@ -675,10 +726,10 @@ export default function ImageDetailPage({
       const hiresRes = await fetch(`/api/gallery/image/${imageId}/hires`);
       if (!hiresRes.ok) throw new Error('High-res generation failed');
       const { url } = await hiresRes.json();
-      await triggerDownload(url, '-hires');
+      saveBlob(await fetchImageBlob(url, 4000), '-hires');
       sendGAEvent({ action: 'gallery_download_hires', label: imageId || undefined });
     } catch {
-      // Fall back to standard download
+      // Fall back to standard download, which reports its own failure.
       await downloadImage();
     } finally {
       setDownloading(false);
