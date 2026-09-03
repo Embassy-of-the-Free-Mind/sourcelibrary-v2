@@ -54,6 +54,12 @@ export type ImageSourceProvider =
   | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
   | 'tu_darmstadt'   // Technische Universität Darmstadt (ULB)
   | 'byu'            // Brigham Young University, L. Tom Perry Special Collections
+  | 'slub_dresden'   // Sächsische Landesbibliothek – Staats- und Universitätsbibliothek Dresden
+  | 'goettingen'     // Niedersächsische Staats- und Universitätsbibliothek Göttingen
+  | 'b-nice'         // B-NICE / Pustaka Nusantara (Dutch-Indonesian heritage)
+  | 'wikimedia_commons' // Wikimedia Commons / Wikisource
+  | 'tartu_dspace'   // University of Tartu Library (DSpace)
+  | 'morgan'         // The Morgan Library & Museum
   | 'contentdm'      // OCLC CONTENTdm
   | 'ia'             // Internet Archive (alternate key)
   | 'library'
@@ -70,6 +76,75 @@ export const IMAGE_LICENSES = [
   { id: 'in-copyright', name: 'In Copyright', description: 'Permission obtained from rights holder' },
   { id: 'unknown', name: 'Unknown', description: 'License status not determined' },
 ] as const;
+
+/**
+ * What a stored `image_source.license` should be SHOWN as.
+ *
+ * `IMAGE_LICENSES` is our seven-id vocabulary, and `BibliographicInfo` used to
+ * resolve a stored value by exact id and otherwise print it raw. Measured across
+ * 22,081 live books (`scripts/audit/record-completeness.mjs`), 3,740 of them
+ * store something else — and almost none of it is wrong. Sources record their
+ * own rights statement, and that is what the importers faithfully kept: a
+ * rightsstatements.org URI from MDZ, a Creative Commons deed URL from the
+ * Internet Archive, "PDM 1.0" from e-rara, "Open access (University of Oxford)"
+ * from ETCSL. The defect was ours: a reader saw a bare URL where a licence
+ * should be.
+ *
+ * **Resolved for display, never rewritten in the data.** The stored string is
+ * the source's own claim and is provenance; normalising it away would lose what
+ * the institution actually said. And it would be worse than lossy in one case:
+ * `rightsstatements.org/vocab/NoC-NC` means "No Copyright – Non-Commercial Use
+ * Only", which is NOT public domain. Rewriting those 1,260 records to
+ * `publicdomain` would have misstated the rights on every one of them.
+ *
+ * An unrecognised value still falls through to itself. That is the honest
+ * default: show what the source said rather than guess a licence for it.
+ */
+const LICENSE_ALIASES: Record<string, string> = {
+  // Public Domain Mark, in the spellings the importers actually stored.
+  'http://creativecommons.org/publicdomain/mark/1.0/': 'Public Domain Mark 1.0',
+  'https://creativecommons.org/publicdomain/mark/1.0/': 'Public Domain Mark 1.0',
+  'http://creativecommons.org/licenses/publicdomain/': 'Public Domain Mark 1.0',
+  'creative commons public domain mark 1.0': 'Public Domain Mark 1.0',
+  'pdm 1.0': 'Public Domain Mark 1.0',
+  pdm: 'Public Domain Mark 1.0',
+  'public-domain': 'Public Domain',
+  public_domain: 'Public Domain',
+  'public domain': 'Public Domain',
+  // CC0 dedication.
+  'http://creativecommons.org/publicdomain/zero/1.0/': 'CC0 1.0',
+  'https://creativecommons.org/publicdomain/zero/1.0/': 'CC0 1.0',
+  cc0: 'CC0 1.0',
+  'cc0 1.0 universal': 'CC0 1.0',
+  // Deed URLs for the licence family.
+  'https://creativecommons.org/licenses/by-nd/4.0/': 'CC BY-ND 4.0',
+  'http://creativecommons.org/licenses/by-nc/4.0/': 'CC BY-NC 4.0',
+  'http://creativecommons.org/licenses/by-nc-nd/3.0/': 'CC BY-NC-ND 3.0',
+  'http://creativecommons.org/licenses/by-nc-nd/4.0/': 'CC BY-NC-ND 4.0',
+  'https://creativecommons.org/licenses/by-nc-nd/4.0/': 'CC BY-NC-ND 4.0',
+  'https://creativecommons.org/licenses/by-nc-sa/4.0/': 'CC BY-NC-SA 4.0',
+  'http://creativecommons.org/licenses/by-nc-sa/2.5/scotland/': 'CC BY-NC-SA 2.5 Scotland',
+  // NOT public domain — see the note above. These say a work is out of
+  // copyright in the holder's judgement but reserved for non-commercial use.
+  'https://rightsstatements.org/vocab/noc-nc/1.0/': 'No Copyright – Non-Commercial Use Only',
+  'http://rightsstatements.org/vocab/noc-nc/1.0/': 'No Copyright – Non-Commercial Use Only',
+  'https://rightsstatements.org/vocab/inc/1.0/': 'In Copyright',
+  'https://rightsstatements.org/vocab/und/1.0/': 'Copyright Undetermined',
+};
+
+/** Display name for a stored licence value, and whether the value is itself a link. */
+export function licenseDisplay(value?: string | null): { name: string; url?: string } | null {
+  if (!value || !String(value).trim()) return null;
+  const raw = String(value).trim();
+  const byId = IMAGE_LICENSES.find((l) => l.id === raw);
+  if (byId) return { name: byId.name };
+  const alias = LICENSE_ALIASES[raw.toLowerCase()];
+  const url = /^https?:\/\//i.test(raw) ? raw : undefined;
+  if (alias) return { name: alias, url };
+  // Unrecognised: show the source's own words. A bare URL gets a shorter label
+  // than the URL itself, because a link is not a licence name.
+  return { name: url ? 'See the source\u2019s rights statement' : raw, url };
+}
 
 // Image source and licensing info
 export interface ImageSource {
