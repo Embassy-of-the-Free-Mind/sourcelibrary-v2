@@ -48,21 +48,72 @@ Open: #4629 (withdrawal script), #4623 (research-agenda amendment).
   table is where duplication starts. I rebuilt four existing things before
   finding them.
 
+## Corpus-wide fabrication scan — done, and hand-reviewed (2026-09-03)
+
+Step 2 below is complete. `scripts/audit/detect-fabricated-translation.mjs` (v3,
+9 controls: 3 positive from confirmed withdrawals, 6 negative encoding every
+false-positive family found across v0-v2) found **122 candidates** across
+5,576 non-Latin-script books with translations. Precision on a 3-page sample
+was estimated at ~1/3 — nowhere near trustworthy — so every one of the 122 was
+read **by hand** (OCR + full translation, not just the flagged snippet;
+several needed the raw un-collapsed `translation.data` to see the exact
+invented span). Full reasoning per page lives in the session transcript; the
+short version:
+
+- **6 confirmed genuine fabrications, withdrawn** (same script, second
+  `LITERAL_TARGETS` batch, applied + CDN-purged 2026-09-03):
+  Book of the Dead II pp.19, 54; Book of the Dead III pp.220, 288; Sefer
+  ha-Zohar p.415; Babylonian Liturgies p.333. p.220 was the worst of the six —
+  15 fully invented numbered "verses" (28-42) for a page where OCR declined
+  every single line. The Zohar page is notable because the translation's own
+  `<meta>` tag **admitted** it: "this translation reconstructs the likely
+  thematic content based on the provided vocabulary" — a self-confessed
+  invention, not a subtle one.
+- **~91 confirmed false positives.** Two dominant genuine shapes the detector
+  can't tell apart from fabrication without reading both fields in full: (a) a
+  trivial decline (one illegible word/seal) sitting inside an otherwise fully
+  and correctly transcribed page — Bencao Gangmu, Homeric Batrachomyomachia,
+  Korean chronicles, Sanskrit philosophy all fell in this bucket; (b) a
+  correctly-hedged full decline with no invented specifics — the Herculaneum
+  papyri cluster (7 pages) and most of the Zohar cluster (5 of 7 pages) are
+  exemplary here, consistently describing *physical* damage rather than
+  claiming content.
+- **2 left unwithdrawn as low-confidence**: Maḥzor pp.192, 251 — one recites
+  the Shema (near-universal fixed liturgy, plausibly genuine even under a
+  10-line decline), the other is a garbled but plausibly-real attempt at a
+  difficult acrostic piyyut, not clean invention.
+- **A ~25-book Tibetan tantric cluster was deliberately left out of this
+  batch.** It's consistent with — and corroborates — the already-tracked,
+  differently-scoped #4523 finding (Gemini cannot reliably read cursive
+  dbu-med; 31-35% cross-run agreement vs 87-93% for print). Several pages
+  quote famous, identifiable canonical works (Atiśa's *Lamp for the Path*,
+  Ramanuja/Vedanta Deśika Śrīvaiṣṇava theology) fluently enough that pattern-
+  matching to well-known training-data content vs. genuinely reading a hurried
+  cursive folio can't be told apart without Tibetological expertise I don't
+  have. #4523 already recommends withdraw-not-re-OCR for this script class at
+  the corpus level — fold this cluster into that remediation rather than
+  treating it as 25 more one-off `#4584` withdrawals.
+
+**Detector precision, now measured properly: 6/122 ≈ 5%** (the 2 low-confidence
+Maḥzor pages and the Tibetan cluster counted as not-confirmed). That's a work
+list, not close to an authority — consistent with the ~8% estimated earlier
+from the 3-page sample. Any future run of this detector needs the same
+hand-review step; do not withdraw off its output directly.
+
 ## Next, in order
 
 1. **Loop classifier** — prerequisite for A3, E2 and any honest B1 rate. Body-length
    means are the wrong estimator; loop rate is a Bernoulli quantity needing an
    interval, and cross-run agreement cannot detect a *deterministic* loop.
    Then re-run `scripts/eval/prompt-ab.mjs` and revisit v17.
-2. **Corpus-wide fabrication scan.** p.24's signature (OCR bracket placeholder +
-   ≥5 enumerated translation lines) found 1 hit in 310 pages of that book. Run it
-   across the corpus — that is the unmeasured B1 rate, and the agenda's #1
-   priority (A5, quote integrity) depends on it.
+2. ~~Corpus-wide fabrication scan~~ — done, see above.
 3. **Breasted QA → visible.** Check the Harkhuf pages (~201–213) read correctly,
    then flip. That completes the original ask.
 4. **#4582** — 6 Latin books labelled Kyrgyz; 141 books took their language from
    `ocr_detected_lang` against a disagreeing cataloguer.
 5. **#4624** — `--book` always takes the 25-page preview path, never the full pass.
+6. **Tibetan cluster → #4523.** Fold the 25-book list above into that issue's
+   corpus-level remediation instead of one-off withdrawals.
 
 ## Worth knowing
 
