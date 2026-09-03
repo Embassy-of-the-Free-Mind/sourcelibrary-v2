@@ -166,15 +166,20 @@ function decodeSpan(body) {
   // that is literally what the reported page does: \pi\text{o}\tau... for
   // ποτ.... A Latin o flanked by Greek is omicron; one standing alone is left
   // as it was found.
-  let composed = out.normalize('NFC');
+  // Map the Latin o BEFORE composing accents, and allow combining marks between
+  // it and its Greek neighbour. `\acute{o}` decodes to "o" + combining acute; if
+  // we composed first, the result would be a precomposed Latin ó that the bare-o
+  // rule can no longer see, leaving a Latin letter inside a Greek word
+  // (δóξαις instead of δόξαις). Mapping first lets NFC compose ο + acute → ό.
   const GREEK = '\\u0370-\\u03ff\\u1f00-\\u1fff';
-  composed = composed
-    .replace(new RegExp(`(?<=[${GREEK}])o`, 'g'), '\u03bf')
-    .replace(new RegExp(`o(?=[${GREEK}])`, 'g'), '\u03bf')
-    .replace(new RegExp(`(?<=[${GREEK}])O`, 'g'), '\u039f')
-    .replace(new RegExp(`O(?=[${GREEK}])`, 'g'), '\u039f');
+  const MARKS = '\\u0300-\\u036f';
+  const mapped = out
+    .replace(new RegExp(`(?<=[${GREEK}][${MARKS}]*)o`, 'g'), '\u03bf')
+    .replace(new RegExp(`o(?=[${MARKS}]*[${GREEK}])`, 'g'), '\u03bf')
+    .replace(new RegExp(`(?<=[${GREEK}][${MARKS}]*)O`, 'g'), '\u039f')
+    .replace(new RegExp(`O(?=[${MARKS}]*[${GREEK}])`, 'g'), '\u039f');
 
-  return composed.normalize('NFC').replace(/\s+/g, ' ').trim();
+  return mapped.normalize('NFC').replace(/\s+/g, ' ').trim();
 }
 
 /**
@@ -183,7 +188,28 @@ function decodeSpan(body) {
  * @returns {{ text: string, replacements: number }} the repaired text and how
  *   many math spans were decoded. `replacements === 0` means nothing changed.
  */
-export function repairTexGreek(text) {
+const GREEK_CHAR = /[\u0370-\u03ff\u1f00-\u1fff]/g;
+
+/**
+ * Rewrite TeX-encoded Greek in `text` to Unicode Greek.
+ *
+ * By default only WORD-LIKE spans are touched — two or more Greek letters, which
+ * is the defect #4580 reports: a Greek word spelled out as TeX, unsearchable and
+ * uncitable.
+ *
+ * A span holding exactly ONE letter (`$\Delta$`, `$\psi$`) is deliberately left
+ * alone. Measured over 4,000 matching pages, single-letter spans outnumber
+ * word-like ones (21,223 vs 17,474) and cluster in alchemical and astrological
+ * texts, where `$\Delta$` is a SYMBOL rather than a mangled word. Rendering
+ * those as Δ may well be an improvement, but it is a different decision about
+ * far more pages, and quietly making it while fixing something else is how a
+ * narrow fix turns into an unreviewed corpus-wide edit.
+ *
+ * Pass `{ symbolsToo: true }` to include them, deliberately.
+ *
+ * @returns {{ text: string, replacements: number }}
+ */
+export function repairTexGreek(text, { symbolsToo = false } = {}) {
   if (!text || typeof text !== 'string' || !text.includes('\\')) {
     return { text: text ?? '', replacements: 0 };
   }
@@ -192,6 +218,10 @@ export function repairTexGreek(text) {
     const body = dollarBody !== undefined ? dollarBody : parenBody;
     const decoded = decodeSpan(body);
     if (decoded === null || decoded === '') return whole;
+    if (!symbolsToo) {
+      const letters = (decoded.match(GREEK_CHAR) || []).length;
+      if (letters < 2) return whole; // a lone symbol, not a word
+    }
     replacements++;
     return decoded;
   });

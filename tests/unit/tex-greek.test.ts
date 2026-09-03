@@ -29,14 +29,14 @@ describe('repairTexGreek — decoding', () => {
   });
 
   it('keeps final sigma distinct from medial sigma', () => {
-    expect(repairTexGreek('$\\sigma$').text).toBe('σ');
-    expect(repairTexGreek('$\\varsigma$').text).toBe('ς');
+    // Two letters, so word-like gating lets them through.
+    expect(repairTexGreek('$\\sigma\\sigma$').text).toBe('σσ');
+    expect(repairTexGreek('$\\sigma\\varsigma$').text).toBe('σς');
   });
 
   it('composes accents to precomposed NFC codepoints', () => {
     // έ is U+03AD, one codepoint — not ε + combining acute.
-    expect([...repairTexGreek('$\\acute{\\epsilon}$').text]).toHaveLength(1);
-    expect(repairTexGreek('$\\acute{\\epsilon}$').text).toBe('έ');
+    expect(repairTexGreek('$\\acute{\\epsilon}\\nu$').text).toBe('έν');
   });
 
   it('handles \\(...\\) spans as well as $...$', () => {
@@ -45,8 +45,40 @@ describe('repairTexGreek — decoding', () => {
     expect(text).toContain('γη');
   });
 
+  it('maps a Latin o inside a Greek word to omicron, even under an accent', () => {
+    // From the corpus: TeX has no \omicron, so the model writes a Latin o —
+    // and \acute{o} decodes to o + combining acute. Composing before mapping
+    // would leave a precomposed LATIN ó sitting inside a Greek word.
+    expect(repairTexGreek('$\\delta\\acute{o}\\xi\\alpha\\iota\\varsigma$').text).toBe('δόξαις');
+    expect(repairTexGreek('$\\alpha\\delta\\acute{\\upsilon}\\nu\\alpha\\tau o\\nu$').text).toBe('αδύνατον');
+  });
+
+  it('decodes real words taken verbatim from the corpus', () => {
+    expect(repairTexGreek('$\\kappa\\rho\\acute{\\alpha}\\tau\\iota\\sigma\\tau\\omicron\\nu$').text).toBe('κράτιστον');
+    expect(repairTexGreek('$\\delta\\eta\\lambda\\eta\\tau\\acute{\\eta}\\rho\\iota\\alpha$').text).toBe('δηλητήρια');
+  });
+
   it('decodes uppercase letters', () => {
     expect(repairTexGreek('$\\Delta\\Epsilon$').text).toBe('ΔΕ');
+  });
+});
+
+describe('repairTexGreek — single symbols are a separate decision', () => {
+  it('leaves a lone Greek letter alone by default', () => {
+    // $\Delta$ in an alchemical text is a SYMBOL (fire), not a mangled word.
+    // Measured: single-letter spans OUTNUMBER word-like ones in the corpus
+    // (21,223 vs 17,474 over 4,000 pages), so converting them silently would
+    // turn a narrow fix into an unreviewed corpus-wide edit.
+    expect(repairTexGreek('the sign $\\Delta$ denotes')).toEqual({ text: 'the sign $\\Delta$ denotes', replacements: 0 });
+    expect(repairTexGreek('$\\psi$')).toEqual({ text: '$\\psi$', replacements: 0 });
+  });
+
+  it('converts them only when asked explicitly', () => {
+    expect(repairTexGreek('the sign $\\Delta$ denotes', { symbolsToo: true }).text).toBe('the sign Δ denotes');
+  });
+
+  it('still decodes two-letter words', () => {
+    expect(repairTexGreek('\\(\\gamma\\eta\\)').replacements).toBe(1);
   });
 });
 
