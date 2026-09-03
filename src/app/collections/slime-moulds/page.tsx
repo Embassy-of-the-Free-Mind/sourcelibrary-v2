@@ -45,7 +45,7 @@ const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
 const OG_TITLE = 'Slime Moulds — Source Library';
-const OG_DESC = 'Neither plant, animal, nor fungus. The books that spent two centuries arguing about what the slime moulds are, from Panckow in 1654 to the first monograph of 1875.';
+const OG_DESC = 'One cell that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. The books that first drew, named and puzzled over the slime moulds, from Panckow in 1654 to the first monograph of 1875.';
 // The book pinned as the featured work. Rendered only when it is actually in
 // the collection, so the authored copy below can never sit under another title.
 const FEATURED_SLUG_PREFIX = 'sluzowce-mycetozoa-monografia';
@@ -364,7 +364,7 @@ export default async function SlimeMouldsCollectionPage() {
       {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
       <ConditionalSiteHeader variant="dark" />
       {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden min-h-[66vh] flex items-end" style={{ background: '#14100c' }}>
+      <section className="relative overflow-hidden min-h-[60vh] md:min-h-[75vh] flex items-end" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         {/* The collage is filtered to actual slime mould plates; the route falls
             back to the collection's full plate set while too few are extracted. */}
@@ -391,20 +391,22 @@ export default async function SlimeMouldsCollectionPage() {
             )}
           </nav>
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Slime Moulds</h1>
-          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Neither plant, animal, nor fungus. These are the books that spent two centuries arguing about it.</p>
+          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">One cell, big enough to see, that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. The books that first drew, named and puzzled over it, from a seventeenth-century herbal to the first monograph of 1875.</p>
           <div className="flex flex-wrap items-center gap-2">
-            {/* Stat chips borrow the book hero's colour language so the two read as
-                one system: soft blue for scope, green for language coverage, gold
-                for the first-translation claim. Same tones as book/[id] page.tsx. */}
-            <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e8e2d6', borderColor: 'rgba(232,226,214,0.3)' }}>{total.toLocaleString('en-US')} works</span>
+            {/* Stat chips take the book hero's status-row colours in the same
+                left-to-right order it uses (OCR blue, Translated green, First
+                translation gold), so the two rows read as one system. Same hex
+                values as book/[id] page.tsx. Languages, when present, stay
+                neutral cream. */}
+            <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#8fbfe6', borderColor: 'rgba(143,191,230,0.4)' }}>{total.toLocaleString('en-US')} works</span>
             {ftCount > 0 && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e0b46a', borderColor: 'rgba(224,180,106,0.42)' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#86c98f', borderColor: 'rgba(134,201,143,0.4)' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
             )}
             {dateRange && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#8fbfe6', borderColor: 'rgba(143,191,230,0.4)' }}>{dateRange.min} – {dateRange.max}</span>
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e0b46a', borderColor: 'rgba(224,180,106,0.42)' }}>{dateRange.min} – {dateRange.max}</span>
             )}
             {languages.length > 0 && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#86c98f', borderColor: 'rgba(134,201,143,0.4)' }}>{languages.join(' · ')}</span>
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e8e2d6', borderColor: 'rgba(232,226,214,0.3)' }}>{languages.join(' · ')}</span>
             )}
           </div>
         </div>
