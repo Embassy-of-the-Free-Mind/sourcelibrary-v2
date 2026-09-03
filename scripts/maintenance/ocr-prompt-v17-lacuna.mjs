@@ -13,10 +13,20 @@
  * exactly once before substitution — a prompt this load-bearing must never be
  * patched by a regex that silently matched nothing or matched twice.
  *
- * ORDERING (matters): the new rows land with is_default:false. Promote them
- * ONLY once the `<lacuna>` renderer and stripper have shipped, otherwise the
- * pipeline emits a tag the reader renders as literal text:
- *   node scripts/maintenance/ocr-prompt-v17-lacuna.mjs --promote
+ * ORDERING (matters): the new rows land with is_default:false.
+ *
+ * DO NOT PROMOTE v17 YET — and --promote now refuses without an explicit
+ * override, because a docstring saying "not yet" is not a control.
+ * Two conditions, only the first of which is met by merging this:
+ *   1. the `<lacuna>` renderer + stripper have shipped (this PR), and
+ *   2. v17 has been shown NOT to over-decline.
+ * Condition 2 FAILED on 2026-09-02: at k=5, v17 turned p.197's perfectly
+ * legible Latin note ("Nihil hic deesse videtur") into a <lacuna>, and the
+ * headline fabrication win did not replicate — a second run put the runaway
+ * loop on the opposite arm (scripts/eval/EXPERIMENTS.md, PR #4610, issue #4195).
+ * Re-run scripts/eval/prompt-ab.mjs with a loop classifier before promoting.
+ *
+ *   node scripts/maintenance/ocr-prompt-v17-lacuna.mjs --promote --ab-rerun-clean
  * Rollback: --demote, which restores v16/v13 as default.
  *
  * Usage:
@@ -131,6 +141,21 @@ const plan = [
 const c = new MongoClient(process.env.MONGODB_URI);
 await c.connect();
 const col = c.db('bookstore').collection('prompts');
+
+if (PROMOTE && !process.argv.includes('--ab-rerun-clean')) {
+  console.error([
+    'REFUSING to promote v17.',
+    '',
+    'v17 was measured OVER-DECLINING on 2026-09-02: it converts readable text',
+    'into gap markers (Kitab al-Bulhan p.197, legible Latin -> <lacuna>), and the',
+    'fabrication win it was promoted for did not replicate across two k=5 runs.',
+    'See scripts/eval/EXPERIMENTS.md and PR #4610.',
+    '',
+    'Re-run scripts/eval/prompt-ab.mjs with a loop classifier first. If it comes',
+    'back clean, pass --ab-rerun-clean to say so.',
+  ].join('\n'));
+  process.exit(1);
+}
 
 if (PROMOTE || DEMOTE) {
   // The unique index uniq_default_per_type permits one default per type, so the
