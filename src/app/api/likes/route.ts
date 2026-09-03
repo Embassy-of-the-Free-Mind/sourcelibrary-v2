@@ -37,6 +37,14 @@ async function resolveTarget(
       );
       return { found: !!book, tenantId: (book?.tenantId as string) || null };
     }
+    if (targetType === 'collection') {
+      // Collections are liked by slug (the id a reader sees in the URL).
+      const coll = await db.collection('collections').findOne(
+        { slug: targetId },
+        { projection: { tenantId: 1 } }
+      );
+      return { found: !!coll, tenantId: (coll?.tenantId as string) || null };
+    }
     if (targetType === 'page' || targetType === 'image') {
       // Image targetIds are `{pageId}-{detectionIndex}` (current UI) or
       // legacy `{pageId}:{detectionIndex}` — the tenant lives on the parent
@@ -65,7 +73,7 @@ async function resolveTarget(
  * Toggle a like for a target. If already liked, removes it. If not, adds it.
  *
  * Body:
- *   - target_type: 'image' | 'page' | 'book'
+ *   - target_type: 'image' | 'page' | 'book' | 'collection'
  *   - target_id: string
  *   - visitor_id: string (from localStorage)
  */
@@ -89,9 +97,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!['image', 'page', 'book'].includes(target_type)) {
+    if (!['image', 'page', 'book', 'collection'].includes(target_type)) {
       return NextResponse.json(
-        { error: 'target_type must be image, page, or book' },
+        { error: 'target_type must be image, page, book, or collection' },
         { status: 400 }
       );
     }

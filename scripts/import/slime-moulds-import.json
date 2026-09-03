@@ -1,0 +1,29 @@
+[
+  {
+    "ia_identifier": "b33479355",
+    "title": "Herbarium Portatile, oder behendes Kräuter- und Gewächs-Buch",
+    "author": "Thomas Panckow (Pancovius, 1622-1665)",
+    "year": 1656,
+    "original_language": "German",
+    "language": "German",
+    "notes": "Leipzig 1656 edition of the herbal first published in Berlin in 1654. Contains the earliest known published notice of a slime mould: a short description and woodcut of 'fungi cito crescentes' (the rapidly growing fungus), almost certainly Lycogala epidendrum, together with a note on how fast it appears. A picture herbal of 1363 woodcuts with Latin and German names, so the translatable text is short entries rather than continuous prose. Collection: slime-moulds, mycology. Source: archive.org, Wellcome Library copy, 624 images."
+  },
+  {
+    "ia_identifier": "b28113640",
+    "title": "Die Mycetozoen (Schleimpilze): ein Beitrag zur Kenntniss der niedersten Organismen",
+    "author": "Anton de Bary (1831-1888)",
+    "year": 1864,
+    "original_language": "German",
+    "language": "German",
+    "notes": "The book form (Leipzig, Wilhelm Engelmann, 1864) of de Bary's 1859 paper in the Zeitschrift für wissenschaftliche Zoologie. Argues from developmental evidence that the slime moulds are not fungi at all but the lowest of animals, and gives them the name Mycetozoa. The single text that removes the group from mycology and sets the terms for everything after it. German prose, never fully translated. 132 pages plus 6 folded plates. Collection: slime-moulds, mycology. Source: archive.org, Wellcome Library copy, 170 images."
+  },
+  {
+    "ia_identifier": "sluzowcemycetozo00rost",
+    "title": "Śluzowce (Mycetozoa). Monografia",
+    "author": "Józef Tomasz Rostafiński (1850-1928)",
+    "year": 1875,
+    "original_language": "Polish",
+    "language": "Polish",
+    "notes": "The first monograph of the slime moulds (Paris, Nakładem Biblioteki Kórnickiej, 1875), written in Polish by de Bary's student and never fully translated. Rostafiński's classification and species descriptions remain the foundation of myxomycete taxonomy, reaching most later workers only second hand through Lister's 1894 English monograph. First-translation candidate. Collection: slime-moulds, mycology. Source: archive.org, Smithsonian Libraries / BHL copy, 468 images."
+  }
+]

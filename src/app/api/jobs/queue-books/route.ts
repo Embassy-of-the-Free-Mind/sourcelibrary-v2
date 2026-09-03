@@ -118,7 +118,10 @@ export const POST = withAuth(async (request, session) => {
     // Set active job on book
     await db.collection('books').updateOne(
       { id: bookId },
-      { $set: { job: { type: 'realtime', job_id: jobId } } }
+      // `action` rides along so the public book payload can say WHAT is being
+      // done without exposing the authenticated job record. Readers get
+      // "the illustrations are being prepared"; operators still get the banner.
+      { $set: { job: { type: 'realtime', job_id: jobId, action } } }
     );
 
     // Enqueue pages to appropriate queue

@@ -311,6 +311,18 @@ async function processOneJob(db, job) {
     let recitationCount = 0;
     const recitationPageIds = []; // Track page IDs for per-page recitation stamping (single-page path only)
 
+    // Why pages failed, tallied by reason.
+    //
+    // A batch can come back JOB_STATE_SUCCEEDED with most of its pages unsaved,
+    // and until now the only record was a failed_pages number — which is enough
+    // to know something went wrong and never enough to find out what. Lister
+    // 1894 lost 80% of its pages this way, twice, and the cause is still
+    // unknown: not the recitation filter, not image size, dimensions, format or
+    // payload size (all four checked and refuted). The responses that would say
+    // are discarded here, so record the shape of them.
+    const failReasons = {};
+    const noteFail = (reason) => { failReasons[reason] = (failReasons[reason] || 0) + 1; };
+
     // Job totals come from the RESPONSES, not from the pages we end up saving
     // (#3452) — Gemini bills every response, including the ones we discard.
     const { inputTokens: totalInputTokens, outputTokens: totalOutputTokens } =
@@ -318,11 +330,11 @@ async function processOneJob(db, job) {
 
     if (isMultiPage && job.type === 'ocr') {
       for (const r of responses) {
-        if (r.error) { failCount++; continue; }
+        if (r.error) { failCount++; noteFail(`error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`); continue; }
         const candidate = r.response?.candidates?.[0];
-        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
+        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; noteFail('RECITATION'); continue; }
         const text = candidate?.content?.parts?.[0]?.text;
-        if (!text) { failCount++; continue; }
+        if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
         const parsed = parseMultiPageOcr(text, { lenient: true });
         // One response covers N pages and reports one usageMetadata — split it
         // evenly for the per-page stamp so pages.ocr.input_tokens doesn't claim
@@ -346,17 +358,20 @@ async function processOneJob(db, job) {
           // Index fallback caused cross-book contamination (2026-03-24 incident).
           console.warn(`  SKIP: response ${idx} missing metadata.key (book: ${job.book_id})`);
           failCount++;
+          noteFail('missing-metadata-key');
           continue;
         }
         const candidate = r.response?.candidates?.[0];
         if (candidate?.finishReason === 'RECITATION') {
           recitationCount++;
           failCount++;
+          noteFail('RECITATION');
           if (job.type === 'ocr') recitationPageIds.push(pageId); // Stamp page-level tracking
           continue;
         }
+        if (r.error) { failCount++; noteFail(`error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`); continue; }
         const text = candidate?.content?.parts?.[0]?.text;
-        if (!text) { failCount++; continue; }
+        if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
         pageResults.push({ pageId, text, usage: r.response?.usageMetadata });
       }
     }
@@ -730,6 +745,7 @@ async function processOneJob(db, job) {
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
+          ...(failCount > 0 ? { fail_reasons: failReasons } : {}),
           ...(protectedCount > 0 && { protected_pages: protectedCount }),
           ...(blankRefusedCount > 0 && { blank_refused_pages: blankRefusedCount }),
           results_collected: true,

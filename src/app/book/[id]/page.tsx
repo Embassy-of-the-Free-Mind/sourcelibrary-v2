@@ -77,6 +77,7 @@ import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
 import { getPageImageUrl } from '@/lib/page-image-url';
+import { galleryFilter, galleryHref, type GalleryScope } from '@/lib/gallery-scope';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
@@ -495,6 +496,14 @@ export async function generateMetadata({ params, lang = 'en' }: PageProps): Prom
   };
 }
 
+/**
+ * The illustrations of one book, as this page shows them: curated at quality
+ * >= 0.7 rather than the gallery's 0.5 default. Defined once so the count, the
+ * preview row and the "view all" link cannot drift apart — they did, and the
+ * page offered "View all 141 illustrations" into a page of 192.
+ */
+const bookGalleryScope = (bookId: string): GalleryScope => ({ bookId, minQuality: 0.7 });
+
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
@@ -623,22 +632,21 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       .toArray()
       .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100)),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
-    // Top 8 gallery images for preview row
+    // Top 8 gallery images for preview row. Both this and the count below use
+    // BOOK_GALLERY_SCOPE, which also builds the "view all" href — so the number
+    // shown and the page it opens are the same set by construction.
     db.collection('gallery_images')
       .find(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
+        galleryFilter(bookGalleryScope(bookId)),
         { projection: { _id: 0, id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1, type: 1, page_number: 1, gallery_quality: 1, dhash: 1, book_id: 1 }, maxTimeMS: 5000 },
       )
       .sort({ gallery_quality: -1 })
       .limit(30) // over-fetch to allow dhash dedup to filter duplicates
       .toArray()
       .catch(() => []),
-    // Separate count query for accurate image count display
+    // Counted with the same scope the preview and the link use.
     db.collection('gallery_images')
-      .countDocuments(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
-        { maxTimeMS: 5000 },
-      )
+      .countDocuments(galleryFilter(bookGalleryScope(bookId)), { maxTimeMS: 5000 })
       .catch(() => 0),
     // Collections this book belongs to
     (quickBook.collections as string[] | undefined)?.length
@@ -1854,7 +1862,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <GalleryMasonry plates={galleryPlates} />
               {imageCount > galleryPlates.length && (
                 <div className="mt-8 text-center">
-                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
+                  {/* imageCount is counted at quality >= 0.7, the bar this section curates
+                      to, but /gallery defaults to 0.5 — so "view all 141" opened a
+                      page of 192. Carry the threshold so the destination matches the
+                      promise. */}
+                  <Link href={galleryHref(bookGalleryScope(book.id))} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
                     <Images className="w-4 h-4" />
                     {t.viewAllIllustrations(imageCount)}
                   </Link>

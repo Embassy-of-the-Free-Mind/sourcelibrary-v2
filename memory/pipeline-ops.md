@@ -152,3 +152,30 @@ boost) inside their computed `_priority` — it now acts as a tiebreak below
 - **Bulk OCR belongs in the orchestrator, NOT the Vercel route (2026-06-26):** For any backlog OCR, enroll books (`pipeline_auto.status='queued'`; orchestrator advances already-archived ones to `archive_complete` and archives the rest, then OCRs) — the orchestrator submits to Gemini *directly* from Hetzner. The route `POST /api/books/[id]/batch-ocr-async` downloads ALL page images synchronously before creating batches, so it **edge-timeouts on books >~300pp** (Cloudflare 524 / Vercel 500 / Next `__next_error__`); only small books (<~150pp, or a small `limit:`) submit cleanly. **Rule: don't drive bulk OCR by looping the route from a laptop — enroll and let the pipeline do it.**
 - **Route batch-OCR: client abort loses the batch; 524 does not; batch_jobs is ground truth (2026-06-26):** A client-side `AbortController` on `batch-ocr-async` cancels the Vercel function → no batch created. A Cloudflare **524** (origin keeps running) DOES create the batch server-side. The route does **not** dedupe against pending `batch_jobs`, so re-calling a book that already has pending jobs **double-submits and double-charges**. **Rule: never abort early; treat 524/500 as "verify via `batch_jobs`," and use `batch_jobs` (created in last N h, per `book_id`) as the dedup/coverage source of truth before resubmitting.**
 - **A chunk of `language:'english'` books are IA lending-locked = copyright (2026-06-26):** IA Controlled-Digital-Lending scans have the `*0000xxxx` "inlibrary" identifier; their page images 403 and they're copyright-restricted — `batch-ocr-async` returns `400 "Failed to prepare any images"` and `archive-bulk` skips them as broken-source. **They cannot/should-not be archived or OCR'd — detect (identifier `…0000<libcode>` or 403 on the image URL) and drop / re-source from an open copy.** Two more gotchas from the same sweep: (a) the route OCRs from `pages.photo`/`photo_original` (for archived books these point to `images.sourcelibrary.org` R2; "has external `photo`" ≠ "archived to R2"); (b) `pages_count − pages_ocr` **overcounts** the real OCR gap — blank/plate pages count toward `pages_count` but are intentionally never OCR'd, so filter to books <~85% OCR'd to find genuine gaps.
+
+## Batch OCR can report success and save almost nothing (2026-08-24, UNRESOLVED)
+
+A Gemini batch returns `JOB_STATE_SUCCEEDED` while most of its pages never
+save. Measured on one import: Lister 1894 lost **80%** of 250 submitted pages,
+twice; Cooke 1877 52%; Massee 1892 10%; the German/Latin/Polish books in the
+same batch lost ~0-3%. The identical pages then went through the realtime
+Lambda path (`/api/jobs/queue-books`) without trouble, so it is not the pages
+and not the scans.
+
+**Checked and refuted** (do not re-spend on these): the RECITATION filter (no
+page carries `ocr.recitation_count`); image byte size (Zopf succeeds at a
+1,329KB median while Lister fails at 917KB); pixel dimensions; JPEG encoding
+(progressive vs baseline correlates loosely but de Bary is progressive and
+barely failed); inline payload size (the largest payload had the lowest
+failure rate).
+
+**Why it stayed undiagnosable:** `batch-collector.mjs` discarded the responses
+that would say. It now tallies failures by reason into `batch_jobs.fail_reasons`
+(transport error / RECITATION / missing metadata key / no-text + finishReason).
+**Next occurrence: read that field first.**
+
+Two things still wrong and unfixed: the pipeline reports success on a job that
+saved almost nothing, and these jobs log **no cost at all** even though every
+response is billed — so the spend is invisible too. A batch saving under some
+threshold should mark the book for retry and fall back to the realtime path,
+which is what had to be done by hand five times.

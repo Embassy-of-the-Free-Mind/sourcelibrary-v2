@@ -1,0 +1,29 @@
+[
+  {
+    "ia_identifier": "mobot31753000311289",
+    "title": "Nova Genera Plantarum",
+    "author": "Heinrich Adolph Schrader (1767-1836)",
+    "year": 1797,
+    "original_language": "Latin",
+    "language": "Latin",
+    "notes": "Schrader's pars prima (Leipzig, 1797), the only part published. Contains early formal descriptions of slime mould genera with hand-coloured engraved plates, made in the years when Persoon was fixing the nomenclature the group still uses. Short, never translated, and a plate source as much as a text. First-translation candidate. Collection: slime-moulds, mycology. Source: archive.org, Missouri Botanical Garden copy, 48 images."
+  },
+  {
+    "ia_identifier": "myxomycetesofgre00cook",
+    "title": "The Myxomycetes of Great Britain, arranged according to the method of Rostafinski",
+    "author": "Mordecai Cubitt Cooke (1825-1914)",
+    "year": 1877,
+    "original_language": "English",
+    "language": "English",
+    "notes": "The book that carried Rostafinski's classification into English practice, seventeen years before Lister's monograph (London, 1877). The title states the debt outright. A working British flora of the group with 24 plates, and the bridge between the Polish monograph almost nobody could read and the English one everybody did. Collection: slime-moulds, mycology. Source: archive.org, MBLWHOI Library copy, 164 images."
+  },
+  {
+    "ia_identifier": "monographofmyxog00massuoft",
+    "title": "Monograph of the Myxogastres",
+    "author": "George Massee (1845-1917)",
+    "year": 1892,
+    "original_language": "English",
+    "language": "English",
+    "notes": "Massee's arrangement of the group (London, Methuen, 1892), with twelve coloured plates. Published two years before Lister's monograph and largely superseded by it, which is the interest: the two together show the classification being argued rather than settled. Collection: slime-moulds, mycology. Source: archive.org, University of Toronto copy, 412 images."
+  }
+]

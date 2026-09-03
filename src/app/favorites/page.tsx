@@ -33,6 +33,14 @@ interface PopularBook {
   contentType?: 'book' | 'artwork';
 }
 
+interface SavedCollection {
+  slug: string;
+  name: string;
+  description?: string;
+  bookCount?: number;
+  likeCount: number;
+}
+
 interface PopularPage {
   id: string;
   pageNumber: number;
@@ -79,6 +87,7 @@ export default function FavoritesPage() {
 
   // My likes data
   const [myBooks, setMyBooks] = useState<PopularBook[]>([]);
+  const [myCollections, setMyCollections] = useState<SavedCollection[]>([]);
   const [myPages, setMyPages] = useState<PopularPage[]>([]);
   const [myImages, setMyImages] = useState<PopularImage[]>([]);
   const [loadingMyBooks, setLoadingMyBooks] = useState(true);
@@ -100,6 +109,10 @@ export default function FavoritesPage() {
     }
 
     const visitorId = identity.id;
+
+    likes.getMine<SavedCollection>({ type: 'collection', visitorId })
+      .then(data => setMyCollections(data.items))
+      .catch(console.error);
 
     likes.getMine<PopularBook>({ type: 'book', visitorId })
       .then(data => setMyBooks(data.items))
@@ -249,6 +262,22 @@ export default function FavoritesPage() {
 
       {/* Content */}
       <main className="max-w-5xl mx-auto px-6 py-10">
+        {/* Saved collections sit above the tabs: they are few, and a
+            collection is a different kind of thing from the items the tabs
+            hold. Only in "My Likes". */}
+        {mode === 'mine' && myCollections.length > 0 && (
+          <section className="mb-10">
+            <h2 className="text-sm font-medium text-stone-500 mb-3">Saved collections</h2>
+            <div className="flex flex-wrap gap-2">
+              {myCollections.map(c => (
+                <Link key={c.slug} href={`/collections/${c.slug}`} className="inline-flex items-baseline gap-2 border border-stone-200 bg-white px-4 py-2 text-sm text-stone-800 hover:border-stone-400 transition-colors">
+                  {c.name}
+                  {typeof c.bookCount === 'number' && c.bookCount > 0 && <span className="text-xs text-stone-400">{c.bookCount} books</span>}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <BookLoader size="sm" />
