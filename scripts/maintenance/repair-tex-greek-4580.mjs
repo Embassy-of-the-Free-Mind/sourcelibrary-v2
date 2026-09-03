@@ -35,6 +35,7 @@
 
 import { MongoClient } from 'mongodb';
 import { repairTexGreek } from '../lib/tex-greek.mjs';
+import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const LIMIT = parseInt((process.argv.find(a => a.startsWith('--limit=')) || '').split('=')[1] || '0', 10);
@@ -118,16 +119,17 @@ for (const field of ['ocr', 'translation']) {
 
     // Keep the pre-repair text. A decoder that is 99% right still needs the 1%
     // to be recoverable, and an overwrite with no copy is not auditable.
-    await db.collection('page_revisions').insertOne({
-      page_id: p.id,
-      book_id: p.book_id,
-      field,
-      text: before,
-      source: SWEEP,
-      reason: 'tex_greek_markup',
-      spans_decoded: replacements,
-      created_at: new Date(),
-    });
+    //
+    // Via the shared helper, NOT a hand-rolled insertOne: page_revisions carries
+    // a unique `id` index and a field shape (data/source/model/language/…) that
+    // the measurement stack segments on. My first version wrote {text, source}
+    // with no id and died on a duplicate-key collision against id:null — which
+    // at least failed closed, before any page was touched.
+    const saved = await saveRevisionBeforeOverwrite(db, p.id, field, { reason: 'tex_greek_markup' });
+    if (!saved) {
+      console.warn(`  skipped ${p.id}: could not save a revision, refusing to overwrite`);
+      continue;
+    }
     const res = await pages.updateOne(
       { id: p.id },
       { $set: { [path]: after, [`${field}.tex_greek_repaired_at`]: new Date() } },
