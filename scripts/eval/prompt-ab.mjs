@@ -45,13 +45,28 @@
  *               absence caused the original failure.
  *   lacuna/unclear rate, and modal <page-type> plus how often it flips.
  *
- * ── Pre-registered decision rule ───────────────────────────────────────────
+ * ── Pre-registered decision rule (AMENDED — see below) ─────────────────────
  * An arm is better on a positive-control page iff BOTH hold:
- *   (a) mean body_len falls by more than the pooled SD of the two arms, and
+ *   (a) the 95% bootstrap CI on the difference in mean body_len excludes zero
+ *       and the difference is negative, and
  *   (b) agreement does not fall.
- * On a negative control, an arm is acceptable iff mean body_len does not fall
- * by more than the pooled SD. Anything else is "not established" and is
- * reported as such rather than argued around.
+ * On a negative control, an arm is acceptable iff (a) does not hold in the
+ * negative direction. Anything else is "not established" and is reported as
+ * such rather than argued around.
+ *
+ * ── AMENDMENT 2026-09-02: statistics, recorded not silently applied ─────────
+ * v1 of clause (a) compared the arm difference against a POOLED SD — an ad-hoc
+ * threshold with no error rate attached, invented locally. It should never have
+ * been: `scripts/eval/stats-cross-model.mjs` has carried an exact sign test,
+ * Wilcoxon, and a 10k-resample bootstrap CI on paired per-page deltas since
+ * #3235, and `PREREGISTRATION-prompt-ablation.md` / `-repeat-instability.md`
+ * had already established the house conventions this file's header claims to
+ * introduce. The rule now uses that machinery, extracted to lib/paired-stats.mjs.
+ * The amendment is a strictly more conservative test, made before any new arm
+ * was run, and the pre-amendment results are kept in results/ for comparison —
+ * a preregistration that is quietly rewritten stops being one (the phrasing is
+ * borrowed from the repeat-instability preregistration, which handled its own
+ * amendment the same way).
  *
  * ── KNOWN FLAW in clause (b), found on the first run — do not silently fix ──
  * Clause (b) ("agreement does not fall") misfires when the BASELINE failure is
@@ -69,12 +84,38 @@
  * after seeing the numbers is the exact failure pre-registration prevents. Fix
  * it in the next revision, prospectively.
  *
+ * ── FINDING 2026-09-02: the runaway loop is NOT controlled by the prompt ───
+ * Two independent k=5 runs of the SAME two arms gave opposite answers:
+ *
+ *   run 1   hiero-rows (p.118)   v15 16,264 ±0     v17    348 ±4
+ *   run 2   hiero-rows (p.118)   v15    554 ±65    v17 16,232 ±0
+ *   run 2   hiero-block (p.24)   v15 16,271 ±0     v17    834 ±48
+ *
+ * The ~16.2k figure is the output-token cap: a degenerate repetition loop runs
+ * until truncation. It lands on EITHER arm, and within a batch of 5 it is
+ * all-or-none (±0, agreement 1.000), which makes a single batch look decisive
+ * when it is not. Both arms load distinct, correct prompts (verified by
+ * content_hash), so this is not an assignment bug.
+ *
+ * CONSEQUENCE: body-length means are the wrong estimator for this failure. A
+ * looped run is a categorical catastrophe, not a long reading, and averaging it
+ * with normal runs produces a number that describes neither. The next revision
+ * must (a) classify each run as looped / normal by a repetition detector,
+ * (b) report LOOP RATE as a Bernoulli outcome with a proper interval, and
+ * (c) compute length statistics on normal runs only. k=5 cannot estimate a rate
+ * this volatile — power for a Bernoulli rate needs tens of runs per arm.
+ *
+ * Until that lands, NO claim about v15-vs-v17 on looping pages is supported by
+ * this harness, in either direction. The earlier "5,000x pooled SD win" and its
+ * mirror image are both the same artifact.
+ *
  * ── Usage ──────────────────────────────────────────────────────────────────
  *   node --env-file=.env.production.local scripts/eval/prompt-ab.mjs \
  *     --a 15 --b 17 --k 5 [--cases lacuna|blank|all] [--out results.json]
  */
 import { MongoClient } from 'mongodb';
 import { writeFileSync } from 'fs';
+import { diffCI, binomTwoSided, resetSeed } from './lib/paired-stats.mjs';
 
 const arg = (name, dflt) => {
   const i = process.argv.indexOf(`--${name}`);
@@ -197,6 +238,7 @@ for (const t of CASES) {
     const types = ok.map(pageType);
     row.arms[v] = {
       n: ok.length,
+      body_lens: lens,
       body_mean: Math.round(mean(lens)), body_sd: Math.round(sd(lens)),
       agreement: Number(mean(pairs).toFixed(3)),
       lacuna: Number(mean(ok.map((r) => tagCount(r, 'lacuna'))).toFixed(1)),
@@ -207,18 +249,27 @@ for (const t of CASES) {
   }
   const a = row.arms[A_VER], b = row.arms[B_VER];
   if (a?.n && b?.n) {
-    const pooled = Math.sqrt((a.body_sd ** 2 + b.body_sd ** 2) / 2);
-    row.pooled_sd = Math.round(pooled);
-    row.body_delta = b.body_mean - a.body_mean;
-    // Pre-registered rule, applied mechanically — not after looking.
+    // AMENDED 2026-09-02, and the amendment is recorded rather than applied
+    // silently. v1 of this rule compared the arm difference against a POOLED SD
+    // — an ad-hoc threshold with no error rate. scripts/eval/stats-cross-model.mjs
+    // has carried a bootstrap CI + sign test since #3235; the rule now uses that
+    // machinery (extracted to lib/paired-stats.mjs) instead of a worse local
+    // invention. Verdicts below are recomputed under the amended rule; the
+    // pre-amendment run is preserved in results/ for comparison.
+    resetSeed();  // reproducible CI
+    const d = diffCI(a.body_lens, b.body_lens);
+    row.body_delta = Math.round(d.delta);
+    row.body_ci = d.ci.map((x) => Math.round(x));
+    row.decisive = d.decisive;
+    // A change counts only if the 95% CI excludes zero.
     row.verdict = t.control === 'positive'
-      ? (row.body_delta < -pooled && b.agreement >= a.agreement ? 'IMPROVED'
-        : row.body_delta < -pooled ? 'shorter, but agreement fell' : 'not established')
-      : (row.body_delta >= -pooled ? 'unchanged (ok)' : 'REGRESSION');
+      ? (d.decisive && d.delta < 0 && b.agreement >= a.agreement ? 'IMPROVED'
+        : d.decisive && d.delta < 0 ? 'shorter, but agreement fell' : 'not established')
+      : (!(d.decisive && d.delta < 0) ? 'unchanged (ok)' : 'REGRESSION');
     console.log(`── ${t.id.padEnd(13)} [${t.control}] ${t.note}`);
     console.log(`   v${A_VER}: body ${String(a.body_mean).padStart(6)} ±${String(a.body_sd).padEnd(5)} agree=${a.agreement}  lacuna=${a.lacuna} unclear=${a.unclear} type=${a.page_type_modal}${a.page_type_stable ? '' : '*'}`);
     console.log(`   v${B_VER}: body ${String(b.body_mean).padStart(6)} ±${String(b.body_sd).padEnd(5)} agree=${b.agreement}  lacuna=${b.lacuna} unclear=${b.unclear} type=${b.page_type_modal}${b.page_type_stable ? '' : '*'}`);
-    console.log(`   Δbody=${row.body_delta}  pooled_sd=${row.pooled_sd}  →  ${row.verdict}\n`);
+    console.log(`   Δbody=${row.body_delta}  95% CI [${row.body_ci[0]}, ${row.body_ci[1]}]  →  ${row.verdict}\n`);
   }
   results.push(row);
 }
@@ -233,5 +284,10 @@ console.log(`positive controls: ${pos.filter((r) => r.verdict === 'IMPROVED').le
 console.log(`negative controls: ${neg.filter((r) => r.verdict === 'unchanged (ok)').length}/${neg.length} unchanged, ${neg.filter((r) => r.verdict === 'REGRESSION').length} regressed`);
 const instability = scored.flatMap((r) => [r.arms[A_VER], r.arms[B_VER]]).filter((a) => a?.body_sd);
 console.log(`sampler spread: median body_sd = ${Math.round(instability.map((a) => a.body_sd).sort((x, y) => x - y)[Math.floor(instability.length / 2)] || 0)} chars — the quantity a k=1 run cannot see`);
+const decisive = scored.filter((r) => r.decisive);
+const shorter = decisive.filter((r) => r.body_delta < 0).length;
+console.log(`decisive pages: ${decisive.length}/${scored.length}; of those ${shorter} shorter under v${B_VER}` +
+  (decisive.length ? `  (sign test p=${binomTwoSided(shorter, decisive.length).toFixed(3)})` : ''));
+console.log('NOTE: n is small; the sign test across this many pages is descriptive, not confirmatory.');
 if (OUT) { writeFileSync(OUT, JSON.stringify({ model: MODEL, arms: [A_VER, B_VER], k: K, at: new Date().toISOString(), results }, null, 2)); console.log(`\nwrote ${OUT}`); }
 await c.close();
