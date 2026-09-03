@@ -10,6 +10,7 @@ import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { FeedbackPanel } from './FeedbackPanel';
+import ReaderWebMCP from './ReaderWebMCP';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
@@ -3165,6 +3166,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   return (
     <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)} className="flex flex-col h-[100dvh]">
+      {/* WebMCP only on the main site: get_citation emits /book/… URLs whose
+          shape is wrong on tenant reading rooms, and embedded iframes would
+          need an explicit allow="tools" grant from the partner page anyway. */}
+      {!isEmbedded && <ReaderWebMCP r={r} />}
       {/* Never in an embed or on a tenant subdomain. A partner reading room
           exists to hold one collection; a menu offering Explore, Works and
           Support sends the reader to URLs the tenant host 404s, and out of the
