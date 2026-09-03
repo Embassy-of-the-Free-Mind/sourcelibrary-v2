@@ -298,6 +298,13 @@ async function listBooks(args: Record<string, unknown>) {
   // follow-up "all books by this person" call needs no separate lookup.
   if (args.author_id) params.set('author_id', String(args.author_id));
   if (args.edition_key) params.set('edition_key', String(args.edition_key));
+  // Every witness of ONE work. list_editions already answers "give me the
+  // siblings of this book", but only as a whole set — without this filter an
+  // agent holding a work_id cannot combine it with language, year or sort, so
+  // it falls back to a title search. That is exactly how the Sancai Tuhui reads
+  // as 18 books instead of 108: most witnesses are titled "Collected
+  // Illustrations of the Three Realms" and contain no "Sancai" string (#4576).
+  if (args.work_id) params.set('work_id', String(args.work_id));
   if (typeof args.year_from === 'number' && Number.isFinite(args.year_from)) params.set('year_from', String(Math.trunc(args.year_from)));
   if (typeof args.year_to === 'number' && Number.isFinite(args.year_to)) params.set('year_to', String(Math.trunc(args.year_to)));
   // `has_edition` filters by a language the book can be READ in; `language`
@@ -1108,6 +1115,7 @@ const TOOLS: Tool[] = [
         search: { type: 'string', description: 'Free-text filter matching title or author (relevance-ranked, may include title matches). For exactly one person\'s books use author_id instead.' },
         author_id: { type: 'string', description: 'Canonical author slug, e.g. "jan-hus" — filters to exactly that person\'s books via the author thesaurus (variant slugs resolve to the canonical person). Every book row in results carries its author_id; the response echoes the canonicalized author.' },
         edition_key: { type: 'string', description: 'Other digitizations of ONE printing — pass the edition_key from a result row. Only full-quality keys match on both sides, so this answers "what other scans of this exact edition do you hold?" and never merges different printings of the same title.' },
+        work_id: { type: 'string', description: 'Every witness of one WORK, across editions, languages and centuries — pass the work_id from a result row or from get_book. Use this instead of a title search whenever you already hold the identifier: witnesses of one work are often titled differently in each language, so a title search finds only the subset that happens to share your wording. Unlike list_editions (which returns the whole set), this composes with language, year_from/year_to and sort.' },
         year_from: { type: 'number', description: 'Earliest edition year (inclusive). Matches only books with a known numeric year — ~60% of the library.' },
         year_to: { type: 'number', description: 'Latest edition year (inclusive).' },
         language: { type: 'string' }, category: { type: 'string' },
