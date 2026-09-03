@@ -48,9 +48,13 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
       '@type': 'Organization',
       name: 'Embassy of the Free Mind',
     },
+    // Mirrors the SOCIALS list rendered in the footer
+    // (src/components/layout/GlobalFooter.tsx) — update both together, or
+    // search engines and readers are told different things.
     sameAs: [
       'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2',
       'https://x.com/SourceLibrary_',
+      'https://www.instagram.com/source.library',
       'https://en.wikipedia.org/wiki/Embassy_of_the_Free_Mind',
     ],
   };
