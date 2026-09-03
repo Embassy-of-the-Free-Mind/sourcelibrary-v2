@@ -79,6 +79,37 @@ const ACCENTS = {
   check: '̌',
 };
 
+/**
+ * Commands that are not Greek-letter names but stand in for one, or for a
+ * character inside a Greek word. All observed in the corpus:
+ *
+ *   \circ   — the ring/degree glyph, used as omicron (ἀθάνατον, πήχυιον)
+ *   \imath  — dotless i, which is what a model reaches for under an accent
+ *   \cdot   — used as the Greek ano teleia (·), the colon of Greek punctuation
+ */
+const STANDINS = {
+  circ: 'ο',
+  imath: 'ι',
+  jmath: 'ι',
+  cdot: '·',
+};
+
+/**
+ * Non-Greek glyphs the same OCR pass writes as TeX. Included because a page
+ * repaired for Greek alone comes out INCONSISTENT: an alchemical recipe reads
+ * "aquam $\nabla$ … Nota quod Δ" — half markup, half glyph, worse than either.
+ * All unambiguous single characters.
+ */
+const GLYPHS = {
+  nabla: '\u2207', triangle: '\u25b3', square: '\u25a1', odot: '\u2609',
+  oplus: '\u2295', ominus: '\u2296', otimes: '\u2297',
+  dagger: '\u2020', ddagger: '\u2021', degree: '\u00b0',
+  prime: '\u2032', textprime: '\u2032',
+  Box: '\u25a1', Diamond: '\u25c7', Triangle: '\u25b3',
+  textrecipe: '\u211e',   // ℞ — 'take', the opening word of a recipe
+  textdegree: '\u00b0', textbullet: '\u2022',
+};
+
 /** A whole math span, $…$ or \(…\). */
 const MATH_SPAN = /\$([^$]{1,4000})\$|\\\(([\s\S]{1,4000}?)\\\)/g;
 
@@ -91,13 +122,30 @@ function decodeSpan(body) {
   let out = '';
   let i = 0;
   let sawGreek = false;
+  let sawGlyph = false;
 
   while (i < body.length) {
     const rest = body.slice(i);
 
     // \text{...} / \mathrm{...} — literal text, usually a letter the model
     // could not name (\text{o} for omicron).
-    let m = rest.match(/^\\(?:text|mathrm|textrm|mathit)\{([^{}]*)\}/);
+    // \text{\textsf{A}} — a nested text group, and \text{\&} an escaped char
+    // inside one. Both appear on alchemical pages beside the Greek.
+    let m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{\s*\\(?:textsf|textrm|mathrm|text|mathbf)\{([^{}]*)\}\s*\}/);
+    if (m) {
+      if (!/^[A-Za-z0-9&]*$/.test(m[1])) return null;
+      out += m[1];
+      i += m[0].length;
+      continue;
+    }
+    m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{\s*\\([&%#_])\s*\}/);
+    if (m) {
+      out += m[1];
+      sawGlyph = true;
+      i += m[0].length;
+      continue;
+    }
+    m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{([^{}]*)\}/);
     if (m) {
       if (!/^[A-Za-z0-9 ,.;:'’\-]*$/.test(m[1])) return null;
       out += m[1];
@@ -107,9 +155,68 @@ function decodeSpan(body) {
 
     // \acute{\epsilon} — accent applied to a letter (or to another accent).
     m = rest.match(/^\\([a-zA-Z]+)\{\s*\\([a-zA-Z]+)\s*\}/);
-    if (m && ACCENTS[m[1]] && LETTERS[m[2]]) {
-      out += LETTERS[m[2]] + ACCENTS[m[1]];
-      sawGreek = true;
+    if (m && ACCENTS[m[1]] && (LETTERS[m[2]] || STANDINS[m[2]])) {
+      // STANDINS as well as LETTERS: \acute{\imath} is ί, and dotless i is
+      // exactly what a model reaches for when it needs to put an accent on an
+      // iota it is spelling out.
+      out += (LETTERS[m[2]] || STANDINS[m[2]]) + ACCENTS[m[1]];
+      if (LETTERS[m[2]]) sawGreek = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \acute{} — an accent with an empty argument. The mark belongs to the
+    // letter just emitted, which is what the model meant.
+    m = rest.match(/^\\([a-zA-Z]+)\{\s*\}/);
+    if (m && ACCENTS[m[1]]) {
+      out += ACCENTS[m[1]];
+      i += m[0].length;
+      continue;
+    }
+
+    // \text{\textrecipe} — a named glyph wrapped in a text group.
+    m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{\s*\\([a-zA-Z]+)\s*\}/);
+    if (m && GLYPHS[m[1]]) {
+      out += GLYPHS[m[1]];
+      sawGlyph = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \unicode{x2609} — an explicit codepoint. Unambiguous by construction.
+    m = rest.match(/^\\unicode\{x([0-9a-fA-F]{2,6})\}/);
+    if (m) {
+      const cp = parseInt(m[1], 16);
+      if (!(cp > 0 && cp <= 0x10ffff)) return null;
+      out += String.fromCodePoint(cp);
+      sawGlyph = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \nabla, \odot — a non-Greek glyph command.
+    m = rest.match(/^\\([a-zA-Z]+)(?![a-zA-Z])/);
+    if (m && GLYPHS[m[1]]) {
+      out += GLYPHS[m[1]];
+      sawGlyph = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \grave\alpha — accent with NO braces around its argument. TeX accepts
+    // this and the model emits it; matching only the braced form missed them all.
+    m = rest.match(/^\\([a-zA-Z]+)\s*\\([a-zA-Z]+)/);
+    if (m && ACCENTS[m[1]] && (LETTERS[m[2]] || STANDINS[m[2]])) {
+      out += (LETTERS[m[2]] || STANDINS[m[2]]) + ACCENTS[m[1]];
+      if (LETTERS[m[2]]) sawGreek = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \acute{\mathrm{o}} — accent over a \text/\mathrm group.
+    m = rest.match(/^\\([a-zA-Z]+)\{\s*\\(?:text|mathrm|textrm|mathit)\{([^{}]*)\}\s*\}/);
+    if (m && ACCENTS[m[1]] && /^[A-Za-z0-9]$/.test(m[2])) {
+      out += m[2] + ACCENTS[m[1]];
       i += m[0].length;
       continue;
     }
@@ -131,6 +238,11 @@ function decodeSpan(body) {
         i += m[0].length;
         continue;
       }
+      if (STANDINS[m[1]]) {
+        out += STANDINS[m[1]];
+        i += m[0].length;
+        continue;
+      }
       if (m[1] === ' ' || m[1] === 'quad' || m[1] === 'qquad' || m[1] === ' ') {
         out += ' ';
         i += m[0].length;
@@ -138,6 +250,10 @@ function decodeSpan(body) {
       }
       return null; // an unknown command — could be real maths
     }
+
+    // \& \% \# — escaped punctuation, literal in the output.
+    m = rest.match(/^\\([&%#_])/);
+    if (m) { out += m[1]; i += m[0].length; continue; }
 
     // \, \; \! \  — TeX spacing
     m = rest.match(/^\\[,;:!> ]/);
@@ -159,22 +275,27 @@ function decodeSpan(body) {
     return null;
   }
 
-  if (!sawGreek) return null;
+  if (!sawGreek && !sawGlyph) return null;
 
   // TeX has no \omicron (it would render identically to a Latin o), so a model
   // spelling a Greek word out reaches for `\text{o}` or a bare `o` instead —
   // that is literally what the reported page does: \pi\text{o}\tau... for
   // ποτ.... A Latin o flanked by Greek is omicron; one standing alone is left
   // as it was found.
-  let composed = out.normalize('NFC');
+  // Map the Latin o BEFORE composing accents, and allow combining marks between
+  // it and its Greek neighbour. `\acute{o}` decodes to "o" + combining acute; if
+  // we composed first, the result would be a precomposed Latin ó that the bare-o
+  // rule can no longer see, leaving a Latin letter inside a Greek word
+  // (δóξαις instead of δόξαις). Mapping first lets NFC compose ο + acute → ό.
   const GREEK = '\\u0370-\\u03ff\\u1f00-\\u1fff';
-  composed = composed
-    .replace(new RegExp(`(?<=[${GREEK}])o`, 'g'), '\u03bf')
-    .replace(new RegExp(`o(?=[${GREEK}])`, 'g'), '\u03bf')
-    .replace(new RegExp(`(?<=[${GREEK}])O`, 'g'), '\u039f')
-    .replace(new RegExp(`O(?=[${GREEK}])`, 'g'), '\u039f');
+  const MARKS = '\\u0300-\\u036f';
+  const mapped = out
+    .replace(new RegExp(`(?<=[${GREEK}][${MARKS}]*)o`, 'g'), '\u03bf')
+    .replace(new RegExp(`o(?=[${MARKS}]*[${GREEK}])`, 'g'), '\u03bf')
+    .replace(new RegExp(`(?<=[${GREEK}][${MARKS}]*)O`, 'g'), '\u039f')
+    .replace(new RegExp(`O(?=[${MARKS}]*[${GREEK}])`, 'g'), '\u039f');
 
-  return composed.normalize('NFC').replace(/\s+/g, ' ').trim();
+  return mapped.normalize('NFC').replace(/\s+/g, ' ').trim();
 }
 
 /**
@@ -183,7 +304,28 @@ function decodeSpan(body) {
  * @returns {{ text: string, replacements: number }} the repaired text and how
  *   many math spans were decoded. `replacements === 0` means nothing changed.
  */
-export function repairTexGreek(text) {
+const GREEK_CHAR = /[\u0370-\u03ff\u1f00-\u1fff]/g;
+
+/**
+ * Rewrite TeX-encoded Greek in `text` to Unicode Greek.
+ *
+ * By default only WORD-LIKE spans are touched — two or more Greek letters, which
+ * is the defect #4580 reports: a Greek word spelled out as TeX, unsearchable and
+ * uncitable.
+ *
+ * A span holding exactly ONE letter (`$\Delta$`, `$\psi$`) is deliberately left
+ * alone. Measured over 4,000 matching pages, single-letter spans outnumber
+ * word-like ones (21,223 vs 17,474) and cluster in alchemical and astrological
+ * texts, where `$\Delta$` is a SYMBOL rather than a mangled word. Rendering
+ * those as Δ may well be an improvement, but it is a different decision about
+ * far more pages, and quietly making it while fixing something else is how a
+ * narrow fix turns into an unreviewed corpus-wide edit.
+ *
+ * Pass `{ symbolsToo: true }` to include them, deliberately.
+ *
+ * @returns {{ text: string, replacements: number }}
+ */
+export function repairTexGreek(text, { symbolsToo = true } = {}) {
   if (!text || typeof text !== 'string' || !text.includes('\\')) {
     return { text: text ?? '', replacements: 0 };
   }
@@ -192,6 +334,10 @@ export function repairTexGreek(text) {
     const body = dollarBody !== undefined ? dollarBody : parenBody;
     const decoded = decodeSpan(body);
     if (decoded === null || decoded === '') return whole;
+    if (!symbolsToo) {
+      const letters = (decoded.match(GREEK_CHAR) || []).length;
+      if (letters < 2) return whole; // a lone symbol, not a word
+    }
     replacements++;
     return decoded;
   });

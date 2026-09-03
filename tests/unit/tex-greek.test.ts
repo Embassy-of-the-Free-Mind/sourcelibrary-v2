@@ -29,14 +29,14 @@ describe('repairTexGreek — decoding', () => {
   });
 
   it('keeps final sigma distinct from medial sigma', () => {
-    expect(repairTexGreek('$\\sigma$').text).toBe('σ');
-    expect(repairTexGreek('$\\varsigma$').text).toBe('ς');
+    // Two letters, so word-like gating lets them through.
+    expect(repairTexGreek('$\\sigma\\sigma$').text).toBe('σσ');
+    expect(repairTexGreek('$\\sigma\\varsigma$').text).toBe('σς');
   });
 
   it('composes accents to precomposed NFC codepoints', () => {
     // έ is U+03AD, one codepoint — not ε + combining acute.
-    expect([...repairTexGreek('$\\acute{\\epsilon}$').text]).toHaveLength(1);
-    expect(repairTexGreek('$\\acute{\\epsilon}$').text).toBe('έ');
+    expect(repairTexGreek('$\\acute{\\epsilon}\\nu$').text).toBe('έν');
   });
 
   it('handles \\(...\\) spans as well as $...$', () => {
@@ -45,8 +45,48 @@ describe('repairTexGreek — decoding', () => {
     expect(text).toContain('γη');
   });
 
+  it('maps a Latin o inside a Greek word to omicron, even under an accent', () => {
+    // From the corpus: TeX has no \omicron, so the model writes a Latin o —
+    // and \acute{o} decodes to o + combining acute. Composing before mapping
+    // would leave a precomposed LATIN ó sitting inside a Greek word.
+    expect(repairTexGreek('$\\delta\\acute{o}\\xi\\alpha\\iota\\varsigma$').text).toBe('δόξαις');
+    expect(repairTexGreek('$\\alpha\\delta\\acute{\\upsilon}\\nu\\alpha\\tau o\\nu$').text).toBe('αδύνατον');
+  });
+
+  it('decodes real words taken verbatim from the corpus', () => {
+    expect(repairTexGreek('$\\kappa\\rho\\acute{\\alpha}\\tau\\iota\\sigma\\tau\\omicron\\nu$').text).toBe('κράτιστον');
+    expect(repairTexGreek('$\\delta\\eta\\lambda\\eta\\tau\\acute{\\eta}\\rho\\iota\\alpha$').text).toBe('δηλητήρια');
+  });
+
   it('decodes uppercase letters', () => {
     expect(repairTexGreek('$\\Delta\\Epsilon$').text).toBe('ΔΕ');
+  });
+});
+
+describe('repairTexGreek — single symbols, settled by spot check', () => {
+  // Initially gated off, on the theory that a lone $\\Delta$ was an alchemical
+  // symbol rather than a mangled word and converting it exceeded the report.
+  // Reading real pages in context overturned that:
+  //   "das ist $\\alpha$ vnd $\\omega$ Ewigkeit vnd zeit"  — Alpha and Omega
+  //   "$\\alpha$) … $\\beta$) … $\\gamma$)"                    — enumeration markers
+  //   "the pleasant and daintie garden off $\\psi$ers."   — ψers, philosophers
+  // In every case the TeX is noise and the Greek letter is the true reading.
+  it('converts a lone Greek letter, because the letter IS the reading', () => {
+    expect(repairTexGreek('das ist $\\alpha$ vnd $\\omega$ Ewigkeit').text).toBe('das ist α vnd ω Ewigkeit');
+    expect(repairTexGreek('garden off $\\psi$ers.').text).toBe('garden off ψers.');
+    expect(repairTexGreek('daß $\\alpha$) Diese, $\\beta$) Hat').text).toBe('daß α) Diese, β) Hat');
+  });
+
+  it('can be gated off explicitly', () => {
+    expect(repairTexGreek('the sign $\\Delta$ denotes', { symbolsToo: false }))
+      .toEqual({ text: 'the sign $\\Delta$ denotes', replacements: 0 });
+  });
+
+  it('converts the non-Greek glyphs alongside, so a page is never half-repaired', () => {
+    // An alchemical recipe carries ∇ (water) and Δ (fire) in one sentence.
+    // Repairing only the Greek one leaves "aquam $\\nabla$ … quod Δ".
+    expect(repairTexGreek('aquam $\\nabla$ et $\\Delta$ fortiter').text).toBe('aquam ∇ et Δ fortiter');
+    expect(repairTexGreek('sup $\\unicode{x2609}$ candente').text).toBe('sup ☉ candente');
   });
 });
 
