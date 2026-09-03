@@ -94,6 +94,22 @@ const STANDINS = {
   cdot: '·',
 };
 
+/**
+ * Non-Greek glyphs the same OCR pass writes as TeX. Included because a page
+ * repaired for Greek alone comes out INCONSISTENT: an alchemical recipe reads
+ * "aquam $\nabla$ … Nota quod Δ" — half markup, half glyph, worse than either.
+ * All unambiguous single characters.
+ */
+const GLYPHS = {
+  nabla: '\u2207', triangle: '\u25b3', square: '\u25a1', odot: '\u2609',
+  oplus: '\u2295', ominus: '\u2296', otimes: '\u2297',
+  dagger: '\u2020', ddagger: '\u2021', degree: '\u00b0',
+  prime: '\u2032', textprime: '\u2032',
+  Box: '\u25a1', Diamond: '\u25c7', Triangle: '\u25b3',
+  textrecipe: '\u211e',   // ℞ — 'take', the opening word of a recipe
+  textdegree: '\u00b0', textbullet: '\u2022',
+};
+
 /** A whole math span, $…$ or \(…\). */
 const MATH_SPAN = /\$([^$]{1,4000})\$|\\\(([\s\S]{1,4000}?)\\\)/g;
 
@@ -106,13 +122,30 @@ function decodeSpan(body) {
   let out = '';
   let i = 0;
   let sawGreek = false;
+  let sawGlyph = false;
 
   while (i < body.length) {
     const rest = body.slice(i);
 
     // \text{...} / \mathrm{...} — literal text, usually a letter the model
     // could not name (\text{o} for omicron).
-    let m = rest.match(/^\\(?:text|mathrm|textrm|mathit)\{([^{}]*)\}/);
+    // \text{\textsf{A}} — a nested text group, and \text{\&} an escaped char
+    // inside one. Both appear on alchemical pages beside the Greek.
+    let m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{\s*\\(?:textsf|textrm|mathrm|text|mathbf)\{([^{}]*)\}\s*\}/);
+    if (m) {
+      if (!/^[A-Za-z0-9&]*$/.test(m[1])) return null;
+      out += m[1];
+      i += m[0].length;
+      continue;
+    }
+    m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{\s*\\([&%#_])\s*\}/);
+    if (m) {
+      out += m[1];
+      sawGlyph = true;
+      i += m[0].length;
+      continue;
+    }
+    m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{([^{}]*)\}/);
     if (m) {
       if (!/^[A-Za-z0-9 ,.;:'’\-]*$/.test(m[1])) return null;
       out += m[1];
@@ -137,6 +170,35 @@ function decodeSpan(body) {
     m = rest.match(/^\\([a-zA-Z]+)\{\s*\}/);
     if (m && ACCENTS[m[1]]) {
       out += ACCENTS[m[1]];
+      i += m[0].length;
+      continue;
+    }
+
+    // \text{\textrecipe} — a named glyph wrapped in a text group.
+    m = rest.match(/^\\(?:text|mathrm|textrm|mathit|mathbf|textbf)\{\s*\\([a-zA-Z]+)\s*\}/);
+    if (m && GLYPHS[m[1]]) {
+      out += GLYPHS[m[1]];
+      sawGlyph = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \unicode{x2609} — an explicit codepoint. Unambiguous by construction.
+    m = rest.match(/^\\unicode\{x([0-9a-fA-F]{2,6})\}/);
+    if (m) {
+      const cp = parseInt(m[1], 16);
+      if (!(cp > 0 && cp <= 0x10ffff)) return null;
+      out += String.fromCodePoint(cp);
+      sawGlyph = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \nabla, \odot — a non-Greek glyph command.
+    m = rest.match(/^\\([a-zA-Z]+)(?![a-zA-Z])/);
+    if (m && GLYPHS[m[1]]) {
+      out += GLYPHS[m[1]];
+      sawGlyph = true;
       i += m[0].length;
       continue;
     }
@@ -213,7 +275,7 @@ function decodeSpan(body) {
     return null;
   }
 
-  if (!sawGreek) return null;
+  if (!sawGreek && !sawGlyph) return null;
 
   // TeX has no \omicron (it would render identically to a Latin o), so a model
   // spelling a Greek word out reaches for `\text{o}` or a bare `o` instead —
@@ -263,7 +325,7 @@ const GREEK_CHAR = /[\u0370-\u03ff\u1f00-\u1fff]/g;
  *
  * @returns {{ text: string, replacements: number }}
  */
-export function repairTexGreek(text, { symbolsToo = false } = {}) {
+export function repairTexGreek(text, { symbolsToo = true } = {}) {
   if (!text || typeof text !== 'string' || !text.includes('\\')) {
     return { text: text ?? '', replacements: 0 };
   }

@@ -63,22 +63,30 @@ describe('repairTexGreek — decoding', () => {
   });
 });
 
-describe('repairTexGreek — single symbols are a separate decision', () => {
-  it('leaves a lone Greek letter alone by default', () => {
-    // $\Delta$ in an alchemical text is a SYMBOL (fire), not a mangled word.
-    // Measured: single-letter spans OUTNUMBER word-like ones in the corpus
-    // (21,223 vs 17,474 over 4,000 pages), so converting them silently would
-    // turn a narrow fix into an unreviewed corpus-wide edit.
-    expect(repairTexGreek('the sign $\\Delta$ denotes')).toEqual({ text: 'the sign $\\Delta$ denotes', replacements: 0 });
-    expect(repairTexGreek('$\\psi$')).toEqual({ text: '$\\psi$', replacements: 0 });
+describe('repairTexGreek — single symbols, settled by spot check', () => {
+  // Initially gated off, on the theory that a lone $\\Delta$ was an alchemical
+  // symbol rather than a mangled word and converting it exceeded the report.
+  // Reading real pages in context overturned that:
+  //   "das ist $\\alpha$ vnd $\\omega$ Ewigkeit vnd zeit"  — Alpha and Omega
+  //   "$\\alpha$) … $\\beta$) … $\\gamma$)"                    — enumeration markers
+  //   "the pleasant and daintie garden off $\\psi$ers."   — ψers, philosophers
+  // In every case the TeX is noise and the Greek letter is the true reading.
+  it('converts a lone Greek letter, because the letter IS the reading', () => {
+    expect(repairTexGreek('das ist $\\alpha$ vnd $\\omega$ Ewigkeit').text).toBe('das ist α vnd ω Ewigkeit');
+    expect(repairTexGreek('garden off $\\psi$ers.').text).toBe('garden off ψers.');
+    expect(repairTexGreek('daß $\\alpha$) Diese, $\\beta$) Hat').text).toBe('daß α) Diese, β) Hat');
   });
 
-  it('converts them only when asked explicitly', () => {
-    expect(repairTexGreek('the sign $\\Delta$ denotes', { symbolsToo: true }).text).toBe('the sign Δ denotes');
+  it('can be gated off explicitly', () => {
+    expect(repairTexGreek('the sign $\\Delta$ denotes', { symbolsToo: false }))
+      .toEqual({ text: 'the sign $\\Delta$ denotes', replacements: 0 });
   });
 
-  it('still decodes two-letter words', () => {
-    expect(repairTexGreek('\\(\\gamma\\eta\\)').replacements).toBe(1);
+  it('converts the non-Greek glyphs alongside, so a page is never half-repaired', () => {
+    // An alchemical recipe carries ∇ (water) and Δ (fire) in one sentence.
+    // Repairing only the Greek one leaves "aquam $\\nabla$ … quod Δ".
+    expect(repairTexGreek('aquam $\\nabla$ et $\\Delta$ fortiter').text).toBe('aquam ∇ et Δ fortiter');
+    expect(repairTexGreek('sup $\\unicode{x2609}$ candente').text).toBe('sup ☉ candente');
   });
 });
 
