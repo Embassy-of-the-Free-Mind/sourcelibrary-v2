@@ -47,6 +47,15 @@
             "command": "bash /Users/dereklomas/sourcelibrary/.claude/hooks/branch-guard.sh"
           }
         ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/dereklomas/sourcelibrary/.claude/hooks/prior-art-guard.mjs"
+          }
+        ]
       }
     ]
   }
