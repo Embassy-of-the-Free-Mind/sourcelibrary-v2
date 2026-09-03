@@ -71,17 +71,31 @@ prompts/
 Every page record stores all four fields, written together at the time of every overwrite:
 
 ```javascript
-page.ocr.prompt_version    // "v10"
-page.ocr.prompt_id         // ObjectId-string of the prompt document, or 'hardcoded' / 'custom'
-page.ocr.prompt_hash       // md5 of prompt content (cryptographic verifier)
-page.ocr.prompt_name       // "Standard OCR" | "Latin OCR (Neo-Latin)" | etc
-page.ocr.source            // see the full enum below — 16 values, not 5
+page.ocr.prompt_version    // "v10"                     ALWAYS present
+page.ocr.source            // see the full enum below    ALWAYS present
+page.ocr.model             //                            ALWAYS present
+page.ocr.prompt_id         // *** NOT WRITTEN — 0/300 ***
+page.ocr.prompt_hash       // *** NOT WRITTEN — 0/300 ***
+page.ocr.prompt_name       // *** NOT WRITTEN — 0/300 ***
+
 page.translation.prompt_version
-page.translation.prompt_id
-page.translation.prompt_hash
-page.translation.prompt_name
 page.translation.source
+page.translation.model
+page.translation.prompt_id     // source=ai: 100%   source=batch_api: 19%
+page.translation.prompt_hash   // source=ai: 100%   source=batch_api: 19%
+page.translation.prompt_name   // source=ai: 100%   source=batch_api: 19%
 ```
+
+> **Corrected 2026-09-03 (#4613).** This block previously listed `prompt_id`, `prompt_hash` and
+> `prompt_name` as present on **both** `ocr` and `translation`, describing the hash as a
+> "cryptographic verifier". Measured against production: **`ocr` never carries any of the three**
+> (0/300 most-recently-OCR'd pages), and on `translation` they are written only by the realtime path
+> (`source=ai`, 100%) and inconsistently by batch (`source=batch_api`, 19% of 600 sampled).
+>
+> So an OCR page can be tied to a prompt *version string* but **not** cryptographically verified
+> against the prompt text that produced it — which is what the hash was for. Anyone writing a
+> provenance check against `ocr.prompt_hash` will read `undefined` and, if they treat absence as
+> pass, will verify nothing. Closing this is part of #4613.
 
 Books store the same shape on AI-generated fields:
 
