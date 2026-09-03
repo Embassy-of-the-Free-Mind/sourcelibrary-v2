@@ -135,7 +135,7 @@
 # Collect Gemini Batch API results (#3713). The Vercel process-batches cron was archived
 # as "replaced by Hetzner workers" but this replacement was never added, so submitted
 # batches sat uncollected until someone ran the script by hand.
-*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collect-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/batch/collect-batch-results.mjs --limit 200" >> /var/log/sourcelibrary/collect-batch.log 2>&1
+*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collect-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/batch/collect-batch-results.mjs --limit 200 --abandon-stale=7" >> /var/log/sourcelibrary/collect-batch.log 2>&1
 # Identity worker — Phase 0: stamps normalized_title/author + edition_key on any book missing them (#3730)
 40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1
 # Stage coverage snapshot — nightly semantic monitoring (#3756)
@@ -143,3 +143,4 @@
 40 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
+*/30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
