@@ -101,7 +101,6 @@ const SECTION_LABELS: Record<string, string> = {
   translations: 'First translations',
   featured: 'Featured',
   gallery: 'Gallery',
-  artworks: 'Visual art',
   librarian: 'Librarian',
   works: 'Works',
   involved: 'Get involved',
@@ -150,7 +149,7 @@ async function getSlimeMouldData() {
   if (!collection) return null;
   const books = db.collection('books');
 
-  const [firstRaw, sourceRaw, ftCount, total, yearAgg, volumeAgg, bookIdDocs, artworkRaw] = await Promise.all([
+  const [firstRaw, sourceRaw, ftCount, total, yearAgg, volumeAgg, bookIdDocs] = await Promise.all([
     withTimeout(books.find({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     // Every readable book, first translations included. Mycology excludes them
     // here because its slider is a sample of 40-odd titles; this collection is
@@ -166,10 +165,6 @@ async function getSlimeMouldData() {
     // hero's "N scans" and "N languages".
     withTimeout(books.aggregate([{ $match: { collections: SLUG, visible: true, pages_count: { $gt: 0 } } }, { $group: { _id: null, pages: { $sum: '$pages_count' }, langs: { $addToSet: '$language' } } }], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(books.find({ collections: SLUG, visible: true }, { projection: { id: 1, title: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
-    // Artworks tagged into the collection (Haeckel's Mycetozoa plate, for one).
-    // They live in `books` with content_type 'artwork' and no pages, so the
-    // works grid and its counts (both gated on pages_count) never see them.
-    withTimeout(books.find({ collections: SLUG, content_type: 'artwork', visible: true }, { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, resource_type: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, 'enrichment.subject': 1, commons_width: 1, commons_height: 1 }, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(30).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
   ]);
 
   // Split the collection into books that are wholly about the group and books
@@ -212,7 +207,6 @@ async function getSlimeMouldData() {
     : [[] as Record<string, unknown>[], 0, 0];
 
   const firstTranslations = firstRaw.map(toMini);
-  const artworks = JSON.parse(JSON.stringify(artworkRaw)) as Artwork[];
   const sourceWorks = sourceRaw.map(toMini);
   const gallery = JSON.parse(JSON.stringify(galleryRaw)) as GalleryImg[];
   // Rostafiński is the centrepiece of this collection, so it is pinned rather
@@ -241,15 +235,9 @@ async function getSlimeMouldData() {
     firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount,
     galleryBrowseHref: isLinkableScope(allScope) ? galleryHref(allScope) : null,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
-    languages, scanCount, languageCount, gallery, artworks, featured, featuredPages, parent,
+    languages, scanCount, languageCount, gallery, featured, featuredPages, parent,
     featuredPlateCount, featuredPlatesHref: featuredScope ? galleryHref(featuredScope) : null,
   };
-}
-
-interface Artwork {
-  id: string; slug?: string; title: string; display_title?: string; author?: string; year?: number; published?: string;
-  resource_type?: string; thumbnail?: string; thumbnail_blob?: string; image_display?: string; image_thumb?: string;
-  enrichment?: { subject?: string }; commons_width?: number; commons_height?: number;
 }
 
 interface PagePreview { id: string; page_number?: number; kind: 'illustration' | 'text'; url: string }
@@ -336,7 +324,7 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, gallery: galleryRawList, artworks, featured, featuredPages, parent, featuredPlateCount, featuredPlatesHref } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, gallery: galleryRawList, featured, featuredPages, parent, featuredPlateCount, featuredPlatesHref } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   // Editor curation runs last: it decides order and exclusions on top of the
   // relevance filter, so a hidden image is hidden however well it scored.
@@ -380,7 +368,6 @@ export default async function SlimeMouldsCollectionPage() {
     firstTranslations.length > 0 && 'translations',
     featured && 'featured',
     gallery.length > 0 && 'gallery',
-    artworks.length > 0 && 'artworks',
     'librarian', 'works', 'involved',
   ].filter(Boolean) as string[]).map((id) => ({ id, label: SECTION_LABELS[id] }));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
@@ -582,45 +569,6 @@ export default async function SlimeMouldsCollectionPage() {
             </div>
             <div className="mt-6 flex justify-center">
               <Link href={galleryBrowseHref || '#'} className={BTN_DARK}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from the collection&apos;s {total.toLocaleString('en-US')} books <ArrowRight className="w-4 h-4" /></Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ===== Visual art — artworks tagged into the collection ===== */}
-      {artworks.length > 0 && (
-        <section id="artworks" className="bg-warm border-b border-border-light scroll-mt-16">
-          <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
-            <div className="flex items-end justify-between gap-4 mb-1">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">Visual art</h2>
-              <Link href="/artwork" className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap">Browse all art <ArrowRight className="inline w-3.5 h-3.5" /></Link>
-            </div>
-            <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Prints and plates of the slime moulds made as art rather than as figures in a text.</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {artworks.map((art) => {
-                const thumb = getBookThumbnailUrl(art);
-                const isPortrait = (art.commons_height || 0) > (art.commons_width || 0);
-                return (
-                  <Link key={art.id} href={`/artwork/${art.slug || art.id}?from=${SLUG}`} className="group block">
-                    <div className="border border-border-light hover:border-accent-rust/40 transition-colors overflow-hidden bg-white">
-                      <div className={`relative ${isPortrait ? 'aspect-[3/4]' : 'aspect-[4/3]'} bg-stone-100 overflow-hidden`}>
-                        {thumb ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={thumb} alt={art.display_title || art.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
-                        ) : (
-                          <div className="absolute inset-0 bg-cream" />
-                        )}
-                      </div>
-                      <div className="p-3">
-                        <h3 className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight line-clamp-2 mb-1 font-display">{art.display_title || art.title}</h3>
-                        {(art.author || art.year) && (
-                          <p className="text-xs text-muted line-clamp-1">{[art.author, art.year].filter(Boolean).join(' · ')}</p>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
             </div>
           </div>
         </section>
