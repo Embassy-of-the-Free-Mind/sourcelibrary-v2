@@ -110,6 +110,78 @@
       "reference": "At parte ex aliā, quā saxa rotantia lātē intulerat torrēns arbustaque dīruta rīpīs, Arcadas insuētōs aciēs īnferre pedestrīs ut uīdit Pallās Latiō dare terga sequācī, aspera quīs nātūra locī dīmittere quandō suāsit equōs, ūnum quod rēbus restat ēgēnīs, nunc prece, nunc dictīs uirtūtem accendit amārīs; Quō fugitis, sociī? Per uōs et fortia factā, per ducis Euandrī nōmen dēuictaque bella spemque meam, patriae quae nunc subit aemula laudī, fīdite nē pedibus. Ferrō rumpenda per hostīs est uia. Quā globus ille uirum dēnsissimus urget, hāc uōs et Pallanta ducem patria alta reposcit. Nūmina nūlla premunt, mortālī urgēmur ab hoste mortālēs; totidem nōbīs animaeque manūsque. Ecce maris magnā claudit nōs obice pontus, dēest iam terra fugae: pelagus Trōiamne petāmus? Haec ait, et medius dēnsōs prōrumpit in hostīs. Obuius huic prīmum fātīs adductus inīquīs fit Lagus. Hunc, uellit magnō dum pondere saxum, intortō fīgit tēlō, discrīmina costīs",
       "book_id": "6a084d9715c643eb1af3f59e",
       "page_number": 890
+    },
+    {
+      "work": "Praetorius, Syntagma Musicum Tomus I (1615) — de Magnificat in liturgia",
+      "slug": "la-praetorius-syntagma1-p120",
+      "title_rx": "syntagma musicum|praetorius.*syntagma",
+      "source": "la.wikisource proofread page-scan (Liber:PRAETORIUS, Michael - Syntagma musicum 1.djvu, 488 pages proofread q3)",
+      "source_url": "https://la.wikisource.org/wiki/Pagina:PRAETORIUS,_Michael_-_Syntagma_musicum_1.djvu/120",
+      "edition": "Wittenberg: Johannes Richter / Wolfenbüttel: Elias Holwein, 1615 (only edition of Tomus I)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold 69ef2b4685daccce30f2e066 'Syntagma Musicum, Tomus I: Musicae Artis Analecta' 1615, pc=1156 ocr=1156 (ia syntagmamusicume00prae). Scan page 120 of the wikisource djvu; printed-page mapping to our copy needs pinning. Mid-book musicological-theological prose with inline Greek (μεγαλυνῳδία) and Praetorius's mixed Greek-Latin spellings (Lειturgodiæ) plus one blackletter German insert — deliberately hard, utterly non-canonical. Wikisource rendering uses æ/œ but plain s (their convention); copy their rendering verbatim.",
+      "reference": "Ex iis Psalmis μεγαλυνῳδία sane Lειturgodiæ Ecelesiasticæ pars maxime insignis ac frequentissima est. Etenim Magnificat illud tam magnifecit pia vetustas, ut omnibus Tonis, Tonorumque differentiis, cuiusque Dominicem ac Festi solennitati congruentibus, post Antiphonas rite concini instituerint μελοποιίασ periti artifices Musici. Et D. Lutherus Megalander Magnificat in Postillis domesticis seu privatis vocare dignatur Canticum Magisteri; Ein MeisterGesang / quod frequenti ac decenti consuetudine in Ecclesiæ congressibus dignissimum sit, iugis Sacrificii instar, destinari Leiurgodiis Vespertinis. Quippe sub mundi vespera et seculo ultimo, in Novo Testamento, exhibitum Messiam hac gratiarum actione excipit cum Maria, humilis et indigna Ecelesia, sibimet gratulans de Dei erga humiles contemtosque misericordia, de Christi in superbos contemtores potentia, de fide denique Dei in promissis servandis verissima."
+    },
+    {
+      "work": "Copernicus, De revolutionibus orbium coelestium (1543) — Book III, Spica observation at Frauenburg, fol. 64v",
+      "slug": "la-copernicus-derev-p142",
+      "title_rx": "de revolutionibus orbium",
+      "source": "la.wikisource proofread page-scan (Liber:Nicolai Copernici torinensis De revolutionibus orbium coelestium.djvu, Year=1543; scan 142 = fol. 64b)",
+      "source_url": "https://la.wikisource.org/wiki/Pagina:Nicolai_Copernici_torinensis_De_revolutionibus_orbium_coelestium.djvu/142",
+      "edition": "Nuremberg: Johannes Petreius, 1543 (editio princeps)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold three 1543 Petreius copies — 694b3b5b58a47807cc735dce (ocr=412), 694f49d3f9b1ecc07965e424 (ocr=422, ia nicolaicopernici00cope_1), 606a74d7-2ac1-420b-924d-de761439fb3f. Mid Book III technical/observational prose with Roman-numeral quantities and a woodcut diagram on page — non-canonical (the famous passages are the preface/Book I). An {{inline float}} figure sits mid-page in the source; reference text runs around it.",
+      "reference": "ab Autumni æquinoctio visa sunt pervenisse, in quibus omnibus latitudo cuiusque sua semper mansit eadem, ut non amplius in hac parte habeant aliquid dubitationis. Quapropter nos etiam Anno Christi M.D.XXV. primo post intercalarem secundum, qui ab Alexandri morte, Ægyptiorum annorum est M.DCCC.XLIX observavimus saepe nominatam Spicam in Frueburgio Prussiae, & videbatur maxima eius altitudo in circulo meridiano partium proxime XXVII. Latitudinem vero Frueburgi invenimus esse partium LIIII. scrup. primorum XIX.s. Quapropter constabit eius declinatio ab aequinoctiali partium VIII. scrup. XL. Unde patefactus est locus eius, ut sequitur. Descripsimus enim meridianum circulum per polos utriusque signiferi & aequinoctials A B C D, in quibus sectiones communes atque dimetientes fuerint AEC aequinoctialis, & zodiaci B E D, cuius polus Boreus sit F axis F E G. Sitque Capricorni, D Cancri principium: assumatur autem B H circumferentia, quae sit aequalis Austrinae latitudini stellae duarum partium, & ab H signo ad ED parallelus agatur H L, que secet axem zodiaci in I, aequinoctialem in K. Capiatur etiam secundum declinationem stellae Austrinam circumferentia partium VIII. scrup. XL. M A, & à signo M, agatur M N parallelus ad AC que secabit parallelum Zodiaci H I L : secet ergo in O signo, & O P recta linea ad angulos rectos, aequalis erit semissi subtendentis duplam ipsius A M declinationis."
+    },
+    {
+      "work": "Schneider, De catarrhis liber primus (1660) — Index capitum / terminological survey",
+      "slug": "la-schneider-catarrhis-p26",
+      "title_rx": "de catarrhis|schneider.*catarrh",
+      "source": "la.wikisource proofread page-scan (Liber:Conrad Victor Schneider. De catarrhis... 1660.pdf; q3 pages 4-27)",
+      "source_url": "https://la.wikisource.org/wiki/Pagina:Conrad_Victor_Schneider._De_catarrhis._Liber_primus_quo_agitur_de_speciebus_catarrhorum_et_de_osse_cuneiformi_per_quod_catarrhi_decurrere_finguntur._1660.pdf/26",
+      "edition": "Wittenberg: Mevius & Schumacher, 1660",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold 69b51dcfcf111105c4290a42 'Conradi Victoris Schneideri... [De catarrhis]' 1660, pc=496 ocr=375. Scan page 26 (front-matter Index capitum, dense name-list prose — an OCR torture test: long-s, italic proper names, &-ligatures). Transcription preserves ſ; a few readings look like transcriber slips vs faithful early-modern spellings (e.g. 'reprebendit', 'Jobann') — spot-check against the scan before pinning.",
+      "reference": "Verba copioſius explicarivetant Galenus, Ariſtoteles, Critolaus Phaſalites, & maximè Plato. Quo nomine etiam Galenus reprebendit Archigenem, Agaubinum & Chryſippum. Contrà ijdem verba diligentiùs penſitari pracipiunt, duma modò ea, qua rem continent, tantò enixiore curâ pero tractentur. Hoc loco admodùm neceſſaria & utilis eſt verborum enodatio, Rheumatis & Catarrhi vocabula non idem valent. Ida, aſſerisur contra Jacobum de Partibus, Johannem de Tornamira, Johannem Matth: de Gradi, Nicolaum Nicol: Florent: Alexandrum Benedictum, Varignanam, Anton: Fumanellum, Vidum Vidium, Leon: Borallum, Jobann: Marquardum, Robertum Fluddium, Ant: Mus: Braſſavolam, quem ob id notant Nicolaus Fontanus Paſcbalius, Vincentius Alſarius à Cruce; hic quidem cum ſimul aliquo colore excuſat. Tandem fat multi autorum negant; Rheuma & Catarrhum in eandem ſignificationem conferri poſſe, ut Jobannes Michaël Savonarola, Montanus, Laur: Joubertus, Crato, Capivaccius, Euſt: Rudius, God: Steegbius, And: Laurentius, Pareda, Henricus Petraus & alij. Rheumatis vocabulum fuit antiquius"
+    },
+    {
+      "work": "Agricola, De re metallica (1556) — Liber X, silver cupellation furnace",
+      "slug": "la-agricola-metallica-p406",
+      "title_rx": "de re metallica",
+      "source": "la.wikisource proofread page-scan (Liber:Agricola De re metallica.djvu — Basel: Froben & Episcopius 1556, ia georgiiagricolae00agri; q3 incl. mid-book pages)",
+      "source_url": "https://la.wikisource.org/wiki/Pagina:Agricola_De_re_metallica.djvu/406",
+      "edition": "Basel: Hieronymus Froben & Nicolaus Episcopius, 1556 (editio princeps)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold two 1556 copies — 69b64e7118b87551bfc88abe (ocr=601), 69b64e8e18b87551bfc8a08b (ocr=595) — plus 1621 reprints. Scan 406 ≈ printed p.386 (Liber X region uses delta=20 in the pagelist). Technical metallurgical prose with u/v in original distribution ('uerò', 'inijcitur'); a woodcut caption (Pilum cui dentes A...) follows this text on the page — noted, excluded from reference. Famous work but the Latin interior prose is unquotable.",
+      "reference": "de ea, qua argentum perpurgatur: nam auri perpurgandi rationem ante explicaui. Argentum autem perpurgatur in ustrina: cuius fornacis focum sustinet testudo lateribus concamerata: eius fornix, qui priore parte existit, altus est pedes tres. Sed ipse focus longus pedes quinque, latus quatuor: à lateribus & posteriore parte muri sunt integri: à priore uerò alter fornix alteri superpositus est: super quem & murum caminus statutus est. Focus foueam habet rotundam, latam cubitum, altam palmos duos: in quam inijcitur cinis cribratus, & in eum testa præparata sic imponitur, ut cinis undique æque altus ac ipsa sit. Testa autem, quæ fictilis est, repletur puluere, qui constat ex paribus portionibus ossium in puluerem contritorum, & cineris sumpti de catino, in quo plumbum ab auro uel argento separatur: alij ad cinerem admiscent laterem comminutum: quo modo neuter puluis argentum ad se allicit: puluis compositus, & aqua madefactus paucus inijcitur in testam, et tunditur pilo ligneo terete, longo pedem, lato palmum & digitum: ex quo extant dentes numero sex, crassi digitum, lati & alti digitum & tertiam eius partem, inter se distantes ferè digito."
+    },
+    {
+      "work": "Linnaeus, Systema naturae (1735, Leiden folio) — Observationes in Regnum Lapideum",
+      "slug": "la-linnaeus-systema1735-p5",
+      "title_rx": "systema natur",
+      "source": "la.wikisource proofread page-scan (Liber:Systema naturae 1735.djvu, q3 p.5, q4 pp.1-2)",
+      "source_url": "https://la.wikisource.org/wiki/Pagina:Systema_naturae_1735.djvu/5",
+      "edition": "Leiden: Theodor Haak / Joannes Wilhelmus de Groot, 1735 (editio princeps, folio)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold 69b4cc84d5b6c3815e1a0fb2 'Systema naturae' 1735 Leiden, pc=21 ocr=21 (whole book is 21 pages — the folio broadsheet edition). CAVEAT: the wikisource transcription has residual long-s→f slips ('fubjectis', 'fœpius', 'fine dubio' for sine) — needs a cleanup pass against the scan before pinning as ground truth. Original prints numbered observationes (arabic numerals) — numbering stripped by wikitext markers here. Layout is numbered-paragraph prose, not the famous taxonomy tables.",
+      "reference": "Primogenitas Terras tantummodo Glaream & Argillam nominamus, e quibus, Elementorum ope, totum Regnum Lapideum existimamus esse productum. Hinc reliqui Lapides temporis, a Creatione præterlapsi, progenies sunt. Generatio Lapidum Simplicium & Aggregatorum per appositionem particularum externam fit; & si hi principio aliquo Minerali, forte salino, in humore quodam soluto, imprægnantur, Composti dicuntur. Hinc generatio in Regno Lapideo nulla ex ovo. Hinc nulla humorum per vasa circulatio, ut in reliquis Naturæ Regnis. Petram omnem, vix ullâ exceptâ, e Terris originem ducere extra controversiam est. e. gr. ex Humo vegetabili palustri Schiftus, e Glarea Cos, ex Argilla Marmor. Petra cum fuerit imprægnata materiâ aliquâ, respectu ad Simplices, peregrinâ, Minera dicitur. Petra vel Minera comminuta Terra nominatur; sed non vice versâ. Terra mixta si concrescat Concretum dicitur. Petrificata sœpius ex Argilla in Calcem mutata oriuntur, paucis tamen exceptis. Saxa, Lapides vulgatissimos, rupium & montium plerorumque bases, in Principio non creata fuisse docent partes illorum constituentes; nec omnes in Diluvio generatos fuisse, confirmat frequens autopsia illorum Saxorum, quæ indies producuntur."
+    },
+    {
+      "work": "Institoris & Sprenger, Malleus maleficarum (ed. II, before 14 Aug 1490) — pars I, quaestio 1 argumentation",
+      "slug": "la-malleus-ed2-p30",
+      "title_rx": "malleus maleficarum",
+      "source": "la.wikisource proofread page-scan (Liber:Malleus maleficarum (ed. II) - pars prima.djvu, HAB Wolfenbüttel copy; 67 pages proofread q3)",
+      "edition": "[Speyer: Peter Drach], ante 14 VIII 1490 ('ed. II'); OUR copies are 1486/1487 and 1511 printings — CROSS-EDITION",
+      "source_url": "https://la.wikisource.org/wiki/Pagina:Malleus_maleficarum_(ed._II)_-_pars_prima.djvu/30",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "CROSS-EDITION, medium confidence: we hold 69523495ab34727b1f044a45 (1486, ocr=266), 69592552aecc3a7338f95c54 / 69b6475b18b87551bfc4bcbb (1487), 69bd9c796120d54bd036f318 (1511, ocr=570) — none is the HAB ed. II scan; incunable editions differ in setting though text is close. Also 15th-c gothic type, outside the stated 16th-18th c window — include only if the cross-edition + period caveats are acceptable. Diplomatic features: unexpanded 'vt/vbi', rubricated initials (unwrapped from {{Vermilio}}), original misprints retained per {{corr}} first argument ('figurationibas', 'concilium', 'additus').",
+      "reference": "Impossibile est effectum sine causa sua producere. sed opera maleficorum sunt talia quod non possunt nisi opere demonum fieri. patet ex descriptione operum maleficorum. ex Isido. libro. viij. ethimol. Malefici dicuntur ob magnitudinem facinorum. Hi enim elementa concutiunt. mentes hominum turbant & absque vllo veneni haustu sola vi carminum animas interimunt &c. Huiusmodi autem effectus non possunt ex influentijs corporum celestium mediante homine causari. Preterea philosophus in ethi. Difficile inquirit quid sit principium operationis in anima. Et ostendit quod oportet esse aliquod extrinsecum. Omne enim quod incipit de nouo habet aliquam causam. Incipit enim homo operari quia vult. Incipit autem velle. quia preconciliatur. si autem preconciliatur propter aliquod concilium precedens. aut ergo est procedere in infinitum. aut oportet ponere aliquod principium extrinsecum quod primo mouet hominem ad conciliandum nisi forte aliquis dicat quod hoc est a fortuna ex quo sequeretur omnes actus humanos esse fortuitos. quod est absurdum."
     }
   ]
 }
