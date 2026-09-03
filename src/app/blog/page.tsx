@@ -26,6 +26,19 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'two-copies-two-languages',
+    title: 'Two Copies, Two Languages',
+    subtitle:
+      'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Measuring 21,481 books to settle it produced two headline findings that turned out to be the measuring instrument — and one cheap check that caught them both.',
+    date: '21 August 2026',
+    readTime: '8 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+    image: 'https://images.sourcelibrary.org/pages/69b220ccf79d8af0eab7fd3a/0043.jpg',
+    imageAlt:
+      'A page of Greek type from the 1495 Aldine edition of Lascaris’ Erotemata, facing its Latin translation.',
+  },
+  {
     slug: 'suda-benchmark',
     title: 'Graded by the Suda',
     subtitle:
