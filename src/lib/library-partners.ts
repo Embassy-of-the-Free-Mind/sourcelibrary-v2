@@ -12,6 +12,12 @@ export interface LibraryPartner {
    *  a duplicate tile. Query with getProviderKeys(partner), never providerKey
    *  alone, on any surface that filters books by provider. */
   aliasProviderKeys?: ImageSourceProvider[];
+  /** 'platform' marks an aggregator or digital portal (Internet Archive,
+   *  Google Books, e-rara…) whose scans depict books physically held
+   *  ELSEWHERE — the holders are credited per-book via contributing_library.
+   *  Unset means a holding institution: the library/museum both owns and
+   *  digitized what we show. /libraries renders the two as separate sections. */
+  kind?: 'platform';
   url: string;
   description: string;
   color: 'rust' | 'sage' | 'violet' | 'gold';
@@ -36,6 +42,7 @@ export interface LibraryPartner {
 export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   'internet-archive': {
     slug: 'internet-archive',
+    kind: 'platform',
     name: 'Internet Archive',
     shortName: 'IA',
     providerKey: 'internet_archive',
@@ -88,7 +95,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://cudl.lib.cam.ac.uk',
     description: 'The Cambridge University Digital Library provides free online access to some of the University of Cambridge\'s most important collections, including Isaac Newton\'s papers, medieval manuscripts, and early printed books.',
     color: 'violet',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69907bdc5f855ec553e7177b/0001.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69907bdc5f855ec553e7177b/69907bdd5f855ec553e717bf-0.jpg?v=1784234836198',
   },
   'bibliotheca-philosophica-hermetica': {
     slug: 'bibliotheca-philosophica-hermetica',
@@ -103,6 +110,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'e-rara': {
     slug: 'e-rara',
+    kind: 'platform',
     name: 'e-rara',
     shortName: 'e-rara',
     providerKey: 'e-rara',
@@ -119,7 +127,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://wellcomecollection.org',
     description: 'Wellcome Collection in London is a free museum and library exploring health, life, and our place in the world. Their digital collections include medical manuscripts, alchemical texts, and works on the history of science and medicine.',
     color: 'rust',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/6991d8978c1030b12444c035/0047.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69905e2c2fd6a039938a1705/69905e2c2fd6a039938a171a-0.jpg',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Wellcome_Collection_logo.svg',
   },
   'hab-wolfenbuettel': {
@@ -145,6 +153,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'google-books': {
     slug: 'google-books',
+    kind: 'platform',
     name: 'Google Books',
     shortName: 'Google',
     providerKey: 'google_books',
@@ -155,6 +164,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'hathi-trust': {
     slug: 'hathi-trust',
+    kind: 'platform',
     name: 'HathiTrust Digital Library',
     shortName: 'HathiTrust',
     providerKey: 'hathi_trust',
@@ -164,6 +174,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'europeana': {
     slug: 'europeana',
+    kind: 'platform',
     name: 'Europeana',
     shortName: 'Europeana',
     providerKey: 'europeana',
@@ -226,6 +237,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'e-codices': {
     slug: 'e-codices',
+    kind: 'platform',
     name: 'e-codices',
     shortName: 'e-codices',
     providerKey: 'e-codices',
@@ -286,6 +298,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'imslp': {
     slug: 'imslp',
+    kind: 'platform',
     name: 'IMSLP / Petrucci Music Library',
     shortName: 'IMSLP',
     providerKey: 'imslp',
@@ -302,6 +315,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digital.staatsbibliothek-berlin.de',
     description: 'The Staatsbibliothek zu Berlin is one of the largest academic libraries in the German-speaking world. Its digital collections include VD16/VD17 early printed books, the Diez collection (Arabic, Persian, Turkish), and Hamilton manuscripts.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/archived/6a243d100f0e4f405e62fa43/7.jpg',
   },
   'austrian-national-library': {
     slug: 'austrian-national-library',
@@ -349,6 +363,9 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://sc.lib.byu.edu',
     description: 'The L. Tom Perry Special Collections at Brigham Young University holds the William Gates papers (MSS 279) — the working archive of the Maya scholar and publisher William E. Gates (1863-1940), who spent decades photographing and photostatting Mesoamerican manuscripts. For several of the Books of Chilam Balam, the Yucatec Maya manuscript books of prophecy, chronicle, medicine and the calendar, the copies Gates made are the only surviving witness to originals that have since been lost.',
     color: 'violet',
+    // A Gates photostat zodiac figure from the Chilam Balam of Ixil — muted
+    // grey because the surviving witnesses ARE photostats; that's the archive.
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/6a878ac1d71f2514794f9e40/6a879ba86f4a03d5d89ad507-0.jpg?v=1788147109763',
   },
   'huntington': {
     slug: 'huntington',
@@ -387,17 +404,18 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digi.ub.uni-heidelberg.de',
     description: 'Heidelberg University Library holds the Codex Manesse and important collections of medieval manuscripts, alchemical texts, and early printed books from one of Germany\'s oldest universities (founded 1386).',
     color: 'violet',
-    heroImageOverride: 'https://images.sourcelibrary.org/hero/heidelberg.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69cfb6fe709cb88a028365a4/69cfb6fe709cb88a028365aa-0.jpg?v=1781645688188',
   },
   'bdrc': {
     slug: 'bdrc',
+    kind: 'platform',
     name: 'Buddhist Digital Resource Center',
     shortName: 'BDRC',
     providerKey: 'bdrc',
     url: 'https://www.bdrc.io',
     description: 'The Buddhist Digital Resource Center preserves and provides access to Buddhist literary heritage across Asia — Tibetan, Chinese, Sanskrit, and Pali manuscripts from monasteries, libraries, and private collections.',
     color: 'gold',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69dfee8cce6bb8619e07ff08/0003.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69dfee86ce6bb8619e07f683/69dfee87ce6bb8619e07f686-0.jpg?v=1780586270680',
   },
   'met-museum': {
     slug: 'met-museum',
@@ -437,13 +455,14 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'qatar-digital-library': {
     slug: 'qatar-digital-library',
+    kind: 'platform',
     name: 'Qatar Digital Library',
     shortName: 'QDL',
     providerKey: 'qdl',
     url: 'https://www.qdl.qa',
     description: 'The Qatar Digital Library, a partnership between the British Library and Qatar Foundation, provides access to Arabic scientific manuscripts, historical records of the Gulf region, and maps from British India Office archives.',
     color: 'gold',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5efb5bfd8cafd91e44089/0003.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69a5ea0d815633a563894d0e/69a5ea0d815633a563894dbf-0.jpg',
   },
   'escorial': {
     slug: 'escorial',
@@ -457,12 +476,14 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'sat-daizokyo': {
     slug: 'sat-daizokyo',
+    kind: 'platform',
     name: 'SAT Daizokyo',
     shortName: 'SAT',
     providerKey: 'sat_daizokyo',
     url: 'https://21dzk.l.u-tokyo.ac.jp/SAT/',
     description: 'The SAT Daizokyo Text Database at the University of Tokyo provides digital access to the Taishō Shinshū Daizōkyō, the standard modern edition of the Chinese Buddhist canon containing over 3,000 texts.',
     color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69f13428c8d07a6810653407/69f13428c8d07a6810653416-0.jpg?v=1781723654028',
   },
   'tu-darmstadt': {
     slug: 'tu-darmstadt',
@@ -475,6 +496,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'oraec': {
     slug: 'oraec',
+    kind: 'platform',
     name: 'ORAEC (Ancient Egyptian Texts)',
     shortName: 'ORAEC',
     providerKey: 'oraec',
