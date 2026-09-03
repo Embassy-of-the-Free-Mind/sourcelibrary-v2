@@ -97,33 +97,47 @@ for (const field of ['ocr', 'translation']) {
 
   // ── checkpoint: enumerate ids first, then work from the list ──────────────
   const idFile = `${STATE}.${field}.ids`;
+  const doneMarker = `${STATE}.${field}.ids.complete`;
   const doneFile = `${STATE}.${field}.done`;
-  let ids;
-  if (existsSync(idFile)) {
-    ids = readFileSync(idFile, 'utf8').split('\n').filter(Boolean);
-    console.log(`[${field}] resuming from ${idFile}: ${ids.length} candidates`);
+
+  // Enumeration is itself resumable and RANGE-BASED. Two reasons:
+  //
+  //  1. A partial id file must never be mistaken for a complete one. An earlier
+  //     version read whatever was on disk and proceeded, so a run killed during
+  //     enumeration would have swept a fraction of the corpus and reported
+  //     "done" — a silent partial, the worst kind of wrong. Completion is now
+  //     recorded by a separate marker file written only after the cursor drains.
+  //
+  //  2. Sorting by id and resuming from the last one seen means each run makes
+  //     forward progress even if it dies, instead of restarting from zero.
+  let ids = existsSync(idFile)
+    ? readFileSync(idFile, 'utf8').split('\n').filter(Boolean)
+    : [];
+
+  if (existsSync(doneMarker)) {
+    console.log(`[${field}] candidate list complete: ${ids.length} pages`);
   } else {
-    // Streamed, not distinct(): distinct() returns ONE BSON document and the
-    // candidate set blows past the 16MB cap, which is why the first two full
-    // runs died during enumeration with no error in the log. This projects id
-    // only, does no slow work in the loop, and flushes to disk as it goes — so
-    // even enumeration is resumable.
-    ids = [];
-    const enumCursor = pages.find(query, { projection: { id: 1, _id: 0 } }).batchSize(2000);
-    let buf = [];
-    for await (const row of enumCursor) {
-      if (!row?.id) continue;
-      ids.push(String(row.id));
-      buf.push(String(row.id));
-      if (buf.length >= 2000) {
-        appendFileSync(idFile, buf.join('\n') + '\n');
-        buf = [];
-        if (ids.length % 20000 === 0) console.log(`[${field}] enumerating… ${ids.length}`);
-      }
+    let last = ids.length ? ids[ids.length - 1] : '';
+    if (ids.length) console.log(`[${field}] resuming enumeration after ${ids.length} ids`);
+    let added = 0;
+    for (;;) {
+      const batch = await pages
+        .find(last ? { ...query, id: { $gt: last } } : query, { projection: { id: 1, _id: 0 } })
+        .sort({ id: 1 })
+        .limit(5000)
+        .toArray();
+      if (!batch.length) break;
+      const chunk = batch.map(r => String(r.id)).filter(Boolean);
+      appendFileSync(idFile, chunk.join('\n') + '\n');
+      ids.push(...chunk);
+      last = chunk[chunk.length - 1];
+      added += chunk.length;
+      console.log(`[${field}] enumerated ${ids.length} (+${chunk.length})`);
     }
-    if (buf.length) appendFileSync(idFile, buf.join('\n') + '\n');
-    console.log(`[${field}] enumerated ${ids.length} candidate pages → ${idFile}`);
+    writeFileSync(doneMarker, new Date().toISOString());
+    console.log(`[${field}] enumeration COMPLETE: ${ids.length} candidates (+${added} this run)`);
   }
+
   const done = existsSync(doneFile)
     ? new Set(readFileSync(doneFile, 'utf8').split('\n').filter(Boolean))
     : new Set();
