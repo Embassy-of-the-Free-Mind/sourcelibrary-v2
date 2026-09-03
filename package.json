@@ -84,7 +84,7 @@
     "remark-gfm": "^4.0.1",
     "replicate": "^1.4.0",
     "resend": "^6.9.2",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "sonner": "^2.0.7",
     "stripe": "^20.4.1",
     "tailwind-merge": "^3.4.0",
