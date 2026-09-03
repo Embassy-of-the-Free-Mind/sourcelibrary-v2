@@ -103,8 +103,25 @@ for (const field of ['ocr', 'translation']) {
     ids = readFileSync(idFile, 'utf8').split('\n').filter(Boolean);
     console.log(`[${field}] resuming from ${idFile}: ${ids.length} candidates`);
   } else {
-    ids = (await pages.distinct('id', query)).map(String);
-    writeFileSync(idFile, ids.join('\n'));
+    // Streamed, not distinct(): distinct() returns ONE BSON document and the
+    // candidate set blows past the 16MB cap, which is why the first two full
+    // runs died during enumeration with no error in the log. This projects id
+    // only, does no slow work in the loop, and flushes to disk as it goes — so
+    // even enumeration is resumable.
+    ids = [];
+    const enumCursor = pages.find(query, { projection: { id: 1, _id: 0 } }).batchSize(2000);
+    let buf = [];
+    for await (const row of enumCursor) {
+      if (!row?.id) continue;
+      ids.push(String(row.id));
+      buf.push(String(row.id));
+      if (buf.length >= 2000) {
+        appendFileSync(idFile, buf.join('\n') + '\n');
+        buf = [];
+        if (ids.length % 20000 === 0) console.log(`[${field}] enumerating… ${ids.length}`);
+      }
+    }
+    if (buf.length) appendFileSync(idFile, buf.join('\n') + '\n');
     console.log(`[${field}] enumerated ${ids.length} candidate pages → ${idFile}`);
   }
   const done = existsSync(doneFile)
