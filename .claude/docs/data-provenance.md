@@ -2,6 +2,21 @@
 
 Every OCR transcription, translation, summary, index, chapter extraction, and image extraction in Source Library can be traced back to the exact prompt, model, trigger, and job that produced it. This document explains the full chain.
 
+> **GAP, open as of 2026-09-03 (#4613): the chain does NOT include generation parameters, and they
+> change the output.** `thinkingBudget`, `temperature` and `maxOutputTokens` are recorded nowhere.
+> Two production OCR paths ran the *same model and prompt* at temperature **1.0** (Lambda, unset →
+> model default, confirmed via the models API) and **0.1** (Hetzner), and the Lambda ran with
+> thinking ON until #4591. The #4581 A/B measured only **74%** word agreement (Latin) and **43%**
+> character agreement (Classical Chinese) between thinking-on and thinking-off arms **of the same
+> images** — so these are different populations, and `model` + `prompt_version` cannot tell them
+> apart.
+>
+> **Consequence for anything measured over `page_revisions`:** two revisions of a page may differ
+> because of an unrecorded config change rather than model instability. Segment by `source` as a
+> rough proxy (`ai` → Lambda, `batch_api` → batch, `pipeline_preview` → orchestrator) — but that is
+> a correlation with the call site, not a record of what was sent. Treat any agreement or
+> calibration figure spanning 2026 as carrying this confound until #4613 lands.
+
 > **Last full audit:** 2026-05-05. See `.claude/handoffs/2026-05-05-provenance-audit.md` for the audit report and the gaps closed.
 
 ## The Provenance Chain
