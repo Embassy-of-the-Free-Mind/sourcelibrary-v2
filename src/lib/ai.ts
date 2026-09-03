@@ -1,7 +1,7 @@
 import { DEFAULT_PROMPTS, DEFAULT_MODEL, ENGLISH_MODERNIZATION_PROMPT } from './types';
 import { getGeminiClient } from './gemini-client';
 import { images } from './api-client/images';
-import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { HarmCategory, HarmBlockThreshold, type GenerationConfig } from '@google/generative-ai';
 import { sanitizeTranslationTags } from './sanitize-translation-tags';
 
 // Safety settings for OCR/transcription - disable all filters for historical texts
@@ -27,6 +27,24 @@ const OCR_SAFETY_SETTINGS = [
     threshold: HarmBlockThreshold.BLOCK_NONE,
   },
 ];
+
+// Gemini 3.x runs thinking by default and bills thought tokens at the output rate,
+// while candidatesTokenCount excludes them — so thinking must be explicitly disabled
+// or the meter under-reports the bill (17x in Aug 2026, #4581). The batch writers
+// (pipeline-orchestrator.mjs) already set thinkingBudget: 0; this covers the
+// realtime/Lambda path. thinkingConfig is not in @google/generative-ai 0.24.x types
+// but is passed through verbatim to the API (verified by live probe: thoughtsTokenCount
+// 61 -> absent).
+const THINKING_OFF_CONFIG = {
+  thinkingConfig: { thinkingBudget: 0 },
+} as unknown as GenerationConfig;
+
+function getThinkingOffModel(modelId: string) {
+  return getGeminiClient().getGenerativeModel({
+    model: modelId,
+    generationConfig: THINKING_OFF_CONFIG,
+  });
+}
 
 // Model pricing per 1M tokens (USD)
 export const MODEL_PRICING: Record<string, { input: number; output: number }> = {
@@ -72,7 +90,7 @@ export async function performOCRWithBuffer(
   previousPageOcr?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = promptText;
 
@@ -103,7 +121,8 @@ export async function performOCRWithBuffer(
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
+      ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
 
     return {
       text: result.response.text(),
@@ -130,7 +149,7 @@ export async function performOCR(
   previousPageOcr?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = promptText;
 
@@ -174,7 +193,8 @@ export async function performOCR(
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
+      ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
 
     return {
       text: result.response.text(),
@@ -200,7 +220,7 @@ export async function performTranslation(
   modelId: string = DEFAULT_MODEL,
   bookContext?: { title?: string; author?: string; year?: number | string }
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   // English books get modernized (Early Modern → Modern English) instead of translated
   const isEnglish = sourceLanguage.toLowerCase() === 'english';
@@ -240,7 +260,8 @@ export async function performTranslation(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
+    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
 
   // Carry manuscript warnings through to the translation so both panels show them
   let translationText = sanitizeTranslationTags(result.response.text());
@@ -266,7 +287,7 @@ export async function generateSummary(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = customPrompt || DEFAULT_PROMPTS.summary;
   prompt += `\n\n**Translated text:**\n${translatedText}`;
@@ -279,7 +300,8 @@ export async function generateSummary(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
+    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
 
   return {
     text: result.response.text(),
@@ -345,7 +367,7 @@ export async function performModernization(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = customPrompt || MODERNIZATION_PROMPT;
 
@@ -363,7 +385,8 @@ export async function performModernization(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
+    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
 
   return {
     text: result.response.text(),
@@ -441,7 +464,7 @@ export async function performTransliteration(
   sourceScript: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   // Preprocess: strip metadata, convert column headers to <column-break/>
   const cleanedOcr = preprocessOcrForTransliteration(ocrText);
@@ -461,7 +484,8 @@ export async function performTransliteration(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
+    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
 
   return {
     text: result.response.text(),
