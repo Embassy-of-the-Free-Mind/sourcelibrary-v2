@@ -181,7 +181,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Adding or changing a Librarian / MCP tool, or the text one returns → `agent-tool-results.md` (**a ranker cannot answer "how many"**, and a URL you leave out is one the model will invent — two 404s came out of the first live turn)
 
 **Writing a sweep, an import, or a new field**
-- A BULK import/sweep, or choosing `/api/import/*` vs a `*-direct.mjs` script → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$3,069/mo bill; run it on Hetzner, not the laptop).
+- A BULK import/sweep, or choosing `/api/import/*` vs a `*-direct.mjs` script → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$1,750/mo bill; run it on Hetzner, not the laptop).
 - Running any script/worker under `secret-lover run`, or running one **from a worktree**, or a job that reports a store as empty → `credential-injection.md` (**secret-lover reports an unreadable secret as a missing one and runs anyway**; a worktree resolves to the wrong project and gets zero secrets)
 - Adding a field to `books`/`pages`, writing a maintenance sweep, or touching `book-docs.mjs`/`sweep-log.mjs`/`field-sprawl.mjs` → `field-sprawl.md` (**a sweep records a ROW, not a COLUMN**; consolidation without enforcement re-polluted 4.16M rows in 3 months)
 
