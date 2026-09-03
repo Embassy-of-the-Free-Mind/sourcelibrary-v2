@@ -156,3 +156,24 @@ Three specific traps, each of which cost real work:
 - **`books.language` is not reliable evidence of what is printed on the pages we hold.** Ganguli's *Mahābhārata* and Avalon's *Serpent Power* are catalogued Sanskrit and are already English — no translation applies. Screen with `english-source-detect.mjs`, sampling from **mid-book**: front matter is routinely English even in a Latin edition. *(Corrected 2026-08-12, #3942: this bullet used to read "`books.language` is the language of the WORK, not of the pages we hold", which inverted the actual contract and read as licence for the mislabel. `resolveLanguage()` in `src/lib/resolve-language.ts` (#2185) defines `language` as the MANIFESTATION language — the leaves in this scan — with `original_language` carrying the work when the two differ. The observation behind the old wording is real and unchanged: plenty of records violate that contract, which is exactly why you screen the pages instead of trusting either field. Where the record is right, `languageApparatus()` in `src/lib/edition-language.ts` is what serves the distinction.)*
 
 Full postmortem: private ops repo, `~/sourcelibrary-ops/handoffs/2026-08-01-reference-set-and-first-translation-audit.md`.
+
+## The 2026-08-08 evidence-ledger incident (demoted from CLAUDE.md, 2026-09-02)
+
+Kept here in full because the *rule* now lives in CLAUDE.md as a rule and a tell,
+and this is the archaeology behind it.
+
+A first-translation verification round wrote 40 rows to an append-only evidence
+ledger and reported "Sink B untouched, no flag written" — true of the ingest,
+false of the pipeline. Seven hours later the nightly loop read that evidence and
+**removed three public badges**, including books the same session had just
+verified as correct.
+
+The detail that makes it more than carelessness: the rows carried
+`resolver: tier2_agent`, which is exactly what the loop's safety valve
+(`--resolver=tier2_agent,human`) admits. **The evidence unlocked the gate it was
+meant to pass.** A valve that only removes claims (`--only-demotions`) is the
+right shape for an unattended job, and it means every mistake it makes needs a
+person to undo.
+
+The FT loop in this incident was retired 2026-09-01 (#4536). The principle
+outlives the machinery: ask what reads a store, and when it next runs.

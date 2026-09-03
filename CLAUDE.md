@@ -48,7 +48,7 @@ because every incident added a section and nothing ever demoted one. It is now c
 Lessons from PR #1980 (postmortem: private ops repo, `~/sourcelibrary-ops/handoffs/2026-05-25-pr1980-split.md`). Apply to all contributors — internal, external, and AI-assisted.
 
 - **One concern per PR.** Don't bundle dead-code removal with tooling adoption, or refactors with feature work. The two halves of #1980 had very different risk profiles; bundled, they couldn't be reviewed cleanly. If the diff has more than one "why," split it.
-- **Search before you build — the field, the script, and the issue.** Three times in one session (2026-08-21) work was done that already existed: a `languages[]` array had been on 45,675 books since May (#4089); a hand-rolled OCR-clear duplicated `reset-book-ocr.mjs` and skipped 3 of its 5 safety steps, including the job-cancellation that stops a stale batch resurrecting the text (#4175); and a whole issue class had been filed 17 days earlier (#3591 vs #4149). Each cost more than the search would have. Before adding a field check `scripts/lib/books-known-fields.json`; before writing a maintenance script `ls scripts/maintenance/ scripts/audit/`; before opening an issue `gh issue list --search`. The tell that you skipped this is discovering the prior art *after* your version is written — and yours is usually the worse one, because theirs has the scar tissue.
+- **Search before you build — the field, the script, and the issue.** Three times in one session (2026-08-21) work was done that already existed: a `languages[]` array had been on 45,675 books since May (#4089); a hand-rolled OCR-clear duplicated `reset-book-ocr.mjs` and skipped 3 of its 5 safety steps, including the job-cancellation that stops a stale batch resurrecting the text (#4175); and a whole issue class had been filed 17 days earlier (#3591 vs #4149). Each cost more than the search would have. Before adding a field check `scripts/lib/books-known-fields.json`; before writing a maintenance script `ls scripts/maintenance/ scripts/audit/`; before an eval read `scripts/eval/INDEX.md` (especially the `lib/` table) and `EXPERIMENTS.md`; before opening an issue `gh issue list --search`. **Search the concept, not your word for it** — `fabricat` returned nothing where the tracker said "invented"/"declines", hiding four live issues. The tell that you skipped this is discovering the prior art *after* your version is written — and yours is usually the worse one, because theirs has the scar tissue. This rule was violated four times in one session (2026-09-02) *while written down*, so it is now **enforced**: a `PreToolUse` hook (`.claude/hooks/prior-art-guard.mjs`) blocks a new file under `scripts/{eval,maintenance,audit,lib}`, `src/lib`, `.claude/{docs,skills}` until it carries a `PRIOR ART: <path> — <why it does not fit>` line (`none — <where you looked>` is fine). Log what an experiment concluded in `scripts/eval/EXPERIMENTS.md`.
 - **Verify before deleting.** Static analysis (graph audits, IDE "find unused") can confidently miss dynamic requires, framework conventions (Next.js routing, cron triggers, server actions), and recent additions. Always `grep -rn '<name>' src/` for every deletion. `InputWidget.tsx` in #1980 was flagged dead but actively imported by `/founding-donors` — one grep would have caught it.
 - **Verify a flagged bug against current code + data before "fixing" it.** Audits, manifests, migration plans, and stale comments drift from the code — a "bug" they surface may not exist, or the code may already be correct. Read the actual code at the line and run a quick data query to confirm the failure case is real and non-negligible before adding a branch or a fix. Don't kill long-but-finite queries and mistake them for timeouts. Sometimes the documentation is the bug, not the code — fix the doc too.
 - **The absence of a marker is not the absence of the mechanism — and the authoritative source is often outside this repo.** One audit produced six retractions, all the same shape: a missing thing (no receipt email, no config key, no field on rows) read as a missing behaviour, when the behaviour lived somewhere unlooked-at — a vendor dashboard, a platform setting, a filter before the insert. Before concluding from a shape in the data, find the code path or the vendor's own page. The six cases → `.claude/docs/invariants/measurement-instruments.md`.
@@ -85,21 +85,15 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 
 ## Writing to a store an automated job reads is ACTUATION, not recording — CRITICAL
 A ledger, queue or evidence log that a cron or worker consumes is not a notebook; it is
-the input to a writer you are not watching. On 2026-08-08 a first-translation
-verification round wrote 40 rows to an append-only evidence ledger and reported "Sink B
-untouched, no flag written" — true of the ingest, false of the pipeline. Seven hours
-later the nightly loop read that evidence and **removed three public badges**, including
-books the same session had just verified as correct. The rows even carried
-`resolver: tier2_agent`, which is exactly what the loop's safety valve
-(`--resolver=tier2_agent,human`) admits — the evidence unlocked the gate it was meant to
-pass. **Before writing to any such store, ask what reads it and when it next runs**, and
-say so in the report: "ingested N rows; the 05:30 job will act on them." A sign-off that
-sits two hops downstream of the decision is not a sign-off. Prefer a shape where the
-human reviews the *diff* at the point the change becomes visible (see #3726 Tier 3 for
-the pattern). Corollary: **a valve that only removes claims can never undo its own
-error** — `--only-demotions` is right for an unattended job, and it means every mistake
-it makes needs a person. (The FT loop in this incident was retired 2026-09-01, #4536 —
-the principle outlives it.) Related: `.claude/docs/invariants/first-translation-claims.md`.
+the input to a writer you are not watching. **Before writing to any such store, ask what
+reads it and when it next runs**, and say so in the report: "ingested N rows; the 05:30
+job will act on them." A sign-off two hops upstream of the visible change is not a
+sign-off — prefer a shape where the human reviews the *diff* where it becomes visible
+(#3726 Tier 3). **Tell:** you describe a write as inert ("no flag written") and it is
+true of your ingest but false of the pipeline. Corollary: **a valve that only removes
+claims can never undo its own error.** The 2026-08-08 incident (40 evidence rows → three
+public badges removed seven hours later, by a safety valve the evidence itself unlocked)
+→ `.claude/docs/invariants/first-translation-claims.md`.
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
