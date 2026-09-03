@@ -73,6 +73,11 @@ for (const field of ['ocr', 'translation']) {
     const s = stats[field];
     s.scanned++;
     if (LIMIT && s.scanned > LIMIT) break;
+    // Progress as it goes. A silent hour-long scan is indistinguishable from a
+    // hung one, and this one is long: the regex is unindexed over ~20M docs.
+    if (s.scanned % 200 === 0) {
+      console.log(`  [${field}] scanned=${s.scanned} decodable=${s.repairable} left-alone=${s.untouched}`);
+    }
 
     if (p[field]?.human_edited) continue; // #3749 — a person's text is theirs
     const before = p[field]?.data;
