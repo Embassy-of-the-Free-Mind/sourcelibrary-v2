@@ -63,6 +63,21 @@ export const BATCH_MULTIPLIER = 0.5;
  */
 export const DEFAULT_PRICING = { input: 1.50, output: 9.00 };
 
+/**
+ * What `gemini_usage.cost_usd` rows written BEFORE 2026-09-03 were computed
+ * with. Kept — not deleted — because those rows are still in the database and
+ * anyone reconstructing historical spend needs the rate that produced them.
+ *
+ * This replaces the old `DISPUTED_LEGACY_PRICING`, which held the opposite
+ * pair. The dispute is resolved (see the header): the rate below is the WRONG
+ * one, and it is recorded here precisely so old numbers can be re-derived and
+ * corrected, rather than silently compared against new ones.
+ */
+export const SUPERSEDED_PRICING_BEFORE_2026_09_03 = {
+  'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
+  'gemini-3.6-flash': { input: 1.50, output: 7.50 },
+};
+
 export function priceFor(model) {
   return MODEL_PRICING[model] || DEFAULT_PRICING;
 }
