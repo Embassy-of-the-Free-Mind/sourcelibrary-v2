@@ -148,6 +148,19 @@ const nextConfig: NextConfig = {
           // robots.ts training-crawler reservation. See /licensing.
           { key: 'TDM-Reservation', value: '1' },
           { key: 'TDM-Policy', value: 'https://sourcelibrary.org/licensing' },
+          // WebMCP origin-trial token (#4594): activates document.modelContext
+          // in Chrome 149-156 / Edge 150+ so the reader/search tools registered
+          // by ReaderWebMCP / SearchWebMCP work for real visitors. The token is
+          // a public, signed blob bound to https://sourcelibrary.org:443 only —
+          // on previews and tenant subdomains it fails validation and is inert.
+          // Expires Nov 16, 2026 (or when Chrome 157 rolls out); renew at
+          // https://developer.chrome.com/origintrials/#/trials/my (registered
+          // under derek@sourcelibrary.org).
+          {
+            key: 'Origin-Trial',
+            value:
+              'AiGk3BeAh5JX8uvQoQHD6UyYXlrho5+ZVDLPXPX3N85h5ohG2aq57wG3t7ROHgN0vNO5heSiG6uhktqvuJkVXQ4AAABReyJvcmlnaW4iOiJodHRwczovL3NvdXJjZWxpYnJhcnkub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9',
+          },
         ],
       },
       // CORS for the PUBLIC READ API (#4491). /developers advertises "direct
