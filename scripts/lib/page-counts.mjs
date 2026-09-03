@@ -25,6 +25,9 @@ export function isVisiblePage(page) {
 /** True iff a page carries non-empty OCR text. */
 export function hasOcr(page) {
   const data = page?.ocr?.data;
+  // Attempted-but-not-legible pages keep `data` for provenance but are not
+  // served (#4523) — they do not count as OCR'd.
+  if (page?.ocr?.unreadable === true) return false;
   return typeof data === 'string' && data !== '';
 }
 
@@ -140,6 +143,9 @@ export function buildVisiblePageCountPipeline(bookId) {
                 { $ne: ['$ocr.data', null] },
                 { $ne: ['$ocr.data', ''] },
                 { $ifNull: ['$ocr.data', false] },
+                // Attempted-but-not-legible pages retain `data` for provenance
+                // but are not served (#4523) — not counted as OCR'd.
+                { $ne: ['$ocr.unreadable', true] },
               ] },
               1, 0,
             ],
