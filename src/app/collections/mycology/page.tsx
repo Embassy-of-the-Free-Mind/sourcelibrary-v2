@@ -323,7 +323,7 @@ export default async function MycologyCollectionPage() {
       <CollectionAnchorBar sections={SECTIONS} slug={SLUG} />
 
       {/* ===== Introduction ===== */}
-      <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
+      <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
             <div className="font-body flex-1 min-w-0">
@@ -354,7 +354,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== First translations — slider ===== */}
       {firstTranslations.length > 0 && (
-        <section id="translations" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="translations" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
@@ -368,7 +368,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Featured work ===== */}
       {featured && (
-        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-4">
+        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
               {/* Cover (desktop: left, 33% of section width, max 80vh tall, 2:3 — matches
@@ -435,7 +435,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Gallery — all visual material ===== */}
       {gallery.length > 0 && (
-        <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">Gallery</h2>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
@@ -458,7 +458,7 @@ export default async function MycologyCollectionPage() {
       )}
 
       {/* ===== Ask the librarian ===== */}
-      <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
+      <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
           <div className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
@@ -479,7 +479,7 @@ export default async function MycologyCollectionPage() {
       </section>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
-      <section id="works" className="bg-cream border-b border-border-light scroll-mt-4">
+      <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
@@ -566,7 +566,7 @@ export default async function MycologyCollectionPage() {
       />
 
       {/* ===== Get involved ===== */}
-      <section id="involved" className="bg-cream scroll-mt-4">
+      <section id="involved" className="bg-cream scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
           <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>

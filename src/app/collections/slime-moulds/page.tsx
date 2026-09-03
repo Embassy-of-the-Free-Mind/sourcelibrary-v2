@@ -404,29 +404,21 @@ export default async function SlimeMouldsCollectionPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Slime Moulds</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">One cell, big enough to see, that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. These are the books that first drew, named and puzzled over it, from a seventeenth-century herbal to the first monograph of 1875.</p>
           {/* Stats set exactly as the book hero's status row (size, weight,
-              colours, order: blue, green, gold), no boxes. Same hex values as
-              book/[id] page.tsx. Languages, when present, stay neutral cream. */}
+              colours blue / green / gold in that order), no boxes. Same hex
+              values as book/[id] page.tsx. Order: works, years, then first
+              translations if any. Languages, when present, stay neutral cream. */}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
             <span style={{ color: '#8fbfe6' }}>{total.toLocaleString('en-US')} works</span>
-            {ftCount > 0 && (
-              <span style={{ color: '#86c98f' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
-            )}
             {dateRange && (
-              <span style={{ color: '#e0b46a' }}>{dateRange.min} – {dateRange.max}</span>
+              <span style={{ color: '#86c98f' }}>{dateRange.min} – {dateRange.max}</span>
+            )}
+            {ftCount > 0 && (
+              <span style={{ color: '#e0b46a' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
             )}
             {languages.length > 0 && (
               <span style={{ color: '#e8e2d6' }}>{languages.join(' · ')}</span>
             )}
           </div>
-          {/* The book hero's rust "Read this book" button, pointed at the
-              collection's centrepiece. Absent until Rostafiński is visible. */}
-          {featured && (
-            <div className="mt-6">
-              <Link href={featuredHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d', textShadow: 'none' }}>
-                <BookOpen className="w-[18px] h-[18px]" />Read the first monograph
-              </Link>
-            </div>
-          )}
         </div>
       </section>
 
@@ -434,7 +426,7 @@ export default async function SlimeMouldsCollectionPage() {
       <CollectionAnchorBar sections={sections} slug={SLUG} tone="dark" />
 
       {/* ===== Introduction ===== */}
-      <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
+      <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
             <div className="font-body flex-1 min-w-0">
@@ -471,7 +463,7 @@ export default async function SlimeMouldsCollectionPage() {
 
       {/* ===== First translations — slider ===== */}
       {firstTranslations.length > 0 && (
-        <section id="translations" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="translations" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
@@ -485,7 +477,7 @@ export default async function SlimeMouldsCollectionPage() {
 
       {/* ===== Featured work ===== */}
       {featured && (
-        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-4">
+        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
               {/* Cover (desktop: left, 33% of section width, max 80vh tall, 2:3 — matches
@@ -554,7 +546,7 @@ export default async function SlimeMouldsCollectionPage() {
 
       {/* ===== Gallery — all visual material ===== */}
       {gallery.length > 0 && (
-        <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-start justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">Gallery</h2>
@@ -580,7 +572,7 @@ export default async function SlimeMouldsCollectionPage() {
       )}
 
       {/* ===== Ask the librarian ===== */}
-      <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
+      <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
           <div className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
@@ -601,7 +593,7 @@ export default async function SlimeMouldsCollectionPage() {
       </section>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
-      <section id="works" className="bg-cream border-b border-border-light scroll-mt-4">
+      <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
@@ -636,7 +628,7 @@ export default async function SlimeMouldsCollectionPage() {
           translations land rather than filling it with anything else. */}
 
       {/* ===== Get involved ===== */}
-      <section id="involved" className="bg-cream scroll-mt-4">
+      <section id="involved" className="bg-cream scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
           <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
