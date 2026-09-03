@@ -27,6 +27,7 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
+import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 /**
@@ -467,6 +468,25 @@ async function processOneJob(db, job) {
       }
       if (blankVerdicts.size) {
         console.log(`  BLANK-PAGE GUARD: refusing ${blankVerdicts.size} page(s) whose image has no ink (#4149)`);
+      }
+    }
+
+    // ── TeX-Greek repair (#4580) ────────────────────────────────────────────
+    // The model sometimes spells a Greek word out as LaTeX math rather than
+    // transcribing it: \dot{\alpha}\pi\text{o}\tau... for ἀποτελέσματος. That
+    // markup is a lossless encoding of a correct reading, so unlike the blank-page
+    // guard above this REPAIRS rather than refuses — the model read the word, it
+    // just answered in the wrong alphabet. Applies to translations too: the TeX
+    // was observed surviving into English output. Only fully-decodable spans are
+    // touched, so real equations pass through untouched.
+    let texRepairedPages = 0, texRepairedSpans = 0;
+    if (texGreekRepairEnabled()) {
+      for (const r of pageResults) {
+        const { text: fixed, replacements } = repairTexGreek(r.text);
+        if (replacements > 0) { r.text = fixed; texRepairedPages++; texRepairedSpans += replacements; }
+      }
+      if (texRepairedPages) {
+        console.log(`  TEX-GREEK: decoded ${texRepairedSpans} LaTeX span(s) to Unicode Greek across ${texRepairedPages} page(s) (#4580)`);
       }
     }
 
