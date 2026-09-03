@@ -7,7 +7,21 @@
  * Here the OCR is CORRECT (it honestly declined) and only PART of the
  * translation is invented, so the fix is surgical rather than a delete.
  *
- * Withdraws the fabricated translation on Urkunden IV p.24 (#4584).
+ * Withdraws fabricated translations — content asserted for a region the OCR
+ * recorded as unread (#4584).
+ *
+ * TARGETS (each verified BY HAND before being listed here; the corpus detector
+ * that surfaced them ran at ~8% precision, so its output is a work list and
+ * never an authority):
+ *   Urkunden IV p.24        20 invented lines of funerary formulae, one of
+ *                           which was promoted to a featured quote. WITHDRAWN.
+ *   Book of the Dead II     pp.33-34: OCR transcribed NO hieroglyphs
+ *                           ("[Hieroglyphic text lines 1-28]") and the
+ *                           translation supplied numbered <note> claims about
+ *                           what those lines say. Milder than p.24 — the
+ *                           content sits in AI-marked <note> tags rather than
+ *                           being served as the source's words — but it still
+ *                           tells a reader what an unread line 29 contains.
  *
  * WHAT WENT WRONG. The OCR read the German apparatus correctly and recorded the
  * glyph block as unread — `[Hieroglyphic text lines x+1 through 20]`. The
@@ -41,92 +55,82 @@ import { MongoClient } from 'mongodb';
 import { createHash } from 'crypto';
 
 const APPLY = process.argv.includes('--apply');
-const BOOK = '69e013c593b116d24238b3d7';
-const PAGE = 24;
-const LACUNA = '<lacuna>20 lines of hieroglyphic text, not transcribed</lacuna>';
+const TARGETS = [
+  { book: '69e013c593b116d24238b3d7', page: 24,
+    lacuna: '<lacuna>20 lines of hieroglyphic text, not transcribed</lacuna>',
+    anchor: /(<note>A large diagram[^<]*<\/note>)/, quotes: true },
+  { book: '69e0126c4e6773d060856486', page: 33,
+    lacuna: '<lacuna>hieroglyphic text lines 1-34, not transcribed</lacuna>',
+    anchor: /(<header>[^<]*<\/header>)/, quotes: false },
+  { book: '69e0126c4e6773d060856486', page: 34,
+    lacuna: '<lacuna>hieroglyphic text block, not transcribed</lacuna>',
+    anchor: /(<header>[^<]*<\/header>)/, quotes: false },
+];
 
 const c = new MongoClient(process.env.MONGODB_URI);
 await c.connect();
 const db = c.db('bookstore');
 
-const page = await db.collection('pages').findOne({ book_id: BOOK, page_number: PAGE });
-if (!page) { console.error('page not found'); process.exit(1); }
-const prior = typeof page.translation === 'string' ? page.translation : (page.translation?.data || '');
+// Matches both observed shapes: "x+3. …" (Urkunden) and "29. <note>…" (Book of the Dead).
+const INVENTED_LINE = /^\s*(?:x\+)?\d+\.\s+\S.*(?:\n|$)/gm;
 
-// (1) Assert the fabrication is still there, on the live document.
-const fabricated = prior.match(/^x\+\d+\.\s+\S.*$/gm) || [];
-if (fabricated.length < 5) {
-  console.error(`REFUSING: expected the invented x+N lines, found ${fabricated.length}. Already withdrawn, or the page changed.`);
-  process.exit(1);
-}
-console.log(`page ${PAGE}: ${fabricated.length} invented lines present`);
+let changed = 0;
+for (const t of TARGETS) {
+  const page = await db.collection('pages').findOne({ book_id: t.book, page_number: t.page });
+  if (!page) { console.error(`  p.${t.page}: page not found`); continue; }
+  const prior = typeof page.translation === 'string' ? page.translation : (page.translation?.data || '');
 
-// Replace the contiguous invented block with one marker; keep everything else.
-const next = prior
-  .replace(/^x\+\d+\.\s+.*(?:\n|$)/gm, '')          // drop the invented lines
-  .replace(/\n{3,}/g, '\n\n')
-  .replace(/(Only the final lines are preserved\n\nx\+1\n)/, `$1`)
-  .trimEnd();
-// Insert the marker where the invented block stood: after the <note> about the diagram.
-const withMarker = next.includes(LACUNA) ? next
-  : next.replace(/(<note>A large diagram[^<]*<\/note>)/, `$1\n\n${LACUNA}`);
-if (!withMarker.includes(LACUNA)) {
-  console.error('REFUSING: could not site the <lacuna> marker — anchor missing, would have silently dropped the gap.');
-  process.exit(1);
-}
+  // (1) Assert on the LIVE document. A stale work list must not edit a page.
+  const invented = prior.match(INVENTED_LINE) || [];
+  if (invented.length < 5) { console.log(`  ${t.book} p.${t.page}: ${invented.length} invented lines — already withdrawn or changed, skipping`); continue; }
 
-const book = await db.collection('books').findOne({ id: BOOK }, { projection: { reading_summary: 1, title: 1 } });
-const quotes = book?.reading_summary?.quotes || [];
-const bad = quotes.filter((q) => q.page === PAGE);
+  const stripped = prior.replace(INVENTED_LINE, '').replace(/\n{3,}/g, '\n\n').trimEnd();
+  const next = stripped.includes(t.lacuna) ? stripped : stripped.replace(t.anchor, `$1\n\n${t.lacuna}`);
+  if (!next.includes(t.lacuna)) { console.error(`  ${t.book} p.${t.page}: REFUSING — anchor missing, the gap would vanish silently`); continue; }
 
-console.log(`\n--- BEFORE (${prior.length} chars) ---\n${prior.slice(0, 260)}…`);
-console.log(`\n--- AFTER (${withMarker.length} chars) ---\n${withMarker}`);
-console.log(`\n--- featured quotes to remove: ${bad.length} ---`);
-for (const q of bad) console.log(`  "${q.text.slice(0, 90)}"`);
+  console.log(`\n### ${t.book} p.${t.page}: ${invented.length} invented lines → <lacuna>`);
+  console.log(`  before ${prior.length} chars → after ${next.length}`);
+  if (!APPLY) { console.log(`  --- AFTER ---\n${next.split('\n').map(l => '  ' + l).join('\n')}`); continue; }
 
-if (!APPLY) { console.log('\n(dry run — pass --apply)'); await c.close(); process.exit(0); }
+  // (2) Preserve. Nothing is destroyed.
+  await db.collection('page_revisions').insertOne({
+    id: createHash('sha1').update(`${page.id}-withdraw-4584`).digest('hex').slice(0, 12),
+    page_id: page.id, book_id: t.book, page_number: t.page, field: 'translation',
+    data: prior, source: 'withdraw-fabricated-translation-4584',
+    model: page.translation?.model || null, language: page.translation?.language || 'en',
+    reason: 'fabricated: translation asserted content for a region the OCR recorded as unread',
+    note: 'Issue #4584. Withdrawn 2026-09-03; invented lines replaced with a <lacuna> marker.',
+    created_at: new Date(),
+  });
 
-// (2) Preserve. Nothing is destroyed.
-await db.collection('page_revisions').insertOne({
-  id: createHash('sha1').update(`${page.id}-withdraw-4584`).digest('hex').slice(0, 12),
-  page_id: page.id,
-  book_id: BOOK,
-  page_number: PAGE,
-  field: 'translation',
-  data: prior,
-  source: 'withdraw-fabricated-translation-4584',
-  model: page.translation?.model || null,
-  language: page.translation?.language || 'en',
-  reason: 'fabricated: translation supplied 20 lines of English funerary formulae for a glyph block the OCR recorded as unread',
-  note: 'Issue #4584. Withdrawn 2026-09-03; invented lines replaced with a <lacuna> marker, legitimate German-apparatus translation retained.',
-  created_at: new Date(),
-});
-
-// (3) Replace the text.
-const r1 = await db.collection('pages').updateOne({ _id: page._id }, {
-  $set: {
-    'translation.data': withMarker,
-    'translation.content_hash': createHash('md5').update(withMarker).digest('hex'),
+  // (3) Replace the text.
+  await db.collection('pages').updateOne({ _id: page._id }, { $set: {
+    'translation.data': next,
+    'translation.content_hash': createHash('md5').update(next).digest('hex'),
     'translation.updated_at': new Date(),
     'translation.withdrawn_reason': 'fabricated-block-removed-4584',
-  },
-});
+  }});
 
-// (4) Remove the invented featured quote.
-const r2 = await db.collection('books').updateOne({ id: BOOK }, {
-  $set: {
-    'reading_summary.quotes': quotes.filter((q) => q.page !== PAGE),
-    updated_at: new Date(),
-  },
-});
+  // (4) Remove any featured quote drawn from the withdrawn region.
+  if (t.quotes) {
+    const book = await db.collection('books').findOne({ id: t.book }, { projection: { reading_summary: 1 } });
+    const quotes = book?.reading_summary?.quotes || [];
+    await db.collection('books').updateOne({ id: t.book },
+      { $set: { 'reading_summary.quotes': quotes.filter((q) => q.page !== t.page), updated_at: new Date() } });
+    console.log(`  featured quotes removed: ${quotes.filter((q) => q.page === t.page).length}`);
+  }
+  changed++;
+}
 
-console.log(`\npreserved to page_revisions; page updated=${r1.modifiedCount}; book quotes updated=${r2.modifiedCount}`);
-
-// Verify on a fresh read.
-const after = await db.collection('pages').findOne({ book_id: BOOK, page_number: PAGE });
-const t = after.translation?.data || '';
-const q2 = (await db.collection('books').findOne({ id: BOOK }, { projection: { reading_summary: 1 } }))?.reading_summary?.quotes || [];
-console.log(`VERIFY invented lines remaining: ${(t.match(/^x\+\d+\.\s+\S/gm) || []).length} (want 0)`);
-console.log(`VERIFY lacuna marker present: ${t.includes(LACUNA)}`);
-console.log(`VERIFY p.${PAGE} quotes remaining: ${q2.filter((q) => q.page === PAGE).length} (want 0), total quotes now ${q2.length}`);
+if (APPLY) {
+  console.log(`\n=== VERIFY (fresh reads) ===`);
+  for (const t of TARGETS) {
+    const after = await db.collection('pages').findOne({ book_id: t.book, page_number: t.page });
+    const txt = after?.translation?.data || '';
+    console.log(`  ${t.book} p.${t.page}: invented=${(txt.match(INVENTED_LINE) || []).length} lacuna=${txt.includes(t.lacuna)}`);
+  }
+  console.log(`pages changed: ${changed}`);
+} else {
+  console.log('\n(dry run — pass --apply)');
+}
 await c.close();
