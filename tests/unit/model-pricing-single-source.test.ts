@@ -73,18 +73,48 @@ describe('model pricing has one source of truth', () => {
     expect(offenders, `Import from scripts/lib/model-pricing.mjs instead of re-declaring prices:\n  ${offenders.join('\n  ')}`).toEqual([]);
   });
 
-  it('records the disputed rate rather than quietly dropping it', async () => {
+  /**
+   * RESOLVED 2026-09-03 (#4581, #3576). This case used to pin 0.075/0.30 as
+   * canonical and hold 0.25/1.50 as "disputed". It had it backwards, and
+   * because it was a test, it actively blocked the correction.
+   *
+   * The old argument was that 0.075/0.30 was the "closest fit to recorded
+   * costs". That was CIRCULAR — recorded `cost_usd` was itself computed from
+   * 0.075/0.30. Google's SKU catalogue settles it at 0.25/1.50.
+   *
+   * The lesson worth keeping: a test that pins a CONSTANT pins whatever was
+   * believed the day it was written. This one now asserts the property that
+   * actually matters — that the superseded rate is still recorded — and leaves
+   * verifying the number itself to the thing that can: spend-reconcile.mjs,
+   * which diffs against Google's live catalogue and exits 2 on drift.
+   */
+  it('records the superseded rate rather than quietly dropping it', async () => {
     const m = await import('../../scripts/lib/model-pricing.mjs');
-    expect(m.MODEL_PRICING['gemini-3.1-flash-lite']).toEqual({ input: 0.075, output: 0.30 });
-    expect(m.DISPUTED_LEGACY_PRICING['gemini-3.1-flash-lite']).toEqual({ input: 0.25, output: 1.50 });
+    // Canonical, catalogue-verified.
+    expect(m.MODEL_PRICING['gemini-3.1-flash-lite']).toEqual({ input: 0.25, output: 1.50 });
+    // The rate historical rows were actually costed at, kept so they can be
+    // re-derived rather than silently compared against corrected ones.
+    expect(m.SUPERSEDED_PRICING_BEFORE_2026_09_03['gemini-3.1-flash-lite'])
+      .toEqual({ input: 0.075, output: 0.30 });
   });
 
   it('costOf computes from the shared table', async () => {
     const m = await import('../../scripts/lib/model-pricing.mjs');
-    expect(m.costOf('gemini-3.1-flash-lite', 1e6, 0)).toBeCloseTo(0.075, 6);
-    expect(m.costOf('gemini-3.1-flash-lite', 0, 1e6)).toBeCloseTo(0.30, 6);
+    expect(m.costOf('gemini-3.1-flash-lite', 1e6, 0)).toBeCloseTo(0.25, 6);
+    expect(m.costOf('gemini-3.1-flash-lite', 0, 1e6)).toBeCloseTo(1.50, 6);
     // Unknown model falls back rather than returning 0 — a silent zero is how
     // a metering gap reads as "free" (#3452).
     expect(m.costOf('not-a-model', 1e6, 0)).toBeGreaterThan(0);
+  });
+
+  /**
+   * Batch is exactly half of standard across every model in Google's
+   * catalogue. A caller that prices batch work at the standard rate overstates
+   * ~2x — which is the opposite of the failure this file was written about,
+   * and just as wrong.
+   */
+  it('exposes the batch multiplier so batch work is not priced at standard', async () => {
+    const m = await import('../../scripts/lib/model-pricing.mjs');
+    expect(m.BATCH_MULTIPLIER).toBe(0.5);
   });
 });

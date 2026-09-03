@@ -46,17 +46,38 @@ function getThinkingOffModel(modelId: string) {
   });
 }
 
-// Model pricing per 1M tokens (USD)
+// Model pricing per 1M tokens (USD), STANDARD serving tier, text.
+//
+// Verify against Google's own catalogue, never a summary of the pricing page:
+//   scripts/audit/spend-reconcile.mjs   (exits 2 on drift; source is
+//   cloudbilling.googleapis.com/v1/services/AEFD-7695-64FA/skus)
+//
+// Two things this table cannot express, and both matter when reading a number
+// computed from it:
+//   - BATCH is exactly half of every rate below. A batch-heavy month costs less
+//     than this table implies.
+//   - Reasoning ("thinking") tokens bill at the OUTPUT rate. Callers must count
+//     `thoughtsTokenCount` alongside `candidatesTokenCount` or the cost is
+//     understated several-fold (#4581).
 export const MODEL_PRICING: Record<string, { input: number; output: number }> = {
+  // Verified against the SKU catalogue 2026-09-03.
   'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
+  'gemini-3.1-flash-lite': { input: 0.25, output: 1.50 },   // was 0.075/0.30 — 3.3x/5x under list (#4581)
+  'gemini-3.5-flash-lite': { input: 0.30, output: 2.50 },
+  'gemini-3.5-flash': { input: 1.50, output: 9.00 },       // NOT the same as 3.6/3.7 — verify, don't infer
+
+  'gemini-3.6-flash': { input: 0.75, output: 3.75 },
+  'gemini-3.7-flash': { input: 0.75, output: 3.75 },
+  // Legacy models — retained for historical rows; not verifiable against the
+  // current catalogue, which splits 2.5-flash by long/short input.
   'gemini-2.5-flash': { input: 0.15, output: 0.60 },
   'gemini-2.0-flash': { input: 0.10, output: 0.40 },
   'gemini-2.0-flash-exp': { input: 0.10, output: 0.40 },
   'gemini-1.5-flash': { input: 0.075, output: 0.30 },
   'gemini-1.5-pro': { input: 1.25, output: 5.00 },
-  'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
-  // Fallback for unknown models
-  'default': { input: 0.10, output: 0.40 },
+  // Fallback for unknown models. Deliberately NOT cheap: an unpriced model
+  // should overstate, so it gets noticed, rather than hide in the noise.
+  'default': { input: 0.75, output: 3.75 },
 };
 
 export interface TokenUsage {
