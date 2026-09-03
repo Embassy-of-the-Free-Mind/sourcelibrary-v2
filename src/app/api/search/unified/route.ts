@@ -947,7 +947,7 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
         { slug: queryRegex },
       ],
     })
-    .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, featured_images: { $slice: 1 } })
+    .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
     .limit(3)
     .maxTimeMS(2000)
@@ -955,8 +955,11 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
 
   return {
     results: cols.map((c: any) => {
+      // A curated hero_image (set per collection in Mongo, cut for a 4:3 card)
+      // beats the first auto-featured plate — the same rule the collections
+      // index applies, so the two cards show the same picture.
       const hero = c.featured_images?.[0];
-      const heroUrl = hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
+      const heroUrl = c.hero_image || hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
       return {
         slug: c.slug,
         tenantId: c.tenantId,
