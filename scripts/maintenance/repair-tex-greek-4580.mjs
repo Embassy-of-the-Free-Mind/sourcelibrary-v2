@@ -67,20 +67,38 @@ const books = db.collection('books');
 
 console.log(`=== #4580 TeX-Greek repair — ${APPLY ? 'APPLY' : 'REPORT ONLY (pass --apply to write)'} ===\n`);
 
-// Positive control. The first version of this sweep used a pattern with one
-// escaping level too many, so it matched a DOUBLE backslash and found 7 pages
-// where the truth was far larger — and it could not see the very page the bug
-// was reported from. "Not found" is worthless until the probe has returned
-// "found" for a case known to be positive.
-const CONTROL_PAGE = '697c925fa47ba017d78e5d04'; // Fama Remissa p.18, from #4580
-const control = await pages.findOne({ id: CONTROL_PAGE, 'ocr.data': { $regex: TEX_GREEK } });
-if (!control) {
-  console.error(`FATAL: positive control ${CONTROL_PAGE} does not match the pattern.`);
+// Positive control, against a LITERAL fixture rather than a live row.
+//
+// The first version looked up the reported page and asserted the pattern
+// matched it. That worked exactly once: the sweep repaired that page, the TeX
+// was gone, and the control then failed and blocked every subsequent run. A
+// control drawn from the mutable population invalidates itself on success —
+// it was measuring "has this page been fixed yet", not "does the probe work".
+//
+// The fixture is the text as originally reported in #4580, frozen here. It
+// cannot be repaired out from under the check, and it fails loudly if anyone
+// edits the pattern into uselessness (which already happened once: eight
+// backslashes matched a DOUBLE backslash and found almost nothing).
+const CONTROL_TEXT =
+  'Huc pertinet communicatio idiomatum verbalis: officii: ' +
+  '$\\dot{\\alpha}\\pi\\text{o}\\tau\\epsilon\\lambda\\acute{\\epsilon}\\sigma\\mu\\alpha\\tau\\text{o}\\varsigma$.';
+
+if (!new RegExp(TEX_GREEK).test(CONTROL_TEXT)) {
+  console.error('FATAL: the candidate pattern does not match the reported defect.');
   console.error('The probe is broken, not the corpus. Refusing to report a count.');
   await client.close();
   process.exit(2);
 }
-console.log(`positive control OK — ${CONTROL_PAGE} matches\n`);
+{
+  const probe = repairTexGreek(CONTROL_TEXT);
+  if (probe.replacements !== 1 || !probe.text.includes('\u1f00\u03c0\u03bf\u03c4\u03b5\u03bb\u03ad\u03c3\u03bc\u03b1\u03c4\u03bf\u03c2')) {
+    console.error(`FATAL: the decoder no longer produces the expected reading.`);
+    console.error(`  got: ${JSON.stringify(probe.text)}`);
+    await client.close();
+    process.exit(2);
+  }
+}
+console.log('positive control OK — pattern matches and decodes the reported defect\n');
 
 const stats = {
   ocr: { scanned: 0, repairable: 0, spans: 0, untouched: 0, written: 0 },
