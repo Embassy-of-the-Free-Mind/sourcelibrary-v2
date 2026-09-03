@@ -85,14 +85,23 @@ are what produced the 3.5× spread.
   as native, the stored copy matched it exactly, ratio 1.0, master. The error
   ran toward good news on precisely the population where the debt lives. It now
   returns `null` (undecidable) for those hosts rather than a flattering number.
-- **Measured per provider, 14 pages each, against the source's own info.json:**
-  EAP/BL **11/14 at full res** (median ratio 1.000) — it goes through the worker
-  that stitches. e-rara **0/14** (median **0.667**, ~44% of the pixels, 1.92M
-  pages). The difference between those two rows is not the source, it is
-  whether the worker was built to defeat the cap. Positive control on
-  Manchester: `/full/full/` returns 1366x2000 = **29% of native width**;
-  tile-stitching the same page returns 4782x7000 = **100%**, a 12x pixel
-  recovery, available today.
+- **Sample ONE PAGE PER BOOK, or a page count impersonates an independent
+  sample.** This bullet previously read "e-rara **0/14** at full res, median
+  **0.667**, ~44% of the pixels" — from 14 pages that were very likely a handful
+  of books repeated. **Withdrawn.** Re-measured 2026-08-31 across 30 e-rara pages,
+  one per book: **19/30 (63%) at full resolution**, median stored/native ratio
+  **1.14**, p10 0.59, worst 0.28, best 1.48. The median page holds *more* width
+  than the IIIF service calls native; about a third sit below it. The honest word
+  is **uneven**, not lossy — and the first number reached a commit message, a PR
+  and this doc before anything checked it. Pages within a book share a capture
+  path, so they are one observation, not N.
+- **What does hold up, measured the same way:** EAP/BL **11/14 at full res**
+  (median ratio 1.000) — it goes through the worker that stitches. And the
+  positive control on Manchester, which is a single page and therefore claims
+  nothing about a population: `/full/full/` returns 1366x2000 = **29% of native
+  width**; tile-stitching the same page returns 4782x7000 = **100%**. A 12x pixel
+  recovery, available today. That one is a demonstration of a *mechanism*, which
+  a single case can establish; a *rate* is what needs the per-book sample.
 - **An audit must not become an incident.** The MASTER tier reads bytes from
   the source institution's server. Three hosts blocked us inside 48 hours in
   August 2026 (#4395 MDZ; plus the IA and Wellcome incidents). The audit runs
