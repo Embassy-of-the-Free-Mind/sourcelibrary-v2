@@ -79,6 +79,21 @@ const ACCENTS = {
   check: '̌',
 };
 
+/**
+ * Commands that are not Greek-letter names but stand in for one, or for a
+ * character inside a Greek word. All observed in the corpus:
+ *
+ *   \circ   — the ring/degree glyph, used as omicron (ἀθάνατον, πήχυιον)
+ *   \imath  — dotless i, which is what a model reaches for under an accent
+ *   \cdot   — used as the Greek ano teleia (·), the colon of Greek punctuation
+ */
+const STANDINS = {
+  circ: 'ο',
+  imath: 'ι',
+  jmath: 'ι',
+  cdot: '·',
+};
+
 /** A whole math span, $…$ or \(…\). */
 const MATH_SPAN = /\$([^$]{1,4000})\$|\\\(([\s\S]{1,4000}?)\\\)/g;
 
@@ -107,9 +122,39 @@ function decodeSpan(body) {
 
     // \acute{\epsilon} — accent applied to a letter (or to another accent).
     m = rest.match(/^\\([a-zA-Z]+)\{\s*\\([a-zA-Z]+)\s*\}/);
-    if (m && ACCENTS[m[1]] && LETTERS[m[2]]) {
-      out += LETTERS[m[2]] + ACCENTS[m[1]];
-      sawGreek = true;
+    if (m && ACCENTS[m[1]] && (LETTERS[m[2]] || STANDINS[m[2]])) {
+      // STANDINS as well as LETTERS: \acute{\imath} is ί, and dotless i is
+      // exactly what a model reaches for when it needs to put an accent on an
+      // iota it is spelling out.
+      out += (LETTERS[m[2]] || STANDINS[m[2]]) + ACCENTS[m[1]];
+      if (LETTERS[m[2]]) sawGreek = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \acute{} — an accent with an empty argument. The mark belongs to the
+    // letter just emitted, which is what the model meant.
+    m = rest.match(/^\\([a-zA-Z]+)\{\s*\}/);
+    if (m && ACCENTS[m[1]]) {
+      out += ACCENTS[m[1]];
+      i += m[0].length;
+      continue;
+    }
+
+    // \grave\alpha — accent with NO braces around its argument. TeX accepts
+    // this and the model emits it; matching only the braced form missed them all.
+    m = rest.match(/^\\([a-zA-Z]+)\s*\\([a-zA-Z]+)/);
+    if (m && ACCENTS[m[1]] && (LETTERS[m[2]] || STANDINS[m[2]])) {
+      out += (LETTERS[m[2]] || STANDINS[m[2]]) + ACCENTS[m[1]];
+      if (LETTERS[m[2]]) sawGreek = true;
+      i += m[0].length;
+      continue;
+    }
+
+    // \acute{\mathrm{o}} — accent over a \text/\mathrm group.
+    m = rest.match(/^\\([a-zA-Z]+)\{\s*\\(?:text|mathrm|textrm|mathit)\{([^{}]*)\}\s*\}/);
+    if (m && ACCENTS[m[1]] && /^[A-Za-z0-9]$/.test(m[2])) {
+      out += m[2] + ACCENTS[m[1]];
       i += m[0].length;
       continue;
     }
@@ -131,6 +176,11 @@ function decodeSpan(body) {
         i += m[0].length;
         continue;
       }
+      if (STANDINS[m[1]]) {
+        out += STANDINS[m[1]];
+        i += m[0].length;
+        continue;
+      }
       if (m[1] === ' ' || m[1] === 'quad' || m[1] === 'qquad' || m[1] === ' ') {
         out += ' ';
         i += m[0].length;
@@ -138,6 +188,10 @@ function decodeSpan(body) {
       }
       return null; // an unknown command — could be real maths
     }
+
+    // \& \% \# — escaped punctuation, literal in the output.
+    m = rest.match(/^\\([&%#_])/);
+    if (m) { out += m[1]; i += m[0].length; continue; }
 
     // \, \; \! \  — TeX spacing
     m = rest.match(/^\\[,;:!> ]/);
