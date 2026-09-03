@@ -295,6 +295,7 @@ export const NOTES_ALLOWED_ELEMENTS = [
   'span', 'div', 'sup',
   // XML annotation elements (new syntax)
   'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc', 'interp',
+  'lacuna',
 ];
 
 // Pre-process bracket note tags to XML tags before ReactMarkdown sees them
@@ -839,6 +840,20 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
             {children}?
           </span>
         ) : <>{children}</>,
+        // A region of the page with no legible source — glyphs we cannot read,
+        // a torn-away block. Its children DESCRIBE the gap; they are not the
+        // page's words, which is why every text-extraction path drops this tag
+        // content-and-all (see strip-editorial-wrappers). Rendered in BOTH note
+        // states on purpose: hiding it would make an incomplete page read as a
+        // complete one, which is the fabrication this tag exists to prevent.
+        lacuna: ({ children }: any) => (
+          <span
+            className="inline-flex items-center gap-1 bg-stone-100 text-stone-500 border border-dashed border-stone-300 px-1.5 py-0.5 rounded mx-0.5 text-sm not-italic"
+            title="Not transcribed — no legible reading of this region. The page image is the source."
+          >
+            […] <span className="italic">{children}</span>
+          </span>
+        ),
         term: ({ children }: any) => (
           <span className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded mx-0.5`} title="Technical term">
             <em>{children}</em>

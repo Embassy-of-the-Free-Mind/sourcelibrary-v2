@@ -13,6 +13,21 @@ describe('stripEditorialWrappers', () => {
     expect(out).toContain('<term>yantra</term>'); // inline glosses survive
   });
 
+  it('drops a <lacuna> region marker content-and-all, unlike <unclear>', () => {
+    // #4584: the failure this tag exists to prevent. Urkunden IV p.24 had its
+    // unread glyph block described in prose, and the description was rendered
+    // downstream as if it were the page's own words. A <lacuna> DESCRIBES a
+    // gap, so its content must never reach quotable/countable/embeddable text —
+    // whereas <unclear> wraps a best-guess READING and must survive as body text.
+    const page = `Nur die letzten Zeilen sind erhalten <lacuna>20 lines of hieroglyphic text, not transcribed</lacuna> <unclear>Dw3-r-nhh</unclear>`;
+    const out = stripEditorialWrappers(page);
+    expect(out).not.toMatch(/hieroglyphic/i);
+    expect(out).not.toMatch(/not transcribed/i);
+    expect(out).not.toMatch(/20 lines/i);
+    expect(out).toContain('Nur die letzten Zeilen');
+    expect(out).toContain('Dw3-r-nhh');   // the unclear READING survives
+  });
+
   it('drops summary, keywords, and vocab blocks', () => {
     const t = `body text <summary>AI description of the page</summary> more body <keywords>a, b, c</keywords> end <vocab>term1, term2</vocab>`;
     const out = stripEditorialWrappers(t).replace(/\s+/g, ' ').trim();
