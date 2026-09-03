@@ -218,6 +218,31 @@ GET /books
 
 Returns all books in the library with metadata.
 
+### Entities: People, Places and Concepts
+
+```
+https://sourcelibrary.org/explore
+https://sourcelibrary.org/explore/map
+```
+
+Over a million named entities — people, places and concepts — extracted from the
+AI-generated indexes of the books themselves, with a growing subset aligned to
+Wikidata (QIDs, birth/death years, coordinates). `/explore/map` plots the places
+that carry coordinates.
+
+Two things worth knowing before you build on it. Alignment is by Wikipedia-URL
+match or exact name string, so most entities are extracted but not yet aligned;
+treat an unaligned entity as "we found this name", not "we identified this
+thing". And because the source is a book's index rather than its body text, a
+place discussed in a book but absent from its index is invisible here.
+
+Ancient toponyms are the known weak spot: the same place is written differently
+in every tradition that names it (Magan / Makkan / Majan / Ṣuḥār / 甕蠻 / Oman),
+and matching on strings cannot join those. If you are chasing a place across
+languages, search co-occurring names rather than the place itself — a query for
+a lone toponym also collects homographs in unrelated languages, while a pair
+like `Dilmun Meluhha` returns near-pure signal.
+
 ### Distributed Text Services (DTS) API
 
 Source Library implements the [DTS v1.0 specification](https://distributed-text-services.github.io/specifications/) for standards-compliant text citation and passage retrieval.
