@@ -258,11 +258,17 @@ async function main() {
         { _id: book._id },
         {
           $set: {
-            contributing_library: library,
+            // The NAME only — contributing_library is a text field everywhere
+            // it is read (Supabase mirror column, /libraries chips, cite
+            // button). Writing the whole {name,url,note} object here put a
+            // JSON blob on 1,110 books (#4589); url/note belong in provenance.
+            contributing_library: library.name,
             'field_provenance.contributing_library': {
               source: 'provider_mapping',
               method,
               provider,
+              library_url: library.url,
+              library_note: library.note,
               date: now.toISOString(),
             },
           },
