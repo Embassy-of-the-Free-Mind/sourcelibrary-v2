@@ -35,6 +35,7 @@ import { tenantBookUrl } from '@/lib/slugify';
 import { matchKnownEntity } from '@/lib/known-entities';
 import { assessMatchQuality } from '@/lib/search/match-quality';
 import HighlightedText from '@/components/search/HighlightedText';
+import SearchWebMCP from '@/components/search/SearchWebMCP';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
@@ -989,6 +990,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
   return (
     <div className="bg-cream" lang={lang}>
+      {/* WebMCP only on the main site: tool results emit /book/… URLs whose
+          shape is wrong on tenant reading rooms, and embedded iframes would
+          need an explicit allow="tools" grant from the partner page anyway. */}
+      {!embed && <SearchWebMCP />}
       {!embed && <SiteHeader variant="light" />}
 
       {/* Search Bar */}
