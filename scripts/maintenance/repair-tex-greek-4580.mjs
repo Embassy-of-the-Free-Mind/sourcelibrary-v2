@@ -45,7 +45,7 @@ if (!uri) { console.error('MONGODB_URI not set.'); process.exit(1); }
 
 // Any TeX Greek-letter command. Deliberately letters only — matching on \acute
 // or \tilde alone would sweep in real mathematics that happens to use accents.
-const TEX_GREEK = '\\\\\\\\(alpha|beta|gamma|delta|epsilon|varepsilon|zeta|eta|theta|vartheta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|varsigma|tau|upsilon|phi|varphi|chi|psi|omega)';
+const TEX_GREEK = '\\\\(alpha|beta|gamma|delta|epsilon|varepsilon|zeta|eta|theta|vartheta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|varsigma|tau|upsilon|phi|varphi|chi|psi|omega)';
 
 const client = new MongoClient(uri);
 await client.connect();
@@ -54,6 +54,21 @@ const pages = db.collection('pages');
 const books = db.collection('books');
 
 console.log(`=== #4580 TeX-Greek repair — ${APPLY ? 'APPLY' : 'REPORT ONLY (pass --apply to write)'} ===\n`);
+
+// Positive control. The first version of this sweep used a pattern with one
+// escaping level too many, so it matched a DOUBLE backslash and found 7 pages
+// where the truth was far larger — and it could not see the very page the bug
+// was reported from. "Not found" is worthless until the probe has returned
+// "found" for a case known to be positive.
+const CONTROL_PAGE = '697c925fa47ba017d78e5d04'; // Fama Remissa p.18, from #4580
+const control = await pages.findOne({ id: CONTROL_PAGE, 'ocr.data': { $regex: TEX_GREEK } });
+if (!control) {
+  console.error(`FATAL: positive control ${CONTROL_PAGE} does not match the pattern.`);
+  console.error('The probe is broken, not the corpus. Refusing to report a count.');
+  await client.close();
+  process.exit(2);
+}
+console.log(`positive control OK — ${CONTROL_PAGE} matches\n`);
 
 const stats = {
   ocr: { scanned: 0, repairable: 0, spans: 0, untouched: 0, written: 0 },
