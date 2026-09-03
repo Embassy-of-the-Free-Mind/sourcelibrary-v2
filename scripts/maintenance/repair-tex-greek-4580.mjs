@@ -27,6 +27,16 @@
  * decoder's judgement stays auditable and reversible rather than being a silent
  * overwrite of the only copy.
  *
+ * RESUMABLE BY DESIGN. The first version streamed a Mongo cursor across the
+ * per-page writes and was killed three times, losing everything each time — the
+ * documented trap: never hold a cursor open across slow work. It now enumerates
+ * the candidate page ids FIRST (fast, one pass), checkpoints them to disk, and
+ * processes from that list, appending each finished id. A kill costs only the
+ * page in flight; re-running skips what is already done.
+ *
+ * Checkpoint files live beside the log, keyed by --state (default
+ * /tmp/tex-greek-4580). Delete them to start over.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/repair-tex-greek-4580.mjs
  *   node --env-file=.env.production.local scripts/maintenance/repair-tex-greek-4580.mjs --apply
@@ -34,6 +44,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { readFileSync, writeFileSync, appendFileSync, existsSync } from 'node:fs';
 import { repairTexGreek } from '../lib/tex-greek.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 
@@ -78,14 +89,38 @@ const stats = {
 const affectedBooks = new Set();
 const samples = [];
 
+const STATE = (process.argv.find(a => a.startsWith('--state=')) || '').split('=')[1] || '/tmp/tex-greek-4580';
+
 for (const field of ['ocr', 'translation']) {
   const path = `${field}.data`;
   const query = { [path]: { $regex: TEX_GREEK } };
-  const cursor = pages.find(query, {
-    projection: { id: 1, book_id: 1, page_number: 1, [path]: 1, [`${field}.human_edited`]: 1 },
-  });
 
-  for await (const p of cursor) {
+  // ── checkpoint: enumerate ids first, then work from the list ──────────────
+  const idFile = `${STATE}.${field}.ids`;
+  const doneFile = `${STATE}.${field}.done`;
+  let ids;
+  if (existsSync(idFile)) {
+    ids = readFileSync(idFile, 'utf8').split('\n').filter(Boolean);
+    console.log(`[${field}] resuming from ${idFile}: ${ids.length} candidates`);
+  } else {
+    ids = (await pages.distinct('id', query)).map(String);
+    writeFileSync(idFile, ids.join('\n'));
+    console.log(`[${field}] enumerated ${ids.length} candidate pages → ${idFile}`);
+  }
+  const done = existsSync(doneFile)
+    ? new Set(readFileSync(doneFile, 'utf8').split('\n').filter(Boolean))
+    : new Set();
+  if (done.size) console.log(`[${field}] ${done.size} already processed, skipping those`);
+
+  const todo = ids.filter(id => !done.has(id));
+  console.log(`[${field}] ${todo.length} to process`);
+
+  for (const pageId of todo) {
+    const p = await pages.findOne(
+      { id: pageId },
+      { projection: { id: 1, book_id: 1, page_number: 1, [path]: 1, [`${field}.human_edited`]: 1 } },
+    );
+    if (!p) { appendFileSync(doneFile, pageId + '\n'); continue; }
     const s = stats[field];
     s.scanned++;
     if (LIMIT && s.scanned > LIMIT) break;
@@ -95,12 +130,12 @@ for (const field of ['ocr', 'translation']) {
       console.log(`  [${field}] scanned=${s.scanned} decodable=${s.repairable} left-alone=${s.untouched}`);
     }
 
-    if (p[field]?.human_edited) continue; // #3749 — a person's text is theirs
+    if (p[field]?.human_edited) { if (APPLY) appendFileSync(doneFile, String(p.id) + '\n'); continue; } // #3749
     const before = p[field]?.data;
     if (typeof before !== 'string') continue;
 
     const { text: after, replacements } = repairTexGreek(before);
-    if (replacements === 0 || after === before) { s.untouched++; continue; }
+    if (replacements === 0 || after === before) { s.untouched++; if (APPLY) appendFileSync(doneFile, String(p.id) + '\n'); continue; }
 
     s.repairable++;
     s.spans += replacements;
@@ -135,6 +170,7 @@ for (const field of ['ocr', 'translation']) {
       { $set: { [path]: after, [`${field}.tex_greek_repaired_at`]: new Date() } },
     );
     if (res.modifiedCount === 1) s.written++;
+    appendFileSync(doneFile, String(p.id) + '\n');
   }
 }
 
