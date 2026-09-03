@@ -50,6 +50,9 @@ export function buildVisiblePageCountPipeline(bookId: string): Document[] {
                 { $ne: ['$ocr.data', null] },
                 { $ne: ['$ocr.data', ''] },
                 { $ifNull: ['$ocr.data', false] },
+                // Attempted-but-not-legible pages retain `data` for provenance
+                // but are not served (#4523) — they must not count as OCR'd.
+                { $ne: ['$ocr.unreadable', true] },
               ] },
               1, 0,
             ],

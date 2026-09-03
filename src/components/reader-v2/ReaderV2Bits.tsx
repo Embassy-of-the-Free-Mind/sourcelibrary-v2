@@ -212,6 +212,15 @@ export function ReaderProse({
     return <GatedPane page={page} />;
   }
 
+  // Honest-unavailable (#4523): a transcription was ATTEMPTED but is not
+  // reliably legible. Withhold BOTH panes (a translation of untrustworthy OCR
+  // is untrustworthy too) and show the scan as authoritative. Must come before
+  // the empty check — `data` is retained for provenance, so the pane is NOT
+  // empty; rendering it would serve exactly the text we judged unreliable.
+  if (page.ocr?.unreadable) {
+    return <PaneEmptyState page={page} book={book} kind={kind} unreadable />;
+  }
+
   // An empty pane is several different situations wearing one sentence: a page
   // nobody has transcribed, a page transcribed but not translated, a blank
   // flyleaf. They call for different words and, for one of them, a way to ask

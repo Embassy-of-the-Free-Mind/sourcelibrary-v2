@@ -351,6 +351,9 @@ export interface ReaderStrings {
   paneEmpty: {
     notTranscribed: string;
     notTranscribedBody: string;
+    /** Attempted but not reliably legible (#4523). */
+    notReliablyLegible: string;
+    notReliablyLegibleBody: string;
     blankPage: string;
     readyToTranslate: string;
     readyToTranslateBody: string;
@@ -754,6 +757,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneEmpty: {
       notTranscribed: 'Not transcribed yet',
       notTranscribedBody: 'The scan is here and free to read, but this page has no transcription yet, so there is nothing to translate from.',
+      notReliablyLegible: 'Not reliably legible',
+      notReliablyLegibleBody: 'We attempted to transcribe this page but could not produce a reading we trust, so we are not showing one. The scan beside this is the authoritative source.',
       blankPage: 'Blank page.',
       readyToTranslate: 'Ready to translate',
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
@@ -1131,6 +1136,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneEmpty: {
       notTranscribed: 'Aún sin transcribir',
       notTranscribedBody: 'El escaneo está aquí y se puede leer libremente, pero esta página todavía no tiene transcripción, así que no hay nada de donde traducir.',
+      notReliablyLegible: 'Sin lectura fiable',
+      notReliablyLegibleBody: 'Intentamos transcribir esta página, pero no pudimos obtener una lectura fiable, así que no mostramos ninguna. El escaneo que la acompaña es la fuente autorizada.',
       blankPage: 'Página en blanco.',
       readyToTranslate: 'Lista para traducir',
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',

@@ -80,7 +80,7 @@ export function GatedPane({ page }: { page: Page }) {
  * because there's nothing to translate from, if OCR is also missing —
  * handled below by falling through to the same states as `kind: 'ocr'`).
  */
-export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; kind: 'ocr' | 'translation' }) {
+export function PaneEmptyState({ page, book, kind, unreadable }: { page: Page; book: Book; kind: 'ocr' | 'translation'; unreadable?: boolean }) {
   const { data: sessionData } = useStableSession();
   const pathname = usePathname();
   const t = getReaderStrings(useLocale()).paneEmpty;
@@ -90,6 +90,20 @@ export function PaneEmptyState({ page, book, kind }: { page: Page; book: Book; k
 
   const sessionEmail = (sessionData?.user as { email?: string } | undefined)?.email || null;
   const ocrText = page.ocr?.data || '';
+
+  // Honest-unavailable (#4523): a transcription was attempted but is not
+  // reliably legible. Say so plainly, for both panes — never the "not
+  // transcribed yet" wording, which would imply nobody has tried, and never a
+  // request-translation CTA, since there is no trustworthy source text to
+  // translate. The scan pane beside this remains authoritative.
+  if (unreadable) {
+    return (
+      <EmptyPane
+        label={t.notReliablyLegible}
+        body={t.notReliablyLegibleBody}
+      />
+    );
+  }
 
   // No transcription at all — public readers get plain, non-paywall-sounding
   // wording; editors (inner_circle+) get the operator wording, since they're
