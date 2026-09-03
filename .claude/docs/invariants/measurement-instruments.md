@@ -488,3 +488,54 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## A positive control drawn from the data the process REPAIRS invalidates itself on success
+
+A repair sweep for #4580 (OCR writing Greek as LaTeX) refused to report a count unless
+a probe first matched the page the defect was reported from. Correct instinct — a
+"not found" is worthless until the probe has returned "found" for a known positive, and
+that guard had already caught a real escaping bug where the candidate pattern carried
+one backslash level too many and matched `\\alpha` rather than `\alpha`, reporting a
+confident **7 pages across 4 books** when the true population was in the thousands.
+
+Then the sweep repaired the control page. The TeX was gone, the control failed, and
+every subsequent run aborted with *"the probe is broken, not the corpus."*
+
+The guard behaved correctly; the **control** was wrong. It was measuring *"has this page
+been fixed yet"*, not *"does the probe work"*. **Any check whose subject the process
+under test can MODIFY starts testing the wrong thing the moment that process succeeds.**
+
+Use a frozen fixture — the defect text as originally reported, pasted into the script —
+and assert against it both that the candidate pattern matches and that the transform
+produces the expected output. Neither can be repaired out from under the check, and both
+fail loudly on the two regressions that actually happen: an over-escaped pattern, and a
+transform that silently stops producing the right answer.
+
+Related: `lesson_probe_needs_a_positive_control` (auto-memory).
+
+## A parser's error mode belongs to its INPUT distribution, not its code
+
+`publishedToYear` (`src/lib/resolve-language.ts`) takes the first 3–4 digit run it
+finds. That is right for a curator-typed hint (`"1561"`, `"ca. 1524"`). Reused on IIIF
+catalogue strings during a 1,698-book repair it fabricated precision, silently:
+
+| catalogue string | returns | truth |
+|---|---|---|
+| `1601-1700` | **1601** | a century, not a year |
+| `after 1599/1st half of the 17th century` | **1599** | the one year it demonstrably is NOT |
+| `1301-1500 / 1401-1500 / 1301-1400` | **1301** | three overlapping ranges |
+
+Nothing errors and every output is a plausible year, so the damage is invisible
+downstream — those books then answer `year_from=1601&year_to=1601` with false confidence
+and a reader cannot tell a measured year from a guessed one.
+
+**Before reusing a parser on a new source, print 10–20 real inputs from that source
+beside the outputs.** Distribution first, code second. And when a value can be a range,
+a century or an open bound, **do not collapse it to a point**: write the honest free-text
+field and leave the numeric one unset. An absent year is recoverable; a fabricated one
+is indistinguishable from a real one. The #4572 sweep splits exactly this way — 1,495
+books got an exact year, 121 got `published` with no `year`.
+
+Diverging from an existing helper is sometimes correct. Say WHY at the divergence, or
+the next person will "fix" the inconsistency back.
+
