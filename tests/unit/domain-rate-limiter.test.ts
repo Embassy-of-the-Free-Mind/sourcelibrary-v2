@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { claimSlot, getDomainLimit, noteRateLimited, effectiveLimit, DOMAIN_LIMITS } from '../../scripts/lib/iiif-utils.mjs';
+import { claimSlot, getDomainLimit, noteRateLimited, effectiveLimit, _agePenaltyClockForTest, DOMAIN_LIMITS } from '../../scripts/lib/iiif-utils.mjs';
 
 /**
  * Guards the per-host rate limiter in scripts/lib/iiif-utils.mjs against the
@@ -95,6 +95,88 @@ describe('429 handling', () => {
 
   it('is a no-op on an unparseable URL rather than throwing', () => {
     expect(() => noteRateLimited('not a url')).not.toThrow();
+  });
+});
+
+/**
+ * The other half of a backoff: getting back up.
+ *
+ * #4396 fixed the burst but gave the limiter multiplicative DECREASE and no
+ * increase — `penalty` doubled on every 429 and nothing lowered it. Four 429s
+ * pinned a host at 1/16th of its rate for the life of the process, and the
+ * archiver runs 50-minute batches, so one early burst crippled the whole run.
+ * Measured on production 2026-09-03 before the fix: gallica granted 3.27 req/s
+ * healthy, 0.29 req/s after four 429s, and was still at 0.41 req/s afterwards
+ * with no path back. The hourly archiver logged a flat 0.08 pages/s and
+ * `books 0/240` against a 12,561-book backlog (#4588).
+ *
+ * Negative control performed when written: deleting the `decayPenalty` call in
+ * `claimSlot` makes `recovers ... after a quiet period` fail with the penalty
+ * still at 16, and it goes green again on restore.
+ */
+describe('per-host rate limiter recovery', () => {
+  it('recovers toward the configured rate after a quiet period', () => {
+    const URL_ = 'https://recovery-test.example.org/x';
+    for (let i = 0; i < 5; i++) noteRateLimited(URL_, undefined);
+    const configured = getDomainLimit(URL_);
+
+    // Pinned at the floor immediately after the burst.
+    expect(effectiveLimit(URL_)).toBeCloseTo(configured / 16, 5);
+
+    // One quiet minute halves it; four quiet minutes are most of the way back.
+    _agePenaltyClockForTest(URL_, 60_000);
+    expect(effectiveLimit(URL_)).toBeCloseTo(configured / 8, 5);
+
+    _agePenaltyClockForTest(URL_, 3 * 60_000);
+    expect(effectiveLimit(URL_)).toBeCloseTo(configured, 5);
+  });
+
+  it('never recovers past the configured rate', () => {
+    const URL_ = 'https://recovery-ceiling.example.org/x';
+    noteRateLimited(URL_, undefined);
+    _agePenaltyClockForTest(URL_, 60 * 60_000); // an hour of quiet
+    expect(effectiveLimit(URL_)).toBe(getDomainLimit(URL_));
+  });
+
+  it('grants the recovered rate to the REAL scheduler, not just the reporter', async () => {
+    // The first draft of these tests asserted only through effectiveLimit(),
+    // which decays on its own — so every one of them passed with the decay
+    // deleted from claimSlot, the function that actually paces the archiver.
+    // A guard that green-lights the broken build is worse than no guard
+    // (invariants/tests-that-are-not-guards.md). This drives claimSlot and
+    // times it.
+    const HOST = 'recovery-scheduler.example.org';
+    const LIMIT = 50; // 20ms spacing healthy, 320ms at 1/16 — a wide, fast gap
+
+    for (let i = 0; i < 5; i++) noteRateLimited(`https://${HOST}/x`, undefined);
+    _agePenaltyClockForTest(`https://${HOST}/x`, 5 * 60_000); // 5 quiet minutes
+
+    // Drain the 429 cooldown, which parks nextSlot ~5s out regardless of rate.
+    await claimSlot(HOST, LIMIT);
+
+    const t0 = Date.now();
+    for (let i = 0; i < 10; i++) await claimSlot(HOST, LIMIT);
+    const elapsed = Date.now() - t0;
+
+    // Recovered: 10 x 20ms = ~200ms. Still pinned at 1/16: 10 x 320ms = ~3.2s.
+    expect(elapsed).toBeLessThan(1500);
+  });
+
+  it('backs off faster than it recovers', () => {
+    // The asymmetry is the safety property: the other party is a library that
+    // can block us outright, so we must fall fast and climb slowly. One 429
+    // halves the rate instantly; undoing it costs a full quiet minute.
+    const URL_ = 'https://asymmetry-test.example.org/x';
+    const configured = getDomainLimit(URL_);
+
+    noteRateLimited(URL_, undefined);
+    expect(effectiveLimit(URL_)).toBeCloseTo(configured / 2, 5);
+
+    _agePenaltyClockForTest(URL_, 59_000); // just under the half-life
+    expect(effectiveLimit(URL_)).toBeCloseTo(configured / 2, 5);
+
+    _agePenaltyClockForTest(URL_, 2_000); // now over it
+    expect(effectiveLimit(URL_)).toBeCloseTo(configured, 5);
   });
 });
 

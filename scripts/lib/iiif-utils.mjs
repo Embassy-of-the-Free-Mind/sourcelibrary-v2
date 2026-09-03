@@ -45,13 +45,48 @@ export const DOMAIN_LIMITS = {
 
 const DEFAULT_LIMIT = 5;
 
-// Per-host scheduling state: { nextSlot, penalty }.
-//   nextSlot — epoch ms of the next unclaimed send slot for this host.
-//   penalty  — divisor applied to the configured limit after a 429, so a host
-//              that tells us to slow down actually gets a slower caller.
+// Per-host scheduling state: { nextSlot, penalty, penalizedAt }.
+//   nextSlot    — epoch ms of the next unclaimed send slot for this host.
+//   penalty     — divisor applied to the configured limit after a 429, so a host
+//                 that tells us to slow down actually gets a slower caller.
+//   penalizedAt — epoch ms of the last 429, used to decay `penalty` back toward 1.
 const _domainBuckets = new Map();
 
 const MAX_PENALTY = 16; // floor: a 2/s host lands at one request every 8s
+
+/**
+ * How long a host must go without a 429 before the penalty halves.
+ *
+ * #4396 gave the limiter multiplicative DECREASE and no increase: `penalty`
+ * doubled on every 429 and nothing ever lowered it. Four 429s pinned a host at
+ * 1/16th of its configured rate for the rest of the process, and the archiver
+ * runs 50-minute batches — so one early burst crippled the whole run. Measured
+ * on production 2026-09-03: gallica granted 3.27 req/s healthy and 0.29 req/s
+ * after four 429s, with no recovery, while the hourly archiver logged a flat
+ * 0.08 pages/s and `books 0/240`.
+ *
+ * Halving per quiet minute is deliberately slower than the doubling on the way
+ * down: we back off fast and return slowly, which is the safe asymmetry when
+ * the other party is a library that can block us outright (#4311, #4395).
+ */
+const PENALTY_HALFLIFE_MS = 60_000;
+
+/**
+ * Decay `penalty` toward 1 based on how long the host has been quiet.
+ *
+ * Called from the read path rather than on a timer so there is nothing to
+ * schedule or clean up, and a host that is never touched again costs nothing.
+ */
+function decayPenalty(b, now) {
+  if (b.penalty <= 1 || !b.penalizedAt) return;
+  const halvings = Math.floor((now - b.penalizedAt) / PENALTY_HALFLIFE_MS);
+  if (halvings <= 0) return;
+  b.penalty = Math.max(1, b.penalty / 2 ** halvings);
+  // Advance the clock by the halvings consumed, so partial progress is kept
+  // instead of being re-counted on the next call.
+  b.penalizedAt += halvings * PENALTY_HALFLIFE_MS;
+  if (b.penalty <= 1) { b.penalty = 1; b.penalizedAt = 0; }
+}
 
 export function getDomainLimit(url) {
   try {
@@ -64,7 +99,7 @@ export function getDomainLimit(url) {
 
 function bucketFor(host) {
   let b = _domainBuckets.get(host);
-  if (!b) { b = { nextSlot: 0, penalty: 1 }; _domainBuckets.set(host, b); }
+  if (!b) { b = { nextSlot: 0, penalty: 1, penalizedAt: 0 }; _domainBuckets.set(host, b); }
   return b;
 }
 
@@ -86,8 +121,9 @@ function bucketFor(host) {
  */
 export async function claimSlot(host, limit) {
   const b = bucketFor(host);
-  const interval = 1000 / Math.max(limit / b.penalty, 0.05);
   const now = Date.now();
+  decayPenalty(b, now);
+  const interval = 1000 / Math.max(limit / b.penalty, 0.05);
   const slot = Math.max(now, b.nextSlot);
   b.nextSlot = slot + interval;         // claimed synchronously — no await above
   const wait = slot - now;
@@ -106,18 +142,38 @@ export async function claimSlot(host, limit) {
 export function noteRateLimited(url, retryAfterSeconds) {
   let host; try { host = new URL(url).hostname; } catch { return; }
   const b = bucketFor(host);
+  const now = Date.now();
+  // Decay first, so a host that has been quiet for minutes is penalised from
+  // its recovered rate rather than from a stale worst case.
+  decayPenalty(b, now);
   b.penalty = Math.min(b.penalty * 2, MAX_PENALTY);
+  b.penalizedAt = now;
   const cooldown = Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0
     ? retryAfterSeconds * 1000
     : 5000;
-  b.nextSlot = Math.max(b.nextSlot, Date.now() + cooldown);
+  b.nextSlot = Math.max(b.nextSlot, now + cooldown);
   return b.penalty;
 }
 
 /** Effective (post-penalty) rate for a host, for logging. */
 export function effectiveLimit(url) {
   let host; try { host = new URL(url).hostname; } catch { return null; }
-  return getDomainLimit(url) / bucketFor(host).penalty;
+  const b = bucketFor(host);
+  decayPenalty(b, Date.now());
+  return getDomainLimit(url) / b.penalty;
+}
+
+/**
+ * Test seam: age a host's penalty clock by `ms` without sleeping.
+ *
+ * Recovery is measured in minutes, so a test that actually waited would be a
+ * test nobody runs. Exported only for the behavioural guard in
+ * tests/unit/domain-rate-limiter.test.ts.
+ */
+export function _agePenaltyClockForTest(url, ms) {
+  let host; try { host = new URL(url).hostname; } catch { return; }
+  const b = bucketFor(host);
+  if (b.penalizedAt) b.penalizedAt -= ms;
 }
 
 /**
