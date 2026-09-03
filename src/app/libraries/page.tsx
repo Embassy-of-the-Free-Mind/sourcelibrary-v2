@@ -106,6 +106,11 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
   for (const row of allRows) {
     const name = (row.contributing_library as string || '').trim();
     if (!name || excludeNames.has(name)) continue;
+    // Some importers stored a serialized object instead of a name — a chip
+    // reading {"name":"Internet Archive","url":…} is a data bug, not an
+    // institution. Skip anything JSON-shaped; the source rows need a repair
+    // sweep, but the page shouldn't render the bug meanwhile.
+    if (name.startsWith('{') || name.startsWith('[')) continue;
     counts.set(name, (counts.get(name) || 0) + 1);
   }
 
