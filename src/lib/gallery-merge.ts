@@ -17,6 +17,11 @@ export interface MergedBrowseOpts {
   offset: number;
   imageType?: string | null;
   minQuality?: number;
+  /**
+   * True when the CALLER set minQuality themselves. Without this the default
+   * browse's 0.82 floor silently overrides an explicit request — see qFloor.
+   */
+  qualityExplicit?: boolean;
   maxPerBook?: number;
   yearStart?: number | null;
   yearEnd?: number | null;
@@ -73,14 +78,22 @@ export async function mergedGalleryBrowse(
   const {
     tenantId, source, limit, offset,
     imageType = null, minQuality = 0.7, maxPerBook = 3,
-    yearStart = null, yearEnd = null, visitorId = null,
+    yearStart = null, yearEnd = null, visitorId = null, qualityExplicit = false,
   } = opts;
   const tenant = tenantId ? { tenantId } : {};
   const pageIndex = Math.floor(offset / Math.max(1, limit));
   // The natural-aspect masonry shows full pages, so raise the quality floor for
   // the merged browse — blank/low-content plates the old square crop hid now
-  // read as empty tiles. (Explicit type/quality filters still honor the request.)
-  const qFloor = imageType ? minQuality : Math.max(minQuality, 0.82);
+  // read as empty tiles.
+  //
+  // "Explicit type/quality filters still honor the request" was the stated
+  // intent, but only the TYPE half was implemented: an explicit minQuality was
+  // silently overridden by the 0.82 floor, so a caller passing minQuality=0.5
+  // got exactly the same set as one passing nothing, and ~88,000 images stayed
+  // unreachable however they asked. `qualityExplicit` implements the half that
+  // was documented and missing. The floor still applies to the DEFAULT browse,
+  // which is what it was for.
+  const qFloor = (imageType || qualityExplicit) ? minQuality : Math.max(minQuality, 0.82);
   // Artworks must actually have an image, else they render as blank tiles.
   const artHasImage = { $or: [
     { image_display: { $nin: [null, ''] } },
@@ -94,6 +107,9 @@ export async function mergedGalleryBrowse(
   // ---- illustrations ----
   let illusDocs: any[] = [];
   let illusHasMore = false;
+  // Hoisted so the TOTAL below counts the SAME set the items query returns.
+  // See the note at the count site: these used to be two different queries.
+  let illusFilter: Record<string, unknown> | null = null;
   if (illusPerPage > 0) {
     const f: Record<string, unknown> = {
       ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
@@ -107,6 +123,7 @@ export async function mergedGalleryBrowse(
       if (yearEnd !== null) y.$lte = yearEnd;
       f.book_year = y;
     }
+    illusFilter = f;
     const docs = await db.collection('gallery_images')
       .find(f, { projection: { _id: 0 } })
       .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
@@ -179,27 +196,24 @@ export async function mergedGalleryBrowse(
 
   const hasMore = illusHasMore || artHasMore;
 
-  // Real total for the UI count: illustrations (estimated when unfiltered, exact
-  // when type/year-filtered) + artworks. Both guarded with a time cap.
+  // Total counted with the SAME filter that produced the items.
+  //
+  // It used to fall back to estimatedDocumentCount() whenever the browse was
+  // unfiltered — i.e. on the default view, which is exactly what a harvester
+  // walks. That counts the whole gallery_images collection and ignores every
+  // predicate the items query applies: the quality floor, book_visible, the
+  // URL guards, and above all `book_rank <= maxPerBook` (default 3). So the
+  // API advertised ~222,500 while pagination dried up around 36,000, and an
+  // external consumer reported getting "only" ~53K of a promised 200K+.
+  // Same defect as the gallery collection that claimed 200 images and served
+  // none (#4486): a count computed by a different query than the one that
+  // serves the rows. Measured cost of counting honestly: 370–990ms, and the
+  // filtered branch was already paying it.
   let illusTotal = 0;
-  if (illusPerPage > 0) {
-    if (imageType || yearStart !== null || yearEnd !== null) {
-      const cf: Record<string, unknown> = {
-        ...tenant, gallery_quality: { $gte: qFloor }, book_visible: true,
-        extracted_url: { $ne: null }, image_url: { $ne: null },
-      };
-      if (maxPerBook < 100) cf.book_rank = { $lte: maxPerBook };
-      if (imageType) cf.type = imageType;
-      if (yearStart !== null || yearEnd !== null) {
-        const y: Record<string, number> = {};
-        if (yearStart !== null) y.$gte = yearStart;
-        if (yearEnd !== null) y.$lte = yearEnd;
-        cf.book_year = y;
-      }
-      illusTotal = await db.collection('gallery_images').countDocuments(cf, { maxTimeMS: 8000 }).catch(() => 0);
-    } else {
-      illusTotal = await db.collection('gallery_images').estimatedDocumentCount();
-    }
+  if (illusPerPage > 0 && illusFilter) {
+    illusTotal = await db.collection('gallery_images')
+      .countDocuments(illusFilter, { maxTimeMS: 8000 })
+      .catch(() => 0);
   }
   const artTotal = await db.collection('books').countDocuments(af, { maxTimeMS: 8000 }).catch(() => arts.length);
   const total = illusTotal + artTotal;

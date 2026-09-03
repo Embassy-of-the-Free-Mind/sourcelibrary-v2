@@ -399,12 +399,11 @@ export async function enrichBookMetadata(
     changes.push({ field: 'subject_keywords', previous: null, new_value: parsed.subject_keywords });
   }
 
-  // First translation: derive top-level boolean
-  if (parsed.first_translation?.status) {
-    const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
-    updates.is_first_translation = isFirst;
-    changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
-  }
+  // First translation: the public boolean is no longer written from content
+  // enrichment (#3881/#4536) — the sanctioned path to the badge is the reviewed
+  // Translation Card. The content opinion stays in ai_metadata.first_translation.
+  // (This helper's only importer is an _archived route; the live twin in
+  // pipeline-orchestrator.mjs got the same change.)
 
   // Source work dates: save compositional timeline
   if (parsed.source_work_dates && Array.isArray(parsed.source_work_dates.layers)) {
@@ -492,7 +491,24 @@ export async function enrichBookMetadata(
         db, book.title as string, (updates.author || book.author) as string, updates.display_title as string
       );
       if (newSlug !== currentSlug) {
-        await db.collection('books').updateOne({ id: bookId }, { $set: { slug: newSlug } });
+        // A rename here changes a PUBLIC URL, so it owes the same two things
+        // every other slug writer owes (#4389):
+        //
+        //   slug_aliases — the old address keeps resolving and now 308s to the
+        //     new one. Without it the old URL 404s. This writer had been
+        //     skipping it since the leading-hyphen class was added to
+        //     isPlaceholderSlug; it only did not bite because a placeholder URL
+        //     is rarely linked. Widening the rule again (to the "unknown-N"
+        //     family) would have made a silent 404 the common case.
+        //   updated_at — /book/[id] reads the Supabase books_catalog mirror
+        //     BEFORE Atlas, and that mirror syncs on { updated_at: { $gt } }.
+        //     A slug written without the bump is invisible to it, and the page
+        //     keeps serving the OLD slug as canonical until the weekly rebuild.
+        //
+        // A previous slug of '' has no URL to preserve — nothing to alias.
+        const slugUpdate: Record<string, unknown> = { $set: { slug: newSlug, updated_at: new Date() } };
+        if (currentSlug) slugUpdate.$addToSet = { slug_aliases: currentSlug };
+        await db.collection('books').updateOne({ id: bookId }, slugUpdate);
         changes.push({ field: 'slug', previous: currentSlug, new_value: newSlug });
       }
     }

@@ -7,6 +7,43 @@ description: Batch process books through the complete pipeline - generate croppe
 
 Process books through the complete pipeline: Crop → OCR → Translate
 
+## Current-state corrections — read before using any recipe below (verified 2026-08-29)
+
+Three parts of this doc drifted from production; the recipes are kept for reference
+but these corrections win:
+
+1. **`POST /api/jobs/queue-books` requires auth and a different payload.** Send
+   `Authorization: Bearer $CRON_SECRET`, and the body takes singular `bookId` plus an
+   explicit `pageIds` array (`{"bookId": "...", "pageIds": [...], "action": "ocr"}`).
+   The unauthenticated plural-`bookIds` examples below return 401 / missing-fields.
+
+2. **Every jq status recipe below is dead for anonymous callers.** The public
+   `GET /api/books/[id]` no longer includes `pages[].ocr.data` or
+   `pages[].translation.data` (side effect of the per-caller harvest budgets, #4306),
+   so `select((.ocr.data // "") | length > 0)` counts **0 on a fully-OCR'd book**.
+   This produced a false "stalled at 0/592" alarm on 2026-08-28. Count in Mongo instead:
+
+   ```bash
+   set -a; source .env.production.local; set +a
+   node -e "const {MongoClient}=require('mongodb');(async()=>{const c=new MongoClient(process.env.MONGODB_URI);await c.connect();
+   const p=c.db('bookstore').collection('pages');
+   console.log('ocr:',await p.countDocuments({book_id:'BOOK_ID','ocr.data':{\$exists:true,\$ne:''}}),
+   'translated:',await p.countDocuments({book_id:'BOOK_ID','translation.data':{\$exists:true,\$ne:''}}));
+   await c.close()})()"
+   ```
+
+   Positive-control any monitor built on a count: verify it reads nonzero on a
+   known-processed book before trusting its zero.
+
+3. **While the pipeline line is paused (#3826), prefer the local scripts** over the
+   Lambda queue: `scripts/batch/bulk-reocr-local.mjs --new-only --book-id=<id>` for OCR
+   (Gemini Batch API, ~$0.0008/page; caps at 500 pages/run — rerun until clean; collect
+   early with `scripts/batch/collect-batch-results.mjs`) and
+   `scripts/batch/queue-translations.mjs --book-id=<id>` for translation (direct SQS,
+   FIFO prior-page context, tags `initiated_by`). A page whose OCR marks it
+   `<page-type>blank</page-type>` never receives `translation.data` — a book that
+   plateaus at N−1 with only a stamp/blank leaf missing is complete, not stalled.
+
 ## Roadmap Reference
 
 See `.claude/ROADMAP.md` for the translation priority list.

@@ -1,14 +1,17 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import type { Book, Page } from '@/lib/types';
+import type { CdliWitness } from '@/lib/types/book';
+import type { CorpusInfo } from '@/lib/text-provenance';
 import type { ReaderSettings } from './useReaderV2';
-import { PaneEmptyState } from './PaneEmptyState';
+import { PaneEmptyState, GatedPane } from './PaneEmptyState';
 
 // Shared presentational pieces for the v2 reader design previews. All values
 // map to existing Source Library tokens (globals.css) — no new primitives.
@@ -73,6 +76,94 @@ export function AiChip({ short = false }: { short?: boolean }) {
   );
 }
 
+/**
+ * The corpus counterpart of AiChip (#4350): this translation is the corpus
+ * editors' scholarly work — labelling it "AI" (or leaving it unlabelled next
+ * to panes that are) misattributes a human translation to a machine.
+ */
+export function CorpusChip({ corpus }: { corpus: CorpusInfo }) {
+  const t = getReaderStrings(useLocale()).panes;
+  return (
+    <span
+      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em]"
+      style={{ color: 'var(--text-faint)' }}
+      title={t.corpusChipTitle(corpus.name)}
+    >
+      {t.corpusChip(corpus.shortName)}
+    </span>
+  );
+}
+
+/**
+ * Caption bar under a tablet-witness photograph in the scan pane (#4350).
+ * Names the tablet, offers the carousel when the composition survives on
+ * several, and — the part that must never be implied away — says the text
+ * follows the corpus edition rather than this photograph.
+ */
+export function WitnessCaption({ witness, index, total, onPrev, onNext, corpus }: {
+  witness: CdliWitness;
+  index: number;
+  total: number;
+  onPrev: () => void;
+  onNext: () => void;
+  corpus: CorpusInfo | null;
+}) {
+  const t = getReaderStrings(useLocale()).panes;
+  const detail = [witness.designation, witness.museum, witness.period].filter(Boolean).join(' · ');
+  return (
+    <div
+      className="absolute bottom-0 left-0 right-0 px-4 py-2 flex items-center gap-3 border-t"
+      style={{
+        background: 'color-mix(in srgb, var(--bg-warm) 92%, transparent)',
+        borderColor: 'var(--border-light)',
+        backdropFilter: 'blur(3px)',
+      }}
+    >
+      <div className="flex-1 min-w-0">
+        <p className="font-sans text-[11.5px] truncate" style={{ color: 'var(--text-secondary)' }}>
+          {detail}
+          {witness.cdli_url && (
+            <>
+              {' · '}
+              <a href={witness.cdli_url} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+                {t.viewOnCdli}
+              </a>
+            </>
+          )}
+        </p>
+        <p className="font-sans text-[10.5px] mt-0.5" style={{ color: 'var(--text-faint)' }}>
+          {t.witnessNotSource(corpus?.shortName || 'corpus')}
+        </p>
+      </div>
+      {total > 1 && (
+        <div className="flex items-center gap-1 shrink-0">
+          <button
+            type="button"
+            onClick={onPrev}
+            aria-label={t.prevWitness}
+            className="w-7 h-7 flex items-center justify-center border transition-colors hover:bg-[var(--bg-white)]"
+            style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+          >
+            <ChevronLeft size={14} />
+          </button>
+          <span className="font-sans text-[10.5px] tabular-nums px-1" style={{ color: 'var(--text-muted)' }}>
+            {t.witnessCount(index + 1, total)}
+          </span>
+          <button
+            type="button"
+            onClick={onNext}
+            aria-label={t.nextWitness}
+            className="w-7 h-7 flex items-center justify-center border transition-colors hover:bg-[var(--bg-white)]"
+            style={{ borderColor: 'var(--border-medium)', color: 'var(--text-secondary)' }}
+          >
+            <ChevronRight size={14} />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const LINE_WIDTH_CH = { narrow: 55, comfortable: 70, wide: 86 } as const;
 
 /**
@@ -113,6 +204,13 @@ export function ReaderProse({
   const raw = kind === 'ocr' ? (page.ocr?.data || '') : (page.translation?.data || '');
   const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
   const lang = kind === 'ocr' ? book.language : 'English';
+
+  // Metered reader (#4357): the server withheld this page's text (beyond the
+  // free sample, signed-out caller). Must come before the empty check — a
+  // gated page IS empty, but "not transcribed yet" would be a lie.
+  if (page.gated) {
+    return <GatedPane page={page} />;
+  }
 
   // An empty pane is several different situations wearing one sentence: a page
   // nobody has transcribed, a page transcribed but not translated, a blank
@@ -194,6 +292,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
+  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn,
 }: {
   page: Page;
   book: Book;
@@ -206,14 +305,39 @@ export function ScanViewer({
   /** The scroller, exposed so the reader can sync it with the text panes. */
   scrollRef?: React.RefObject<HTMLDivElement | null>;
   onScroll?: () => void;
+  /**
+   * Show this URL instead of the page's own image — a CDLI tablet-witness
+   * photograph standing in for a scan that does not exist (#4350). Already
+   * browser-loadable (an /api/image proxy URL, or a CSP-allowlisted host);
+   * deliberately not routed through resolveScanUrls, which reads page fields
+   * this synthetic image does not have.
+   */
+  srcOverride?: string;
+  /** Higher-resolution companion to srcOverride, swapped in past 1.5× zoom
+   *  and in the fullscreen view — same contract as display vs native. */
+  nativeSrcOverride?: string;
+  /** Alt text to pair with srcOverride — the default alt describes a scan. */
+  altOverride?: string;
+  /** Reports the loaded image's natural dimensions, so a parent can size its
+   *  pane to the page's own shape (the mobile fit-to-width pane needs the
+   *  aspect ratio, which only the loaded image knows). */
+  onNaturalSize?: (size: { w: number; h: number }) => void;
+  /** A zoomed touch-pan that runs PAST the scan's left/right edge and keeps
+   *  going is a page turn (the photo-viewer convention). Without it a zoomed
+   *  reader has no way to the next page short of zooming out first (#4385).
+   *  Judged at finger-lift from the leftover travel, so drifting back before
+   *  release cancels it. */
+  onEdgePageTurn?: (dir: 'next' | 'prev') => void;
 }) {
   const t = getReaderStrings(useLocale()).panes;
-  const { display, native } = resolveScanUrls(page);
+  const resolved = resolveScanUrls(page);
+  const display = srcOverride ?? resolved.display;
+  const native = nativeSrcOverride ?? srcOverride ?? resolved.native;
   const localRef = useRef<HTMLDivElement>(null);
   const containerRef = scrollRef ?? localRef;
   const spacerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-  const dragRef = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
+  const dragRef = useRef<{ x: number; y: number; left: number; top: number; handedY?: number; edgeX?: number } | null>(null);
   const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
   const pointers = useRef<Map<number, { x: number; y: number }>>(new Map());
   const [dragging, setDragging] = useState(false);
@@ -248,6 +372,7 @@ export function ScanViewer({
     const el = imgRef.current;
     if (el?.complete && el.naturalWidth) {
       natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+      onNaturalSize?.(natural.current);
       measure();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -418,8 +543,31 @@ export function ScanViewer({
     const d = dragRef.current;
     const el = containerRef.current;
     if (d && el) {
-      el.scrollLeft = d.left - (e.clientX - d.x);
-      el.scrollTop = d.top - (e.clientY - d.y);
+      const wantLeft = d.left - (e.clientX - d.x);
+      el.scrollLeft = wantLeft;
+      // Travel past the horizontal edge accrues toward a page turn, judged
+      // at finger-lift (onPointerUp). Only the LAST value counts, so easing
+      // back before release cancels the turn.
+      if (e.pointerType === 'touch') d.edgeX = wantLeft - el.scrollLeft;
+      const wantTop = d.top - (e.clientY - d.y);
+      el.scrollTop = wantTop;
+      // A zoomed pan that runs past the scan's top or bottom edge hands the
+      // leftover travel to the mobile column scroller. Without this the scan
+      // (most of a phone screen, touchAction none) traps every vertical drag,
+      // and the translation below is only reachable from the sliver of
+      // non-scan UI (#4385). handedY tracks what was already passed on, so
+      // reversing the finger takes it back before the scan pans again.
+      if (e.pointerType === 'touch') {
+        const leftover = wantTop - el.scrollTop;
+        const delta = leftover - (d.handedY ?? 0);
+        if (delta !== 0) {
+          const outer = el.closest<HTMLElement>('main[data-reader-panels-container]');
+          if (outer) {
+            outer.scrollTop += delta;
+            d.handedY = leftover;
+          }
+        }
+      }
       return;
     }
     // The lens tracks the cursor on a desk and the finger on a phone. Touch
@@ -431,16 +579,32 @@ export function ScanViewer({
   const onPointerUp = (e: React.PointerEvent) => {
     pointers.current.delete(e.pointerId);
     if (pointers.current.size < 2) pinchRef.current = null;
+    const d = dragRef.current;
+    // A zoomed pan that ended a deliberate distance past the left/right edge
+    // is a page turn — the photo-viewer convention, and otherwise a zoomed
+    // reader has no way forward short of zooming out first (#4385).
+    if (d && e.pointerType === 'touch' && onEdgePageTurn && Math.abs(d.edgeX ?? 0) > 80) {
+      onEdgePageTurn((d.edgeX ?? 0) > 0 ? 'next' : 'prev');
+    }
     dragRef.current = null;
     setDragging(false);
     if (e.pointerType !== 'mouse') setLens(null);
   };
 
-  const alt = t.scanAlt(page.page_number, book.display_title || book.title);
+  const alt = altOverride ?? t.scanAlt(page.page_number, book.display_title || book.title);
   if (!display) {
+    // Words, not a bare block: a silent placeholder reads as an image that
+    // failed to load, when the truth is that no image exists (#4350).
     return (
       <div className="h-full w-full flex items-center justify-center">
-        <div className="h-[80%]" style={{ aspectRatio: '0.68', background: 'color-mix(in srgb, var(--bg-warm) 80%, var(--bg-dark))' }} role="img" aria-label={alt} />
+        <div
+          className="h-[80%] flex items-center justify-center px-6 text-center"
+          style={{ aspectRatio: '0.68', background: 'color-mix(in srgb, var(--bg-warm) 80%, var(--bg-dark))' }}
+        >
+          <span className="font-sans text-[12px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
+            {t.noFacsimile}
+          </span>
+        </div>
       </div>
     );
   }
@@ -462,14 +626,31 @@ export function ScanViewer({
         cursor: zoomed ? (dragging ? 'grabbing' : 'grab') : (lensOn ? 'crosshair' : 'default'),
         // Capture touch only while the scan is interactive, so a drag over a
         // fitted page still scrolls the mobile column and swipes pages.
-        touchAction: zoomed || lensOn ? 'none' : 'auto',
-        overscrollBehavior: 'contain',
+        // pan-x pan-y, NOT auto: auto lets the browser claim a two-finger
+        // gesture for NATIVE viewport zoom — it pointercancels our pinch
+        // mid-flight (the scan double-zooms), and afterwards swipes pan the
+        // zoomed viewport instead of reaching the reader at all, which is
+        // "you can't get to the next page after zooming" (#4385). pan-x pan-y
+        // keeps one-finger scrolling native and routes two fingers to us.
+        touchAction: zoomed || lensOn ? 'none' : 'pan-x pan-y',
+        // Only while it can actually be panned. `overflow: hidden` still makes
+        // this a scroll container, so containing the overscroll on a fitted
+        // page swallowed every vertical drag over the scan instead of passing
+        // it up to the mobile column — and the scan is most of a phone screen,
+        // so the page read as unscrollable until you found the text below it.
+        overscrollBehavior: zoomed ? 'contain' : 'auto',
       }}
       onWheel={onWheel}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
+      // The pointer map can wedge: a missed pointerup after a pinch leaves a
+      // stale entry, every later touch then reads as a second pinch finger,
+      // and panning freezes until remount. The touch stream carries the
+      // authoritative remaining-contact list — an empty one clears the map.
+      onTouchEnd={e => { if (e.touches.length === 0) { pointers.current.clear(); pinchRef.current = null; } }}
+      onTouchCancel={e => { if (e.touches.length === 0) { pointers.current.clear(); pinchRef.current = null; } }}
       onPointerLeave={() => { if (!dragRef.current) setLens(null); }}
       onDoubleClick={e => applyZoom(zoomed ? 1 : 2, { x: e.clientX, y: e.clientY })}
     >
@@ -490,6 +671,7 @@ export function ScanViewer({
           onLoad={e => {
             const el = e.currentTarget;
             natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+            onNaturalSize?.(natural.current);
             measure();
           }}
           className={fit ? 'absolute top-0 left-0' : 'max-h-full max-w-full object-contain'}

@@ -2,6 +2,29 @@
 
 **Read this when:** Asserting, badging, or counting "first translation" — or working on `search_efforts` / `reference_translations` / the FT reference set.
 
+> **DEMOLITION 2026-09-01 (#4536):** the book-grain machinery this doc's incidents
+> came from (derive → reconcile valve, both FT crons, Phase 1.6's public-boolean
+> write) is retired and deleted. `books.is_first_translation` is FROZEN except
+> through Translation Card review (`translation-card-method.md`). The evidence
+> layer below (attempts ledger, search_efforts, transcripts) is unchanged and
+> still binding; references to the derive/valve mechanics are history.
+
+> **FIRST, read `.claude/docs/ft-eval-runs-ledger.md`** — one row per measurement
+> ever run on this system, with what it concluded and where the artifact is. A
+> 2026-09-01 session re-derived four things the project already knew (a 13-month-old
+> duplicate issue, a verified re-OCR fix, a pilot that had already converged, and
+> the evidence-store map) because it read the code before reading the record. The
+> first question on FT work is *what has already been tried*, not *what does the
+> code do*. Why this keeps happening: `.claude/docs/ft-organization-assessment.md`.
+>
+> **The evidence layer is 13 stores, and the obvious one is usually the wrong one.**
+> `books.prior_translation` (676 books) is a narrow reader-facing CREDIT field. The
+> actual evidence store is `priors[]` on the attempt ledger — **11,323 books**, 6,608
+> with a named translator, 3,227 with a URL. `books.first_translation.priors` is
+> empty (0); `translation_verification` carries its own 16 sub-keys including
+> `translations` and `search_evidence` on 13,865 books. Measuring one store and
+> reporting it as the total produced a wrong number for Derek on 2026-09-01.
+
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
 ---
@@ -26,7 +49,11 @@ imprints, so the remaining loss sits in modern scholarly publishing that no
 early-modern catalogue can reach. Adding sources of the same kind will not close
 it. So:
 
-- **`none_found` is WEAK evidence.** Never quote a count built on it. Positive findings (a prior *found* and verified) are unaffected — poor recall cannot manufacture a false positive.
+- **`none_found` is WEAK evidence.** Never quote a count built on it. Poor *catalogue* recall cannot manufacture a false positive — but an **LLM verifier can**, and ours did. See the next bullet; the old unqualified form of this line ("positive findings are unaffected") was falsified on 2026-09-01 and must not be relied on.
+- **A `found` from `gemini_verifier` over-claims — by about 20% (#4525, measured 2026-09-01).** Re-running grounded search over a broad, unselected set of verifier-`found` books, grounded search **contradicts it on 19.8%** (833 of 4,215 adjudicated) and confirms the rest.
+  - **A first pass put this at 53% and that number was WRONG.** It came from pairing the two methods on the 5,534 books both had judged — which removes the confound *between* methods and leaves the one *inside* the shared set, because grounded search had only ever run on a ladder queue enriched for contested cases. Selecting on disagreement then measuring disagreement. If you cite an agreement statistic from this system, establish how the shared population was chosen first. Its rows *do* carry queries (95.2%) and sources; they are **recorded, not necessarily executed**, and a written query string looks like retrieval while behaving like recall. It produced ~57K of the ledger's rows, so most of the corpus's prior evidence has this bias baked in.
+  - **Why this is easy to miss: a false `found` produces no visible error — it silently SUPPRESSES a first.** The book simply stops being claimed. So the bias depresses the badge count invisibly, and is the leading explanation for the gap between the sampled corpus estimate (~8,565, round 5) and what we badge (~5,000).
+  - **Never compare two instruments on their own populations.** A method that ran corpus-wide and a method that ran on a curated queue have different base rates *by construction*, and that difference will read as accuracy. Pair them on shared items or measure nothing. Instrument: `scripts/audit/ft-method-agreement.mjs`.
 - **A null means different things in different traditions.** French has 23,035 English translations in the set, Syriac 119, and CJK is reachable only via MARC 880 (present on 2.3% of rows). Read reference-set *depth* beside every verdict; a flat badge cannot be honest across all of them.
 - **Keep "we could not ask" separate from "we asked and found nothing."** Conflating them turns an unasked question into a confident negative — the single most common way this system lies.
 

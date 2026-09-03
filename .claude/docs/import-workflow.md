@@ -70,6 +70,13 @@ Applies to all contributors — human and AI.
 - `src/lib/dedup.ts` — fingerprint + normalize + `checkDuplicate` + `scanForDuplicates`.
 - `scripts/lib/book-docs.mjs` — `makeBookDoc`/`makePageDoc`, the whitelisted doc constructors.
 - `.claude/docs/chinese-iiif-sources.md` — per-source IIIF manifest patterns + gotchas.
+- `.claude/docs/sanskrit-sources.md` — Indic channels; eGangotri/DLI/Wellcome, and why
+  Indian museum portals are usually the wrong door (the same MSS are on IA, CC0).
+- `.claude/docs/islamic-science-sources.md` — Gallica's 14.5K Arabic/Persian/Ottoman
+  manuscripts, which Greek works survive only in Arabic, and the three Gallica traps
+  (403 without a browser UA; `cc…` arks have no manifest; free-text ≠ subject).
+- `scripts/import/gallica-islamic-science-enumerate.mjs` + `gallica-islamic-wave.mjs`
+  — enumerate then import, Greek-transmission first.
 - `.claude/docs/daoist-alchemy-acquisition-list.md` — a worked want→dedupe→get example.
 
 ## Building the insert docs

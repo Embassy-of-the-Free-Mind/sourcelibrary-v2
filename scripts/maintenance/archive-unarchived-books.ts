@@ -17,7 +17,7 @@
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
-import { upgradeToFullRes, rateLimitedFetch } from '../lib/iiif-utils.mjs';
+import { upgradeToFullRes, rateLimitedFetch, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = (() => {
@@ -52,13 +52,20 @@ async function archivePage(db, page) {
 
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
-      let imageBuffer: Buffer;
-      try {
-        imageBuffer = await rateLimitedFetch(fullResUrl);
-      } catch (err) {
-        if (fullResUrl !== originalUrl) imageBuffer = await rateLimitedFetch(originalUrl);
-        else throw err;
-      }
+      // fetchPageMaster adds the tile-stitch route on the seven hosts that answer
+      // `/full/full/` with something smaller and no error, and reports what the
+      // source said was available so it can be recorded (#4406). The retry and
+      // full-res-then-original fallback stay this script's own.
+      const download = async (u: string): Promise<Buffer> => {
+        try {
+          return await rateLimitedFetch(u);
+        } catch (err) {
+          if (u !== originalUrl) return await rateLimitedFetch(originalUrl);
+          throw err;
+        }
+      };
+      const master = await fetchPageMaster(fullResUrl, { download });
+      const imageBuffer: Buffer = master.buffer;
 
       // Preserve native resolution. Only cap at 6000px to avoid pathological tiles.
       // Drops the previous 2000px down-resize that was discarding source detail.
@@ -76,8 +83,17 @@ async function archivePage(db, page) {
         access: 'public',
       });
 
-      // Update page in DB
-      const update = { $set: { archived_photo: blob.url } };
+      // Update page in DB. Record what we stored AND what the source said was
+      // available — the two numbers the MASTER tier compares. Stored dims come
+      // from the processed buffer we just wrote, not the pre-resize one, because
+      // the 6000px cap above means those can differ (#4406).
+      const storedMeta = await sharp(processed).metadata().catch(() => ({} as { width?: number; height?: number }));
+      const update = {
+        $set: {
+          archived_photo: blob.url,
+          ...dimensionFields({ width: storedMeta.width, height: storedMeta.height }, master),
+        } as Record<string, unknown>,
+      };
 
       // Also generate 150px thumbnail
       try {

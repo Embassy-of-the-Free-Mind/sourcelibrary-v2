@@ -216,7 +216,12 @@ async function fetchUpgraded(url) {
     // region tiles. Per-page info.json: dimensions vary page to page.
     const pageInfo = await fetchIiifInfo(url);
     if (pageInfo && shouldTileStitch(pageInfo, url)) {
-      const maxChunk = Math.min(pageInfo.maxWidth || 2000, pageInfo.maxHeight || 2000, 2000);
+      // Do NOT size the stride from the host's ADVERTISED cap. `shouldTileStitch`
+      // only returned true because this host lies about that number; taking the
+      // lie as the tile size is what produced 64%-white masters in July 2026
+      // (#4523). 1024 is the empirically safe stride; fetchIiifNativeRes probes
+      // and shrinks further if even that is capped.
+      const maxChunk = Math.min(pageInfo.maxWidth || 1024, pageInfo.maxHeight || 1024, 1024);
       ({ buffer: raw } = await fetchIiifNativeRes(url, { info: pageInfo, maxChunk, timeout: 60_000 }));
     } else {
       raw = await rateLimitedFetch(upgraded, { timeout: 60_000 });
@@ -316,7 +321,9 @@ async function regenerateVariants(page, masterBuffer) {
   const displayKey = toKey(page.display_photo);
   const thumbKey = toKey(page.image_thumb) || toKey(page.thumbnail_blob);
   if (!displayKey && !thumbKey) return;
-  const { display, thumb } = await generateDisplayVariants(masterBuffer);
+  const { display, thumb } = await generateDisplayVariants(masterBuffer, {
+    bookId: page.book_id, pageNumber: page.page_number,
+  });
   if (displayKey) await r2Put(displayKey, display);
   if (thumbKey) await r2Put(thumbKey, thumb);
 }

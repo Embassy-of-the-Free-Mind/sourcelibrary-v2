@@ -33,6 +33,7 @@ import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -211,19 +212,23 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
   }
 
   const result = await response.json();
-  const text = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const candidate = result.candidates?.[0];
+  // Concatenate ALL text parts. Reading only parts[0] loses the tail whenever the
+  // model splits its answer, and returns '' when parts[0] is a non-text part.
+  const text = (candidate?.content?.parts || []).map(p => p.text || '').join('');
   const usage = result.usageMetadata || {};
   return {
     text,
+    // `finishReason` is the difference between "this page is blank" and "the model
+    // refused to transcribe it". Both used to arrive here as text === '' and both
+    // were then discarded as 'empty', which is how a legible page could vanish with
+    // no record (#4458). RECITATION in particular returns zero content parts.
+    finishReason: candidate?.finishReason || null,
     usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: usage.candidatesTokenCount || 0 },
   };
 }
 
-// --- Extract metadata from OCR text ---
-function extractPageType(text) {
-  const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
-  return match ? match[1].toLowerCase().trim() : null;
-}
+// --- Extract metadata from OCR text: shared via scripts/lib/ocr-result-parse.mjs (#4443) ---
 
 /** Check if this page is a digitizer insert — via OCR tag, body-text, or meta-descriptor fallback. */
 function isDigitizerPage(pageType, ocrText) {
@@ -237,43 +242,64 @@ function isDigitizerPage(pageType, ocrText) {
   return false;
 }
 
-function extractColumns(text) {
-  const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
-  if (!match) return null;
-  const n = parseInt(match[1], 10);
-  return n >= 2 ? n : null;
-}
+// `parseDetectedImages` now comes from scripts/lib/ocr-result-parse.mjs (#4456).
+// The local copy walked `<image>` sub-tags with a `<bounding-box>` child, a shape
+// no OCR prompt here has ever asked for, so it returned [] on every page and the
+// `length > 0` guard below turned that into silence.
 
-function parseDetectedImages(text) {
-  const imageBlocks = text.match(/<detected-images>[\s\S]*?<\/detected-images>/gi);
-  if (!imageBlocks) return [];
-  const images = [];
-  for (const block of imageBlocks) {
-    const imageMatches = block.match(/<image>[\s\S]*?<\/image>/gi);
-    if (!imageMatches) continue;
-    for (const imgBlock of imageMatches) {
-      const desc = imgBlock.match(/<description>([\s\S]*?)<\/description>/i)?.[1]?.trim();
-      const type = imgBlock.match(/<type>([\s\S]*?)<\/type>/i)?.[1]?.trim();
-      const bbox = imgBlock.match(/<bounding-box>([\s\S]*?)<\/bounding-box>/i)?.[1]?.trim();
-      if (desc || type) {
-        const img = { description: desc || '', type: type || 'illustration' };
-        if (bbox) {
-          const coords = bbox.split(',').map(s => parseInt(s.trim(), 10));
-          if (coords.length === 4 && coords.every(c => !isNaN(c))) {
-            img.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
-          }
-        }
-        images.push(img);
-      }
+/**
+ * Record a page the run declined to write, so it is not invisible (#4458).
+ *
+ * A skip used to leave NOTHING behind — no `gemini_usage` row (the success path's
+ * insert sits after the early returns and the catch only covers thrown errors), and
+ * no field on the page. The count in the run summary was the only trace, and
+ * `--no-ocr` re-selects the page on every later run, so the same Gemini call was paid
+ * for and discarded forever. Six of nine such pages turned out to be transient
+ * failures that succeeded on an identical re-run; three were RECITATION refusals on
+ * a legible 1902 contents page.
+ *
+ * The rule this restores: a completeness predicate is satisfied by output OR by an
+ * explicit recorded skip. Never by silence.
+ */
+async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model }) {
+  db.collection('gemini_usage').insertOne({
+    type: 'ocr', mode: 'realtime', model,
+    book_id: page.book_id, page_ids: [page.id],
+    status: 'skipped', skip_reason: reason,
+    finish_reason: finishReason ?? null,
+    chars: chars ?? null,
+    duration_ms: durationMs ?? null,
+    prompt_version: TARGET_PROMPT,
+    endpoint: 'scripts/realtime-ocr.mjs', timestamp: new Date(),
+  }).catch(() => {});
+
+  // A durable marker on the page itself, so the NEXT run can see what happened here
+  // rather than rediscovering it at full price.
+  const set = {
+    'ocr.last_skip': { reason, finish_reason: finishReason ?? null, at: new Date(), model },
+  };
+  // RECITATION is not transient: the model refuses this image, and repeating the
+  // identical call cannot change that. Count it, and let the orchestrator's existing
+  // `ocr.recitation_blocked` gate (pipeline-orchestrator.mjs) exclude the page once
+  // it has refused N=3 times — the same threshold batch-collector.mjs uses.
+  if (finishReason === 'RECITATION') {
+    const count = (page.ocr?.recitation_count ?? 0) + 1;
+    set['ocr.recitation_count'] = count;
+    if (count >= 3) {
+      set['ocr.recitation_blocked'] = true;
+      set['ocr.recitation_blocked_at'] = new Date();
     }
   }
-  return images;
+  await db.collection('pages').updateOne({ id: page.id }, { $set: set }).catch(() => {});
 }
 
 // --- Process one page ---
 async function processPage(page, promptText, db) {
   const imageUrl = getPageImageUrl(page);
-  if (!imageUrl) return { pageId: page.id, status: 'skip', reason: 'no image' };
+  if (!imageUrl) {
+    await recordSkip(db, page, { reason: 'no-image', model: TARGET_MODEL });
+    return { pageId: page.id, status: 'skip', reason: 'no image' };
+  }
 
   const startTime = Date.now();
   const keyInfo = getNextKey();
@@ -284,15 +310,24 @@ async function processPage(page, promptText, db) {
     const durationMs = Date.now() - startTime;
 
     if (!result.text || result.text.length < 5) {
-      return { pageId: page.id, status: 'empty', durationMs };
+      // Three different states used to collapse into 'empty': a genuinely blank leaf,
+      // a refusal (RECITATION / SAFETY), and a truncation that produced no text.
+      const reason =
+        result.finishReason === 'RECITATION' ? 'recitation'
+          : result.finishReason === 'SAFETY' ? 'safety'
+            : result.finishReason === 'MAX_TOKENS' ? 'max-tokens-no-text'
+              : 'empty';
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL });
+      return { pageId: page.id, status: 'skip', reason, finishReason: result.finishReason, durationMs };
     }
 
     // Hallucination guard
     if (result.text.length > 25000) {
+      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL });
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
-    const pageType = extractPageType(result.text);
+    const pageType = extractPageType(result.text, { validate: false });
     const columns = extractColumns(result.text);
     const detectedImages = parseDetectedImages(result.text);
 
@@ -364,6 +399,7 @@ async function processPage(page, promptText, db) {
 // --- Concurrent processor ---
 async function processBatch(pages, promptText, db, runId) {
   let completed = 0, failed = 0, skipped = 0;
+  const skipReasons = {};
   let totalTokens = 0;
   let consecutiveErrors = 0;
   const startTime = Date.now();
@@ -417,6 +453,11 @@ async function processBatch(pages, promptText, db, runId) {
         }
       } else {
         skipped++;
+        // "Skipped: 9" with no breakdown is the same silence one level up — it was
+        // what hid #4458 for a full run. Tally the reasons so the summary can say
+        // which pages were declined and why.
+        const key = result.reason || 'unknown';
+        skipReasons[key] = (skipReasons[key] || 0) + 1;
       }
     }
 
@@ -468,7 +509,7 @@ async function processBatch(pages, promptText, db, runId) {
     console.log(`  Advanced ${booksCompleted} books to ocr_complete`);
   }
 
-  return { completed, failed, skipped, totalTokens, elapsed: Date.now() - startTime, booksUpdated: Object.keys(bookPages).length, booksCompleted };
+  return { completed, failed, skipped, skipReasons, totalTokens, elapsed: Date.now() - startTime, booksUpdated: Object.keys(bookPages).length, booksCompleted };
 }
 
 // --- Main ---
@@ -557,8 +598,23 @@ async function main() {
       ]}
     ];
 
+    // Skip pages the model has permanently refused. pipeline-orchestrator.mjs has
+    // honoured this flag in two places all along; this script set neither and read
+    // neither, so a RECITATION-blocked page was re-selected and re-paid-for on every
+    // run, silently, forever (#4458). `--all` is an explicit human override and is
+    // left alone.
+    if (targetMode !== 'all') {
+      pageFilter['ocr.recitation_blocked'] = { $ne: true };
+    }
+
     const totalEligible = await db.collection('pages').countDocuments(pageFilter);
     console.log(`Eligible pages: ${totalEligible.toLocaleString()}`);
+    if (targetMode !== 'all') {
+      const blocked = await db.collection('pages').countDocuments({
+        ...pageFilter, 'ocr.recitation_blocked': true,
+      });
+      if (blocked > 0) console.log(`  (excluding ${blocked} page(s) the model has permanently refused)`);
+    }
 
     if (totalEligible === 0) {
       console.log('Nothing to process.');
@@ -659,6 +715,13 @@ async function main() {
     console.log(`Completed: ${result.completed}`);
     console.log(`Failed: ${result.failed}`);
     console.log(`Skipped: ${result.skipped}`);
+    // Never print a bare skip count — say what was declined and why (#4458).
+    for (const [reason, n] of Object.entries(result.skipReasons || {}).sort((a, b) => b[1] - a[1])) {
+      console.log(`  ${reason}: ${n}`);
+    }
+    if (result.skipReasons?.recitation) {
+      console.log(`  ↳ recitation refusals are counted on the page; 3 strikes sets ocr.recitation_blocked`);
+    }
     console.log(`Tokens: ${result.totalTokens.toLocaleString()}`);
     console.log(`Books updated: ${result.booksUpdated}`);
     console.log(`Books advanced to ocr_complete: ${result.booksCompleted}`);

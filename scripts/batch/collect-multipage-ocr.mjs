@@ -9,68 +9,27 @@
 import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const DRY_RUN = process.argv.includes('--dry-run');
 
-// Prompt version and helpers inlined to avoid build issues
-const PROMPT_VERSION = 'v4.2026-02';
+/**
+ * Provenance fallback for legacy jobs only — NOT the current prompt version.
+ *
+ * Jobs submitted since early 2026 record their own `prompt_version` (see
+ * `pipeline-orchestrator.mjs`, `bulk-reocr-*.mjs`), and that is what gets
+ * stamped. This value is what a job predating that field was actually run with,
+ * so it must NOT be bumped to `PROMPT_VERSION` from ocr-result-parse.mjs:
+ * restamping an old job with today's prompt version fabricates provenance.
+ * Previously named PROMPT_VERSION, which read as "the current prompt" (#4443).
+ */
+const LEGACY_JOB_PROMPT_VERSION = 'v4.2026-02';
 
-function extractPageType(text) {
-  const match = text.match(/<page-type>([\s\S]*?)<\/page-type>/);
-  return match ? match[1].trim().toLowerCase() : null;
-}
-
-function extractColumns(text) {
-  const match = text.match(/<columns>(\d+)<\/columns>/);
-  if (!match) return null;
-  const n = parseInt(match[1]);
-  return n >= 2 ? n : null;
-}
-
-function parseMultiPageOcr(text) {
-  const results = new Map();
-  const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    const pageId = match[1];
-    let content = match[2].trim();
-    // Remove closing </page> tag if present
-    content = content.replace(/<\/page>\s*$/, '').trim();
-    if (content) results.set(pageId, content);
-  }
-  return results;
-}
-
-function parseDetectedImages(text) {
-  const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
-  if (!match) return [];
-  const imagesText = match[1].trim();
-  const images = [];
-  const imgRegex = /<image>([\s\S]*?)<\/image>/g;
-  let imgMatch;
-  while ((imgMatch = imgRegex.exec(imagesText)) !== null) {
-    const imgContent = imgMatch[1];
-    const getTag = (tag) => {
-      const m = imgContent.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
-      return m ? m[1].trim() : null;
-    };
-    const bbox = getTag('bbox');
-    const image = {
-      type: getTag('type') || 'illustration',
-      description: getTag('description') || '',
-      subject: getTag('subject')?.split(',').map(s => s.trim()).filter(Boolean) || [],
-    };
-    if (bbox) {
-      const coords = bbox.split(',').map(Number);
-      if (coords.length === 4) {
-        image.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
-      }
-    }
-    images.push(image);
-  }
-  return images;
-}
+// `parseDetectedImages` now comes from scripts/lib/ocr-result-parse.mjs (#4456).
+// The local copy walked `<image>` sub-tags, a shape no OCR prompt here has ever
+// asked for, so it returned [] on every page and the `length > 0` guard below
+// turned that into silence.
 
 async function main() {
   const uri = process.env.MONGODB_URI;
@@ -160,7 +119,7 @@ async function main() {
         if (r.error) { console.log(`  Response error: ${JSON.stringify(r.error).slice(0, 100)}`); continue; }
         const text = r.response?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) { console.log('  Empty response'); continue; }
-        const parsed = parseMultiPageOcr(text);
+        const parsed = parseMultiPageOcr(text, { lenient: true });
         pageCount += parsed.size;
         console.log(`  Response: ${parsed.size} pages parsed from ${text.length} chars`);
       }
@@ -189,7 +148,7 @@ async function main() {
         continue;
       }
       const usage = result.response?.usageMetadata;
-      const parsed = parseMultiPageOcr(text);
+      const parsed = parseMultiPageOcr(text, { lenient: true });
       console.log(`  Response ${ri}: ${parsed.size} pages`);
 
       for (const [pageId, ocrText] of parsed) {
@@ -199,7 +158,7 @@ async function main() {
           continue;
         }
 
-        const pageType = extractPageType(ocrText);
+        const pageType = extractPageType(ocrText, { validate: false });
         const columns = extractColumns(ocrText);
         const detectedImages = parseDetectedImages(ocrText);
 
@@ -221,7 +180,7 @@ async function main() {
               'ocr.model': job.model,
               'ocr.language': job.language,
               'ocr.source': 'batch_api',
-              'ocr.prompt_version': job.prompt_version || PROMPT_VERSION,
+              'ocr.prompt_version': job.prompt_version || LEGACY_JOB_PROMPT_VERSION,
               'ocr.prompt_name': job.prompt_name || 'Standard OCR',
               'ocr.batch_job_id': String(job._id),
               'ocr.pages_per_request': job.pages_per_request,

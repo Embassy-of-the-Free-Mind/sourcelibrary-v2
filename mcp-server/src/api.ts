@@ -540,6 +540,29 @@ export async function getQuote(args: {
   const tips = [ocrOriginal ? OCR_ORIGINAL_TIP : QUOTE_TIP];
   if (romanized) tips.push(ROMANIZED_TIP);
 
+  // Copy clause (#4360): the scan shows one library's physical copy. Appended
+  // only when the API named a genuine holder, so the tip never invites the
+  // model to invent one. The in-app server (src/app/api/mcp/route.ts) carries
+  // the same logic — fixes do not propagate between the two copies.
+  const copy = (result.citation as Record<string, unknown> | undefined)?.copy as
+    | { statement?: string }
+    | undefined;
+  if (copy?.statement) {
+    tips.push(
+      `The scanned images reproduce one physical copy: "${copy.statement}". ` +
+        "When citing copy-specific evidence (marginalia, provenance marks, hand-coloring), include that clause in the citation.",
+    );
+  }
+
+  // Marginalia (#4362): quote.marginalia_note carries the full guidance; the
+  // tip makes sure it is read rather than passed over.
+  if (quote?.contains_marginalia === true) {
+    tips.push(
+      "This page carries MARGINAL text (<margin>…</margin>). A marginal note exists only in this " +
+        "physical copy — when quoting from one, say 'marginal annotation' and follow quote.marginalia_note.",
+    );
+  }
+
   return {
     ...withCitationLink(result),
     tip: tips.join("\n\n"),

@@ -7,6 +7,7 @@ import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
@@ -47,6 +48,7 @@ import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { AISection } from '@/components/embed/AISection';
 import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
+import { filterPublishedEntityTerms } from '@/lib/entity-publish';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { BookShare } from '@/components/ui/ShareButton';
@@ -214,6 +216,17 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
     'index.keyTerms': 0,
   }, tenantId);
   if (scoped) return scoped.book as unknown as Book;
+
+  // A book the tenant's own catalogue links (external-scan edition of a held
+  // work) renders in the reading room even without a tenantId assignment —
+  // mirror of the same admission in getBook(). See src/lib/tenant-catalog-books.ts.
+  if (tenantSlug && tenantSlug !== 'default') {
+    const unscopedId = ((result.book as Record<string, unknown>).id
+      || (result.book as { _id?: { toString(): string } })._id?.toString()) as string;
+    if (await tenantCatalogReferencesBook(tenantSlug, unscopedId)) {
+      return result.book as unknown as Book;
+    }
+  }
 
   // Default tenant is the global namespace. Legacy + corpus-source books
   // (ETCSL, CDLI, etc.) have no `tenantId`/`tenant_id` field at all; the
@@ -530,12 +543,25 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       'index.concepts': 0,
       'index.keyTerms': 0,
     }, tenantId);
-    if (!scoped) return null;
-    effectiveResult = {
-      book: scoped.book as Record<string, unknown>,
-      matchedBySlug: scoped.matchedBySlug,
-      fromCatalog: false,
-    };
+    if (scoped) {
+      effectiveResult = {
+        book: scoped.book as Record<string, unknown>,
+        matchedBySlug: scoped.matchedBySlug,
+        fromCatalog: false,
+      };
+    } else {
+      // Not assigned to this tenant — but the tenant's own catalogue may link
+      // it as an external-scan edition of a work they hold (sl_external_book_id
+      // on bph_works / library_catalog_records). The catalogue row is the
+      // authorization; without it this stays a hard miss (tenant lockdown).
+      const unscopedId = (result.book.id || result.book._id?.toString()) as string;
+      const referenced = tenantSlug
+        ? await tenantCatalogReferencesBook(tenantSlug, unscopedId)
+        : false;
+      if (!referenced) return null;
+      // Fall through with the unscoped lookup result; the hidden-book gate
+      // downstream still applies to it unchanged.
+    }
   }
 
   const { book: quickBook, matchedBySlug, fromCatalog } = effectiveResult;
@@ -970,7 +996,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const hasSummary = !!summaryText;
   const showProposedBanner = previewProposed && !!candidate?.brief;
   const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
-  const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+  // Prose links go only to published-tier entity pages (#4321) — linking every
+  // index term is how one-book vocabulary like "Axis" earned sitewide links.
+  // On lookup failure, degrade to unlinked prose rather than linking unvetted.
+  const summaryEntities = await (async () => {
+    const all = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+    if (all.length === 0) return all;
+    try {
+      const entityDb = await getReadDb();
+      const published = await filterPublishedEntityTerms(entityDb, all.map(e => e.term));
+      return all.filter(e => published.has(e.term));
+    } catch {
+      return [];
+    }
+  })();
 
   // ============================================================================
   // Book page v2 layout (non-embed only). Tenant/embed reading rooms keep the
@@ -1577,7 +1616,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               )}
               <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
-                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
@@ -1621,8 +1660,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
-                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
-                    <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
+                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
+                    <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
                     </Link>
                   ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
@@ -1733,7 +1772,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
                   <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
@@ -1789,12 +1828,22 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
             {(() => {
               const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+              // Corpus editions (#4350): the page cards have no images of
+              // their own, so CDLI witness-tablet photos stand in — cycled
+              // across the grid, and named for what they are in the subtitle.
+              const witnessFallbacks = !hasScans
+                ? (book.cdli_witnesses || [])
+                  .filter(w => w.has_photo && (w.thumbnail_url || w.photo_url))
+                  .map(w => ({ src: (w.thumbnail_url || w.photo_url) as string, alt: `Tablet ${w.designation}` }))
+                : [];
               const pagesSubtitle = !hasScans
-                ? (digitizer ? t.textEditionBy(digitizer) : t.textEdition)
+                ? (witnessFallbacks.length > 0
+                  ? t.textEditionWitnesses(witnessFallbacks.length)
+                  : digitizer ? t.textEditionBy(digitizer) : t.textEdition)
                 : digitizer
                   ? t.pagesDigitizedBy(digitizer)
                   : t.pagesInReadingOrder;
-              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} />;
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} fallbackImages={witnessFallbacks.length > 0 ? witnessFallbacks : undefined} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
                 return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
@@ -1904,8 +1953,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 return (
                   <p className="text-base sm:text-lg text-stone-300 mb-1">
                     {heroByline.role === 'author' ? (
-                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
-                        <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
+                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
+                        <Link href={authorUrl(book.author, book.author_id)!} className="hover:text-white transition-colors">
                           <AuthorName author={book.author} />
                         </Link>
                       ) : <AuthorName author={book.author} />
@@ -2159,6 +2208,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       ustcId={book.ustc_id}
                       language={book.language}
                       doi={book.doi}
+                      holdingLibrary={book.image_source?.contributing_library}
+                      shelfmark={book.image_source?.shelfmark}
                       editionVersion={currentEdition?.version}
                       tenantSlug={tenantSlug || undefined}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
@@ -2556,6 +2607,35 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     // authority to /artwork rather than keep indexing both. redirect() defaults to
     // a temporary 307, which consolidates nothing — the whole point of the change.
     if (artSlug) permanentRedirect(`/artwork/${artSlug}`);
+
+    // A slug that was RENAMED keeps working through `slug_aliases`
+    // (findBookByIdOrSlug resolves them on its miss path), but until now it kept
+    // working at the OLD address: the proxy only sends a /book/<segment> to the
+    // book-slug resolver when `looksLikeBookId(segment)` is true, and that is
+    // false for every slug-shaped segment — which is every alias a slug repair
+    // creates. So the ~276 books renamed by earlier sweeps, and the 112 renamed
+    // by #4389, each had two live URLs emitting self-referential canonicals.
+    // Confirmed against production before the change: /book/1-10, a real alias
+    // on a real book, returned 200 rather than a redirect.
+    // The redirect belongs here rather than in the proxy because deciding it
+    // needs the resolved book, and the proxy would have to pay a DB lookup on
+    // every book page view to learn what one string compare answers here.
+    //
+    // 308, for the same reason as the artwork case above: this is a permanent
+    // canonicalisation and search engines must move authority to the new URL.
+    // Costs one string comparison on the canonical path, where it is false.
+    // Localized twins are handled by their own branch above (307/308 there).
+    //
+    // The shape guard is a loop guard: a slug carrying a character that the
+    // router re-encodes would never compare equal to the incoming segment, so
+    // the redirect would fire again on its own target. Only redirect TO a
+    // segment that survives a round trip unchanged.
+    if (lang === 'en') {
+      const canonicalSlug = (earlyBook as { slug?: string }).slug;
+      if (canonicalSlug && id !== canonicalSlug && /^[a-z0-9][a-z0-9._~-]*$/i.test(canonicalSlug)) {
+        permanentRedirect(`/book/${canonicalSlug}`);
+      }
+    }
   }
 
   return (

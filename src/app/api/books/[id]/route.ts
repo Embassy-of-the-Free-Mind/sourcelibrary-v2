@@ -9,9 +9,13 @@ import { withApiAuth } from '@/lib/api-auth';
 import { EDITION_COUNTER_PROJECTION } from '@/lib/page-translations';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
+import { toPublicPageImages } from '@/lib/public-image-fields';
+import { getPartnerByProvider } from '@/lib/library-partners';
 
 export const preferredRegion = 'fra1';
 
@@ -38,7 +42,14 @@ export const GET = withApiAuth(async (
     // categories, year) — without these, MCP returns a book card with
     // null pages and no summary.
     const bookProjection = pagesMode === 'nav' ? {
-      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+      // `visible` feeds the hidden-book gate below — without it a hidden book
+      // in nav mode reads as public (isHiddenBook tests visible === false).
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
+      // Whether `display_title` is the source record's title or a label a
+      // vision model wrote from the image (#4288). Artwork records live in
+      // `books` too, and MCP's get_book returned `display_title || title` with
+      // no way for a client to tell a catalogued title from an AI caption.
+      'field_provenance.display_title': 1, content_type: 1, resource_type: 1,
       published: 1, year: 1, language: 1, doi: 1,
       // The edition-vs-work language distinction (#3942). `language` is the
       // MANIFESTATION language — what is printed on these leaves — while
@@ -72,6 +83,15 @@ export const GET = withApiAuth(async (
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
     const book = result.book;
+
+    // Hidden books present their CATALOG CARD to unauthorized callers —
+    // bibliographic metadata is public policy (#4240 follow-up, 2026-08-27),
+    // content is not: no pages array, no page-image URLs (the public bucket
+    // would make that content access in one hop). Editors and CRON_SECRET
+    // callers fall through to the full record + pages as before.
+    if (!(await isBookReadable(book, request))) {
+      return NextResponse.json({ ...hiddenBookMetadataCard(book), pages: [] });
+    }
 
     // Page projections:
     // - full: all fields (for admin/processing views)
@@ -129,7 +149,33 @@ export const GET = withApiAuth(async (
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }
 
-    return NextResponse.json({ ...book, pages }, {
+    // Public responses serve OUR images only. The page docs also carry the
+    // originating institution's URLs (74% of `photo` values point off our
+    // infrastructure), and handing those to a paginating consumer turns our
+    // API into a fan-out attack on twenty partner libraries. We hold a
+    // full-resolution copy of every page, so nothing is lost — see
+    // src/lib/public-image-fields.ts for the measurements.
+    // Provenance survives as ATTRIBUTION on the book below, not as a per-page
+    // image endpoint.
+    const publicPages = pages.map(p => toPublicPageImages(p as Record<string, unknown>));
+
+    const sourceProvider = (book as any).image_source?.provider as string | undefined;
+    const attribution = sourceProvider ? {
+      provider: sourceProvider,
+      name: getPartnerByProvider(sourceProvider)?.name || sourceProvider,
+      url: getPartnerByProvider(sourceProvider)?.url || null,
+      /** Where the scanned object lives at the holding institution, when known. */
+      item_url: (book as any).source_url || (book as any).ia_identifier
+        ? (book as any).source_url || `https://archive.org/details/${(book as any).ia_identifier}`
+        : null,
+      note: 'Digitized by this institution. Page images are served from Source Library\'s own CDN; please do not bulk-fetch the source.',
+    } : undefined;
+
+    return NextResponse.json({
+      ...book,
+      ...(attribution ? { attribution } : {}),
+      pages: publicPages,
+    }, {
       headers: { 'Cache-Control': cacheControl }
     });
   } catch (error) {
@@ -157,35 +203,29 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
 
     const bookId = book.id || book._id.toString();
 
-    // SOFT DELETE by default - archive to deleted_books collection
+    // SOFT DELETE by default - archive to deleted_books collection.
+    // Goes through deleteBookArchived() so the archive row is read back before
+    // anything is removed — `deleted_books` IS the recovery path (#4450).
     if (!confirmPermanent) {
-      // Get all pages for archival
-      const pages = await db.collection('pages').find({ book_id: bookId }).maxTimeMS(30000).toArray();
-
-      // Archive book with its pages
-      await db.collection('deleted_books').insertOne({
-        ...book,
-        pages,
-        deleted_at: new Date(),
-        original_id: book._id
-      });
-
-      // Remove from active collections
-      await db.collection('pages').deleteMany({ book_id: bookId });
-      await db.collection('books').deleteOne({ _id: book._id });
+      const deleted = await deleteBookArchived(
+        db,
+        book,
+        `admin delete via DELETE /api/books/${id} (${session?.user?.email ?? 'unknown'})`
+      );
+      const pagesArchived = deleted?.pagesArchived ?? 0;
 
       // Audit log (non-blocking)
       logAuditEvent({
         action: 'book_deleted',
         book_id: bookId,
         book_title: book.title,
-        pages_affected: pages.length,
+        pages_affected: pagesArchived,
         metadata: { recoverable: true },
       });
 
       return NextResponse.json({
         success: true,
-        message: `Archived "${book.title}" with ${pages.length} pages`,
+        message: `Archived "${book.title}" with ${pagesArchived} pages`,
         bookId,
         recoverable: true,
         hint: 'POST /api/books/restore/{id} to recover'
@@ -229,21 +269,26 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
       });
     }
 
-    // Book is not archived - permanent delete from active (should be rare)
-    const pagesResult = await db.collection('pages').deleteMany({ book_id: bookId });
-    await db.collection('books').deleteOne({ _id: book._id });
+    // Book is not archived - permanent delete from active (should be rare).
+    // Named `purgeBookUnarchived` so this deliberate, unrecoverable path can
+    // never be mistaken for an ordinary deleteOne when read or grepped (#4450).
+    const purged = await purgeBookUnarchived(
+      db,
+      book,
+      `operator purge via DELETE /api/books/${id}?confirm=PERMANENTLY_DELETE (${session?.user?.email ?? 'unknown'})`
+    );
 
     logAuditEvent({
       action: 'book_deleted_permanent',
       book_id: bookId,
       book_title: book.title,
-      pages_affected: pagesResult.deletedCount,
+      pages_affected: purged?.pagesDeleted ?? 0,
       metadata: { recoverable: false, source: 'active' },
     });
 
     return NextResponse.json({
       success: true,
-      message: `PERMANENTLY deleted "${book.title}" and ${pagesResult.deletedCount} pages`,
+      message: `PERMANENTLY deleted "${book.title}" and ${purged?.pagesDeleted ?? 0} pages`,
       bookId,
       recoverable: false,
       warning: 'This action cannot be undone'

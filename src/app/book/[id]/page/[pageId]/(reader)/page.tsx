@@ -12,6 +12,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { markPageForReader } from '@/lib/provenance';
+import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle } from '@/lib/localized';
@@ -75,6 +76,15 @@ const BOOK_NAV_PROJECTION = {
   pages_translated_es: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
+  // The copy clause of the citation panel (#4360): which library's physical
+  // copy the scan shows, and its shelfmark there. Sub-paths only — the full
+  // image_source carries license/attribution baggage the reader doesn't use.
+  // The top-level twins are legacy sprawl 3,860 live books still rely on
+  // (consolidation: #4361); resolveHoldingCopy reads both.
+  'image_source.contributing_library': 1, 'image_source.shelfmark': 1,
+  contributing_library: 1, shelfmark: 1,
+  // Metered reader (#4357): isPageFree() needs the book's page total.
+  pages_count: 1,
 };
 
 export default async function PageEditorPage({ params, allowHidden = false, lang = 'en' }: PageProps & { allowHidden?: boolean; lang?: Locale }) {
@@ -145,11 +155,28 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   // zero-width characters so search snippet matching is untouched.
   const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org${localePath(`/book/${bookPath}/page/${pageId}`, lang)}`);
 
+  // Metered reader (#4357): beyond the free sample, the ISR HTML carries the
+  // page WITHOUT its text — for everyone, which is what keeps it statically
+  // cacheable (an ISR render can't see who's asking). Signed-in readers get
+  // the full text refetched client-side (useReaderV2's gated-page effect);
+  // anonymous readers see the scan with a sign-in pane. seo_indexable pages
+  // are always free, so every Google-indexed reader URL keeps its full text
+  // and its `isAccessibleForFree: true` JSON-LD stays honest. Editor preview
+  // (allowHidden) and tenant/embed reading rooms are exempt. No-op unless
+  // METERED_READER=1.
+  const metered = meteredReaderEnabled()
+    && !allowHidden
+    && !(ctx?.id || ctx?.isEmbedded)
+    && !isPageFree(serializedPage as unknown as { page_number?: number | null; seo_indexable?: boolean }, (book as unknown as { pages_count?: number }).pages_count);
+  const servedPage = metered
+    ? (stripGatedPage(serializedPage as unknown as Record<string, unknown>, (book as unknown as { pages_count?: number }).pages_count || 0) as unknown as Page)
+    : serializedPage;
+
   // The flight payload the reader (and anything scraping this URL) receives
   // carries the invisible provenance imprimatur in the translation. It is
   // deterministic — content-keyed, no per-request input — so this page stays
   // safely ISR/CDN-cacheable. The editor save path strips it before storing.
-  const markedPage = markPageForReader(serializedPage, scopedBookId);
+  const markedPage = markPageForReader(servedPage, scopedBookId);
 
   return (
     <>

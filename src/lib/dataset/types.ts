@@ -18,11 +18,14 @@ export interface DatasetTierConfig {
 export const DATASET_TIERS: Record<DatasetTier, DatasetTierConfig> = {
   explorer: {
     name: 'Explorer',
-    description: 'Sample the dataset — 100 pages/day, any language',
+    description: 'Free keyed tier — 2,000 pages/day, any language',
     monthlyPrice: 0,
     annualPrice: 0,
-    pagesPerDay: 100,
-    requestsPerMinute: 10,
+    // A key must be an UPGRADE over staying anonymous (#4366): anon gets 500
+    // pages/day and a signed-in session 1,000, so the free key sits above both.
+    // The old 100/10 made getting a key a downgrade — exactly backwards.
+    pagesPerDay: 2000,
+    requestsPerMinute: 60,
     scope: 'sample',
   },
   language: {
@@ -73,6 +76,11 @@ export interface ApiKeyDoc {
   permissions: {
     languages: string[] | '*';
     clusters: string[] | '*';
+    /** Serve images without VISIBLE provenance marks (?clean=1 on the image
+     *  proxy). Implied by full-scope tiers; admin-grantable on any key.
+     *  Invisible marks (EXIF, keyed watermark) stay regardless — see
+     *  src/lib/image-marks.ts. */
+    clean_images?: boolean;
   };
   rate_limit: {
     requests_per_minute: number;
@@ -94,6 +102,7 @@ export interface DatasetAccessLog {
   records_returned: number;
   book_ids: string[];
   format: 'jsonl' | 'json';
+  /** Anonymized (last octet zeroed) by logAccess before storage — never a full IP. */
   ip_address: string;
 }
 

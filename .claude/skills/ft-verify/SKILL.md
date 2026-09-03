@@ -60,7 +60,7 @@ A set of flips, each with: `book_id`, `work` (title), `author`, `lang`, and a **
 | Sink | Store | Written by |
 |---|---|---|
 | A — evidence | `first_translation_attempts` (append-only) | `ingest-ft-verify-results.mjs` (step 3) |
-| B — verdict | `book.first_translation` | `derive-ft-verdict-from-attempts.ts` (never this skill) |
+| B — verdict | `book.first_translation` | RETIRED #4536 — verdict derivation deleted; badge changes go through the Translation Card review (never this skill) |
 | C — registry | `translation_catalogs` (the flywheel of verified positives) | `ingest-ft-verify-results.mjs` (step 3) |
 
 ### Survivor rules

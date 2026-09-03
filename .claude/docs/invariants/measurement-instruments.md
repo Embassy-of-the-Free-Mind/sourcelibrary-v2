@@ -320,11 +320,171 @@ reads all three:
   it. Any time a read rule widens, the detectors watching it are writers too:
   re-run each and confirm its SCOPE moved.
 
+- **A COUNTER cannot tell a dead source from a dead service — keep the reason.**
+  A batch loop that tallies failures without recording *why* produces the least
+  actionable output there is: `0 embedded, 60 failed`, repeated. On 2026-08-21
+  that line cost an hour of eliminating the CLIP server (healthy: 222ms for one
+  image, 978ms for a batch of ten), the batch size, and the Postgres write —
+  before the real cause surfaced, which was that **1,596 gallery rows carry a
+  dead `extracted_url`** and every fetch 404'd (#4185). The reason had been
+  available the entire time: the server returns
+  `result.error = "fetch 404 for <url>"`, and the failure branch was a bare
+  `failed++` that discarded it. The asymmetry is what makes this expensive — the
+  SERVICE is the first thing anyone suspects and the least often at fault, so a
+  bare counter points every reader at the wrong layer first. Keep a **bounded**
+  sample of `{id, input, reason}` (cap it, so a run where everything fails does
+  not become its own problem), and when `succeeded === 0 && failed > 0` say so
+  explicitly and name the source as the place to look. Same family as "absence
+  is not failure — no silent skips" (#3740): here the skip was counted but
+  unexplained, which reads as a working instrument reporting a broken world.
+
+- **A finding must be ACTIONABLE, or the dedupe that protects your inbox becomes
+  a mute button.** `book-slug-placeholders` fired on every placeholder book slug,
+  and `corpus-integrity-watch.yml` files **one open issue at a time** — correct on
+  its own, since a deterministic finding filed daily buries the first report under
+  30 copies. But after the #4521 repair, 38 of the 39 remaining bad URLs were
+  waiting on an English `display_title` (#4390), not on slug logic: nothing the
+  repair sweep can touch, ever. So the issue stays open forever, and the *next*
+  importer that bypasses `generateBookSlug` — the regression the detector exists
+  for — files **nothing**. The alarm was masked by its own backlog. Worse, the
+  issue body said "Repair with `repair-book-slugs.ts`", which was now false for
+  every row in it: the next reader runs the sweep, gets 0 renames, and re-derives
+  the whole triage. **Split "broken" from "fixable" and fire only on fixable**
+  (#4530): `classifySlugRepair` in `src/lib/book-slug-repair.ts` returns
+  `repairable` vs a named blocker, the repairable count drives the exit code, and
+  the blocked tail is *reported with its reason and its owning issue* so it reads
+  as a known backlog rather than N mysterious rows. **Put the triage in ONE module
+  the detector and its repair tool both import** — a detector that disagrees with
+  its own sweep reports work that cannot be done, which is the failure itself.
+  **Tell:** a standing detector whose count never reaches zero, or an auto-filed
+  issue whose remedy you have already run.
+
 **Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
 an *error message* rather than a *measurement*. Read the body before believing the
 title — and when a watchdog has filed the same title on a regular cadence with no
-one acting on it, suspect the watchdog before the corpus.
+one acting on it, suspect the watchdog before the corpus. Conversely, a watchdog
+that filed **once** and has been quiet since may be muzzled by its own open issue
+rather than satisfied: check whether its finding is still actionable.
 
 Related: the same self-referential shape as the error reporter that reported its
 own failures (#4045/#4047), and the inverse of "absence is not failure — no silent
 skips" (#3740): here the failure was not silent, it was *disguised as a finding*.
+
+## The absence of a marker is not the absence of the mechanism
+
+A cost-and-analytics audit on 2026-08-05/07 produced **six retractions, every one the same shape**: a
+missing thing was read as a missing behaviour, when the behaviour lived somewhere unlooked-at — often
+outside this repo entirely.
+
+- No Cloudflare receipt email ⇒ "billed to another mailbox." Cloudflare *states* it sends none;
+  invoices are dashboard-only, as are Supabase's and Atlas's.
+- No `skewProtection` in `next.config.ts`/`vercel.json` ⇒ "the feature is off." It is a **Vercel
+  project setting**, was on, and the real defect was that its window was *shorter than the CDN TTL*.
+- No `traffic_class` field on `analytics_pageviews` rows ⇒ "unclassified." The route classifies and
+  **drops** non-human before the insert, so every stored row is human by filtering — this one nearly
+  merged a wrong "correction" to a doc that was right.
+- An unfamiliar model id read as a third model ⇒ lite usage under-counted **40×**
+  (`gemini-3.1-flash-lite-preview` is an alias; the orchestrator says so in a comment).
+
+**Before concluding from a shape in the data, find the code path or the vendor's own page.** One
+known-absent item looked up in the authoritative source beats any amount of reasoning about
+aggregates. Corollary: everything *measured* in that audit held up; everything *inferred* from
+absence did not.
+
+## A detector tuned by one programme is an actuator against another
+
+Two programmes in this repo pointed at the same R2 objects with opposite
+intentions, and neither could see the other (#4406).
+
+- **#2651** regenerates each page's `display_photo` from the master at
+  `min(2000, native)` so the keyed provenance watermark survives recompression.
+- **#3005 Pass 1** flags a `display_photo` that is **≥90% of its master** as
+  "never downsized" and regenerates it to 1200px.
+
+A baked variant measures **100–122%** of its master. So every provenance-marked
+page is, by #3005's definition, textbook bloat — and `regen-display-bloat.mjs`
+would have force-overwritten each one with an unmarked 1200px variant it cannot
+re-sign (it has no key and no edition id at that point). The detector was
+correct on the day it was written; a *different* programme then changed the
+population underneath it, and a threshold that used to mean "nobody downsized
+this" came to mean "somebody marked this."
+
+**The rule: a threshold encodes an assumption about who else writes to the
+population.** Before running any sweep that overwrites or deletes on a measured
+property, ask *what else writes here, and would its output look like my
+detector's positive class?* Then make the guard explicit and **counted** — the
+executor now HEADs the display key, skips objects carrying `provenance`
+metadata, reports them as `marked=N`, and requires `--force-unmark`. A silent
+skip would have been the same failure in the other direction.
+
+Corollary, and the reason this pairs with the section above: the collision is
+invisible from either issue thread. Neither #2651 nor #3005 mentions the other,
+and both are individually well-reasoned. **Shared mutable state is discovered by
+reading the writers, not the plans** — same lesson as the two sessions that both
+wrote `locus_anchors`, one object store instead of one collection.
+
+## The CDN's own machinery writes rows into the traffic it measures (fake Early Hints 504s)
+
+On 2026-08-31 Cloudflare zone analytics showed **1.49M "504 Gateway Timeout" rows in 24h** — 10% of
+all edge traffic, apparently doubling week-over-week. It read as a worsening origin outage. It was
+nothing: with the zone's **Early Hints** feature ON (Speed → Optimization), Cloudflare's Early Hints
+machinery logs synthetic request rows stamped `userAgent: "nginx-ssl early hints"` (also
+`"bastion early hints"`), `edgeResponseStatus: 504`, `originResponseStatus: 0`. They shadow real
+visits roughly 1:1 on hot paths, so they *scale with success*.
+
+How it was proven harmless — the checks to repeat before believing an edge error rate:
+
+- **Latency is the lie detector.** avg `edgeTimeToFirstByteMs` on the "504s" was **4.2ms**. A real
+  gateway timeout spends tens of seconds waiting. A 4ms 504 never contacted anything.
+- **The ASN mix was the reader audience** (Comcast, Verizon, Charter, T-Mobile, Facebook's link
+  scraper) — not a fleet. Rows that shadow real traffic distribute like real traffic.
+- **The origin answered when actually asked**: 9.5M genuine 200s/day at 180ms avg TTFB, and curl of
+  the top "failing" paths returned 200 in 120–430ms.
+
+**Rule: any error-rate query over Cloudflare zone analytics must exclude `userAgent` containing
+"early hints" before quoting a 5xx number.** Same family as the PostHog bot-fleet inflation above —
+the instrument records things that are not visits, silently, in the direction that invites a
+confident wrong conclusion (here: "production is failing").
+
+Practical notes: none of the repo's static CF tokens (`CF_API_TOKEN`, `CF_ANALYTICS_TOKEN`,
+`CLOUDFLARE_API_TOKEN`) carries zone `analytics.read` — but the Cloudflare plugin MCP
+(`mcp__plugin_cloudflare_cloudflare-api__execute`) can POST GraphQL to `/graphql` under its own
+OAuth and read everything. Zone analytics retain only ~7 days (a range older than 1w1d is rejected),
+so anything worth keeping must be quoted out the week it happens.
+
+## A third-party search endpoint can ignore your query and still return 200
+
+On 2026-08-21, IA's `services/search/v1/scrape` **silently ignored `q`
+entirely**: `mediatype:texts`, `petrarca` and `collection:europeanlibraries` all
+returned the identical unfiltered first page (items beginning `0-...`). Every
+call was HTTP 200 with well-formed JSON. The same endpoint had answered
+`identifier:ita-bnc-ald-*` correctly an hour earlier, so this was degradation,
+not a syntax error on our side.
+
+The failure mode is the dangerous direction: a search hunting for copies of a
+book returns nothing matching, which reads as **"not held anywhere"** — a
+confident negative finding, produced by an instrument that was not searching.
+An acquisition hunt across 17 editions reported 0/17 found and was entirely
+artifact.
+
+**The tell was a sanity floor, not an error:** "petrarca returns 1 item on all of
+Internet Archive" is impossible. Carry a magnitude expectation for at least one
+query and check it.
+
+Rules for any third-party search you draw conclusions from:
+
+- **Positive control, every run.** Query something you *know* the endpoint holds
+  and abort the run if it comes back empty. `scripts/audit/` probes in this repo
+  do this; copy the pattern.
+- **Per-item control where you can.** Hunting for other copies of book X, require
+  the query to return **X itself**. Then a zero is a real zero. All 17 queries
+  passed this on the retry, which is the only reason the second result is
+  trustworthy.
+- **Prefer `advancedsearch.php` over `scrape` for searching.** `scrape` is fine
+  for enumerating a known identifier prefix; it also rejects `count` < 100 with
+  HTTP 400, which — if unchecked — turns every query into a silent zero.
+- **Distinguish "query returned nothing" from "query did not run."** Log the
+  endpoint's own reported total alongside your filtered count.
+
+Same shape as the guard-reads-the-wrong-store entry above: the instrument was
+healthy-looking and pointed at nothing.

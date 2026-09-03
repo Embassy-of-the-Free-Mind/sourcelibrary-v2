@@ -116,10 +116,43 @@ apiClient.interceptors.response.use(
     }
 
     // Extract error message from response
-    const message = (error.response?.data as any)?.error || error.message || 'Request failed';
-    throw new Error(message);
+    const data = error.response?.data as ApiErrorBody | undefined;
+    const message = data?.error || error.message || 'Request failed';
+
+    // Carry the machine-readable fields through instead of collapsing the
+    // response to a prose string. Anon-gate walls answer with
+    // `code: 'SIGNIN_REQUIRED'` (see src/lib/anon-gate.ts), and a caller that
+    // can only read `err.message` has to regex the copy to recognise one —
+    // which breaks the moment the wording changes. `message` is unchanged, so
+    // every existing caller keeps working.
+    throw Object.assign(new Error(message), {
+      status: error.response?.status,
+      code: data?.code,
+      signIn: data?.sign_in,
+      retryAfter: data?.retry_after,
+    });
   }
 );
+
+/** The JSON body our API routes return on error. */
+interface ApiErrorBody {
+  error?: string;
+  code?: string;
+  sign_in?: string;
+  retry_after?: number;
+}
+
+/**
+ * Shape of the error thrown by the response interceptor and `streamRequest`.
+ * Fields are optional: a network failure has no response body to read them
+ * from, so always check before branching on one.
+ */
+export interface ApiClientError extends Error {
+  status?: number;
+  code?: string;
+  signIn?: string;
+  retryAfter?: number;
+}
 
 /**
  * Streaming request helper that applies interceptor logic
@@ -171,14 +204,22 @@ export async function streamRequest(
 
     // Try to extract error message from response
     let message = 'Request failed';
+    let body: ApiErrorBody = {};
     try {
-      const errorData = await response.json();
-      message = errorData.error || message;
+      body = (await response.json()) as ApiErrorBody;
+      message = body.error || message;
     } catch {
       message = response.statusText || message;
     }
 
-    throw new Error(message);
+    // Same additive fields as the interceptor above, so a caller can branch on
+    // `code` regardless of which helper it used.
+    throw Object.assign(new Error(message), {
+      status: response.status,
+      code: body.code,
+      signIn: body.sign_in,
+      retryAfter: body.retry_after,
+    });
   }
 
   return response;

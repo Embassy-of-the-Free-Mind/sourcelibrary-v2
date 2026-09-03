@@ -5,12 +5,14 @@ import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
 import { withAuth } from '@/lib/auth-helpers';
 import sharp from 'sharp';
+// Which source hosts we will fetch from — ONE list, shared with the watchdog and
+// the cover archiver. See src/lib/archivable-sources.ts for why three private
+// copies of this became a silent no-op.
+import { ARCHIVABLE_SOURCES_REGEX } from '@/lib/archivable-sources';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
 
-// Regex pattern to match pages from external sources that can be archived
-const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|dl\.ndl\.go\.jp/;
 
 /**
  * Recount archived pages and write the cached counter back onto the book (#3712).

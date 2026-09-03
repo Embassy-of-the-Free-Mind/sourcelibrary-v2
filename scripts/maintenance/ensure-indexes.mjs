@@ -66,6 +66,7 @@ export const INDEXES = [
   // ── acquisition_queue ─────────────────────────────────────────
   { collection: 'acquisition_queue', key: { 'status': 1 }, options: { 'name': 'status_1' }, why: 'Queue-status filter. scripts/catalog-coverage/acquire-gap-batch.mjs.' },
   { collection: 'acquisition_queue', key: { 'sn': 1 }, options: { 'name': 'sn_1', 'unique': true }, why: 'Unique catalog serial-number key, prevents re-queuing the same USTC/catalog entry. scripts/catalog-coverage/acquire-gap-batch.mjs.' },
+  { collection: 'acquisition_queue', key: { 'status': 1, 'priority': -1, '_id': 1 }, options: { 'name': 'claim_priority_idx' }, why: 'Priority-ordered claim (findOneAndUpdate sort) so reader-request rows (priority:1) jump bulk seeds. scripts/catalog-coverage/acquire-gap-batch.mjs.' },
   // ── analytics_bot_access ──────────────────────────────────────
   { collection: 'analytics_bot_access', key: { 'bot': 1, 'path_prefix': 1, 'date': 1 }, options: { 'name': 'bot_daily_idx', 'background': true }, why: 'Daily bot-hit counter upsert key (bot+path_prefix+day). src/app/api/analytics/bots/route.ts creates this lazily on first write.' },
   // ── analytics_events ──────────────────────────────────────────
@@ -128,9 +129,9 @@ export const INDEXES = [
   { collection: 'books_warehouse', key: { 'id': 1 }, options: { 'name': 'id_1', 'unique': true }, why: 'Unique warehouse key, mirrors books.id. scripts/migration/warehouse-migration.mjs.' },
   { collection: 'books_warehouse', key: { 'pipeline_auto.status': 1 }, options: { 'name': 'pipeline_auto.status_1' }, why: 'Pipeline status filter on the warehouse copy. scripts/migration/warehouse-migration.mjs.' },
   { collection: 'books_warehouse', key: { 'ia_identifier': 1 }, options: { 'name': 'ia_identifier_1' }, why: 'Internet Archive identifier lookup for dedup/import reconciliation. scripts/migration/warehouse-migration.mjs.' },
-  { collection: 'books_warehouse', key: { 'source_fingerprint': 1 }, options: { 'name': 'source_fingerprint_1' }, why: 'De-dup fingerprint lookup, mirrors the books.idx_source_fingerprint strategy. scripts/maintenance/backfill-warehouse-dedup-fields.ts.' },
-  { collection: 'books_warehouse', key: { 'normalized_title': 1, 'normalized_author': 1 }, options: { 'name': 'normalized_title_1_normalized_author_1' }, why: 'Title+author de-dup lookup, mirrors books.idx_normalized_title_author. scripts/maintenance/backfill-warehouse-dedup-fields.ts.' },
-  { collection: 'books_warehouse', key: { 'image_source.iiif_manifest': 1 }, options: { 'name': 'image_source.iiif_manifest_1' }, why: 'IIIF-manifest de-dup lookup. scripts/maintenance/backfill-warehouse-dedup-fields.ts.' },
+  { collection: 'books_warehouse', key: { 'source_fingerprint': 1 }, options: { 'name': 'source_fingerprint_1' }, why: 'De-dup fingerprint lookup, mirrors the books.idx_source_fingerprint strategy. Origin: backfill-warehouse-dedup-fields.ts (one-time, deleted 2026-08).' },
+  { collection: 'books_warehouse', key: { 'normalized_title': 1, 'normalized_author': 1 }, options: { 'name': 'normalized_title_1_normalized_author_1' }, why: 'Title+author de-dup lookup, mirrors books.idx_normalized_title_author. Origin: backfill-warehouse-dedup-fields.ts (one-time, deleted 2026-08).' },
+  { collection: 'books_warehouse', key: { 'image_source.iiif_manifest': 1 }, options: { 'name': 'image_source.iiif_manifest_1' }, why: 'IIIF-manifest de-dup lookup. Origin: backfill-warehouse-dedup-fields.ts (one-time, deleted 2026-08).' },
   // ── bookshelves ───────────────────────────────────────────────
   { collection: 'bookshelves', key: { 'visitor_id': 1, 'book_id': 1 }, options: { 'name': 'bookshelves_visitor_book_idx', 'background': true, 'unique': true }, why: 'One shelf entry per visitor+book, unique. Archived ensure-indexes route.' },
   { collection: 'bookshelves', key: { 'visitor_id': 1, 'status': 1, 'updated_at': -1 }, options: { 'name': 'bookshelves_visitor_status_idx', 'background': true }, why: 'Per-visitor shelf listing sorted by updated_at. Archived ensure-indexes route.' },
@@ -190,7 +191,7 @@ export const INDEXES = [
   // ── failed_imports ────────────────────────────────────────────
   { collection: 'failed_imports', key: { 'source_id': 1 }, options: { 'name': 'source_id_1', 'unique': true }, why: 'Unique per-source id — prevents re-processing a failed import twice (no exact creation script found in-repo).' },
   // ── ft_reverify_proposal ──────────────────────────────────────
-  { collection: 'ft_reverify_proposal', key: { 'book_id': 1 }, options: { 'name': 'book_id_1', 'unique': true }, why: 'One reverify proposal per book, unique. scripts/analysis/ft-ground-remediation.mjs.' },
+  { collection: 'ft_reverify_proposal', key: { 'book_id': 1 }, options: { 'name': 'book_id_1', 'unique': true }, why: 'One reverify proposal per book, unique. Producer (scripts/analysis/ft-ground-remediation.mjs) deleted in #4536; index kept for the existing rows.' },
   // ── gallery_collections ───────────────────────────────────────
   { collection: 'gallery_collections', key: { 'slug': 1 }, options: { 'name': 'gallery_collections_slug_idx', 'background': true, 'unique': true }, why: 'Collection-page slug lookup, unique. Archived ensure-indexes route.' },
   { collection: 'gallery_collections', key: { 'featured': 1, 'sort_order': 1 }, options: { 'name': 'gallery_collections_featured_idx', 'background': true }, why: 'Featured-listing sort. Archived ensure-indexes route.' },

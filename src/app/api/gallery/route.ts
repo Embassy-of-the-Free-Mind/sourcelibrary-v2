@@ -88,7 +88,9 @@ let cachedFilters: { data: { types: string[]; subjects: string[]; yearRange: { m
  *   - figure: filter by figure tag
  *   - symbol: filter by symbol tag
  *   - minQuality: minimum gallery_quality score (0-1), default 0.7
- *   - maxPerBook: max images per book (via book_rank), default 3
+ *   - maxPerBook: max images per book (via book_rank), default 1000 (uncapped).
+ *     The human gallery passes 3 explicitly; this default is for API callers,
+ *     for whom a low cap is an invisible ceiling rather than curation.
  *   - includeArchive: show 0.5+ quality images (overrides minQuality to 0.5)
  *   - semantic: use embedding search
  */
@@ -131,7 +133,13 @@ export async function GET(request: NextRequest) {
     const yearStart = searchParams.get('yearStart') ? parseInt(searchParams.get('yearStart')!) : null;
     const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
     const includeArchive = searchParams.get('includeArchive') === 'true';
-    const maxPerBook = parseInt(searchParams.get('maxPerBook') || '3');
+    // Uncapped by DEFAULT for API callers (#4509 follow-up). The cap exists so
+    // one heavily-illustrated volume cannot dominate the human gallery — and
+    // that surface sets its own value (src/app/gallery/page.tsx passes 3
+    // explicitly), so it is unaffected. As an API default it was a silent
+    // CEILING: it put ~120,000 of our own images out of reach however far a
+    // consumer paginated. Pass maxPerBook=3 to get the curated spread back.
+    const maxPerBook = parseInt(searchParams.get('maxPerBook') || '1000');
     // Quality thresholds
     let minQuality = 0.7; // default: gallery quality
     if (includeArchive) minQuality = 0.5;
@@ -158,6 +166,8 @@ export async function GET(request: NextRequest) {
       const merged = await mergedGalleryBrowse(db, {
         tenantId, source: sourceParam as 'all' | 'artwork', limit, offset,
         imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId: visitorIdForMerge,
+        // Honour an explicitly-requested floor instead of silently clamping it.
+        qualityExplicit: searchParams.get('minQuality') !== null,
       });
       const mergedFilters = await getGalleryFilters(db).catch(() => ({ types: [], subjects: [], yearRange: { minYear: null, maxYear: null } }));
       return NextResponse.json({
@@ -305,7 +315,15 @@ export async function GET(request: NextRequest) {
 
       // Fallback: $text index (covers description, book_title, book_author)
       if (textItems.length === 0) {
-        filter.$text = { $search: searchQuery };
+        // Multi-word queries: quote the phrase so $text requires the words
+        // together. Bare $text ORs tokens, so "zzzqxv nonexistent" matched 12
+        // rows whose captions contain the word "nonexistent" — garbage served
+        // as if it matched the query (#4338). Single words keep OR semantics
+        // (there is nothing to OR).
+        const phraseQuery = /\s/.test(searchQuery)
+          ? `"${searchQuery.replace(/"/g, '')}"`
+          : searchQuery;
+        filter.$text = { $search: phraseQuery };
         const sortOrder: Record<string, any> = { score: { $meta: 'textScore' }, gallery_quality: -1 };
         const projection = { _id: 0, score: { $meta: 'textScore' as const } };
         textItems = await db.collection('gallery_images')

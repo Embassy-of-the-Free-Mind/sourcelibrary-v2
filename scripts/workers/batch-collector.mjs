@@ -27,6 +27,8 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
+import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
+import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -89,55 +91,12 @@ function calculateCost(model, inputTokens, outputTokens) {
   return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
 }
 
-// ── OCR metadata extraction (mirrors defaults.ts) ──
+// ── OCR metadata extraction: shared with defaults.ts via scripts/lib/ocr-result-parse.mjs (#4443) ──
 
-function extractPageType(text) {
-  const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
-  if (!match) return null;
-  const type = match[1].toLowerCase().trim();
-  const valid = new Set([
-    'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
-    'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
-  ]);
-  return valid.has(type) ? type : null;
-}
-
-function extractColumns(text) {
-  const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
-  if (!match) return null;
-  const n = parseInt(match[1], 10);
-  return n >= 2 ? n : null;
-}
-
-function parseDetectedImages(text) {
-  const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
-  if (!match) return [];
-  const imagesText = match[1].trim();
-  const images = [];
-  const imgRegex = /<image>([\s\S]*?)<\/image>/g;
-  let imgMatch;
-  while ((imgMatch = imgRegex.exec(imagesText)) !== null) {
-    const imgContent = imgMatch[1];
-    const getTag = (tag) => {
-      const m = imgContent.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
-      return m ? m[1].trim() : null;
-    };
-    const bbox = getTag('bbox');
-    const image = {
-      type: getTag('type') || 'illustration',
-      description: getTag('description') || '',
-      subject: getTag('subject')?.split(',').map(s => s.trim()).filter(Boolean) || [],
-    };
-    if (bbox) {
-      const coords = bbox.split(',').map(Number);
-      if (coords.length === 4) {
-        image.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
-      }
-    }
-    images.push(image);
-  }
-  return images;
-}
+// `parseDetectedImages` now comes from scripts/lib/ocr-result-parse.mjs (#4456).
+// The local copy walked `<image>` sub-tags, a shape no OCR prompt here has ever
+// asked for, so it returned [] on every page and the `length > 0` guard at the
+// write site turned that into silence.
 
 /**
  * Parse image extraction response — expects a JSON array of detected images.
@@ -176,19 +135,6 @@ function normalizeBbox(raw) {
     };
   }
   return { x, y, width, height };
-}
-
-function parseMultiPageOcr(text) {
-  const results = new Map();
-  const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    const pageId = match[1];
-    let content = match[2].trim();
-    content = content.replace(/<\/page>\s*$/, '').trim();
-    if (content) results.set(pageId, content);
-  }
-  return results;
 }
 
 // ── Gemini API ──
@@ -389,7 +335,7 @@ async function processOneJob(db, job) {
         if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; noteFail('RECITATION'); continue; }
         const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
-        const parsed = parseMultiPageOcr(text);
+        const parsed = parseMultiPageOcr(text, { lenient: true });
         // One response covers N pages and reports one usageMetadata — split it
         // evenly for the per-page stamp so pages.ocr.input_tokens doesn't claim
         // the whole request's tokens N times over.
@@ -540,6 +486,25 @@ async function processOneJob(db, job) {
       }
     }
 
+    // ── TeX-Greek repair (#4580) ────────────────────────────────────────────
+    // The model sometimes spells a Greek word out as LaTeX math rather than
+    // transcribing it: \dot{\alpha}\pi\text{o}\tau... for ἀποτελέσματος. That
+    // markup is a lossless encoding of a correct reading, so unlike the blank-page
+    // guard above this REPAIRS rather than refuses — the model read the word, it
+    // just answered in the wrong alphabet. Applies to translations too: the TeX
+    // was observed surviving into English output. Only fully-decodable spans are
+    // touched, so real equations pass through untouched.
+    let texRepairedPages = 0, texRepairedSpans = 0;
+    if (texGreekRepairEnabled()) {
+      for (const r of pageResults) {
+        const { text: fixed, replacements } = repairTexGreek(r.text);
+        if (replacements > 0) { r.text = fixed; texRepairedPages++; texRepairedSpans += replacements; }
+      }
+      if (texRepairedPages) {
+        console.log(`  TEX-GREEK: decoded ${texRepairedSpans} LaTeX span(s) to Unicode Greek across ${texRepairedPages} page(s) (#4580)`);
+      }
+    }
+
     for (const { pageId, text, usage } of pageResults) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (humanEditedIds.has(pageId)) {
@@ -568,6 +533,10 @@ async function processOneJob(db, job) {
           blankRefusedCount++;
           continue;
         }
+        // Validating, as this collector's private copy always did — but against
+        // the current vocabulary rather than the 14-value set it had frozen at.
+        // That set had lost `digitizer-insert`, so this collector could not
+        // record the one page type the digitizer guards downstream read (#4443).
         const pageType = extractPageType(text);
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
@@ -578,7 +547,11 @@ async function processOneJob(db, job) {
           'ocr.updated_at': now,
           'ocr.model': job.model,
           'ocr.language': job.language,
-          'ocr.source': 'batch_api',
+          // Submitters may claim a narrower provenance label than "some batch".
+          // Phase 1.5 preview pools stamp `pipeline_preview` so the measurement
+          // stack can still segment previews from full passes now that both
+          // arrive through the Batch API (.claude/docs/data-provenance.md).
+          'ocr.source': job.ocr_source || 'batch_api',
           'ocr.prompt_version': job.prompt_version || 'v5.2026-02',
           'ocr.prompt_id': job.prompt_id,
           'ocr.prompt_hash': job.prompt_hash,

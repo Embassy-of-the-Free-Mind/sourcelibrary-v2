@@ -46,7 +46,26 @@ encodes that:
    main checkout. Don't recreate them (`create-all-provider-tenants.mjs` is
    the legacy writer — don't run it). New contributing libraries go in
    `LIBRARY_PARTNERS`, not in the `tenants` collection.
-5. **Segment 0 of a URL is shared by three namespaces, and ownership is
+5. **Renaming a slug needs the alias AND the redirect, and until #4389 only
+   the alias existed.** A repair sweep pushes the old slug onto
+   `slug_aliases`, and `findBookByIdOrSlug` resolves it on its miss path — so
+   the old URL keeps *resolving*. It did not keep *canonicalising*: the 301
+   was supposed to come from the proxy's book-slug resolver, and the proxy
+   only routes `/book/<segment>` there when `looksLikeBookId(segment)` — which
+   is `false` for anything containing a hyphen, i.e. for **every slug-shaped
+   alias a rename creates**. The ~276 books renamed by earlier sweeps
+   therefore each had two fully-rendering URLs, each emitting a
+   self-referential canonical. It read as working because the artwork half of
+   that batch *did* 308, via the unrelated `/artwork` canonicalisation.
+   `/book/[id]/page.tsx` now 308s any resolved-but-non-canonical segment to
+   `/book/<slug>` (English only; the localized twin has its own branch just
+   above it). It lives in the page, not the proxy, because the decision needs
+   the resolved book and the proxy would otherwise pay a DB lookup on every
+   book page view. **When you rename a public URL, verify the 301 by curling
+   it** — an old URL that renders is not an old URL that redirects, and the
+   difference is invisible from the database. Reader URLs
+   (`/book/<alias>/page/<pageId>`) still resolve without redirecting.
+6. **Segment 0 of a URL is shared by three namespaces, and ownership is
    decided by an ALLOWLIST of tenants — never by a denylist of routes.**
    `/bph/…` (tenant), `/es/…` (locale prefix) and `/book/…`, `/upload`,
    `/encyclopedia/…` (~90 global route roots) all compete for the same

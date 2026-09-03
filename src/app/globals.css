@@ -446,7 +446,11 @@ body:has([data-reader-v2]) {
   from { transform: translateY(14px); opacity: 0; }
   to   { transform: none; opacity: 1; }
 }
-.rv2-slide-up { animation: rv2-slide-up 0.22s ease-out both; }
+/* `backwards`, not `both`, for the same reason as the turn animations below:
+   a filled-forwards animation keeps applying transform:none afterwards, and an
+   animated property beats an inline style — the pull-to-dismiss would track
+   the finger in JS while the sheet sat perfectly still. */
+.rv2-slide-up { animation: rv2-slide-up 0.22s ease-out backwards; }
 /* The page strip slides in by its own height, so the travel reads the same on
    a 92px desktop strip and a 96px phone one. Short on purpose. */
 @keyframes rv2-strip-in {
@@ -466,6 +470,39 @@ body:has([data-reader-v2]) {
 /* Opacity only. A rise moved the text under the reader's eye, which on a
    facsimile is worse than the abrupt swap it replaced. */
 .rv2-page-in { animation: rv2-page-in 200ms ease-out both; }
+
+/* The phone column swapped pages instantly, which on a swipe reads as a jolt
+   rather than as having moved. The new page arrives from the side you sent it,
+   far enough to say a page went by and no further. X only, for the same reason
+   the fade above is opacity only: a vertical rise moves text under the eye. */
+@keyframes rv2-turn-next {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes rv2-turn-prev {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+/* `backwards`, not `both`: a filled-forwards animation keeps applying its end
+   value after it finishes, and an animated property beats an inline style, so
+   the pane would sit locked at transform:none and the drag-follow's inline
+   transform would be silently ignored for the rest of the session — the swipe
+   would stop moving anything under the finger after the first page turn. The
+   end state here is the natural state, so there is nothing to hold. */
+/* Ground behind the mobile sheet. Dark enough to lift the sheet off the page
+   and to say "tap anywhere to get out of this", light enough that the reading
+   underneath is still legibly there. */
+@keyframes rv2-scrim-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.rv2-scrim {
+  background: rgba(30, 20, 8, 0.28);
+  animation: rv2-scrim-in 180ms ease-out both;
+}
+
+.rv2-turn-next { animation: rv2-turn-next 190ms ease-out backwards; }
+.rv2-turn-prev { animation: rv2-turn-prev 190ms ease-out backwards; }
 
 /* Panel contents arrive just after the panel itself, so switching tools reads
    as one movement instead of two things appearing at once. */
@@ -499,6 +536,7 @@ body:has([data-reader-v2]) {
 @media (prefers-reduced-motion: reduce) {
   .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in,
   .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in,
+  .rv2-turn-next, .rv2-turn-prev, .rv2-scrim,
   .rv2-menu-ground, .rv2-menu-item { animation: none; }
 }
 

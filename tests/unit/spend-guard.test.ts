@@ -15,7 +15,10 @@ import {
   getTodaySpendUsd,
   readDailyBudgetUsd,
   budgetAllowsDispatch,
+  budgetAllowsDispatchScoped,
+  readScopeEnvelopes,
   _setSupabaseSpendReaderForTests,
+  _setSupabaseScopeSpendReaderForTests,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/spend-guard.mjs';
@@ -23,6 +26,7 @@ import {
 // Default: Supabase store empty and readable. Individual tests override.
 beforeEach(() => {
   _setSupabaseSpendReaderForTests(async () => ({ usd: 0, rows: 0, costlessRows: 0, error: null }));
+  _setSupabaseScopeSpendReaderForTests(async () => ({ usd: 0, rows: 0, error: null }));
 });
 const supaStub = (usd: number, rows = 0, error: string | null = null) =>
   _setSupabaseSpendReaderForTests(async () => ({ usd, rows, costlessRows: 0, error }));
@@ -130,5 +134,120 @@ describe('budgetAllowsDispatch', () => {
     expect(await budgetAllowsDispatch(db, 'test', { bypass: true })).toBe(true);
     expect(calls.findOnes).toBe(0);
     expect(calls.aggregates.length).toBe(0);
+  });
+});
+
+// ─── Scope envelopes (#4540) ────────────────────────────────────────────────
+
+describe('readScopeEnvelopes — only positive finite budgets are envelopes', () => {
+  it('filters non-budgeted, zero, negative and malformed budgets', () => {
+    const control = {
+      allow_scopes: {
+        good: { book_ids: ['a'], budget_usd: 5 },
+        pauseOnly: { book_ids: ['b'] },
+        zero: { book_ids: ['c'], budget_usd: 0 },
+        negative: { book_ids: ['d'], budget_usd: -3 },
+        stringy: { book_ids: ['e'], budget_usd: '5' },
+      },
+    };
+    const envs = readScopeEnvelopes(control);
+    expect(envs.map((e: { tag: string }) => e.tag)).toEqual(['good']);
+    expect(envs[0].budget_usd).toBe(5);
+  });
+  it('empty/missing allow_scopes → no envelopes', () => {
+    expect(readScopeEnvelopes({})).toEqual([]);
+    expect(readScopeEnvelopes(undefined)).toEqual([]);
+  });
+});
+
+/**
+ * Stub distinguishing the DAILY aggregate (matches by _id time range only)
+ * from a SCOPE aggregate (matches book_id) on the same gemini_usage collection.
+ */
+function makeScopedDbStub({ dailyUsd = 0, scopeUsd = 0, control }: {
+  dailyUsd?: number; scopeUsd?: number; control: Record<string, unknown>;
+}) {
+  return {
+    collection(name: string) {
+      return {
+        aggregate: (pipeline: Array<{ $match?: Record<string, unknown> }>) => {
+          const isScope = !!pipeline[0]?.$match?.book_id;
+          const usd = isScope ? scopeUsd : dailyUsd;
+          return { toArray: async () => (usd === 0 ? [] : [{ _id: null, usd, rows: 1, costlessRows: 0 }]) };
+        },
+        findOne: async () => (name === 'system_config' ? control : null),
+        find: () => ({ project: () => ({ toArray: async () => [] }) }),
+      };
+    },
+  };
+}
+
+describe('budgetAllowsDispatchScoped — a second ceiling, never an absence of one', () => {
+  const envControl = (over: Record<string, unknown> = {}) => ({
+    _id: 'processing_control',
+    daily_budget_usd: 5,
+    allow_scopes: { lane: { book_ids: ['b1', 'b2'], budget_usd: 10, created_at: new Date('2026-09-01T00:00:00Z') } },
+    ...over,
+  });
+
+  it('global dial open → unrestricted dispatch, envelopes not consulted', async () => {
+    const db = makeScopedDbStub({ dailyUsd: 2, control: envControl() });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(true);
+    expect(g.envelopeIds).toBeNull();
+  });
+
+  it('dial closed + envelope with room → scoped dispatch confined to the envelope books', async () => {
+    const db = makeScopedDbStub({ dailyUsd: 21, scopeUsd: 3, control: envControl() });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(true);
+    expect([...g.envelopeIds!].sort()).toEqual(['b1', 'b2']);
+  });
+
+  it('dial closed + envelope spent → refused (ceilings all the way down)', async () => {
+    const db = makeScopedDbStub({ dailyUsd: 21, scopeUsd: 10, control: envControl() });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(false);
+  });
+
+  it('dial closed + no envelopes → refused (a pause-only scope never opens the dial)', async () => {
+    const db = makeScopedDbStub({ dailyUsd: 21, control: envControl({ allow_scopes: { lane: { book_ids: ['b1'] } } }) });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(false);
+  });
+
+  it('dial UNSET (default-closed) + envelope with room → scoped dispatch (an envelope is an explicit bounded grant)', async () => {
+    const db = makeScopedDbStub({ scopeUsd: 3, control: envControl({ daily_budget_usd: null }) });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(true);
+    expect(g.envelopeIds!.size).toBe(2);
+  });
+
+  it('FAILS CLOSED for every lane when the daily meter is unreadable', async () => {
+    supaStub(0, 0, 'Supabase read error: fetch failed');
+    const db = makeScopedDbStub({ dailyUsd: 0, scopeUsd: 0, control: envControl() });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(false);
+  });
+
+  it('FAILS CLOSED for an envelope whose own meter is unreadable', async () => {
+    _setSupabaseScopeSpendReaderForTests(async () => ({ usd: 0, rows: 0, error: 'Supabase read failed (500)' }));
+    const db = makeScopedDbStub({ dailyUsd: 21, scopeUsd: 0, control: envControl() });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(false);
+  });
+
+  it('envelope spend SUMS both stores — Supabase spend alone can close the envelope', async () => {
+    _setSupabaseScopeSpendReaderForTests(async () => ({ usd: 9.5, rows: 100, error: null }));
+    const db = makeScopedDbStub({ dailyUsd: 21, scopeUsd: 0.6, control: envControl() });
+    const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(false); // 9.5 + 0.6 >= 10
+  });
+
+  it('bypass short-circuits, unrestricted', async () => {
+    const db = makeScopedDbStub({ dailyUsd: 999, control: envControl() });
+    const g = await budgetAllowsDispatchScoped(db, 'test', { bypass: true });
+    expect(g.allowed).toBe(true);
+    expect(g.envelopeIds).toBeNull();
   });
 });

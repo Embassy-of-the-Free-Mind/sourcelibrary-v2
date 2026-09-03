@@ -75,6 +75,36 @@ const bothVisible = await books.aggregate([
   { $count: 'n' },
 ]).toArray();
 
+// ── Gate 5: the REVIEW queues — is the human lane draining? (#4271) ─────────
+// Detection finished weeks before the drain did; a queue that stops moving is
+// the failure mode, and it is invisible unless the table counts it. Segment
+// the merge queue by the LLM screen's verdict: `same`/`different` are the
+// batchable slices, `unsure`/unstamped are the manual remainder.
+const mergeQueue = await db.collection('work_merge_queue').aggregate([
+  { $group: { _id: { status: '$status', verdict: { $ifNull: ['$llm.verdict', 'unscreened'] } }, n: { $sum: 1 } } },
+]).toArray();
+const mergePending = {};
+let mergeAdjudicated = 0;
+for (const r of mergeQueue) {
+  if (r._id.status === 'pending') mergePending[r._id.verdict] = (mergePending[r._id.verdict] ?? 0) + r.n;
+  else mergeAdjudicated += r.n;
+}
+const mergePendingTotal = Object.values(mergePending).reduce((a, b) => a + b, 0);
+
+const keeperQueue = await db.collection('edition_keeper_queue').aggregate([
+  { $group: { _id: { status: '$status', bucket: '$bucket', ft: { $eq: ['$ft_flag', true] } }, n: { $sum: 1 } } },
+]).toArray();
+const keeperPending = {};
+let keeperAdjudicated = 0;
+let keeperBatchable = 0; // MECHANICAL_KEEP with no FT badge at stake — the batch lane's slice
+for (const r of keeperQueue) {
+  if (r._id.status === 'pending') {
+    keeperPending[r._id.bucket] = (keeperPending[r._id.bucket] ?? 0) + r.n;
+    if (r._id.bucket === 'MECHANICAL_KEEP' && !r._id.ft) keeperBatchable += r.n;
+  } else keeperAdjudicated += r.n;
+}
+const keeperPendingTotal = Object.values(keeperPending).reduce((a, b) => a + b, 0);
+
 const gates = {
   measured_at: new Date().toISOString(),
   phase0: {
@@ -94,6 +124,22 @@ const gates = {
     dark_cluster_pointers: darkPointers[0]?.n ?? 0,
     both_visible_edition_clusters: bothVisible[0]?.n ?? 0,
   },
+  review_queues: {
+    work_merge_queue: {
+      pending: mergePendingTotal,
+      adjudicated: mergeAdjudicated,
+      pending_by_verdict: mergePending,
+      batchable: (mergePending.same ?? 0) + (mergePending.different ?? 0),
+      manual_remainder: (mergePending.unsure ?? 0) + (mergePending.unscreened ?? 0),
+    },
+    edition_keeper_queue: {
+      pending: keeperPendingTotal,
+      adjudicated: keeperAdjudicated,
+      pending_by_bucket: keeperPending,
+      batchable_mechanical_non_ft: keeperBatchable,
+    },
+    note: 'batch lanes: /curation/identity-review (#4271). A pending count that stops falling means the drain stalled again.',
+  },
 };
 
 if (JSON_OUT) {
@@ -106,6 +152,14 @@ if (JSON_OUT) {
   console.log(`  Reader:   ${gates.collocation.books_addressable} live books in multi-language work clusters (${gates.collocation.multilanguage_work_clusters} clusters)`);
   console.log(`            ${gates.collocation.full_quality_edition_sibling_books} live books with a full-quality edition sibling`);
   console.log(`  Queues:   ${gates.queues.dark_cluster_pointers} dark pointers, ${gates.queues.both_visible_edition_clusters} both-visible edition clusters`);
+  const rq = gates.review_queues;
+  const byVerdict = Object.entries(rq.work_merge_queue.pending_by_verdict).map(([k, v]) => `${v} ${k}`).join(', ') || 'none';
+  const byBucket = Object.entries(rq.edition_keeper_queue.pending_by_bucket).map(([k, v]) => `${v} ${k}`).join(', ') || 'none';
+  console.log(`  Review:   work_merge_queue ${rq.work_merge_queue.pending} pending (${byVerdict}), ${rq.work_merge_queue.adjudicated} adjudicated`);
+  console.log(`            → ${rq.work_merge_queue.batchable} batchable, ${rq.work_merge_queue.manual_remainder} need a human one at a time`);
+  console.log(`            edition_keeper_queue ${rq.edition_keeper_queue.pending} pending (${byBucket}), ${rq.edition_keeper_queue.adjudicated} adjudicated`);
+  console.log(`            → ${rq.edition_keeper_queue.batchable_mechanical_non_ft} batchable (MECHANICAL_KEEP, no FT badge at stake)`);
+  console.log(`            drain: /curation/identity-review (batch lanes, #4271)`);
 }
 
 await client.close();

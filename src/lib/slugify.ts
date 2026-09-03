@@ -16,13 +16,29 @@ export function generateBookSlug(
   author: string,
   displayTitle?: string | null
 ): string {
-  const titleSource = displayTitle || title;
+  // A sentinel is the ABSENCE of a title, not a title. Reading it as text is
+  // what put 112 ETCSL books at /book/unknown-N (#4389): the importer slugged a
+  // record whose English title field held the literal string "Unknown", which
+  // sanitizes to the perfectly legal-looking slug "unknown", so no fallback
+  // branch ever fired and nothing looked broken. Skipping the sentinel here
+  // means the next source (the original title, then the author) gets its turn.
+  const titleSource = isNonTitle(displayTitle) ? (isNonTitle(title) ? '' : title) : displayTitle || '';
   const slugTitle = slugifyText(titleSource, 60);
   const authorLast = extractLastName(author);
   const slugAuthor = slugifyText(authorLast, 20);
 
+  // A title segment has to contain a LETTER to be a title. A non-Latin title
+  // does not always sanitize to the empty string the branch below assumes:
+  // catalogue titles carry measurements, and "​漢宮春曉, 卷, 絹本設色, 纵30.6厘米
+  // 横574.1厘米" left "30-6-574-1" behind — the scroll's dimensions in
+  // centimetres, minted as /book/30-6-574-1-ying (#4521). Digits that survived
+  // a script the slugifier cannot read are debris, not information, and
+  // isPlaceholderSlug already treats a letterless slug as broken, so producing
+  // one here just hands the repair sweep its own work back.
+  const titleIsReadable = /[a-z]/.test(slugTitle);
+
   if (!slugAuthor || slugAuthor === 'unknown') {
-    return slugTitle || 'untitled';
+    return titleIsReadable ? slugTitle : 'untitled';
   }
 
   // slugifyText keeps only [a-z0-9], so a title written entirely in Greek,
@@ -33,7 +49,7 @@ export function generateBookSlug(
   // non-Latin title degrades to a plain readable segment instead of a broken
   // one. Prefer giving these books an English `display_title`: the generator
   // reads it first, and it produces a genuinely descriptive slug.
-  if (!slugTitle) {
+  if (!titleIsReadable) {
     return slugAuthor;
   }
 
@@ -41,21 +57,71 @@ export function generateBookSlug(
 }
 
 /**
+ * Catalogue sentinels that mean "we do not have a title", written into a title
+ * field as if they were one. Every one of these sanitizes to a legal-looking
+ * slug, which is exactly why they are dangerous: nothing downstream can tell
+ * `/book/unknown-7` from a book actually called "Unknown".
+ *
+ * Compared after lowercasing, trimming, and stripping wrapping brackets and
+ * trailing punctuation — catalogues write "[unknown]", "Unknown.", "n/a".
+ */
+const NON_TITLE_SENTINELS = new Set([
+  'unknown', 'unknown title', 'title unknown', 'untitled', 'no title',
+  // 'n a' is the slug form of 'n/a' — isPlaceholderSlug hyphen-splits before
+  // testing, so both spellings have to be here.
+  'none', 'na', 'n/a', 'n a', 'nil', 'null', 'undefined', 'missing', 'not known',
+  'onbekend', 'sans titre', 'ohne titel', 'senza titolo', 'sin titulo',
+  '?', '??', '???', '-', '--', '.', '_',
+]);
+
+/**
+ * Is this string a "we do not know" marker rather than a title?
+ *
+ * Empty/absent counts too, so callers can use it as a single "nothing usable
+ * here" test. See NON_TITLE_SENTINELS and #4389.
+ */
+export function isNonTitle(text: string | null | undefined): boolean {
+  if (!text) return true;
+  const normalized = text
+    .trim()
+    .replace(/^[[({<"'\s]+|[\])}>"'.,;:\s]+$/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!normalized) return true;
+  return NON_TITLE_SENTINELS.has(normalized);
+}
+
+/**
+ * The base of a slug, with a dedupe suffix removed: "unknown-7" → "unknown",
+ * "atalanta-fugiens-maier-5" → "atalanta-fugiens-maier".
+ */
+function slugBase(slug: string): string {
+  return slug.replace(/-\d+$/, '');
+}
+
+/**
  * Is this slug a placeholder or a malformed leftover rather than a real,
  * readable URL segment?
  *
  * Catches: missing/empty, the literal string "undefined", the "untitled"
- * family, and anything with no Latin letter at all — the class that produced
- * ~85 visible books sitting at URLs like /book/-10 and /book/-13, written by
- * an import that bypassed generateBookSlug entirely.
+ * family, a sentinel base with a dedupe counter on it ("unknown-7" — #4389),
+ * and anything with no Latin letter at all — the class that produced ~85
+ * visible books sitting at URLs like /book/-10 and /book/-13, written by an
+ * import that bypassed generateBookSlug entirely.
  *
- * Used by the repair sweep and by the enrichment path that regenerates a slug
- * once a book finally has a display_title.
+ * The counter is stripped before the sentinel test, but only a NUMERIC one:
+ * "unknown-pleasures" is a real title and stays a real slug.
+ *
+ * Used by the repair sweeps, by scripts/audit/book-slug-placeholders.ts, and
+ * by the enrichment path that regenerates a slug once a book finally has a
+ * display_title.
  */
 export function isPlaceholderSlug(slug: string | null | undefined): boolean {
   if (!slug) return true;
   if (slug === 'undefined' || slug === 'null') return true;
   if (/^untitled(-|$)/.test(slug)) return true;
+  if (NON_TITLE_SENTINELS.has(slugBase(slug).replace(/-/g, ' '))) return true;
   return !/[a-z]/.test(slug);
 }
 
@@ -131,7 +197,13 @@ function extractLastName(author: string): string {
   if (!author || /^unknown\b/i.test(author.trim())) {
     return 'unknown';
   }
-  if (author === 'Anonymous') {
+  // "Anonymous Sumerian", "Anonymous (Egyptian)", "Anonymous Yucatec Maya
+  // scribes" — 661 books carry a qualified anonymity marker, and the last-word
+  // rule below reads the qualifier as a surname: /book/a-balbale-to-inana-sumerian
+  // presents a language as the author. Same defect as "Unknown artist" →
+  // "-artist" above, one word over. The bare "Anonymous" case is unchanged and
+  // deliberate — an anonymous early-modern imprint is a real attribution.
+  if (/^anonymous\b/i.test(author.trim())) {
     return 'anonymous';
   }
 
@@ -143,6 +215,31 @@ function extractLastName(author: string): string {
   // "First Last" format — take last word
   const parts = author.trim().split(/\s+/);
   return parts[parts.length - 1];
+}
+
+/**
+ * Does this author field name somebody, or is it a stand-in for "we do not
+ * know"?
+ *
+ * Used by the repair sweeps to decide whether re-slugging a book whose title
+ * is entirely non-Latin gains anything. generateBookSlug falls back to the
+ * author for those titles, and the answer differs sharply by author:
+ * "Katsushika Hokusai" turns /book/-15 into a URL that names the artist, while
+ * "Anonymous" would only turn /book/216 into /book/216-anonymous — a changed
+ * public URL carrying no new information, plus a redirect to maintain forever.
+ *
+ * Compared on the SLUGIFIED surname, so the qualified spellings catalogues
+ * actually write — "未詳 (Unknown)", "Unknown artist", "Anonymous Sumerian" —
+ * all fold to the same answer as the bare word. Note this is deliberately
+ * stricter than extractLastName's own policy: that function keeps "anonymous"
+ * in the slug on purpose (an anonymous early-modern imprint is a real
+ * attribution), and this predicate is only about whether the segment is worth
+ * *renaming an existing URL* for.
+ */
+export function isGenericAuthor(author: string | null | undefined): boolean {
+  if (!author) return true;
+  const surname = slugifyText(extractLastName(author), 20);
+  return !surname || surname === 'unknown' || surname === 'anonymous' || surname === 'anon';
 }
 
 /**
@@ -254,7 +351,23 @@ export function authorSlug(author: string): string {
     .replace(/-{2,}/g, '-');
 }
 
-export function authorUrl(author: string): string | null {
+/**
+ * URL for a book's author page.
+ *
+ * Prefer `authorId` (`books.author_id`, the canonical FK) over the byline
+ * string whenever it is present. The byline is what a CATALOGUE said; the
+ * canonical link is who we decided that means, and the two diverge exactly
+ * where it matters. Slugifying the byline sends every book bylined "Thomas" to
+ * `/author/thomas` — Aquinas and Thomas à Kempis alike — so the reader is told
+ * a work is by whoever that bare form happens to resolve to (#4318).
+ *
+ * It also makes the link independent of the thesaurus's MATCH surface. Bare
+ * forenames had to be withdrawn from `variants[]` because they claimed every
+ * namesake; a byline-derived URL would then dead-end, while `author_id` keeps
+ * pointing at the right person.
+ */
+export function authorUrl(author: string, authorId?: string | null): string | null {
+  if (authorId) return `/author/${authorId}`;
   if (!author || author === 'Unknown' || author === 'Anonymous') return null;
   return `/author/${authorSlug(author)}`;
 }

@@ -186,7 +186,10 @@ The session that turned the instrument into recorded, per-book truth.
 - **The instrument works and is proven.** Per-book, cross-model, adversarial,
   fully auditable (every query + source + verdict in the provenance log), gated
   on human sign-off before any public flip.
-- **The numbers, honestly:** of ~14,106 FT-eligible books, the best estimate is
+- **The numbers, honestly (SUPERSEDED 2026-08-31 by round 5, PR #4524: the
+  canonical estimate is now **~8,565, 95% CI 7,362–9,768** over a 16,151 pool —
+  the figure below used the pre-July `not_applicable` rubric):** of ~14,106
+  FT-eligible books, the old estimate was
   **~5,000 genuine first English translations (range ~4,000–6,500)** — close to
   the count we badge today, but composed of *substantially different books*
   (~1,900 over-claims roughly cancel ~1,900 missed firsts). Rigorously verified

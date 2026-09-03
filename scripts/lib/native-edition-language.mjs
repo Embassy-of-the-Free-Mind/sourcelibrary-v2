@@ -14,8 +14,15 @@
  * real ones: "Spanish / Latin", "Spanish / French", "Nahuatl-Spanish", "Old
  * Spanish" and "Spanish in Hebrew characters" — Judeo-Spanish in Hebrew script,
  * which a Spanish reader cannot read at all and which a substring match would
- * happily claim. A bilingual edition is its own question: only part of the page
- * is the language, so any promise made about the whole page is half-kept.
+ * happily claim.
+ *
+ * A BILINGUAL edition stays out, and the reason changed on 2026-08-25. It used
+ * to be "only part of the page is the language, so any promise made about the
+ * whole page is half-kept" — true of the PAGE, and the page was the wrong unit.
+ * The Spanish COLUMN of a parallel-text leaf is wholly Spanish, and
+ * `scripts/lib/source-column.mjs` extracts it into `pages.translations.es`, which
+ * gives such a book a real counter. So this pattern keeps meaning exactly what it
+ * says: the whole leaf is the language.
  */
 
 export const NATIVE_EDITION_LANGUAGE = {

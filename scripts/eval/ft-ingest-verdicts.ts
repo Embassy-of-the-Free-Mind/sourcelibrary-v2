@@ -130,7 +130,7 @@ async function main() {
       );
       written += r.modifiedCount;
     }
-    console.log(`\n--apply-verdicts: wrote book.first_translation on ${written} books (flag NOT auto-flipped; run reconcile-first-translation-flag.ts to materialize).`);
+    console.log(`\n--apply-verdicts: wrote book.first_translation on ${written} books (flag NOT auto-flipped; run reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] to materialize).`);
   } else {
     console.log('\n(verdicts NOT applied to books — re-run with --apply-verdicts after sign-off)');
   }

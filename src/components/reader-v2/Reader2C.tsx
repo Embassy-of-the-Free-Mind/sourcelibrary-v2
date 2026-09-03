@@ -10,6 +10,7 @@ import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { FeedbackPanel } from './FeedbackPanel';
+import ReaderWebMCP from './ReaderWebMCP';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
@@ -20,12 +21,14 @@ import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-clien
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
+import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { ReaderSettings } from './useReaderV2';
 import {
   ChevronLeft, ChevronRight, ChevronRight as ChevronRightSmall,
   List, Search, Quote, Pencil, Check, X, Loader2, GalleryHorizontal,
   ZoomIn, ZoomOut, ScanSearch, Heart, Share2, BookOpen, MessageCircle,
   Info, Bell, MoreHorizontal, Link as LinkIcon, Columns3, Copy, Maximize2, Download, Menu, LogOut, LifeBuoy, MessageSquare, User,
+  History, Settings2,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/track-event';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
@@ -39,10 +42,12 @@ import PinnedVersionBanner from './PinnedVersion';
 import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishButton } from './ReaderSpanishToggle';
 import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
 import {
-  CapsLabel, AiChip, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
+  CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
   SURFACE, themeAttr, bookByline,
 } from './ReaderV2Bits';
+import { pageTextCorpus, translationCorpus } from '@/lib/text-provenance';
+import type { CdliWitness } from '@/lib/types/book';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -52,9 +57,19 @@ import {
 // scrolls. Design handoff: design_handoff_reader_page/README.md § 2c.
 
 const INK = 'var(--bg-dark)';
+/** Height of the floating mobile title bar, and of the lead-in the column
+ *  keeps for it. One number: the bar covers the top of the column, so
+ *  anything that scrolls a pane to the top has to clear it. */
+const BAR_H = 52;
+/** How long a scroll up has to have been meant before the bar comes back. */
+const BAR_SHOW_DELAY_MS = 280;
 const STRIP_KEY = 'sl-reader-v2c-strip';
 /** Mobile toolbar height — one row of four tools. */
 const MOBILE_TOOLBAR_H = 52;
+/** Breathing room kept above a mobile sheet, so it never meets the top edge. */
+const SHEET_TOP_GAP = 24;
+/** How far the sheet has to be pulled down before letting go puts it away. */
+const SHEET_DISMISS_PULL = 90;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -82,11 +97,25 @@ function panelBlurb(t: ReaderStrings, panel: Exclude<LeftPanel, null>): string |
  * opens full-screen from the bar instead. Labels come from `t.moreMenu`,
  * which is keyed by exactly these names.
  */
+// The More sheet, grouped the way a reader thinks (#4385 follow-up: it was a
+// flat ten-row wall with citation first): ways INTO the text, then things
+// about THIS page, then the reader itself. Feedback sits last, in rust, as
+// the one row that talks back to us.
+const MORE_GROUPS = [
+  { key: 'groupRead', tools: ['contents', 'guide', 'search', 'librarian'] },
+  { key: 'groupPage', tools: ['cite', 'downloads', 'info', 'history'] },
+  { key: 'groupReader', tools: ['settings', 'feedback'] },
+] as const;
 const MORE_TOOLS = [
-  'cite', 'downloads', 'info', 'history',
   'contents', 'guide', 'search', 'librarian',
+  'cite', 'downloads', 'info', 'history',
   'settings', 'feedback',
 ] as const;
+const MORE_ICONS: Record<(typeof MORE_TOOLS)[number], typeof List> = {
+  contents: List, guide: BookOpen, search: Search, librarian: MessageCircle,
+  cite: Quote, downloads: Download, info: Info, history: History,
+  settings: Settings2, feedback: MessageSquare,
+};
 
 interface Reader2CProps {
   initialBook: Book;
@@ -1365,22 +1394,29 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
 
       {/* Provenance. A library that publishes machine-made text owes the
           reader the record of how it was made, in the same place as the rest
-          of the bibliographic record — not tucked in a pane menu. */}
-      {(page.ocr?.model || page.translation?.model) && (
+          of the bibliographic record — not tucked in a pane menu. Corpus
+          editions (#4350) branch on every row: there is no scan behind them,
+          and an ETCSL translation is the corpus editors' scholarly work — the
+          default wording was false in both directions. */}
+      {(page.ocr?.model || page.translation?.model) && (() => {
+        const ocrCorpus = pageTextCorpus(page);
+        const trCorpus = translationCorpus(page);
+        const witnessCount = (book.cdli_witnesses || []).length;
+        return (
         <>
           <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>{t.howPageWasMade}</CapsLabel>
           <dl>
             <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
               <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldScan}</dt>
               <dd style={{ color: 'var(--text-secondary)' }}>
-                {t.scannedFrom(page.page_number ?? undefined)}
+                {ocrCorpus ? t.corpusNoScan(witnessCount) : t.scannedFrom(page.page_number ?? undefined)}
               </dd>
             </div>
             {page.ocr?.model && (
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {t.transcribedBy(page.ocr.model)}
+                  {ocrCorpus ? t.corpusTranscript(ocrCorpus.name, ocrCorpus.org) : t.transcribedBy(page.ocr.model)}
                 </dd>
               </div>
             )}
@@ -1388,16 +1424,17 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldEnglish}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {t.translatedBy(page.translation.model)}
+                  {trCorpus ? t.corpusTranslation(trCorpus.name) : t.translatedBy(page.translation.model)}
                 </dd>
               </div>
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            {t.machineNotice}
+            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : t.machineNotice}
           </p>
         </>
-      )}
+        );
+      })()}
     </div>
   );
 }
@@ -1548,7 +1585,7 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
  * switch on (it used to follow the cursor uninvited).
  */
 function ScanControls({
-  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand,
+  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand, compact = false,
 }: {
   zoom: number;
   onZoomStep: (dir: 1 | -1) => void;
@@ -1557,6 +1594,10 @@ function ScanControls({
   onToggleLens: () => void;
   /** Open the scan full screen, at the resolution it was archived at */
   onExpand?: () => void;
+  /** Touch layout: the fingers ARE the zoom control (pinch, double-tap), so
+   *  the ± steppers and the lens would only crowd a 34px header. Renders the
+   *  fullscreen button alone, plus a tap-to-reset % chip while pinched in. */
+  compact?: boolean;
 }) {
   const strings = getReaderStrings(useLocale());
   const t = strings.panes;
@@ -1569,6 +1610,28 @@ function ScanControls({
   // family holds without the outline fighting the ground.
   const btn = `${PANE_ICON_CHIP} disabled:opacity-30`;
   const btnStyle = { color: 'var(--text-muted)' } as const;
+  if (compact) {
+    return (
+      <div className="flex items-center gap-0.5">
+        {zoom > 1 && (
+          <button
+            type="button"
+            onClick={onZoomReset}
+            className="min-w-[46px] px-1 h-[26px] font-sans text-[11px] tabular-nums transition-colors hover:bg-black/[0.06]"
+            style={{ color: 'var(--text-muted)' }}
+            title={t.resetZoom}
+          >
+            {Math.round(zoom * 100)}%
+          </button>
+        )}
+        {onExpand && (
+          <button type="button" onClick={onExpand} aria-label={tb.viewScanFullScreen} title={tb.viewScanFullScreen} className={btn} style={btnStyle}>
+            <Maximize2 size={14} />
+          </button>
+        )}
+      </div>
+    );
+  }
   return (
     <div className="flex items-center gap-0.5">
       <button type="button" aria-label={t.zoomOut} disabled={zoom <= 1} onClick={() => onZoomStep(-1)}
@@ -1625,7 +1688,7 @@ function ScanControls({
  * link to the bare image file: that navigated away from the library entirely
  * and left nothing to come back from.
  */
-function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }: {
+function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, srcOverride, altOverride }: {
   page: Page;
   book: Book;
   onClose: () => void;
@@ -1633,6 +1696,9 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
   onNext: () => void;
   hasPrev: boolean;
   hasNext: boolean;
+  /** Witness photo stand-in (#4350) — fullRes, so hand it the 4000px tier. */
+  srcOverride?: string;
+  altOverride?: string;
 }) {
   const strings = getReaderStrings(useLocale());
   const t = strings.toolbar;
@@ -1662,6 +1728,26 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
 
   const navBtn = 'w-10 h-10 flex items-center justify-center transition-colors disabled:opacity-25 hover:bg-[rgba(253,252,249,0.12)]';
 
+  // The full-screen view had buttons and arrow keys but no touch at all — on
+  // a phone that reads as "you can no longer swipe to the next page" (#4385).
+  // At fit, a plain axis-locked swipe turns the page; zoomed, ScanViewer owns
+  // the touches and its edge-turn (onEdgePageTurn below) takes over.
+  const lightboxSwipe = useRef<{ x: number; y: number } | null>(null);
+  const onLbTouchStart = (e: React.TouchEvent) => {
+    lightboxSwipe.current = e.touches.length === 1 && zoom <= 1
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : null;
+  };
+  const onLbTouchEnd = (e: React.TouchEvent) => {
+    const s = lightboxSwipe.current;
+    lightboxSwipe.current = null;
+    if (!s || zoom > 1) return;
+    const dx = e.changedTouches[0].clientX - s.x;
+    const dy = e.changedTouches[0].clientY - s.y;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0) onNext(); else onPrev();
+  };
+
   return (
     <div ref={boxRef} className="fixed inset-0 z-[100] flex flex-col rv2-pop" style={{ background: '#14110d' }} role="dialog" aria-modal="true" aria-label={t.scanFullScreen}>
       <div className="shrink-0 flex items-center gap-2 px-3 h-[52px]" style={{ borderBottom: `1px solid ${onInk(0.12)}` }}>
@@ -1684,8 +1770,12 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext }:
         <button type="button" onClick={onClose} aria-label={t.close}
           className={navBtn} style={{ color: onInk(0.75) }}><X size={17} /></button>
       </div>
-      <div className="flex-1 min-h-0 px-3 py-3">
-        <ScanViewer page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes />
+      <div className="flex-1 min-h-0 px-3 py-3" onTouchStart={onLbTouchStart} onTouchEnd={onLbTouchEnd}>
+        <ScanViewer
+          page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes
+          srcOverride={srcOverride} altOverride={altOverride}
+          onEdgePageTurn={dir => { if (dir === 'next') { if (hasNext) onNext(); } else if (hasPrev) onPrev(); }}
+        />
       </div>
       <div className="shrink-0 flex items-center justify-center gap-1 h-[46px]" style={{ borderTop: `1px solid ${onInk(0.12)}` }}>
         <button type="button" aria-label={strings.panes.zoomOut} disabled={zoom <= 1}
@@ -1977,7 +2067,7 @@ function PanelContent({
 }: {
   panel: Exclude<LeftPanel, null>;
   r: ReaderState;
-  citationParts: { author: string; title: string; year: string; locator: string; source: string; url: string };
+  citationParts: { author: string; title: string; year: string; locator: string; copy: string; source: string; url: string };
   copied: boolean;
   onCopyCitation: () => void;
   librarianMessages: LibrarianMessage[];
@@ -1992,26 +2082,42 @@ function PanelContent({
     // A quiet list, not a wall of boxes. Ten bordered white tiles on a warm
     // ground read as ten competing buttons; a single hairline-separated column
     // reads as a menu, which is what it is. Rows are full-width tap targets
-    // and arrive in sequence so opening More is one movement.
-    const row = 'w-full text-left flex items-center justify-between gap-3 h-[46px] font-sans text-[14px] transition-colors active:bg-[var(--bg-white)]';
+    // and arrive in sequence so opening More is one movement. Grouped with
+    // caps headers and a leading icon per row (#4385 follow-up — the flat
+    // list read as "a disorganized wall of options").
+    const row = 'w-full text-left flex items-center gap-3 h-[46px] font-sans text-[14px] transition-colors active:bg-[var(--bg-white)]';
+    let rowIndex = 0;
     return (
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-5" style={{ overscrollBehavior: 'contain' }}>
         <div className="flex flex-col">
-          {MORE_TOOLS.map((key, i) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => onSelectPanel(key)}
-              className={`${row} rv2-tile-in border-b`}
-              style={{
-                borderColor: 'var(--border-light)',
-                color: 'var(--text-primary)',
-                animationDelay: `${i * 18}ms`,
-              }}
-            >
-              {t.moreMenu[key]}
-              <ChevronRightSmall size={15} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
-            </button>
+          {MORE_GROUPS.map((group) => (
+            <div key={group.key} className="flex flex-col">
+              <CapsLabel className="pt-4 pb-1.5" style={{ color: 'var(--text-faint)' }}>
+                {t.moreMenu[group.key]}
+              </CapsLabel>
+              {group.tools.map((key) => {
+                const IconFor = MORE_ICONS[key];
+                const rust = key === 'feedback';
+                const i = rowIndex++;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => onSelectPanel(key)}
+                    className={`${row} rv2-tile-in border-b`}
+                    style={{
+                      borderColor: 'var(--border-light)',
+                      color: rust ? 'var(--accent-rust)' : 'var(--text-primary)',
+                      animationDelay: `${i * 18}ms`,
+                    }}
+                  >
+                    <IconFor size={16} className="shrink-0" style={{ color: rust ? 'var(--accent-rust)' : 'var(--text-muted)' }} />
+                    <span className="flex-1">{t.moreMenu[key]}</span>
+                    <ChevronRightSmall size={15} className="shrink-0" style={{ color: 'var(--text-faint)' }} />
+                  </button>
+                );
+              })}
+            </div>
           ))}
           {/* The edit row is gone. This sheet is the mobile More menu, and the
               editor textarea and the Cancel/Save bar exist only in the desktop
@@ -2150,7 +2256,7 @@ function PanelContent({
             {citationParts.year && <span style={{ color: 'var(--text-muted)' }}> {citationParts.year}</span>}
           </p>
           <p className="font-sans text-[12px] mt-1" style={{ color: 'var(--text-secondary)' }}>
-            {[citationParts.locator, citationParts.source].filter(Boolean).join(' · ')}
+            {[citationParts.locator, citationParts.copy.replace(/\.$/, ''), citationParts.source].filter(Boolean).join(' · ')}
           </p>
           <p className="font-sans text-[11.5px] mt-1.5 break-all" style={{ color: 'var(--text-faint)' }}>
             {citationParts.url}
@@ -2206,6 +2312,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
+  /**
+   * Whether the client has taken over from the server render. The server has
+   * no viewport to measure, so isDesktop guesses true there — which meant the
+   * server sent every phone the DESKTOP filmstrip: a button and a thumbnail
+   * URL for every page of the book, a quarter of the HTML on a 101-page book
+   * and far worse on the 4,198-page one, and React then threw the whole
+   * subtree away as a hydration mismatch and rendered the mobile strip in its
+   * place. Neither strip is rendered until the viewport is known.
+   */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   // Librarian conversation survives panel toggles and page turns
   const [librarianMessages, setLibrarianMessages] = useState<LibrarianMessage[]>([]);
@@ -2399,16 +2516,118 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     }
   }, []);
 
-  // Mobile: one scroller for the stacked panes. Reset it on a page turn so a
-  // new page always starts at the top, and drive paging from a horizontal swipe.
+  // Mobile: one scroller for the stacked panes, and paging driven from a
+  // horizontal swipe.
   const mobileMainRef = useRef<HTMLElement>(null);
+
+  /**
+   * Which stacked pane you were reading when the page turned. Resetting the
+   * column to the top on every turn meant a swipe taken halfway down a
+   * translation landed you back on the next page's scan, so reading a
+   * translation across a page break cost a scroll past the facsimile every
+   * time. Turning a page from inside a pane now keeps you in that pane.
+   */
+  const mobileAnchor = useRef<string | null>(null);
+  // A swipe is "carry on reading" and keeps your pane. Every other way of
+  // changing page — the pager, the filmstrip, Contents, a typed page number —
+  // is a deliberate move, and lands at the top of the reader.
+  const keepPaneOnTurn = useRef(false);
+  // Which way the last turn went, so the new page can arrive from that side.
+  // Taken from the index rather than from the swipe, so the pager, the
+  // filmstrip and a jump all animate the same way a swipe does.
+  const lastIndex = useRef(r.currentIndex);
+  // Restoring the anchor scrolls the column, and that scroll must not be read
+  // back as a reading move — on a short page the restore clamps at the foot,
+  // which would re-read the anchor as the scan and lose the pane on the next
+  // turn. Same idea as the zoom guard on the scan sync above.
+  const anchorLock = useRef(0);
+
+  const readMobileAnchor = useCallback(() => {
+    const el = mobileMainRef.current;
+    if (!el) return null;
+    // You haven't moved: there is no pane to hold, and a turn starts at the top.
+    if (el.scrollTop < 24) return null;
+    const box = el.getBoundingClientRect();
+    // The deepest pane you have brought up the screen — NOT the pane at the top
+    // edge. Plenty of pages are too short for the translation to ever reach the
+    // top, and reading one meant no anchor at all: the pane sat at the foot of
+    // the screen, which is exactly the case a turn used to throw away.
+    const reached = box.bottom - box.height * 0.25;
+    let anchor: string | null = null;
+    for (const section of el.querySelectorAll<HTMLElement>('[data-reader-section]')) {
+      if (section.getBoundingClientRect().top <= reached) anchor = section.dataset.readerSection ?? null;
+    }
+    return anchor;
+  }, []);
 
   useEffect(() => {
     ocrRef.current?.scrollTo({ top: 0 });
     enRef.current?.scrollTo({ top: 0 });
-    mobileMainRef.current?.scrollTo({ top: 0 });
     setBarHidden(false);
   }, [r.currentPageId]);
+
+  // Keyed on the page that is actually RENDERED, not the one being navigated
+  // to: an uncached turn changes the id first and the content a fetch later,
+  // and anchoring against the outgoing page's layout puts you nowhere.
+  useLayoutEffect(() => {
+    const el = mobileMainRef.current;
+    if (!el) return;
+    // Read once: the two passes below must place the SAME pane.
+    const anchor = keepPaneOnTurn.current ? mobileAnchor.current : null;
+    keepPaneOnTurn.current = false;
+    anchorLock.current = Date.now() + 250;
+    const place = () => {
+      // No anchor, or the new page hasn't got that pane (plenty have no
+      // translation): start at the top, as before.
+      const target = anchor
+        ? el.querySelector<HTMLElement>(`[data-reader-section="${anchor}"]`)
+        : null;
+      if (target) {
+        // Under the bar, not under the top edge of the column: the bar floats
+        // over the column and is always back on screen for a new page, so
+        // aligning to the edge would put the first line behind it.
+        const delta = target.getBoundingClientRect().top - el.getBoundingClientRect().top - BAR_H;
+        el.scrollTop = Math.max(0, el.scrollTop + delta);
+      } else {
+        el.scrollTop = 0;
+      }
+      lastScrollY.current = el.scrollTop;
+      barIntent.current = 0;
+    };
+    place();
+
+    // Slide the panes in from the side the turn came from. Restarting the
+    // animation by hand rather than keying the elements: a new key would
+    // remount the column, and the scan would be re-fetched and re-decoded on
+    // every page turn.
+    const back = r.currentIndex < lastIndex.current;
+    lastIndex.current = r.currentIndex;
+    for (const pane of Array.from(el.querySelectorAll<HTMLElement>(':scope > section'))) {
+      // The CONTENTS of the pane, not the pane. Sliding the pane itself moved
+      // its background with it and left a strip of the column showing down the
+      // side of the screen — a white gap running past the edge of the page.
+      // The pane holds still and its text and facsimile arrive inside it.
+      const inner = pane.lastElementChild;
+      if (!(inner instanceof HTMLElement)) continue;
+      // The drag-follow writes an inline transform on this same element; leave
+      // it in place and the pane starts its arrival wherever the finger left it.
+      inner.style.transition = '';
+      inner.style.transform = '';
+      inner.classList.remove('rv2-turn-next', 'rv2-turn-prev');
+      void inner.offsetWidth; // reflow, or the class swap is coalesced and nothing plays
+      inner.classList.add(back ? 'rv2-turn-prev' : 'rv2-turn-next');
+    }
+
+    // The title bar comes back on a turn and the new text settles a beat
+    // later; both change how far the column can scroll, so a position taken
+    // in this pass alone lands short of where it was asked to go.
+    const raf = requestAnimationFrame(place);
+    return () => cancelAnimationFrame(raf);
+    // The RENDERED page only. On an uncached turn the index moves a fetch
+    // ahead of the content, and keying on it too would play the animation
+    // over the outgoing page and then again over the new one.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [r.currentPage.id]);
 
   /**
    * How much of the viewport the on-screen keyboard is covering. The layout
@@ -2440,14 +2659,86 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * with no height of its own snaps between sizes, so measure what the content
    * wants — the header plus its scroller's full content — and animate to it.
    */
+  const sheetOpen = !!leftPanel && !isDesktop;
+  /**
+   * Whether the sheet's list runs on past its bottom edge. On a 568px phone
+   * ten grouped items do not fit, and the list happened to cut cleanly at a
+   * hairline divider — which reads as the end of the menu rather than as more
+   * to come, so Reading settings and Send feedback looked like they did not
+   * exist. A fade over the last few pixels says the list continues.
+   */
+  const [sheetHasMore, setSheetHasMore] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
+  /**
+   * Pull the sheet down to put it away. It opened with one way out: a 16px
+   * glyph tucked under the site header, at the far end of a panel you had just
+   * scrolled to the bottom of. A sheet you can push away with the thumb that
+   * opened it is the whole point of a sheet.
+   */
+  const sheetDrag = useRef<{ y: number; dy: number } | null>(null);
+  const onSheetDragStart = (e: React.TouchEvent) => {
+    if (e.touches.length !== 1) { sheetDrag.current = null; return; }
+    sheetDrag.current = { y: e.touches[0].clientY, dy: 0 };
+    const el = sheetRef.current;
+    if (el) el.style.transition = 'none';
+  };
+  const onSheetDragMove = (e: React.TouchEvent) => {
+    const s = sheetDrag.current;
+    const el = sheetRef.current;
+    if (!s || !el || e.touches.length !== 1) return;
+    // Downward only: dragging up would tear the sheet off its own bottom edge.
+    s.dy = Math.max(0, e.touches[0].clientY - s.y);
+    el.style.transform = `translateY(${s.dy}px)`;
+  };
+  const onSheetDragEnd = () => {
+    const s = sheetDrag.current;
+    const el = sheetRef.current;
+    sheetDrag.current = null;
+    if (!s || !el) return;
+    el.style.transition = 'transform 200ms ease-out';
+    if (s.dy > SHEET_DISMISS_PULL) {
+      el.style.transform = `translateY(${el.offsetHeight}px)`;
+      window.setTimeout(() => setLeftPanel(null), 170);
+    } else {
+      el.style.transform = '';
+    }
+  };
+  // A sheet that closed mid-pull would open again already pushed down.
+  useEffect(() => {
+    const el = sheetRef.current;
+    if (!el) return;
+    el.style.transition = '';
+    el.style.transform = '';
+  }, [leftPanel]);
+
+  // The scroller belongs to whichever panel is mounted, so find it rather than
+  // holding a ref to it, and watch the content too: panels fetch.
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    if (!sheet || !leftPanel) { setSheetHasMore(false); return; }
+    const body = sheet.querySelector<HTMLElement>('[class*="overflow-y-auto"]');
+    if (!body) { setSheetHasMore(false); return; }
+    const measure = () => setSheetHasMore(body.scrollHeight - body.scrollTop - body.clientHeight > 8);
+    measure();
+    body.addEventListener('scroll', measure, { passive: true });
+    const ro = new ResizeObserver(measure);
+    ro.observe(body);
+    for (const child of Array.from(body.children)) ro.observe(child);
+    return () => { body.removeEventListener('scroll', measure); ro.disconnect(); };
+    // The observer covers the sheet being resized, so its height is not a dep.
+  }, [leftPanel]);
   const [sheetHeight, setSheetHeight] = useState<number | null>(null);
   useLayoutEffect(() => {
     if (!leftPanel || isDesktop) { setSheetHeight(null); return; }
     // With the keyboard up the usable viewport is what is LEFT above it, not
     // the window — sizing against the window made the sheet climb the screen.
-    const visible = Math.max(200, window.innerHeight - keyboardInset);
-    const cap = Math.round(visible * (keyboardInset > 0 ? 0.82 : 0.72));
+    // The cap is the room the sheet actually has: everything above whatever it
+    // rises from, less a margin so it never reaches the top edge. A flat 72% of
+    // the window left the More menu 400px for 480px of rows, so the last two
+    // items — Reading settings and Send feedback — sat below the fold on every
+    // phone, and under 8 of 10 on a small one.
+    const bottom = keyboardInset > 0 ? keyboardInset : MOBILE_TOOLBAR_H;
+    const cap = Math.max(200, window.innerHeight - bottom - SHEET_TOP_GAP);
     // Lists and conversations always want the full sheet; the short, fixed
     // panels size to their own content so they don't sit in a half-empty box.
     if (SHEET_FILLS.has(leftPanel)) { setSheetHeight(cap); return; }
@@ -2455,8 +2746,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     if (!sheet) return;
     const measure = () => {
       const header = sheet.firstElementChild as HTMLElement | null;
-      const body = sheet.lastElementChild as HTMLElement | null;
-      if (!header || !body) return;
+      // Skip the fade overlay: it is a later sibling of the panel and 36px
+      // tall, and measured as the body it sized the whole sheet to 113px.
+      const body = Array.from(sheet.children)
+        .filter((c): c is HTMLElement => c instanceof HTMLElement && c.dataset.sheetFade === undefined)
+        .pop() ?? null;
+      if (!header || !body || body === header) return;
       setSheetHeight(Math.min(cap, Math.ceil(header.offsetHeight + body.scrollHeight)));
     };
     measure();
@@ -2468,31 +2763,133 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   }, [leftPanel, keyboardInset, isDesktop]);
 
   // Mobile title bar yields to the reading: it slides away as you read down
-  // and comes back the moment you scroll up. The threshold keeps a jittery
-  // finger from flickering it, and the top of the page always shows it.
+  // and comes back when you scroll up. Height, contents and visibility all
+  // move on this one curve and duration — they used to run at 200ms, 150ms
+  // and instantly, so the bar arrived in pieces and left in one cut.
+  const BAR_MS = 240;
+  const BAR_EASE = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
   const [barHidden, setBarHidden] = useState(false);
   const lastScrollY = useRef(0);
+  /**
+   * Scrolling that has kept going the same way, in pixels: up is negative.
+   * Six pixels of movement used to be enough to throw the whole bar back on
+   * screen, and momentum alone can produce that, so it appeared out of
+   * nothing. Turning it takes a deliberate stretch of scrolling now, and
+   * changing direction starts the count again.
+   */
+  const barIntent = useRef(0);
+  /**
+   * The bar waits before coming back. Meeting the threshold mid-scroll and
+   * appearing on the spot put it on screen while the reader was still moving,
+   * which is what made it feel like it jumped out. Leaving is not delayed:
+   * getting out of the way should be immediate.
+   */
+  const barShowTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancelBarShow = useCallback(() => {
+    if (barShowTimer.current !== null) {
+      clearTimeout(barShowTimer.current);
+      barShowTimer.current = null;
+    }
+  }, []);
+  const showBarSoon = useCallback(() => {
+    if (barShowTimer.current !== null) return; // already on its way
+    barShowTimer.current = setTimeout(() => {
+      barShowTimer.current = null;
+      setBarHidden(false);
+    }, BAR_SHOW_DELAY_MS);
+  }, []);
+  useEffect(() => cancelBarShow, [cancelBarShow]);
+
   const onMobileScroll = useCallback(() => {
     const el = mobileMainRef.current;
     if (!el) return;
     const y = el.scrollTop;
     const delta = y - lastScrollY.current;
+    lastScrollY.current = y;
+    if (Date.now() > anchorLock.current) mobileAnchor.current = readMobileAnchor();
+    if (delta === 0) return;
+    if ((delta > 0) !== (barIntent.current > 0)) barIntent.current = 0;
+    barIntent.current += delta;
     // At the foot of the page the pager appears, and that is exactly when a
     // reader wants the whole set of ways out — next, previous, or back to the
     // book — so the bar comes back with it rather than staying hidden.
     const atFoot = el.scrollHeight - (y + el.clientHeight) < 80;
-    if (y < 48 || atFoot) setBarHidden(false);
-    else if (delta > 6) setBarHidden(true);
-    else if (delta < -6) setBarHidden(false);
-    lastScrollY.current = y;
-  }, []);
+    // The top of a page is where the bar lives: no wait there, it is the
+    // resting state rather than something arriving.
+    if (y < 48) { cancelBarShow(); setBarHidden(false); barIntent.current = 0; }
+    else if (barIntent.current > 16) { cancelBarShow(); setBarHidden(true); }
+    else if (barIntent.current < -28 || atFoot) showBarSoon();
+  }, [readMobileAnchor, cancelBarShow, showBarSoon]);
 
   // Swipe to page: axis-locked so a vertical read never turns a page, and a
   // horizontal drag has to clear both a distance floor and a vertical bias.
+  // Carried by both layouts — a tablet in landscape gets the desktop grid, and
+  // for a while that meant a touch device with no gesture at all.
   const swipeRef = useRef<{ x: number; y: number; axis: null | 'x' | 'y' } | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length !== 1) { swipeRef.current = null; return; }
-    swipeRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, axis: null };
+    if (e.touches.length !== 1) {
+      // A second finger means a pinch, not a page turn — abandon the swipe
+      // AND any drag-follow offset already applied, or the column sits
+      // shifted sideways for the whole zoom gesture.
+      swipeRef.current = null;
+      dragFollow(null);
+      return;
+    }
+    // Anything with its own use for a horizontal drag opts out by marking
+    // itself: a zoomed scan is being panned, and a slide-out panel is not the
+    // page you are reading.
+    if ((e.target as HTMLElement | null)?.closest('[data-no-page-swipe]')) {
+      swipeRef.current = null;
+      return;
+    }
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+    // A finger that lands in live selected text is working the selection, not
+    // turning a page — dragging a handle sideways across the 45px floor used
+    // to throw the selection away and jump to the next page. The pad covers
+    // the handles, which sit a little outside the text they belong to.
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+      const PAD = 24;
+      for (const rect of Array.from(selection.getRangeAt(0).getClientRects())) {
+        if (x >= rect.left - PAD && x <= rect.right + PAD && y >= rect.top - PAD && y <= rect.bottom + PAD) {
+          swipeRef.current = null;
+          return;
+        }
+      }
+    }
+    swipeRef.current = { x, y, axis: null };
+  };
+  // Nothing moved under the finger during a drag, so the gesture read as
+  // absent (#4385). A locked horizontal drag now pulls the whole column a
+  // little (with resistance) and a released drag snaps back; the arrival of
+  // the new page is animated separately (#4384's slide-in, direction taken
+  // from the page index). Direct style writes, not state — a re-render per
+  // touchmove is exactly the jank the scan viewer's compositing comments
+  // warn about.
+  const dragFollow = (dx: number | null) => {
+    const el = mobileMainRef.current;
+    if (!el) return;
+    // The pane CONTENTS move under the finger, not the column. Moving the
+    // column moved its backgrounds with it, and the gap it opened showed the
+    // bare page behind: a pale band down the side of the screen for the length
+    // of every swipe, against a facsimile that is nowhere near that colour.
+    // The panes hold still and their text and scan slide inside them, which is
+    // the same gesture with nothing behind it to see. (Same reasoning as the
+    // turn animation, which moves these very elements.)
+    for (const pane of Array.from(el.querySelectorAll<HTMLElement>(':scope > section'))) {
+      const inner = pane.lastElementChild;
+      if (!(inner instanceof HTMLElement)) continue;
+      if (dx === null) {
+        inner.style.transition = 'transform 180ms ease-out';
+        inner.style.transform = '';
+      } else {
+        inner.style.transition = 'none';
+        inner.style.transform = `translateX(${Math.max(-90, Math.min(90, dx * 0.35))}px)`;
+      }
+    }
+    // A column left translated by an older build would sit off-centre forever.
+    if (el.style.transform) { el.style.transition = ''; el.style.transform = ''; }
   };
   const onTouchMove = (e: React.TouchEvent) => {
     const s = swipeRef.current;
@@ -2502,17 +2899,30 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     if (!s.axis && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
       s.axis = Math.abs(dx) > Math.abs(dy) * 1.5 ? 'x' : 'y';
     }
+    if (s.axis === 'x') dragFollow(dx);
   };
   const onTouchEnd = (e: React.TouchEvent) => {
     const s = swipeRef.current;
     swipeRef.current = null;
     if (!s || s.axis !== 'x') return;
+    dragFollow(null);
     const t = e.changedTouches[0];
     const dx = t.clientX - s.x;
     if (Math.abs(dx) < 45) return;
-    if (dx < 0) r.goNext(); else r.goPrev();
+    if (dx < 0) {
+      if (!nextPage) return;
+      keepPaneOnTurn.current = true;
+      r.goNext();
+    } else {
+      if (!prevPage) return;
+      keepPaneOnTurn.current = true;
+      r.goPrev();
+    }
   };
-
+  const onTouchCancel = () => {
+    swipeRef.current = null;
+    dragFollow(null);
+  };
   // Filmstrip: keep the current page centred
   const stripRef = useRef<HTMLDivElement>(null);
   const stripMobileRef = useRef<HTMLDivElement>(null);
@@ -2531,11 +2941,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // text on screen while being perfectly correct on the clipboard; setting the
   // title, the locator and the URL apart makes it checkable at a glance
   // without changing a character of what gets pasted.
+  // The copy clause (#4360): the scan shows one library's physical object, and
+  // a citation of the image is a claim about that copy — marginalia and
+  // provenance marks exist nowhere else. Null when no genuine holder is known
+  // (aggregators like Internet Archive are filtered), and then the citation
+  // reads as before.
+  const holdingCopy = resolveHoldingCopy(r.book);
   const citationParts = {
     author: r.book.author ? `${r.book.author}.` : '',
     title: r.book.display_title || r.book.title,
     year: r.book.published ? `(${r.book.published})` : '',
     locator: r.currentPage?.page_number != null ? `p. ${r.currentPage.page_number}` : '',
+    copy: holdingCopy ? `${holdingCopy.statement}.` : '',
     source: 'Source Library',
     url: `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`,
   };
@@ -2543,6 +2960,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     citationParts.author,
     `${citationParts.title}${citationParts.year ? ` ${citationParts.year}` : ''},`,
     `${citationParts.locator}.`,
+    citationParts.copy,
     `${citationParts.source}.`,
     citationParts.url,
   ].filter(Boolean).join(' ');
@@ -2556,6 +2974,41 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   const pageNum = r.currentPage?.page_number ?? '—';
   const scan = resolveScanUrls(r.currentPage);
+  // Corpus editions (#4350): no scan exists, so a CDLI tablet-witness
+  // photograph stands in — clearly captioned as a witness, not the source of
+  // the text. The index survives page turns on purpose: the witnesses belong
+  // to the composition, not to any one of our page divisions.
+  const witnessPhotos = useMemo(
+    () => ((r.book.cdli_witnesses || []) as CdliWitness[]).filter(w => w.has_photo && w.photo_url),
+    [r.book.cdli_witnesses],
+  );
+  const [witnessIndex, setWitnessIndex] = useState(0);
+  const witness = !scan.display && witnessPhotos.length > 0
+    ? witnessPhotos[((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length]
+    : null;
+  // Through the sharp resizer, not raw: CDLI originals run to ~24MB. Two
+  // tiers, same contract as display vs native — 1600px at rest, 4000px once
+  // the reader zooms past 1.5× or goes fullscreen. The caption's CDLI link
+  // remains the road to the untouched original.
+  const witnessSrc = witness?.photo_url
+    ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=1600&q=80`
+    : undefined;
+  const witnessNativeSrc = witness?.photo_url
+    ? `/api/image?url=${encodeURIComponent(witness.photo_url)}&w=4000&q=85`
+    : undefined;
+  // The mobile scan pane is sized by the page's own shape (full-bleed width,
+  // height from the aspect ratio) instead of a fixed 66dvh box. The ratio is
+  // only known once an image loads, so keep the last seen one across page
+  // turns — pages of one book share a shape — and open on a typical page
+  // proportion before the first load.
+  const [scanRatio, setScanRatio] = useState(0.72);
+  const onScanNaturalSize = useCallback((size: { w: number; h: number }) => {
+    if (!size.w || !size.h) return;
+    const ratio = size.w / size.h;
+    setScanRatio(prev => (Math.abs(prev - ratio) > 0.005 ? ratio : prev));
+  }, []);
+  const ocrCorpusInfo = pageTextCorpus(r.currentPage);
+  const translationCorpusInfo = translationCorpus(r.currentPage);
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/book/${r.bookPath}/page/${r.currentPageId}`
     : `https://sourcelibrary.org/book/${r.bookPath}/page/${r.currentPageId}`;
@@ -2567,6 +3020,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const leftPanelWidth = 340;
   const prevPage = r.currentIndex > 0 ? r.pageList[r.currentIndex - 1] : null;
   const nextPage = r.currentIndex >= 0 && r.currentIndex < r.totalPages - 1 ? r.pageList[r.currentIndex + 1] : null;
+  // A zoomed pan that runs past the scan's left/right edge turns the page
+  // (ScanViewer's onEdgePageTurn) — without it a zoomed-in reader has no way
+  // forward short of zooming out first (#4385). It is a swipe-like move, so
+  // it holds your pane like one (#4383).
+  const onScanEdgeTurn = (dir: 'next' | 'prev') => {
+    if (dir === 'next') {
+      if (!nextPage) return;
+      keepPaneOnTurn.current = true;
+      r.goNext();
+    } else {
+      if (!prevPage) return;
+      keepPaneOnTurn.current = true;
+      r.goPrev();
+    }
+  };
 
   // Colour of whatever pane ends the mobile column, used to fill any leftover
   // height so a short page never shows a white band.
@@ -2698,6 +3166,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   return (
     <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)} className="flex flex-col h-[100dvh]">
+      {/* WebMCP only on the main site: get_citation emits /book/… URLs whose
+          shape is wrong on tenant reading rooms, and embedded iframes would
+          need an explicit allow="tools" grant from the partner page anyway. */}
+      {!isEmbedded && <ReaderWebMCP r={r} />}
       {/* Never in an embed or on a tenant subdomain. A partner reading room
           exists to hold one collection; a menu offering Explore, Works and
           Support sends the reader to URLs the tenant host 404s, and out of the
@@ -2926,6 +3398,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
           className="relative flex min-h-0"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           {r.views.scan && (
             <section
@@ -2940,17 +3415,20 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     onZoomReset={() => changeZoom(1)}
                     lensOn={lensOn}
                     onToggleLens={() => setLensOn(v => !v)}
-                    onExpand={scan.native ? () => setLightbox(true) : undefined}
+                    onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
                   />
                 }
               >
-                <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{t.panes.originalScan}</CapsLabel>
+                <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
               </PaneHeader>
               {/* `relative` because PageDeepZoomButton positions its control
                   and its inline viewer against the nearest positioned parent:
                   the tiled canvas fills this box, over the scan, while the
                   translation stays readable beside it. */}
-              <div className={`relative flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}>
+              <div
+                className={`relative flex-1 min-h-0 overflow-hidden ${scanZoom > 1 ? '' : 'px-6 py-[22px]'}`}
+                data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
+              >
                 <ScanViewer
                   page={r.currentPage}
                   book={r.book}
@@ -2959,7 +3437,21 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   lensOn={lensOn}
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
+                  srcOverride={witnessSrc}
+                  nativeSrcOverride={witnessNativeSrc}
+                  altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
+                  onEdgePageTurn={onScanEdgeTurn}
                 />
+                {witness && (
+                  <WitnessCaption
+                    witness={witness}
+                    index={((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length}
+                    total={witnessPhotos.length}
+                    onPrev={() => setWitnessIndex(i => i - 1)}
+                    onNext={() => setWitnessIndex(i => i + 1)}
+                    corpus={ocrCorpusInfo}
+                  />
+                )}
                 {/* Tiled deep zoom, where the page has a tile pyramid. The
                     lightbox tops out at a 4000px render; this serves tiles, so
                     a reader can go to the native resolution of the scan and
@@ -3075,6 +3567,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     editing={editing}
                   />
                 )}
+                {/* A corpus translation is the corpus editors' work, not AI's —
+                    say so where the reader is looking (#4350). */}
+                {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -3105,6 +3600,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <div
               role="dialog"
               aria-labelledby="rv2-panel-title"
+              data-no-page-swipe=""
               className="absolute top-0 left-0 bottom-0 border-r z-40 flex flex-col rv2-slide-in-left"
               style={{
                 width: leftPanelWidth,
@@ -3148,8 +3644,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 re-rendered both copies on every panel toggle and every scroll
                 that flipped the bar. 463 public books exceed 1,000 pages and
                 the largest is 4,198, which is ~8,400 buttons and images for
-                one reader. */}
-            {isDesktop && (
+                one reader. And `mounted`, because on the server isDesktop is
+                a guess: see where it is declared. */}
+            {mounted && isDesktop && (
             <Filmstrip
               pageList={r.pageList}
               currentPageId={r.currentPageId}
@@ -3165,20 +3662,41 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
       </div>
 
       {/* ── Mobile / tablet (<lg): stacked panes, filmstrip pinned ───────── */}
-      <div className="lg:hidden flex flex-col flex-1 min-h-0">
-        {/* Clipping is only needed while the bar is collapsing. Left on, it
-            cut off the account menu, which opens downward out of the header. */}
+      {/* overflowX clip: the drag-follow translates the column, and a
+          transformed element's bounds extend the PAGE's scrollable overflow —
+          iOS then natively panned the whole document sideways (title bar,
+          filmstrip, toolbar and all) and could leave it stuck there. Clipped
+          here, only the column can ever move. `clip`, not `hidden`: hidden
+          would quietly turn this box into a scroll container. */}
+      <div className="lg:hidden relative flex flex-col flex-1 min-h-0" style={{ overflowX: 'clip' }}>
+        {/* The bar floats over the column rather than sitting above it in the
+            flow. It used to animate its own height, which resized the scroller
+            under the reader and shoved the text down the screen every time it
+            came back. The column carries a permanent lead-in of the same
+            height instead, so at the top of a page nothing looks different and
+            nothing ever moves. */}
         <header
-          className="shrink-0 transition-[height] duration-200 ease-out relative z-[60]"
+          className="absolute top-0 left-0 right-0 z-[60]"
           style={{
+            height: BAR_H,
             background: INK,
             color: '#fdfcf9',
-            height: barHidden ? 0 : 52,
-            overflow: barHidden ? 'hidden' : 'visible',
-            // Same reason as the filmstrips: a 0-height bar still held a
-            // focusable back-link and menu button, and aria-hidden over them
-            // made that worse rather than better.
-            visibility: barHidden ? 'hidden' : 'visible',
+            // Also away while a sheet is open. The sheet is a modal with its
+            // own title and its own way out, and it is tall enough to reach
+            // the top of the screen — where it slid UNDER this bar, taking the
+            // grab handle with it and clipping the close button into a flat
+            // white square. Nothing to collide with, and the sheet gets the
+            // height back.
+            transform: barHidden || sheetOpen ? 'translateY(-100%)' : 'none',
+            // Same reason as the filmstrips: a bar off the top of the screen
+            // still held a focusable back-link and menu button, and aria-hidden
+            // over them made that worse rather than better.
+            visibility: barHidden || sheetOpen ? 'hidden' : 'visible',
+            // visibility is in the transition on purpose. It is a discrete
+            // property, so transitioning it holds the old value for the whole
+            // duration instead of applying at once — without that the contents
+            // were cut off the screen while the bar was still leaving.
+            transition: `transform ${BAR_MS}ms ${BAR_EASE}, visibility ${BAR_MS}ms ${BAR_EASE}`,
           }}
         >
           {/* The row fades with the bar rather than being revealed by it.
@@ -3186,8 +3704,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               at full strength in a 4px-tall box, so the avatar — the tallest
               thing in the row — appeared first and the rest caught up. */}
           <div
-            className="flex items-center gap-2.5 h-[52px] px-3 transition-opacity duration-150"
-            style={{ opacity: barHidden ? 0 : 1 }}
+            className="flex items-center gap-2.5 h-[52px] px-3"
+            style={{
+              opacity: barHidden ? 0 : 1,
+              transition: `opacity ${BAR_MS}ms ${BAR_EASE}`,
+            }}
           >
             {/* Circles-only mark (the wordmark stays a desktop affordance) */}
             {/* Sized to match the account avatar beside it — the two circles
@@ -3232,6 +3753,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           className="flex-1 min-h-0 overflow-y-auto flex flex-col"
           style={{
             overscrollBehavior: 'contain',
+            // The turn animation slides the panes in from the side, and a pane
+            // sitting 14px to the right is 14px of scrollable width the browser
+            // will scroll sideways to reach — the turn jiggled and could be
+            // left horizontally scrolled if you touched it mid-flight.
+            overflowX: 'hidden',
             background: lastSurface,
             // No scroll-snap here. A proximity snap on the pager made the
             // scroller grab at the finger near the foot of every page, which
@@ -3242,30 +3768,74 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchCancel}
         >
-          {r.views.scan && (
+          {/* The floating bar's share of the column. Fixed, so the reading
+              area never changes size and the text never shifts. */}
+          <div className="shrink-0" style={{ height: BAR_H }} aria-hidden="true" />
+          {r.views.scan && !scan.display && !witness && (
+            /* No facsimile: one quiet line instead of a scan-sized empty bed.
+               The full-height placeholder read as an image that failed to
+               load — "the shimmer of empty pages" (#4385). */
+            <section className="border-b" style={{ background: SURFACE.scanBed, borderColor: 'var(--border-medium)' }}>
+              <div className="min-h-[34px] flex items-center px-4 py-1.5">
+                <span className="font-sans text-[12px]" style={{ color: 'var(--text-faint)' }}>
+                  {t.panes.noFacsimile}
+                </span>
+              </div>
+            </section>
+          )}
+          {r.views.scan && (scan.display || witness) && (
             <section style={{ background: SURFACE.scanBed }}>
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
-                <CapsLabel style={{ color: 'var(--text-muted)' }}>{t.panes.originalScan}</CapsLabel>
+                <CapsLabel style={{ color: 'var(--text-muted)' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
                 <ScanControls
+                  compact
                   zoom={scanZoom}
                   onZoomStep={zoomStep}
                   onZoomReset={() => changeZoom(1)}
                   lensOn={lensOn}
                   onToggleLens={() => setLensOn(v => !v)}
-                  onExpand={scan.native ? () => setLightbox(true) : undefined}
+                  onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
                 />
               </div>
               {/* Zoom/pan and the lens need the touch stream, so keep those
-                  gestures from also turning the page */}
+                  gestures from also turning the page. Full-bleed: the pane is
+                  as wide as the phone and as tall as the page's own shape —
+                  the old fixed 66dvh box left the scan floating in padding
+                  ("the width should fill to the ends", #4385). */}
               <div
-                className="relative px-4 py-4"
-                style={{ height: 'min(66dvh, 520px)' }}
-                onTouchStart={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
-                onTouchMove={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
-                onTouchEnd={e => { if (scanZoom > 1 || lensOn) e.stopPropagation(); }}
+                className="relative"
+                style={{
+                  aspectRatio: String(scanRatio),
+                  // The exception to full-bleed: an extreme ratio (a scroll,
+                  // a strip, a foldout) would otherwise make the pane several
+                  // screens tall — cap those and let the viewer letterbox.
+                  // ONLY those: a maxHeight on a normal page transfers back
+                  // through aspect-ratio into a narrower box, quietly shaving
+                  // the full-width promise on every tall-ish page.
+                  maxHeight: scanRatio < 0.55 ? 'min(85dvh, 700px)' : undefined,
+                }}
+                data-no-page-swipe={scanZoom > 1 || lensOn ? '' : undefined}
               >
-                <ScanViewer page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn} />
+                <ScanViewer
+                  page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
+                  srcOverride={witnessSrc}
+                  nativeSrcOverride={witnessNativeSrc}
+                  altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
+                  onNaturalSize={onScanNaturalSize}
+                  onEdgePageTurn={onScanEdgeTurn}
+                />
+                {witness && (
+                  <WitnessCaption
+                    witness={witness}
+                    index={((witnessIndex % witnessPhotos.length) + witnessPhotos.length) % witnessPhotos.length}
+                    total={witnessPhotos.length}
+                    onPrev={() => setWitnessIndex(i => i - 1)}
+                    onNext={() => setWitnessIndex(i => i + 1)}
+                    corpus={ocrCorpusInfo}
+                  />
+                )}
                 {/* On a phone this opens the fullscreen viewer directly —
                     inline pan/zoom fights the swipe between pages. */}
                 {deepzoomManifest && (
@@ -3326,6 +3896,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     spanishAvailable={spanishAvailable}
                     editing={editing}
                   />
+                  {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
                 </div>
                 <div className="flex items-center gap-1">
                   {traceShown && (
@@ -3396,50 +3967,110 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             the keyboard is up it sits directly on the keyboard instead (the
             toolbar and strip are behind it), so the field being typed in and
             its results stay on screen. */}
+        {/* Something to tap that is not a 16px glyph. The sheet had no ground
+            behind it, so the only way out was the corner button — with a panel
+            of content between your thumb and it. */}
+        {leftPanel && !isDesktop && (
+          <button
+            type="button"
+            aria-label={t.panels.closeAria(leftPanelTitle)}
+            onClick={() => setLeftPanel(null)}
+            className="fixed left-0 right-0 top-0 z-40 rv2-scrim"
+            style={{ bottom: keyboardInset > 0 ? keyboardInset : MOBILE_TOOLBAR_H }}
+          />
+        )}
         {leftPanel && !isDesktop && (
           <div
             ref={sheetRef}
             className="fixed left-0 right-0 z-50 border-t flex flex-col rv2-slide-up transition-[height,bottom] duration-200 ease-out"
             style={{
-              bottom: keyboardInset > 0
-                ? keyboardInset
-                : MOBILE_TOOLBAR_H + (stripVisible ? 96 : 0),
+              // From the toolbar, over the filmstrip rather than above it.
+              // Clearing the strip cost the sheet 96px it does not have to
+              // spare, to keep a row of page thumbnails visible behind a menu
+              // nobody opened to look at thumbnails.
+              bottom: keyboardInset > 0 ? keyboardInset : MOBILE_TOOLBAR_H,
               height: sheetHeight ?? undefined,
-              maxHeight: keyboardInset > 0 ? undefined : '72dvh',
+              maxHeight: keyboardInset > 0
+                ? undefined
+                : `calc(100dvh - ${MOBILE_TOOLBAR_H + SHEET_TOP_GAP}px)`,
               background: SURFACE.panel, borderColor: 'var(--border-medium)',
               boxShadow: '0 -24px 48px -28px rgba(30,20,8,0.5)',
             }}
             role="dialog"
             aria-labelledby="rv2-sheet-title"
           >
-            <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
+            {/* The header is also the grip: the handle says the sheet can be
+                pushed away, and the whole band answers the drag, so the pull
+                works wherever the thumb lands rather than on a 4px bar. */}
+            <div
+              className="shrink-0 px-4 pb-2.5 border-b select-none"
+              style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG, touchAction: 'none' }}
+              onTouchStart={onSheetDragStart}
+              onTouchMove={onSheetDragMove}
+              onTouchEnd={onSheetDragEnd}
+              onTouchCancel={onSheetDragEnd}
+            >
+              {/* Square, like everything else here: globals.css flattens every
+                  rounded-* utility site-wide with !important, so a pill grip or
+                  a round close button silently becomes a block. */}
+              <div className="flex justify-center pt-2.5 pb-2">
+                <span
+                  aria-hidden="true"
+                  className="block"
+                  style={{ width: 40, height: 4, background: 'color-mix(in srgb, var(--bg-dark) 22%, transparent)' }}
+                />
+              </div>
               {/* One fixed row: back (when there is somewhere to go back to),
                   title, close. Close holds the top-right corner whatever else
                   is in the row — it used to shift down whenever a back button
                   appeared above it. */}
-              <div className="flex items-center gap-1.5 min-h-[28px]">
+              <div className="flex items-center gap-2 min-h-[44px]">
                 {MORE_TOOLS.some(k => k === leftPanel) && (
                   <button
                     type="button"
                     aria-label={t.panels.backToMore}
                     onClick={() => setLeftPanel('more')}
-                    className="w-11 h-11 -ml-3 shrink-0 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
-                    style={{ color: 'var(--text-muted)' }}
+                    className="w-11 h-11 shrink-0 -ml-1.5 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                    style={{ color: 'var(--text-secondary)' }}
                   >
-                    <ChevronLeft size={17} />
+                    <ChevronLeft size={20} />
                   </button>
                 )}
-                <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
-                <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
-                  className="w-11 h-11 -mr-3 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
+                <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate !text-[12px] tracking-[0.13em]" style={{ color: 'var(--text-primary)' }}>{leftPanelTitle}</CapsLabel>
+                {/* 20px in a 44px target, on the header's own ground. A 16px
+                    cross on a bare band read as decoration rather than the way
+                    out — and it is no longer the only way out: the ground
+                    behind the sheet and a pull on this bar both close it. */}
+                <button
+                  type="button"
+                  aria-label={t.panels.closeAria(leftPanelTitle)}
+                  onClick={() => setLeftPanel(null)}
+                  className="w-11 h-11 shrink-0 -mr-1.5 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  <X size={20} />
+                </button>
               </div>
               {leftPanelBlurb && (
-                <p className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
+                <p className="mt-0.5 pr-10 pb-1 font-sans text-[12.5px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                   {leftPanelBlurb}
                 </p>
               )}
             </div>
             <PanelContent panel={leftPanel} {...panelProps} />
+            {/* Over the foot of the sheet, not inside the scroller: a mask on
+                the scroller itself would fade the last row at the end of the
+                list too, which is exactly when there is nothing left to say. */}
+            <div
+              aria-hidden="true"
+              data-sheet-fade=""
+              className="pointer-events-none absolute left-0 right-0 bottom-0 transition-opacity duration-200"
+              style={{
+                height: 36,
+                opacity: sheetHasMore ? 1 : 0,
+                background: `linear-gradient(to top, ${SURFACE.panel}, transparent)`,
+              }}
+            />
           </div>
         )}
 
@@ -3457,8 +4088,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           }}
         >
           <div className="h-[96px]">
-            {/* See the desktop strip: one layout at a time, not two. */}
-            {!isDesktop && (
+            {/* See the desktop strip: one layout at a time, and not until the
+                client knows which one. */}
+            {mounted && !isDesktop && (
               <Filmstrip
                 pageList={r.pageList}
                 currentPageId={r.currentPageId}
@@ -3499,6 +4131,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           onNext={r.goNext}
           hasPrev={!!prevPage}
           hasNext={!!nextPage}
+          srcOverride={witnessNativeSrc}
+          altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
         />
       )}
     </div>

@@ -21,7 +21,8 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync, writeFileSync } from 'node:fs';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const ROWS = JSON.parse(readFileSync('scripts/output/harvard-phil-rows.json', 'utf8'));
@@ -91,7 +92,7 @@ async function main() {
     if (!COMMIT) { console.log(`· ${it.fhcl} ${String(pages.length).padStart(4)}p | ${title.slice(0, 50)}${it.vol ? ` [vol ${it.vol}]` : ''}`); results.push({ fhcl: it.fhcl, pages: pages.length }); await new Promise(x => setTimeout(x, 800)); continue; }
     const bookId = new ObjectId(), id = bookId.toHexString(), now = new Date();
     const slug = await uniqueSlug(db, slugify(it.en) || ('harvard-' + it.fhcl));
-    await db.collection('books').insertOne(makeBookDoc({
+    const acquired = await insertBookIfNew(db, {
       _id: bookId, id, slug, title, display_title: it.cjk || label,
       author, language: 'Chinese', original_language: 'Chinese', published: '',
       categories: [], collections: ['east-asia', 'chinese-classics'], thumbnail: pages[0]?.thumbnail || '',
@@ -108,7 +109,9 @@ async function main() {
       status: 'draft', hidden: true, visible: false, source_fingerprint: fp,
       normalized_title: slugify(it.cjk).replace(/-/g, ' '), normalized_author: slugify(author).replace(/-/g, ' '),
       created_at: now, updated_at: now,
-    }));
+    }, { importer: 'script:harvard-philosophy-direct', sourceIdentifier: it.fhcl, sourceUrl: manifestUrl });
+    // The gate declined this candidate; the reason is a row in `dedup_skips`.
+    if (!acquired.inserted) { console.log(`– ${it.fhcl} skip — ${acquired.message}`); results.push({ fhcl: it.fhcl, skip: true }); continue; }
     for (let s = 0; s < pages.length; s += 500) {
       const docs = pages.slice(s, s + 500).map((p, k) => { const pid = new ObjectId(); return makePageDoc({ _id: pid, id: pid.toHexString(), book_id: id, page_number: s + k + 1, photo: p.photo, thumbnail: p.thumbnail, photo_original: p.photo, created_at: now, updated_at: now }); });
       await db.collection('pages').insertMany(docs, { ordered: false });

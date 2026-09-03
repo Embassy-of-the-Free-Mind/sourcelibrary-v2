@@ -81,3 +81,57 @@ Note `next dev` cannot stand in for it in a worktree: the shared `node_modules`
 symlink points outside the worktree root and Turbopack panics on it
 ("Symlink [project]/node_modules is invalid, it points out of the filesystem
 root"). Preview deploys are the practical loop.
+
+## Tool descriptions are the only lever that acts before the mistake
+
+From an agent's own postmortem of its session (feedback, 2026-08-27): it
+asserted three false things with full confidence — no IIIF MCP servers exist
+(two do), visual-similarity over collections is unprecedented (it isn't), we
+lack IIIF endpoints (we ship them) — and each was caught only because a human
+pushed back. An unprompted agent files all three and moves on.
+
+/llms.txt, /developers, and result-payload notes all correct errors *after*
+they're made or only if consulted. The tool description is read every single
+time, by every client, before every call. **Treat descriptions as the primary
+documentation surface for agent consumers, not as parameter labels**: put the
+known data hazards (unreliable fields, sparse coverage, lanes a filter cannot
+reach) and the narrowing strategy in the description of the tool and of the
+specific parameter they poison. `get_quote` teaching citation practice and
+`year_from`'s artwork-year caution are the house pattern.
+
+---
+
+## A write tool fabricates identifiers too, and those land in your database
+
+The sections above are about what a model invents in its *output*. The same
+failure runs backwards through any tool that lets a model write *into* a store.
+
+`propose_collection` takes a `book_ids[]` array and `POST /api/collection-proposals`
+inserts it verbatim: no existence check, no resolution, nothing. Of the two
+proposals that accumulated there, **each contained exactly one book id that
+matches no record in `books` or in `deleted_books`** — `698420e1…` and
+`69b51e49…`, invented whole. They are well-formed 24-character hex, they sit in
+the correct id-space, and one of them (`69b51e49ff09e4fe943ab558`) falls inside a
+real import batch, with genuine neighbours two characters away. Nothing about
+them looks wrong.
+
+The damage is quiet because the approve path is quiet. `POST
+/api/collection-proposals/[id]` with `action:'approve'` hands `proposal.book_ids`
+straight to `createCollection()`, whose `updateMany({_id:{$in:…}})` simply matches
+fewer documents than it was given and reports no error. A 33-book collection
+becomes a 32-book collection, the page renders, the counts agree with each other,
+and the missing work is invisible — you cannot tell a book the curator dropped
+from a book the model hallucinated.
+
+**Resolve every model-supplied identifier before acting on it, and fail loudly on
+the gap.** `updateMany` matching fewer docs than ids is not a warning, it is a
+silent truncation. `scripts/create-proposed-collections-2026-08.mjs` does this:
+it fetches all ids first, diffs against what it asked for, and throws with the
+unresolved list rather than building a short collection.
+
+And when you repair one, **record which id was fabricated and what you did**. The
+two here needed opposite treatments: the Saint-Martin entry was unambiguous from
+the rationale (which cites him, and whose *sequel* was already in the list) so it
+was substituted, while the "Postel (1635)" entry was dropped outright — Postel
+died in 1581, so the date is invented too and there is no record to substitute.
+A silent substitution is a second fabrication, just one with better manners.

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { decodeShortlink } from '@/lib/shortlinks';
+import { mintCitationToken } from '@/lib/citation-token';
+import { meteredReaderEnabled } from '@/lib/free-preview';
 import { Page } from '@/lib/types';
 
 interface RouteContext {
@@ -56,9 +58,17 @@ export async function GET(request: NextRequest, context: RouteContext) {
       );
     }
 
+    // Metered reader (#4357): a citation must resolve even past the free
+    // sample, so the redirect carries a per-page capability token the
+    // page-content API honors for exactly this page (citation-token.ts).
+    // Only minted while metering is on — with the flag off the param would
+    // be inert noise on every shared URL.
+    const cite = meteredReaderEnabled() ? mintCitationToken(page.id) : null;
+    const citeSuffix = cite ? `?cite=${cite}` : '';
+
     // Redirect to the full page URL
     return NextResponse.redirect(
-      new URL(`${prefix}/book/${bookPath}/page/${page.id}`, request.url),
+      new URL(`${prefix}/book/${bookPath}/page/${page.id}${citeSuffix}`, request.url),
       { status: 302 }
     );
   } catch (error) {

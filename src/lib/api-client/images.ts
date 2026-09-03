@@ -29,6 +29,24 @@
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 /**
+ * Self-referential fetches (a server-side consumer pulling from our own
+ * /api/image or /api/crop-image — exports, auto-split, batch OCR crops) must
+ * carry the internal `itk` signature or the image gate budgets them like an
+ * anonymous scraper (src/lib/image-gate.ts, #4356). Signing here covers every
+ * consumer of these helpers at one stroke. Lazy import keeps node:crypto out
+ * of any bundle that pulls this module in without hitting the branch.
+ */
+async function withInternalImageToken(url: string): Promise<string> {
+  if (!url.includes('/api/image') && !url.includes('/api/crop-image')) return url;
+  try {
+    const { signImageProxyUrl } = await import('@/lib/image-proxy-auth');
+    return signImageProxyUrl(url);
+  } catch {
+    return url;
+  }
+}
+
+/**
  * Fetch an image from a URL and return it as a Buffer
  *
  * @param url - The image URL to fetch
@@ -46,6 +64,7 @@ async function fetchBuffer(
   options?: { timeout?: number }
 ): Promise<Buffer> {
   const timeout = options?.timeout || 30000;
+  url = await withInternalImageToken(url);
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -102,6 +121,7 @@ async function fetchBase64(
   options?: { timeout?: number; includeMimeType?: boolean }
 ): Promise<string | { base64: string; mimeType: string }> {
   const timeout = options?.timeout || 30000;
+  url = await withInternalImageToken(url);
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -274,6 +294,7 @@ async function fetchBufferWithMimeType(
   options?: { timeout?: number }
 ): Promise<{ buffer: Buffer; mimeType: string }> {
   const timeout = options?.timeout || 30000;
+  url = await withInternalImageToken(url);
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);

@@ -36,6 +36,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
@@ -46,46 +47,6 @@ if (!STALE && slugs.length === 0) {
   console.error('Usage: --slug <slug> [--slug <slug>...] | --stale   [--apply]');
   process.exit(1);
 }
-
-const COUNT_PIPELINE = (bookId) => [
-  { $match: { book_id: bookId, page_number: { $gt: 0 } } },
-  {
-    $group: {
-      _id: null,
-      total: { $sum: 1 },
-      with_ocr: {
-        $sum: {
-          $cond: [
-            {
-              $and: [
-                { $ne: ['$ocr.data', null] },
-                { $ne: ['$ocr.data', ''] },
-                { $ifNull: ['$ocr.data', false] },
-              ],
-            },
-            1,
-            0,
-          ],
-        },
-      },
-      with_translation: {
-        $sum: {
-          $cond: [
-            {
-              $and: [
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] },
-              ],
-            },
-            1,
-            0,
-          ],
-        },
-      },
-    },
-  },
-];
 
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
@@ -99,7 +60,7 @@ const query = STALE
 
 const candidates = await books
   .find(query)
-  .project({ _id: 1, id: 1, slug: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1 })
+  .project({ _id: 1, id: 1, slug: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translatable: 1 })
   .toArray();
 
 console.log(`Scanning ${candidates.length} book(s)…`);
@@ -109,20 +70,26 @@ let written = 0;
 
 for (const book of candidates) {
   const bookId = book.id || String(book._id);
-  const [counts] = await pages.aggregate(COUNT_PIPELINE(bookId)).toArray();
+  const [counts] = await pages.aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
   if (!counts) continue;
 
   const same =
     (book.pages_count ?? 0) === counts.total &&
     (book.pages_ocr ?? 0) === counts.with_ocr &&
-    (book.pages_translated ?? 0) === counts.with_translation;
+    (book.pages_translated ?? 0) === counts.with_translation &&
+    (book.pages_translatable ?? null) === counts.translatable;
   if (same) continue;
 
   drifted++;
   console.log(
     `${book.slug}\n  pages       ${book.pages_count ?? 0} → ${counts.total}` +
       `\n  ocr         ${book.pages_ocr ?? 0} → ${counts.with_ocr}` +
-      `\n  translated  ${book.pages_translated ?? 0} → ${counts.with_translation}`,
+      `\n  translated  ${book.pages_translated ?? 0} → ${counts.with_translation}` +
+      `\n  translatable ${book.pages_translatable ?? '—'} → ${counts.translatable}` +
+      (counts.translatable > 0
+        ? `   (${((100 * counts.translated_translatable) / counts.translatable).toFixed(1)}% of translatable` +
+          `, vs ${((100 * counts.with_translation) / Math.max(counts.total, 1)).toFixed(1)}% of all pages)`
+        : ''),
   );
 
   if (APPLY) {
@@ -133,6 +100,7 @@ for (const book of candidates) {
           pages_count: counts.total,
           pages_ocr: counts.with_ocr,
           pages_translated: counts.with_translation,
+          pages_translatable: counts.translatable,
           updated_at: new Date(),
         },
       },

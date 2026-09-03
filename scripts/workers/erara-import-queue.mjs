@@ -18,6 +18,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { acquisitionGate, confirmClaims } from '../lib/acquire-book.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = path.join(__dirname, '..', 'erara-queue.txt');
@@ -179,7 +180,22 @@ async function importBook(db, entry) {
     updated_at: new Date(),
   };
 
+  // Acquisition gate. This worker's doc literal predates `makeBookDoc()` (it
+  // still writes `erara_id` / `pageCount`), so it takes the gate on its own
+  // rather than going through `insertBookIfNew()`. A decline is a row in
+  // `dedup_skips`, not a line of stdout.
+  const gate = await acquisitionGate(db, bookDoc, {
+    importer: 'worker:erara-import-queue',
+    sourceIdentifier: eraraId,
+    sourceUrl,
+  });
+  if (!gate.ok) {
+    console.log(`  [skip] ${eraraId} — ${gate.message}`);
+    return 'skip';
+  }
+
   await db.collection('books').insertOne(bookDoc);
+  await confirmClaims(db, gate.fingerprints, bookIdStr);
 
   const pageDocs = meta.canvases.map((canvas, i) => {
     const pageId = new ObjectId();

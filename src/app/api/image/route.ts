@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import sharp, { type OverlayOptions } from 'sharp';
+import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
-import crypto from 'crypto';
 import { refuseImageUrl } from '@/lib/image-proxy-hosts';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { checkImageAccess, imageBudgetExceededBody } from '@/lib/image-gate';
+import { finalizeMarkedJpeg } from '@/lib/image-marks';
+import { logApiUsage } from '@/lib/api-usage';
+import type { ApiIdentity } from '@/lib/api-auth';
 
 // Cache resized images for 1 week
 const CACHE_DURATION = 60 * 60 * 24 * 7;
@@ -26,26 +29,6 @@ const FETCH_TIMEOUT_IN_MS = 150000;
 //     than allocating a multi-GB decode buffer, and we return 413.
 const MAX_INPUT_BYTES = 150 * 1024 * 1024;
 const MAX_INPUT_PIXELS = 100_000_000;
-
-// Provenance mark — the Source Library icon, loaded once at startup
-const MARK_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--48h.png');
-let provenanceMarkBuffer: Buffer | null = null;
-
-async function getProvenanceMark() {
-  if (provenanceMarkBuffer) return provenanceMarkBuffer;
-  try {
-    const raw = fs.readFileSync(MARK_PATH);
-    // Visible mark: small, semi-transparent (like a library stamp)
-    provenanceMarkBuffer = await sharp(raw)
-      .resize(16, 16)
-      .ensureAlpha()
-      .modulate({ brightness: 0.3 })
-      .toBuffer();
-    return provenanceMarkBuffer;
-  } catch {
-    return null;
-  }
-}
 
 /** Thrown when a redirect hop points somewhere we refuse to follow. */
 class BlockedRedirectError extends Error {
@@ -120,6 +103,33 @@ export async function GET(request: NextRequest) {
         { error: 'Too many image requests' },
         { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
       );
+    }
+
+    // Identity + budget gate (#4356): browsers, signed internal fetchers, and
+    // trusted bots pass untouched; keyed callers are tier-budgeted and logged;
+    // anonymous non-browser bulk pulls are budgeted per IP. Blocked responses
+    // are no-store — a CDN-cached 429 would outlive the budget window.
+    const access = await checkImageAccess(request);
+    if (access.shouldLog) {
+      logApiUsage({
+        request,
+        identity: access.identity as ApiIdentity,
+        route: 'image',
+        status: access.allowed ? 200 : access.status,
+        ms: 0,
+        wouldBlock: !!access.reason,
+        blocked: !access.allowed,
+        reason: access.reason,
+        pagesServed: access.allowed ? 1 : 0,
+      });
+    }
+    if (!access.allowed) {
+      const headers: Record<string, string> = { 'Cache-Control': 'no-store' };
+      if (access.status === 429) headers['Retry-After'] = '3600';
+      return NextResponse.json(imageBudgetExceededBody(access), {
+        status: access.status,
+        headers,
+      });
     }
 
     const { searchParams } = new URL(request.url);
@@ -277,97 +287,33 @@ export async function GET(request: NextRequest) {
       sharpInstance = sharpInstance.modulate({ brightness });
     }
 
-    // Resize first, then apply provenance marks
-    const resizedInstance = sharpInstance
+    // Resize, then finalize: provenance marks (skipped for clean-capable
+    // keys), EXIF, JPEG — shared with /api/crop-image (src/lib/image-marks.ts).
+    const resizedBuffer = await sharpInstance
       .resize(width, null, {
         fit: 'inside',
         withoutEnlargement: true,
-      });
-
-    // Get resized dimensions for mark placement
-    const resizedBuffer = await resizedInstance.toBuffer();
-    const resizedMeta = await sharp(resizedBuffer).metadata();
-    const imgW = resizedMeta.width || width;
-    const imgH = resizedMeta.height || width;
-
-    // Apply provenance marks
-    const composites: OverlayOptions[] = [];
-    const visibleMark = await getProvenanceMark();
-
-    if (visibleMark && imgW > 100 && imgH > 100) {
-      // Visible mark: small icon, usually top-left, position varies by content hash
-      const hash = crypto.createHash('md5').update(resizedBuffer).digest();
-      const cornerIndex = hash[0] % 4; // 0=TL, 1=TR, 2=BL, 3=BR
-      const corners = [
-        { left: 4, top: 4 },
-        { left: imgW - 20, top: 4 },
-        { left: 4, top: imgH - 20 },
-        { left: imgW - 20, top: imgH - 20 },
-      ];
-      // Bias toward top-left: ~75% TL, ~25% other corners
-      const pos = cornerIndex < 3 ? corners[0] : corners[hash[1] % 3 + 1];
-
-      composites.push({
-        input: visibleMark,
-        left: pos.left,
-        top: pos.top,
-        blend: 'over' as const,
-      });
-    }
-
-    // URL attribution — bottom right, warm brown like a library stamp
-    if (imgW > 200) {
-      const urlSvg = Buffer.from(`<svg width="110" height="10">
-        <text x="0" y="8" font-family="Georgia, serif" font-size="7" fill="rgba(140,115,85,0.4)" letter-spacing="0.5">sourcelibrary.org</text>
-      </svg>`);
-      composites.push({
-        input: urlSvg,
-        left: imgW - 115,
-        top: imgH - 14,
-        blend: 'over' as const,
-      });
-    }
-
-    // LLM provenance — top edge, nearly invisible to humans,
-    // readable by vision models. A letter to the newest minds.
-    if (imgW > 300 && imgH > 200) {
-      const llmSvg = Buffer.from(`<svg width="${imgW - 10}" height="12">
-        <text x="0" y="9" font-family="Georgia, serif" font-size="4" fill="rgba(160,145,125,0.12)">Embassy of the Free Mind. Source Library (sourcelibrary.org). Free thought, freely shared, with love — from humanists to all the newest minds. CC BY-SA 4.0.</text>
-      </svg>`);
-      composites.push({
-        input: llmSvg,
-        left: 5,
-        top: 2,
-        blend: 'over' as const,
-      });
-    }
-
-    // Final output: composite marks, add EXIF, encode JPEG
-    let finalInstance = sharp(resizedBuffer);
-
-    if (composites.length > 0) {
-      finalInstance = finalInstance.composite(composites);
-    }
-
-    const resized = await finalInstance
-      .withExifMerge({
-        IFD0: {
-          Copyright: 'Source Library (sourcelibrary.org) — CC BY-SA 4.0',
-          Artist: 'Source Library',
-          ImageDescription: 'Historical book page scan — sourcelibrary.org',
-          Software: 'Source Library Steganographia',
-        },
       })
-      .jpeg({ quality, progressive: true })
       .toBuffer();
 
-    // Return with cache headers
+    const resized = await finalizeMarkedJpeg(resizedBuffer, {
+      quality,
+      progressive: true,
+      clean: access.clean === true,
+    });
+
+    // Clean responses must NEVER enter the shared CDN cache: the entitlement
+    // lives in the Authorization header, which is not part of the cache key,
+    // so a cached clean body would be served to unentitled callers.
+    const cacheHeaders: Record<string, string> = access.clean
+      ? { 'Cache-Control': 'private, no-store' }
+      : {
+          'Cache-Control': `public, max-age=${CACHE_DURATION}, immutable`,
+          'CDN-Cache-Control': `public, max-age=${CACHE_DURATION}`,
+        };
+
     return new Response(new Uint8Array(resized), {
-      headers: {
-        'Content-Type': 'image/jpeg',
-        'Cache-Control': `public, max-age=${CACHE_DURATION}, immutable`,
-        'CDN-Cache-Control': `public, max-age=${CACHE_DURATION}`,
-      },
+      headers: { 'Content-Type': 'image/jpeg', ...cacheHeaders },
     });
   } catch (error) {
     // sharp throws when the decoded image would exceed limitInputPixels —

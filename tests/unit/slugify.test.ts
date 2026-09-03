@@ -143,4 +143,28 @@ describe('authorUrl', () => {
   it('returns null for empty string', () => {
     expect(authorUrl('')).toBeNull();
   });
+
+  // #4318: the byline is what a catalogue said; author_id is who we decided
+  // that means. Slugifying the byline sent every book bylined "Thomas" to
+  // /author/thomas — Aquinas and Thomas à Kempis alike.
+  it('prefers author_id over the byline when both are present', () => {
+    expect(authorUrl('Thomas', 'thomas-a-kempis')).toBe('/author/thomas-a-kempis');
+    expect(authorUrl('Thomas', 'thomas-aquinas')).toBe('/author/thomas-aquinas');
+  });
+
+  it('two books sharing a byline resolve to different authors', () => {
+    expect(authorUrl('Basilius', 'basil-valentine'))
+      .not.toBe(authorUrl('Basilius', 'basil-of-caesarea-2'));
+  });
+
+  it('falls back to the byline when author_id is absent', () => {
+    expect(authorUrl('Michael Maier', undefined)).toBe('/author/michael-maier');
+    expect(authorUrl('Michael Maier', null)).toBe('/author/michael-maier');
+  });
+
+  // A linked book still gets a URL even when the byline alone would yield none,
+  // which is how an "Anonymous"-bylined book reaches its attributed author.
+  it('honours author_id even for placeholder bylines', () => {
+    expect(authorUrl('Anonymous', 'jacobus-de-voragine')).toBe('/author/jacobus-de-voragine');
+  });
 });

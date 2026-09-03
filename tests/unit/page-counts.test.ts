@@ -74,7 +74,41 @@ describe('page-counts convention (#3293)', () => {
       total: 3,
       with_ocr: 3,
       with_translation: 2,
+      // All three visible pages have OCR and none is a never-translated type,
+      // so all three are translatable; two of them carry a translation.
+      translatable: 3,
+      translated_translatable: 2,
+      blank: 0,
     });
+  });
+
+  it('translatable excludes what can never be translated, and its numerator matches', () => {
+    // The #4442 denominator. A blank leaf carries a translation PLACEHOLDER, so
+    // counting it in the numerator while excluding it from the denominator is what
+    // pushed real books past 100% (the Blue Qur'an at 1000%, Hugh of Santalla at
+    // 105.6%). Both must exclude it.
+    const pages = [
+      { page_number: 1, ocr: { data: 'a' }, translation: { data: 'A' } },
+      { page_number: 2, ocr: { data: 'b' }, page_type: 'blank', translation: { data: '[Blank page]' } },
+      { page_number: 3, ocr: { data: 'c' }, page_type: 'bookplate', translation: { data: 'C' } },
+      { page_number: 4, ocr: { data: 'd' } }, // translatable, not yet translated
+      { page_number: 5 }, // no OCR — nothing to translate from
+      { page_number: 6, ocr: { data: 'f' }, ocrRecitation: true },
+    ];
+    // page 6 is refused by the model — expressed the way the writers store it
+    (pages[5] as Record<string, unknown>).ocr = { data: 'f', recitation_blocked: true };
+
+    const stats = countVisiblePageStats(pages);
+    // Pages 1, 4 and 5. Page 5 has NO OCR and still counts: not-yet-OCR'd is pending
+    // work, not impossible work. Excluding it badged half-OCR'd books as 100%.
+    expect(stats.translatable).toBe(3);
+    expect(stats.translated_translatable).toBe(1); // page 1
+    // The ratio can never exceed 1 — the property the old numerator violated.
+    expect(stats.translated_translatable).toBeLessThanOrEqual(stats.translatable);
+    // And the blank leaf's placeholder is still excluded from pages_translated.
+    expect(stats.with_translation).toBe(2); // pages 1 and 3 (bookplate is not 'blank')
+    // pages_blank counts never-translated types that carry OCR: the blank and the bookplate.
+    expect(stats.blank).toBe(2);
   });
 
   it('regression: hidden translated pages do not fabricate a low translated count', () => {
@@ -163,5 +197,23 @@ describe('blank pages are excluded from pages_translated', () => {
     // translation_pct divides by (pages_ocr - pages_blank) = 60 - 54 = 6.
     const denominator = stats.with_ocr - 54;
     expect((stats.with_translation / denominator) * 100).toBe(100); // was 1000
+  });
+
+  it('a half-OCR\'d book does not read as complete (Theatrum Chemicum regression)', () => {
+    // Real shape: 4,198 visible pages, only 2,003 with OCR, 1,985 translated. The first
+    // version of the denominator excluded un-OCR'd pages, so this book displayed
+    // **100% translated** with 2,195 pages carrying no text at all. 1,701 books were
+    // in that state. The denominator must count pages that WILL be translatable.
+    const pages = [];
+    for (let n = 1; n <= 1985; n++) pages.push({ page_number: n, ocr: { data: 'o' }, translation: { data: 't' } });
+    for (let n = 1986; n <= 2003; n++) pages.push({ page_number: n, ocr: { data: 'o' }, page_type: 'blank', translation: { data: '[Blank page]' } });
+    for (let n = 2004; n <= 4198; n++) pages.push({ page_number: n }); // awaiting OCR
+
+    const stats = countVisiblePageStats(pages);
+    expect(stats.total).toBe(4198);
+    expect(stats.translatable).toBe(4180); // everything except the 18 blank leaves
+    expect(stats.translated_translatable).toBe(1985);
+    const pct = Math.round((100 * stats.translated_translatable) / stats.translatable);
+    expect(pct).toBe(47); // honest, and nowhere near 100
   });
 });

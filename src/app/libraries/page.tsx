@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Library, ExternalLink, BookOpen, Globe } from 'lucide-react';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
+import HeroScrim from '@/components/HeroScrim';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import type { Metadata } from 'next';
 
@@ -105,6 +106,11 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
   for (const row of allRows) {
     const name = (row.contributing_library as string || '').trim();
     if (!name || excludeNames.has(name)) continue;
+    // Some importers stored a serialized object instead of a name — a chip
+    // reading {"name":"Internet Archive","url":…} is a data bug, not an
+    // institution. Skip anything JSON-shaped; the source rows need a repair
+    // sweep, but the page shouldn't render the bug meanwhile.
+    if (name.startsWith('{') || name.startsWith('[')) continue;
     counts.set(name, (counts.get(name) || 0) + 1);
   }
 
@@ -120,7 +126,8 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
   languages: string[];
   size?: 'hero' | 'featured' | 'normal';
 }) {
-  const topLangs = languages.slice(0, 4).join(', ');
+  const isCompact = size === 'normal';
+  const topLangs = languages.slice(0, isCompact ? 3 : 4).join(', ');
   const isHero = size === 'hero';
   const isFeatured = size === 'featured';
 
@@ -156,7 +163,7 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
       <div className={`absolute inset-0 ${
         isHero || isFeatured
           ? 'bg-gradient-to-r from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.5)] to-transparent'
-          : 'bg-gradient-to-t from-[rgba(26,22,18,0.88)] via-[rgba(26,22,18,0.3)] to-transparent'
+          : 'bg-gradient-to-t from-[rgba(26,22,18,0.95)] via-[rgba(26,22,18,0.55)] via-40% to-transparent'
       }`} />
 
       {/* Content */}
@@ -177,23 +184,28 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
           {partner.name}
         </h2>
 
-        <p className={`text-white/70 leading-relaxed ${
-          isHero ? 'mt-2 text-base md:text-lg line-clamp-3' :
-          isFeatured ? 'mt-2 text-sm md:text-base line-clamp-2' :
-          'mt-1 text-xs line-clamp-2 hidden sm:block'
-        }`}>
-          {partner.description}
-        </p>
+        {/* Descriptions only on the large cards — on small tiles they overflow the
+            image and land on unreadably light scan backgrounds. The tile links to
+            /libraries/[slug], which carries the full description. */}
+        {!isCompact && (
+          <p className={`text-white/70 leading-relaxed ${
+            isHero ? 'mt-2 text-base md:text-lg line-clamp-3' : 'mt-2 text-sm md:text-base line-clamp-2'
+          }`}>
+            {partner.description}
+          </p>
+        )}
 
-        <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 ${isHero || isFeatured ? 'mt-5' : 'mt-2'}`}>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
+        <div className={`flex items-center gap-x-3 gap-y-1 min-w-0 ${
+          isCompact ? 'mt-2 flex-nowrap' : 'mt-5 flex-wrap'
+        }`}>
+          <span className="inline-flex shrink-0 items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
             <BookOpen className="w-3 h-3" />
             {count.toLocaleString('en-US')} books
           </span>
           {topLangs && (
-            <span className="inline-flex items-center gap-1.5 text-xs text-white/50">
-              <Globe className="w-3 h-3" />
-              {topLangs}
+            <span className={`items-center gap-1.5 text-xs text-white/60 min-w-0 ${isCompact ? 'hidden md:inline-flex' : 'inline-flex'}`}>
+              <Globe className="w-3 h-3 shrink-0" />
+              <span className="truncate">{topLangs}</span>
             </span>
           )}
         </div>
@@ -213,30 +225,58 @@ export default async function LibrariesPage() {
     fetchContributingLibraries().catch((err) => { console.error('Libraries contributing fetch failed:', err); return [] as ContributingLibrary[]; }),
   ]);
 
-  const partners = stats
-    .map(s => {
-      const partner = getPartnerByProvider(s.provider);
-      if (!partner) return null;
-      return { ...partner, count: s.count, languages: s.languages, heroImage: partner.heroImageOverride || s.heroImage };
-    })
-    .filter(Boolean) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
+  // Group provider stats by PARTNER, not by provider key: some institutions
+  // imported books under two keys over time (ndl + ndl_japan, mdz + bsb) and
+  // must render as one tile with summed counts, not duplicates.
+  const byPartnerSlug = new Map<string, typeof LIBRARY_PARTNERS[string] & { count: number; languageSet: Set<string>; heroImage?: string }>();
+  for (const s of stats) {
+    const partner = getPartnerByProvider(s.provider);
+    if (!partner) continue;
+    const entry = byPartnerSlug.get(partner.slug)
+      || { ...partner, count: 0, languageSet: new Set<string>(), heroImage: partner.heroImageOverride };
+    entry.count += s.count;
+    for (const lang of s.languages) entry.languageSet.add(lang);
+    if (!entry.heroImage) entry.heroImage = s.heroImage;
+    byPartnerSlug.set(partner.slug, entry);
+  }
+  const partners = [...byPartnerSlug.values()]
+    .map(({ languageSet, ...p }) => ({ ...p, languages: [...languageSet].sort() }))
+    .sort((a, b) => b.count - a.count) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
 
   const totalBooks = partners.reduce((s, p) => s + p.count, 0);
   const totalInstitutions = contributingLibraries.length;
 
-  // Separate BPH (home library) and IA (featured) from the rest
+  // The page credits two different kinds of source, in two sections: HOLDING
+  // institutions (they own and digitized what we show) and digital PLATFORMS
+  // (aggregators whose scans depict books physically held elsewhere — those
+  // holders appear in Contributing Institutions below). BPH keeps its
+  // home-library hero at the top.
   const bph = partners.find(p => p.providerKey === 'bph');
-  const ia = partners.find(p => p.providerKey === 'internet_archive');
-  const rest = partners.filter(p => p.providerKey !== 'bph' && p.providerKey !== 'internet_archive');
+  const holdingLibraries = partners.filter(p => p.providerKey !== 'bph' && p.kind !== 'platform');
+  const platforms = partners.filter(p => p.kind === 'platform');
 
   return (
     <div className="min-h-screen bg-stone-50">
       <SiteHeader variant="light" />
 
-      {/* Hero: dark gradient header */}
-      <div className="relative overflow-hidden text-white py-16 md:py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
-        <div className="relative max-w-[var(--container-wide)] mx-auto px-6">
+      {/* Hero: a tiled mosaic of the partners' own scans under the shared
+          HeroScrim — the same treatment as the book-page hero, so the two
+          surfaces read as one design. Falls back to the dark base color if
+          images are missing. */}
+      <div className="relative overflow-hidden text-white" style={{ background: '#14100c' }}>
+        <div className="absolute inset-0 grid grid-cols-3 grid-rows-4 md:grid-cols-6 md:grid-rows-2">
+          {partners
+            .map(p => p.heroImage)
+            .filter((src): src is string => !!src)
+            .slice(0, 12)
+            .map((src, i) => (
+              <div key={src} className="relative">
+                <Image src={src} alt="" fill sizes="(max-width: 768px) 34vw, 17vw" className="object-cover" priority={i < 6} />
+              </div>
+            ))}
+        </div>
+        <HeroScrim />
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 py-20 md:py-28" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">Libraries</h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">
             {totalBooks.toLocaleString('en-US')} books sourced from {partners.length} libraries and archives
@@ -254,22 +294,16 @@ export default async function LibrariesPage() {
           </section>
         )}
 
-        {/* Internet Archive — Featured (full-width spread) */}
-        {ia && (
-          <section className="mb-12">
-            <PartnerCard partner={ia} heroImage={ia.heroImage} count={ia.count} languages={ia.languages} size="featured" />
-          </section>
-        )}
-
-        {/* Other Digital Sources — 2-column grid */}
+        {/* Holding libraries — institutions that own and digitized the books */}
         <section className="mb-16">
-          <h2 className="text-2xl font-display text-primary mb-2">Digital Sources</h2>
-          <p className="text-sm text-muted mb-6">
-            Libraries and platforms whose digitized collections we import, translate, and preserve.
+          <h2 className="text-2xl font-display text-primary mb-2">Libraries &amp; Archives</h2>
+          <p className="text-sm text-muted mb-6 max-w-3xl">
+            The institutions whose collections we read from — each holds the books it digitized.
+            Every card links to their holdings on Source Library.
           </p>
 
-          <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
-            {rest.map((partner) => (
+          <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+            {holdingLibraries.map((partner) => (
               <PartnerCard
                 key={partner.slug}
                 partner={partner}
@@ -280,6 +314,29 @@ export default async function LibrariesPage() {
             ))}
           </div>
         </section>
+
+        {/* Digital platforms — aggregators; the physical holders are credited below */}
+        {platforms.length > 0 && (
+          <section className="mb-16">
+            <h2 className="text-2xl font-display text-primary mb-2">Digital Archives &amp; Platforms</h2>
+            <p className="text-sm text-muted mb-6 max-w-3xl">
+              Portals and aggregators through which we source scans. The books themselves live in
+              the contributing institutions credited beneath — and on each book&apos;s own page.
+            </p>
+
+            <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+              {platforms.map((partner) => (
+                <PartnerCard
+                  key={partner.slug}
+                  partner={partner}
+                  heroImage={partner.heroImage}
+                  count={partner.count}
+                  languages={partner.languages}
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Contributing Institutions */}
         {contributingLibraries.length > 0 && (

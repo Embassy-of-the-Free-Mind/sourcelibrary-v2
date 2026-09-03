@@ -18,6 +18,7 @@ import type { ApiIdentity } from '@/lib/api-auth';
 import type { NextRequest } from 'next/server';
 import { getPagesServedLast24h } from '@/lib/api-usage';
 import { DATASET_TIERS, type DatasetTier } from '@/lib/dataset/types';
+import { API_LIMITS } from '@/lib/api-limits';
 
 export interface BudgetCheck {
   allowed: boolean;
@@ -36,8 +37,8 @@ export interface BudgetCheck {
 // anti-bulk levers are the bot gate (20%/book for declared AI crawlers) and
 // the training license (/licensing). Previous tuning (2026-05-11, log-only
 // data): 100/200 with heaviest observed legit caller at 65 pages/day.
-const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || 500);
-const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || 1000);
+const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || API_LIMITS.anon.pagesPerDay);
+const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || API_LIMITS.session.pagesPerDay);
 
 /**
  * Map a caller identity to its daily /text page limit. Exported for unit tests

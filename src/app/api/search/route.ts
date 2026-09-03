@@ -14,10 +14,36 @@ import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { logSearchEvent } from '@/lib/search-event-log';
+import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 
 export const preferredRegion = 'fra1';
 
 const MAX_PAGE_RESULTS = 25;
+
+/**
+ * Carry a book's identity fields onto a result as transients, so the
+ * work-grain collapse below can read them. Stripped before the response —
+ * `_work_id` was already doing this; aliases and `duplicate_of` join it so
+ * every lane in the app collapses on the same rule (src/lib/search/work-grouping.ts).
+ */
+function attachIdentity(result: SearchResult, book: Record<string, unknown>): void {
+  const r = result as unknown as Record<string, unknown>;
+  if (book.work_id) r._work_id = book.work_id;
+  if (Array.isArray(book.work_id_aliases)) r._work_id_aliases = book.work_id_aliases;
+  if (book.duplicate_of) r._duplicate_of = book.duplicate_of;
+}
+
+/** Read the transients back as the shape `collapseByWork` expects. */
+function identityOf(result: SearchResult): WorkGroupable {
+  const r = result as unknown as Record<string, unknown>;
+  return {
+    book_id: result.book_id,
+    work_id: r._work_id as string | undefined,
+    work_id_aliases: r._work_id_aliases as string[] | undefined,
+    duplicate_of: r._duplicate_of as string | undefined,
+  };
+}
 
 /** Strip XML/HTML tags and clean up OCR artifacts for display */
 function cleanText(text: string): string {
@@ -224,8 +250,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         thumbnail_blob: (typedBook as any).thumbnail_blob,
         quality_score: (typedBook as any).quality_score,
       };
-      // Transient field for work-level dedup (stripped before response)
-      if ((typedBook as any).work_id) (result as any)._work_id = (typedBook as any).work_id;
+      // Transient fields for work-level dedup (stripped before response)
+      attachIdentity(result, typedBook as unknown as Record<string, unknown>);
       if ((typedBook as any).text_role) (result as any)._text_role = (typedBook as any).text_role;
       return result;
     }
@@ -260,7 +286,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, text_role: 1 };
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -533,7 +559,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const pageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -600,7 +626,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail: (book as any).thumbnail,
           thumbnail_blob: (book as any).thumbnail_blob,
         };
-        if ((book as any).work_id) (pageResult as any)._work_id = (book as any).work_id;
+        attachIdentity(pageResult, book as unknown as Record<string, unknown>);
         if ((book as any).text_role) (pageResult as any)._text_role = (book as any).text_role;
         results.push(pageResult);
       }
@@ -649,7 +675,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
                 : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
                 : language ? { language } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -687,7 +713,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             thumbnail_blob: book.thumbnail_blob as string | undefined,
             quality_score: (book as any).quality_score,
           };
-          if ((book as any).work_id) (semResult as any)._work_id = (book as any).work_id;
+          attachIdentity(semResult, book as unknown as Record<string, unknown>);
           if ((book as any).text_role) (semResult as any)._text_role = (book as any).text_role;
           results.push(semResult);
         }
@@ -730,7 +756,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
                 : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
                 : language ? { language } : {}),
             },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -768,7 +794,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
         };
-        if (book.work_id) (spResult as any)._work_id = book.work_id;
+        attachIdentity(spResult, book as Record<string, unknown>);
         if ((book as any).text_role) (spResult as any)._text_role = (book as any).text_role;
         results.push(spResult);
       }
@@ -906,23 +932,46 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       }
     }
 
-    // Dedup by work_id: keep the first (best-ranked) edition of each work.
-    // Results are already sorted by relevance, so the first hit for a work_id wins.
-    // Books without work_id are always kept (they can't be deduped).
-    const seenWorkIds = new Set<string>();
-    const dedupedResults: SearchResult[] = [];
-    for (const r of results) {
-      const workId = (r as any)._work_id as string | undefined;
-      if (workId) {
-        if (seenWorkIds.has(workId)) continue;
-        seenWorkIds.add(workId);
+    // Collapse to one row per work (#4300). Results are already sorted by
+    // relevance, so the first hit for a work wins and represents it; books with
+    // no blessed work identity are always kept, because "no work_id" means
+    // "not shown to be an edition of anything", not "dedupe me by title".
+    // Shared with the unified and semantic lanes — one definition, so a new
+    // lane can't reintroduce the copies (src/lib/search/work-grouping.ts).
+    const collapsed = collapseByWork(results, { getIdentity: identityOf });
+    const dedupedResults: SearchResult[] = collapsed.results;
+
+    // "N editions of this work →" for rows that replaced siblings. The number
+    // is what /work/[id] renders (fetchWorkFanouts calls that page's own
+    // filter), not how many rows we hid — a count shown to a reader has to
+    // describe the set its link reaches. Suppressed under a tenant: an
+    // edition census across the global library is not a partner reading
+    // room's claim to make (tenant-lockdown.md).
+    // `pages_only` is the MCP passage contract — a caller asking for passages
+    // gets passages, not an edition census, and the extra count queries would
+    // be latency it never asked for.
+    const fanouts = collapsed.groups.length > 0 && !pagesOnly
+      ? await fetchWorkFanouts(
+        db,
+        new Map(collapsed.groups.map(g => [g.key, g.collapsed.length])),
+        { tenantScoped: !!tenantId || !!tenantSlug },
+      )
+      : new Map();
+    const fanoutByResultId = new Map<string, unknown>();
+    if (fanouts.size > 0) {
+      for (const [key, group] of collapsed.byKey) {
+        const fanout = fanouts.get(key);
+        if (fanout) fanoutByResultId.set(group.primary.id, fanout);
       }
-      dedupedResults.push(r);
     }
 
     // Apply offset and strip transient fields
     const paginatedResults = dedupedResults.slice(offset, offset + limit)
-      .map(r => { const { _work_id, _text_role, ...clean } = r as any; return clean as SearchResult; });
+      .map(r => {
+        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, ...clean } = r as any;
+        const fanout = fanoutByResultId.get(r.id);
+        return (fanout ? { ...clean, work_group: fanout } : clean) as SearchResult;
+      });
 
     // For exact year searches, find nearby books (within 5 years)
     let nearby: SearchResult[] = [];

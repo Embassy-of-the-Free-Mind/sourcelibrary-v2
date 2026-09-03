@@ -21,4 +21,63 @@ Lessons from PR #2055 (see `.claude/handoffs/`). The homepage and most public su
 - **A materialized snapshot of ids bypasses every visibility field it was built from.** `gallery_collections.image_ids` (type `thematic`) is frozen when the gallery is seeded, so hiding a book afterwards prunes nothing, and the resolve in `/collections/[id]` had no visibility filter at all — while `/api/gallery`, `hero-mosaic`, `books/timeline` and `search/unified` all guard on `gallery_images.book_visible`. That one outlier kept serving **38 images from the Kloss/CMC takedown six weeks after it**, 10 of them on the live `/collections/freemasonry` page, alongside 291 more from ordinarily-hidden books (PR #4056; 329 pruned, standing detector `scripts/audit/gallery-visibility-leak.mjs`). **When you hide something, ask what has already copied its id into a list** — a denormalised flag protects only the surfaces that read it, and a frozen id list reads none of them. Note the same page's *dynamic* fallback query filters `visible: true` correctly, so the guarded and unguarded paths sat ten lines apart and produced different answers for the same collection.
 - **`gallery_images.book_visible` drifts in BOTH directions, and only one direction is a leak.** It is denormalised from `books.visible` and refreshed by the sync worker only when a book's **pages** change, so a bare visibility flip never reaches it. Measured 2026-08-18: 1,217 rows claimed `book_visible: true` for a hidden book (art leaking, fixed), and **6,760 claimed `false` for a visible book** (art suppressed that should show, left alone). Repair the leak direction freely; the suppressed direction *publishes* images and is a curation decision, not a data fix. Don't "correct" both in one sweep and call it hygiene.
 - **Authored prose inside a collection doc is a takedown surface.** The Kloss takedown swept books, Supabase, `gallery_images.book_visible`, collection `visible` flags, the tenant and code references — but not `description` / `expanded_description` / `highlighted_books` / `featured_images` / `hero_image`, which are hand-written and cite specific books by id. `/collections/freemasonry` therefore stayed live for six weeks naming "the Kloss Library, one of the most important Masonic research collections ever assembled" and linking 13 removed books, every link dead. **Any removal has to grep the authored fields, not just the flags** — a hidden book stops rendering, but a sentence *about* it does not.
-- **A card must count what its TARGET page renders, not what the collection holds.** `collections` carries three counters — `book_count` (translated/readable), `total_book_count` (all visible member texts, #3176), `artwork_count` — and nothing ties a counter to the view that consumes it, so a card is free to pick the wrong one. A `collection_type: 'visual_art'` collection renders artworks and *nothing else* (`isArtCollection`), so its book counters describe texts the reader can never reach from it. Until #4106 the sub-collection child cards on `/collections/[id]` showed `total_book_count ?? book_count`, inherited their noun from the **parent** collection, and sorted the grid by `book_count` — so `school-of-athens` advertised **"518 books"** above a page showing **30 works**, and sorted second in Classical Philosophy. Measured across all 284 child cards, **19 art children were mislabelled**; School of Athens was the only over-count and the rest simply vanished (`esoteric-engravers` showing 0 against ~1,600 artworks, `portraits-tradition` 0 against ~1,600). The fix is per-child, not global: `childCardCount()` labels and sorts by the child's own `collection_type`, and `collectionCountLabel()` takes an optional third `collectionType` that drops the text half for `visual_art`. **Before adding a count to any card, open the page it links to and ask which query fills it** — `/collections` and the homepage grids escaped this only because they exclude `visual_art` at the query level, not because they got the counter right. Corollary, still open as a curation call (#4107): the 518 texts tagged `school-of-athens` are legitimate editions that no surface lists, so a counter can also be *honest about data that no page will ever show*.
+- **A card must count what its TARGET page renders, not what the collection holds.** `collections` carries three counters — `book_count` (translated/readable), `total_book_count` (all visible member texts, #3176), `artwork_count` — and nothing ties a counter to the view that consumes it, so a card is free to pick the wrong one. A `collection_type: 'visual_art'` collection renders artworks and *nothing else* (`isArtCollection`), so its book counters describe texts the reader can never reach from it. Until #4106 the sub-collection child cards on `/collections/[id]` showed `total_book_count ?? book_count`, inherited their noun from the **parent** collection, and sorted the grid by `book_count` — so `school-of-athens` advertised **"518 books"** above a page showing **30 works**, and sorted second in Classical Philosophy. Measured across all 284 child cards, **19 art children were mislabelled**; School of Athens was the only over-count and the rest simply vanished (`esoteric-engravers` showing 0 against ~1,600 artworks, `portraits-tradition` 0 against ~1,600). The fix is per-child, not global: `childCardCount()` labels and sorts by the child's own `collection_type`, and `collectionCountLabel()` takes an optional third `collectionType` that drops the text half for `visual_art`. **Before adding a count to any card, open the page it links to and ask which query fills it** — `/collections` and the homepage grids escaped this only because they exclude `visual_art` at the query level, not because they got the counter right. Corollary, still open as a curation call (#4107): the 518 texts tagged `school-of-athens` are legitimate editions that no surface lists, so a counter can also be *honest about data that no page will ever show*. Second instance, 2026-08-30: on a newly built collection `book_count` counted every tagged, visible, paginated member (33) while the grid rendered 32, because the grid is `browseBooks` over Supabase and serves *readable* books — Carey's *Principles of Social Science* (497pp, 300 OCR'd, **0 translated**) is a legitimate member that no page will show. `book_count` is the readable subset, `total_book_count` is the membership; computing the former as "live members" silently overstates it by however many members are untranslated. Caught only by diffing the live grid against Mongo membership after the write, which is the check worth running: **do not validate a counter against the query you just wrote, validate it against the read path**.
+
+## The numerator has to exclude what the denominator excludes (#3747)
+
+`translation_pct` and the ≥90%-readable bar both divide by `pages_ocr − pages_blank`.
+Anything that lands in the **numerator** but is subtracted from the **denominator**
+pushes the ratio past 100 — and it did, on **6,228 live books, 32% of the public
+library**. The Blue Qur'an reported **1000% translated**: 60 pages, 54 of them blank,
+over a denominator of 6.
+
+**A blank leaf carries translation text.** The translator writes the literal
+placeholder `[Blank page — no translatable content]` onto every one, so the obvious
+test — non-empty `translation.data` — counts flyleaves and endpapers as translated
+work. Measured 2026-08-08: **87,777** such pages, 99.8% of them under 120 characters.
+
+- **The rule:** a page counts as translated iff it has non-empty `translation.data`
+  **and** `page_type !== 'blank'`. Use `isTranslatedPage()` from
+  `scripts/lib/page-counts.mjs` (TS twin `src/lib/page-counts.ts`). `hasTranslation()`
+  stays literal on purpose — "carries text" and "counts as translated work" are
+  different questions, and conflating them is the whole bug.
+- **Fix the definition, not the call site.** Writers that run their own query must
+  match it: `scripts/workers/sync-worker.mjs` (aggregation) and
+  `scripts/batch/realtime-translate.mjs` (`countDocuments`). The batch collectors and
+  `translate-core` inherit it from the shared helper. Grep every writer of
+  `pages_translated` before calling a fix complete.
+- **This recurred after 136 days** because the note recording it stated the naive rule
+  ("`pages_translated` = pages with actual `translation.data`") — the memory was not
+  merely absent, it was *wrong*, and wrong guidance is trusted. If you correct a rule,
+  correct it where it is written down.
+- Correcting it lowers headline stats, and that is the correct direction:
+  `is_fully_translated` **15,741 → 14,172**. Those 1,569 books had genuinely
+  untranslated pages and were clearing the bar on placeholder padding. `sync-worker`
+  reconciles every 2h and ignores the pipeline pause, so no backfill is needed.
+
+## `books.published` is free text — never parse or sort it (#3718)
+
+`published` is a catalogue string: `12th century`, `1500–1825`, `14uu`, `[18--]`,
+`MDXLIX. [1549]`, `n.d`, `Ur III / Old Babylonian (c. 2100–1600 BCE)`. 2,505 live books
+hold a non-plain-year value. The numeric `year` field is populated on **19,012 of
+19,465** live books and is what you compute with.
+
+- `parseInt(published)` reads `"12th century"` as the year **12**. Boethius — 31
+  witnesses spanning 1150–1900 — advertised its range as **"12 – 1900"**; the Four
+  Gospels as "18 – 1100" against a real 550–1750.
+- `sort: { published: 1 }` is a **lexical** sort, so `"550"` lands after `"1750"` and
+  the oldest witness sorts last in a chronological list.
+- Use `editionYear()` (`src/lib/dedup.ts`), `formatYear()` / `formatYearSpan()`
+  (`src/lib/format-year.ts`, BCE renders as "1550 BCE"), and `byChronology()`
+  (`src/app/work/[id]/page.tsx`). Compute with `year`, **display** `published` — for a
+  manuscript "12th century" is more honest than the point estimate 1150 — and filter
+  the no-date markers (`Unknown`, `n.d.`, `[date of publication not identified]`).
+- **Still unfixed:** `src/app/languages/page.tsx` compares `published` as strings for
+  its per-language ranges.
+- **A pre-500 date with no publication statement is a composition date, not the
+  object's.** Exactly 12 live books match, and all 12 are (Homer −750, Euclid −300
+  "palimpsest", Galen 170, Plato −375); `/works` excludes them from span endpoints. The
+  discriminator is **not** "published is Unknown" — the Bodleian Gospels manuscripts at
+  895/927/950 also lack one and their dates are genuine. The oldest object actually
+  held is the 550 CE Bodleian Gospels.
+||||||| b0a919ae

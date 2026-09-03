@@ -18,6 +18,17 @@
  * `doc-staleness.mjs`. Schema drift is a distinct failure mode: the prose stays
  * true-looking while the world adds a value underneath it.
  *
+ * SECOND CHECK: ACTIVE DEFAULTS (#3614). Same failure mode, different shape. The
+ * doc's "Current defaults" table is not an enum but a set of pointers at live
+ * rows, and it rotted the same way — it said OCR v10 while production ran v15,
+ * translation v8 while production ran v12. And underneath it the collection
+ * itself had drifted: TWO `is_default: true` rows for `summary`, so which prompt
+ * produced a summary was decided by natural order, and `version` was mixed
+ * string and number (`1` vs `'v1'`), which makes every `sort({version:-1})` in
+ * the codebase follow BSON type order rather than intent. So this half asserts
+ * three things: exactly one default per type, numeric versions, and a doc table
+ * that names the versions actually running.
+ *
  * THE CHECK. For each registered (collection, field, doc) triple: read the
  * distinct values from production, and require that each one appears SOMEWHERE
  * in the doc's text. That is deliberately crude — it does not parse structure,
@@ -28,14 +39,23 @@
  * fail the run: a legitimate enum value can simply have no rows yet, and a
  * writer that has not fired is not a documentation defect.
  *
- * Needs MONGODB_URI. WITHOUT IT THIS REPORTS "NOT RUN" AND EXITS NON-ZERO under
- * --fail-on-findings, rather than printing a clean pass — an unrun check that
- * looks green is how the leak audit in CLAUDE.md nearly shipped twice.
+ * EXIT CONTRACT (under --fail-on-findings), per
+ * `.claude/docs/invariants/measurement-instruments.md`:
  *
- * RUN IT ON HETZNER, not a laptop. The exact mode scans `pages` twice (19.1M
- * docs each) and takes longer than a consumer connection reliably stays up --
- * two of three attempts on 2026-08-04/05 died on a network blip mid-scan. The
- * scans are the point, so the fix is where you run it, not a weaker check.
+ *   0  ran, clean
+ *   1  ran, FOUND something — file the finding
+ *   2  COULD NOT RUN (no MONGODB_URI, connection died mid-scan) — go red
+ *
+ * Never branch a finding on `!= 0`. An unrun check that looks green, or an
+ * infrastructure failure filed as a corpus finding, are both how this family of
+ * detector has lied before.
+ *
+ * RUN THE ENUM HALF ON HETZNER, not a laptop. The exact mode scans `pages` twice
+ * (19.1M docs each) and takes longer than a consumer connection reliably stays
+ * up -- two of three attempts on 2026-08-04/05 died on a network blip mid-scan.
+ * The scans are the point, so the fix is where you run it, not a weaker check.
+ * The defaults half reads 55 documents and runs anywhere in a second, which is
+ * why `--only=defaults` is what the scheduled workflow uses.
  *
  *   set -a; source .env.production.local; set +a
  *   node scripts/audit/doc-enum-drift.mjs
@@ -43,6 +63,8 @@
  *   node scripts/audit/doc-enum-drift.mjs --json
  *   node scripts/audit/doc-enum-drift.mjs --fast     # sample big collections;
  *                                                    # can only find, never clear
+ *   node scripts/audit/doc-enum-drift.mjs --only=defaults   # active prompts only
+ *   node scripts/audit/doc-enum-drift.mjs --only=enums      # documented enums only
  */
 import { MongoClient } from 'mongodb';
 import { readFileSync, existsSync } from 'node:fs';
@@ -51,6 +73,13 @@ const args = process.argv.slice(2);
 const asJson = args.includes('--json');
 const failOnFindings = args.includes('--fail-on-findings');
 const fast = args.includes('--fast');   // opt IN to sampling; exact is the default
+const only = (args.find(a => a.startsWith('--only='))?.slice(7) || 'all');
+if (!['all', 'enums', 'defaults'].includes(only)) {
+  console.error(`unknown --only=${only} (expected: enums | defaults)`);
+  process.exit(2);
+}
+const runEnums = only === 'all' || only === 'enums';
+const runDefaults = only === 'all' || only === 'defaults';
 /** Above this many documents, discover values by $sample rather than a full scan. */
 const EXACT_MAX = 2_000_000;
 const SAMPLE_SIZE = 50_000;
@@ -65,6 +94,13 @@ const SAMPLE_SIZE = 50_000;
  * one-off typos); keep it near-empty and justified inline.
  */
 const REGISTRY = [
+  {
+    label: 'prompts.type (active defaults)',
+    collection: 'prompts',
+    field: 'type',
+    doc: '.claude/docs/data-provenance.md',
+    note: 'Prompt type vocabulary. See the separate active-defaults check below for the version/uniqueness invariants.',
+  },
   {
     label: 'page_revisions.source',
     collection: 'page_revisions',
@@ -100,15 +136,75 @@ const REGISTRY = [
   },
 ];
 
+/** Where the "Current defaults" table lives, and how a live default must appear in it. */
+const DEFAULTS_DOC = '.claude/docs/data-provenance.md';
+
+/**
+ * `'v12'` → 12, `12` → 12. Anything else (missing field, `'latest'`) → null,
+ * which this check reports rather than repairs — see
+ * `scripts/maintenance/repair-prompt-defaults-3614.mjs`.
+ */
+function parseVersion(v) {
+  if (typeof v === 'number' && Number.isFinite(v)) return v;
+  if (typeof v === 'string') { const m = /^v?(\d+)$/i.exec(v.trim()); if (m) return Number(m[1]); }
+  return null;
+}
+
+/**
+ * The active-prompt invariants. Deliberately three separate assertions, because
+ * they fail independently and a run that reports only the doc mismatch would
+ * have missed the live bug in #3614.
+ */
+async function checkPromptDefaults(db) {
+  const out = { doc: DEFAULTS_DOC, duplicates: [], missingDefault: [], nonNumeric: [], docDrift: [], defaults: [] };
+  const rows = await db.collection('prompts').find({}).toArray();
+  out.total = rows.length;
+
+  for (const p of rows) {
+    if (parseVersion(p.version) === null) {
+      out.nonNumeric.push({ id: String(p._id), type: p.type, name: p.name ?? null, version: p.version ?? null });
+    }
+  }
+
+  const types = [...new Set(rows.map(p => p.type).filter(Boolean))].sort();
+  for (const type of types) {
+    const defs = rows.filter(p => p.type === type && p.is_default === true);
+    if (defs.length === 0) { out.missingDefault.push(type); continue; }
+    if (defs.length > 1) {
+      out.duplicates.push({ type, rows: defs.map(p => ({ id: String(p._id), name: p.name ?? null, version: p.version ?? null })) });
+    }
+    for (const p of defs) out.defaults.push({ type, id: String(p._id), name: p.name ?? null, version: parseVersion(p.version), rawVersion: p.version ?? null });
+  }
+
+  // Doc table. Crude on purpose, exactly like the enum half: find a line that
+  // names the prompt, then check the version token on that line. A reformatted
+  // table still passes; a stale version number does not.
+  if (!existsSync(DEFAULTS_DOC)) {
+    out.docMissing = true;
+    return out;
+  }
+  const lines = readFileSync(DEFAULTS_DOC, 'utf8').split('\n');
+  for (const d of out.defaults) {
+    if (!d.name) { out.docDrift.push({ ...d, reason: 'live default has no `name` — nothing to match in the doc, and its output records prompt_name: undefined' }); continue; }
+    const line = lines.find(l => l.includes(d.name) && /\bv\d+\b/.test(l));
+    if (!line) { out.docDrift.push({ ...d, reason: `no line in the doc names "${d.name}" with a version` }); continue; }
+    const documented = [...line.matchAll(/\bv(\d+)\b/g)].map(m => Number(m[1]));
+    if (d.version === null || !documented.includes(d.version)) {
+      out.docDrift.push({ ...d, reason: `doc says v${documented.join('/v')}, production runs v${d.version}` });
+    }
+  }
+  return out;
+}
+
 async function main() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    const msg = 'NOT RUN — MONGODB_URI is unset. This check cannot pass without a database; treat this as a finding, not a skip.';
+    const msg = 'NOT RUN — MONGODB_URI is unset. This check cannot pass without a database; this is exit 2 (instrument failure), NOT a finding.';
     console.log(asJson ? JSON.stringify({ status: 'not_run', reason: msg }, null, 2) : `\n${msg}\n`);
     // process.exitCode, never process.exit(): exit() discards buffered stdout
     // when stdout is a PIPE rather than a tty, so the report vanishes in CI and
     // under any redirect -- the exact places this check is meant to speak up.
-    if (failOnFindings) process.exitCode = 1;
+    if (failOnFindings) process.exitCode = 2;
     return;
   }
 
@@ -122,8 +218,10 @@ async function main() {
   // hangs FOREVER. Observed 2026-08-04 -- a DNS blip left a run alive 2h43m,
   // printing its error and then simply never exiting.
   const findings = [];
+  let defaults = null;
   try {
-  for (const entry of REGISTRY) {
+  if (runDefaults) defaults = await checkPromptDefaults(db);
+  for (const entry of runEnums ? REGISTRY : []) {
     if (!existsSync(entry.doc)) {
       findings.push({ ...entry, kind: 'missing_doc', undocumented: [], phantom: [] });
       continue;
@@ -187,7 +285,7 @@ async function main() {
   }
 
   if (asJson) {
-    console.log(JSON.stringify({ status: 'ran', findings }, null, 2));
+    console.log(JSON.stringify({ status: 'ran', findings, prompt_defaults: defaults }, null, 2));
   } else {
     console.log('');
     for (const f of findings) {
@@ -217,11 +315,42 @@ async function main() {
       if (f.phantom.length) console.log(`    (documented but absent from production: ${f.phantom.join(', ')} — informational)`);
       console.log('');
     }
+
+    const d = defaults;
+    if (d) {
+    const head = `prompts active defaults  ->  ${d.doc}`;
+    const clean = !d.duplicates.length && !d.missingDefault.length && !d.nonNumeric.length && !d.docDrift.length && !d.docMissing;
+    console.log(clean ? `✓ ${head}` : `✗ ${head}`);
+    if (d.docMissing) console.log('    doc file does not exist');
+    for (const dup of d.duplicates) {
+      console.log(`    ${dup.type}: ${dup.rows.length} rows with is_default:true — the lookup picks one by natural order, not intent`);
+      for (const r of dup.rows) console.log(`      ${r.id}  "${r.name}"  version=${JSON.stringify(r.version)}`);
+    }
+    for (const t of d.missingDefault) console.log(`    ${t}: NO default — every lookup for this type silently falls back to the hardcoded prompt`);
+    if (d.nonNumeric.length) {
+      console.log(`    ${d.nonNumeric.length} rows whose \`version\` is not a number — sort({version:-1}) follows BSON type order, not intent:`);
+      for (const r of d.nonNumeric) console.log(`      ${r.id}  ${r.type}/${r.name}  version=${JSON.stringify(r.version)}`);
+    }
+    for (const dd of d.docDrift) console.log(`    ${dd.type} "${dd.name}": ${dd.reason}`);
+    if (clean) {
+      console.log(`    ${d.defaults.length} types, one default each, all documented at the running version:`);
+      for (const x of d.defaults) console.log(`      ${x.type.padEnd(22)} "${x.name}" v${x.version}`);
+    } else {
+      console.log('    Repair rows with: node --env-file=.env.production.local scripts/maintenance/repair-prompt-defaults-3614.mjs');
+      console.log(`    Repair the table by editing the "Current defaults" section of ${d.doc}`);
+    }
+    console.log('');
+    }
   }
 
   // A sampled entry never counts as passing, even with nothing found.
   const bad = findings.filter(f => f.kind !== 'ok' || f.sampled);
-  if (bad.length && failOnFindings) process.exitCode = 1;   // not process.exit() -- see above
+  const defaultsBad = defaults && (defaults.docMissing || defaults.duplicates.length ||
+    defaults.missingDefault.length || defaults.nonNumeric.length || defaults.docDrift.length);
+  if ((bad.length || defaultsBad) && failOnFindings) process.exitCode = 1;   // not process.exit() -- see above
 }
 
-main().catch(e => { console.error(e); process.exitCode = 1; });
+// An uncaught throw is an INSTRUMENT failure (exit 2), never a finding (exit 1):
+// a connection that dies mid-scan measured nothing, and filing that as a corpus
+// finding is precisely the mistake in measurement-instruments.md.
+main().catch(e => { console.error(e); process.exitCode = 2; });

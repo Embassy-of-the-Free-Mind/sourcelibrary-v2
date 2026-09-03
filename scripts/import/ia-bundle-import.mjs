@@ -38,7 +38,8 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
 import crypto from 'crypto';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -156,7 +157,7 @@ async function main() {
       const bookId = new ObjectId();
       const bookIdStr = bookId.toHexString();
 
-      const bookDoc = makeBookDoc({
+      const acquired = await insertBookIfNew(db, {
         _id: bookId,
         id: bookIdStr,
         slug,
@@ -195,9 +196,9 @@ async function main() {
         normalized_author: normalizeAuthor(entry.author),
         created_at: new Date(),
         updated_at: new Date(),
-      });
-
-      await db.collection('books').insertOne(bookDoc);
+      }, { importer: 'script:ia-bundle-import', sourceIdentifier: `${bundle_id}/${fileHash}`, sourceUrl: `https://archive.org/details/${bundle_id}` });
+      // The gate declined this candidate; the reason is a row in `dedup_skips`.
+      if (!acquired.inserted) { console.log(`  SKIP — ${acquired.message}`); skipped++; continue; }
 
       const CHUNK = 500;
       for (let start = 0; start < pageCount; start += CHUNK) {

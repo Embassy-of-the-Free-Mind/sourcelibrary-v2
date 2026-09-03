@@ -1,19 +1,30 @@
 import { getDb } from '@/lib/mongodb';
+import { anonymizeIp } from '@/lib/anonymize-ip';
 import { DatasetAccessLog } from './types';
 
 const COLLECTION = 'dataset_access_log';
 const DAILY_COLLECTION = 'dataset_usage_daily';
 
-/** Log a dataset API access event (EU AI Act compliance) */
-export async function logAccess(entry: DatasetAccessLog): Promise<void> {
+/** Log a dataset API access event (EU AI Act compliance).
+ *  `countPages: false` records the access without charging the caller's daily
+ *  page quota — for endpoints returning metadata records, not pages (books). */
+export async function logAccess(
+  entry: DatasetAccessLog,
+  opts?: { countPages?: boolean },
+): Promise<void> {
   const db = await getDb();
+
+  // Anonymize at the write boundary so no call site can forget. The caller is
+  // already identified by api_key_id; a full IP adds nothing the compliance
+  // log needs, and /privacy promises we don't store full IPs.
+  entry.ip_address = anonymizeIp(entry.ip_address);
 
   // Fire-and-forget — don't block the API response
   Promise.all([
     db.collection(COLLECTION).insertOne(entry),
     incrementDailyUsage(
       entry.api_key_id,
-      entry.records_returned
+      opts?.countPages === false ? 0 : entry.records_returned
     ),
   ]).catch(err => console.error('[dataset] access log failed:', err));
 }

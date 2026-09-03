@@ -15,7 +15,7 @@
  *   1. write `book.first_translation = { verdict: 'not_applicable', ... }`
  *      (verdict-only writer — ft-ingest-verdicts.ts), append to
  *      first_translation_attempts,
- *   2. run reconcile-first-translation-flag.ts --apply (the ONLY flag writer).
+ *   2. run reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] --apply (the ONLY flag writer).
  * `not_applicable` is not in FIRST_FAMILY, so the reconcile demotes the badge.
  *
  * Usage:

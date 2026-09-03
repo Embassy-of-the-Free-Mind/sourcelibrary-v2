@@ -24,11 +24,9 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
-import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
-import { shouldRefuseOcrWrite, recordRefusal } from '../lib/blank-page-guard.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -55,17 +53,6 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
-/**
- * Save current page content as a revision before overwriting — delegates to the
- * shared helper (scripts/lib/page-revisions.mjs). This worker's inline copy
- * predated the #3240 refinements (marker-text skip, reason, source_language,
- * batch_job_id preference) and never received them (#3977). Sole call site is
- * the preview-model realtime re-OCR path.
- */
-async function saveRevisionBeforeOverwrite(db, pageId, field) {
-  return saveRevisionShared(db, pageId, field, { reason: 'reocr_realtime' });
-}
-
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
 const OCR_MODEL_LITE = 'gemini-3.1-flash-lite';
 
@@ -277,6 +264,10 @@ const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
 let MAX_ACTIVE_IMAGE_JOBS = 50;
 const PREVIEW_PAGE_COUNT = 25;
 let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
+// How long a submitted preview batch suppresses re-offering its book. Longer
+// than any healthy batch (measured p90 0.4h) so we never double-submit, short
+// enough that a submission which died is retried the same day.
+const PREVIEW_BATCH_RETRY_HOURS = 12;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 14;
 
@@ -836,12 +827,88 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+/**
+ * What each "done" status claims the book now HAS (#3740).
+ *
+ * Measured 2026-08-08 across 58,605 text books: 28,233 sat past enrichment with no
+ * summary and 27,837 past chapters with no chapters. Nothing was broken loudly — the
+ * statuses were simply written ahead of the work, and every downstream phase selects on
+ * status, so those books are permanently "past" the phases that would have filled them
+ * in. A status that runs ahead of the work is worse than no status.
+ *
+ * `skip` is the other half and is not optional. Absence has two causes that are
+ * indistinguishable after the fact: the stage failed, or the stage correctly decided
+ * there was nothing to do. A single-work volume legitimately has no chapters; a book
+ * under 10 pages is not meant to have them. If the predicate read absence as failure,
+ * ~28K books would re-stall permanently — a far bigger outage than the bug. So a status
+ * is satisfied by **output OR an explicitly recorded skip**, and the phase that decides
+ * to skip must say so at the moment it decides, because that is the only moment the
+ * reason exists.
+ */
+const STATUS_OUTPUT_CLAIMS = {
+  archive_complete:  { has: b => (b.pages_archived || 0) > 0,                      skip: 'archive_skipped_reason',     want: 'pages_archived > 0' },
+  ocr_complete:      { has: b => (b.pages_ocr || 0) > 0,                           skip: 'ocr_skipped_reason',         want: 'pages_ocr > 0' },
+  summary_indexed:   { has: b => !!b.summary,                                      skip: 'summary_skipped_reason',     want: 'a summary' },
+  chapters_complete: { has: b => Array.isArray(b.chapters) && b.chapters.length > 0, skip: 'chapters_skipped_reason',  want: 'chapters' },
+  cover_selected:    { has: b => b.cover_page != null,                             skip: 'cover_skipped_reason',       want: 'a cover_page' },
+};
+
+// Default is OBSERVE, not enforce. Flipping behaviour at 53 call sites in a pipeline that
+// is about to be restarted is how you turn a silent-success bug into an outage, and the
+// predicates above have not yet been proven against every path that writes a status.
+// Observe mode records the violation and still advances; once the recorded violations
+// look right, STATUS_GUARD_ENFORCE=1 makes it refuse.
+const STATUS_GUARD_ENFORCE = process.env.STATUS_GUARD_ENFORCE === '1';
+
+/**
+ * Does this status tell the truth about the book? Returns null when fine, else a reason.
+ * Satisfied by real output, by a skip reason recorded on the document, or by one being
+ * written in this very call (`extra`).
+ */
+function statusOutputViolation(book, status, extra = {}) {
+  const claim = STATUS_OUTPUT_CLAIMS[status];
+  if (!claim) return null;
+  if (claim.has(book)) return null;
+  if (extra[claim.skip] || book?.pipeline_auto?.[claim.skip]) return null;
+  return `status '${status}' claims ${claim.want}, book has none and no ${claim.skip} was recorded`;
+}
+
 async function setPipelineStatus(db, bookId, status, extra = {}) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { 'pipeline_auto.status': 1, title: 1 } }
+    {
+      projection: {
+        title: 1, pipeline_auto: 1,
+        summary: 1, chapters: 1, cover_page: 1,
+        pages_ocr: 1, pages_archived: 1, pages_count: 1,
+      },
+    }
   );
   const prevStatus = book?.pipeline_auto?.status;
+
+  const violation = book ? statusOutputViolation(book, status, extra) : null;
+  if (violation) {
+    console.log(`  [status-guard] ${bookId}: ${violation}${STATUS_GUARD_ENFORCE ? ' — REFUSED' : ''}`);
+    db.collection('audit_log').insertOne({
+      action: 'pipeline_status_output_missing',
+      book_id: bookId,
+      book_title: book?.title,
+      metadata: { attempted: status, from: prevStatus || 'none', violation, enforced: STATUS_GUARD_ENFORCE },
+      timestamp: new Date(),
+    }).catch(() => {});
+
+    if (STATUS_GUARD_ENFORCE) {
+      // Park it where a sweep can find it, rather than advancing past the work.
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { 'pipeline_auto.status': 'needs_attention', 'pipeline_auto.last_updated': new Date(),
+                  'pipeline_auto.error': violation, updated_at: new Date() } }
+      );
+      return;
+    }
+    // Observe mode: advance, but leave a mark so the population stays countable.
+    extra = { ...extra, output_missing: violation, output_missing_at: new Date() };
+  }
 
   await db.collection('books').updateOne(
     { id: bookId },
@@ -1592,8 +1659,30 @@ Output structure:
 // Collector already supports book_ids arrays and metadata.key matching.
 const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-book pool
 
-async function submitCrossBookOcrBatches(db, books) {
-  const ocrModel = OCR_MODEL_LITE;
+/**
+ * @param opts.maxPagesPerBook  Cap pages taken from each book. Phase 1.5 passes
+ *   25 so a preview stays a preview; without it one long book fills the pool.
+ * @param opts.advanceStatus    When false, leave `pipeline_auto.status` alone.
+ *   Preview books must stay at `archive_complete` — flipping them to
+ *   `ocr_submitted` would let the collector call a 25-page sample a finished
+ *   OCR pass and skip the other 275 pages.
+ * @param opts.ocrSource        Stamped on the batch_jobs row and read back by
+ *   the collector as `ocr.source`. Preview passes `pipeline_preview` so the
+ *   provenance split the measurement stack segments on survives the move to
+ *   batch (see .claude/docs/data-provenance.md).
+ * @param opts.model            One batch job carries ONE model, so a pool must
+ *   be uniform. Callers that mix scripts have to partition by
+ *   `getOcrModelForBook` and call once per model. Defaults to flash-lite, which
+ *   is what this function always used.
+ */
+async function submitCrossBookOcrBatches(db, books, opts = {}) {
+  const {
+    maxPagesPerBook = null,
+    advanceStatus = true,
+    ocrSource = null,
+    model = OCR_MODEL_LITE,
+  } = opts;
+  const ocrModel = model;
   const basePromptRef = await getOcrPromptFromDb(db);
   const basePrompt = basePromptRef.text;
 
@@ -1629,7 +1718,8 @@ async function submitCrossBookOcrBatches(db, books) {
   for (const book of eligible) {
     if (allDownloaded.length >= CROSS_BOOK_BATCH_SIZE) break;
 
-    const remaining = CROSS_BOOK_BATCH_SIZE - allDownloaded.length;
+    const poolRoom = CROSS_BOOK_BATCH_SIZE - allDownloaded.length;
+    const remaining = maxPagesPerBook ? Math.min(poolRoom, maxPagesPerBook) : poolRoom;
     const pages = await db.collection('pages')
       .find({
         book_id: book.id,
@@ -1772,18 +1862,22 @@ async function submitCrossBookOcrBatches(db, books) {
     submission_method: 'file',
     key_index: batchJob.keyIndex,
     cross_book: true,
+    ...(ocrSource ? { ocr_source: ocrSource } : {}),
+    ...(maxPagesPerBook ? { preview: true, preview_page_cap: maxPagesPerBook } : {}),
     ocr_generation: bookGenerations[chunkBookIds[0]] ?? 0, // #2449 generation guard
     book_generations: Object.fromEntries(chunkBookIds.map(id => [id, bookGenerations[id] ?? 0])),
     created_at: new Date(),
     updated_at: new Date(),
   });
 
-  // Mark all pooled books as ocr_submitted so they don't get re-submitted
+  // Mark all pooled books so they don't get re-submitted. `preview_batch_at` is
+  // stamped either way and is what Phase 1.5 filters on; a preview run leaves
+  // the pipeline status untouched so the book still owes a full OCR pass.
   for (const bookId of chunkBookIds) {
     await db.collection('books').updateOne(
       { id: bookId },
       { $set: {
-        'pipeline_auto.status': 'ocr_submitted',
+        ...(advanceStatus ? { 'pipeline_auto.status': 'ocr_submitted' } : {}),
         'pipeline_auto.preview_batch_at': new Date(),
         'pipeline_auto.last_updated': new Date(),
       } }
@@ -2367,11 +2461,12 @@ async function run() {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
 
   // ── Selective unpause ──────────────────────────────────────────────
-  // Process specific books even while globally paused. Driven by
-  // system_config.processing_control.allow_book_ids[] / allow_collections[].
-  // When a scope is set, the global pause is bypassed but EVERY phase is
-  // confined to the allowlisted books (via applyBookOverride below). An
-  // empty scope means the pause is a full stop, unchanged. The free
+  // Process specific books even while the line is otherwise stopped. Driven by
+  // system_config.processing_control.allow_book_ids[] / allow_collections[] /
+  // allow_scopes{}. A configured scope CONFINES the run only when the line is
+  // stopped for everyone else — globally paused (#2610), or the daily dial is
+  // closed and a scope envelope is open (#4540). When the line is open, scoped
+  // books flow with everything else and unscoped books are unaffected. The free
   // archiving workers already do this per-book (archive-bulk --book-id,
   // archive-iiif-local --ignore-pause); this brings the paid path in line.
   const { bookIds: _scopeBookIds, collections: _scopeCollections } = getScopeConfig(control);
@@ -2382,10 +2477,7 @@ async function run() {
       .toArray();
     for (const b of scoped) _scopeIds.add(String(b.id));
   }
-  const SCOPED_MODE = _scopeIds.size > 0;
-  // SCOPE_ACTIVE gates the per-phase applyBookOverride calls — true for either
-  // a single --book override (existing behavior) or a config-driven allowlist.
-  const SCOPE_ACTIVE = !!BOOK_OVERRIDE || SCOPED_MODE;
+  const SCOPE_CONFIGURED = _scopeIds.size > 0;
 
   if (RECOVERY_ONLY && !shouldBypassPause(control, { bookOverride: !!BOOK_OVERRIDE })) {
     console.log('[pipeline-orchestrator] PAUSED, but this is a recovery-only run (--phase 8.5): rolling back stuck statuses spends nothing, so it proceeds.');
@@ -2403,8 +2495,25 @@ async function run() {
     await client.close();
     return;
   }
+  // ── Run mode (#4540): measure the dial once, decide the lane ──
+  // ENVELOPE MODE: the global dial is closed but a scope envelope has room —
+  // the run proceeds confined to the envelope-open books only. The decision is
+  // made at run START so confinement and dispatch can never disagree: if the
+  // dial closes mid-run and an envelope opens, this run's phases refuse and
+  // the NEXT run (2 min) enters envelope mode with candidates confined.
+  const _startGate = await budgetAllowsDispatchScoped(db, 'run start (mode decision)', { bypass: !!BOOK_OVERRIDE, control });
+  const ENVELOPE_MODE = !!(_startGate.allowed && _startGate.envelopeIds);
+  if (ENVELOPE_MODE) {
+    for (const id of [..._scopeIds]) if (!_startGate.envelopeIds.has(id)) _scopeIds.delete(id);
+    console.log(`[pipeline-orchestrator] ENVELOPE MODE: global dial closed, scope envelope(s) open — processing ONLY ${_scopeIds.size} envelope book(s).`);
+  }
+  const SCOPED_MODE = SCOPE_CONFIGURED && (!!control?.paused || ENVELOPE_MODE);
+  // SCOPE_ACTIVE gates the per-phase applyBookOverride calls — true for either
+  // a single --book override (existing behavior) or a confining scope.
+  const SCOPE_ACTIVE = !!BOOK_OVERRIDE || SCOPED_MODE;
+
   if (control?.paused && SCOPED_MODE) {
-    console.log(`[pipeline-orchestrator] PAUSED globally, but selective-unpause scope is active — processing ONLY ${_scopeIds.size} allowlisted book(s) (allow_book_ids + allow_collections).`);
+    console.log(`[pipeline-orchestrator] PAUSED globally, but selective-unpause scope is active — processing ONLY ${_scopeIds.size} allowlisted book(s) (allow_book_ids + allow_collections + allow_scopes).`);
   }
 
   // DB health probe — adjusts submission limits based on Atlas load
@@ -2479,6 +2588,24 @@ async function run() {
       return normalBooks.filter(b => _scopeIds.has(String(b.id || b._id)));
     }
     return normalBooks;
+  }
+
+  /**
+   * Per-phase paid-dispatch gate (#4540). Wraps budgetAllowsDispatchScoped so
+   * every paid phase re-measures (the dial can close mid-run as spend lands),
+   * with one safety rule: envelope-lane dispatch is honored ONLY when the run
+   * started in envelope mode — that is the only case where the phase's
+   * candidates are already confined to the envelope books. A lane that opens
+   * mid-run waits for the next run rather than dispatching unconfined.
+   */
+  async function budgetAllowsDispatchForPhase(label) {
+    const g = await budgetAllowsDispatchScoped(db, label, { bypass: !!BOOK_OVERRIDE });
+    if (!g.allowed) return false;
+    if (g.envelopeIds && !ENVELOPE_MODE) {
+      console.log(`  [spend-guard] ${label}: envelope lane opened mid-run, but this run's candidates are not confined — deferring scoped dispatch to the next run.`);
+      return false;
+    }
+    return true;
   }
 
   const log = {
@@ -2823,6 +2950,12 @@ async function run() {
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (AR screen → Gemini confirm) ---');
 
+      // The AR screen is free; only the confirm spends. Asked once per cycle so
+      // the free screen keeps running when the dial is closed — gating the whole
+      // phase would stop `split_checked` being written, and Phase 1.5 requires
+      // it, so a closed dial would silently stall preview OCR as well.
+      const splitConfirmAllowed = await budgetAllowsDispatchForPhase('Phase 1.25 (split confirm)');
+
       // Scoped mode raises the window so allowlisted books behind the backlog
       // aren't stranded (work stays confined by applyBookOverride below). The
       // module-level phase limits get this raise already; phase-local consts
@@ -2922,6 +3055,12 @@ async function run() {
 
           // AR > threshold — confirm with Gemini before flagging for spread-aware OCR.
           // This prevents wasting the spread OCR prompt on foldouts, maps, and wide tables.
+          if (!splitConfirmAllowed) {
+            // Leave the book unmarked rather than marking it checked without
+            // having checked it — it should be retried once the dial reopens.
+            console.log(`    ${label}: AR=${detectedAr.toFixed(2)}, confirm SKIPPED (spend ceiling) — leaving unchecked`);
+            continue;
+          }
           console.log(`    ${label}: AR=${detectedAr.toFixed(2)}, confirming with Gemini...`);
 
           if (DRY_RUN) {
@@ -3080,13 +3219,31 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       }
     }
 
-    // ── Phase 1.5: Preview OCR — first 25 pages via inline Gemini ──
-    // OCRs the title page, TOC, and opening pages directly via Gemini realtime API.
-    // Purpose: get text for AI metadata classification (Phase 1.6) before full OCR.
-    // Prioritizes likely first translations (flagged at enrollment).
-    if (shouldRun(1.5)) {
-      console.log('\n--- Phase 1.5: Preview OCR (inline Gemini, first 25 pages) ---');
+    // ── Phase 1.5: Preview OCR — first 25 pages, pooled into a flash-lite batch ──
+    // Transcribes the title page, TOC and opening pages so Phase 1.6 can
+    // classify metadata before the full pass. Prioritises likely first
+    // translations (flagged at enrollment).
+    //
+    // Submitted through the Batch API rather than inline realtime (2026-08-30).
+    // Batch is half the token price for identical output, and it is not slower
+    // here: measured over the 2026-08-27..30 window, batch jobs completed
+    // p50 0.2h / p90 0.4h. Riding Phase 2's cross-book pooler also inherits its
+    // machinery — key rotation, the #2449 generation guard, metadata.key result
+    // routing, and the collector's blank-page guard (#4149), which the inline
+    // path had to implement for itself.
+    //
+    // Books stay at `archive_complete`: a 25-page sample is not a finished OCR
+    // pass, and `advanceStatus: false` stops the collector from recording it as
+    // one and skipping the remaining pages.
+    //
+    // Dial-gated. Phase 1.5 spends, so it must ask — it was outside the dial
+    // while it was inline realtime, which meant the one phase that runs every
+    // two minutes was the one phase the ceiling could not stop.
+    if (shouldRun(1.5) && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
+      console.log('\n--- Phase 1.5: Preview OCR (flash-lite batch, first 25 pages) ---');
 
+      const previewRetryCutoff = new Date(Date.now() - PREVIEW_BATCH_RETRY_HOURS * 60 * 60 * 1000);
+      const previewProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, needs_splitting: 1, 'image_source.provider': 1 };
       let readyForPreview = await db.collection('books')
         .find({
           'pipeline_auto.status': 'archive_complete',
@@ -3094,185 +3251,95 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'pipeline_auto.preview_ocr_done': { $ne: true },
           'pipeline_auto.recitation_retry': { $ne: true },
           'pipeline_auto.recitation_blocked': { $ne: true },
-          // Spread guard (#2449): preview OCR uses the standard prompt, which writes
-          // marker-less text that poisons the post-OCR split. Spread books get their
-          // first OCR from Phase 2's spread-aware path instead.
-          $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
+          $and: [
+            // Spread guard (#2449): preview OCR uses the standard prompt, which writes
+            // marker-less text that poisons the post-OCR split. Spread books get their
+            // first OCR from Phase 2's spread-aware path instead.
+            { $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }] },
+            // Skip a book whose preview batch is still in flight. The pooler would
+            // refuse it anyway, but a batch takes hours and this keeps the candidate
+            // list moving. Time-boxed, so a submission that died is retried rather
+            // than stranded behind its own marker.
+            { $or: [
+              { 'pipeline_auto.preview_batch_at': { $exists: false } },
+              { 'pipeline_auto.preview_batch_at': { $lt: previewRetryCutoff } },
+            ] },
+          ],
         })
         .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
-        .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
+        .project(previewProjection)
         .limit(PREVIEW_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) readyForPreview = await applyBookOverride(db, readyForPreview, { id: 1, title: 1, language: 1, needs_splitting: 1 });
+      if (SCOPE_ACTIVE) readyForPreview = await applyBookOverride(db, readyForPreview, previewProjection);
 
       console.log(`  Books ready for preview OCR: ${readyForPreview.length}`);
 
-      const previewOcrPromptRef = await getOcrPromptFromDb(db);
-      const previewOcrPrompt = previewOcrPromptRef.text;
-      const previewApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
-      const previewModel = OCR_MODEL_LITE;
-      let previewDone = 0;
-
+      // Retire candidates whose opening pages are already transcribed. Judged on
+      // the FIRST 25 page numbers, not on "any page still lacking OCR" — the
+      // latter never goes false for a long book, so the book would ride the
+      // candidate list forever, taking 25 more pages each run and never being
+      // marked done. Preview is a position in the book, not a quantity.
+      const stillNeedPreview = [];
       for (const book of readyForPreview) {
-        try {
-          const label = (book.title || '').substring(0, 50);
-
-          // Get first 25 pages needing OCR with R2 images
-          const previewPages = await db.collection('pages')
-            .find({
-              book_id: book.id,
-              $or: [
-                { 'ocr.data': { $exists: false } },
-                { 'ocr.data': null },
-                { 'ocr.data': '' },
-              ],
-              $and: [{
-                $or: [
-                  { cropped_photo: { $exists: true, $nin: [null, ''] } },
-                  { archived_photo: { $regex: /^https?:\/\// } },
-                ]
-              }],
-            })
-            .sort({ page_number: 1 })
-            .limit(PREVIEW_PAGE_COUNT)
-            .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1 })
-            .toArray();
-
-          if (previewPages.length === 0) {
-            // All pages already have OCR — skip preview
-            if (!DRY_RUN) {
-              await db.collection('books').updateOne(
-                { id: book.id },
-                { $set: { 'pipeline_auto.preview_ocr_done': true, updated_at: new Date() } }
-              );
-            }
-            continue;
+        const firstPages = await db.collection('pages')
+          .find({ book_id: book.id, page_number: { $gt: 0 } })
+          .sort({ page_number: 1 })
+          .limit(PREVIEW_PAGE_COUNT)
+          .project({ _id: 0, 'ocr.data': 1 })
+          .toArray();
+        const anyMissing = firstPages.some(p => !p.ocr?.data);
+        if (firstPages.length > 0 && !anyMissing) {
+          if (!DRY_RUN) {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { 'pipeline_auto.preview_ocr_done': true, updated_at: new Date() } }
+            );
           }
+          continue;
+        }
+        stillNeedPreview.push(book);
+      }
 
-          if (DRY_RUN) {
-            console.log(`  Would preview OCR: ${label} — ${previewPages.length} pages`);
-            continue;
+      if (DRY_RUN) {
+        console.log(`  Would submit preview OCR for ${stillNeedPreview.length} books (<=${PREVIEW_PAGE_COUNT} pages each, ${OCR_MODEL_LITE})`);
+      } else if (stillNeedPreview.length === 0) {
+        console.log('  No books need preview OCR');
+      } else {
+        // One batch job carries one model, so partition before pooling. Sending
+        // a Chinese or Sanskrit book to flash-lite is the failure the routing
+        // rule exists to prevent — it does not fail, it invents plausible text
+        // (see src/app/blog/tibetan-ocr/). The previous inline path ignored
+        // this and used flash-lite for every book; that is not carried over.
+        const byModel = new Map();
+        for (const book of stillNeedPreview) {
+          const m = getOcrModelForBook(book);
+          if (!byModel.has(m)) byModel.set(m, []);
+          byModel.get(m).push(book);
+        }
+
+        let submittedBooks = 0;
+        for (const [model, group] of byModel) {
+          try {
+            const previewResult = await submitCrossBookOcrBatches(db, group, {
+              maxPagesPerBook: PREVIEW_PAGE_COUNT,
+              advanceStatus: false,
+              ocrSource: 'pipeline_preview',
+              model,
+            });
+            submittedBooks += previewResult.bookIds.length;
+            console.log(`  Preview OCR submitted (${model}): ${previewResult.submitted} pages from ${previewResult.bookIds.length}/${group.length} books`);
+          } catch (err) {
+            log.errors.push(`Preview OCR batch (${model}): ${err.message}`);
+            console.log(`  Preview OCR batch FAILED (${model}): ${err.message}`);
           }
-
-          // Download images
-          const downloaded = await downloadImagesParallel(previewPages, IMAGE_CONCURRENCY);
-          if (downloaded.length < 3) {
-            console.log(`  Too few images for preview: ${label} (${downloaded.length})`);
-            continue;
-          }
-
-          // OCR each page via Gemini realtime (one call per page, parallel batches of 5)
-          let pagesOcrd = 0;
-          for (let i = 0; i < downloaded.length; i += 5) {
-            const batch = downloaded.slice(i, i + 5);
-            const results = await Promise.allSettled(batch.map(async ({ pageId, image }) => {
-              const url = `${GEMINI_API_BASE}/models/${previewModel}:generateContent?key=${previewApiKey}`;
-              const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  contents: [{
-                    role: 'user',
-                    parts: [
-                      { inlineData: { mimeType: image.mimeType, data: image.data } },
-                      { text: previewOcrPrompt },
-                    ],
-                  }],
-                  safetySettings: [
-                    { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-                    { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-                  ],
-                  generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
-                }),
-              });
-
-              if (!response.ok) {
-                const errText = await response.text();
-                throw new Error(`Gemini ${response.status}: ${errText.substring(0, 100)}`);
-              }
-
-              const data = await response.json();
-              const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-              const usage = data.usageMetadata || {};
-
-              // Blank-page guard (#4149): refuse a transcription claim over a
-              // leaf with no ink. Two of the five books confirmed fabricating
-              // came through THIS path. It costs nothing here — `item.image.data`
-              // is the very base64 just posted to Gemini, so no refetch.
-              // Fails open on every doubt; see scripts/lib/blank-page-guard.mjs.
-              if (text) {
-                const blank = await shouldRefuseOcrWrite({ text, imageBuffer: image?.data })
-                  .catch(() => ({ refuse: false }));
-                if (blank.refuse) {
-                  console.log(`  BLANK-PAGE GUARD: refusing page ${pageId} — image ink ${(blank.coverage * 100).toFixed(3)}% vs ${blank.chars} chars claimed (#4149)`);
-                  await recordRefusal(db, {
-                    pageId, bookId: book.id, pageNumber: null, text,
-                    model: previewModel, verdict: blank, jobId: null,
-                  });
-                  return;
-                }
-              }
-
-              if (text) {
-                await saveRevisionBeforeOverwrite(db, pageId, 'ocr');
-                await db.collection('pages').updateOne(
-                  { id: pageId },
-                  { $set: {
-                    'ocr.data': text,
-                    'ocr.model': previewModel,
-                    'ocr.prompt_version': previewOcrPromptRef.version || OCR_PROMPT_VERSION,
-                    'ocr.prompt_id': previewOcrPromptRef.id,
-                    'ocr.prompt_hash': previewOcrPromptRef.content_hash,
-                    'ocr.prompt_name': previewOcrPromptRef.name,
-                    'ocr.updated_at': new Date(),
-                    'ocr.source': 'pipeline_preview',
-                    updated_at: new Date(),
-                  }}
-                );
-                pagesOcrd++;
-              }
-
-              // Log usage (fire-and-forget)
-              const inputTokens = usage.promptTokenCount || 0;
-              const outputTokens = usage.candidatesTokenCount || 0;
-              const costUsd = (inputTokens / 1_000_000) * 0.075 + (outputTokens / 1_000_000) * 0.30;
-              logUsageAsync({
-                type: 'ocr', mode: 'realtime', model: previewModel,
-                book_id: book.id, page_ids: [pageId],
-                input_tokens: inputTokens, output_tokens: outputTokens,
-                cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-preview-ocr',
-              }, db);
-            }));
-
-            // Brief pause between batches
-            await sleep(200);
-          }
-
-          // Update book: mark preview done, sync OCR count. VISIBLE pages only
-          // (page_number > 0) — see scripts/lib/page-counts.mjs and issue #3293.
-          const ocrCount = await db.collection('pages').countDocuments({
-            book_id: book.id,
-            ...VISIBLE_PAGE_MATCH,
-            'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
-          });
-          await db.collection('books').updateOne(
-            { id: book.id },
-            { $set: {
-              'pipeline_auto.preview_ocr_done': true,
-              pages_ocr: ocrCount,
-              updated_at: new Date(),
-            }}
-          );
-
-          previewDone++;
-          console.log(`  Preview OCR done: ${label} — ${pagesOcrd}/${downloaded.length} pages`);
-        } catch (err) {
-          log.errors.push(`Preview OCR ${book.id}: ${err.message}`);
+        }
+        // Name what did NOT go. A pool that silently stops at its page cap
+        // otherwise reads as "every candidate handled".
+        const deferred = stillNeedPreview.length - submittedBooks;
+        if (deferred > 0) {
+          console.log(`  Deferred to a later run: ${deferred} books (pool cap ${CROSS_BOOK_BATCH_SIZE} pages per model, or an OCR batch already in flight)`);
         }
       }
-      console.log(`  Preview OCR completed: ${previewDone} books`);
     }
 
     // ── Phase 1.6: AI metadata classification ──
@@ -3280,7 +3347,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // language, description, display_title, categories, source_work_dates, FT pre-screen.
     // Also does catalog cross-reference (USTC/EFM) for year/place/publisher.
     // Writes ai_metadata and updates book fields at medium+ confidence.
-    if (shouldRun(1.6) || shouldRun(1.5)) {
+    if ((shouldRun(1.6) || shouldRun(1.5)) && await budgetAllowsDispatchForPhase('Phase 1.6 (metadata classification)')) {
       console.log('\n--- Phase 1.6: AI metadata classification ---');
 
       const metadataApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
@@ -3307,12 +3374,17 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           'ai_metadata.enriched_at': { $exists: false },
         })
         .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
+        // place_of_publication + publisher must survive the projection:
+        // verifyMetadataInline guards on them ("only fill if absent"), and a
+        // projected-away field made the guard always pass — overwriting real
+        // values and recording previous_value: null in field_provenance.
         .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1,
                    description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1,
+                   place_of_publication: 1, publisher: 1,
                    field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 });
+      if (SCOPE_ACTIVE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, place_of_publication: 1, publisher: 1, field_provenance: 1, subject_keywords: 1, 'translation_verification.source': 1 });
 
       console.log(`  Books ready for AI metadata: ${readyForMetadata.length}`);
       let metadataEnriched = 0;
@@ -3514,27 +3586,18 @@ Rules:
               updates.subject_keywords = parsed.subject_keywords;
             }
 
-            // First translation: derive boolean + refine pipeline flag.
-            // CATALOG PRECEDENCE (#1974): this is a content-based read of the
-            // book's own pages — it CANNOT establish whether someone else already
-            // published a translation, which is a catalog fact. So it must never
-            // overwrite a catalog-grounded determination. Re-enrichment was
-            // clobbering correct catalog verdicts and manufacturing false "first
-            // translation" claims. Authoritative sources are the catalog-grounded
-            // ones (catalog_search / catalog_and_llm from search+validate-
-            // translation-evidence, and the deliberate canonical_kanjur tag) — NOT
-            // gemini_knowledge_lookup, which is itself memory-based. The content
-            // opinion is still preserved in ai_metadata.first_translation below.
+            // First translation: refine the INTERNAL pipeline flag only.
+            // The public boolean is no longer written here (#3881/#4536,
+            // 2026-09-01): a content-based read of the book's own pages cannot
+            // establish whether someone else already published a translation —
+            // that is a catalog fact, and the sanctioned path to the public
+            // badge is the reviewed Translation Card (work_translation_history).
+            // pipeline_auto.likely_first_translation stays: it is a routing
+            // signal (enrichment priority sort keys read it), never rendered.
             if (parsed.first_translation?.status) {
-              const CATALOG_GROUNDED_SOURCES = ['catalog_search', 'catalog_and_llm', 'canonical_kanjur'];
-              if (CATALOG_GROUNDED_SOURCES.includes(book.translation_verification?.source)) {
-                changes.push({ field: 'is_first_translation', skipped: 'deferred_to_catalog_verification', verification_source: book.translation_verification.source, content_status: parsed.first_translation.status });
-              } else {
-                const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
-                updates.is_first_translation = isFirst;
-                updates['pipeline_auto.likely_first_translation'] = isFirst;
-                changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
-              }
+              const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
+              updates['pipeline_auto.likely_first_translation'] = isFirst;
+              changes.push({ field: 'pipeline_auto.likely_first_translation', previous: book.pipeline_auto?.likely_first_translation ?? null, new_value: isFirst, public_badge_skipped: 'ft_demolition_3881' });
             }
 
             // Source work dates
@@ -3823,7 +3886,7 @@ Rules:
     // Two-pass strategy:
     //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
     //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
-    if (shouldRun(2) && await budgetAllowsDispatch(db, 'Phase 2 (OCR submit)', { bypass: !!BOOK_OVERRIDE })) {
+    if (shouldRun(2) && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       // Ordering gate: never OCR a book before Phase 1.97 has deduped it, else
@@ -3903,11 +3966,14 @@ Rules:
             // processing_priority (#3756): explicit queue weight, higher first
             // (absent sorts last under -1). Existing ordering kept as tiebreak.
             { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            // language + image_source.provider must survive the projection:
+            // getOcrModelForBook reads both, and a missing language reads as
+            // "unknown script" and routes EVERY book to flash-preview (~2.75x).
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
-        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
+        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, image_source: 1, pipeline_auto: 1 });
 
         const dedupedPreview = await filterDuplicateWorks(db, previewCandidates);
 
@@ -4009,11 +4075,12 @@ Rules:
           }},
           // processing_priority (#3756): explicit queue weight, higher first.
           { $sort: { processing_priority: -1, _priority: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
+          // language + image_source.provider must survive the projection (see Pass 1).
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
-      if (SCOPE_ACTIVE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, image_source: 1, pipeline_auto: 1 });
 
       const dedupedFull = await filterDuplicateWorks(db, readyForOcr);
 
@@ -4114,9 +4181,12 @@ Rules:
 
       let ocrPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
-        .project({ id: 1, title: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
+        // thumbnail_source must survive the projection: the early-cover guard
+        // below reads it, and a missing field made "!== 'manual'" always true —
+        // silently overwriting human-chosen covers on every run.
+        .project({ id: 1, title: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
-      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, thumbnail_source: 1, pipeline_auto: 1 });
 
       console.log(`  Books waiting for OCR: ${ocrPending.length}`);
 
@@ -4349,7 +4419,7 @@ Rules:
 
     // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on ocr_complete books) ──
     // Not a pipeline state — just enriches pages before translation. Cheap & fast (text-only, lite model).
-    if (shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) {
+    if ((shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) && await budgetAllowsDispatchForPhase('Phase 3.7 (transliteration)')) {
       console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
 
       // Find ocr_complete books with non-Latin languages
@@ -4432,7 +4502,7 @@ Rules:
     // ── Phase 4: Dispatch translation to Lambda via SQS FIFO ──
     // Hetzner focuses on OCR; Lambdas scale out translation.
     // Creates a job record, enqueues pages to SQS FIFO, Lambdas process sequentially per book.
-    if (shouldRun(4) && await budgetAllowsDispatch(db, 'Phase 4 (translation dispatch)', { bypass: !!BOOK_OVERRIDE })) {
+    if (shouldRun(4) && await budgetAllowsDispatchForPhase('Phase 4 (translation dispatch)')) {
       console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
       // Zombie job reaper: cancel ANY job stuck in processing with no update for >1h.
@@ -4543,10 +4613,13 @@ Rules:
           // then first translations, then speed tier. Descending sort puts books
           // without the field last.
           { $sort: { processing_priority: -1, _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+          // pages_ocr must survive the projection: the "OCR incomplete" guard
+          // reads it, and a projected-away field read as 0 — bouncing every
+          // fully-translated >30-page book back to archive_complete forever.
+          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
-        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1, image_source: 1 });
+        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, pipeline_auto: 1, image_source: 1 });
 
         // If no fresh books, re-queue partially-translated books (gap-fill)
         // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.
@@ -4564,13 +4637,13 @@ Rules:
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
             // processing_priority + pages_translated must survive the projection
             // for the sort below to see them (#3756).
-            { $project: { id: 1, title: 1, pages_count: 1, pages_translated: 1, processing_priority: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
             // Reader requests first (#3750) — see the fresh-books sort above.
             { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
-          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1 });
+          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, language: 1, image_source: 1, pipeline_auto: 1 });
           if (partialBooks.length > 0) {
             console.log(`  No fresh books — gap-filling ${partialBooks.length} under-translated books`);
           }
@@ -4776,7 +4849,13 @@ Rules:
         } catch (err) {
           const retries = book.pipeline_auto?.retry_count || 0;
           if (retries >= MAX_RETRIES) {
-            await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: 0 });
+            // Gave up after repeated throws, but the book is still counted as enriched
+            // and moved on. Record the reason so the summary_indexed population can be
+            // split into "has a summary" and "we stopped trying" (#3740).
+            await setPipelineStatus(db, book.id, 'summary_indexed', {
+              retry_count: 0,
+              summary_skipped_reason: `summary+index threw ${retries} times (last: ${err.message?.slice(0, 120)}); advanced as non-critical`,
+            });
             log.enriched++;
           } else {
             await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
@@ -4810,7 +4889,14 @@ Rules:
         try {
           if ((book.pages_count || 0) < 10) {
             if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
+              // A legitimate skip: too short to have chapters. Record WHY on the book —
+              // `log.chapters_skipped` is an in-memory counter that dies with the run, so
+              // this decision used to leave no trace and the book became indistinguishable
+              // from one whose extraction failed (#3740).
+              await setPipelineStatus(db, book.id, 'chapters_complete', {
+                retry_count: 0,
+                chapters_skipped_reason: `book has ${book.pages_count || 0} pages, fewer than the 10-page minimum for chapter extraction`,
+              });
             }
             log.chapters_skipped++;
             continue;
@@ -4835,8 +4921,13 @@ Rules:
           } else {
             const retries = book.pipeline_auto?.retry_count || 0;
             if (retries >= MAX_RETRIES) {
-              // Non-critical — skip
-              await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
+              // Non-critical — give up, but say so. This path writes the SUCCESS status
+              // after repeated FAILURE; unlabelled, it is why "chapters_complete with no
+              // chapters" cannot be told apart from a book that legitimately has none.
+              await setPipelineStatus(db, book.id, 'chapters_complete', {
+                retry_count: 0,
+                chapters_skipped_reason: `extract-chapters failed ${retries} times (last: HTTP ${res.status}); advanced as non-critical`,
+              });
               log.chapters_skipped++;
             } else {
               await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: retries + 1 });
@@ -4864,7 +4955,7 @@ Rules:
     }
 
     // ── Phase 8: Image extraction (chapters_complete -> images_submitted/complete) ──
-    if (shouldRun(8)) {
+    if (shouldRun(8) && await budgetAllowsDispatchForPhase('Phase 8 (image extraction)')) {
       console.log('\n--- Phase 8: Image extraction ---');
 
       const USE_BATCH = process.env.IMAGE_EXTRACTION_USE_BATCH !== 'false'; // Default: true (batch)
@@ -5367,7 +5458,7 @@ Rules:
         .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1 });
+      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1, content_type: 1 });
 
       console.log(`  Books ready to finalize: ${readyToFinalize.length}`);
 

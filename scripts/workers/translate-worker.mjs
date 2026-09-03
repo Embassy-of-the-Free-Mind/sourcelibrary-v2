@@ -38,7 +38,7 @@ import {
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -1076,7 +1076,15 @@ async function selfDispatch(db, limit) {
   // work exactly like orchestrator Phase 4 does, and during the 2026-08-08
   // incident it was the only dispatcher actually running — ungated. Every
   // path that turns a book into Gemini calls must ask the budget first.
-  if (!await budgetAllowsDispatch(db, 'translate-self-dispatch')) return [];
+  // Envelope-lane dispatch (#4540) is honored only via the module-level
+  // SCOPE_FILTER set by the main-run gate — if the envelope opened but this
+  // call's confinement isn't in place, refuse rather than dispatch unconfined.
+  const _sdGate = await budgetAllowsDispatchScoped(db, 'translate-self-dispatch');
+  if (!_sdGate.allowed) return [];
+  if (_sdGate.envelopeIds && !SCOPE_IDS) {
+    console.log('[TRANSLATE] self-dispatch: envelope lane open but no scope confinement active — deferring to the next confined run.');
+    return [];
+  }
 
   // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
@@ -1240,6 +1248,29 @@ async function main() {
     await client.close();
     return;
   }
+
+  // The dial gates the whole RUN, not just selfDispatch (#4436 follow-up).
+  // selfDispatch was gated because it creates new work; but main() also picks
+  // up books already at translate_submitted/translate_partial and resumes
+  // orphaned jobs, and neither asked. On the 2026-08-30 relight that gap was
+  // live: 5,011 preview-translate jobs queued before the dial existed drained
+  // straight through a $5 ceiling while the guard correctly logged "CEILING
+  // REACHED — no new dispatch". Both were true; the ceiling only governed
+  // dispatch, and the expensive path was consumption.
+  //
+  // A queue is stored spend. Anything that turns a queued job into Gemini
+  // calls has to ask, or the dial only limits how fast we ENQUEUE money.
+  const _gate = await budgetAllowsDispatchScoped(db, 'translate-worker run', { control });
+  if (!_gate.allowed) {
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-translate-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      pages_saved: 0, actions: { books_processed: 0, skip_reason: 'daily budget ceiling reached' },
+      errors: [], error_count: 0, summary: 'skipped: daily budget ceiling reached',
+    }).catch(() => {});
+    await client.close();
+    return;
+  }
   // When globally paused with a scope, confine candidate selection to it
   // (module-level SCOPE_FILTER read by selfDispatch).
   if (control?.paused && hasScope(control)) {
@@ -1248,12 +1279,25 @@ async function main() {
     SCOPE_FILTER = { id: { $in: SCOPE_IDS } };
     console.log(`[TRANSLATE] PAUSED globally, scope active — confining to ${SCOPE_IDS.length} allowlisted book(s).`);
   }
+  // Scope envelope (#4540): global dial closed but an envelope has room — the
+  // run proceeds confined to the envelope books. This governs CONSUMPTION too:
+  // a queue is stored spend, so resuming translate_submitted/orphaned work for
+  // non-envelope books would spend the global budget the dial just refused.
+  if (_gate.envelopeIds) {
+    SCOPE_IDS = [..._gate.envelopeIds];
+    SCOPE_SET = new Set(SCOPE_IDS);
+    SCOPE_FILTER = { id: { $in: SCOPE_IDS } };
+    console.log(`[TRANSLATE] Global dial closed, scope envelope open — confining to ${SCOPE_IDS.length} envelope book(s).`);
+  }
 
   // Find books — fresh (0 translated) first, then partials sorted by most remaining pages.
   // Grouping similar workloads per batch minimizes convoy tail waste.
   // Books with <10 pages remaining are auto-completed (overhead not worth it).
   const MIN_REMAINING = 1;
-  const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
+  // last_translation_at must survive the projection: the circuit breaker
+  // branches on it, and a projected-away field made both breaker conditions
+  // permanently false — zero-progress books re-billed forever, never parked.
+  const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1, last_translation_at: 1 };
 
   // Auto-complete near-zero books — job setup overhead exceeds the work
   const nearZero = await db.collection('books').aggregate([

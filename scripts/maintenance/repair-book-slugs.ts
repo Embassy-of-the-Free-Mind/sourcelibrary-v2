@@ -14,6 +14,13 @@
  *      generateBookSlug fix in src/lib/slugify.ts, which stops a non-Latin
  *      title from minting new ones.
  *
+ * WHICH OF THOSE THIS SWEEP CAN ACTUALLY FIX is decided by
+ * `classifySlugRepair` in src/lib/book-slug-repair.ts — holdbacks, "nothing
+ * Latin-script to build from", "the slug already says what the record says".
+ * That module is shared with scripts/audit/book-slug-placeholders.ts, the
+ * detector that REPORTS this work, so the two cannot drift into disagreeing
+ * about what is repairable (#4521). Change the rule there, not here.
+ *
  * Renaming a slug changes a public URL, so the old one is pushed onto
  * `slug_aliases` in the SAME update. findBookByIdOrSlug resolves aliases on
  * its miss path and the caller 301s to the canonical slug, so existing links,
@@ -41,7 +48,8 @@
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { MongoClient, type Db } from 'mongodb';
-import { generateBookSlug, appendSlugSuffix, isPlaceholderSlug } from '@/lib/slugify';
+import { appendSlugSuffix, isPlaceholderSlug } from '@/lib/slugify';
+import { classifySlugRepair } from '@/lib/book-slug-repair';
 
 const APPLY = process.argv.includes('--apply');
 const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
@@ -160,31 +168,18 @@ async function main() {
 
   for (const book of broken) {
     const title = book.display_title || book.title || '';
-    const base = generateBookSlug(book.title || '', book.author || '', book.display_title);
+    const bookId = book.id || String(book._id);
 
-    // generateBookSlug already falls back to the author, then to "untitled".
-    // If we land on a placeholder anyway (no Latin characters anywhere in
-    // title OR author), leave the book alone rather than moving it from one
-    // meaningless URL to another — it needs a display_title first, which is
-    // the enrichment pipeline's job, not this sweep's.
-    if (isPlaceholderSlug(base)) {
-      skipped.push(`${book.id} — nothing to build a slug from: "${title.slice(0, 40)}"`);
+    // The whole triage — holdbacks, "nothing to build from", "no gain" — lives
+    // in src/lib/book-slug-repair.ts, shared with the detector that reports
+    // this work. A detector disagreeing with its own repair tool reports work
+    // that cannot be done; see the header there (#4521).
+    const verdict = classifySlugRepair({ ...book, id: bookId });
+    if (!verdict.repairable || !verdict.slug) {
+      skipped.push(`${bookId} — ${verdict.reason}: "${title.slice(0, 40)}"`);
       continue;
     }
-
-    // A book that ALREADY has a URL only earns a rename if the new slug says
-    // something the old one didn't. Titles like "216" or "2-13" sanitize to
-    // themselves, so /book/216 would become /book/216-anonymous: a changed
-    // URL, no new information, and a redirect to maintain forever. Those are
-    // a metadata problem, not a slug problem. A book with NO slug is the
-    // opposite case — any readable segment beats /book/<objectid>.
-    const titleHasLetters = /[a-z]/i.test(
-      title.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
-    );
-    if (book.slug && !titleHasLetters) {
-      skipped.push(`${book.id} — slug "${book.slug}" already matches its title, no gain`);
-      continue;
-    }
+    const base = verdict.slug;
 
     const to = await reserveSlug(db, base, taken);
     plan.push({

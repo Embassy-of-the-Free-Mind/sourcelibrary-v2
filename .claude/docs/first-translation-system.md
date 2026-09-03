@@ -2,6 +2,15 @@
 
 *Source of truth for "how do we decide a book is a first English translation, and how is that counted?" Last reconciled against live code + production data 2026-06-01. Sibling: `.claude/docs/author-identity-system.md`.*
 
+> ## ⚠️ 2026-09-01 — the book-grain machinery this document describes is RETIRED (#4536)
+>
+> The nightly derive→reconcile actuators are off and their scripts deleted
+> (`derive-ft-verdict-from-attempts.ts`, `reconcile-first-translation-flag.ts`,
+> `derive-from-evidence.ts`). `books.is_first_translation` is frozen except
+> through the **Translation Card** (`work_translation_history`) review process —
+> see `.claude/docs/translation-card-method.md`. Read what follows as history of
+> how the stored verdicts were produced, not as the live mechanism.
+
 > ## ⚠️ 2026-08-01 — read [`first-translation-reference-set.md`](./first-translation-reference-set.md) before trusting any absence claim here
 >
 > An **evidence layer beneath this whole document** shipped in PR #3463 (#3459),
@@ -25,7 +34,7 @@
 > no prior" was written without that measurement and should be re-derived. The
 > verdict model, the badge, and the writer topology below remain accurate.
 
-> **Scaling verification across the whole corpus (tiered census methodology — models, prompts, tools, cost, the ~5,000 estimate): [`first-translation-census-methodology.md`](./first-translation-census-methodology.md).**
+> **Scaling verification across the whole corpus (tiered census methodology — models, prompts, tools, cost, the ~5,000 estimate — SUPERSEDED by round 5's ~8,565, PR #4524): [`first-translation-census-methodology.md`](./first-translation-census-methodology.md).**
 
 **Related issues:** [#2567](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2567) (cluster map / tracking) · [#1974](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1974) (no automated setter — central gap) · [#2352](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2352) (work-keyed translation index) · [#2564](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2564) (measurement + effort-routing + single-writer) · [#2264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2264) (work resolver) · [#2453](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2453) (works catalog) · [#2244](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2244) (backfill) · [#2332](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/2332) (subsystem cleanup).
 

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import sharp from 'sharp';
 import { getNextApiKey } from '@/lib/gemini-client';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
@@ -52,7 +53,8 @@ Return JSON with these fields:
       "reasoning": "Why this is a possibility"
     }
   ],
-  "search_terms": ["Array of 3-5 key search terms to find this work in a library catalog — include all names from inscriptions (invenit, fecit, excudit), key figures, distinctive words from inscriptions"]
+  "search_terms": ["Array of 3-5 key search terms to find this work in a library catalog — include all names from inscriptions (invenit, fecit, excudit), key figures, distinctive words from inscriptions"],
+  "artwork_bbox": "[ymin, xmin, ymax, xmax] — bounding box of the artwork/illustration ITSELF within the photograph, in normalized 0-1000 coordinates, excluding wall, frame, mat, and background; null if the artwork fills nearly the whole photo"
 }
 
 RULES:
@@ -86,11 +88,36 @@ interface IdentifyResult {
   confidence_reason?: string;
   alternative_identifications?: AlternativeIdentification[];
   search_terms?: string[];
+  /** [ymin, xmin, ymax, xmax], normalized 0-1000 (#4237) */
+  artwork_bbox?: number[] | string | null;
   // Added by Google Search verification
   verified_artist?: string;
   verified_title?: string;
   catalog_numbers?: string[];
   web_sources?: WebSource[];
+}
+
+/** Pipeline failure that maps to a specific HTTP status on the JSON path. */
+class IdentifyError extends Error {
+  constructor(message: string, public status: number, public detail?: string) {
+    super(message);
+  }
+}
+
+/**
+ * Parse the identification's artwork_bbox (#4237). The model may return the
+ * array directly or as a string; anything malformed becomes null and the
+ * pipeline behaves exactly as before the crop lane existed.
+ */
+function parseArtworkBbox(raw: unknown): { ymin: number; xmin: number; ymax: number; xmax: number } | null {
+  let a = raw;
+  if (typeof a === 'string') {
+    try { a = JSON.parse(a.replace(/[^\d,.[\]-]/g, '')); } catch { return null; }
+  }
+  if (!Array.isArray(a) || a.length !== 4 || a.some(v => typeof v !== 'number' || !isFinite(v))) return null;
+  const [ymin, xmin, ymax, xmax] = a as number[];
+  if (!(ymax > ymin && xmax > xmin) || ymin < 0 || xmin < 0 || ymax > 1000 || xmax > 1000) return null;
+  return { ymin, xmin, ymax, xmax };
 }
 
 export async function POST(request: NextRequest) {
@@ -99,6 +126,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
   }
 
+  let base64: string;
+  let mimeType: string;
   try {
     const formData = await request.formData();
     const file = formData.get('image') as File | null;
@@ -116,8 +145,23 @@ export async function POST(request: NextRequest) {
 
     // Convert to base64
     const bytes = await file.arrayBuffer();
-    const base64 = Buffer.from(bytes).toString('base64');
-    const mimeType = file.type || 'image/jpeg';
+    base64 = Buffer.from(bytes).toString('base64');
+    mimeType = file.type || 'image/jpeg';
+  } catch {
+    return NextResponse.json({ error: 'Invalid upload' }, { status: 400 });
+  }
+
+  // The identification pipeline, staged. `emit` fires at stage boundaries so the
+  // streaming path (?stream=1) can deliver partial results while later stages
+  // are still running; the buffered JSON path passes a no-op. Returns the same
+  // assembled payload either way. (#4232)
+  const pipeline = async (emitRaw: (e: Record<string, unknown>) => void) => {
+    // Stage timing: `t` (ms since pipeline start) rides on every event, and
+    // `mark` logs internal boundaries — the streamed events alone showed an
+    // unexplained multi-second gap between identification and matches (#4232).
+    const t0 = Date.now();
+    const emit = (e: Record<string, unknown>) => emitRaw({ ...e, t: Date.now() - t0 });
+    const mark = (label: string) => console.log(`[identify] t+${Date.now() - t0}ms ${label}`);
 
     // Run Gemini vision + CLIP visual search in parallel
     const apiKey = getNextApiKey();
@@ -189,12 +233,13 @@ export async function POST(request: NextRequest) {
 
     // Wait for initial identification + CLIP
     const [resp, clipMatches] = await Promise.all([geminiPromise, clipPromise]);
+    mark('gemini+clip resolved');
 
     if (!resp.ok) {
       const err = await resp.text();
       console.error('[identify] Gemini error:', resp.status, err);
       const detail = resp.status === 429 ? 'Rate limited — try again in a moment' : `Vision API error (${resp.status})`;
-      return NextResponse.json({ error: detail }, { status: 502 });
+      throw new IdentifyError(detail, 502);
     }
 
     const geminiData = await resp.json();
@@ -202,7 +247,7 @@ export async function POST(request: NextRequest) {
 
     // Parse JSON from response
     if (!text) {
-      return NextResponse.json({ error: 'Vision API returned empty response — try a different image' }, { status: 502 });
+      throw new IdentifyError('Vision API returned empty response — try a different image', 502);
     }
     const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
     const jsonStr = (jsonMatch?.[1] || text).trim();
@@ -210,8 +255,61 @@ export async function POST(request: NextRequest) {
     try {
       identification = JSON.parse(jsonStr);
     } catch {
-      return NextResponse.json({ error: 'Could not parse vision response — try a clearer image', detail: text.substring(0, 300) }, { status: 500 });
+      throw new IdentifyError('Could not parse vision response — try a clearer image', 500, text.substring(0, 300));
     }
+
+    // First streamed stage: the reader sees the analysis while retrieval,
+    // visual confirmation and web verification are still running.
+    emit({ type: 'identification', data: identification });
+    mark('identification emitted');
+
+    // #4237: crop the photo to the artwork's own box (from the identification
+    // call — no extra model call) and run a second CLIP search on the crop.
+    // On wall photos the frame/wall/angle drown the CLIP signal (#3193 measured
+    // the true image never surfacing); the crop recovers it. Runs concurrently
+    // with the text strategies and the rerank lane's own candidate fetch, and
+    // degrades to null on ANY failure — the pipeline then behaves as before.
+    const cropPromise: Promise<{ matches: ClipMatch[]; cropBase64: string } | null> = (async () => {
+      try {
+        const b = parseArtworkBbox(identification.artwork_bbox);
+        if (!b) return null;
+        const img = sharp(Buffer.from(base64, 'base64'));
+        const meta = await img.metadata();
+        if (!meta.width || !meta.height) return null;
+        const W = meta.width, H = meta.height;
+        const px = { x: (b.xmin / 1000) * W, y: (b.ymin / 1000) * H, w: ((b.xmax - b.xmin) / 1000) * W, h: ((b.ymax - b.ymin) / 1000) * H };
+        // 4% margin; reject implausible boxes (hallucinated slivers, or boxes
+        // so large the crop would change nothing).
+        const mx = px.w * 0.04, my = px.h * 0.04;
+        const left = Math.max(0, Math.round(px.x - mx)), top = Math.max(0, Math.round(px.y - my));
+        const width = Math.min(W - left, Math.round(px.w + 2 * mx)), height = Math.min(H - top, Math.round(px.h + 2 * my));
+        const frac = (width * height) / (W * H);
+        if (frac < 0.08 || frac > 0.95 || width < 40 || height < 40) return null;
+        const cropBuf = await img.extract({ left, top, width, height }).jpeg({ quality: 85 }).toBuffer();
+        mark('crop: extracted');
+
+        const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ base64: cropBuf.toString('base64'), mime_type: 'image/jpeg' }),
+          signal: AbortSignal.timeout(8000),
+        });
+        if (!clipResp.ok) return null;
+        const { embedding } = await clipResp.json();
+        if (!embedding) return null;
+        const { data, error } = await supabase.rpc('match_clip_images', {
+          query_embedding: embedding,
+          match_threshold: 0.25,
+          match_count: 12,
+        }).abortSignal(AbortSignal.timeout(8000));
+        if (error) return null;
+        mark('crop: clip matches');
+        return { matches: (data || []) as ClipMatch[], cropBase64: cropBuf.toString('base64') };
+      } catch (e) {
+        console.warn('[identify] crop lane failed:', e instanceof Error ? e.message : String(e));
+        return null;
+      }
+    })();
 
     // Promise 3: Semantic artwork search (runs after initial ID, in parallel with DB search)
     // Uses the identification to find related artworks via embedding similarity
@@ -237,9 +335,15 @@ export async function POST(request: NextRequest) {
         // retrieval, while the visual description alone ranks best.
         const textQuery = [identification.subject, ...(identification.search_terms || []).slice(0, 3)]
           .filter(Boolean).join('. ');
-        const textCands = await getGalleryCandidatesByText(textQuery, 10);
+        // The crop lane runs concurrently with this fetch; awaiting both keeps
+        // the slower of the two as the only wait.
+        const [textCands, crop] = await Promise.all([
+          getGalleryCandidatesByText(textQuery, 10),
+          cropPromise,
+        ]);
+        mark('rerank: text candidates');
 
-        const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(cm => ({
+        const toCand = (cm: ClipMatch): IdentifyCandidate => ({
           id: cm.id,
           source: 'clip' as const,
           sourceType: (cm.source_type as IdentifyCandidate['sourceType']) || 'gallery_image',
@@ -249,11 +353,15 @@ export async function POST(request: NextRequest) {
           similarity: cm.similarity,
           title: cm.title,
           author: cm.author,
-        }));
+        });
+        const cropCands: IdentifyCandidate[] = (crop?.matches || []).slice(0, 10).map(toCand);
+        const clipCands: IdentifyCandidate[] = clipMatches.slice(0, 10).map(toCand);
 
-        // Union, CLIP first (dedupe by id), capped to keep the rerank call small
+        // Union, crop-CLIP first (its candidates saw the artwork without the
+        // wall — #4237 bench), then full-photo CLIP, then text (dedupe by id),
+        // capped to keep the rerank call small
         const byId = new Map<string, IdentifyCandidate>();
-        for (const c of [...clipCands, ...textCands]) if (!byId.has(c.id)) byId.set(c.id, c);
+        for (const c of [...cropCands, ...clipCands, ...textCands]) if (!byId.has(c.id)) byId.set(c.id, c);
         let candidates = [...byId.values()].slice(0, 16);
 
         const hydration = await hydrateCandidates(db, candidates);
@@ -270,8 +378,15 @@ export async function POST(request: NextRequest) {
           })
           .filter(c => c.thumbnailUrl && (!c.galleryId || c._hydrated?.book_visible !== false));
 
+        mark('rerank: candidates hydrated');
         const t0 = Date.now();
-        const verdict = await rerankByVisualComparison(base64, mimeType, candidates);
+        // The CROP is the query image when we have one: the #4237 bench showed
+        // the comparison call picks the right candidate far more often when the
+        // wall/frame clutter is gone (RcropPhoto 23/24 vs Runion 20/24).
+        const verdict = crop
+          ? await rerankByVisualComparison(crop.cropBase64, 'image/jpeg', candidates)
+          : await rerankByVisualComparison(base64, mimeType, candidates);
+        mark('rerank: verdict');
         if (!verdict?.picked) {
           return {
             confirmed: null as ConfirmedMatch | null,
@@ -398,7 +513,7 @@ Return JSON only:
     const db = await getDb();
     const books = db.collection('books');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const matches: any[] = [];
+    let matches: any[] = [];
 
     // Collect all names to search — from artist, publisher, and all inscription names
     const allNames: string[] = [];
@@ -438,6 +553,12 @@ Return JSON only:
         ],
       };
 
+      // maxTimeMS is a hard latency budget, not a safety net: these unindexed
+      // regex scans short-circuit fast when terms are common (the limit fills
+      // early) but walk all ~105K books when terms are rare — measured 8.07s
+      // for one Strategy 2 scan, which was the whole pipeline's tail (#4232).
+      // The text strategies are fallback lanes behind CLIP + visual rerank, so
+      // a bounded partial beats a complete-but-slow answer here.
       const artistBooks = await books
         .find(nameQuery, {
           projection: {
@@ -446,7 +567,7 @@ Return JSON only:
             commons_full_url: 1, archived_full_url: 1,
             commons_title: 1, 'enrichment.subject': 1, 'enrichment.inscriptions': 1,
           },
-          maxTimeMS: 8000,
+          maxTimeMS: 2500,
         })
         .limit(50)
         .toArray()
@@ -496,6 +617,7 @@ Return JSON only:
       matches.push(...scored.slice(0, 10));
     }
 
+    mark('strategy1 done');
     // Strategy 2: Search terms against title/display_title (fallback if no artist or few matches)
     if (matches.length < 3 && identification.search_terms?.length) {
       const termQueries = identification.search_terms
@@ -527,7 +649,9 @@ Return JSON only:
                 published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, resource_type: 1,
                 'enrichment.subject': 1,
               },
-              maxTimeMS: 8000,
+              // Hard latency budget — see the Strategy 1 comment: THIS scan
+              // measured 8.07s on rare terms and was the pipeline's tail.
+              maxTimeMS: 2500,
             },
           )
           .limit(20)
@@ -575,29 +699,46 @@ Return JSON only:
       .filter(w => w.length > 4)
       .slice(0, 5);
 
+    mark('strategy2 done');
     const pageMatches: { bookId: string; pageNumber: number; score: number }[] = [];
 
     if ((searchTerms.length > 0 || phrases.length > 0) && topMatches.length > 0) {
       const bookIds = topMatches.map(m => m.id);
 
-      // Strategy A: Search for distinctive phrases (strongest signal — exact multi-word match)
-      for (const phrase of phrases.slice(0, 4)) {
+      // Up to 10 book-scoped OCR regex queries. They used to run SEQUENTIALLY
+      // and this loop alone could add several seconds; the queries are
+      // independent, so fire them together and merge in a fixed order
+      // (phrases before terms) to keep scoring deterministic. (#4232 perf)
+      const phraseQueries = phrases.slice(0, 4).map(phrase => {
         const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const found = await pages
+        return pages
           .find(
-            {
-              book_id: { $in: bookIds },
-              'ocr.data': { $regex: escaped, $options: 'i' },
-            },
-            {
-              projection: { book_id: 1, page_number: 1 },
-              maxTimeMS: 5000,
-            },
+            { book_id: { $in: bookIds }, 'ocr.data': { $regex: escaped, $options: 'i' } },
+            { projection: { book_id: 1, page_number: 1 }, maxTimeMS: 2500 },
           )
           .limit(10)
           .toArray()
           .catch(() => []);
+      });
+      const termQueries2 = searchTerms.slice(0, 6).map(term => {
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return pages
+          .find(
+            { book_id: { $in: bookIds }, 'ocr.data': { $regex: escaped, $options: 'i' } },
+            { projection: { book_id: 1, page_number: 1 }, maxTimeMS: 2500 },
+          )
+          .limit(20)
+          .toArray()
+          .catch(() => []);
+      });
+      const [phraseResults, termResults] = await Promise.all([
+        Promise.all(phraseQueries),
+        Promise.all(termQueries2),
+      ]);
 
+      // Phrases first (strongest signal — exact multi-word match), then words
+      // (catches pages where OCR line breaks differ from the inscriptions).
+      for (const found of phraseResults) {
         for (const p of found) {
           const existing = pageMatches.find(
             pm => pm.bookId === p.book_id && pm.pageNumber === p.page_number,
@@ -609,26 +750,7 @@ Return JSON only:
           }
         }
       }
-
-      // Strategy B: Search for individual distinctive words (more queries but catches
-      // pages where OCR line breaks differ from the inscriptions)
-      for (const term of searchTerms.slice(0, 6)) {
-        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const found = await pages
-          .find(
-            {
-              book_id: { $in: bookIds },
-              'ocr.data': { $regex: escaped, $options: 'i' },
-            },
-            {
-              projection: { book_id: 1, page_number: 1 },
-              maxTimeMS: 3000,
-            },
-          )
-          .limit(20)
-          .toArray()
-          .catch(() => []);
-
+      for (const found of termResults) {
         for (const p of found) {
           const existing = pageMatches.find(
             pm => pm.bookId === p.book_id && pm.pageNumber === p.page_number,
@@ -668,6 +790,7 @@ Return JSON only:
       }
     }
 
+    mark('page matching done');
     // Merge CLIP visual matches into text matches
     // CLIP matches come from Supabase with book_id — merge by boosting existing or adding new
     const existingMatchIds = new Set(matches.map(m => m.id));
@@ -699,6 +822,7 @@ Return JSON only:
     // here (thumbnail/title/id), so guard against a stale visible column.
     const { filterVisibleArtworks } = await import('@/lib/artwork-visibility');
     const semanticArtworks = await filterVisibleArtworks(db, await semanticArtworkPromise);
+    mark('semantic artworks merged');
     for (const sa of semanticArtworks) {
       if (existingMatchIds.has(sa.book_id)) continue;
       const semanticScore = Math.round(sa.similarity * 30); // Scale similarity to 0-30
@@ -762,6 +886,36 @@ Return JSON only:
     // The artwork image fields are already in the match object from Strategy 1 query
     // (commons_full_url, archived_full_url were projected but not shown — now we surface them)
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const shapeMatches = (list: any[]) =>
+      list.slice(0, 10).map(({ _score, _visual_similarity, _match_source, enrichment, commons_title, english_title, ...rest }) => {
+        // Attach page match if this book has one
+        const pm = pageMatches.find(p => p.bookId === rest.id);
+        // Use page image, artwork image, or fall back to book cover
+        const pageImg = pageImageMap.get(rest.id);
+        const matchImage = pageImg?.image_url
+          || rest.commons_full_url  // artworks from Wikimedia
+          || rest.archived_full_url // artworks archived to R2
+          || rest.thumbnail_blob || rest.thumbnail;
+        // Clean up fields we don't want to expose
+        const { commons_full_url, archived_full_url, ...cleanRest } = rest;
+        return {
+          ...cleanRest,
+          match_image: matchImage,
+          score: _score,
+          visual_similarity: _visual_similarity || undefined,
+          match_source: _match_source || 'text',
+          subject: enrichment?.subject,
+          ...(pm ? { page_number: pm.pageNumber, page_score: pm.score } : {}),
+          ...(pageImg ? { page_number: pageImg.page_number } : {}),
+        };
+      });
+
+    // Second streamed stage: the provisional rail (text + visual + semantic,
+    // not yet visually confirmed), so the wait for the rerank shows results.
+    mark('matches emitting');
+    emit({ type: 'matches', data: shapeMatches(matches), visual_search: clipMatches.length > 0 });
+
     // Await visual confirmation (started right after identification), but never
     // let it hold the response — a stalled dependency degrades to "no
     // confirmation" instead of a hung request.
@@ -792,10 +946,39 @@ Return JSON only:
           _match_source: 'visual_confirmed',
         });
       }
+
+      // With a confirmed answer the rail below it is corroboration, not
+      // discovery: the semantic lane matches on description text and reliably
+      // pads the tail with unrelated works (Book of the Dead papyri after a
+      // Mesoamerican codex — #4232). Keep the visual and text lanes, capped.
+      matches = matches
+        .filter((m, i) => i === 0 || m._match_source !== 'semantic_artwork')
+        .slice(0, 5);
     }
+
+    const pagePayload = confirmed
+      ? (confirmed.page_number != null ? { book_id: confirmed.book_id, page_number: confirmed.page_number, score: 100 } : null)
+      : bestPage ? {
+        book_id: bestPage.bookId,
+        page_number: bestPage.pageNumber,
+        score: bestPage.score,
+      } : null;
+    const rerankPayload = {
+      ran: rerank.ran,
+      candidates: rerank.candidateCount,
+      sure: (rerank as { sure?: boolean }).sure ?? false,
+      ms: (rerank as { ms?: number }).ms,
+      error: (rerank as { error?: string }).error,
+    };
+
+    // Third streamed stage: the verdict. Carries the final (possibly reordered
+    // and trimmed) rail so the client replaces the provisional one.
+    mark('confirmed emitting');
+    emit({ type: 'confirmed', data: confirmed, page: pagePayload, rerank: rerankPayload, matches: shapeMatches(matches) });
 
     // Await Google Search verification (started earlier, should be done by now)
     const verification = await verifyPromise;
+    mark('verification resolved');
 
     // Merge verification corrections into identification
     if (verification) {
@@ -811,57 +994,71 @@ Return JSON only:
       if (verification.sources?.length) {
         identification.web_sources = verification.sources;
       }
+      // Fourth streamed stage: web-verified attribution patched into the
+      // already-rendered analysis card.
+      emit({ type: 'verification', data: identification });
     }
 
-    return NextResponse.json({
+    return {
       identification,
-      matches: matches.slice(0, 10).map(({ _score, _visual_similarity, _match_source, enrichment, commons_title, english_title, ...rest }) => {
-        // Attach page match if this book has one
-        const pm = pageMatches.find(p => p.bookId === rest.id);
-        // Use page image, artwork image, or fall back to book cover
-        const pageImg = pageImageMap.get(rest.id);
-        const matchImage = pageImg?.image_url
-          || rest.commons_full_url  // artworks from Wikimedia
-          || rest.archived_full_url // artworks archived to R2
-          || rest.thumbnail_blob || rest.thumbnail;
-        // Clean up fields we don't want to expose
-        const { commons_full_url, archived_full_url, ...cleanRest } = rest;
-        return {
-          ...cleanRest,
-          match_image: matchImage,
-          score: _score,
-          visual_similarity: _visual_similarity || undefined,
-          match_source: _match_source || 'text',
-          subject: enrichment?.subject,
-          ...(pm ? { page_number: pm.pageNumber, page_score: pm.score } : {}),
-          ...(pageImg ? { page_number: pageImg.page_number } : {}),
-        };
-      }),
+      matches: shapeMatches(matches),
       visual_search: clipMatches.length > 0,
       semantic_artwork_search: semanticArtworks.length > 0,
       verified: !!verification,
       confirmed,
-      rerank: {
-        ran: rerank.ran,
-        candidates: rerank.candidateCount,
-        sure: (rerank as { sure?: boolean }).sure ?? false,
-        ms: (rerank as { ms?: number }).ms,
-        error: (rerank as { error?: string }).error,
-      },
+      rerank: rerankPayload,
       // A visually confirmed match supersedes the text-heuristic page guess —
       // an unconfirmed guess pointing at a different book misleads (see #3193
       // benchmark: the heuristic picked the wrong book on degraded photos).
-      page: confirmed
-        ? (confirmed.page_number != null ? { book_id: confirmed.book_id, page_number: confirmed.page_number, score: 100 } : null)
-        : bestPage ? {
-          book_id: bestPage.bookId,
-          page_number: bestPage.pageNumber,
-          score: bestPage.score,
-        } : null,
-    });
-  } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error);
-    console.error('[identify] Error:', msg);
-    return NextResponse.json({ error: 'Identification failed', detail: msg }, { status: 500 });
+      page: pagePayload,
+    };
+  };
+
+  // Buffered JSON is the DEFAULT: scripts and the eval bench
+  // (scripts/eval/identify-bench.mjs) keep working unchanged. The page opts
+  // into streaming with ?stream=1.
+  const wantStream = new URL(request.url).searchParams.get('stream') === '1';
+
+  if (!wantStream) {
+    try {
+      return NextResponse.json(await pipeline(() => {}));
+    } catch (error) {
+      if (error instanceof IdentifyError) {
+        return NextResponse.json(
+          { error: error.message, ...(error.detail ? { detail: error.detail } : {}) },
+          { status: error.status },
+        );
+      }
+      const msg = error instanceof Error ? error.message : String(error);
+      console.error('[identify] Error:', msg);
+      return NextResponse.json({ error: 'Identification failed', detail: msg }, { status: 500 });
+    }
   }
+
+  // NDJSON stream: one JSON object per line. Every event has a `type`; the
+  // stream always ends with `done` or `error`, so a client can treat either as
+  // terminal. HTTP status is 200 regardless — by the time a stage fails, the
+  // headers are long gone.
+  const encoder = new TextEncoder();
+  const body = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const emit = (e: Record<string, unknown>) => controller.enqueue(encoder.encode(JSON.stringify(e) + '\n'));
+      try {
+        emit({ type: 'status', stage: 'reading' });
+        await pipeline(emit);
+        emit({ type: 'done' });
+      } catch (error) {
+        const msg = error instanceof IdentifyError ? error.message : 'Identification failed';
+        console.error('[identify] stream error:', error instanceof Error ? error.message : String(error));
+        emit({ type: 'error', message: msg, ...(error instanceof IdentifyError && error.detail ? { detail: error.detail } : {}) });
+      }
+      controller.close();
+    },
+  });
+  return new Response(body, {
+    headers: {
+      'Content-Type': 'application/x-ndjson; charset=utf-8',
+      'Cache-Control': 'no-store',
+    },
+  });
 }

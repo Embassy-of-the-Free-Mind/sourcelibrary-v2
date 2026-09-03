@@ -59,8 +59,72 @@ export function isTranslatedPage(page) {
 }
 
 /**
- * Aggregation pipeline that returns { total, with_ocr, with_translation }
- * for the VISIBLE pages of one book. Used by the batch collectors.
+ * Page types that will never carry a translation, whatever we spend.
+ *
+ * Kept as a literal rather than imported from `translate-core.mjs` because that
+ * module imports THIS one; the two must stay in step and
+ * `tests/unit/page-counts.test.ts` is where that is asserted.
+ */
+export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+
+/**
+ * True iff a page is work the translator could actually do — the honest
+ * DENOMINATOR for translation completeness (#4442).
+ *
+ * `pages_count` is the wrong denominator and always has been: it counts every
+ * visible page, including ones no amount of money will ever translate.
+ *
+ * EXACT, corpus-wide, after the 2026-08-31 backfill — every live book now carries
+ * `pages_translatable`, so this is a count and not an estimate:
+ *
+ *   complete by the naive measure (pages_translated >= pages_count):  3,244  10.2%
+ *   complete by the honest measure (>= pages_translatable):          14,984  47.2%
+ *   nothing translatable at all (no OCR yet, or all plates):          1,563   4.9%
+ *
+ * **11,740 finished books currently display as unfinished.**
+ *
+ * Two earlier figures for this are wrong and should not be repeated. "~41%" came
+ * from extrapolating a sample restricted to books with a 1-25 page apparent tail,
+ * which structurally cannot see a complete book carrying a hundred pages of plates.
+ * "49.9%" was an unrestricted 800-book sample — sound method, just superseded by the
+ * exact count. A sample frame chosen for one question is rarely valid for the next.
+ *
+ * A page qualifies unless it is a never-translated type or the model has permanently
+ * refused it.
+ *
+ * CRUCIALLY, a page with no OCR yet still counts. "Not yet OCR'd" is PENDING work, not
+ * IMPOSSIBLE work, and excluding it is how a book gets badged finished while half of it
+ * is blank. The first version of this did exactly that: Theatrum Chemicum vol. 6 —
+ * 4,198 pages, only 2,003 OCR'd — displayed 100% translated with 2,195 pages carrying
+ * no text at all, and 1,701 books (11.4% of everything badged complete) had more than
+ * a fifth of the book un-OCR'd. Overstating completeness is a worse failure than the
+ * understatement this field exists to fix, because a reader can see it.
+ */
+export function isTranslatablePageForCount(page) {
+  if (!isVisiblePage(page)) return false;
+  if (NEVER_TRANSLATED_PAGE_TYPES.includes(page?.page_type ?? '')) return false;
+  if (page?.translation?.recitation_blocked === true) return false;
+  if (page?.translation?.safety_blocked === true) return false;
+  if (page?.ocr?.recitation_blocked === true) return false;
+  return true;
+}
+
+/** Mongo twin of isTranslatablePageForCount(), shared by the denominator and its numerator. */
+const TRANSLATABLE_COND = {
+  $and: [
+    // No `ocr.data` requirement — see isTranslatablePageForCount. A page awaiting OCR
+    // is pending work and belongs in the denominator.
+    { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] }] },
+    { $ne: ['$translation.recitation_blocked', true] },
+    { $ne: ['$translation.safety_blocked', true] },
+    { $ne: ['$ocr.recitation_blocked', true] },
+  ],
+};
+
+/**
+ * Aggregation pipeline that returns
+ * { total, with_ocr, with_translation, translatable, translated_translatable, blank }
+ * for the VISIBLE pages of one book. Used by the batch collectors and the recount.
  */
 export function buildVisiblePageCountPipeline(bookId) {
   return [
@@ -97,6 +161,45 @@ export function buildVisiblePageCountPipeline(bookId) {
             ],
           },
         },
+        // The honest denominator and ITS matching numerator (#4442). Mirrors
+        // isTranslatablePageForCount(). `translatable` is what could ever be
+        // translated; `translated_translatable` is how much of that has been —
+        // and it is deliberately NOT `with_translation`, because a numerator
+        // must exclude whatever its denominator excludes. Getting that wrong is
+        // what produced the Blue Qur'an's 1000% above, and a 105.6% reading on
+        // Hugh of Santalla while this was being written.
+        translatable: {
+          $sum: { $cond: [TRANSLATABLE_COND, 1, 0] },
+        },
+        // Pages that legitimately carry no translation — the `pages_blank` counter.
+        // Named for the historical field; the set is every never-translated type that
+        // nonetheless has OCR, which is what the translation job has always recorded.
+        blank: {
+          $sum: {
+            $cond: [
+              { $and: [
+                { $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] },
+                { $ne: ['$ocr.data', null] },
+                { $ne: ['$ocr.data', ''] },
+                { $ifNull: ['$ocr.data', false] },
+              ] },
+              1, 0,
+            ],
+          },
+        },
+        translated_translatable: {
+          $sum: {
+            $cond: [
+              { $and: [
+                TRANSLATABLE_COND,
+                { $ne: ['$translation.data', null] },
+                { $ne: ['$translation.data', ''] },
+                { $ifNull: ['$translation.data', false] },
+              ] },
+              1, 0,
+            ],
+          },
+        },
       },
     },
   ];
@@ -109,9 +212,13 @@ export function buildVisiblePageCountPipeline(bookId) {
  */
 export function countVisiblePageStats(pages) {
   const visible = (pages ?? []).filter(isVisiblePage);
+  const translatable = visible.filter(isTranslatablePageForCount);
   return {
     total: visible.length,
     with_ocr: visible.filter(hasOcr).length,
     with_translation: visible.filter(isTranslatedPage).length,
+    translatable: translatable.length,
+    translated_translatable: translatable.filter(hasTranslation).length,
+    blank: visible.filter(p => NEVER_TRANSLATED_PAGE_TYPES.includes(p?.page_type ?? '') && hasOcr(p)).length,
   };
 }

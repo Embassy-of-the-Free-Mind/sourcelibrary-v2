@@ -11,6 +11,7 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -42,11 +43,7 @@ const abandonArg = args.find(a => a.startsWith('--abandon-stale='));
 const ABANDON_STALE_DAYS = abandonArg ? parseInt(abandonArg.split('=')[1], 10) : null;
 const DRY_RUN = args.includes('--dry-run');
 
-// --- OCR metadata extraction (mirrors defaults.ts) ---
-function extractPageType(text) {
-  const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
-  return match ? match[1].toLowerCase().trim() : null;
-}
+// --- OCR metadata extraction: shared with defaults.ts via scripts/lib/ocr-result-parse.mjs (#4443) ---
 
 /** Check if this page is a digitizer insert — via OCR tag, body-text, or meta-descriptor fallback. */
 function isDigitizerPage(pageType, ocrText) {
@@ -62,55 +59,10 @@ function isDigitizerPage(pageType, ocrText) {
   return false;
 }
 
-function extractColumns(text) {
-  const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
-  if (!match) return null;
-  const n = parseInt(match[1], 10);
-  return n >= 2 ? n : null;
-}
-
-function parseDetectedImages(text) {
-  const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
-  if (!match) return [];
-  const imagesText = match[1].trim();
-  const images = [];
-  const imgRegex = /<image>([\s\S]*?)<\/image>/g;
-  let imgMatch;
-  while ((imgMatch = imgRegex.exec(imagesText)) !== null) {
-    const imgContent = imgMatch[1];
-    const getTag = (tag) => {
-      const m = imgContent.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
-      return m ? m[1].trim() : null;
-    };
-    const bbox = getTag('bbox');
-    const image = {
-      type: getTag('type') || 'illustration',
-      description: getTag('description') || '',
-      subject: getTag('subject')?.split(',').map(s => s.trim()).filter(Boolean) || [],
-    };
-    if (bbox) {
-      const coords = bbox.split(',').map(Number);
-      if (coords.length === 4) {
-        image.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
-      }
-    }
-    images.push(image);
-  }
-  return images;
-}
-
-function parseMultiPageOcr(text) {
-  const results = new Map();
-  const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    const pageId = match[1];
-    let content = match[2].trim();
-    content = content.replace(/<\/page>\s*$/, '').trim();
-    if (content) results.set(pageId, content);
-  }
-  return results;
-}
+// `parseDetectedImages` now comes from scripts/lib/ocr-result-parse.mjs (#4456).
+// The local copy walked `<image>` sub-tags, which no OCR prompt in this repo has
+// ever asked for — the prompt asks for a JSON array — so it returned [] on every
+// page, and the `length > 0` guard below turned that into silence.
 
 // --- Gemini API ---
 async function getJobData(jobName) {
@@ -210,7 +162,7 @@ async function processOneJob(db, job) {
         const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         const usage = result.response?.usageMetadata;
-        const parsed = parseMultiPageOcr(text);
+        const parsed = parseMultiPageOcr(text, { lenient: true });
         for (const [pageId, ocrText] of parsed) {
           pageResults.push({ pageId, text: ocrText, usage });
         }
@@ -257,7 +209,7 @@ async function processOneJob(db, job) {
       if (text.length > 25000) { failCount++; continue; }
 
       if (job.type === 'ocr') {
-        const pageType = extractPageType(text);
+        const pageType = extractPageType(text, { validate: false });
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
 

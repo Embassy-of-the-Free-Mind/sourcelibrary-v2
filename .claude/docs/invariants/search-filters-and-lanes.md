@@ -87,3 +87,80 @@ STABLE and is rejected (`42P17`), which is why these use `COALESCE(x,'') || ' '`
 `add-bph-diacritic-normalization.sql` shows `concat_ws` and **does not match
 deployed reality** — read `pg_get_expr` off the live column, not the migration
 file.
+
+---
+
+## Artworks share the `books` collection, so every lane must exclude them (#4415, 2026-08-30)
+
+24,912 of ~110,058 `books_catalog` rows are artworks — museum prints, paintings,
+drawings — living in the same collection as texts. **A lane that filters only on
+`visible` + `pages_count > 0` serves them as books.** The books lane did exactly
+that for 97 rows: searching *stela* returned 8 Met objects with `pages_count: 0`
+and pushed the five *Hieroglyphic Texts from Egyptian Stelae* volumes we actually
+hold off the page. The **semantic** lane had no gate at all and was serving
+`T13 Tarot` — `visible: false` in Mongo — to the public.
+
+Three traps, all of which bit during the fix:
+
+- **Do not filter on "`resource_type` is set."** One live book (*Babad Tanah
+  Djawi lan Tanah-Tanah ing Sakiwa-Tengenipoen*) is `content_type: 'text'` with
+  `resource_type: 'text'`, and that filter hides it. Use the shared
+  `isArtworkRecord()` in `src/lib/artwork-record.ts`: an explicit **non-artwork**
+  `content_type` always wins. Keep that record as the negative control — a fix
+  that stops returning it is a regression, not a fix.
+- **PostgREST `.not(col,'eq',v)` drops NULL rows** to three-valued logic. 19,432
+  live books have a NULL `content_type`; a plain negation deletes them from
+  results. Use the chained `or` form (`NON_ARTWORK_FILTERS` in
+  `src/lib/books-catalog.ts`).
+- **A lane check that reads a field the route strips is vacuous.** The first
+  "no artworks in the books lane" assertion passed against a response that never
+  carries the field. Run the positive control — disable the filter, watch the Met
+  stelae come back — or the green check means nothing. See
+  `tests-that-are-not-guards.md`.
+
+Corollary for counting, not just serving: any aggregate over `books` inflates
+unless it excludes artworks. A naive author query for "William Blake" returns
+777 records, of which **776 are prints and drawings**.
+
+---
+
+## A filter over a vector index is a post-filter until proven otherwise (#4439)
+
+`ORDER BY embedding <=> query LIMIT n` plus a WHERE predicate does not filter
+then rank. It ranks — via the HNSW index — then filters what the index handed
+back. So the predicate's **recall tracks that value's share of the table, not
+the query**. On `page_translations` that means Latin (36% of rows) filters
+perfectly and Chinese (2.2%) returns nothing, on the same query, in 60ms.
+
+Three things generalise past this table:
+
+- **A branch is not a plan.** `match_semantic` had carried, since 2026-05-17, a
+  correct diagnosis of this exact bug and an `IF has_language_filter THEN`
+  branch written to avoid it. Both branches ended in the same `ORDER BY … LIMIT`,
+  so both used the index. The comment said sequential scan; the planner had
+  never heard of the comment. **Verify a plan change with `EXPLAIN ANALYZE`, or
+  by a latency that could only come from the plan you intended.**
+- **Fast zero is the tell.** No scan of 4.5M rows returns in 60ms. When a filter
+  returns empty far quicker than the work it claims to have done, it did not do
+  that work.
+- **Test with the rare value, never the common one.** A test that asserts
+  `language: 'Latin'` returns rows passes against the broken function. The
+  mechanism-pinning form is: a filter for a NON-dominant value must return rows
+  on a query whose unfiltered hits are all dominant —
+  `scripts/audit/semantic-language-filter-recall.mjs`. Control the instrument
+  too (do the rows exist in the table? does the unfiltered arm return anything?)
+  or you cannot tell a broken filter from an honest absence.
+
+Structural fixes, in preference order: a **partial index per value** so the
+predicate matches the index predicate (`page_texts` does this for `lang`);
+pgvector **`hnsw.iterative_scan`** (≥ 0.8.0), which keeps walking until enough
+rows survive; or a fenced exact pre-filter, which is correct on any version and
+costs a scan of everything the predicate admits. Details, measurements and the
+migration: `scripts/migration/fix-semantic-language-prefilter.sql` and
+`.claude/docs/embeddings.md`.
+
+This is at minimum a partial cause of #3514 — retrieval reproducing the very
+narrowing the library exists to undo. `exclude_languages` is documented on
+`search_concept` and `search_translations` as the way "to surface non-Western
+sources"; until this is fixed it does the opposite of that more reliably than
+it does it.

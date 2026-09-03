@@ -10,9 +10,8 @@
 
 import { getDb } from '@/lib/mongodb';
 import type { PageJobType } from '@/lib/types/job';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
-import { queuePreviewTranslation } from '@/lib/preview-translate';
 import { revalidateBook } from '@/lib/revalidate';
+import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
 
 /** Type alias for the Db returned by getDb() */
 type Db = Awaited<ReturnType<typeof getDb>>;
@@ -153,47 +152,30 @@ async function handleJobCompletion(
 
       console.log(`${logPrefix} Updated book ${bookId}: pages_ocr = ${totalPagesWithOcr}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
 
-      // If this was a preview OCR job, automatically queue preview translation
-      const completedJob = await jobs.findOne({ id: jobId }, { projection: { config: 1, book_title: 1 } });
-      if (completedJob?.config?.preview) {
-        console.log(`${logPrefix} Preview OCR complete for ${bookId} — triggering preview translation`);
-        // Non-blocking — fire and forget
-        queuePreviewTranslation(db, bookId, completedJob.book_title || '').catch(err => {
-          console.error(`${logPrefix} Preview translation trigger failed for ${bookId}:`, err);
-        });
-      }
+      // NOTE: a completed OCR job used to auto-trigger preview TRANSLATION here.
+      // Both halves of that import-time shortcut are gone (see the removal of
+      // src/lib/preview-ocr.ts): they enqueued Gemini work straight onto the
+      // SQS/Lambda realtime path, which consults neither the processing pause
+      // nor the daily dial. Translation now comes from the orchestrator's
+      // dial-gated phases like every other book's.
 
       break;
     }
 
     case 'translation': {
-      // Update book's pages_translated + pages_blank counts
-      const [translationAgg] = await pages.aggregate([
-        { $match: { book_id: bookId } },
-        { $group: {
-          _id: null,
-          translated: { $sum: {
-            $cond: [
-              { $and: [
-                { $eq: [{ $type: '$translation.data' }, 'string'] },
-                { $gt: [{ $strLenCP: '$translation.data' }, 0] },
-              ] },
-              1, 0
-            ]
-          }},
-          blank: { $sum: {
-            $cond: [
-              { $and: [
-                { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
-                { $eq: [{ $type: '$ocr.data' }, 'string'] },
-                { $gt: [{ $strLenCP: '$ocr.data' }, 0] },
-              ] },
-              1, 0
-            ]
-          }}
-        }}
-      ]).toArray();
-      const totalPagesWithTranslation = translationAgg?.translated || 0;
+      // Counters come from the canonical pipeline, NOT a private aggregation.
+      // The one that used to live here diverged from every other writer twice over:
+      // it matched ALL pages (no `page_number > 0`, so soft-hidden duplicate spreads
+      // counted) and it counted blank-page PLACEHOLDERS as translations. Measured
+      // 2026-08-31 on 60 random live books, it disagreed with the canonical count on
+      // 30% of them and over-counted by 1,973 pages; on "Phantasms of the Living,
+      // Vol. I" (663 visible pages, 1,514 soft-hidden) it would have written
+      // pages_translated: 2175 against pages_count: 663 — 328% translated — the next
+      // time a translation job completed. See #4442 and page-counts.ts.
+      const [translationAgg] = await pages
+        .aggregate(buildVisiblePageCountPipeline(bookId))
+        .toArray();
+      const totalPagesWithTranslation = translationAgg?.with_translation || 0;
       const totalPagesBlank = translationAgg?.blank || 0;
 
       // Mark enrichment stale if this book already has an index
@@ -208,6 +190,7 @@ async function handleJobCompletion(
         {
           $set: {
             pages_translated: totalPagesWithTranslation,
+            pages_translatable: translationAgg?.translatable ?? 0,
             pages_blank: totalPagesBlank,
             last_translation_at: new Date(),
             ...enrichmentStale,

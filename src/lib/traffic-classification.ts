@@ -33,7 +33,7 @@ const AI_TRAINER = /gptbot|ccbot|claudebot|anthropic-ai|google-extended|bytespid
 const SEARCH_CRAWLER = /googlebot|googleother|bingbot|bingpreview|slurp|duckduckbot|baiduspider|yandexbot|applebot|seznambot|sogou|exabot/i;
 
 // Everything else automated: SEO tools, scrapers, monitors, generic libraries.
-const OTHER_BOT = /ahrefs|semrush|mj12bot|dotbot|petalbot|dataforseo|screaming frog|bot\b|crawler|spider|headlesschrome|python-requests|curl|wget|axios|go-http-client|java\/|okhttp|scrapy|httpclient/i;
+const OTHER_BOT = /ahrefs|semrush|mj12bot|dotbot|petalbot|dataforseo|screaming frog|bot\b|crawler|spider|headlesschrome|lightpanda|python-requests|curl|wget|axios|go-http-client|java\/|okhttp|scrapy|httpclient/i;
 
 export function classifyTraffic(
   userAgent: string | null | undefined,

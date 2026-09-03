@@ -45,6 +45,13 @@ export interface Book {
    */
   editor?: string;
   attribution_note?: string;  // "after" for prints after a designer, "circle of", "workshop of", etc.
+  /**
+   * FK to the canonical `authors` thesaurus (`authors._id`). This is THE author
+   * link — `author_entity_id` below points at the retiring `entities` layer and
+   * both are written during the migration. Prefer this one when resolving who a
+   * book is by; `author` is only what the catalogue said (#2179, #4318).
+   */
+  author_id?: string;
   author_entity_id?: string;  // FK to entities collection (entity._id as string) — canonical author identity (VIAF/Wikidata linked)
   /** Display name for the canonical author (denormalised so the book page can render without a join). */
   author_canonical_name?: string;

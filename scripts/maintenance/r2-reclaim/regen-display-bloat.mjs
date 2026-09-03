@@ -13,6 +13,10 @@
  *     those and never serves the display variant, so regenerating from the
  *     spread master would bake a wrong (full-spread) image for no benefit (#1814),
  *   - resize with the shared generateDisplayVariants() (1200px + provenance mark),
+ *   - SKIP display variants already carrying a provenance mark (#4406): the
+ *     #2651 bake regenerates those at <=2000px, which reads as 'bloat' to this
+ *     pass's >=90%-of-master detector, and regenerating would strip the keyed
+ *     watermark. Reported as marked=N; --force-unmark overrides deliberately.
  *   - overwrite display + thumb keys, update Mongo display_photo/image_thumb.
  *
  * The master (archived/ or -full) is never touched, so every regenerated display
@@ -26,7 +30,7 @@
  */
 import fs from 'node:fs';
 import readline from 'node:readline';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
 import { generateDisplayVariants } from '../../workers/lib/display-image.mjs';
 import { getPageSource, isUsableImageUrl } from '../../lib/page-image-url.mjs';
 import { mongo, outPath, human } from './lib.mjs';
@@ -37,6 +41,9 @@ const has = (n) => args.includes(`--${n}`);
 
 const DRY_RUN = has('dry-run');
 const VERIFY = has('verify');
+// Escape hatch for a deliberate, whole-corpus width decision (#4406) — NOT for a
+// routine reclaim run. Without it, provenance-marked variants are left alone.
+const FORCE_UNMARK = has('force-unmark');
 const LIMIT = parseInt(getArg('limit') || '0', 10) || Infinity; // candidate rows to consider
 const CONCURRENCY = parseInt(getArg('concurrency') || '8', 10);
 const MIN_RECLAIM = parseInt(getArg('min-reclaim') || '0', 10); // skip rows below this reclaimEst (bytes)
@@ -58,7 +65,7 @@ const PAGE_PROJECTION = {
 
 const st = {
   rows: 0, considered: 0,
-  regen: 0, skipSplit: 0, skipNoSource: 0, skipNotFound: 0, failed: 0,
+  regen: 0, skipSplit: 0, skipNoSource: 0, skipNotFound: 0, skipMarked: 0, failed: 0,
   oldBytes: 0, newBytes: 0, reclaimed: 0, downloadBytes: 0,
   start: Date.now(),
 };
@@ -88,6 +95,28 @@ function resolveSource(page) {
   return { source };
 }
 
+/**
+ * Is this display object a provenance-marked variant written by the #2651 bake?
+ *
+ * THIS GUARD IS THE POINT, NOT AN OPTIMISATION (#4406). Pass 1's detector calls
+ * a display "never downsized" when it is >=90% of its master — and a baked
+ * variant, regenerated at min(2000, native) q85, is routinely 100-122% of the
+ * master it came from. So *every* marked page looks exactly like bloat to this
+ * pass, and regenerating it would silently strip the keyed watermark (this
+ * script's 1200px path cannot re-embed it without the book id and key) and undo
+ * work that costs ~$40/month of storage to produce. Two programmes, one set of
+ * objects, opposite intentions. Skip them and say how many.
+ */
+async function isProvenanceMarked(displayKey) {
+  try {
+    const h = await s3.send(new HeadObjectCommand({ Bucket: BUCKET, Key: displayKey }));
+    return Boolean(h.Metadata?.provenance);
+  } catch {
+    // Missing/unreadable object: let the normal path handle it.
+    return false;
+  }
+}
+
 async function processRow(row, page, db) {
   const { source, skip } = resolveSource(page);
   if (skip === 'split') { st.skipSplit++; return; }
@@ -97,13 +126,17 @@ async function processRow(row, page, db) {
   const displayKey = `pages/${page.book_id}/${num}.jpg`;
   const thumbKey = `pages/${page.book_id}/${num}-thumb.jpg`;
 
+  if (!FORCE_UNMARK && await isProvenanceMarked(displayKey)) { st.skipMarked++; return; }
+
   if (DRY_RUN) { st.regen++; st.oldBytes += row.displaySize; return; }
 
   try {
     const buf = await download(source);
     if (!buf || buf.length === 0) throw new Error(`empty source: ${source.slice(0, 80)}`);
     st.downloadBytes += buf.length;
-    const { display, thumb } = await generateDisplayVariants(buf);
+    const { display, thumb } = await generateDisplayVariants(buf, {
+      bookId: page.book_id, pageNumber: page.page_number,
+    });
     if (VERIFY) {
       const dir = outPath('verify-samples');
       fs.mkdirSync(dir, { recursive: true });
@@ -139,7 +172,7 @@ async function runPool(tasks, db) {
 
 function logProgress() {
   const el = (Date.now() - st.start) / 1000;
-  console.error(`  considered=${st.considered} regen=${st.regen} split=${st.skipSplit} nosrc=${st.skipNoSource} nf=${st.skipNotFound} fail=${st.failed} reclaimed=${human(st.reclaimed)} (${(st.regen / el).toFixed(1)}/s)`);
+  console.error(`  considered=${st.considered} regen=${st.regen} split=${st.skipSplit} nosrc=${st.skipNoSource} nf=${st.skipNotFound} marked=${st.skipMarked} fail=${st.failed} reclaimed=${human(st.reclaimed)} (${(st.regen / el).toFixed(1)}/s)`);
 }
 
 async function main() {
@@ -189,6 +222,7 @@ async function main() {
     config: { MIN_RECLAIM, LIMIT: LIMIT === Infinity ? 'all' : LIMIT, CONCURRENCY },
     manifest_rows: st.rows, considered: st.considered,
     regenerated: st.regen, skip_split: st.skipSplit, skip_no_source: st.skipNoSource,
+    skip_provenance_marked: st.skipMarked,
     skip_not_found: st.skipNotFound, failed: st.failed,
     old_display_bytes: st.oldBytes, old_human: human(st.oldBytes),
     new_display_bytes: st.newBytes, new_human: human(st.newBytes),

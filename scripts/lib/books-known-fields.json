@@ -1,7 +1,7 @@
 {
   "_comment": [
     "Authoritative list of top-level `books` fields, from a FULL-SCAN enumeration",
-    "of production (never sampled \u2014 sampling misses ~95 rare fields).",
+    "of production (never sampled — sampling misses ~95 rare fields).",
     "",
     "This is the single source of truth shared by:",
     "  - scripts/audit/new-field-writes.mjs  (fails a PR that $sets an unknown field)",
@@ -15,7 +15,7 @@
   ],
   "generated_from": "full-scan enumeration of bookstore.books",
   "generated_at": "2026-08-18",
-  "count": 423,
+  "count": 427,
   "retired": [
     "acquisition_priority",
     "acquisition_wave",
@@ -254,6 +254,7 @@
     "ia_identifier",
     "id",
     "identifier",
+    "image_card",
     "image_display",
     "image_extraction_status",
     "image_full",
@@ -367,6 +368,7 @@
     "pages_count_reconcile_reason",
     "pages_count_reconciled_at",
     "pages_ocr",
+    "pages_translatable",
     "pages_translated",
     "pages_translated_es",
     "papyrus_images",

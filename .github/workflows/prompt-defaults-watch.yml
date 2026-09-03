@@ -1,0 +1,87 @@
+name: Prompt defaults watch
+
+# The ratchet half of #3614. Two failures, both silent, both caught here:
+#
+#   1. Two `is_default: true` rows for one prompt `type`. Every OCR/translation/
+#      summary call resolves its prompt with `findOne({ type, is_default: true })`
+#      — 17 call sites, most with no sort — so a second default makes "which
+#      prompt produced this text" a matter of natural order. The unversioned
+#      summary row also stamped `prompt_version: undefined` onto its output.
+#   2. The "Current defaults" table in `.claude/docs/data-provenance.md` drifting
+#      away from the versions actually running. It said OCR v10 while production
+#      ran v15. Nothing caught it: the doc is living, referenced and undated, so
+#      it passes every check in doc-staleness.mjs.
+#
+# `prompts` holds ~55 documents, so unlike the enum half of the same script this
+# runs in a second from anywhere — hence `--only=defaults`. The enum half still
+# needs a Hetzner-scale scan of `pages` and stays a manual run.
+#
+# Findings go to a tracking issue, not a red X on a contributor's PR. Red is
+# reserved for the detector being unable to measure at all.
+
+# NOT on pull_request. The audit reads production, and a PR-time DB read cannot
+# work: GitHub withholds secrets from fork PRs, so `MONGODB_URI` is empty there
+# and the run lands in the exit-2 branch below — a red X reading "check the
+# MONGODB_URI repo secret" on a contributor's diff, for a secret they were never
+# meant to have. The first PR to fire this check (#4570) went red for the
+# adjacent reason: the CI Atlas user is collection-scoped and had no read grant
+# on `bookstore.prompts`, which the schedule needs regardless. Same shape as
+# field-sprawl-watch.yml, which keeps its production census off pull_request and
+# gates PRs with a static, no-secrets lint instead. There is no static half of
+# this check to offer — the whole point is comparing the doc table against the
+# rows actually running — so the schedule is the signal.
+on:
+  schedule:
+    # Weekly, Wednesdays 08:00 UTC.
+    - cron: '0 8 * * 3'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  prompt-defaults:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+
+      - name: Audit active prompt defaults
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/doc-enum-drift.mjs --only=defaults --fail-on-findings > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+
+      # Exit 1 is a measurement, exit 2 is the instrument. Branching on `!= 0`
+      # is the single line that filed three weeks of fabricated findings from a
+      # missing MONGODB_URI on a sibling workflow — see
+      # .claude/docs/invariants/measurement-instruments.md.
+      - name: File findings
+        if: steps.run.outputs.fired == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Prompt defaults drift — $(date -u +'%Y-%m-%d')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "Either the \`prompts\` collection broke an invariant (two defaults for one type, or a non-numeric \`version\`) or the \"Current defaults\" table in \`.claude/docs/data-provenance.md\` no longer names the versions in production. Both are actionable and the report says which. Repair: \`node --env-file=.env.production.local scripts/maintenance/repair-prompt-defaults-3614.mjs\` for the rows, an edit for the table." \
+            "$(cat report.txt)")
+          EXISTING=$(gh issue list --search "Prompt defaults drift in:title" --state open --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label pipeline
+          fi
+
+      - name: Fail if the audit could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::prompt-defaults audit could not run (exit ${{ steps.run.outputs.fired }}) — nothing was measured. Check the MONGODB_URI repo secret, and that its Atlas user has a read grant on bookstore.prompts (a 'not authorized on bookstore ... find: \"prompts\"' error in the report above means the grant, not the secret)."
+          exit 1

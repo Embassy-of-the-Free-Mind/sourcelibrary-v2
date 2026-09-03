@@ -19,7 +19,7 @@
 
 import { MongoClient } from 'mongodb';
 import { scorePageForCover } from '../lib/cover-scoring.mjs';
-import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { buildCoverUpdate } from '../lib/cover-write.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const SKIP_MANUAL = process.argv.includes('--skip-manual');
@@ -50,7 +50,7 @@ const client = new MongoClient(process.env.MONGODB_URI, {
 await client.connect();
 const db = client.db('bookstore');
 
-// getPageImageUrl is imported from the shared resolver (#1727) — see top of file.
+// Cover URLs are resolved inside buildCoverUpdate (cover-write.mjs) — see top of file.
 
 // --- Main ---
 console.log(`\n=== Smart Cover Selection (OCR-based) ===`);
@@ -98,6 +98,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
         projection: {
           book_id: 1, page_number: 1, page_type: 1,
           photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1,
+          enhanced_photo: 1, image_thumb: 1, thumbnail_blob: 1,
           'ocr.data': 1,
         }
       }
@@ -130,13 +131,22 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     const best = scored[0];
     if (best.score < 30) { skipped++; continue; }
 
-    // Get the URL for the best page
-    const bestUrl = getPageImageUrl(best.page);
-    if (!bestUrl) { skipped++; continue; }
+    // Build the canonical four-field cover update (issue #4276: this script
+    // used to write only legacy `thumbnail` + nonstandard `cover_page_number`,
+    // leaving image_display/image_thumb stale — the exact partial-write class
+    // the cover-fields contract exists to prevent).
+    const update = buildCoverUpdate(best.page, {
+      source: 'smart_ocr',
+      method: 'smart-cover-selection',
+      actor: 'script',
+      confidence: 0.8,
+      detail: `${best.reason} (score ${best.score})`,
+    });
+    if (!update) { skipped++; continue; }
 
     // Check if it's different from current cover
     const currentThumb = book.thumbnail || '';
-    if (currentThumb === bestUrl) { skipped++; continue; }
+    if (currentThumb === update.image_display) { skipped++; continue; }
 
     // In non-force mode, also skip if current cover is from a later page
     // (it was likely already upgraded and might be correct)
@@ -155,14 +165,11 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     });
 
     if (!DRY_RUN) {
+      // updated_at bump lets sync-books-catalog's incremental mode pick the
+      // book up; remember to run it (and revalidate) after a live sweep.
       await db.collection('books').updateOne(
         { id: book.id },
-        { $set: {
-          thumbnail: bestUrl,
-          thumbnail_source: 'smart_ocr',
-          cover_updated_at: new Date(),
-          cover_page_number: best.page.page_number,
-        }}
+        { $set: { ...update, updated_at: new Date() } }
       );
     }
   }

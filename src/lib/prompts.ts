@@ -9,6 +9,40 @@ export function promptContentHash(content: string): string {
 }
 
 /**
+ * Coerce a stored `prompts.version` to a number.
+ *
+ * The field held a mix of numbers, `'v1'` strings, and nothing at all until
+ * #3614, which is how `latestVersion.version + 1` produced `'v11'` from `'v1'`
+ * and `NaN` from a missing field, and how `sort({ version: -1 })` came to follow
+ * BSON type order rather than intent. Pre-versioning rows are 0.
+ */
+export function parsePromptVersion(v: unknown): number {
+  if (typeof v === 'number' && Number.isFinite(v)) return v;
+  if (typeof v === 'string') {
+    const m = /^v?(\d+)$/i.exec(v.trim());
+    if (m) return Number(m[1]);
+  }
+  return 0;
+}
+
+/**
+ * Next version number for a prompt lineage, scoped to (type, name).
+ *
+ * Scoped, because `name` alone collides across types the moment two types share
+ * a name; and computed with $max over parsed values rather than a sort, so one
+ * unrepaired string row cannot decide the answer.
+ */
+export async function nextPromptVersion(
+  collection: { find: (q: Record<string, unknown>, o?: Record<string, unknown>) => { toArray: () => Promise<Array<{ version?: unknown }>> } },
+  type: string,
+  name: string
+): Promise<number> {
+  const rows = await collection.find({ type, name }, { projection: { version: 1 } }).toArray();
+  const max = rows.reduce((acc, r) => Math.max(acc, parsePromptVersion(r.version)), 0);
+  return max + 1;
+}
+
+/**
  * Result of looking up a prompt - includes both the text and a reference for storage
  */
 export interface PromptLookupResult {
@@ -55,16 +89,20 @@ export async function getPrompt(
       const { ObjectId } = await import('mongodb');
       prompt = await collection.findOne({ _id: new ObjectId(options.id) });
     } else if (options?.name) {
-      // Look up by name (get latest version)
+      // Look up by name (get latest version). Scoped by type: `name` alone
+      // collides the moment two types share one.
       prompt = await collection.findOne(
-        { name: options.name },
-        { sort: { version: -1 } }
+        { type, name: options.name },
+        { sort: { version: -1, created_at: -1 } }
       );
     } else {
-      // Get default prompt for this type
+      // Get default prompt for this type. Exactly one row per type should carry
+      // the flag (unique partial index, #3614) — the sort is the tie-break that
+      // keeps this deterministic if that ever slips again, rather than letting
+      // natural order decide which prompt made a reader-facing text.
       prompt = await collection.findOne(
         { type, is_default: true },
-        { sort: { version: -1 } }
+        { sort: { version: -1, created_at: -1 } }
       );
     }
 
@@ -75,7 +113,10 @@ export async function getPrompt(
         reference: {
           id: prompt._id?.toString() || 'unknown',
           name: prompt.name as string,
-          version: (prompt.version as number) || 1,
+          // parse, don't `|| 1`: an unversioned row used to record itself as v1,
+          // pointing provenance at a prompt that never produced the text. 0 is
+          // the established "no real DB version" sentinel (see fallbacks below).
+          version: parsePromptVersion(prompt.version),
           content_hash: (prompt.content_hash as string) || promptContentHash(content),
         },
       };
@@ -192,7 +233,7 @@ export async function getTranslationPrompt(
       const db = await getDb();
       const doc = await db.collection('prompts').findOne(
         { type: 'english_modernization', is_default: true },
-        { sort: { version: -1 } }
+        { sort: { version: -1, created_at: -1 } }
       );
       if (doc?.content) {
         const content = doc.content as string;
@@ -201,7 +242,7 @@ export async function getTranslationPrompt(
           reference: {
             id: doc._id?.toString() || 'unknown',
             name: (doc.name as string) || 'English Modernization',
-            version: (doc.version as number) || 1,
+            version: parsePromptVersion(doc.version),
             content_hash: (doc.content_hash as string) || promptContentHash(content),
           },
         };

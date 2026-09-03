@@ -1,6 +1,7 @@
 # The revision corpus is a mixed record — and five things I got wrong finding that out
 
-2026-08-01 → 08-04, issue #3473. Merged: **PR #3475**. Open: **PR #3617**, issue **#3614**.
+2026-08-01 → 08-05, issue #3473. Merged: **PR #3475**, **PR #3617**.
+Open: **PR #3637** (neighbour test), issue **#3614**.
 
 Written to be read cold. The retractions are the point — every one was a confident,
 plausible aggregate over an instrument nobody had checked, and four of the five
@@ -102,13 +103,20 @@ agreement elsewhere.** Using the word metric on Tibetan is what produced the voi
    `getSummaryPrompt()` resolves arbitrarily and one path records
    `prompt_version: undefined`. Also: the doc's "Current defaults" table is 5 and 4
    versions behind (OCR v10 vs **v15**, Translation v8 vs **v12**).
-3. **~40 stratified pairs** before adopting the leaf-agnostic corpus. It would grow the
-   usable set by +23,130 (ocr) / +50,446 (translation), and 4/4 spot-checked low-agreement
-   rescued pairs were genuinely the same page — but n=4 cannot move a published number.
-4. **`corpus` and `wikisource` rows are not model output** (~5.7K on each field). Every
-   quality number in this session assumed `pages.ocr` is what a model read. Too small to
-   move conclusions — but "too small to matter" is exactly the claim that was wrong four
-   times above, so measure it.
+3. ~~**~40 stratified pairs**~~ **RESOLVED 2026-08-05 — PR #3637.** Done at n=190, not 40,
+   and by a better method than eyeballing: `scripts/eval/neighbour-leaf-test.mjs` compares a
+   prior revision against its own page AND pages N±1, needing no page number, timestamp or
+   metadata. **94.7% same leaf / 1.6% shifted / 3.7% ambiguous.** But failures concentrate
+   where the signal lives — the 0–0.3 band is 77/5/18, clean above 0.3 — so 94.7% describes
+   the population while the *unstable arm* carries ~a fifth uncertain provenance. Adopting
+   leaf-agnostic is now an evidenced call; it still moves a published number, so it stays a
+   separate decision and the draw script default is unchanged.
+4. ~~**`corpus` and `wikisource` rows are not model output**~~ **RESOLVED 2026-08-05 — PR
+   #3637. Zero contamination**, measured over all 61,640 true repeats, not estimated. The
+   same-model-same-prompt filter excludes them by construction: a non-model source carries
+   neither. Every language figure stands. Worth noting the process — "too small to matter"
+   was the right answer here, but it was only trustworthy once measured, and that phrasing
+   had already been wrong four times above.
 5. **Semantic metric for translation quality.** Scoped in the measurement-loop doc so the
    next attempt does not begin by re-running Levenshtein and rediscovering it fails.
 

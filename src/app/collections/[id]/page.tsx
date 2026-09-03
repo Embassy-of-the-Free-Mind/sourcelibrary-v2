@@ -60,8 +60,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return { title: 'Collection Not Found - Source Library' };
     }
 
+    // Flatten inline markdown links the same way the JSON-LD description does —
+    // the page body renders them as <Link>s, but a meta/og description is plain
+    // text and would otherwise publish raw `[anchor](/book/slug)` syntax into
+    // search results and social cards.
     const description = collection.description
-      ? String(collection.description).slice(0, 200)
+      ? stripMarkdownLinks(String(collection.description)).slice(0, 200)
       : `Browse the ${collection.name} collection on Source Library.`;
 
     // Social-card image: the curated hero plate, falling back to the site
@@ -687,20 +691,28 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
 
   const artworks = await artworksPromise;
 
-  // Fetch parent collection if this is a subcollection
+  // Fetch parent collection if this is a subcollection.
+  // `parent` is a string OR an array of slugs (cross-listed pathways like
+  // women-of-the-secret-tradition carry ["hermetica","secret-societies"]).
+  // findOne({slug: <array>}) matches nothing, which silently dropped the
+  // breadcrumb on exactly the cross-listed collections — the ones where a
+  // reader most needs to know where they are (#4339). The child query
+  // ({parent: id}) matches array values natively, so the tree only broke in
+  // the upward direction. First slug wins as the primary trail.
   let parentCollection: { slug: string; name: string } | null = null;
-  if (collection.parent) {
+  const parentSlug = Array.isArray(collection.parent) ? collection.parent[0] : collection.parent;
+  if (parentSlug) {
     const parentDoc = await withTimeout(
       db.collection('collections').findOne(
         tenantId
           ? {
-            slug: collection.parent,
+            slug: parentSlug,
             $or: [
               { tenantId },
               { tenantId: { $exists: false } },
             ],
           }
-          : { slug: collection.parent },
+          : { slug: parentSlug },
         { projection: { slug: 1, name: 1 } },
       ),
       5000, null,
@@ -1753,6 +1765,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           languages={languages}
           collectionType={collection.collection_type}
           provider={provider}
+          defaultView={(collection as { all_books_default_view?: 'grid' | 'list' }).all_books_default_view}
         />
       </div>
       <SignUpCTA />

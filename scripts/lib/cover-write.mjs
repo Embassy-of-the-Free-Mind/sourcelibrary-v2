@@ -24,6 +24,7 @@ import { HAND_IN_FRAME_RE } from './cover-scoring.mjs';
 export const COVER_WRITE_FIELDS = [
   'image_display',
   'image_thumb',
+  'image_card',
   'image_full',
   'image_source_url',
   'thumbnail',
@@ -77,6 +78,11 @@ export function buildCoverUpdate(page, opts) {
   const update = {
     image_display: url,
     image_thumb: thumbUrl,
+    // Cleared, never carried over: image_card names ONE page's -card.avif, so a
+    // pointer that survives a cover change renders the OLD page as the new
+    // cover. Falls back to image_display until the variant is regenerated.
+    // Lock-step with src/lib/cover-fields.ts.
+    image_card: null,
     thumbnail: url,
     thumbnail_blob: thumbUrl,
     thumbnail_source: opts.source,

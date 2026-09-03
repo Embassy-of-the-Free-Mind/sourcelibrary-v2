@@ -61,9 +61,11 @@ export const CSP_IMG_HOSTS = [
   'https://iiif-images.library.upenn.edu',
   'https://content.staatsbibliothek-berlin.de',
   'https://images.sub.uni-goettingen.de',
-  // Getty (Florentine Codex vols 1-3, 2,506 pages). Missing here meant every
-  // page thumbnail AND the reader's own page image were CSP-blocked — the
-  // books were unreadable in a browser while every URL returned 200 to curl.
+  // Getty (Florentine Codex vols 1-3, 2,506 pages). Missing here CSP-blocked
+  // every page THUMBNAIL on those books — page grid and cover picker rendered
+  // nothing — while every one of those URLs returned 200 to curl. The reader
+  // itself was fine: those pages carry `display_photo` on R2, so the damage
+  // tracked the size tier, not the book. See invariants/image-host-allowlists.md.
   'https://media.getty.edu',
 ] as const;
 

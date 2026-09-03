@@ -6,6 +6,18 @@ export interface LibraryPartner {
   name: string;
   shortName: string;
   providerKey: ImageSourceProvider;
+  /** Additional provider keys that belong to the SAME institution. Books were
+   *  imported under both keys over time (e.g. 'ndl' + 'ndl_japan'); listing the
+   *  extras here folds them into this partner everywhere instead of rendering
+   *  a duplicate tile. Query with getProviderKeys(partner), never providerKey
+   *  alone, on any surface that filters books by provider. */
+  aliasProviderKeys?: ImageSourceProvider[];
+  /** 'platform' marks an aggregator or digital portal (Internet Archive,
+   *  Google Books, e-rara…) whose scans depict books physically held
+   *  ELSEWHERE — the holders are credited per-book via contributing_library.
+   *  Unset means a holding institution: the library/museum both owns and
+   *  digitized what we show. /libraries renders the two as separate sections. */
+  kind?: 'platform';
   url: string;
   description: string;
   color: 'rust' | 'sage' | 'violet' | 'gold';
@@ -30,13 +42,14 @@ export interface LibraryPartner {
 export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   'internet-archive': {
     slug: 'internet-archive',
+    kind: 'platform',
     name: 'Internet Archive',
     shortName: 'IA',
     providerKey: 'internet_archive',
     url: 'https://archive.org',
     description: 'The Internet Archive is a non-profit digital library offering free access to millions of books, movies, and web pages. Their Open Library and book scanning initiatives have digitized millions of volumes from partner libraries worldwide.',
     color: 'rust',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69d0065c73df40dce83db54c/0006.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/6953cc0c77f38f6761be0ed8/6953cc0d77f38f6761be0f72-0.jpg?v=1773153012299',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Internet_Archive_logo_and_wordmark.svg',
   },
   'gallica': {
@@ -47,16 +60,19 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://gallica.bnf.fr',
     description: 'Gallica is the digital library of the Bibliothèque nationale de France, providing free access to over 10 million documents including manuscripts, books, maps, and prints from one of the largest libraries in the world.',
     color: 'violet',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5ef41bfd8cafd91e44049/0022.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/6a6be1c4b7e35edd8ad0421f/6a6be1c4b7e35edd8ad04226-0.jpg?v=1785555098090',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Gallica_logo.svg',
   },
   'bavarian-state-library': {
     slug: 'bavarian-state-library',
-    name: 'Bavarian State Library (MDZ)',
-    shortName: 'MDZ',
+    name: 'Bavarian State Library',
+    shortName: 'BSB',
     providerKey: 'mdz',
+    // Books arrived under two keys over time: 'mdz' (the digitization center's
+    // IIIF) and 'bsb' (direct). Same Munich institution — one tile, one page.
+    aliasProviderKeys: ['bsb'],
     url: 'https://www.digitale-sammlungen.de',
-    description: 'The Münchener DigitalisierungsZentrum (MDZ) is the digitization center of the Bayerische Staatsbibliothek, one of the most important research libraries in Europe. Their digital collections include over 3 million digitized pages of rare books and manuscripts.',
+    description: 'The Bayerische Staatsbibliothek in Munich is one of Europe\'s most important research libraries, holding extensive medieval codices, incunabula, and East Asian manuscripts. Its digitization center (MDZ) has digitized millions of pages of rare books and manuscripts.',
     color: 'sage',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69b51ec447b06ecd58196723/0002.jpg',
   },
@@ -79,7 +95,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://cudl.lib.cam.ac.uk',
     description: 'The Cambridge University Digital Library provides free online access to some of the University of Cambridge\'s most important collections, including Isaac Newton\'s papers, medieval manuscripts, and early printed books.',
     color: 'violet',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69907bdc5f855ec553e7177b/0001.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69907bdc5f855ec553e7177b/69907bdd5f855ec553e717bf-0.jpg?v=1784234836198',
   },
   'bibliotheca-philosophica-hermetica': {
     slug: 'bibliotheca-philosophica-hermetica',
@@ -94,13 +110,14 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'e-rara': {
     slug: 'e-rara',
+    kind: 'platform',
     name: 'e-rara',
     shortName: 'e-rara',
     providerKey: 'e-rara',
     url: 'https://www.e-rara.ch',
     description: 'e-rara.ch is the platform for digitized rare books from Swiss libraries. It provides free access to printed works from the 15th to the 20th century held by Swiss research libraries, with a focus on early printed books.',
     color: 'sage',
-    heroImageOverride: 'https://images.sourcelibrary.org/archived/69b69ff8080b19f98fd128a3/2.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69b67cff24677234712502ea/69b67cff24677234712504b8-0.jpg?v=1781697060038',
   },
   'wellcome-collection': {
     slug: 'wellcome-collection',
@@ -110,7 +127,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://wellcomecollection.org',
     description: 'Wellcome Collection in London is a free museum and library exploring health, life, and our place in the world. Their digital collections include medical manuscripts, alchemical texts, and works on the history of science and medicine.',
     color: 'rust',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/6991d8978c1030b12444c035/0047.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69905e2c2fd6a039938a1705/69905e2c2fd6a039938a171a-0.jpg',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Wellcome_Collection_logo.svg',
   },
   'hab-wolfenbuettel': {
@@ -136,16 +153,18 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'google-books': {
     slug: 'google-books',
+    kind: 'platform',
     name: 'Google Books',
     shortName: 'Google',
     providerKey: 'google_books',
     url: 'https://books.google.com',
     description: 'Google Books has digitized millions of volumes in partnership with major research libraries worldwide. Source Library imports Google Books content via Internet Archive mirrors, which host the digitized page images.',
     color: 'sage',
-    heroImageOverride: 'https://images.sourcelibrary.org/archived/6991ebe2e93551dd846a79cd/4.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69a5edc996d6dd816a56b5ec/69a5edc996d6dd816a56b5f0-0.jpg',
   },
   'hathi-trust': {
     slug: 'hathi-trust',
+    kind: 'platform',
     name: 'HathiTrust Digital Library',
     shortName: 'HathiTrust',
     providerKey: 'hathi_trust',
@@ -155,6 +174,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'europeana': {
     slug: 'europeana',
+    kind: 'platform',
     name: 'Europeana',
     shortName: 'Europeana',
     providerKey: 'europeana',
@@ -183,7 +203,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://allardpierson.nl',
     description: 'Allard Pierson at the University of Amsterdam houses the Bibliotheca Rosenthaliana and important collections of early printed books, manuscripts, and maps from the Dutch Golden Age and beyond.',
     color: 'gold',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69b525ce6be6046083032a57/0007.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69b4cd1ad5b6c3815e1a3f81/69b4cd1ad5b6c3815e1a3fc6-0.jpg?v=1781731220938',
   },
   'laurenziana': {
     slug: 'laurenziana',
@@ -213,10 +233,11 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digitalcollections.universiteitleiden.nl',
     description: 'Leiden University Library, founded in 1575, holds the Scaliger collection of Oriental manuscripts, the Vossius collection of classical texts, and important Dutch Golden Age scientific works.',
     color: 'sage',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/6991c57d3074a1745a4118d2/0004.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69b3f74ba107e55a0ee1ca1a/69b3f74ba107e55a0ee1cad9-0.jpg',
   },
   'e-codices': {
     slug: 'e-codices',
+    kind: 'platform',
     name: 'e-codices',
     shortName: 'e-codices',
     providerKey: 'e-codices',
@@ -240,6 +261,8 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     name: 'National Diet Library of Japan',
     shortName: 'NDL',
     providerKey: 'ndl_japan',
+    // 'ndl' was a second import key for the same library — folded in here.
+    aliasProviderKeys: ['ndl'],
     url: 'https://dl.ndl.go.jp',
     description: 'The National Diet Library of Japan is the national library of Japan, providing digital access to rare Japanese books, manuscripts, maps, and prints spanning over a millennium of Japanese literary and scientific tradition.',
     color: 'rust',
@@ -275,6 +298,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'imslp': {
     slug: 'imslp',
+    kind: 'platform',
     name: 'IMSLP / Petrucci Music Library',
     shortName: 'IMSLP',
     providerKey: 'imslp',
@@ -291,6 +315,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digital.staatsbibliothek-berlin.de',
     description: 'The Staatsbibliothek zu Berlin is one of the largest academic libraries in the German-speaking world. Its digital collections include VD16/VD17 early printed books, the Diez collection (Arabic, Persian, Turkish), and Hamilton manuscripts.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/archived/6a243d100f0e4f405e62fa43/7.jpg',
   },
   'austrian-national-library': {
     slug: 'austrian-national-library',
@@ -318,7 +343,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://library.harvard.edu/libraries/houghton',
     description: 'The Houghton Library at Harvard University is the primary repository for rare books and manuscripts, housing the Islamic Heritage Project collection, medieval codices, incunabula, and extensive printing history materials.',
     color: 'rust',
-    heroImageOverride: 'https://images.sourcelibrary.org/hero/harvard-houghton.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69f338e1876dd827cbc54599/69f338e1876dd827cbc545a5-0.jpg?v=1780586019308',
   },
   'penn-schoenberg': {
     slug: 'penn-schoenberg',
@@ -329,6 +354,18 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Lawrence J. Schoenberg Collection at the University of Pennsylvania holds important medieval scientific manuscripts. Penn also hosts OPenn, providing CC0 access to over 51,000 manuscripts from 30+ institutions.',
     color: 'sage',
     heroImageOverride: 'https://images.sourcelibrary.org/hero/penn_colenda.jpg',
+  },
+  'byu': {
+    slug: 'byu',
+    name: 'Brigham Young University, L. Tom Perry Special Collections',
+    shortName: 'BYU',
+    providerKey: 'byu',
+    url: 'https://sc.lib.byu.edu',
+    description: 'The L. Tom Perry Special Collections at Brigham Young University holds the William Gates papers (MSS 279) — the working archive of the Maya scholar and publisher William E. Gates (1863-1940), who spent decades photographing and photostatting Mesoamerican manuscripts. For several of the Books of Chilam Balam, the Yucatec Maya manuscript books of prophecy, chronicle, medicine and the calendar, the copies Gates made are the only surviving witness to originals that have since been lost.',
+    color: 'violet',
+    // A Gates photostat zodiac figure from the Chilam Balam of Ixil — muted
+    // grey because the surviving witnesses ARE photostats; that's the archive.
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/6a878ac1d71f2514794f9e40/6a879ba86f4a03d5d89ad507-0.jpg?v=1788147109763',
   },
   'huntington': {
     slug: 'huntington',
@@ -367,17 +404,18 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digi.ub.uni-heidelberg.de',
     description: 'Heidelberg University Library holds the Codex Manesse and important collections of medieval manuscripts, alchemical texts, and early printed books from one of Germany\'s oldest universities (founded 1386).',
     color: 'violet',
-    heroImageOverride: 'https://images.sourcelibrary.org/hero/heidelberg.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69cfb6fe709cb88a028365a4/69cfb6fe709cb88a028365aa-0.jpg?v=1781645688188',
   },
   'bdrc': {
     slug: 'bdrc',
+    kind: 'platform',
     name: 'Buddhist Digital Resource Center',
     shortName: 'BDRC',
     providerKey: 'bdrc',
     url: 'https://www.bdrc.io',
     description: 'The Buddhist Digital Resource Center preserves and provides access to Buddhist literary heritage across Asia — Tibetan, Chinese, Sanskrit, and Pali manuscripts from monasteries, libraries, and private collections.',
     color: 'gold',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69dfee8cce6bb8619e07ff08/0003.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69dfee86ce6bb8619e07f683/69dfee87ce6bb8619e07f686-0.jpg?v=1780586270680',
   },
   'met-museum': {
     slug: 'met-museum',
@@ -388,28 +426,12 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     description: 'The Metropolitan Museum of Art in New York provides open access to its encyclopedic collection spanning 5,000 years, including Egyptian papyri, Islamic manuscripts, medieval art, and Asian calligraphy.',
     color: 'rust',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/7/73/The_Metropolitan_Museum_of_Art_Logo.svg',
-    heroImageOverride: 'https://images.sourcelibrary.org/hero/met-book-of-dead.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69e11aec918f5a3cda71f7b7/69e11aed918f5a3cda71f7bc-0.jpg?v=1780586279093',
   },
-  'ndl': {
-    slug: 'ndl',
-    name: 'National Diet Library of Japan',
-    shortName: 'NDL',
-    providerKey: 'ndl',
-    url: 'https://dl.ndl.go.jp',
-    description: 'The National Diet Library is Japan\'s national library, providing digital access to rare Japanese books, Buddhist manuscripts, woodblock prints, and historical texts spanning over a millennium.',
-    color: 'rust',
-    heroImageOverride: 'https://images.sourcelibrary.org/hero/ndl-genji-monogatari.jpg',
-  },
-  'bsb': {
-    slug: 'bsb',
-    name: 'Bayerische Staatsbibliothek',
-    shortName: 'BSB',
-    providerKey: 'bsb',
-    url: 'https://www.bsb-muenchen.de',
-    description: 'The Bavarian State Library in Munich holds one of Europe\'s most important manuscript collections, with extensive holdings of medieval codices, incunabula, and East Asian manuscripts including the Turfan collection.',
-    color: 'sage',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69b51e0dcf111105c42961ed/0003.jpg',
-  },
+  // 'ndl' and 'bsb' entries removed 2026-09-01: they duplicated 'ndl-japan'
+  // and 'bavarian-state-library' (same institutions, second import keys) and
+  // rendered duplicate tiles on /libraries. Their provider keys live on as
+  // aliasProviderKeys of the canonical entries; their slugs as PARTNER_SLUG_ALIASES.
   'v-and-a': {
     slug: 'v-and-a',
     name: 'Victoria & Albert Museum',
@@ -433,13 +455,14 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'qatar-digital-library': {
     slug: 'qatar-digital-library',
+    kind: 'platform',
     name: 'Qatar Digital Library',
     shortName: 'QDL',
     providerKey: 'qdl',
     url: 'https://www.qdl.qa',
     description: 'The Qatar Digital Library, a partnership between the British Library and Qatar Foundation, provides access to Arabic scientific manuscripts, historical records of the Gulf region, and maps from British India Office archives.',
     color: 'gold',
-    heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5efb5bfd8cafd91e44089/0003.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69a5ea0d815633a563894d0e/69a5ea0d815633a563894dbf-0.jpg',
   },
   'escorial': {
     slug: 'escorial',
@@ -453,12 +476,14 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'sat-daizokyo': {
     slug: 'sat-daizokyo',
+    kind: 'platform',
     name: 'SAT Daizokyo',
     shortName: 'SAT',
     providerKey: 'sat_daizokyo',
     url: 'https://21dzk.l.u-tokyo.ac.jp/SAT/',
     description: 'The SAT Daizokyo Text Database at the University of Tokyo provides digital access to the Taishō Shinshū Daizōkyō, the standard modern edition of the Chinese Buddhist canon containing over 3,000 texts.',
     color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/gallery/69f13428c8d07a6810653407/69f13428c8d07a6810653416-0.jpg?v=1781723654028',
   },
   'tu-darmstadt': {
     slug: 'tu-darmstadt',
@@ -471,6 +496,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
   'oraec': {
     slug: 'oraec',
+    kind: 'platform',
     name: 'ORAEC (Ancient Egyptian Texts)',
     shortName: 'ORAEC',
     providerKey: 'oraec',
@@ -488,6 +514,8 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
  */
 const PARTNER_SLUG_ALIASES: Record<string, string> = {
   'bph': 'bibliotheca-philosophica-hermetica',
+  'ndl': 'ndl-japan',
+  'bsb': 'bavarian-state-library',
 };
 
 /** Look up a partner by its URL slug (e.g. "internet-archive" or "bph") */
@@ -497,9 +525,18 @@ export function getPartnerBySlug(slug: string): LibraryPartner | undefined {
   return aliasTarget ? LIBRARY_PARTNERS[aliasTarget] : undefined;
 }
 
-/** Look up a partner by its `image_source.provider` value (e.g. "internet_archive") */
+/** Look up a partner by its `image_source.provider` value (e.g. "internet_archive").
+ *  Alias keys resolve to the canonical partner (e.g. 'bsb' → Bavarian State Library). */
 export function getPartnerByProvider(provider: string): LibraryPartner | undefined {
-  return Object.values(LIBRARY_PARTNERS).find(p => p.providerKey === provider);
+  return Object.values(LIBRARY_PARTNERS).find(
+    p => p.providerKey === provider || p.aliasProviderKeys?.includes(provider as ImageSourceProvider)
+  );
+}
+
+/** Every provider key whose books belong to this partner. Use this — not
+ *  `partner.providerKey` alone — wherever books are filtered by provider. */
+export function getProviderKeys(partner: LibraryPartner): string[] {
+  return [partner.providerKey, ...(partner.aliasProviderKeys || [])];
 }
 
 /** Get all partner slugs for generateStaticParams */

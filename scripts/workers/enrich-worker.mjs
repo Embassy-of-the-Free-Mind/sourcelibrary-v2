@@ -41,7 +41,7 @@ import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
@@ -1493,8 +1493,15 @@ async function main() {
 
   // The dial caps money regardless of pause/scope state (#3826): a scope
   // confines WHICH books, the budget caps HOW MUCH. Every Gemini call below
-  // is paid work.
-  if (!DRY_RUN && !await budgetAllowsDispatch(db, 'enrich-worker', { control })) {
+  // is paid work. A scope ENVELOPE (#4540) can open a confined lane when the
+  // global dial is closed — the gate then returns the book ids the lane is
+  // limited to, and the candidate queries below are confined to them.
+  const _gate = DRY_RUN ? { allowed: true, envelopeIds: null } : await budgetAllowsDispatchScoped(db, 'enrich-worker', { control });
+  if (_gate.envelopeIds) {
+    SCOPE_FILTER = { id: { $in: [..._gate.envelopeIds] } };
+    console.log(`[ENRICH] Global dial closed, scope envelope open — confining to ${_gate.envelopeIds.size} envelope book(s).`);
+  }
+  if (!DRY_RUN && !_gate.allowed) {
     await db.collection('cron_runs').insertOne({
       cron: 'hetzner-enrich-worker', timestamp: new Date(),
       duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
@@ -1540,7 +1547,15 @@ async function main() {
       books = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete', ...SCOPE_FILTER })
         .sort({ is_first_translation: -1, pages_count: 1, 'pipeline_auto.retry_count': 1 })  // First translations first, then small books
-        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
+        // The embedding path (composeBookEmbeddingText + upsertBookEmbedding)
+        // reads far more than the enrich loop itself: published/categories go
+        // into the embedded text, content_type + commons_* + resource_type +
+        // medium are the whole descriptive signal for artworks, quality_score/
+        // collections land in the stored metadata. Projected away, artworks got
+        // generic embeddings and book_embeddings.year/categories were always
+        // null/[] — the single-book --book lane (unprojected findOne) was
+        // correct while this batch lane silently wasn't.
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, published: 1, categories: 1, quality_score: 1, content_type: 1, resource_type: 1, medium: 1, collections: 1, commons_description: 1, commons_categories: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
         .toArray();
     }

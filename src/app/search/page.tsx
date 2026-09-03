@@ -7,12 +7,13 @@ import Image from 'next/image';
 import {
   Search, Book, ExternalLink, Filter, X, Loader2,
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
-  ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
+  ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown, Library
 } from 'lucide-react';
 import { useSearchParams, useRouter, useParams, usePathname } from 'next/navigation';
 import { useLocale, useLocalePath } from '@/lib/i18n';
 import type { Locale } from '@/lib/locale-path';
 import { SEARCH_STRINGS, EXAMPLE_QUERIES, type SearchStrings } from '@/lib/search-i18n';
+import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
@@ -28,10 +29,13 @@ import {
   type IndexSearchResult,
   type GalleryItem,
   type Collection,
+  type ApiClientError,
 } from '@/lib/api-client';
 import { tenantBookUrl } from '@/lib/slugify';
 import { matchKnownEntity } from '@/lib/known-entities';
+import { assessMatchQuality } from '@/lib/search/match-quality';
 import HighlightedText from '@/components/search/HighlightedText';
+import SearchWebMCP from '@/components/search/SearchWebMCP';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
@@ -155,6 +159,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // "no related results" as if it were a fact — the "looks like 1 result" bug, where
   // held editions catalogued under another name (Pimander ≈ Corpus Hermeticum) vanish.
   const [semanticDegraded, setSemanticDegraded] = useState(false);
+  // Honest-failure flag from /api/search/unified (#4281): 'weak' = results
+  // exist but none contains all the query's words. null = strong or unjudged.
+  const [matchQuality, setMatchQuality] = useState<'strong' | 'weak' | null>(null);
 
   // Page-content passage results (for quoted phrase searches)
   const [passageResults, setPassageResults] = useState<SearchResult[]>([]);
@@ -404,18 +411,23 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         const existingIds = new Set(imageResults.map(i => `${i.pageId}-${i.detectionIndex}`));
         const newImages: GalleryItem[] = [];
         // Search all image terms in parallel
+        const supplementTerms = imgTerms.slice(0, 3);
         const results = await Promise.allSettled(
-          imgTerms.slice(0, 3).map(term =>
+          supplementTerms.map(term =>
             galleryApi.list({ query: term, limit: 4, maxPerBook: 1 })
           )
         );
-        for (const r of results) {
+        for (const [i, r] of results.entries()) {
           if (r.status !== 'fulfilled') continue;
           for (const item of (r.value.items || [])) {
             const key = `${item.pageId}-${item.detectionIndex}`;
             if (existingIds.has(key)) continue;
             existingIds.add(key);
-            newImages.push(item);
+            // Carry the LLM term that fetched this image so the card can label
+            // it "related · <term>". Unlabeled, these read as direct matches —
+            // a user searching "ancient egyptian" saw tarot layouts because the
+            // expansion suggested "book of thoth" (#4338).
+            newImages.push({ ...item, aiTerm: supplementTerms[i] } as GalleryItem);
           }
         }
         if (newImages.length > 0) {
@@ -441,6 +453,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       setCollectionResults([]);
       setImageResults([]); setImageTotal(0);
       setCatalogResults([]); setCatalogTotal(0);
+      setMatchQuality(null);
       return;
     }
     setLoading(true);
@@ -458,6 +471,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           setIndexTotal(cached.indexTotal);
           setImageResults(cached.images);
           setImageTotal(cached.imageTotal);
+          setMatchQuality(cached.matchQuality ?? null);
           setLoading(false);
           return;
         }
@@ -488,7 +502,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           // Map unified gallery + visual + artwork results to GalleryItem shape
           // Merge all image sources, deduped by id
           const galleryResults = data.gallery?.results || [];
-          const visualResults = data.visual?.results || [];
+          // CLIP results are approximate by nature — tag them so the card can
+          // say "visual match" instead of presenting an embedding neighbor as
+          // if it matched the query text (#4338: tarot cards under "ancient
+          // egyptian" read as broken search when unlabeled).
+          const visualResults = (data.visual?.results || []).map((v: any) => ({ ...v, visualMatch: true }));
           const artworkResults = (data as any).artworks?.results || [];
           const seenImageIds = new Set<string>();
           const allImageResults = [...galleryResults, ...visualResults];
@@ -502,7 +520,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             images.push({
               pageId,
               bookId: g.bookId || '',
-              pageNumber: 0,
+              // Carried through so the card can say which page of which book the
+              // detail was cropped from. CLIP rows have no page number; 0 reads
+              // as "unknown" and the card omits it.
+              pageNumber: typeof g.pageNumber === 'number' ? g.pageNumber : 0,
               detectionIndex,
               imageUrl: g.imageUrl || '',
               thumbnailUrl: g.imageUrl || '',
@@ -510,6 +531,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               author: '',
               description: g.description || '',
               type: g.type,
+              visualMatch: (g as any).visualMatch || undefined,
             } as GalleryItem);
           }
           // Merge artwork results as image cards. With lexical recall (#2735) a
@@ -536,7 +558,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               type: a.genre || 'artwork',
               isArtwork: true,
               artworkSlug: a.slug || null,
-            } as GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null });
+              // What makes the card readable as an object rather than a page of
+              // one of our books: the medium, and the museum that holds it.
+              artworkType: a.resource_type || a.genre || null,
+              holder: a.holder || null,
+            } as GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null; artworkType?: string | null; holder?: string | null });
           }
           const imTotal = (data.gallery?.total || 0) + (data.visual?.total || 0) + artworkResults.length;
 
@@ -558,6 +584,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           }
           baseImagesSet.current = true;
           setCollectionResults((data as any).collections?.results || []);
+          const mq = ((data as any).match_quality === 'weak' || (data as any).match_quality === 'strong')
+            ? (data as any).match_quality : null;
+          setMatchQuality(mq);
           displayHintLocked.current = true; // lock layout once results render
 
           // Cache the result
@@ -566,6 +595,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             books, bookTotal: bTotal,
             index, indexTotal: iTotal,
             images, imageTotal: imTotal,
+            matchQuality: mq,
           });
           // Evict old cache entries
           if (searchCache.current.size > 50) {
@@ -573,14 +603,20 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             if (oldest) searchCache.current.delete(oldest[0]);
           }
         } catch (err) {
+          const apiErr = err as ApiClientError;
           const msg = err instanceof Error ? err.message : String(err);
           // Anonymous free-search allowance exhausted — show the sign-in wall
           // and stop (don't fire the parallel agents or report an error).
-          if (/free searches this hour/i.test(msg) || /SIGNIN_REQUIRED/.test(msg)) {
+          // Keyed on the machine-readable code the route sends, not on the
+          // wording of the copy: the api-client interceptor carries `code`
+          // through now, and a regex over user-facing prose silently stops
+          // matching the first time that prose is reworded.
+          if (apiErr?.code === 'SIGNIN_REQUIRED') {
             setSignInRequired(true);
             setBookResults([]); setBookTotal(0);
             setIndexResults([]); setIndexTotal(0);
             setImageResults([]); setImageTotal(0);
+            setMatchQuality(null);
             setCollectionResults([]); setSemanticResults([]); setSemanticDegraded(false);
             // Stop the parallel AI-expand stream so nothing leaks past the wall.
             aiAbortRef.current?.();
@@ -609,7 +645,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             return r.json();
           })
           .then(data => {
-            // Dedup against keyword book results
+            // Coarse dedup against whatever keyword results this closure can
+            // see. The authoritative pass is the work-grain one at render time
+            // (`uniqueSemantic` below) — this closure captures `bookResults`
+            // from the render that fired the fetch, so it can be a step behind.
             const keywordIds = new Set(bookResults.map(b => b.id || b.book_id));
             const deduped = (data.results || []).filter((s: any) => !keywordIds.has(s.book_id));
             setSemanticResults(deduped);
@@ -763,7 +802,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   }, [router, currentPathname, tenant, defaultMode, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype
-  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number }>());
+  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number; matchQuality?: 'strong' | 'weak' | null }>());
   const CACHE_TTL = 60_000; // 1 minute
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
@@ -951,6 +990,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
   return (
     <div className="bg-cream" lang={lang}>
+      {/* WebMCP only on the main site: tool results emit /book/… URLs whose
+          shape is wrong on tenant reading rooms, and embedded iframes would
+          need an explicit allow="tools" grant from the partner page anyway. */}
+      {!embed && <SearchWebMCP />}
       {!embed && <SiteHeader variant="light" />}
 
       {/* Search Bar */}
@@ -1539,8 +1582,18 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
         {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
         {!signInRequired && viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading || catalogResults.length > 0 || catalogLoading) && (() => {
+          // Dedup the conceptual lane against the keyword lane at the WORK
+          // grain, not just by book id (#4300). The two lanes are fetched
+          // independently (unified + /api/search/semantic), so each collapses
+          // its own copies server-side and neither can see the other's — a
+          // second scan of an already-listed work would otherwise take a slot
+          // on the first screen, which is the complaint this fixes. Both lanes
+          // now return `work_id`; rows without one are never merged, because an
+          // unkeyed book is not shown to be an edition of anything.
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
-          const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
+          const keywordWorkIds = new Set(bookResults.map(b => b.work_id).filter(Boolean));
+          const uniqueSemantic = semanticResults.filter((sem: any) =>
+            !keywordIds.has(sem.book_id) && !(sem.work_id && keywordWorkIds.has(sem.work_id)));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
 
           // Shared components
@@ -1707,8 +1760,26 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </>
           );
 
+          // Honest weak-match banner (#4281): the lanes found only partial-word
+          // matches ("Rainer" alone, "Maria" alone). Say so before showing them,
+          // instead of presenting token noise as an answer. The unified flag is
+          // metadata-only, so a page-content passage that covers every word
+          // (quoted-phrase queries) overrides it — and while passages are still
+          // loading we stay quiet rather than flash a claim we may retract.
+          const passagesCover = assessMatchQuality(
+            query,
+            passageResults.map(r => [r.title, r.display_title, r.author, r.snippet].filter(Boolean).join(' ')),
+          ) === 'strong';
+          const weakMatchBanner = matchQuality === 'weak' && !passageLoading && !passagesCover && (
+            <div className="px-4 py-3 rounded-lg border border-border-light bg-warm/60">
+              <p className="text-sm font-medium text-primary">{t.weakMatchTitle(query)}</p>
+              <p className="text-sm text-secondary mt-0.5">{t.weakMatchBody}</p>
+            </div>
+          );
+
           return (
             <div className="space-y-3">
+              {weakMatchBanner}
               {passageSection}
               {collectionCards}
               {narrationBlock}
@@ -1881,6 +1952,37 @@ function cleanSnippet(text: string): string {
     .trim();
 }
 
+/**
+ * "N editions & copies of this work →" (#4300).
+ *
+ * Rendered under a result that STANDS IN for siblings the work-grain collapse
+ * removed — four scans of Kircher's Musurgia now occupy one row, and this is
+ * the affordance that says so instead of the library silently dropping three.
+ * The count comes from the API, which reads it off the same filter `/work/[id]`
+ * renders its edition list from, so the number always describes the page this
+ * link opens (visibility-and-stats.md). Absent under a tenant context, by
+ * construction — the API does not send it there.
+ *
+ * Sits OUTSIDE the card's own <Link>: a nested anchor is invalid HTML and the
+ * inner one would swallow the click.
+ */
+function WorkEditionsLink({ group }: { group: NonNullable<SearchResult['work_group']> }) {
+  const t = SEARCH_STRINGS[useLocale()];
+  const lp = useLocalePath();
+  return (
+    <div className="px-4 pb-3 -mt-1">
+      <Link
+        href={lp(group.href)}
+        className="inline-flex items-center gap-1 text-xs text-accent-gold-dark hover:text-accent-gold font-medium transition-colors"
+      >
+        <Library className="w-3.5 h-3.5" aria-hidden />
+        {t.workEditionsLink(group.editions)}
+        <ChevronRight className="w-3 h-3" />
+      </Link>
+    </div>
+  );
+}
+
 function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: { result: SearchResult; query: string; tenant?: string; autoPassages?: boolean; mobileCompact?: boolean }) {
   // Client children take no `lang` prop — the pathname already says which
   // language they are in (i18n.md, "the book page: ONE page, two URLs").
@@ -2026,6 +2128,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
           </div>
         </div>
       </Link>
+      {result.work_group && <WorkEditionsLink group={result.work_group} />}
       {passagesOpen && (
         <div className="px-4 pb-4 -mt-1">
           {passagesLoading ? (
@@ -2126,6 +2229,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
           </div>
         </div>
       </Link>
+      {result.work_group && <WorkEditionsLink group={result.work_group} />}
     </div>
   );
 }
@@ -2217,8 +2321,38 @@ function IndexResultCard({ result, query, tenant }: { result: IndexSearchResult;
   );
 }
 
-function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null }; query: string; large?: boolean; tenant?: string }) {
+function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null; artworkType?: string | null; holder?: string | null; link?: string | null; aiTerm?: string; visualMatch?: boolean }; query: string; large?: boolean; tenant?: string }) {
   const [imageError, setImageError] = useState(false);
+  const t = SEARCH_STRINGS[useLocale()];
+
+  // Provenance chip: images that arrived via LLM term expansion or CLIP
+  // similarity are honest neighbors, not matches — say so on the card (#4338).
+  const provenance = item.aiTerm
+    ? `related · ${item.aiTerm}`
+    : item.visualMatch ? 'visual match' : null;
+
+  // The strip mixes two different things and used to render them identically: a
+  // standalone artwork held by a museum (links to /artwork/) and a detail cropped
+  // out of a book we hold (links to /gallery/image/). The second line was
+  // `item.bookTitle` in both cases — a slot meaning "the object's own title" for
+  // one and "the book it came from" for the other. Say which: artworks get a
+  // medium chip and their holder, illustrations get "from <book> · p. N".
+  //
+  // Two producers feed this card and they mark an artwork differently: the
+  // unified-search artworks lane sets `isArtwork` (+ artworkType/holder), while
+  // /api/gallery — which backs the dedicated Images tab — sets `source:'artwork'`
+  // and puts the medium in `type` (see artworkToGalleryItem in gallery-merge.ts).
+  // Reading only one of them left half the artworks wearing a book card.
+  const isArtwork = item.isArtwork === true || item.source === 'artwork';
+  const typeChip = isArtwork ? artworkTypeLabel(item.artworkType || item.type) : null;
+  const subtitle = isArtwork
+    ? (item.holder || item.author || null)
+    : (item.bookTitle ? t.imageFromBook(item.bookTitle) : null);
+  // A NEGATIVE page_number is a soft-hide marker, not a leaf — "p. -154" is both
+  // nonsense to a reader and a leak of an internal flag. Only a positive number
+  // is a page you could turn to. Rendered as its own non-shrinking span so a long
+  // book title truncates without swallowing the page number with it.
+  const pageLabel = !isArtwork && item.pageNumber > 0 ? `p. ${item.pageNumber}` : null;
 
   // Use pre-generated thumbnail/extracted URL first (publicly accessible),
   // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
@@ -2227,14 +2361,15 @@ function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & {
     ? `/${tenant}/gallery/image/${item.pageId}-${item.detectionIndex}`
     : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
 
-  // Artworks link to /artwork/[slug], gallery images to /gallery/image/[id]
-  const href = item.isArtwork
-    ? `/artwork/${item.artworkSlug || item.pageId}`
-    : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
+  // /api/gallery hands back the canonical URL for a standalone artwork in `link`;
+  // prefer it. Without this the Images tab built `/gallery/image/artwork-<id>`
+  // from the synthetic pageId — a hard 404 on every artwork tile in that tab.
+  const artworkHref = item.link
+    || (item.artworkSlug ? `/artwork/${item.artworkSlug}` : null);
 
   return (
     <Link
-      href={item.isArtwork ? `/artwork/${item.artworkSlug || item.pageId}` : imageHref}
+      href={isArtwork && artworkHref ? artworkHref : imageHref}
       className="group block bg-white rounded-lg border border-border-light overflow-hidden hover:border-accent-gold/30 hover:shadow-md transition-all"
     >
       <div className={`relative bg-warm ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>
@@ -2253,12 +2388,31 @@ function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem & {
             <ImageIcon className="w-8 h-8 text-border-medium" />
           </div>
         )}
+        {(provenance || typeChip) && (
+          <div className="absolute top-1.5 left-1.5 flex flex-col items-start gap-1">
+            {typeChip && (
+              <span className="px-1.5 py-0.5 rounded bg-black/55 text-[10px] leading-tight text-white/90 backdrop-blur-sm">
+                {typeChip}
+              </span>
+            )}
+            {provenance && (
+              <span className="px-1.5 py-0.5 rounded bg-black/55 text-[10px] leading-tight text-white/90 backdrop-blur-sm">
+                {provenance}
+              </span>
+            )}
+          </div>
+        )}
       </div>
       <div className="p-2.5">
         <p className="text-sm text-secondary line-clamp-2 mb-1">
           {query ? <HighlightedText text={item.description} query={query} /> : item.description}
         </p>
-        <p className="text-xs text-muted line-clamp-1">{item.bookTitle}</p>
+        {subtitle && (
+          <p className="text-xs text-muted flex items-baseline gap-1">
+            <span className="truncate">{subtitle}</span>
+            {pageLabel && <span className="shrink-0">· {pageLabel}</span>}
+          </p>
+        )}
       </div>
     </Link>
   );

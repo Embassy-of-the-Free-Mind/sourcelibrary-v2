@@ -736,7 +736,7 @@ const serviceData: Record<string, ServiceInfo> = {
     label: 'Scripts', subtitle: '233 in scripts/ + 42 temp', color: '#fdcb6e', icon: '📜',
     summary: 'Operational scripts for analysis, batch processing, enrichment, maintenance, and imports. Run manually via `set -a; source .env.production.local; set +a; node scripts/whatever.mjs`. Plus ~42 untracked _tmp-* scratch scripts at the project root.',
     details: [
-      'Analysis (~49 scripts): Pipeline stats, OCR backlog checks, duplicate detection, data quality audits, processing candidate identification. Examples: pipeline-stats.mjs, find-duplicates.mjs, check-ocr-backlog.mjs.',
+      'Analysis (~49 scripts): Pipeline stats, OCR backlog checks, duplicate detection, data quality audits, processing candidate identification. Examples: pipeline-stats.mjs, check-ocr-backlog.mjs.',
       'Batch processing (~33): Direct Gemini API calls for bulk OCR, translation, re-OCR. Examples: realtime-ocr.mjs (Tier 3 keys, high RPS), submit-translations.mjs, retranslate-stale.mjs.',
       'Enrichment (~38): Catalog enrichment from USTC/BPH databases, entity extraction, collection assignment, language normalization, work ID assignment. Examples: enrich-from-catalogs.mjs, assign-collections.mjs, search-translation-evidence.mjs.',
       'Maintenance (~49): Fix stuck jobs, correct page counts, repair covers, create MongoDB indexes, clean up Gemini batch artifacts. Examples: fix-conflicting-visibility.mjs, fix-covers.mjs, create-critical-indexes.mjs.',
