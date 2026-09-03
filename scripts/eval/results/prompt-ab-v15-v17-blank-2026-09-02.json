@@ -1,0 +1,176 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "arms": [
+    15,
+    17
+  ],
+  "k": 5,
+  "at": "2026-09-03T03:53:56.146Z",
+  "results": [
+    {
+      "id": "blank-45",
+      "set": "blank",
+      "control": "positive",
+      "book": "69a565b95a8a09c1b325e47f",
+      "page": 45,
+      "note": "#4149 blank leaf w/ printer mark",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 32,
+          "body_sd": 43,
+          "agreement": 0.4,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "blank",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 105,
+          "body_sd": 15,
+          "agreement": 0.751,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "blank",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 32,
+      "body_delta": 73,
+      "verdict": "not established"
+    },
+    {
+      "id": "blank-72",
+      "set": "blank",
+      "control": "positive",
+      "book": "69a565b95a8a09c1b325e47f",
+      "page": 72,
+      "note": "#4149 blank leaf",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 0,
+          "body_sd": 0,
+          "agreement": 1,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "blank",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 0,
+          "body_sd": 0,
+          "agreement": 1,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "blank",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 0,
+      "body_delta": 0,
+      "verdict": "not established"
+    },
+    {
+      "id": "faint-mark",
+      "set": "blank",
+      "control": "positive",
+      "book": "6953b56577f38f6761bd979d",
+      "page": 4,
+      "note": "#3591 faint mark — must NOT be blank",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 4,
+          "body_sd": 0,
+          "agreement": 1,
+          "lacuna": 0,
+          "unclear": 1,
+          "page_type_modal": "blank",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 26,
+          "body_sd": 21,
+          "agreement": 0.301,
+          "lacuna": 0,
+          "unclear": 1,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 15,
+      "body_delta": 22,
+      "verdict": "not established"
+    },
+    {
+      "id": "basmala",
+      "set": "blank",
+      "control": "positive",
+      "book": "6953b56577f38f6761bd979d",
+      "page": 266,
+      "note": "#3591 legible basmala — must NOT be blank",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 57,
+          "body_sd": 40,
+          "agreement": 0.456,
+          "lacuna": 0,
+          "unclear": 6.2,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 28,
+          "body_sd": 9,
+          "agreement": 0.618,
+          "lacuna": 1,
+          "unclear": 3.4,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 29,
+      "body_delta": -29,
+      "verdict": "IMPROVED"
+    },
+    {
+      "id": "cataloguer",
+      "set": "blank",
+      "control": "negative",
+      "book": "6953b56577f38f6761bd979d",
+      "page": 197,
+      "note": "#3591 Latin note — already correct",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 67,
+          "body_sd": 23,
+          "agreement": 0.611,
+          "lacuna": 0,
+          "unclear": 0.8,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 30,
+          "body_sd": 0,
+          "agreement": 1,
+          "lacuna": 1,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 16,
+      "body_delta": -37,
+      "verdict": "REGRESSION"
+    }
+  ]
+}
