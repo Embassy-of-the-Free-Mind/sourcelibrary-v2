@@ -1,0 +1,176 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "arms": [
+    15,
+    17
+  ],
+  "k": 5,
+  "at": "2026-09-03T03:52:45.516Z",
+  "results": [
+    {
+      "id": "torn-grid",
+      "set": "lacuna",
+      "control": "positive",
+      "book": "6953b56577f38f6761bd979d",
+      "page": 60,
+      "note": "#3591 torn mansion grid — completes a closed set",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 1561,
+          "body_sd": 313,
+          "agreement": 0.423,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "diagram",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 7160,
+          "body_sd": 10222,
+          "agreement": 0.473,
+          "lacuna": 0,
+          "unclear": 12.4,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 7231,
+      "body_delta": 5599,
+      "verdict": "not established"
+    },
+    {
+      "id": "hiero-rows",
+      "set": "lacuna",
+      "control": "positive",
+      "book": "69e013c593b116d24238b3d7",
+      "page": 118,
+      "note": "#4584 glyph rows — Ra-loop",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 16264,
+          "body_sd": 0,
+          "agreement": 1,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 348,
+          "body_sd": 4,
+          "agreement": 0.911,
+          "lacuna": 8,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 3,
+      "body_delta": -15916,
+      "verdict": "shorter, but agreement fell"
+    },
+    {
+      "id": "hiero-block",
+      "set": "lacuna",
+      "control": "positive",
+      "book": "69e013c593b116d24238b3d7",
+      "page": 24,
+      "note": "#4584 unread block — invented x+N lines",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 3962,
+          "body_sd": 6884,
+          "agreement": 0.927,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 455,
+          "body_sd": 372,
+          "agreement": 0.897,
+          "lacuna": 3.4,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 4875,
+      "body_delta": -3507,
+      "verdict": "not established"
+    },
+    {
+      "id": "ordinary-en",
+      "set": "lacuna",
+      "control": "negative",
+      "book": "69a565b95a8a09c1b325e47f",
+      "page": 30,
+      "note": "clean printed English prose",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 2486,
+          "body_sd": 0,
+          "agreement": 1,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 2494,
+          "body_sd": 4,
+          "agreement": 0.997,
+          "lacuna": 0,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 3,
+      "body_delta": 8,
+      "verdict": "unchanged (ok)"
+    },
+    {
+      "id": "cipher",
+      "set": "lacuna",
+      "control": "negative",
+      "book": "6953b56577f38f6761bd979d",
+      "page": 198,
+      "note": "#3591 cipher — must keep declining",
+      "arms": {
+        "15": {
+          "n": 5,
+          "body_mean": 295,
+          "body_sd": 64,
+          "agreement": 0.521,
+          "lacuna": 0,
+          "unclear": 21.8,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        },
+        "17": {
+          "n": 5,
+          "body_mean": 119,
+          "body_sd": 67,
+          "agreement": 0.541,
+          "lacuna": 0.8,
+          "unclear": 0,
+          "page_type_modal": "text",
+          "page_type_stable": true
+        }
+      },
+      "pooled_sd": 66,
+      "body_delta": -176,
+      "verdict": "REGRESSION"
+    }
+  ]
+}
