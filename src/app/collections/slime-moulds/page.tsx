@@ -210,9 +210,15 @@ async function getSlimeMouldData() {
   // than picked by translated-page count. Null until it is visible.
   const featured = [...firstTranslations, ...sourceWorks]
     .find((b) => String(b.slug || '').startsWith(FEATURED_SLUG_PREFIX)) || null;
-  const [featuredPages, parentDoc] = await Promise.all([
+  // The featured work's OWN plates, so the button under it counts this book and
+  // not the collection. The collection-wide count belongs to the gallery section;
+  // shown here it read as the size of the monograph (which has seven plates,
+  // while Panckow's herbal alone has 1,371).
+  const featuredScope: GalleryScope | null = featured ? { bookId: featured.id, maxPerBook: NO_PER_BOOK_CAP, minQuality: 0.5 } : null;
+  const [featuredPages, parentDoc, featuredPlateCount] = await Promise.all([
     featured ? getFeaturedPagePreviews(db, featured.id, getBookThumbnailUrl(featured)) : Promise.resolve([] as PagePreview[]),
     collection.parent ? withTimeout(db.collection('collections').findOne({ slug: collection.parent as string }, { projection: { _id: 0, slug: 1, name: 1 } }), 5000, null) : Promise.resolve(null),
+    featuredScope ? withTimeout(countGalleryImages(db as never, featuredScope), 5000, 0) : Promise.resolve(0),
   ]);
   const parent = parentDoc ? { slug: parentDoc.slug as string, name: parentDoc.name as string } : null;
   const yr = yearAgg[0] as { min?: number; max?: number } | undefined;
@@ -224,6 +230,7 @@ async function getSlimeMouldData() {
     galleryBrowseHref: isLinkableScope(allScope) ? galleryHref(allScope) : null,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
     languages, gallery, featured, featuredPages, parent,
+    featuredPlateCount, featuredPlatesHref: featuredScope ? galleryHref(featuredScope) : null,
   };
 }
 
@@ -311,7 +318,7 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, languages, gallery: galleryRawList, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, languages, gallery: galleryRawList, featured, featuredPages, parent, featuredPlateCount, featuredPlatesHref } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   // Editor curation runs last: it decides order and exclusions on top of the
   // relevance filter, so a hidden image is hidden however well it scored.
@@ -524,8 +531,8 @@ export default async function SlimeMouldsCollectionPage() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
-                  {galleryAllCount > 0 && (
-                    <Link href={galleryBrowseHref || '#'} className={BTN_OUTLINE}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  {featuredPlateCount > 0 && featuredPlatesHref && (
+                    <Link href={featuredPlatesHref} className={BTN_OUTLINE}>{featuredPlateCount.toLocaleString('en-US')} plate{featuredPlateCount === 1 ? '' : 's'} from this book <ArrowRight className="w-3.5 h-3.5" /></Link>
                   )}
                 </div>
               </div>
@@ -555,7 +562,7 @@ export default async function SlimeMouldsCollectionPage() {
               <GalleryMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href={galleryBrowseHref || '#'} className={BTN_DARK}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from these books <ArrowRight className="w-4 h-4" /></Link>
+              <Link href={galleryBrowseHref || '#'} className={BTN_DARK}>Browse all {galleryAllCount.toLocaleString('en-US')} plates from the collection&apos;s {total.toLocaleString('en-US')} books <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>
