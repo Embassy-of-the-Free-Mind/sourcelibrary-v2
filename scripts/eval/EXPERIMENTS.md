@@ -19,6 +19,35 @@ The replication column exists because of 2026-09-02, below.
 
 ---
 
+## 2026-09-03 — Bench 2 first arms: Kraken (CPU) vs fresh Gemini on diplomatic print
+
+- **Design.** Pre-registered (`PREREGISTRATION-bench2-print.md`, #4523). 11 new
+  diplomatic (non-recitable, same-edition) reference pages pinned + 25 existing;
+  arms so far: gemini-3.1-flash-lite k=3 (production prompt) and Kraken 5.x
+  CPU k=1 (CATMuS-Print for Latin/German, greek-cllg for Greek), same images
+  (`bench2-export.mjs`), same scoring (`score-transcripts.mjs --engine`).
+- **Result (interim — CHURRO/Surya GPU arms pending L4 stock).** Diplomatic tier:
+  - **Latin:** Kraken ≈ Gemini. Agricola 1556 99.2/99.5, Copernicus 1543
+    98.7/98.7, Linnaeus 1735 98.2/99.4. Both arms fail the same two hard pages
+    (Malleus ~1490 incunable; Praetorius 1615) — Kraken loudly (guard-fail,
+    59–73%), Gemini by alignment failure. Kraken cost ≈ €0 (Hetzner CPU,
+    ~20–50s/page niced).
+  - **Greek:** Kraken **matches or beats** Gemini on every aligned page —
+    Marinus 99.9/99.9, Bekker 99.9/99.4, Orphica 99.2/99.2, Parthey apparatus
+    94.3/91.9; 99.7–100.0 on Teubner canonical (Philo/Simplicius/Hero). Caveat:
+    all diplomatic Greek pages are 19th-c editions; on the one 16th-c Greek
+    print page (Dioscorides 1549 Ruel) Kraken guard-fails at 88.4%.
+  - **German Fraktur:** Kraken **loses badly** (72.8–89.1%, all guard-fails) —
+    CATMuS-Print is not a Fraktur model. Gemini 99.6%. Needs a Fraktur-specific
+    arm (GT4HistOCR/austriannewspapers lineage) before any German decision.
+  - Failure asymmetry confirmed on print, matching Bench 1: every Kraken failure
+    is guard-visible (loud); Gemini's weak pages align plausibly.
+- **Replicated?** Not yet — Kraken k=1 (determinism check pending), Gemini k=3
+  best-of. No reroute decision until GPU arms + paired stats run.
+- **Artifacts.** `results/scorecard-outputs-2026-09-03.jsonl` (both arms),
+  `results/scorecard--latin-la--greek-el--german-de---2026-09-03.json`,
+  Kraken raw + models on `hetzner:/root/bench2-kraken/`.
+
 ## 2026-09-02 — Does OCR prompt v17 reduce fabrication vs v15?
 
 - **Design.** Paired, k=5 runs per (page, arm), page as unit of analysis,
