@@ -149,7 +149,7 @@ async function getSlimeMouldData() {
   if (!collection) return null;
   const books = db.collection('books');
 
-  const [firstRaw, sourceRaw, ftCount, total, yearAgg, bookIdDocs] = await Promise.all([
+  const [firstRaw, sourceRaw, ftCount, total, yearAgg, volumeAgg, bookIdDocs] = await Promise.all([
     withTimeout(books.find({ collections: SLUG, is_first_translation: true, pages_translated: { $gt: 0 }, visible: true }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 }).sort({ year: 1, title: 1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     // Every readable book, first translations included. Mycology excludes them
     // here because its slider is a sample of 40-odd titles; this collection is
@@ -161,6 +161,9 @@ async function getSlimeMouldData() {
     // includes books still working through OCR and translation.
     withTimeout(books.countDocuments({ collections: SLUG, visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 8000 }), 8000, 0),
     withTimeout(books.aggregate([{ $match: { collections: SLUG, visible: true, year: { $type: 'number', $gt: 0 } } }, { $group: { _id: null, min: { $min: '$year' }, max: { $max: '$year' } } }], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
+    // Scans and languages over every readable book (no year filter): the
+    // hero's "N scans" and "N languages".
+    withTimeout(books.aggregate([{ $match: { collections: SLUG, visible: true, pages_count: { $gt: 0 } } }, { $group: { _id: null, pages: { $sum: '$pages_count' }, langs: { $addToSet: '$language' } } }], { maxTimeMS: 8000 }).toArray() as Promise<Record<string, unknown>[]>, 8000, []),
     withTimeout(books.find({ collections: SLUG, visible: true }, { projection: { id: 1, title: 1 }, maxTimeMS: 5000 }).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
   ]);
 
@@ -223,13 +226,16 @@ async function getSlimeMouldData() {
   const parent = parentDoc ? { slug: parentDoc.slug as string, name: parentDoc.name as string } : null;
   const yr = yearAgg[0] as { min?: number; max?: number } | undefined;
   const languages = ((collection.languages as { lang: string; count: number }[] | undefined) || []).filter((l) => l.count > 0).map((l) => l.lang);
+  const vol = volumeAgg[0] as { pages?: number; langs?: (string | null)[] } | undefined;
+  const scanCount = vol?.pages || 0;
+  const languageCount = (vol?.langs || []).filter(Boolean).length;
 
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
     firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount,
     galleryBrowseHref: isLinkableScope(allScope) ? galleryHref(allScope) : null,
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
-    languages, gallery, featured, featuredPages, parent,
+    languages, scanCount, languageCount, gallery, featured, featuredPages, parent,
     featuredPlateCount, featuredPlatesHref: featuredScope ? galleryHref(featuredScope) : null,
   };
 }
@@ -318,7 +324,7 @@ export default async function SlimeMouldsCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, languages, gallery: galleryRawList, featured, featuredPages, parent, featuredPlateCount, featuredPlatesHref } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryAllCount, galleryBrowseHref, dateRange, scanCount, languageCount, gallery: galleryRawList, featured, featuredPages, parent, featuredPlateCount, featuredPlatesHref } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   // Editor curation runs last: it decides order and exclusions on top of the
   // relevance filter, so a hidden image is hidden however well it scored.
@@ -415,8 +421,16 @@ export default async function SlimeMouldsCollectionPage() {
             {ftCount > 0 && (
               <span style={{ color: '#e0b46a' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
             )}
-            {languages.length > 0 && (
-              <span style={{ color: '#e8e2d6' }}>{languages.join(' · ')}</span>
+            {/* Trial stats (2026-09-02): languages, scans, plates. Colours continue
+                the row: lilac, cream, rust. Keep the ones that earn their place. */}
+            {languageCount > 0 && (
+              <span style={{ color: '#cdb8e8' }}>{languageCount} language{languageCount === 1 ? '' : 's'}</span>
+            )}
+            {scanCount > 0 && (
+              <span style={{ color: '#e8e2d6' }}>{scanCount.toLocaleString('en-US')} scans</span>
+            )}
+            {galleryAllCount > 0 && (
+              <span style={{ color: '#d98a72' }}>{galleryAllCount.toLocaleString('en-US')} plates</span>
             )}
           </div>
         </div>
