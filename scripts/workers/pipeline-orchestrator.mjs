@@ -39,6 +39,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { logUsage, logUsageAsync, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 const execFileAsync = promisify(execFile);
@@ -5404,7 +5405,7 @@ Rules:
       let readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1, 'pipeline_auto.finalize_requeues': 1, 'pipeline_auto.finalize_last_ocr': 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
       if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1, content_type: 1 });
@@ -5414,50 +5415,48 @@ Rules:
       for (const book of readyToFinalize) {
         const totalPages = book.pages_count || await db.collection('pages').countDocuments({ book_id: book.id });
 
-        if (totalPages === 0) {
-          // Single-object artworks legitimately have 0 pages — finalize, don't flag as a
-          // failed import. (Phase 0 normally diverts these, but the dedicated `--phase 9`
-          // finalize cron doesn't run Phase 0, so guard here too.)
-          if (book.content_type === 'artwork') {
-            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'complete', { skipped: 'artwork', completed_at: new Date() });
-            log.completed = (log.completed || 0) + 1;
-            continue;
-          }
-          if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'needs_attention', {
-              error: 'Empty book: 0 pages. Likely a failed import.',
-            });
-          }
-          log.needs_attention++;
-          log.errors.push(`Finalize blocked ${book.id}: 0 pages`);
-          continue;
-        }
-
-        const ocrCount = await db.collection('pages').countDocuments({
+        const ocrCount = totalPages === 0 ? 0 : await db.collection('pages').countDocuments({
           book_id: book.id,
           'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
         });
 
-        if (ocrCount === 0) {
-          if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'needs_attention', {
-              error: `Finalize blocked: 0/${totalPages} OCR pages. Needs manual investigation.`,
-            });
-          }
+        // "Finished" means the OCR is FINISHED, not that some of it exists. The
+        // old test here was a 10% floor, which the 25-page preview pass cleared
+        // on any book of 250 pages — 13,329 books were stamped complete holding
+        // 1.55M pages that had never been transcribed. See finalize-decision.mjs.
+        const verdict = decideFinalize({
+          totalPages,
+          ocrCount,
+          contentType: book.content_type,
+          requeues: book.pipeline_auto?.finalize_requeues || 0,
+          lastOcrCount: book.pipeline_auto?.finalize_last_ocr ?? null,
+        });
+
+        if (verdict.action === 'needs_attention') {
+          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'needs_attention', { error: verdict.reason });
           log.needs_attention++;
-          log.errors.push(`Finalize blocked ${book.id}: 0/${totalPages} OCR pages`);
+          log.errors.push(`Finalize blocked ${book.id}: ${verdict.reason}`);
           continue;
         }
 
-        const ocrPercent = ocrCount / totalPages;
-        if (ocrPercent < 0.1) {
+        if (verdict.action === 'requeue') {
+          // Back to the state the OCR queue actually reads. Record the count so
+          // the next lap can tell progress from a stall and stop looping.
           if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'needs_attention', {
-              error: `Very low OCR coverage: ${ocrCount}/${totalPages} (${(ocrPercent * 100).toFixed(1)}%)`,
+            await setPipelineStatus(db, book.id, 'archive_complete', {
+              finalize_requeues: (book.pipeline_auto?.finalize_requeues || 0) + 1,
+              finalize_last_ocr: ocrCount,
             });
           }
-          log.needs_attention++;
-          log.errors.push(`Finalize blocked ${book.id}: ${ocrCount}/${totalPages} OCR`);
+          log.requeued_for_ocr = (log.requeued_for_ocr || 0) + 1;
+          console.log(`  Requeued ${book.id}: ${verdict.reason}`);
+          continue;
+        }
+
+        if (totalPages === 0) {
+          // Single-object artworks legitimately have 0 pages (verdict: complete).
+          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'complete', { skipped: 'artwork', completed_at: new Date() });
+          log.completed = (log.completed || 0) + 1;
           continue;
         }
 
