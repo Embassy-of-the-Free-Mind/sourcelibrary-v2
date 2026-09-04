@@ -27,15 +27,46 @@ import {
 } from '../lib/iiif-utils.mjs';
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
 const execFileP = promisify(execFile);
-const CONCURRENCY = parseInt(process.argv[process.argv.indexOf('--concurrency') + 1] || '6');
+/**
+ * Read `--name <int>`, falling back to `dflt` when it is absent or unusable.
+ *
+ * The idiom this replaces — `parseInt(argv[argv.indexOf('--x') + 1] || 'N')` —
+ * is wrong when the flag is ABSENT: `indexOf` returns -1, so it reads
+ * `argv[0]`, which is the node binary path, and `parseInt('/usr/bin/node')` is
+ * NaN. The `|| 'N'` default never fires because `argv[0]` is a non-empty
+ * string.
+ *
+ * Measured 2026-09-04, and the reason this helper exists: run without
+ * `--page-concurrency`, PAGE_CONCURRENCY was NaN, `Array.from({length: NaN})`
+ * produced ZERO page workers, and the archiver processed 24 books in one second
+ * fetching nothing — while reporting `complete 2, partial 22`. It failed
+ * silently in the direction that looks like success, which is this file's
+ * signature failure mode.
+ */
+const intArg = (name: string, dflt: number): number => {
+  const i = process.argv.indexOf(`--${name}`);
+  if (i < 0) return dflt;
+  const v = parseInt(process.argv[i + 1] ?? '', 10);
+  return Number.isInteger(v) && v > 0 ? v : dflt;
+};
+
+const CONCURRENCY = intArg('concurrency', 6);
 // Pages in flight per book. Unchanged from the chunk width it replaces —
 // CONCURRENCY × PAGE_CONCURRENCY is the memory budget, and PR #4527 measured
 // that budget against `opj_decompress` (~1.0 GB per JP2 decode, 687 OOM events,
 // one of which killed cron.service itself). This PR is about scheduling, not
 // about buying throughput with memory, so the width stays where it was.
-const PAGE_CONCURRENCY = parseInt(process.argv[process.argv.indexOf('--page-concurrency') + 1] || '6');
+const PAGE_CONCURRENCY = intArg('page-concurrency', 6);
+const BATCH = intArg('batch', 60);
 
-const BATCH = parseInt(process.argv[process.argv.indexOf('--batch') + 1] || '60');
+// A pool width is load-bearing: at 0 or NaN this script archives nothing and
+// says it succeeded. Fail at startup instead — a constructor that throws beats
+// a comment asking the next person to be careful.
+for (const [flag, v] of [['concurrency', CONCURRENCY], ['page-concurrency', PAGE_CONCURRENCY], ['batch', BATCH]] as const) {
+  if (!Number.isInteger(v) || v < 1) {
+    throw new Error(`--${flag} resolved to ${v}. A width of ${v} archives nothing while reporting success; refusing to start.`);
+  }
+}
 const log = (...a: any[]) => console.log(new Date().toISOString().slice(11, 19), ...a);
 
 async function main() {
@@ -364,19 +395,46 @@ async function main() {
       }
     }
   };
+  // ── The summary must survive the kill ────────────────────────────────────
+  //
+  // The cron wrapper ALWAYS ends this run with SIGTERM at its 50-minute
+  // ceiling — that is its designed behaviour, not an error path. So until now
+  // the final summary and the per-host table were printed only on the rare run
+  // that finished its whole batch, which in practice meant never: the very
+  // instrument this PR adds would have been unreachable in production. Print it
+  // on the way out instead.
+  //
+  // Deliberately does no I/O: a handler that awaits a Mongo count during
+  // shutdown is a handler that races the 60s SIGKILL and prints nothing.
+  const printSummary = (reason: string) => {
+    const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
+    const runMins = (Date.now() - runStart) / 60000;
+    const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
+    log(`archive-acquired (${reason}): complete ${ok}, partial ${partial}, stalled ${stalled} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
+    // Per-host triage. A failure count without the source's own answer beside
+    // it is not a measurement — it is what made #4588 take three rounds of
+    // diagnosis to reach a cause this table states outright.
+    if (breaker.size()) log(`per-host outcomes this run:\n${breaker.report()}`);
+  };
+  let signalled = false;
+  for (const sig of ['SIGTERM', 'SIGINT'] as const) {
+    process.on(sig, () => {
+      if (signalled) return;   // a second signal must not interleave two reports
+      signalled = true;
+      clearInterval(hb);
+      log(`${sig} received — stopping. In-flight pages are abandoned; the next run resumes from the pages that still lack archived_photo.`);
+      printSummary(`stopped by ${sig}`);
+      process.exit(143);
+    });
+  }
+
   await Promise.all(Array.from({ length: Math.min(CONCURRENCY, todo.length) }, () => bookWorker()));
   clearInterval(hb);
   const remaining = PROVIDER
     ? await books.countDocuments({ 'image_source.provider': PROVIDER, pages_count: { $gt: 0 }, archive_status: { $ne: 'archive_complete' } })
     : await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
-  const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
-  const runMins = (Date.now() - runStart) / 60000;
-  const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-  log(`archive-acquired: complete ${ok}, partial ${partial}, stalled ${stalled} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s) | un-archived acquired remaining ${remaining}${throttled ? ` | throttled ${throttled}` : ''}`);
-  // Per-host triage, printed every run. A failure count without the source's
-  // own answer next to it is not a measurement — it is what made #4588 take
-  // three wrong diagnoses to reach a cause that this table states outright.
-  if (breaker.size()) log(`per-host outcomes this run:\n${breaker.report()}`);
+  printSummary('finished');
+  log(`un-archived acquired remaining ${remaining}`);
   if (blocked) {
     // Exit non-zero so a wrapper loop stops instead of re-running into the block.
     log(`ABORTED — SOURCE BLOCKED: ${(blocked as Error).message}`);

@@ -138,6 +138,37 @@ describe('archive-acquired schedules with a pool, not a barrier', () => {
     expect(src).toMatch(/Array\.from\(\{ length: Math\.min\(PAGE_CONCURRENCY/);
   });
 
+  it('parses its width flags safely, and refuses to start on a bad one', () => {
+    // This is the case the grep assertions above did NOT catch, and it shipped
+    // to a live measurement run before being caught by actually running it.
+    //
+    // `parseInt(argv[argv.indexOf('--x') + 1] || 'N')` reads argv[0] — the node
+    // binary path — when the flag is absent, so the value is NaN and the `|| 'N'`
+    // default never fires. `Array.from({length: NaN})` is an EMPTY array, so the
+    // pool started zero workers: 24 books "processed" in one second, nothing
+    // fetched, and the run reported `complete 2, partial 22`.
+    //
+    // A width is load-bearing, so the guard is a throw at startup rather than a
+    // comment. Negative control: restoring the old idiom for any one flag turns
+    // the first assertion red.
+    expect(src, 'the argv[indexOf+1] idiom reads argv[0] when the flag is absent')
+      .not.toMatch(/parseInt\(process\.argv\[process\.argv\.indexOf/);
+    expect(src, 'no safe int-arg reader').toMatch(/const intArg = /);
+    expect(src, 'a bad width must abort the run, not run it empty')
+      .toMatch(/refusing to start/);
+  });
+
+  it('prints its summary on SIGTERM, because SIGTERM is how every run ends', () => {
+    // The cron wrapper always kills this run at its 50-minute ceiling. A summary
+    // printed only on natural completion is a summary nobody ever sees — which
+    // would have made the per-host table added in this PR unreachable in
+    // production, the exact failure it was written to end.
+    expect(src, 'no signal handler — the run summary dies with the process').toMatch(/process\.on\(sig/);
+    expect(src, 'SIGTERM must be handled; it is the normal exit path here').toMatch(/SIGTERM/);
+    expect(src, 'the summary must be callable from both paths').toMatch(/const printSummary = /);
+    expect(src, 'the handler must emit the per-host table too').toMatch(/printSummary\(`stopped by/);
+  });
+
   it('will not send to a host its breaker has paused', () => {
     // Without this the pool refills its slots and hands them straight back to
     // the host that emptied them.
