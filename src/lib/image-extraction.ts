@@ -216,6 +216,12 @@ export async function extractWithGemini(
         generationConfig: {
           temperature: 0.1,
           maxOutputTokens: 2048,
+          // Gemini 3.x thinks by default and bills thought tokens at the output
+          // rate, while candidatesTokenCount excludes them — so an unconfigured
+          // call spends money the meter cannot see (#4581, 17x in Aug 2026).
+          // ai.ts's six entry points were fixed in #4591; this REST call was not,
+          // and it is the busiest unattended Gemini path we run (#4599).
+          thinkingConfig: { thinkingBudget: 0 },
         }
       })
     }
@@ -233,7 +239,10 @@ export async function extractWithGemini(
   const usageMetadata = data.usageMetadata;
   const usage = {
     inputTokens: usageMetadata?.promptTokenCount || 0,
-    outputTokens: usageMetadata?.candidatesTokenCount || 0,
+    // Count thought tokens too: if thinking is ever re-enabled here, the meter
+    // sees it instead of going blind again (#4581).
+    outputTokens: (usageMetadata?.candidatesTokenCount || 0) +
+      (usageMetadata?.thoughtsTokenCount || 0),
   };
 
   // Parse JSON from response
