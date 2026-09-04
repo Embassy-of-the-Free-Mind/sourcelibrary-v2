@@ -4,7 +4,18 @@ import { getReadDb } from '@/lib/mongodb';
 import { CONSENSUS_TARGET } from '@/lib/review-candidates';
 
 export const maxDuration = 15;
-export const revalidate = 300;
+// Deliberately NOT cached. The first version set `revalidate = 300` on the
+// grounds that this is a slow-moving number — and a positive control caught it:
+// three synthetic verdicts were inserted and the endpoint went on reporting
+// zero, because the cached response was being served (a `?cb=` query string
+// does not create a new cache entry for a route handler). A stale answer here
+// is worse than a slightly expensive one in both directions: a volunteer who
+// has just judged a page and sees the count unmoved concludes their work was
+// not recorded — which is exactly what happened for real when submissions were
+// silently 400ing — and we cannot tell "nobody has rated" from "the number is
+// five minutes old". Traffic is a handful of people; two indexed reads is
+// nothing.
+export const dynamic = 'force-dynamic';
 
 /**
  * GET /api/review/translation-check/summary
