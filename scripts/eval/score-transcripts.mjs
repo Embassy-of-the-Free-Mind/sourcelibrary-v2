@@ -28,7 +28,11 @@ const engine = argOf('engine');
 const runIndex = parseInt(argOf('run') || '1', 10);
 const only = argOf('only') ? new RegExp(argOf('only')) : null;
 if (!dirArg) { console.error('--dir=<transcripts dir> required'); process.exit(1); }
-const gtDir = path.join(__dirname, 'ground-truth');
+// --gt-dir selects the reference tier: `ground-truth` (pinned, diplomatic, books we
+// hold) or `ground-truth-ws` (Wikisource harvest, images from Commons). They are kept
+// in separate directories on purpose — pooling a modernised reference with a
+// glyph-diplomatic one silently inflates CER — so the tier is an explicit choice.
+const gtDir = path.join(__dirname, argOf('gt-dir') || 'ground-truth');
 
 const jsonlPath = engine
   ? path.join(__dirname, 'results', `scorecard-outputs-${new Date().toISOString().slice(0, 10)}.jsonl`)

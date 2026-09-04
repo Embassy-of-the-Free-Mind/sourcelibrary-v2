@@ -1,0 +1,15 @@
+{
+  "work": "Werke (Erster Band) (1801) — la.ws p21",
+  "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Gauss%2C_Carl_Friedrich_-_Werke_%281870%29.djvu/page21-1920px-Gauss%2C_Carl_Friedrich_-_Werke_%281870%29.djvu.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "commons_file": "File:Gauss, Carl Friedrich - Werke (1870).djvu",
+  "page_number": 21,
+  "script": "latin",
+  "language": "Latin",
+  "source": "la.wikisource proofread Page (level 3)",
+  "source_url": "https://la.wikisource.org/wiki/Pagina%3AGauss%2C%20Carl%20Friedrich%20-%20Werke%20(1870).djvu%2F21",
+  "tier": "wikisource",
+  "fidelity": "word",
+  "quality_level": 3,
+  "year": 1801,
+  "ocr_ground_truth": "Qui numeri secundum modulum compositum sunt congrui, etiam secundum quemvis eius divisorem erunt congrui.\n\nSi plures numeri eidem numero secundum eundem modulum sunt congrui, inter se erunt congrui (secundum eundem modulum).\n\nHaec modulorum identitas etiam in sequentibus est subintelligenda.\n\nNumeri congrui residua minima habent eadem, incongrui diversa.\n\nSi habentur quotcunque numeri A, B, C etc. totidemque alii a, b, c etc. illis secundum modulum quemcunque congrui\n\nA \\equiv a, B \\equiv b etc., erit A+B+C+ etc. \\equiv a+b+c+ etc.\n\nSi A \\equiv a, B \\equiv b , erit A - B \\equiv a - b .\n\nSi A \\equiv a , erit quoque kA \\equiv ka .\n\nSi k numerus positivus, hoc est tantummodo casus particularis propos. art.\npraec., ponendo ibi A = B = C etc., a = b = c etc. Si k negativus, erit -k positivus, adeoque -kA \\equiv -ka, unde kA \\equiv ka .\n\nSi A \\equiv a, B \\equiv b , erit AB \\equiv ab . Namque AB \\equiv Ab \\equiv ba .\n\nSi habentur quotcunque numeri A, B, C etc. totidemque alii a, b, c etc. his congrui, A \\equiv a, B \\equiv b etc., producta ex utrisque erunt congrua, ABC etc. \\equiv abc etc.\n\nEx artic. praec. AB \\equiv ab , et ob eandem rationem ABC \\equiv abc ; eodemque\nmodo quotcunque alii factores accedere possunt.\n\nSi omnes numeri A, B, C etc. aequales assumuntur, nec non respondentes\na, b, c etc., habetur hoc theorema: Si A \\equiv a et k integer positivus, erit A^k \\equiv a^k .\n\nSit X functio algebraica indeterminatae x , huius formae\ndesignantibus A, B, C etc. numeros integros quoscunque; a, b, c etc. vero integros non negativos. Tum si indeterminatae x valores secundum modulum quemcunque congrui tribuuntur, valores functionis X inde prodeuntes congrui erunt."
+}

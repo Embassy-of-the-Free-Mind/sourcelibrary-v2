@@ -33,7 +33,9 @@ const args = Object.fromEntries(process.argv.slice(2)
 
 if (!args.out) { console.error('--out=<dir> required'); process.exit(1); }
 const only = args.only ? new RegExp(args.only) : null;
-const gtDir = path.join(__dirname, 'ground-truth');
+// --gt-dir=ground-truth-ws exports the Wikisource tier, whose pages carry an
+// image_url (Commons renders the scan) instead of a book_id (we do not hold them).
+const gtDir = path.join(__dirname, args['gt-dir'] || 'ground-truth');
 fs.mkdirSync(args.out, { recursive: true });
 
 loadEnv();
@@ -42,11 +44,16 @@ let exported = 0, skipped = 0;
 for (const f of fs.readdirSync(gtDir).filter(f => f.endsWith('.json')).sort()) {
   if (only && !only.test(f)) continue;
   const gt = JSON.parse(fs.readFileSync(path.join(gtDir, f), 'utf8'));
-  if (!gt.ocr_ground_truth || !gt.book_id) continue;
+  if (!gt.ocr_ground_truth) continue;
   const slug = f.replace(/\.json$/, '');
-  const page = await getPage(gt.book_id, gt.page_number);
-  if (!page) { console.log(`  ! ${slug}: page not found`); skipped++; continue; }
-  const imageUrl = getPageSource(page);
+  let imageUrl;
+  if (gt.book_id) {
+    const page = await getPage(gt.book_id, gt.page_number);
+    if (!page) { console.log(`  ! ${slug}: page not found`); skipped++; continue; }
+    imageUrl = getPageSource(page);       // the image production OCR'd
+  } else {
+    imageUrl = gt.image_url;              // Wikisource tier: Commons renders the scan
+  }
   if (!imageUrl) { console.log(`  ! ${slug}: no usable page image`); skipped++; continue; }
   let buf;
   try {
@@ -64,7 +71,8 @@ for (const f of fs.readdirSync(gtDir).filter(f => f.endsWith('.json')).sort()) {
   }
   fs.writeFileSync(path.join(args.out, `${slug}.jpg`), buf);
   manifest.push({
-    slug, work: gt.work, book_id: gt.book_id, page_number: gt.page_number,
+    slug, work: gt.work, book_id: gt.book_id || null, tier: gt.tier || 'pinned',
+    fidelity: gt.fidelity || 'diplomatic', page_number: gt.page_number,
     script: gt.script, language: gt.language, image_url: imageUrl,
     bytes: buf.length, ...(width ? { resized_width: width } : {}),
   });

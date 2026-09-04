@@ -50,11 +50,18 @@ async function api(base, params) {
   // The MediaWiki API accepts the same read query over POST; use it when the GET
   // would be long. Retries also fall back to POST rather than repeating a doomed GET.
   const usePost = url.length > 1800;
-  for (let attempt = 0; attempt < 4; attempt++) {
+  // Exponential backoff with a long tail: the small wikis (el, la) rate-limit an
+  // unauthenticated client hard, and a 4-try/2s ladder gave up while the wiki was
+  // merely asking us to slow down. Honour Retry-After when the server sends one.
+  for (let attempt = 0; attempt < 6; attempt++) {
     const r = usePost
       ? await fetch(base, { method: 'POST', headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' }, body: qs })
       : await fetch(url, { headers: { 'User-Agent': UA } });
-    if (r.status === 429 || r.status >= 500) { await sleep(2000 * (attempt + 1)); continue; }
+    if (r.status === 429 || r.status >= 500) {
+      const ra = parseInt(r.headers.get('retry-after') || '0', 10);
+      await sleep(Math.max(ra * 1000, 3000 * 2 ** attempt));
+      continue;
+    }
     if (!r.ok) throw new Error(`${r.status} ${usePost ? base : url.slice(0, 120)}`);
     return r.json();
   }
@@ -155,8 +162,13 @@ console.log(`  ${candidates.length} in the ${YEAR_FROM}-${YEAR_TO} window\n`);
 
 // 3. For each candidate work, take up to MAX_PER_WORK pages at level >= MIN_LEVEL.
 const harvested = [];
+// A network failure mid-harvest must not discard the pages already collected — the
+// first el.wikisource run threw on a rate-limit and lost 3 good pages plus all the
+// API calls that produced them. Each work is isolated; failures are counted, not fatal.
+let failedWorks = 0;
 for (const cand of candidates) {
   if (harvested.length >= MAX_PAGES) break;
+  try {
   const pref = await api(WS, { action: 'query', list: 'allpages', apnamespace: String(NS_PAGE_ID), apprefix: `${cand.file}/`, aplimit: '500' });
   const subpages = (pref.query?.allpages || []).map(p => p.title);
   if (!subpages.length) continue;
@@ -205,14 +217,25 @@ for (const cand of candidates) {
       console.log(`  + ${cand.year}  ${p.title.slice(0, 70)}  (L${level}, ${text.length} chars)`);
     }
     await sleep(150);
+    }
+  } catch (e) {
+    failedWorks++;
+    console.log(`  ! ${cand.file.slice(0, 50)}: ${e.message.slice(0, 80)}`);
   }
 }
 
+const glyphCount = harvested.filter(p => p.fidelity === 'glyph').length;
 const outFile = path.join(OUT, `${WIKI}-${YEAR_FROM}-${YEAR_TO}.json`);
 fs.writeFileSync(outFile, JSON.stringify({
   harvested_at: new Date().toISOString(), wiki: WIKI, year_from: YEAR_FROM, year_to: YEAR_TO,
-  min_quality_level: MIN_LEVEL, fidelity: 'word',
-  caveat: 'Wikisource modernises long-s and expands ligatures; word-faithful, not glyph-diplomatic. Do not use to test glyph preservation.',
+  min_quality_level: MIN_LEVEL, failed_works: failedWorks,
+  fidelity_counts: { glyph: glyphCount, word: harvested.length - glyphCount },
+  caveat: 'Wikisource house style USUALLY modernises long-s and expands ligatures, but not always — '
+    + 'per-page `fidelity` is detected from the text itself. Only fidelity="glyph" pages may be used to '
+    + 'test long-s/ligature preservation; scoring glyph-faithful OCR against a fidelity="word" reference '
+    + 'inflates CER. Measured: la.wikisource ~20% glyph, de.wikisource ~0% (so German Fraktur glyph tests '
+    + 'still need DTA original-orthography TEI).',
   pages: harvested,
 }, null, 2));
+if (failedWorks) console.log(`  (${failedWorks} works failed; partial results still written)`);
 console.log(`\nHarvested ${harvested.length} pages → ${outFile}`);
