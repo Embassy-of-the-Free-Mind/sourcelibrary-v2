@@ -488,3 +488,36 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## The convenient artifact is the misleading one — that is not a coincidence
+
+Three instruments failed in one afternoon (2026-09-04, #4523), and in every case the
+artifact a reasonable person would reach for FIRST was the wrong one. That is the
+pattern, not bad luck: the convenient artifact is convenient because it is complete,
+always present, or already open — and those are exactly the properties a stale or
+partial record has.
+
+- **A failures-only log reads as a complete log.** `reocr_worker.py` writes
+  `worker-0.jsonl` containing only failures and skips; successes go to the output
+  directory and are never logged. Reading it produced "2,016 failures, ZERO
+  successes — the job is broken", published as an operational alert. The job was
+  healthy: the output dir grew 7,430 → 7,451 files in 15 minutes, with valid
+  Tibetan in them. **Verify a worker by its OUTPUT growing, never by its error log
+  being non-empty.** If a log records only one outcome class, say so in its NAME.
+- **An error field that captures a stderr TAIL reports the last warning, not the
+  cause.** Every failure in that log read `kenlm python bindings are not installed`
+  — a benign notice the BDRC CLI prints on every invocation, successful or not. The
+  real failure modes (`No lines detected` on blank folios, http 403/502) were
+  invisible. Capture the exception, not the tail.
+- **A field present on 100% of rows beats a correct field present on 27% — in
+  adoption, not in truth.** `pages.image_width` exists on all 285,373 OCR'd Tibetan
+  pages; `image_metadata.width` on 27.3%. Where both exist they disagree **4,000 of
+  4,000 sampled times**: `image_width` is the DISPLAY derivative, `image_metadata`
+  the archived master (one page reads 1200×800 against a real 3888×2592). A
+  corpus-wide "42% of pages are too low-res to OCR" was built on the populated field
+  and was wrong. **Before a cohort query, check the field's coverage AND cross-check
+  it against a second source on rows carrying both.** For image size the authority is
+  the provider's own `info.json`, since our copy can never exceed the source master.
+
+Corollary for the writing side: **if you know which artifact is authoritative, make
+it the easy one to reach.** A warning in a doc loses to a field that autocompletes.

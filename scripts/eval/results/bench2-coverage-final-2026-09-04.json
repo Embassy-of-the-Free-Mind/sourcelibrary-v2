@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-09-04T21:55:21.647Z",
+  "gt_dir": "ground-truth-ws",
+  "jsonl": "scorecard-outputs-2026-09-04.jsonl",
+  "estimator": "mean-over-runs",
+  "rows": [
+    {
+      "model": "gemini-lite-ws",
+      "language": "German",
+      "pages": 29,
+      "aligned": 28,
+      "coverage": 0.9655,
+      "conditional_acc": 99.44,
+      "unconditional_acc": 96.01
+    },
+    {
+      "model": "gemini-lite-ws",
+      "language": "Greek",
+      "pages": 24,
+      "aligned": 22,
+      "coverage": 0.9167,
+      "conditional_acc": 97.84,
+      "unconditional_acc": 89.68
+    },
+    {
+      "model": "gemini-lite-ws",
+      "language": "Latin",
+      "pages": 33,
+      "aligned": 28,
+      "coverage": 0.8485,
+      "conditional_acc": 96.25,
+      "unconditional_acc": 81.67
+    },
+    {
+      "model": "kraken-ws",
+      "language": "German",
+      "pages": 30,
+      "aligned": 14,
+      "coverage": 0.4667,
+      "conditional_acc": 94.74,
+      "unconditional_acc": 44.21
+    },
+    {
+      "model": "kraken-ws",
+      "language": "Greek",
+      "pages": 25,
+      "aligned": 23,
+      "coverage": 0.92,
+      "conditional_acc": 99.35,
+      "unconditional_acc": 91.4
+    },
+    {
+      "model": "kraken-ws",
+      "language": "Latin",
+      "pages": 45,
+      "aligned": 38,
+      "coverage": 0.8444,
+      "conditional_acc": 97.72,
+      "unconditional_acc": 82.52
+    }
+  ]
+}
