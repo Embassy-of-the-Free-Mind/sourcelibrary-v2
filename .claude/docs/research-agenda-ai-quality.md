@@ -1,6 +1,8 @@
 # Source Library Research Agenda — AI Quality (v1)
 
-_Finalized 2026-07-24. What we're trying to find out about the quality of our AI-generated text,
+_Finalized 2026-07-24; amended 2026-09-02 (B1 status, A3 measurement caveat, three standing
+cautions) — see `scripts/eval/EXPERIMENTS.md` for the runs behind the amendments._
+_Original note: What we're trying to find out about the quality of our AI-generated text,
 for whom, and what each line of work delivers. How-to-measure details live in
 `ocr-translation-eval-landscape.md` (the field survey); this doc is the plan that survey serves.
 Status lines point at the issues/PRs where work already exists — check them before starting._
@@ -63,7 +65,14 @@ repeated 8,000 times, the model's reasoning written out as if it were page text,
 characters of `&nbsp;`. About 1.3% of revision pairs have one of these. We have cheap detectors;
 the open work is tracking whether new model generations reduce these failures or just change
 their shape.
-_Status: taxonomy and detectors exist (#3273); tracking over time doesn't._
+_Status: taxonomy and detectors exist (#3273); tracking over time doesn't. **Measurement caveat
+found 2026-09-02 (#4610):** these failures are stochastic per CALL, not deterministic per prompt.
+A degenerate repetition loop ran to the output-token cap (~16.2k chars) on one arm of a prompt A/B
+and, on an identical re-run, on the OTHER arm — while looking perfectly stable within each batch
+(±0 chars, cross-run agreement 1.000). Two consequences: a mean over runs averages a categorical
+catastrophe into a number describing neither, so loop rate must be estimated as a **Bernoulli rate**
+with an interval; and cross-run agreement CANNOT detect this failure, because a deterministic loop
+is perfectly reproducible. Any A3 tracking needs a repetition classifier first._
 
 ### A4. Are some scripts getting worse quality — and are we even measuring them fairly?
 Word-based scoring punishes Chinese and Tibetan: one wrong glyph sinks a whole "word," so the
@@ -92,7 +101,16 @@ part (bad), or it fills the gap with fluent invention (worst — the reader can'
 the split: of translation errors, how many were inherited from bad OCR, and how many did the
 translator introduce? Track made-up passages separately from overall quality — an average score
 hides them.
-_Status: not yet studied; the trace-alignment tooling (#3125) is a ready instrument._
+_Status: **the worst case is confirmed live, with a mechanism** (2026-09-02, #4584). On Urkunden
+IV p.24 the OCR behaved correctly — it read the German apparatus and recorded the glyph block as
+unread — and the translator rendered those twenty unread lines as twenty lines of English funerary
+formulae. One was promoted into the book's featured quotes, so this is also an A5 failure. The
+mechanism was specific and fixable: OCR emitted an untagged `[Hieroglyphic text lines x+1 through
+20]` while the translation prompt said "no square brackets, use XML" and "translate EVERYTHING".
+Fix shipped as the `<lacuna>` tag (#4605) — a gap marker that is stripped from every quotable,
+countable and exportable surface, so a description of a gap can never again be served as text.
+The RATE is still unmeasured, which is the actual B1 study; the trace-alignment tooling (#3125)
+remains the instrument._
 
 ### B2. Can an AI judge grade our translations, and can we trust its grades?
 With no reference translation, the validated approach is asking a strong model to grade the
@@ -212,3 +230,17 @@ scorecard, it goes on `/research`.
 - Use character-level metrics for Chinese/Tibetan/etc.; word-level ones lie.
 - Our eval tooling does not do LLM-judge translation grading today; don't claim it in
   funder-facing material.
+- **Run it twice before you believe it.** On 2026-09-02 two identical k=5 prompt comparisons
+  returned OPPOSITE headline results, and the single-run version of the same finding had already
+  been written into a PR and an issue before replication caught it. A number from one run of a
+  stochastic pipeline is a draw, not a result. Report the SD alongside every mean; if the SD is
+  the size of the effect, there is no effect yet. (`scripts/eval/prompt-ab.mjs`,
+  `scripts/eval/EXPERIMENTS.md`.)
+- **Match the estimator to the failure's shape.** Graded errors (a slightly wrong word) average
+  meaningfully; catastrophic ones (a loop, a refusal, an invented page) do not — they are Bernoulli
+  events and belong in a rate with an interval, computed after excluding them from the length and
+  accuracy statistics. Mixing the two produces a mean that describes no page that exists.
+- **A probe needs a positive control before its negative result means anything**, and absence of a
+  signal is not evidence of a pass. Both bit twice in one session: a calibration harness reported a
+  reassuring 0% while silently measuring nothing, and an error branch counted every failed spawn as
+  a success.
