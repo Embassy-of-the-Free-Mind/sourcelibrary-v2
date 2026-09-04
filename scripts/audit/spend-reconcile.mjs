@@ -321,6 +321,28 @@ function tally(groups) {
   return { byModel, byEndpoint, calls, spendCalls, cost, placeholders, failed, error: null };
 }
 
+/**
+ * The THIRD store: Mongo `ai_usage`, written by `src/lib/log-ai-usage.ts` for the
+ * request-path features (librarian, explain, ai_search_expand, voice, podcast).
+ *
+ * Reported on its own line and never added to the call count, because the unit is
+ * different: a librarian row is one TURN, and a turn is agentic — several Gemini
+ * calls. Adding turns to calls would produce a number that is neither. August 2026:
+ * 8,784 rows, $77.00, of which the librarian is $76.48.
+ */
+async function requestPathUsage(db) {
+  const rows = await db.collection('ai_usage').aggregate([
+    { $match: { timestamp: { $gte: start, $lt: end } } },
+    { $group: { _id: '$feature', rows: { $sum: 1 }, cost: { $sum: { $ifNull: ['$costUsd', 0] } } } },
+    { $sort: { cost: -1 } },
+  ]).toArray();
+  return {
+    byFeature: rows.map(r => ({ feature: r._id || 'unknown', rows: r.rows, cost: r.cost })),
+    rows: rows.reduce((a, r) => a + r.rows, 0),
+    cost: rows.reduce((a, r) => a + r.cost, 0),
+  };
+}
+
 /** Merge the two stores into one metered picture. */
 function mergeMetered(a, b) {
   const out = { byModel: {}, byEndpoint: {}, calls: 0, spendCalls: 0, cost: 0, placeholders: 0, failed: 0 };
@@ -478,11 +500,14 @@ async function main() {
     // ---- our meters (BOTH stores — see the block comment above) ------------
     const uri = process.env.MONGODB_URI;
     let mongo = { error: 'MONGODB_URI not set' };
+    let requestPath = null;
     if (uri) {
       const client = new MongoClient(uri, { serverSelectionTimeoutMS: 30000 });
       try {
         await client.connect();
-        mongo = await meteredMongo(client.db(process.env.MONGODB_DB || 'bookstore'));
+        const db = client.db(process.env.MONGODB_DB || 'bookstore');
+        mongo = await meteredMongo(db);
+        requestPath = await requestPathUsage(db).catch(() => null);
       } catch (err) {
         mongo = { error: `Mongo read failed: ${err.message}` };
       } finally { await client.close().catch(() => {}); }
@@ -524,6 +549,15 @@ async function main() {
         log(`    ${e.slice(0, 38).padEnd(38)} ${v.calls.toLocaleString().padStart(9)} ${money(v.cost).padStart(10)}`);
       }
       if (eps.length > 18) log(`    ${`… ${eps.length - 18} more`.padEnd(38)}`);
+
+      if (requestPath && requestPath.rows) {
+        // Separate line, separate unit — see requestPathUsage() above.
+        log(`\n  REQUEST-PATH FEATURES (Mongo ai_usage — TURNS, not calls; not added above)`);
+        for (const f of requestPath.byFeature) {
+          log(`    ${f.feature.slice(0, 38).padEnd(38)} ${f.rows.toLocaleString().padStart(9)} ${money(f.cost).padStart(10)}`);
+        }
+        out.requestPath = requestPath;
+      }
 
       const gap = est - metered.cost;
       log(`\nRECONCILIATION`);

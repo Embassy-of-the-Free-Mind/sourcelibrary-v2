@@ -1,16 +1,21 @@
+import type { GenerativeModel } from '@google/generative-ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { withAuth } from '@/lib/auth-helpers';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { getGeminiClient } from '@/lib/gemini-client';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/books/[id]/editions/front-matter', type: 'other' }));
 
 // POST /api/books/[id]/editions/front-matter - Generate front matter for an edition
 export const POST = withAuth(async (request, session, context) => {
@@ -66,7 +71,7 @@ export const POST = withAuth(async (request, session, context) => {
     const bookContext = buildBookContext(book, pages);
 
     // Generate introduction and methodology in parallel
-    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+    const model = genAI().getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const [introResult, methodResult] = await Promise.all([
       generateIntroduction(model, book, bookContext),
@@ -171,7 +176,7 @@ function buildBookContext(book: Book, pages: Page[]): string {
 }
 
 async function generateIntroduction(
-  model: ReturnType<typeof genAI.getGenerativeModel>,
+  model: GenerativeModel,
   book: Book,
   context: string
 ): Promise<string> {
@@ -213,7 +218,7 @@ Rules:
 }
 
 async function generateMethodology(
-  model: ReturnType<typeof genAI.getGenerativeModel>,
+  model: GenerativeModel,
   book: Book,
   pages: Page[]
 ): Promise<string> {

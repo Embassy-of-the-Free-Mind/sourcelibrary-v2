@@ -145,7 +145,7 @@ export async function generateDigest(periodDays: number = 14, options?: { trigge
   const prompt = buildDigestPrompt(ctx, periodDays);
   const model = 'gemini-3-flash-preview';
 
-  const genAI = getGeminiClient();
+  const genAI = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' });
   const geminiModel = genAI.getGenerativeModel({ model });
 
   const startTime = Date.now();

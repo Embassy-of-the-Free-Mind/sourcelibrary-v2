@@ -3,7 +3,8 @@
  * using Gemini AI based on title page OCR, index, and metadata.
  */
 import { Db } from 'mongodb';
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { getGeminiClient } from './gemini-client';
 
 const MODEL = 'gemini-3-flash-preview';
 
@@ -173,7 +174,7 @@ Rules:
 
 Respond ONLY with valid JSON, no markdown fences.`;
 
-  const genAI = new GoogleGenerativeAI(key);
+  const genAI = getGeminiClient({ endpoint: 'collection-relevance', type: 'other' });
   const model = genAI.getGenerativeModel({
     model: MODEL,
     safetySettings: [

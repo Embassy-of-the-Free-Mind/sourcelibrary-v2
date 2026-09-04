@@ -16,12 +16,19 @@ name: Spend perimeter
 # changes it — no database, no secrets, seconds to run. A new spending phase,
 # or a new cron, fails here rather than on a bill.
 
+#   USAGE PERIMETER — a third way to lose the money, added 2026-09-05. A path can
+#   ask the dial and still write no usage row: measured across August 2026, 28% of
+#   successful GenerateContent calls (117,090 of 417,936) recorded nothing, so
+#   their spend was attributable to no workstream and checkable for no runaway
+#   thinking budget. `gemini-usage-perimeter.mjs` fails on a NEW call site that
+#   spends without recording, or on any src/ file that constructs the Gemini SDK
+#   outside the metered client.
+
 on:
   pull_request:
     paths:
-      - 'scripts/workers/**'
-      - 'scripts/lib/spend-guard.mjs'
-      - 'scripts/audit/spend-perimeter.mjs'
+      - 'src/**'
+      - 'scripts/**'
       - 'infrastructure/hetzner-crontab'
       - 'vercel.json'
       - '.github/workflows/spend-perimeter.yml'
@@ -40,3 +47,5 @@ jobs:
           node-version: '22'
       - name: Every unattended Gemini spender must ask the dial
         run: node scripts/audit/spend-perimeter.mjs --ci
+      - name: Every Gemini call site must record what it spent, or say why not
+        run: node scripts/audit/gemini-usage-perimeter.mjs --ci

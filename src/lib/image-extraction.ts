@@ -201,6 +201,11 @@ export async function extractWithGemini(
     ? { base64: imageData, mimeType: getMimeType(imageUrl, null) }
     : { base64: imageData.base64, mimeType: imageData.mimeType };
 
+  // usage-ok: this function RETURNS its token counts (input, output including
+  // thoughts) and the image-extraction worker writes the row from them, with the
+  // book and page context this layer does not have — see the
+  // `worker/image-extraction` and `hetzner/image-extract-worker` endpoints in
+  // gemini_usage. Logging here too would double-count the busiest metered lane.
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {

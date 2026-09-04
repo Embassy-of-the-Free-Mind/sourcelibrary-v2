@@ -278,7 +278,7 @@ export const POST = withAuth(async (
     const { context: bookContext, pageCount } = await buildBookContext(id, userQuery);
 
     // Create the model
-    const model = getGeminiClient().getGenerativeModel({ model: 'gemini-3-flash-preview' });
+    const model = getGeminiClient({ endpoint: '/api/books/[id]/chat', type: 'other' }).getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     // System prompt
     const systemPrompt = `You are a knowledgeable guide helping readers understand a historical text. You have access to the book's content below.

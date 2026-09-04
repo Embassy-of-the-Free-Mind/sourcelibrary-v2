@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { getGeminiClient } from '@/lib/gemini-client';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/split-gemini/check', type: 'other' }));
 
 /**
  * Check if an image is a two-page spread using Gemini
@@ -43,7 +47,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       ? { base64: imageData, mimeType: 'image/jpeg' }
       : { base64: imageData.base64, mimeType: imageData.mimeType };
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+    const model = genAI().getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const prompt = `Analyze this scanned book image and determine:
 

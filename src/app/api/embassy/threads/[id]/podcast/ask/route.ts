@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
+import { logAiUsage } from '@/lib/log-ai-usage';
 import { storagePut } from '@/lib/storage';
 import { auth } from '@/lib/auth';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
@@ -108,10 +109,22 @@ ${existingScript.slice(-1500)}
 Elena: [enthusiasm] Oh, I love that question...
 Marcus: Yeah, and actually...`;
 
+  // Visitor-triggered spend on the podcast Q&A path — recorded in the
+  // request-path store, same as the librarian and explain (#4599).
+  const scriptStartedAt = Date.now();
   const scriptResponse = await ai.models.generateContent({
     model: SCRIPT_MODEL,
     contents: scriptPrompt,
     config: { temperature: 0.8 },
+  });
+  logAiUsage({
+    feature: 'podcast_ask',
+    model: SCRIPT_MODEL,
+    inputTokens: scriptResponse.usageMetadata?.promptTokenCount ?? 0,
+    outputTokens: (scriptResponse.usageMetadata?.candidatesTokenCount ?? 0)
+      + (scriptResponse.usageMetadata?.thoughtsTokenCount ?? 0),
+    ms: Date.now() - scriptStartedAt,
+    ok: true,
   });
 
   const script = scriptResponse.text;
@@ -135,6 +148,15 @@ Marcus: Yeah, and actually...`;
           },
         },
       } as Record<string, unknown>,
+    });
+
+    logAiUsage({
+      feature: 'podcast_ask_tts',
+      model: TTS_MODEL,
+      inputTokens: ttsResponse.usageMetadata?.promptTokenCount ?? 0,
+      outputTokens: (ttsResponse.usageMetadata?.candidatesTokenCount ?? 0)
+        + (ttsResponse.usageMetadata?.thoughtsTokenCount ?? 0),
+      ok: true,
     });
 
     const candidate = ttsResponse.candidates?.[0];
