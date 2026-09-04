@@ -276,13 +276,22 @@ export default async function MycologyCollectionPage() {
       <ConditionalSiteHeader variant="dark" />
       {/* ===== Hero ===== */}
       {/* Same hero as collections/slime-moulds, so the two subject pages read
-          as one system: centred block, the book hero's scrim, breadcrumb as the
-          rust author-eyebrow, stats as the book status row (no boxes). */}
-      <section className="relative overflow-hidden min-h-[60vh] md:min-h-[75vh] flex items-center" style={{ background: '#14100c' }}>
+          as one system: bottom-aligned at 56svh on phones, centred at 75vh on
+          desktop, the book hero's scrim, breadcrumb as the rust author-eyebrow,
+          stats as the book status row (no boxes). */}
+      <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end md:items-center" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
-        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.08} oversize={0.1} />
-        {/* Mobile: vertical tint — strongest at the bottom (text), light at top. */}
-        <div className="absolute inset-0 md:hidden bg-gradient-to-t from-dark/85 via-dark/45 to-dark/5" />
+        <ParallaxImage
+          src={`/api/collections/${SLUG}/hero-collage`}
+          srcMobile={`/api/collections/${SLUG}/hero-collage?shape=portrait`}
+          loading="eager" strength={0.08} oversize={0.1}
+        />
+        {/* Mobile: the shared scrim's bottom-weighted variant, so the phone hero
+            is darkened to the same 72% base as the desktop one instead of the 45%
+            it used to hand-roll. */}
+        <div className="absolute inset-0 md:hidden">
+          <HeroScrim variant="bottom" />
+        </div>
         {/* Desktop: the book hero's tint, so the two read as one system —
             see src/components/HeroScrim.tsx. */}
         <div className="absolute inset-0 hidden md:block">
@@ -317,7 +326,7 @@ export default async function MycologyCollectionPage() {
               <span style={{ color: '#e0b46a' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
             )}
             {languages.length > 0 && (
-              <span style={{ color: 'rgba(232,226,214,0.7)' }}>{languages.join(' · ')}</span>
+              <span className="hidden sm:inline" style={{ color: '#e8e2d6' }}>{languages.join(' · ')}</span>
             )}
           </div>
         </div>
