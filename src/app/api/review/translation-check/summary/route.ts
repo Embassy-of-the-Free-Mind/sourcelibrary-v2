@@ -43,7 +43,13 @@ export const dynamic = 'force-dynamic';
  * what we know.
  */
 
-type Row = { item_id: string; rating: string | null; detail: unknown };
+type Passage = { quote?: string; should_say?: string };
+type Row = {
+  item_id: string;
+  rating: string | null;
+  note: string | null;
+  detail: { passages?: Passage[] } | null;
+};
 
 const VERDICTS = [
   'both_sound',
@@ -61,7 +67,8 @@ async function allRatings(): Promise<Row[]> {
     const from = page * 1000;
     const { data, error } = await supabaseAdmin
       .from('volunteer_ratings')
-      .select('item_id,rating,detail')
+      .select('item_id,rating,note,detail')
+      .order('created_at', { ascending: false })
       .eq('queue', 'translation-check')
       .range(from, from + 999);
     if (error) {
@@ -143,8 +150,41 @@ export async function GET() {
     })
     .sort((a, b) => b.checked - a.checked || a.language.localeCompare(b.language));
 
+  /**
+   * The qualitative half, surfaced rather than stored.
+   *
+   * A passage is the only output of this queue that can be acted on directly:
+   * a quoted line and what it should have said is a fix. Counting them per
+   * language turns a binary page verdict into an error RATE, and reading them
+   * together is how a recurring mistake gets recognised as a PIPELINE defect
+   * rather than a page defect — which is the difference between correcting one
+   * book and correcting the next hundred thousand pages.
+   *
+   * Capped at 25 and newest-first: this is a window for triage, not an export.
+   */
+  const passages: { language: string; quote: string; should_say: string; url?: string }[] = [];
+  for (const r of rows) {
+    for (const p of r.detail?.passages ?? []) {
+      if (!p.quote?.trim() && !p.should_say?.trim()) continue;
+      passages.push({
+        language: langOf.get(r.item_id) ?? 'unknown',
+        quote: (p.quote ?? '').slice(0, 300),
+        should_say: (p.should_say ?? '').slice(0, 300),
+      });
+      if (passages.length >= 25) break;
+    }
+    if (passages.length >= 25) break;
+  }
+
+  const notes = rows
+    .filter(r => r.note?.trim())
+    .slice(0, 25)
+    .map(r => ({ language: langOf.get(r.item_id) ?? 'unknown', note: r.note!.slice(0, 500) }));
+
   return NextResponse.json({
     consensus_target: CONSENSUS_TARGET,
+    passages,
+    notes,
     note:
       'faithful_pct is computed over pages whose transcription held — the only population ' +
       'where "is the English faithful?" is a well-posed question. Transcription failures are ' +
