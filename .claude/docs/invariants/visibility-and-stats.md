@@ -80,4 +80,31 @@ hold a non-plain-year value. The numeric `year` field is populated on **19,012 o
   discriminator is **not** "published is Unknown" — the Bodleian Gospels manuscripts at
   895/927/950 also lack one and their dates are genuine. The oldest object actually
   held is the 550 CE Bodleian Gospels.
-||||||| b0a919ae
+
+## `isTranslationReadable()` answers "of what we transcribed", not "of the book" (#4653)
+
+The readable bar above divides by `pages_ocr − pages_blank`. That is the right
+denominator for the question it was built for — a badged first translation is a
+claim about text we hold in transcription — but it is the WRONG one for any
+surface that shows a book the pipeline has not finished, and it fails in the
+direction that over-claims.
+
+Measured on the 18 books in `forum-of-conscience`'s `further_reading`: the
+typical shape is **223 pages, 25 OCR'd, 0 translated**. Translate those 25 and
+`translationCoverage()` returns **1.0** — "Translated", fully readable — while
+**198 pages have never been transcribed at all**. Nothing in the numerator or
+the denominator can see them, because a page awaiting OCR is in neither.
+
+- **The tell:** you are rendering a book selected for NOT being finished —
+  an acquisition list, a wishlist, a coverage report, an untranslated-backlog
+  surface. On the ordinary public corpus the two denominators nearly agree,
+  which is exactly why this stays invisible until a surface deliberately
+  populated with unfinished books renders one.
+- **The rule:** before saying "Translated", require the transcription to be
+  complete too (`pages_ocr >= pages_count`) — a CONJUNCTION with the existing
+  bar, never a second competing threshold. `furtherReadingStatus()` in
+  `src/lib/further-reading.ts` is the worked example; its negative control lives
+  in `tests/unit/further-reading.test.ts`.
+- Related: the same asymmetry from the other end — a page awaiting OCR belongs
+  in the DENOMINATOR of any corpus-wide translation-completeness figure (#4516).
+  One number cannot serve both questions; say which one you measured.
