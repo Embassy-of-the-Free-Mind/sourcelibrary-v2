@@ -1,5 +1,6 @@
 import React, { Suspense, cache } from 'react';
 import Link from 'next/link';
+import { renderInlineProse, stripInlineMarkup } from '@/lib/inline-prose';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
@@ -99,11 +100,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // ---------- Helpers ----------
 
-/** Flatten inline markdown links `[text](/href)` to their anchor text.
- *  The rendered page body parses these into <Link>s, but plain-text consumers
- *  (schema.org JSON-LD `description`) must not carry raw markdown syntax. */
+/** Flatten authored markup to plain text for consumers that must not carry it.
+ *  The rendered page body parses markdown links into <Link>s and emphasis into
+ *  <em>/<strong>; plain-text consumers (schema.org JSON-LD `description`, meta
+ *  tags) must carry neither. Delegates to the shared stripper so the render and
+ *  the flatten never diverge. */
 function stripMarkdownLinks(text: string | null | undefined): string {
-  return (text || '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  return stripInlineMarkup(text);
 }
 
 interface ChildCollection {
@@ -1579,7 +1582,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             <div className="max-w-4xl">
               {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks)}
+                  {renderInlineProse(para, (seg) => linkBookTitles(seg, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks))}
                 </p>
               ))}
             </div>
