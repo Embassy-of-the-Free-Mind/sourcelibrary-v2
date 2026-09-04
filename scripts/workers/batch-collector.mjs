@@ -19,7 +19,7 @@
 import { MongoClient } from 'mongodb';
 
 import { GoogleGenAI } from '@google/genai';
-import { completeBatchUsage, sumBatchResponseUsage } from './lib/supabase-usage-logger.mjs';
+import { completeBatchUsage, sumBatchResponseUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
@@ -343,7 +343,7 @@ async function processOneJob(db, job) {
         const share = parsed.length || 1;
         const pageUsage = usage ? {
           promptTokenCount: Math.round((usage.promptTokenCount || 0) / share),
-          candidatesTokenCount: Math.round((usage.candidatesTokenCount || 0) / share),
+          candidatesTokenCount: Math.round(outputTokensFrom(usage) / share),
         } : undefined;
         for (const [pageId, ocrText] of parsed) {
           pageResults.push({ pageId, text: ocrText, usage: pageUsage });
@@ -516,7 +516,7 @@ async function processOneJob(db, job) {
 
       // Per-page stamp only — the job totals are summed per response above.
       const inputTokens = usage?.promptTokenCount || 0;
-      const outputTokens = usage?.candidatesTokenCount || 0;
+      const outputTokens = outputTokensFrom(usage);
 
       if (job.type === 'ocr') {
         // Refused by the blank-page guard: keep the evidence, write no OCR.

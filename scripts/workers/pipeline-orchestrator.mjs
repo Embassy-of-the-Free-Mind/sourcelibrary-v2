@@ -37,7 +37,7 @@ import { promisify } from 'util';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { logUsage, logUsageAsync } from './lib/supabase-usage-logger.mjs';
+import { logUsage, logUsageAsync, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 const execFileAsync = promisify(execFile);
@@ -586,7 +586,7 @@ async function transliteratePage(db, page, sourceScript) {
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
   const usage = data.usageMetadata || {};
   const inputTokens = usage.promptTokenCount || 0;
-  const outputTokens = usage.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usage);
 
   if (!text) return null;
 
@@ -3498,7 +3498,7 @@ Rules:
           const rawText = (data.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
           const usage = data.usageMetadata || {};
           const inputTokens = usage.promptTokenCount || 0;
-          const outputTokens = usage.candidatesTokenCount || 0;
+          const outputTokens = outputTokensFrom(usage);
 
           let parsed;
           try {
