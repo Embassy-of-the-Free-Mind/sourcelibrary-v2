@@ -34,6 +34,74 @@ const named = args.find(a => !a.startsWith('--') && a !== FILE);
  * Campaigns. Each returns rows; keep them small and specific — "check this
  * blog post for errors" is answerable, "review the site" is not.
  */
+const UA =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36';
+
+/**
+ * Turn a defect MARKER into a campaign.
+ *
+ * Most live OCR defects have a fingerprint that the public search index can
+ * already find — the text a reader sees is indexed, so a bug that reaches the
+ * reader is searchable by definition. This walks a set of probes, collects the
+ * page hits, and hands each one to a volunteer as "go and look".
+ *
+ * Why the public search API and not Mongo or Supabase: an `ilike '%marker%'`
+ * over `page_translations` has no index to use and times out, and a regex over
+ * `pages` (19.1M docs) is a full collection scan. The search index is the one
+ * place this lookup is cheap — and it is also, by construction, exactly the set
+ * of pages a reader could stumble on.
+ *
+ * `perBook` keeps one bad book from filling the queue: three pages is enough to
+ * confirm a pattern, and the volunteer is asked to note whether the rest of the
+ * book looks the same.
+ */
+async function markerCampaign({
+  probes, prompt, label, campaign, idPrefix, perBook = 3,
+  confirm = () => true,
+}) {
+  const byPage = new Map();
+  const perBookCount = new Map();
+  let rejected = 0;
+
+  for (const probe of probes) {
+    const res = await fetch(
+      `${SITE}/api/search?q=${encodeURIComponent(probe)}&limit=50`,
+      { headers: { 'User-Agent': UA } },
+    );
+    if (!res.ok) {
+      console.warn(`  probe "${probe}" → HTTP ${res.status} (skipped)`);
+      continue;
+    }
+    const data = await res.json();
+    const hits = (data.results ?? []).filter(r => r.type === 'page' && r.page_id && r.slug);
+    console.warn(`  probe "${probe}" → ${data.total} total, ${hits.length} page hits`);
+    for (const h of hits) {
+      if (byPage.has(h.page_id)) continue;
+      // A search hit is a candidate, not a confirmation: a probe word can match
+      // an ordinary sentence. `confirm` looks at the indexed snippet — the text
+      // a reader actually sees — so a volunteer is never sent to a page where
+      // there is nothing to find. Sending someone to look at a false positive
+      // spends the one thing this system is short of.
+      if (!confirm(h)) { rejected++; continue; }
+      const n = perBookCount.get(h.book_id) ?? 0;
+      if (n >= perBook) continue;
+      perBookCount.set(h.book_id, n + 1);
+      byPage.set(h.page_id, {
+        item_id: `${idPrefix}:${h.page_id}`,
+        url: `${SITE}/book/${h.slug}/page/${h.page_id}`,
+        label,
+        campaign,
+        prompt: `${prompt}\n\nThis is page ${h.page_number} of “${h.title}”.`,
+      });
+    }
+    // The edge bot-limiter allows ~10 requests a minute; probes are few, so a
+    // short pause is cheaper than being throttled halfway through a build.
+    await new Promise(r => setTimeout(r, 3000));
+  }
+  if (rejected) console.warn(`  ${rejected} hit(s) rejected: the snippet showed no defect`);
+  return [...byPage.values()];
+}
+
 const CAMPAIGNS = {
   blog: {
     describe: 'Every blog post, read for factual and typographic errors',
@@ -71,6 +139,33 @@ const CAMPAIGNS = {
       }));
     },
   },
+
+  // ── Campaigns pointed at live, open defects ──────────────────────────────
+  // These exist so volunteer minutes land on something the tracker is actually
+  // trying to close, rather than on a generic "is this scan blurry". Each names
+  // its issue in the campaign label, so an answer can be carried back to it.
+  'tex-greek': {
+    describe: 'Greek printed as LaTeX code in the text readers see (#4580)',
+    build: () =>
+      markerCampaign({
+        idPrefix: 'tex',
+        label: 'the page',
+        campaign: 'Greek rendered as LaTeX (#4580)',
+        // Six fingerprints of the same failure: the model draws the SHAPE of a
+        // Greek word as maths notation instead of transcribing it as Greek.
+        probes: ['varsigma', 'mathrm', 'overline', 'varepsilon', 'lambda\\', 'begin{aligned}'],
+        // A literal backslash in running prose is essentially always TeX. This
+        // is what separates a page that PRINTS \varsigma from a translation that
+        // happens to discuss the word "overline".
+        confirm: h => typeof h.snippet === 'string' && h.snippet.includes('\\'),
+        prompt:
+          'The transcription on this page may show LaTeX code — things like \\alpha, ' +
+          '$\\varsigma$ or \\overline{} — where the book actually prints Greek letters. ' +
+          'Compare the text with the scan beside it. Is code standing in for Greek? ' +
+          'If you read Greek, the useful extra is what the word should say. And please ' +
+          'note whether the rest of the book does the same thing, or only this page.',
+      }),
+  },
 };
 
 if (args.includes('--list') || (!named && !FILE)) {
@@ -97,7 +192,7 @@ if (FILE) {
 } else {
   const c = CAMPAIGNS[named];
   if (!c) { console.error(`Unknown campaign "${named}". Try --list.`); process.exit(1); }
-  rows = c.build();
+  rows = await c.build();
 }
 
 console.log(`${rows.length} task(s)`);
