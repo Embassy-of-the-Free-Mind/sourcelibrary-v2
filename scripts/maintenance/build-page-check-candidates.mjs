@@ -246,18 +246,17 @@ const CAMPAIGNS = {
           .toArray();
         if (!page) continue;
         rows.push({
+          queue: 'translation-check',
           item_id: `trans:${language}:${page._id}`,
           url: `${SITE}/book/${b.slug ?? bookId}/page/${page._id}`,
           label: 'the page',
-          campaign: `Translation spot-check — ${language}`,
+          language,
+          campaign: `Translation check — ${language}`,
           prompt:
-            `You read ${language}. This page shows the original beside our English. ` +
-            'Does the English say what the original says? We are not asking whether it ' +
-            'reads nicely — we are asking whether it is TRUE to the page: dropped ' +
-            'clauses, invented sentences, a negation lost, a name or number changed. ' +
-            'If it is sound, say so and press "looks right" — knowing which pages are ' +
-            'fine is exactly as valuable to us as knowing which are wrong. If something ' +
-            'is off, quote the phrase and what it should say.' +
+            `You read ${language}. This page shows the scan, our transcription of it, ` +
+            'and our English. Two separate questions, in this order: does the ' +
+            'transcription match what is actually on the page, and does the English ' +
+            'match the original?' +
             (b.title ? `\n\nThis is “${b.title}”${b.published ? `, ${b.published}` : ''}.` : ''),
         });
       }
@@ -305,18 +304,27 @@ const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
 const col = client.db('bookstore').collection('review_candidates');
 let inserted = 0, updated = 0;
+const queuesTouched = new Set();
 for (const r of rows) {
+  // A campaign may target a queue other than page-check — `translations` goes to
+  // `translation-check`, whose verdicts separate the transcription layer from
+  // the translation layer. Default stays page-check so every existing campaign
+  // and every --file run behaves exactly as before.
+  const queue = r.queue ?? QUEUE;
+  queuesTouched.add(queue);
   // (queue, item_id) is uniquely indexed — re-running must refresh the prompt,
   // not duplicate the task or throw.
   const res = await col.updateOne(
-    { queue: QUEUE, item_id: r.item_id },
+    { queue, item_id: r.item_id },
     {
-      $set: { payload: r, stratum: { campaign: r.campaign } },
-      $setOnInsert: { queue: QUEUE, item_id: r.item_id, is_gold: false, created_at: new Date() },
+      $set: { payload: r, stratum: { campaign: r.campaign, language: r.language } },
+      $setOnInsert: { queue, item_id: r.item_id, is_gold: false, created_at: new Date() },
     },
     { upsert: true },
   );
   if (res.upsertedCount) inserted++; else if (res.modifiedCount) updated++;
 }
-console.log(`\ninserted ${inserted}, updated ${updated}, pool now ${await col.countDocuments({ queue: QUEUE })}`);
+for (const q of queuesTouched) {
+  console.log(`\ninserted ${inserted}, updated ${updated}, ${q} pool now ${await col.countDocuments({ queue: q })}`);
+}
 await client.close();
