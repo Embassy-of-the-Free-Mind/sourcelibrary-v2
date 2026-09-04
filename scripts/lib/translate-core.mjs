@@ -36,7 +36,11 @@ export const MODEL_LITE = 'gemini-3.1-flash-lite';
  * (Arabic-script) manuscripts — flash-lite garbles them into confident
  * nonsense (2026-07-18 Hikayat Tanah Hitu pilot). Malay must route to full
  * flash. A drifted copy of this list in translate-worker.mjs used to include
- * it, which is exactly why the copies were consolidated here.
+ * it, which is exactly why the copies were consolidated here. A second pair of
+ * drifted copies, on the OCR side, carried it until 2026-09-04 — batch OCR now
+ * reads this list too, via scripts/lib/ocr-routing.mjs. Do not paste this list
+ * anywhere; import it. Parity across all three surviving implementations is
+ * pinned by tests/unit/translate-core-parity.test.ts.
  */
 export const LATIN_SCRIPT_LANGUAGES = new Set([
   'english', 'en', 'eng',
