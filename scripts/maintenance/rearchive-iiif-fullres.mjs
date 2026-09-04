@@ -367,7 +367,12 @@ async function regenerateVariants(page, masterBuffer) {
 async function refetchOne(book) {
   const pages = await db.collection('pages').find(
     { book_id: book.id },
-    { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1 } },
+    // book_id is load-bearing, not decorative: regenerateVariants passes it to
+    // generateDisplayVariants as the watermark key. Omitted from the projection,
+    // it arrives undefined and every regenerated display/thumb is written
+    // WITHOUT the keyed watermark — unattributable in the wild (#2651). The
+    // function logs that as a warning, so the only symptom was a line in a log.
+    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1 } },
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
