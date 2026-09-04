@@ -133,6 +133,28 @@ what was new is that a *safety control* embodied it.
   hourly buckets — day-aligned queries anchor to the query END time and silently become
   rolling-24h windows). Verified 2026-08-09 for ~$0.05.
 
+**It recurred inside the audit written to catch it (2026-09-05, #4593/#4657).** `spend-reconcile.mjs`
+— the instrument whose whole purpose is comparing our meter to Google's bill — read Mongo
+`gemini_usage` alone. For August 2026 it reported 154,888 calls / $499.74 when the two stores hold
+305,800 / $2,316.68, so meter coverage printed 37% (true: 72%) and the billed-vs-metered gap printed
+11.1x (true: 2.4x). #4599 was then filed against a 250K-call hole that is ~117K. Three lessons the
+first incident did not carry:
+
+- **"Sum both stores" is a property of every spend instrument, so pin it in a test that names them
+  all** — `tests/unit/usage-meter-reads-both-stores.test.ts` asserts it for the guard, the reconciler
+  and `true-gemini-spend.mjs` together. Fixing the one that broke leaves the next one to be
+  discovered by a bill.
+- **Count the stores before trusting a coverage figure: there are THREE.** Mongo `ai_usage`
+  (`logAiUsage()`, request-path features — librarian, explain, ai_search_expand) held $77.00 in
+  August and no spend instrument read it. Report it separately: a librarian row is one agentic
+  TURN, several Gemini calls, so it can never be added to a call count.
+- **A silent-zero diagnosis deserves the inverse hypothesis.** #4593 was filed as "writers dropped
+  `created_at`, so every date-scoped read sees $0". The writers had moved to `timestamp` in 2026-03
+  and all 14 live readers followed; nothing reads `created_at` on that collection, and the dial reads
+  neither (ObjectId ranges, on purpose). What was actually invisible was the mirror image — 1,381
+  legacy rows carrying `created_at` and no `timestamp`. The ad-hoc query that produced the $0 was the
+  broken instrument, which is the theme of this whole file.
+
 ## An output that cannot vary with its input is reporting nothing — and a plausible list hides it best
 
 The `/encyclopedia/[name]` **Connections** panel showed "other entities that appear in
