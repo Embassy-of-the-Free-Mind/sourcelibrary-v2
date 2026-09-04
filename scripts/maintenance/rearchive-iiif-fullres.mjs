@@ -169,6 +169,31 @@ async function jpegDims(buf) {
   }
 }
 
+/**
+ * How wide is the master we ACTUALLY HOLD for this page?
+ *
+ * Eligibility used to be `info.width / getIiifSizeCap(sourceUrl)` — the master
+ * measured against the size the URL *asks* for. On a SILENT_CAP host that number
+ * is a lie: EAP serves 1200px however much you request, so a `/full/full/` URL
+ * (no numeric cap at all) reads as "already native" while the archive on disk is
+ * 1200px. That blind spot stranded 763 British Library Tibetan books whose EAP
+ * masters are 3888-4752px — the rearchiver reported them `not-low-res (cap=full,
+ * master=3888)` and skipped every one (#4523).
+ *
+ * Ask the archive instead, cheapest source first: the width we recorded, else
+ * measure the archived bytes, else fall back to the URL cap for non-archived pages.
+ */
+async function heldMasterWidth(page, cap) {
+  if (page.image_metadata?.width) return page.image_metadata.width;
+  if (page.archived_photo) {
+    try {
+      const dims = await jpegDims(await rateLimitedFetch(page.archived_photo, { timeout: 30_000 }));
+      if (dims?.width) return dims.width;
+    } catch { /* fall through to the URL cap */ }
+  }
+  return cap || null;
+}
+
 // ── Consistency guard (issue #3186) ──
 //
 // The e-rara off-by-one incident: for PDF-sourced imports, `archived_photo` was
@@ -208,7 +233,6 @@ function checkAlignment(pages) {
 async function fetchUpgraded(url) {
   if (!isIiifUrl(url)) return { skipped: 'not-iiif', url };
   const upgraded = upgradeToFullRes(url);
-  if (upgraded === url) return { skipped: 'no-upgrade-pattern', url };
   let raw;
   try {
     // Servers like Cambridge (maxWidth/maxHeight 2000) silently downscale
@@ -223,6 +247,13 @@ async function fetchUpgraded(url) {
       // and shrinks further if even that is capped.
       const maxChunk = Math.min(pageInfo.maxWidth || 1024, pageInfo.maxHeight || 1024, 1024);
       ({ buffer: raw } = await fetchIiifNativeRes(url, { info: pageInfo, maxChunk, timeout: 60_000 }));
+    } else if (upgraded === url) {
+      // Nothing to gain: the URL already requests native AND this host honours
+      // it. (Checked AFTER the tile-stitch branch, not before — on a silent-cap
+      // host a `/full/full/` URL is already "upgraded" textually while the bytes
+      // come back at 1200px, and bailing here skipped every page of the EAP310
+      // cohort whose masters are 3888-4752px. #4523.)
+      return { skipped: 'no-upgrade-pattern', url };
     } else {
       raw = await rateLimitedFetch(upgraded, { timeout: 60_000 });
     }
@@ -258,7 +289,7 @@ async function audit() {
   for (const b of books) {
     const samplePage = await db.collection('pages').findOne(
       { book_id: b.id, page_number: { $gte: 3 } },
-      { projection: { photo: 1, photo_original: 1, archived_photo: 1 } },
+      { projection: { photo: 1, photo_original: 1, archived_photo: 1, image_metadata: 1 } },
       { sort: { page_number: 1 } },
     );
     if (!samplePage) { results.noPages++; continue; }
@@ -271,7 +302,9 @@ async function audit() {
 
     const cap = getIiifSizeCap(sourceUrl);
     const masterWidth = info.width;
-    const ratio = cap ? masterWidth / cap : null;
+    // Against what we HOLD, not what the URL requests — see heldMasterWidth().
+    const held = await heldMasterWidth(samplePage, cap);
+    const ratio = held ? masterWidth / held : null;
 
     const isLowRes = ratio !== null && ratio >= MIN_UPGRADE_RATIO;
     if (isLowRes) {
@@ -282,11 +315,12 @@ async function audit() {
         title: b.title,
         provider: b.image_source?.provider,
         currentCap: cap,
+        heldWidth: held,
         masterWidth,
         masterHeight: info.height,
         upgradeRatio: ratio.toFixed(1) + 'x',
       });
-      console.log(`  LOW-RES  ${cap}px → ${masterWidth}px (${ratio.toFixed(1)}x)  ${(b.title || '').substring(0, 50)} [${b.image_source?.provider}]`);
+      console.log(`  LOW-RES  held ${held}px → ${masterWidth}px (${ratio.toFixed(1)}x)  ${(b.title || '').substring(0, 50)} [${b.image_source?.provider}]`);
     } else {
       results.highRes++;
     }
@@ -333,7 +367,7 @@ async function regenerateVariants(page, masterBuffer) {
 async function refetchOne(book) {
   const pages = await db.collection('pages').find(
     { book_id: book.id },
-    { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1 } },
+    { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1 } },
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
@@ -346,8 +380,9 @@ async function refetchOne(book) {
   const info = await fetchIiifInfo(sourceUrl);
   if (!info) return { skipped: 'info-json-fail' };
   const cap = getIiifSizeCap(sourceUrl);
-  if (!cap || info.width / cap < MIN_UPGRADE_RATIO) {
-    return { skipped: `not-low-res (cap=${cap || 'full'}, master=${info.width})` };
+  const held = await heldMasterWidth(sample, cap);
+  if (!held || info.width / held < MIN_UPGRADE_RATIO) {
+    return { skipped: `not-low-res (held=${held || 'unknown'}, master=${info.width})` };
   }
 
   // ── Consistency guard: never overwrite an archive whose photo_original is a
@@ -372,7 +407,7 @@ async function refetchOne(book) {
     }
   }
 
-  console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${cap}→${info.width}px (${pages.length} pages)`);
+  console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${held}→${info.width}px (${pages.length} pages)`);
 
   let updated = 0, skipped = 0, failed = 0;
   await parallelMap(pages, async (page) => {
@@ -423,7 +458,10 @@ async function refetchOne(book) {
         updated_at: new Date(),
       } },
     );
-    await recordUpgradeEvent(book, { fromWidthCap: cap, toMasterWidth: info.width, pagesUpdated: updated });
+    // `held`, not `cap`: this value is also written as `ocr_input_width`, the
+    // width the existing OCR actually read. The URL cap is null on silent-cap
+    // hosts, which would record null provenance and an Infinity upgrade_ratio.
+    await recordUpgradeEvent(book, { fromWidthCap: held, toMasterWidth: info.width, pagesUpdated: updated });
   }
 
   return { updated, skipped, failed };
