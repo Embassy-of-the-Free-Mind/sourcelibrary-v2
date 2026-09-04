@@ -18,7 +18,7 @@ export const SUMMARY_PROMPT_VERSION = '2026-05-29-plain-encyclopedic';
 // Low temperature keeps the prose factual. At the default (~1.0) flash-lite
 // reaches for grand register ("seminal", "delineates the trajectory of...")
 // and slips into copywriter mode ("Readers will discover...").
-export const SUMMARY_GEN_CONFIG = { temperature: 0.2 };
+export const SUMMARY_GEN_CONFIG = { temperature: 0.2, thinkingConfig: { thinkingBudget: 0 } };
 
 /**
  * Build the synthesis prompt from already-assembled inputs.

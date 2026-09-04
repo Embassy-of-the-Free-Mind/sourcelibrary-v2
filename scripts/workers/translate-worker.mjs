@@ -25,7 +25,7 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash, randomBytes } from 'crypto';
 import { nanoid } from 'nanoid';
-import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import {
   getTranslateModelForBook as getModelForBook,
   sanitizeTranslationTags,
@@ -273,7 +273,7 @@ async function translatePage(db, page, book, prevTranslation) {
   const model = ai.getGenerativeModel({
     model: selectedModel,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { maxOutputTokens: maxOutputTokensFor([page]) },
+    generationConfig: { maxOutputTokens: maxOutputTokensFor([page]), thinkingConfig: { thinkingBudget: 0 } },
   });
   const start = Date.now();
   const result = await model.generateContent(prompt);
@@ -285,7 +285,7 @@ async function translatePage(db, page, book, prevTranslation) {
   return {
     text,
     inputTokens: usage.promptTokenCount || 0,
-    outputTokens: usage.candidatesTokenCount || 0,
+    outputTokens: outputTokensFrom(usage),
     durationMs,
     promptRef,
   };
@@ -349,7 +349,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const model = ai.getGenerativeModel({
     model: selectedModel,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { maxOutputTokens: maxOutputTokensFor(pages) },
+    generationConfig: { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 } },
   });
   const start = Date.now();
   const result = await model.generateContent(prompt);
@@ -400,7 +400,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
   return {
     translations, // Map<pageNumber, translatedText>
     inputTokens: usage.promptTokenCount || 0,
-    outputTokens: usage.candidatesTokenCount || 0,
+    outputTokens: outputTokensFrom(usage),
     durationMs,
     promptRef,
   };

@@ -61,13 +61,31 @@ export function calculateUsageCost(model, inputTokens, outputTokens, isBatch) {
  * $0.00. And in multi-page mode one response covers N pages but carries ONE
  * usageMetadata, so per-page attribution multiplied the same tokens by N.
  */
+/**
+ * Output tokens as GOOGLE BILLS THEM: visible text plus reasoning.
+ *
+ * Gemini 3.x charges `thoughtsTokenCount` at the output rate, and on models
+ * that think by default (measured 2026-09-04: `gemini-3-flash-preview` emits
+ * ~1.5 thought tokens per visible output token with no `thinkingConfig`) a
+ * meter reading `candidatesTokenCount` alone under-reports the bill without
+ * ever erroring. That is how August metered $499.74 against $8,389.32 billed
+ * (#4581). `src/lib/ai.ts` was fixed in #4591; the Hetzner `.mjs` stack — which
+ * runs nearly all current work — was not, until now.
+ *
+ * Use this at every site that records what a call cost. Fix the definition,
+ * not the call site.
+ */
+export function outputTokensFrom(usageMetadata) {
+  return (usageMetadata?.candidatesTokenCount || 0) + (usageMetadata?.thoughtsTokenCount || 0);
+}
+
 export function sumBatchResponseUsage(responses) {
   let input = 0;
   let output = 0;
   for (const r of responses || []) {
     const usage = r?.response?.usageMetadata;
     input += usage?.promptTokenCount || 0;
-    output += usage?.candidatesTokenCount || 0;
+    output += outputTokensFrom(usage);
   }
   return { inputTokens: input, outputTokens: output };
 }
