@@ -15,54 +15,22 @@
  * carried `malay`/`ms`/`msa`, which the canonical list excludes on purpose,
  * so Malay books were OCR'd on lite (wrong) and translated on flash (right).
  *
+ * So this module does not keep an allowlist of its own: it imports the
+ * canonical one from translate-core.mjs. OCR and translation are the same
+ * question — "can flash-lite read this script?" — and a second list is a
+ * second thing to forget. If OCR ever needs to diverge from translation,
+ * that is a deliberate change and the parity test below must say so.
+ *
  * Parity across every remaining implementation is pinned by
  * tests/unit/translate-core-parity.test.ts.
  */
 
-export const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
-export const OCR_MODEL_LITE = 'gemini-3.1-flash-lite';
+import { LATIN_SCRIPT_LANGUAGES, MODEL_FLASH, MODEL_LITE } from './translate-core.mjs';
 
-// Latin-script languages safe for flash-lite. Anything else (Tibetan, Arabic,
-// Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) routes to flash because
-// flash-lite hallucinates on low-resource scripts — it over-relies on
-// linguistic priors when visual decoding is hard, producing plausible-sounding
-// content that has nothing to do with the page. See src/app/blog/tibetan-ocr/.
-// Must stay in sync with LATIN_SCRIPT_LANGUAGES in src/lib/types/ai-models.ts.
-const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
-  'english', 'en', 'eng',
-  'latin', 'la', 'lat',
-  'french', 'fr', 'fra',
-  'italian', 'it', 'ita',
-  'spanish', 'es', 'spa',
-  'portuguese', 'pt', 'por',
-  'romanian', 'ro', 'ron', 'rum',
-  'catalan', 'ca', 'cat',
-  'german', 'de', 'deu', 'ger',
-  'dutch', 'nl', 'nld', 'dut',
-  'swedish', 'sv', 'swe',
-  'norwegian', 'no', 'nor',
-  'danish', 'da', 'dan',
-  'finnish', 'fi', 'fin',
-  'icelandic', 'is', 'isl', 'ice',
-  'welsh', 'cy', 'cym', 'wel',
-  'irish', 'ga', 'gle',
-  'polish', 'pl', 'pol',
-  'czech', 'cs', 'ces', 'cze',
-  'slovak', 'sk', 'slk', 'slo',
-  'slovenian', 'sl', 'slv',
-  'croatian', 'hr', 'hrv',
-  'hungarian', 'hu', 'hun',
-  'estonian', 'et', 'est',
-  'latvian', 'lv', 'lav',
-  'lithuanian', 'lt', 'lit',
-  'albanian', 'sq', 'sqi', 'alb',
-  'turkish', 'tr', 'tur',
-  'indonesian', 'id', 'ind',
-  'vietnamese', 'vi', 'vie',
-  'malay', 'ms', 'msa',
-  'tagalog', 'tl', 'tgl', 'filipino',
-  'swahili', 'sw', 'swa',
-]);
+// Re-exported under OCR-phase names so call sites read honestly. There is one
+// pair of models, not two — these ARE translate-core's constants.
+export const OCR_MODEL_FLASH = MODEL_FLASH;
+export const OCR_MODEL_LITE = MODEL_LITE;
 
 /**
  * THE model routing for OCR. Mirrors getModelForBook in
@@ -76,6 +44,6 @@ const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
 export function getOcrModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
   const lang = (book?.language || '').toLowerCase().trim();
-  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return OCR_MODEL_FLASH;
+  if (!lang || !LATIN_SCRIPT_LANGUAGES.has(lang)) return OCR_MODEL_FLASH;
   return OCR_MODEL_LITE;
 }
