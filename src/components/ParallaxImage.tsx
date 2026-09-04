@@ -19,10 +19,17 @@ export const framingEvent = (slot: string) => `framing:${slot}`;
  * to make the <img> targetable by the editor.
  */
 export default function ParallaxImage({
-  src, alt = '', className = '', strength = 0.12, loading = 'lazy',
+  src, srcMobile, mobileBreakpoint = 768,
+  alt = '', className = '', strength = 0.12, loading = 'lazy',
   oversize = 0.15, objectPosition = 'center', framing, frameSlot,
 }: {
   src: string;
+  /** Narrow-viewport variant, served below `mobileBreakpoint` via <picture>.
+   *  A phone hero is a portrait box, so a landscape source is cover-cropped to a
+   *  sliver of its width; pass a portrait sheet here instead. */
+  srcMobile?: string;
+  /** Width (px) below which `srcMobile` is used. */
+  mobileBreakpoint?: number;
   alt?: string;
   className?: string;
   strength?: number;
@@ -54,6 +61,12 @@ export default function ParallaxImage({
     const parent = el?.parentElement;
     if (!el || !parent) return;
     if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    // No parallax on phones: a ~470px hero shifts by a few pixels, which nobody
+    // sees, while the oversized box and the rAF cost are paid in full.
+    if (typeof window !== 'undefined' && window.matchMedia?.(`(max-width: ${mobileBreakpoint - 1}px)`).matches) {
+      el.style.transform = 'none';
+      return;
+    }
 
     let raf = 0;
     let visible = false;
@@ -80,22 +93,24 @@ export default function ParallaxImage({
       window.removeEventListener('resize', onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [strength]);
+  }, [strength, mobileBreakpoint]);
 
   const op = frame ? `${frame.x}% ${frame.y}%` : objectPosition;
   const scale = frame?.scale ?? 1;
 
   return (
     <div ref={wrapRef} className="absolute inset-x-0" style={{ willChange: 'transform', top: `${-oversize * 100}%`, height: `${100 + oversize * 200}%` }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        data-frame-slot={frameSlot}
-        src={src}
-        alt={alt}
-        loading={loading}
-        className={`w-full h-full object-cover ${className}`}
-        style={{ objectPosition: op, transformOrigin: op, transform: `scale(${scale})` }}
-      />
+      <picture className="block w-full h-full">
+        {srcMobile && <source media={`(max-width: ${mobileBreakpoint - 1}px)`} srcSet={srcMobile} />}
+        <img
+          data-frame-slot={frameSlot}
+          src={src}
+          alt={alt}
+          loading={loading}
+          className={`w-full h-full object-cover ${className}`}
+          style={{ objectPosition: op, transformOrigin: op, transform: `scale(${scale})` }}
+        />
+      </picture>
     </div>
   );
 }
