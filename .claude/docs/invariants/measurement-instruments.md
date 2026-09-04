@@ -488,3 +488,24 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## Two meters, two clocks: reconcile by MONTH, never by window (2026-09-04)
+
+Our `gemini_usage` rows and Google's Cloud Monitoring token telemetry measure the same
+spend on **different clocks**. A batch row is timestamped when the job is *collected*;
+Google counts the tokens when they were *generated*, hours earlier.
+
+Over a 3-hour window that made Google's total (6.52M output tokens) line up with our
+**realtime** rows (5.81M) while our batch rows (4.09M) looked uncounted — from which I
+concluded "the metric excludes batch." **That was wrong.** At month scale it resolves:
+September meter 78.0M vs Google 69.7M, i.e. batch *is* counted and the meter runs ~12%
+high on boundary effects (late-August batches collected in September).
+
+**Rule:** reconcile monthly (`scripts/audit/spend-reconcile.mjs --month=YYYY-MM`) and
+treat ±15% as clock noise, not signal. A short window cannot distinguish "this lane is
+unmetered" from "these two clocks disagree", and the first conclusion is much more
+alarming than the truth.
+
+Generalisation worth keeping: **when two instruments disagree, check whether they share
+a clock before concluding one is broken.** The disagreement was real and the mechanism
+was mundane; the short window manufactured the drama.
