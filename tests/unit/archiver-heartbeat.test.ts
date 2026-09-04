@@ -86,3 +86,74 @@ describe('long-running archivers generally', () => {
     ).toEqual([]);
   });
 });
+
+/**
+ * The archiver must schedule its work as a POOL, not as fixed slices.
+ *
+ * ## What broke
+ *
+ * Both loops in `archive-acquired.ts` were `for (i += N) { await
+ * Promise.all(slice) }`. A slice does not advance until its slowest member
+ * finishes, and the members that finished early sit idle in the meantime — so
+ * the run's effective width decays to one for as long as the slowest item
+ * takes.
+ *
+ * Measured on the pipeline box 2026-09-04 (#4588): a 50-minute run archived 53
+ * pages/min for four minutes, completed its one healthy book, and then held the
+ * remaining seven slots for 45 minutes on books whose hosts returned an error
+ * to every single request — at a flat 5 pages/min — while 7,559 books on a host
+ * serving 100% of requests in 0.3s waited unreached in the same 240-row batch.
+ * `books 0/240`, every hour, for days.
+ *
+ * ## What this test is, honestly
+ *
+ * A re-deletion guard, not a proof of behaviour. `archive-acquired.ts` opens a
+ * Mongo connection and an R2 client at import, so it cannot be exercised in a
+ * unit test; the real behavioural coverage for the pieces that COULD be
+ * extracted is in host-breaker.test.ts. What this pins is that the barrier does
+ * not come back — which is not hypothetical for this file: the heartbeat above
+ * was added and silently deleted the same day by a concurrent PR that predated
+ * it, and nothing failed (see the header). A grep-shaped test still runs in
+ * that PR's CI, which is the whole point.
+ */
+describe('archive-acquired schedules with a pool, not a barrier', () => {
+  const src = readFileSync(ARCHIVER, 'utf8');
+
+  it('has no fixed-slice Promise.all over a work list', () => {
+    // `for (...; i += N) await Promise.all(list.slice(i, i + N)...)` is the
+    // shape. Either loop coming back reintroduces the 45-minute stall.
+    expect(src, 'a sliced Promise.all is a barrier: the slice waits for its slowest member')
+      .not.toMatch(/await Promise\.all\(\s*\w+\.slice\(/);
+    expect(src, 'sliced chunk loop over pages or books').not.toMatch(/for \(let i = 0; i < \w+\.length; i \+= /);
+  });
+
+  it('drives both levels from a shared cursor, so a finished slot is refilled', () => {
+    // A pool is: a shared index, workers that loop until it runs out, and
+    // exactly `width` of them started at once.
+    expect(src, 'no book-level worker pool').toMatch(/const bookWorker = async/);
+    expect(src, 'workers must pull from a shared cursor, not own a fixed slice').toMatch(/todo\[nextBook\+\+\]/);
+    expect(src, 'no page-level worker pool').toMatch(/ps\[next\+\+\]/);
+    expect(src, 'pool width must come from the concurrency settings')
+      .toMatch(/Array\.from\(\{ length: Math\.min\(CONCURRENCY/);
+    expect(src).toMatch(/Array\.from\(\{ length: Math\.min\(PAGE_CONCURRENCY/);
+  });
+
+  it('will not send to a host its breaker has paused', () => {
+    // Without this the pool refills its slots and hands them straight back to
+    // the host that emptied them.
+    expect(src, 'the pool must consult the breaker before each page').toMatch(/breaker\.allow\(/);
+    expect(src, 'a success must reopen the host').toMatch(/breaker\.success\(/);
+    expect(src, 'the run must print per-host outcomes').toMatch(/breaker\.report\(\)/);
+  });
+
+  it('never drops a book from the queue that archived nothing', () => {
+    // `archived: true` on a book with 0 pages on R2 removes it from the work
+    // queue for good, with the truth demoted to a note nothing reads — a write
+    // that erases its own repair path (CLAUDE.md, Data Protection). It was
+    // unreachable only because the run was always killed at the 50-minute
+    // ceiling first; fixing the throughput is what makes it reachable.
+    expect(src, 'a partial book must be retried, not marked archived').toMatch(/archive_attempts/);
+    expect(src, 'giving up must be recorded as giving up, not as success').toMatch(/archive_stalled/);
+    expect(src, 'progress must be what decides whether to retry').toMatch(/r2 > have0/);
+  });
+});
