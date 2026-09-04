@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
 
 // ── Config ──
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -24,10 +25,6 @@ const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const IMAGE_CONCURRENCY = 20;
 const OCR_INLINE_BATCH_SIZE = 20;
 const OCR_FILE_BATCH_SIZE = 150;
-
-// Models
-const MODEL_FLASH = 'gemini-3-flash-preview';
-const MODEL_LITE = 'gemini-3.1-flash-lite';
 
 // ── CLI args ──
 const args = process.argv.slice(2);
@@ -49,36 +46,6 @@ if (GEMINI_BATCH_KEYS.length === 0) {
 
 function getGeminiApiKey(keyIndex = 0) {
   return GEMINI_BATCH_KEYS[keyIndex] || GEMINI_BATCH_KEYS[0];
-}
-
-// Latin-script languages safe for flash-lite. Non-Latin scripts get flash
-// because flash-lite hallucinates on low-resource scripts. See
-// src/lib/types/ai-models.ts for the canonical list.
-const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
-  'english', 'en', 'eng', 'latin', 'la', 'lat',
-  'french', 'fr', 'fra', 'italian', 'it', 'ita',
-  'spanish', 'es', 'spa', 'portuguese', 'pt', 'por',
-  'romanian', 'ro', 'ron', 'rum', 'catalan', 'ca', 'cat',
-  'german', 'de', 'deu', 'ger', 'dutch', 'nl', 'nld', 'dut',
-  'swedish', 'sv', 'swe', 'norwegian', 'no', 'nor',
-  'danish', 'da', 'dan', 'finnish', 'fi', 'fin',
-  'icelandic', 'is', 'isl', 'ice',
-  'welsh', 'cy', 'cym', 'wel', 'irish', 'ga', 'gle',
-  'polish', 'pl', 'pol', 'czech', 'cs', 'ces', 'cze',
-  'slovak', 'sk', 'slk', 'slo', 'slovenian', 'sl', 'slv',
-  'croatian', 'hr', 'hrv', 'hungarian', 'hu', 'hun',
-  'estonian', 'et', 'est', 'latvian', 'lv', 'lav',
-  'lithuanian', 'lt', 'lit', 'albanian', 'sq', 'sqi', 'alb',
-  'turkish', 'tr', 'tur', 'indonesian', 'id', 'ind',
-  'vietnamese', 'vi', 'vie', 'malay', 'ms', 'msa',
-  'tagalog', 'tl', 'tgl', 'filipino', 'swahili', 'sw', 'swa',
-]);
-
-function getOcrModelForBook(book) {
-  if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
-  const lang = (book?.language || '').toLowerCase().trim();
-  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return MODEL_FLASH;
-  return MODEL_LITE;
 }
 
 // ── Image helpers ──
