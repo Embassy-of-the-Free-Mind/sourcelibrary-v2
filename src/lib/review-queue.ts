@@ -30,6 +30,14 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'm', rating: 'microfilm',        label: '⚠ microfilm',        color: '#f59e0b', hint: 'Microfilm/microfiche, washed out, low contrast' },
     { key: 'j', rating: 'degraded',         label: '✗ degraded',         color: '#ef4444', hint: 'Blurry / cropped / corrupt — unusable' },
     { key: 'n', rating: 'blank',            label: '∅ blank',            color: '#6b7280', hint: 'Effectively blank page' },
+    // Added 2026-09-01 because volunteers kept typing it. Of the three
+    // qualitative notes this queue has ever received, all three said the same
+    // thing — "This is not a page" — because every button above assumes the
+    // image IS a page of the book and only asks how well it scanned. A rater
+    // looking at a colour target or a ruler had no honest answer, so the
+    // signal arrived as prose that nothing reads. If a queue's notes keep
+    // repeating one sentence, that sentence is a missing option.
+    { key: 'x', rating: 'not-a-page',       label: '⊘ not a page',       color: '#6366f1', hint: 'Colour chart, ruler, scanner furniture, box or shelf — not a page of the book' },
     { key: 'u', rating: 'unclear',          label: '? unclear',          color: '#9ca3af', hint: "Can't tell" },
   ],
   // UI copy, not book pages. The item is a translated interface string and the
