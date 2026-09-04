@@ -26,6 +26,7 @@ const QUEUE = 'page-check';
 const SITE = 'https://sourcelibrary.org';
 const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
+const argOf = (n, d) => args.find(a => a.startsWith(`--${n}=`))?.split('=')[1] ?? d;
 const fileIdx = args.indexOf('--file');
 const FILE = fileIdx >= 0 ? args[fileIdx + 1] : null;
 const named = args.find(a => !a.startsWith('--') && a !== FILE);
@@ -165,6 +166,104 @@ const CAMPAIGNS = {
           'If you read Greek, the useful extra is what the word should say. And please ' +
           'note whether the rest of the book does the same thing, or only this page.',
       }),
+  },
+
+  /**
+   * The one task no machine can do for us.
+   *
+   * Everything else in this file is a defect a script could in principle find:
+   * a marker in the text, a script that does not match the folio. Translation
+   * FIDELITY is different in kind. Asking a model whether a translation is
+   * faithful, when the same model family produced the transcription AND the
+   * translation, measures agreement with itself — it is circular, and it is
+   * exactly how 529 Tibetan books came to carry invented scripture that read
+   * fluently all the way through. A person who reads Latin is not replaceable
+   * here by a better prompt.
+   *
+   * SAMPLING. Stratified RANDOM within a language, never self-selected. This is
+   * the "panel" lane of .claude/docs/community-quality-review-design.md and its
+   * whole purpose is a number that generalises: "how good is our Latin on the
+   * books enthusiasts happen to like" is not a corpus statistic. Volunteers who
+   * want to pick their own text are welcome to — through the feedback widget on
+   * any page — but those answers belong to the other lane and must not be mixed
+   * into this pool.
+   *
+   * WHY ~35 PAGES PER LANGUAGE. Every corpus-wide quality claim we publish
+   * currently rests on 32 human-verified anchor pages, and the calibration
+   * scorecard refuses to fit a stratum below five. About 35 judgments buys ±10%
+   * for a language at 95% confidence; ~140 buys ±5%. Say the small number out
+   * loud — everyone assumes this work is unbounded, and it is the boundedness
+   * that makes people start.
+   *
+   *   node scripts/maintenance/build-page-check-candidates.mjs translations \
+   *     --language=Latin --n=40 [--apply]
+   */
+  translations: {
+    describe: 'Spot-check a translation against its original (--language=, --n=)',
+    async build() {
+      const language = argOf('language', 'Latin');
+      const n = parseInt(argOf('n', '40'), 10);
+      if (!process.env.MONGODB_URI) {
+        console.error('MONGODB_URI required to build this campaign');
+        process.exit(1);
+      }
+      const client = new MongoClient(process.env.MONGODB_URI);
+      await client.connect();
+      const db = client.db('bookstore');
+
+      // `language` is the EDITION's language — the script actually on the page,
+      // which is what a reader will be comparing against. See
+      // .claude/docs/invariants/language-fields.md.
+      const books = await db.collection('books')
+        .find(
+          { language, visible: true, pages_count: { $gt: 0 }, pages_ocr: { $gt: 0 } },
+          { projection: { id: 1, title: 1, slug: 1, published: 1, author: 1 } },
+        )
+        .limit(600)
+        .toArray();
+      console.warn(`  ${books.length} live ${language} books with transcription`);
+
+      const rows = [];
+      const shuffled = books.sort(() => Math.random() - 0.5);
+      for (const b of shuffled) {
+        if (rows.length >= n) break;
+        const bookId = b.id ?? String(b._id);
+        // One page per book: pages within a book are one observation, not many
+        // (memory: lesson_sample_one_page_per_book). A book that reads well on
+        // page 40 tells you little extra about page 41.
+        const [page] = await db.collection('pages')
+          .aggregate([
+            {
+              $match: {
+                book_id: bookId,
+                'ocr.data': { $type: 'string', $ne: '' },
+                'translation.data': { $type: 'string', $ne: '' },
+              },
+            },
+            { $sample: { size: 1 } },
+            { $project: { page_number: 1 } },
+          ])
+          .toArray();
+        if (!page) continue;
+        rows.push({
+          item_id: `trans:${language}:${page._id}`,
+          url: `${SITE}/book/${b.slug ?? bookId}/page/${page._id}`,
+          label: 'the page',
+          campaign: `Translation spot-check — ${language}`,
+          prompt:
+            `You read ${language}. This page shows the original beside our English. ` +
+            'Does the English say what the original says? We are not asking whether it ' +
+            'reads nicely — we are asking whether it is TRUE to the page: dropped ' +
+            'clauses, invented sentences, a negation lost, a name or number changed. ' +
+            'If it is sound, say so and press "looks right" — knowing which pages are ' +
+            'fine is exactly as valuable to us as knowing which are wrong. If something ' +
+            'is off, quote the phrase and what it should say.' +
+            (b.title ? `\n\nThis is “${b.title}”${b.published ? `, ${b.published}` : ''}.` : ''),
+        });
+      }
+      await client.close();
+      return rows;
+    },
   },
 };
 
