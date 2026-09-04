@@ -381,13 +381,21 @@ export default async function SlimeMouldsCollectionPage() {
       {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
       <ConditionalSiteHeader variant="dark" />
       {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden min-h-[60vh] md:min-h-[75vh] flex items-center" style={{ background: '#14100c' }}>
+      <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end md:items-center" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         {/* The collage is filtered to actual slime mould plates; the route falls
             back to the collection's full plate set while too few are extracted. */}
-        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage?match=${encodeURIComponent(MYXO_DESC_RX)}`} loading="eager" strength={0.08} oversize={0.1} />
-        {/* Mobile: vertical tint — strongest at the bottom (text), light at top. */}
-        <div className="absolute inset-0 md:hidden bg-gradient-to-t from-dark/85 via-dark/45 to-dark/5" />
+        <ParallaxImage
+          src={`/api/collections/${SLUG}/hero-collage?match=${encodeURIComponent(MYXO_DESC_RX)}`}
+          srcMobile={`/api/collections/${SLUG}/hero-collage?shape=portrait&match=${encodeURIComponent(MYXO_DESC_RX)}`}
+          loading="eager" strength={0.08} oversize={0.1}
+        />
+        {/* Mobile: the shared scrim's bottom-weighted variant, so the phone hero
+            is darkened to the same 72% base as the desktop one instead of the 45%
+            it used to hand-roll. */}
+        <div className="absolute inset-0 md:hidden">
+          <HeroScrim variant="bottom" />
+        </div>
         {/* Desktop: the book hero's tint, so the two read as one system —
             see src/components/HeroScrim.tsx. The previous stack was a
             left-weighted gradient plus a bottom fade with no flat base scrim,
@@ -412,7 +420,13 @@ export default async function SlimeMouldsCollectionPage() {
             )}
           </nav>
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Slime Moulds</h1>
-          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">One cell, big enough to see, that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. These are the books that first drew, named and puzzled over it, from a seventeenth-century herbal to the first monograph of 1875.</p>
+          {/* Phones get the first sentence only. The full deck ran six lines and
+              205px, 40% of the hero, and the herbal-to-monograph clause is
+              repeated in the introduction directly below. */}
+          <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">
+            One cell, big enough to see, that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads.
+            <span className="hidden sm:inline"> These are the books that first drew, named and puzzled over it, from a seventeenth-century herbal to the first monograph of 1875.</span>
+          </p>
           {/* Stats set exactly as the book hero's status row (size, weight,
               colours blue / green / gold in that order), no boxes. Same hex
               values as book/[id] page.tsx. Order: works, years, then first

@@ -14,25 +14,39 @@ export const revalidate = 86400;
 // tiles so the dark ground shows through as a grid, and the same #14100c the
 // book hero uses, so the two heroes read as one system rather than two.
 const GAP = 6;
-const COLS = 7, COLW = 200, H = 900;
-const W = COLS * COLW + (COLS + 1) * GAP;
+const COLW = 200;
+// Two shapes. The landscape default fills a wide desktop hero. `?shape=portrait`
+// exists because a phone hero is a PORTRAIT box: object-cover on the 1448x900
+// landscape sheet scaled it up and showed only ~40% of its width (under three of
+// seven columns), so plates read as slabs of texture rather than specimens. The
+// portrait sheet is narrow and tall, so a phone sees every column at full width.
+const SHAPES = {
+  landscape: { cols: 7, h: 900 },
+  portrait: { cols: 3, h: 1100 },
+} as const;
+type ShapeName = keyof typeof SHAPES;
+const canvasWidth = (cols: number) => cols * COLW + (cols + 1) * GAP;
 const BG = '#14100c';
 const FETCH_LIMIT = 48;
 // Below this many matches a filtered collage looks broken, so we fall back.
 const MIN_COLLAGE = 14;
 
-async function solid(maxAge: number): Promise<Response> {
-  const out = await sharp({ create: { width: W, height: H, channels: 3, background: BG } }).webp({ quality: 60 }).toBuffer();
+async function solid(maxAge: number, cols: number = SHAPES.landscape.cols, h: number = SHAPES.landscape.h): Promise<Response> {
+  const out = await sharp({ create: { width: canvasWidth(cols), height: h, channels: 3, background: BG } }).webp({ quality: 60 }).toBuffer();
   return new Response(new Uint8Array(out), { headers: { 'Content-Type': 'image/webp', 'Cache-Control': `public, max-age=${maxAge}` } });
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const shapeParam = req.nextUrl.searchParams.get('shape');
+  const shape = SHAPES[(shapeParam as ShapeName) in SHAPES ? (shapeParam as ShapeName) : 'landscape'];
+  const { cols: COLS, h: H } = shape;
+  const W = canvasWidth(COLS);
   try {
     const db = await getReadDb();
     const bookDocs = await db.collection('books').find({ collections: id, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 }).toArray();
     const bookIds = bookDocs.map((d) => d.id as string);
-    if (!bookIds.length) return solid(3600);
+    if (!bookIds.length) return solid(3600, COLS, H);
 
     // Optional ?match=<regex> narrows the collage to plates whose description
     // matches — a collection about one subject inside broader books (slime
@@ -59,7 +73,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         .sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
     }
     const urls = imgs.map((g) => (g.thumbnail_url || g.extracted_url || g.image_url) as string | undefined).filter((u): u is string => Boolean(u));
-    if (!urls.length) return solid(3600);
+    if (!urls.length) return solid(3600, COLS, H);
 
     // Fetch + resize to column width in parallel (natural height preserved).
     const resized = (await Promise.all(urls.map(async (u) => {
@@ -70,7 +84,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         return { data, height: info.height };
       } catch { return null; }
     }))).filter((r) => r !== null);
-    if (!resized.length) return solid(3600);
+    if (!resized.length) return solid(3600, COLS, H);
 
     // Masonry pack: each image goes to the currently-shortest column; the bottom
     // overflowing tile in a column is cropped so nothing exceeds the canvas.
@@ -87,11 +101,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       tiles.push({ input, left: GAP + c * (COLW + GAP), top: colH[c] });
       colH[c] += r.height + GAP;
     }
-    if (!tiles.length) return solid(3600);
+    if (!tiles.length) return solid(3600, COLS, H);
 
     const out = await sharp({ create: { width: W, height: H, channels: 3, background: BG } }).composite(tiles).webp({ quality: 68 }).toBuffer();
     return new Response(new Uint8Array(out), { headers: { 'Content-Type': 'image/webp', 'Cache-Control': 'public, max-age=31536000, immutable' } });
   } catch {
-    return solid(600);
+    return solid(600, COLS, H);
   }
 }
