@@ -14,11 +14,27 @@
  *                           prop=imageinfo&iiurlwidth=1500&iiurlparam=page<N>-1500px
  * level 4 = validated (two independent humans), level 3 = proofread (one).
  *
- * CAVEAT, and it is the whole reason this is a SEPARATE tier from the pinned
- * diplomatic set: Wikisource house style modernises long-s and expands ligatures.
- * These pages are WORD-faithful, not GLYPH-diplomatic — scoring Fraktur against them
- * inflates CER, and they cannot test long-s preservation at all. Rows are tagged
- * `fidelity: 'word'` so no caller mistakes them for diplomatic references.
+ * CAVEAT 1 — fidelity. Wikisource house style usually modernises long-s and expands
+ * ligatures, so many pages are WORD-faithful, not GLYPH-diplomatic. Detected per page
+ * (`fidelity`), because a substantial minority DO preserve ſ. Measured: la ~22% glyph,
+ * de 0% — so German Fraktur glyph tests still need DTA original-orthography TEI.
+ *
+ * CAVEAT 2 — THESE PAGES ARE NOT A RANDOM SAMPLE OF HISTORICAL PRINT, and every
+ * accuracy computed over them is conditioned on the following, all of which select
+ * toward EASIER pages. Quote them with the number.
+ *   a) Proofread-status selection: only pages a human volunteer chose to transcribe.
+ *      Volunteers favour legible scans and works they care about; badly-scanned,
+ *      damaged or dull pages are under-represented — exactly the OCR-hard tail.
+ *   b) --min-chars (default 600) drops sparse pages: title pages, plates, blanks,
+ *      colophons, tables. Those are a large share of real OCR failures, so excluding
+ *      them flatters every arm and may not flatter them equally (layout-heavy pages
+ *      are where VLMs beat line recognisers).
+ *   c) Middle-of-book window (35-75%): avoids front matter, also avoids indices.
+ *   d) Year filter needs a machine-readable year in the index template.
+ *   e) One page per work (--per-work), which is the standing rule and is a FEATURE:
+ *      pages within a book are one observation, not many.
+ * Candidate order is shuffled (seeded) so the set is at least not the alphabetical
+ * prefix of the wiki — see the sampling note further down.
  *
  *   node scripts/eval/harvest-wikisource-gt.mjs --wiki=la --from=1500 --to=1800 --max=40
  *   node scripts/eval/harvest-wikisource-gt.mjs --wiki=de --level=4 --max=25 --out=<dir>
@@ -158,7 +174,24 @@ for (let i = 0; i < indexTitles.length && candidates.length < MAX_PAGES * 6; i +
   }
   await sleep(150);
 }
-console.log(`  ${candidates.length} in the ${YEAR_FROM}-${YEAR_TO} window\n`);
+console.log(`  ${candidates.length} in the ${YEAR_FROM}-${YEAR_TO} window`);
+
+// SAMPLING — read this before quoting any number computed over this set.
+//
+// `list=allpages` returns titles ALPHABETICALLY, and the harvest loop below stops at
+// --max. The first run therefore sampled the alphabetical prefix of each wiki: the 45
+// Latin pages covered initial letters A-H and *nothing* from I-Z. That is not a sample
+// of Wikisource, it is a sample of its first eighth, and any per-language accuracy
+// computed over it inherits whatever those particular works happen to be.
+// Shuffle first, deterministically (seeded), so the set is reproducible AND unbiased
+// by title.
+let seed = parseInt(argOf('seed', '20260904'), 10);
+const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+for (let i = candidates.length - 1; i > 0; i--) {
+  const j = Math.floor(rnd() * (i + 1));
+  [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+}
+console.log(`  shuffled (seed ${argOf('seed', '20260904')})\n`);
 
 // 3. For each candidate work, take up to MAX_PER_WORK pages at level >= MIN_LEVEL.
 const harvested = [];
