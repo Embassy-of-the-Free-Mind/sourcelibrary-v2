@@ -275,11 +275,19 @@ export default async function MycologyCollectionPage() {
       {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
       <ConditionalSiteHeader variant="dark" />
       {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden min-h-[66vh] flex items-end" style={{ background: '#14100c' }}>
+      <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
-        <ParallaxImage src={`/api/collections/${SLUG}/hero-collage`} loading="eager" strength={0.08} oversize={0.1} />
-        {/* Mobile: vertical tint — strongest at the bottom (text), light at top. */}
-        <div className="absolute inset-0 md:hidden bg-gradient-to-t from-dark/85 via-dark/45 to-dark/5" />
+        <ParallaxImage
+          src={`/api/collections/${SLUG}/hero-collage`}
+          srcMobile={`/api/collections/${SLUG}/hero-collage?shape=portrait`}
+          loading="eager" strength={0.08} oversize={0.1}
+        />
+        {/* Mobile: the shared scrim's bottom-weighted variant, so the phone hero
+            is darkened to the same 72% base as the desktop one instead of the 45%
+            it used to hand-roll. */}
+        <div className="absolute inset-0 md:hidden">
+          <HeroScrim variant="bottom" />
+        </div>
         {/* Desktop: the book hero's tint, so the two read as one system —
             see src/components/HeroScrim.tsx. The previous stack was a
             left-weighted gradient plus a bottom fade with no flat base scrim,
@@ -289,31 +297,35 @@ export default async function MycologyCollectionPage() {
           <HeroScrim />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-12 pb-10">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/60 mb-6">
-            <Link href="/collections" className="hover:text-white/90 transition-colors">Collections</Link>
+        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 pt-12 pb-10" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
+          {/* Breadcrumb as the book hero's rust author-eyebrow, matching
+              /collections/slime-moulds. The two were one click apart and used two
+              different systems (white/60 sentence case here, rust caps there). */}
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-3 md:mb-4" style={{ color: '#d98a72' }}>
+            <Link href="/collections" className="hover:opacity-80 transition-opacity">Collections</Link>
             {parent && (
               <>
-                <span className="text-white/30">/</span>
-                <Link href={parentHref} className="hover:text-white/90 transition-colors">{parent.name}</Link>
+                <span style={{ opacity: 0.5 }}>/</span>
+                <Link href={parentHref} className="hover:opacity-80 transition-opacity">{parent.name}</Link>
               </>
             )}
           </nav>
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Fungi &amp; Mycology</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Fungi built the soil that built our world. These are the books that first studied them.</p>
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Stat chips borrow the book hero's colour language so the two read as
-                one system: soft blue for scope, green for language coverage, gold
-                for the first-translation claim. Same tones as book/[id] page.tsx. */}
-            <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e8e2d6', borderColor: 'rgba(232,226,214,0.3)' }}>{total.toLocaleString('en-US')} works</span>
-            {ftCount > 0 && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e0b46a', borderColor: 'rgba(224,180,106,0.42)' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
-            )}
+          {/* Stats set as the book hero's status row (size, weight, colours blue /
+              green / gold in that order), no boxes — identical to
+              /collections/slime-moulds. The bordered chips this replaces fought a
+              busy collage and wrapped to two ragged rows at 360px. */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
+            <span style={{ color: '#8fbfe6' }}>{total.toLocaleString('en-US')} works</span>
             {dateRange && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#8fbfe6', borderColor: 'rgba(143,191,230,0.4)' }}>{dateRange.min} – {dateRange.max}</span>
+              <span style={{ color: '#86c98f' }}>{dateRange.min} – {dateRange.max}</span>
+            )}
+            {ftCount > 0 && (
+              <span style={{ color: '#e0b46a' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
             )}
             {languages.length > 0 && (
-              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#86c98f', borderColor: 'rgba(134,201,143,0.4)' }}>{languages.join(' · ')}</span>
+              <span className="hidden sm:inline" style={{ color: '#e8e2d6' }}>{languages.join(' · ')}</span>
             )}
           </div>
         </div>
