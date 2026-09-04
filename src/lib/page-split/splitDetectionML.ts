@@ -84,7 +84,7 @@ export async function detectSplitWithGemini(
   imageUrl: string,
   modelId: string =  process.env.GEMINI_MODEL || 'gemini-3-flash-preview'
 ): Promise<GeminiSplitResult> {
-  const genAI = getGeminiClient();
+  const genAI = getGeminiClient({ endpoint: 'split-detection', type: 'other' });
   const model = genAI.getGenerativeModel({ model: modelId });
 
   const prompt = `You are an expert at analyzing scanned book images.

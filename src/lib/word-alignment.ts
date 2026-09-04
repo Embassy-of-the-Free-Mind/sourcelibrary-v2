@@ -23,10 +23,11 @@
 
 import { createHash } from 'crypto';
 import type { Db } from 'mongodb';
-import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+import { SchemaType } from '@google/generative-ai';
 import { stripEditorialWrappers } from './strip-editorial-wrappers';
 import { normalizeForSearch, locateSpan } from './align-text';
 import { logGeminiCall } from './gemini-logger';
+import { getGeminiClient } from './gemini-client';
 
 export const WORD_ALIGNMENT_VERSION = 1;
 const ALIGNMENT_MODEL = 'gemini-3.1-flash-lite';
@@ -169,7 +170,7 @@ async function generateRomanSpans(
 ): Promise<Array<{ i: number; rom: string }>> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('No GEMINI_API_KEY configured');
-  const genAI = new GoogleGenerativeAI(apiKey);
+  const genAI = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' });
   const model = genAI.getGenerativeModel({
     model: ALIGNMENT_MODEL,
     generationConfig: {
@@ -225,7 +226,7 @@ async function generatePairs(
 ): Promise<Array<{ src: string; en: string }>> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('No GEMINI_API_KEY configured');
-  const genAI = new GoogleGenerativeAI(apiKey);
+  const genAI = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' });
   const model = genAI.getGenerativeModel({
     model: ALIGNMENT_MODEL,
     generationConfig: {

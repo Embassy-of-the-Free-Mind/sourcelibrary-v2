@@ -127,7 +127,7 @@ export const POST = withAuth(async (request, session, context) => {
 
     const stitchPrompt = await getStitchPrompt(db);
 
-    const genAI = getGeminiClient();
+    const genAI = getGeminiClient({ selfMetered: true, reason: 'this route logs its own row after the call' });
     const model = genAI.getGenerativeModel({ model: modelId });
 
     const results: StitchResult[] = [];

@@ -346,7 +346,7 @@ export async function generateTweetVariations(
  */
 async function generateWithGemini(prompt: string): Promise<{ research?: string; variations: TweetVariation[] }> {
   const apiKey = getNextApiKey();
-  const genAI = getGeminiClient();
+  const genAI = getGeminiClient({ endpoint: 'tweet-generator', type: 'other' });
   const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
   try {

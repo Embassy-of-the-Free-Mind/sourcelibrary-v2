@@ -46,6 +46,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { normalizeLongS, isCorrectionAcceptable, detectLongSArtefacts } from '../lib/early-modern-text.mjs';
+import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 
 const argv = process.argv.slice(2);
 const flag = k => argv.includes(k);
@@ -100,7 +101,7 @@ if (ONE_BOOK) {
 if (!books.length) { console.log('no matching books'); await client.close(); process.exit(0); }
 console.log(`${APPLY ? 'APPLY' : 'DRY-RUN'} | model ${MODEL} | ${books.length} book(s)\n`);
 
-async function correctPage(page) {
+async function correctPage(page, bookId) {
   const url = getPageSource(page);
   if (!url) return { skip: 'no image' };
   const resp = await fetch(url, { signal: AbortSignal.timeout(60000) });
@@ -116,6 +117,21 @@ async function correctPage(page) {
     ]}],
     config: { temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } },
   });
+
+  // An unattended worker that writes no usage row is money the dial cannot see
+  // and no report can attribute (#4599). Logged before the acceptance check —
+  // a rejected correction was still billed.
+  await logUsage({
+    type: 'ocr',
+    mode: 'realtime',
+    model: MODEL,
+    book_id: bookId,
+    page_ids: [String(page.id ?? page._id)],
+    input_tokens: r.usageMetadata?.promptTokenCount || 0,
+    output_tokens: outputTokensFrom(r.usageMetadata),
+    status: 'success',
+    endpoint: 'worker/ocr-correct-grounded',
+  }, db);
 
   const finish = r.candidates?.[0]?.finishReason;
   let text = (r.text || '').trim();
@@ -143,7 +159,7 @@ for (const book of books) {
 
   for (let i = 0; i < pages.length; i += CONCURRENCY) {
     const chunk = pages.slice(i, i + CONCURRENCY);
-    const results = await Promise.allSettled(chunk.map(p => correctPage(p)));
+    const results = await Promise.allSettled(chunk.map(p => correctPage(p, bid)));
     for (let j = 0; j < chunk.length; j++) {
       const p = chunk[j], res = results[j];
       totals.pages++;

@@ -7,6 +7,10 @@
  *   secret-lover run -- node scripts/collect-batch-results.mjs [--limit N] [--concurrency N]
  */
 
+// usage-ok: reads batch job status and downloads finished result files. It
+// generates nothing, so there is no spend here to record; the batch's own
+// spend is closed out by completeBatchUsage() when the results land (#3452).
+
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';

@@ -40,6 +40,10 @@
  * estimate needs. Ask before a bulk run.
  */
 
+// usage-ok: embedding spend is recorded one level down, in
+// scripts/lib/embed-book-page-texts.mjs via logEmbeddingUsage() (#4162) — one
+// row per book. This file-level audit cannot see through the import.
+
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
 import { embeddableEditionFilter, isNativeEditionLanguage } from '../lib/native-edition-language.mjs';

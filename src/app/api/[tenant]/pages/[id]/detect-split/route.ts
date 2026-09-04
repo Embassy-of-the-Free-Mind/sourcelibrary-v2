@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server';
 import { withAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
-import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+import { SchemaType } from '@google/generative-ai';
 import { images } from '@/lib/api-client';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { getGeminiClient } from '@/lib/gemini-client';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/[tenant]/pages/[id]/detect-split', type: 'other' }));
 
 export const POST = withAuth(async (request, _session, context) => {
   try {
@@ -35,7 +40,7 @@ export const POST = withAuth(async (request, _session, context) => {
     const base64Image = typeof imageData === 'string' ? imageData : imageData.base64;
 
     // Run Gemini detection (using fastest model)
-    const model = genAI.getGenerativeModel({
+    const model = genAI().getGenerativeModel({
       model: 'gemini-3-flash-preview',
       generationConfig: {
         responseMimeType: 'application/json',
