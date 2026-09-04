@@ -75,6 +75,54 @@
       "page_number": 128,
       "_note": "The set's only German ANTIQUA exemplar (19th-c physics was Antiqua; everything else surveyed in our German holdings is Fraktur). Pre-reform orthography (dass/Grösse) on both sides. Guard-verified 2026-07-19 at 0.000, pipeline char accuracy 100%.",
       "reference": "Unter dieser Annahme müssen wir aber auch Uebereinstimmung mit der Erfahrung erhalten, wenn wir die Limite berechnen, der sich die Gesetze der Erscheinungen bei stets ins Unendliche wachsender Anzahl und abnehmender Grösse der Moleküle nähern. Bei Berechnung der letzteren Limite haben wir aber in der That wieder zwei Grössen, die unabhängig von einander beliebig klein gemacht werden können: die Grösse der Volumelemente, und die Dimensionen der Moleküle, und wir können bei jeder gegebenen Kleinheit der ersteren letztere noch so klein wählen, dass jedes Volumelement noch sehr viele Moleküle enthält, deren Eigenschaften in gegebenen engen Grenzen eingeschlossen sind."
+    },
+    {
+      "work": "Weigel, Gnothi seauton, Ander Theil: Astrologia Theologizata (1618) — Vorrede, man rules the stars",
+      "slug": "de-weigel-gnothi2-p40",
+      "title_rx": "gnothi seauton|astrologia theologizata",
+      "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography layer)",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/weigel_gnothi02_1618?p=40",
+      "edition": "Neustadt [i.e. Halle]: Johann Knuber, 1618 (Ander Theil; DTA copy: HAB Wolfenbüttel)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold 68679f27fc518f6dbf334eb6 'Ander Theil Gnothi Seauton. Nosce teipsum. Astrologia theologizata', publisher 'Johan Knuber', place \"`Newenstatt'|[Halle]\" 1618 — identical imprint to DTA. pc=129, ocr=1 (needs OCR before pinning). DTA scan 40 = printed p.33; running header 'Erkenne dich ſelber/' excluded. Early-1600s Fraktur, 152 years earlier than our earliest existing DTA reference — closes the stated gap. Contains inline Greek γνῶθι σεαυτόν.",
+      "reference": "Hette keinen freyen willen/ vnd Gott hette jhm nicht Gebot noch gewalt gegeben als einem Weyſen vber das Geſtirn zuherſchen/ Das iſt/ Gott hette vns nicht den Baum des Lebens mitten in den Garten gepflantzet/ Er hette vns Chriſtum ſeinen Sohn nicht geſand/ noch jhn fuͤr vns ſterben laſſen. Wir ſind ja darzu getaufft das wir Chriſten ſein ſollen zu herrſchen vber das Geſtirne/ vnd demſelben zugebieten. So iſt der Menſche mehr den das gantze Firmament, Vnd warumb ſolte ein Chriſte oder auch ein Naturalis dem Firmament oder auch allen Sternen nicht gebieten koͤnnen oder ſollen? Jſt es doch nur ein Spiegel/ præludium, fuͤrlauff aller Menſchlichen Handierungen/ Leben vnd weſen/ wie ein gemaltes Bilde an der Wand/ oder ein Spiegel nicht zwinget den Lebendigen Mann der darein ſiehet: Alſo wenig mag auch das Geſtirne den Menſchen noͤtigen/ zwingen zuſtelen/ Kriegen/ Freſſen/ Sauffen/ Spielen oder andere Buͤberey zutreiben. Der Menſche thut alles mit vernunfft vnd freyen willen/ was das Geſtirne vorſpielet. Diß Buch Aſtrologia Theologizata wird darumb geſchrieben/ das bewieſen werden ſoll: Wie der Menſche aus dem Geſtirne ſey/ vnd doch vber das Geſtirne herrſche: Wie dem Menſchen alle Kůnſte/ Handwercke/ Sprachen/ Faculteten/ exceptâ Theologiâ & Iuſtitiâ, Handierung/ gewerbe/ Empter/ Staͤnde/ etc. Wachſen/ wie dem Leibe das Brodt aus der Erden/ der Wein auß dem Reben/ vnd doch alle ſolche gewerbe fahren laſſen můſſe nach der Theologi, nach dem Creutz Baume des Lebens mitten im Garten."
+    },
+    {
+      "work": "Glauber, Furni Novi Philosophici, Erster Theil (1646) — De Usu Spiritus Salis",
+      "slug": "de-glauber-furni1-p30",
+      "title_rx": "furni novi philosophici",
+      "source": "Deutsches Textarchiv, page-aligned TEI (original-orthography layer) of the 1646 Amsterdam printing",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/glauber_furni01_1646?p=30",
+      "edition": "Amsterdam: Fabel, 1646 (DTA); OUR copy is a 1649 printing of the same Theil — CROSS-PRINTING",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "CROSS-PRINTING, medium confidence: we hold 6a26c3beaad44c98627cb64a 'Furni Novi Philosophici Oder Beschreibung einer New-erfundenen Distillir-Kunst' 1649, pc=64 ocr=25 — same title/Theil as DTA glauber_furni01_1646 but a 1649 Amsterdam reprint; wording expected near-identical, page-setting may differ (like the Hegel-1832 cross-edition row in german.json). Alchemical-technical Fraktur with Latin antiqua inserts (Spiritus Salis, Hydropicis) — classic mixed-type difficulty.",
+      "reference": "Wil es derhalben nur bey dieſer Erinnerung bleiben laſſen/ vnd anfangen zu beſchreiben/ worzu dieſer Spiritus diene vnd gebraucht werden koͤnne/ ſo wol zur Alchymia als zur Medicin, vnd andern Mechaniſchen Kuͤnſten. De Uſu Spiritus Salis. WAs anbelangt den Nutzen dieſes Spiritus Salis, vnd worzu er koͤnne gebraucht werden/ meritirt er ſehr wol/ daß ſein Lob nicht verſchwiegen bleibe. Dieweiln aber faſt alle Chymiſche Buͤcher davon melden/ wil ichs darbey beruhen laſſen/ vnd den Leſer an ſolche Buͤcher/ die weitlaͤufftig davon tractiren/ gewieſen haben/ außgenommen von etwas wenigs/ davon andere nichts gedacht oder gewuſt/ ſchreiben. Es wird von allen Chymicis dafuͤr gehalten/ daß der Spiritus Salis per ſe ein herrliche Medicin, gantz ſicher inn- vnd euſſerlich zu gebrauchen ſey: daß er den Durſt in hitzigen Kranckheiten leſche/ den Schleim im Magen ledig macht vnd verzehre/ einen guten Appetit zum Eſſen befoͤrdere/ ſey auch gut den Hydropicis, Calculoſis & Podagricis, vnd dergleichen in vielen andern Kranckheiten dienſtlich."
+    },
+    {
+      "work": "Zesen, Adriatische Rosemund (1645) — end of Book I, Markhold's sleepless night",
+      "slug": "de-zesen-rosemund-p100",
+      "title_rx": "adriatische rosemund",
+      "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography layer)",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/zesen_rosemund_1645?p=100",
+      "edition": "Amsterdam: Louis Elzevier, 1645 (only 17th-c edition)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold 69b302af3613a84e6806788a 'Adriatische Rosemund' 1645, publisher 'Elzevir, Louis', pc=400 ocr=399 (ned-kbn-all-00004211-001). DTA scan 100 = printed p.84. Zesen's idiosyncratic reformed orthography (dahrnahch, wuͤl, ſchlahffen) plus r-rotunda ꝛ ('verdꝛuͤhsliche') — no model can spell this from memory; excellent anti-memorization property. Running header 'Der Adriatiſchen Roſemund' excluded.",
+      "reference": "Jn etlichen tagen dahrnahch nahm ich den laͤtſten abſchihd von der ganzen geſelſchaft/ und truhg der Adelmund di ſachche traͤulich auf/ daß ſi ſelbige/ weil ſi den anfang ſo gluͤklich gemacht haͤtte/ auch fol-aͤnd zur gluͤklichen aͤndſchaft bringen moͤchte. Jch wuͤl nicht ſagen/ wi di tauſend-ſchoͤhne Roſemund (von welcher ich noch/ ſo lang’ ich bei den Maſinnen verzohg/ etliche belihbte ſchreiben erhalten habe/ bei meinem abzuge ſo haͤftig geweinet hat/ und wi hoͤhchlich ich ſi bejammern muͤſſen: dan di zeit gebuͤtet es/ und di beſchaffenheit unſerer irdiſchen leiber fortert uns zur nacht-ruhe. Nahch ſolcher Erzaͤhlung entkleideten ſich diſe beide vertraueten Fraͤunde/ und begaben ſich/ nahchdaͤhm ſi einander guhte nacht gewuͤndſchet hatten/ nahch bette. Aber es wahr umſonſt/ daß Markhold zu ſchlahffen gedachte; es wahr nuhr vergaͤbens/ daß er an einem ſolchen orte ſeine ruhe zu ſuchen geſuͤnnet wahr/ da er nuhr ſeinen ſuͤnnen verhaͤngen muſte/ ſelbige vihlmehr zu verſtoͤhren. Dan er lahg di ganze nacht in tauſendterlei gedanken/ und wůnſchete mit ſo haͤftigem verlangen nahch der fraͤudigen ankunft des tages. di einbildung wahr di einzige/ di ſeine ſůnnen bemeiſterte/ di/ an ſtat daß ſi ihm di nacht verkürzern ſolte/ ſi vihlmehr verlaͤngerte/ und ſeine ſchmaͤrzen von blik zu blik vergroͤhſſerte; dehr-geſtalt/ daß er in tauſend aͤngſten lahg/ und ihm nichts anders einbildete/ als daß diſe verdꝛuͤhsliche nacht nimmer-mehr ein aͤnde gewuͤnnen wuͤrde."
+    },
+    {
+      "work": "Kunckel, Ars Vitraria Experimentalis (1679) — Anmerkungen on Merret, Kalchsalz and glass",
+      "slug": "de-kunckel-glasmacher-p80",
+      "title_rx": "ars vitraria|glasmacher-kunst|glasmacherkunst",
+      "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography layer)",
+      "source_url": "https://www.deutschestextarchiv.de/book/view/kunckel_glasmacher_1679?p=80",
+      "edition": "Frankfurt & Leipzig: in Verlegung des Autoris, 1679 (1st edition)",
+      "non_canonical": true,
+      "memorization_risk": "low",
+      "_note": "SAME EDITION, high confidence: we hold 6a42736128e9db2e39c159f4 'Ars Vitraria Experimentalis, Oder Vollkommene Glasmacher-Kunst' 1679, publisher 'Franckfurt und Leipzig : In Verlegung des Autoris', pc=602 ocr=25 (ia johanniskunckeli00kunc). DTA scan 80 = printed p.54. Technical glass-chemistry Fraktur with antiqua inserts (Fritta, Autor, Cryſtall) and marginal chapter heads ('Vom 7. Capitel.') — note marginalia when pinning. Running header 'J Kunckels Anmerckungen uͤber das 1. B.' excluded.",
+      "reference": "Vom 7. Capitel. VOn dieſem iſt wahr/ was der gelehrte Heer D. Merret ſetzet/ daß das Glas/ zu welchem das Kalchſaltz koͤmmt/ allezeit auff Milchfarb falle. Derohalben ob es gleich durchſichtig und helle ſiehet/ ſo iſt es doch zum rechten Cryſtall-Glas nichts nuͤtze: Denn wegen der ſubtilen Erde/ die das Glas von dem Kalch behaͤlt/ wird es blaß oder bleich auff Milch-Art/ die man nicht ſo eigentlich beſchreiben kan. Wenn man auch den Kalch nur unter die Aſche miſchet/ und lauget ſie zugleich aus/ ſo wird es ſich doch ſchon auff dergleichen Weiſe erzeigen/ welches ich ſelber erfahren. Von dem rechten Saltz/ welches aus dem Kalch gemacht und gebracht kan werden/ waͤre mehr zu ſchreibẽ; gehoͤrt aber hieher nicht. Das Glas/ da Kalch zum Saltz gekommen/ bringt auch vor andern Riſſe/ und tauret nicht ſo lang. Vom 8. Capitel. OB ich gleich vorher ſchon erwehnet/ was Fritta ſey; ſo will ich doch/ was in einem ieden Capitel tractiret wird/ aufs neue wiederholen/ auf daß ſich unſere teutſche Glasmacher darnach deſto beſſer richten koͤnnen: Die bekuͤmmern ſich nicht darumb/ wo das Wort herkomme/ ſondern laſſen es den Gelehrten."
     }
   ]
 }
