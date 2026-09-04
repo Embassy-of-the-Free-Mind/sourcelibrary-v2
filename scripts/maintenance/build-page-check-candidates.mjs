@@ -214,18 +214,36 @@ const CAMPAIGNS = {
       // `language` is the EDITION's language — the script actually on the page,
       // which is what a reader will be comparing against. See
       // .claude/docs/invariants/language-fields.md.
+      // RANDOM AT BOTH LEVELS, and it has to be — the whole claim this sample
+      // supports is "this generalises to our Latin", which a convenience sample
+      // cannot support.
+      //
+      // The first version of this got it wrong twice, in ways that look random
+      // and are not. `.find().limit(600)` returns the first 600 documents the
+      // query plan yields — natural order, which here correlates with insertion
+      // order and therefore with import wave, source archive and collection. A
+      // whole language's sample could have come from one acquisition batch.
+      // And `arr.sort(() => Math.random() - 0.5)` is the classic non-shuffle:
+      // an inconsistent comparator does not produce a uniform permutation, and
+      // it biases toward leaving elements near where they started.
+      //
+      // `$sample` draws uniformly at the database, over the WHOLE matching set.
+      const matchLive = { language, visible: true, pages_count: { $gt: 0 }, pages_ocr: { $gt: 0 } };
+      const population = await db.collection('books').countDocuments(matchLive);
       const books = await db.collection('books')
-        .find(
-          { language, visible: true, pages_count: { $gt: 0 }, pages_ocr: { $gt: 0 } },
-          { projection: { id: 1, title: 1, slug: 1, published: 1, author: 1 } },
-        )
-        .limit(600)
+        .aggregate([
+          { $match: matchLive },
+          // Over-draw: a book can fail the page filter below and be skipped.
+          { $sample: { size: Math.min(population, n * 4) } },
+          { $project: { id: 1, title: 1, slug: 1, published: 1, author: 1 } },
+        ])
         .toArray();
-      console.warn(`  ${books.length} live ${language} books with transcription`);
+      console.warn(
+        `  ${population} live ${language} books with transcription; drew ${books.length} at random`,
+      );
 
       const rows = [];
-      const shuffled = books.sort(() => Math.random() - 0.5);
-      for (const b of shuffled) {
+      for (const b of books) {
         if (rows.length >= n) break;
         const bookId = b.id ?? String(b._id);
         // One page per book: pages within a book are one observation, not many
