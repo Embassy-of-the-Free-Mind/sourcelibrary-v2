@@ -18,6 +18,7 @@
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON } from '../lib/model-pricing.mjs';
 
 // --- Config ---
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -335,8 +336,8 @@ async function run() {
   console.log(`Books skipped: ${booksSkipped}`);
   console.log(`Pages submitted: ${totalQueued.toLocaleString()}`);
   if (totalSkipped > 0) console.log(`Pages skipped (active job): ${totalSkipped.toLocaleString()}`);
-  const costPerPage = 0.00079; // batch API = 50% of $0.00158
-  console.log(`Est. cost @ $${costPerPage}/page (batch): $${(totalQueued * costPerPage).toFixed(2)}`);
+  const costPerPage = PAGE_RATE_USD.ocrBatch;
+  console.log(`Est. cost @ $${costPerPage}/page (batch, measured ${PAGE_RATES_MEASURED_ON}): $${(totalQueued * costPerPage).toFixed(2)}`);
   if (!DRY_RUN) {
     console.log(`\nResults will be collected by /api/cron/process-batches (every 2h)`);
   }
