@@ -43,6 +43,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { cleanPageText, pageQuality } from './lib/wikisource-text.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
 const WIKI = argOf('wiki', 'la');
@@ -113,20 +115,6 @@ function parseIndexFields(text) {
     language: field(FIELD_ALIASES.language),
     title: field(FIELD_ALIASES.title).replace(/^\[\[|\]\]$/g, ''),
   };
-}
-
-const pageQuality = (text) => { const m = text.match(/<pagequality\s+level="(\d)"/i); return m ? parseInt(m[1], 10) : null; };
-
-/** Strip proofread scaffolding to leave the transcribed text. */
-function cleanPageText(text) {
-  let t = text.replace(/<noinclude>[\s\S]*?<\/noinclude>/gi, ' ');
-  t = t.replace(/<\/?includeonly>/gi, '').replace(/<\/?noinclude>/gi, '');
-  t = t.replace(/\{\{[^{}]*\}\}/g, ' ');                    // simple templates (running headers, rules)
-  t = t.replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, '$1');   // links → label
-  t = t.replace(/<ref[^>]*>[\s\S]*?<\/ref>/gi, ' ');
-  t = t.replace(/<[^>]+>/g, ' ');
-  t = t.replace(/'''?/g, '');
-  return t.replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 console.log(`Harvesting ${WIKI}.wikisource — years ${YEAR_FROM}-${YEAR_TO}, level>=${MIN_LEVEL}, max ${MAX_PAGES} pages\n`);
