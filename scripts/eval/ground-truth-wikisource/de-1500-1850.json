@@ -1,0 +1,10 @@
+{
+  "harvested_at": "2026-09-04T16:42:01.120Z",
+  "wiki": "de",
+  "year_from": 1500,
+  "year_to": 1850,
+  "min_quality_level": 3,
+  "fidelity": "word",
+  "caveat": "Wikisource modernises long-s and expands ligatures; word-faithful, not glyph-diplomatic. Do not use to test glyph preservation.",
+  "pages": []
+}
