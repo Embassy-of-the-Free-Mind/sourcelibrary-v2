@@ -78,6 +78,57 @@ export const SUPERSEDED_PRICING_BEFORE_2026_09_03 = {
   'gemini-3.6-flash': { input: 1.50, output: 7.50 },
 };
 
+/**
+ * PER-PAGE rates — what a page of work actually COSTS US, as opposed to the
+ * per-token vendor prices above.
+ *
+ * These are OBSERVATIONS, not prices. They are the ratio of `gemini_usage`
+ * cost to pages over a recent window, so they move whenever prompt length,
+ * model routing, or page density moves. They exist because four separate
+ * scripts had each hardcoded their own copy of a 2026-07-16 measurement
+ * ($0.00079/page) and were still printing it in September, understating every
+ * estimate by ~2.8x. A stale constant is invisible; that is the whole failure.
+ *
+ * Two rules, both learned the hard way:
+ *   1. NEVER print a rate without its measurement date. Use `describePageRate`.
+ *      The old constant survived 7 weeks because the output said "$3.18" and
+ *      never said "at a rate measured in July".
+ *   2. RE-MEASURE before quoting these anywhere that matters. One query:
+ *
+ *        select type, mode, model, sum(cost_usd), sum(page_count)
+ *        from gemini_usage where timestamp >= <recent> group by 1,2,3
+ *
+ * Measured 2026-09-04 over rows since 2026-09-03 (i.e. priced with the
+ * corrected constants from #4601 — do not mix with older rows):
+ *   translation realtime lite  $0.00241/pg  (9,971 pages, n=2,737)
+ *   ocr batch lite             $0.00222/pg  (8,656 pages, n=352)
+ *   extract_images flash       $0.00285/pg  (1,622 pages, n=30)
+ *   index/summary/chapters     ~$0.0001/pg combined — negligible
+ *
+ * DELIBERATELY ABSENT: batch OCR on flash-preview. It measures $0.00106/pg,
+ * which is below the lite rate and cannot be right — the flash batch rows are
+ * contaminated by uncollected $0 placeholders (#4567). An obviously-wrong
+ * number is safer missing than published.
+ */
+export const PAGE_RATES_MEASURED_ON = '2026-09-04';
+
+export const PAGE_RATE_USD = {
+  ocrBatch: 0.00222,
+  translationRealtime: 0.00241,
+  imageExtraction: 0.00285,
+  enrichmentTail: 0.0001,
+};
+
+/** A rate never travels without its vintage. */
+export function describePageRate(rate) {
+  return `$${rate}/page (measured ${PAGE_RATES_MEASURED_ON})`;
+}
+
+/** Estimate for a mixed OCR + translation remainder, the common case. */
+export function estimatePagesCost({ ocrPages = 0, translationPages = 0 }) {
+  return ocrPages * PAGE_RATE_USD.ocrBatch + translationPages * PAGE_RATE_USD.translationRealtime;
+}
+
 export function priceFor(model) {
   return MODEL_PRICING[model] || DEFAULT_PRICING;
 }

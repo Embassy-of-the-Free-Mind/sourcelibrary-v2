@@ -54,6 +54,7 @@ import fs from 'fs';
 import path from 'path';
 import { agreementPrimary, scriptClassOf } from './lib/metrics.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON } from '../lib/model-pricing.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('--')).map(a => {
   const m = a.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [a, true];
@@ -62,7 +63,7 @@ const N = parseInt(args.n || '500');              // total across BOTH arms
 const APPLY = !!args.apply;
 const CONC = parseInt(args.concurrency || '4');
 const MODEL = args.model || 'gemini-3.1-flash-lite';
-const COST_PER_PAGE = 0.00079;
+const COST_PER_PAGE = PAGE_RATE_USD.ocrBatch;
 const OUT = args.out || `scripts/eval/results/reocr-pairing-${new Date().toISOString().slice(0, 10)}.json`;
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY_2 || process.env.GEMINI_API_KEY;
@@ -160,7 +161,7 @@ async function main() {
   console.log(`  control languages: ${dist(arms.control)}`);
   const targets = [...arms.suspect, ...arms.control];
   console.log(`arms: suspect=${arms.suspect.length}  control=${arms.control.length}  total=${targets.length}`);
-  console.log(`ESTIMATED COST: ${targets.length} pages x $${COST_PER_PAGE} = $${(targets.length * COST_PER_PAGE).toFixed(2)}`);
+  console.log(`ESTIMATED COST: ${targets.length} pages x $${COST_PER_PAGE} = $${(targets.length * COST_PER_PAGE).toFixed(2)}  (rate measured ${PAGE_RATES_MEASURED_ON})`);
   if (!APPLY) {
     console.log('\nDRY RUN — nothing spent, nothing called. Re-run with --apply to execute.');
     await client.close();

@@ -68,6 +68,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { translatablePageFilter, isTranslatablePage } from '../lib/translate-core.mjs';
+import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON } from '../lib/model-pricing.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => {
@@ -83,7 +84,8 @@ const SAMPLE = parseInt(getArg('sample', '80'), 10);
 const JSON_OUT = getArg('json', null);
 
 /** Measured 2026-08-31 over 55 pages of realtime translation. */
-const COST_PER_PAGE = 0.00079;
+// Translation runs on the realtime lane, not batch — price it as such.
+const COST_PER_PAGE = PAGE_RATE_USD.translationRealtime;
 
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
@@ -269,7 +271,7 @@ for (const c of candidates.slice(0, LIMIT)) {
 
 console.log(`\n--- Summary ---`);
 console.log(`Books: ${candidates.length}  (${requested.length} with an open reader request)`);
-console.log(`Pages to finish: ${totalPages}  ≈ $${(totalPages * COST_PER_PAGE).toFixed(2)} at $${COST_PER_PAGE}/page`);
+console.log(`Pages to finish: ${totalPages}  ≈ $${(totalPages * COST_PER_PAGE).toFixed(2)} at $${COST_PER_PAGE}/page (measured ${PAGE_RATES_MEASURED_ON})`);
 console.log(`Counter drift among verified books: ${drifted.length} of ${candidates.length}, worst ${maxDrift} page(s)`);
 if (candidates.length > LIMIT) console.log(`(showing ${LIMIT} of ${candidates.length} — raise --limit or use --json)`);
 
