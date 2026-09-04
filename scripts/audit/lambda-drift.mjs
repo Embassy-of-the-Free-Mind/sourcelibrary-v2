@@ -91,7 +91,13 @@ try {
         '--output', 'json']));
       lastModified = cfg.mod;
       const zipPath = join(tmp, `${w.entry}.zip`);
-      sh('curl', ['-sS', '-o', zipPath, cfg.loc]);
+      // The deployed zips are ~2.3 MB and the presigned host is occasionally slow. Both layers
+      // need headroom: curl retries transient failures, and execFileSync gets its own longer
+      // deadline — the generic 120s killed a real run with `spawnSync curl ETIMEDOUT`, which
+      // reports as COULD NOT CHECK and teaches people to ignore the tool.
+      sh('curl', ['-sS', '--fail', '--connect-timeout', '20', '--max-time', '180',
+        '--retry', '3', '--retry-delay', '2', '--retry-all-errors', '-o', zipPath, cfg.loc],
+        { timeout: 600000 });
       sh('unzip', ['-oq', zipPath, 'index.js', '-d', join(tmp, w.entry)]);
       deployedSha = createHash('sha256').update(readFileSync(join(tmp, w.entry, 'index.js'))).digest('hex');
     } catch (e) {
