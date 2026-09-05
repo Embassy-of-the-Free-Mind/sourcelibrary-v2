@@ -270,7 +270,44 @@ export function upgradeToFullRes(url) {
     // this reason — 0 of 28 sampled books could be archived, while the STORED
     // url returned 200 the moment it was requested unmodified. MDZ escaped only
     // because its rule happens to require a comma (`/full/2000,/`).
-    if (/\/full\/full\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) return url;
+    // IIIF Image API 3.0 REMOVED the size keyword `full`; its spelling is `max`.
+    // A v3 service answers `/full/full/` with `400 Bad Request — Invalid size`,
+    // in ~0.2s, which reads in our logs as an ordinary page failure rather than
+    // as "this URL cannot ever work". Measured on Hetzner 2026-09-04 against
+    // iiif.archive.org (`/image/iiif/3/`), 4 pages of one IA item:
+    //
+    //   /full/full/  ->  400 in 0.5s   (or 504 after 60s on a cold decode)
+    //   /full/max/   ->  200 in 2.9s, 1.3–1.8 MB
+    //
+    // Every unarchived Internet Archive page in the corpus is on this endpoint,
+    // so this single segment is why the archiver's IA books never advanced and
+    // why ~58% of its page attempts failed.
+    //
+    // Keyed on the version declared in the PATH (`/iiif/3/`), not on a hostname,
+    // because that is what the service itself is asserting. dl.ndl.go.jp is
+    // excluded explicitly: it serves a v3-shaped path but 500s on `max` and
+    // wants `full` (the rule further down), and two rules must not fight over
+    // the same URL.
+    const isIiifV3 = /\/iiif\/3\//.test(url) && !url.includes('dl.ndl.go.jp');
+    if (isIiifV3 && /\/full\/full\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) {
+      return url.replace(/\/full\/full\/(\d+\/[a-z]+\.)/i, '/full/max/$1');
+    }
+    // The size keyword this URL's API version understands. Used by the generic
+    // rules below so an upgrade never hands a v3 service a v2-only keyword.
+    const FULL_SIZE = isIiifV3 ? 'max' : 'full';
+    // NDL Japan returns HTTP 500 on /full/max/ (IIIF v3 syntax their server
+    // doesn't honor); /full/full/ returns the native-resolution image. Many
+    // imported NDL URLs use /full/max/ from a v3-style manifest crawl.
+    //
+    // This runs BEFORE the "already at a full-size keyword" early return below,
+    // because that return now recognises `max` as well as `full` and would
+    // otherwise swallow this rule — leaving NDL pinned to the spelling that
+    // 500s. Caught by the negative-control case in
+    // tests/unit/iiif-upgrade-full-res.test.ts, not by reading the diff.
+    if (url.includes('dl.ndl.go.jp') && url.includes('/full/max/')) {
+      return url.replace('/full/max/', '/full/full/');
+    }
+    if (/\/full\/(?:full|max)\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) return url;
     // Harvard MPS rate-limits /full/full/ much more aggressively than /full/2000,/
     // — at 1 req/s the full-res endpoint still 429s out (5 cold-start fails =
     // circuit breaker, 0 successes). The existing 2000px variant in the photo
@@ -279,7 +316,7 @@ export function upgradeToFullRes(url) {
       return url;
     }
     if (url.includes('archive.org') && url.includes('/full/pct:')) {
-      return url.replace(/\/full\/pct:\d+\//, '/full/full/');
+      return url.replace(/\/full\/pct:\d+\//, `/full/${FULL_SIZE}/`);
     }
     if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) {
       return url.replace(/\/full\/\d+,\//, '/full/full/');
@@ -294,14 +331,8 @@ export function upgradeToFullRes(url) {
     if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\/\d+\/[a-z]+\./i)) {
       return url.replace(/\/full\/\d+,?\d*\/(\d+\/[a-z]+\.)/i, '/full/full/$1');
     }
-    // NDL Japan returns HTTP 500 on /full/max/ (IIIF v3 syntax their server
-    // doesn't honor); /full/full/ returns the native-resolution image. Many
-    // imported NDL URLs use /full/max/ from a v3-style manifest crawl.
-    if (url.includes('dl.ndl.go.jp') && url.includes('/full/max/')) {
-      return url.replace('/full/max/', '/full/full/');
-    }
     if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
-      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
+      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, `/full/${FULL_SIZE}/`);
     }
   } catch {}
   return url;

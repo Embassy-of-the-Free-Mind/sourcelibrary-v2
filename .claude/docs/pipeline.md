@@ -207,7 +207,7 @@ The Hetzner `pipeline-orchestrator.mjs` (~2,900 lines) runs all phases. Individu
 | Phase | Transition | Notes |
 |-------|-----------|-------|
 | Phase 0: Auto-enroll | new → `queued` | Books imported within 14 days without `pipeline_auto`. |
-| Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner copies images to Cloudflare R2. 24h timeout — advances anyway since OCR works on original IIIF URLs. |
+| Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner copies images to Cloudflare R2. **There is NO timeout — a book advances only when every page is covered.** |
 | Phase 1.25: BPH split | `archive_complete` (BPH only) | Detects two-page spreads, crops into left/right pages. |
 | Phase 1.5: Preview OCR | `archive_complete` → (no status change) | First 25 pages sent to Lambda via SQS for fast preview. Triggers preview translation on completion. |
 | Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Gemini Batch API (Hetzner direct). See "OCR Routing" below. |
