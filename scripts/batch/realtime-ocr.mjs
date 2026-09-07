@@ -27,6 +27,7 @@
  *   --limit=N          Max pages to process (default: 2000)
  *   --concurrency=N    Parallel API calls (default: 30)
  *   --dry-run          Show what would be processed, don't call Gemini
+ *   --reason="..."     Why this run is being done by hand (recorded on the run, #4336)
  */
 
 import fs from 'node:fs';
@@ -34,6 +35,7 @@ import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -58,6 +60,8 @@ const SINGLE_BOOK = getArg('book-id');
 const OFFSET = parseInt(getArg('offset') || '0', 10);
 const PIPELINE_STATUS = getArg('status');
 const PROVIDER = getArg('provider');
+const INITIATED_BY = 'script:realtime-ocr';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // Targeting mode
 const MODE_NO_OCR = hasFlag('no-ocr');
@@ -685,6 +689,8 @@ async function main() {
       },
       book_ids: uniqueBookIds,
       progress: { completed: 0, failed: 0, skipped: 0, total: pages.length },
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date(),
     });

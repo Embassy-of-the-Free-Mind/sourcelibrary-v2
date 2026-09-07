@@ -10,11 +10,13 @@
  * Options:
  *   --dry-run    Show what would be queued without queuing
  *   --limit=N    Max books to queue (default: 519)
+ *   --reason="..." Why this batch is being run by hand (recorded on each job, #4336)
  */
 
 import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 const TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -23,6 +25,8 @@ const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '519');
+const INITIATED_BY = 'script:queue-translations-to-80pct';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 async function main() {
   if (!MONGODB_URI) throw new Error('MONGODB_URI not set');
@@ -118,7 +122,8 @@ async function main() {
         model: 'gemini-3-flash-preview',
         language: book.language || 'auto-detect'
       },
-      initiated_by: 'script:queue-translations-to-80pct',
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date()
     });
