@@ -74,7 +74,7 @@ export const visionContent: VisionContent = {
     linkLabel: 'read it at the source',
   },
   bodyBeforeImage1: [
-    'That is what Source Library does: it goes back to the source and lets anyone — a reader, a scholar, an AI — do the same. Today it holds more than **40,000 books** in over fifty languages. More than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time.',
+    'That is what Source Library does: it goes back to the source and lets anyone — a reader, a scholar, an AI — do the same. Today it holds more than **40,000 books** in over fifty languages. More than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. Counting originals and translations, the library already holds more words than English Wikipedia.',
     'Every translation sits beside the scanned original, so any line can be checked, quoted and cited. It is free, Creative Commons share-alike, and open by API and MCP, so the AI you use can reach for the actual page.',
   ],
   image1: {
@@ -88,7 +88,7 @@ export const visionContent: VisionContent = {
   ],
   buildHeading: 'What we need to finish',
   bodyBuild: [
-    'Here is the situation. We hold **72,000 more books — sixteen million pages — that no one can read yet.** They are scanned and catalogued and waiting for the pipeline. Translating a page costs about two cents; translating all of them costs about $360,000. That is the single largest thing your money can do here, and it is entirely mechanical: fund it, and the books get read.',
+    'Here is the situation. We hold **72,000 more books — sixteen million pages — that no one can read yet.** They are scanned and catalogued and waiting for the pipeline. Translating a page costs about two cents; translating all of them costs about $360,000. That is the single largest thing your money can do here, and it is entirely mechanical: fund it, and the books get read. Finished, the library will hold about four times the words of English Wikipedia. Wikipedia is what we know; this is the shelf it was written from.',
     'Around that core sit the things a library needs in order to be trusted and to last: scholars checking the translations against the originals, a scanner at the Embassy for the books that exist nowhere else, the hosting that keeps every page online, and a small team to run it. Everything so far has been done by a handful of people, mostly unpaid. The budget below is what it takes to do the next five years properly. It comes to **$2 million**, about $400,000 a year, and the first year needs **$520,000**.',
   ],
   montage: {
