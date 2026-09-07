@@ -109,6 +109,7 @@ export function isTranslatablePageForCount(page) {
   if (page?.translation?.recitation_blocked === true) return false;
   if (page?.translation?.safety_blocked === true) return false;
   if (page?.ocr?.recitation_blocked === true) return false;
+  if (page?.ocr?.fail_blocked === true) return false;
   return true;
 }
 
@@ -121,6 +122,7 @@ const TRANSLATABLE_COND = {
     { $ne: ['$translation.recitation_blocked', true] },
     { $ne: ['$translation.safety_blocked', true] },
     { $ne: ['$ocr.recitation_blocked', true] },
+    { $ne: ['$ocr.fail_blocked', true] },
   ],
 };
 

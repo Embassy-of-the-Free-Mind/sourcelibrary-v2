@@ -323,6 +323,20 @@ async function processOneJob(db, job) {
     const failReasons = {};
     const noteFail = (reason) => { failReasons[reason] = (failReasons[reason] || 0) + 1; };
 
+    // Pages that failed for a reason OTHER than recitation, and the reason.
+    //
+    // RECITATION has had a give-up counter since #2065; nothing else did. A page
+    // that fails deterministically for any other reason was therefore re-selected
+    // every cycle forever: page 620 of the Tabiena Summa (book 6a3a3b98862ce9a5b4d759b3)
+    // was submitted as its own single-page job 197 times between 2026-09-04 and
+    // 2026-09-06, every one of them landing on the `> HALLUCINATION_LIMIT` branch
+    // below, which discarded the response and stamped nothing. `fail_reasons: {}`
+    // on 197 batch_jobs rows is the fingerprint — failCount incremented, no reason
+    // recorded, no page state changed, so the next pass could not tell it had ever
+    // been tried. Only pages we can name are stamped: in the multi-page branch one
+    // response covers N pages and a failure there has no single pageId to blame.
+    const failedPageIds = new Map(); // pageId -> reason
+
     // Job totals come from the RESPONSES, not from the pages we end up saving
     // (#3452) — Gemini bills every response, including the ones we discard.
     const { inputTokens: totalInputTokens, outputTokens: totalOutputTokens } =
@@ -369,9 +383,15 @@ async function processOneJob(db, job) {
           if (job.type === 'ocr') recitationPageIds.push(pageId); // Stamp page-level tracking
           continue;
         }
-        if (r.error) { failCount++; noteFail(`error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`); continue; }
+        if (r.error) {
+          const reason = `error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`;
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
+        }
         const text = candidate?.content?.parts?.[0]?.text;
-        if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
+        if (!text) {
+          const reason = `no-text:${candidate?.finishReason || 'no-candidate'}`;
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
+        }
         pageResults.push({ pageId, text, usage: r.response?.usageMetadata });
       }
     }
@@ -512,7 +532,15 @@ async function processOneJob(db, job) {
         protectedCount++;
         continue;
       }
-      if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
+      // A runaway generation — the model looped instead of reading. Deterministic
+      // for a given page+model, so without the stamp below this page comes straight
+      // back on the next pass (see failedPageIds above).
+      if (text.length > HALLUCINATION_LIMIT) {
+        failCount++;
+        noteFail('over-hallucination-limit');
+        failedPageIds.set(pageId, 'over-hallucination-limit');
+        continue;
+      }
 
       // Per-page stamp only — the job totals are summed per response above.
       const inputTokens = usage?.promptTokenCount || 0;
@@ -571,7 +599,18 @@ async function processOneJob(db, job) {
         if (columns) setObj.columns = columns;
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 
-        bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
+        // A page that reads clears its failure history: the counter below must
+        // measure CONSECUTIVE failures, or an intermittent page accumulates
+        // strikes over months and eventually blocks itself for no reason.
+        bulkOps.push({
+          updateOne: {
+            filter: { id: pageId },
+            update: {
+              $set: setObj,
+              $unset: { 'ocr.fail_count': '', 'ocr.fail_reason': '', 'ocr.fail_blocked': '', 'ocr.fail_blocked_at': '' },
+            },
+          },
+        });
       } else if (job.type === 'image_extraction') {
         // Parse JSON array of detected images from Gemini response
         const parsed = parseImageExtractionResponse(text);
@@ -720,6 +759,47 @@ async function processOneJob(db, job) {
         console.log(`  Gallery: ${galleryDocs.length} images written for book ${job.book_id}`);
       } catch (galleryErr) {
         console.error(`  Gallery write error: ${galleryErr.message}`);
+      }
+    }
+
+    // ── Per-page give-up for every failure class that is not RECITATION ──
+    // Same shape as the recitation stamp above (count, timestamp, blocked flag at
+    // N=3) and read by the same page-selection queries. Kept as its own field
+    // rather than folded into recitation_count because the two mean different
+    // things to a human reading the page: one is a copyright refusal, the other is
+    // "we tried three times and could not get a usable read".
+    if (failedPageIds.size > 0 && job.type === 'ocr') {
+      const OCR_FAIL_BLOCK_THRESHOLD = 3;
+      const failNow = new Date();
+      const failOps = [...failedPageIds].map(([pageId, reason]) => ({
+        updateOne: {
+          filter: { id: pageId },
+          update: [
+            { $set: { ocr: { $cond: { if: { $eq: ['$ocr', null] }, then: {}, else: '$ocr' } } } },
+            {
+              $set: {
+                'ocr.fail_count': { $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] },
+                'ocr.fail_reason': reason,
+                'ocr.fail_blocked': {
+                  $gte: [{ $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] }, OCR_FAIL_BLOCK_THRESHOLD],
+                },
+                'ocr.fail_blocked_at': {
+                  $cond: {
+                    if: { $gte: [{ $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] }, OCR_FAIL_BLOCK_THRESHOLD] },
+                    then: failNow,
+                    else: { $ifNull: ['$ocr.fail_blocked_at', null] },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      }));
+      try {
+        await db.collection('pages').bulkWrite(failOps, { ordered: false });
+        console.log(`  Stamped OCR failure tracking on ${failOps.length} page(s) (book: ${job.book_id})`);
+      } catch (failErr) {
+        console.error(`  Failed to stamp OCR failure tracking: ${failErr.message}`);
       }
     }
 

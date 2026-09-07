@@ -1302,6 +1302,7 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
       book_id: book.id,
       page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
       'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
+      'ocr.fail_blocked': { $ne: true }, // …and after N=3 failures of any other kind (#4674)
       $or: [
         { 'ocr.data': { $exists: false } },
         { 'ocr.data': null },
@@ -1674,6 +1675,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
         book_id: book.id,
         page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
         'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
+        'ocr.fail_blocked': { $ne: true }, // …and after N=3 failures of any other kind (#4674)
         $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
         $and: [{
           $or: [
@@ -4169,9 +4171,20 @@ Rules:
         }
 
         if (isComplete) {
-          // Check for remaining un-OCR'd pages
+          // Check for remaining un-OCR'd pages.
+          //
+          // Permanently-blocked pages are NOT remaining work — they are work that
+          // will never succeed, and counting them here is what kept books one page
+          // short of done circling forever. The selection query above already
+          // refuses to submit them, so a book whose only gap is blocked pages was
+          // resubmitting nothing and being told it was incomplete for it. Excluding
+          // them lets such a book reach `ocr_complete` and go on to translation:
+          // the Tabiena Summa sat at 1002/1003 pages with 0 translated for a month
+          // on the strength of one unreadable folio.
           const remainingOcr = await db.collection('pages').countDocuments({
             book_id: book.id,
+            'ocr.recitation_blocked': { $ne: true },
+            'ocr.fail_blocked': { $ne: true },
             $or: [
               { photo: { $exists: true, $ne: null } },
               { photo_original: { $exists: true, $ne: null } },
