@@ -30,7 +30,27 @@ cd "$(dirname "$0")/../.." || exit 1
 set -a; source .env.production.local; set +a
 
 BATCH="${ARCHIVE_BATCH:-240}"
-CONCURRENCY="${ARCHIVE_CONCURRENCY:-8}"
+# Concurrency is a MEMORY budget here, not a throughput dial.
+#
+# JP2 pages are decoded by `opj_decompress`, an external binary the Node heap
+# limits cannot touch. Measured on the box 2026-08-31: ~1.0 GB RSS each
+# (total-vm 1.48 GB). At the previous default of 8 that is ~8 GB of decoders
+# against 15 GB of RAM shared with the rest of the pipeline — and on
+# 2026-08-31 06:41 it went global-OOM. The kernel killed `opj_decompress`
+# repeatedly (687 OOM events in syslog) and took **cron.service itself** down
+# with it, so EVERY scheduled job on the box stopped for 25 hours: archiving,
+# the hourly auto-pull, health snapshots, the lot. Nothing alarmed, because a
+# dead scheduler writes no logs to notice.
+#
+# It also explains the archiver's own numbers: the run before the outage logged
+# 284 pages ok against 379 "failed" at 0.10 pages/s. Those failures were mostly
+# our own decoders being OOM-killed, not sources refusing us — so a lower
+# concurrency should RAISE net throughput, not lower it.
+#
+# 4 keeps peak decoder memory near 4 GB with headroom for node + the workers
+# that share this machine. Raise it only against measured `free -g` headroom
+# under a real run, never on assumption.
+CONCURRENCY="${ARCHIVE_CONCURRENCY:-4}"
 
 # Ceiling below the hourly interval, so a stuck run is always dead before the
 # next one is due and can never chain into a multi-hour silent outage. The

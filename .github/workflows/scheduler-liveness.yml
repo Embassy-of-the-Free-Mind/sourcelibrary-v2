@@ -1,0 +1,72 @@
+name: Scheduler liveness
+
+# Is anything still running on the Hetzner box?
+#
+# On 2026-08-31 06:41 `cron.service` there was OOM-killed and stayed dead for
+# 25 hours. Archiving stopped, the hourly auto-pull that deploys `main`
+# stopped, health snapshots stopped — and NOTHING reported it, because every
+# check that would have was itself a cron on that box. The archive log sat at
+# 0 bytes, which reads exactly like "nothing to do" (#4528).
+#
+# This workflow exists to have a failure domain DISJOINT from the thing it
+# watches. It deliberately does not run on Hetzner (dies with it) and not on
+# Vercel (our other single point of failure). GitHub Actions is neither.
+#
+# It alarms to ntfy.sh/sourcelibrary-uptime — the same topic the other
+# watchers use, so there is one place to look, not four.
+
+on:
+  schedule:
+    # Every two hours. The outage it exists for lasted 25; a two-hour beat
+    # keeps the worst case short without alarming on an ordinary slow hour.
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+    inputs:
+      scheduler_hours:
+        description: 'Alert if no cron of any kind has reported in this many hours'
+        default: '3'
+      archive_hours:
+        description: 'Alert if no archive-* cron has reported in this many hours'
+        default: '6'
+
+concurrency:
+  group: scheduler-liveness
+  cancel-in-progress: false
+
+jobs:
+  liveness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --omit=dev --ignore-scripts
+      - name: Check scheduler and archiver liveness
+        id: check
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/scheduler-liveness.mjs \
+            --scheduler-hours "${{ github.event.inputs.scheduler_hours || '3' }}" \
+            --archive-hours "${{ github.event.inputs.archive_hours || '6' }}" \
+            | tee liveness.txt
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Report
+        run: |
+          code="${{ steps.check.outputs.code }}"
+          if [ "$code" = "0" ]; then
+            echo "Scheduler and archiver are reporting."
+          elif [ "$code" = "1" ]; then
+            # The script already pushed to ntfy; fail the run so it is also
+            # visible in the Actions list.
+            echo "::error::Scheduler or archiver has stopped — ntfy alert sent. See liveness.txt above."
+            exit 1
+          else
+            # Exit 2 is UNKNOWN, not healthy: the check could not measure. Say
+            # so loudly rather than letting an unreadable database look like a
+            # quiet, well-behaved pipeline.
+            echo "::error::Liveness check could NOT RUN (exit $code) — nothing was measured. Check the MONGODB_URI repo secret."
+            exit 1
+          fi
