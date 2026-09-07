@@ -331,7 +331,7 @@ async function processPage(page, promptText, db) {
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
-    const pageType = extractPageType(result.text, { validate: false });
+    const pageType = extractPageType(result.text);
     const columns = extractColumns(result.text);
     const detectedImages = parseDetectedImages(result.text);
 
