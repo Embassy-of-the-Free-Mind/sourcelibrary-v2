@@ -10,6 +10,7 @@
  *   node scripts/batch/bulk-ocr-lambda.mjs --book-ids=id1,id2,id3
  *   node scripts/batch/bulk-ocr-lambda.mjs --provider=efm --incomplete-only
  *   node scripts/batch/bulk-ocr-lambda.mjs --dry-run
+ *   node scripts/batch/bulk-ocr-lambda.mjs --reason="why by hand"
  */
 
 import { MongoClient } from 'mongodb';
@@ -17,6 +18,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // Load .env.production.local
 try {
@@ -56,6 +58,8 @@ const PROVIDER = getArg('provider');
 const DRY_RUN = hasFlag('dry-run');
 const INCOMPLETE_ONLY = hasFlag('incomplete-only') || true; // default: only pages missing OCR
 const LIMIT = parseInt(getArg('limit') || '0', 10);
+const INITIATED_BY = 'bulk-ocr-script';
+const REASON = parseInitiatedReason(process.argv.slice(2), INITIATED_BY);
 
 // SQS client
 const sqsClient = new SQSClient({ region: AWS_REGION });
@@ -180,7 +184,8 @@ async function main() {
       book_title: book.title,
       progress: { total: pageIds.length, completed: 0, failed: 0 },
       config: { page_ids: pageIds, language: book.language || 'Unknown' },
-      initiated_by: 'bulk-ocr-script',
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date(),
       started_at: new Date(),

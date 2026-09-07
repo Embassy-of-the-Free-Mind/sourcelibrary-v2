@@ -97,6 +97,7 @@ export default function LogsTab() {
                   <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Status</th>
                   <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Type</th>
                   <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>User</th>
+                  <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Reason</th>
                   <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Book</th>
                   <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Pages</th>
                   <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Model / Prompt</th>
@@ -128,6 +129,12 @@ export default function LogsTab() {
                       </td>
                       <td className="px-4 py-3 text-xs" style={{ color: 'var(--text-muted)' }}>
                         {job.initiated_by || '-'}
+                      </td>
+                      {/* Why a human ran this by hand — blank for automated lanes (#4336) */}
+                      <td className="px-4 py-3 text-xs max-w-[220px]" style={{ color: 'var(--text-muted)' }}>
+                        <div className="truncate" title={job.initiated_reason || ''}>
+                          {job.initiated_reason || '-'}
+                        </div>
                       </td>
                       <td className="px-4 py-3 max-w-[200px]">
                         {job.book_id ? (
