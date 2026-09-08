@@ -24,6 +24,7 @@ import {
   isTranslatedPage,
   buildVisiblePageCountPipeline,
   countVisiblePageStats,
+  isBlockedForModel,
 } from '../../scripts/lib/page-counts.mjs';
 
 describe('page-counts convention (#3293)', () => {
@@ -142,6 +143,25 @@ describe('page-counts convention (#3293)', () => {
     const stats = countVisiblePageStats(pages);
     expect(stats.translatable).toBe(2);
     expect(stats.translated_translatable).toBe(1);
+  });
+
+  it('a give-up does not outlive the model that made it (#4674)', () => {
+    // 959 of 967 blocked pages had not been retried in over a month, and half of a
+    // re-probed sample read cleanly against the CURRENT model. A block that names no
+    // model is permanent; one that names its model must expire when the model changes.
+    const blocked = { ocr: { fail_blocked: true, fail_blocked_model: 'gemini-3.1-flash-lite' } };
+    expect(isBlockedForModel(blocked, 'gemini-3.1-flash-lite')).toBe(true);   // same model — still blocked
+    expect(isBlockedForModel(blocked, 'gemini-3-flash-preview')).toBe(false); // new model — reopened
+
+    // A legacy block records no model. It stays blocked under every model: reopening
+    // 967 pages is a spend decision, not something a deploy should do by itself.
+    const legacy = { ocr: { fail_blocked: true } };
+    expect(isBlockedForModel(legacy, 'gemini-3.1-flash-lite')).toBe(true);
+    expect(isBlockedForModel(legacy, 'anything-else')).toBe(true);
+
+    // And a page nobody gave up on is never blocked.
+    expect(isBlockedForModel({ ocr: { fail_count: 2 } }, 'gemini-3.1-flash-lite')).toBe(false);
+    expect(isBlockedForModel({}, 'gemini-3.1-flash-lite')).toBe(false);
   });
 
   it('regression: hidden translated pages do not fabricate a low translated count', () => {

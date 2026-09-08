@@ -607,7 +607,8 @@ async function processOneJob(db, job) {
             filter: { id: pageId },
             update: {
               $set: setObj,
-              $unset: { 'ocr.fail_count': '', 'ocr.fail_reason': '', 'ocr.fail_blocked': '', 'ocr.fail_blocked_at': '' },
+              $unset: { 'ocr.fail_count': '', 'ocr.fail_reason': '', 'ocr.fail_blocked': '',
+                        'ocr.fail_blocked_at': '', 'ocr.fail_blocked_model': '' },
             },
           },
         });
@@ -783,6 +784,9 @@ async function processOneJob(db, job) {
                 'ocr.fail_blocked': {
                   $gte: [{ $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] }, OCR_FAIL_BLOCK_THRESHOLD],
                 },
+                // WHICH model gave up. The block is scoped to it, so switching
+                // models reopens the page instead of stranding it (#4674).
+                'ocr.fail_blocked_model': job.model ?? null,
                 'ocr.fail_blocked_at': {
                   $cond: {
                     if: { $gte: [{ $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] }, OCR_FAIL_BLOCK_THRESHOLD] },

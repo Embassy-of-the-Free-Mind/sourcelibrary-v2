@@ -25,7 +25,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
-import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
@@ -1302,20 +1302,22 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
       book_id: book.id,
       page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
       'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
-      'ocr.fail_blocked': { $ne: true }, // …and after N=3 failures of any other kind (#4674)
       $or: [
         { 'ocr.data': { $exists: false } },
         { 'ocr.data': null },
         { 'ocr.data': '' },
       ],
-      $and: [{
-        $or: [
-          { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-          { cropped_photo: { $exists: true, $nin: [null, ''] } },
-          { photo: { $exists: true, $ne: null } },
-          { photo_original: { $exists: true, $ne: null } },
-        ]
-      }]
+      $and: [
+        {
+          $or: [
+            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+            { cropped_photo: { $exists: true, $nin: [null, ''] } },
+            { photo: { $exists: true, $ne: null } },
+            { photo_original: { $exists: true, $ne: null } },
+          ]
+        },
+        notBlockedForModel(ocrModel),
+      ]
     })
     .sort({ page_number: 1 })
     .limit(pageLimit)
@@ -1675,15 +1677,17 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
         book_id: book.id,
         page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
         'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
-        'ocr.fail_blocked': { $ne: true }, // …and after N=3 failures of any other kind (#4674)
         $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
-        $and: [{
-          $or: [
-            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-            { cropped_photo: { $exists: true, $nin: [null, ''] } },
-            { photo: { $exists: true, $ne: null } },
-          ]
-        }]
+        $and: [
+          {
+            $or: [
+              { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+              { cropped_photo: { $exists: true, $nin: [null, ''] } },
+              { photo: { $exists: true, $ne: null } },
+            ]
+          },
+          notBlockedForModel(model),
+        ]
       })
       .sort({ page_number: 1 })
       .limit(remaining)
