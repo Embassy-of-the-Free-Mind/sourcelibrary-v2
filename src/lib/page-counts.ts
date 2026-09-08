@@ -18,8 +18,13 @@ export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } } as const;
 /** Page types that will never carry a translation. Mirror of the .mjs list. */
 export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
 
-/** Shared by the `translatable` denominator and its numerator, so they cannot drift. */
-const TRANSLATABLE_COND = {
+/**
+ * Shared by the `translatable` denominator and its numerator, so they cannot drift.
+ * Exported so a page-level "which pages are untranslated?" query (#4685) can reuse
+ * this exact definition of "translatable" inside a `find()`'s `$expr`, instead of
+ * restating it and risking drift.
+ */
+export const TRANSLATABLE_COND = {
   $and: [
     // No `ocr.data` requirement: a page awaiting OCR is PENDING work, not impossible
     // work, and excluding it badges half-OCR'd books as 100% translated. Mirror of the

@@ -49,6 +49,9 @@ export interface BookStrings {
   firstTranslationTooltip: string;
   noPriorTranslationTooltip: string;
   pageAbbrev: (n: number) => string;
+  /** Label prefixing the "which pages are missing" strip on a book under 100% (#4685). */
+  untranslated: string;
+  untranslatedTooltip: (n: number) => string;
 
   // ---- about / dropdowns ----
   summary: string;
@@ -145,6 +148,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     firstTranslationTooltip: 'First translation into English',
     noPriorTranslationTooltip: 'We searched the catalogues and found no earlier English translation — a record of the search, not proof none exists',
     pageAbbrev: (n) => `p. ${n}`,
+    untranslated: 'Untranslated: pp.',
+    untranslatedTooltip: (n) => `${n} page${n === 1 ? '' : 's'} without a translation yet`,
 
     summary: 'About this book',
     summaryIsEnglish: 'Summary available in English.',
@@ -233,6 +238,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     firstTranslationTooltip: 'Primera traducción al inglés',
     noPriorTranslationTooltip: 'Hemos buscado en los catálogos y no hemos encontrado ninguna traducción al inglés anterior — es el registro de una búsqueda, no la prueba de que no exista',
     pageAbbrev: (n) => `pág. ${n}`,
+    untranslated: 'Sin traducir: págs.',
+    untranslatedTooltip: (n) => `${n} página${n === 1 ? '' : 's'} sin traducir todavía`,
 
     summary: 'Sobre este libro',
     summaryIsEnglish: 'Resumen disponible en inglés.',

@@ -92,6 +92,8 @@ import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { markPageForReader } from '@/lib/provenance';
+import { translationCompleteness } from '@/lib/translation-completeness';
+import { TRANSLATABLE_COND } from '@/lib/page-counts';
 
 // ISR: serve cached HTML, revalidate in background every 24h.
 // Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
@@ -504,7 +506,29 @@ export async function generateMetadata({ params, lang = 'en' }: PageProps): Prom
  */
 const bookGalleryScope = (bookId: string): GalleryScope => ({ bookId, minQuality: 0.7 });
 
+/**
+ * Group a page-number-sorted list of untranslated pages into consecutive runs, so
+ * the "Untranslated" strip can render "104–106" instead of "104, 105, 106" (#4685).
+ * Assumes `pages` is already sorted ascending by `page_number` (the query it feeds
+ * from sorts server-side).
+ */
+function collapsePageRuns(pages: UntranslatedPageRef[]): UntranslatedPageRef[][] {
+  const runs: UntranslatedPageRef[][] = [];
+  for (const page of pages) {
+    const lastRun = runs[runs.length - 1];
+    const lastPage = lastRun?.[lastRun.length - 1];
+    if (lastPage && page.page_number === lastPage.page_number + 1) {
+      lastRun.push(page);
+    } else {
+      runs.push([page]);
+    }
+  }
+  return runs;
+}
+
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
+/** One untranslated-but-translatable page, just enough to link into the reader (#4685). */
+interface UntranslatedPageRef { id: string; page_number: number }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
 interface AuthorEntityPreview {
@@ -520,7 +544,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null; untranslatedPages: UntranslatedPageRef[] } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -591,7 +615,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   const cardPromise = loadCard(db, (quickBook as { work_id?: string }).work_id).catch(() => null);
 
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
+  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard, untranslatedPagesRaw] = await Promise.all([
     fullBookPromise,
     // Use page_number >= 0 to skip archived-spread pages (negative numbers).
     // This uses the {book_id, page_number} compound index efficiently.
@@ -660,6 +684,34 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
         .catch(() => [])
       : Promise.resolve([]),
     cardPromise,
+    // Which translatable pages have no translation yet (#4685) — a small, indexed,
+    // capped find, not the aggregate scan the invariant doc warns about: {book_id,
+    // page_number} is equality+range on the compound index, and $expr (reusing
+    // TRANSLATABLE_COND so "translatable" can't drift from the counter that writes
+    // pages_translatable) is applied in-memory over that already-narrow set. Capped
+    // at 60 — the reader only ever needs the full list up to that count, or the
+    // first 20 of a longer one (see the render-side logic). This runs unconditionally
+    // (we don't yet know the book's completeness here) but is cheap and only fires
+    // once per 24h ISR revalidation, not per request.
+    db.collection('pages')
+      .find(
+        {
+          book_id: bookId,
+          page_number: { $gt: 0 },
+          $expr: {
+            $and: [
+              TRANSLATABLE_COND,
+              // No translation yet: missing, null, or the empty-string placeholder.
+              { $eq: [{ $ifNull: ['$translation.data', ''] }, ''] },
+            ],
+          },
+        },
+        { projection: { _id: 0, id: 1, page_number: 1 }, maxTimeMS: 5000 },
+      )
+      .sort({ page_number: 1 })
+      .limit(60)
+      .toArray()
+      .catch(() => []),
   ]);
 
   // Use the full Atlas book when available (has editions, translation_verification, etc.)
@@ -742,7 +794,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
 
   const serializedEntity = authorEntity ? JSON.parse(JSON.stringify(authorEntity)) : null;
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null, untranslatedPages: JSON.parse(JSON.stringify(untranslatedPagesRaw)) as UntranslatedPageRef[] };
 }
 
 // Skeleton for book info while loading
@@ -810,7 +862,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard, untranslatedPages } = data;
 
   // What we can honestly SAY about this book's first-translation status (#3459).
   // The flag decides whether a claim appears at all; this decides its register —
@@ -934,10 +986,23 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     return !!(q.photo || q.photo_original || q.archived_photo || q.cropped_photo
       || q.image_display || q.image_thumb || q.thumbnail || q.thumbnail_blob);
   });
-  const pagesBlank = (book as unknown as { pages_blank?: number }).pages_blank ?? 0;
   const ocrPct = totalPages > 0 ? Math.min(100, Math.round((ocrCount / totalPages) * 100)) : 0;
-  const readablePages = Math.max(1, ocrCount - pagesBlank);
-  const translatedPct = Math.min(100, Math.round((translatedCount / readablePages) * 100));
+  // The single completeness formula (#4505): denominator is `pages_translatable`
+  // (visible pages with something to translate, excluding blanks/ex-libris/
+  // bookplates/digitizer notices), not the old book-page-local
+  // `translatedCount / (ocrCount - pagesBlank)` ratio. Same number every other
+  // surface now shows for this book.
+  const completeness = translationCompleteness(book);
+  const translatedPct = completeness.percent;
+  // How many translatable pages still have no translation — the strip below only
+  // renders when this is both known (`exact`) and honest (>0, <100%). Not shown for
+  // records that predate the `pages_translatable` recount (#4442): the fallback
+  // denominator over-counts, so the gap it implies is not reliable enough to name
+  // pages by number.
+  const untranslatedGapCount = completeness.exact
+    ? Math.max(0, completeness.translatable - completeness.translated)
+    : 0;
+  const showUntranslatedStrip = completeness.exact && translatedPct < 100 && untranslatedGapCount > 0 && untranslatedPages.length > 0;
   const imageCount = galleryImageCount || galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
@@ -1765,6 +1830,52 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {ftClaim === 'confirmed' ? t.firstTranslation : t.noPriorTranslation}
                     </span>
                   )}
+                </div>
+              )}
+              {/* Which translatable pages still have no translation (#4685) — so
+                  "98% translated" reads differently for a mid-book hole than for a
+                  missing back cover. Only shown once the honest denominator is known
+                  (`completeness.exact`) and there's a real gap to name. Collapsed
+                  into ranges; each page number links straight into the reader. */}
+              {showUntranslatedStrip && (
+                <div
+                  className="flex flex-wrap items-baseline gap-x-1 gap-y-1 mt-1.5 text-[10.5px] md:text-[13.5px]"
+                  title={t.untranslatedTooltip(untranslatedGapCount)}
+                >
+                  <span style={{ color: 'rgba(245,240,232,0.55)' }}>{t.untranslated}</span>
+                  {(() => {
+                    const shown = untranslatedGapCount > 60 ? untranslatedPages.slice(0, 20) : untranslatedPages;
+                    const runs = collapsePageRuns(shown);
+                    const moreCount = untranslatedGapCount - shown.length;
+                    const bookPath = book.slug || book.id;
+                    return (
+                      <>
+                        {runs.map((run, i) => {
+                          const first = run[0];
+                          const last = run[run.length - 1];
+                          return (
+                            <span key={first.id}>
+                              <Link href={lp(`/book/${bookPath}/page/${first.id}`)} style={{ color: 'rgba(245,240,232,0.78)' }} className="hover:underline hover:opacity-90">
+                                {first.page_number}
+                              </Link>
+                              {run.length > 1 && (
+                                <>
+                                  {'–'}
+                                  <Link href={lp(`/book/${bookPath}/page/${last.id}`)} style={{ color: 'rgba(245,240,232,0.78)' }} className="hover:underline hover:opacity-90">
+                                    {last.page_number}
+                                  </Link>
+                                </>
+                              )}
+                              {i < runs.length - 1 ? ', ' : ''}
+                            </span>
+                          );
+                        })}
+                        {moreCount > 0 && (
+                          <span style={{ color: 'rgba(245,240,232,0.55)' }}>{', '}{t.more(moreCount)}</span>
+                        )}
+                      </>
+                    );
+                  })()}
                 </div>
               )}
 
