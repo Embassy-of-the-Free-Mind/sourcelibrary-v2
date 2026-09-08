@@ -122,7 +122,7 @@ export const visionContent: VisionContent = {
       { work: 'Research commissions, grant-writing, conferences and gatherings at the Embassy', resource: '$150K' },
       { work: 'Legal foundations (entity, trademark, rights policy), administration and contingency', resource: '$240K' },
     ],
-    footnote: 'Translation is priced at 2.3 cents a page, above what our pipeline currently costs, to cover retries and the harder scripts. Scanning is $60 a book, all in. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time salaries at Dutch rates. Administration is the Embassy’s fiscal sponsorship. A full line-by-line budget is available on request.',
+    footnote: 'Translation is priced at 2.3 cents a page, above what our pipeline currently costs, to cover retries and the harder scripts. Scanning is $60 a book, all in. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time salaries at Dutch rates. Administration covers bookkeeping, audit and compliance. A full line-by-line budget is available on request.',
   },
   ways: {
     heading: 'Ways to take part',
