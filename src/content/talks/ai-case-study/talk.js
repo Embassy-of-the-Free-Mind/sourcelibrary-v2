@@ -283,12 +283,19 @@ if($('#eth'))$('#eth').innerHTML=[
  new MutationObserver(()=>window.syncTabs()).observe(document.body,{attributes:true,subtree:true,attributeFilter:['class']});
 })();
 
-/* covers wall: true proportions, a strip of ground between */
-(function(){const c=$('#wall');if(!c)return;const ctx=c.getContext('2d');const img=new Image();img.src='/talks/ai-case-study/assets/covers-true.jpg';let meta=null;const hero=$('#hero');let readyDone=false;const ready=()=>{if(readyDone)return;readyDone=true;hero.classList.add('ready')};const fontsReady=(document.fonts&&document.fonts.ready)||Promise.resolve();const imgReady=new Promise(r=>{img.complete?r():(img.onload=r,img.onerror=r)});Promise.all([fontsReady,imgReady]).then(()=>setTimeout(ready,120));setTimeout(ready,1800);fetch('/talks/ai-case-study/assets/covers-true.json').then(r=>r.json()).then(m=>meta=m);const t0=performance.now();
- let rows=null;function layout(W,H){const gap=10,top=56+gap,rowsFit=Math.max(3,Math.floor((H-top)/(150+gap))),rowH=Math.floor((H-top-gap*(rowsFit-1))/rowsFit);rows=[];let i=0,y=top;while(y+rowH<=H+1){const row={y,h:rowH,items:[],w:0};let x=0;while(x<W*2){const it=meta.items[i%meta.n];i++;const w=it.w*rowH/it.h;row.items.push({it,x,w});x+=w+gap}row.w=x;rows.push(row);y+=rowH+gap}}
+/* covers wall: true proportions, a strip of ground between; tiles arrive one by one, then drift */
+(function(){const c=$('#wall');if(!c)return;const ctx=c.getContext('2d');const img=new Image();img.src='/talks/ai-case-study/assets/covers-true.jpg';let meta=null;const hero=$('#hero');let readyDone=false,born=0;
+ const ready=()=>{if(readyDone)return;readyDone=true;born=performance.now();hero.classList.add('ready')};
+ const fontsReady=(document.fonts&&document.fonts.ready)||Promise.resolve();const imgReady=new Promise(r=>{img.complete?r():(img.onload=r,img.onerror=r)});
+ fetch('/talks/ai-case-study/assets/covers-true.json').then(r=>r.json()).then(m=>{meta=m;Promise.all([fontsReady,imgReady]).then(()=>setTimeout(ready,80))});setTimeout(ready,2200);
+ let rows=null;function layout(W,H){const gap=10,top=56+gap,rowsFit=Math.max(3,Math.floor((H-top)/(150+gap))),rowH=Math.floor((H-top-gap*(rowsFit-1))/rowsFit);rows=[];let i=0,y=top,seed=3;const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+  while(y+rowH<=H+1){const row={y,h:rowH,items:[],w:0};let x=0;while(x<W*2){const it=meta.items[i%meta.n];i++;const w=it.w*rowH/it.h;const wave=(x/W)*0.9+((y-top)/H)*0.5;row.items.push({it,x,w,delay:wave+rnd()*0.7});x+=w+gap}row.w=x;rows.push(row);y+=rowH+gap}}
+ const ease=t=>1-Math.pow(1-t,3);
  function draw(now){if(!meta||!img.complete){requestAnimationFrame(draw);return}const dpr=Math.min(2,devicePixelRatio||1);const W=c.clientWidth,H=c.clientHeight;if(c.width!==W*dpr){c.width=W*dpr;c.height=H*dpr;rows=null}ctx.setTransform(dpr,0,0,dpr,0,0);if(!rows)layout(W,H);ctx.clearRect(0,0,W,H);
-  const t=RM?0:(now-t0)/1000;rows.forEach((row,ri)=>{const off=((t*(ri%2?6:9))%row.w);for(const q of row.items){let x=q.x-off;if(x+q.w<0)x+=row.w;if(x>W)continue;ctx.drawImage(img,q.it.x,q.it.y,q.it.w,q.it.h,x,row.y,q.w,row.h)}});
-  requestAnimationFrame(draw)}requestAnimationFrame(draw)})();
+  if(!readyDone){requestAnimationFrame(draw);return}
+  const age=(now-born)/1000;const drift=RM?0:Math.max(0,age-1.6);
+  rows.forEach((row,ri)=>{const off=((drift*(ri%2?6:9))%row.w);for(const q of row.items){let x=q.x-off;if(x+q.w<0)x+=row.w;if(x>W)continue;const p=RM?1:Math.min(1,Math.max(0,(age-q.delay)/0.9));if(p<=0)continue;const e=ease(p);ctx.globalAlpha=e;const sc=0.94+0.06*e;const dw=q.w*sc,dh=row.h*sc;ctx.drawImage(img,q.it.x,q.it.y,q.it.w,q.it.h,x+(q.w-dw)/2,row.y+(row.h-dh)/2+(1-e)*14,dw,dh)}});
+  ctx.globalAlpha=1;requestAnimationFrame(draw)}requestAnimationFrame(draw)})();
 
 /* slides */
 const slides=$$('.slide'),rail=$('#rail');rail.innerHTML=slides.map(s=>`<a href="#${s.id}" data-part="${s.dataset.part||''}" title="${esc(s.dataset.title||s.id)}"></a>`).join('');const dots=$$('#rail a');let active=0;

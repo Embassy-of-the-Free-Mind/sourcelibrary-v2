@@ -812,3 +812,6 @@ body.booted .site{opacity:1}
 .slide:not(#hero).on-screen .stage{opacity:1}
 #advice .dd{opacity:1}
 @media (prefers-reduced-motion:reduce){#hero #wall,#hero .in>*,#hero .pill,.site,.slide .head>*,.slide .stage{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* the wall paints its own entrance; no CSS fade on top of it */
+#hero #wall{opacity:1;transition:none}
