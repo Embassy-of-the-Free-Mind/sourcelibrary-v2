@@ -89,7 +89,7 @@ export const visionContent: VisionContent = {
   buildHeading: 'What we need to finish',
   bodyBuild: [
     'Here is the situation. We hold **72,000 more books — sixteen million pages — that no one can read yet.** They are scanned and catalogued and waiting for the pipeline. Translating a page costs about two cents; translating all of them costs about $360,000. That is the single largest thing your money can do here, and it is entirely mechanical: fund it, and the books get read. Finished, the library will hold about four times the words of English Wikipedia. Wikipedia is what we know; this is the shelf it was written from.',
-    'Around that core sit the things a library needs in order to be trusted and to last: scholars checking the translations against the originals, a scanner at the Embassy for the books that exist nowhere else, the hosting that keeps every page online, and a small team to run it. Everything so far has been done by a handful of people, mostly unpaid. The budget below is what it takes to do the next five years properly. It comes to **$2 million**, about $400,000 a year, and the first year needs **$520,000**.',
+    'Around that core sit the things a library needs in order to be trusted and to last: scholars checking the translations against the originals, a scanner at the Embassy for the books that exist nowhere else, the hosting that keeps every page online, and a small team to run it. Everything so far has been done by a handful of people, mostly unpaid. The budget below is what it takes to do the next five years properly. It comes to **$2.4 million**: $2 million of work, and $400,000 to run the organization that does it. The first year needs **$672,000**; each year after that, about $430,000.',
   ],
   montage: {
     images: [
@@ -111,8 +111,8 @@ export const visionContent: VisionContent = {
     photo: '/founder-derek.jpg',
   },
   plan: {
-    heading: 'The five-year budget: $2 million',
-    intro: 'Every line is built from a unit cost we have measured. The first year needs **$520,000**; each year after that, about **$370,000**.',
+    heading: 'The five-year budget: $2.4 million',
+    intro: 'Every line is built from a unit cost we have measured. The first year needs **$672,000**; each year after that, about **$432,000**.',
     items: [
       { work: 'Translate the 72,000 books (16 million pages) we already hold — about 2 cents a page', resource: '$360K' },
       { work: 'Scholars reviewing the translations against the originals, language by language', resource: '$150K' },
@@ -121,8 +121,9 @@ export const visionContent: VisionContent = {
       { work: 'Keeping every page online for five years — hosting, storage, database', resource: '$170K' },
       { work: 'Research commissions, grant-writing, conferences and gatherings at the Embassy', resource: '$150K' },
       { work: 'Legal foundations (entity, trademark, rights policy), administration and contingency', resource: '$240K' },
+      { work: 'Running the organization: fundraising help, tools, insurance, payment processing, and a three-month reserve', resource: '$400K' },
     ],
-    footnote: 'Translation is priced at 2.3 cents a page, above what our pipeline currently costs, to cover retries and the harder scripts. Scanning is $60 a book, all in. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time salaries at Dutch rates. Administration covers bookkeeping, audit and compliance. A full line-by-line budget is available on request.',
+    footnote: 'Translation is priced at 2.3 cents a page, above what our pipeline currently costs, to cover retries and the harder scripts. Scanning is $60 a book, all in. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
   },
   ways: {
     heading: 'Ways to take part',
