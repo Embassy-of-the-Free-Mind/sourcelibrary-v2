@@ -1002,7 +1002,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const untranslatedGapCount = completeness.exact
     ? Math.max(0, completeness.translatable - completeness.translated)
     : 0;
-  const showUntranslatedStrip = completeness.exact && translatedPct < 100 && untranslatedGapCount > 0 && untranslatedPages.length > 0;
+  // Gated on ocrPct > 0 (i.e. only alongside the OCR/Translated row, never the
+  // separate "Scans only — not transcribed yet" message): a book with zero OCR has
+  // zero translation by construction, and naming its whole page range as
+  // "Untranslated" only restates what that message already says.
+  const showUntranslatedStrip = ocrPct > 0 && completeness.exact && translatedPct < 100 && untranslatedGapCount > 0 && untranslatedPages.length > 0;
   const imageCount = galleryImageCount || galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
