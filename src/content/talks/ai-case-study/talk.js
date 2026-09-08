@@ -7,6 +7,7 @@ const tip=$('#tip');
 function hover(el,text){el.addEventListener('mousemove',e=>{tip.innerHTML=text;tip.style.opacity=1;tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY+14)+'px'});el.addEventListener('mouseleave',()=>tip.style.opacity=0)}
 const strip=s=>s.replace(/<(language|page-type|page-num|scan-quality|script|lang)>[\s\S]*?<\/\1>/g,'').replace(/<vocab>[\s\S]*?<\/vocab>/g,'').replace(/<detected-images>[\s\S]*?<\/detected-images>/g,'').replace(/<meta>[\s\S]*?<\/meta>/g,'').replace(/<insert>|<\/insert>/g,'').replace(/<gloss>(.*?)<\/gloss>/g,'').replace(/<note>(.*?)<\/note>/g,'').replace(/<[^>]+>/g,'').replace(/^#+ /gm,'').replace(/\*\*|\*   /g,'').replace(/-> (.*?) <-/g,'$1').trim();
 
+document.body.classList.add('booted');
 /* theme */
 const themeBtn=$('#theme');function setTheme(t){document.documentElement.dataset.theme=t;themeBtn.textContent=t==='dark'?'Light':'Dark';try{localStorage.setItem('sl-talk-theme',t)}catch(e){}}
 setTheme(document.documentElement.dataset.theme||'light');themeBtn.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
@@ -283,7 +284,7 @@ if($('#eth'))$('#eth').innerHTML=[
 })();
 
 /* covers wall: true proportions, a strip of ground between */
-(function(){const c=$('#wall');if(!c)return;const ctx=c.getContext('2d');const img=new Image();img.src='/talks/ai-case-study/assets/covers-true.jpg';let meta=null;fetch('/talks/ai-case-study/assets/covers-true.json').then(r=>r.json()).then(m=>meta=m);const t0=performance.now();
+(function(){const c=$('#wall');if(!c)return;const ctx=c.getContext('2d');const img=new Image();img.src='/talks/ai-case-study/assets/covers-true.jpg';let meta=null;const hero=$('#hero');let readyDone=false;const ready=()=>{if(readyDone)return;readyDone=true;hero.classList.add('ready')};const fontsReady=(document.fonts&&document.fonts.ready)||Promise.resolve();const imgReady=new Promise(r=>{img.complete?r():(img.onload=r,img.onerror=r)});Promise.all([fontsReady,imgReady]).then(()=>setTimeout(ready,120));setTimeout(ready,1800);fetch('/talks/ai-case-study/assets/covers-true.json').then(r=>r.json()).then(m=>meta=m);const t0=performance.now();
  let rows=null;function layout(W,H){const gap=10,top=56+gap,rowsFit=Math.max(3,Math.floor((H-top)/(150+gap))),rowH=Math.floor((H-top-gap*(rowsFit-1))/rowsFit);rows=[];let i=0,y=top;while(y+rowH<=H+1){const row={y,h:rowH,items:[],w:0};let x=0;while(x<W*2){const it=meta.items[i%meta.n];i++;const w=it.w*rowH/it.h;row.items.push({it,x,w});x+=w+gap}row.w=x;rows.push(row);y+=rowH+gap}}
  function draw(now){if(!meta||!img.complete){requestAnimationFrame(draw);return}const dpr=Math.min(2,devicePixelRatio||1);const W=c.clientWidth,H=c.clientHeight;if(c.width!==W*dpr){c.width=W*dpr;c.height=H*dpr;rows=null}ctx.setTransform(dpr,0,0,dpr,0,0);if(!rows)layout(W,H);ctx.clearRect(0,0,W,H);
   const t=RM?0:(now-t0)/1000;rows.forEach((row,ri)=>{const off=((t*(ri%2?6:9))%row.w);for(const q of row.items){let x=q.x-off;if(x+q.w<0)x+=row.w;if(x>W)continue;ctx.drawImage(img,q.it.x,q.it.y,q.it.w,q.it.h,x,row.y,q.w,row.h)}});
