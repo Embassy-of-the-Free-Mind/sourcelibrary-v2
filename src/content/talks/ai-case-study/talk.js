@@ -174,19 +174,20 @@ if($('#eth'))$('#eth').innerHTML=[
   {k:'nl',name:'Dutch',n:82651,tr:462,unit:'works printed before 1700',step:0,hi:true},
   ...EU.filter(d=>d[0]!=='Dutch').map(d=>({k:d[0],name:d[0],n:d[1],tr:d[2],unit:'works printed before 1700',step:1})),
   {k:'tib',name:'Tibetan',n:30437,tr:822,unit:'works in the BDRC catalogue',step:2},
-  {k:'chi',name:'Chinese',n:500000,tr:null,unit:'editions in the union catalogue; translations uncounted',step:2,est:true},
-  {k:'ara',name:'Arabic script',n:3500000,tr:null,unit:'surviving manuscripts, estimate; works uncounted',step:3,est:true},
-  {k:'ind',name:'India',n:10000000,tr:null,unit:'manuscripts, national estimate',step:4,est:true}];
+  {k:'ara',name:'Arabic script',n:3500000,tr:null,unit:'surviving manuscripts, estimate; works uncounted',step:2,est:true},
+  {k:'ind',name:'India',n:10000000,tr:null,unit:'manuscripts, national estimate',step:3,est:true},
+  {k:'chi',name:'Chinese',n:10000000,tr:null,unit:'200,000 titles and 500,000 editions catalogued to 1912, before manuscripts and local printing. True size uncounted.',step:4,open:true},
+  {k:'rest',name:'Also uncounted',n:10000000,tr:null,unit:'Japanese, Korean, Persian, Hebrew, Armenian, Ethiopian, Byzantine Greek, medieval Latin manuscripts: no comparable estimate',step:4,none:true}];
  const barSteps=[
   {name:'Dutch',cap:`<b>82,651</b> works printed in Dutch before 1700. <b>0.56%</b> have an English translation.`},
   {name:'Europe',cap:`Latin alone is <b>444,120</b> works. Europe before 1700: <b>1.39 million</b>, about <b>0.9%</b> readable in English.`},
-  {name:'China',cap:`China's union catalogue lists <b>500,000</b> editions to 1912. Nobody has counted how many exist in English.`},
   {name:'Arabic',cap:`<b>3 to 4 million</b> Arabic-script manuscripts survive, counted in copies, not works. Europe's print is already a strip.`},
-  {name:'India',cap:`India estimates <b>10 million</b> manuscripts. The Dutch bar we started with is now a hairline.`}];
- const scaleHTML=()=>`<div class="scale"><div class="axis"><span class="a0">0</span><span class="amax"></span></div>${SCALE_ROWS.map(r=>`<div class="srow ${r.hi?'hi':''} ${r.est?'est':''}" data-k="${r.k}" data-step="${r.step}"><span class="lab">${r.name}</span><span class="bar"><i class="all"></i>${r.tr!=null?'<i class="tr"></i>':''}<span class="val"><b>${fmt(r.n)}</b> ${r.unit}${r.tr!=null?` · <b>${(r.tr/r.n*100).toFixed(2)}%</b> translated`:''}</span></span></div>`).join('')}</div>`;
+  {name:'India',cap:`India estimates <b>10 million</b> manuscripts, the largest figure anyone has published. The Dutch bar is now a hairline.`},
+  {name:'China',cap:`China is almost certainly larger than any of these and <b>nobody has counted it</b>. Nor most of the rest of the world.`}];
+ const scaleHTML=()=>`<div class="scale"><div class="axis"><span class="a0">0</span><span class="amax"></span></div>${SCALE_ROWS.map(r=>`<div class="srow ${r.hi?'hi':''} ${r.est?'est':''} ${r.open?'open':''} ${r.none?'none':''}" data-k="${r.k}" data-step="${r.step}"><span class="lab">${r.name}</span><span class="bar"><i class="all"></i>${r.tr!=null?'<i class="tr"></i>':''}<span class="val">${(r.open||r.none)?'':`<b>${fmt(r.n)}</b> `}${r.unit}${r.tr!=null?` · <b>${(r.tr/r.n*100).toFixed(2)}%</b> translated`:''}</span></span></div>`).join('')}</div>`;
  function renderScale(i){let el=barsEl.querySelector('.scale');if(!el){barsEl.innerHTML=scaleHTML();el=barsEl.querySelector('.scale');void el.offsetWidth}
-  const shown=SCALE_ROWS.filter(r=>r.step<=i);const max=Math.max(...shown.map(r=>r.n));const unit=i>=4?'manuscripts':i>=3?'manuscripts':i>=2?'editions':'works';
-  el.querySelector('.amax').textContent=fmt(max)+' '+unit;el.classList.toggle('solo',i===0);
+  const shown=SCALE_ROWS.filter(r=>r.step<=i);const max=Math.max(...shown.map(r=>r.n));const unit=i>=2?'manuscripts':'works';
+  el.querySelector('.amax').textContent=i>=4?'uncounted →':fmt(max)+' '+unit;el.classList.toggle('solo',i===0);
   el.querySelectorAll('.srow').forEach(row=>{const r=SCALE_ROWS.find(x=>x.k===row.dataset.k);const on=r.step<=i;row.classList.toggle('on',on);row.style.setProperty('--w',on?(r.n/max*100).toFixed(3)+'%':'0%');row.style.setProperty('--t',on&&r.tr!=null?Math.max(0.15,r.tr/max*100).toFixed(3)+'%':'0%')});
   cap.innerHTML=barSteps[i].cap}
  host.innerHTML=`<div class="bubbles"><div class="gap-top"><div class="bub-legend circles-only"><span><i style="background:var(--red)"></i>no English translation</span><span><i style="background:var(--yellow)"></i>a scan exists</span><span><i style="background:var(--green)"></i>translated</span><span><i class="dash"></i>estimated extent, other units</span></div><div class="bub-legend bars-only"><span><i class="lg-tr"></i>translated into English</span><span><i class="lg-no"></i>no English translation</span><span><i class="lg-est"></i>estimate, counted in other units</span></div><div class="ver"><button data-v="bars">Bars</button><button data-v="circles">Circles</button></div></div><div class="wrap"><div class="barsv"></div><svg class="circ" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">${all.map(circle).join('')}</svg></div><div><div class="bub-ctrl2"><button class="bub-play" type="button" aria-label="Play or pause"></button><div class="bub-steps"></div></div><div class="bub-cap"></div></div></div>`;
