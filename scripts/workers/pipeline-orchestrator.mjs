@@ -212,6 +212,10 @@ let TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
 const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
 let MAX_ACTIVE_IMAGE_JOBS = 50;
 const PREVIEW_PAGE_COUNT = 25;
+// How many times finalize will return a fully-OCR'd, untranslated book to the
+// translate lane before parking it as complete WITH a recorded skip reason.
+// Bounded so a language translation genuinely cannot handle cannot ping-pong.
+const FINALIZE_TRANSLATE_REQUEUES = 3;
 let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
 // How long a submitted preview batch suppresses re-offering its book. Longer
 // than any healthy batch (measured p90 0.4h) so we never double-submit, short
@@ -5404,10 +5408,17 @@ Rules:
       let readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1 })
+        // pipeline_auto must survive the projection: the untranslated-finalize
+        // guard below reads finalize_requeues off it, and a projected-away field
+        // read as 0 is the #4563/#4565 starvation family — here it would requeue
+        // the same book forever instead of parking it with a reason.
+        .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1, pipeline_auto: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1, content_type: 1 });
+      // Same field set as the projection above — applyBookOverride re-fetches, so
+      // a field missing HERE is missing on the scope path only, which is how this
+      // bug family hides (#4563: the guard worked until a scope was active).
+      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready to finalize: ${readyToFinalize.length}`);
 
@@ -5458,6 +5469,65 @@ Rules:
           }
           log.needs_attention++;
           log.errors.push(`Finalize blocked ${book.id}: ${ocrCount}/${totalPages} OCR`);
+          continue;
+        }
+
+        // Translation is not consulted anywhere above: `ocrPercent` alone decides
+        // `complete`. But `complete` is TERMINAL for enrichment — Phase 6 selects
+        // strictly on `translate_complete`, Phase 7 on `summary_indexed` — so a
+        // fully-OCR'd book whose translation never ran gets sealed here and is
+        // never seen again by any phase. That is the #3740 shape, and the guard at
+        // setPipelineStatus cannot catch it because nothing claims translation.
+        //
+        // Measured 2026-09-08: 142 books, ~15.4K OCR'd pages, EVERY ONE
+        // non-Latin-script (Chinese 71, Arabic 38, Malay 15, Javanese 5, …), and
+        // not one carrying a translate_skipped_reason.
+        //
+        // The 25-page preview cohort is NOT this case and must still finalize:
+        // PREVIEW_PAGE_COUNT books legitimately carry no translation (full OCR is
+        // bought on demand by bulk-reocr-opened-books.mjs), and refusing them
+        // would re-stall ~17K books — the outage pipeline-status-truth.md warns
+        // about. Hence the `fullyOcrd` conjunct.
+        //
+        // translatedCount is COUNTED from `pages`, exactly as ocrCount is above,
+        // rather than read off `book.pages_translated`: that field is not in this
+        // phase's projection, and a projected-away field read as 0 is the
+        // starvation bug family from #4563/#4565 — here it would bounce every
+        // finalizing book back to ocr_complete forever.
+        const needsTranslation = !['English', 'english', 'en', 'eng'].includes(book.language);
+        const fullyOcrd = ocrCount >= totalPages * 0.9;
+        let untranslatedAndFull = false;
+        if (needsTranslation && fullyOcrd) {
+          const translatedCount = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            'translation.data': { $exists: true, $ne: '', $not: { $eq: null } },
+          });
+          untranslatedAndFull = translatedCount === 0;
+        }
+
+        if (untranslatedAndFull) {
+          // Bounded: send it back to the translate lane, but never more than
+          // FINALIZE_TRANSLATE_REQUEUES times, so a language translation genuinely
+          // cannot handle parks with a REASON instead of ping-ponging forever
+          // (the ocr_complete <-> archive_complete bounce, #4563).
+          const requeues = book.pipeline_auto?.finalize_requeues || 0;
+          if (requeues < FINALIZE_TRANSLATE_REQUEUES) {
+            if (!DRY_RUN) {
+              await setPipelineStatus(db, book.id, 'ocr_complete', {
+                finalize_requeues: requeues + 1,
+                requeue_reason: 'finalize: fully OCR\'d but 0 translated pages — returned to the translate lane',
+              });
+            }
+            log.errors.push(`Finalize requeued ${book.id}: ${ocrCount}/${totalPages} OCR, 0 translated`);
+            continue;
+          }
+          if (!DRY_RUN) {
+            await setPipelineStatus(db, book.id, 'complete', {
+              completed_at: new Date(),
+              translate_skipped_reason: `translation produced nothing after ${requeues} finalize requeues (${book.language})`,
+            });
+          }
+          log.errors.push(`Finalize completed untranslated ${book.id} after ${requeues} requeues (${book.language})`);
           continue;
         }
 
