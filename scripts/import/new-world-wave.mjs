@@ -212,6 +212,12 @@ async function main() {
       language: b.language,
       published: String(b.published),
       ...(b.original_language ? { original_language: b.original_language } : {}),
+      // A facing-page edition (Chimalpahin's Nahuatl with Siméon's French) is
+      // "substantially multilingual" in language-fields.md's terms: `language`
+      // still names the principal text, and languages[] carries the rest.
+      ...(Array.isArray(b.languages) && b.languages.length > 1
+        ? { languages: b.languages, language_multi: true }
+        : {}),
       text_role: b.text_role || 'original',
       field_provenance: { language: 'caller' },
       ia_identifier: b.ia,

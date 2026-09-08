@@ -55,6 +55,11 @@ export const BOOK_FIELDS = Object.freeze([
   // core bibliographic
   'title', 'display_title', 'display_author', 'original_title',
   'author', 'language', 'original_language',
+  // languages[] + language_multi: the ONE multilingual-edition array
+  // (invariants/language-fields.md). Written by normalize-language-tags.mjs on
+  // 45K books; an importer that already knows an edition is facing-page
+  // (Chimalpahin's Nahuatl/French) may set it at insert time.
+  'languages', 'language_multi',
   'published', 'year', 'original_work_year', 'date_earliest', 'date_latest',
   'publisher',
   'place_published', 'place_of_publication', // known duplicate family — #3969 Track B
