@@ -1,0 +1,41 @@
+{
+  "description": "Index of verified music transcriptions used as references by scripts/music/eval-transcription.mjs. See README.md.",
+  "items": [
+    {
+      "id": "shaker-1852-faithful-witness-p21",
+      "kind": "reference",
+      "file": "shaker-1852-faithful-witness-p21.abc",
+      "book_id": "6a58f512c6cd8f9871069afb",
+      "page_id": "6a58f512c6cd8f9871069b10",
+      "page_number": 21,
+      "url": "https://sourcelibrary.org/book/6a58f512c6cd8f9871069afb?page=21",
+      "notation_system": "letteral",
+      "title": "The Faithful Witness (opening)",
+      "verified": "2026-07-16 letter-for-letter second pass against the scan (issue #3161); unpitched source — score with interval_ner, not pitch_ner",
+      "mongo_status": "verified"
+    },
+    {
+      "id": "morley-1597-p14-solmization",
+      "kind": "answer-key",
+      "file": null,
+      "book_id": "69aebe72c0472fef6455ae36",
+      "page_number": 14,
+      "url": "https://sourcelibrary.org/book/69aebe72c0472fef6455ae36?page=14",
+      "notation_system": "mensural",
+      "title": "Morley, Plaine and Easie Introduction — plainsong examples with printed solmization",
+      "check": "the page prints the solmization syllables under each example; a recogniser's pitches must map to those hexachord degrees. Syllables as OCR'd (unverified against scan): 'sol sol la sol la fa sol fa mi sol la sol' (ex. 1), 'sol fa fa sol fa fa la sol sol fa la la sol fa mi la la sol' (ex. 2).",
+      "mongo_status": "none"
+    },
+    {
+      "id": "atalanta-1618-fuga-01",
+      "kind": "external-reference",
+      "file": null,
+      "book_id": "69520c46ab34727b1f044141",
+      "url": "https://sourcelibrary.org/book/69520c46ab34727b1f044141",
+      "notation_system": "mensural",
+      "title": "Maier, Atalanta fugiens — Fuga I (three voices)",
+      "external": "Brown University Library, Furnace and Fugue: MEI in Brown-University-Library/atalanta-code data/mei/Fuga 01.xml, CC BY-NC-ND 4.0. Compare against it; do not redistribute a converted copy (issue #3164).",
+      "mongo_status": "none"
+    }
+  ]
+}
