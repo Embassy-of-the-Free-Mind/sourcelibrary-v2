@@ -29,9 +29,11 @@ jobs:
 
       # `node --check` validates syntax, not scope; tsc does not cover plain
       # .mjs. This is the only guard against an undeclared identifier in the
-      # 1,100+ scripts that run against production Mongo (#4702).
+      # 1,100+ scripts that run against production Mongo (#4702). It uses its
+      # own config on purpose: eslint.config.mjs loads eslint-config-next's
+      # TypeScript layer, which crashes on load under the lockfile's ESLint 10.
       - name: Lint plain-node scripts (no-undef)
-        run: npx eslint "scripts/**/*.mjs" --quiet
+        run: npx eslint -c eslint.scripts.config.mjs "scripts/**/*.mjs" --quiet
 
       # Static source check — no network, no secrets — so it gates PRs here
       # rather than running nightly. Vercel Blob is retired in favour of R2
