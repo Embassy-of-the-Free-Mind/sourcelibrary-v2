@@ -1412,6 +1412,9 @@ export async function* streamAgenticResponse(
   // force a final synthesis turn below so the reader never gets a stub or an
   // empty reply (see the "kites" regression, issue #2826).
   let answeredNaturally = false;
+  // The last finishReason Gemini reported (SAFETY, RECITATION, MAX_TOKENS,
+  // STOP…). Only read when the turn ends with no visible text, to say why.
+  let lastFinishReason: string | undefined;
   const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
 
   // Harvest every URL a tool handed back, wherever it sits in the payload
@@ -1462,6 +1465,7 @@ export async function* streamAgenticResponse(
     for await (const chunk of stream) {
       if (chunk.usageMetadata) roundUsage = chunk.usageMetadata;
       const candidate = chunk.candidates?.[0];
+      if (candidate?.finishReason) lastFinishReason = String(candidate.finishReason);
       if (!candidate?.content?.parts) continue;
       for (const part of candidate.content.parts) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1574,6 +1578,7 @@ export async function* streamAgenticResponse(
       for await (const chunk of finalStream) {
         if (chunk.usageMetadata) finalUsage = chunk.usageMetadata;
         const candidate = chunk.candidates?.[0];
+        if (candidate?.finishReason) lastFinishReason = String(candidate.finishReason);
         if (!candidate?.content?.parts) continue;
         for (const part of candidate.content.parts) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1597,6 +1602,32 @@ export async function* streamAgenticResponse(
     } catch (err) {
       console.error('[Librarian] Forced synthesis failed:', err instanceof Error ? err.message : err);
     }
+  }
+
+  // Last resort: the turn ends with NO visible text. Measured over 45 days,
+  // 48 of 2,328 answers (2.1%) persisted as blank prose with 2–4 tool rounds
+  // and a full source list (#4704) — the reader saw source cards and nothing
+  // else, and nothing was logged. The model can return an empty candidate
+  // (SAFETY / RECITATION / a 500 that the retry didn't cover), and the forced
+  // synthesis above can hit the same wall. Hand the reader the pages that were
+  // retrieved, as a deterministic answer, and leave a trace with the reason.
+  if (generatedChunks.join('').trim() === '' && !choicesPresented) {
+    const fallback = emptyAnswerFallback(deduplicateSources(allSources), lang);
+    generatedChunks.push(fallback);
+    yield { type: 'text', text: fallback };
+    console.warn('[Librarian] empty answer', { finishReason: lastFinishReason, rounds: usage.rounds, sources: allSources.length });
+    try {
+      const db = await getDb();
+      await db.collection('embassy_errors').insertOne({
+        kind: 'empty_answer',
+        threadId: threadId ?? null,
+        message: userMessage.slice(0, 500),
+        finishReason: lastFinishReason ?? null,
+        rounds: usage.rounds,
+        sourceCount: allSources.length,
+        createdAt: new Date(),
+      });
+    } catch { /* best effort */ }
   }
 
   if (allSources.length > 0) {
@@ -2017,6 +2048,29 @@ export async function resolveSlugToHeldBook(
   candidates.sort((a, b) => (b.read_count || 0) - (a.read_count || 0) || (b.pages_count || 0) - (a.pages_count || 0));
   const best = candidates[0];
   return { slug: best.slug, title: best.display_title || best.title || best.slug };
+}
+
+/**
+ * The answer a reader gets when the model produced no text at all: the pages
+ * that were retrieved, as page-level links, plus an honest one-liner. Pure, so
+ * it is testable; the wording is deliberately the desk's, not an error code.
+ */
+export function emptyAnswerFallback(sources: SourceCard[], lang: Locale = 'en'): string {
+  const top = sources.filter(s => s.pageNumber != null).slice(0, 6);
+  const prefix = lang === 'es' ? '/es' : '';
+  const lines = top.map(s => {
+    const url = `https://sourcelibrary.org${prefix}/book/${s.bookSlug || s.book_id}/page-number/${s.pageNumber}`;
+    const page = lang === 'es' ? `Página ${s.pageNumber}` : `Page ${s.pageNumber}`;
+    return `- *${s.bookTitle}*${s.bookAuthor ? ` — ${s.bookAuthor}` : ''}, [${page}](${url})`;
+  });
+  if (lang === 'es') {
+    return top.length
+      ? `Encontré estas páginas pero no logré redactar la respuesta. Ábralas directamente, o vuelva a preguntar con otras palabras:\n\n${lines.join('\n')}`
+      : 'No logré redactar una respuesta esta vez. Vuelva a preguntar con otras palabras, o nombre un autor u obra concretos.';
+  }
+  return top.length
+    ? `I found these pages but couldn't compose the answer. Open them directly, or ask again in other words:\n\n${lines.join('\n')}`
+    : 'I couldn\'t compose an answer this time. Ask again in other words, or name a specific author or work.';
 }
 
 function deduplicateSources(sources: SourceCard[]): SourceCard[] {
