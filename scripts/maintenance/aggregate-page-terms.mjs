@@ -29,6 +29,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
+import zlib from 'node:zlib';
 import { MongoClient } from 'mongodb';
 import { isLatinScript } from '../lib/page-terms-parse.mjs';
 
@@ -55,15 +56,16 @@ sql.exec(`
 `);
 
 // ---- load shards (skip books already loaded) ----
-const shards = fs.readdirSync(IN_DIR).filter((f) => f.endsWith('.jsonl'));
+const shards = fs.readdirSync(IN_DIR).filter((f) => f.endsWith('.jsonl') || f.endsWith('.jsonl.gz'));
 const isLoaded = sql.prepare('SELECT 1 FROM loaded WHERE book_id = ?');
 const markLoaded = sql.prepare('INSERT INTO loaded (book_id) VALUES (?)');
 const ins = sql.prepare('INSERT INTO raw VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
 let loaded = 0, rows = 0;
 for (const f of shards) {
-  const bookId = f.replace(/\.jsonl$/, '');
+  const bookId = f.replace(/\.jsonl(\.gz)?$/, '');
   if (isLoaded.get(bookId)) continue;
-  const text = fs.readFileSync(path.join(IN_DIR, f), 'utf8');
+  const buf = fs.readFileSync(path.join(IN_DIR, f));
+  const text = f.endsWith('.gz') ? zlib.gunzipSync(buf).toString('utf8') : buf.toString('utf8');
   sql.exec('BEGIN');
   for (const line of text.split('\n')) {
     if (!line) continue;
