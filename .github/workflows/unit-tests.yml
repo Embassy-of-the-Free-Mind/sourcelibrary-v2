@@ -27,6 +27,12 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit
 
+      # `node --check` validates syntax, not scope; tsc does not cover plain
+      # .mjs. This is the only guard against an undeclared identifier in the
+      # 1,100+ scripts that run against production Mongo (#4702).
+      - name: Lint plain-node scripts (no-undef)
+        run: npx eslint "scripts/**/*.mjs" --quiet
+
       # Static source check — no network, no secrets — so it gates PRs here
       # rather than running nightly. Vercel Blob is retired in favour of R2
       # (#3645); this refuses new hardcoded Blob URLs (plain OR percent-encoded)
