@@ -202,7 +202,7 @@ export default function TibetanReocrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A second cohort of {DATA.lowresBooks} volumes, {DATA.lowresPages} pages, exists online only as 1536-pixel derivatives. The perturbation test says about two thirds of serve-quality pages still clear the bar at that resolution, so we ran them too, and we are asking the British Library whether the deposited masters can be made available. Those pages carry the same verdict machinery and a lower serve rate.
+          A second cohort of {DATA.lowresBooks} volumes, {DATA.lowresPages} pages, exists online only as 1536-pixel derivatives. The perturbation test says about two thirds of serve-quality pages still clear the bar at that resolution, so we ran them too. Those pages carry the same verdict machinery and a lower serve rate. All three EAP projects deposited full-resolution TIFFs with the British Library; the online derivative is the ceiling only because nothing larger is served, and the deposited masters are the obvious next request.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
