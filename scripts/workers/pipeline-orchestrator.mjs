@@ -3475,13 +3475,25 @@ Rules:
             // Language: update if Unknown
             const currentLang = book.language || 'Unknown';
             const aiLang = parsed.language || '';
+            // ONE typed provenance entry, not three private fields (2026-09-10) — this mirrors
+            // src/lib/metadata-enrichment.ts, which had the same three writes. language_source /
+            // language_confidence / ai_detected_language were read by nothing.
             if (aiLang && currentLang === 'Unknown') {
               updates.language = aiLang;
-              updates.language_source = 'gemini_text';
-              updates.language_confidence = confidence;
+              updates['field_provenance.language'] = {
+                source: 'enrichment', value: aiLang, chosen_from: 'gemini_text', confidence,
+                claims: [{ source: 'gemini_text', value: aiLang }], date: now.toISOString(),
+              };
               changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
             } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
-              updates.ai_detected_language = aiLang;
+              updates['field_provenance.language'] = {
+                source: 'enrichment', value: currentLang, chosen_from: 'catalogue', confidence, conflict: true,
+                claims: [
+                  { source: 'catalogue', value: currentLang },
+                  { source: 'gemini_text', value: aiLang },
+                ],
+                date: now.toISOString(),
+              };
             }
 
             // Author: update if Unknown/missing

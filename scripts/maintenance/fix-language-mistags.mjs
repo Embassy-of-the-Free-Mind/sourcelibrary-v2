@@ -14,6 +14,8 @@
  * Usage: node scripts/maintenance/fix-language-mistags.mjs [--apply]
  */
 import { MongoClient } from 'mongodb';
+// A sweep records a ROW, not a COLUMN (invariants/field-sprawl.md).
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 const APPLY=process.argv.includes('--apply');
 const KEY=process.env.GEMINI_API_KEY, M='gemini-3.1-flash-lite';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -26,12 +28,15 @@ async function lang(title){
   return null;
 }
 const c=new MongoClient(process.env.MONGODB_URI); await c.connect();
-const B=c.db('bookstore').collection('books');
+const db=c.db('bookstore');
+const B=db.collection('books');
 const cand=await B.find({language:'Latin', title:ENG},{projection:{title:1}}).toArray();
 let retag=0,kept=0,flagged=0,err=0; const changes=[];
 for(const b of cand){ const v=await lang(b.title); if(!v){err++;continue;}
   if(v.is_latin===false && v.confidence==='high'){ retag++; changes.push(`${v.content_language.padEnd(10)} ← ${(b.title||'').slice(0,55)}`);
-    if(APPLY) await B.updateOne({_id:b._id},{$set:{language:v.content_language,languages:[v.content_language],language_raw:'Latin',language_corrected:'gemini_content_mistag'}}); }
+    if(APPLY) { await B.updateOne({_id:b._id},{$set:{language:v.content_language,languages:[v.content_language],language_raw:'Latin'}});
+      // language_corrected held only the label 'gemini_content_mistag' and nothing read it (retired 2026-09-10).
+      await recordSweepAction(db,{sweep:'fix-language-mistags',book_id:String(b._id),action:'language-retagged',detail:{from:'Latin',to:v.content_language,detector:'gemini_content_mistag'}}); } }
   else if(v.is_latin===true){ kept++; }
   else { flagged++; if(APPLY) await B.updateOne({_id:b._id},{$set:{language_review:true}}); }
   await sleep(200);
