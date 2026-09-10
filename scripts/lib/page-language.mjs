@@ -23,7 +23,7 @@
  * See .claude/docs/invariants/language-fields.md — `language` is the EDITION's language, never the
  * work's. This module answers only the edition question.
  */
-import { normalizeLanguageToken } from './language-normalize.mjs';
+import { normalizeLanguageToken, languageFamily } from './language-normalize.mjs';
 
 /** A page with less OCR than this is a plate, a blank or a flyleaf — not evidence of a language. */
 export const MIN_CONTENT_CHARS = 700;
@@ -39,6 +39,19 @@ export const NONLATIN_QUOTE = 400;
 export const MIN_SAMPLE = 4;
 /** Share of the sample that must carry one tag before it is written unreviewed. */
 export const CLEAR_SHARE = 0.7;
+/**
+ * A runner-up language holding at least this share means the sample saw TWO languages, which is
+ * what a parallel-text edition looks like — Budge's Bar Hebraeus (Syriac facing English), Bleek &
+ * Lloyd's Specimens (ǀXam facing English), Gorfinkle's Maimonides (Hebrew facing English). Choosing
+ * one of the two is an editorial judgement about what the edition IS, so it goes to a human.
+ */
+export const BILINGUAL_RUNNERUP = 0.25;
+/**
+ * A language token must look like a language name before it is written to a reader-facing field.
+ * The OCR emitted "|xam" for Specimens of Bushman Folklore — a real language (ǀXam) under a
+ * non-alphabetic transcription that no downstream consumer knows.
+ */
+const WELL_FORMED = /^[A-Za-z][A-Za-z \-']{2,}$/;
 
 export const SCRIPTS = [
   ['HEBREW', /[֐-׿]/g],
@@ -116,10 +129,14 @@ export function spreadSample(items, n) {
  *
  * @param {Array<{ocr?: any, page_number?: number}>} pages  pages carrying OCR (any order)
  * @param {{sample?: number}} [opts]
- * @returns {{language: string|null, confidence: 'clear'|'review'|'none', sampled: number,
+ * @param {string|null} [storedLanguage]  what the catalogue currently says, so a same-family
+ *        refinement ("German" -> "Middle High German") can be reported as agreement rather than a
+ *        correction. It is not one: it is more precise about the same language, and writing it would
+ *        also push the book off getModelForBook()'s Latin-script list and onto the dearer model.
+ * @returns {{language: string|null, confidence: 'clear'|'review'|'none'|'refinement', sampled: number,
  *            modal: string|null, modalShare: number, scripts: object, why: string}}
  */
-export function detectLanguageFromPages(pages, opts = {}) {
+export function detectLanguageFromPages(pages, opts = {}, storedLanguage = null) {
   const sample = opts.sample ?? 25;
   const content = pages
     .filter(p => bodyText(p.ocr).trim().length >= MIN_CONTENT_CHARS)
@@ -142,6 +159,22 @@ export function detectLanguageFromPages(pages, opts = {}) {
   const nonLatin = Object.entries(scripts).sort((a, b) => b[1] - a[1]);
   const nonLatinTotal = nonLatin.reduce((s, [, n]) => s + n, 0);
   const modalLang = modal ? normalizeLanguageToken(modal) : null;
+  const stored = storedLanguage ? normalizeLanguageToken(storedLanguage) : null;
+  const runnerUpShare = ranked.length > 1 ? ranked[1][1] / sampled : 0;
+  const base = { sampled, modal, modalShare, scripts };
+
+  // A refinement inside one language family is not a correction, so it must not overwrite.
+  if (modalLang && stored && modalLang !== stored && languageFamily(modalLang) === languageFamily(stored)) {
+    return { ...base, language: stored, confidence: 'refinement', why: `page text reads "${modalLang}" — the same family as the stored "${stored}", a finer label rather than a different language` };
+  }
+  // Two languages in one sample is a parallel-text edition; which one the edition "is" needs a human.
+  if (modalLang && runnerUpShare >= BILINGUAL_RUNNERUP) {
+    return { ...base, language: modalLang, confidence: 'review', why: `two languages in the sample — "${modal}" ${Math.round(modalShare * 100)}% and "${ranked[1][0]}" ${Math.round(runnerUpShare * 100)}%: a parallel-text edition` };
+  }
+  // Never write a token that does not read as a language name.
+  if (modalLang && !WELL_FORMED.test(modalLang)) {
+    return { ...base, language: modalLang, confidence: 'review', why: `the OCR reported "${modalLang}", which is not a well-formed language name — confirm the intended label` };
+  }
 
   // A heavy non-Latin script VETOES a Latin-script tag: that combination is the known
   // apparatus-vs-text failure, where the model reads the editor's English and calls the book English.

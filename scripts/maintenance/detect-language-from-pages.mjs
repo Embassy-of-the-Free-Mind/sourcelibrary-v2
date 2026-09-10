@@ -1,12 +1,24 @@
 #!/usr/bin/env node
 /**
- * PRIOR ART: scripts/audit/ft-english-badged-classify.mjs classifies English-vs-not for badge
- * adjudication and writes nothing; scripts/maintenance/ft-english-badged-adjudicate.mjs writes that
- * one decision. Neither answers "which language is this edition?" for an arbitrary book, and nothing
- * in the repo sets `language` from our OWN page text — src/app/api/import/ia/route.ts can only pass
- * IA's `ocr_detected_lang`, which IA publishes for about a third of items. The sampling/census
- * primitives are shared via scripts/lib/page-language.mjs. OCR is NOT reimplemented: the sample is
- * handed to scripts/batch/realtime-ocr.mjs --page-ids-file.
+ * PRIOR ART — read this before extending, there is more of it than you expect:
+ *   - scripts/audit/detect-book-languages.mjs (#4117) already aggregates the per-page `<language>`
+ *     tag per book, over ALL tagged pages, with its own bilingual threshold (--threshold, default
+ *     0.10). It is the better instrument whenever the OCR already exists, and it NEVER writes — it
+ *     is explicitly "the instrument for tuning the 'is it really bilingual' threshold before anyone
+ *     writes anything".
+ *   - scripts/audit/language-review-triage.mjs (#3958) triages the `language_review` queue and also
+ *     never writes, because "clearing a flag on a published book is a public metadata decision".
+ *     That queue holds ~1,519 live books and nothing drains it; its default query is visible:true,
+ *     so a flag set on a hidden book is only reachable with its --all.
+ *   - scripts/audit/ft-english-badged-classify.mjs is where the sampling/tag/census primitives come
+ *     from (now shared via scripts/lib/page-language.mjs); it answers only English-vs-not.
+ *
+ * WHAT THIS ADDS, and why it may write where those may not. It covers the case they cannot: a book
+ * with NO OCR at all, where there is no tag to aggregate yet — so it commissions a spread sample
+ * first (OCR is not reimplemented; the sample goes to scripts/batch/realtime-ocr.mjs
+ * --page-ids-file). And it writes only where the decision is not a public one: by default it refuses
+ * to change `language` on a `visible` book, because that is the call those two scripts deliberately
+ * leave to a human. Pass --allow-visible to override, and expect to justify it.
  *
  * WHY. `books.language` picks the OCR model — getModelForBook() (src/lib/types/ai-models.ts) routes
  * Latin-script to flash-lite and non-Latin/unknown to full flash — so a mis-catalogued language buys
@@ -40,6 +52,8 @@ const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
 const val = (f) => { const a = argv.find((x) => x.startsWith(`${f}=`)); return a ? a.slice(f.length + 1) : null; };
 const PLAN = has('--plan'), APPLY = has('--apply'), COMMIT = has('--commit');
+/** Changing `language` on a published book is a public metadata decision — see the header. */
+const ALLOW_VISIBLE = has('--allow-visible');
 const SAMPLE = parseInt(val('--sample') || '25', 10);
 const OUT = val('--out') || '/tmp/language-sample-page-ids.json';
 /** Measured batch OCR rate; a rate never travels without its vintage. */
@@ -51,7 +65,7 @@ if (PLAN === APPLY) { console.error('Pass exactly one of --plan or --apply.'); p
 
 async function targets(db) {
   const iaFile = val('--ia-ids-file'), bookIds = val('--book-ids');
-  const proj = { id: 1, title: 1, author: 1, language: 1, pages_count: 1, ia_identifier: 1, field_provenance: 1, _id: 0 };
+  const proj = { id: 1, title: 1, author: 1, language: 1, pages_count: 1, ia_identifier: 1, field_provenance: 1, visible: 1, _id: 0 };
   if (iaFile) {
     const ids = JSON.parse(fs.readFileSync(iaFile, 'utf8'));
     return db.collection('books').find({ ia_identifier: { $in: ids } }, { projection: proj }).toArray();
@@ -114,20 +128,24 @@ if (APPLY) {
   let wrote = 0, flagged = 0, unchanged = 0, thin = 0;
   for (const b of books) {
     const pages = await db.collection('pages').find({ book_id: b.id }, { projection: { ocr: 1, page_number: 1, _id: 0 } }).toArray();
-    const d = detectLanguageFromPages(pages, { sample: SAMPLE });
+    const d = detectLanguageFromPages(pages, { sample: SAMPLE }, b.language);
     const stored = b.language ? normalizeLanguageToken(b.language) : null;
     const tag = `${String(b.ia_identifier || b.id).padEnd(32)}`;
     if (!d.language) { console.log(`  ?   ${tag} ${d.why}`); thin++; continue; }
-    const agrees = stored && stored === d.language;
+    // A 'review' verdict must take the flag path even when the detected value happens to equal the
+    // stored one: "this is a parallel-text edition" is the finding, and agreement does not answer it.
+    const agrees = stored && stored === d.language && d.confidence !== 'review';
     if (agrees) {
-      console.log(`  =   ${tag} ${d.language} confirmed (${d.why})`);
+      console.log(`  ${d.confidence === 'refinement' ? '≈' : '='}   ${tag} ${d.language} confirmed (${d.why})`);
       unchanged++;
       if (COMMIT) {
         await db.collection('books').updateOne({ id: b.id }, { $set: {
           'field_provenance.language': {
             source: 'page_ocr', value: d.language, chosen_from: 'page_ocr_detected',
-            claims: [{ source: provLabel(b.field_provenance), value: stored }, { source: 'page_ocr_detected', value: d.language }],
-            sampled: d.sampled, date: new Date().toISOString(),
+            claims: [{ source: provLabel(b.field_provenance), value: stored }, { source: 'page_ocr_detected', value: d.modal || d.language }],
+            sampled: d.sampled, why: d.why,
+            ...(d.confidence === 'refinement' ? { refinement: d.modal } : {}),
+            date: new Date().toISOString(),
           },
           updated_at: new Date(),
         } });
@@ -143,12 +161,29 @@ if (APPLY) {
       sampled: d.sampled, why: d.why, ...(stored ? { conflict: true } : {}), date: new Date().toISOString(),
     };
     // A 'review' verdict must never silently replace a catalogued value — record and flag.
+    // `language_review_detail` is written in the shape scripts/audit/language-review-triage.mjs
+    // reads, so these land in the EXISTING queue rather than beside it.
+    const detail = { detected: d.language, confidence: d.confidence, bucket: 'page_ocr_sample',
+      sampled: d.sampled, modal: d.modal, modal_share: +d.modalShare.toFixed(2), scripts: d.scripts, why: d.why };
     if (d.confidence !== 'clear' && stored) {
-      console.log(`  !   ${tag} stored=${stored} detected=${d.language} — FLAGGED for review (${d.why})`);
+      console.log(`  !   ${tag} stored=${stored} detected=${d.language}${d.language === stored ? ' (same value, but the sample is mixed)' : ''} — FLAGGED for review (${d.why})`);
       flagged++;
       if (COMMIT) {
         await db.collection('books').updateOne({ id: b.id }, { $set: {
-          language_review: true, 'field_provenance.language': prov, updated_at: new Date(),
+          language_review: true, language_review_detail: detail,
+          'field_provenance.language': prov, updated_at: new Date(),
+        } });
+      }
+      continue;
+    }
+    // Published books are the case the two audit scripts leave to a human on purpose.
+    if (b.visible && !ALLOW_VISIBLE) {
+      console.log(`  !   ${tag} ${stored || 'none'} -> ${d.language} WITHHELD — book is visible; changing a published language needs --allow-visible`);
+      flagged++;
+      if (COMMIT) {
+        await db.collection('books').updateOne({ id: b.id }, { $set: {
+          language_review: true, language_review_detail: detail,
+          'field_provenance.language': prov, updated_at: new Date(),
         } });
       }
       continue;
