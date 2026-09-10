@@ -11,8 +11,10 @@
  *   translation.data  <keywords>silence, hesychia</keywords>      → kind "keyword"
  *   translation.data  <note>original: "ἡσυχίαν" (hesychian)</note>→ kind "original" (verified against ocr.data; 12% are fabricated, #3308)
  *
- * PASS 1 of two. No model call, no DB write. One JSONL shard per book under --out-dir, one row
- * per (page, kind, term_key). Measured on a 218-book pilot (2026-09-09): 21 rows/page, 10.5
+ * PASS 1 of two. No model call, no DB write. One gzipped JSONL shard per book under --out-dir
+ * (`<book_id>.jsonl.gz`, ~8x smaller than plain — the corpus-wide plain estimate was 27 GB
+ * against 24 GB free on Hetzner), one row per (page, kind, term_key). Provenance is written
+ * ONCE per run to `<out-dir>/_meta.json` rather than repeated on every row. Measured on a 218-book pilot (2026-09-09): 21 rows/page, 10.5
  * DISTINCT terms/page, and the global distinct count grows ~linearly with books (mostly one-off
  * names + OCR noise) — ~70M per-book rows corpus-wide. That is a disk artifact, not an Atlas
  * collection. `aggregate-page-terms.mjs` (pass 2) reduces the shards to the curated global
@@ -32,6 +34,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { MongoClient } from 'mongodb';
 import { parseOcrVocab, parseTranslationTerms, CONTEXT_CHARS } from '../lib/page-terms-parse.mjs';
 
@@ -64,7 +67,13 @@ const books = db.collection('books');
 const pages = db.collection('pages');
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
-const shardPath = (bookId) => path.join(OUT_DIR, `${bookId}.jsonl`);
+const shardPath = (bookId) => path.join(OUT_DIR, `${bookId}.jsonl.gz`);
+fs.writeFileSync(path.join(OUT_DIR, '_meta.json'), JSON.stringify({
+  method: METHOD,
+  sources: { vocab: 'ocr.data <vocab>', term: 'translation.data <term>/<gloss>', keyword: 'translation.data <keywords>', original: 'translation.data <note original>, verified by $indexOfCP against ocr.data' },
+  confidence: { vocab: 0.8, term: 0.8, keyword: 0.8, original_verified: 0.9, original_unverified: 0.3 },
+  started: new Date(), host: process.env.HOSTNAME || null,
+}, null, 1));
 const resumeFrom = RESUME_FROM;
 
 /** Retry transient Atlas/network errors per book instead of dying mid-sweep. */
@@ -142,7 +151,6 @@ async function processBook(book) {
     { $sort: { page_number: 1 } },
   ], { readPreference: 'secondaryPreferred' }).toArray(), `book ${book.id}`);
 
-  const now = new Date();
   const rows = [];
   for (const p of bookPages) {
     if (!p.has_any) continue;
@@ -162,13 +170,8 @@ async function processBook(book) {
     ];
     if (parsed.length) stats.pagesWithAny++;
     for (const r of parsed) {
-      const { source, ...rest } = r;
-      rows.push({
-        book_id: book.id,
-        page_number: p.page_number,
-        ...rest,
-        field_provenance: { source, method: METHOD, confidence: r.kind === 'original' ? (r.verified ? 0.9 : 0.3) : 0.8, date: now },
-      });
+      const { source: _source, ...rest } = r;
+      rows.push({ book_id: book.id, page_number: p.page_number, ...rest });
       bump(stats.byKind, r.kind);
       if (r.kind === 'original') { if (r.verified) stats.originalVerified++; else stats.originalUnverified++; }
       if (r.kind === 'vocab') bump(stats.byLang, srcLang || 'unknown');
@@ -181,7 +184,7 @@ async function processBook(book) {
   // Write to a temp name and rename, so a killed run never leaves a truncated shard that
   // the resume check would then treat as done.
   const tmp = shard + '.tmp';
-  fs.writeFileSync(tmp, rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
+  fs.writeFileSync(tmp, zlib.gzipSync(rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''), { level: 6 }));
   fs.renameSync(tmp, shard);
 
   if (stats.books % 100 === 0) console.log(`${stats.books} books · ${stats.pages} pages · ${stats.rows} rows`);
