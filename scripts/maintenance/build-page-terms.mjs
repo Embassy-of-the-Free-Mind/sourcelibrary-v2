@@ -21,7 +21,10 @@
  * term table and is the only thing that writes to Mongo.
  *
  * Resumable by construction: a book whose shard file exists is skipped (delete the file to
- * redo it). Each book is fetched with retries — the laptop pilot died on an Atlas
+ * redo it). A book whose server-side extraction fails deterministically ("match limit
+ * exceeded" on a translation-loop page) falls back to fetching its text and parsing on the
+ * client; a book that fails even then is logged to <out-dir>/_failed.jsonl and the sweep
+ * continues — the first corpus run died on ONE such page after 3,307 books. Each book is fetched with retries — the laptop pilot died on an Atlas
  * PoolClearedOnNetworkError after ~1M rows with no retry. Run it on Hetzner, detached:
  *   nohup node --env-file=.env.production.local scripts/maintenance/build-page-terms.mjs \
  *     --out-dir /var/lib/sourcelibrary/page-terms > /var/log/sourcelibrary/page-terms.log 2>&1 &
@@ -40,6 +43,8 @@ import { parseOcrVocab, parseTranslationTerms, CONTEXT_CHARS } from '../lib/page
 
 const OCR = { $ifNull: ['$ocr.data', ''] };
 const TR = { $ifNull: ['$translation.data', ''] };
+// OCR with newlines folded to spaces, for verifying multi-word originals across line breaks.
+const OCR_WS = { $replaceAll: { input: { $replaceAll: { input: OCR, find: '\n', replacement: ' ' } }, find: '  ', replacement: ' ' } };
 // Leading context by substring from the match index — a `.{0,120}<term>` prefix in the regex
 // itself cost 36 s on a 1,763-page book (backtracking at every position); this is ~1 s.
 const CTX = (idx) => ({ $substrCP: [TR, { $max: [0, { $subtract: [idx, CONTEXT_CHARS] }] }, { $min: [CONTEXT_CHARS, idx] }] });
@@ -51,6 +56,7 @@ const LIMIT_BOOKS = Number(getArg('--limit-books') || 0);
 const RESUME_FROM = getArg('--resume-from');
 const OUT_DIR = getArg('--out-dir') || 'scripts/output/page-terms';
 const BOOK_PAGE_SIZE = Number(getArg('--page-size') || 200);
+const CLIENT_SIDE = args.includes('--client-side'); // debug: skip the aggregation, exercise the fallback path
 const METHOD = 'build-page-terms.mjs@1';
 // ocr.language carries these non-values on old pages; fall back to the book's language.
 const NON_LANG = new Set(['auto-detect', 'unknown', 'Unknown', '', null, undefined]);
@@ -90,7 +96,7 @@ async function withRetry(fn, label, tries = 6) {
 }
 
 const stats = {
-  books: 0, skipped: 0, pages: 0, pagesWithAny: 0, rows: 0,
+  books: 0, skipped: 0, failed: 0, fallback: 0, pages: 0, pagesWithAny: 0, rows: 0,
   byKind: { vocab: 0, term: 0, keyword: 0, original: 0 },
   originalVerified: 0, originalUnverified: 0,
   byLang: {},
@@ -129,39 +135,61 @@ async function processBook(book) {
   // CONTEXT_CHARS of leading text for <term> and <note original>, cut by $substrCP from the
   // match index), so a 15 MB book comes back as ~1 MB (measured 17x less egress, 2026-09-10). Original-notes are
   // verified server-side with $indexOfCP against ocr.data, which never leaves the server.
-  const bookPages = await withRetry(() => pages.aggregate([
+  let bookPages;
+  try {
+    if (CLIENT_SIDE) throw new Error('--client-side');
+    bookPages = await withRetry(() => pages.aggregate([
     { $match: { book_id: book.id } },
     { $project: {
       page_number: 1,
       lang: '$ocr.language', opv: '$ocr.prompt_version', tpv: '$translation.prompt_version',
       has_any: { $or: [{ $gt: ['$ocr.data', null] }, { $gt: ['$translation.data', null] }] },
-      vocab: { $regexFindAll: { input: OCR, regex: '<vocab>[\\s\\S]*?</vocab>' } },
+      vocab: { $regexFindAll: { input: OCR, regex: '<vocab>[\\s\\S]{0,4000}?</vocab>' } },
       terms: { $map: {
-        input: { $regexFindAll: { input: TR, regex: '<term(?:\\s[^>]*)?>[\\s\\S]*?</term>(?:\\s*<gloss(?:\\s[^>]*)?>[\\s\\S]*?</gloss>)?' } },
+        input: { $regexFindAll: { input: TR, regex: '<term(?:\\s[^>]*)?>[\\s\\S]{0,300}?</term>(?:\\s*<gloss(?:\\s[^>]*)?>[\\s\\S]{0,400}?</gloss>)?' } },
         as: 'm', in: { match: '$$m.match', ctx: CTX('$$m.idx') },
       } },
-      keywords: { $regexFindAll: { input: TR, regex: '<keywords>[\\s\\S]*?</keywords>' } },
+      keywords: { $regexFindAll: { input: TR, regex: '<keywords>[\\s\\S]{0,2000}?</keywords>' } },
       notes: { $map: {
         input: { $regexFindAll: { input: TR, regex: `<note(?:\\s[^>]*)?>\\s*original:\\s*["“«']([^"”»']{1,80})["”»'](?:\\s*[(（][^()（）]{1,80}[)）])?` } },
         as: 'n',
-        in: { match: '$$n.match', ctx: CTX('$$n.idx'), q: { $arrayElemAt: ['$$n.captures', 0] },
-              v: { $gte: [{ $indexOfCP: [OCR, { $arrayElemAt: ['$$n.captures', 0] }] }, 0] } },
+        in: { $let: {
+          // Same trim the client parser applies before searching (clean()): quotes, spaces,
+          // trailing punctuation. Without it the server verified 71% where the client verified 91%.
+          vars: { q: { $trim: { input: { $arrayElemAt: ['$$n.captures', 0] }, chars: ' \t\n"\'“”‘’«»,;:.' } } },
+          in: { match: '$$n.match', ctx: CTX('$$n.idx'), q: { $arrayElemAt: ['$$n.captures', 0] },
+                v: { $and: [{ $gt: [{ $strLenCP: '$$q' }, 0] }, { $gte: [{ $indexOfCP: [OCR_WS, '$$q'] }, 0] }] } },
+        } },
       } },
     } },
     { $sort: { page_number: 1 } },
-  ], { readPreference: 'secondaryPreferred' }).toArray(), `book ${book.id}`);
+  ], { readPreference: 'secondaryPreferred' }).toArray(), `book ${book.id}`, 3);
+  } catch (e) {
+    // Deterministic server-side failure (e.g. "match limit exceeded" on a 245K-char
+    // translation-loop page): fall back to the client-side path for THIS book only.
+    stats.fallback++;
+    console.warn(`book ${book.id}: server-side extraction failed (${e.message?.slice(0, 90)}) — client-side fallback`);
+    const full = await withRetry(() => pages.find({ book_id: book.id }, {
+      projection: { page_number: 1, 'ocr.data': 1, 'ocr.language': 1, 'ocr.prompt_version': 1, 'translation.data': 1, 'translation.prompt_version': 1 },
+    }).sort({ page_number: 1 }).toArray(), `book ${book.id} (full)`);
+    bookPages = full.map((p) => ({
+      page_number: p.page_number, lang: p.ocr?.language, opv: p.ocr?.prompt_version, tpv: p.translation?.prompt_version,
+      has_any: !!(p.ocr?.data || p.translation?.data),
+      _full: { ocr: p.ocr?.data || '', tr: p.translation?.data || '' },
+    }));
+  }
 
   const rows = [];
   for (const p of bookPages) {
     if (!p.has_any) continue;
     stats.pages++;
     const srcLang = (NON_LANG.has(p.lang) ? null : p.lang) || book.language || null;
-    const ocrPart = p.vocab.map((m) => m.match).join('\n');
-    const trPart = [...p.terms.map((m) => m.ctx + m.match), ...p.keywords.map((m) => m.match), ...p.notes.map((n) => n.ctx + n.match)].join('\n');
-    const verified = new Map(p.notes.map((n) => [n.q, n.v]));
+    const ocrPart = p._full ? p._full.ocr : p.vocab.map((m) => m.match).join('\n');
+    const trPart = p._full ? p._full.tr : [...p.terms.map((m) => m.ctx + m.match), ...p.keywords.map((m) => m.match), ...p.notes.map((n) => n.ctx + n.match)].join('\n');
+    const verified = p._full ? undefined : new Map(p.notes.map((n) => [n.q, n.v]));
     const parsed = [
       ...parseOcrVocab(ocrPart).map((r) => ({ ...r, lang: srcLang, prompt_version: p.opv ?? null, source: 'ocr.data <vocab>' })),
-      ...parseTranslationTerms(trPart, null, { verified }).map((r) => ({
+      ...parseTranslationTerms(trPart, p._full ? p._full.ocr : null, { verified }).map((r) => ({
         ...r,
         lang: r.kind === 'original' ? srcLang : 'English',
         prompt_version: p.tpv ?? null,
@@ -198,7 +226,14 @@ await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
   for (;;) {
     const { value: book, done } = await iter.next();
     if (done) return;
-    await processBook(book);
+    try {
+      await processBook(book);
+    } catch (e) {
+      // One book must never take the sweep down. Record it; rerun with --book <id> later.
+      stats.failed++;
+      fs.appendFileSync(path.join(OUT_DIR, '_failed.jsonl'), JSON.stringify({ book_id: book.id, error: String(e.message || e).slice(0, 300), at: new Date().toISOString() }) + '\n');
+      console.error(`book ${book.id}: FAILED after fallback — ${String(e.message || e).slice(0, 120)}`);
+    }
   }
 }));
 
