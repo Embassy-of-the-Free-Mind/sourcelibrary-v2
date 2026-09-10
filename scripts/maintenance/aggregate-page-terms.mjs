@@ -15,7 +15,7 @@
  *   { term_key, term (most frequent surface form), kinds: {vocab,term,keyword,original},
  *     langs: {Latin: n, …}, glosses: [{gloss, n}] (top 5), books: n, pages: n,
  *     original_verified: n, original_unverified: n,
- *     evidence: [{book_id, page_number, kind, gloss}] (≤5, distinct books),
+ *     evidence: [{book_id, page_number, kind, gloss, context}] (≤5, distinct books; context = ≤120 chars of translation before a <term>/<note original>),
  *     field_provenance: {source, method, date} }
  *
  * Kept for Mongo (--apply) when ANY of: has a gloss; <term>-tagged in ≥2 books; verified
@@ -50,7 +50,7 @@ if (REBUILD && fs.existsSync(DB_PATH)) fs.unlinkSync(DB_PATH);
 const sql = new DatabaseSync(DB_PATH);
 sql.exec(`
   PRAGMA journal_mode = OFF; PRAGMA synchronous = OFF; PRAGMA temp_store = FILE;
-  CREATE TABLE IF NOT EXISTS raw (term_key TEXT, term TEXT, kind TEXT, lang TEXT, gloss TEXT, book_id TEXT, page_number INTEGER, verified INTEGER);
+  CREATE TABLE IF NOT EXISTS raw (term_key TEXT, term TEXT, kind TEXT, lang TEXT, gloss TEXT, book_id TEXT, page_number INTEGER, verified INTEGER, context TEXT);
   CREATE TABLE IF NOT EXISTS loaded (book_id TEXT PRIMARY KEY);
 `);
 
@@ -58,7 +58,7 @@ sql.exec(`
 const shards = fs.readdirSync(IN_DIR).filter((f) => f.endsWith('.jsonl'));
 const isLoaded = sql.prepare('SELECT 1 FROM loaded WHERE book_id = ?');
 const markLoaded = sql.prepare('INSERT INTO loaded (book_id) VALUES (?)');
-const ins = sql.prepare('INSERT INTO raw VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+const ins = sql.prepare('INSERT INTO raw VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
 let loaded = 0, rows = 0;
 for (const f of shards) {
   const bookId = f.replace(/\.jsonl$/, '');
@@ -68,7 +68,7 @@ for (const f of shards) {
   for (const line of text.split('\n')) {
     if (!line) continue;
     const r = JSON.parse(line);
-    ins.run(r.term_key, r.term, r.kind, r.lang ?? null, r.gloss ?? null, r.book_id, r.page_number, r.verified === true ? 1 : r.verified === false ? 0 : null);
+    ins.run(r.term_key, r.term, r.kind, r.lang ?? null, r.gloss ?? null, r.book_id, r.page_number, r.verified === true ? 1 : r.verified === false ? 0 : null, r.context ?? null);
     rows++;
   }
   markLoaded.run(bookId);
@@ -90,7 +90,7 @@ const groups = sql.prepare(`
          SUM(gloss IS NOT NULL) AS glossed
   FROM raw GROUP BY term_key
 `);
-const detail = sql.prepare('SELECT term, kind, lang, gloss, book_id, page_number, verified FROM raw WHERE term_key = ?');
+const detail = sql.prepare('SELECT term, kind, lang, gloss, book_id, page_number, verified, context FROM raw WHERE term_key = ? ORDER BY (gloss IS NULL), (context IS NULL)');
 const distinctBooksBy = sql.prepare("SELECT COUNT(DISTINCT book_id) AS b FROM raw WHERE term_key = ? AND kind = ? AND (? IS NULL OR verified = ?)");
 
 const out = fs.createWriteStream(OUT, { flags: 'w' });
@@ -116,7 +116,7 @@ for (const g of groups.iterate()) {
     if (d.gloss) glosses.set(d.gloss, (glosses.get(d.gloss) || 0) + 1);
     if (evidence.length < 5 && !evBooks.has(d.book_id) && (d.kind !== 'original' || d.verified === 1)) {
       evBooks.add(d.book_id);
-      evidence.push({ book_id: d.book_id, page_number: d.page_number, kind: d.kind, gloss: d.gloss });
+      evidence.push({ book_id: d.book_id, page_number: d.page_number, kind: d.kind, gloss: d.gloss, context: d.context });
     }
   }
   const row = {

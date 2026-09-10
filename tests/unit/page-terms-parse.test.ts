@@ -92,6 +92,16 @@ describe('parseTranslationTerms', () => {
       expect.objectContaining({ term: 'εἰρήνην', gloss: null, verified: false }),
     ]);
   });
+  it('keeps the translator\'s own rendering as leading context, tags stripped', () => {
+    const t = 'He spoke of <margin>x</margin> stillness of heart <term>hesychia</term> <gloss>quiet</gloss>';
+    const row = parseTranslationTerms(t)[0];
+    expect(row.context).toBe('He spoke of x stillness of heart');
+    expect(parseTranslationTerms('<term>alone</term>')[0].context).toBeNull();
+  });
+  it('accepts a pre-computed verification map when OCR text is not supplied', () => {
+    const rows = parseTranslationTerms('x <note>original: "wujud"</note> y <note>original: "ghayb"</note>', null, { verified: new Map([['wujud', true]]) });
+    expect(rows.map((r) => [r.term, r.verified])).toEqual([['wujud', true], ['ghayb', null]]);
+  });
   it('original-notes get verified: null when no OCR text is supplied', () => {
     const rows = parseTranslationTerms('x <note>original: "wujud"</note>');
     expect(rows[0]).toMatchObject({ kind: 'original', term: 'wujud', verified: null });

@@ -25,6 +25,7 @@
  *     --out-dir /var/lib/sourcelibrary/page-terms > /var/log/sourcelibrary/page-terms.log 2>&1 &
  *   node scripts/maintenance/build-page-terms.mjs --limit-books 300     # pilot
  *   node scripts/maintenance/build-page-terms.mjs --book <id>           # one book
+ *   --concurrency N (default 6) · --out-dir <dir> · --resume-from <bookId>
  *
  * Book iteration is keyset pagination (id > last), never a long-lived cursor — a cursor held
  * across slow work dies with CursorNotFound (see the entity repair sweep's header).
@@ -32,7 +33,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
-import { parseOcrVocab, parseTranslationTerms } from '../lib/page-terms-parse.mjs';
+import { parseOcrVocab, parseTranslationTerms, CONTEXT_CHARS } from '../lib/page-terms-parse.mjs';
+
+const OCR = { $ifNull: ['$ocr.data', ''] };
+const TR = { $ifNull: ['$translation.data', ''] };
+// Leading context by substring from the match index — a `.{0,120}<term>` prefix in the regex
+// itself cost 36 s on a 1,763-page book (backtracking at every position); this is ~1 s.
+const CTX = (idx) => ({ $substrCP: [TR, { $max: [0, { $subtract: [idx, CONTEXT_CHARS] }] }, { $min: [CONTEXT_CHARS, idx] }] });
 
 const args = process.argv.slice(2);
 const getArg = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : null; };
@@ -106,33 +113,50 @@ async function* iterateBooks() {
 
 const bump = (o, k) => { o[k] = (o[k] || 0) + 1; };
 
-for await (const book of iterateBooks()) {
+async function processBook(book) {
   const shard = shardPath(book.id);
-  if (fs.existsSync(shard)) { stats.skipped++; continue; }
-  const bookPages = await withRetry(() => pages
-    .find({ book_id: book.id }, {
-      projection: {
-        page_number: 1, 'ocr.data': 1, 'ocr.language': 1, 'ocr.prompt_version': 1,
-        'translation.data': 1, 'translation.prompt_version': 1,
-      },
-    })
-    .sort({ page_number: 1 })
-    .toArray(), `book ${book.id}`);
+  if (fs.existsSync(shard)) { stats.skipped++; return; }
+  // Extraction happens INSIDE Mongo: $regexFindAll returns only the tagged substrings (plus
+  // CONTEXT_CHARS of leading text for <term> and <note original>, cut by $substrCP from the
+  // match index), so a 15 MB book comes back as ~1 MB (measured 17x less egress, 2026-09-10). Original-notes are
+  // verified server-side with $indexOfCP against ocr.data, which never leaves the server.
+  const bookPages = await withRetry(() => pages.aggregate([
+    { $match: { book_id: book.id } },
+    { $project: {
+      page_number: 1,
+      lang: '$ocr.language', opv: '$ocr.prompt_version', tpv: '$translation.prompt_version',
+      has_any: { $or: [{ $gt: ['$ocr.data', null] }, { $gt: ['$translation.data', null] }] },
+      vocab: { $regexFindAll: { input: OCR, regex: '<vocab>[\\s\\S]*?</vocab>' } },
+      terms: { $map: {
+        input: { $regexFindAll: { input: TR, regex: '<term(?:\\s[^>]*)?>[\\s\\S]*?</term>(?:\\s*<gloss(?:\\s[^>]*)?>[\\s\\S]*?</gloss>)?' } },
+        as: 'm', in: { match: '$$m.match', ctx: CTX('$$m.idx') },
+      } },
+      keywords: { $regexFindAll: { input: TR, regex: '<keywords>[\\s\\S]*?</keywords>' } },
+      notes: { $map: {
+        input: { $regexFindAll: { input: TR, regex: `<note(?:\\s[^>]*)?>\\s*original:\\s*["“«']([^"”»']{1,80})["”»'](?:\\s*[(（][^()（）]{1,80}[)）])?` } },
+        as: 'n',
+        in: { match: '$$n.match', ctx: CTX('$$n.idx'), q: { $arrayElemAt: ['$$n.captures', 0] },
+              v: { $gte: [{ $indexOfCP: [OCR, { $arrayElemAt: ['$$n.captures', 0] }] }, 0] } },
+      } },
+    } },
+    { $sort: { page_number: 1 } },
+  ], { readPreference: 'secondaryPreferred' }).toArray(), `book ${book.id}`);
 
   const now = new Date();
   const rows = [];
   for (const p of bookPages) {
-    const ocrText = p.ocr?.data;
-    const trText = p.translation?.data;
-    if (!ocrText && !trText) continue;
+    if (!p.has_any) continue;
     stats.pages++;
-    const srcLang = (NON_LANG.has(p.ocr?.language) ? null : p.ocr.language) || book.language || null;
+    const srcLang = (NON_LANG.has(p.lang) ? null : p.lang) || book.language || null;
+    const ocrPart = p.vocab.map((m) => m.match).join('\n');
+    const trPart = [...p.terms.map((m) => m.ctx + m.match), ...p.keywords.map((m) => m.match), ...p.notes.map((n) => n.ctx + n.match)].join('\n');
+    const verified = new Map(p.notes.map((n) => [n.q, n.v]));
     const parsed = [
-      ...parseOcrVocab(ocrText).map((r) => ({ ...r, lang: srcLang, prompt_version: p.ocr?.prompt_version ?? null, source: 'ocr.data <vocab>' })),
-      ...parseTranslationTerms(trText, ocrText).map((r) => ({
+      ...parseOcrVocab(ocrPart).map((r) => ({ ...r, lang: srcLang, prompt_version: p.opv ?? null, source: 'ocr.data <vocab>' })),
+      ...parseTranslationTerms(trPart, null, { verified }).map((r) => ({
         ...r,
         lang: r.kind === 'original' ? srcLang : 'English',
-        prompt_version: p.translation?.prompt_version ?? null,
+        prompt_version: p.tpv ?? null,
         source: `translation.data <${r.kind === 'original' ? 'note original' : r.kind === 'keyword' ? 'keywords' : 'term'}>`,
       })),
     ];
@@ -162,6 +186,18 @@ for await (const book of iterateBooks()) {
 
   if (stats.books % 100 === 0) console.log(`${stats.books} books · ${stats.pages} pages · ${stats.rows} rows`);
 }
+
+// Small pool: books are independent, and a serial loop leaves the connection idle while
+// the client parses. --concurrency 1 for debugging.
+const CONCURRENCY = Number(getArg('--concurrency') || 6);
+const iter = iterateBooks();
+await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
+  for (;;) {
+    const { value: book, done } = await iter.next();
+    if (done) return;
+    await processBook(book);
+  }
+}));
 
 await client.close();
 
