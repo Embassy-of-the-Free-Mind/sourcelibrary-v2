@@ -1867,7 +1867,70 @@ const SLUG_STOPWORDS = new Set([
   // Cataloguing / format words — describe the artefact, not the work.
   'manuscript', 'manuscripts', 'codex', 'facsimile', 'collection',
   'collections', 'compilation', 'digitization', 'unknown', 'author', 'authors',
+  // Jesuit imprint boilerplate the model copies into Kircher slugs
+  // (`athanasii-kircheri-e-societate-iesu-…`) — describes the author's order,
+  // never the work, and our titles rarely carry it.
+  'societate', 'soc', 'iesu', 'jesu', 'iesv', 'hoc', 'est',
 ]);
+
+/** 2–4 digit numbers in a slug or title: years, shelfmarks (`reg-lat-1266`), volumes. */
+function numbersOf(s: string): Set<string> {
+  return new Set(s.match(/\d{2,4}/g) ?? []);
+}
+
+/**
+ * Never swap shelfmarks or dates: when both the broken slug and the candidate
+ * carry numbers and share none, the candidate is a different object.
+ * `reg-lat-1266` was "repaired" onto `…-reg-lat-1228` — a different Vatican
+ * manuscript — because the digits were filtered out before matching.
+ */
+export function numbersAgree(slug: string, cand: Pick<RepairCandidate, 'slug' | 'title' | 'display_title'>): boolean {
+  const want = numbersOf(slug);
+  const have = numbersOf(`${cand.slug} ${cand.title ?? ''} ${cand.display_title ?? ''}`);
+  if (want.size === 0 || have.size === 0) return true;
+  return [...want].some(n => have.has(n));
+}
+
+/** Levenshtein distance, capped: returns 3 as soon as it cannot be ≤ 2. */
+function editDistance(a: string, b: string): number {
+  if (Math.abs(a.length - b.length) > 2) return 3;
+  const prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    let diag = prev[0];
+    prev[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = prev[j];
+      prev[j] = Math.min(prev[j] + 1, prev[j - 1] + 1, diag + (a[i - 1] === b[j - 1] ? 0 : 1));
+      diag = tmp;
+    }
+  }
+  return prev[b.length];
+}
+
+/**
+ * The fuzzy tier's acceptance test: every DISTINCTIVE token of the broken slug
+ * (5+ characters) must correspond to some word of the candidate's title or
+ * author — as a substring, or within a small edit distance (1 for short
+ * tokens, 2 for 8+). That tolerates the ways a model-composed slug drifts
+ * from the catalogue (dropped umlauts: `weytber-mpten`/`weytberuempten` for
+ * *weytberümpten*; Latin inflection: `subterranei` for *subterraneus*) while
+ * still refusing a candidate that lacks a real title word: Gassendi's *Life of
+ * Tycho* shares six tokens with `tychonis-brahe-…-astronomiae-instauratae` but
+ * has no `instauratae`, and Meder's judgment on the Rosicrucians has no
+ * `fraternity`. Measured on 195 unrepaired slugs: 14 accepted, 0 wrong (#4704).
+ */
+export function distinctiveTokensAccounted(tokens: string[], cand: Pick<RepairCandidate, 'title' | 'display_title' | 'english_title' | 'author'>): boolean {
+  const words = normalizeForMatch([cand.title, cand.display_title, cand.english_title, cand.author].filter(Boolean).join(' '))
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter(Boolean);
+  return tokens
+    .filter(t => t.length >= 5)
+    .every(t => {
+      const tok = normalizeForMatch(t);
+      const tolerance = tok.length >= 8 ? 2 : 1;
+      return words.some(w => w.includes(tok) || editDistance(tok, w) <= tolerance);
+    });
+}
 
 /**
  * Fields carried by the `books_search` Atlas index. `slug` is NOT among them,
@@ -1927,6 +1990,7 @@ async function findRepairCandidates(
   tokens: string[],
   minimumShouldMatch: number,
   excludeSlug: string,
+  fuzzy = false,
 ): Promise<RepairCandidate[]> {
   const db = await getDb();
   const pipeline = [
@@ -1934,7 +1998,17 @@ async function findRepairCandidates(
       $search: {
         index: BOOK_SEARCH_INDEX,
         compound: {
-          should: tokens.map(t => ({ text: { query: t, path: REPAIR_SEARCH_PATHS } })),
+          should: tokens.map(t => ({
+            text: {
+              query: t,
+              path: REPAIR_SEARCH_PATHS,
+              // One edit per token, first two letters fixed: catches dropped
+              // diacritics and inflection without letting `vita` find `vitae`
+              // in every book. The acceptance test after the query is what
+              // keeps this honest (distinctiveTokensAccounted).
+              ...(fuzzy ? { fuzzy: { maxEdits: 1, prefixLength: 2 } } : {}),
+            },
+          })),
           minimumShouldMatch,
         },
       },
@@ -2003,6 +2077,19 @@ export async function resolveSlugToHeldBook(
     candidates = await findRepairCandidates(tokens, tokens.length - 1, slug);
   }
 
+  // Third tier: the composed slug is the RIGHT book spelled slightly wrong —
+  // dropped umlauts, Latin case endings, a typo. Exact matching cannot see
+  // that, so query fuzzily for 60% of the tokens and then insist that every
+  // distinctive token is accounted for within edit distance (the acceptance
+  // test is what makes this tier safe; the query only proposes).
+  let fuzzyTier = false;
+  if (candidates.length === 0 && tokens.length >= 2) {
+    const msm = Math.max(2, Math.ceil(tokens.length * 0.6));
+    candidates = (await findRepairCandidates(tokens, Math.min(msm, tokens.length), slug, true))
+      .filter(cand => distinctiveTokensAccounted(tokens, cand));
+    fuzzyTier = true;
+  }
+
   // Never swap volumes: if both slugs carry a volume designator and they
   // disagree, the candidate is a different physical book of the same work.
   const wantVol = volumeOf(slug);
@@ -2010,9 +2097,28 @@ export async function resolveSlugToHeldBook(
     const candVol = volumeOf(cand.slug);
     return !(wantVol && candVol && wantVol !== candVol);
   });
+  // Never swap shelfmarks or dates (reg-lat-1266 is not reg-lat-1228).
+  candidates = candidates.filter(cand => numbersAgree(slug, cand));
   // Never swap works: an author-only match is a different book by the same hand.
   candidates = candidates.filter(cand => matchesBeyondAuthor(tokens, cand));
   if (candidates.length === 0) return null;
+
+  if (fuzzyTier) {
+    // Rank by how many tokens landed in the title; a tie between two
+    // DIFFERENT titles is ambiguity, and ambiguity is a dead link, not a guess.
+    // A tie between editions of the same work (`…-khunrath-2`/`-3`) is fine.
+    const hits = (cand: RepairCandidate) => tokens.filter(t => {
+      const tok = normalizeForMatch(t);
+      return normalizeForMatch([cand.title, cand.display_title, cand.english_title].filter(Boolean).join(' ')).includes(tok);
+    }).length;
+    candidates.sort((a, b) => hits(b) - hits(a) || (b.read_count || 0) - (a.read_count || 0));
+    const [first, second] = candidates;
+    if (second && hits(second) === hits(first)) {
+      const titleOf = (c: RepairCandidate) => normalizeForMatch(c.display_title || c.title || '');
+      if (titleOf(first) !== titleOf(second)) return null;
+    }
+    return { slug: first.slug, title: first.display_title || first.title || first.slug };
+  }
 
   candidates.sort((a, b) => (b.read_count || 0) - (a.read_count || 0) || (b.pages_count || 0) - (a.pages_count || 0));
   const best = candidates[0];
