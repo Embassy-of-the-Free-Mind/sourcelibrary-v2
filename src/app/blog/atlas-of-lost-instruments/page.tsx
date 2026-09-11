@@ -28,7 +28,79 @@ export const metadata: Metadata = {
 
 const R = 'text-accent-rust hover:text-accent-rust underline';
 const P = 'text-secondary leading-relaxed mb-6 font-body';
-const H2 = 'font-serif text-3xl text-primary mb-6 mt-14';
+
+/**
+ * The atlas's plates. One entry per station; drives the contents grid at the
+ * top and the eyebrow line on every section so the two cannot drift apart.
+ */
+const PLATES = [
+  { id: 'keyed-fiddle', n: 'I', year: 1619, place: 'Wolfenbüttel', title: 'The keyed fiddle', img: `${IMG}/695573e7f63a757109172b1d/293.jpg` },
+  { id: 'cat-organ', n: 'II', year: 1650, place: 'Rome', title: 'The cat organ', img: `${IMG}/69b6b0fa96dc15d4a16cfb67/437.jpg` },
+  { id: 'aeolian-harp', n: 'III', year: 1650, place: 'Rome', title: 'A harp the wind plays', img: `${IMG}/695592747bd6d2cd1d61a5c3/379.jpg` },
+  { id: 'composing-box', n: 'IV', year: 1650, place: 'Rome', title: 'A box that composes', img: `${IMG}/695592747bd6d2cd1d61a5c3/500.jpg` },
+  { id: 'megaphone', n: 'V', year: 1671, place: 'London and Rome', title: 'The quarrel over the megaphone', img: `${IMG}/69aebe60c0472fef6455a8f2/10.jpg` },
+  { id: 'third-sound', n: 'VI', year: 1754, place: 'Padua', title: 'The note nobody played', img: `${IMG}/6990585617295890441358e0/28.jpg` },
+  { id: 'sand-figures', n: 'VII', year: 1787, place: 'Wittenberg', title: 'Sand that draws a sound', img: `${IMG}/69905808172958904413516a/111.jpg` },
+  { id: 'thirty-one', n: 'VIII', year: 1577, place: 'Salamanca', title: 'Thirty-one notes to the octave', img: `${IMG}/695575b157e3b773024f206d/178.jpg` },
+  { id: 'baghdad-osuna', n: 'IX', year: 950, place: 'Baghdad and Osuna', title: 'Before Europe, and beside it', img: `${IMG}/69557dd157e3b773024f4041/40.jpg` },
+] as const;
+
+type Plate = (typeof PLATES)[number];
+
+function Station({ plate, children }: { plate: Plate; children: ReactNode }) {
+  return (
+    <section id={plate.id} className="mt-16 scroll-mt-24">
+      <p className="text-xs uppercase tracking-[0.2em] text-muted font-body mb-2">
+        Plate {plate.n} &middot; {plate.year} &middot; {plate.place}
+      </p>
+      <h2 className="font-serif text-3xl text-primary mb-6 mt-0">{plate.title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function Contents() {
+  return (
+    <nav aria-label="Plates" className="not-prose my-10">
+      <p className="text-xs uppercase tracking-[0.2em] text-muted font-body mb-4">The plates</p>
+      <ol className="grid grid-cols-2 md:grid-cols-3 gap-3 list-none p-0 m-0">
+        {PLATES.map((p) => (
+          <li key={p.id} className="m-0">
+            <a
+              href={`#${p.id}`}
+              className="group block rounded-lg border border-border-light bg-white/70 overflow-hidden hover:border-accent-rust/60 transition-colors"
+            >
+              <div className="aspect-[4/3] bg-cream overflow-hidden">
+                <img
+                  src={p.img}
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-full object-cover object-top grayscale-[35%] group-hover:grayscale-0 transition"
+                />
+              </div>
+              <div className="px-3 py-2">
+                <p className="text-[11px] uppercase tracking-wider text-muted font-body">
+                  {p.n} &middot; {p.year}
+                </p>
+                <p className="text-sm text-primary font-serif leading-snug">{p.title}</p>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  );
+}
+
+function PartTitle({ children }: { children: ReactNode }) {
+  return (
+    <div className="mt-20 mb-2 flex items-center gap-4 not-prose">
+      <hr className="flex-1 border-border-light" />
+      <p className="text-xs uppercase tracking-[0.25em] text-accent-rust font-body">{children}</p>
+      <hr className="flex-1 border-border-light" />
+    </div>
+  );
+}
 
 function Quote({ children, cite, href }: { children: ReactNode; cite: string; href: string }) {
   return (
@@ -45,6 +117,7 @@ function Quote({ children, cite, href }: { children: ReactNode; cite: string; hr
 }
 
 export default function AtlasOfLostInstrumentsPage() {
+  const [fiddle, cat, harp, box, megaphone, third, sand, thirtyOne, beyond] = PLATES;
   return (
     <ContentPageLayout
       header={
@@ -54,7 +127,7 @@ export default function AtlasOfLostInstrumentsPage() {
           image={HERO}
           imageAlt="Plate XXII of Praetorius's Theatrum Instrumentorum, 1620: a keyed fiddle, a straw fiddle, bells and a tambourine"
         >
-          <p className="text-stone-400 text-sm mt-4">10 September 2026 &middot; 12 min read</p>
+          <p className="text-stone-400 text-sm mt-4">11 September 2026 &middot; 12 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -69,19 +142,27 @@ export default function AtlasOfLostInstrumentsPage() {
       </div>
 
       <article className="prose-content max-w-none">
-        <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          The easy criticism of a library like this one is that it is all theory. Harmony of the spheres,
-          ratios of the soul, the music of the planets: beautiful, and useless. The{' '}
+        <p className="text-xl text-secondary leading-relaxed mb-6 font-body">
+          The easy criticism of a library like this one is that it is all theory. The harmony of the
+          spheres, the ratios of the soul, the music of the planets: beautiful, and useless. The{' '}
           <Link href="/blog/sound-laboratory" className={R}>Sound Laboratory</Link> answered part of that
-          by letting you test the old claims with your ears. This note takes the other half of the
-          objection head on. We went looking through the books for things that actually happened:
-          instruments that were built, effects that were heard for the first time, quarrels over who
-          heard them first. Here are nine. Every one links to the page it comes from, in our own
-          translation, beside the scan.
+          by letting you test the old claims with your ears. This note answers the rest. We went
+          through the music shelf looking not for ideas but for <em>events</em>: an instrument that was
+          built, an effect that was heard for the first time, a fight over who heard it first.
+        </p>
+        <p className={P}>
+          We found nine. They are laid out below as the plates of an atlas, each one a page you can
+          open. Every quotation is our translation of that page, and every page sits beside its scan,
+          so you can check us. Four were built, three were heard, one was fought over, and the last
+          two come from outside the story Europe usually tells about itself. At the end is the thing
+          none of this reaches yet: the music printed on those same pages.
         </p>
 
-        {/* I */}
-        <h2 className={H2}>I. The keyed fiddle</h2>
+        <Contents />
+
+        <PartTitle>Built</PartTitle>
+
+        <Station plate={fiddle}>
         <p className={P}>
           Michael Praetorius spent the years around 1619 doing something nobody had done: cataloguing
           every instrument he could find, with measured woodcuts, in the second volume of his{' '}
@@ -105,8 +186,9 @@ export default function AtlasOfLostInstrumentsPage() {
           rebuild the sound of 1619 from, this is it.
         </p>
 
-        {/* II */}
-        <h2 className={H2}>II. The cat organ</h2>
+        </Station>
+
+        <Station plate={cat}>
         <p className={P}>
           Athanasius Kircher&apos;s <em>Musurgia Universalis</em> (1650) is a thousand pages on everything
           sound can do, and buried in its chapter on keyboard mechanics is the most notorious instrument
@@ -129,8 +211,9 @@ export default function AtlasOfLostInstrumentsPage() {
           sourceLabel="Schott, Magia Universalis, 1674"
         />
 
-        {/* III */}
-        <h2 className={H2}>III. A harp the wind plays</h2>
+        </Station>
+
+        <Station plate={harp}>
         <p className={P}>
           Two hundred pages later in the same <em>Musurgia</em>, after a long description of a mechanical
           organ whose cylinder drives statues of blacksmiths to swing their hammers in time, Kircher
@@ -151,8 +234,9 @@ export default function AtlasOfLostInstrumentsPage() {
           before anyone could account for it, and he wrote down that he had.
         </p>
 
-        {/* IV */}
-        <h2 className={H2}>IV. A box that composes</h2>
+        </Station>
+
+        <Station plate={box}>
         <p className={P}>
           The <em>Musurgia</em>&apos;s Book VIII is titled &ldquo;Miraculous Music-making,&rdquo; and its
           miracle is a wooden chest full of slats. Each slat carries columns of numbers; you pick slats
@@ -169,8 +253,11 @@ export default function AtlasOfLostInstrumentsPage() {
           sourceLabel="Kircher, Musurgia Universalis, vol. II, 1650"
         />
 
-        {/* V */}
-        <h2 className={H2}>V. The quarrel over the megaphone</h2>
+        </Station>
+
+        <PartTitle>Fought over</PartTitle>
+
+        <Station plate={megaphone}>
         <p className={P}>
           In 1671 Sir Samuel Morland, the Restoration&apos;s most inventive courtier, published a small book
           in English and Latin announcing a new instrument: a conical trumpet, the biggest over sixteen
@@ -219,8 +306,11 @@ export default function AtlasOfLostInstrumentsPage() {
           to measure it and publish the distances.
         </p>
 
-        {/* VI */}
-        <h2 className={H2}>VI. The note nobody played</h2>
+        </Station>
+
+        <PartTitle>Heard</PartTitle>
+
+        <Station plate={third}>
         <p className={P}>
           Giuseppe Tartini was the most famous violinist in Europe when, in 1754, he published a
           treatise claiming that two notes played loudly and perfectly in tune produce a third note,
@@ -237,11 +327,13 @@ export default function AtlasOfLostInstrumentsPage() {
           observation was right. Difference tones are real, they are still called Tartini tones, and the
           physics took Helmholtz another century. You can hear one in{' '}
           <Link href="/blog/sound-laboratory" className={R}>Station V of the Sound Laboratory</Link>.
-          The treatise has no English translation. [verify]
+          The only English translation of the treatise is a doctoral dissertation from 1985 that was
+          never published; ours is the first anyone can open.
         </p>
 
-        {/* VII */}
-        <h2 className={H2}>VII. Sand that draws the shape of a sound</h2>
+        </Station>
+
+        <Station plate={sand}>
         <p className={P}>
           In 1787 a young lawyer in Wittenberg named Ernst Chladni published a book of
           <em> discoveries</em>, and used the word without embarrassment. He had bowed the edge of a
@@ -265,12 +357,13 @@ export default function AtlasOfLostInstrumentsPage() {
           This is the founding experiment of acoustics as a laboratory science, and this is the first
           edition of it. Napoleon, after watching the demonstration, paid for Chladni&apos;s larger{' '}
           <Link href="/book/6990580b17295890441351e7" className={R}><em>Acoustics</em></Link> of 1802 to be
-          put into French. Nobody paid to put the <em>Discoveries</em> into English, and until this year
-          nobody had. [verify]
+          put into French. As far as we can find, nobody ever put the <em>Discoveries</em> into English.
+          Until now it has been a book you could look at but not read.
         </p>
 
-        {/* VIII */}
-        <h2 className={H2}>VIII. Thirty-one notes to the octave</h2>
+        </Station>
+
+        <Station plate={thirtyOne}>
         <p className={P}>
           In 1555 Nicola Vicentino built a harpsichord with six rows of keys and thirty-one notes in every
           octave, so that the chromatic and enharmonic scales of the ancient Greeks could be played
@@ -292,11 +385,15 @@ export default function AtlasOfLostInstrumentsPage() {
           right: a third of a comma, he says, offends the ear &ldquo;very little.&rdquo; Modern
           psychoacoustics puts the just-noticeable difference for a sustained tone at about five cents,
           which is a quarter of a comma. A blind man arguing from arithmetic about what ears can do
-          landed within a few cents of the answer.
+          landed within a few cents of the answer. This is a discovery about hearing, not about
+          tuning, and it was made two hundred years before anyone had a name for the field.
         </p>
 
-        {/* IX */}
-        <h2 className={H2}>IX. Beyond Europe, and before it</h2>
+        </Station>
+
+        <PartTitle>Before Europe, and beside it</PartTitle>
+
+        <Station plate={beyond}>
         <p className={P}>
           Seven centuries before Praetorius, al-Farabi wrote the{' '}
           <Link href="/book/69dea2514d19ec2e9ba762be" className={R}><em>Grand Book of Music</em></Link>,
@@ -304,8 +401,8 @@ export default function AtlasOfLostInstrumentsPage() {
           frets of the oud and the tunbur, describes how performers tune open strings &ldquo;by the
           method of sensory perception through the smaller consonances,&rdquo; and tables the rhythms
           &ldquo;famous among the Arabs in ancient times.&rdquo; Every one of its 195 pages is
-          transcribed and translated here. It has had a French translation since the 1930s and, as far
-          as we can find, no complete English one. [verify]
+          transcribed and translated here. It has had a French translation since the 1930s and modern
+          Persian and Turkish ones. We can find no complete English one.
         </p>
         <p className={P}>
           And in 1555, the same year as Vicentino, a Franciscan named Juan Bermudo printed the{' '}
@@ -313,11 +410,31 @@ export default function AtlasOfLostInstrumentsPage() {
           Musicales</em></Link> in Osuna: the first detailed account of the vihuela, the Spanish guitar&apos;s
           ancestor, with fret positions calculated from the monochord and a defence of a new
           seven-course instrument of his own design. It is the closest thing to a recording we have of
-          how sixteenth-century Spain tuned. All 258 pages are translated. [verify: no prior English translation]
+          how sixteenth-century Spain tuned. One chapter, on playing the vihuela, has been translated
+          into English by scholars. The other five books had not been, and now all 258 pages are.
         </p>
+        <FolioPair>
+          <FolioFigure
+            src={`${IMG}/69dea2514d19ec2e9ba762be/12.jpg`}
+            alt="A page of the Arabic manuscript of al-Farabi's Grand Book of Music"
+            caption="Al-Farabi's own summary of the book: strings, genera, melodies, and the rhythms of the ancient Arabs."
+            href="/book/69dea2514d19ec2e9ba762be?page=12"
+            sourceLabel="al-Farabi, Kitab al-Musiqa al-Kabir, c. 950"
+          />
+          <FolioFigure
+            src={`${IMG}/69557dd157e3b773024f4041/40.jpg`}
+            alt="A page of Bermudo's Declaración de Instrumentos Musicales, 1555"
+            caption="Bermudo's first book, on why the ancients' music worked and the moderns' does not."
+            href="/book/69557dd157e3b773024f4041?page=40"
+            sourceLabel="Bermudo, Declaración, 1555"
+          />
+        </FolioPair>
 
-        {/* Coda */}
-        <h2 className={H2}>What the machine cannot read yet</h2>
+        </Station>
+
+        <hr className="border-border-light my-16" />
+
+        <h2 className="font-serif text-3xl text-primary mb-6">What the machine cannot read yet</h2>
         <p className={P}>
           There is one thing on these pages that none of this can reach. Praetorius prints tunings,
           Morley prints sight-singing exercises, the Gradual of 1360 is seven hundred pages of chant,
@@ -338,22 +455,27 @@ export default function AtlasOfLostInstrumentsPage() {
         <p className={P}>
           Reading staff notation from a scan is a different problem from reading text, and the large
           vision models are still bad at it: on scanned piano scores the frontier models make a
-          wrong note or rhythm on most of the notes they see, while a small specialist model trained
+          most of
+          the notes wrong, while a small specialist model trained
           on nothing but scores does twice as well. For sixteenth-century mensural print and for
           neumes, the tools that exist are the ones musicologists correct by hand. So we have done the
           unglamorous thing. The score pages are inventoried, the transcription store records which
           model wrote what, and there is a scorer that grades a transcription on pitch and rhythm
           separately, against references checked by a person. When a model arrives that can read
-          Praetorius, it will find the pages waiting and a test it has to pass. Until then, the atlas
-          has the pictures and the words. The music is still locked in the page.
+          Praetorius, it will find the pages waiting and a test it has to pass.
+        </p>
+        <p className={P}>
+          Until then the atlas has the pictures and the words. The music is still locked in the page,
+          and if you can read mensural notation, or know someone who plays a nyckelharpa, the
+          suggest-an-edit link below is how the next plate gets added.
         </p>
 
         <p className="text-sm text-muted mt-12 font-body">
-          Method: the nine items were found by searching the translated corpus for instrument and
+          Method: the nine plates were found by searching the translated corpus for instrument and
           technique vocabulary and reading the pages that came back; every claim above links to the page
           it rests on. The notation census is the output of the score-page inventory in the public
-          repository (issue #4713). Sources for the state of optical music recognition are given in the
-          repository&apos;s music-notation doc.
+          repository (issue #4713), which also holds the sources for the state of optical music
+          recognition.
         </p>
       </article>
     </ContentPageLayout>

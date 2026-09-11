@@ -30,7 +30,7 @@ export const posts: BlogPost[] = [
     title: 'An Atlas of Lost Instruments',
     subtitle:
       'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about sound that were discovered, invented, or fought over in books this library holds — and the 13,647 pages of music on them that no machine can yet read.',
-    date: '10 September 2026',
+    date: '11 September 2026',
     readTime: '12 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
