@@ -40,14 +40,34 @@ while true; do
     echo "$(stamp) PARKED — metered link, re-checking in 10m"; sleep 600; continue
   fi
   echo "$(stamp) archive-acquired-mac: hosts $HOSTS, batch $BATCH, concurrency $CONCURRENCY×$PAGE_CONCURRENCY, newest first, ceiling ${MAX_MINUTES}m"
+  # Run the archiver in the background and re-check the guard every minute while it runs: the guard at
+  # cycle start is not enough when a cycle is 50 minutes long and a plane boards in the middle of it.
+  # On DENY the archiver gets SIGTERM, which it handles (in-flight pages are abandoned, the next cycle
+  # resumes from the pages still lacking archived_photo) — see its own shutdown note.
   if [ -n "$TIMEOUT" ]; then
     "$TIMEOUT" --signal=TERM --kill-after=60s "${MAX_MINUTES}m" npx tsx scripts/catalog-coverage/archive-acquired.ts \
-      --batch "$BATCH" --concurrency "$CONCURRENCY" --page-concurrency "$PAGE_CONCURRENCY" --newest-first --hosts "$HOSTS"
+      --batch "$BATCH" --concurrency "$CONCURRENCY" --page-concurrency "$PAGE_CONCURRENCY" --newest-first --hosts "$HOSTS" &
   else
     perl -e 'alarm shift; exec @ARGV' "$((MAX_MINUTES * 60))" npx tsx scripts/catalog-coverage/archive-acquired.ts \
-      --batch "$BATCH" --concurrency "$CONCURRENCY" --page-concurrency "$PAGE_CONCURRENCY" --newest-first --hosts "$HOSTS"
+      --batch "$BATCH" --concurrency "$CONCURRENCY" --page-concurrency "$PAGE_CONCURRENCY" --newest-first --hosts "$HOSTS" &
   fi
+  child=$!
+  parked=0
+  while kill -0 "$child" 2>/dev/null; do
+    sleep 60
+    if [ -x "$GUARD" ] && ! "$GUARD" --why; then
+      echo "$(stamp) link became metered mid-cycle — stopping the archiver"
+      # $child is a wrapper (timeout/perl -> npx -> node); signal every process running the script
+      # so the node worker itself gets TERM, not just the wrapper. Only this lane runs it on the Mac.
+      pkill -TERM -f 'scripts/catalog-coverage/archive-acquired.ts' 2>/dev/null
+      kill -TERM "$child" 2>/dev/null
+      parked=1
+      break
+    fi
+  done
+  wait "$child"
   rc=$?
+  if [ "$parked" -eq 1 ]; then echo "$(stamp) PARKED mid-cycle — re-checking in 10m"; sleep 600; continue; fi
   case "$rc" in
     0)   echo "$(stamp) cycle finished; next in 5m"; sleep 300 ;;
     3)   # HostBlocked (401/403): the source refused this address. Never auto-retry into a block.
