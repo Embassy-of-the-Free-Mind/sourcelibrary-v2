@@ -235,9 +235,9 @@ export default function AtlasOfLostInstrumentsPage() {
         </p>
 
         <FolioFigure
-          src={`${IMG}/695592747bd6d2cd1d61a5c3/380.jpg`}
-          alt="Woodcut diagram of Kircher's wind harp: a box of strings between two angled boards that funnel the wind across it"
-          caption="The instrument, lettered for assembly: pegs at CA, bridges at IK and SD, and the two boards that squeeze the wind across the strings."
+          src="https://images.sourcelibrary.org/artwork/art-kircher-windharfe.jpg"
+          alt="Woodcut of Kircher's wind harp: a box of strings between two angled boards that funnel the wind across it, with a cherub's head blowing from the right"
+          caption="The instrument, lettered for assembly: pegs at CA, bridges at IK and SD, and the two boards that squeeze the wind across the strings. This is the same woodcut in the Deutsche Fotothek's copy; our scan of the page is linked."
           href="/book/695592747bd6d2cd1d61a5c3?page=380"
           sourceLabel="Kircher, Musurgia Universalis, vol. II, 1650"
         />
@@ -432,8 +432,8 @@ export default function AtlasOfLostInstrumentsPage() {
         <FolioPair>
           <FolioFigure
             src={`${IMG}/69dea2514d19ec2e9ba762be/12.jpg`}
-            alt="A page of the Arabic manuscript of al-Farabi's Grand Book of Music"
-            caption="Al-Farabi's own summary of the book: strings, genera, melodies, and the rhythms of the ancient Arabs."
+            alt="A page of the printed Arabic text of al-Farabi's Grand Book of Music"
+            caption="The editor's summary of al-Farabi's plan: strings, genera, melodies, and the rhythms of the ancient Arabs. Our copy is the Cairo edition of the text."
             href="/book/69dea2514d19ec2e9ba762be?page=12"
             sourceLabel="al-Farabi, Kitab al-Musiqa al-Kabir, c. 950"
           />
