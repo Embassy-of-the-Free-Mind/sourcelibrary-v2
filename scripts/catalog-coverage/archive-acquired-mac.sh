@@ -13,7 +13,14 @@
 # Logs to /tmp/archive-acquired-mac.log.
 set -u
 cd "$(dirname "$0")/../.." || exit 1
-set -a; source .env.production.local; set +a
+# A worktree checkout (.claude/worktrees/<name>) has no .env.production.local — the file is gitignored and
+# lives in the main checkout three levels up. Say which one was used: a silently wrong env is how a lane
+# reports an empty queue (credential-injection.md).
+ENV_FILE=".env.production.local"
+if [ ! -f "$ENV_FILE" ] && [ -f "../../../$ENV_FILE" ]; then ENV_FILE="../../../$ENV_FILE"; fi
+if [ ! -f "$ENV_FILE" ]; then echo "$(date -u +%FT%TZ) no .env.production.local here or in the main checkout — exiting"; exit 1; fi
+echo "$(date -u +%FT%TZ) env: $(cd "$(dirname "$ENV_FILE")" && pwd)/.env.production.local"
+set -a; source "$ENV_FILE"; set +a
 
 HOSTS="${ARCHIVE_HOSTS:-api.digitale-sammlungen.de}"
 BATCH="${ARCHIVE_BATCH:-120}"
