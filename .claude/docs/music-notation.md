@@ -59,9 +59,13 @@ Caveats that change what a number means:
   human correcting: MuRET (Alicante; the only one for handwritten mensural),
   Aruspix (printed mensural; Pugin, now Verovio), OMMR4all (plainchant on 4-line
   staves). Output is MEI, which Verovio renders and abcjs can be bypassed for.
-- **Letteral is OCR, not OMR** — Gemini reads the letters at ~100% pitch, ~85–90%
-  rhythm (#3161 pilot). Already done for the Shaker book; extend to any other
-  letter-notation hymnal.
+- **Letteral is OCR for pitch, not yet for rhythm** — measured 2026-09-11 on seven
+  verified references (`scripts/music/eval-results/2026-09-11-letteral-gemini-3-flash-preview/`):
+  gemini-3-flash-preview reads the letters at interval NER 0–0.08 on the five pages
+  it read the right span of (0.19 mean over all seven), but rhythm NER is 0.49 —
+  long group underlines come back as quarters and half-note bars are dropped. The
+  July pilot's "~85–90% rhythm" was eyeballed, never scored, and is withdrawn. The
+  79 Shaker drafts are pitch-reliable, rhythm-unreliable.
 - **Performance ("play it beautifully") is not solved by anyone.** RenCon 2025
   (ISMIR) benchmarked nine expressive-rendering systems on piano; humans still won
   and a steady tempo beat bad rubato. Nothing handles historically informed
@@ -97,7 +101,10 @@ Caveats that change what a number means:
 
 ## Pilot order (cheapest evidence first)
 
-1. Verify five more Shaker drafts → five letteral references (human pass, #3161).
+1. ~~Verify five more Shaker drafts → five letteral references~~ **done 2026-09-11**
+   (seven references, first scored run above). Next on this lane: re-run with each
+   music line cropped to its own image — the rhythm marks are 2 px high on a
+   3000 px page — and re-score the same seven.
 2. Write one mensural reference from Morley p.14, where the printed solmization is
    the answer key, then run Aruspix on the same page and score it.
 3. Run rokot-omr-2b locally on one Fux and one Rameau example; score against a

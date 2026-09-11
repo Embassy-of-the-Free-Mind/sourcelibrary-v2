@@ -84,6 +84,20 @@ and on Tibetan it is the worst engine we have tested on our own scans.**
 
 ---
 
+## 2026-09-11 — Music: can a VLM read Shaker letteral notation? (first scored run)
+
+**Headline: pitch yes, rhythm no.** gemini-3-flash-preview on seven verified
+letteral references (180 notes, `scripts/music/ground-truth/`): interval NER
+**0.19 mean, 0–0.08 on the five pages it read the right span of**; rhythm NER
+**0.49** (long group underlines → quarters; half-note bars dropped). The July #3161
+pilot's "85–90% rhythm" was eyeballed and is withdrawn. Cost $0.019. Positive
+control on the scorer passed (0 on self, 0.06 on a one-edit copy). *Replicated?*
+No (single run, temp 0). Artifact:
+`scripts/music/eval-results/2026-09-11-letteral-gemini-3-flash-preview/README.md`.
+Next: crop per music line and re-score the same seven.
+
+---
+
 ## 2026-09-03 — Bench 2 (complete): can self-hosted OCR replace Gemini on print?
 
 **Headline: yes on quality, no decision yet on scope — n is too small.** Three
