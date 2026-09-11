@@ -28,7 +28,7 @@ import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
-import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -4081,12 +4081,14 @@ Rules:
           // recitation filter and then corrected against its own image.
           const isLiteRetry = book.pipeline_auto?.recitation_retry_lite === true;
           const isRecitationRetry = book.pipeline_auto?.recitation_retry === true;
+          // Tier 2 is flash-preview only when OCR_LITE_ONLY is off (ocr-routing.mjs);
+          // under lite-only it re-runs lite, and a second refusal still falls to tier 3.
           const ocrOpts = isLiteRetry
-            ? { modelOverride: OCR_MODEL_FLASH }
+            ? { modelOverride: ocrEscalationModel() }
             : isRecitationRetry
               ? { modelOverride: OCR_MODEL_LITE }
               : {};
-          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${OCR_MODEL_FLASH}: ${label}`);
+          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${ocrEscalationModel()}: ${label}`);
           else if (isRecitationRetry) console.log(`  RECITATION retry (tier 1) with ${OCR_MODEL_LITE}: ${label}`);
           else console.log(`  Submitting OCR: ${label}...`);
           const result = await submitOcrDirectly(db, book, ocrOpts);
