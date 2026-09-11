@@ -4,6 +4,7 @@ import {
   findCitedBookLinks,
   findCitedCollectionSlugs,
   findEmbeddedImageUrls,
+  priorTurnImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
 import { PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
@@ -1399,9 +1400,10 @@ export async function* streamAgenticResponse(
   // (search hits + get_book_page + read_nearby_pages). Used to ground the
   // page citations in the final answer — see verifyCitations.
   const retrievedPageKeys = new Set<string>();
-  // Every image URL any tool returned this turn. The model is allowed to embed
-  // these and nothing else; anything else in an `![](...)` is fabricated.
-  const toolImageUrls = new Set<string>();
+  // Every image URL any tool returned this turn, plus every embed that survived
+  // an earlier answer in this thread (see priorTurnImageUrls). The model may
+  // embed these and nothing else; anything else in an `![](...)` is fabricated.
+  const toolImageUrls = new Set<string>(priorTurnImageUrls(history));
   // Text the model produced THIS turn. `contents` is seeded with the thread
   // history, so scanning it for citations re-flags every earlier answer's
   // broken links — which crowds real, new breakage out of the repair budget.
