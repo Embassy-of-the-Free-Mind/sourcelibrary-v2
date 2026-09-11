@@ -27,8 +27,14 @@ BATCH="${ARCHIVE_BATCH:-120}"
 CONCURRENCY="${ARCHIVE_CONCURRENCY:-4}"
 PAGE_CONCURRENCY="${ARCHIVE_PAGE_CONCURRENCY:-4}"
 MAX_MINUTES="${ARCHIVE_MAX_MINUTES:-50}"
-# Per-machine metered-link guard (phone hotspot, in-flight wifi). Checked every cycle; FAILS OPEN when absent.
+# Per-machine network guard. Checked every cycle and every minute during one; FAILS OPEN when absent.
+# BULK_NET_ALLOW_ONLY=1 makes the guard deny everything except networks pinned in ~/.config/bulk-net-allow
+# (Derek 2026-09-11: "only do it on wifido"). Pinned by signature — gateway hardware address + DHCP
+# server — because macOS 15+ hides the SSID from tools without Location permission. Pin the home network
+# once with `~/bin/bulk-net-guard.sh --pin wifido` while on it; set ARCHIVE_ALLOW_ONLY=0 to go back to
+# the deny-list behaviour.
 GUARD="${BULK_NET_GUARD:-$HOME/bin/bulk-net-guard.sh}"
+export BULK_NET_ALLOW_ONLY="${ARCHIVE_ALLOW_ONLY:-1}"
 # GNU timeout is `gtimeout` from coreutils on macOS. Without it, perl's alarm() survives exec, so the
 # archiver inherits a SIGALRM deadline it does not handle and is terminated at the ceiling.
 TIMEOUT=$(command -v gtimeout || command -v timeout || true)
