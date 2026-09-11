@@ -36,14 +36,14 @@ const DATA = {
   finalMark: pending,
   finalTextless: pending,
   finalBooks: pending,
-  oldIdentityMedian: pending,
-  newIdentityMedian: pending,
-  oldAbove07: pending,
-  newAbove07: pending,
-  alignedPages: pending,
-  distinctToh: pending,
-  pagesWith84000: pending,
-  controlNoise05: pending,
+  oldIdentityMedian: '0.18',
+  newIdentityMedian: '0.66',
+  oldAbove07: '488',
+  newAbove07: '1,880',
+  alignedPages: '5,086',
+  distinctToh: '290',
+  pagesWith84000: '2,679',
+  controlNoise05: '0.97',
   computeEur: pending,
   computeCoreHours: pending,
   retransCostUsd: pending,
@@ -154,7 +154,7 @@ export default function TibetanReocrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We built an index over the Derge text and, for each transcribed page, retrieved the best-matching window and scored syllable identity with a standard sequence alignment. On <Pending v={DATA.alignedPages} /> pages of the new transcription that reach a Derge passage, median identity is <Pending v={DATA.newIdentityMedian} />. The old transcription of the same pages scores <Pending v={DATA.oldIdentityMedian} />. Above the 0.7 line that we treat as a confirmed reading, the new text has <Pending v={DATA.newAbove07} /> pages and the old text has <Pending v={DATA.oldAbove07} />. A five-percent-noised copy of the true Derge page, our positive control, scores <Pending v={DATA.controlNoise05} />, so the instrument can tell a good read from a perfect one.
+          We built an index over the Derge text and, for each transcribed page, retrieved the best-matching window and scored syllable identity with a standard sequence alignment. On <Pending v={DATA.alignedPages} /> pages of the new transcription that reach a Derge passage, median identity is <Pending v={DATA.newIdentityMedian} />. The old transcription of the same pages scores <Pending v={DATA.oldIdentityMedian} />. Above the 0.7 line that we treat as a confirmed reading, the new text has <Pending v={DATA.newAbove07} /> pages and the old text has <Pending v={DATA.oldAbove07} />. Worse than the score: on 86% of these pages the old text does not even retrieve the folio it was supposed to be transcribing. It is Kanjur-shaped prose from somewhere else in the canon, or from nowhere. A five-percent-noised copy of the true Derge page, our positive control, scores <Pending v={DATA.controlNoise05} />, so the instrument can tell a good read from a perfect one.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
