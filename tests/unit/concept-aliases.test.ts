@@ -4,18 +4,37 @@
  * accepted, no malformed key survives, and the known false friends stay out.
  */
 import { describe, it, expect } from 'vitest';
+import { createHash } from 'node:crypto';
 import { allConcepts, conceptFor, expandTerm, foldTerm } from '../../src/lib/concept-aliases';
 
 const FLOOR = 0.7;
+/** sha256 of JSON.stringify(the 62 curated entries) as reviewed on 2026-09-11 (PR #4725). */
+const CURATED_SHA256 = 'f635b438dca7dcd90f5adbd98d78e3964a99d7de1f387f4c37712633e1e999c8';
 
 describe('concept-aliases data contract', () => {
   const concepts = allConcepts();
 
-  it('has the 62 map concepts, each with a headword and tiers', () => {
-    expect(concepts.length).toBe(62);
+  it('has the 62 curated map concepts VERBATIM, plus corpus batches appended after them', () => {
+    const curated = concepts.filter((c) => !c.source);
+    expect(curated.length).toBe(62);
+    // The curated set is reviewed by hand; a corpus batch may only APPEND. Pinned by hash so
+    // an edit to any curated row (or a corpus row losing its `source`) fails here.
+    expect(createHash('sha256').update(JSON.stringify(curated)).digest('hex')).toBe(CURATED_SHA256);
+    expect(concepts.slice(0, 62)).toEqual(curated);
     for (const c of concepts) {
       expect(typeof c.concept).toBe('string');
       expect(Array.isArray(c.variants) && Array.isArray(c.equivalents) && Array.isArray(c.related)).toBe(true);
+      if (c.source) expect(c.source, c.concept).toMatch(/^corpus-\d{4}-\d{2}$/);
+    }
+  });
+
+  it('a corpus headword never duplicates a curated headword or an accepted alias of another entry', () => {
+    const taken = new Map<string, string>();
+    for (const c of concepts) {
+      const k = foldTerm(c.concept);
+      expect(taken.has(k), `${c.concept} already reachable via ${taken.get(k)}`).toBe(false);
+      taken.set(k, c.concept);
+      for (const r of [...c.variants, ...c.equivalents]) if (!taken.has(foldTerm(r.term))) taken.set(foldTerm(r.term), c.concept);
     }
   });
 
