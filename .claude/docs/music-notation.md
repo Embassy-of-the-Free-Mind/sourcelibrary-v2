@@ -48,7 +48,12 @@ Caveats that change what a number means:
 
 - **Vision LLMs cannot read staff notation note-for-note.** Gemini 3.1 Pro scores
   59% on a chorale-reading benchmark; on scanned IMSLP piano pages GPT-5 and Gemini
-  2.5 Pro sit at 0.94 normalised error. Pitch-as-position defeats them. Do not
+  2.5 Pro sit at 0.94 normalised error. Pitch-as-position defeats them. **Measured
+  on our own page 2026-09-11:** gemini-3-flash-preview on Morley's twelve-note
+  plainsong example 1 (one voice, one clef, all semibreves) scores pitch NER 0.42 —
+  it returned the printed solmization mapped through the natural hexachord, i.e. it
+  read the syllables, not the staff
+  (`scripts/music/eval-results/2026-09-11-mensural-gemini-3-flash-preview/`). Do not
   batch a frontier VLM over score pages and store the result.
 - **Specialist small models beat them 2× on engraved modern notation.**
   rokot-omr-2b (2.1B Qwen3-VL fine-tune, runs locally in ~2 GB, CC BY-NC) scores
@@ -59,9 +64,13 @@ Caveats that change what a number means:
   human correcting: MuRET (Alicante; the only one for handwritten mensural),
   Aruspix (printed mensural; Pugin, now Verovio), OMMR4all (plainchant on 4-line
   staves). Output is MEI, which Verovio renders and abcjs can be bypassed for.
-- **Letteral is OCR, not OMR** — Gemini reads the letters at ~100% pitch, ~85–90%
-  rhythm (#3161 pilot). Already done for the Shaker book; extend to any other
-  letter-notation hymnal.
+- **Letteral is OCR for pitch, not yet for rhythm** — measured 2026-09-11 on seven
+  verified references (`scripts/music/eval-results/2026-09-11-letteral-gemini-3-flash-preview/`):
+  gemini-3-flash-preview reads the letters at interval NER 0–0.08 on the five pages
+  it read the right span of (0.19 mean over all seven), but rhythm NER is 0.49 —
+  long group underlines come back as quarters and half-note bars are dropped. The
+  July pilot's "~85–90% rhythm" was eyeballed, never scored, and is withdrawn. The
+  79 Shaker drafts are pitch-reliable, rhythm-unreliable.
 - **Performance ("play it beautifully") is not solved by anyone.** RenCon 2025
   (ISMIR) benchmarked nine expressive-rendering systems on piano; humans still won
   and a steady tempo beat bad rubato. Nothing handles historically informed
@@ -85,7 +94,8 @@ Caveats that change what a number means:
    `pitch_ner`, `interval_ner` (transposition-invariant; the metric for unpitched
    sources like Shaker notation), `rhythm_ner`, `note_ner`, `lyric_wer`. Pitch and
    rhythm are reported separately because they fail separately (letteral: pitch
-   perfect, rhythm 85%; staff: the reverse). A model earns a batch run by clearing
+   0–0.08, rhythm 0.49; staff: the model reads the printed syllables, not the
+   positions — both measured 2026-09-11). A model earns a batch run by clearing
    a bar on the references in `scripts/music/ground-truth/` for that notation
    system — and there is no bar yet for most systems because there is no
    reference: write the reference first.
@@ -97,9 +107,13 @@ Caveats that change what a number means:
 
 ## Pilot order (cheapest evidence first)
 
-1. Verify five more Shaker drafts → five letteral references (human pass, #3161).
-2. Write one mensural reference from Morley p.14, where the printed solmization is
-   the answer key, then run Aruspix on the same page and score it.
+1. ~~Verify five more Shaker drafts → five letteral references~~ **done 2026-09-11**
+   (seven references, first scored run above). Next on this lane: re-run with each
+   music line cropped to its own image — the rhythm marks are 2 px high on a
+   3000 px page — and re-score the same seven.
+2. ~~Write one mensural reference from Morley p.14~~ **done 2026-09-11** (example 1;
+   the VLM baseline above). Still open: run Aruspix or MuRET on the same page and
+   score it against that reference.
 3. Run rokot-omr-2b locally on one Fux and one Rameau example; score against a
    hand transcription; if `note_ner` < 0.1, propose the common-practice batch.
 4. Atalanta: embed Brown's recordings on the emblem pages (#3164). No OMR needed.

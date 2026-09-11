@@ -6,10 +6,15 @@ against the page image by a human or by a documented letter-for-letter pass;
 **drafts never live here** — a draft is a candidate, not a reference.
 
 `manifest.json` is the index: one entry per reference, with the page it
-transcribes, the notation system, how it was verified, and the file. Add an
-entry when you add a file. The same reference must also exist as a
-`status: "verified"` row in `music_transcriptions` (the reader plays from
-Mongo; the eval reads from either).
+transcribes, the notation system, how it was verified, the `span` a candidate
+must cover to be comparable, and the file. Add an entry when you add a file.
+The same reference must also exist as a `status: "verified"` row in
+`music_transcriptions` (the reader plays from Mongo; the eval reads from
+either) — `node --env-file=.env.production.local scripts/music/sync-ground-truth.mjs`
+upserts every manifest reference there.
+
+Repeat marks: write `||`, never `:|`, in a reference — the scorer plays the tune
+through abcjs, and a repeat would double the note sequence.
 
 ## What counts as verified
 
@@ -34,8 +39,8 @@ such pages; they are checks, not full references, until someone writes the ABC.
 
 | system          | have | wanted first                                               |
 |-----------------|------|------------------------------------------------------------|
-| letteral        | 1    | more Shaker pieces from the 78 drafts (#3161)              |
-| mensural        | 0    | Morley 1597 p.14 examples (printed answer key); Atalanta Fuga I via Furnace & Fugue MEI (#3164, compare-only — CC BY-NC-ND) |
+| letteral        | 7    | more Shaker pieces from the 73 remaining drafts (#3161); the manifest `span` field says what part of the page each covers |
+| mensural        | 1    | Morley p.14 examples 2+ (ex. 1 done; printed answer key); Atalanta Fuga I via Furnace & Fugue MEI (#3164, compare-only — CC BY-NC-ND) |
 | common-practice | 0    | Fux 1725 or Rameau 1722, one short example                 |
 | neumes          | 0    | one antiphon from the 1360 Gradual, against a Liber Usualis reading |
 | tablature       | 0    | one lute page                                              |
