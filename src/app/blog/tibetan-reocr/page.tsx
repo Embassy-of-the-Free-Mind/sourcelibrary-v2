@@ -29,6 +29,18 @@ const DATA = {
   pilotCanon: '71',
   pilotMark: '64',
   perturbHold: '33 to 37 of 38',
+  // Yigdzin (#4722), measured 2026-09-11 with the fixed ±2-page scorer
+  leaderboardYigdzinUchen: '0.7%',
+  leaderboardWoodblockUchen: '8%',
+  leaderboardFlashLiteUchen: '24%',
+  leaderboardCursiveYigdzin: '2 to 7%',
+  leaderboardCursiveOthers: '70 to 90%',
+  gate0Yigdzin: '0.94',
+  gate0Wood: '0.68',
+  markYigdzin: '0.95',
+  markYigdzinAll: '64 of 64',
+  controlNarrow: '0.50',
+  controlWide: '0.97',
   sampleBimodalLow: '36%',
   sampleBimodalHigh: '43%',
   // Pending: filled by the quality pass
@@ -197,6 +209,17 @@ export default function TibetanReocrPage() {
           </figcaption>
         </figure>
 
+        {/* ── The instrument ── */}
+        <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">The instrument was wrong too</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We nearly published the numbers above one section too early. When a third model arrived and scored 0.48 on a test where its makers&rsquo; own benchmark predicted something near 0.95, we assumed the model was misconfigured. It was our ruler. The scorer aligned each transcription against a single page of the Derge e-text, and a photographed Bhutanese folio holds more text than one Derge page. A perfect read of a folio that straddles two pages could never score above about 0.5. Our positive control had not caught this because the control pages were single Derge pages: it certified the instrument only on inputs shaped like itself.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Widening the window to two pages either side moved a two-page control from {DATA.controlNarrow} to {DATA.controlWide} and lifted every long page in the study. All the identity figures in this note are from the corrected scorer. The earlier ones were underestimates, and the direction of every finding survived, but the lesson is worth the paragraph: a gate you pass is a threshold, and a threshold cannot tell you that the ruler is short. What told us was an outside instrument predicting a magnitude we did not see.
+        </p>
+
         {/* ── Totals ── */}
         <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">What changed on the site</h2>
 
@@ -205,7 +228,18 @@ export default function TibetanReocrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A second cohort of {DATA.lowresBooks} volumes, {DATA.lowresPages} pages, exists online only as 1536-pixel derivatives. The perturbation test says about two thirds of serve-quality pages still clear the bar at that resolution, so we ran them too. Those pages carry the same verdict machinery and a lower serve rate. All three EAP projects deposited full-resolution TIFFs with the British Library; the online derivative is the ceiling only because nothing larger is served, and the deposited masters are the obvious next request.
+          A second cohort of {DATA.lowresBooks} volumes, {DATA.lowresPages} pages, exists online only as 1536-pixel derivatives. With the line models, the perturbation test said about two thirds of serve-quality pages still clear the bar at that resolution, so we ran them too. All three EAP projects deposited full-resolution TIFFs with the British Library, and the deposited masters are the obvious next request. Then the third model made the question moot, as the next section explains.
+        </p>
+
+        {/* ── Yigdzin ── */}
+        <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">A third reader</h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Three weeks after the fleet started, the Buddhist Digital Resource Center published a new model, an 810-million-parameter vision-language model fine-tuned for Tibetan, trained on both the formal script and the cursive one, and released with a public leaderboard of 46 OCR systems scored on 472 hand-transcribed pages. Everything in this note is on that leaderboard. On clean formal script, the new model makes a character error {DATA.leaderboardYigdzinUchen} of the time; the line models we had just finished running, {DATA.leaderboardWoodblockUchen}; the general model that ran our library for eight months, {DATA.leaderboardFlashLiteUchen}. On cursive, the new model sits at {DATA.leaderboardCursiveYigdzin} and everything else we had used at {DATA.leaderboardCursiveOthers}.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We rented one GPU for about a hundred euros and ran it over the whole cohort. On the pilot book, with the corrected scorer, its median identity to the canon is {DATA.gate0Yigdzin} against {DATA.gate0Wood} for the line models. On the {DATA.pilotMark} pages of that book we had marked unreadable, it scores {DATA.markYigdzin}, with {DATA.markYigdzinAll} above the confirmation line. The pages we withheld were the right call under the model we had, and they were readable all along. The new model also ignores resolution beyond about a megapixel, so the low-resolution cohort is no worse off than the masters. The next adjudication pass uses it as the primary reader, with the two line models as the independent witnesses that decide agreement.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -239,7 +273,11 @@ export default function TibetanReocrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>Specialists beat generalists on their own ground, by a lot, for almost nothing.</strong> The models that fixed this are free, open, and run on a laptop. The frontier model was the expensive wrong tool. We expect this to be true for other low-resource scripts in the library, and we are checking.
+          <strong>Specialists beat generalists on their own ground, by a lot, for almost nothing.</strong> The models that fixed this are free, open, and run on a laptop or a hundred euros of GPU. The frontier model was the expensive wrong tool. We expect this to be true for other low-resource scripts in the library, and we are checking.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          <strong>Check the magnitude, not the gate.</strong> Twice in this work a number passed its threshold and was still wrong: consistency passed and hid fabrication; the new model passed its gate at half the score its makers predicted, and the ruler was short. The check that worked both times was an outside instrument predicting what the number should be. When you cannot say what a good result would look like before you measure, you do not yet have a measurement.
         </p>
 
         <hr className="my-10 border-stone-200" />
