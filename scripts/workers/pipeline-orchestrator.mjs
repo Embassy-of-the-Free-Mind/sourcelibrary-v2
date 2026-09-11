@@ -75,7 +75,6 @@ function assertModelsAreNotBroken(constants) {
   }
 }
 
-const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 
 // Code provenance (#2297): the git SHA actually checked out on this worker box.
