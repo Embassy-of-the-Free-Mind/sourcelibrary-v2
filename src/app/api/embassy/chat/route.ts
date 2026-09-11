@@ -7,6 +7,7 @@ import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/li
 import { applyCitationFixes, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { isBareGreeting, greetingReply } from '@/lib/embassy/greeting';
+import { findReplayableAnswer, firstMessageKey, type ReplayableAnswer } from '@/lib/embassy/replay-cache';
 import { chatRequestSchema } from '@/lib/embassy/chat-request';
 import { threadVisibility } from '@/lib/embassy/thread-visibility';
 import { toUserId } from '@/lib/user-id';
@@ -131,6 +132,15 @@ export async function POST(request: NextRequest) {
   // A bare "hello" gets the desk's welcome, not six searches (see greeting.ts).
   // The thread it opens is kept but unlisted — there is nothing in it to read.
   const bareGreeting = isBareGreeting(message);
+  // An identical first-turn question answered within the last week is replayed
+  // from that answer — no model call, instant, and the feed keeps one copy of
+  // a canonical question instead of one per asker (see replay-cache.ts).
+  // Only for a fresh thread on the default library; a collection context
+  // changes the search weighting, so those always run the agent.
+  const replay: ReplayableAnswer | null =
+    !threadId && history.length === 0 && !collection && !bareGreeting
+      ? await findReplayableAnswer(db, message, lang, now).catch(() => null)
+      : null;
 
   if (threadId) {
     // Continue existing thread — verify ownership. Signed-in users may only
@@ -174,9 +184,10 @@ export async function POST(request: NextRequest) {
     const result = await db.collection('embassy_threads').insertOne({
       type: 'chat',
       title: message.slice(0, 120),
+      firstMessageKey: firstMessageKey(message),
       creatorId: userId,
       creatorName: displayName,
-      visibility: bareGreeting ? 'unlisted' : threadVisibility(userId, visibility === 'public'),
+      visibility: bareGreeting || replay ? 'unlisted' : threadVisibility(userId, visibility === 'public'),
       aiEnabled: true,
       lang,
       messageCount: 0,
@@ -214,9 +225,16 @@ export async function POST(request: NextRequest) {
   async function* greetingSteps(): AsyncGenerator<LibrarianStep> {
     yield { type: 'text', text: greetingReply(lang) };
   }
+  /** The earlier answer, replayed as the same two steps the agent would emit. */
+  async function* replaySteps(answer: ReplayableAnswer): AsyncGenerator<LibrarianStep> {
+    yield { type: 'text', text: answer.content };
+    yield { type: 'sources', sources: answer.sources };
+  }
   const agentSteps = () => bareGreeting
     ? greetingSteps()
-    : streamAgenticResponse(message, history, activeThreadId, { collection, lang });
+    : replay
+      ? replaySteps(replay)
+      : streamAgenticResponse(message, history, activeThreadId, { collection, lang });
 
   const saveAiResponse = async () => {
     if (!fullText && allSources.length === 0) return;
@@ -238,6 +256,8 @@ export async function POST(request: NextRequest) {
           inCollection: s.inCollection,
         })),
         usage: turnUsage,
+        // Provenance of a replayed answer; also stops a replay being replayed.
+        ...(replay ? { cachedFrom: replay.messageId, cachedFromThread: replay.threadId } : {}),
         createdAt: aiMessageTime,
       });
 

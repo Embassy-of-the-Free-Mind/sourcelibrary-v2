@@ -129,6 +129,79 @@ describe('Embassy API', () => {
       expect(thread!.visibility).toBe('public');
     });
 
+    it('replays an identical first-turn question from last week\'s answer, with no model call', async () => {
+      const { auth } = await import('@/lib/auth');
+      (auth as any).mockResolvedValue(null);
+      const { streamAgenticResponse } = await import('@/lib/embassy/librarian');
+      const db = getTestDb();
+
+      // Yesterday: someone asked, the agent answered well (long, cited, no
+      // sourcing disclaimer) in a public thread.
+      const question = 'What is the Emerald Tablet?';
+      const earlier = new Date(Date.now() - 24 * 3600 * 1000);
+      const t = await db.collection('embassy_threads').insertOne({
+        type: 'chat', title: question, creatorId: null, visibility: 'public', lang: 'en',
+        messageCount: 2, createdAt: earlier, lastMessageAt: earlier,
+      });
+      await db.collection('embassy_messages').insertOne({
+        threadId: t.insertedId, authorType: 'human', authorId: null, content: question, createdAt: earlier,
+      });
+      const answer = 'The Emerald Tablet (Tabula Smaragdina) is a short Hermetic text. '.repeat(12)
+        + '— *[The Golden Fleece](https://sourcelibrary.org/book/aureum-vellus)* [Page 241](https://sourcelibrary.org/book/aureum-vellus?page=241)';
+      const original = await db.collection('embassy_messages').insertOne({
+        threadId: t.insertedId, authorType: 'ai', authorName: 'The Librarian', content: answer,
+        sources: [{ bookId: 'b1', bookTitle: 'Aureum Vellus', bookAuthor: 'Trismosin', pageNumber: 241, bookSlug: 'aureum-vellus', inCollection: false }],
+        createdAt: new Date(earlier.getTime() + 30_000),
+      });
+
+      // Today: the same question, differently punctuated.
+      const callsBefore = (streamAgenticResponse as any).mock.calls.length;
+      const res = await chatPost(makeRequest('/api/embassy/chat', { message: 'what is the emerald tablet', visibility: 'public' }) as any);
+      const data = await res.json();
+      expect(res.status).toBe(200);
+      expect((streamAgenticResponse as any).mock.calls.length).toBe(callsBefore);
+      expect(data.message.content).toBe(answer);
+      expect(data.message.sources[0]).toMatchObject({ book_id: 'b1', pageNumber: 241, bookSlug: 'aureum-vellus' });
+
+      const thread = await db.collection('embassy_threads').findOne({ _id: new ObjectId(data.threadId) });
+      expect(thread!.visibility).toBe('unlisted');
+      expect(thread!.firstMessageKey).toBe('what is the emerald tablet');
+      const saved = await db.collection('embassy_messages').findOne({ threadId: new ObjectId(data.threadId), authorType: 'ai' });
+      expect(String(saved!.cachedFrom)).toBe(String(original.insertedId));
+
+      // A replay is never itself replayed: ask a third time and the newest
+      // candidate (the replay) is skipped in favour of the original.
+      const res3 = await chatPost(makeRequest('/api/embassy/chat', { message: question }) as any);
+      const data3 = await res3.json();
+      expect((streamAgenticResponse as any).mock.calls.length).toBe(callsBefore);
+      const saved3 = await db.collection('embassy_messages').findOne({ threadId: new ObjectId(data3.threadId), authorType: 'ai' });
+      expect(String(saved3!.cachedFrom)).toBe(String(original.insertedId));
+    });
+
+    it('does not replay a short, disclaimed, or private earlier answer', async () => {
+      const { auth } = await import('@/lib/auth');
+      (auth as any).mockResolvedValue(null);
+      const { streamAgenticResponse } = await import('@/lib/embassy/librarian');
+      const db = getTestDb();
+      const earlier = new Date(Date.now() - 3600 * 1000);
+      const seed = async (question: string, content: string, visibility: string) => {
+        const t = await db.collection('embassy_threads').insertOne({ type: 'chat', title: question, creatorId: null, visibility, lang: 'en', messageCount: 2, createdAt: earlier, lastMessageAt: earlier });
+        await db.collection('embassy_messages').insertOne({ threadId: t.insertedId, authorType: 'human', content: question, createdAt: earlier });
+        await db.collection('embassy_messages').insertOne({ threadId: t.insertedId, authorType: 'ai', content, sources: [{ bookId: 'b', bookTitle: 'T', bookAuthor: 'A', pageNumber: 1 }], createdAt: new Date(earlier.getTime() + 1000) });
+      };
+      const long = 'x'.repeat(700);
+      await seed('Who was Marsilio Ficino?', 'Too short.', 'public');
+      await seed('Who was Giordano Bruno?', long + '\n\n---\n*A note on sourcing: this answer contains a link to a page that doesn\'t exist.*', 'public');
+      await seed('Who was Paracelsus?', long, 'private');
+
+      for (const message of ['Who was Marsilio Ficino?', 'Who was Giordano Bruno?', 'Who was Paracelsus?']) {
+        const before = (streamAgenticResponse as any).mock.calls.length;
+        const res = await chatPost(makeRequest('/api/embassy/chat', { message }) as any);
+        expect(res.status).toBe(200);
+        expect((streamAgenticResponse as any).mock.calls.length, message).toBe(before + 1);
+      }
+    });
+
     it('answers a bare greeting from the desk, with no model call, in an unlisted thread', async () => {
       const { auth } = await import('@/lib/auth');
       (auth as any).mockResolvedValueOnce(null);
