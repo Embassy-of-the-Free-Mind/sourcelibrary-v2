@@ -89,3 +89,22 @@ export function typeTerm(termKeyStr, nameIndex) {
   if (ranked.length > 1 && top.weight < DOMINANCE * second) return { type: 'unknown', source: 'ambiguous', weight: top.weight, alt };
   return { type: topType, source: top.source, id: top.id, name: top.name, weight: top.weight, ...(ranked.length > 1 ? { alt } : {}) };
 }
+
+/**
+ * How much to trust a person/place verdict. Measured on the bridge-kept set (2026-09-11):
+ * 36,144 of 106,604 person/place verdicts rested on a SINGLE-book entity, and the samples of
+ * those were mostly concepts mis-extracted as names ("Certus → certain", "Bibula →
+ * absorbent", "Ostende → show", "tela → weapons"). A Wikidata-backed canonical entity is
+ * strong on its own; an extracted entity or author is strong only when ≥3 books named it
+ * AND those are ≥5% of the books the term occurs in — a true name gets extracted from a
+ * fair share of its books, a common word gets tagged as a name once by accident.
+ * Concept/unknown verdicts carry no confidence (null).
+ */
+export const STRONG_MIN_WEIGHT = 3;
+export const STRONG_MIN_RATIO = 0.05;
+export function typeConfidence(verdict, books) {
+  if (verdict.type !== 'person' && verdict.type !== 'place') return null;
+  if (verdict.source === 'canonical_entities') return 'strong';
+  const w = verdict.weight || 0;
+  return w >= STRONG_MIN_WEIGHT && w >= STRONG_MIN_RATIO * (books || 0) ? 'strong' : 'weak';
+}

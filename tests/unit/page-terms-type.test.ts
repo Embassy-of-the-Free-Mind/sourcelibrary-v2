@@ -5,7 +5,7 @@
  * bucket — an ambiguous or unjudgeable key is never folded into either verdict.
  */
 import { describe, it, expect } from 'vitest';
-import { buildNameIndex, typeTerm, nameKeys, isUnjudgeable } from '../../scripts/lib/page-terms-type.mjs';
+import { buildNameIndex, typeTerm, nameKeys, isUnjudgeable, typeConfidence } from '../../scripts/lib/page-terms-type.mjs';
 import { KEEP_RULES } from '../../scripts/lib/page-terms-keep.mjs';
 
 const index = buildNameIndex([
@@ -66,6 +66,17 @@ describe('typeTerm', () => {
   });
   it('ignores records with a type outside person/place/concept', () => {
     expect(typeTerm('ignored', index)).toMatchObject({ type: 'concept', source: 'unmatched' });
+  });
+});
+
+describe('typeConfidence', () => {
+  it('canonical entities are strong; extracted names need weight and share', () => {
+    expect(typeConfidence({ type: 'place', source: 'canonical_entities', weight: 1 }, 500)).toBe('strong');
+    expect(typeConfidence({ type: 'person', source: 'entities', weight: 92 }, 153)).toBe('strong'); // Cajetan
+    expect(typeConfidence({ type: 'person', source: 'entities', weight: 1 }, 85)).toBe('weak'); // "Certus → certain"
+    expect(typeConfidence({ type: 'person', source: 'entities', weight: 15 }, 428)).toBe('weak'); // "sortes → lots"
+    expect(typeConfidence({ type: 'person', source: 'authors', weight: 1 }, 8)).toBe('weak'); // "Weijing → reed rhizome"
+    expect(typeConfidence({ type: 'concept', source: 'unmatched' }, 10)).toBeNull();
   });
 });
 

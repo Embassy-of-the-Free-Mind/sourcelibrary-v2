@@ -29,7 +29,7 @@
  */
 import fs from 'node:fs';
 import readline from 'node:readline';
-import { buildNameIndex, typeTerm } from '../lib/page-terms-type.mjs';
+import { buildNameIndex, typeTerm, typeConfidence } from '../lib/page-terms-type.mjs';
 import { KEEP_RULES, RULE_NAMES } from '../lib/page-terms-keep.mjs';
 
 const args = process.argv.slice(2);
@@ -75,8 +75,8 @@ console.log(`names: ${records.length} records ${JSON.stringify(bySource)} → ${
 
 // ---- stream the global table ----
 const bucket = () => ({ person: 0, place: 0, concept: 0, unknown: 0 });
-const stats = { rows: 0, all: bucket(), allSource: {}, kept: 0, keptType: bucket(), keptSource: {}, weight1: bucket() };
-const samples = { person: [], place: [], concept: [], unknown: [], weight1: [] };
+const stats = { rows: 0, all: bucket(), allSource: {}, kept: 0, keptType: bucket(), keptSource: {}, keptConfidence: { strong: 0, weak: 0 }, weight1: bucket() };
+const samples = { person: [], place: [], concept: [], unknown: [], weight1: [], strong: [], weak: [] };
 // Measurement only: would a gloss-shape heuristic recover names the tables miss?
 const PLACE_GLOSS = /\b(city|town|village|river|mountain|island|region|province|kingdom|country|port|lake|sea|valley|district|capital)\b/i;
 const PERSON_GLOSS = /\b(king|queen|emperor|philosopher|saint|bishop|pope|poet|prophet|son of|daughter of|disciple|abbot|monk|scholar|physician|general|prince|duke|caliph|sultan|rabbi|sage|master|teacher|author)\b/i;
@@ -94,11 +94,12 @@ for await (const line of rl) {
   const r = JSON.parse(line);
   stats.rows++;
   const t = typeTerm(r.term_key, nameIndex);
+  t.confidence = typeConfidence(t, r.books);
   stats.all[t.type]++;
   stats.allSource[t.source] = (stats.allSource[t.source] || 0) + 1;
   if (controls.has(r.term_key)) controlSeen.set(r.term_key, t);
   if (!(t.type === 'concept' && t.source === 'unmatched')) {
-    fs.writeSync(outFd, JSON.stringify({ term_key: r.term_key, type: t.type, type_source: t.source, type_id: t.id ?? null, type_name: t.name ?? null, type_weight: t.weight ?? null }) + '\n');
+    fs.writeSync(outFd, JSON.stringify({ term_key: r.term_key, type: t.type, type_source: t.source, type_confidence: t.confidence, type_id: t.id ?? null, type_name: t.name ?? null, type_weight: t.weight ?? null }) + '\n');
     overlay++;
   }
   const kept = RULE ? KEEP_RULES[RULE](r) : true;
@@ -106,6 +107,7 @@ for await (const line of rl) {
   stats.kept++;
   stats.keptType[t.type]++;
   stats.keptSource[t.source] = (stats.keptSource[t.source] || 0) + 1;
+  if (t.confidence) { stats.keptConfidence[t.confidence]++; reservoir(samples[t.confidence], fmt(r, t), stats.keptConfidence[t.confidence]); }
   reservoir(samples[t.type], fmt(r, t), stats.keptType[t.type]);
   if ((t.type === 'person' || t.type === 'place') && t.weight === 1) { stats.weight1[t.type]++; reservoir(samples.weight1, fmt(r, t), stats.weight1.person + stats.weight1.place); }
   if (t.source === 'unmatched') {
@@ -120,6 +122,7 @@ fs.closeSync(outFd);
 console.log(JSON.stringify({ ...stats, rule: RULE || 'none', overlay_rows: overlay, seconds: Math.round((Date.now() - t0) / 1000) }));
 for (const k of ['person', 'place', 'concept', 'unknown']) console.log(`\n== ${k} (${RULE ? 'kept by ' + RULE : 'all'}) ==\n` + samples[k].map((s) => '  ' + s).join('\n'));
 console.log(`\n== person/place decided on weight 1 (single-book entity only) ==\n` + samples.weight1.map((s) => '  ' + s).join('\n'));
+for (const k of ['strong', 'weak']) console.log(`\n== person/place with type_confidence=${k} ==\n` + samples[k].map((s) => '  ' + s).join('\n'));
 console.log(`\n== gloss-shape hint on UNMATCHED kept rows (measurement only, not applied): place-like ${hint.place}, person-like ${hint.person} ==`);
 console.log('  place-like: ' + hint.samples.place.join(' | '));
 console.log('  person-like: ' + hint.samples.person.join(' | '));

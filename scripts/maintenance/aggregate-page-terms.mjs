@@ -16,7 +16,7 @@
  *     langs: {Latin: n, …}, glosses: [{gloss, n}] (top 5), books: n, pages: n,
  *     original_verified: n, original_unverified: n,
  *     evidence: [{book_id, page_number, kind, gloss, context}] (≤5, distinct books; context = ≤120 chars of translation before a <term>/<note original>),
- *     type, type_source, type_id (with --types; see scripts/lib/page-terms-type.mjs),
+ *     type, type_source, type_confidence, type_id (with --types; scripts/lib/page-terms-type.mjs),
  *     field_provenance: {source, method, kept_because, rule, date} }
  *
  * Keep rules live in scripts/lib/page-terms-keep.mjs. `--rule pilot` (default) is the
@@ -79,6 +79,7 @@ const stampType = (row) => {
   const t = types.get(row.term_key);
   row.type = t?.type ?? 'concept';
   row.type_source = t?.type_source ?? 'unmatched';
+  row.type_confidence = t?.type_confidence ?? null;
   row.type_id = t?.type_id ?? null;
   return row;
 };
