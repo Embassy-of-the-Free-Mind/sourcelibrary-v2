@@ -1,7 +1,7 @@
 # First measured music-transcription run — letteral, gemini-3-flash-preview
 
 Date 2026-09-11 · issue #3161 · model `gemini-3-flash-preview`, temperature 0,
-`thinkingConfig.thinkingBudget` 2048 · script `scripts/music/transcribe-letteral.mjs`
+`thinkingConfig.thinkingBudget` 2048 · script `scripts/music/transcribe-notation.mjs --system letteral`
 · scorer `scripts/music/eval-transcription.mjs --batch` · cost **$0.019**
 (12,982 prompt + 944 output + 3,176 thinking tokens).
 

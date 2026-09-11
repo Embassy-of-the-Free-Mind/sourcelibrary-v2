@@ -48,7 +48,12 @@ Caveats that change what a number means:
 
 - **Vision LLMs cannot read staff notation note-for-note.** Gemini 3.1 Pro scores
   59% on a chorale-reading benchmark; on scanned IMSLP piano pages GPT-5 and Gemini
-  2.5 Pro sit at 0.94 normalised error. Pitch-as-position defeats them. Do not
+  2.5 Pro sit at 0.94 normalised error. Pitch-as-position defeats them. **Measured
+  on our own page 2026-09-11:** gemini-3-flash-preview on Morley's twelve-note
+  plainsong example 1 (one voice, one clef, all semibreves) scores pitch NER 0.42 —
+  it returned the printed solmization mapped through the natural hexachord, i.e. it
+  read the syllables, not the staff
+  (`scripts/music/eval-results/2026-09-11-mensural-gemini-3-flash-preview/`). Do not
   batch a frontier VLM over score pages and store the result.
 - **Specialist small models beat them 2× on engraved modern notation.**
   rokot-omr-2b (2.1B Qwen3-VL fine-tune, runs locally in ~2 GB, CC BY-NC) scores
@@ -89,7 +94,8 @@ Caveats that change what a number means:
    `pitch_ner`, `interval_ner` (transposition-invariant; the metric for unpitched
    sources like Shaker notation), `rhythm_ner`, `note_ner`, `lyric_wer`. Pitch and
    rhythm are reported separately because they fail separately (letteral: pitch
-   perfect, rhythm 85%; staff: the reverse). A model earns a batch run by clearing
+   0–0.08, rhythm 0.49; staff: the model reads the printed syllables, not the
+   positions — both measured 2026-09-11). A model earns a batch run by clearing
    a bar on the references in `scripts/music/ground-truth/` for that notation
    system — and there is no bar yet for most systems because there is no
    reference: write the reference first.
@@ -105,8 +111,9 @@ Caveats that change what a number means:
    (seven references, first scored run above). Next on this lane: re-run with each
    music line cropped to its own image — the rhythm marks are 2 px high on a
    3000 px page — and re-score the same seven.
-2. Write one mensural reference from Morley p.14, where the printed solmization is
-   the answer key, then run Aruspix on the same page and score it.
+2. ~~Write one mensural reference from Morley p.14~~ **done 2026-09-11** (example 1;
+   the VLM baseline above). Still open: run Aruspix or MuRET on the same page and
+   score it against that reference.
 3. Run rokot-omr-2b locally on one Fux and one Rameau example; score against a
    hand transcription; if `note_ner` < 0.1, propose the common-practice batch.
 4. Atalanta: embed Brown's recordings on the emblem pages (#3164). No OMR needed.

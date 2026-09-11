@@ -107,6 +107,20 @@
       "mongo_status": "verified"
     },
     {
+      "id": "morley-1597-p14-plainsong-ex1",
+      "kind": "reference",
+      "file": "morley-1597-p14-plainsong-ex1.abc",
+      "book_id": "69aebe72c0472fef6455ae36",
+      "page_id": "69aebe72c0472fef6455ae45",
+      "page_number": 14,
+      "url": "https://sourcelibrary.org/book/69aebe72c0472fef6455ae36?page=14",
+      "notation_system": "mensural",
+      "title": "Morley, Plaine and Easie Introduction — plainsong example 1 (the first staff on the page, labelled Phi.)",
+      "span": "the first staff on the page only (twelve notes, labelled Phi., with the syllables sol sol la sol la fa sol fa mi sol la sol printed under it)",
+      "verified": "2026-09-11 read from the scan at 3x–5x zoom: five-line staff, ladder-shaped C-clef centred on the second line from the top (so that line is c’), twelve void diamond noteheads, all semibreves (no rhythm to read). Staff positions space3 space3 space4 space3 line3 line2 space1 line2 space2 space3 line3 space3 (counted from the top) give g g e g a c’ d’ c’ b g a g. Checked against the printed solmization: every syllable fits with one mutation, natural hexachord (sol=g la=a) and hard hexachord (la=e fa=c’ sol=d’ mi=b). Pitched source: score with pitch_ner; interval_ner also meaningful.",
+      "mongo_status": "verified"
+    },
+    {
       "id": "morley-1597-p14-solmization",
       "kind": "answer-key",
       "file": null,
@@ -115,7 +129,7 @@
       "url": "https://sourcelibrary.org/book/69aebe72c0472fef6455ae36?page=14",
       "notation_system": "mensural",
       "title": "Morley, Plaine and Easie Introduction — plainsong examples with printed solmization",
-      "check": "the page prints the solmization syllables under each example; a recogniser's pitches must map to those hexachord degrees. Syllables as OCR'd (unverified against scan): 'sol sol la sol la fa sol fa mi sol la sol' (ex. 1), 'sol fa fa sol fa fa la sol sol fa la la sol fa mi la la sol' (ex. 2).",
+      "check": "the page prints the solmization syllables under each example; a recogniser's pitches must map to those hexachord degrees. Example 1 now has a full reference (morley-1597-p14-plainsong-ex1); examples 2+ remain answer-key only. Syllables as OCR'd (unverified against scan): 'sol sol la sol la fa sol fa mi sol la sol' (ex. 1), 'sol fa fa sol fa fa la sol sol fa la la sol fa mi la la sol' (ex. 2).",
       "mongo_status": "none"
     },
     {

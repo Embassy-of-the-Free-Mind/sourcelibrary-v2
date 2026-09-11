@@ -40,7 +40,7 @@ such pages; they are checks, not full references, until someone writes the ABC.
 | system          | have | wanted first                                               |
 |-----------------|------|------------------------------------------------------------|
 | letteral        | 7    | more Shaker pieces from the 73 remaining drafts (#3161); the manifest `span` field says what part of the page each covers |
-| mensural        | 0    | Morley 1597 p.14 examples (printed answer key); Atalanta Fuga I via Furnace & Fugue MEI (#3164, compare-only — CC BY-NC-ND) |
+| mensural        | 1    | Morley p.14 examples 2+ (ex. 1 done; printed answer key); Atalanta Fuga I via Furnace & Fugue MEI (#3164, compare-only — CC BY-NC-ND) |
 | common-practice | 0    | Fux 1725 or Rameau 1722, one short example                 |
 | neumes          | 0    | one antiphon from the 1360 Gradual, against a Liber Usualis reading |
 | tablature       | 0    | one lute page                                              |
