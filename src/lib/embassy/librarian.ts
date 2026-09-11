@@ -387,7 +387,7 @@ const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish' };
 // Replaces the prior executeSearchCollection (keyword-only) and
 // executeSearchSemantic (book-then-page only) with a single unified path.
 async function executeSearch(query: string, collection?: string | null): Promise<{
-  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string }>;
+  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string; year?: number; language?: string; textRole?: string }>;
   books: Array<{ id: string; title: string; author?: string; authorSlug?: string; year?: number; slug?: string }>;
   collectionUsed: string | null;
 }> {
@@ -404,6 +404,24 @@ async function executeSearch(query: string, collection?: string | null): Promise
     // collectionWeight defaults to 2 in hybridSearch.
   });
   return { passages, books, collectionUsed };
+}
+
+/**
+ * " (1591, Latin, original)" / " (1928, English)" / "" — the edition tag on a
+ * passage header. The model cannot prefer the source over the compendium
+ * quoting it unless it can see which is which: 35% of page citations landed
+ * on 1850–1949 English compendia, and Poimandres was quoted from
+ * Reitzenstein's 1904 study while the Turnebus editio princeps sat in the same
+ * result list (#4704).
+ */
+export function editionTag(p: { year?: number; language?: string; textRole?: string }): string {
+  const role = p.textRole === 'original'
+    ? 'original'
+    : p.textRole
+      ? p.textRole.replace(/-/g, ' ')
+      : undefined;
+  const bits = [p.year, p.language, role].filter(Boolean);
+  return bits.length ? ` (${bits.join(', ')})` : '';
 }
 
 async function executeSearchWikipedia(query: string): Promise<{ title: string; summary: string; url: string } | null> {
@@ -947,7 +965,11 @@ async function executeTool(
             : (localized.has(`${p.book_id}:${p.page_number}`)
               ? ` [text: ${LANG_NAMES[lang]} edition]`
               : ` [text: English only — no ${LANG_NAMES[lang]} edition of this page]`);
-          context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
+          // Edition tag: "(1591, Latin, original)" / "(1928, English)". The
+          // model cannot prefer the source over the compendium quoting it
+          // unless it can see which is which (#4704: 35% of page citations
+          // landed on 1850–1949 English compendia).
+          context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
         }
       }
       if (totalFound === 0) context = 'No results found for this query.';
@@ -1270,6 +1292,8 @@ Every mention of a book should link to it. Every mention of an author should lin
 **The same rule applies to book URLs.** Only write a /book/... link whose slug appeared verbatim in a tool result THIS turn. Our slugs encode edition, volume, and cataloguing details you cannot guess (the Corpus Hermeticum lives at slugs like \`poimandres-corpus-hermeticum-ficino\`, never \`the-corpus-hermeticum\`), so a slug built from a title will 404 even when we hold the book. If you mention a book the tools did not return this turn, give its title in plain italics with no link — or run a quick search for it first if a link would genuinely help.
 
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
+
+**Ad fontes — cite the source, not the compendium.** Each passage header carries the edition's year, language, and whether it is the original text. When the same idea is available both in an original (or a period edition) and in a later compendium or history that quotes it — Waite's *Hermetic Museum*, Hall's *Secret Teachings*, Mead, Thorndike, the *Kybalion* — quote and link the original and, if the modern book adds something, cite it second as commentary. Never present a nineteenth- or twentieth-century paraphrase as the words of a Renaissance author. If only a modern edition turned up, say so in a clause ("in Waite's 1893 translation") and consider one search in the original language before answering. The reader came for the primary source; a page in a 1928 handbook is a detour, not an arrival.
 
 **Step 6: Show images and suggest next steps.**
 When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — copy them character for character, and never build one by slugifying a title or an artwork's description. Fabricated embeds are stripped from your answer before the reader sees it, and the answer is then labelled as containing an illustration that could not be sourced. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all.

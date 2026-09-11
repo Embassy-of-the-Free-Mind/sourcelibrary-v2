@@ -35,6 +35,15 @@ export interface SearchPassage {
   text: string;
   score: number;
   source: string; // 'kw' | 'btp' | 'gp' | 'rrf(...)' — for diagnostics + UI
+  /**
+   * Edition metadata, so a consumer can tell a 1591 original from a 1928
+   * compendium quoting it. Without these the Librarian cited Manly P. Hall
+   * and Waite as often as the sources they paraphrase (#4704).
+   */
+  year?: number;
+  language?: string;
+  /** `original` | `modern-translation` | `period-translation` (books.text_role). */
+  textRole?: string;
 }
 
 export interface SearchBook {
@@ -485,7 +494,7 @@ export async function hybridSearch(
   const bookDocs = passageBookIds.length > 0
     ? await db.collection('books')
         .find({ id: { $in: passageBookIds }, ...tenantBookFilter(opts.tenantId) })
-        .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1 })
+        .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, text_role: 1 })
         .toArray()
     : [];
   const bookMap = new Map(bookDocs.map(b => [b.id, b]));
@@ -500,6 +509,9 @@ export async function hybridSearch(
       bookTitle: book.display_title || book.title || 'Unknown',
       bookAuthor: book.author || 'Unknown',
       bookSlug: book.slug,
+      year: typeof book.year === 'number' ? book.year : undefined,
+      language: typeof book.language === 'string' ? book.language : undefined,
+      textRole: typeof book.text_role === 'string' ? book.text_role : undefined,
       page_number: hit.page_number,
       text: stripAnnotations(hit.text || '').slice(0, 1200),
       score: hit.score,
