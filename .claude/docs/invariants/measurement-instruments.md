@@ -488,3 +488,10 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## A positive control certifies the instrument only on inputs shaped like the control (#4722)
+The Derge-identity scorer (`kanjur_align.score_page` on clawdbot, `/root/tibetan-eval/`) computed identity = matches / len(read) against **one** retrieved e-text page. Its positive control — a true e-text page plus 5% noise — scored 0.968, because the control was built from the **reference** side. Real reads are EAP two-leaf captures, ~470–600 syllables against a ~350–400-syllable e-text page, so a verbatim read of a folio straddling two pages was capped near **0.5** and the gate still passed. Every Derge identity published before 2026-09-11 (old Gemini 0.182 → BDRC 0.664, the 0.60 align rescue in `adjudicate.py`, the 5,086-page concordance) is an underestimate for long pages; the same Yigdzin reads score 0.93–0.97 once windowed.
+
+- **Build positive controls from the INPUT distribution, not the reference's.** A two-page concatenation control scores 0.496 at the old window and 0.968 at the new one — that control now ships with the scorer (`control --span 2`).
+- **For any ratio with the read in the denominator, window the reference wider than the longest read.** Fix: `score_page(..., window=2)` (retrieved page ±2, now the default; `window=0` reproduces the old number and `identity1` carries it).
+- **Tell:** an external instrument predicts a magnitude you do not see (a 0.7%-CER model reading at 0.48 "identity"), and your gate still passes. That gap is the instrument until proven otherwise. Postmortem and numbers: #4722 comment 5640946736; lesson `lesson_alignment_identity_capped_by_window_span` in auto-memory.
