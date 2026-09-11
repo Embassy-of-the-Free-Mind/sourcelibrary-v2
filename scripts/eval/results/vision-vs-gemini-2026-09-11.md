@@ -109,15 +109,15 @@ Coverage: Vision aligned where gemini-3.1-flash-lite did not: 0; gemini-3.1-flas
 - REF: ubi, cum litteris et Graecis et Latinis uehementissimam operam dedisset, tandem omni cura omnique studio indulsit medicinae et mathematicis. quibus rebus cum ante alios eruditior peritiorque esset, se in urbem contulit statimque, magistri stabuli equorum Augusti amicitiam nactus, multos uariosque mo
 - OUT: V I R G I L I I polim tranfiit: ubi cum litteris & Graecis, & Latinis uehementiffimam operam dediffet, tandem omni cu- ra, omniq. ftudio indulfit medicinae, & mathemati- cis. Quibus rebus cū ante alios eruditior, peritiorq. eflet, fe in urbem contulit: ftatimq. magiftri ftabuli equorum Augufti, amic
 
-## Tibetan cross-check — 20 pages of the #4523 pilot book, Derge alignment identity
+## Tibetan cross-check — 20 pages of the #4523 pilot book, Derge alignment identity (window=2)
 
-Instrument: `kanjur_align.py` on clawdbot (positive control median 0.968, chance floor 0.083). Identity, not CER: higher is better.
+Instrument: `kanjur_align.py score --window 2` on clawdbot, the 2026-09-11 fix (a scan page holds ~2x a Derge etext page, so the read is aligned against the retrieved page ±2). Identity, not CER: higher is better. Window=0 numbers (0.339 / 0.453 / 0.426 / 0.51) are kept in the JSON under `arms_window0`.
 
 | arm | n | median identity | mean | Vision − arm (median) | Vision W / L |
 |---|---:|---:|---:|---:|---:|
-| google-vision (hint bo) | 20 | 0.339 | 0.348 | — | — / — |
-| gemini re-OCR, woodblock prompt (#4523 txt-wood) | 20 | 0.453 | 0.44 | -0.086 | 0 / 20 |
-| gemini re-OCR, dbu-can prompt (#4523 txt-uchan) | 20 | 0.426 | 0.422 | -0.082 | 0 / 19 |
-| BDRC Yigdzin-v1 (#4722 txt-yigdzin) | 20 | 0.51 | 0.53 | -0.143 | 0 / 20 |
+| google-vision (hint bo) | 20 | 0.666 | 0.663 | — | — |
+| gemini re-OCR, woodblock prompt (#4523 txt-wood) | 20 | 0.862 | 0.812 | −0.174 | 2 / 18 |
+| gemini re-OCR, dbu-can prompt (#4523 txt-uchan) | 20 | 0.789 | 0.771 | −0.126 | 2 / 18 |
+| BDRC Yigdzin-v1 (#4722 txt-yigdzin) | 20 | 0.956 | 0.931 | −0.275 | 0 / 20 |
 
-Vision is the WORST of the four on our scans, losing 20/20 pages to the woodblock-prompt Gemini arm and to Yigdzin. The BDRC leaderboard rank (3rd, uchen CER 0.09) does not transfer to this manuscript Kanjur.
+Vision is the WORST of the four on our scans, losing 18/20 pages to both Gemini arms and 20/20 to Yigdzin. The BDRC leaderboard rank (3rd, uchen CER 0.09) does not transfer to this manuscript Kanjur.

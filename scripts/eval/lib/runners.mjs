@@ -122,6 +122,11 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
     body.generationConfig.thinkingConfig = isGemini3
       ? { thinkingLevel: 'HIGH' }
       : { thinkingBudget: 8192 };
+  } else if (opts.thinkingBudgetZero) {
+    // Gemini 3.x thinks by default and bills it at the output rate (#4581). Opt in
+    // per call site rather than flipping every historical eval arm's behaviour:
+    // arms run before 2026-09-11 did NOT set this, so a re-run with it is a new arm.
+    body.generationConfig.thinkingConfig = { thinkingBudget: 0 };
   }
 
   const start = Date.now();

@@ -195,6 +195,76 @@ laptop (`import-cost-and-egress.md`; IA is unreachable from the laptop anyway).
 - It does not settle Tibetan: dbu-med is already known-bad on every VLM (#4523)
   and the BDRC Yigdzin lane (#4722) is the plan there, not this experiment.
 
+## Amendments — 2026-09-11, before the run, after Derek's spend approval
+
+Three things checked in the hour between approval and the first paid call
+changed the design. Recorded here BEFORE the run so they are amendments, not
+post-hoc choices.
+
+1. **`gemini-2.5-flash-lite` is gone.** The one-call probe returned 404
+   *"no longer available to new users"*. The arm is dropped as pre-registered.
+   Three arms remain: flash-preview (k=2), 3.1-flash-lite (k=2), Cloud Vision (k=1).
+2. **Reference CER is infeasible for a random page of a random book, and the
+   plan as written would have dropped ~95 % of the sample.** The reference tier
+   (`reference-works/`) covers six languages and only *canonical* works — a
+   random Latin book from 45K is almost never on Wikisource. So the primary
+   metric becomes **agreement with the incumbent, calibrated by the incumbent's
+   own repeat agreement**: for each page, `agreementPrimary()` (char-level on
+   spaceless scripts, word-level otherwise, from `lib/metrics.mjs`) between the
+   cheaper arm and each flash run, against flash run-1 vs run-2. Flash's
+   self-agreement is the ceiling any engine can reach on that page, and the
+   thresholds transfer to that scale unchanged:
+   - **X:** median over pages of (flash self-agreement − arm↔flash agreement)
+     ≤ 1.0 pp. Same number, same reasoning: one word in a hundred beyond the
+     incumbent's own instability.
+   - **Y:** a page is catastrophic if arm↔flash agreement < 50 % while flash
+     self-agreement ≥ 80 % (flash was stable, the arm was not), or the arm
+     produced no text, or the invention judge marks it. Rate ≤ 10 %.
+   - **Invention veto** and **coverage floor** unchanged (coverage = pages where
+     the arm produced ≥ 50 % of flash's character count).
+   - Reference CER is still computed wherever a page can be pinned (Tibetan via
+     Derge identity on clawdbot, with the **fixed window=2 scorer** of
+     2026-09-11 — the Vision Tibetan number from the 55-page run is re-scored on
+     it so the two tables share one instrument) and reported beside agreement.
+   Agreement with flash cannot show lite being *better* than flash; the question
+   this experiment answers is "as good as", which is the routing question.
+3. **No blind stratification.** Fraktur/roman, woodblock/movable and
+   dbu-can/dbu-med are not fields, so the sample is uniform within each folded
+   language and the stratum is recorded post hoc (from the arms' own `<script>`
+   tags and the judge) rather than enforced. A language whose verdict flips
+   between strata is reported as *undecided — stratum-dependent* and stays on
+   flash.
+
+4. **The agreement threshold is calibrated on the pinned set, not asserted.**
+   Two facts from the dry run and the on-disk data forced this. (a) At
+   temperature 0 both Gemini arms are deterministic on the two dry-run pages
+   (run 1 == run 2), so "flash's own repeat agreement" is ~1.0 and cannot
+   calibrate anything — the k=2 runs are kept as an instability detector, not
+   a ceiling. (b) Word/char agreement is a noisy proxy for a CER gap: on the 38
+   pinned pages where lite and flash both align, pages whose reference-CER gap
+   is ≤ 1 pp have lite↔flash agreement p10 = 0.41, **p25 = 0.84**, median 0.96;
+   pages whose gap is > 1 pp have median 0.52, p75 0.68, max 0.92. So rule X
+   becomes: **median lite↔flash agreement over the language's pages ≥ 0.84** —
+   the 25th percentile of agreement among pinned pages that are genuinely within
+   1 pp, a cutoff that only one in ten of the beyond-1 pp pinned pages clears.
+   The catastrophic cutoff (agreement < 0.50) sits at the beyond-1 pp median.
+   The calibration table is `results/per-language-suitability-calibration-2026-09-11.json`.
+5. **The invention judge is `gemini-3-flash-preview`, not Claude.** The
+   `ANTHROPIC_API_KEY` on this machine returns 401 from both
+   `.env.production.local` and the Keychain (flagged to Derek). The judge is
+   still independent of the arms it vetoes (lite, Vision); it is not used to
+   judge flash's own spans. Judge calls run with `thinkingBudget` 512 and the
+   verdict JSON is persisted with each span.
+
+Everything else — population, n, seed, page-interior rule, arms' prompt and
+settings, cost ceiling — stands. The sample as drawn: **27 languages, 540
+pages** (Arabic, Armenian, Chinese, Dutch, English, French, Ge'ez, German,
+Greek, Hebrew, Hindi, Italian, Japanese, Javanese, Korean, Latin, Malay, Middle
+English, Ottoman Turkish, Pali, Persian, Portuguese, Russian, Sanskrit, Spanish,
+Syriac, Tibetan); the fold table is in the sample file. `thinkingBudget: 0` is set explicitly on both
+Gemini arms (CLAUDE.md rule); the July arms did not set it, so these arms are
+labelled `@tb0` in the outputs and are not pooled with July rows.
+
 ## Artifacts
 
 - Sampler + runner: `scripts/eval/per-language-suitability.mjs` (to be written;

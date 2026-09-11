@@ -58,10 +58,12 @@ and on Tibetan it is the worst engine we have tested on our own scans.**
     both engines because the reference is a passage, not the page — so the
     "garbles rather than invents" claim rests on the human read, n=5, and is
     consistent with but not proven by this run.
-  - Tibetan: Vision median Derge identity **0.339** vs Gemini woodblock-prompt
-    0.453, dbu-can-prompt 0.426, BDRC Yigdzin 0.51 (control 0.968, chance 0.083).
-    Vision loses **20/20** to the woodblock arm and to Yigdzin. The leaderboard
-    rank does not transfer to this manuscript Kanjur.
+  - Tibetan (fixed window=2 Derge scorer, same evening): Vision median identity
+    **0.666** vs Gemini woodblock-prompt 0.862, dbu-can-prompt 0.789, BDRC
+    Yigdzin 0.956. Vision loses **18/20** to both Gemini arms and 20/20 to
+    Yigdzin. (Window=0 read 0.339 / 0.453 / 0.426 / 0.51 — same order, same
+    verdict; kept in the JSON for provenance.) The leaderboard rank does not
+    transfer to this manuscript Kanjur.
   - What Vision has that no VLM does: a per-block confidence. Mean block
     confidence tracks the guard loosely (0.98 on the control, 0.6–0.7 on the
     worst pages) — worth a look as a *triage* signal, not as a lane.
