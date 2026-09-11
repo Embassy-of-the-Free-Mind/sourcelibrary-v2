@@ -401,6 +401,9 @@ async function executeSearch(query: string, collection?: string | null): Promise
   const { passages, books } = await hybridSearch(query, {
     tenantId: null,
     collection: collectionUsed,
+    // Ad fontes: at comparable relevance, hand the model the 1591 imprint
+    // before the 1928 handbook that paraphrases it (#4704).
+    preferPeriodEditions: true,
     // collectionWeight defaults to 2 in hybridSearch.
   });
   return { passages, books, collectionUsed };

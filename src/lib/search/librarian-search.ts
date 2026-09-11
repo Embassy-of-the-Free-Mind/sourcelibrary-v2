@@ -23,6 +23,7 @@ import {
 import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { authorSlug as toAuthorSlug } from '@/lib/slugify';
+import { editionYear } from '@/lib/dedup';
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -73,6 +74,12 @@ export interface HybridSearchOptions {
   tenantId?: string | null;
   /** Max passages to return (default 8). */
   limit?: number;
+  /**
+   * Nudge period editions (printed or written up to PERIOD_EDITION_YEAR) above
+   * later compendia at equal relevance. Off by default so site search is
+   * untouched; the Librarian turns it on. See applyPeriodEditionBoost.
+   */
+  preferPeriodEditions?: boolean;
   /** Max book-level results in `books` (default 5). */
   bookLimit?: number;
   /**
@@ -282,6 +289,42 @@ async function collectionScopedSources(
  * k=60 is the canonical default. Eval showed k=20 vs k=60 produce identical
  * rankings on the current golden set — stick with 60 for posterity.
  */
+/** A book printed or written in or before this year counts as a period edition. */
+export const PERIOD_EDITION_YEAR = 1800;
+/** Multiplier on the fused score of a period-edition hit. */
+export const PERIOD_EDITION_BOOST = 1.25;
+
+/**
+ * Nudge period editions above later compendia at comparable relevance.
+ *
+ * Why: over 45 days, 35% of the Librarian's page citations landed on
+ * 1850–1949 English compendia — Waite's Hermetic Museum and Hall's Secret
+ * Teachings were the #2 and #3 most-cited books — while the originals they
+ * paraphrase sat lower in the same result lists (#4704). Those books are dense
+ * in the reader's keywords and in fluent English, so every lane ranks them
+ * well; nothing in the fusion knew a 1928 handbook from a 1591 imprint.
+ *
+ * Mechanism: multiply the fused score of hits whose edition year is known and
+ * ≤ PERIOD_EDITION_YEAR by PERIOD_EDITION_BOOST, then re-sort the head. A
+ * nudge, not a filter — a compendium that is clearly the best hit stays
+ * first, and a book with no known year is left alone. Only the top `head`
+ * hits are considered, which is all the caller will read anyway.
+ */
+export function applyPeriodEditionBoost(
+  hits: RawHit[],
+  head: number,
+  yearOf: (bookId: string) => number | null,
+): RawHit[] {
+  const top = hits.slice(0, head).map(h => {
+    const year = yearOf(h.book_id);
+    return year != null && year <= PERIOD_EDITION_YEAR
+      ? { ...h, score: h.score * PERIOD_EDITION_BOOST }
+      : h;
+  });
+  top.sort((a, b) => b.score - a.score);
+  return [...top, ...hits.slice(head)];
+}
+
 function rrfMerge(rankedLists: RawHit[][], k = 60, weights?: number[]): RawHit[] {
   const scores = new Map<string, { hit: RawHit; score: number; sources: Set<string> }>();
   for (let li = 0; li < rankedLists.length; li++) {
@@ -488,16 +531,25 @@ export async function hybridSearch(
   // Optional cross-encoder rerank (no-op without API key)
   merged = await maybeRerank(query, merged);
 
-  // Resolve book metadata for the top passages (slug + display title)
-  const passageBookIds = [...new Set(merged.slice(0, limit * 2).map(h => h.book_id))];
+  // Resolve book metadata for the top passages (slug + display title). Three
+  // pages' worth, not two, so the period-edition boost below has candidates
+  // from just below the cut to promote.
+  const passageBookIds = [...new Set(merged.slice(0, limit * 3).map(h => h.book_id))];
   const db = await getDb();
   const bookDocs = passageBookIds.length > 0
     ? await db.collection('books')
         .find({ id: { $in: passageBookIds }, ...tenantBookFilter(opts.tenantId) })
-        .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, text_role: 1 })
+        .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, text_role: 1 })
         .toArray()
     : [];
   const bookMap = new Map(bookDocs.map(b => [b.id, b]));
+
+  if (opts.preferPeriodEditions) {
+    merged = applyPeriodEditionBoost(merged, limit * 3, id => {
+      const b = bookMap.get(id);
+      return b ? editionYear(b as { year?: number | null; published?: string | null }) : null;
+    });
+  }
 
   // Build final passage list — drop any hit whose book is hidden / wrong tenant
   const passages: SearchPassage[] = [];
