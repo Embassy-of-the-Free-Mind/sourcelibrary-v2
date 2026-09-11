@@ -1,0 +1,4058 @@
+{
+  "date": "2026-09-11",
+  "engine": "google-vision",
+  "feature": "DOCUMENT_TEXT_DETECTION",
+  "refs": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+  ],
+  "cost": {
+    "units": 78,
+    "usd_list": 0.117,
+    "note": "Whole experiment: 1 smoke test + 1 control (x2 runs) + 55 pinned pages + 20 Tibetan pilot pages = 78 DOCUMENT_TEXT_DETECTION units; all inside the 1,000-unit/month free tier, so billed $0. List price $1.50/1K."
+  },
+  "control": {
+    "image": "vision-control-modern-print-2026-09-11.png",
+    "slug": "latin-la-copernicus-derev-p142",
+    "hints": [
+      "la"
+    ],
+    "aligned": true,
+    "cer": 0,
+    "char_accuracy": 1,
+    "mean_confidence": 0.983,
+    "detected": [
+      {
+        "languageCode": "la",
+        "confidence": 1
+      }
+    ],
+    "error": null
+  },
+  "pages": [
+    {
+      "slug": "armenian-eznik-elc-alandoc-109",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 435084,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2719,
+      "cer": 0.0653,
+      "char_accuracy": 0.9347,
+      "char_accuracy_raw": 0.9347,
+      "char_accuracy_windowed": 0.9263,
+      "ref_chars": 765,
+      "out_chars": 783,
+      "novel_word_rate": 0.3662,
+      "mean_confidence": 0.889,
+      "min_confidence": 0.636,
+      "blocks": 4,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.9686478
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.028168613
+        }
+      ],
+      "vision_error": null,
+      "ms": 750
+    },
+    {
+      "slug": "armenian-eznik-elc-alandoc-157",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 418677,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.4211,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.8973,
+      "char_accuracy_windowed": 0.8822,
+      "ref_chars": 773,
+      "out_chars": 765,
+      "novel_word_rate": 0.4583,
+      "mean_confidence": 0.847,
+      "min_confidence": 0.49,
+      "blocks": 7,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.95946836
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.030118233
+        }
+      ],
+      "vision_error": null,
+      "ms": 873
+    },
+    {
+      "slug": "armenian-eznik-elc-alandoc-203",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 405896,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.3774,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.8722,
+      "char_accuracy_windowed": 0.8654,
+      "ref_chars": 739,
+      "out_chars": 725,
+      "novel_word_rate": 0.4366,
+      "mean_confidence": 0.766,
+      "min_confidence": 0.398,
+      "blocks": 10,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.9545275
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.032721143
+        }
+      ],
+      "vision_error": null,
+      "ms": 796
+    },
+    {
+      "slug": "armenian-eznik-elc-alandoc-70",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 428782,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.398,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.9431,
+      "char_accuracy_windowed": 0.9381,
+      "ref_chars": 742,
+      "out_chars": 760,
+      "novel_word_rate": 0.5143,
+      "mean_confidence": 0.786,
+      "min_confidence": 0.384,
+      "blocks": 8,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.9653792
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.028371044
+        }
+      ],
+      "vision_error": null,
+      "ms": 895
+    },
+    {
+      "slug": "armenian-xorenatsi-patmutiwn-2-13",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 419766,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0873,
+      "cer": 0.0094,
+      "char_accuracy": 0.9906,
+      "char_accuracy_raw": 0.9906,
+      "char_accuracy_windowed": 0.988,
+      "ref_chars": 944,
+      "out_chars": 2414,
+      "novel_word_rate": 0.4757,
+      "mean_confidence": 0.816,
+      "min_confidence": 0.183,
+      "blocks": 25,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.9913559
+        },
+        {
+          "languageCode": "lb",
+          "confidence": 0.0024363005
+        }
+      ],
+      "vision_error": null,
+      "ms": 890
+    },
+    {
+      "slug": "armenian-xorenatsi-patmutiwn-2-60",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 395459,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.1062,
+      "cer": 0.0622,
+      "char_accuracy": 0.9378,
+      "char_accuracy_raw": 0.9378,
+      "char_accuracy_windowed": 0.9869,
+      "ref_chars": 1141,
+      "out_chars": 2144,
+      "novel_word_rate": 0.3508,
+      "mean_confidence": 0.886,
+      "min_confidence": 0.547,
+      "blocks": 25,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.9947799
+        }
+      ],
+      "vision_error": null,
+      "ms": 864
+    },
+    {
+      "slug": "armenian-xorenatsi-patmutiwn-3-35",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 405373,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.1,
+      "cer": 0.019,
+      "char_accuracy": 0.981,
+      "char_accuracy_raw": 0.981,
+      "char_accuracy_windowed": 0.981,
+      "ref_chars": 1236,
+      "out_chars": 2405,
+      "novel_word_rate": 0.3512,
+      "mean_confidence": 0.807,
+      "min_confidence": 0.424,
+      "blocks": 32,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.9807669
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.008399394
+        }
+      ],
+      "vision_error": null,
+      "ms": 754
+    },
+    {
+      "slug": "armenian-zohrab-1chronicles-1",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 1033706,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2319,
+      "cer": 0.0363,
+      "char_accuracy": 0.9637,
+      "char_accuracy_raw": 0.9637,
+      "char_accuracy_windowed": 0.7971,
+      "ref_chars": 1422,
+      "out_chars": 5956,
+      "novel_word_rate": 0.6957,
+      "mean_confidence": 0.658,
+      "min_confidence": 0.343,
+      "blocks": 94,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.9720219
+        }
+      ],
+      "vision_error": null,
+      "ms": 2013
+    },
+    {
+      "slug": "armenian-zohrab-john-1",
+      "in_v03": true,
+      "script": "armenian",
+      "language": "Armenian",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "hy"
+      ],
+      "image_bytes": 883819,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2516,
+      "cer": 0.0954,
+      "char_accuracy": 0.9046,
+      "char_accuracy_raw": 0.9046,
+      "char_accuracy_windowed": 0.8772,
+      "ref_chars": 941,
+      "out_chars": 3831,
+      "novel_word_rate": 0.678,
+      "mean_confidence": 0.573,
+      "min_confidence": 0.128,
+      "blocks": 105,
+      "detected_languages": [
+        {
+          "languageCode": "hy",
+          "confidence": 0.91712886
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.02697875
+        },
+        {
+          "languageCode": "tr",
+          "confidence": 0.0046668914
+        },
+        {
+          "languageCode": "pl",
+          "confidence": 0.0036881883
+        },
+        {
+          "languageCode": "es",
+          "confidence": 0.0012053505
+        }
+      ],
+      "vision_error": null,
+      "ms": 1684
+    },
+    {
+      "slug": "chinese-analects-xue-er",
+      "in_v03": true,
+      "script": "cjk",
+      "language": "Chinese",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "zh-Hant"
+      ],
+      "image_bytes": 889308,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.7333,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.2667,
+      "char_accuracy_windowed": 0.1667,
+      "ref_chars": 36,
+      "out_chars": 3713,
+      "novel_word_rate": null,
+      "mean_confidence": 0.922,
+      "min_confidence": 0.733,
+      "blocks": 15,
+      "detected_languages": [
+        {
+          "languageCode": "en",
+          "confidence": 0.9158027
+        },
+        {
+          "languageCode": "zh",
+          "confidence": 0.040957116
+        },
+        {
+          "languageCode": "ca",
+          "confidence": 0.01901741
+        }
+      ],
+      "vision_error": null,
+      "ms": 1419
+    },
+    {
+      "slug": "chinese-daodejing-1",
+      "in_v03": true,
+      "script": "cjk",
+      "language": "Chinese",
+      "source_class": "woodblock",
+      "canonical": true,
+      "hints": [
+        "zh-Hant"
+      ],
+      "image_bytes": 2022236,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0169,
+      "cer": 0.0169,
+      "char_accuracy": 0.9831,
+      "char_accuracy_raw": 0.9831,
+      "char_accuracy_windowed": 0.9661,
+      "ref_chars": 74,
+      "out_chars": 563,
+      "novel_word_rate": null,
+      "mean_confidence": 0.733,
+      "min_confidence": 0.564,
+      "blocks": 11,
+      "detected_languages": [
+        {
+          "languageCode": "zh",
+          "confidence": 0.8686862
+        }
+      ],
+      "vision_error": null,
+      "ms": 2941
+    },
+    {
+      "slug": "chinese-hanfeizi-nan-yan",
+      "in_v03": true,
+      "script": "cjk",
+      "language": "Chinese",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "zh-Hant"
+      ],
+      "image_bytes": 591098,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.082,
+      "cer": 0.082,
+      "char_accuracy": 0.918,
+      "char_accuracy_raw": 0.918,
+      "char_accuracy_windowed": 0.8525,
+      "ref_chars": 72,
+      "out_chars": 367,
+      "novel_word_rate": null,
+      "mean_confidence": 0.583,
+      "min_confidence": 0.282,
+      "blocks": 22,
+      "detected_languages": [
+        {
+          "languageCode": "zh",
+          "confidence": 0.82653123
+        },
+        {
+          "languageCode": "sn",
+          "confidence": 0.024677401
+        }
+      ],
+      "vision_error": null,
+      "ms": 954
+    },
+    {
+      "slug": "chinese-shijing-guan-ju",
+      "in_v03": true,
+      "script": "cjk",
+      "language": "Chinese",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "zh-Hant"
+      ],
+      "image_bytes": 567341,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.15,
+      "cer": 0.15,
+      "char_accuracy": 0.85,
+      "char_accuracy_raw": 0.85,
+      "char_accuracy_windowed": 0.3625,
+      "ref_chars": 100,
+      "out_chars": 1095,
+      "novel_word_rate": null,
+      "mean_confidence": 0.639,
+      "min_confidence": 0.357,
+      "blocks": 69,
+      "detected_languages": [
+        {
+          "languageCode": "zh",
+          "confidence": 0.6795404
+        },
+        {
+          "languageCode": "ja",
+          "confidence": 0.09407862
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.009963034
+        },
+        {
+          "languageCode": "ms",
+          "confidence": 0.004508203
+        }
+      ],
+      "vision_error": null,
+      "ms": 2086
+    },
+    {
+      "slug": "chinese-xunzi-quan-xue",
+      "in_v03": true,
+      "script": "cjk",
+      "language": "Chinese",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "zh-Hant"
+      ],
+      "image_bytes": 631844,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.7,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.3,
+      "char_accuracy_windowed": 0.14,
+      "ref_chars": 64,
+      "out_chars": 381,
+      "novel_word_rate": null,
+      "mean_confidence": 0.679,
+      "min_confidence": 0.468,
+      "blocks": 10,
+      "detected_languages": [
+        {
+          "languageCode": "zh",
+          "confidence": 0.9602814
+        }
+      ],
+      "vision_error": null,
+      "ms": 1279
+    },
+    {
+      "slug": "chinese-zhuangzi-xiaoyaoyou",
+      "in_v03": true,
+      "script": "cjk",
+      "language": "Chinese",
+      "source_class": "woodblock",
+      "canonical": true,
+      "hints": [
+        "zh-Hant"
+      ],
+      "image_bytes": 1093189,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.7647,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.2353,
+      "char_accuracy_windowed": 0.098,
+      "ref_chars": 62,
+      "out_chars": 199,
+      "novel_word_rate": null,
+      "mean_confidence": 0.658,
+      "min_confidence": 0.159,
+      "blocks": 33,
+      "detected_languages": [
+        {
+          "languageCode": "zh",
+          "confidence": 0.7032461
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.038852327
+        }
+      ],
+      "vision_error": null,
+      "ms": 1608
+    },
+    {
+      "slug": "german-boltzmann-gastheorie2-p128",
+      "in_v03": true,
+      "script": "latin",
+      "language": "German",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "de"
+      ],
+      "image_bytes": 657684,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0,
+      "cer": 0,
+      "char_accuracy": 1,
+      "char_accuracy_raw": 1,
+      "char_accuracy_windowed": 1,
+      "ref_chars": 672,
+      "out_chars": 2183,
+      "novel_word_rate": 0.507,
+      "mean_confidence": 0.982,
+      "min_confidence": 0.968,
+      "blocks": 5,
+      "detected_languages": [
+        {
+          "languageCode": "de",
+          "confidence": 0.9983803
+        }
+      ],
+      "vision_error": null,
+      "ms": 1094
+    },
+    {
+      "slug": "german-de-weigel-gnothi2-p40",
+      "in_v03": false,
+      "script": "latin",
+      "language": "German",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "de"
+      ],
+      "image_bytes": 9217060,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2426,
+      "cer": 0.0217,
+      "char_accuracy": 0.9783,
+      "char_accuracy_raw": 0.9783,
+      "char_accuracy_windowed": 0.9718,
+      "ref_chars": 1500,
+      "out_chars": 3062,
+      "novel_word_rate": 0.5,
+      "mean_confidence": 0.851,
+      "min_confidence": 0.53,
+      "blocks": 8,
+      "detected_languages": [
+        {
+          "languageCode": "de",
+          "confidence": 0.9259245
+        },
+        {
+          "languageCode": "lb",
+          "confidence": 0.028441044
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.017583324
+        },
+        {
+          "languageCode": "af",
+          "confidence": 0.012968304
+        },
+        {
+          "languageCode": "cy",
+          "confidence": 0.006870852
+        },
+        {
+          "languageCode": "nl",
+          "confidence": 0.0056043486
+        }
+      ],
+      "vision_error": null,
+      "ms": 1869
+    },
+    {
+      "slug": "german-de-zesen-rosemund-p100",
+      "in_v03": false,
+      "script": "latin",
+      "language": "German",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "de"
+      ],
+      "image_bytes": 1570987,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2027,
+      "cer": 0.0296,
+      "char_accuracy": 0.9704,
+      "char_accuracy_raw": 0.9704,
+      "char_accuracy_windowed": 0.9535,
+      "ref_chars": 1472,
+      "out_chars": 1654,
+      "novel_word_rate": 0.3438,
+      "mean_confidence": 0.748,
+      "min_confidence": 0.466,
+      "blocks": 11,
+      "detected_languages": [
+        {
+          "languageCode": "de",
+          "confidence": 0.8916465
+        },
+        {
+          "languageCode": "nl",
+          "confidence": 0.04700281
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.039961174
+        },
+        {
+          "languageCode": "da",
+          "confidence": 0.016752148
+        }
+      ],
+      "vision_error": null,
+      "ms": 2832
+    },
+    {
+      "slug": "german-hegel-logik-p148",
+      "in_v03": true,
+      "script": "latin",
+      "language": "German",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "de"
+      ],
+      "image_bytes": 488767,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0395,
+      "cer": 0,
+      "char_accuracy": 1,
+      "char_accuracy_raw": 1,
+      "char_accuracy_windowed": 0.9975,
+      "ref_chars": 499,
+      "out_chars": 1711,
+      "novel_word_rate": 0.5515,
+      "mean_confidence": 0.697,
+      "min_confidence": 0.385,
+      "blocks": 6,
+      "detected_languages": [
+        {
+          "languageCode": "de",
+          "confidence": 0.98040444
+        }
+      ],
+      "vision_error": null,
+      "ms": 952
+    },
+    {
+      "slug": "german-hegel-phaenomenologie-p351",
+      "in_v03": true,
+      "script": "latin",
+      "language": "German",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "de"
+      ],
+      "image_bytes": 438280,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.037,
+      "cer": 0.0033,
+      "char_accuracy": 0.9967,
+      "char_accuracy_raw": 0.9967,
+      "char_accuracy_windowed": 0.9935,
+      "ref_chars": 368,
+      "out_chars": 2045,
+      "novel_word_rate": 0.7526,
+      "mean_confidence": 0.952,
+      "min_confidence": 0.863,
+      "blocks": 6,
+      "detected_languages": [
+        {
+          "languageCode": "de",
+          "confidence": 0.9964728
+        }
+      ],
+      "vision_error": null,
+      "ms": 843
+    },
+    {
+      "slug": "german-herder-sprache-p44",
+      "in_v03": true,
+      "script": "latin",
+      "language": "German",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "de"
+      ],
+      "image_bytes": 1028580,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.1062,
+      "cer": 0.0135,
+      "char_accuracy": 0.9865,
+      "char_accuracy_raw": 0.9865,
+      "char_accuracy_windowed": 0.9832,
+      "ref_chars": 1071,
+      "out_chars": 1144,
+      "novel_word_rate": 0.1826,
+      "mean_confidence": 0.935,
+      "min_confidence": 0.869,
+      "blocks": 4,
+      "detected_languages": [
+        {
+          "languageCode": "de",
+          "confidence": 0.9820554
+        },
+        {
+          "languageCode": "ms",
+          "confidence": 0.0075797588
+        }
+      ],
+      "vision_error": null,
+      "ms": 1295
+    },
+    {
+      "slug": "german-humboldt-kosmos1-p150",
+      "in_v03": true,
+      "script": "latin",
+      "language": "German",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "de"
+      ],
+      "image_bytes": 386150,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0352,
+      "cer": 0.0071,
+      "char_accuracy": 0.9929,
+      "char_accuracy_raw": 0.9929,
+      "char_accuracy_windowed": 0.9929,
+      "ref_chars": 1007,
+      "out_chars": 1714,
+      "novel_word_rate": 0.3613,
+      "mean_confidence": 0.968,
+      "min_confidence": 0.944,
+      "blocks": 2,
+      "detected_languages": [
+        {
+          "languageCode": "de",
+          "confidence": 0.99785185
+        }
+      ],
+      "vision_error": null,
+      "ms": 739
+    },
+    {
+      "slug": "greek-dioscorides-ruel-106",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 620832,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.3855,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.8545,
+      "char_accuracy_windowed": 0.7477,
+      "ref_chars": 549,
+      "out_chars": 1966,
+      "novel_word_rate": 0.6477,
+      "mean_confidence": 0.808,
+      "min_confidence": 0.361,
+      "blocks": 15,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.79297984
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.19037783
+        },
+        {
+          "languageCode": "gd",
+          "confidence": 0.0074704415
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.0034398974
+        },
+        {
+          "languageCode": "ga",
+          "confidence": 0.00059311104
+        }
+      ],
+      "vision_error": null,
+      "ms": 1394
+    },
+    {
+      "slug": "greek-el-aristotle-bekker1-p17",
+      "in_v03": false,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 1903827,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0196,
+      "cer": 0.0065,
+      "char_accuracy": 0.9935,
+      "char_accuracy_raw": 0.9935,
+      "char_accuracy_windowed": 0.9767,
+      "ref_chars": 968,
+      "out_chars": 3726,
+      "novel_word_rate": 0.5062,
+      "mean_confidence": 0.763,
+      "min_confidence": 0.437,
+      "blocks": 16,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9930005
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.0024164817
+        },
+        {
+          "languageCode": "de",
+          "confidence": 0.001542425
+        }
+      ],
+      "vision_error": null,
+      "ms": 2743
+    },
+    {
+      "slug": "greek-el-marinus-procli-p60",
+      "in_v03": false,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 343646,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0414,
+      "cer": 0.0022,
+      "char_accuracy": 0.9978,
+      "char_accuracy_raw": 0.9978,
+      "char_accuracy_windowed": 0.9956,
+      "ref_chars": 1116,
+      "out_chars": 1753,
+      "novel_word_rate": 0.3584,
+      "mean_confidence": 0.854,
+      "min_confidence": 0.729,
+      "blocks": 6,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.99676466
+        }
+      ],
+      "vision_error": null,
+      "ms": 984
+    },
+    {
+      "slug": "greek-el-orphica-abel-p17",
+      "in_v03": false,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 129527,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0693,
+      "cer": 0.0083,
+      "char_accuracy": 0.9917,
+      "char_accuracy_raw": 0.9917,
+      "char_accuracy_windowed": 0.9867,
+      "ref_chars": 733,
+      "out_chars": 1213,
+      "novel_word_rate": 0.2143,
+      "mean_confidence": 0.889,
+      "min_confidence": 0.521,
+      "blocks": 14,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.99113995
+        }
+      ],
+      "vision_error": null,
+      "ms": 376
+    },
+    {
+      "slug": "greek-el-parthey-poemander-p33",
+      "in_v03": false,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 1152001,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.4261,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.8393,
+      "char_accuracy_windowed": 0.8318,
+      "ref_chars": 667,
+      "out_chars": 1264,
+      "novel_word_rate": 0.6587,
+      "mean_confidence": 0.824,
+      "min_confidence": 0.507,
+      "blocks": 13,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.98911774
+        }
+      ],
+      "vision_error": null,
+      "ms": 1795
+    },
+    {
+      "slug": "greek-hero-pneumatica-178",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 555390,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0471,
+      "cer": 0.0126,
+      "char_accuracy": 0.9874,
+      "char_accuracy_raw": 0.9874,
+      "char_accuracy_windowed": 0.9874,
+      "ref_chars": 1246,
+      "out_chars": 1392,
+      "novel_word_rate": 0.0968,
+      "mean_confidence": 0.899,
+      "min_confidence": 0.637,
+      "blocks": 7,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9893757
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.005543896
+        }
+      ],
+      "vision_error": null,
+      "ms": 964
+    },
+    {
+      "slug": "greek-hero-pneumatica-266",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 611485,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0421,
+      "cer": 0.0021,
+      "char_accuracy": 0.9979,
+      "char_accuracy_raw": 0.9979,
+      "char_accuracy_windowed": 0.9948,
+      "ref_chars": 1194,
+      "out_chars": 1584,
+      "novel_word_rate": 0.1278,
+      "mean_confidence": 0.885,
+      "min_confidence": 0.885,
+      "blocks": 1,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.91109633
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.08770185
+        }
+      ],
+      "vision_error": null,
+      "ms": 983
+    },
+    {
+      "slug": "greek-hero-pneumatica-306",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 583314,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0203,
+      "cer": 0,
+      "char_accuracy": 1,
+      "char_accuracy_raw": 1,
+      "char_accuracy_windowed": 1,
+      "ref_chars": 1220,
+      "out_chars": 1523,
+      "novel_word_rate": 0.0977,
+      "mean_confidence": 0.922,
+      "min_confidence": 0.882,
+      "blocks": 4,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9327623
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.0350466
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.0035227009
+        }
+      ],
+      "vision_error": null,
+      "ms": 1150
+    },
+    {
+      "slug": "greek-hero-pneumatica-60",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 572891,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0086,
+      "cer": 0,
+      "char_accuracy": 1,
+      "char_accuracy_raw": 1,
+      "char_accuracy_windowed": 0.9919,
+      "ref_chars": 760,
+      "out_chars": 1428,
+      "novel_word_rate": 0.1724,
+      "mean_confidence": 0.889,
+      "min_confidence": 0.743,
+      "blocks": 8,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9643174
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.00472183
+        }
+      ],
+      "vision_error": null,
+      "ms": 1049
+    },
+    {
+      "slug": "greek-iliad-1",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "manuscript",
+      "canonical": true,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 7391813,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.7805,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.4434,
+      "char_accuracy_windowed": 0.3439,
+      "ref_chars": 276,
+      "out_chars": 1165,
+      "novel_word_rate": 0.8214,
+      "mean_confidence": 0.707,
+      "min_confidence": 0.392,
+      "blocks": 38,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.23775628
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.15327078
+        },
+        {
+          "languageCode": "pt",
+          "confidence": 0.10717343
+        },
+        {
+          "languageCode": "sv",
+          "confidence": 0.07595245
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.03640696
+        },
+        {
+          "languageCode": "eu",
+          "confidence": 0.032287784
+        },
+        {
+          "languageCode": "su",
+          "confidence": 0.029539408
+        },
+        {
+          "languageCode": "co",
+          "confidence": 0.02380438
+        },
+        {
+          "languageCode": "hu",
+          "confidence": 0.020964472
+        },
+        {
+          "languageCode": "ca",
+          "confidence": 0.01672102
+        },
+        {
+          "languageCode": "pl",
+          "confidence": 0.011659008
+        },
+        {
+          "languageCode": "fy",
+          "confidence": 0.0100029595
+        },
+        {
+          "languageCode": "es",
+          "confidence": 0.009129275
+        },
+        {
+          "languageCode": "lt",
+          "confidence": 0.009086563
+        },
+        {
+          "languageCode": "sw",
+          "confidence": 0.0067562982
+        },
+        {
+          "languageCode": "lus",
+          "confidence": 0.005102589
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.0013631708
+        }
+      ],
+      "vision_error": null,
+      "ms": 8982
+    },
+    {
+      "slug": "greek-iliad-13-idomeneus",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "manuscript",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 6087700,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.9217,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.1256,
+      "char_accuracy_windowed": 0.1256,
+      "ref_chars": 1105,
+      "out_chars": 1314,
+      "novel_word_rate": 0.4286,
+      "mean_confidence": 0.643,
+      "min_confidence": 0.337,
+      "blocks": 58,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.11183555
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.10158302
+        },
+        {
+          "languageCode": "de",
+          "confidence": 0.08114432
+        },
+        {
+          "languageCode": "pt",
+          "confidence": 0.061405975
+        },
+        {
+          "languageCode": "kri",
+          "confidence": 0.05829244
+        },
+        {
+          "languageCode": "es",
+          "confidence": 0.05566965
+        },
+        {
+          "languageCode": "fi",
+          "confidence": 0.03582184
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.034822073
+        },
+        {
+          "languageCode": "fy",
+          "confidence": 0.030382037
+        },
+        {
+          "languageCode": "hu",
+          "confidence": 0.029448481
+        },
+        {
+          "languageCode": "yo",
+          "confidence": 0.028569942
+        },
+        {
+          "languageCode": "eu",
+          "confidence": 0.028333578
+        },
+        {
+          "languageCode": "sv",
+          "confidence": 0.027794903
+        },
+        {
+          "languageCode": "af",
+          "confidence": 0.027468778
+        },
+        {
+          "languageCode": "nl",
+          "confidence": 0.026832059
+        },
+        {
+          "languageCode": "ca",
+          "confidence": 0.025850564
+        },
+        {
+          "languageCode": "ff",
+          "confidence": 0.02325985
+        },
+        {
+          "languageCode": "mi",
+          "confidence": 0.00840592
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.00751829
+        },
+        {
+          "languageCode": "mg",
+          "confidence": 0.0056050173
+        },
+        {
+          "languageCode": "gd",
+          "confidence": 0.0051229917
+        },
+        {
+          "languageCode": "co",
+          "confidence": 0.0012155122
+        }
+      ],
+      "vision_error": null,
+      "ms": 9529
+    },
+    {
+      "slug": "greek-philo-opificio-38",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 560173,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0141,
+      "cer": 0.0009,
+      "char_accuracy": 0.9991,
+      "char_accuracy_raw": 0.9991,
+      "char_accuracy_windowed": 0.9991,
+      "ref_chars": 1340,
+      "out_chars": 2589,
+      "novel_word_rate": 0.215,
+      "mean_confidence": 0.856,
+      "min_confidence": 0.469,
+      "blocks": 33,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9413602
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.025136918
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.01632192
+        },
+        {
+          "languageCode": "gd",
+          "confidence": 0.0057665203
+        },
+        {
+          "languageCode": "it",
+          "confidence": 0.004801966
+        }
+      ],
+      "vision_error": null,
+      "ms": 1000
+    },
+    {
+      "slug": "greek-philo-opificio-45",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 637550,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0,
+      "cer": 0,
+      "char_accuracy": 1,
+      "char_accuracy_raw": 1,
+      "char_accuracy_windowed": 1,
+      "ref_chars": 639,
+      "out_chars": 2524,
+      "novel_word_rate": 0.6051,
+      "mean_confidence": 0.865,
+      "min_confidence": 0.502,
+      "blocks": 41,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.96433026
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.011671961
+        },
+        {
+          "languageCode": "pt",
+          "confidence": 0.003393301
+        },
+        {
+          "languageCode": "ga",
+          "confidence": 0.0024944867
+        }
+      ],
+      "vision_error": null,
+      "ms": 1005
+    },
+    {
+      "slug": "greek-philo-opificio-55",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 619973,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0174,
+      "cer": 0.0019,
+      "char_accuracy": 0.9981,
+      "char_accuracy_raw": 0.9981,
+      "char_accuracy_windowed": 0.9981,
+      "ref_chars": 1247,
+      "out_chars": 2741,
+      "novel_word_rate": 0.3175,
+      "mean_confidence": 0.898,
+      "min_confidence": 0.764,
+      "blocks": 24,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9788161
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.010262834
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.006853332
+        },
+        {
+          "languageCode": "sv",
+          "confidence": 0.0018945392
+        }
+      ],
+      "vision_error": null,
+      "ms": 1020
+    },
+    {
+      "slug": "greek-simplicius-in-phys-150",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 722671,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0278,
+      "cer": 0.0046,
+      "char_accuracy": 0.9954,
+      "char_accuracy_raw": 0.9954,
+      "char_accuracy_windowed": 0.9931,
+      "ref_chars": 1086,
+      "out_chars": 3058,
+      "novel_word_rate": 0.4797,
+      "mean_confidence": 0.866,
+      "min_confidence": 0.712,
+      "blocks": 18,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9372131
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.044656295
+        },
+        {
+          "languageCode": "hu",
+          "confidence": 0.006488248
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.0026767524
+        },
+        {
+          "languageCode": "sv",
+          "confidence": 0.0016818633
+        }
+      ],
+      "vision_error": null,
+      "ms": 1193
+    },
+    {
+      "slug": "greek-simplicius-in-phys-300",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 680672,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0278,
+      "cer": 0.0028,
+      "char_accuracy": 0.9972,
+      "char_accuracy_raw": 0.9972,
+      "char_accuracy_windowed": 0.9972,
+      "ref_chars": 1317,
+      "out_chars": 2953,
+      "novel_word_rate": 0.387,
+      "mean_confidence": 0.878,
+      "min_confidence": 0.637,
+      "blocks": 27,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.8971815
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.062325392
+        },
+        {
+          "languageCode": "gd",
+          "confidence": 0.01894304
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.0073644295
+        },
+        {
+          "languageCode": "de",
+          "confidence": 0.005108541
+        },
+        {
+          "languageCode": "da",
+          "confidence": 0.0048189666
+        },
+        {
+          "languageCode": "sv",
+          "confidence": 0.0018184726
+        }
+      ],
+      "vision_error": null,
+      "ms": 1203
+    },
+    {
+      "slug": "greek-simplicius-in-phys-500",
+      "in_v03": true,
+      "script": "greek",
+      "language": "Greek",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "el"
+      ],
+      "image_bytes": 687353,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0306,
+      "cer": 0.001,
+      "char_accuracy": 0.999,
+      "char_accuracy_raw": 0.999,
+      "char_accuracy_windowed": 0.998,
+      "ref_chars": 1214,
+      "out_chars": 2892,
+      "novel_word_rate": 0.3305,
+      "mean_confidence": 0.901,
+      "min_confidence": 0.677,
+      "blocks": 15,
+      "detected_languages": [
+        {
+          "languageCode": "el",
+          "confidence": 0.9729797
+        },
+        {
+          "languageCode": "la",
+          "confidence": 0.023639658
+        }
+      ],
+      "vision_error": null,
+      "ms": 1229
+    },
+    {
+      "slug": "hebrew-genesis-1",
+      "in_v03": true,
+      "script": "hebrew",
+      "language": "Hebrew",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "he"
+      ],
+      "image_bytes": 983269,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0,
+      "cer": 0,
+      "char_accuracy": 1,
+      "char_accuracy_raw": 1,
+      "char_accuracy_windowed": 0.9746,
+      "ref_chars": 450,
+      "out_chars": 3702,
+      "novel_word_rate": 0.3833,
+      "mean_confidence": 0.799,
+      "min_confidence": 0.23,
+      "blocks": 68,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.39877957
+        },
+        {
+          "languageCode": "iw",
+          "confidence": 0.2501228
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.16647653
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.019395655
+        },
+        {
+          "languageCode": "uz",
+          "confidence": 0.018445162
+        },
+        {
+          "languageCode": "ca",
+          "confidence": 0.015482696
+        },
+        {
+          "languageCode": "kri",
+          "confidence": 0.008126618
+        },
+        {
+          "languageCode": "co",
+          "confidence": 0.0076452643
+        },
+        {
+          "languageCode": "su",
+          "confidence": 0.0075096358
+        },
+        {
+          "languageCode": "es",
+          "confidence": 0.0072689317
+        },
+        {
+          "languageCode": "no",
+          "confidence": 0.007132526
+        },
+        {
+          "languageCode": "nl",
+          "confidence": 0.007130968
+        },
+        {
+          "languageCode": "ku",
+          "confidence": 0.006839798
+        },
+        {
+          "languageCode": "haw",
+          "confidence": 0.006593184
+        },
+        {
+          "languageCode": "da",
+          "confidence": 0.006540052
+        },
+        {
+          "languageCode": "hu",
+          "confidence": 0.006100232
+        },
+        {
+          "languageCode": "pt",
+          "confidence": 0.0059698448
+        },
+        {
+          "languageCode": "is",
+          "confidence": 0.0030538286
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.0029075812
+        },
+        {
+          "languageCode": "gd",
+          "confidence": 0.002265351
+        }
+      ],
+      "vision_error": null,
+      "ms": 1800
+    },
+    {
+      "slug": "hebrew-psalms-1",
+      "in_v03": true,
+      "script": "hebrew",
+      "language": "Hebrew",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "he"
+      ],
+      "image_bytes": 751857,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.0597,
+      "cer": 0.0282,
+      "char_accuracy": 0.9718,
+      "char_accuracy_raw": 0.9718,
+      "char_accuracy_windowed": 0.9637,
+      "ref_chars": 606,
+      "out_chars": 614,
+      "novel_word_rate": 0.2045,
+      "mean_confidence": 0.609,
+      "min_confidence": 0.221,
+      "blocks": 10,
+      "detected_languages": [
+        {
+          "languageCode": "iw",
+          "confidence": 0.8494262
+        },
+        {
+          "languageCode": "yi",
+          "confidence": 0.12662086
+        }
+      ],
+      "vision_error": null,
+      "ms": 1175
+    },
+    {
+      "slug": "hebrew-sefer-hayirah-blessings",
+      "in_v03": true,
+      "script": "hebrew",
+      "language": "Hebrew",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "he"
+      ],
+      "image_bytes": 136770,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.5663,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.5864,
+      "char_accuracy_windowed": 0.3858,
+      "ref_chars": 415,
+      "out_chars": 1051,
+      "novel_word_rate": 0.557,
+      "mean_confidence": 0.745,
+      "min_confidence": 0.392,
+      "blocks": 8,
+      "detected_languages": [
+        {
+          "languageCode": "iw",
+          "confidence": 0.9188235
+        },
+        {
+          "languageCode": "yi",
+          "confidence": 0.058212522
+        }
+      ],
+      "vision_error": null,
+      "ms": 364
+    },
+    {
+      "slug": "hebrew-shaarei-orah-gate2-yovel",
+      "in_v03": true,
+      "script": "hebrew",
+      "language": "Hebrew",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "he"
+      ],
+      "image_bytes": 725188,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.1341,
+      "cer": 0.0468,
+      "char_accuracy": 0.9532,
+      "char_accuracy_raw": 0.9532,
+      "char_accuracy_windowed": 0.9471,
+      "ref_chars": 1493,
+      "out_chars": 2914,
+      "novel_word_rate": 0.4957,
+      "mean_confidence": 0.831,
+      "min_confidence": 0.495,
+      "blocks": 8,
+      "detected_languages": [
+        {
+          "languageCode": "iw",
+          "confidence": 0.99768215
+        }
+      ],
+      "vision_error": null,
+      "ms": 1640
+    },
+    {
+      "slug": "latin-aeneid-1",
+      "in_v03": true,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 657607,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.3214,
+      "cer": 0.0347,
+      "char_accuracy": 0.9653,
+      "char_accuracy_raw": 0.9653,
+      "char_accuracy_windowed": 0.9236,
+      "ref_chars": 176,
+      "out_chars": 2266,
+      "novel_word_rate": 0.925,
+      "mean_confidence": 0.805,
+      "min_confidence": 0.36,
+      "blocks": 28,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9362529
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.011280949
+        },
+        {
+          "languageCode": "hr",
+          "confidence": 0.009154092
+        },
+        {
+          "languageCode": "haw",
+          "confidence": 0.0080599245
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.005196059
+        },
+        {
+          "languageCode": "it",
+          "confidence": 0.00518069
+        },
+        {
+          "languageCode": "pl",
+          "confidence": 0.0048264735
+        },
+        {
+          "languageCode": "no",
+          "confidence": 0.004699205
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.0028344903
+        },
+        {
+          "languageCode": "sl",
+          "confidence": 0.00028394442
+        }
+      ],
+      "vision_error": null,
+      "ms": 1510
+    },
+    {
+      "slug": "latin-aeneid-10-pallas",
+      "in_v03": true,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 554322,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.3566,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.9483,
+      "char_accuracy_windowed": 0.7076,
+      "ref_chars": 943,
+      "out_chars": 2057,
+      "novel_word_rate": 0.6244,
+      "mean_confidence": 0.906,
+      "min_confidence": 0.708,
+      "blocks": 28,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9130205
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.047240622
+        },
+        {
+          "languageCode": "it",
+          "confidence": 0.009803384
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.0050488147
+        }
+      ],
+      "vision_error": null,
+      "ms": 967
+    },
+    {
+      "slug": "latin-hieronymus-epistola-ad-paulinum",
+      "in_v03": true,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 2430766,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.4069,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.9514,
+      "char_accuracy_windowed": 0.9363,
+      "ref_chars": 1103,
+      "out_chars": 6623,
+      "novel_word_rate": 0.8545,
+      "mean_confidence": 0.894,
+      "min_confidence": 0.636,
+      "blocks": 16,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9780208
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.010221819
+        },
+        {
+          "languageCode": "lb",
+          "confidence": 0.004152886
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.0005895933
+        }
+      ],
+      "vision_error": null,
+      "ms": 3467
+    },
+    {
+      "slug": "latin-hieronymus-prologus-galeatus",
+      "in_v03": true,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 2305336,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.3974,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.9459,
+      "char_accuracy_windowed": 0.9349,
+      "ref_chars": 1182,
+      "out_chars": 5155,
+      "novel_word_rate": 0.8269,
+      "mean_confidence": 0.945,
+      "min_confidence": 0.799,
+      "blocks": 27,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.98960453
+        },
+        {
+          "languageCode": "id",
+          "confidence": 0.004496484
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.0038979733
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.0020010215
+        }
+      ],
+      "vision_error": null,
+      "ms": 3600
+    },
+    {
+      "slug": "latin-la-agricola-metallica-p406",
+      "in_v03": false,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 760395,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2971,
+      "cer": 0.0368,
+      "char_accuracy": 0.9632,
+      "char_accuracy_raw": 0.9632,
+      "char_accuracy_windowed": 0.9601,
+      "ref_chars": 1153,
+      "out_chars": 1700,
+      "novel_word_rate": 0.4494,
+      "mean_confidence": 0.874,
+      "min_confidence": 0.284,
+      "blocks": 17,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9588342
+        },
+        {
+          "languageCode": "es",
+          "confidence": 0.009522748
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.0025184487
+        }
+      ],
+      "vision_error": null,
+      "ms": 1390
+    },
+    {
+      "slug": "latin-la-copernicus-derev-p142",
+      "in_v03": false,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 1190947,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.4778,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.9532,
+      "char_accuracy_windowed": 0.91,
+      "ref_chars": 1401,
+      "out_chars": 2978,
+      "novel_word_rate": 0.7257,
+      "mean_confidence": 0.6,
+      "min_confidence": 0.311,
+      "blocks": 24,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.89241385
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.026040714
+        },
+        {
+          "languageCode": "co",
+          "confidence": 0.016180387
+        },
+        {
+          "languageCode": "it",
+          "confidence": 0.007262146
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.0050963033
+        },
+        {
+          "languageCode": "da",
+          "confidence": 0.0048141642
+        },
+        {
+          "languageCode": "tr",
+          "confidence": 0.0041028243
+        },
+        {
+          "languageCode": "pt",
+          "confidence": 0.0036727802
+        },
+        {
+          "languageCode": "id",
+          "confidence": 0.0016635016
+        },
+        {
+          "languageCode": "ro",
+          "confidence": 0.0014950822
+        }
+      ],
+      "vision_error": null,
+      "ms": 2253
+    },
+    {
+      "slug": "latin-la-linnaeus-systema1735-p5",
+      "in_v03": false,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 212981,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.1563,
+      "cer": 0.0228,
+      "char_accuracy": 0.9772,
+      "char_accuracy_raw": 0.9772,
+      "char_accuracy_windowed": 0.9703,
+      "ref_chars": 1204,
+      "out_chars": 3731,
+      "novel_word_rate": 0.6616,
+      "mean_confidence": 0.965,
+      "min_confidence": 0.907,
+      "blocks": 9,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9993631
+        }
+      ],
+      "vision_error": null,
+      "ms": 600
+    },
+    {
+      "slug": "latin-la-malleus-ed2-p30",
+      "in_v03": false,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 199033,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.8095,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.7047,
+      "char_accuracy_windowed": 0.691,
+      "ref_chars": 1044,
+      "out_chars": 1574,
+      "novel_word_rate": 0.8606,
+      "mean_confidence": 0.776,
+      "min_confidence": 0.776,
+      "blocks": 1,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9124965
+        },
+        {
+          "languageCode": "hu",
+          "confidence": 0.027942955
+        }
+      ],
+      "vision_error": null,
+      "ms": 480
+    },
+    {
+      "slug": "latin-la-praetorius-syntagma1-p120",
+      "in_v03": false,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": null,
+      "canonical": true,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 1339597,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.9027,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.5808,
+      "char_accuracy_windowed": 0.2957,
+      "ref_chars": 916,
+      "out_chars": 1852,
+      "novel_word_rate": 0.945,
+      "mean_confidence": 0.933,
+      "min_confidence": 0.851,
+      "blocks": 12,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9513032
+        },
+        {
+          "languageCode": "fi",
+          "confidence": 0.028229855
+        },
+        {
+          "languageCode": "ca",
+          "confidence": 0.01044436
+        },
+        {
+          "languageCode": "is",
+          "confidence": 0.0032752387
+        }
+      ],
+      "vision_error": null,
+      "ms": 2969
+    },
+    {
+      "slug": "latin-vita-vergilii-donatus-auctus",
+      "in_v03": true,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 555886,
+      "downscaled": false,
+      "aligned": false,
+      "guard_value": 0.3893,
+      "cer": null,
+      "char_accuracy": null,
+      "char_accuracy_raw": 0.9198,
+      "char_accuracy_windowed": 0.8846,
+      "ref_chars": 1083,
+      "out_chars": 2057,
+      "novel_word_rate": 0.6637,
+      "mean_confidence": 0.829,
+      "min_confidence": 0.551,
+      "blocks": 4,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.99036866
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.008005449
+        },
+        {
+          "languageCode": "ca",
+          "confidence": 0.0016259041
+        }
+      ],
+      "vision_error": null,
+      "ms": 962
+    },
+    {
+      "slug": "latin-vulgate-genesis-1",
+      "in_v03": true,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": "print",
+      "canonical": true,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 2445232,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2807,
+      "cer": 0.039,
+      "char_accuracy": 0.961,
+      "char_accuracy_raw": 0.961,
+      "char_accuracy_windowed": 0.8865,
+      "ref_chars": 356,
+      "out_chars": 2095,
+      "novel_word_rate": 0.6977,
+      "mean_confidence": 0.915,
+      "min_confidence": 0.679,
+      "blocks": 37,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.8942832
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.06407571
+        },
+        {
+          "languageCode": "gd",
+          "confidence": 0.013811449
+        },
+        {
+          "languageCode": "lb",
+          "confidence": 0.0057647154
+        },
+        {
+          "languageCode": "tr",
+          "confidence": 0.0053823856
+        },
+        {
+          "languageCode": "haw",
+          "confidence": 0.0040997267
+        },
+        {
+          "languageCode": "pt",
+          "confidence": 0.003510772
+        }
+      ],
+      "vision_error": null,
+      "ms": 3450
+    },
+    {
+      "slug": "latin-vulgate-genesis-5-genealogy",
+      "in_v03": true,
+      "script": "latin",
+      "language": "Latin",
+      "source_class": "print",
+      "canonical": false,
+      "hints": [
+        "la"
+      ],
+      "image_bytes": 2196291,
+      "downscaled": false,
+      "aligned": true,
+      "guard_value": 0.2674,
+      "cer": 0.0519,
+      "char_accuracy": 0.9481,
+      "char_accuracy_raw": 0.9481,
+      "char_accuracy_windowed": 0.6468,
+      "ref_chars": 1252,
+      "out_chars": 4016,
+      "novel_word_rate": 0.662,
+      "mean_confidence": 0.897,
+      "min_confidence": 0.361,
+      "blocks": 57,
+      "detected_languages": [
+        {
+          "languageCode": "la",
+          "confidence": 0.9703862
+        },
+        {
+          "languageCode": "en",
+          "confidence": 0.014323178
+        },
+        {
+          "languageCode": "fr",
+          "confidence": 0.0032403811
+        },
+        {
+          "languageCode": "tr",
+          "confidence": 0.0024440272
+        }
+      ],
+      "vision_error": null,
+      "ms": 3091
+    }
+  ],
+  "per_language": {
+    "Armenian": {
+      "pages": 9,
+      "aligned": 6,
+      "median_cer_pp": 4.92,
+      "mean_confidence": 0.781,
+      "detected_language_matches": 9
+    },
+    "Chinese": {
+      "pages": 6,
+      "aligned": 3,
+      "median_cer_pp": 8.2,
+      "mean_confidence": 0.702,
+      "detected_language_matches": 6
+    },
+    "German": {
+      "pages": 7,
+      "aligned": 7,
+      "median_cer_pp": 0.71,
+      "mean_confidence": 0.876,
+      "detected_language_matches": 7
+    },
+    "Greek": {
+      "pages": 17,
+      "aligned": 13,
+      "median_cer_pp": 0.21,
+      "mean_confidence": 0.844,
+      "detected_language_matches": 17
+    },
+    "Hebrew": {
+      "pages": 4,
+      "aligned": 3,
+      "median_cer_pp": 2.82,
+      "mean_confidence": 0.746,
+      "detected_language_matches": 0
+    },
+    "Latin": {
+      "pages": 12,
+      "aligned": 5,
+      "median_cer_pp": 3.68,
+      "mean_confidence": 0.862,
+      "detected_language_matches": 12
+    }
+  },
+  "paired": {
+    "gemini-3-flash-preview": {
+      "n_pairs": 25,
+      "vision_wins": 1,
+      "ties": 13,
+      "vision_losses": 11,
+      "sign_p": 0.0063,
+      "mean_delta_pp": -0.51,
+      "median_delta_pp": -0.46,
+      "vision_aligned_ref_not": 5,
+      "ref_aligned_vision_not": 14,
+      "ref_pages_with_runs": 45,
+      "per_language": {
+        "Armenian": {
+          "n": 5,
+          "wins": 0,
+          "losses": 4,
+          "median_vision_cer_pp": 3.63,
+          "median_ref_cer_pp": 0.7,
+          "mean_novel_vision": 0.448,
+          "mean_novel_ref": 0.295
+        },
+        "Chinese": {
+          "n": 2,
+          "wins": 0,
+          "losses": 2,
+          "median_vision_cer_pp": 8.35,
+          "median_ref_cer_pp": 0.28,
+          "mean_novel_vision": null,
+          "mean_novel_ref": null
+        },
+        "German": {
+          "n": 5,
+          "wins": 0,
+          "losses": 2,
+          "median_vision_cer_pp": 0.33,
+          "median_ref_cer_pp": 0,
+          "mean_novel_vision": 0.471,
+          "mean_novel_ref": 0.427
+        },
+        "Greek": {
+          "n": 9,
+          "wins": 0,
+          "losses": 0,
+          "median_vision_cer_pp": 0.1,
+          "median_ref_cer_pp": 0,
+          "mean_novel_vision": 0.304,
+          "mean_novel_ref": 0.287
+        },
+        "Hebrew": {
+          "n": 2,
+          "wins": 1,
+          "losses": 1,
+          "median_vision_cer_pp": 1.41,
+          "median_ref_cer_pp": 12.43,
+          "mean_novel_vision": 0.294,
+          "mean_novel_ref": 0.068
+        },
+        "Latin": {
+          "n": 2,
+          "wins": 0,
+          "losses": 2,
+          "median_vision_cer_pp": 3.69,
+          "median_ref_cer_pp": 2.04,
+          "mean_novel_vision": 0.811,
+          "mean_novel_ref": 0.712
+        }
+      },
+      "deltas": [
+        {
+          "slug": "armenian-eznik-elc-alandoc-109",
+          "language": "Armenian",
+          "vision": 0.9347,
+          "ref": 0.9648,
+          "delta": -0.0301,
+          "novel_vision": 0.3662,
+          "novel_ref": 0.1667
+        },
+        {
+          "slug": "armenian-xorenatsi-patmutiwn-2-13",
+          "language": "Armenian",
+          "vision": 0.9906,
+          "ref": 0.9956,
+          "delta": -0.005,
+          "novel_vision": 0.4757,
+          "novel_ref": 0.0515
+        },
+        {
+          "slug": "armenian-xorenatsi-patmutiwn-2-60",
+          "language": "Armenian",
+          "vision": 0.9378,
+          "ref": 0.9974,
+          "delta": -0.0596,
+          "novel_vision": 0.3508,
+          "novel_ref": 0.2941
+        },
+        {
+          "slug": "armenian-xorenatsi-patmutiwn-3-35",
+          "language": "Armenian",
+          "vision": 0.981,
+          "ref": 0.993,
+          "delta": -0.012,
+          "novel_vision": 0.3512,
+          "novel_ref": 0.2816
+        },
+        {
+          "slug": "armenian-zohrab-1chronicles-1",
+          "language": "Armenian",
+          "vision": 0.9637,
+          "ref": 0.9751,
+          "delta": -0.0114,
+          "novel_vision": 0.6957,
+          "novel_ref": 0.6824
+        },
+        {
+          "slug": "chinese-daodejing-1",
+          "language": "Chinese",
+          "vision": 0.9831,
+          "ref": 0.9944,
+          "delta": -0.0113,
+          "novel_vision": null,
+          "novel_ref": null
+        },
+        {
+          "slug": "chinese-shijing-guan-ju",
+          "language": "Chinese",
+          "vision": 0.85,
+          "ref": 1,
+          "delta": -0.15,
+          "novel_vision": null,
+          "novel_ref": null
+        },
+        {
+          "slug": "german-boltzmann-gastheorie2-p128",
+          "language": "German",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.507,
+          "novel_ref": 0.507
+        },
+        {
+          "slug": "german-hegel-logik-p148",
+          "language": "German",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.5515,
+          "novel_ref": 0.5188
+        },
+        {
+          "slug": "german-hegel-phaenomenologie-p351",
+          "language": "German",
+          "vision": 0.9967,
+          "ref": 1,
+          "delta": -0.0033,
+          "novel_vision": 0.7526,
+          "novel_ref": 0.7394
+        },
+        {
+          "slug": "german-herder-sprache-p44",
+          "language": "German",
+          "vision": 0.9865,
+          "ref": 1,
+          "delta": -0.0135,
+          "novel_vision": 0.1826,
+          "novel_ref": 0.0439
+        },
+        {
+          "slug": "german-humboldt-kosmos1-p150",
+          "language": "German",
+          "vision": 0.9929,
+          "ref": 1,
+          "delta": -0.0071,
+          "novel_vision": 0.3613,
+          "novel_ref": 0.3247
+        },
+        {
+          "slug": "greek-hero-pneumatica-266",
+          "language": "Greek",
+          "vision": 0.9979,
+          "ref": 1,
+          "delta": -0.0021,
+          "novel_vision": 0.1278,
+          "novel_ref": 0.0909
+        },
+        {
+          "slug": "greek-hero-pneumatica-306",
+          "language": "Greek",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.0977,
+          "novel_ref": 0.0902
+        },
+        {
+          "slug": "greek-hero-pneumatica-60",
+          "language": "Greek",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.1724,
+          "novel_ref": 0.1478
+        },
+        {
+          "slug": "greek-philo-opificio-38",
+          "language": "Greek",
+          "vision": 0.9991,
+          "ref": 1,
+          "delta": -0.0009,
+          "novel_vision": 0.215,
+          "novel_ref": 0.1919
+        },
+        {
+          "slug": "greek-philo-opificio-45",
+          "language": "Greek",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.6051,
+          "novel_ref": 0.5947
+        },
+        {
+          "slug": "greek-philo-opificio-55",
+          "language": "Greek",
+          "vision": 0.9981,
+          "ref": 0.999,
+          "delta": -0.0009,
+          "novel_vision": 0.3175,
+          "novel_ref": 0.3143
+        },
+        {
+          "slug": "greek-simplicius-in-phys-150",
+          "language": "Greek",
+          "vision": 0.9954,
+          "ref": 1,
+          "delta": -0.0046,
+          "novel_vision": 0.4797,
+          "novel_ref": 0.4612
+        },
+        {
+          "slug": "greek-simplicius-in-phys-300",
+          "language": "Greek",
+          "vision": 0.9972,
+          "ref": 1,
+          "delta": -0.0028,
+          "novel_vision": 0.387,
+          "novel_ref": 0.3696
+        },
+        {
+          "slug": "greek-simplicius-in-phys-500",
+          "language": "Greek",
+          "vision": 0.999,
+          "ref": 0.999,
+          "delta": 0,
+          "novel_vision": 0.3305,
+          "novel_ref": 0.3249
+        },
+        {
+          "slug": "hebrew-genesis-1",
+          "language": "Hebrew",
+          "vision": 1,
+          "ref": 0.7513,
+          "delta": 0.2487,
+          "novel_vision": 0.3833,
+          "novel_ref": 0
+        },
+        {
+          "slug": "hebrew-psalms-1",
+          "language": "Hebrew",
+          "vision": 0.9718,
+          "ref": 1,
+          "delta": -0.0282,
+          "novel_vision": 0.2045,
+          "novel_ref": 0.1364
+        },
+        {
+          "slug": "latin-aeneid-1",
+          "language": "Latin",
+          "vision": 0.9653,
+          "ref": 0.9722,
+          "delta": -0.0069,
+          "novel_vision": 0.925,
+          "novel_ref": 0.8765
+        },
+        {
+          "slug": "latin-vulgate-genesis-1",
+          "language": "Latin",
+          "vision": 0.961,
+          "ref": 0.987,
+          "delta": -0.026,
+          "novel_vision": 0.6977,
+          "novel_ref": 0.5479
+        }
+      ]
+    },
+    "gemini-3.1-flash-lite": {
+      "n_pairs": 37,
+      "vision_wins": 3,
+      "ties": 19,
+      "vision_losses": 15,
+      "sign_p": 0.0075,
+      "mean_delta_pp": -1.09,
+      "median_delta_pp": -0.28,
+      "vision_aligned_ref_not": 0,
+      "ref_aligned_vision_not": 15,
+      "ref_pages_with_runs": 56,
+      "per_language": {
+        "Armenian": {
+          "n": 6,
+          "wins": 2,
+          "losses": 3,
+          "median_vision_cer_pp": 4.93,
+          "median_ref_cer_pp": 3.14,
+          "mean_novel_vision": 0.486,
+          "mean_novel_ref": 0.436
+        },
+        "Chinese": {
+          "n": 3,
+          "wins": 0,
+          "losses": 2,
+          "median_vision_cer_pp": 8.2,
+          "median_ref_cer_pp": 1.69,
+          "mean_novel_vision": null,
+          "mean_novel_ref": null
+        },
+        "German": {
+          "n": 7,
+          "wins": 0,
+          "losses": 3,
+          "median_vision_cer_pp": 0.71,
+          "median_ref_cer_pp": 0,
+          "mean_novel_vision": 0.457,
+          "mean_novel_ref": 0.421
+        },
+        "Greek": {
+          "n": 13,
+          "wins": 0,
+          "losses": 0,
+          "median_vision_cer_pp": 0.21,
+          "median_ref_cer_pp": 0.19,
+          "mean_novel_vision": 0.301,
+          "mean_novel_ref": 0.284
+        },
+        "Hebrew": {
+          "n": 3,
+          "wins": 1,
+          "losses": 1,
+          "median_vision_cer_pp": 2.82,
+          "median_ref_cer_pp": 0,
+          "mean_novel_vision": 0.361,
+          "mean_novel_ref": 0.343
+        },
+        "Latin": {
+          "n": 5,
+          "wins": 0,
+          "losses": 5,
+          "median_vision_cer_pp": 3.68,
+          "median_ref_cer_pp": 1.06,
+          "mean_novel_vision": 0.679,
+          "mean_novel_ref": 0.608
+        }
+      },
+      "deltas": [
+        {
+          "slug": "armenian-eznik-elc-alandoc-109",
+          "language": "Armenian",
+          "vision": 0.9347,
+          "ref": 0.9598,
+          "delta": -0.0251,
+          "novel_vision": 0.3662,
+          "novel_ref": 0.2083
+        },
+        {
+          "slug": "armenian-xorenatsi-patmutiwn-2-13",
+          "language": "Armenian",
+          "vision": 0.9906,
+          "ref": 0.9773,
+          "delta": 0.0133,
+          "novel_vision": 0.4757,
+          "novel_ref": 0.5167
+        },
+        {
+          "slug": "armenian-xorenatsi-patmutiwn-2-60",
+          "language": "Armenian",
+          "vision": 0.9378,
+          "ref": 0.9956,
+          "delta": -0.0578,
+          "novel_vision": 0.3508,
+          "novel_ref": 0.2606
+        },
+        {
+          "slug": "armenian-xorenatsi-patmutiwn-3-35",
+          "language": "Armenian",
+          "vision": 0.981,
+          "ref": 0.986,
+          "delta": -0.005,
+          "novel_vision": 0.3512,
+          "novel_ref": 0.2941
+        },
+        {
+          "slug": "armenian-zohrab-1chronicles-1",
+          "language": "Armenian",
+          "vision": 0.9637,
+          "ref": 0.9569,
+          "delta": 0.0068,
+          "novel_vision": 0.6957,
+          "novel_ref": 0.718
+        },
+        {
+          "slug": "armenian-zohrab-john-1",
+          "language": "Armenian",
+          "vision": 0.9046,
+          "ref": 0.9292,
+          "delta": -0.0246,
+          "novel_vision": 0.678,
+          "novel_ref": 0.6183
+        },
+        {
+          "slug": "chinese-daodejing-1",
+          "language": "Chinese",
+          "vision": 0.9831,
+          "ref": 0.9831,
+          "delta": 0,
+          "novel_vision": null,
+          "novel_ref": null
+        },
+        {
+          "slug": "chinese-hanfeizi-nan-yan",
+          "language": "Chinese",
+          "vision": 0.918,
+          "ref": 0.9836,
+          "delta": -0.0656,
+          "novel_vision": null,
+          "novel_ref": null
+        },
+        {
+          "slug": "chinese-shijing-guan-ju",
+          "language": "Chinese",
+          "vision": 0.85,
+          "ref": 0.95,
+          "delta": -0.1,
+          "novel_vision": null,
+          "novel_ref": null
+        },
+        {
+          "slug": "german-boltzmann-gastheorie2-p128",
+          "language": "German",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.507,
+          "novel_ref": 0.507
+        },
+        {
+          "slug": "german-de-weigel-gnothi2-p40",
+          "language": "German",
+          "vision": 0.9783,
+          "ref": 0.9952,
+          "delta": -0.0169,
+          "novel_vision": 0.5,
+          "novel_ref": 0.3498
+        },
+        {
+          "slug": "german-de-zesen-rosemund-p100",
+          "language": "German",
+          "vision": 0.9704,
+          "ref": 0.9915,
+          "delta": -0.0211,
+          "novel_vision": 0.3438,
+          "novel_ref": 0.3208
+        },
+        {
+          "slug": "german-hegel-logik-p148",
+          "language": "German",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.5515,
+          "novel_ref": 0.5188
+        },
+        {
+          "slug": "german-hegel-phaenomenologie-p351",
+          "language": "German",
+          "vision": 0.9967,
+          "ref": 1,
+          "delta": -0.0033,
+          "novel_vision": 0.7526,
+          "novel_ref": 0.7394
+        },
+        {
+          "slug": "german-herder-sprache-p44",
+          "language": "German",
+          "vision": 0.9865,
+          "ref": 0.991,
+          "delta": -0.0045,
+          "novel_vision": 0.1826,
+          "novel_ref": 0.1858
+        },
+        {
+          "slug": "german-humboldt-kosmos1-p150",
+          "language": "German",
+          "vision": 0.9929,
+          "ref": 1,
+          "delta": -0.0071,
+          "novel_vision": 0.3613,
+          "novel_ref": 0.3247
+        },
+        {
+          "slug": "greek-el-aristotle-bekker1-p17",
+          "language": "Greek",
+          "vision": 0.9935,
+          "ref": 0.9935,
+          "delta": 0,
+          "novel_vision": 0.5062,
+          "novel_ref": 0.4909
+        },
+        {
+          "slug": "greek-el-marinus-procli-p60",
+          "language": "Greek",
+          "vision": 0.9978,
+          "ref": 0.9989,
+          "delta": -0.0011,
+          "novel_vision": 0.3584,
+          "novel_ref": 0.3018
+        },
+        {
+          "slug": "greek-el-orphica-abel-p17",
+          "language": "Greek",
+          "vision": 0.9917,
+          "ref": 0.9917,
+          "delta": 0,
+          "novel_vision": 0.2143,
+          "novel_ref": 0.2232
+        },
+        {
+          "slug": "greek-hero-pneumatica-178",
+          "language": "Greek",
+          "vision": 0.9874,
+          "ref": 0.9893,
+          "delta": -0.0019,
+          "novel_vision": 0.0968,
+          "novel_ref": 0.0492
+        },
+        {
+          "slug": "greek-hero-pneumatica-266",
+          "language": "Greek",
+          "vision": 0.9979,
+          "ref": 1,
+          "delta": -0.0021,
+          "novel_vision": 0.1278,
+          "novel_ref": 0.0909
+        },
+        {
+          "slug": "greek-hero-pneumatica-306",
+          "language": "Greek",
+          "vision": 1,
+          "ref": 0.997,
+          "delta": 0.003,
+          "novel_vision": 0.0977,
+          "novel_ref": 0.1128
+        },
+        {
+          "slug": "greek-hero-pneumatica-60",
+          "language": "Greek",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.1724,
+          "novel_ref": 0.1478
+        },
+        {
+          "slug": "greek-philo-opificio-38",
+          "language": "Greek",
+          "vision": 0.9991,
+          "ref": 1,
+          "delta": -0.0009,
+          "novel_vision": 0.215,
+          "novel_ref": 0.1919
+        },
+        {
+          "slug": "greek-philo-opificio-45",
+          "language": "Greek",
+          "vision": 1,
+          "ref": 0.9981,
+          "delta": 0.0019,
+          "novel_vision": 0.6051,
+          "novel_ref": 0.6105
+        },
+        {
+          "slug": "greek-philo-opificio-55",
+          "language": "Greek",
+          "vision": 0.9981,
+          "ref": 0.9933,
+          "delta": 0.0048,
+          "novel_vision": 0.3175,
+          "novel_ref": 0.311
+        },
+        {
+          "slug": "greek-simplicius-in-phys-150",
+          "language": "Greek",
+          "vision": 0.9954,
+          "ref": 1,
+          "delta": -0.0046,
+          "novel_vision": 0.4797,
+          "novel_ref": 0.4612
+        },
+        {
+          "slug": "greek-simplicius-in-phys-300",
+          "language": "Greek",
+          "vision": 0.9972,
+          "ref": 1,
+          "delta": -0.0028,
+          "novel_vision": 0.387,
+          "novel_ref": 0.3696
+        },
+        {
+          "slug": "greek-simplicius-in-phys-500",
+          "language": "Greek",
+          "vision": 0.999,
+          "ref": 0.998,
+          "delta": 0.001,
+          "novel_vision": 0.3305,
+          "novel_ref": 0.3333
+        },
+        {
+          "slug": "hebrew-genesis-1",
+          "language": "Hebrew",
+          "vision": 1,
+          "ref": 1,
+          "delta": 0,
+          "novel_vision": 0.3833,
+          "novel_ref": 0.3852
+        },
+        {
+          "slug": "hebrew-psalms-1",
+          "language": "Hebrew",
+          "vision": 0.9718,
+          "ref": 1,
+          "delta": -0.0282,
+          "novel_vision": 0.2045,
+          "novel_ref": 0.1364
+        },
+        {
+          "slug": "hebrew-shaarei-orah-gate2-yovel",
+          "language": "Hebrew",
+          "vision": 0.9532,
+          "ref": 0.9107,
+          "delta": 0.0425,
+          "novel_vision": 0.4957,
+          "novel_ref": 0.5089
+        },
+        {
+          "slug": "latin-aeneid-1",
+          "language": "Latin",
+          "vision": 0.9653,
+          "ref": 0.9722,
+          "delta": -0.0069,
+          "novel_vision": 0.925,
+          "novel_ref": 0.9027
+        },
+        {
+          "slug": "latin-la-agricola-metallica-p406",
+          "language": "Latin",
+          "vision": 0.9632,
+          "ref": 0.9947,
+          "delta": -0.0315,
+          "novel_vision": 0.4494,
+          "novel_ref": 0.2581
+        },
+        {
+          "slug": "latin-la-linnaeus-systema1735-p5",
+          "language": "Latin",
+          "vision": 0.9772,
+          "ref": 0.9941,
+          "delta": -0.0169,
+          "novel_vision": 0.6616,
+          "novel_ref": 0.6103
+        },
+        {
+          "slug": "latin-vulgate-genesis-1",
+          "language": "Latin",
+          "vision": 0.961,
+          "ref": 0.9894,
+          "delta": -0.0284,
+          "novel_vision": 0.6977,
+          "novel_ref": 0.6296
+        },
+        {
+          "slug": "latin-vulgate-genesis-5-genealogy",
+          "language": "Latin",
+          "vision": 0.9481,
+          "ref": 0.9687,
+          "delta": -0.0206,
+          "novel_vision": 0.662,
+          "novel_ref": 0.6407
+        }
+      ]
+    }
+  },
+  "worst_vision": [
+    {
+      "slug": "greek-iliad-13-idomeneus",
+      "aligned": false,
+      "char_accuracy_raw": 0.1256,
+      "mean_confidence": 0.643,
+      "novel_word_rate": 0.4286,
+      "detected": [
+        "el",
+        "en",
+        "de",
+        "pt",
+        "kri",
+        "es",
+        "fi",
+        "la",
+        "fy",
+        "hu",
+        "yo",
+        "eu",
+        "sv",
+        "af",
+        "nl",
+        "ca",
+        "ff",
+        "mi",
+        "fr",
+        "mg",
+        "gd",
+        "co"
+      ],
+      "reference": "πιόμεν’ ἐκ βοτάνης· γάνυται δ’ ἄρα τε φρένα ποιμήν· ὣς Αἰνείᾳ θυμὸς ἐνὶ στήθεσσι γεγήθει, ὡς ἴδε λαῶν ἔθνος ἐπισπόμενον ἑοῖ αὐτῷ. Οἱ δ’ ἀμφ’ Ἀλκαθόῳ αὐτοσχεδὸν ὁρμήθησαν μακροῖσι ξυστοῖσι· περὶ στήθεσσι δὲ χαλκὸς σμερδαλέον κονάβιζε τιτυσκομένων καθ’ ὅμιλον ἀλλήλων· δύο δ’ ἄνδρες ἀρήϊοι ἔξοχον ἄλλων",
+      "output": "Inches cm 1 2 13 4 2 15 ww pww. ws, S andfor Dar For las deas. When Perls, 5. Huda: drws Now, visor Bouw orgula με diov. mula la. Through Onneur: In: N. Thouche an Bolarus. Larulas de apa de Peera Targeti τε dis arrera dopios evi sudeas gepuder. ,'\"'de Nawr advos amadouchvor vos auſ Επι 201 Ond'app'"
+    },
+    {
+      "slug": "chinese-zhuangzi-xiaoyaoyou",
+      "aligned": false,
+      "char_accuracy_raw": 0.2353,
+      "mean_confidence": 0.658,
+      "novel_word_rate": null,
+      "detected": [
+        "zh",
+        "en"
+      ],
+      "reference": "北冥有魚，其名為鯤。鯤之大，不知其幾千里也。化而為鳥，其名為鵬。鵬之背，不知其幾千里也；怒而飛，其翼若垂天之雲。是鳥也，海運",
+      "output": "齊諧者志怪 颶風大作則海氣先動 |/莊于爱注危一 不相干廣作一各 則將徙於南冥南魚都和 者則 L 橫已極 風名爾雅風 鵬飛撃术 鵬之徙於南冥也水擊三千 言其高 一去半歲言其遠 里攙區扶摇而上者九萬里去以六月息者 日中遊氣 章法 大之視上如此 00 绝形弯 其正 鳩之視下亦如此 造物也老于云素箫 哀 。 耶下 同 其遠 082 9 8 4 9 5 2 言 0. 灬所至極 言培風先借水為喻 港 OR"
+    },
+    {
+      "slug": "chinese-analects-xue-er",
+      "aligned": false,
+      "char_accuracy_raw": 0.2667,
+      "mean_confidence": 0.922,
+      "novel_word_rate": null,
+      "detected": [
+        "en",
+        "zh",
+        "ca"
+      ],
+      "reference": "學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？人不知而不慍，不亦君子乎？",
+      "output": "2 CONFUCIAN ANALECTS. 而務有亂上犯孝其 一節 有子 道本也。者而不上弟為有 生本君未好好者而人子 孝子之作犯鮮好也日 CHAPTER II. 1. The philosopher Yew said, \"They are few who, being filial and fraternal, are fond of offending against their supe- riors. There have been none, who, not liking to offend against their superiors, have been fond of st"
+    },
+    {
+      "slug": "chinese-xunzi-quan-xue",
+      "aligned": false,
+      "char_accuracy_raw": 0.3,
+      "mean_confidence": 0.679,
+      "novel_word_rate": null,
+      "detected": [
+        "zh"
+      ],
+      "reference": "君子曰：學不可以已。青、取之於藍，而青於藍；冰、水為之，而寒於水。木直中繩，輮以為輪，其曲中規，雖有槁暴，不復挺者，輮使之然也。",
+      "output": "4 49 荀子勸學 神莫大於化道福莫長於無禍 美丽對自開著大趣 11 吾嘗終日而思矣不如須臾之所學也吾嘗跂而望矣不如登高之博見 也) 登高而招臂非加長也而見者遠順風而呼聲非加疾也而聞者彰假輿馬 若非利足一 也而致千里假舟機者非能水也而絕江河◎ 君子生 非異也善 假於物也因爾夫息散 南方有鳥焉名曰『蒙鳩 』 以羽爲巢而編之以髮繫之葦苕 風至苕 折卵破子死巢非不完也所繫者然也西方有木焉名日『射干 』 莖長四寸 生於高山之上而臨百仞之淵木莖非能長也所立者然也蓬生麻中不扶而直 49 ⊕爲學則自化道故神莫大焉脩身則自無禍故福莫長焉 ●跂音器(ㄑ)舉踵也博見廣見也 D ●利捷足也 四能讀爲『』給直也 金生"
+    },
+    {
+      "slug": "greek-iliad-1",
+      "aligned": false,
+      "char_accuracy_raw": 0.4434,
+      "mean_confidence": 0.707,
+      "novel_word_rate": 0.8214,
+      "detected": [
+        "el",
+        "la",
+        "pt",
+        "sv",
+        "en",
+        "eu",
+        "su",
+        "co",
+        "hu",
+        "ca",
+        "pl",
+        "fy",
+        "es",
+        "lt",
+        "sw",
+        "lus",
+        "fr"
+      ],
+      "reference": "Μῆνιν ἄειδε, θεά, Πηληϊάδεω Ἀχιλῆος οὐλομένην, ἣ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκε, πολλὰς δ' ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν οἰωνοῖσί τε πᾶσι· Διὸς δ' ἐτελείετο βουλή, ἐξ οὗ δὴ τὰ πρῶτα διαστήτην ἐρίσαντε Ἀτρεΐδης τε ἄναξ ἀνδρῶν καὶ δῖος Ἀχιλλεύς.",
+      "output": "thena cm İnches 2 4 M adna Sham cont walitu J Oune ou Iriados. A. IMÁДOZ OMHPOY.H.A. ΙΛΙΑΔΟΣ Payudios. Nopos xa's pelives. Arda Tiras Nevoon, Vainor rearon, dos arauſes. A. preas Chriſe peſtem exercitis inimicitias Regum. um ände der entründen Muo Ouropirke, u wei H Tolla's d² ippopous yuxa's aide r"
+    }
+  ],
+  "worst_ref": {
+    "gemini-3-flash-preview": [
+      {
+        "slug": "greek-hero-pneumatica-178",
+        "char_accuracy_raw": 0,
+        "aligned": false,
+        "novel_word_rate": 0.0574,
+        "reference": "ἕτερα δὲ ἁλυσείδια ἐπειληθέντα πρὸς τοὺς στροφεῖς τὰ ἐναντία τοῖς πρότερον εἰς ἓν ἀποδεθέντα διὰ τροχίλου εἰς βάρος μολιβοῦν ἀποδεδέσθω, διʼ οὗ καταρρέποντος ἀποκεκλεισμέναι ἔσονται αἰ θύραι. ὁ δὲ Κ ΛΜ σίφων τὸ ἐκτὸς σκέλος ἐχέτω φέρον εἰς τὸ κρεμαστὸν ἀγγεῖον. ἐμβεβλήσθω δὲ διά τινος τρυπήματος τοῦ",
+        "output": "<language>Ancient Greek</language> <page-type>text</page-type> <page-num>178</page-num> <header>ΗΡΩΝΟΣ ΑΛΕΞΑΝΔΡΕΩΣ ΠΝΕΥΜΑΤΙΚΩΝ Α.</header> μενον· ἕτερα δὲ ἁλυσείδια ἐπειληθέντα πρὸς τοὺς στροφεῖς τὰ ἐναντία τοῖς πρότερον εἰς ἓν ἀποδεθέντα διὰ τροχίλου εἰς βάρος μολιβοῦν ἀποδεδέσθω, δι’ οὗ καταρρέπον"
+      },
+      {
+        "slug": "armenian-zohrab-john-1",
+        "char_accuracy_raw": 0.159,
+        "aligned": false,
+        "novel_word_rate": null,
+        "reference": "Ի սկզբանէ էր բանն . եւ բանն էր առ Աստուած . եւ Աստուած էր բանն ։ Նա էր ի սկզբանէ առ Աստուած ։ Ամենայն ինչ ՝ նովաւ եղեւ . եւ առանց նորա եղեւ եւ ոչինչ ՝ որ ինչ եղեւն ։ Նովաւ ՝ կեանք էր , եւ կեանքն ՝ էր լոյս մարդկան . Եւ լոյսն ՝ ի խաւարի անդ ՝ լուսաւոր էր , եւ խաւար ՝ նմա ոչ եղեւ հասու ։ Եղեւ այր մի առ",
+        "output": "\" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" \" "
+      },
+      {
+        "slug": "german-herder-sprache-p44",
+        "char_accuracy_raw": 0.3333,
+        "aligned": true,
+        "novel_word_rate": 0.0439,
+        "reference": "Kraft in die Seele hinein gedacht, die dem Menſchen als eine Zugabe vor allen Thieren zu eigen geworden, und die alſo auch, wie die vierte Stuffe einer Leiter nach den drei unterſten, allein betrachtet werden muͤſſe; und das iſt freilich, es moͤgen es ſo große Philoſophen ſagen, als da wollen, Philo",
+        "output": "00074551 44 Kraft in die Seele hinein gedacht, die dem Men- ſchen als eine Zugabe vor allen Thieren zu eigen geworden, und die alſo auch, wie die vierte Stuffe einer Leiter nach den drei unterſten, allein betrach- tet werden müſſe; und das iſt freilich, es mögen es ſo große Philoſophen ſagen, als da"
+      },
+      {
+        "slug": "chinese-hanfeizi-nan-yan",
+        "char_accuracy_raw": 0.4098,
+        "aligned": false,
+        "novel_word_rate": null,
+        "reference": "臣非非難言也，所以難言者：言順比滑澤，洋洋纚纚然，則見以為華而不實。敦祗恭厚，鯁固慎完，則見以為掘而不倫。多言繁稱，連類比物，則見以為虛而無用。",
+        "output": "韓非子新釋（上卷） 難 言 第 三 叙説 難言なんげんとは「言いうをはゞかる」の意い。臣下しんかとして君上くんじやうに事ことを言上ごんじやうして嘉納かなふを得うることは、なか なか困難こんなんなことで容易よういならぬ苦心くしんを要ようする。加しかのみならず之こうつかり物ものを申まを上あげ君きみの御機嫌おきげんを損そこねたら最後さいご、 死亡しはう立どころに至いたる有様ありさまである、故ゆゑに臣下しんかたる者もの、君きみに對たいし申まを上あげたいことは山々やまやまあつても、勢いきほひ、 差控さしひかへざるを得えないと謂いうのが此この篇へんの趣旨しゆしである。 此この篇へん、上書じやうしよの體たい"
+      },
+      {
+        "slug": "latin-vulgate-genesis-5-genealogy",
+        "char_accuracy_raw": 0.4638,
+        "aligned": false,
+        "novel_word_rate": 0.8627,
+        "reference": "Vixit autem Adam centum triginta annis : et genuit ad imaginem et similitudinem suam, vocavitque nomen ejus Seth. Et facti sunt dies Adam, postquam genuit Seth, octingenti anni : genuitque filios et filias. Et factum est omne tempus quod vixit Adam, anni nongenti triginta, et mortuus est. Vixit quoq",
+        "output": "Adam. CAP. IIII. GENESIS. CAP. V. 3 7 Nónne ſi bene egeris, recipies: ſin autem 25 Cognouit quoque adhuc Adam vxorem malè, ſtatim in foribus peccatum - tuum ſuam, & peperit filium, vocauitq; nomen -12. aderit? ſed ſub te erit appetitus eius, & tu eius Seth: dicens, Poſuit mihi Deus ſemen dominaberis"
+      }
+    ],
+    "gemini-3.1-flash-lite": [
+      {
+        "slug": "latin-la-praetorius-syntagma1-p120",
+        "char_accuracy_raw": 0.5926,
+        "aligned": false,
+        "novel_word_rate": 0.9239,
+        "reference": "Ex iis Psalmis μεγαλυνῳδία sane Lειturgodiæ Ecelesiasticæ pars maxime insignis ac frequentissima est. Etenim Magnificat illud tam magnifecit pia vetustas, ut omnibus Tonis, Tonorumque differentiis, cuiusque Dominicem ac Festi solennitati congruentibus, post Antiphonas rite concini instituerint μελοπ",
+        "output": "ET VESPERTINA. 73 Denique: Esurientes implevit bonis, & divites dimisit inanes: domesticis januis, cellis penuarijs & cubiculis adscribantur. Præterea scitè & mirificè nobis commendat hanc memorabilem B. Mariæ ODEN, quòd personarum cognominum cognatíque argumenti canticis, in Veteri Testamento præca"
+      },
+      {
+        "slug": "latin-la-malleus-ed2-p30",
+        "char_accuracy_raw": 0.7628,
+        "aligned": false,
+        "novel_word_rate": 0.7063,
+        "reference": "Impossibile est effectum sine causa sua producere. sed opera maleficorum sunt talia quod non possunt nisi opere demonum fieri. patet ex descriptione operum maleficorum. ex Isido. libro. viij. ethimol. Malefici dicuntur ob magnitudinem facinorum. Hi enim elementa concutiunt. mentes hominum turbant & ",
+        "output": "plant. Fortificatur argumentū ex.p.Reguz.c.xvi. ybi faul vexabat a demone alleuiabat qñ Dauid cythara pcutiebat corā eo z q recedebat spūs ma lus.Sed prra. Impossibile est effectum sine causa sua pducere.h opa maleficoy sunt talia q non pfit nisi ope demonū fieri.prz ex descriptiōe opey male ficoy.e"
+      },
+      {
+        "slug": "greek-dioscorides-ruel-106",
+        "char_accuracy_raw": 0.8636,
+        "aligned": false,
+        "novel_word_rate": 0.6522,
+        "reference": "ἄχρις οὗ τακηρὸς γένηται, καὶ ἐπιπλασθεὶς νύκτα ὅλην τρίχας μελαίνει προαποσμηχθείσας Κιμωλίᾳ γῇ. 3 ἁρμόζει δὲ τὰ φύλλα πάντων λεῖα κοπέντα οἰδήμασι, καὶ τὰ ἄτονα δὲ μέρη κρατύνει. αἱ δὲ Σαρδιαναὶ βάλανοι, ἄς τινες λόπιμα ἢ καστανίας ἢ μότα ἡ Διὸς βαλάνους καλοῦσι, στύρουσι καὶ αὐταί, τῶν ὁμοίων τέ ",
+        "output": "LIBER L 57 σὺν σέαι δὲ χοιρείῳ ταειχη- ad duritias quas coëthe vo- ρῷ, πρὸς κακοήθεις σκληρίας, ὴ cant, & malefica vlcera cum πρὸς πονηρευόμενα ἕλκη ἁρμό- falfa axungia conueniunt. Ili- ζοισιν· ἰσχυρότεραι δὲ τ δρυϊνῶν gnæ glandes viribus quernas αἱ πρίνινα τῇ δυνάμει εἰσίν. antecellunt. Περὶ Φηγοῦ "
+      },
+      {
+        "slug": "hebrew-shaarei-orah-gate2-yovel",
+        "char_accuracy_raw": 0.9107,
+        "aligned": true,
+        "novel_word_rate": 0.5089,
+        "reference": "וביאור העיקר הזה: דע, כי מידת היוב\"ל למעלה היא שביעית, היא עליונה, והיא סוד הגאולה השלמה והחירות; ומן היובל, שהיא סוד הגאולה השלמה, מקבלת מידת אל ח\"י שפע הגאולה ומביא גאולה לעולם, כמו שמקבל מן היובל כוח החיים ונקרא על זה אל ח\"י. ודע כי בכוח ספירת היובל, שנמשכת באל חי, נגאלו ישראל ויצאו ממצרים, שנאמר",
+        "output": "רה שער ב אדני פועלת גאולה בשליחות אל חי ומצלת את הצדיק וגואלת אותם מכל פגע ומחלה ומכל מיני משחית ופורענות ונקרא באותה השעה המלאך הגואל ולפי שמדת אדני הנקרא שכינה היתה הולכת עם יעקב בשליחות אל חי כאמרו אם יהיה אלהים עמדי ושמרני בדרך הזה ושבתי בשלום בית אבי והיה יהוה לי לאלהים והיתה המרה הזאת הולכת עם"
+      },
+      {
+        "slug": "latin-vita-vergilii-donatus-auctus",
+        "char_accuracy_raw": 0.9176,
+        "aligned": true,
+        "novel_word_rate": 0.6278,
+        "reference": "ubi, cum litteris et Graecis et Latinis uehementissimam operam dedisset, tandem omni cura omnique studio indulsit medicinae et mathematicis. quibus rebus cum ante alios eruditior peritiorque esset, se in urbem contulit statimque, magistri stabuli equorum Augusti amicitiam nactus, multos uariosque mo",
+        "output": "V I R G I L I I polim tranfiit: ubi cum litteris & Graecis, & Latinis uehementiffimam operam dediffet, tandem omni cu- ra, omniq. ftudio indulfit medicinae, & mathemati- cis. Quibus rebus cū ante alios eruditior, peritiorq. eflet, fe in urbem contulit: ftatimq. magiftri ftabuli equorum Augufti, amic"
+      }
+    ]
+  },
+  "transcripts_dir": "results/vision-transcripts-2026-09-11",
+  "scorecard_outputs": null,
+  "tibetan_pilot": {
+    "book_id": "69e7abd05f1a22ab19a9e929",
+    "title": "Neyphug Kanjur rGyud Kha (EAP310, manuscript Kanjur)",
+    "pages": [
+      "69e7abd05f1a22ab19a9e929_00029",
+      "69e7abd05f1a22ab19a9e929_00057",
+      "69e7abd05f1a22ab19a9e929_00085",
+      "69e7abd05f1a22ab19a9e929_00113",
+      "69e7abd05f1a22ab19a9e929_00141",
+      "69e7abd05f1a22ab19a9e929_00169",
+      "69e7abd05f1a22ab19a9e929_00197",
+      "69e7abd05f1a22ab19a9e929_00225",
+      "69e7abd05f1a22ab19a9e929_00253",
+      "69e7abd05f1a22ab19a9e929_00281",
+      "69e7abd05f1a22ab19a9e929_00309",
+      "69e7abd05f1a22ab19a9e929_00337",
+      "69e7abd05f1a22ab19a9e929_00365",
+      "69e7abd05f1a22ab19a9e929_00393",
+      "69e7abd05f1a22ab19a9e929_00421",
+      "69e7abd05f1a22ab19a9e929_00449",
+      "69e7abd05f1a22ab19a9e929_00477",
+      "69e7abd05f1a22ab19a9e929_00505",
+      "69e7abd05f1a22ab19a9e929_00533",
+      "69e7abd05f1a22ab19a9e929_00561"
+    ],
+    "instrument": "/root/tibetan-eval/kanjur_align.py score --index etext-index-full.pkl on clawdbot; identity = NW syllable identity vs the best-retrieved Derge etext page",
+    "positive_control_noise05_median": 0.968,
+    "chance_floor_median": 0.083,
+    "arms": {
+      "google-vision": {
+        "label": "google-vision (hint bo)",
+        "n": 20,
+        "median_identity": 0.339,
+        "mean_identity": 0.348,
+        "min": 0.2031,
+        "max": 0.6335
+      },
+      "wood": {
+        "label": "gemini re-OCR, woodblock prompt (#4523 txt-wood)",
+        "n": 20,
+        "median_identity": 0.453,
+        "mean_identity": 0.44,
+        "min": 0.25,
+        "max": 0.7666,
+        "vision_minus_arm_median": -0.086,
+        "vision_wins": 0,
+        "vision_losses": 20
+      },
+      "uchan": {
+        "label": "gemini re-OCR, dbu-can prompt (#4523 txt-uchan)",
+        "n": 20,
+        "median_identity": 0.426,
+        "mean_identity": 0.422,
+        "min": 0.2177,
+        "max": 0.75,
+        "vision_minus_arm_median": -0.082,
+        "vision_wins": 0,
+        "vision_losses": 19
+      },
+      "yigdzin": {
+        "label": "BDRC Yigdzin-v1 (#4722 txt-yigdzin)",
+        "n": 20,
+        "median_identity": 0.51,
+        "mean_identity": 0.53,
+        "min": 0.2729,
+        "max": 0.95,
+        "vision_minus_arm_median": -0.143,
+        "vision_wins": 0,
+        "vision_losses": 20
+      }
+    },
+    "scores_file": "clawdbot:/root/tibetan-eval/scores-vision-cmp-all.jsonl",
+    "per_page": [
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00029",
+        "arm": "google-vision",
+        "identity": 0.461,
+        "retrieval": 0.058,
+        "n_syllables": 603
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00057",
+        "arm": "google-vision",
+        "identity": 0.3238,
+        "retrieval": 0.027,
+        "n_syllables": 562
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00085",
+        "arm": "google-vision",
+        "identity": 0.3399,
+        "retrieval": 0.0451,
+        "n_syllables": 559
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00113",
+        "arm": "google-vision",
+        "identity": 0.3738,
+        "retrieval": 0.0669,
+        "n_syllables": 511
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00141",
+        "arm": "google-vision",
+        "identity": 0.3879,
+        "retrieval": 0.0646,
+        "n_syllables": 562
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00169",
+        "arm": "google-vision",
+        "identity": 0.278,
+        "retrieval": 0.0383,
+        "n_syllables": 554
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00197",
+        "arm": "google-vision",
+        "identity": 0.6335,
+        "retrieval": 0.0322,
+        "n_syllables": 502
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00225",
+        "arm": "google-vision",
+        "identity": 0.3772,
+        "retrieval": 0.0513,
+        "n_syllables": 570
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00253",
+        "arm": "google-vision",
+        "identity": 0.3896,
+        "retrieval": 0.0634,
+        "n_syllables": 557
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00281",
+        "arm": "google-vision",
+        "identity": 0.2031,
+        "retrieval": 0.0335,
+        "n_syllables": 640
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00309",
+        "arm": "google-vision",
+        "identity": 0.3442,
+        "retrieval": 0.0347,
+        "n_syllables": 523
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00337",
+        "arm": "google-vision",
+        "identity": 0.2559,
+        "retrieval": 0.0201,
+        "n_syllables": 551
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00365",
+        "arm": "google-vision",
+        "identity": 0.2746,
+        "retrieval": 0.0134,
+        "n_syllables": 528
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00393",
+        "arm": "google-vision",
+        "identity": 0.3372,
+        "retrieval": 0.0409,
+        "n_syllables": 519
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00421",
+        "arm": "google-vision",
+        "identity": 0.3233,
+        "retrieval": 0.0461,
+        "n_syllables": 532
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00449",
+        "arm": "google-vision",
+        "identity": 0.3842,
+        "retrieval": 0.0441,
+        "n_syllables": 505
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00477",
+        "arm": "google-vision",
+        "identity": 0.3354,
+        "retrieval": 0.0377,
+        "n_syllables": 483
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00505",
+        "arm": "google-vision",
+        "identity": 0.2888,
+        "retrieval": 0.0157,
+        "n_syllables": 516
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00533",
+        "arm": "google-vision",
+        "identity": 0.3802,
+        "retrieval": 0.0384,
+        "n_syllables": 526
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00561",
+        "arm": "google-vision",
+        "identity": 0.2772,
+        "retrieval": 0.0495,
+        "n_syllables": 552
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00029",
+        "arm": "wood",
+        "identity": 0.4816,
+        "retrieval": 0.1194,
+        "n_syllables": 490
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00057",
+        "arm": "wood",
+        "identity": 0.4562,
+        "retrieval": 0.1014,
+        "n_syllables": 502
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00085",
+        "arm": "wood",
+        "identity": 0.3611,
+        "retrieval": 0.0574,
+        "n_syllables": 493
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00113",
+        "arm": "wood",
+        "identity": 0.4638,
+        "retrieval": 0.0862,
+        "n_syllables": 442
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00141",
+        "arm": "wood",
+        "identity": 0.462,
+        "retrieval": 0.0747,
+        "n_syllables": 487
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00169",
+        "arm": "wood",
+        "identity": 0.3232,
+        "retrieval": 0.0461,
+        "n_syllables": 526
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00197",
+        "arm": "wood",
+        "identity": 0.7666,
+        "retrieval": 0.0302,
+        "n_syllables": 437
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00225",
+        "arm": "wood",
+        "identity": 0.4536,
+        "retrieval": 0.0717,
+        "n_syllables": 507
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00253",
+        "arm": "wood",
+        "identity": 0.4524,
+        "retrieval": 0.1004,
+        "n_syllables": 473
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00281",
+        "arm": "wood",
+        "identity": 0.25,
+        "retrieval": 0.0486,
+        "n_syllables": 560
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00309",
+        "arm": "wood",
+        "identity": 0.4865,
+        "retrieval": 0.1156,
+        "n_syllables": 446
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00337",
+        "arm": "wood",
+        "identity": 0.3755,
+        "retrieval": 0.0725,
+        "n_syllables": 474
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00365",
+        "arm": "wood",
+        "identity": 0.4163,
+        "retrieval": 0.0579,
+        "n_syllables": 454
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00393",
+        "arm": "wood",
+        "identity": 0.4437,
+        "retrieval": 0.0797,
+        "n_syllables": 444
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00421",
+        "arm": "wood",
+        "identity": 0.4048,
+        "retrieval": 0.0833,
+        "n_syllables": 462
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00449",
+        "arm": "wood",
+        "identity": 0.4965,
+        "retrieval": 0.0962,
+        "n_syllables": 431
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00477",
+        "arm": "wood",
+        "identity": 0.481,
+        "retrieval": 0.095,
+        "n_syllables": 447
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00505",
+        "arm": "wood",
+        "identity": 0.3538,
+        "retrieval": 0.0514,
+        "n_syllables": 472
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00533",
+        "arm": "wood",
+        "identity": 0.5226,
+        "retrieval": 0.1083,
+        "n_syllables": 486
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00561",
+        "arm": "wood",
+        "identity": 0.3505,
+        "retrieval": 0.0913,
+        "n_syllables": 465
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00029",
+        "arm": "uchan",
+        "identity": 0.5089,
+        "retrieval": 0.1168,
+        "n_syllables": 448
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00057",
+        "arm": "uchan",
+        "identity": 0.4252,
+        "retrieval": 0.0701,
+        "n_syllables": 508
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00085",
+        "arm": "uchan",
+        "identity": 0.364,
+        "retrieval": 0.0498,
+        "n_syllables": 467
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00113",
+        "arm": "uchan",
+        "identity": 0.4454,
+        "retrieval": 0.0898,
+        "n_syllables": 449
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00141",
+        "arm": "uchan",
+        "identity": 0.4325,
+        "retrieval": 0.0641,
+        "n_syllables": 504
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00169",
+        "arm": "uchan",
+        "identity": 0.3189,
+        "retrieval": 0.0417,
+        "n_syllables": 533
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00197",
+        "arm": "uchan",
+        "identity": 0.75,
+        "retrieval": 0.0249,
+        "n_syllables": 448
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00225",
+        "arm": "uchan",
+        "identity": 0.4261,
+        "retrieval": 0.0562,
+        "n_syllables": 521
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00253",
+        "arm": "uchan",
+        "identity": 0.3975,
+        "retrieval": 0.0592,
+        "n_syllables": 478
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00281",
+        "arm": "uchan",
+        "identity": 0.2177,
+        "retrieval": 0.0609,
+        "n_syllables": 565
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00309",
+        "arm": "uchan",
+        "identity": 0.4831,
+        "retrieval": 0.1114,
+        "n_syllables": 445
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00337",
+        "arm": "uchan",
+        "identity": 0.3576,
+        "retrieval": 0.0672,
+        "n_syllables": 481
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00365",
+        "arm": "uchan",
+        "identity": 0.3742,
+        "retrieval": 0.0385,
+        "n_syllables": 473
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00393",
+        "arm": "uchan",
+        "identity": 0.4295,
+        "retrieval": 0.0757,
+        "n_syllables": 454
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00421",
+        "arm": "uchan",
+        "identity": 0.387,
+        "retrieval": 0.0655,
+        "n_syllables": 478
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00449",
+        "arm": "uchan",
+        "identity": 0.4775,
+        "retrieval": 0.0979,
+        "n_syllables": 444
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00477",
+        "arm": "uchan",
+        "identity": 0.442,
+        "retrieval": 0.0745,
+        "n_syllables": 448
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00505",
+        "arm": "uchan",
+        "identity": 0.3844,
+        "retrieval": 0.0486,
+        "n_syllables": 437
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00533",
+        "arm": "uchan",
+        "identity": 0.4807,
+        "retrieval": 0.0763,
+        "n_syllables": 491
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00561",
+        "arm": "uchan",
+        "identity": 0.3376,
+        "retrieval": 0.0815,
+        "n_syllables": 471
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00029",
+        "arm": "yigdzin",
+        "identity": 0.6074,
+        "retrieval": 0.154,
+        "n_syllables": 512
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00057",
+        "arm": "yigdzin",
+        "identity": 0.4628,
+        "retrieval": 0.1107,
+        "n_syllables": 497
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00085",
+        "arm": "yigdzin",
+        "identity": 0.4784,
+        "retrieval": 0.1125,
+        "n_syllables": 485
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00113",
+        "arm": "yigdzin",
+        "identity": 0.6918,
+        "retrieval": 0.2112,
+        "n_syllables": 318
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00141",
+        "arm": "yigdzin",
+        "identity": 0.5207,
+        "retrieval": 0.1324,
+        "n_syllables": 482
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00169",
+        "arm": "yigdzin",
+        "identity": 0.3728,
+        "retrieval": 0.112,
+        "n_syllables": 523
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00197",
+        "arm": "yigdzin",
+        "identity": 0.7892,
+        "retrieval": 0.0398,
+        "n_syllables": 408
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00225",
+        "arm": "yigdzin",
+        "identity": 0.4961,
+        "retrieval": 0.1109,
+        "n_syllables": 510
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00253",
+        "arm": "yigdzin",
+        "identity": 0.5308,
+        "retrieval": 0.1524,
+        "n_syllables": 471
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00281",
+        "arm": "yigdzin",
+        "identity": 0.2729,
+        "retrieval": 0.0721,
+        "n_syllables": 546
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00309",
+        "arm": "yigdzin",
+        "identity": 0.5178,
+        "retrieval": 0.1528,
+        "n_syllables": 450
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00337",
+        "arm": "yigdzin",
+        "identity": 0.3894,
+        "retrieval": 0.0925,
+        "n_syllables": 470
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00365",
+        "arm": "yigdzin",
+        "identity": 0.4571,
+        "retrieval": 0.1,
+        "n_syllables": 455
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00393",
+        "arm": "yigdzin",
+        "identity": 0.6064,
+        "retrieval": 0.1716,
+        "n_syllables": 343
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00421",
+        "arm": "yigdzin",
+        "identity": 0.4674,
+        "retrieval": 0.1203,
+        "n_syllables": 430
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00449",
+        "arm": "yigdzin",
+        "identity": 0.5245,
+        "retrieval": 0.1321,
+        "n_syllables": 429
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00477",
+        "arm": "yigdzin",
+        "identity": 0.5023,
+        "retrieval": 0.1116,
+        "n_syllables": 444
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00505",
+        "arm": "yigdzin",
+        "identity": 0.4152,
+        "retrieval": 0.0993,
+        "n_syllables": 448
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00533",
+        "arm": "yigdzin",
+        "identity": 0.5489,
+        "retrieval": 0.1432,
+        "n_syllables": 481
+      },
+      {
+        "id": "69e7abd05f1a22ab19a9e929_00561",
+        "arm": "yigdzin",
+        "identity": 0.95,
+        "retrieval": 0.3143,
+        "n_syllables": 40
+      }
+    ]
+  }
+}
