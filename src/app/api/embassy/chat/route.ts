@@ -5,7 +5,8 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
 import { applyCitationFixes, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
-import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
+import { isBareGreeting, greetingReply } from '@/lib/embassy/greeting';
 import { chatRequestSchema } from '@/lib/embassy/chat-request';
 import { threadVisibility } from '@/lib/embassy/thread-visibility';
 import { toUserId } from '@/lib/user-id';
@@ -16,6 +17,9 @@ export const dynamic = 'force-dynamic';
 // 110s elapsed. The killed function severs the SSE stream and the client shows
 // "The Librarian seems to be away." 300 matches our other long-running routes.
 export const maxDuration = 300;
+
+/** Anonymous Librarian turns per UTC day, across all IPs. See the gate below. */
+const ANON_DAILY_CEILING = Number(process.env.LIBRARIAN_ANON_DAILY_CEILING) || 500;
 
 
 /**
@@ -46,7 +50,12 @@ export async function POST(request: NextRequest) {
   const userId = session?.user?.id ?? null;
 
   if (!userId) {
-    const rl = checkRateLimit(
+    // Shared (Mongo-backed) counter, not the in-memory one: the in-memory
+    // limiter is private to each Vercel instance, so a steady low-rate hitter
+    // fanned across lambdas never trips it — a bot opened 3,106 threads in a
+    // week that way, each a full Gemini turn (#4704). Falls back to in-memory
+    // only when Mongo is slow or down.
+    const rl = await checkRateLimitShared(
       { name: 'librarian-chat', limit: 5, windowSeconds: 3600 },
       getClientIp(request),
     );
@@ -57,6 +66,23 @@ export async function POST(request: NextRequest) {
           code: 'SIGNIN_REQUIRED',
         },
         { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+      );
+    }
+    // Global daily ceiling on ANONYMOUS turns, all IPs together — a per-IP cap
+    // is worthless against rotation. Baseline anonymous traffic is a few dozen
+    // turns a day; a ceiling ~10x that never touches real visitors, and when it
+    // does trip the door stays open via free sign-in.
+    const ceiling = await checkRateLimitShared(
+      { name: 'librarian-chat-anon-global', limit: ANON_DAILY_CEILING, windowSeconds: 86400 },
+      'all',
+    );
+    if (!ceiling.allowed) {
+      return NextResponse.json(
+        {
+          error: 'The Librarian\'s free desk is fully booked for today. Sign in (free) to keep talking.',
+          code: 'SIGNIN_REQUIRED',
+        },
+        { status: 429, headers: { 'Retry-After': String(ceiling.retryAfter) } },
       );
     }
   }
@@ -102,6 +128,9 @@ export async function POST(request: NextRequest) {
 
   const now = new Date();
   let activeThreadId: string;
+  // A bare "hello" gets the desk's welcome, not six searches (see greeting.ts).
+  // The thread it opens is kept but unlisted — there is nothing in it to read.
+  const bareGreeting = isBareGreeting(message);
 
   if (threadId) {
     // Continue existing thread — verify ownership. Signed-in users may only
@@ -147,7 +176,7 @@ export async function POST(request: NextRequest) {
       title: message.slice(0, 120),
       creatorId: userId,
       creatorName: displayName,
-      visibility: threadVisibility(userId, visibility === 'public'),
+      visibility: bareGreeting ? 'unlisted' : threadVisibility(userId, visibility === 'public'),
       aiEnabled: true,
       lang,
       messageCount: 0,
@@ -180,6 +209,14 @@ export async function POST(request: NextRequest) {
   /** The text as the reader should see it: links repaired, dead images dropped. */
   const finalizeText = (text: string) =>
     applyImageRemovals(applyCitationFixes(text, citationFixes), imageRemovals);
+
+  /** One canned step in place of the agentic loop, for a bare greeting. */
+  async function* greetingSteps(): AsyncGenerator<LibrarianStep> {
+    yield { type: 'text', text: greetingReply(lang) };
+  }
+  const agentSteps = () => bareGreeting
+    ? greetingSteps()
+    : streamAgenticResponse(message, history, activeThreadId, { collection, lang });
 
   const saveAiResponse = async () => {
     if (!fullText && allSources.length === 0) return;
@@ -215,7 +252,7 @@ export async function POST(request: NextRequest) {
 
   if (!stream) {
     try {
-      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection, lang })) {
+      for await (const step of agentSteps()) {
         if (step.type === 'text') {
           fullText += step.text || '';
         } else if (step.type === 'sources') {
@@ -299,7 +336,7 @@ export async function POST(request: NextRequest) {
     try {
       await send({ type: 'threadId', threadId: activeThreadId });
 
-      for await (const step of streamAgenticResponse(message, history, activeThreadId, { collection, lang })) {
+      for await (const step of agentSteps()) {
         lastStepType = step.type;
         switch (step.type) {
           case 'thinking':

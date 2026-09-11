@@ -108,7 +108,7 @@ describe('Embassy API', () => {
       (auth as any).mockResolvedValueOnce(null);
 
       const req = makeRequest('/api/embassy/chat', {
-        message: 'Hello',
+        message: 'Where does Agrippa discuss celestial harmony?',
         visibility: 'public',
       });
 
@@ -127,6 +127,33 @@ describe('Embassy API', () => {
       });
       expect(thread!.creatorId).toBeNull();
       expect(thread!.visibility).toBe('public');
+    });
+
+    it('answers a bare greeting from the desk, with no model call, in an unlisted thread', async () => {
+      const { auth } = await import('@/lib/auth');
+      (auth as any).mockResolvedValueOnce(null);
+      const { streamAgenticResponse } = await import('@/lib/embassy/librarian');
+      const callsBefore = (streamAgenticResponse as any).mock.calls.length;
+
+      const req = makeRequest('/api/embassy/chat', {
+        message: 'Hello',
+        visibility: 'public',
+      });
+
+      const res = await chatPost(req as any);
+      const data = await res.json();
+      expect(res.status).toBe(200);
+      // The agentic loop never ran — a "Hello" used to cost a full Gemini turn
+      // (#4704: 3,106 of them in one week).
+      expect((streamAgenticResponse as any).mock.calls.length).toBe(callsBefore);
+      expect(data.message.content).toMatch(/Welcome to the reading room/);
+
+      const db = getTestDb();
+      const thread = await db.collection('embassy_threads').findOne({
+        _id: new ObjectId(data.threadId),
+      });
+      // Kept (the visitor can continue it) but out of the Recent feed.
+      expect(thread!.visibility).toBe('unlisted');
     });
 
     it('honours an anonymous opt-out as unlisted, not private', async () => {
