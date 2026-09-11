@@ -14,6 +14,7 @@
  * Global row (one per term_key):
  *   { term_key, term (most frequent surface form), kinds: {vocab,term,keyword,original},
  *     langs: {Latin: n, …}, glosses: [{gloss, n}] (top 5), books: n, pages: n,
+ *     books_text: n (books excluding <keywords> rows), books_by_kind: {vocab, term, keyword, original_verified},
  *     original_verified: n, original_unverified: n,
  *     evidence: [{book_id, page_number, kind, gloss, context}] (≤5, distinct books; context = ≤120 chars of translation before a <term>/<note original>),
  *     type, type_source, type_confidence, type_id (with --types; scripts/lib/page-terms-type.mjs),
@@ -35,6 +36,7 @@
  *   node scripts/maintenance/aggregate-page-terms.mjs --in-dir <dir> [--db page-terms.sqlite] [--out global.jsonl]
  *   node scripts/maintenance/aggregate-page-terms.mjs --from-global global.jsonl --rule bridge --types types.jsonl --out kept.jsonl --apply
  *   pilot thresholds: --min-term-books 2 --min-orig-books 2 --min-vocab-books 3 --min-nonlatin-books 1
+ *   --keywords-weight 0: evaluate the rule on non-<keywords> evidence (see KW_WEIGHT below)
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -53,6 +55,13 @@ const APPLY = args.includes('--apply');
 const REBUILD = args.includes('--rebuild');
 const RULE = getArg('--rule') || 'pilot';
 const TYPES = getArg('--types');
+// <keywords> are the translator's END-OF-PAGE SUMMARY list ("key concepts, names, themes in
+// English, for indexing" — the prompt's own words), not terms that occur in the text. In the
+// vocabulary path they inflate `books` for common English words and are the only source for
+// many of them. --keywords-weight 0 evaluates the keep rule on the term's NON-keyword
+// evidence (`books_text`, counted in the group query); `kinds.keyword` and `books` still
+// report the full picture. Default 1 keeps the old behaviour reviewable.
+const KW_WEIGHT = Number(getArg('--keywords-weight') ?? 1);
 const METHOD = 'aggregate-page-terms.mjs@3';
 // Pilot-rule thresholds (distinct books per kind). Ignored by --rule bridge.
 const PILOT_T = {
@@ -65,7 +74,19 @@ const PILOT_T = {
 if (!RULE_NAMES.includes(RULE)) { console.error(`--rule must be one of ${RULE_NAMES.join('|')}`); process.exit(1); }
 if (APPLY && !process.env.MONGODB_URI) { console.error('MONGODB_URI not set.'); process.exit(1); }
 if (FROM_GLOBAL && path.resolve(FROM_GLOBAL) === path.resolve(OUT)) { console.error('--out must differ from --from-global'); process.exit(1); }
-const keep = (row) => KEEP_RULES[RULE](row, PILOT_T);
+if (![0, 1].includes(KW_WEIGHT)) { console.error('--keywords-weight must be 0 or 1'); process.exit(1); }
+const isKeywordOnly = (r) => (r.kinds?.keyword || 0) > 0 && !((r.kinds?.vocab || 0) + (r.kinds?.term || 0) + (r.kinds?.original || 0));
+/** The rule sees the term's non-keyword evidence when keywords weigh 0. A table written
+ *  before `books_text` existed cannot be re-counted: keyword-only rows are dropped and the
+ *  rest evaluated on their full `books` (over-keeps, never under-keeps; counted in stats). */
+function ruleView(row) {
+  if (KW_WEIGHT !== 0) return row;
+  if (row.books_text != null) return { ...row, books: row.books_text };
+  if (isKeywordOnly(row)) return { ...row, books: 0 };
+  stats.keywords_approx = (stats.keywords_approx || 0) + 1;
+  return row;
+}
+const keep = (row) => KEEP_RULES[RULE](ruleView(row), PILOT_T);
 
 // ---- typing overlay (sparse: absent key = concept/unmatched) ----
 const types = new Map();
@@ -114,7 +135,7 @@ async function emit(row, why) {
   stats.why[why] = (stats.why[why] || 0) + 1;
   stampType(row);
   if (TYPES) stats.types[row.type] = (stats.types[row.type] || 0) + 1;
-  row.field_provenance = { ...row.field_provenance, method: METHOD, kept_because: why, rule: RULE, date: now };
+  row.field_provenance = { ...row.field_provenance, method: METHOD, kept_because: why, rule: RULE, keywords_weight: KW_WEIGHT, date: now };
   fs.writeSync(outFd, JSON.stringify(row) + '\n');
   if (APPLY) {
     batch.push({ replaceOne: { filter: { term_key: row.term_key }, replacement: row, upsert: true } });
@@ -178,23 +199,27 @@ if (FROM_GLOBAL) {
            COUNT(DISTINCT book_id || ':' || page_number) AS pages,
            SUM(kind='vocab') AS k_vocab, SUM(kind='term') AS k_term, SUM(kind='keyword') AS k_keyword, SUM(kind='original') AS k_original,
            SUM(kind='original' AND verified=1) AS ov, SUM(kind='original' AND verified=0) AS ou,
-           SUM(gloss IS NOT NULL) AS glossed, COUNT(DISTINCT gloss) AS glosses_distinct
+           SUM(gloss IS NOT NULL) AS glossed, COUNT(DISTINCT gloss) AS glosses_distinct,
+           COUNT(DISTINCT CASE WHEN kind<>'keyword' THEN book_id END) AS books_text,
+           COUNT(DISTINCT CASE WHEN kind='vocab' THEN book_id END) AS b_vocab,
+           COUNT(DISTINCT CASE WHEN kind='term' THEN book_id END) AS b_term,
+           COUNT(DISTINCT CASE WHEN kind='keyword' THEN book_id END) AS b_keyword,
+           COUNT(DISTINCT CASE WHEN kind='original' AND verified=1 THEN book_id END) AS b_original_verified
     FROM raw GROUP BY term_key
   `);
   const detail = sql.prepare('SELECT term, kind, lang, gloss, book_id, page_number, verified, context FROM raw WHERE term_key = ? ORDER BY (gloss IS NULL), (context IS NULL)');
-  const distinctBooksBy = sql.prepare("SELECT COUNT(DISTINCT book_id) AS b FROM raw WHERE term_key = ? AND kind = ? AND (? IS NULL OR verified = ?)");
   const distinctGlosses = sql.prepare('SELECT DISTINCT gloss FROM raw WHERE term_key = ? AND gloss IS NOT NULL LIMIT 20');
 
-  /** The rule's view of a group, before the (slow) detail pass. Per-kind book counts and the
-   *  gloss strings are fetched lazily — only the branch that needs them pays for the query. */
+  /** The rule's view of a group, before the (slow) detail pass. Per-kind book counts come
+   *  from the group query itself (they used to be three re-queries per unglossed group);
+   *  only the gloss STRINGS are fetched lazily, and only for the non-Latin branch that
+   *  needs them. */
   const preRow = (g, nonLatin) => ({
-    term_key: g.term_key, books: g.books, non_latin: nonLatin,
+    term_key: g.term_key, books: g.books, books_text: g.books_text, non_latin: nonLatin,
     kinds: { vocab: g.k_vocab, term: g.k_term, keyword: g.k_keyword, original: g.k_original },
     original_verified: g.ov,
+    term_books: g.b_term, orig_books: g.b_original_verified, vocab_books: g.b_vocab,
     get glosses() { return g.glossed ? (nonLatin ? distinctGlosses.all(g.term_key) : Array.from({ length: g.glosses_distinct }, () => ({ gloss: null }))) : []; },
-    get term_books() { return distinctBooksBy.get(g.term_key, 'term', null, null).b; },
-    get orig_books() { return distinctBooksBy.get(g.term_key, 'original', 1, 1).b; },
-    get vocab_books() { return distinctBooksBy.get(g.term_key, 'vocab', null, null).b; },
   });
 
   for (const g of groups.iterate()) {
@@ -220,6 +245,8 @@ if (FROM_GLOBAL) {
       langs,
       glosses: [...glosses.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([gloss, n]) => ({ gloss, n })),
       books: g.books, pages: g.pages,
+      books_text: g.books_text,
+      books_by_kind: { vocab: g.b_vocab, term: g.b_term, keyword: g.b_keyword, original_verified: g.b_original_verified },
       original_verified: g.ov, original_unverified: g.ou,
       non_latin: nonLatin,
       evidence,
