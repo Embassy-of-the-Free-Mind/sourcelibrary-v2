@@ -18,6 +18,7 @@ import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { randomBytes } from 'crypto';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const SQS_QUEUE_URL = process.env.SQS_PAGE_OCR_QUEUE_URL;
@@ -73,7 +74,7 @@ async function run() {
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'archive_complete', hidden: { $ne: true } })
     .sort({ read_count: -1 })
-    .project({ id: 1, title: 1, pages_count: 1, job: 1 })
+    .project({ id: 1, title: 1, language: 1, 'image_source.provider': 1, pages_count: 1, job: 1 })
     .limit(LIMIT)
     .toArray();
 
@@ -148,7 +149,9 @@ async function run() {
         book_id: book.id,
         book_title: book.title,
         progress: { total: pageIds.length, completed: 0, failed: 0 },
-        config: { page_ids: pageIds },
+        // The Lambda routes by book when no model is named; stamping it here makes
+        // the decision visible on the job row (#4729).
+        config: { page_ids: pageIds, model: getOcrModelForBook(book) },
         failed_page_ids: [],
         // This lane is hand-run, so it says so on every row it writes (#4336).
         initiated_by: INITIATED_BY,
