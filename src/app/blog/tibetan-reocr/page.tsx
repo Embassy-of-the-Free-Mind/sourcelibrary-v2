@@ -36,11 +36,14 @@ const DATA = {
   finalMark: pending,
   finalTextless: pending,
   finalBooks: pending,
-  oldIdentityMedian: '0.18',
-  newIdentityMedian: '0.66',
-  oldAbove07: '488',
-  newAbove07: '1,880',
-  alignedPages: '5,086',
+  // 2026-09-11: the scorer's one-page Derge window capped two-leaf folios at ~0.5
+  // (#4722). The 09-10 figures (old 0.18 / new 0.66 / 488 / 1,880 / 5,086) are
+  // UNDERESTIMATES and must be re-scored with the ±2-page window before publishing.
+  oldIdentityMedian: pending,
+  newIdentityMedian: pending,
+  oldAbove07: pending,
+  newAbove07: pending,
+  alignedPages: pending,
   distinctToh: '290',
   pagesWith84000: '2,679',
   controlNoise05: '0.97',
