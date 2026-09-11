@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'atlas-of-lost-instruments',
+    title: 'An Atlas of Lost Instruments',
+    subtitle:
+      'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about sound that were discovered, invented, or fought over in books this library holds — and the 13,647 pages of music on them that no machine can yet read.',
+    date: '10 September 2026',
+    readTime: '12 min read',
+    tag: 'Collection',
+    tagColor: 'bg-accent-violet/10 text-accent-violet',
+    image: 'https://images.sourcelibrary.org/archived/695573e7f63a757109172b1d/293.jpg',
+    imageAlt: 'Plate XXII of Praetorius\'s Theatrum Instrumentorum, 1620: folk instruments including a keyed fiddle.',
+  },
+  {
     slug: 'suda-benchmark',
     title: 'Graded by the Suda',
     subtitle:
