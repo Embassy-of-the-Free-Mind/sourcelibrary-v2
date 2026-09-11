@@ -25,6 +25,7 @@
  *
  *   node scripts/maintenance/aggregate-page-terms.mjs --in-dir <dir> [--db page-terms.sqlite] [--out global.jsonl]
  *   node scripts/maintenance/aggregate-page-terms.mjs --in-dir <dir> --apply
+ *   thresholds: --min-term-books 2 --min-orig-books 2 --min-vocab-books 3 --min-nonlatin-books 1
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -40,7 +41,13 @@ const DB_PATH = getArg('--db') || path.join(IN_DIR, '..', 'page-terms.sqlite');
 const OUT = getArg('--out') || path.join(IN_DIR, '..', 'page-terms-global.jsonl');
 const APPLY = args.includes('--apply');
 const REBUILD = args.includes('--rebuild');
-const METHOD = 'aggregate-page-terms.mjs@1';
+const METHOD = 'aggregate-page-terms.mjs@2';
+// Keep thresholds (distinct books). Defaults reproduce the pilot rule; raise them on the
+// full corpus if the kept count is too large for Atlas — read the stats line first.
+const MIN_TERM_BOOKS = Number(getArg('--min-term-books') || 2);
+const MIN_ORIG_BOOKS = Number(getArg('--min-orig-books') || 2);
+const MIN_VOCAB_BOOKS = Number(getArg('--min-vocab-books') || 3);
+const MIN_NONLATIN_BOOKS = Number(getArg('--min-nonlatin-books') || 1);
 
 if (APPLY && !process.env.MONGODB_URI) {
   console.error('MONGODB_URI not set.');
@@ -95,19 +102,38 @@ const groups = sql.prepare(`
 const detail = sql.prepare('SELECT term, kind, lang, gloss, book_id, page_number, verified, context FROM raw WHERE term_key = ? ORDER BY (gloss IS NULL), (context IS NULL)');
 const distinctBooksBy = sql.prepare("SELECT COUNT(DISTINCT book_id) AS b FROM raw WHERE term_key = ? AND kind = ? AND (? IS NULL OR verified = ?)");
 
-const out = fs.createWriteStream(OUT, { flags: 'w' });
+// fs.writeSync, NOT a WriteStream: the group loop outruns the disk and an un-awaited
+// stream.write() buffers everything in memory — the first corpus run was OOM-killed at
+// 9.8 GB RSS after 4 GiB of output (2026-09-11).
+const outFd = fs.openSync(OUT, 'w');
 const stats = { groups: 0, kept: 0, why: { gloss: 0, term2: 0, orig2: 0, vocab3: 0, nonLatin: 0 } };
-const kept = [];
 const now = new Date();
+// --apply streams upserts in batches of 1,000 as groups are produced; nothing is retained.
+let col = null, written = 0;
+const batch = [];
+async function flush() {
+  if (!batch.length) return;
+  if (!col) {
+    const client = new MongoClient(process.env.MONGODB_URI);
+    await client.connect();
+    col = client.db('bookstore').collection('page_terms');
+    await col.createIndex({ term_key: 1 }, { unique: true });
+    await col.createIndex({ books: -1 });
+    await col.createIndex({ 'glosses.gloss': 1 });
+    process.on('exit', () => client.close());
+  }
+  const res = await col.bulkWrite(batch.splice(0), { ordered: false });
+  written += res.upsertedCount + res.matchedCount;
+}
 for (const g of groups.iterate()) {
   stats.groups++;
   const nonLatin = !isLatinScript(g.term_key);
   let why = null;
   if (g.glossed > 0) why = 'gloss';
-  else if (nonLatin) why = 'nonLatin';
-  else if (g.k_term > 0 && distinctBooksBy.get(g.term_key, 'term', null, null).b >= 2) why = 'term2';
-  else if (g.ov > 0 && distinctBooksBy.get(g.term_key, 'original', 1, 1).b >= 2) why = 'orig2';
-  else if (g.k_vocab > 0 && distinctBooksBy.get(g.term_key, 'vocab', null, null).b >= 3) why = 'vocab3';
+  else if (nonLatin && g.books >= MIN_NONLATIN_BOOKS) why = 'nonLatin';
+  else if (g.k_term > 0 && distinctBooksBy.get(g.term_key, 'term', null, null).b >= MIN_TERM_BOOKS) why = 'term2';
+  else if (g.ov > 0 && distinctBooksBy.get(g.term_key, 'original', 1, 1).b >= MIN_ORIG_BOOKS) why = 'orig2';
+  else if (g.k_vocab > 0 && distinctBooksBy.get(g.term_key, 'vocab', null, null).b >= MIN_VOCAB_BOOKS) why = 'vocab3';
   if (!why) continue;
   stats.kept++; stats.why[why]++;
 
@@ -133,26 +159,15 @@ for (const g of groups.iterate()) {
     evidence,
     field_provenance: { source: 'ocr.data <vocab> + translation.data <term>/<gloss>/<keywords>/<note original>', method: METHOD, kept_because: why, date: now },
   };
-  out.write(JSON.stringify(row) + '\n');
-  if (APPLY) kept.push(row);
+  fs.writeSync(outFd, JSON.stringify(row) + '\n');
+  if (APPLY) {
+    batch.push({ replaceOne: { filter: { term_key: row.term_key }, replacement: row, upsert: true } });
+    if (batch.length >= 1000) await flush();
+  }
 }
-await new Promise((r) => out.end(r));
+if (APPLY) await flush();
+fs.closeSync(outFd);
 console.log(JSON.stringify(stats));
 console.log(`global table → ${OUT}; sqlite → ${DB_PATH}`);
 
-if (APPLY) {
-  const client = new MongoClient(process.env.MONGODB_URI);
-  await client.connect();
-  const col = client.db('bookstore').collection('page_terms');
-  await col.createIndex({ term_key: 1 }, { unique: true });
-  await col.createIndex({ books: -1 });
-  await col.createIndex({ 'glosses.gloss': 1 });
-  let written = 0;
-  for (let i = 0; i < kept.length; i += 1000) {
-    const batch = kept.slice(i, i + 1000).map((r) => ({ replaceOne: { filter: { term_key: r.term_key }, replacement: r, upsert: true } }));
-    const res = await col.bulkWrite(batch, { ordered: false });
-    written += res.upsertedCount + res.modifiedCount + res.matchedCount;
-  }
-  await client.close();
-  console.log(`page_terms: ${written} rows upserted`);
-}
+if (APPLY) console.log(`page_terms: ${written} rows upserted`);
