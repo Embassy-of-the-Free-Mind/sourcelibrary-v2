@@ -35,14 +35,14 @@ const P = 'text-secondary leading-relaxed mb-6 font-body';
  */
 const PLATES = [
   { id: 'keyed-fiddle', n: 'I', year: 1619, place: 'Wolfenbüttel', title: 'The keyed fiddle', img: `${IMG}/695573e7f63a757109172b1d/293.jpg` },
-  { id: 'cat-organ', n: 'II', year: 1650, place: 'Rome', title: 'The cat organ', img: `${IMG}/69b6b0fa96dc15d4a16cfb67/437.jpg` },
-  { id: 'aeolian-harp', n: 'III', year: 1650, place: 'Rome', title: 'A harp the wind plays', img: `${IMG}/695592747bd6d2cd1d61a5c3/379.jpg` },
-  { id: 'composing-box', n: 'IV', year: 1650, place: 'Rome', title: 'A box that composes', img: `${IMG}/695592747bd6d2cd1d61a5c3/500.jpg` },
+  { id: 'cat-organ', n: 'II', year: 1650, place: 'Rome', title: 'The cat organ', img: `${IMG}/69b6b0fa96dc15d4a16cfb67/438.jpg` },
+  { id: 'aeolian-harp', n: 'III', year: 1650, place: 'Rome', title: 'A harp the wind plays', img: `${IMG}/695592747bd6d2cd1d61a5c3/380.jpg` },
+  { id: 'composing-box', n: 'IV', year: 1650, place: 'Rome', title: 'A box that composes', img: `${IMG}/695592747bd6d2cd1d61a5c3/198.jpg` },
   { id: 'megaphone', n: 'V', year: 1671, place: 'London and Rome', title: 'The quarrel over the megaphone', img: `${IMG}/69aebe60c0472fef6455a8f2/10.jpg` },
   { id: 'third-sound', n: 'VI', year: 1754, place: 'Padua', title: 'The note nobody played', img: `${IMG}/6990585617295890441358e0/28.jpg` },
   { id: 'sand-figures', n: 'VII', year: 1787, place: 'Wittenberg', title: 'Sand that draws a sound', img: `${IMG}/69905808172958904413516a/111.jpg` },
-  { id: 'thirty-one', n: 'VIII', year: 1577, place: 'Salamanca', title: 'Thirty-one notes to the octave', img: `${IMG}/695575b157e3b773024f206d/178.jpg` },
-  { id: 'baghdad-osuna', n: 'IX', year: 950, place: 'Baghdad and Osuna', title: 'Before Europe, and beside it', img: `${IMG}/69557dd157e3b773024f4041/40.jpg` },
+  { id: 'thirty-one', n: 'VIII', year: 1577, place: 'Salamanca', title: 'Thirty-one notes to the octave', img: `${IMG}/695573bdf63a7571091726c0/159.jpg` },
+  { id: 'baghdad-osuna', n: 'IX', year: 950, place: 'Baghdad and Osuna', title: 'Before Europe, and beside it', img: `${IMG}/69557dd157e3b773024f4041/237.jpg` },
 ] as const;
 
 type Plate = (typeof PLATES)[number];
@@ -204,10 +204,10 @@ export default function AtlasOfLostInstrumentsPage() {
           moved the listeners to loud laughter; indeed, it could have moved the mice themselves to dance.
         </Quote>
         <FolioFigure
-          src={`${IMG}/69b6b0fa96dc15d4a16cfb67/437.jpg`}
-          alt="Engraving from Schott's Magia Universalis, 1674: a man holds a scroll of music before four donkeys; beside it a keyboard with a row of cat heads above the keys"
-          caption="Kircher's student Kaspar Schott engraved it twenty-four years later, paired with a man conducting four donkeys. Figure II is the cat organ."
-          href="/book/69b6b0fa96dc15d4a16cfb67?page=437"
+          src={`${IMG}/69b6b0fa96dc15d4a16cfb67/438.jpg`}
+          alt="Engraving from Schott's Magia Universalis, 1674: a man holds a scroll of music before four donkeys; below, a keyboard with a row of cat heads above the keys"
+          caption="Kircher's student Kaspar Schott engraved it twenty-four years later, above a man conducting four donkeys. Figure II is the cat organ, nine heads in a row."
+          href="/book/69b6b0fa96dc15d4a16cfb67?page=438"
           sourceLabel="Schott, Magia Universalis, 1674"
         />
 
@@ -234,6 +234,14 @@ export default function AtlasOfLostInstrumentsPage() {
           before anyone could account for it, and he wrote down that he had.
         </p>
 
+        <FolioFigure
+          src={`${IMG}/695592747bd6d2cd1d61a5c3/380.jpg`}
+          alt="Woodcut diagram of Kircher's wind harp: a box of strings between two angled boards that funnel the wind across it"
+          caption="The instrument, lettered for assembly: pegs at CA, bridges at IK and SD, and the two boards that squeeze the wind across the strings."
+          href="/book/695592747bd6d2cd1d61a5c3?page=380"
+          sourceLabel="Kircher, Musurgia Universalis, vol. II, 1650"
+        />
+
         </Station>
 
         <Station plate={box}>
@@ -246,10 +254,10 @@ export default function AtlasOfLostInstrumentsPage() {
           &ldquo;algorithmic composition&rdquo; existed, and the book explains how to operate it.
         </p>
         <FolioFigure
-          src={`${IMG}/695592747bd6d2cd1d61a5c3/500.jpg`}
-          alt="Engraved plate of Kircher's Arca Musarithmica: a chest holding rows of numbered slats"
-          caption="The musical-arithmetic chest. A layperson who could count syllables could produce a motet."
-          href="/book/695592747bd6d2cd1d61a5c3?page=500"
+          src={`${IMG}/695592747bd6d2cd1d61a5c3/198.jpg`}
+          alt="Page of Kircher's Musurgia showing three combinations of numbered columns for composing"
+          caption="What a slat carries: three combinations of columns, each column a voice, each number a scale degree. A layperson who could count syllables could produce a motet."
+          href="/book/695592747bd6d2cd1d61a5c3?page=198"
           sourceLabel="Kircher, Musurgia Universalis, vol. II, 1650"
         />
 
@@ -389,6 +397,14 @@ export default function AtlasOfLostInstrumentsPage() {
           tuning, and it was made two hundred years before anyone had a name for the field.
         </p>
 
+        <FolioFigure
+          src={`${IMG}/695573bdf63a7571091726c0/159.jpg`}
+          alt="Woodcut of a harpsichord with split keys, from Zarlino's Istitutioni Harmoniche, 1558"
+          caption={<>Zarlino&apos;s instrument for all three Greek genera, with the keys split to reach the extra notes. The epigraph above it, from Alciato: &ldquo;it is hard, unless for a learned man, to keep so many strings in tune.&rdquo;</>}
+          href="/book/695573bdf63a7571091726c0?page=159"
+          sourceLabel="Zarlino, Le Istitutioni Harmoniche, 1558"
+        />
+
         </Station>
 
         <PartTitle>Before Europe, and beside it</PartTitle>
@@ -422,10 +438,10 @@ export default function AtlasOfLostInstrumentsPage() {
             sourceLabel="al-Farabi, Kitab al-Musiqa al-Kabir, c. 950"
           />
           <FolioFigure
-            src={`${IMG}/69557dd157e3b773024f4041/40.jpg`}
-            alt="A page of Bermudo's Declaración de Instrumentos Musicales, 1555"
-            caption="Bermudo's first book, on why the ancients' music worked and the moderns' does not."
-            href="/book/69557dd157e3b773024f4041?page=40"
+            src={`${IMG}/69557dd157e3b773024f4041/237.jpg`}
+            alt="Woodcut of a seven-course vihuela with every fret marked, from Bermudo's Declaración, 1555"
+            caption="Bermudo's seven-course vihuela, with every semitone marked on the fingerboard."
+            href="/book/69557dd157e3b773024f4041?page=237"
             sourceLabel="Bermudo, Declaración, 1555"
           />
         </FolioPair>
@@ -454,10 +470,9 @@ export default function AtlasOfLostInstrumentsPage() {
         </p>
         <p className={P}>
           Reading staff notation from a scan is a different problem from reading text, and the large
-          vision models are still bad at it: on scanned piano scores the frontier models make a
-          most of
-          the notes wrong, while a small specialist model trained
-          on nothing but scores does twice as well. For sixteenth-century mensural print and for
+          vision models are still bad at it: on scanned piano scores the frontier models get most
+          of the notes wrong, while a small specialist model trained on nothing but scores does
+          twice as well. For sixteenth-century mensural print and for
           neumes, the tools that exist are the ones musicologists correct by hand. So we have done the
           unglamorous thing. The score pages are inventoried, the transcription store records which
           model wrote what, and there is a scorer that grades a transcription on pitch and rhythm
