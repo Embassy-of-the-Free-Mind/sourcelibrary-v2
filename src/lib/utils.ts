@@ -55,6 +55,79 @@ export function formatNumber(n: number | null | undefined): string {
  *   - Use 'display' for any UI element >100px (book cards, grids, heroes)
  *   - Use 'thumb' for tiny previews (<100px, search results, list rows)
  */
+/**
+ * The 500px AVIF card variant, or null when this book has no usable one.
+ *
+ * Two conditions, both required:
+ *   1. `image_card` is set — proof the R2 object EXISTS. Never derive this URL
+ *      by convention: a guessed `-card.avif` sibling 404s for every book the
+ *      backfill hasn't reached, which is the broken-cover failure mode already
+ *      recorded twice in book-cover-loader.ts (homepage smoke test, 2026-07-08).
+ *   2. It names the SAME page as `image_display` — proof it is not STALE.
+ *      Changing a book's cover repoints `image_display` at another page; a card
+ *      pointer left behind then renders the old page as the new cover, which is
+ *      worse than showing no card at all. `buildCoverUpdate()` clears the field
+ *      on every cover write, but this file's own postmortem is about cover
+ *      writers that bypassed that helper and were missed — so the read path
+ *      does not assume they all behaved.
+ *
+ * A stale or missing pointer degrades to `display`: heavier, never wrong.
+ */
+export function getBookCardUrl(
+  book: Parameters<typeof getBookThumbnailUrl>[0] & { image_card?: string | null },
+): string | null {
+  const card = book.image_card?.trim();
+  if (!card) return null;
+  // Checked against the cover this card would REPLACE — resolved the same way
+  // the component resolves it — not against `image_display` specifically.
+  //
+  // That distinction is the whole guard. `thumbnail` and `image_display`
+  // disagree for 4,309 live books (an incomplete dual-write from the R2
+  // migration, PR #1588), and different surfaces render different ones: the
+  // Supabase-fed catalogue has only `thumbnail`, while Mongo-fed surfaces
+  // prefer `image_display`. Validating against a field the caller might not
+  // even render would swap the PICTURE on 3,635 books — turning a
+  // make-it-smaller change into a change-the-cover change. Asking "is this the
+  // card of the image I am about to show?" is true on every surface at once.
+  const expected = cardUrlForCover(getBookThumbnailUrl(book, 'display'));
+  return expected !== null && card.split('?')[0] === expected ? card : null;
+}
+
+/**
+ * The `-card.avif` URL a given cover SHOULD have, or null when that cover has
+ * no R2 page-scan home to hang one off (external IIIF, Wikimedia, one-off
+ * uploads). Pure string derivation — says nothing about whether the object
+ * exists, which is what `image_card` is for.
+ *
+ * Must stay in lock-step with `resolveSource()` +`cardKeyFrom()` in
+ * scripts/maintenance/backfill-cover-cards.mjs: the backfill uses this mapping
+ * to decide where to WRITE, and getBookCardUrl uses it to decide whether the
+ * stored pointer is still the right one. If the two ever disagree, every card
+ * silently stops being served — hence one derivation, asserted by tests.
+ *
+ * Note the legacy rewrite: `/archived/{id}/5.jpg` and `/thumbnails/{id}/5.jpg`
+ * both name a page whose canonical variants live at `/pages/{id}/0005.*`, so
+ * the card for those covers is NOT a sibling of the stored URL. 8,464 of the
+ * 16,800 backfill candidates are in that shape.
+ */
+export function cardUrlForCover(displayUrl?: string | null): string | null {
+  const raw = displayUrl?.replace(/\s+/g, '').trim();
+  if (!raw || !raw.includes('images.sourcelibrary.org/')) return null;
+  const noQuery = raw.split('?')[0];
+
+  const legacy = noQuery.match(/^(https?:\/\/[^/]+)\/(?:archived|thumbnails)\/([^/]+)\/(\d+)\.jpg$/);
+  if (legacy) {
+    const [, origin, bookId, num] = legacy;
+    return `${origin}/pages/${bookId}/${num.padStart(4, '0')}-card.avif`;
+  }
+
+  if (noQuery.includes('images.sourcelibrary.org/pages/') || noQuery.includes('images.sourcelibrary.org/cropped/')) {
+    return noQuery.replace(/-(?:thumb|full)\.jpg$/, '.jpg').replace(/\.jpg$/, '-card.avif');
+  }
+
+  return null;
+}
+
 export function getBookThumbnailUrl(
   book: { thumbnail?: string | null; thumbnail_blob?: string | null; image_display?: string | null; image_thumb?: string | null },
   size: 'display' | 'thumb' = 'display'

@@ -2,7 +2,13 @@
  * Generates Open Graph share-card variants from hero-video frames.
  *
  * Inputs:  scripts/one-off/og-sources/{cosmological,zodiac,illuminated,arcani}.jpg
- * Outputs: public/og-image-{name}.jpg  (1200x630, brand-overlaid)
+ * Outputs: public/og-image-{name}.jpg     (English, 1200x630, brand-overlaid)
+ *          public/og-image-es-{name}.jpg  (Spanish copy, same frames)
+ *
+ * One card per frame per locale: a Spanish link shared into a Spanish
+ * conversation should not preview in English (#4162). The Spanish headline is
+ * the authored line the /es homepage hero already uses (src/lib/home-i18n.ts),
+ * so the card and the page a reader lands on say the same thing.
  *
  * Each variant uses the same typography overlay:
  * - SOURCELIBRARY wordmark + Beta sup (Inter)
@@ -15,37 +21,36 @@
  * needs more or less darkening.
  */
 
-import puppeteer from 'puppeteer';
+import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
 
 const SOURCES = path.resolve('scripts/one-off/og-sources');
 const OUT = path.resolve('public');
 
+// The four background frames. Copy is per-locale (COPY below), so each frame
+// produces one card per locale.
 const VARIANTS = [
+  { name: 'cosmological', gradientOpacity: 0.88 },
+  { name: 'zodiac', gradientOpacity: 0.82 },
+  { name: 'illuminated', gradientOpacity: 0.80 },
+  { name: 'arcani', gradientOpacity: 0.85 },
+];
+
+// Locale copy. `prefix` is the filename infix: '' for English (the historical
+// og-image-{name}.jpg names, which are already live), 'es-' for Spanish.
+const COPY = [
   {
-    name: 'cosmological',
+    lang: 'en',
+    prefix: '',
     headline: 'Unlock a New Renaissance of Ancient Knowledge',
     subhead: 'Rare Hermetic and esoteric texts, digitized and translated for scholars, seekers, and AI.',
-    gradientOpacity: 0.88,
   },
   {
-    name: 'zodiac',
-    headline: 'Unlock a New Renaissance of Ancient Knowledge',
-    subhead: 'Rare Hermetic and esoteric texts, digitized and translated for scholars, seekers, and AI.',
-    gradientOpacity: 0.82,
-  },
-  {
-    name: 'illuminated',
-    headline: 'Unlock a New Renaissance of Ancient Knowledge',
-    subhead: 'Rare Hermetic and esoteric texts, digitized and translated for scholars, seekers, and AI.',
-    gradientOpacity: 0.80,
-  },
-  {
-    name: 'arcani',
-    headline: 'Unlock a New Renaissance of Ancient Knowledge',
-    subhead: 'Rare Hermetic and esoteric texts, digitized and translated for scholars, seekers, and AI.',
-    gradientOpacity: 0.85,
+    lang: 'es',
+    prefix: 'es-',
+    headline: 'Un nuevo Renacimiento de la sabiduría antigua',
+    subhead: 'Textos herméticos y esotéricos raros, digitalizados y traducidos para estudiosos, buscadores y sistemas de IA.',
   },
 ];
 
@@ -160,9 +165,13 @@ const renderHtml = ({ bgDataUrl, headline, subhead, gradientOpacity }) => `
 </html>
 `;
 
-const browser = await puppeteer.launch();
-const page = await browser.newPage();
-await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 2 });
+// Playwright, not puppeteer: playwright is already a devDependency here and
+// its Chromium is installed, so this script runs from a plain `npm ci` checkout.
+const browser = await chromium.launch();
+const page = await browser.newPage({
+  viewport: { width: 1200, height: 630 },
+  deviceScaleFactor: 2,
+});
 
 // Warm up the page once so the font CSS loads — subsequent setContent calls
 // reuse the cached fonts and don't re-hit the network.
@@ -183,6 +192,15 @@ await page.evaluate(() => document.fonts.ready);
 await new Promise(r => setTimeout(r, 500));
 console.log('Fonts loaded');
 
+// Only the locales named on the command line are rebuilt (default: all), so
+// regenerating the Spanish set never silently reflows the live English cards.
+const wanted = process.argv.slice(2).filter((a) => !a.startsWith('-'));
+const locales = wanted.length ? COPY.filter((c) => wanted.includes(c.lang)) : COPY;
+if (!locales.length) {
+  console.error(`No matching locale. Known: ${COPY.map((c) => c.lang).join(', ')}`);
+  process.exit(1);
+}
+
 for (const variant of VARIANTS) {
   const srcPath = path.join(SOURCES, `${variant.name}.jpg`);
   if (!fs.existsSync(srcPath)) {
@@ -192,18 +210,20 @@ for (const variant of VARIANTS) {
   const bgBuf = fs.readFileSync(srcPath);
   const bgDataUrl = `data:image/jpeg;base64,${bgBuf.toString('base64')}`;
 
-  await page.setContent(renderHtml({ ...variant, bgDataUrl }), { waitUntil: 'load', timeout: 60000 });
-  await page.evaluate(() => document.fonts.ready);
-  await new Promise(r => setTimeout(r, 300));
+  for (const copy of locales) {
+    await page.setContent(renderHtml({ ...variant, ...copy, bgDataUrl }), { waitUntil: 'load', timeout: 60000 });
+    await page.evaluate(() => document.fonts.ready);
+    await new Promise(r => setTimeout(r, 300));
 
-  const outPath = path.join(OUT, `og-image-${variant.name}.jpg`);
-  await page.screenshot({
-    path: outPath,
-    type: 'jpeg',
-    quality: 88,
-    clip: { x: 0, y: 0, width: 1200, height: 630 },
-  });
-  console.log(`✓ ${path.relative(process.cwd(), outPath)}`);
+    const outPath = path.join(OUT, `og-image-${copy.prefix}${variant.name}.jpg`);
+    await page.screenshot({
+      path: outPath,
+      type: 'jpeg',
+      quality: 88,
+      clip: { x: 0, y: 0, width: 1200, height: 630 },
+    });
+    console.log(`✓ ${path.relative(process.cwd(), outPath)}`);
+  }
 }
 
 await browser.close();

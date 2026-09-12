@@ -59,6 +59,7 @@ src/data/*
 !src/data/image-constellation.json
 !src/data/marcianus-berthelot-overlay.json
 !src/data/jung-bph-alignment-2026-05-22.json
+!src/data/concept-aliases.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
 !src/data/shwep-bibliographies.ts
@@ -149,3 +150,6 @@ scripts/eval/results/ft-enum-*.json
 # for free from Mongo via scripts/eval/revision-agreement-corpus.mjs).
 # The summary JSON + markdown reports beside it ARE committed.
 scripts/eval/results/revision-agreement-corpus-*.jsonl
+
+# Per-run import ledgers (progress state, not source)
+scripts/import/*-ledger.jsonl

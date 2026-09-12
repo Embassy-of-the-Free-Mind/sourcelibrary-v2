@@ -50,4 +50,22 @@ describe('pickArtworkRecord', () => {
   it('returns null when nothing matched', () => {
     expect(pickArtworkRecord([], 'nothing-here')).toBeNull();
   });
+
+  it('resolves a visible record addressed by id (favorites link by id)', () => {
+    const byId = { id: '69e535a6ad2c589edb9e0779', slug: 'print-garden-of-love-ca-1500', visible: true };
+    expect(pickArtworkRecord([byId], '69e535a6ad2c589edb9e0779')).toBe(byId);
+  });
+
+  it('prefers a visible slug match over an id match', () => {
+    const slugMatch = { id: 'other-id', slug: 'gold', visible: true };
+    const idMatch = { id: 'gold', slug: 'something-else', visible: true };
+    for (const candidates of both(slugMatch, idMatch)) {
+      expect(pickArtworkRecord(candidates, 'gold')).toBe(slugMatch);
+    }
+  });
+
+  it('a hidden record addressed by id still reaches the caller gate (404, not fall-through)', () => {
+    const hidden = { id: 'abc123', slug: 'hidden-work', visible: false };
+    expect(pickArtworkRecord([hidden], 'abc123')).toBe(hidden);
+  });
 });

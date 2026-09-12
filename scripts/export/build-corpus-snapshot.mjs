@@ -61,6 +61,13 @@ const EXCLUDE_FILE = arg('--exclude-file', null);
 const VERSION = arg('--version', new Date().toISOString().slice(0, 10).replace(/-/g, '.'));
 const VERIFY_SAMPLE = Number(arg('--verify-sample', 200)); // pages spot-checked post-build
 const SKIP_VERIFY = has('--skip-verify');
+// Non-English editions to include alongside the English translation (#4095).
+// `pages.translations.<iso>` — a language-keyed MAP, never a per-language
+// column, so the snapshot gains a key rather than a schema. Comma-separated;
+// `--editions=none` builds the English-only snapshot the earlier versions did.
+const EDITION_LANGS = (arg('--editions', 'es') || '')
+  .split(',').map((l) => l.trim().toLowerCase())
+  .filter((l) => /^[a-z]{2,3}$/.test(l) && l !== 'en' && l !== 'none');
 
 // Mirrors src/lib/license-info.ts CONTENT_LICENSE (scripts can't import TS —
 // same twin situation as strip-editorial-wrappers). Change both together.
@@ -294,7 +301,11 @@ async function build() {
 
   const fetchPages = (bookId) => db.collection('pages')
     .find({ book_id: bookId, page_number: { $not: { $lt: 0 } } })
-    .project({ id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 })
+    .project({
+      id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1,
+      ...Object.fromEntries(EDITION_LANGS.map((l) => [`translations.${l}.data`, 1])),
+      ...(EDITION_LANGS.includes('es') ? { 'translation_es.data': 1 } : {}),
+    })
     .sort({ page_number: 1 })
     .toArray();
 
@@ -346,7 +357,25 @@ async function build() {
         shard.words += q.words; nWords += q.words;
         shard.chars += text.length;
       }
-      if (rec.ocr || rec.translation) { outPages.push(rec); shard.pages++; nPages++; }
+      // Other editions of the same leaf, keyed by ISO code. They ride in their
+      // own map rather than replacing `translation`, because the English text
+      // is what the OCR is aligned to and what every existing consumer reads —
+      // a Spanish page arriving under `translation` would silently change the
+      // language of a corpus somebody already trained on. Words and chars are
+      // NOT added to the shard totals: those count the corpus once, and
+      // double-counting a passage because we hold two renderings of it would
+      // inflate every figure quoted from the manifest.
+      for (const l of EDITION_LANGS) {
+        const raw = page.translations?.[l]?.data
+          ?? (l === 'es' ? page.translation_es?.data : null);
+        if (!raw || raw.length > MAX_PAGE_CHARS) continue;
+        const text = stripEditorialWrappers(raw, { keepTables: true }).trim();
+        if (!text || /^\[[^\]]{0,160}\]$/.test(text)) continue;
+        (rec.translations ??= {})[l] = text;
+        shard.edition_pages = (shard.edition_pages || {});
+        shard.edition_pages[l] = (shard.edition_pages[l] || 0) + 1;
+      }
+      if (rec.ocr || rec.translation || rec.translations) { outPages.push(rec); shard.pages++; nPages++; }
     }
     if (!outPages.length) continue;
 
@@ -391,6 +420,11 @@ async function build() {
     file: path.basename(s.path),
     language: s.lang,
     books: s.books, pages: s.pages, words: s.words, chars: s.chars,
+    // Pages carrying a non-English edition, per ISO code. Counted separately
+    // from `pages` on purpose: a page with a Spanish rendering is still ONE
+    // page of corpus, and folding the two together would inflate every figure
+    // downstream.
+    ...(s.edition_pages ? { edition_pages: s.edition_pages } : {}),
     sha256: await sha256Stream(s.path),
     bytes: fs.statSync(s.path).size,
   })));
@@ -400,7 +434,15 @@ async function build() {
     shardEntries,
   });
   fs.writeFileSync(path.join(DIR, 'manifest.json'), JSON.stringify(manifest, null, 2));
-  console.log(`[build] done: ${nBooks.toLocaleString()} books, ${nPages.toLocaleString()} pages, ${nWords.toLocaleString()} words, ${shards.size} shards`);
+  const editionTotals = {};
+  for (const s of shards.values()) {
+    for (const [l, n] of Object.entries(s.edition_pages || {})) editionTotals[l] = (editionTotals[l] || 0) + n;
+  }
+  const editionSummary = Object.entries(editionTotals).map(([l, n]) => `${n.toLocaleString()} ${l}`).join(', ');
+  console.log(`[build] done: ${nBooks.toLocaleString()} books, ${nPages.toLocaleString()} pages, ${nWords.toLocaleString()} words, ${shards.size} shards` +
+    (EDITION_LANGS.length
+      ? `; other editions: ${editionSummary || `none found for ${EDITION_LANGS.join(',')}`}`
+      : ''));
 
   if (!SKIP_VERIFY) await verify(db, manifest);
   await client.close();

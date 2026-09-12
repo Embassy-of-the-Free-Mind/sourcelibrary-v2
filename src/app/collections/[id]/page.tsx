@@ -1,5 +1,6 @@
 import React, { Suspense, cache } from 'react';
 import Link from 'next/link';
+import { renderInlineProse, stripInlineMarkup } from '@/lib/inline-prose';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
@@ -11,6 +12,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import collectionRedirects from '@/lib/collection-redirects.json';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
+import CollectionFurtherReading from '@/components/collections/CollectionFurtherReading';
 import IndexCatalogBrowser from '@/components/collections/IndexCatalogBrowser';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
@@ -25,6 +27,13 @@ import { ftRenderProps, type FtRenderSource } from '@/lib/first-translation/rend
 import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
 import { authorUrl } from '@/lib/slugify';
+import { localizedEditionFilter } from '@/lib/localized';
+import {
+  resolveFurtherReading,
+  resolveReadingListGaps,
+  type FurtherReadingBook,
+  type FurtherReadingRef,
+} from '@/lib/further-reading';
 import { ObjectId } from 'mongodb';
 
 // ISR: rebuild at most once per day
@@ -59,8 +68,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return { title: 'Collection Not Found - Source Library' };
     }
 
+    // Flatten inline markdown links the same way the JSON-LD description does —
+    // the page body renders them as <Link>s, but a meta/og description is plain
+    // text and would otherwise publish raw `[anchor](/book/slug)` syntax into
+    // search results and social cards.
     const description = collection.description
-      ? String(collection.description).slice(0, 200)
+      ? stripMarkdownLinks(String(collection.description)).slice(0, 200)
       : `Browse the ${collection.name} collection on Source Library.`;
 
     // Social-card image: the curated hero plate, falling back to the site
@@ -94,11 +107,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // ---------- Helpers ----------
 
-/** Flatten inline markdown links `[text](/href)` to their anchor text.
- *  The rendered page body parses these into <Link>s, but plain-text consumers
- *  (schema.org JSON-LD `description`) must not carry raw markdown syntax. */
+/** Flatten authored markup to plain text for consumers that must not carry it.
+ *  The rendered page body parses markdown links into <Link>s and emphasis into
+ *  <em>/<strong>; plain-text consumers (schema.org JSON-LD `description`, meta
+ *  tags) must carry neither. Delegates to the shared stripper so the render and
+ *  the flatten never diverge. */
 function stripMarkdownLinks(text: string | null | undefined): string {
-  return (text || '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  return stripInlineMarkup(text);
+}
+
+interface ChildCollection {
+  slug: string;
+  name: string;
+  subtitle?: string;
+  book_count?: number;
+  total_book_count?: number;
+  artwork_count?: number;
+  collection_type?: string;
+  featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[];
+}
+
+/**
+ * What a sub-collection card should claim, judged by the child's OWN type.
+ *
+ * A `visual_art` collection renders artworks and nothing else (see `isArtCollection`
+ * in the loader), so its `book_count` / `total_book_count` describe texts the reader
+ * will never be shown. `school-of-athens` is the worst case: 518 tagged texts, 30
+ * artworks on the page. Nineteen art children were mislabelled this way — most in
+ * the other direction, e.g. `esoteric-engravers` advertising 0 while holding ~1,600
+ * artworks — because the card took the parent's noun and the parent's counter.
+ */
+function childCardCount(child: ChildCollection): { count: number; label: string } {
+  return child.collection_type === 'visual_art'
+    ? { count: child.artwork_count || 0, label: 'works' }
+    : { count: child.total_book_count ?? child.book_count ?? 0, label: 'books' };
 }
 
 interface BookItem {
@@ -451,6 +493,17 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
+  // Further reading — books we HOLD that are adjacent to this collection without
+  // being members of it (#4653). Deliberately NOT part of `collections`, so it
+  // never reaches `book_count` / `total_book_count` or the works grid: those
+  // describe membership, and these books are not members. The ids are
+  // `books.id`, matching `highlighted_books` / `mentioned_books` — never the
+  // Mongo `_id`, which 16,343 books have had re-minted.
+  const furtherReadingRefs: FurtherReadingRef[] = Array.isArray(collection.further_reading)
+    ? (collection.further_reading as FurtherReadingRef[])
+    : [];
+  const furtherReadingIds = furtherReadingRefs.map(r => r?.book_id).filter(Boolean);
+
   // Art collections share one canonical filter with the manifest API
   // (/api/collections/[id]?mode=manifest) — keep them in sync or the
   // server-rendered grid and the expanded grid show different works.
@@ -564,7 +617,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     }
   }
 
-  const [books, highlights, galleryImages, mentionedBooks, firstTranslations] = await Promise.all([
+  const [books, highlights, galleryImages, mentionedBooks, firstTranslations, furtherReadingBooks] = await Promise.all([
     fetchBooksWithFallback(),
     curatedBookIds.length > 0
       ? withTimeout(
@@ -655,24 +708,50 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
           .toArray(),
         8000, [],
       ),
+    // Further reading — resolved by id, NOT by a `pages_translated > 0` filter:
+    // the whole point of the band is books we hold and cannot yet read. The
+    // `visible: true` filter is load-bearing, not decorative — an authored id
+    // list inside a collection document is a takedown surface, and this is the
+    // only thing standing between a removed book and a dead link on a public
+    // page (visibility-and-stats.md, /collections/freemasonry). Order is
+    // restored from the authored refs afterwards; `$in` does not preserve it.
+    furtherReadingIds.length > 0
+      ? withTimeout(
+        db.collection('books')
+          .find(
+            { id: { $in: furtherReadingIds }, visible: true, ...(tenantId ? { tenantId } : {}) },
+            { projection, maxTimeMS: 8000 },
+          )
+          .toArray(),
+        8000, [],
+      )
+      : Promise.resolve([]),
   ]);
 
   const artworks = await artworksPromise;
 
-  // Fetch parent collection if this is a subcollection
+  // Fetch parent collection if this is a subcollection.
+  // `parent` is a string OR an array of slugs (cross-listed pathways like
+  // women-of-the-secret-tradition carry ["hermetica","secret-societies"]).
+  // findOne({slug: <array>}) matches nothing, which silently dropped the
+  // breadcrumb on exactly the cross-listed collections — the ones where a
+  // reader most needs to know where they are (#4339). The child query
+  // ({parent: id}) matches array values natively, so the tree only broke in
+  // the upward direction. First slug wins as the primary trail.
   let parentCollection: { slug: string; name: string } | null = null;
-  if (collection.parent) {
+  const parentSlug = Array.isArray(collection.parent) ? collection.parent[0] : collection.parent;
+  if (parentSlug) {
     const parentDoc = await withTimeout(
       db.collection('collections').findOne(
         tenantId
           ? {
-            slug: collection.parent,
+            slug: parentSlug,
             $or: [
               { tenantId },
               { tenantId: { $exists: false } },
             ],
           }
-          : { slug: collection.parent },
+          : { slug: parentSlug },
         { projection: { slug: 1, name: 1 } },
       ),
       5000, null,
@@ -682,14 +761,28 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     }
   }
 
-  // Fetch child collections if this is a parent collection
+  // Fetch child collections if this is a parent collection.
+  // `collection_type` + `artwork_count` are load-bearing here: a `visual_art` child
+  // renders ONLY artworks on its own page, so its book counters describe items the
+  // reader will never see. Project both so the card can label itself (see
+  // `childCardCount` below) instead of inheriting the parent's noun and counter.
   const childCollections = await withTimeout(
     db.collection('collections')
       .find({ parent: id, visible: true, ...(tenantId ? { tenantId } : {}) })
-      .sort({ book_count: -1 })
-      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, total_book_count: 1, featured_images: 1 })
+      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, total_book_count: 1, artwork_count: 1, collection_type: 1, featured_images: 1 })
       .toArray(),
     8000, [],
+  );
+
+  // How many books here are readable in Spanish — translated into it, or written
+  // in it (#4120). Only used to decide whether this page offers its Spanish twin,
+  // so it fails to 0 (no link) rather than blocking the render.
+  const spanishBookCount = await withTimeout(
+    db.collection('books').countDocuments(
+      { collections: id, visible: true, ...localizedEditionFilter('es'), ...(tenantId ? { tenantId } : {}) },
+      { maxTimeMS: 3000 },
+    ),
+    3000, 0,
   );
 
   const { _id, ...collectionClean } = collection;
@@ -802,12 +895,20 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: JSON.parse(JSON.stringify(galleryImages)) as any[],
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
+    furtherReading: resolveFurtherReading(
+      furtherReadingRefs,
+      (sanitizeBookThumbs(furtherReadingBooks as Record<string, unknown>[]) as unknown as FurtherReadingBook[])
+        .map(b => ({ ...b, title: b.title || '' })),
+    ),
+    readingListGaps: resolveReadingListGaps(collection.reading_list_gaps),
     parentCollection,
     galleryCollectionSlug,
     galleryTotalCount,
     exhibition: curationDraft?.curation ? JSON.parse(JSON.stringify(curationDraft.curation)) : null,
     exhibitionBooks,
-    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; total_book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
+    childCollections: (childCollections.map(({ _id, ...rest }) => rest) as ChildCollection[])
+      .sort((a, b) => childCardCount(b).count - childCardCount(a).count),
+    spanishBookCount,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
   };
@@ -888,7 +989,10 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
   // tenant-scoped mismatch can still return null here.
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
+  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, furtherReading, readingListGaps, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, spanishBookCount } = data;
+
+  // The band self-gates on empty, but the hero anchor needs to know in advance.
+  const hasFurtherReading = furtherReading.length > 0 || readingListGaps.length > 0;
 
   // Collections that carry an Index catalogue (index_catalogs editions) render
   // the catalogue browser as their centrepiece — hide the Visual Art section
@@ -1095,10 +1199,44 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             >
               {total.toLocaleString('en-US')} {itemLabel}
             </a>
+            {/* Counts the band, not the collection — the two are different sets
+                on purpose, and this link lands on exactly what it counts. */}
+            {hasFurtherReading && (
+              <>
+                <span className="w-px h-4 bg-white/20" />
+                <a
+                  href="#further-reading"
+                  className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+                >
+                  {furtherReading.length > 0
+                    ? `${furtherReading.length.toLocaleString('en-US')} further reading`
+                    : 'Further reading'}
+                </a>
+              </>
+            )}
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
                 <span>{languages.map((l: { lang: string }) => l.lang).join(', ')}</span>
+              </>
+            )}
+            {/* The bridge only ran one way: the Spanish twin links here ("Ver esta
+                colección … en inglés") and this page had NO reference to
+                /es/collections at all, so a Spanish reader was told to go read
+                English and an English reader never learned a Spanish page existed.
+                Shown only when the collection really has Spanish books — a link
+                into an empty Spanish page is the broken promise the route gate
+                exists to prevent. Tenants keep their own prefix and never get it. */}
+            {!tenantSlug && spanishBookCount > 0 && (
+              <>
+                <span className="w-px h-4 bg-white/20" />
+                <Link
+                  href={`/es/collections/${collection.slug || id}`}
+                  hrefLang="es"
+                  className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+                >
+                  Leer en español ({spanishBookCount.toLocaleString('es-ES')})
+                </Link>
               </>
             )}
           </div>
@@ -1114,6 +1252,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             </h2>
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {childCollections.map((child) => {
+                const { count: childCount, label: childLabel } = childCardCount(child);
                 const fi = child.featured_images;
                 let heroUrl: string | undefined;
                 if (fi?.length) {
@@ -1144,9 +1283,9 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                      {(child.total_book_count ?? child.book_count) ? (
+                      {childCount ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {(child.total_book_count ?? child.book_count)!.toLocaleString('en-US')} {itemLabel}
+                          {childCount.toLocaleString('en-US')} {childLabel}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
@@ -1288,7 +1427,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 Illustrations
               </h2>
               <Link
-                href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}` : `/gallery?collection=${id}`)}
+                href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}&maxPerBook=999` : `/gallery?collection=${id}&maxPerBook=999`)}
                 className="text-sm text-muted hover:text-accent-rust transition-colors"
               >
                 Browse all {galleryTotalImages.toLocaleString('en-US')}
@@ -1334,7 +1473,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
               })}
               {galleryTotalImages > diverseGalleryImages.length && (
                 <Link
-                  href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}` : `/gallery?collection=${id}`)}
+                  href={galleryCollectionSlug ? (tenantSlug ? `/${tenantSlug}/gallery/collections/${galleryCollectionSlug}` : `/gallery/collections/${galleryCollectionSlug}`) : (tenantSlug ? `/${tenantSlug}/gallery?collection=${id}&maxPerBook=999` : `/gallery?collection=${id}&maxPerBook=999`)}
                   className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
                 >
                   <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
@@ -1503,7 +1642,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             <div className="max-w-4xl">
               {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks)}
+                  {renderInlineProse(para, (seg) => linkBookTitles(seg, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks))}
                 </p>
               ))}
             </div>
@@ -1689,8 +1828,19 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           languages={languages}
           collectionType={collection.collection_type}
           provider={provider}
+          defaultView={(collection as { all_books_default_view?: 'grid' | 'list' }).all_books_default_view}
         />
       </div>
+
+      {/* Further reading — adjacent works we hold, and the ones we don't. Sits
+          AFTER the works grid on purpose: it is a handoff, not a member list,
+          and it feeds no counter above it. Self-gates when both halves empty. */}
+      <CollectionFurtherReading
+        books={furtherReading}
+        gaps={readingListGaps}
+        tenantSlug={tenantSlug}
+      />
+
       <SignUpCTA />
     </div>
   );

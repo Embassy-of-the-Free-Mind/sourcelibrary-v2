@@ -300,7 +300,16 @@ export async function computeQualityFlags(
     db.collection('pages').countDocuments({
       book_id: bookId,
       'translation.data': { $exists: true, $ne: '' },
-      $expr: { $lt: [{ $strLenCP: '$translation.data' }, 50] },
+      // $cond guard: some pages carry a non-string translation.data, and
+      // $strLenCP throws server-side on it, aborting the whole count.
+      // $and/$type in the match don't help — only $cond skips evaluation.
+      $expr: {
+        $cond: [
+          { $eq: [{ $type: '$translation.data' }, 'string'] },
+          { $lt: [{ $strLenCP: '$translation.data' }, 50] },
+          false,
+        ],
+      },
     }),
   ]);
 

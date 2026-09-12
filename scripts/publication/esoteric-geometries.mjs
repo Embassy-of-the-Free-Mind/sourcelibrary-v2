@@ -46,6 +46,7 @@ function parseArgs(argv) {
     perBook: Number(get('--per-book', '3')),
     perChapter: Number(get('--per-chapter', '14')),
     minQuality: Number(get('--min-quality', '0.7')),
+    maxYear: Number(get('--max-year', '1930')),
     manifestOnly: a.includes('--manifest-only'),
   };
 }
@@ -231,6 +232,16 @@ function plateKey(it) {
   return `${it.pageId}-${it.detectionIndex}`;
 }
 
+/**
+ * Standalone artwork records (as opposed to plates extracted from a book's
+ * pages) come back with an `artwork-`-prefixed pageId. Their dating is the
+ * artwork's, not a historical edition's, so an undated one carries no evidence
+ * that it belongs in a guide to historical geometry.
+ */
+function isArtworkRecord(it) {
+  return String(it.pageId || '').startsWith('artwork-');
+}
+
 function combinedText(it) {
   const m = it.metadata || {};
   return [
@@ -271,6 +282,8 @@ function classify(it) {
 async function gatherCandidates() {
   console.log(`Scanning library for geometric plates (source: ${CFG.base})\u2026`);
   const byKey = new Map();
+  let droppedModern = 0;
+  let droppedUndated = 0;
   for (const query of QUERIES) {
     const items = await fetchQuery(query);
     let added = 0;
@@ -279,11 +292,27 @@ async function gatherCandidates() {
       if (byKey.has(key)) continue;
       if (EXCLUDE_TYPES.has(it.type)) continue;
       if ((it.galleryQuality ?? 0) < CFG.minQuality) continue;
+      // This is a guide to HISTORICAL esoteric geometry, and the gallery now
+      // serves a second lane: standalone artwork records, many of them modern
+      // (measured 2026-08-21: a third of the hits for this script's own
+      // Platonic-solids query were artwork records dated 2008-2024). They are
+      // currently kept out only INCIDENTALLY — they carry no gallery_quality,
+      // so the threshold above drops them. That is one accidental guard, and it
+      // disappears the day the artwork lane gets quality scores. State the rule
+      // the guide actually depends on instead of relying on that.
+      if (Number.isFinite(it.year) && it.year > CFG.maxYear) { droppedModern++; continue; }
+      if (!Number.isFinite(it.year) && isArtworkRecord(it)) { droppedUndated++; continue; }
       if (!it.extractedUrl && !it.imageUrl) continue;
       byKey.set(key, it);
       added++;
     }
     console.log(`  ${JSON.stringify(query)} -> +${added} new (total ${byKey.size})`);
+  }
+  if (droppedModern > 0 || droppedUndated > 0) {
+    console.log(
+      `  (excluded ${droppedModern} plate(s) dated after ${CFG.maxYear} and ` +
+      `${droppedUndated} undated artwork record(s) — raise with --max-year)`
+    );
   }
   return [...byKey.values()];
 }

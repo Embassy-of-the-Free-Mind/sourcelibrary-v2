@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useLocalePath } from '@/lib/i18n';
 import { ArrowRight } from 'lucide-react';
 
 export interface LibrarySectionData {
@@ -25,6 +26,8 @@ const fmt = (n: number) => n.toLocaleString('en-US');
  * (falling back to a single representative image).
  */
 export default function BookLibrarySection({ data }: { data: LibrarySectionData }) {
+  // Cover links keep the locale of the page this section is mounted on.
+  const localePath = useLocalePath();
   const covers = data.covers.filter((c) => c.thumbnail).slice(0, 10);
   const hasCovers = covers.length >= 4;
 
@@ -38,7 +41,7 @@ export default function BookLibrarySection({ data }: { data: LibrarySectionData 
     <div className={`-mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-px-6 [scrollbar-width:none] [-webkit-overflow-scrolling:touch] ${className}`}>
       <div className="flex gap-3 md:grid md:grid-cols-5">
         {covers.map((c) => (
-          <Link key={c.slug} href={`/book/${c.slug}`} className="block flex-shrink-0 w-[104px] md:w-auto snap-start group">
+          <Link key={c.slug} href={localePath(`/book/${c.slug}`)} className="block flex-shrink-0 w-[104px] md:w-auto snap-start group">
             <div className="aspect-[3/4] overflow-hidden border transition-shadow group-hover:shadow-md" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" loading="lazy" />

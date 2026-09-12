@@ -97,9 +97,10 @@ export const POST = withAuth(async (request, session, context) => {
     // Generate scholarly EPUB directly (avoid fragile self-fetch)
     let epubBuffer: Buffer | undefined;
     try {
-      epubBuffer = await generateKdpEpub(book, pages, {
+      epubBuffer = await generateKdpEpub(book, pages, db, {
         introduction: edition.front_matter?.introduction,
         methodology: edition.front_matter?.methodology,
+        license: edition.license,
       });
       console.log(`Scholarly EPUB generated: ${(epubBuffer.length / 1024 / 1024).toFixed(1)}MB`);
     } catch (e) {

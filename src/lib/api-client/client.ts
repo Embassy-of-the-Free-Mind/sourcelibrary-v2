@@ -1,35 +1,43 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { PREFIXED_LOCALES } from '@/lib/locale-path';
 
-// Global routes that are not tenant slugs; keep in sync with proxy routing rules.
-const NON_TENANT_SEGMENTS = new Set([
-  'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
-  'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
-  'support', 'unauthorized', 'design-options', 'experiments',
-  'ficino-society', 'contribute', 'census', 'oauth', 'developers',
-  'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
-  'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
-  'favorites', 'reading-history', 'timeline', 'topics', 'languages',
-  'categories', 'catalog', 'artwork', 'artist', 'book', 'collections',
-  'author', 'work', 'connect', 'data', 'read', 'research', 'embed', 'shwep',
-  'identify', 'for-researchers', 'admin',
-  'map', 'constellation', 'analytics', 'traffic',
-]);
+import { TENANT_ROOT_PATHS } from '@/lib/tenant-roots';
 
+/**
+ * Resolve the tenant slug that owns `pathname`, or null when the URL is a
+ * global (corpus-wide) route.
+ *
+ * Segment 0 is shared by three namespaces — tenants (`/bph/…`), locale
+ * prefixes (`/es/…`) and every global route root (`/book/…`, `/gallery/…`,
+ * `/encyclopedia/…`) — so the order of the checks below is the whole design:
+ *
+ *   1. strip a locale prefix: it decorates a global route, it never owns one
+ *   2. `/embed/<tenant>/…`: the slug sits in a RESERVED position, so anything
+ *      well-formed there is a tenant claim (the server resolves it against the
+ *      `tenants` collection and 404s an unknown one) — no global route can
+ *      collide with it
+ *   3. a bare first segment is a tenant ONLY if it is on TENANT_ROOT_PATHS,
+ *      the same allowlist the proxy gates on
+ *
+ * Step 3 used to be a denylist of global route roots, which is the wrong
+ * shape: it has to name every route that has ever been added, and it was 39
+ * entries short — `/es`, `/encyclopedia`, `/upload`, `/qa`, `/give` and the
+ * rest all read as tenants, so client calls from those pages went to
+ * `/api/<route>/…` and 404'd. See `@/lib/tenant-roots`.
+ */
 export function getTenantSlugFromPathname(pathname: string): string | null {
   const segments = pathname.split('/').filter(Boolean);
-  // Handle /embed/{tenant}/... paths (tenant subdomains rewrite to /embed/bph/...)
-  if (segments[0] === 'embed' && segments[1]) {
-    const embedTenant = segments[1];
-    if (/^[a-z0-9-]+$/.test(embedTenant) && !NON_TENANT_SEGMENTS.has(embedTenant)) {
-      return embedTenant;
-    }
-    return null;
+
+  if (segments[0] && (PREFIXED_LOCALES as string[]).includes(segments[0])) {
+    segments.shift();
   }
+
+  if (segments[0] === 'embed' && segments[1]) {
+    return /^[a-z0-9-]+$/.test(segments[1]) ? segments[1] : null;
+  }
+
   const slug = segments[0] || '';
-  if (!slug) return null;
-  if (!/^[a-z0-9-]+$/.test(slug)) return null;
-  if (NON_TENANT_SEGMENTS.has(slug)) return null;
-  return slug;
+  return TENANT_ROOT_PATHS.has(slug) ? slug : null;
 }
 
 // Browser-only wrapper. Returns the tenant slug for the current page, or ''
@@ -108,10 +116,43 @@ apiClient.interceptors.response.use(
     }
 
     // Extract error message from response
-    const message = (error.response?.data as any)?.error || error.message || 'Request failed';
-    throw new Error(message);
+    const data = error.response?.data as ApiErrorBody | undefined;
+    const message = data?.error || error.message || 'Request failed';
+
+    // Carry the machine-readable fields through instead of collapsing the
+    // response to a prose string. Anon-gate walls answer with
+    // `code: 'SIGNIN_REQUIRED'` (see src/lib/anon-gate.ts), and a caller that
+    // can only read `err.message` has to regex the copy to recognise one —
+    // which breaks the moment the wording changes. `message` is unchanged, so
+    // every existing caller keeps working.
+    throw Object.assign(new Error(message), {
+      status: error.response?.status,
+      code: data?.code,
+      signIn: data?.sign_in,
+      retryAfter: data?.retry_after,
+    });
   }
 );
+
+/** The JSON body our API routes return on error. */
+interface ApiErrorBody {
+  error?: string;
+  code?: string;
+  sign_in?: string;
+  retry_after?: number;
+}
+
+/**
+ * Shape of the error thrown by the response interceptor and `streamRequest`.
+ * Fields are optional: a network failure has no response body to read them
+ * from, so always check before branching on one.
+ */
+export interface ApiClientError extends Error {
+  status?: number;
+  code?: string;
+  signIn?: string;
+  retryAfter?: number;
+}
 
 /**
  * Streaming request helper that applies interceptor logic
@@ -163,14 +204,22 @@ export async function streamRequest(
 
     // Try to extract error message from response
     let message = 'Request failed';
+    let body: ApiErrorBody = {};
     try {
-      const errorData = await response.json();
-      message = errorData.error || message;
+      body = (await response.json()) as ApiErrorBody;
+      message = body.error || message;
     } catch {
       message = response.statusText || message;
     }
 
-    throw new Error(message);
+    // Same additive fields as the interceptor above, so a caller can branch on
+    // `code` regardless of which helper it used.
+    throw Object.assign(new Error(message), {
+      status: response.status,
+      code: body.code,
+      signIn: body.sign_in,
+      retryAfter: body.retry_after,
+    });
   }
 
   return response;

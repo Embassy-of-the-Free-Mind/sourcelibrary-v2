@@ -1,4 +1,5 @@
 import { getReadDb } from '@/lib/mongodb';
+import { localePath, type Locale } from '@/lib/locale-path';
 import Link from 'next/link';
 import { Library, ScanSearch } from 'lucide-react';
 import { isTrustedEditionKey } from '@/lib/edition-key';
@@ -35,6 +36,9 @@ interface RelatedEditionsProps {
    * when this is full-quality. */
   editionKey?: string | null;
   editionKeyQuality?: string | null;
+  /** Locale of the page mounting this — sibling links keep its URL prefix.
+   *  Named `locale` because `lang` already means the BOOK's language here. */
+  locale?: Locale;
 }
 
 interface Sibling {
@@ -64,8 +68,8 @@ const PROJ = {
   'image_source.provider_name': 1,
 };
 
-function bookHref(b: Sibling): string {
-  return `/book/${encodeURIComponent(b.slug || b.id || '')}`;
+function bookHref(b: Sibling, locale: Locale): string {
+  return localePath(`/book/${encodeURIComponent(b.slug || b.id || '')}`, locale);
 }
 
 function transPct(b: Sibling): number {
@@ -73,7 +77,7 @@ function transPct(b: Sibling): number {
 }
 
 export default async function RelatedEditions({
-  bookId, workId, language, editionKey, editionKeyQuality,
+  bookId, workId, language, editionKey, editionKeyQuality, locale = 'en',
 }: RelatedEditionsProps) {
   const db = await getReadDb();
 
@@ -116,7 +120,7 @@ export default async function RelatedEditions({
     const pct = transPct(b);
     return (
       <li key={b.id}>
-        <Link href={bookHref(b)} className="group/re flex items-baseline gap-2 py-1 text-sm">
+        <Link href={bookHref(b, locale)} className="group/re flex items-baseline gap-2 py-1 text-sm">
           <span className="text-accent-gold group-hover/re:text-accent-gold/80 truncate">
             {b.display_title || b.title}
           </span>

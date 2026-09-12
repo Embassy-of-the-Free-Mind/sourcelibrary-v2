@@ -37,6 +37,11 @@ export const chatRequestSchema = z.object({
   // "Ask the Librarian" entry point on a collection page; the Librarian biases
   // results toward this collection while still surfacing strong outside matches.
   collection: z.string().max(120).nullable().optional(),
+  // The conversation's language (the URL locale of the page that sent it:
+  // `/es/librarian` → 'es'). Selects the edition the tools quote from and the
+  // `/es` prefix on every link. The model would answer in Spanish anyway;
+  // this is what makes it quote OUR Spanish edition instead of improvising one.
+  lang: z.enum(['en', 'es']).default('en'),
 });
 
 export type ChatRequest = z.infer<typeof chatRequestSchema>;

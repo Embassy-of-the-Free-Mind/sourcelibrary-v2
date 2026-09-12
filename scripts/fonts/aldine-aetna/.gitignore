@@ -1,0 +1,9 @@
+# scratch data reproduced by fetch_*.sh + segment.py
+*.jpg
+*.png
+*.npz
+*clusters.json
+chosen.json
+extra/
+*.ttf
+*.woff2

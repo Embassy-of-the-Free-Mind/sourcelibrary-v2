@@ -7,7 +7,7 @@ import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/s
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
-import { getEntity, getSharedBooks, getAuthoredWorks } from './layout';
+import { getEntity, getAuthoredWorks } from './layout';
 
 const TYPE_ICONS = {
   person: User,
@@ -54,7 +54,6 @@ export default async function EntityDetailPage({
   const deduplicatedBooks = entity.books;
 
   const Icon = TYPE_ICONS[entity.type];
-  const connections = await getSharedBooks(decodedName);
 
   // Books this person WROTE (vs the books that mention them, below). Only people
   // can have authored works, so don't spend a query on places and concepts.
@@ -231,48 +230,6 @@ export default async function EntityDetailPage({
           </div>
         )}
 
-        {/* Shared Books / Connections */}
-        {connections && connections.length > 0 && (
-          <div className="bg-white rounded-lg border border-stone-200 p-6">
-            <h2 className="text-lg font-semibold text-stone-900 mb-1">Connections</h2>
-            <p className="text-sm text-stone-500 mb-4">
-              Other entities that appear in the same books as {entity.name}.
-            </p>
-            <div className="space-y-3">
-              {connections.map((conn) => {
-                const ConnIcon = TYPE_ICONS[conn.type];
-                return (
-                  <div key={conn.name} className="flex items-start gap-3">
-                    <Link
-                      href={`/encyclopedia/${encodeURIComponent(conn.name)}`}
-                      className={`inline-flex items-center gap-1.5 shrink-0 mt-0.5 px-2 py-1 rounded-full text-sm font-medium transition-colors ${ENTITY_TYPE_STYLES[conn.type as EntityType].pillHover}`}
-                    >
-                      <ConnIcon className="w-3.5 h-3.5" />
-                      {conn.name}
-                    </Link>
-                    <div className="flex flex-wrap gap-1 min-w-0">
-                      {conn.sharedBooks.slice(0, 4).map((book) => (
-                        <Link
-                          key={book.book_id}
-                          href={`/book/${book.book_id}`}
-                          className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors truncate max-w-[200px]"
-                          title={book.book_title}
-                        >
-                          {book.book_title}
-                        </Link>
-                      ))}
-                      {conn.sharedBooks.length > 4 && (
-                        <span className="inline-block px-2 py-0.5 text-stone-400 text-xs">
-                          +{conn.sharedBooks.length - 4} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
 
         {/* Appearances */}
         <div className="bg-white rounded-lg border border-stone-200 p-6">

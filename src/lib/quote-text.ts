@@ -25,13 +25,21 @@ import type { Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
+import { getTranslation } from '@/lib/page-translations';
 
-export type QuoteTextSource = 'translation' | 'ocr_original';
+export type QuoteTextSource = 'translation' | 'ocr_original' | 'source_column';
 
 export interface QuotableText {
   /** Wrapper-stripped, verbatim, ready to be put inside quotation marks. */
   text: string;
   source: QuoteTextSource;
+  /**
+   * The ISO code of the language `text` is actually IN — not the one that was
+   * asked for. A caller that requested `es` and received `en` must be able to
+   * see that it happened; a quote is a claim about words, and a silent
+   * substitution makes the caller assert something it never checked (#4095).
+   */
+  lang: string;
 }
 
 /**
@@ -48,21 +56,95 @@ export const OCR_ORIGINAL_NOTE =
   + 'include_image.';
 
 /**
+ * What a caller has to be told when the localized text is the leaf's OWN column
+ * rather than a translation we made.
+ *
+ * A parallel-text manuscript carries two languages side by side, and where one
+ * of them is the language asked for, the honest answer is that column — not a
+ * machine pivot standing in front of it. But the two are indistinguishable once
+ * they are in the same field, and the difference is the whole citation: these
+ * words are Ximénez's of 1701 and Sahagún's of 1577, and their period spelling
+ * ("ensuberbescas", "baxa la cabeça") is theirs, not OCR error to be tidied
+ * away. Spelled out because agents act on these sentences.
+ */
+export const SOURCE_COLUMN_NOTE =
+  'This text is not our translation. It is the column of the leaf that is already written in this '
+  + 'language — a bilingual manuscript with the languages in parallel columns — transcribed from the '
+  + 'scan by AI, uncorrected, preserving period spelling and scribal abbreviation. Attribute the '
+  + 'wording to the historical translator or scribe named in the book record, never to Source '
+  + 'Library, and do not modernise it when quoting. Where the exact wording carries weight, check it '
+  + 'against the leaf with include_image.';
+
+/**
+ * `pages.translations.<iso>.source` written by
+ * `scripts/maintenance/extract-source-columns.mjs`. Twin of
+ * `SOURCE_COLUMN_PROVENANCE` in `scripts/lib/source-column.mjs` — a plain string
+ * on both sides; the writer is a node script and cannot import this module.
+ */
+export const SOURCE_COLUMN_PROVENANCE = 'source-column';
+
+/**
+ * Does this quotable text contain marginalia? (#4362)
+ *
+ * `<margin>` is a real page mark, not an editorial wrapper — its content stays
+ * in quotable text (quote-and-snippet-integrity.md) in two forms: the tag the
+ * OCR prompts emit, and the `[[margin: …]]` bracket form NotesRenderer also
+ * normalizes. A marginal note is COPY-SPECIFIC evidence: it exists in exactly
+ * one physical copy, so a quote drawn from it needs the copy clause
+ * (citation.copy, #4360) and must say it is marginal — a citation that treats
+ * a reader's annotation as the printed body text misattributes the words.
+ */
+export function containsMarginalia(text: string): boolean {
+  return /<margin[\s>]/.test(text) || /\[\[margin:/.test(text);
+}
+
+/**
+ * What a caller has to be told when the quoted page carries marginal text.
+ * Spelled out because agents act on these sentences.
+ */
+export const MARGINALIA_NOTE =
+  'This page carries marginal text (marked <margin>…</margin> or [[margin: …]]). Marginalia are '
+  + 'COPY-SPECIFIC: a marginal note exists only in the one physical copy that was scanned, unlike '
+  + 'the printed body text, which any copy of the edition carries. When quoting from a marginal '
+  + 'note, say so ("marginal annotation"), and cite the holding library named in citation.copy when '
+  + 'present — without the copy, the note cannot be located by a reader. Marginal text may be in a '
+  + 'different hand, language, or century than the printed text.';
+
+/**
  * The quotable text of a page, or null when the page holds nothing citable.
  *
  * Emptiness is measured AFTER wrapper stripping on purpose: a page whose
  * `translation.data` is nothing but a `<meta>` block has no verbatim text in it,
  * and serving an empty string as a quote is worse than saying so.
  */
-export function resolveQuoteText(page: Page, bookId: string): QuotableText | null {
+export function resolveQuoteText(page: Page, bookId: string, lang: string = 'en'): QuotableText | null {
+  // A non-English edition is tried FIRST and falls back to English, reporting
+  // which one it served. Never the other way round, and never silently: the
+  // Spanish edition covers 103 books out of 22,000, so the fallback is the
+  // common case and a caller that cannot see it has no way to know whether the
+  // words it is about to quote are the ones a Spanish reader sees.
+  if (lang && lang !== 'en') {
+    const localized = getTranslation(page, lang);
+    const cleaned = localized?.data ? stripEditorialWrappers(localized.data).trim() : '';
+    if (cleaned) {
+      // Same field, two different claims about authorship. `source-column` means
+      // the words are the leaf's own — see SOURCE_COLUMN_NOTE.
+      const source: QuoteTextSource =
+        localized?.source === SOURCE_COLUMN_PROVENANCE ? 'source_column' : 'translation';
+      return { text: markForExport(cleaned, bookId), source, lang };
+    }
+  }
+
   const translation = page.translation?.data
     ? stripEditorialWrappers(page.translation.data).trim()
     : '';
-  if (translation) return { text: markForExport(translation, bookId), source: 'translation' };
+  if (translation) return { text: markForExport(translation, bookId), source: 'translation', lang: 'en' };
 
   const ocrRaw = page.ocr?.data || '';
   const ocr = ocrRaw ? stripEditorialWrappers(ocrRaw).trim() : '';
-  if (ocr && isEnglishOriginalPage(ocrRaw)) return { text: ocr, source: 'ocr_original' };
+  // The leaf's own English. Its language is a property of the page, not of the
+  // request — asking for Spanish cannot make a 1570 English leaf Spanish.
+  if (ocr && isEnglishOriginalPage(ocrRaw)) return { text: ocr, source: 'ocr_original', lang: 'en' };
 
   return null;
 }

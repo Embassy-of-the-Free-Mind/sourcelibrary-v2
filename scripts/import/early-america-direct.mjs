@@ -11,6 +11,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { normalizeTitle, normalizeAuthor } from '../lib/dedup-normalize.mjs';
 const COMMIT = process.argv.includes('--commit');
 
 const BOOKS = [
@@ -52,8 +53,6 @@ const BOOKS = [
   { ia: 'oflawofnaturenat00pufe', title: 'Of the Law of Nature and Nations, Eight Books', author: 'Samuel von Pufendorf', language: 'English', published: '1729' },
 ];
 
-function normalizeTitle(t){return t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/^(the|a|an|der|die|das|de|le|la|les|il|lo|gli|i|el|los|las)\s+/i,'').replace(/\s*[\(\[:]?\s*(vol\.?\s*\d+|tomus?\s*\d+|part\.?\s*\d+|band\s*\d+|tome?\s*\d+)[\)\]]?\s*$/i,'').replace(/[^\w\s]/g,'').replace(/\s+/g,' ').trim();}
-function normalizeAuthor(a){const c=a.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(dr|prof|rev|saint|st|sir|fr|bp)\b\.?\s*/g,'').replace(/\s*\([\d\s\-–,?.]+\)\s*/g,'').replace(/,\s*[\d\s\-–?.]+$/,'').replace(/[\[\]]/g,'').replace(/\b(born|died|fl\.?|circa|ca?\.?)\s*\d{3,4}\b/g,'').replace(/[^\w\s]/g,'').replace(/\s+/g,' ').trim();return c.split(' ').filter(w=>w.length>0).sort().join(' ');}
 function slugify(t,m=70){return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').substring(0,m).replace(/-$/,'');}
 async function uniqueSlug(db,base){let s=base,i=2;while(await db.collection('books').findOne({slug:s},{projection:{_id:1}}))s=`${base}-${i++}`;return s;}
 async function pageCountFor(ia,metadata){

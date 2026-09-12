@@ -7,6 +7,9 @@ import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
 import { type HomeLang } from '@/lib/home-i18n';
+import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
+import { localizedEditionFilter } from '@/lib/localized';
+import type { Locale } from '@/lib/locale-path';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -690,6 +693,33 @@ async function getFeaturedPodcast(language: HomeLang): Promise<FeaturedPodcast |
   };
 }
 
+// ---------- The Spanish collection card (the /es "Leer en español" band) ----------
+// One card linking to /es/collections/en-espanol, the same block /es/collections
+// leads with. The band used to be a 15-cover slider plus counts; a single
+// door into the full list was the call (#4158 → #4161 → here).
+
+/**
+ * How many books in each collection can be read in `lang` — the "· 57 en
+ * español" half of the homepage grid's count line.
+ *
+ * Same selection rule as `/es/collections` (`localizedEditionFilter`): a book
+ * counts if it was TRANSLATED into the language or WRITTEN in it. Sharing the
+ * filter is what stops the homepage card and the collections card from
+ * disagreeing about the same collection. Indexed off the small set of books
+ * that have an edition, never by scanning collections × books.
+ */
+async function getLocalizedCollectionCounts(lang: Exclude<Locale, 'en'>): Promise<Record<string, number>> {
+  const db = await getReadDb();
+  const rows = await db.collection('books').aggregate<{ _id: string; count: number }>([
+    { $match: { ...localizedEditionFilter(lang), visible: true, pages_count: { $gt: 0 } } },
+    { $unwind: '$collections' },
+    { $group: { _id: '$collections', count: { $sum: 1 } } },
+  ], { maxTimeMS: 8000 }).toArray();
+  const out: Record<string, number> = {};
+  for (const r of rows) if (typeof r._id === 'string') out[r._id] = r.count;
+  return out;
+}
+
 // ---------- Aggregate ----------
 
 export interface HomeData {
@@ -701,13 +731,22 @@ export interface HomeData {
   collections: CollectionForGrid[];
   blogPosts: HomeBlogPost[];
   featuredPodcast: FeaturedPodcast | null;
+  /** The `en-espanol` collection card. Null on the English homepage. */
+  spanishCollection: EsSpanishCollectionCard | null;
+  /**
+   * Books readable in the page's language, per collection slug — what the grid
+   * card's "· N en español" line reads. Empty on the English homepage, where
+   * every book is already in the page's language and the line would be noise.
+   */
+  localizedCollectionCounts: Record<string, number>;
 }
 
-// `lang` selects the podcast episode's language and nothing else — every other
-// query is language-agnostic, which is what keeps the two homepages structurally
-// identical (see the note at the top of this file).
+// `lang` selects the podcast episode's language and the Spanish-edition band,
+// and nothing else — every other query is language-agnostic, which is what
+// keeps the two homepages structurally identical (see the note at the top of
+// this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, featuredPodcast, spanishCollection, localizedCollectionCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -715,7 +754,11 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
     withTimeout(getFeaturedPodcast(lang), 8000, null),
+    lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
+    lang === 'en'
+      ? Promise.resolve({} as Record<string, number>)
+      : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast };
+  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, blogPosts: BLOG_POSTS, featuredPodcast, spanishCollection, localizedCollectionCounts };
 }

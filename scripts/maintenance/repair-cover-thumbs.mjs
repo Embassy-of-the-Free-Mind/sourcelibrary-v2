@@ -163,7 +163,9 @@ async function repairFromBookImage(db, book) {
   const source = bookLevelCoverImage(book);
   if (!source) return false;
   const buf = await download(source);
-  const { thumb } = await generateDisplayVariants(buf);
+  // Only the thumb is used here (book-level cover), but pass the identity anyway
+  // so the discarded display buffer doesn't trip the "unmarked variant" warning.
+  const { thumb } = await generateDisplayVariants(buf, { bookId: book.id, pageNumber: 0 });
   const thumbUrl = await uploadR2(bookThumbKey(book.id), thumb);
   await db.collection('books').updateOne(
     { id: book.id },
@@ -200,7 +202,9 @@ async function repairBook(db, book) {
     const keys = variantKeys(book.id, page.page_number);
     // Regenerate fresh from the CORRECT source (cropped half for split) — bulletproof.
     const buf = await download(source);
-    const { display, thumb } = await generateDisplayVariants(buf);
+    const { display, thumb } = await generateDisplayVariants(buf, {
+      bookId: book.id, pageNumber: page.page_number,
+    });
     const displayUrl = await uploadR2(keys.display, display);
     const thumbUrl = await uploadR2(keys.thumb, thumb);
 

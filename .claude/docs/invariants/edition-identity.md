@@ -68,8 +68,13 @@ of shadow traffic. The retired title+author tier still runs as the POST-FLIP
 shadow: both verdicts land in `dedup_shadow_decisions` (`regime:
 'edition_live'`), where a shadow-only row now means the OLD tier caught
 something the new one lets through — the regression signature. Read with
-`scripts/audit/dedup-shadow-agreement.mjs`; a clean week means the shadow
-block and `titleAuthorTierMatches()` get deleted. Audit scripts replaying
+`scripts/audit/dedup-shadow-agreement.mjs`. **Retirement is gated on #4270,
+not on a lucky quiet week**: the 2026-08-27 triage found tier 2 blind to
+bilingual stored titles (native script + romanization) re-imported under the
+bare romanized title — the key prefix differs, and only the old ASCII tier
+catches it (by stripping the non-Latin half). Fix the recall gap
+(`edition_key_latin` secondary key, #4270), THEN a clean week deletes the
+shadow block and `titleAuthorTierMatches()`. Audit scripts replaying
 books already in the DB must pass `{ shadowLog: false }`. The shadow block is
 fenced — it must never fail an import. Corollary of the flip: dedup recall now
 DEPENDS on Phase 0 stamping both `books` and `books_warehouse` — an unstamped
@@ -176,3 +181,113 @@ and nothing downstream of it can be trusted.
   work_id over-split, now **detected automatically from below** instead of
   hunted by hand. This is the argument for building layers bottom-up: the
   edition layer falsifies the work layer for free.
+
+---
+
+## The acquisition gate (copy layer) — 2026-08-30
+
+**Read this half when:** you are writing an importer, adding an import route, or
+about to conclude that acquisition dedupe "already runs."
+
+Acquisition dedupe is a **different problem from merging**. At acquisition time a
+false positive is cheap — we decline a book we may already hold, and nothing is
+destroyed. A wrong `duplicate_of` merge HIDES a real book. So the gate is
+deliberately not tuned for precision: the two things that were actually wrong
+were that it did not always run, and that a NO left no trace.
+
+**Where the gate lives.** `acquisitionGate()` in `src/lib/acquisition-guard.ts`
+(TS, used by all ten `/api/import/*` routes) and `insertBookIfNew()` in
+`scripts/lib/acquire-book.mjs` (the direct importers). Call one of them instead
+of a bare `checkDuplicate()` on any path that creates a book.
+
+Three rules, each from a measurement over the 139 same-fingerprint groups in
+`books` on 2026-08-30:
+
+- **A check-then-insert is not a gate under concurrency.** 80 of those 139 groups
+  (58%) have every member created within five seconds of each other, dozens
+  within a single millisecond. `scripts/catalog-coverage/acquire-gap-batch.mjs`
+  runs at `CONCURRENCY = 10`, and ten USTC works resolving to the same scan all
+  passed `checkDuplicate()` before any of them inserted. The gate claims the
+  candidate's fingerprints in `acquisition_claims` (unique `_id`), so exactly one
+  writer wins. **Tell:** members of a duplicate group whose `created_at` differ by
+  milliseconds — that is a race, not a missing check, and adding a check will not
+  fix it.
+- **A fingerprint is a SET, not a string.** `sourceFingerprint()` picks one
+  identifier by priority, so the same IA object arriving as `ia:<id>` and as
+  `iiif:…/iiif/<id>/manifest.json` was two books to tier 1 — the tier that
+  cannot be wrong. `sourceFingerprints()` holds every identifier a record
+  carries, including ones derived back out of its URLs, and tier 1 matches on
+  intersection. It finds 268 groups where the scalar finds 139.
+  **The exclusions are load-bearing, not oversights:** bare `dc:` values (LCCN and
+  OCLC identify a bibliographic RECORD, not a scan — every volume of one serial
+  shares them; and `dc_identifier` is a bare STRING on 89,772 books, so `[0]` is a
+  single character), and numeric path segments scraped from arbitrary URLs. Each
+  merged tens of thousands of distinct books in the dry run. Pinned as negative
+  tests in `tests/unit/source-fingerprints.test.ts`; widen only with a dry run
+  over the live corpus first.
+- **A skip must be a row, not a line of stdout.** Every decision lands in
+  `dedup_skips` with the candidate's identity, the matched book, the tier, and
+  an `evidence` grade. `edition_key_no_year` is the one to review: **81% of
+  edition-key-only decisions have no publication year on at least one side**, so
+  they rest on normalized title + surname alone — weaker than the
+  "same author, same title, same year" rule of thumb the gate is meant to encode.
+  Nothing automated reads `dedup_skips` or `acquisition_claims`; deliberately kept
+  out of `dedup_shadow_decisions`, which an agreement audit computes percentages
+  over.
+
+**Standing detector:** `node scripts/audit/duplicate-fingerprint-groups.mjs --detect`
+exits 2 when a same-fingerprint group appears that is not in
+`scripts/audit/baselines/duplicate-fingerprints.json`. It reports; it never
+merges, hides, or deletes. Re-baseline with `--update-baseline` once a human has
+looked.
+
+## An acquisition gap computed at the COPY layer is not a gap
+
+A digitised-library collection usually has **one item per physical copy**, not
+one per edition — the layer table at the top of this file, applied to a source
+catalogue rather than to our own. BNCF's Aldine collection on Internet Archive
+is 739 items but **606 distinct editions**; the 1501 Martial appears three times
+(shelfmarks `Ald.1.1.1`, `Ald.3.2.19`, `Ald.3.2.20`), one EDIT16 number, one
+fingerprint.
+
+Our import dedup is manifestation-level (`ia_identifier` / `source_fingerprint`)
+and **structurally cannot** see this: a second copy genuinely is a different scan
+of a different physical object, so every duplicate copy classifies as NEW. On
+2026-08-21 "104 missing Aldines" was taken at face value and 10 books imported;
+**6 were second copies of editions already held** (#4123, #4125). The real gap
+was ~72 editions, and ~50 of *those* were already in the library from other
+institutions' scans.
+
+**Before importing from any single-institution collection:**
+
+1. **Group the candidate list into editions first.** The key is bibliographic,
+   not textual: an **EDIT16 CNC** number, else the **ISBD fingerprint** (it
+   encodes characters at fixed signature positions, so it identifies a
+   printing). Both sit in the IA item's `notes`. Tool:
+   `scripts/audit/bncf-aldine-edition-gap.mjs`.
+2. **Match the survivors against the WHOLE catalogue, not just that source's own
+   items.** The audit that only compared IA items to each other reported 75
+   unheld editions; ~50 were already held from BSB Munich, Ghent, Zürich, Johns
+   Hopkins, Tufts and Google Books `bub_gb_*`.
+3. **Never quote coverage as an item ratio.** It flatters you on held duplicates
+   *and* overstates what is missing. Quote editions held / editions known.
+
+Identical fingerprint ⇒ same printing; differing shelfmarks then just mean two
+copies on two shelves, and near-identical page counts corroborate (400 vs 396 —
+binding and flyleaves). Duplicates found after import get the corpus convention:
+`hidden`, `visible:false`, `hidden_reason:'same_edition_duplicate'`,
+`duplicate_of:<kept id>` — never deleted, since the scan stays an other-copy rail.
+
+**Attribution evidence lives in the source item, not in our fields.** Our
+`books.publisher` / `dublin_core` are usually empty for `bub_gb_*` imports, while
+every `ita-bnc-ald` item carries `publisher` **and** an `imprint` field. Fetch
+`archive.org/metadata/<id>`. For the Aldine case the decisive strings are an
+Aldo/Manuzio/"ex Bibliotheca Aldina"/"presso Aldo" imprint, the
+**anchor-and-dolphin** device (`ancora ... delfino`), or a citation to
+**Renouard, *Annales de l'imprimerie des Alde***. Beware false contradictions:
+"in aedibus Populi Romani" is the Roman press Paolo Manuzio directed from 1561,
+not evidence against an Aldine attribution.
+
+**Short titles defeat token matchers.** "Il Petrarca." has one token of ≥5
+characters, so a matcher requiring two shared tokens reports a false gap. Treat
+any "no match" bucket as an upper bound, never as a work list.

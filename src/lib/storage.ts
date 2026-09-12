@@ -41,7 +41,12 @@ function getR2BucketName(): string {
 }
 
 function getR2PublicUrl(): string {
-  return process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+  // .trim() is load-bearing: a trailing "\n" in this env value once poisoned
+  // 7,575 gallery_images rows with "https://images.sourcelibrary.org\n/..."
+  // URLs (#4340, lesson_env_newline_phantom_sync_success). Browsers strip the
+  // newline when parsing, so it shipped unnoticed; every non-browser consumer
+  // got broken URLs.
+  return (process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org').trim();
 }
 
 export function isR2Configured(): boolean {

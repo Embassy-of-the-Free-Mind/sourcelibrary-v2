@@ -38,8 +38,12 @@ function escapeRegex(s: string): string {
  * `sourcelibrary.org`, so an unanchored pattern reads a perfectly good CDN URL
  * (`images.sourcelibrary.org/artwork/foo.jpg`) as a link to the `/artwork/foo`
  * page and reports it dead.
+ *
+ * The optional `/es` is the locale prefix: a Spanish conversation cites
+ * `sourcelibrary.org/es/book/<slug>`, which is the same book and must be
+ * verified (and repaired) exactly like the English link.
  */
-export const SITE_HOST_PATTERN = '(?<![\\w.-])sourcelibrary\\.org';
+export const SITE_HOST_PATTERN = '(?<![\\w.-])sourcelibrary\\.org(?:\\/es)?';
 
 /** Book links in a response: `/book/<slug>` plus any page suffix. */
 export function findCitedBookLinks(text: string): Array<{ slug: string; page?: number }> {
@@ -81,12 +85,13 @@ export function applyCitationFixes(text: string, fixes: CitationFix[]): string {
   let out = text;
   for (const fix of fixes) {
     if (!fix?.fromSlug || !fix?.toSlug || fix.fromSlug === fix.toSlug) continue;
+    // `$1` keeps the `/es` locale prefix (if any) on the repaired link.
     const pattern = new RegExp(
-      `https://sourcelibrary\\.org/book/${escapeRegex(fix.fromSlug)}(?![a-z0-9-])` +
+      `https://sourcelibrary\\.org(/es)?/book/${escapeRegex(fix.fromSlug)}(?![a-z0-9-])` +
       `(?:\\?page=\\d+|/page-number/\\d+|/page/[A-Za-z0-9-]+)?`,
       'g',
     );
-    out = out.replace(pattern, `https://sourcelibrary.org/book/${fix.toSlug}`);
+    out = out.replace(pattern, (_m, prefix: string | undefined) => `https://sourcelibrary.org${prefix ?? ''}/book/${fix.toSlug}`);
   }
   return out;
 }
@@ -106,6 +111,40 @@ export function findEmbeddedImageUrls(text: string): string[] {
   let m;
   while ((m = pattern.exec(text)) !== null) urls.push(m[1]);
   return urls;
+}
+
+/**
+ * Image URLs the Librarian may legitimately re-embed on a later turn: every
+ * embed that SURVIVED an earlier assistant message in this thread.
+ *
+ * The fabricated-image guard allows only URLs a tool returned THIS turn. Built
+ * per turn, it called a plate the Librarian itself showed on turn one
+ * "fabricated" on turn three — measured over 45 days, 281 of 508 stripped
+ * embeds had appeared verbatim earlier in the same thread (#4704). Prior
+ * assistant text is persisted after removals were applied, so anything still
+ * embedded there was tool-sourced when it was first shown.
+ *
+ * History is client-supplied, so only our own image hosts are trusted from it;
+ * an off-site URL must still be re-returned by a tool to be embeddable.
+ */
+export function priorTurnImageUrls(history: Array<{ role: string; content: string }>): string[] {
+  const urls = new Set<string>();
+  for (const msg of history) {
+    if (msg.role !== 'assistant' || !msg.content) continue;
+    for (const url of findEmbeddedImageUrls(msg.content)) {
+      if (isOwnImageHost(url)) urls.add(url);
+    }
+  }
+  return [...urls];
+}
+
+function isOwnImageHost(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === 'sourcelibrary.org' || host.endsWith('.sourcelibrary.org');
+  } catch {
+    return false;
+  }
 }
 
 export function applyImageRemovals(text: string, removeUrls: string[]): string {

@@ -7,13 +7,13 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { execFileSync } from 'child_process';
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { storagePut } from '@/lib/storage';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
+import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 
 export const maxDuration = 300;
 
@@ -137,15 +137,15 @@ export const POST = withCuratorAuth(async (request) => {
     }
 
     // Cross-source dedup check
-    const dedupResult = await checkDuplicate(db, {
+    const gate = await acquisitionGate(db, {
       title, author, published,
       image_source: { provider, identifier: identifier || undefined, pdf_url, source_url: source_url || pdf_url },
-    });
-    if (dedupResult.isDuplicate) {
-      const best = dedupResult.matches[0];
+    }, { importer: 'api:pdf' });
+    if (!gate.ok) {
+      const best = gate.matches[0];
       return NextResponse.json(
-        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
-        { status: 409 },
+        { error: gate.message, existingId: best?.matchedBookId ?? null, reason: gate.reason, evidence: gate.evidence, matches: gate.matches },
+        { status: 409 }
       );
     }
 
@@ -265,6 +265,7 @@ export const POST = withCuratorAuth(async (request) => {
       status: 'draft',
       hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ image_source: { provider, identifier: identifier || undefined, pdf_url } }),
+      source_fingerprints: gate.fingerprints,
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
       created_at: now,
@@ -274,6 +275,9 @@ export const POST = withCuratorAuth(async (request) => {
     // Classify original-vs-translation at import (issue #2395).
     applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
+    // The claim now points at the row it produced, so it stops being
+    // reclaimable and the acquisition ledger is joinable to `books`.
+    await confirmClaims(db, gate.fingerprints, bookIdStr);
 
     // 5. Create page records — each page traces back to source PDF
     const pageDocs = [];
@@ -305,7 +309,6 @@ export const POST = withCuratorAuth(async (request) => {
     await db.collection('pages').insertMany(pageDocs);
 
     // 6. Post-import hooks (all non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     logAuditEvent({
       action: 'book_imported',

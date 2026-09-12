@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useLocalePath } from '@/lib/i18n';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { isInAppBrowser } from '@/lib/in-app-browser';
@@ -20,6 +21,8 @@ import { HOME_STRINGS, type HomeLang, type HomeStrings } from '@/lib/home-i18n';
  * librarian invitation lives in its own section below (AskTheSourceBand).
  */
 function HeroSignUp({ t }: { t: HomeStrings }) {
+  // The sign-in page has a Spanish twin; keep the visitor on their locale.
+  const localePath = useLocalePath();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -130,7 +133,7 @@ function HeroSignUp({ t }: { t: HomeStrings }) {
         </button>
         <span className="text-white/30">|</span>
         <Link
-          href="/auth/signin"
+          href={localePath('/auth/signin')}
           className="text-sm text-white/60 hover:text-white/90 transition-colors"
         >
           {t.haveAccount}

@@ -69,3 +69,35 @@ export async function isBookReadable(book: BookLike | null | undefined, request:
   if (!isHiddenBook(book)) return true;
   return canReadHiddenBook(request);
 }
+
+/**
+ * The catalog card a hidden book presents to unauthorized callers.
+ *
+ * Policy (Derek, 2026-08-27): bibliographic metadata of hidden books is
+ * PUBLIC — a large visible catalog raises the library's perceived value —
+ * while CONTENT stays gated. So this card carries identity, description and
+ * counts, and deliberately omits the pages array and every per-page image
+ * URL (a page list against the public image bucket would be content access
+ * in one hop). Cover fields are included: covers are a book's public face.
+ * The text/quote/index/chat/download routes still refuse hidden books
+ * entirely via isBookReadable above.
+ */
+const METADATA_CARD_FIELDS = [
+  'id', 'slug', 'title', 'display_title', 'author', 'published', 'year',
+  'language', 'original_language', 'text_role', 'is_translation',
+  'pages_count', 'pages_translated', 'categories', 'work_id', 'doi',
+  'reading_summary', 'contains_works', 'chapters',
+  'thumbnail', 'thumbnail_blob', 'image_display', 'image_thumb',
+] as const;
+
+export function hiddenBookMetadataCard(book: BookLike): Record<string, unknown> {
+  const b = book as Record<string, unknown>;
+  const card: Record<string, unknown> = {};
+  for (const f of METADATA_CARD_FIELDS) if (b[f] !== undefined) card[f] = b[f];
+  // Per-language edition counters (pages_translated_es, …) — same public
+  // surface as the visible-book card.
+  for (const k of Object.keys(b)) if (k.startsWith('pages_translated_')) card[k] = b[k];
+  card.visible = false;
+  card.access = 'metadata_only';
+  return card;
+}

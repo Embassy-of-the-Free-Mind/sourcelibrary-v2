@@ -1,12 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, type ReactNode } from 'react';
 import { useParams, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { useStableSession } from '@/hooks/useStableSession';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
+import UserMenu from '@/components/layout/UserMenu';
 import RevisionHistory from '@/components/reader/RevisionHistory';
 import {
   Loader2,
@@ -30,7 +32,8 @@ import {
   AlertCircle,
   Crosshair,
 } from 'lucide-react';
-import { useReaderPreferences, type ReaderTheme } from '@/hooks/useReaderPreferences';
+import { useReaderPreferences, type ReaderTheme, type ReaderFount } from '@/hooks/useReaderPreferences';
+import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import TraceAlignment, { type TraceStatus } from '@/components/reader/TraceAlignment';
 import AiBadge from '@/components/ui/AiBadge';
@@ -42,9 +45,13 @@ import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import ChapterDropdown from '@/components/reader/ChapterDropdown';
+import { useLocale, useLocalePath } from '@/lib/i18n';
+import { READER_STRINGS } from '@/lib/book-i18n';
+import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import ShareButton from '@/components/ui/ShareButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
+import type { ApiClientError } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import { getPageDisplayUrl, getPageThumbUrl, isUsableImageUrl } from '@/lib/utils';
@@ -54,18 +61,29 @@ import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
+import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 
-// Languages that use non-Latin scripts and benefit from transliteration
-const NON_LATIN_LANGUAGES = new Set([
-  'greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
-  'syriac', 'chinese', 'japanese', 'korean', 'sanskrit',
-  'armenian', 'georgian', 'ethiopic', 'coptic', 'tibetan',
-  'russian', 'church slavonic'
-]);
 
-function hasNonLatinScript(language?: string): boolean {
-  if (!language) return false;
-  return NON_LATIN_LANGUAGES.has(language.toLowerCase());
+/** Set when the anon-gate walls a signed-out reader; null otherwise. */
+type TransliterationGate = { message: string } | null;
+
+/**
+ * Both transliteration call sites — the panel's auto-fire effect and the
+ * explicit button — share this. Generating a transliteration is a paid Gemini
+ * call, so anonymous volume is capped per hour and the route answers 429 with
+ * `code: 'SIGNIN_REQUIRED'` at the cap. That is a prompt, not a failure: the
+ * panel renders a sign-in CTA rather than an error toast, and nothing retries.
+ * Any other error keeps the existing toast.
+ */
+function handleTransliterationError(
+  err: ApiClientError,
+  setGate: (gate: TransliterationGate) => void,
+): void {
+  if (err?.code === 'SIGNIN_REQUIRED') {
+    setGate({ message: err.message });
+    return;
+  }
+  toast.error(`Transliteration failed: ${err?.message || 'Unknown error'}`);
 }
 
 // Helper to format edit source info
@@ -73,6 +91,8 @@ function hasNonLatinScript(language?: string): boolean {
 
 // Inline book search bar for the page reader footer
 function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?: string }) {
+  const locale = useLocale();
+  const rs = READER_STRINGS[locale];
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -87,7 +107,10 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
     debounceRef.current = setTimeout(async () => {
       setIsSearching(true);
       try {
-        const res = await fetch(`/api/books/${bookId}/search?q=${encodeURIComponent(query.trim())}`);
+        // Search the edition the reader is actually reading. Under `/es` the
+        // input, the placeholder and the page text are Spanish; without this
+        // the results came back from the English text (#4095).
+        const res = await fetch(`/api/books/${bookId}/search?q=${encodeURIComponent(query.trim())}&lang=${locale}`);
         if (res.ok) {
           const data = await res.json();
           setResults(data.results || []);
@@ -96,7 +119,7 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
       finally { setIsSearching(false); }
     }, 300);
     return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
-  }, [query, bookId]);
+  }, [query, bookId, locale]);
 
   // Close on click outside
   useEffect(() => {
@@ -128,13 +151,13 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
               window.location.href = `${tenantPrefix || ''}/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`;
             }
           }}
-          placeholder="Search this book..."
-          aria-label="Search within this book"
+          placeholder={rs.searchThisBook}
+          aria-label={rs.searchWithinBook}
           className="bg-transparent outline-none text-xs w-full"
           style={{ color: 'var(--text-primary)' }}
         />
         {query && (
-          <button onClick={() => { setQuery(''); setResults([]); setShowResults(false); }} aria-label="Clear search">
+          <button onClick={() => { setQuery(''); setResults([]); setShowResults(false); }} aria-label={rs.clearSearch}>
             <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} aria-hidden="true" />
           </button>
         )}
@@ -185,6 +208,13 @@ interface TranslationEditorProps {
   onNavigate: (pageId: string, opts?: { toTop?: boolean }) => void;
   onSave: (data: { ocr?: string; translation?: string; summary?: string }) => Promise<void>;
   onRefresh?: () => Promise<void>;
+  /**
+   * EN/ES reading-language links, built by the caller (PageEditorClient) because
+   * the target URLs are locale paths, not editor state. Rendered inside the
+   * reader header rather than as a band above it (#4124); null when the book has
+   * no Spanish edition, or on a tenant/embed/pinned-version surface.
+   */
+  languageSwitch?: ReactNode;
 }
 
 interface SettingsModalProps {
@@ -439,6 +469,7 @@ export default function TranslationEditor({
   onNavigate,
   onSave,
   onRefresh,
+  languageSwitch,
 }: TranslationEditorProps) {
   const params = useParams<{ tenant: string }>();
   const pathname = usePathname();
@@ -456,8 +487,19 @@ export default function TranslationEditor({
   // so links should use /book/... not /bph/book/...
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
   const isOnEmbedRoute = pathname?.startsWith('/embed/');
-  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
+  const locale = useLocale();
+  const rs = READER_STRINGS[locale];
+  const isOnLocaleRoute = locale !== 'en';
+  const tenantPrefix = isOnTenantSubdomain
+    ? ''
+    : isOnLocaleRoute
+      ? `/${locale}`
+      : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
   const bookSlugOrId = book.slug || book.id;
+  // Chapter titles in the reader's language, aligned by index with book.chapters.
+  const localizedChapterTitles = locale === 'en'
+    ? undefined
+    : (book as unknown as { localized?: Record<string, { chapters?: string[] }> }).localized?.[locale]?.chapters;
   const bookMetadata = book as Book & { metadata?: { scriptType?: string } };
   const hasRashiScript = !!bookMetadata.metadata?.scriptType?.toLowerCase().includes('rashi');
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
@@ -473,6 +515,14 @@ export default function TranslationEditor({
   const translationLangLabel = (translationLang.startsWith('es') || translationLang.includes('span'))
     ? 'Español'
     : isEnglishBook ? 'Modernized' : 'English';
+  // The panel TOGGLE names the panel; the panel's own header names the language
+  // it holds (translationLangLabel, above). Labelling the toggle with the target
+  // language put a control reading "Español" a few pixels from the EN/ES
+  // reading-language links (#4124) — two language-shaped controls side by side,
+  // only one of which changes the language. On an English-language book the
+  // panel is not a translation at all (the OCR panel holds the diplomatic
+  // transcription, this one the modernization), so it keeps its own name.
+  const translationTabLabel = isEnglishBook ? rs.modernizedTab : rs.translationTab;
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
   // Save state for the inline page editor. The previous design auto-saved on
   // blur with no UI feedback — editors (Paul Dijstelberge, May 2026) reported
@@ -485,7 +535,9 @@ export default function TranslationEditor({
     translation: page.translation?.data || '',
     summary: page.summary?.data || '',
   });
-  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme } = useReaderPreferences();
+  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize, theme, setTheme, fount, setFount } = useReaderPreferences();
+  // Does this book have a facsimile of its own type? (src/lib/fonts/aldine-fount.ts)
+  const hasFount = isAldineFount(book.id);
 
   // Modernized text toggle
   const [modernizedMode, setModernizedMode] = useState(() => {
@@ -579,18 +631,39 @@ export default function TranslationEditor({
   const bookYear = parseInt(String(book.published ?? ''), 10);
   const englishOcrIsReadingView = isEnglishBook && !(bookYear < 1820);
 
+  // The same idea one locale over. A book WRITTEN in the reading language has
+  // no translation into it and never will — `pages.translations.es` is empty
+  // for Cogolludo — so the transcription IS the Spanish text. Without this the
+  // Spanish reader renders an empty translation panel over a book that is
+  // entirely in Spanish. Deliberately narrow: only the current locale, only a
+  // native edition (`NATIVE_EDITION_LANGUAGE`, which excludes half-Spanish
+  // bilinguals), and it does not touch the English behaviour above.
+  const nativeOcrIsReadingView = locale !== 'en'
+    && isNativeEdition(book as unknown as Record<string, unknown>, locale);
+
+  // Either route to "the transcription is the reading text".
+  const sourceOcrIsReadingView = englishOcrIsReadingView || nativeOcrIsReadingView;
+
   // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden;
   // for modern-print English books, image + OCR visible, translation hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
   const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
-  const [showOcrPanel, setShowOcrPanel] = useState(englishOcrIsReadingView);
-  const [showTranslationPanel, setShowTranslationPanel] = useState(!englishOcrIsReadingView);
+  const [showOcrPanel, setShowOcrPanel] = useState(sourceOcrIsReadingView);
+  const [showTranslationPanel, setShowTranslationPanel] = useState(!sourceOcrIsReadingView);
   const [showTransliterationPanel, setShowTransliterationPanel] = useState(false);
   const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
   const [transliterationLoading, setTransliterationLoading] = useState(false);
+  // Set when the anon-gate walls a signed-out reader. The panel auto-fires the
+  // route, so hitting the hourly cap must read as a sign-in prompt, never as a
+  // failure the reader caused — and nothing may retry into the wall.
+  const [transliterationGate, setTransliterationGate] = useState<TransliterationGate>(null);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
+  // Liked state of the CURRENT page, reported by the LikeButtons (#4126) so
+  // the footer line can swap "to save it to your favorites" → "Saved to your
+  // favorites". Both the toolbar and footer hearts report here.
+  const [pageLiked, setPageLiked] = useState(false);
   // Full book doc for the edition-info section of the metadata panel. The reader
   // route only ships a slim book projection, so the bibliographic fields are
   // fetched on demand — once per book, the first time the panel opens.
@@ -810,6 +883,17 @@ export default function TranslationEditor({
   const isNonLatin = hasNonLatinScript(book.language);
   const hasTransliteration = !!(page.transliteration?.data || transliterationText);
   const hasGermanSource = !!page.translation?.german_source;
+  /**
+   * How many columns the TRANSLATION panel should render in.
+   *
+   * `page.columns` describes the LEAF, and NotesRenderer uses it as a fallback:
+   * with no `<column-break/>` in the text it splits at the paragraph midpoint to
+   * mirror the scan. That is wrong for a source-column edition, where the text
+   * IS one column of a two-column page — rendering it as two would tell the
+   * reader the leaf carried two columns of Spanish when it carried one of
+   * Spanish beside one of Nahuatl or K'iche'.
+   */
+  const translationColumns = page.translation?.source === 'source-column' ? 1 : page.columns;
   const shouldShowRequestTranslation = shouldShowTranslationRequestCta({
     ocrText,
     translationText,
@@ -828,12 +912,13 @@ export default function TranslationEditor({
     }
     let cancelled = false;
     setTransliterationLoading(true);
+    setTransliterationGate(null);
     pagesApi.transliterate(page.id)
       .then((res) => {
         if (!cancelled) setTransliterationText(res.transliteration || '');
       })
-      .catch((err) => {
-        if (!cancelled) toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`);
+      .catch((err: ApiClientError) => {
+        if (!cancelled) handleTransliterationError(err, setTransliterationGate);
       })
       .finally(() => {
         if (!cancelled) setTransliterationLoading(false);
@@ -841,9 +926,12 @@ export default function TranslationEditor({
     return () => { cancelled = true; };
   }, [showTransliterationPanel, page.id, isNonLatin, page.ocr?.data, page.transliteration?.data]);
 
-  // Reset transliteration text when page changes
+  // Reset transliteration text when page changes. The gate clears too: it is
+  // per-request state, and a page whose transliteration is already cached is
+  // served free — leaving a stale wall up would hide text we have paid for.
   useEffect(() => {
     setTransliterationText(page.transliteration?.data || '');
+    setTransliterationGate(null);
   }, [page.id, page.transliteration?.data]);
 
   // Detect multi-column structure in OCR (either <column-break/> or ## Column N headers)
@@ -1190,7 +1278,7 @@ export default function TranslationEditor({
     const isFullyTranslated = ocrText && translationText;
 
     return (
-      <div className="h-screen flex flex-col" data-reader-theme={theme} style={{ background: 'var(--bg-cream)' }}>
+      <div className="h-screen flex flex-col" data-reader-theme={theme} data-reader-fount={hasFount ? fount : undefined} style={{ background: 'var(--bg-cream)' }}>
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
@@ -1201,7 +1289,7 @@ export default function TranslationEditor({
               {!isEmbedded && <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>}
               <a href={`${tenantPrefix}/book/${bookSlugOrId}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
-                  {book.display_title || book.title}
+                  {localizedTitle(book, locale)}
                 </h1>
                 {(book.author || book.published) && (
                   <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
@@ -1211,10 +1299,13 @@ export default function TranslationEditor({
               </a>
             </div>
 
+            {languageSwitch}
+
             {/* Chapter Navigation */}
             {book.chapters && book.chapters.length > 0 && (
               <ChapterDropdown
                 chapters={book.chapters}
+                localizedTitles={localizedChapterTitles}
                 currentChapterIndex={
                   book.chapters.reduce((best, ch, i) =>
                     ch.pageNumber <= page.page_number ? i : best, -1)
@@ -1234,7 +1325,7 @@ export default function TranslationEditor({
                   onClick={(e) => { e.preventDefault(); onNavigate(previousPage.id); }}
                   className="p-1.5 sm:p-2 rounded-md transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                   style={{ color: 'var(--text-secondary)' }}
-                  aria-label="Previous page"
+                  aria-label={rs.previousPage}
                 >
                   <ChevronLeft className="w-4 h-4" aria-hidden="true" />
                 </a>
@@ -1265,7 +1356,7 @@ export default function TranslationEditor({
                       onKeyDown={(e) => { if (e.key === 'Escape') setIsEditingPage(false); }}
                       className="w-12 text-sm font-medium text-center bg-transparent border-b focus:outline-none"
                       style={{ color: 'var(--text-primary)', borderColor: 'var(--accent-rust)' }}
-                      aria-label={`Jump to page (1 to ${pages.length})`}
+                      aria-label={rs.jumpToPageAria(pages.length)}
                     />
                     <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>/{pages.length}</span>
                   </form>
@@ -1275,8 +1366,8 @@ export default function TranslationEditor({
                     onClick={() => { setPageInputValue(String(currentIndex + 1)); setIsEditingPage(true); }}
                     className="text-sm font-medium rounded px-1 hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none transition-colors"
                     style={{ color: 'var(--text-muted)' }}
-                    aria-label={`Page ${currentIndex + 1} of ${pages.length}. Click to jump to a page`}
-                    title="Jump to page"
+                    aria-label={rs.pageOfAria(currentIndex + 1, pages.length)}
+                    title={rs.jumpToPage}
                   >
                     {currentIndex + 1}/{pages.length}
                   </button>
@@ -1288,7 +1379,7 @@ export default function TranslationEditor({
                   onClick={(e) => { e.preventDefault(); onNavigate(nextPage.id); }}
                   className="p-1.5 sm:p-2 rounded-md transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                   style={{ color: 'var(--text-secondary)' }}
-                  aria-label="Next page"
+                  aria-label={rs.nextPage}
                 >
                   <ChevronRight className="w-4 h-4" aria-hidden="true" />
                 </a>
@@ -1302,12 +1393,23 @@ export default function TranslationEditor({
                 </span>
               )}
             </div>
+
+            {/* Account/sign-in — the reader was the one surface with no route
+                back to /favorites and no visible sign-in state (#4126). After
+                the page navigator so the highest-frequency control keeps its
+                position; on mobile this lives in row 2 instead. Never in
+                partner embeds. */}
+            {!isEmbedded && (
+              <div className="hidden sm:block shrink-0">
+                <UserMenu />
+              </div>
+            )}
           </div>
 
           {/* Row 2: Panel toggles ... Mode toggle + Like */}
           <div className="flex items-center justify-between mt-2 sm:mt-3">
             {/* Panel visibility toggles */}
-            <div className={`flex items-center gap-1 p-1 rounded-lg `} role="toolbar" aria-label="Panel visibility">
+            <div className={`flex items-center gap-1 p-1 rounded-lg `} role="toolbar" aria-label={rs.panelVisibility}>
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showImagePanel ? 'text-white' : ''}`}
@@ -1315,11 +1417,11 @@ export default function TranslationEditor({
                   background: showImagePanel ? 'var(--accent-rust)' : 'transparent',
                   color: showImagePanel ? '#fff' : 'var(--text-muted)',
                 }}
-                aria-label={`${showImagePanel ? 'Hide' : 'Show'} source image`}
+                aria-label={rs.toggle(showImagePanel, rs.panelSourceImage)}
                 aria-pressed={showImagePanel}
               >
                 <ImageIcon className="w-4 h-4" aria-hidden="true" />
-                <span className="hidden sm:inline">Image</span>
+                <span className="hidden sm:inline">{rs.image}</span>
               </button>
               <button
                 onClick={() => setShowOcrPanel(!showOcrPanel)}
@@ -1328,11 +1430,11 @@ export default function TranslationEditor({
                   background: showOcrPanel ? 'var(--accent-rust)' : 'transparent',
                   color: showOcrPanel ? '#fff' : 'var(--text-muted)',
                 }}
-                aria-label={`${showOcrPanel ? 'Hide' : 'Show'} original text`}
+                aria-label={rs.toggle(showOcrPanel, rs.panelOriginalText)}
                 aria-pressed={showOcrPanel}
               >
                 <FileText className="w-4 h-4" aria-hidden="true" />
-                <span className="hidden sm:inline">OCR</span>
+                <span className="hidden sm:inline">{rs.ocr}</span>
               </button>
               {hasTransliteration && (
                 <button
@@ -1342,11 +1444,11 @@ export default function TranslationEditor({
                     background: showTransliterationPanel ? 'var(--accent-rust)' : 'transparent',
                     color: showTransliterationPanel ? '#fff' : 'var(--text-muted)',
                   }}
-                  aria-label={`${showTransliterationPanel ? 'Hide' : 'Show'} romanized text`}
+                  aria-label={rs.toggle(showTransliterationPanel, rs.panelRomanized)}
                   aria-pressed={showTransliterationPanel}
                 >
                   <Type className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden sm:inline">Romanized</span>
+                  <span className="hidden sm:inline">{rs.romanized}</span>
                 </button>
               )}
               {hasGermanSource && (
@@ -1357,14 +1459,14 @@ export default function TranslationEditor({
                     background: showGermanSourcePanel ? 'var(--accent-rust)' : 'transparent',
                     color: showGermanSourcePanel ? '#fff' : 'var(--text-muted)',
                   }}
-                  aria-label={`${showGermanSourcePanel ? 'Hide' : 'Show'} German scholarly translation`}
+                  aria-label={rs.toggle(showGermanSourcePanel, rs.panelGerman)}
                   aria-pressed={showGermanSourcePanel}
                 >
                   <BookOpen className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden sm:inline">Deutsch</span>
+                  <span className="hidden sm:inline">{rs.german}</span>
                 </button>
               )}
-              {!englishOcrIsReadingView && (
+              {!sourceOcrIsReadingView && (
                 <button
                   onClick={() => setShowTranslationPanel(!showTranslationPanel)}
                   className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
@@ -1372,11 +1474,11 @@ export default function TranslationEditor({
                     background: showTranslationPanel ? 'var(--accent-rust)' : 'transparent',
                     color: showTranslationPanel ? '#fff' : 'var(--text-muted)',
                   }}
-                  aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
+                  aria-label={rs.toggle(showTranslationPanel, rs.panelTranslation)}
                   aria-pressed={showTranslationPanel}
                 >
                   <Languages className="w-4 h-4" aria-hidden="true" />
-                  <span className="hidden sm:inline">{translationLangLabel}</span>
+                  <span className="hidden sm:inline">{translationTabLabel}</span>
                 </button>
               )}
             </div>
@@ -1390,21 +1492,21 @@ export default function TranslationEditor({
                     onClick={() => setShowFontControls(prev => !prev)}
                     className={`flex items-center gap-0.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 ${showFontControls ? 'bg-stone-200' : ''}`}
                     style={{ color: showFontControls ? 'var(--text-primary)' : 'var(--text-muted)' }}
-                    aria-label="Reading settings"
-                    title="Reading settings"
+                    aria-label={rs.readingSettings}
+                    title={rs.readingSettings}
                   >
                     <span className="text-xs">A</span><span className="text-base font-semibold leading-none">A</span>
                   </button>
                   {showFontControls && (
                     <div className="absolute right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-lg border p-4" style={{ borderColor: 'var(--border-light)', minWidth: '220px' }}>
-                      <div className="text-[10px] uppercase tracking-widest text-center mb-3" style={{ color: 'var(--text-muted)' }}>Font Size</div>
+                      <div className="text-[10px] uppercase tracking-widest text-center mb-3" style={{ color: 'var(--text-muted)' }}>{rs.fontSize}</div>
                       <div className="flex items-center justify-between gap-4">
                         <button
                           onClick={decreaseFontSize}
                           disabled={isMinSize}
                           className="w-10 h-10 flex items-center justify-center rounded-lg text-base transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                           style={{ color: 'var(--text-primary)' }}
-                          title="Smaller (Cmd+-)"
+                          title={rs.smaller}
                         >
                           A
                         </button>
@@ -1413,7 +1515,7 @@ export default function TranslationEditor({
                           disabled={isDefaultSize}
                           className={`text-base tabular-nums font-semibold transition-colors ${isDefaultSize ? '' : 'hover:text-accent-rust cursor-pointer'}`}
                           style={{ color: 'var(--text-primary)' }}
-                          title="Reset to default (Cmd+0)"
+                          title={rs.resetSize}
                         >
                           {fontSize}
                         </button>
@@ -1422,17 +1524,17 @@ export default function TranslationEditor({
                           disabled={isMaxSize}
                           className="w-10 h-10 flex items-center justify-center rounded-lg text-xl font-semibold transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                           style={{ color: 'var(--text-primary)' }}
-                          title="Larger (Cmd+=)"
+                          title={rs.larger}
                         >
                           A
                         </button>
                       </div>
-                      <div className="text-[10px] uppercase tracking-widest text-center mt-4 mb-3" style={{ color: 'var(--text-muted)' }}>Theme</div>
+                      <div className="text-[10px] uppercase tracking-widest text-center mt-4 mb-3" style={{ color: 'var(--text-muted)' }}>{rs.theme}</div>
                       <div className="flex items-center justify-between gap-2">
                         {([
-                          ['paper', 'Paper', '#fdfcf9', '#1a1612'],
-                          ['sepia', 'Sepia', '#f6eeda', '#1a1612'],
-                          ['night', 'Night', '#1a1612', '#ece7df'],
+                          ['paper', rs.themePaper, '#fdfcf9', '#1a1612'],
+                          ['sepia', rs.themeSepia, '#f6eeda', '#1a1612'],
+                          ['night', rs.themeNight, '#1a1612', '#ece7df'],
                         ] as [ReaderTheme, string, string, string][]).map(([key, label, bg, fg]) => (
                           <button
                             key={key}
@@ -1451,6 +1553,38 @@ export default function TranslationEditor({
                           </button>
                         ))}
                       </div>
+                      {/* Books we hold a facsimile of their own type (#4083): let the
+                          reader choose the book's letterforms or the library's reading face. */}
+                      {hasFount && (
+                        <>
+                          <div className="text-[10px] uppercase tracking-widest text-center mt-4 mb-3" style={{ color: 'var(--text-muted)' }}>{rs.typeface}</div>
+                          <div className="flex items-center justify-between gap-2">
+                            {([
+                              ['original', rs.typeOriginal, rs.typeOriginalTitle, 'var(--font-aldine-aetna), var(--font-cardo), Georgia, serif'],
+                              ['modern', rs.typeModern, rs.typeModernTitle, "'Newsreader', Georgia, serif"],
+                            ] as [ReaderFount, string, string, string][]).map(([key, label, hint, family]) => (
+                              <button
+                                key={key}
+                                onClick={() => setFount(key)}
+                                className="flex-1 flex flex-col items-center gap-1 py-2 rounded-lg border-2 transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+                                style={{
+                                  background: 'var(--bg-white)',
+                                  color: 'var(--text-primary)',
+                                  borderColor: fount === key ? 'var(--accent-rust)' : 'var(--border-light)',
+                                }}
+                                aria-pressed={fount === key}
+                                title={hint}
+                              >
+                                <span className="text-base leading-none" style={{ fontFamily: family }}>Aa</span>
+                                <span className="text-[10px]">{label}</span>
+                              </button>
+                            ))}
+                          </div>
+                          <p className="text-[10px] leading-snug mt-2 text-center" style={{ color: 'var(--text-muted)' }}>
+                            {rs.typeCaption}
+                          </p>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
@@ -1495,6 +1629,7 @@ export default function TranslationEditor({
                   bookId={book.id}
                   size="sm"
                   showCount={true}
+                  onLikedChange={setPageLiked}
                 />
                 <ShareButton
                   title={book.display_title || book.title}
@@ -1552,6 +1687,12 @@ export default function TranslationEditor({
                   tenantSlug={params?.tenant || undefined}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full text-sm"
                 />
+                {/* Mobile home of the account menu — row 1 is too tight there (#4126). */}
+                {!isEmbedded && (
+                  <div className="sm:hidden ml-1">
+                    <UserMenu />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1612,7 +1753,7 @@ export default function TranslationEditor({
                 <div data-reader-section="image" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1 relative`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                      {!pageDisplayUrl && hasWitnessPhotos ? 'Tablet Photo' : 'Source Image'}
+                      {!pageDisplayUrl && hasWitnessPhotos ? rs.tabletPhoto : rs.sourceImage}
                     </span>
                     {!pageDisplayUrl && hasWitnessPhotos && currentWitness && (
                       <a
@@ -1640,7 +1781,7 @@ export default function TranslationEditor({
                         />
                       ) : (
                         <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-                          No image available
+                          {rs.noImage}
                         </div>
                       )}
                       {page.deepzoom && (
@@ -1663,7 +1804,7 @@ export default function TranslationEditor({
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="hover:underline"
-                                  title={`View at ${book.image_source.provider_name}`}
+                                  title={rs.viewAt(book.image_source.provider_name)}
                                   onClick={(e) => e.stopPropagation()}
                                 >
                                   {book.image_source.provider_name}
@@ -1680,13 +1821,13 @@ export default function TranslationEditor({
                             download={`${book.slug || book.id}-page-${page.page_number}.jpg`}
                             className="inline-flex items-center gap-1 hover:underline"
                             style={{ color: 'var(--text-muted)' }}
-                            title="Download full resolution"
+                            title={rs.downloadFullRes}
                             onClick={(e) => e.stopPropagation()}
                           >
                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
-                            Download
+                            {rs.download}
                           </a>
                         )}
                       </div>
@@ -1734,7 +1875,7 @@ export default function TranslationEditor({
                       href={pageHref(previousPage)}
                       onClick={(e) => { e.preventDefault(); onNavigate(previousPage.id); }}
                       className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
-                      aria-label="Previous page"
+                      aria-label={rs.previousPage}
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </a>
@@ -1744,7 +1885,7 @@ export default function TranslationEditor({
                       href={pageHref(nextPage)}
                       onClick={(e) => { e.preventDefault(); onNavigate(nextPage.id); }}
                       className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
-                      aria-label="Next page"
+                      aria-label={rs.nextPage}
                     >
                       <ChevronRight className="w-5 h-5" />
                     </a>
@@ -1884,6 +2025,24 @@ export default function TranslationEditor({
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="und-Latn">
                         <NotesRenderer text={cleanTransliteration} showNotes={false} showMetadata={false} columns={effectiveColumns} />
                       </div>
+                    ) : transliterationGate ? (
+                      // The anon-gate wall. Deliberately NOT an error state: the
+                      // reader has done nothing wrong, and nothing retries.
+                      // Ordered after the cached-text branch so a page we have
+                      // already paid for still renders while the wall is up.
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <Type className="w-8 h-8 mb-3" style={{ color: 'var(--text-faint)' }} />
+                        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+                          {transliterationGate.message}
+                        </p>
+                        <Link
+                          href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname || `/book/${book.id}/page/${page.id}`)}&reason=limit`}
+                          className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
+                          style={{ background: 'var(--accent-rust)' }}
+                        >
+                          Sign in — free
+                        </Link>
+                      </div>
                     ) : page.ocr?.data ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <Type className="w-8 h-8 mb-3" style={{ color: 'var(--text-faint)' }} />
@@ -1893,9 +2052,10 @@ export default function TranslationEditor({
                         <button
                           onClick={() => {
                             setTransliterationLoading(true);
+                            setTransliterationGate(null);
                             pagesApi.transliterate(page.id)
                               .then((res) => setTransliterationText(res.transliteration || ''))
-                              .catch((err) => toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`))
+                              .catch((err: ApiClientError) => handleTransliterationError(err, setTransliterationGate))
                               .finally(() => setTransliterationLoading(false));
                           }}
                           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
@@ -1940,8 +2100,8 @@ export default function TranslationEditor({
                 </div>
               )}
 
-              {/* Translation Panel — suppressed for modern-print English books (OCR is the reading view) */}
-              {showTranslationPanel && !englishOcrIsReadingView && (
+              {/* Translation Panel — suppressed when the transcription IS the reading text: modern-print English, or a book written in the reading language */}
+              {showTranslationPanel && !sourceOcrIsReadingView && (
                 <div id={showOcrPanel ? undefined : 'reader-text'} data-reader-section="translation" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
@@ -2026,10 +2186,10 @@ export default function TranslationEditor({
                             ? 'bg-accent-gold/15 text-accent-gold-dark hover:bg-accent-gold/25'
                             : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
                             }`}
-                          title={showNotes ? "Hide notes and metadata" : "Show notes and metadata"}
+                          title={showNotes ? rs.hideNotes : rs.showNotes}
                         >
                           <MessageSquare className="w-3 h-3" />
-                          {showNotes ? 'Notes' : 'Notes Off'}
+                          {showNotes ? rs.notes : rs.notesOff}
                         </button>
                         <button
                           onClick={(e) => {
@@ -2038,10 +2198,10 @@ export default function TranslationEditor({
                           }}
                           className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors bg-stone-100 hover:bg-stone-200"
                           style={{ color: 'var(--text-muted)' }}
-                          title="View page metadata (models, timestamps, etc.)"
+                          title={rs.viewPageMetadata}
                         >
                           <FileText className="w-3 h-3" />
-                          Info
+                          {rs.info}
                         </button>
                         <button
                           onClick={() => copyToClipboard(modernizedMode && modernizedText ? modernizedText : translationText)}
@@ -2049,7 +2209,7 @@ export default function TranslationEditor({
                           style={{ color: 'var(--text-muted)' }}
                         >
                           {copiedTranslation ? <Check className="w-3 h-3" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3 h-3" />}
-                          {copiedTranslation ? 'Copied' : 'Copy'}
+                          {copiedTranslation ? rs.copied : rs.copy}
                         </button>
                       </div>
                     )}
@@ -2067,7 +2227,7 @@ export default function TranslationEditor({
                               {MANUSCRIPT_OCR_FLAG.label}
                             </summary>
                             <div className="prose-manuscript leading-relaxed mt-3" style={{ color: 'var(--text-muted)' }}>
-                              <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                              <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={translationColumns} pageType={page.page_type} />
                             </div>
                           </details>
                         )}
@@ -2078,7 +2238,7 @@ export default function TranslationEditor({
                         // Convert <section-intro> tags to <note> tags so NotesRenderer styles them as green editorial notes
                         const processedText = modernizedText
                           .replace(/<section-intro>([\s\S]*?)<\/section-intro>/g, '\n\n<note>$1</note>\n\n');
-                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={page.columns} pageType={page.page_type} />;
+                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={translationColumns} pageType={page.page_type} />;
                       })()
                     ) : translationText ? (
                       <>
@@ -2091,7 +2251,7 @@ export default function TranslationEditor({
                           bookYear={book.published}
                           doi={book.doi}
                         >
-                          <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                          <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={translationColumns} pageType={page.page_type} />
                         </HighlightSelection>
                         <TranslationFeedbackPrompt
                           bookId={book.id}
@@ -2256,7 +2416,7 @@ export default function TranslationEditor({
               {/* Empty state when no panels visible */}
               {visibleCount === 0 && (
                 <div className="flex-1 flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
-                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Select a panel to view</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{rs.selectAPanel}</p>
                 </div>
               )}
             </div>
@@ -2265,7 +2425,13 @@ export default function TranslationEditor({
 
         {/* Footer: like + nav hint + search */}
         <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-3 flex-wrap text-xs">
+          {/* The like line states the payoff BEFORE the click and gives the
+              like a route back: "[♥ Like this page] to save it to your
+              favorites" → "[♥] Saved to your favorites" (#4126). The
+              /favorites link is a sibling of the button, never nested inside
+              it (nested interactives are an a11y fail and a mis-tap magnet);
+              embeds keep the bare button — there is no /favorites there. */}
+          <div className="px-4 pt-2 pb-1 flex items-center justify-center gap-1.5 flex-wrap text-xs" aria-live="polite">
             <LikeButton
               key={`footer-${page.id}`}
               targetType="page"
@@ -2273,13 +2439,26 @@ export default function TranslationEditor({
               bookId={book.id}
               size="sm"
               showCount={true}
-              label="Like this page"
+              label={pageLiked && !isEmbedded ? undefined : rs.likeThisPage}
+              onLikedChange={setPageLiked}
             />
+            {!isEmbedded && (
+              <span style={{ color: 'var(--text-muted)' }}>
+                {pageLiked ? rs.likeSavedPrefix : rs.likeSavePrefix}{' '}
+                <a
+                  href="/favorites"
+                  className="underline underline-offset-2 hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {rs.likeFavoritesWord}
+                </a>
+              </span>
+            )}
           </div>
           {showNavHint && (
             <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
-              <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
-              <span className="lg:hidden">Swipe left/right to navigate</span>
+              <span className="hidden lg:inline">{rs.arrowKeysHint}</span>
+              <span className="lg:hidden">{rs.swipeHint}</span>
             </div>
           )}
           <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
@@ -2333,6 +2512,8 @@ export default function TranslationEditor({
               )}
             </a>
           </div>
+
+          {languageSwitch}
 
           {/* Navigation */}
           <div className="flex items-center gap-1 rounded-lg p-1 shrink-0" style={{ background: 'var(--bg-warm)' }}>
@@ -2427,7 +2608,7 @@ export default function TranslationEditor({
               title="Toggle translation panel"
             >
               <Languages className="w-4 h-4" />
-              <span className="hidden sm:inline">{translationLangLabel}</span>
+              <span className="hidden sm:inline">{translationTabLabel}</span>
             </button>
           </div>
 
@@ -2491,7 +2672,7 @@ export default function TranslationEditor({
           <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink relative" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
             <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <div className="flex items-center gap-2">
-                <span className="label">Source</span>
+                <span className="label">{rs.source}</span>
                 <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
                   {book.language || 'Latin'}
                 </span>
@@ -2500,10 +2681,10 @@ export default function TranslationEditor({
                 onClick={() => setShowPageMetadata(true)}
                 className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors hover:bg-stone-200"
                 style={{ color: 'var(--text-muted)' }}
-                title="View page metadata"
+                title={rs.viewPageMetadata}
               >
                 <Info className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Info</span>
+                <span className="hidden sm:inline">{rs.info}</span>
               </button>
             </div>
             <div className="flex-1 overflow-auto p-4" data-reader-panel>

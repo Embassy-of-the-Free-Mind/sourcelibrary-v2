@@ -19,7 +19,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
  *
  * Query params:
  *   - visitor_id: string (required)
- *   - type: 'image' | 'page' | 'book' (required)
+ *   - type: 'image' | 'page' | 'book' | 'collection' (required)
  */
 export async function GET(request: NextRequest) {
   try {
@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
     if (!visitorId) {
       return NextResponse.json({ error: 'visitor_id is required' }, { status: 400 });
     }
-    if (!targetType || !['image', 'page', 'book'].includes(targetType)) {
-      return NextResponse.json({ error: 'type is required (image, page, or book)' }, { status: 400 });
+    if (!targetType || !['image', 'page', 'book', 'collection'].includes(targetType)) {
+      return NextResponse.json({ error: 'type is required (image, page, book, or collection)' }, { status: 400 });
     }
 
     const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000);
@@ -69,10 +69,27 @@ export async function GET(request: NextRequest) {
     const counts = await db.collection('likes').aggregate(countPipeline).toArray();
     const countMap = new Map(counts.map(c => [c._id, c.count]));
 
+    if (targetType === 'collection') {
+      // Saved collections, most recently saved first. Liked by slug.
+      const colls = await db.collection('collections').find(
+        { slug: { $in: targetIds } },
+        { projection: { _id: 0, slug: 1, name: 1, description: 1, book_count: 1 } }
+      ).toArray();
+      const collMap = new Map(colls.map(c => [c.slug as string, c]));
+      const items = targetIds
+        .map(slug => {
+          const c = collMap.get(slug);
+          if (!c) return null;
+          return { slug, name: c.name, description: c.description, bookCount: c.book_count, likeCount: countMap.get(slug) || 1 };
+        })
+        .filter(Boolean);
+      return NextResponse.json({ items, total: items.length });
+    }
+
     if (targetType === 'book') {
       const booksData = await db.collection('books').find(
         { id: { $in: targetIds }, ...tenantFilter },
-        { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, thumbnail_blob: 1, image_thumb: 1, cover_image: 1, content_type: 1 } }
+        { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, thumbnail_blob: 1, image_thumb: 1, cover_image: 1, content_type: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
 
@@ -104,6 +121,10 @@ export async function GET(request: NextRequest) {
           const gallery = galleryMap.get(book.id) || [];
           return {
             id: book.id,
+            // The favorites page builds /artwork/<slug || id> hrefs from this.
+            // /popular already returns slug; without it here every artwork in
+            // "My Likes" linked to /artwork/<id>, which used to 404.
+            slug: book.slug,
             title: book.display_title || book.title,
             author: book.author,
             year: book.year,
@@ -149,6 +170,10 @@ export async function GET(request: NextRequest) {
             bookAuthor: book?.author,
             bookYear: book?.year,
             thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+            // Full-resolution source (no 150px thumbnail first) — used as the
+            // crop source by the profile-photo picker, where a thumbnail
+            // upscaled to 512px turns to mush.
+            image_full: page.archived_photo || page.cropped_photo || page.photo || page.thumbnail_blob,
             excerpt: text.slice(0, 200) + (text.length > 200 ? '...' : ''),
             likeCount: countMap.get(id) || 1,
           };

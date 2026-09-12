@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
+import { localePath, type Locale } from '@/lib/locale-path';
 import { getBookThumbnailUrl } from '@/lib/utils';
 
 interface FeaturedBook {
@@ -25,6 +26,8 @@ interface EditorialSpreadProps {
     hero_image: string | null;
   };
   books: FeaturedBook[];
+  /** Locale of the page mounting this — its links keep the URL prefix. */
+  lang?: Locale;
 }
 
 function bookTitle(book: { display_title?: string; title: string }): string {
@@ -32,7 +35,8 @@ function bookTitle(book: { display_title?: string; title: string }): string {
   return dt && dt !== 'None' ? dt : book.title;
 }
 
-export default function EditorialSpread({ collection, books }: EditorialSpreadProps) {
+export default function EditorialSpread({ collection, books, lang = 'en' }: EditorialSpreadProps) {
+  const lp = (href: string) => localePath(href, lang);
   return (
     <section className="relative overflow-hidden">
       {/* Background image */}
@@ -71,7 +75,7 @@ export default function EditorialSpread({ collection, books }: EditorialSpreadPr
             </p>
           )}
           <Link
-            href={`/collections/${collection.slug}`}
+            href={lp(`/collections/${collection.slug}`)}
             className="inline-flex items-center gap-2 bg-accent-gold/90 hover:bg-accent-gold text-white px-6 py-3 rounded-lg text-sm font-medium transition-colors"
           >
             Explore {collection.book_count} books
@@ -91,7 +95,7 @@ export default function EditorialSpread({ collection, books }: EditorialSpreadPr
                 // for the 120px slot — a 150px source upscales and looks soft.
                 const thumb = getBookThumbnailUrl(book, 'display') || book.thumbnail_blob || book.thumbnail;
                 return (
-                  <Link key={book.id} href={bookUrl(book)} className="group flex-shrink-0">
+                  <Link key={book.id} href={lp(bookUrl(book))} className="group flex-shrink-0">
                     <div className="w-[100px] md:w-[120px] aspect-[3/4] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover:border-accent-gold/50 transition-all">
                       {thumb ? (
                         <Image

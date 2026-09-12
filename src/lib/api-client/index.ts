@@ -22,6 +22,7 @@
 
 // Export the base client and streaming utility
 export { apiClient, streamRequest } from './client';
+export type { ApiClientError } from './client';
 
 // Export all types (single source of truth)
 export * from './types';

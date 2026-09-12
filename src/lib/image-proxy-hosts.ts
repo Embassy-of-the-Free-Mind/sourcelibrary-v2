@@ -45,6 +45,10 @@ export const ALLOWED_IMAGE_HOSTS = [
   'rijksmuseum.nl',                  // Rijksmuseum
   'dl.ndl.go.jp',                    // National Diet Library Japan
   'e-rara.ch',                       // Swiss libraries
+  'media.getty.edu',                 // Getty (Florentine Codex)
+  'cdli.earth',                      // CDLI tablet photos (witness images, #4350 —
+                                     // the originals run to ~24MB, so the reader
+                                     // shows them through the resizer)
 ] as const;
 
 /** IPv4 literal, or null if the string is not one. */

@@ -1,10 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { validateApiKey } from '@/lib/dataset/api-keys';
+import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
 import { logAccess, getDailyPageCount } from '@/lib/dataset/access-logger';
+import { getClientIp } from '@/lib/rate-limit';
 import { DatasetPageRecord } from '@/lib/dataset/types';
+import { markForExport } from '@/lib/provenance';
+import { keyRef } from '@/lib/bot-attribution';
 
 export const maxDuration = 30;
+
+/**
+ * Keyset cursor over the (book_id, page_number) sort key: "<book_id>:<page>".
+ * Returns a Mongo clause selecting everything strictly after that point, or
+ * null for an absent/malformed cursor (which falls back to `offset` rather
+ * than erroring — a bad cursor should not lose a caller their whole walk).
+ */
+function parseCursor(after: string | null): Record<string, unknown> | null {
+  if (!after) return null;
+  const sep = after.lastIndexOf(':');
+  if (sep <= 0) return null;
+  const bookId = after.slice(0, sep);
+  const pageNumber = parseInt(after.slice(sep + 1), 10);
+  if (!bookId || !Number.isFinite(pageNumber)) return null;
+  return {
+    $or: [
+      { book_id: { $gt: bookId } },
+      { book_id: bookId, page_number: { $gt: pageNumber } },
+    ],
+  };
+}
 
 /**
  * GET /api/dataset/v1/pages
@@ -18,7 +42,12 @@ export const maxDuration = 30;
  *   from_year - minimum publication year
  *   to_year   - maximum publication year
  *   content   - ocr, translation, or both (default: both)
- *   offset    - pagination offset (default: 0)
+ *   after     - keyset cursor "<book_id>:<page_number>"; USE THIS to walk the
+ *               corpus. Echo the X-Next-Cursor response header back until it
+ *               stops being returned. Constant-time; offset is not.
+ *   offset    - pagination offset (default: 0). Fine for shallow reads; at
+ *               deep offsets it walks every skipped document and will exceed
+ *               maxDuration. Ignored when `after` is supplied.
  *   limit     - max records (default: 1000, max: 10000)
  */
 export async function GET(request: NextRequest) {
@@ -28,6 +57,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       { error: 'Invalid or missing API key. Get one at https://sourcelibrary.org/dataset' },
       { status: 401 }
+    );
+  }
+
+  const rpm = checkKeyRequestRate(apiKey);
+  if (!rpm.allowed) {
+    return NextResponse.json(
+      { error: 'Requests-per-minute limit reached for this key. Slow down and retry.' },
+      { status: 429, headers: { 'Retry-After': String(rpm.retryAfter ?? 60) } }
     );
   }
 
@@ -94,14 +131,20 @@ export async function GET(request: NextRequest) {
     ];
   }
 
-  // Get matching book IDs with metadata
+  // Get matching book IDs with metadata.
+  // pages.book_id holds the PUBLIC string id (books.id), never the ObjectId —
+  // joining on _id matches nothing and this endpoint served 0 records for
+  // every query until 2026-08-31 (books.id ≠ _id, see
+  // book-deletion-and-identity.md). Positive control before shipping a change
+  // here: one known-good language filter must return rows.
   const books = await db.collection('books')
     .find(bookFilter)
-    .project({ _id: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, 'taxonomy.cluster': 1, 'taxonomy.subcluster': 1 })
+    .project({ _id: 1, id: 1, title: 1, author: 1, year: 1, language: 1, slug: 1, 'taxonomy.cluster': 1, 'taxonomy.subcluster': 1 })
     .toArray();
 
-  const bookMap = new Map(books.map(b => [String(b._id), b]));
-  const bookIds = books.map(b => b._id);
+  const publicId = (b: { id?: string; _id?: unknown }) => b.id || String(b._id);
+  const bookMap = new Map(books.map(b => [publicId(b), b]));
+  const bookIds = books.map(publicId);
 
   if (bookIds.length === 0) {
     return new Response('', {
@@ -113,12 +156,25 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // Query pages
+  // Query pages.
+  // Two pagination modes. `after` is a keyset cursor on the sort key
+  // (book_id, page_number) and is the one to use for walking the corpus:
+  // measured on prod, offset=50000 costs 12.2s and grows linearly (it walks
+  // every skipped doc), while the equivalent cursor read is 155ms and flat,
+  // because {book_id:1, page_number:1} is indexed. At a few hundred thousand
+  // rows in, offset alone exceeds this route's 30s maxDuration. `offset` is
+  // kept for compatibility and for shallow reads.
+  const cursorClause = parseCursor(searchParams.get('after'));
+  const pageQuery = {
+    $and: [
+      { book_id: { $in: bookIds } },
+      pageFilter,
+      ...(cursorClause ? [cursorClause] : []),
+    ],
+  };
+
   const pages = await db.collection('pages')
-    .find({
-      book_id: { $in: bookIds },
-      ...pageFilter,
-    })
+    .find(pageQuery)
     .project({
       book_id: 1,
       page_number: 1,
@@ -126,11 +182,20 @@ export async function GET(request: NextRequest) {
       'translation.data': 1,
     })
     .sort({ book_id: 1, page_number: 1 })
-    .skip(offset)
+    .skip(cursorClause ? 0 : offset)
     .limit(limit)
     .toArray();
 
-  // Build JSONL
+  // Build JSONL. Every text field carries the invisible provenance imprimatur
+  // with a key-derived ref (#4491): this is the KEYED bulk egress, and a key
+  // is attribution by design — the mark names the consumer that pulled the
+  // passage. Invisible, deliberately strippable (attribution, not DRM); a
+  // negotiated bit-clean corpus is delivered offline, never through this
+  // endpoint.
+  const ref = keyRef(String(apiKey._id));
+  const markText = (text: string | undefined, bookId: string) =>
+    text ? markForExport(text, bookId, { ref }) : null;
+
   const bookIdsAccessed = new Set<string>();
   const lines: string[] = [];
 
@@ -145,8 +210,8 @@ export async function GET(request: NextRequest) {
       book_id: bookId,
       page_number: page.page_number,
       language: book.language || 'Unknown',
-      original_text: page.ocr?.data || null,
-      english_translation: page.translation?.data || null,
+      original_text: markText(page.ocr?.data, bookId),
+      english_translation: markText(page.translation?.data, bookId),
       book_title: book.title || '',
       author: book.author || '',
       year: book.year || null,
@@ -168,12 +233,23 @@ export async function GET(request: NextRequest) {
     records_returned: lines.length,
     book_ids: Array.from(bookIdsAccessed),
     format: 'jsonl',
-    ip_address: request.headers.get('x-forwarded-for') || 'unknown',
+    // cf-connecting-ip first — behind the CDN, x-forwarded-for is a Cloudflare
+    // edge node (#3491). logAccess anonymizes before storing.
+    ip_address: getClientIp(request),
   });
+
+  // Keyset cursor for the next page. Derived from the last PAGE row, not the
+  // last emitted line: a row whose book was filtered out still advances the
+  // scan, and dropping it from the cursor would replay it forever.
+  const lastPage = pages[pages.length - 1];
+  const nextCursor = pages.length === limit && lastPage
+    ? `${String(lastPage.book_id)}:${lastPage.page_number}`
+    : null;
 
   return new Response(lines.join('\n') + (lines.length ? '\n' : ''), {
     status: 200,
     headers: {
+      ...(nextCursor ? { 'X-Next-Cursor': nextCursor } : {}),
       'Content-Type': 'application/x-ndjson',
       'X-Total-Records': String(lines.length),
       'X-Offset': String(offset),

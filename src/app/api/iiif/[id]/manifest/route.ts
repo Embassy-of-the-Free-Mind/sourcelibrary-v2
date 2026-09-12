@@ -4,7 +4,12 @@
  * GET /api/iiif/{bookId}/manifest
  *
  * Returns a standards-compliant IIIF manifest for any book in Source Library.
- * Canvases reference the best available image (archived > original > photo).
+ * Canvases PAINT the provenance-marked display variant (`display_photo`) and
+ * offer the unmarked full-resolution original as a labelled `rendering`. That
+ * ordering is the point, not an accident: crawlers read manifests and never run
+ * JS, so the painted body is what gets harvested into datasets, and #2651's goal
+ * is that every image leaving the system carries its attribution mark. Falls
+ * back to archived > original > photo when a page has no marked variant (#4406).
  * OCR and translation annotations are referenced (not inline) and loaded on demand
  * via /api/iiif/{bookId}/canvas/{pageNumber}/{ocr|translation}.
  */
@@ -14,6 +19,8 @@ import { getReadDb } from '@/lib/mongodb';
 import { getPartnerByProvider, type LibraryPartner } from '@/lib/library-partners';
 import { isBookReadable } from '@/lib/book-access';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { API_LIMITS } from '@/lib/api-limits';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -123,6 +130,11 @@ function extractImageService(url: string): { id: string; type: string; profile: 
 const DEFAULT_WIDTH = 1500;
 const DEFAULT_HEIGHT = 2160;
 
+// Width cap the provenance bake regenerates display variants at
+// (scripts/maintenance/bake-provenance-mark.mjs DISPLAY_MAX_W). Used only to
+// estimate a marked body's size when the writer recorded no dimensions.
+const MARKED_DISPLAY_MAX_W = 2000;
+
 // `image_source.provider` has accumulated alternate keys over time; map the
 // aliases back to the canonical key that LIBRARY_PARTNERS is registered under
 // so the holding institution still resolves.
@@ -206,6 +218,12 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Public and keyless by design, but not unmetered (#4366): a light
+  // per-IP ceiling far above any reader or viewer, low enough to blunt scripts.
+  const _rl = checkRateLimit({ name: 'iiif-read', limit: API_LIMITS.publicReads.iiifPerMinute, windowSeconds: 60 }, getClientIp(request));
+  if (!_rl.allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(_rl.retryAfter) } });
+  }
   try {
     const { id } = await params;
     const db = await getReadDb();
@@ -244,6 +262,8 @@ export async function GET(
             photo: 1,
             photo_original: 1,
             archived_photo: 1,
+            display_photo: 1,
+            display_width: 1, display_height: 1,
             image_width: 1, image_height: 1,
             thumbnail_blob: 1, image_thumb: 1,
             thumbnail: 1, image_display: 1,
@@ -416,22 +436,52 @@ export async function GET(
     const canvases = pagesLight.map((page) => {
       const pageNum = page.page_number;
       const canvasId = `${BASE}/api/iiif/${id}/canvas/p${pageNum}`;
-      const imageUrl = page.archived_photo || page.photo_original || page.photo;
-      const service = imageUrl ? extractImageService(imageUrl) : null;
+      // The ORIGINAL, unmarked master (or the partner's IIIF URL on
+      // derivative-only pages). Still offered — as an explicit `rendering`
+      // below — but no longer the default body. See #4406.
+      const originalUrl = page.archived_photo || page.photo_original || page.photo;
+      // The provenance-marked display variant is what we PAINT (#2651): crawlers
+      // read manifests and never run JS, so the body is what gets harvested, and
+      // #2651's goal is that every image leaving the system carries the mark.
+      const paintedUrl = page.display_photo || originalUrl;
+      const isMarked = Boolean(page.display_photo);
+      // A `service` must describe the body it is attached to. The marked variant
+      // is a plain R2 object with no Image API service, so only attach the
+      // upstream service when the body IS that upstream image.
+      const service = !isMarked && paintedUrl ? extractImageService(paintedUrl) : null;
 
       // Use the real digitized pixel size when archiving recorded it, so that
       // xywh region citation / annotation targeting lands on the correct part
       // of the image. Fall back to a nominal page size only when unknown.
+      // NOTE: canvas dimensions stay in the MASTER's pixel space even when the
+      // painted body is the smaller marked variant — existing annotation targets
+      // are expressed against it, and IIIF viewers scale the body to the canvas.
       const width = page.image_width || DEFAULT_WIDTH;
       const height = page.image_height || DEFAULT_HEIGHT;
 
       const imageBody: Record<string, unknown> = {
-        id: imageUrl,
+        id: paintedUrl,
         type: 'Image',
         format: 'image/jpeg',
-        width,
-        height,
       };
+      // Body dimensions, most trustworthy first:
+      //  1. what the variant writer actually recorded (display_width/height);
+      //  2. else derive from the master, capped at the bake's DISPLAY_MAX_W —
+      //     exact for baked pages, and for the not-yet-baked 1200px ones still
+      //     the right ASPECT (which is what a viewer lays out on), only a
+      //     pixel-density hint that is generous;
+      //  3. else fall through to the canvas dimensions.
+      if (isMarked && page.display_width && page.display_height) {
+        imageBody.width = page.display_width;
+        imageBody.height = page.display_height;
+      } else if (isMarked && page.image_width && page.image_height) {
+        const bodyW = Math.min(MARKED_DISPLAY_MAX_W, page.image_width);
+        imageBody.width = bodyW;
+        imageBody.height = Math.round((page.image_height * bodyW) / page.image_width);
+      } else {
+        imageBody.width = width;
+        imageBody.height = height;
+      }
       if (service) {
         imageBody.service = [service];
       }
@@ -458,6 +508,20 @@ export async function GET(
           },
         ],
       };
+
+      // Keep the full-resolution original reachable for legitimate scholarly use —
+      // as a labelled `rendering`, not as the thing a bulk harvester takes by
+      // default. Only when it is a DIFFERENT image from the one we painted.
+      if (originalUrl && originalUrl !== paintedUrl) {
+        canvas.rendering = [
+          {
+            id: originalUrl,
+            type: 'Image',
+            format: 'image/jpeg',
+            label: { en: ['Full-resolution original scan'] },
+          },
+        ];
+      }
 
       // Thumbnail
       const thumbUrl = page.thumbnail_blob || page.thumbnail;

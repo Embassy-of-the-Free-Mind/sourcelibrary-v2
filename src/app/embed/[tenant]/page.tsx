@@ -19,6 +19,7 @@ import { getRequestBaseUrl } from '@/lib/shortlinks';
 import { auth } from '@/lib/auth';
 import { effectiveCatalogRole, normalizeCatalogRole, canEditCatalog } from '@/lib/catalog-role';
 import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
+import CatalogFeedbackButton from '@/components/catalog/CatalogFeedbackButton';
 
 // Cold-start with several BPH-only Supabase/Mongo loaders can exceed the
 // Vercel default function budget (10s) under Atlas load, surfacing as
@@ -293,6 +294,12 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
                 </div>
             )}
             <SharedLibraryView {...viewProps} />
+            {/* The catalogue browse view lives on this landing page (via
+                ?view=catalog), OUTSIDE /embed/[tenant]/catalog/layout.tsx which
+                mounts this button on every other catalogue page — so cataloguers
+                had nowhere to leave feedback from the browse list (José Bouman,
+                2026-08-26). Self-hides for signed-out visitors. */}
+            {isBph && <CatalogFeedbackButton />}
         </>
     );
 }

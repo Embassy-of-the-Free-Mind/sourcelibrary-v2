@@ -28,6 +28,7 @@ import {
   embedTexts,
   EMBED_MODEL,
 } from './page-embedding-text.mjs';
+import { newEmbedUsage, logEmbeddingUsage } from './embedding-usage.mjs';
 
 const EMBED_BATCH_SIZE = 50;   // Gemini batchEmbedContents caps at 100; 50 is the worker's setting
 const UPSERT_BATCH_SIZE = 10;  // HNSW index updates are expensive — keep writes small
@@ -98,9 +99,10 @@ export async function embedBookPages({ db, pg, book, apiKey, force = false }) {
   }
 
   let embedded = 0;
+  const usage = newEmbedUsage();  // one gemini_usage row per book (#4162)
   for (let i = 0; i < work.length; i += EMBED_BATCH_SIZE) {
     const batch = work.slice(i, i + EMBED_BATCH_SIZE);
-    const vectors = await embedTexts(batch.map((w) => w.text), apiKey);
+    const vectors = await embedTexts(batch.map((w) => w.text), apiKey, { usage });
     const rows = batch.map((w, j) => buildPageEmbeddingRow({
       page: w.page, book, text: w.text, hasTranslation: w.hasTranslation, embedding: vectors[j],
     }));
@@ -116,6 +118,8 @@ export async function embedBookPages({ db, pg, book, apiKey, force = false }) {
     }
     embedded += rows.length;
   }
+
+  await logEmbeddingUsage(usage, { model: EMBED_MODEL, bookId: book.id, endpoint: 'enrich-worker/phase6-embed', db });
 
   return { embedded, skipped, alreadyPresent: present.size };
 }

@@ -156,6 +156,10 @@ export const NOTE_TAG_STYLES = {
   gloss: 'bg-accent-violet/8 text-accent-violet',
   insert: 'bg-accent-sage/12 text-accent-sage-dark',
   note: 'bg-accent-gold/15 text-accent-gold-dark',
+  // Translator's single-bracket interpolation: set apart by voice (muted,
+  // italic), not by a chip — they appear mid-sentence and a highlight on
+  // every supplied word would shout.
+  interp: 'italic text-stone-500',
   pageType: 'bg-accent-gold/15 text-accent-gold-dark',
   blockquote: 'border-accent-rust bg-accent-rust/[0.06]',
   keywords: 'text-accent-violet',

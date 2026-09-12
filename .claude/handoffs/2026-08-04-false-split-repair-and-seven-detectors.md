@@ -51,6 +51,7 @@ never by a check that inspected data.
 | 5 | auto-classifier over the flagged set | — | contradicted direct observation; discarded |
 | 6 | edge-ink test for mis-framing | — | fired on 100% of both flags and control |
 | 7 | OCR's own written warnings | 54 | **worked** |
+| 8 | the shipped guard, rehearsed for enforcement | — | refuses 91% of real spreads |
 
 **Why shape kept failing.** Leaf proportions vary enormously between books. A
 spread of two narrow folio leaves (1415×3106 each) is 2780×3105 — still taller
@@ -143,7 +144,19 @@ Backups (untracked, `scripts/output/`): `false-split-repair-2026-08-03T21-31-14-
 - **#3608** — archived captures framed too far left, clipping text mid-word.
   Lives in `archived_photo`, needs re-archiving, not re-cropping. 4 of 39 pages
   hand-verified; deliberately no classifier.
-- **#3593 enforce mode** — guard ships in `report`. Log one real batch, confirm
-  the refusals are single leaves, then set `SPLIT_SPREAD_GUARD=enforce`.
+- **#3593 enforce mode — BLOCKED, and the guard is wrong as built.** Rehearsed
+  read-only over 210 pages `auto-split-ml` would select: it would refuse **91%**
+  of them, at aspect 1.24–1.56, i.e. genuine spreads. Cause: I took
+  `detectGutterPixel`'s `confidence: 'high'` as "this is a spread", but there it
+  means "I can place the cut precisely" — the low-confidence path (dark binding
+  shadows, tight bindings, ornate pages) is handled downstream by snapping to the
+  book median and is full of real spreads. **A confidence score borrowed from one
+  decision does not transfer to another.** Enforcing needs per-book calibration
+  (compare the source against that book's own leaf ratio, refuse only on positive
+  evidence of a single leaf) rather than refusing on absence of evidence. Do NOT
+  set `SPLIT_SPREAD_GUARD=enforce` until that lands. Note the naive patch of
+  "allow anything landscape" does not close it either: three books were refused
+  at 77–100% with portrait sources of 0.68–0.80, and a spread of two narrow
+  leaves legitimately sits near 0.7.
 - **7,792 spurious crops** that were never materialised. Invisible today, live
   ammunition for any future pass through the splitter.

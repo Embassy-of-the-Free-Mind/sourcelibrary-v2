@@ -18,6 +18,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -42,7 +43,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const r2 = new S3Client({
   region: 'auto',
@@ -78,12 +79,11 @@ async function waitForToken() {
   }
 }
 
-function upgradeToFullRes(url) {
-  if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\//)) {
-    return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
-  }
-  return url;
-}
+// upgradeToFullRes is imported from ../lib/iiif-utils.mjs, not redefined here.
+// A private copy lived at this spot and was gallica-only (`url.includes('gallica')`),
+// so it silently no-op'd on every other host this worker touches — and, more to the
+// point, it is the shared version that knows about size caps. A local duplicate of a
+// shared helper is how a fix lands in one place and not the other (#4406).
 
 async function downloadImage(url, maxRetries = 4) {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -136,6 +136,14 @@ async function main() {
     const scopeIds = [...await resolveScopeBookIds(db, control)];
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[archive-gallica] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
+  }
+  // --book-ids=a,b,c: targeted one-off, same intent as archive-bulk's --book-id.
+  // Named books jump the (multi-thousand-book, arbitrarily ordered) queue —
+  // without this there is no way to archive a specific stalled book.
+  const BOOK_IDS = (getArg('book-ids') || '').split(',').map(s => s.trim()).filter(Boolean);
+  if (BOOK_IDS.length) {
+    SCOPE_FILTER = { id: { $in: BOOK_IDS } };
+    console.log(`[archive-gallica] Targeted run: ${BOOK_IDS.length} book(s) by --book-ids.`);
   }
 
   // Find Gallica books with unarchived pages
@@ -229,22 +237,24 @@ async function main() {
       const fullResUrl = upgradeToFullRes(originalUrl);
 
       try {
-        let buffer;
-        try {
-          buffer = await downloadImage(fullResUrl);
-        } catch (err) {
-          if (fullResUrl !== originalUrl) {
-            buffer = await downloadImage(originalUrl);
-          } else {
+        // fetchPageMaster owns only the cap-defeating route; this worker keeps its
+        // own retry + full-res-then-original fallback, passed through as `download`
+        // (#4406). It also records what the source said was available, so "did we
+        // get the master?" stops needing a second trip to the institution.
+        const download = async (u) => {
+          try {
+            return await downloadImage(u);
+          } catch (err) {
+            if (u !== originalUrl) return await downloadImage(originalUrl);
             throw err;
           }
-        }
+        };
+        const master = await fetchPageMaster(fullResUrl, { download });
+        const buffer = master.buffer;
 
         const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
 
-        const dimFields = {};
-        if (urls.width) dimFields.image_width = urls.width;
-        if (urls.height) dimFields.image_height = urls.height;
+        const dimFields = dimensionFields({ width: urls.width, height: urls.height }, master);
 
         await db.collection('pages').updateOne(
           { _id: page._id },

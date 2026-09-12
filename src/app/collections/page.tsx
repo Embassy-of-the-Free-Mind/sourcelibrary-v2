@@ -291,10 +291,17 @@ export default async function CollectionsPage() {
       </Suspense>
 
       <div className="mt-12">
-        <Suspense fallback={<SectionSkeleton heading="Curated Pathways" sub="Thematic journeys and special collections" />}>
+        <Suspense fallback={<SectionSkeleton heading="Curated Pathways" sub="Thematic journeys drawn from across the core collections" />}>
           <CuratedPathwaysSection />
         </Suspense>
       </div>
+
+      {/* The landing shows ~31 of 300+ collections; without this link the rest
+          are reachable only through search (#4339 — real-user confusion about
+          what the catalog actually contains). */}
+      <Suspense fallback={null}>
+        <AllCollectionsLink />
+      </Suspense>
 
       <Suspense fallback={null}>
         <TimelineSection />
@@ -345,13 +352,29 @@ async function CuratedPathwaysSection() {
     <div>
       <div className="mb-4">
         <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
-        <p className="text-stone-500 mt-1 text-sm">Thematic journeys and special collections</p>
+        <p className="text-stone-500 mt-1 text-sm">Thematic journeys drawn from across the core collections</p>
       </div>
       <ShowMorePathways initialCount={INITIAL_PATHWAYS} totalCount={items.length}>
         {items.map((col, i) => (
           <CuratedCard key={col.slug} col={col} tenantSlug={tenantSlug} priority={i < 4} />
         ))}
       </ShowMorePathways>
+    </div>
+  );
+}
+
+async function AllCollectionsLink() {
+  const { slug: tenantSlug } = getTenantContextFromRequest(await headers());
+  const href = tenantSlug ? `/${tenantSlug}/collections/all` : '/collections/all';
+  return (
+    <div className="mt-10 text-center">
+      <Link
+        href={href}
+        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border-light text-sm text-secondary hover:border-accent-gold/40 hover:text-primary transition-colors"
+      >
+        Browse the complete index of collections
+        <span aria-hidden>→</span>
+      </Link>
     </div>
   );
 }

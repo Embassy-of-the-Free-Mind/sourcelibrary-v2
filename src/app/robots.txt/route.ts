@@ -69,6 +69,7 @@ const AI_ALLOW_LIST = [
 const DOCS_ONLY = ['/blog/', '/llms.txt', '/terms', '/licensing', '/developers'];
 
 const DEFAULT_DISALLOW = [
+  '/talks/', // password-gated internal decks; the route also sends X-Robots-Tag: noindex
   '/book/*/pipeline',
   '/book/*/capture',
   '/book/*/qa',
@@ -144,6 +145,10 @@ export function GET(): Response {
   const body = [
     POLICY_PREAMBLE,
     ...GROUPS.map(renderGroup),
+    // RSL (Really Simple Licensing, rslstandard.org): machine-readable license
+    // terms for automated agents — same policy as the Content-Signal lines and
+    // /licensing, in the vocabulary the licensing marketplaces read (#4366).
+    `License: ${BASE_URL}/license.xml`,
     `Sitemap: ${BASE_URL}/sitemap.xml`,
   ].join('\n\n') + '\n';
 

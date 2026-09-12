@@ -3,20 +3,57 @@
  * Backfill image_source.contributing_library for books missing it.
  *
  * Phase 1: Single-institution providers — set name directly (no API calls).
- * Phase 2: IA books — fetch contributor from IA metadata API.
+ * Phase 2: IA books — fetch contributor from IA metadata API (+ call_number → shelfmark).
  * Phase 3: e-rara — extract holding library from OAI-PMH or manifest.
+ * Phase 4 (#4361): books whose contributing_library IS an aggregator name
+ *   ("Internet Archive" — 6,185 live books at time of writing) — replace with
+ *   the IA item's `contributor`, the actual holding institution. An aggregator
+ *   hosted the scan; some library owns the book, and the citation copy clause
+ *   (#4360) refuses to name an aggregator, so these books cite no holder until
+ *   this phase recovers the real one.
+ * Phase 5 (#4361): BPH shelfmark materialization — READ Supabase `bph_works`
+ *   (never write it: .claude/docs/bph-catalogue-disaster-recovery.md), copy
+ *   `shelf_mark` (or the PH-shelfmark in `ubn`) onto the matched Mongo book's
+ *   image_source.shelfmark when empty.
+ *
+ * Value-overwriting phases (4, 5) record a ROW per change in `sweep_log`
+ * (field-sprawl invariant #3969) — including `no-contributor` verdicts, which
+ * double as the checkpoint so re-runs skip items IA has no holder for.
  *
  * Usage:
  *   DRY_RUN=1 node scripts/backfill-contributing-library.mjs          # preview
  *   node scripts/backfill-contributing-library.mjs                     # run all phases
- *   PHASE=1 node scripts/backfill-contributing-library.mjs             # run phase 1 only
- *   PHASE=2 node scripts/backfill-contributing-library.mjs             # run phase 2 only
- *   PHASE=3 node scripts/backfill-contributing-library.mjs             # run phase 3 only
+ *   PHASE=N node scripts/backfill-contributing-library.mjs             # run phase N only
  */
 import { MongoClient } from 'mongodb';
+import { recordSweepAction } from './lib/sweep-log.mjs';
+
+const SWEEP = 'holding-library-4361';
+
+// Sponsors that fund scanning but hold nothing — never a contributing_library.
+const JUNK_SPONSOR = /google|msn|microsoft|sloan foundation|internet archive/i;
+
+// Null-holder tokens IA itself serves ("unknown library" on many Google
+// scans). Writing one asserts a holder that isn't known; 18 slipped through
+// phase 4's first run before this guard (read side suppresses them too —
+// src/lib/holding-library.ts).
+const NULL_HOLDER = /^(unknown( library)?|n\/?a|none|-)$/i;
+
+// Aggregator values that should never stand as a holding library. Mirror of
+// the read-side list in src/lib/holding-library.ts (AGGREGATORS) — the
+// citation layer filters these on read; this sweep replaces them at the rows.
+const AGGREGATOR_VALUES = [
+  'Internet Archive',
+  'archive.org',
+  'Google Books',
+  'Google',
+  'HathiTrust',
+  'Project Gutenberg',
+];
 
 const DRY_RUN = process.env.DRY_RUN === '1';
 const PHASE = process.env.PHASE ? parseInt(process.env.PHASE) : 0; // 0 = all
+const LIMIT = process.env.LIMIT ? parseInt(process.env.LIMIT) : 0; // 0 = no cap (smoke tests)
 
 // Phase 1: Single-institution provider → contributing_library name
 const PROVIDER_LIBRARY_MAP = {
@@ -91,7 +128,7 @@ async function phase2(db) {
 
   let updated = 0;
   let failed = 0;
-  const BATCH_SIZE = 50;
+  const BATCH_SIZE = 5; // was 50 — that concurrency got the IP blocked at IA (2026-08-29)
 
   for (let i = 0; i < books.length; i += BATCH_SIZE) {
     const batch = books.slice(i, i + BATCH_SIZE);
@@ -101,15 +138,29 @@ async function phase2(db) {
       try {
         const resp = await fetch(`https://archive.org/metadata/${identifier}`, {
           signal: AbortSignal.timeout(10000),
+          // Contact-carrying UA per #4353; anonymous bulk fetch at high
+          // concurrency got this IP connection-refused by IA on 2026-08-29.
+          headers: { 'User-Agent': 'SourceLibraryArchiver/1.0 (derek@sourcelibrary.org)' },
         });
         if (!resp.ok) { failed++; return; }
         const data = await resp.json();
         const meta = data?.metadata;
-        // Try contributor first, then fall back to sponsor or publisher
-        const contributor = meta?.contributor || meta?.sponsor;
-        if (!contributor || typeof contributor !== 'string') { failed++; return; }
+        // Try contributor first, then fall back to sponsor — but a scanning
+        // funder (Google, MSN, Sloan) is not a holder (#4361).
+        const sponsor = typeof meta?.sponsor === 'string' && !JUNK_SPONSOR.test(meta.sponsor) ? meta.sponsor : null;
+        const contributor = meta?.contributor || sponsor;
+        if (!contributor || typeof contributor !== 'string' || NULL_HOLDER.test(contributor.trim())) { failed++; return; }
 
+        // IA's call_number is that holder's shelfmark for the copy — the other
+        // half of the citation copy clause (#4360/#4361).
+        const callNumber = typeof meta?.call_number === 'string' ? meta.call_number.trim() : '';
         if (!DRY_RUN) {
+          if (callNumber) {
+            await db.collection('books').updateOne(
+              { _id: book._id, 'image_source.shelfmark': { $exists: false } },
+              { $set: { 'image_source.shelfmark': callNumber } },
+            );
+          }
           await db.collection('books').updateOne(
             { _id: book._id },
             { $set: { 'image_source.contributing_library': contributor } },
@@ -125,7 +176,7 @@ async function phase2(db) {
       console.log(`  ${Math.min(i + BATCH_SIZE, books.length)}/${books.length} — ${updated} updated, ${failed} failed`);
     }
     // Small delay between batches to be kind to IA
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => setTimeout(r, 1000));
   }
 
   console.log(`\nPhase 2 total: ${updated} updated, ${failed} failed`);
@@ -255,6 +306,203 @@ async function phase3(db) {
   return updated;
 }
 
+async function phase4(db) {
+  console.log('\n=== PHASE 4: replace aggregator-as-holder with IA contributor (#4361) ===\n');
+
+  // Books already resolved to "no contributor" in a previous run — the
+  // sweep_log row IS the checkpoint (corpus walks need one; the selection
+  // below is value-based, so without this every re-run would re-fetch the
+  // whole no-contributor tail from IA).
+  const settled = new Set(
+    (await db.collection('sweep_log')
+      .find({ sweep: SWEEP, action: 'no-contributor' }, { projection: { book_id: 1 } })
+      .toArray()).map(r => r.book_id),
+  );
+
+  const books = await db.collection('books').find({
+    'image_source.contributing_library': { $in: AGGREGATOR_VALUES },
+    'image_source.identifier': { $exists: true },
+    'image_source.provider': 'internet_archive',
+    status: { $ne: 'deleted' },
+  }, { projection: { _id: 1, id: 1, 'image_source.identifier': 1, 'image_source.contributing_library': 1 } }).toArray();
+
+  let pending = books.filter(b => !settled.has(b.id));
+  console.log(`${books.length} books carry an aggregator as holder; ${pending.length} unsettled`);
+  if (LIMIT > 0) {
+    pending = pending.slice(0, LIMIT);
+    console.log(`LIMIT=${LIMIT}: processing first ${pending.length} only`);
+  }
+  if (pending.length === 0) return 0;
+
+  let updated = 0;
+  let noContributor = 0;
+  let failed = 0;
+  const BATCH_SIZE = 5; // was 50 — that concurrency got the IP blocked at IA (2026-08-29)
+
+  for (let i = 0; i < pending.length; i += BATCH_SIZE) {
+    const batch = pending.slice(i, i + BATCH_SIZE);
+
+    await Promise.all(batch.map(async (book) => {
+      const identifier = book.image_source.identifier;
+      try {
+        const resp = await fetch(`https://archive.org/metadata/${identifier}`, {
+          signal: AbortSignal.timeout(10000),
+          // Contact-carrying UA per #4353; anonymous bulk fetch at high
+          // concurrency got this IP connection-refused by IA on 2026-08-29.
+          headers: { 'User-Agent': 'SourceLibraryArchiver/1.0 (derek@sourcelibrary.org)' },
+        });
+        if (!resp.ok) { failed++; return; }
+        const data = await resp.json();
+        const meta = data?.metadata;
+        const contributor = typeof meta?.contributor === 'string' ? meta.contributor.trim() : '';
+        const callNumber = typeof meta?.call_number === 'string' ? meta.call_number.trim() : '';
+
+        // The item itself names no holder: leave the aggregator value (the
+        // read-side citation layer suppresses it) and checkpoint the verdict.
+        if (!contributor || NULL_HOLDER.test(contributor) || AGGREGATOR_VALUES.some(a => a.toLowerCase() === contributor.toLowerCase())) {
+          noContributor++;
+          if (!DRY_RUN) {
+            await recordSweepAction(db, {
+              sweep: SWEEP, book_id: book.id, action: 'no-contributor',
+              detail: { ia: identifier },
+            });
+          }
+          return;
+        }
+
+        if (!DRY_RUN) {
+          if (callNumber) {
+            await db.collection('books').updateOne(
+              { _id: book._id, 'image_source.shelfmark': { $exists: false } },
+              { $set: { 'image_source.shelfmark': callNumber } },
+            );
+          }
+          await db.collection('books').updateOne(
+            { _id: book._id },
+            { $set: { 'image_source.contributing_library': contributor } },
+          );
+          await recordSweepAction(db, {
+            sweep: SWEEP, book_id: book.id, action: 'holder-recovered',
+            detail: { from: book.image_source.contributing_library, to: contributor, ia: identifier, ...(callNumber ? { shelfmark: callNumber } : {}) },
+          });
+        }
+        updated++;
+      } catch {
+        failed++;
+      }
+    }));
+
+    if ((i + BATCH_SIZE) % 500 === 0 || i + BATCH_SIZE >= pending.length) {
+      console.log(`  ${Math.min(i + BATCH_SIZE, pending.length)}/${pending.length} — ${updated} recovered, ${noContributor} no-contributor, ${failed} failed`);
+    }
+    await new Promise(r => setTimeout(r, 1000));
+  }
+
+  console.log(`\nPhase 4 total: ${updated} recovered, ${noContributor} genuinely holderless, ${failed} failed (transient — re-run retries them)`);
+  return updated;
+}
+
+async function phase5(db) {
+  console.log('\n=== PHASE 5: BPH shelfmark materialization from bph_works (#4361) ===\n');
+  console.log('READS Supabase only — bph_works writes are catalogue-editor-only.\n');
+
+  const { createClient } = await import('@supabase/supabase-js');
+  const supabase = createClient(
+    process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY,
+  );
+
+  // supabase-js caps every response at 1,000 rows — paginate or lose data.
+  const rows = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await supabase
+      .from('bph_works')
+      .select('ubn, shelf_mark, sl_book_id')
+      .not('sl_book_id', 'is', null)
+      .range(from, from + 999);
+    if (error) throw new Error(`bph_works read failed: ${error.message}`);
+    rows.push(...(data || []));
+    if (!data || data.length < 1000) break;
+  }
+  console.log(`${rows.length} bph_works rows matched to a Source Library book`);
+
+  let updated = 0;
+  let skipped = 0;
+  for (const row of rows) {
+    // shelf_mark is the physical mark; a UBN is the BPH catalogue number and
+    // doubles as the shelfmark for manuscripts (PH-numbers).
+    const mark = (row.shelf_mark || '').trim() || (row.ubn ? `UBN ${row.ubn}` : '');
+    if (!mark) { skipped++; continue; }
+
+    if (DRY_RUN) { updated++; continue; }
+    const res = await db.collection('books').updateOne(
+      {
+        id: row.sl_book_id,
+        $or: [
+          { 'image_source.shelfmark': { $exists: false } },
+          { 'image_source.shelfmark': { $in: [null, ''] } },
+        ],
+      },
+      { $set: { 'image_source.shelfmark': mark } },
+    );
+    if (res.modifiedCount > 0) {
+      updated++;
+      await recordSweepAction(db, {
+        sweep: SWEEP, book_id: row.sl_book_id, action: 'bph-shelfmark',
+        detail: { shelfmark: mark, ubn: row.ubn ?? null },
+      });
+    } else {
+      skipped++; // already has a shelfmark, or the book row is gone
+    }
+  }
+
+  console.log(`\nPhase 5 total: ${updated} shelfmarks set, ${skipped} skipped (no mark / already set / unmatched)`);
+  return updated;
+}
+
+async function phase6(db) {
+  console.log('\n=== PHASE 6: consolidate TOP-LEVEL contributing_library/shelfmark into image_source (#4361) ===\n');
+  console.log('3,860 live books carry the holder only at top level (field sprawl); image_source is canonical.\n');
+
+  let total = 0;
+  for (const [from, to] of [
+    ['contributing_library', 'image_source.contributing_library'],
+    ['shelfmark', 'image_source.shelfmark'],
+  ]) {
+    const filter = {
+      [from]: { $nin: [null, ''] },
+      $or: [{ [to]: { $exists: false } }, { [to]: { $in: [null, ''] } }],
+      status: { $ne: 'deleted' },
+    };
+    const count = await db.collection('books').countDocuments(filter);
+    console.log(`${from} → ${to}: ${count} books`);
+    if (count === 0 || DRY_RUN) { total += count; continue; }
+
+    // Set-if-empty copy; the top-level twin stays for now — removing a field
+    // 3,860 rows' READERS may still expect is its own change, not a side
+    // effect of a backfill.
+    const cursor = db.collection('books').find(filter, { projection: { _id: 1, id: 1, [from.split('.')[0]]: 1 } });
+    for await (const book of cursor) {
+      const value = book[from];
+      if (typeof value !== 'string' || !value.trim()) continue;
+      const res = await db.collection('books').updateOne(
+        { _id: book._id, $or: [{ [to]: { $exists: false } }, { [to]: { $in: [null, ''] } }] },
+        { $set: { [to]: value.trim() } },
+      );
+      if (res.modifiedCount > 0) {
+        total++;
+        await recordSweepAction(db, {
+          sweep: SWEEP, book_id: book.id, action: 'consolidated-to-image-source',
+          detail: { field: from, value: value.trim() },
+        });
+      }
+    }
+    console.log(`  → done`);
+  }
+  console.log(`\nPhase 6 total: ${total}`);
+  return total;
+}
+
 async function main() {
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db('bookstore');
@@ -265,6 +513,9 @@ async function main() {
   if (PHASE === 0 || PHASE === 1) total += await phase1(db);
   if (PHASE === 0 || PHASE === 2) total += await phase2(db);
   if (PHASE === 0 || PHASE === 3) total += await phase3(db);
+  if (PHASE === 0 || PHASE === 4) total += await phase4(db);
+  if (PHASE === 0 || PHASE === 5) total += await phase5(db);
+  if (PHASE === 0 || PHASE === 6) total += await phase6(db);
 
   // Final count
   const remaining = await db.collection('books').countDocuments({

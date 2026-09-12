@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
+import { refuseImageUrl } from '@/lib/image-proxy-hosts';
+import { checkImageAccess, imageBudgetExceededBody } from '@/lib/image-gate';
+import { finalizeMarkedJpeg } from '@/lib/image-marks';
+import { logApiUsage } from '@/lib/api-usage';
+import type { ApiIdentity } from '@/lib/api-auth';
 
 /**
  * GET /api/crop-image
@@ -25,6 +30,39 @@ export async function GET(request: NextRequest) {
 
     if (!imageUrl) {
       return NextResponse.json({ error: 'url required' }, { status: 400 });
+    }
+
+    // Same host policy as /api/image: this is a server-side fetcher taking a
+    // caller-supplied URL, so it must refuse non-allowlisted hosts and private
+    // address literals (it previously fetched anything — SSRF-shaped).
+    const refusal = refuseImageUrl(imageUrl);
+    if (refusal) {
+      return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
+    }
+
+    // Same identity + budget gate as /api/image (#4356) — this route is the
+    // same free resizer under a different path, so it gets the same door.
+    const access = await checkImageAccess(request);
+    if (access.shouldLog) {
+      logApiUsage({
+        request,
+        identity: access.identity as ApiIdentity,
+        route: 'image',
+        status: access.allowed ? 200 : access.status,
+        ms: 0,
+        wouldBlock: !!access.reason,
+        blocked: !access.allowed,
+        reason: access.reason,
+        pagesServed: access.allowed ? 1 : 0,
+      });
+    }
+    if (!access.allowed) {
+      const gateHeaders: Record<string, string> = { 'Cache-Control': 'no-store' };
+      if (access.status === 429) gateHeaders['Retry-After'] = '3600';
+      return NextResponse.json(imageBudgetExceededBody(access), {
+        status: access.status,
+        headers: gateHeaders,
+      });
     }
 
     // Fetch the source image
@@ -76,14 +114,23 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const croppedBuffer = await pipeline
-      .jpeg({ quality: 85 })
-      .toBuffer();
+    // Finalize through the shared marks module: before #4366's follow-up this
+    // route served unmarked bytes, making a full-frame "crop" a trivial bypass
+    // of every visible mark on /api/image. Clean-capable keys skip the visible
+    // marks; clean responses stay out of the shared CDN cache (entitlement is
+    // in a header the cache key can't see).
+    const rawCrop = await pipeline.toBuffer();
+    const croppedBuffer = await finalizeMarkedJpeg(rawCrop, {
+      quality: 85,
+      clean: access.clean === true,
+    });
 
     return new NextResponse(new Uint8Array(croppedBuffer), {
       headers: {
         'Content-Type': 'image/jpeg',
-        'Cache-Control': 'public, max-age=31536000, immutable',
+        'Cache-Control': access.clean
+          ? 'private, no-store'
+          : 'public, max-age=31536000, immutable',
       },
     });
   } catch (error) {

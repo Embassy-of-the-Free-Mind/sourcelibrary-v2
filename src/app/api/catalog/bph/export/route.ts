@@ -4,6 +4,7 @@ import { applyBphFilters, readBphFilters } from '@/lib/bph-catalog-filters';
 
 /**
  * GET /api/catalog/bph/export — the current catalogue search, as a spreadsheet.
+ * POST — a hand-picked selection of records, as the same spreadsheet.
  *
  * Asked for by José Bouman (BPH), 2026-08-12:
  *
@@ -11,10 +12,16 @@ import { applyBphFilters, readBphFilters } from '@/lib/bph-catalog-filters';
  *    books which have JRR in one of the fields.... This is an important
  *    feature, that we often! use!"
  *
- * Takes exactly the query string the browsing API takes, and runs it through
- * the SAME filter module (src/lib/bph-catalog-filters.ts) — so "export" always
- * means "the rows I am looking at", never a near-miss. Only `offset`/`limit`
- * are ignored: an export is the whole selection, not the visible page.
+ * and 2026-08-26 (#4252): "need a way to make selections from the catalog …
+ * and then export the selections to be downloaded" — that is the POST: the
+ * browser's checkbox basket submits `keys` (UBNs and, for the 2,012 records
+ * that have none, uuids) and gets back exactly those rows, in pick order.
+ *
+ * The GET takes exactly the query string the browsing API takes, and runs it
+ * through the SAME filter module (src/lib/bph-catalog-filters.ts) — so
+ * "export" always means "the rows I am looking at", never a near-miss. Only
+ * `offset`/`limit` are ignored: an export is the whole selection, not the
+ * visible page.
  *
  * Public, like the catalogue itself. The staff-only columns (internal_remarks,
  * exhibition_history) are deliberately NOT in the export — they are not public
@@ -88,6 +95,131 @@ function csvEscape(value: unknown): string {
   return s;
 }
 
+/** Shared CSV response builder for both export modes. */
+function csvResponse(
+  rows: Array<Record<string, unknown>>,
+  filenameTerm: string,
+  notes: string[],
+): NextResponse {
+  const lines = [EXPORT_COLUMNS.map((c) => csvEscape(c.header)).join(',')];
+  for (const row of rows) {
+    lines.push(EXPORT_COLUMNS.map((c) => csvEscape(row[c.key])).join(','));
+  }
+  for (const note of notes) {
+    lines.push('');
+    lines.push(csvEscape(note));
+  }
+
+  // A named, dated file: a librarian ends up with several of these in Downloads
+  // and needs to tell them apart.
+  const stamp = new Date().toISOString().slice(0, 10);
+  const term = filenameTerm.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+  const filename = `bph-catalogue${term ? `-${term}` : ''}-${stamp}.csv`;
+
+  // The BOM makes Excel read it as UTF-8; without it, every "Böhme" in the
+  // export opens as "BÃ¶hme" on a default Windows install.
+  return new NextResponse(`﻿${lines.join('\r\n')}\r\n`, {
+    headers: {
+      'content-type': 'text/csv; charset=utf-8',
+      'content-disposition': `attachment; filename="${filename}"`,
+      'cache-control': 'no-store',
+    },
+  });
+}
+
+// Same alphabet the create route allows for a UBN; uuids fit it too. Anything
+// else in a submitted key list is attacker-shaped, not librarian-shaped.
+const KEY_RE = /^[A-Za-z0-9._-]{1,64}$/;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const MAX_KEYS = 5_000;
+// Keys per `.in()` query. supabase-js sends filters in the URL, so one query
+// with thousands of keys would blow the URL limit; chunking keeps each request
+// small and bounded.
+const KEYS_PER_QUERY = 100;
+
+/**
+ * POST /api/catalog/bph/export — export a hand-picked selection.
+ *
+ * Body (form-encoded, so a plain <form> submit downloads the file):
+ *   keys=<whitespace/comma-separated UBNs and uuids>
+ *
+ * Rows come back in the order they were picked, and any key that matches no
+ * record is reported in a trailing NOTE — a shorter-than-expected export must
+ * say so, never just look complete.
+ */
+export async function POST(req: NextRequest) {
+  let raw = '';
+  try {
+    const form = await req.formData();
+    raw = String(form.get('keys') ?? '');
+  } catch {
+    return NextResponse.json({ error: 'Expected form data with a "keys" field' }, { status: 400 });
+  }
+
+  const seen = new Set<string>();
+  const keys: string[] = [];
+  for (const part of raw.split(/[\s,]+/)) {
+    const key = part.trim();
+    if (!key || seen.has(key)) continue;
+    if (!KEY_RE.test(key)) {
+      return NextResponse.json({ error: `Invalid record key: "${key.slice(0, 80)}"` }, { status: 400 });
+    }
+    seen.add(key);
+    keys.push(key);
+  }
+  if (keys.length === 0) {
+    return NextResponse.json({ error: 'No records selected' }, { status: 400 });
+  }
+  if (keys.length > MAX_KEYS) {
+    return NextResponse.json(
+      { error: `Selection too large (${keys.length} records; the limit is ${MAX_KEYS}). Use the search export instead.` },
+      { status: 400 },
+    );
+  }
+
+  const ubns = keys.filter((k) => !UUID_RE.test(k));
+  const uuids = keys.filter((k) => UUID_RE.test(k));
+  const columns = EXPORT_COLUMNS.map((c) => c.key).join(', ');
+
+  // key (ubn or uuid) → row. A row is registered under both its keys so the
+  // reorder below finds it whichever one the client selected by.
+  const byKey = new Map<string, Record<string, unknown>>();
+  const chunks: Array<{ column: 'ubn' | 'uuid'; values: string[] }> = [];
+  for (let i = 0; i < ubns.length; i += KEYS_PER_QUERY) {
+    chunks.push({ column: 'ubn', values: ubns.slice(i, i + KEYS_PER_QUERY) });
+  }
+  for (let i = 0; i < uuids.length; i += KEYS_PER_QUERY) {
+    chunks.push({ column: 'uuid', values: uuids.slice(i, i + KEYS_PER_QUERY) });
+  }
+  for (const chunk of chunks) {
+    const { data, error } = await supabase
+      .from('bph_works')
+      .select(columns)
+      .in(chunk.column, chunk.values);
+    if (error) {
+      console.error('[catalog/bph/export] selection query failed:', error);
+      return NextResponse.json({ error: 'Export failed — please try again' }, { status: 500 });
+    }
+    for (const row of (data ?? []) as unknown as Array<Record<string, unknown>>) {
+      if (typeof row.ubn === 'string' && row.ubn) byKey.set(row.ubn, row);
+      if (typeof row.uuid === 'string' && row.uuid) byKey.set(row.uuid.toLowerCase(), row);
+    }
+  }
+
+  const rows: Array<Record<string, unknown>> = [];
+  const missing: string[] = [];
+  for (const key of keys) {
+    const row = byKey.get(UUID_RE.test(key) ? key.toLowerCase() : key);
+    if (row) rows.push(row);
+    else missing.push(key);
+  }
+
+  const notes = missing.length
+    ? [`NOTE: ${missing.length} selected record(s) were not found and are not in this export: ${missing.slice(0, 20).join(', ')}${missing.length > 20 ? ', …' : ''}`]
+    : [];
+  return csvResponse(rows, `selection-${rows.length}`, notes);
+}
+
 export async function GET(req: NextRequest) {
   const filters = readBphFilters(req.nextUrl.searchParams);
 
@@ -115,31 +247,11 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  const lines = [EXPORT_COLUMNS.map((c) => csvEscape(c.header)).join(',')];
-  for (const row of rows) {
-    lines.push(EXPORT_COLUMNS.map((c) => csvEscape(row[c.key])).join(','));
-  }
   // Never let a cap pass for a complete answer.
-  if (truncated) {
-    lines.push('');
-    lines.push(csvEscape(`NOTE: export capped at ${MAX_ROWS} rows — narrow the search and export again.`));
-  }
-
-  // A named, dated file: a librarian ends up with several of these in Downloads
-  // and needs to tell them apart. The search term goes in the name when there
-  // is one, reduced to characters a filesystem is happy with.
-  const stamp = new Date().toISOString().slice(0, 10);
+  const notes = truncated
+    ? [`NOTE: export capped at ${MAX_ROWS} rows — narrow the search and export again.`]
+    : [];
+  // The search term goes in the filename when there is one.
   const termRaw = filters.q || filters.author || filters.title || filters.shelfMark || '';
-  const term = termRaw.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
-  const filename = `bph-catalogue${term ? `-${term}` : ''}-${stamp}.csv`;
-
-  // The BOM makes Excel read it as UTF-8; without it, every "Böhme" in the
-  // export opens as "BÃ¶hme" on a default Windows install.
-  return new NextResponse(`﻿${lines.join('\r\n')}\r\n`, {
-    headers: {
-      'content-type': 'text/csv; charset=utf-8',
-      'content-disposition': `attachment; filename="${filename}"`,
-      'cache-control': 'no-store',
-    },
-  });
+  return csvResponse(rows, termRaw, notes);
 }

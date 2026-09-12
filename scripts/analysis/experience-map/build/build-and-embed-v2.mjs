@@ -12,7 +12,9 @@
  *     genre and author, which is why an argument about the unity of the animal
  *     kind scored 0.77 against an ego-dissolution probe.
  *
- * Free: embedding is free-tier.
+ * Cost: embedding is BILLED ($0.20/1M input tokens, ~4.29 chars/token —
+ * see .claude/docs/embeddings.md). Negligible at this scale, but not free:
+ * every GEMINI_API_KEY* in the env is a paid key.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';

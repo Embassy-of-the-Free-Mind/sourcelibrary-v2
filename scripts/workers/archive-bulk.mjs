@@ -43,7 +43,24 @@ const PAGE_CONCURRENCY = parseInt(getArg('page-concurrency') || '8', 10);
 const DRY_RUN = hasFlag('dry-run');
 const TARGET_BOOK_ID = getArg('book-id') || null;  // one-off: archive a single book, bypassing the queue
 const JPEG_QUALITY = 85;
-const MAX_DIMENSION = 3000;
+/**
+ * We do not impose resolution ceilings on masters (#4406).
+ *
+ * This was `MAX_DIMENSION = 3000`, applied with a silent
+ * `.resize(3000, 3000, { fit: 'inside' })` to every page above it — so any scan
+ * larger than 3000px on its long edge was permanently downsized before storage,
+ * with nothing recorded to say it had happened. IA scans routinely exceed that;
+ * a Manchester master measured 2026-08-30 was 4782x7000, which would have lost
+ * 57% of its width here. The loss is unrecoverable once the source is gone, and
+ * it was invisible because the stored file is a perfectly good JPEG.
+ *
+ * What remains is a SAFETY VALVE, not a quality decision: sharp will happily try
+ * to decode a pathological image and exhaust memory. Above this we SKIP the page
+ * and say so loudly, rather than quietly shrinking it — the same pattern
+ * deepzoom-harvest-page-masters.mjs already uses. A skipped page is a visible
+ * gap someone can act on; a downsized one looks like success forever.
+ */
+const PATHOLOGICAL_DIMENSION = 30000;
 // Pages sampled to verify the zip-leaf mapping before writing a book (#3368).
 const ALIGN_SAMPLES = parseInt(getArg('align-samples') || '3', 10);
 // Escape hatch for backfills over items already proven aligned. Never default
@@ -66,7 +83,7 @@ if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 try { execSync('which opj_decompress', { stdio: 'pipe' }); }
 catch { console.error('opj_decompress not found. Install: apt-get install libopenjp2-tools'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const s3 = new S3Client({
   region: 'auto',
@@ -260,10 +277,12 @@ async function jp2ToJpeg(jp2Path) {
   } catch (err) {
     if (!fs.existsSync(bmpPath)) throw new Error(`opj_decompress failed: ${err.stderr?.slice(0, 200) || err.message}`);
   }
-  let sharpPipeline = sharp(bmpPath);
+  const sharpPipeline = sharp(bmpPath);
   const meta = await sharpPipeline.metadata();
-  if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-    sharpPipeline = sharp(bmpPath).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+  // No downsize: store the JP2 at the resolution the source actually holds.
+  if (meta.width > PATHOLOGICAL_DIMENSION || meta.height > PATHOLOGICAL_DIMENSION) {
+    try { fs.unlinkSync(bmpPath); } catch {}
+    throw new Error(`pathological dimensions ${meta.width}x${meta.height} — skipped, not downsized (#4406)`);
   }
   const jpegBuffer = await sharpPipeline.jpeg({ quality: JPEG_QUALITY }).toBuffer();
   try { fs.unlinkSync(bmpPath); } catch {}
@@ -475,10 +494,11 @@ async function processBook(book, db) {
           if (format === 'jp2') {
             jpegBuffer = await jp2ToJpeg(srcFile);
           } else {
-            let sharpInst = sharp(srcFile);
+            const sharpInst = sharp(srcFile);
             const meta = await sharpInst.metadata();
-            if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-              sharpInst = sharp(srcFile).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+            // No downsize: store what the source holds. See PATHOLOGICAL_DIMENSION.
+            if (meta.width > PATHOLOGICAL_DIMENSION || meta.height > PATHOLOGICAL_DIMENSION) {
+              throw new Error(`pathological dimensions ${meta.width}x${meta.height} — skipped, not downsized (#4406)`);
             }
             jpegBuffer = await sharpInst.jpeg({ quality: JPEG_QUALITY }).toBuffer();
           }

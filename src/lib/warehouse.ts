@@ -10,6 +10,7 @@
  */
 
 import { Db, Document } from 'mongodb';
+import { deleteBookArchived } from './delete-book';
 
 /** Statuses that belong in the warehouse */
 export const WAREHOUSE_STATUSES = ['archiving', 'archive_complete'] as const;
@@ -45,7 +46,22 @@ export async function moveToWarehouse(db: Db, bookId: string): Promise<boolean> 
     await db.collection('pages_warehouse').bulkWrite(bulkOps, { ordered: false });
   }
 
-  // Delete from live collections only after warehouse write succeeds
+  // Delete from live collections only after the warehouse copy is READABLE.
+  // This is the one bare `books.deleteOne` that is not a deletion — the record
+  // still exists, in `books_warehouse`. That makes it safe only for as long as
+  // the copy is really there, so re-read it rather than trusting the write
+  // (#4450). A book that vanishes from `books` with no warehouse row and no
+  // `deleted_books` row is unrecoverable and nothing downstream can tell.
+  const parked = await db.collection('books_warehouse').findOne(
+    { id: bookId },
+    { projection: { _id: 1 } }
+  );
+  if (!parked) {
+    throw new Error(
+      `moveToWarehouse: warehouse copy of ${bookId} is not readable after write — refusing to delete from books. The book is untouched.`
+    );
+  }
+
   await db.collection('pages').deleteMany({ book_id: bookId });
   await db.collection('books').deleteOne({ id: bookId });
 
@@ -109,8 +125,14 @@ export async function findBookAnywhere(
 
 /**
  * Soft-delete a book: archives to deleted_books, then removes from live.
- * ALWAYS use this instead of raw deleteOne/deleteMany on books.
- * Returns the deleted book document for verification.
+ *
+ * Thin wrapper over `deleteBookArchived()` (src/lib/delete-book.ts), which is
+ * the canonical archive-then-delete helper — see #4450. The archive row is read
+ * back before anything is removed, and the lookup accepts `id` OR `_id`, so a
+ * book whose `_id` was re-minted by a restore/re-import is still found.
+ *
+ * Kept as a named export because callers and docs refer to it; new code should
+ * call `deleteBookArchived()` directly. Returns the deleted book document.
  */
 export async function softDeleteBook(
   db: Db,
@@ -120,20 +142,7 @@ export async function softDeleteBook(
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return null;
 
-  // Archive to deleted_books with metadata
-  await db.collection('deleted_books').replaceOne(
-    { id: bookId },
-    {
-      ...book,
-      deleted_at: new Date(),
-      deletion_reason: reason,
-    },
-    { upsert: true }
-  );
-
-  // Remove pages and book from live AFTER archive succeeds
-  await db.collection('pages').deleteMany({ book_id: bookId });
-  await db.collection('books').deleteOne({ id: bookId });
+  await deleteBookArchived(db, book, reason);
 
   // Audit log
   await db.collection('audit_log').insertOne({

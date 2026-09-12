@@ -30,6 +30,10 @@
  *   import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
  *   const bookDoc = makeBookDoc({ _id: bookId, id: bookIdStr, slug, title, ... });
  *   await db.collection('books').insertOne(bookDoc);
+ *
+ * PREFER `insertBookIfNew()` from `scripts/lib/acquire-book.mjs` over a bare
+ * insertOne: it calls this constructor AND runs the acquisition dedupe gate, so
+ * a direct importer stops being a hole in the gate by default.
  */
 
 /**
@@ -51,6 +55,18 @@ export const BOOK_FIELDS = Object.freeze([
   // core bibliographic
   'title', 'display_title', 'display_author', 'original_title',
   'author', 'language', 'original_language',
+  // languages[] + language_multi: the ONE multilingual-edition array
+  // (invariants/language-fields.md). Written by normalize-language-tags.mjs on
+  // 45K books; an importer that already knows an edition is facing-page
+  // (Chimalpahin's Nahuatl/French) may set it at insert time.
+  'languages', 'language_multi',
+  // language_review: set when the caller's language and the SOURCE's disagree, so the record does
+  // not auto-publish on an unreviewed value. src/app/api/import/ia/route.ts has written it at import
+  // since #2185 (resolveLanguage -> `...(lang.language_review ? { language_review: true } : {})`);
+  // the direct importers could not, because it was missing here, so the same conflict was silently
+  // dropped on whichever door the book came through. ~1,519 live books carry it and a Sunday cron
+  // (audit-language-mismatch.mjs --flag) refills the queue.
+  'language_review',
   'published', 'year', 'original_work_year', 'date_earliest', 'date_latest',
   'publisher',
   'place_published', 'place_of_publication', // known duplicate family — #3969 Track B
@@ -60,7 +76,8 @@ export const BOOK_FIELDS = Object.freeze([
   'is_translation', 'text_role', 'text_source', 'translation_status',
   'content_type', 'work_id',
   // provenance / source
-  'ia_identifier', 'source_fingerprint', 'image_source', 'contributing_library',
+  'ia_identifier', 'source_fingerprint', 'source_fingerprints',
+  'image_source', 'contributing_library',
   'provider', 'held_by', 'current_location', 'attribution_note',
   'dublin_core', 'catalog_metadata', 'catalog_ids', 'field_provenance',
   'enrichment', 'linked_art', 'wikidata_id',
@@ -75,6 +92,12 @@ export const BOOK_FIELDS = Object.freeze([
   // page accounting
   'pages_count',
   'page_count_source', 'pages_ocr', 'pages_translated', 'pages_archived',
+  // pages carrying a Spanish edition (translations.es / legacy translation_es);
+  // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
+  'pages_translated_es',
+  // language-keyed metadata glosses { es: { title } } — ONE map, never title_<lang>
+  // columns; written by scripts/maintenance/localize-metadata.mjs (src/lib/localized.ts)
+  'localized',
   // images / artwork (artwork docs live in `books` with resource_type set)
   'thumbnail', 'thumbnail_blob', 'resource_type', 'image_display',
   'image_full', 'image_source_url', 'image_thumb', 'archived_full_url',
@@ -114,6 +137,8 @@ export const PAGE_FIELDS = Object.freeze([
   'created_at', 'updated_at',
 ]);
 
+import { sourceFingerprints } from './source-fingerprints.mjs';
+
 const BOOK_FIELD_SET = new Set(BOOK_FIELDS);
 const PAGE_FIELD_SET = new Set(PAGE_FIELDS);
 
@@ -150,7 +175,16 @@ function makeDoc(fields, allowed, label) {
  * @returns {object} the validated doc (a shallow copy)
  */
 export function makeBookDoc(fields) {
-  return makeDoc(fields, BOOK_FIELD_SET, 'makeBookDoc');
+  const doc = makeDoc(fields, BOOK_FIELD_SET, 'makeBookDoc');
+  // Stamp the tier-1 fingerprint SET here rather than in each importer. This is
+  // the one line every adopted direct importer already runs through, so the
+  // field cannot be forgotten by a caller that never heard of dedup. Pure
+  // computation — no DB, no network. A caller that supplied its own set keeps it.
+  if (doc.source_fingerprints === undefined) {
+    const fps = sourceFingerprints(doc);
+    if (fps.length > 0) doc.source_fingerprints = fps;
+  }
+  return doc;
 }
 
 /**

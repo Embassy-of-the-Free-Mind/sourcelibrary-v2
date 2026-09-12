@@ -6,7 +6,8 @@
  *
  * SCOPE: pure vector embedding tables only — book_embeddings, artwork_embeddings,
  * gallery_text_embeddings, clip_embeddings. Deletes are recoverable by re-running
- * the embed worker (free Tier).
+ * the embed worker — which is BILLED, so a delete is not costless to undo
+ * (see .claude/docs/embeddings.md).
  *
  * NOT in scope: `page_translations`. That table holds the **translation text
  * itself** (column `translation`, the Gemini Batch API output), not just an

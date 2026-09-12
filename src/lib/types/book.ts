@@ -33,6 +33,7 @@ export interface Book {
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)
+  localized?: import('@/lib/localized').LocalizedBookMap; // per-language title glosses, e.g. { es: { title } } — see src/lib/localized.ts
 
   // Author and publication
   author: string;
@@ -44,6 +45,13 @@ export interface Book {
    */
   editor?: string;
   attribution_note?: string;  // "after" for prints after a designer, "circle of", "workshop of", etc.
+  /**
+   * FK to the canonical `authors` thesaurus (`authors._id`). This is THE author
+   * link — `author_entity_id` below points at the retiring `entities` layer and
+   * both are written during the migration. Prefer this one when resolving who a
+   * book is by; `author` is only what the catalogue said (#2179, #4318).
+   */
+  author_id?: string;
   author_entity_id?: string;  // FK to entities collection (entity._id as string) — canonical author identity (VIAF/Wikidata linked)
   /** Display name for the canonical author (denormalised so the book page can render without a join). */
   author_canonical_name?: string;
@@ -83,6 +91,7 @@ export interface Book {
   pages_translated?: number;  // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_archived?: number;     // CACHED — pages with archived_photo on R2 (excludes failed archives)
+  pages_translated_es?: number; // CACHED — pages with a Spanish edition (translations.es / legacy translation_es); synced by scripts/maintenance/sync-pages-translated-es.mjs
   translation_percent?: number; // Computed at read time from pages_translated/pages_ocr (never stored). Uses pages_ocr as denominator so blank pages don't penalize the percentage.
   created_at?: Date;
   updated_at?: Date;

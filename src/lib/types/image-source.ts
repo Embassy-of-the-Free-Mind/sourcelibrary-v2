@@ -53,7 +53,14 @@ export type ImageSourceProvider =
   | 'eap'            // British Library Endangered Archives Programme
   | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
   | 'tu_darmstadt'   // Technische Universität Darmstadt (ULB)
+  | 'byu'            // Brigham Young University, L. Tom Perry Special Collections
   | 'contentdm'      // OCLC CONTENTdm
+  | 'goettingen'     // Göttingen State and University Library (SUB / GDZ)
+  | 'slub_dresden'   // SLUB Dresden (Saxon State and University Library)
+  | 'b-nice'         // B-NICE / Pustaka Nusantara (Indonesian MSS via Leiden & KB)
+  | 'wikimedia_commons' // Wikimedia Commons (Wikisource Loves Manuscripts etc.)
+  | 'tartu_dspace'   // University of Tartu Library (DSpace)
+  | 'morgan'         // Morgan Library & Museum, New York
   | 'ia'             // Internet Archive (alternate key)
   | 'library'
   | 'user_upload'

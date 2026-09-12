@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getPageImageUrl, getPageSource, type PageImageFields } from '@/lib/page-image-url';
+import { isBrowserRenderableImageUrl } from '@/lib/csp-img-hosts';
 import { getPageSource as getPageSourceJs } from '../../scripts/lib/page-image-url.mjs';
 
 const R2 = 'https://images.sourcelibrary.org';
@@ -28,6 +29,18 @@ const fixtures: Record<string, PageImageFields> = {
     photo: `${R2}/pages/${BOOK}/sp0014-full.jpg`,
     archived_photo: `${R2}/pages/${BOOK}/sp0014-full.jpg`,
     display_photo: `${R2}/pages/${BOOK}/sp0014.jpg`,
+  },
+  // New-era split whose display_photo was never repointed at the half — it is
+  // still a resize of the WHOLE SPREAD. Measured in production 2026-08-29 on
+  // "An encyclopedic outline of masonic… philosophy" p.15, whose reader showed
+  // an introduction spread beside OCR of the title page. The fixture above
+  // assumes display_photo is an `sp…` URL; a large part of the corpus is this
+  // shape instead, so the optimistic fixture hid the bug.
+  newSplitStaleDisplay: {
+    split_from_spread: true,
+    photo: `${R2}/pages/${BOOK}/sp0014-full.jpg`,
+    archived_photo: `${R2}/cropped/${BOOK}/sp0014.jpg`,
+    display_photo: `${R2}/pages/${BOOK}/0015.jpg`,
   },
   // IIIF source, no R2 variant: origin server resizes via /full/{w},/.
   iiif: {
@@ -101,6 +114,26 @@ describe('split-from-spread source identity', () => {
   it('new-era: original → the sp… half', () => {
     expect(getPageImageUrl(fixtures.newSplit, 'original')).toBe(`${R2}/pages/${BOOK}/sp0014-full.jpg`);
   });
+
+  // The reader renders `display`. If that resolves to the spread while the OCR
+  // beside it was read from the half, the two panels describe different pages —
+  // which is what a reader reported on 2026-08-29. `getPageSource` already
+  // returns the half here; the pre-sized-variant tier was overriding it.
+  it('new-era with a STALE display_photo: display must not fall back to the spread', () => {
+    const url = getPageImageUrl(fixtures.newSplitStaleDisplay, 'display')!;
+    expect(url).not.toContain('0015.jpg'); // the spread — the trap
+    expect(url).toContain('sp0014');
+  });
+  it('new-era with a STALE display_photo: thumb stays on the half', () => {
+    const url = getPageImageUrl(fixtures.newSplitStaleDisplay, 'thumb')!;
+    expect(url).not.toContain('0015');
+    expect(url).toContain('sp0014');
+  });
+  it('new-era with a STALE display_photo: source identity is unchanged', () => {
+    // getPageSource was never the problem — it returns the half. The pre-sized
+    // variant tier in resolveSized was overriding it.
+    expect(getPageSource(fixtures.newSplitStaleDisplay)).toBe(`${R2}/pages/${BOOK}/sp0014-full.jpg`);
+  });
 });
 
 describe('IIIF-native resize tier', () => {
@@ -148,5 +181,72 @@ describe('TS and scripts JS twin agree on getPageSource', () => {
     for (const [name, page] of Object.entries(fixtures)) {
       expect(getPageSourceJs(page), name).toBe(getPageSource(page));
     }
+  });
+});
+
+/**
+ * Browser-renderability invariant (2026-08-21).
+ *
+ * `media.getty.edu` was never added to CSP_IMG_HOSTS, so all 2,506 Florentine
+ * Codex pages resolved `image_thumb` to a Getty URL the browser refused —
+ * broken images in the page grid, the cover picker AND the reader, while curl
+ * got a clean 200 from every one of them. A stored URL is only useful if the
+ * browser will load it, so the resolver screens candidates against the same
+ * list the CSP is built from and falls through to a host that works.
+ */
+describe('CSP renderability invariant', () => {
+  const renderable = (url: string) => url.startsWith('/') || isBrowserRenderableImageUrl(url);
+
+  it('every corpus-shaped fixture resolves to a URL the browser may load', () => {
+    // Not a universal law — see the both-lists-blocked case below, where the
+    // only usable URL is one the browser refuses. It IS a law for every page
+    // shape that exists in the corpus, which is what this asserts.
+    for (const [name, page] of Object.entries(fixtures)) {
+      for (const size of ['thumb', 'display', 'hires'] as const) {
+        const url = getPageImageUrl(page, size);
+        if (url) expect(renderable(url), `${name}/${size}: ${url}`).toBe(true);
+      }
+    }
+  });
+
+  it('a stored thumb on a CSP-blocked host falls through to the R2 variant', () => {
+    // The exact Florentine Codex shape: provider thumb, R2 fallbacks alongside.
+    const blockedHost: PageImageFields = {
+      image_thumb: 'https://blocked.example.org/iiif/x/full/150,/0/default.jpg',
+      photo: 'https://blocked.example.org/iiif/x/full/1200,/0/default.jpg',
+      thumbnail_blob: `${R2}/pages/${BOOK}/0001-thumb.jpg`,
+      archived_photo: `${R2}/archived/${BOOK}/1.jpg`,
+    };
+    expect(getPageImageUrl(blockedHost, 'thumb')).toBe(`${R2}/pages/${BOOK}/0001-thumb.jpg`);
+  });
+
+  it('CSP-blocked but proxy-fetchable → the same-origin proxy', () => {
+    // images.metmuseum.org is in the /api/image allowlist but not in img-src,
+    // so the proxy is the one route that renders.
+    const proxyable: PageImageFields = {
+      image_thumb: 'https://images.metmuseum.org/CRDImages/x/thumb.jpg',
+      photo: 'https://images.metmuseum.org/CRDImages/x/original.jpg',
+    };
+    for (const size of ['thumb', 'display', 'hires'] as const) {
+      expect(getPageImageUrl(proxyable, size), size).toMatch(/^\/api\/image\?/);
+    }
+  });
+
+  it('blocked by BOTH lists → keeps the bounded stored URL, never null', () => {
+    // Nothing can render this in a browser, but a server-side consumer
+    // (pageExportImageUrl → fetch) still can, so it must not be discarded.
+    const nowhere: PageImageFields = {
+      image_thumb: 'https://blocked.example.org/iiif/x/full/150,/0/default.jpg',
+      display_photo: 'https://blocked.example.org/iiif/x/full/1200,/0/default.jpg',
+      photo: 'https://blocked.example.org/iiif/x/original.jpg',
+    };
+    expect(getPageImageUrl(nowhere, 'thumb')).toBe('https://blocked.example.org/iiif/x/full/150,/0/default.jpg');
+    expect(getPageImageUrl(nowhere, 'display')).toBe('https://blocked.example.org/iiif/x/full/1200,/0/default.jpg');
+  });
+
+  it('an allowlisted IIIF host still gets the free origin-side resize', () => {
+    // digi.vatlib.it is in CSP_IMG_HOSTS — must NOT be pushed onto our proxy.
+    expect(getPageImageUrl(fixtures.iiif, 'thumb')).toContain('digi.vatlib.it');
+    expect(getPageImageUrl(fixtures.iiif, 'thumb')).not.toContain('/api/image');
   });
 });

@@ -11,6 +11,8 @@ import { posts as blogPostList } from '@/app/blog/page';
 //   1 = collections + libraries + languages + works
 //   2+ = books (up to 5000 per chunk)
 //   1000+ = indexable reader pages (seo_indexable; up to 5000 per chunk)
+//   2000+ = gallery images (public, gallery_quality >= 0.7; with <image:loc>)
+//   3000+ = artwork pages (books with resource_type; with <image:loc>)
 
 const BASE_URL = 'https://sourcelibrary.org';
 const BOOKS_PER_CHUNK = 5000;
@@ -19,6 +21,33 @@ const PAGES_PER_CHUNK = 5000;
 // the dynamically-counted book chunks (2..N). Books realistically span a
 // handful of chunks; 1000 is a safe gap. See issue #2688.
 const PAGE_CHUNK_OFFSET = 1000;
+// Gallery-image and artwork chunks (issue #4357, Phase 1). Gallery images are
+// ~150K rows (30 chunks), so the artwork offset leaves the same 1000-chunk
+// headroom the page offset does. All offsets must match sitemap-index/route.ts.
+const GALLERY_CHUNK_OFFSET = 2000;
+const GALLERY_PER_CHUNK = 5000;
+const ARTWORK_CHUNK_OFFSET = 3000;
+const ARTWORKS_PER_CHUNK = 5000;
+
+// The public gallery serves gallery_quality >= 0.7 (see /api/gallery
+// minQuality default); the sitemap must list the same set its landing pages
+// render. book_visible/book_hidden are denormalized onto gallery_images rows;
+// $ne keeps rows where the field is missing (legacy rows predate it).
+const GALLERY_SITEMAP_FILTER = {
+  gallery_quality: { $gte: 0.7 },
+  book_hidden: { $ne: true },
+  book_visible: { $ne: false },
+  image_url: { $exists: true, $nin: [null, ''] },
+};
+
+// Artwork landing pages (/artwork/[slug]) — books rows with a resource_type,
+// excluding textual books; mirrors getArtwork() in src/app/artwork/[slug]/page.tsx.
+const ARTWORK_SITEMAP_FILTER = {
+  resource_type: { $exists: true, $ne: null },
+  content_type: { $ne: 'book' },
+  visible: true,
+  slug: { $exists: true, $nin: [null, ''] },
+};
 
 // Helper: run a DB query with independent error handling
 async function safeQuery<T>(
@@ -62,13 +91,36 @@ export async function generateSitemaps() {
   }, 0);
   const pageChunks = Math.ceil(pageCount / PAGES_PER_CHUNK);
 
-  // Chunk 0 = static, 1 = dynamic non-books, 2+ = books, 1000+ = reader pages
+  const galleryCount = await safeQuery('gallery-image-count', async (db) => {
+    return db.collection('gallery_images').countDocuments(
+      GALLERY_SITEMAP_FILTER,
+      { maxTimeMS: 30000 }
+    );
+  }, 0);
+  const galleryChunks = Math.ceil(galleryCount / GALLERY_PER_CHUNK);
+
+  const artworkCount = await safeQuery('artwork-count', async (db) => {
+    return db.collection('books').countDocuments(
+      ARTWORK_SITEMAP_FILTER,
+      { maxTimeMS: 30000 }
+    );
+  }, 0);
+  const artworkChunks = Math.ceil(artworkCount / ARTWORKS_PER_CHUNK);
+
+  // Chunk 0 = static, 1 = dynamic non-books, 2+ = books, 1000+ = reader pages,
+  // 2000+ = gallery images, 3000+ = artworks
   const ids = [{ id: 0 }, { id: 1 }];
   for (let i = 0; i < bookChunks; i++) {
     ids.push({ id: 2 + i });
   }
   for (let i = 0; i < pageChunks; i++) {
     ids.push({ id: PAGE_CHUNK_OFFSET + i });
+  }
+  for (let i = 0; i < galleryChunks; i++) {
+    ids.push({ id: GALLERY_CHUNK_OFFSET + i });
+  }
+  for (let i = 0; i < artworkChunks; i++) {
+    ids.push({ id: ARTWORK_CHUNK_OFFSET + i });
   }
 
   return ids;
@@ -108,6 +160,15 @@ export default async function sitemap({
       getWorks(),
     ]);
     return [...collectionPages, ...libraryPages, ...languagePages, ...workPages];
+  }
+
+  // Offset ranges — highest first, since each test is only a lower bound.
+  if (Number.isFinite(chunkId) && chunkId >= ARTWORK_CHUNK_OFFSET) {
+    return getArtworks(chunkId - ARTWORK_CHUNK_OFFSET);
+  }
+
+  if (Number.isFinite(chunkId) && chunkId >= GALLERY_CHUNK_OFFSET) {
+    return getGalleryImages(chunkId - GALLERY_CHUNK_OFFSET);
   }
 
   // Chunk 1000+: indexable reader pages (paginated)
@@ -260,6 +321,82 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
           lastModified,
           changeFrequency: 'monthly' as const,
           priority: 0.7,
+        };
+      });
+  }, [] as MetadataRoute.Sitemap);
+}
+
+// Gallery-image landing pages with their plate as an <image:loc> entry, so
+// Google Images can index the ~150K public illustrations (issue #4357 Phase 1).
+// The image files live on images.sourcelibrary.org (crawlable: no robots.txt,
+// Googlebot-Image fetches return 200) — cross-host image URLs are permitted by
+// the sitemap protocol.
+async function getGalleryImages(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
+  return safeQuery('gallery-images', async (db) => {
+    const images = await db.collection('gallery_images').find(
+      GALLERY_SITEMAP_FILTER,
+      {
+        projection: { _id: 0, id: 1, image_url: 1, updated_at: 1 },
+        sort: { _id: 1 },
+        skip: chunkIndex * GALLERY_PER_CHUNK,
+        limit: GALLERY_PER_CHUNK,
+        maxTimeMS: 60000,
+      }
+    ).toArray();
+
+    return images
+      .filter((img) => typeof img.id === 'string' && img.id !== '')
+      .map((img) => {
+        let lastModified: Date;
+        try {
+          lastModified = img.updated_at ? new Date(img.updated_at) : new Date();
+          if (isNaN(lastModified.getTime())) lastModified = new Date();
+        } catch {
+          lastModified = new Date();
+        }
+        return {
+          url: `${BASE_URL}/gallery/image/${encodeURIComponent(img.id)}`,
+          lastModified,
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+          images: [img.image_url as string],
+        };
+      });
+  }, [] as MetadataRoute.Sitemap);
+}
+
+// Artwork landing pages (/artwork/[slug]) with their primary image (#4357).
+async function getArtworks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
+  return safeQuery('artworks', async (db) => {
+    const artworks = await db.collection('books').find(
+      ARTWORK_SITEMAP_FILTER,
+      {
+        projection: { _id: 0, slug: 1, thumbnail_blob: 1, thumbnail: 1, updated_at: 1 },
+        sort: { _id: 1 },
+        skip: chunkIndex * ARTWORKS_PER_CHUNK,
+        limit: ARTWORKS_PER_CHUNK,
+        maxTimeMS: 60000,
+      }
+    ).toArray();
+
+    return artworks
+      .filter((art) => typeof art.slug === 'string' && art.slug !== '')
+      .map((art) => {
+        let lastModified: Date;
+        try {
+          lastModified = art.updated_at ? new Date(art.updated_at) : new Date();
+          if (isNaN(lastModified.getTime())) lastModified = new Date();
+        } catch {
+          lastModified = new Date();
+        }
+        // Same image preference as the artwork page's own openGraph block.
+        const image = art.thumbnail_blob || art.thumbnail;
+        return {
+          url: `${BASE_URL}/artwork/${encodeURIComponent(art.slug)}`,
+          lastModified,
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+          ...(typeof image === 'string' && image ? { images: [image] } : {}),
         };
       });
   }, [] as MetadataRoute.Sitemap);

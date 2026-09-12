@@ -22,7 +22,8 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync } from 'node:fs';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const MANIFEST_PATH = '/tmp/wuzhen-manifest.json';
@@ -83,7 +84,7 @@ async function main() {
   const slug = await uniqueSlug(db, slugify('daoyan-neiwai-mijue-quanshu-wuzhen-pian'));
   const now = new Date();
 
-  const bookDoc = makeBookDoc({
+  const acquired = await insertBookIfNew(db, {
     _id: bookId, id: bookIdStr, slug,
     title, display_title, author,
     language: 'Chinese', original_language: 'Chinese',
@@ -109,8 +110,9 @@ async function main() {
     normalized_title: slugify(display_title).replace(/-/g, ' '),
     normalized_author: 'boduan zhang',
     created_at: now, updated_at: now,
-  });
-  await db.collection('books').insertOne(bookDoc);
+  }, { importer: 'script:harvard-wuzhen-direct', sourceIdentifier: 'wuzhen-pian', sourceUrl: CANONICAL_MANIFEST });
+  // The gate declined this candidate; the reason is a row in `dedup_skips`.
+  if (!acquired.inserted) { console.log(`SKIP — ${acquired.message}`); await client.close(); return; }
   console.log(`Inserted book ${bookIdStr} slug=${slug}`);
 
   const CHUNK = 500;

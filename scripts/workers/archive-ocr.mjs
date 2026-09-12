@@ -15,7 +15,7 @@ import { MongoClient } from 'mongodb';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
-import { upgradeToFullRes } from '../lib/iiif-utils.mjs';
+import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 
 const MAX_PAGES = 10_000;
@@ -107,7 +107,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 // Many archives (e-rara, some Bodleian endpoints, Wellcome, Vatican) reject
 // requests without a User-Agent — Node's default UA gets blocked. Match the
 // UA the IA bulk archiver uses so per-provider policies are consistent.
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 // Abort only when a connection goes QUIET this long — never merely because a file
 // is big. Overridable per-run; raising it does not slow healthy fetches.
@@ -176,25 +176,25 @@ async function archivePage(page, db) {
   const pagesCol = page._collection || 'pages';
 
   try {
-    // Try full-res first, fall back to original URL if it fails (some sources reject /full/full/)
-    let result;
-    try {
-      result = await downloadImage(sourceUrl);
-    } catch (err) {
-      if (sourceUrl !== originalUrl) {
-        result = await downloadImage(originalUrl);
-      } else {
+    // Try full-res first, fall back to original URL if it fails (some sources reject /full/full/).
+    // This worker's downloadImage returns { buffer }, so it is adapted rather than
+    // replaced — fetchPageMaster owns only the cap-defeating route, never the
+    // provider-tuned retry policy (#4406).
+    const download = async (u) => {
+      try {
+        return (await downloadImage(u)).buffer;
+      } catch (err) {
+        if (u !== originalUrl) return (await downloadImage(originalUrl)).buffer;
         throw err;
       }
-    }
-    const { buffer } = result;
+    };
+    const master = await fetchPageMaster(sourceUrl, { download });
+    const buffer = master.buffer;
 
     // Upload full-res + generate and upload display (1200px) + thumbnail (150px)
     const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
 
-    const dimFields = {};
-    if (urls.width) dimFields.image_width = urls.width;
-    if (urls.height) dimFields.image_height = urls.height;
+    const dimFields = dimensionFields({ width: urls.width, height: urls.height }, master);
 
     await db.collection(pagesCol).updateOne(
       { _id: page._id },

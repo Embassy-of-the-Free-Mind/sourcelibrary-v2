@@ -5,12 +5,13 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
-import { resolveQuoteText, OCR_ORIGINAL_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
-import { withApiAuth } from '@/lib/api-auth';
+import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
+import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
 import { languageApparatusFields } from '@/lib/edition-language';
 
@@ -28,14 +29,30 @@ interface QuoteResponse {
     translation?: string;
     original?: string;
     /**
-     * Which field holds the quotable text: `translation` normally,
-     * `ocr_original` where the leaf is already English and the transcription IS
-     * the citable text. Always present, so a caller can branch instead of
-     * inferring from which fields came back.
+     * Which field holds the quotable text, and whose words they are:
+     * `translation` normally; `ocr_original` where the leaf is already English and
+     * the transcription IS the citable text; `source_column` where a bilingual
+     * leaf's own column is already in the requested language, so the words belong
+     * to the historical translator and not to us. Always present, so a caller can
+     * branch instead of inferring from which fields came back.
      */
     text_source: QuoteTextSource;
-    /** Set only when text_source is `ocr_original` — see OCR_ORIGINAL_NOTE. */
+    /** Set when text_source is `ocr_original` or `source_column` — see those notes. */
     transcription_note?: string;
+    /**
+     * The page carries marginal text (#4362) — copy-specific by nature: it
+     * exists only in the one physical copy that was scanned. Set together
+     * with `marginalia_note`, which says how to cite it.
+     */
+    contains_marginalia?: boolean;
+    marginalia_note?: string;
+    /**
+     * ISO code of the language the quoted text is IN — always present, so a
+     * caller branches on it rather than assuming English (#4095).
+     */
+    lang: string;
+    /** Set only when `lang` differs from the `lang` parameter that was asked for. */
+    lang_note?: string;
     /**
      * Romanization of the original for non-Latin scripts (#3828) — AI-derived
      * apparatus, never a transcription, hence `romanized` and not
@@ -78,14 +95,32 @@ interface QuoteResponse {
 }
 
 // GET /api/books/[id]/quote?page=N - Get a quote from a specific page
-export const GET = withApiAuth(async (request: NextRequest, context: RouteContext) => {
+export const GET = withApiAuth(async (request: NextRequest, context: RouteContext, identity: ApiIdentity) => {
   try {
+    // A quote serves one page of text, so it spends the same 24h page budget
+    // as /text — the MCP docs always claimed this; the route never did it
+    // until #4366. The success response sets X-Pages-Served so the wrapper
+    // logs the page into the pool.
+    const budget = await checkPageBudget({ identity, request });
+    if (!budget.allowed) {
+      return NextResponse.json(bulkBudgetExceededBody(budget), {
+        status: 429,
+        headers: { 'Retry-After': '3600' },
+      });
+    }
+
     const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const pageNumber = parseInt(searchParams.get('page') || '1');
     const includeOriginal = searchParams.get('include_original') !== 'false';
     const includeContext = searchParams.get('include_context') === 'true';
     const includeImage = searchParams.get('include_image') === 'true';
+    // Which EDITION of the page to quote (#4095). Falls back to English when
+    // the book has no such edition — and SAYS so, in `quote.lang`. A quote is a
+    // claim about words; a silent substitution makes the caller assert
+    // something it never checked.
+    const langParam = (searchParams.get('lang') || '').trim().toLowerCase();
+    const requestedLang = /^[a-z]{2,3}$/.test(langParam) ? langParam : 'en';
 
     if (isNaN(pageNumber) || pageNumber < 1) {
       return NextResponse.json({ error: 'Invalid page number' }, { status: 400 });
@@ -136,7 +171,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
-    const quotable = resolveQuoteText(page, book.id);
+    const quotable = resolveQuoteText(page, book.id, requestedLang);
 
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
@@ -168,9 +203,26 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         // envelope) describe the page — they are never verbatim source text
         // and must not be served as quotable content (PR #2232). Stripped in
         // resolveQuoteText, for both text sources.
-        ...(quotable.source === 'translation' ? { translation: quotable.text } : {}),
+        // `source_column` rides in `translation` too — a Spanish reader asked for
+        // Spanish and got Spanish — but `text_source` and the note below say who
+        // wrote it, because the field alone cannot tell Ximenez's 1701 Spanish
+        // from a machine pivot of our English.
+        ...(quotable.source === 'translation' || quotable.source === 'source_column'
+          ? { translation: quotable.text }
+          : {}),
         text_source: quotable.source,
+        lang: quotable.lang,
+        ...(requestedLang !== quotable.lang
+          ? { lang_note: `This page has no text in "${requestedLang}", so the English translation was served (lang: "${quotable.lang}"). Do not present it as the "${requestedLang}" edition.` }
+          : {}),
         ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
+        ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
+        // Checked on the served text AND the OCR original: a translation often
+        // renders the note without the mark-up, so the transcription is the
+        // authority on whether the leaf carries one (#4362).
+        ...(containsMarginalia(quotable.text) || containsMarginalia(page.ocr?.data || '')
+          ? { contains_marginalia: true, marginalia_note: MARGINALIA_NOTE }
+          : {}),
         page: pageNumber,
         book_id: book.id,
         book_title: book.title,
@@ -180,7 +232,10 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         language: book.language,
         ...languageApparatusFields(book),
       },
-      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition),
+      // The citation links follow the edition actually served, never the one
+      // asked for — a `/es` URL for a book we fell back on would 307 straight
+      // back to English.
+      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, quotable.lang),
       license: CONTENT_LICENSE,
     };
 
@@ -221,9 +276,12 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       // sentence running across the leaf break can be quoted whole — serving it
       // only for translated pages would leave that unreachable exactly where the
       // fallback matters (#3939).
+      // Context exists so a sentence running across a leaf break can be quoted
+      // whole — it must therefore be in the SAME language as the quote, or the
+      // two halves cannot be joined.
       const neighbour = (p: unknown) => {
         const pg = p as Page | null;
-        return pg ? resolveQuoteText(pg, resolvedBookId)?.text : undefined;
+        return pg ? resolveQuoteText(pg, resolvedBookId, quotable.lang)?.text : undefined;
       };
       response.context = {
         previous_page: neighbour(prevPage),
@@ -231,7 +289,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
       };
     }
 
-    return NextResponse.json(response);
+    return NextResponse.json(response, { headers: { 'X-Pages-Served': '1' } });
   } catch (error) {
     console.error('Error getting quote:', error);
     return NextResponse.json({ error: 'Failed to get quote' }, { status: 500 });

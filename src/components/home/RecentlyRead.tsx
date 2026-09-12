@@ -6,6 +6,17 @@ import { ArrowRight } from 'lucide-react';
 import { useStableSession } from '@/hooks/useStableSession';
 import { readingHistory } from '@/lib/api-client';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
+import { localePath, type Locale } from '@/lib/locale-path';
+
+// Chrome strings. The whole band used to be hard-coded English, so the Spanish
+// homepage carried an English heading, subtitle and "See all" over Spanish
+// cards — the thing rule 4 of .claude/docs/i18n.md exists to prevent. Labels
+// only; the hrefs go through `localePath`, which prefixes exactly the routes
+// that have a Spanish twin.
+const STRINGS: Record<Locale, { heading: string; subtitle: string; seeAll: string }> = {
+  en: { heading: 'Recently looked at', subtitle: 'Pick up where you left off.', seeAll: 'See all' },
+  es: { heading: 'Vistos recientemente', subtitle: 'Retoma donde lo dejaste.', seeAll: 'Ver todo' },
+};
 
 /**
  * "Recently looked at" — a personalized slider drawn from the signed-in reader's
@@ -18,7 +29,7 @@ import BookSlider, { type MiniBook } from '@/components/BookSlider';
  * Renders nothing for anonymous users or when there's no history yet, so the
  * homepage is unchanged for logged-out visitors.
  */
-export default function RecentlyRead() {
+export default function RecentlyRead({ lang = 'en' }: { lang?: Locale } = {}) {
   const { data: session, status } = useStableSession();
   const [books, setBooks] = useState<MiniBook[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -51,7 +62,7 @@ export default function RecentlyRead() {
   // Hidden entirely for anonymous users and until we have something to show.
   if (!session || !loaded || books.length === 0) return null;
 
-  return <RecentlyReadSlider books={books} />;
+  return <RecentlyReadSlider books={books} lang={lang} />;
 }
 
 /**
@@ -60,25 +71,26 @@ export default function RecentlyRead() {
  * without a live session. Uses the shared BookSlider so the cards and slider
  * mechanics match the rest of the site.
  */
-export function RecentlyReadSlider({ books }: { books: MiniBook[] }) {
+export function RecentlyReadSlider({ books, lang = 'en' }: { books: MiniBook[]; lang?: Locale }) {
+  const t = STRINGS[lang];
   return (
     <section className="bg-[#f3ede6] pb-16 md:pb-24 -mt-4">
       <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
         <div className="flex items-baseline justify-between mb-6">
           <div>
-            <h2 className="text-2xl md:text-3xl text-primary font-display">Recently looked at</h2>
-            <p className="text-muted mt-1 text-sm">Pick up where you left off.</p>
+            <h2 className="text-2xl md:text-3xl text-primary font-display">{t.heading}</h2>
+            <p className="text-muted mt-1 text-sm">{t.subtitle}</p>
           </div>
           <Link
-            href="/reading-history"
+            href={localePath('/reading-history', lang)}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-rust hover:text-accent-rust/80 transition-colors"
           >
-            See all
+            {t.seeAll}
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <BookSlider books={books} />
+        <BookSlider books={books} lang={lang} />
       </div>
     </section>
   );

@@ -13,6 +13,7 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { getEffectiveByline } from '@/lib/byline';
 import HighlightedText from './HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
+import { useLocalePath, canonicalPath } from '@/lib/i18n';
 
 const TYPE_ICONS: Record<string, typeof Lightbulb> = {
   concept: Lightbulb,
@@ -96,8 +97,16 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Extract tenant prefix from pathname
-  const pathParts = pathname.split('/').filter(Boolean);
+  // Segment 0 can be a TENANT slug or a LOCALE prefix, and the two need
+  // OPPOSITE treatment: a tenant prefix is carried verbatim onto every link the
+  // component writes, while a locale prefix belongs only on the paths that
+  // actually have a twin. Deriving one prefix for both made `/es` look like a
+  // tenant, so the Spanish homepage's typeahead emitted `/es/gallery/image/…`
+  // — a 404, since the gallery has no Spanish route (measured: `/gallery` 200,
+  // `/es/gallery` 404). Strip the locale first, then re-apply it per link via
+  // the registry (i18n.md rule 5, "prefer the registry to a per-item ternary").
+  const lp = useLocalePath();
+  const pathParts = canonicalPath(pathname).split('/').filter(Boolean);
   const tenantPrefix = pathParts[0] && pathParts[0] !== 'search' ? `/${pathParts[0]}` : '';
 
   // Preload vocabulary on first focus
@@ -206,25 +215,27 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
     if (!results || !hasResults) return [];
     const items: NavigableItem[] = [];
     for (const book of results.books.results) {
-      items.push({ type: 'book', href: bookUrl(book), id: `book-${book.id}` });
+      items.push({ type: 'book', href: lp(bookUrl(book)), id: `book-${book.id}` });
     }
     for (let i = 0; i < results.index.results.length; i++) {
       const item = results.index.results[i];
       const bookPath = item.book_slug || item.book_id;
-      const href = item.pages?.[0]
+      const href = lp(item.pages?.[0]
         ? `${tenantPrefix}/book/${bookPath}/guide?page=${item.pages[0]}`
-        : `${tenantPrefix}/book/${bookPath}`;
+        : `${tenantPrefix}/book/${bookPath}`);
       items.push({ type: 'index', href, id: `index-${item.book_id}-${item.type}-${i}` });
     }
     for (const sem of semanticResults) {
-      items.push({ type: 'book', href: `${tenantPrefix}/book/${sem.book_id}`, id: `semantic-${sem.book_id}` });
+      items.push({ type: 'book', href: lp(`${tenantPrefix}/book/${sem.book_id}`), id: `semantic-${sem.book_id}` });
     }
     for (const img of galleryResults) {
-      items.push({ type: 'gallery', href: `${tenantPrefix}/gallery/image/${img.id}`, id: `gallery-${img.id}` });
+      // The gallery has no localized twin, so lp() leaves this alone — which is
+      // the point: an English gallery page beats a prefixed 404.
+      items.push({ type: 'gallery', href: lp(`${tenantPrefix}/gallery/image/${img.id}`), id: `gallery-${img.id}` });
     }
-    items.push({ type: 'full-search', href: `${tenantPrefix}/search?q=${encodeURIComponent(query)}`, id: 'full-search' });
+    items.push({ type: 'full-search', href: lp(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`), id: 'full-search' });
     return items;
-  }, [results, hasResults, query, galleryResults, semanticResults, tenantPrefix]);
+  }, [results, hasResults, query, galleryResults, semanticResults, tenantPrefix, lp]);
 
   // Reset active index when results change
   useEffect(() => {
@@ -258,7 +269,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
         // No item selected — go to full search page
         e.preventDefault();
         setIsOpen(false);
-        router.push(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`);
+        router.push(lp(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`));
       }
       return;
     }
@@ -350,7 +361,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                 </p>
               )}
               <Link
-                href={`/search?q=${encodeURIComponent(query)}`}
+                href={lp(`/search?q=${encodeURIComponent(query)}`)}
                 onClick={() => setIsOpen(false)}
                 className="inline-flex items-center gap-2 mt-3 text-sm text-accent-rust hover:text-accent-rust"
               >
@@ -371,7 +382,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                       </span>
                       {results.books.hasMore && (
                         <Link
-                          href={`/search?q=${encodeURIComponent(query)}`}
+                          href={lp(`/search?q=${encodeURIComponent(query)}`)}
                           className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                           onClick={() => setIsOpen(false)}
                         >
@@ -446,7 +457,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                       </span>
                       {results.index.hasMore && (
                         <Link
-                          href={`/search?q=${encodeURIComponent(query)}&mode=index`}
+                          href={lp(`/search?q=${encodeURIComponent(query)}&mode=index`)}
                           className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                           onClick={() => setIsOpen(false)}
                         >
@@ -620,7 +631,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                 return (
                   <Link
                     id={`search-item-${fullSearchIndex}`}
-                    href={`/search?q=${encodeURIComponent(query)}`}
+                    href={lp(`/search?q=${encodeURIComponent(query)}`)}
                     onClick={() => setIsOpen(false)}
                     role="option"
                     aria-selected={activeIndex === fullSearchIndex}

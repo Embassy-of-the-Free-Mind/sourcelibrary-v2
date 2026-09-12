@@ -18,7 +18,15 @@
  * construction, and nothing in CI reported it. This test is that report.
  */
 import { describe, it, expect } from 'vitest';
-import { DEFAULT_PROMPTS } from '@/lib/types/prompts/defaults';
+import {
+  DEFAULT_PROMPTS,
+  PROMPT_PAGE_TYPES,
+  LEGACY_PAGE_TYPES,
+  VALID_PAGE_TYPES,
+  SKIP_TRANSLATION_PAGE_TYPES,
+  HIDDEN_PAGE_TYPES,
+  extractPageType,
+} from '@/lib/types/prompts/defaults';
 import { DESCRIPTION_ONLY_PAGE_TYPES } from '@/components/reader/NotesRenderer';
 
 const DEFAULT_OCR_PROMPT = DEFAULT_PROMPTS.ocr;
@@ -49,6 +57,67 @@ describe('page-type vocabulary', () => {
     for (const t of ['cover', 'musical-score', 'table']) {
       expect(offered.has(t), `"${t}" must stay in the OCR prompt vocabulary`).toBe(true);
     }
+  });
+
+  /**
+   * #4455 was the inverse of the bug above, one layer down: the prompt was
+   * widened, `VALID_PAGE_TYPES` — which sits between the prompt and the database
+   * — was not, and `extractPageType` returned undefined for three values the
+   * model had been explicitly asked to produce. Offered, rendered, dropped in
+   * the middle.
+   *
+   * The prompt's `One of:` line is now interpolated from `PROMPT_PAGE_TYPES`, so
+   * these first two assertions cannot fail by editing the prompt text — they
+   * fail if someone hard-codes the list back into the prompt string, which is
+   * exactly how it drifted the first two times.
+   */
+  it('the prompt enumerates PROMPT_PAGE_TYPES and nothing else', () => {
+    expect(promptPageTypes()).toEqual([...PROMPT_PAGE_TYPES]);
+  });
+
+  it('every type the prompt offers is accepted by the parser', () => {
+    const dropped = promptPageTypes().filter(t => !VALID_PAGE_TYPES.has(t));
+    expect(dropped).toEqual([]);
+  });
+
+  it('every type the prompt offers round-trips through extractPageType', () => {
+    // The set membership above is necessary but not sufficient — this is the
+    // path the pipeline actually takes from model answer to `page_type`.
+    for (const t of PROMPT_PAGE_TYPES) {
+      expect(extractPageType(`<page-type>${t}</page-type>`), t).toBe(t);
+    }
+  });
+
+  it('every type the reader special-cases round-trips too', () => {
+    // DESCRIPTION_ONLY_PAGE_TYPES reachability, end to end: the prompt can ask
+    // for it AND the parser will store it.
+    for (const t of DESCRIPTION_ONLY_PAGE_TYPES) {
+      expect(extractPageType(`<page-type>${t}</page-type>`), t).toBe(t);
+    }
+  });
+
+  it('the accepted set is exactly the offered set plus the declared legacy ones', () => {
+    // Pins that VALID_PAGE_TYPES stays *derived*. A hand-added member — the
+    // #4455 shape — shows up here as an extra.
+    expect([...VALID_PAGE_TYPES].sort())
+      .toEqual([...PROMPT_PAGE_TYPES, ...LEGACY_PAGE_TYPES].sort());
+  });
+
+  it('every page type the pipeline BRANCHES on is a declared one', () => {
+    // The other half of the #4455 audit. `SKIP_TRANSLATION_PAGE_TYPES` named
+    // `digitizer-notice`, which appeared in neither the prompt nor the accepted
+    // set — so it read as a typo when it is in fact written by the digitizer
+    // detection path (321 pages). Any name here that isn't declared is either a
+    // dead branch or an undeclared writer; both are worth failing over.
+    const declared = new Set([...PROMPT_PAGE_TYPES, ...LEGACY_PAGE_TYPES]);
+    const undeclared = [...SKIP_TRANSLATION_PAGE_TYPES, ...HIDDEN_PAGE_TYPES]
+      .filter(t => !declared.has(t));
+    expect(undeclared).toEqual([]);
+  });
+
+  it('no legacy type is also an offered type', () => {
+    const overlap = LEGACY_PAGE_TYPES.filter(t => (PROMPT_PAGE_TYPES as readonly string[]).includes(t));
+    expect(overlap).toEqual([]);
   });
 
   it('gives the model guidance for each newly added type, not just the bare word', () => {

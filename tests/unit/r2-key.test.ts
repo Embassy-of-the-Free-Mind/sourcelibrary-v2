@@ -126,6 +126,29 @@ describe('isBookScopedUrl (read-side audit helper)', () => {
     expect(isBookScopedUrl(`${base}/archived/69b220f356715b0e32473bd0/31.jpg`, BOOK)).toBe(false);
   });
 
+  // #4376: `cropped/` and `uploads/` are book-scoped conventions too, and until
+  // this helper judged them, a cover reading `cropped/<another book's id>/…`
+  // passed the standing audit while a visible book showed the wrong title page.
+  it('judges the cropped/ and uploads/ prefixes', () => {
+    const other = '69a02781bd4078a454714f6f';
+    expect(isBookScopedUrl(`${base}/cropped/${BOOK}/69a02a0c75873c3b8b8a8e6e.jpg`, BOOK)).toBe(true);
+    expect(isBookScopedUrl(`${base}/uploads/${BOOK}/0179-original.jpg`, BOOK)).toBe(true);
+    expect(isBookScopedUrl(`${base}/cropped/${other}/69a02a0c75873c3b8b8a8e6e.jpg`, BOOK)).toBe(false);
+    expect(isBookScopedUrl(`${base}/uploads/${other}/0179-original.jpg`, BOOK)).toBe(false);
+    expect(isBookScopedUrl(`${base}/cropped/undefined/31.jpg`, BOOK)).toBe(false);
+    // The exact pair from #4376 — the shipped cover and its repair.
+    const f6d = '69a02781bd4078a454714f6d';
+    expect(isBookScopedUrl(`${base}/cropped/${other}/69a02a0c75873c3b8b8a8e6e.jpg`, f6d)).toBe(false);
+    expect(isBookScopedUrl(`${base}/cropped/${f6d}/6975a093efc24c700962bbc7.jpg`, f6d)).toBe(true);
+  });
+
+  it('still has no opinion on prefixes that are not book-scoped by design', () => {
+    // Galleries, artwork and manuscripts are keyed by their own ids, not a book's.
+    expect(isBookScopedUrl(`${base}/gallery/some-collection/img-1.jpg`, BOOK)).toBe(true);
+    expect(isBookScopedUrl(`${base}/artwork/6970abc.../plate-3.jpg`, BOOK)).toBe(true);
+    expect(isBookScopedUrl(`${base}/manuscripts/xyz/1.jpg`, BOOK)).toBe(true);
+  });
+
   it('ignores URLs it has no opinion about', () => {
     // External sources (IA, IIIF) are not book-scoped and must not be flagged.
     expect(isBookScopedUrl('https://archive.org/download/foo/page/n30/full/pct:50/0/default.jpg', BOOK)).toBe(true);
@@ -142,6 +165,10 @@ describe('.ts / .mjs twin parity', () => {
     'archived//31.jpg',
     'archived/undefinedbook123/31.jpg',
     `pages/${BOOK}/0031-thumb.jpg`,
+    `cropped/${BOOK}/69a02a0c75873c3b8b8a8e6e.jpg`,
+    'cropped/69a02781bd4078a454714f6f/69a02a0c75873c3b8b8a8e6e.jpg',
+    `uploads/${BOOK}/0179-original.jpg`,
+    'gallery/some-collection/img-1.jpg',
   ];
 
   it('validateR2Key agrees on every case', () => {

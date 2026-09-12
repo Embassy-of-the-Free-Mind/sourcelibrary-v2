@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef, Suspense } from 'react';
+import { useLocale } from '@/lib/i18n';
+import { READER_STRINGS } from '@/lib/book-i18n';
 import { useParams, usePathname } from 'next/navigation';
 import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import VersionBanner from '@/components/ui/VersionBanner';
@@ -9,6 +11,10 @@ import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
 import { getTranslation } from '@/lib/page-translations';
 import { pages as pagesApi, readingHistory } from '@/lib/api-client';
+import Link from 'next/link';
+import { localeHref, type Locale } from '@/lib/locale-path';
+
+type ReadingLanguage = Locale;
 
 interface PageEditorClientProps {
   initialBook: Book;
@@ -57,19 +63,33 @@ export default function PageEditorClient({
   const [pageList] = useState<Page[]>(initialPageList);
   const [currentPageId, setCurrentPageId] = useState<string>(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
-  // Reading language: 'en' (default) or 'es' (Spanish edition, when available).
-  const [lang, setLang] = useState<'en' | 'es'>('en');
   const params = useParams<{ tenant: string }>();
   const pathname = usePathname();
+  // Reading language IS the URL (#4112): /book/… is English, /es/book/… is
+  // Spanish. No stored preference, no client state — the same value the rest of
+  // the page's chrome is rendered from, so the address bar can never disagree
+  // with what the reader is looking at. The EN/ES control below is a LINK
+  // between the two URLs, not a view toggle.
+  const lang: ReadingLanguage = useLocale();
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
   const isOnEmbedRoute = pathname?.startsWith('/embed/');
-  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
+  // On the Spanish twin (/es/book/…) every URL this component writes keeps the
+  // /es prefix, so page flips never drop the reader out of the Spanish site (#4082).
+  const isOnEsRoute = pathname === '/es' || (pathname?.startsWith('/es/') ?? false);
+  const rs = READER_STRINGS[lang];
+  const tenantPrefix = isOnTenantSubdomain ? '' : isOnEsRoute ? '/es' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
   // Every reader URL this component writes uses the book's slug — the same
   // human-readable segment the book page uses (/book/a-sacred-repository-…),
   // never the raw ObjectId. The route resolves either (findBookByIdOrSlug) and
   // the canonical <link> was already slug-based, but the address bar is what
   // readers copy and share, so it has to be the readable one.
   const bookPath = book.slug || book.id;
+
+  // Canonical (English, unprefixed) path of the page currently on screen. Built
+  // from currentPageId rather than usePathname() because page flips use
+  // history.pushState, which Next's router does not observe — usePathname would
+  // still name the page the reader landed on. localeHref() adds the /es prefix.
+  const readerPath = `/book/${bookPath}/page/${currentPageId}`;
 
   // Version pinning: detect ?v= param for citation-pinned reading
   const [pinnedVersion, setPinnedVersion] = useState<string | null>(null);
@@ -302,6 +322,8 @@ export default function PageEditorClient({
     // Build URL with supported query params (version pinning)
     const newParams = new URLSearchParams();
     if (pinnedVersion) newParams.set('v', pinnedVersion);
+    // No language param: on the Spanish twin the /es prefix rides on
+    // tenantPrefix, so every flipped-to URL is already a Spanish URL (#4112).
     const suffix = newParams.toString() ? `?${newParams.toString()}` : '';
     window.history.pushState(null, '', `${tenantPrefix}/book/${bookPath}/page/${newPageId}${suffix}`);
 
@@ -378,6 +400,42 @@ export default function PageEditorClient({
     } as Page;
   }
 
+  // EN/ES as LINKS between `/book/…` and `/es/book/…`, not as a view toggle:
+  // the language a reader is in is always the URL they are on (#4112). It rides
+  // INSIDE the reader's own header (#4124) rather than in a band above it — a
+  // separate strip made the ~100 books with a Spanish edition look like they
+  // carried a site notice, and put the one control that changes what you are
+  // reading outside the bar holding every other reading control.
+  // Hidden inside a tenant reading room or an embed — those surfaces have no
+  // `/es` twin and must never link off-tenant — and hidden on a pinned citation
+  // URL, whose whole point is that it resolves to one fixed text.
+  const showLanguageSwitch =
+    hasSpanish && !pinnedVersion && !isOnTenantSubdomain && !isOnEmbedRoute && !params?.tenant;
+  const languageSwitch = showLanguageSwitch ? (
+    <div
+      className="inline-flex shrink-0 overflow-hidden rounded-lg text-xs font-medium"
+      style={{ background: 'var(--bg-warm)' }}
+      role="group"
+      aria-label={rs.readingLanguage}
+    >
+      {(['en', 'es'] as const).map((code) => (
+        <Link
+          key={code}
+          href={localeHref(code, readerPath)}
+          aria-current={lang === code ? 'page' : undefined}
+          className="px-2 sm:px-2.5 py-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
+          style={{
+            background: lang === code ? 'var(--accent-rust)' : 'transparent',
+            color: lang === code ? '#fff' : 'var(--text-muted)',
+          }}
+        >
+          <span className="hidden sm:inline">{code === 'en' ? 'English' : 'Español'}</span>
+          <span className="sm:hidden">{code === 'en' ? 'EN' : 'ES'}</span>
+        </Link>
+      ))}
+    </div>
+  ) : null;
+
   return (
     <>
       <Suspense fallback={null}>
@@ -396,32 +454,9 @@ export default function PageEditorClient({
         />
       )}
 
-      {hasSpanish && !pinnedVersion && (
-        <div className="flex items-center justify-center gap-2 py-2 text-sm" role="group" aria-label="Reading language">
-          <span className="text-neutral-500">Read in:</span>
-          <div className="inline-flex overflow-hidden rounded-full border border-neutral-300">
-            <button
-              type="button"
-              onClick={() => setLang('en')}
-              aria-pressed={lang === 'en'}
-              className={`px-3 py-1 transition-colors ${lang === 'en' ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              English
-            </button>
-            <button
-              type="button"
-              onClick={() => setLang('es')}
-              aria-pressed={lang === 'es'}
-              className={`px-3 py-1 transition-colors ${lang === 'es' ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-700 hover:bg-neutral-100'}`}
-            >
-              Español
-            </button>
-          </div>
-        </div>
-      )}
-
       <TranslationEditor
         book={book}
+        languageSwitch={languageSwitch}
         page={displayPage}
         pages={pageList}
         currentIndex={currentIndex}

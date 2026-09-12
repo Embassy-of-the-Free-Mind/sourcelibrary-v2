@@ -135,7 +135,9 @@ describe('isEnglishOriginalPage', () => {
 describe('resolveQuoteText', () => {
   it('prefers a translation when one exists', () => {
     const r = resolveQuoteText(page(LATIN_PAGE, 'That which is below is as that which is above.'), 'bk');
-    expect(r).toEqual({ text: 'That which is below is as that which is above.', source: 'translation' });
+    // `lang` names the edition the text is IN — English here, and stated
+    // rather than assumed, because a page can now carry several (#4095).
+    expect(r).toEqual({ text: 'That which is below is as that which is above.', source: 'translation', lang: 'en' });
   });
 
   it('falls back to the transcription on an English-original leaf', () => {

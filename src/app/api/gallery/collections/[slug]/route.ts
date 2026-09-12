@@ -34,7 +34,10 @@ export async function GET(
       featured: collection.featured,
       type: collection.type || 'visual',
       book_collection_slug: collection.book_collection_slug || undefined,
-      imageCount: imageIds.length,
+      // Count what we actually deliver — image_ids can dangle after
+      // gallery_images deletions, and claiming 200 while items is [] misleads
+      // API consumers (issue #4486: musical-scores did exactly that).
+      imageCount: items.length,
       items,
     }, {
       headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },

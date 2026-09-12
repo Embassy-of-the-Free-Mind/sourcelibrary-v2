@@ -6,6 +6,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import { isHiddenBook } from '@/lib/book-access';
 import { pickArtworkRecord } from '@/lib/artwork-slug';
+import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -19,13 +20,19 @@ interface PageProps {
 async function getArtwork(slug: string) {
   const db = await getReadDb();
 
-  // Exact slug, or the legacy `art-` prefixed twin. Fetch BOTH and choose
-  // deliberately — a single findOne over an $in returns an arbitrary match, so
-  // a hidden duplicate twin could shadow the visible canonical and 404 a live
-  // artwork (see src/lib/artwork-slug.ts).
+  // Exact slug, the legacy `art-` prefixed twin, or the record id. Fetch ALL
+  // and choose deliberately — a single findOne over an $in returns an arbitrary
+  // match, so a hidden duplicate twin could shadow the visible canonical and
+  // 404 a live artwork (see src/lib/artwork-slug.ts). Id resolution matters
+  // because /favorites and saved links address artworks by id, and /book/<id>
+  // permanently redirects those here.
   const candidates = await db.collection('books').find(
     // content_type:'book' wins: never render a textual book as artwork even via a direct /artwork/<slug> URL.
-    { slug: { $in: [slug, `art-${slug}`] }, resource_type: { $exists: true }, content_type: { $ne: 'book' } },
+    {
+      $or: [{ slug: { $in: [slug, `art-${slug}`] } }, { id: slug }],
+      resource_type: { $exists: true },
+      content_type: { $ne: 'book' },
+    },
   ).toArray();
   const artwork = pickArtworkRecord(candidates, slug);
   if (!artwork) return null;
@@ -119,14 +126,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const data = await getArtwork(slug);
   if (!data) return { title: 'Not Found', robots: { index: false, follow: true } };
   const { artwork } = data;
+  // The <h1> carries an AI badge and a "title on the source record" line, but a
+  // social card carries neither — it travels off-site as a bare claim. So when
+  // the heading is a label a vision model wrote from the image (#4288), the
+  // description says so and names the real title. The title tag itself stays the
+  // page's display label: it is navigation, not a bibliographic assertion.
+  const artworkTitle = resolveTitle(artwork);
+  const provenanceNote = titleProvenanceNote(artwork);
+  const baseDescription =
+    (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`;
   return {
-    title: `${artwork.display_title || artwork.title} — ${artwork.author} — Source Library`,
-    description: (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`,
+    title: `${artworkTitle.display} — ${artwork.author} — Source Library`,
+    description: artworkTitle.isDescriptive && provenanceNote
+      ? `${provenanceNote} ${baseDescription}`
+      : baseDescription,
     // ?from=<collection> nav-context URLs must not index as duplicates
     alternates: { canonical: `/artwork/${artwork.slug || slug}` },
     robots: { index: true, follow: true },
     openGraph: {
-      title: `${artwork.display_title || artwork.title} by ${artwork.author}`,
+      // "<label> by <author>" is a bibliographic claim. When the label is an AI
+      // description of the picture, the card names the source record's title
+      // instead — the author attribution is true, the title must be too.
+      title: artworkTitle.isDescriptive
+        ? `${artworkTitle.citation} by ${artwork.author}`
+        : `${artworkTitle.display} by ${artwork.author}`,
       images: [artwork.thumbnail_blob || artwork.thumbnail || ''],
     },
   };

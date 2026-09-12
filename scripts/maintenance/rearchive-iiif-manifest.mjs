@@ -69,7 +69,12 @@ const CONCURRENCY = parseInt(ARG('--concurrency', '2'));
 const PAGE_CONCURRENCY = parseInt(ARG('--page-concurrency', '4'));
 const LIMIT = parseInt(ARG('--limit', '0'));
 const MIN_UPGRADE_RATIO = parseFloat(ARG('--min-upgrade-ratio', '1.5'));
-const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
+// Safety valve, not a quality ceiling (#4406). This is a RE-ARCHIVE path whose
+// entire purpose is recovering resolution, so a default that quietly caps the
+// result works against the job. Raised 6000 -> 30000: high enough that no real
+// scan is touched, low enough to stop sharp exhausting memory on a pathological
+// one. Pass --max-width to lower it deliberately for a constrained run.
+const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '30000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
 
 if (!BOOK_ID && !PROVIDER) {

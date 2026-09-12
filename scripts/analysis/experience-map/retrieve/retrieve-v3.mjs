@@ -15,7 +15,8 @@
  * the English/German skew of the unsliced pass. For the largest languages we
  * additionally slice by era, which is correct on this path.
  *
- * Free: embeddings are free-tier and cached to disk; the RPC is a Supabase query.
+ * Cost: embeddings are BILLED (see .claude/docs/embeddings.md) but cached to disk,
+ * so a repeat run is free; the RPC is a Supabase query.
  */
 import { readFileSync, writeFileSync, existsSync, createWriteStream } from 'node:fs';
 import { createRequire } from 'node:module';

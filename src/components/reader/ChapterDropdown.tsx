@@ -3,19 +3,26 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, X, List } from 'lucide-react';
 import type { Chapter } from '@/lib/types';
+import { useLocale } from '@/lib/i18n';
+import { READER_STRINGS } from '@/lib/book-i18n';
 
 interface ChapterDropdownProps {
   chapters: Chapter[];
   currentChapterIndex: number;
   onChapterSelect: (chapter: Chapter) => void;
+  /** Chapter titles in the reader's language, aligned by index with `chapters`
+   *  (books.localized.<lang>.chapters). Absent for English and for books that
+   *  have no translation of their contents yet. */
+  localizedTitles?: string[];
 }
 
-// Display title: prefer English, fall back to original
-function displayTitle(chapter: Chapter): string {
-  return chapter.titleEn || chapter.title;
+// Display title: the reader's language, else English, else the original.
+function displayTitle(chapter: Chapter, localized?: string): string {
+  return localized || chapter.titleEn || chapter.title;
 }
 
-export default function ChapterDropdown({ chapters, currentChapterIndex, onChapterSelect }: ChapterDropdownProps) {
+export default function ChapterDropdown({ chapters, currentChapterIndex, onChapterSelect, localizedTitles }: ChapterDropdownProps) {
+  const rs = READER_STRINGS[useLocale()];
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -65,8 +72,9 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
   // Detect mobile via media query
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
-  // Whether any chapter has an English translation
-  const hasEnglishTitles = chapters.some(ch => ch.titleEn);
+  // Is the title we show a GLOSS (translated), so the original belongs under it?
+  const isGloss = (chapter: Chapter, i: number) =>
+    displayTitle(chapter, localizedTitles?.[i]) !== chapter.title;
 
   return (
     <>
@@ -78,14 +86,14 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
         style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        aria-label={currentChapter ? `Chapter: ${displayTitle(currentChapter)}` : 'Table of contents'}
+        aria-label={currentChapter ? rs.chapterAria(displayTitle(currentChapter, localizedTitles?.[currentChapterIndex])) : rs.tableOfContents}
       >
         <List className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
         <span className="truncate hidden sm:inline">
-          {currentChapter ? displayTitle(currentChapter) : 'Contents'}
+          {currentChapter ? displayTitle(currentChapter, localizedTitles?.[currentChapterIndex]) : rs.contents}
         </span>
         <span className="sm:hidden">
-          {currentChapter ? `Ch. ${currentChapterIndex + 1}` : 'ToC'}
+          {currentChapter ? rs.chapterShort(currentChapterIndex + 1) : rs.toc}
         </span>
         <ChevronDown className={`w-3 h-3 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
       </button>
@@ -97,15 +105,15 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
           className="absolute top-full right-0 mt-1 z-50 w-[34rem] max-h-[60vh] overflow-y-auto rounded-lg shadow-xl"
           style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)' }}
           role="listbox"
-          aria-label="Table of contents"
+          aria-label={rs.tableOfContents}
         >
           <div className="sticky top-0 px-3 py-2 border-b" style={{ background: 'var(--bg-white, #fff)', borderColor: 'var(--border-light)' }}>
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                Contents
+                {rs.contents}
               </span>
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                {chapters.length} chapters
+                {rs.chapterCount(chapters.length)}
               </span>
             </div>
           </div>
@@ -123,20 +131,20 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
               }}
               role="option"
               aria-selected={i === currentChapterIndex}
-              title={hasEnglishTitles && chapter.titleEn ? chapter.title : undefined}
+              title={isGloss(chapter, i) ? chapter.title : undefined}
             >
               <span className="min-w-0">
                 <span className="block truncate" style={{ fontSize: chapter.level === 1 ? '0.9375rem' : '0.875rem' }}>
-                  {displayTitle(chapter)}
+                  {displayTitle(chapter, localizedTitles?.[i])}
                 </span>
-                {hasEnglishTitles && chapter.titleEn && (
+                {isGloss(chapter, i) && (
                   <span className="block truncate text-xs italic" style={{ color: 'var(--text-muted)', marginTop: '2px' }}>
                     {chapter.title}
                   </span>
                 )}
               </span>
               <span className="text-xs shrink-0 tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                p.{'\u00A0'}{chapter.pageNumber}
+                {rs.pageAbbrev(chapter.pageNumber)}
               </span>
             </button>
           ))}
@@ -158,7 +166,7 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
             className="fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl shadow-2xl"
             style={{ background: 'var(--bg-white, #fff)', maxHeight: '70vh' }}
             role="listbox"
-            aria-label="Table of contents"
+            aria-label={rs.tableOfContents}
           >
             {/* Drag handle */}
             <div className="flex justify-center pt-3 pb-1">
@@ -167,13 +175,13 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-2 border-b" style={{ borderColor: 'var(--border-light)' }}>
               <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                Contents
+                {rs.contents}
               </span>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 rounded-md"
                 style={{ color: 'var(--text-muted)' }}
-                aria-label="Close"
+                aria-label={rs.close}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -199,16 +207,16 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
                 >
                   <span className="min-w-0">
                     <span className="block truncate" style={{ fontSize: chapter.level === 1 ? '0.9375rem' : '0.875rem' }}>
-                      {displayTitle(chapter)}
+                      {displayTitle(chapter, localizedTitles?.[i])}
                     </span>
-                    {hasEnglishTitles && chapter.titleEn && (
+                    {isGloss(chapter, i) && (
                       <span className="block truncate text-xs italic" style={{ color: 'var(--text-muted)', marginTop: '2px' }}>
                         {chapter.title}
                       </span>
                     )}
                   </span>
                   <span className="text-xs shrink-0 tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                    p.{'\u00A0'}{chapter.pageNumber}
+                    {rs.pageAbbrev(chapter.pageNumber)}
                   </span>
                 </button>
               ))}

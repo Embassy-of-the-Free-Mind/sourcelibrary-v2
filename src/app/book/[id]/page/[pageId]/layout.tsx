@@ -1,11 +1,14 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 // `cache()`d in its own module: generateMetadata, the shell below, and the
 // (reader) group layout's visibility gate all read it, so one round trip
 // serves the whole request.
 import { getPageData } from './page-data';
+import { type Locale } from '@/lib/locale-path';
+import { READER_STRINGS } from '@/lib/book-i18n';
+import { localizedTitle, hasLocalizedEdition } from '@/lib/localized';
 
 export const preferredRegion = 'fra1';
 
@@ -14,8 +17,9 @@ interface LayoutProps {
   params: Promise<{ id: string; pageId: string }>;
 }
 
-export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
+export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { lang?: Locale }): Promise<Metadata> {
   const { id, pageId } = await params;
+  const rs = READER_STRINGS[lang];
   const ctx = await getTenantContext();
   const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
 
@@ -29,10 +33,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     };
   }
 
-  const bookTitle = book.display_title || book.title;
+  const bookTitle = localizedTitle(book as Parameters<typeof localizedTitle>[0], lang);
   const pageNum = page.page_number;
   const ogBookTitle = book.published ? `${bookTitle} (${book.published})` : bookTitle;
-  const title = `${ogBookTitle} - Page ${pageNum}`;
+  const title = rs.metaTitle(ogBookTitle, pageNum);
 
   // Use translation excerpt if available, otherwise OCR excerpt. Strip editorial
   // wrapper blocks first so <meta>/<summary>/… prose never lands in the OG
@@ -42,8 +46,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     ? textContent.substring(0, 197) + '...'
     : textContent;
 
+  // The excerpt is the page's own text in the reader's language; the sentence
+  // around it follows the locale. An untranslated book keeps its English frame.
   const description = excerpt
-    ? `Page ${pageNum} of "${bookTitle}" by ${book.author}. ${excerpt}`
+    ? `${rs.metaPageOf(pageNum, bookTitle)} — ${book.author}. ${excerpt}`
     : `Page ${pageNum} of "${bookTitle}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
 
   // Always use slug for canonical URL, even if accessed via hex ObjectId
@@ -84,7 +90,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   };
 }
 
-export default async function PageLayout({ children, params }: LayoutProps) {
+export default async function PageLayout({ children, params, lang = 'en' }: LayoutProps & { lang?: Locale }) {
   // Resolve existence HERE, in the shell, rather than leaving it to page.tsx.
   //
   // This segment has a loading.tsx and deliberately keeps it — the reader is
@@ -110,6 +116,26 @@ export default async function PageLayout({ children, params }: LayoutProps) {
   const ctx = await getTenantContext();
   const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined);
   if (!book || !page) notFound();
+
+  // A localized URL is a promise the page is in that language, so a book with
+  // no edition in it has no localized reader URL — 307 to the English one.
+  //
+  // This MUST live in the layout, not in page.tsx. The (reader) segment has a
+  // loading.tsx, so the page is wrapped in an automatic <Suspense> and the 200
+  // shell flushes before the page's code runs: a redirect() down there degrades
+  // into a client-side meta-refresh (#4036), which a crawler will happily index.
+  // Measured — the page-level version returned 200 with NEXT_REDIRECT in the
+  // body. The layout sits above that boundary, so this is a real HTTP 307.
+  //
+  // 307, not 308: the day the book is translated the URL must start working.
+  // `?? false` because PAGE_META_PROJECTION asks for BOTH inputs — the
+  // `pages_translated_es` counter and `language` — so an absent value means the
+  // book has no edition in the language rather than "could not tell". If that
+  // projection ever drops `language`, every natively-Spanish book starts
+  // redirecting away from its own /es reader.
+  if (lang !== 'en' && (hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) ?? false) === false) {
+    redirect(`/book/${(book as unknown as { slug?: string }).slug || id}/page/${pageId}`);
+  }
 
   return children;
 }

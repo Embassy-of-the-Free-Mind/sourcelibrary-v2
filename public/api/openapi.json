@@ -3,7 +3,7 @@
   "info": {
     "title": "Source Library API",
     "description": "Search and cite rare historical texts (alchemy, Hermeticism, Renaissance philosophy) from Source Library. All translations include DOI-backed academic citations.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "contact": {
       "name": "Source Library",
       "url": "https://sourcelibrary.org",
@@ -43,7 +43,15 @@
             "description": "Filter by original language",
             "schema": {
               "type": "string",
-              "enum": ["Latin", "German", "French", "Italian", "English", "Dutch", "Spanish"]
+              "enum": [
+                "Latin",
+                "German",
+                "French",
+                "Italian",
+                "English",
+                "Dutch",
+                "Spanish"
+              ]
             }
           },
           {
@@ -52,7 +60,23 @@
             "description": "Filter by category",
             "schema": {
               "type": "string",
-              "enum": ["alchemy", "hermeticism", "jewish-kabbalah", "christian-cabala", "neoplatonism", "rosicrucianism", "natural-philosophy", "astrology", "natural-magic", "ritual-magic", "theurgy", "mysticism", "theology", "medicine", "gnosticism"]
+              "enum": [
+                "alchemy",
+                "hermeticism",
+                "jewish-kabbalah",
+                "christian-cabala",
+                "neoplatonism",
+                "rosicrucianism",
+                "natural-philosophy",
+                "astrology",
+                "natural-magic",
+                "ritual-magic",
+                "theurgy",
+                "mysticism",
+                "theology",
+                "medicine",
+                "gnosticism"
+              ]
             }
           },
           {
@@ -239,6 +263,454 @@
           }
         }
       }
+    },
+    "/books/{id}/text": {
+      "get": {
+        "summary": "Read a book's text (OCR and/or translation), page-budgeted",
+        "description": "Serves up to your remaining daily page budget (anonymous 500/24h, signed-in 1,000, free key 2,000, paid uncapped). Response header X-Pages-Served reports pages charged.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Book id or slug",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "First page number",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Last page number",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "chapter",
+            "in": "query",
+            "description": "Chapter index to read",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "description": "ocr | translation | both",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Daily page budget exhausted"
+          }
+        }
+      }
+    },
+    "/locus": {
+      "get": {
+        "summary": "Resolve a canonical reference (e.g. Bekker/Stephanus) to witnesses and pages",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "query",
+            "description": "Canonical reference, e.g. 1094a",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "work",
+            "in": "query",
+            "description": "Work identifier",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/ngrams": {
+      "get": {
+        "summary": "N-gram frequency series over the corpus",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Rate-limited per IP (60/min).",
+        "parameters": [
+          {
+            "name": "phrase",
+            "in": "query",
+            "description": "Phrase (1-5 words)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "corpus",
+            "in": "query",
+            "description": "Corpus key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/image": {
+      "get": {
+        "summary": "Resize/serve an allowlisted page-scan image",
+        "description": "Browser image loads pass free. Non-browser callers: anonymous 500 images/day per IP; API keys per tier (free 2,000/day, paid uncapped) via Authorization: Bearer sl_data_...",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "description": "Allowlisted source image URL",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "w",
+            "in": "query",
+            "description": "Max width px",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "JPEG quality",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JPEG image"
+          },
+          "403": {
+            "description": "Host not allowlisted"
+          },
+          "429": {
+            "description": "Image budget exhausted - get a key at /developers"
+          }
+        }
+      }
+    },
+    "/dataset/v1/books": {
+      "get": {
+        "summary": "Dataset: book-level metadata (JSON)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Requires an API key. Cluster/language permissions enforced per key.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Filter by language",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cluster",
+            "in": "query",
+            "description": "Taxonomy cluster",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Pagination offset",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max 1000",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/dataset/v1/pages": {
+      "get": {
+        "summary": "Dataset: streaming page records (JSONL)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Requires an API key; counts against the key daily page quota.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Filter by language",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cluster",
+            "in": "query",
+            "description": "Taxonomy cluster",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "description": "ocr | translation | both",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Pagination offset",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Max 10000",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/dataset/v1/stats": {
+      "get": {
+        "summary": "Dataset: public corpus statistics",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Public; rate-limited 30/min per IP."
+      }
+    },
+    "/dataset/v1/usage": {
+      "get": {
+        "summary": "Your own usage meter (per key or per account)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Authenticate with your API key or a session.",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "description": "Window, max 90",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/dts": {
+      "get": {
+        "summary": "DTS API entry point (Distributed Text Services)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/dts/collection": {
+      "get": {
+        "summary": "DTS collections",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Collection or resource id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/dts/navigation": {
+      "get": {
+        "summary": "DTS navigation (page structure)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "resource",
+            "in": "query",
+            "description": "Resource id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/dts/document": {
+      "get": {
+        "summary": "DTS document (TEI text)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Bot-gated: untrusted crawlers see the first 20% of a book.",
+        "parameters": [
+          {
+            "name": "resource",
+            "in": "query",
+            "description": "Resource id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/iiif/{id}/manifest": {
+      "get": {
+        "summary": "IIIF Presentation manifest for a book",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Book id or slug",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "IIIF manifest JSON"
+          }
+        }
+      }
+    },
+    "/iiif/{id}/search": {
+      "get": {
+        "summary": "IIIF Content Search within a book",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Book id or slug",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "IIIF search response"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -274,7 +746,10 @@
           },
           "type": {
             "type": "string",
-            "enum": ["book", "page"]
+            "enum": [
+              "book",
+              "page"
+            ]
           },
           "book_id": {
             "type": "string"
@@ -421,7 +896,10 @@
           },
           "status": {
             "type": "string",
-            "enum": ["draft", "published"]
+            "enum": [
+              "draft",
+              "published"
+            ]
           },
           "doi": {
             "type": "string"
@@ -529,6 +1007,13 @@
             }
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Dataset API key (sl_data_...). Free at https://sourcelibrary.org/developers."
       }
     }
   }

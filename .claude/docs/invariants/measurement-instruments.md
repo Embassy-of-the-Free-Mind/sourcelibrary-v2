@@ -1,6 +1,6 @@
 # A metric is a claim about an instrument before it is a claim about readers
 
-**Read this when:** Quoting any usage number, building an analytics read path, adding an alarm or health probe, adding a search/analytics write path, or answering "how many readers…".
+**Read this when:** Quoting any usage number, building an analytics read path, adding an alarm or health probe, adding a search/analytics write path, answering "how many readers…", or building any RANKED or RELATED list a reader will read as meaningful (connections, recommendations, "see also").
 
 *Split out of `CLAUDE.md` on 2026-08-04. The text is unchanged apart from cross-references repointed to their new files. See `.claude/docs/knowledge-layer.md` for why this tier exists.*
 
@@ -132,6 +132,54 @@ what was new is that a *safety control* embodied it.
   in the store production writes to, and cross-check the vendor's own meter (Cloud Monitoring
   hourly buckets — day-aligned queries anchor to the query END time and silently become
   rolling-24h windows). Verified 2026-08-09 for ~$0.05.
+
+**It recurred inside the audit written to catch it (2026-09-05, #4593/#4657).** `spend-reconcile.mjs`
+— the instrument whose whole purpose is comparing our meter to Google's bill — read Mongo
+`gemini_usage` alone. For August 2026 it reported 154,888 calls / $499.74 when the two stores hold
+305,800 / $2,316.68, so meter coverage printed 37% (true: 72%) and the billed-vs-metered gap printed
+11.1x (true: 2.4x). #4599 was then filed against a 250K-call hole that is ~117K. Three lessons the
+first incident did not carry:
+
+- **"Sum both stores" is a property of every spend instrument, so pin it in a test that names them
+  all** — `tests/unit/usage-meter-reads-both-stores.test.ts` asserts it for the guard, the reconciler
+  and `true-gemini-spend.mjs` together. Fixing the one that broke leaves the next one to be
+  discovered by a bill.
+- **Count the stores before trusting a coverage figure: there are THREE.** Mongo `ai_usage`
+  (`logAiUsage()`, request-path features — librarian, explain, ai_search_expand) held $77.00 in
+  August and no spend instrument read it. Report it separately: a librarian row is one agentic
+  TURN, several Gemini calls, so it can never be added to a call count.
+- **A silent-zero diagnosis deserves the inverse hypothesis.** #4593 was filed as "writers dropped
+  `created_at`, so every date-scoped read sees $0". The writers had moved to `timestamp` in 2026-03
+  and all 14 live readers followed; nothing reads `created_at` on that collection, and the dial reads
+  neither (ObjectId ranges, on purpose). What was actually invisible was the mirror image — 1,381
+  legacy rows carrying `created_at` and no `timestamp`. The ad-hoc query that produced the $0 was the
+  broken instrument, which is the theme of this whole file.
+
+## An output that cannot vary with its input is reporting nothing — and a plausible list hides it best
+
+The `/encyclopedia/[name]` **Connections** panel showed "other entities that appear in
+the same books as X". It found entities sharing a book with the subject, sorted them by
+their **global** `book_count`, took the top 20 — and only THEN computed the shared-book
+overlap. The corpus's most frequent entities (Rome 6,242 books, Egypt 6,103, Aristotle
+4,834, Plato 4,464 …) share a book with essentially every subject, so the limit always
+ate the same twenty. Measured 2026-08-21: Active Intellect (248 books), Philosopher's
+Stone (89), Kabbalah (496), Rosicrucian (14) and Mercury (825) returned an **identical
+list, in identical order**. The panel had shipped long enough to be indexed, and was
+caught by a reader asking "are these legit?" (#4109 removed it; #4111 rebuilds it).
+
+- **The failure is upstream of the numbers.** A sort + limit that runs before the
+  subject-specific measure doesn't merely rank badly — it makes the output stop
+  depending on the input at all. Compute the per-subject measure BEFORE the limit.
+- **Rank by association, not frequency.** Lift or PMI — shared books over what chance
+  predicts from each item's own base rate — with a support floor. Raw co-occurrence in a
+  corpus with a heavy head is a popularity readout wearing a relevance label.
+- **It fails in the most expensive direction: plausible.** An empty panel gets reported
+  in a day; twenty famous, on-topic-looking names read as insight. Same family as *an
+  activity count is not a quality metric* and *an empty set is not disagreement* below —
+  a signal that cannot move is not a weak signal, it is not a signal.
+- **No single-subject check can see it.** The guard is a test that two different inputs
+  produce different outputs. One that asserts only "the panel renders for X" passes for
+  the entire life of the bug — see `tests-that-are-not-guards.md`.
 
 ## An activity count is not a quality metric, and "carrying" is not "depending"
 
@@ -280,12 +328,290 @@ reads all three:
 - **Verify a detector by making it fail.** The only proof the wiring works is
   running it with the input removed and seeing red. A green scheduled run proves
   nothing about a detector whose failure mode is silence.
+- **And check WHAT it counted, not just that it ran.** The rule above catches a
+  detector that cannot run. It does not catch the worse case: one that runs
+  perfectly, exits `0`, and is measuring a corpus that excludes the failure.
+  `page-texts-coverage.mjs` exists to catch "an unembedded book and a book with
+  no matches return the same empty list", and it selected books by
+  `pages_translated_es > 0` — which is `0` for a book *written* in Spanish and
+  always will be. So all 68 native books sat outside its own denominator and it
+  reported clean over 19,489 unfindable pages (#4146/#4186). Making it fail
+  would have passed: break a book **in** its scope and it goes red, which proves
+  nothing about the books outside. **The tell is the scope line, not the exit
+  code** — 107 books before the fix, 175 after. Print the denominator and read
+  it. Any time a read rule widens, the detectors watching it are writers too:
+  re-run each and confirm its SCOPE moved.
+
+- **A COUNTER cannot tell a dead source from a dead service — keep the reason.**
+  A batch loop that tallies failures without recording *why* produces the least
+  actionable output there is: `0 embedded, 60 failed`, repeated. On 2026-08-21
+  that line cost an hour of eliminating the CLIP server (healthy: 222ms for one
+  image, 978ms for a batch of ten), the batch size, and the Postgres write —
+  before the real cause surfaced, which was that **1,596 gallery rows carry a
+  dead `extracted_url`** and every fetch 404'd (#4185). The reason had been
+  available the entire time: the server returns
+  `result.error = "fetch 404 for <url>"`, and the failure branch was a bare
+  `failed++` that discarded it. The asymmetry is what makes this expensive — the
+  SERVICE is the first thing anyone suspects and the least often at fault, so a
+  bare counter points every reader at the wrong layer first. Keep a **bounded**
+  sample of `{id, input, reason}` (cap it, so a run where everything fails does
+  not become its own problem), and when `succeeded === 0 && failed > 0` say so
+  explicitly and name the source as the place to look. Same family as "absence
+  is not failure — no silent skips" (#3740): here the skip was counted but
+  unexplained, which reads as a working instrument reporting a broken world.
+
+- **A finding must be ACTIONABLE, or the dedupe that protects your inbox becomes
+  a mute button.** `book-slug-placeholders` fired on every placeholder book slug,
+  and `corpus-integrity-watch.yml` files **one open issue at a time** — correct on
+  its own, since a deterministic finding filed daily buries the first report under
+  30 copies. But after the #4521 repair, 38 of the 39 remaining bad URLs were
+  waiting on an English `display_title` (#4390), not on slug logic: nothing the
+  repair sweep can touch, ever. So the issue stays open forever, and the *next*
+  importer that bypasses `generateBookSlug` — the regression the detector exists
+  for — files **nothing**. The alarm was masked by its own backlog. Worse, the
+  issue body said "Repair with `repair-book-slugs.ts`", which was now false for
+  every row in it: the next reader runs the sweep, gets 0 renames, and re-derives
+  the whole triage. **Split "broken" from "fixable" and fire only on fixable**
+  (#4530): `classifySlugRepair` in `src/lib/book-slug-repair.ts` returns
+  `repairable` vs a named blocker, the repairable count drives the exit code, and
+  the blocked tail is *reported with its reason and its owning issue* so it reads
+  as a known backlog rather than N mysterious rows. **Put the triage in ONE module
+  the detector and its repair tool both import** — a detector that disagrees with
+  its own sweep reports work that cannot be done, which is the failure itself.
+  **Tell:** a standing detector whose count never reaches zero, or an auto-filed
+  issue whose remedy you have already run.
 
 **Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
 an *error message* rather than a *measurement*. Read the body before believing the
 title — and when a watchdog has filed the same title on a regular cadence with no
-one acting on it, suspect the watchdog before the corpus.
+one acting on it, suspect the watchdog before the corpus. Conversely, a watchdog
+that filed **once** and has been quiet since may be muzzled by its own open issue
+rather than satisfied: check whether its finding is still actionable.
 
 Related: the same self-referential shape as the error reporter that reported its
 own failures (#4045/#4047), and the inverse of "absence is not failure — no silent
 skips" (#3740): here the failure was not silent, it was *disguised as a finding*.
+
+## The absence of a marker is not the absence of the mechanism
+
+A cost-and-analytics audit on 2026-08-05/07 produced **six retractions, every one the same shape**: a
+missing thing was read as a missing behaviour, when the behaviour lived somewhere unlooked-at — often
+outside this repo entirely.
+
+- No Cloudflare receipt email ⇒ "billed to another mailbox." Cloudflare *states* it sends none;
+  invoices are dashboard-only, as are Supabase's and Atlas's.
+- No `skewProtection` in `next.config.ts`/`vercel.json` ⇒ "the feature is off." It is a **Vercel
+  project setting**, was on, and the real defect was that its window was *shorter than the CDN TTL*.
+- No `traffic_class` field on `analytics_pageviews` rows ⇒ "unclassified." The route classifies and
+  **drops** non-human before the insert, so every stored row is human by filtering — this one nearly
+  merged a wrong "correction" to a doc that was right.
+- An unfamiliar model id read as a third model ⇒ lite usage under-counted **40×**
+  (`gemini-3.1-flash-lite-preview` is an alias; the orchestrator says so in a comment).
+
+**Before concluding from a shape in the data, find the code path or the vendor's own page.** One
+known-absent item looked up in the authoritative source beats any amount of reasoning about
+aggregates. Corollary: everything *measured* in that audit held up; everything *inferred* from
+absence did not.
+
+## A detector tuned by one programme is an actuator against another
+
+Two programmes in this repo pointed at the same R2 objects with opposite
+intentions, and neither could see the other (#4406).
+
+- **#2651** regenerates each page's `display_photo` from the master at
+  `min(2000, native)` so the keyed provenance watermark survives recompression.
+- **#3005 Pass 1** flags a `display_photo` that is **≥90% of its master** as
+  "never downsized" and regenerates it to 1200px.
+
+A baked variant measures **100–122%** of its master. So every provenance-marked
+page is, by #3005's definition, textbook bloat — and `regen-display-bloat.mjs`
+would have force-overwritten each one with an unmarked 1200px variant it cannot
+re-sign (it has no key and no edition id at that point). The detector was
+correct on the day it was written; a *different* programme then changed the
+population underneath it, and a threshold that used to mean "nobody downsized
+this" came to mean "somebody marked this."
+
+**The rule: a threshold encodes an assumption about who else writes to the
+population.** Before running any sweep that overwrites or deletes on a measured
+property, ask *what else writes here, and would its output look like my
+detector's positive class?* Then make the guard explicit and **counted** — the
+executor now HEADs the display key, skips objects carrying `provenance`
+metadata, reports them as `marked=N`, and requires `--force-unmark`. A silent
+skip would have been the same failure in the other direction.
+
+Corollary, and the reason this pairs with the section above: the collision is
+invisible from either issue thread. Neither #2651 nor #3005 mentions the other,
+and both are individually well-reasoned. **Shared mutable state is discovered by
+reading the writers, not the plans** — same lesson as the two sessions that both
+wrote `locus_anchors`, one object store instead of one collection.
+
+## The CDN's own machinery writes rows into the traffic it measures (fake Early Hints 504s)
+
+On 2026-08-31 Cloudflare zone analytics showed **1.49M "504 Gateway Timeout" rows in 24h** — 10% of
+all edge traffic, apparently doubling week-over-week. It read as a worsening origin outage. It was
+nothing: with the zone's **Early Hints** feature ON (Speed → Optimization), Cloudflare's Early Hints
+machinery logs synthetic request rows stamped `userAgent: "nginx-ssl early hints"` (also
+`"bastion early hints"`), `edgeResponseStatus: 504`, `originResponseStatus: 0`. They shadow real
+visits roughly 1:1 on hot paths, so they *scale with success*.
+
+How it was proven harmless — the checks to repeat before believing an edge error rate:
+
+- **Latency is the lie detector.** avg `edgeTimeToFirstByteMs` on the "504s" was **4.2ms**. A real
+  gateway timeout spends tens of seconds waiting. A 4ms 504 never contacted anything.
+- **The ASN mix was the reader audience** (Comcast, Verizon, Charter, T-Mobile, Facebook's link
+  scraper) — not a fleet. Rows that shadow real traffic distribute like real traffic.
+- **The origin answered when actually asked**: 9.5M genuine 200s/day at 180ms avg TTFB, and curl of
+  the top "failing" paths returned 200 in 120–430ms.
+
+**Rule: any error-rate query over Cloudflare zone analytics must exclude `userAgent` containing
+"early hints" before quoting a 5xx number.** Same family as the PostHog bot-fleet inflation above —
+the instrument records things that are not visits, silently, in the direction that invites a
+confident wrong conclusion (here: "production is failing").
+
+Practical notes: none of the repo's static CF tokens (`CF_API_TOKEN`, `CF_ANALYTICS_TOKEN`,
+`CLOUDFLARE_API_TOKEN`) carries zone `analytics.read` — but the Cloudflare plugin MCP
+(`mcp__plugin_cloudflare_cloudflare-api__execute`) can POST GraphQL to `/graphql` under its own
+OAuth and read everything. Zone analytics retain only ~7 days (a range older than 1w1d is rejected),
+so anything worth keeping must be quoted out the week it happens.
+
+## A third-party search endpoint can ignore your query and still return 200
+
+On 2026-08-21, IA's `services/search/v1/scrape` **silently ignored `q`
+entirely**: `mediatype:texts`, `petrarca` and `collection:europeanlibraries` all
+returned the identical unfiltered first page (items beginning `0-...`). Every
+call was HTTP 200 with well-formed JSON. The same endpoint had answered
+`identifier:ita-bnc-ald-*` correctly an hour earlier, so this was degradation,
+not a syntax error on our side.
+
+The failure mode is the dangerous direction: a search hunting for copies of a
+book returns nothing matching, which reads as **"not held anywhere"** — a
+confident negative finding, produced by an instrument that was not searching.
+An acquisition hunt across 17 editions reported 0/17 found and was entirely
+artifact.
+
+**The tell was a sanity floor, not an error:** "petrarca returns 1 item on all of
+Internet Archive" is impossible. Carry a magnitude expectation for at least one
+query and check it.
+
+Rules for any third-party search you draw conclusions from:
+
+- **Positive control, every run.** Query something you *know* the endpoint holds
+  and abort the run if it comes back empty. `scripts/audit/` probes in this repo
+  do this; copy the pattern.
+- **Per-item control where you can.** Hunting for other copies of book X, require
+  the query to return **X itself**. Then a zero is a real zero. All 17 queries
+  passed this on the retry, which is the only reason the second result is
+  trustworthy.
+- **Prefer `advancedsearch.php` over `scrape` for searching.** `scrape` is fine
+  for enumerating a known identifier prefix; it also rejects `count` < 100 with
+  HTTP 400, which — if unchecked — turns every query into a silent zero.
+- **Distinguish "query returned nothing" from "query did not run."** Log the
+  endpoint's own reported total alongside your filtered count.
+
+Same shape as the guard-reads-the-wrong-store entry above: the instrument was
+healthy-looking and pointed at nothing.
+
+## Two meters, two clocks: reconcile by MONTH, never by window (2026-09-04)
+
+Our `gemini_usage` rows and Google's Cloud Monitoring token telemetry measure the same
+spend on **different clocks**. A batch row is timestamped when the job is *collected*;
+Google counts the tokens when they were *generated*, hours earlier.
+
+Over a 3-hour window that made Google's total (6.52M output tokens) line up with our
+**realtime** rows (5.81M) while our batch rows (4.09M) looked uncounted — from which I
+concluded "the metric excludes batch." **That was wrong.** At month scale it resolves:
+September meter 78.0M vs Google 69.7M, i.e. batch *is* counted and the meter runs ~12%
+high on boundary effects (late-August batches collected in September).
+
+**Rule:** reconcile monthly (`scripts/audit/spend-reconcile.mjs --month=YYYY-MM`) and
+treat ±15% as clock noise, not signal. A short window cannot distinguish "this lane is
+unmetered" from "these two clocks disagree", and the first conclusion is much more
+alarming than the truth.
+
+Generalisation worth keeping: **when two instruments disagree, check whether they share
+a clock before concluding one is broken.** The disagreement was real and the mechanism
+was mundane; the short window manufactured the drama.
+
+## The convenient artifact is the misleading one — that is not a coincidence
+
+Three instruments failed in one afternoon (2026-09-04, #4523), and in every case the
+artifact a reasonable person would reach for FIRST was the wrong one. That is the
+pattern, not bad luck: the convenient artifact is convenient because it is complete,
+always present, or already open — and those are exactly the properties a stale or
+partial record has.
+
+- **A failures-only log reads as a complete log.** `reocr_worker.py` writes
+  `worker-0.jsonl` containing only failures and skips; successes go to the output
+  directory and are never logged. Reading it produced "2,016 failures, ZERO
+  successes — the job is broken", published as an operational alert. The job was
+  healthy: the output dir grew 7,430 → 7,451 files in 15 minutes, with valid
+  Tibetan in them. **Verify a worker by its OUTPUT growing, never by its error log
+  being non-empty.** If a log records only one outcome class, say so in its NAME.
+- **An error field that captures a stderr TAIL reports the last warning, not the
+  cause.** Every failure in that log read `kenlm python bindings are not installed`
+  — a benign notice the BDRC CLI prints on every invocation, successful or not. The
+  real failure modes (`No lines detected` on blank folios, http 403/502) were
+  invisible. Capture the exception, not the tail.
+- **A field present on 100% of rows beats a correct field present on 27% — in
+  adoption, not in truth.** `pages.image_width` exists on all 285,373 OCR'd Tibetan
+  pages; `image_metadata.width` on 27.3%. Where both exist they disagree **4,000 of
+  4,000 sampled times**: `image_width` is the DISPLAY derivative, `image_metadata`
+  the archived master (one page reads 1200×800 against a real 3888×2592). A
+  corpus-wide "42% of pages are too low-res to OCR" was built on the populated field
+  and was wrong. **Before a cohort query, check the field's coverage AND cross-check
+  it against a second source on rows carrying both.** For image size the authority is
+  the provider's own `info.json`, since our copy can never exceed the source master.
+
+Corollary for the writing side: **if you know which artifact is authoritative, make
+it the easy one to reach.** A warning in a doc loses to a field that autocompletes.
+
+**An instrument that reads only your own records cannot discover that your records are wrong.** Every rule above is about an instrument that measures the wrong thing. This one is about a whole *set* of instruments that measure the right thing, correctly, and still miss a fact none of them can see — because they all draw from the same well. We had three spend instruments: `true-gemini-spend.mjs` (reads every meter we write), `spend-perimeter.mjs` (checks every spender asks the dial), and the Gemini lines in `daily-health-snapshot.mjs` (reports `batch_jobs.cost_usd`). All three were well-built and encoded real scar tissue. **None of them ever asked Google what it charged.** So for three months they agreed with each other at ~$500/month against a billed $8,389.32 — a 17× gap that no amount of cross-checking *between* them could have surfaced, because the missing quantity (reasoning tokens, billed at the output rate) was absent from every source they read. The meters recorded `candidatesTokenCount`, which excludes `thoughtsTokenCount`; the bill counted both (#4581).
+
+Two compounding failures made it invisible, and both are worth recognising in other domains. First, **the cost figures were computed from a constant, not observed** — `gemini_usage.cost_usd` is derived from `MODEL_PRICING`, so a wrong constant produced wrong costs that were internally consistent and looked fine. Second, **the constant had been "validated" against those same computed costs**: `scripts/lib/model-pricing.mjs` chose `0.075/0.30` for flash-lite as the "closest fit to recorded costs," where the recorded costs were themselves generated by `0.075/0.30`. A constant fitted to numbers it produced is a mirror, not a measurement, and it will fit perfectly forever. Google's SKU catalogue says `0.25/1.50`.
+
+So when you build an instrument over a quantity that some **external party is authoritative for** — a vendor's bill, a partner's catalogue, an upstream API's idea of what it returned — at least one instrument in the set has to reach *outside* and reconcile. `scripts/audit/spend-reconcile.mjs` is that one for spend: it pulls billed tokens from Cloud Monitoring and live prices from the Cloud Billing SKU catalogue (`cloudbilling.googleapis.com/v1/services/AEFD-7695-64FA/skus` — an API, not a console), diffs both against our meters, and exits 2 on drift. It also reports **meter coverage** as a first-class number, which is the second half of the lesson: it found that only 72% of Google's successful `GenerateContent` calls write a usage row at all (#4599 — first read as 37%, because the reconciler itself was reading one of the two usage stores, #4593/#4657). An instrument should say how much of the thing it can see, not only what it found in the part it looked at. And when it cannot see a vendor, it must print UNREADABLE with the reason — an omitted line reads as $0, which is the silent-zero failure from the parser rule above wearing a different hat.
+
+## A page that prints its own answer key cannot test whether a model can do the task
+
+The Morley 1597 plainsong examples were chosen as the first mensural ground
+truth *because* the print sets the solmization syllable under every note — that
+is what let one person verify twelve staff positions without a musicologist. The
+same property makes the page nearly useless as a test of staff reading, and the
+first run (2026-09-11, `scripts/music/eval-results/2026-09-11-mensural-gemini-3-flash-preview/`)
+showed why: gemini-3-flash-preview returned the printed syllables mapped
+through the natural hexachord — right for 7 of 12 notes by coincidence, wrong
+for every note needing the hard hexachord, pitch NER 0.42. Note count and
+lyrics were perfect. **It transcribed the key instead of doing the task the key
+was meant to check**, and nothing in the output says so.
+
+The general shape, which is not specific to music: **whenever the ground truth
+is derivable from something visible in the model's input, the eval measures
+transcription of that thing, not the skill.** A facing-page translation, a
+labelled diagram, a printed index, a filename that names the class, a caption
+that states the answer — each turns a hard task into an easy one *for the model
+only*, while the human verifying the reference still did the hard work and so
+still believes the page is a fair test.
+
+- **Ask what else on the page answers the question**, before adopting a page as
+  ground truth. If the answer is present, either crop it out of the model's
+  input and keep the human's copy, or find a second page without it and report
+  both numbers.
+- **The tell is structured error, not random error.** Errors that partition
+  cleanly along the key's own coordinate system (here: every natural-hexachord
+  note right, every hard-hexachord note wrong) mean the model is working in the
+  key's frame, not the artifact's. Random-looking errors of the same magnitude
+  would have meant it was genuinely reading and failing.
+- **A correct count with wrong content is the same signature.** Getting the
+  number of notes and every lyric exactly right while missing the pitches is
+  what "read the easy channel" looks like; treat per-element agreement and
+  sequence length as separate metrics so one cannot mask the other.
+
+Corollary: an answer key is still the cheapest way to *verify a reference*. Keep
+using it for that. Just don't let the model see it.
+
+## A positive control certifies the instrument only on inputs shaped like the control (#4722)
+The Derge-identity scorer (`kanjur_align.score_page` on clawdbot, `/root/tibetan-eval/`) computed identity = matches / len(read) against **one** retrieved e-text page. Its positive control — a true e-text page plus 5% noise — scored 0.968, because the control was built from the **reference** side. Real reads are EAP two-leaf captures, ~470–600 syllables against a ~350–400-syllable e-text page, so a verbatim read of a folio straddling two pages was capped near **0.5** and the gate still passed. Every Derge identity published before 2026-09-11 (old Gemini 0.182 → BDRC 0.664, the 0.60 align rescue in `adjudicate.py`, the 5,086-page concordance) is an underestimate for long pages; the same Yigdzin reads score 0.93–0.97 once windowed.
+
+- **Build positive controls from the INPUT distribution, not the reference's.** A two-page concatenation control scores 0.496 at the old window and 0.968 at the new one — that control now ships with the scorer (`control --span 2`).
+- **For any ratio with the read in the denominator, window the reference wider than the longest read.** Fix: `score_page(..., window=2)` (retrieved page ±2, now the default; `window=0` reproduces the old number and `identity1` carries it).
+- **Tell:** an external instrument predicts a magnitude you do not see (a 0.7%-CER model reading at 0.48 "identity"), and your gate still passes. That gap is the instrument until proven otherwise. Postmortem and numbers: #4722 comment 5640946736; lesson `lesson_alignment_identity_capped_by_window_span` in auto-memory.

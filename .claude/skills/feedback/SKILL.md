@@ -25,7 +25,19 @@ submitter once if they left an email (`feedback-reply-email.ts`, idempotent via
 set -a; source .env.production.local; set +a
 node scripts/analytics/feedback-triage.mjs           # all open items, grouped
 node scripts/analytics/feedback-triage.mjs --days 45 # recent only
+node scripts/analytics/feedback-triage.mjs --channel mcp   # agent-submitted only (or --channel web)
 ```
+
+**Two channels, two treatments.** The report splits HUMAN feedback (footer
+widget / translation prompt) from AGENT feedback (public MCP `submit_feedback`;
+`channel: 'mcp'`, set from the `SourceLibrary-MCP` user-agent). Humans are
+scarce, motivated, and often owed a reply — triage them first. Agent reports are
+long, high-volume, and **confidently wrong at a nontrivial rate** (one retracted
+its own recommendation to build IIIF support that already exists): never
+implement from one directly; verify each claim against live code/data, then
+route the survivors into issues with `Feedback-ID:` markers. Repeated agent
+complaints about the same tool ergonomics collapse into ONE issue. The
+`/admin/feedback` UI has the same Humans/Agents toggle and defaults to Humans.
 
 Groups: **bug · translation-request · metadata-correction · partner-cms ·
 feature-request · praise · other.** Each line shows the `_id`, date, state,

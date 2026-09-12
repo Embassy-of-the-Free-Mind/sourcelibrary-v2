@@ -15,7 +15,8 @@
  *   node scripts/import/harvard-iiif-direct-batch.mjs --commit
  */
 import { MongoClient, ObjectId } from 'mongodb';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 
@@ -70,7 +71,7 @@ async function main(){
     if (!COMMIT){ console.log(`· ${b.fhcl} ${pages.length}p | ${b.title.slice(0,50)} | ${label.slice(0,40)}`); results.push({fhcl:b.fhcl,pages:pages.length}); await new Promise(x=>setTimeout(x,1500)); continue; }
     const bookId=new ObjectId(), id=bookId.toHexString(), now=new Date();
     const slug=await uniqueSlug(db, slugify(b.title.split('—')[1]||b.title));
-    await db.collection('books').insertOne(makeBookDoc({
+    const acquired = await insertBookIfNew(db, {
       _id:bookId, id, slug, title:b.title, display_title:label||b.title.split('—')[0].trim(),
       author:b.author, language:'Chinese', original_language:'Chinese', published:b.published,
       categories:[], collections:b.colls, thumbnail:pages[0]?.thumbnail||'',
@@ -84,7 +85,9 @@ async function main(){
       status:'draft', hidden:true, visible:false, source_fingerprint:fp,
       normalized_title:slugify(b.title.split('—')[0]).replace(/-/g,' '), normalized_author:slugify(b.author).replace(/-/g,' '),
       created_at:now, updated_at:now,
-    }));
+    }, { importer: 'script:harvard-iiif-direct-batch', sourceIdentifier: b.fhcl, sourceUrl: manifestUrl });
+    // The gate declined this candidate; the reason is a row in `dedup_skips`.
+    if (!acquired.inserted){ console.log(`– ${b.fhcl} skip — ${acquired.message}`); results.push({fhcl:b.fhcl,skip:true}); continue; }
     for (let s=0;s<pages.length;s+=500){ const docs=pages.slice(s,s+500).map((p,k)=>{ const pid=new ObjectId();
       return makePageDoc({ _id:pid, id:pid.toHexString(), book_id:id, page_number:s+k+1, photo:p.photo, thumbnail:p.thumbnail, photo_original:p.photo, created_at:now, updated_at:now }); });
       await db.collection('pages').insertMany(docs,{ordered:false}); }

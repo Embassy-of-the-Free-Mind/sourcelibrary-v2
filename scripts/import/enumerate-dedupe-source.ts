@@ -29,6 +29,12 @@
  *   --ia-query RAW         raw IA advancedsearch query (overrides the two above)
  *   --rows N               max candidates to pull (default 200)
  *   --min-images N         skip items with fewer than N page images (default 10)
+ *   --resolve-images       for items the search index gives no imagecount for,
+ *                          read the real page count from IA's IIIF manifest.
+ *                          Needed for whole channels (eGangotri: 0% coverage).
+ *   --resolve-concurrency N  parallel manifest fetches while resolving (default 4).
+ *                          Do NOT raise this casually: at 12 archive.org
+ *                          throttled us to an 87% failure rate within minutes.
  *   --out PATH             write candidate JSON here (default: stdout table only)
  */
 
@@ -44,6 +50,29 @@ const IA_QUERY_RAW = arg('--ia-query');
 const ROWS = parseInt(arg('--rows', '200'), 10);
 const MIN_IMAGES = parseInt(arg('--min-images', '10'), 10);
 const OUT = arg('--out');
+const RESOLVE_IMAGES = process.argv.includes('--resolve-images');
+const RESOLVE_CONCURRENCY = parseInt(arg('--resolve-concurrency', '4'), 10);
+
+// Page count for an item whose `imagecount` the search index does not carry.
+// Same first step the /api/import/ia route uses (IIIF canvases), so a count
+// here matches the count the import will actually produce.
+// A short deadline is deliberate. Measured over eGangotri: a manifest either
+// answers in ~0.6-3s or does not answer at all, and ~25% fall in the second
+// group. Waiting 25s and then RETRYING them turned a 4-minute job into a
+// 4-hour one for no extra data. Unknown is a fine answer here — the import
+// route resolves the count itself and fails closed if it cannot.
+async function resolveImageCount(identifier: string): Promise<number | null> {
+  try {
+    const r = await fetch(`https://iiif.archive.org/iiif/${identifier}/manifest.json`, { signal: AbortSignal.timeout(10000) });
+    if (!r.ok) return null;
+    const m = await r.json();
+    if (Array.isArray(m.items)) return m.items.length;
+    if (Array.isArray(m.sequences?.[0]?.canvases)) return m.sequences[0].canvases.length;
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 function buildIaQuery() {
   if (IA_QUERY_RAW) return IA_QUERY_RAW;
@@ -69,7 +98,12 @@ async function enumerateIA() {
     title: Array.isArray(d.title) ? d.title[0] : (d.title || ''),
     author: Array.isArray(d.creator) ? d.creator[0] : (d.creator || ''),
     year: d.year || null,
-    images: d.imagecount || 0,
+    // `imagecount` is ABSENT from the advancedsearch index for whole channels
+    // (every eGangotri item, for one). Coercing that to 0 made --min-images
+    // reject 100% of them as THIN — a missing field read as an empty book.
+    // null means "unknown", which is not the same as "none": resolve it with
+    // --resolve-images, never silently treat it as a reason to skip.
+    images: d.imagecount != null && d.imagecount !== '' ? Number(d.imagecount) : null,
     language: Array.isArray(d.language) ? d.language.join(',') : (d.language || ''),
   }));
 }
@@ -121,28 +155,84 @@ async function main() {
   await client.close();
   console.error(`DEDUPE: against ${held.total} held books`);
 
+  if (RESOLVE_IMAGES) {
+    const unknown = candidates.filter(c => c.images == null);
+    console.error(`RESOLVE: ${unknown.length} items have no imagecount — reading page counts from IA's IIIF manifests`);
+    let done = 0, failed = 0, next = 0;
+    // Worker pool, NOT fixed batches: with batches, one slow manifest blocks the
+    // other five in its group, and the whole pass runs at the speed of its worst
+    // item. Each worker just takes the next index when it is free.
+    // Bail if the source has clearly stopped answering us, instead of grinding
+    // through thousands of items at a 0% success rate and calling it progress
+    // (the #4341 lesson: a swallowed failure reads as slow, not as blocked).
+    let aborted = false;
+    const worker = async () => {
+      for (;;) {
+        if (aborted) return;
+        const i = next++;
+        if (i >= unknown.length) return;
+        unknown[i].images = await resolveImageCount(unknown[i].ia_identifier);
+        if (unknown[i].images == null) failed++;
+        if (++done % 200 === 0) console.error(`  …${done}/${unknown.length} (${failed} unresolved)`);
+        if (done >= 120 && failed / done > 0.6) {
+          aborted = true;
+          console.error(`  ABORT: ${failed}/${done} manifest fetches failed (>60%). archive.org is almost certainly throttling —`);
+          console.error(`  lower --resolve-concurrency (4 is the tested default) or drop --resolve-images. Sizes stay UNKNOWN_SIZE, which is honest.`);
+          return;
+        }
+      }
+    };
+    await Promise.all(Array.from({ length: Math.max(1, RESOLVE_CONCURRENCY) }, worker));
+    // Say what stayed unknown. A silent skip here would put items back in the
+    // same hole the missing-imagecount bug dug.
+    console.error(`  resolved ${done - failed}/${unknown.length}; ${failed} still unknown (manifest fetch failed)`);
+  }
+
+  // Dedupe WITHIN the candidate list, not only against holdings. A source can
+  // carry the same item twice: eGangotri re-uploads manuscripts with a
+  // `_2017xx` identifier suffix, and 431 of 1,689 tantra candidates were such
+  // pairs. Nothing downstream would have caught it — each id is genuinely new
+  // to us, so both would import as separate books.
+  const seenBase = new Map<string, string>();
+  for (const c of candidates) {
+    const base = String(c.ia_identifier).replace(/_\d{6}$/, '').toLowerCase();
+    if (!seenBase.has(base)) seenBase.set(base, c.ia_identifier);
+  }
+
   const rows = candidates.map(c => {
     const cls = classify(c, held);
-    const tooThin = (c.images || 0) < MIN_IMAGES;
-    return { ...c, status: tooThin && cls.status === 'NEW' ? 'THIN' : cls.status, reason: tooThin ? `${c.images} images < ${MIN_IMAGES}` : cls.reason };
+    if (cls.status !== 'NEW') return { ...c, status: cls.status, reason: cls.reason };
+    const base = String(c.ia_identifier).replace(/_\d{6}$/, '').toLowerCase();
+    const keeper = seenBase.get(base);
+    if (keeper && keeper !== c.ia_identifier) {
+      return { ...c, status: 'REUPLOAD', reason: `same item as ${keeper} (source re-upload)` };
+    }
+    // Unknown size is a gap in our knowledge, not a property of the book.
+    if (c.images == null) return { ...c, status: 'UNKNOWN_SIZE', reason: 'no imagecount; re-run with --resolve-images' };
+    const tooThin = c.images < MIN_IMAGES;
+    return { ...c, status: tooThin ? 'THIN' : 'NEW', reason: tooThin ? `${c.images} images < ${MIN_IMAGES}` : cls.reason };
   });
 
   const counts = rows.reduce((m, r) => (m[r.status] = (m[r.status] || 0) + 1, m), {});
   console.error(`\nRESULT: ${JSON.stringify(counts)}`);
   console.error(`  NEW = not held, worth subject-filtering for import.`);
-  console.error(`  LIKELY_DUP / HELD = skip. TITLE_CLASH = same title diff author (check). THIN = too few images.\n`);
+  console.error(`  LIKELY_DUP / HELD = skip. TITLE_CLASH = same title diff author (check). THIN = too few images.`);
+  console.error(`  REUPLOAD = the SAME item twice in this list (source re-upload) — import the keeper only.`);
+  console.error(`  UNKNOWN_SIZE = source gave no imagecount — NOT a judgement about the book; re-run with --resolve-images.\n`);
 
   // Readable table — NEW first
-  const order = { NEW: 0, TITLE_CLASH: 1, THIN: 2, LIKELY_DUP: 3, HELD: 4 };
+  const order = { NEW: 0, TITLE_CLASH: 1, UNKNOWN_SIZE: 2, THIN: 3, REUPLOAD: 4, LIKELY_DUP: 5, HELD: 6 };
   rows.sort((a, b) => (order[a.status] - order[b.status]) || String(a.title).localeCompare(String(b.title)));
   for (const r of rows) {
     console.log(`  [${r.status.padEnd(11)}] ${String(r.ia_identifier).padEnd(16)} img=${String(r.images).padStart(4)} | ${String(r.title).slice(0, 50)}`);
   }
 
   if (OUT) {
-    const newOnes = rows.filter(r => r.status === 'NEW' || r.status === 'TITLE_CLASH');
+    // UNKNOWN_SIZE rides along: dropping it here would hide the very items the
+    // missing-imagecount bug used to swallow.
+    const newOnes = rows.filter(r => r.status === 'NEW' || r.status === 'TITLE_CLASH' || r.status === 'UNKNOWN_SIZE');
     writeFileSync(OUT, JSON.stringify({ query: buildIaQuery(), generatedFrom: candidates.length, heldCount: held.total, counts, candidates: newOnes }, null, 2));
-    console.error(`\nWrote ${newOnes.length} review candidates (NEW + TITLE_CLASH) → ${OUT}`);
+    console.error(`\nWrote ${newOnes.length} review candidates (NEW + TITLE_CLASH + UNKNOWN_SIZE) → ${OUT}`);
     console.error(`Next: subject-filter this list by hand, then import the approved ids.`);
   }
 }

@@ -10,10 +10,16 @@
  * `api_keys.last_used_at` is bumped on every key validation (both paths), so it
  * shows liveness but not volume.
  *
- * NOTE on the business-model hole this surfaces: /text treats ANY valid key as
- * the unlimited "apikey" tier (src/lib/api-budget.ts pickLimit), so a *free*
- * explorer key is never page-capped on /text. Heavy explorer-tier extraction
- * flagged below is exactly the bulk use the paid tiers are meant to price.
+ * Tier caps: pickLimit (src/lib/api-budget.ts) caps free Explorer keys at
+ * their published daily page budget on /text AND on the image proxy; paid
+ * tiers (pagesPerDay: 0) are uncapped by design — a paid key buys attributable
+ * unlimited access, not a quota. (An older note here described Explorer keys
+ * as uncapped on /text; that hole was closed in pickLimit.) The historical
+ * all-time BULK flags below predate the caps and are kept as provenance.
+ *
+ * Since #4356, route:'image' rows count image-proxy pulls (1 page_served per
+ * image) — keyed image traffic and budgeted anonymous non-browser pulls both
+ * land here. Browser/reader image loads are never logged.
  *
  * Usage: node scripts/maintenance/api-key-usage-monitor.mjs [--days 7] [--json]
  */
@@ -55,22 +61,29 @@ const perKey = await db.collection('api_usage').aggregate([
   { $sort: { pages: -1 } },
 ]).toArray();
 
-// Windowed per-key traffic (last N days).
+// Windowed per-key traffic (last N days). `images` splits out the image-proxy
+// share of `pages` so a key pulling page scans is distinguishable from one
+// pulling text.
 const perKeyWin = await db.collection('api_usage').aggregate([
   { $match: { api_key_id: { $ne: null }, ts: { $gte: since } } },
-  { $group: { _id: '$api_key_id', calls: { $sum: 1 }, pages: { $sum: '$pages_served' } } },
+  { $group: {
+      _id: '$api_key_id',
+      calls: { $sum: 1 },
+      pages: { $sum: '$pages_served' },
+      images: { $sum: { $cond: [{ $eq: ['$route', 'image'] }, '$pages_served', 0] } },
+  } },
 ]).toArray();
 const winMap = new Map(perKeyWin.map((r) => [String(r._id), r]));
 
 const rows = perKey.map((r) => {
   const k = kmap.get(String(r._id)) || {};
-  const w = winMap.get(String(r._id)) || { calls: 0, pages: 0 };
+  const w = winMap.get(String(r._id)) || { calls: 0, pages: 0, images: 0 };
   const bulk = (k.tier === 'explorer') && r.pages >= BULK_PAGE_FLAG;
   return {
     name: k.name || '?', tier: k.tier || '?', status: k.status || '?',
     user_id: k.user_id, key_prefix: k.key_prefix,
     all_calls: r.calls, all_pages: r.pages, blocked: r.blocked,
-    [`calls_${days}d`]: w.calls, [`pages_${days}d`]: w.pages,
+    [`calls_${days}d`]: w.calls, [`pages_${days}d`]: w.pages, [`images_${days}d`]: w.images,
     last_used: r.last?.toISOString() || null, bulk_flag: bulk,
   };
 });
@@ -86,7 +99,7 @@ if (asJson) {
   console.log(JSON.stringify({ days, generated: new Date().toISOString(), rows, byKind }, null, 2));
 } else {
   console.log(`\nAPI KEY USAGE — ${keys.length} keys total, window = last ${days}d\n`);
-  console.log('  key                              tier       all-time pages   all-time calls   ' + `${days}d pages   last used`);
+  console.log('  key                              tier       all-time pages   all-time calls   ' + `${days}d pages  ${days}d imgs   last used`);
   for (const r of rows) {
     const flag = r.bulk_flag ? '  ⚠ BULK' : '';
     console.log(
@@ -95,6 +108,7 @@ if (asJson) {
       String(r.all_pages).padStart(14) +
       String(r.all_calls).padStart(17) +
       String(r[`pages_${days}d`]).padStart(12) +
+      String(r[`images_${days}d`]).padStart(10) +
       '   ' + (r.last_used?.slice(0, 16) || '-') + flag
     );
   }
@@ -104,7 +118,7 @@ if (asJson) {
   for (const r of byKind) console.log(`    ${r._id.padEnd(9)} ${String(r.calls).padStart(10)} calls  ${String(r.pages).padStart(9)} pages`);
   const flagged = rows.filter((r) => r.bulk_flag);
   if (flagged.length) {
-    console.log(`\n  ⚠ ${flagged.length} explorer key(s) over ${BULK_PAGE_FLAG.toLocaleString()} pages — free-tier bulk extraction (uncapped on /text):`);
+    console.log(`\n  ⚠ ${flagged.length} explorer key(s) over ${BULK_PAGE_FLAG.toLocaleString()} all-time pages — historical free-tier bulk extraction (predates the pickLimit tier caps):`);
     for (const r of flagged) console.log(`    ${r.name} — ${r.all_pages.toLocaleString()} pages (${r.user_id})`);
   }
 }

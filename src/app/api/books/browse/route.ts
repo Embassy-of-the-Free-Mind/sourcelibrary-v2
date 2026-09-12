@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getReadDb } from '@/lib/mongodb';
+import { translationPercent } from '@/lib/translation-completeness';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,7 +49,7 @@ export async function GET(request: NextRequest) {
     // Build query
     let query = supabase
       .from('books_catalog')
-      .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, is_first_translation, last_translation_at, quality_score, image_source_provider', { count: 'exact' })
+      .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, is_first_translation, last_translation_at, quality_score, image_source_provider', { count: 'exact' })
       .eq('visible', true)
       .gt('pages_count', 0);
 
@@ -99,9 +100,8 @@ export async function GET(request: NextRequest) {
     // Transform to match /api/books/library response shape
     const books = (data || []).map(book => ({
       ...book,
-      translation_percent: book.pages_count > 0
-        ? Math.round((book.pages_translated / book.pages_count) * 100)
-        : 0,
+      // One formula, clamped at 100, blanks skipped on both sides (#4505).
+      translation_percent: translationPercent(book),
     }));
 
     const db = await getReadDb();

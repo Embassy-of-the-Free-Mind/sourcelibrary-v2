@@ -9,7 +9,7 @@
  *  - identical-title (HIGH): same author surname + identical full normalized
  *    title + matching series key. Same-work by construction. Tibetan and
  *    volume-marked titles are excluded (pecha / multi-volume grain hazards),
- *    mirroring merge-duplicate-work-ids.mjs.
+ *    mirroring the retired merge-duplicate-work-ids.mjs (deleted 2026-08, in git history).
  *  - containment (MEDIUM, queue only): author-anchored title containment —
  *    the work-coverage fit rule applied between two work_id clusters. Never
  *    auto-written; a wrong merge poisons FT counting silently.

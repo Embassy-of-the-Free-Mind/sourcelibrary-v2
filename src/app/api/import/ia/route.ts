@@ -6,8 +6,8 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
+import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { resolveLanguage, resolveDate, publishedToYear, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
@@ -118,7 +118,47 @@ export const POST = withCuratorAuth(async (request, session) => {
       }
     }
 
-    // 4. Cross-check: if imagecount or jp2 differs wildly from IIIF, trust IIIF
+    // 4. scandata.xml — the leaf list, for items whose images ship ONLY as a
+    // _jp2.zip. Steps 1-3 all miss that shape: IA's IIIF service does not
+    // answer for these items, `imagecount` is absent from their metadata, and
+    // there are no loose .jp2 files to count because they are inside the zip.
+    //
+    // Measured on the eGangotri Sharada corpus (#4311): 739 of 1,507 candidates
+    // failed here, and a 14-item sample was unanimous — 0/14 resolved via IIIF,
+    // 0/14 had imagecount, 0/14 had loose .jp2, and 14/14 had scandata.xml.
+    // Retrying was useless; the chain simply had no step that fit. This is the
+    // same shape as the DLI/Public Library of India mirror, so it unblocks that
+    // channel too.
+    if (pageCount === 0) {
+      const scandata = files.find((f: { name: string }) => /scandata\.xml$/i.test(f.name));
+      if (scandata) {
+        try {
+          const sdRes = await fetch(
+            `https://archive.org/download/${ia_identifier}/${encodeURIComponent(scandata.name)}`,
+            { signal: AbortSignal.timeout(20000) }
+          );
+          if (sdRes.ok) {
+            const xml = await sdRes.text();
+            // Count <page> elements, ignoring any leaf marked as not part of
+            // the book body — IA marks inserts/colour targets this way and
+            // counting them would inflate the page count.
+            const leaves = xml.match(/<page\b[^>]*>/gi) || [];
+            const excluded = (xml.match(/<addToAccessFormats>\s*false\s*<\/addToAccessFormats>/gi) || []).length;
+            const n = leaves.length - excluded;
+            if (n > 1) {
+              pageCount = n;
+              pageCountSource = 'scandata';
+            }
+          }
+        } catch {
+          // scandata unreachable — fall through to the error below, which is
+          // still the right outcome: better to refuse than to import a book
+          // whose length we are guessing at.
+        }
+      }
+    }
+
+    // 5. Cross-check: if imagecount or jp2 differs wildly from IIIF, trust IIIF
     // (this catches the inflation bug where metadata reports 2-20x too many pages)
 
     if (pageCount === 0) {
@@ -149,7 +189,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     // Cross-source dedup check
-    const dedupResult = await checkDuplicate(db, {
+    const gate = await acquisitionGate(db, {
       title,
       author,
       display_title,
@@ -161,15 +201,11 @@ export const POST = withCuratorAuth(async (request, session) => {
         identifier: ia_identifier,
         source_url: `https://archive.org/details/${ia_identifier}`,
       },
-    });
-    if (dedupResult.isDuplicate) {
-      const best = dedupResult.matches[0];
+    }, { importer: 'api:ia' });
+    if (!gate.ok) {
+      const best = gate.matches[0];
       return NextResponse.json(
-        {
-          error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`,
-          existingId: best.matchedBookId,
-          matches: dedupResult.matches,
-        },
+        { error: gate.message, existingId: best?.matchedBookId ?? null, reason: gate.reason, evidence: gate.evidence, matches: gate.matches },
         { status: 409 }
       );
     }
@@ -328,6 +364,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       status: 'draft',
       hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ ia_identifier }),
+      source_fingerprints: gate.fingerprints,
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
       created_at: new Date(),
@@ -337,6 +374,9 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Classify original-vs-translation at import (issue #2395).
     applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
+    // The claim now points at the row it produced, so it stops being
+    // reclaimable and the acquisition ledger is joinable to `books`.
+    await confirmClaims(db, gate.fingerprints, bookIdStr);
 
     // Create pages
     const pageDocs = [];
@@ -358,9 +398,6 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     await db.collection('pages').insertMany(pageDocs);
-
-    // Queue preview OCR for early metadata enrichment (non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     // Audit log (non-blocking)
     logAuditEvent({

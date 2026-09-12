@@ -12,6 +12,14 @@
 #
 # Worktrees are unaffected: `git worktree add` is not a checkout/switch, and
 # branch switches inside a worktree have cwd != the main directory.
+#
+# It ALSO blocks, from ANY cwd (worktrees included), commands that force-move
+# the shared `main` ref itself: `checkout -B main`, `switch -C main`,
+# `branch -f/-D main`, `update-ref refs/heads/main`, `fetch ...:main`.
+# On 2026-08-25 and 08-27 a `checkout -B main origin/main` run from a worktree
+# moved the ref without updating the main checkout's index, stranding it on a
+# 6-day-old tree with a 157-file phantom "staged" mass-revert.
+# See .claude/docs/invariants/main-checkout-and-worktrees.md.
 
 MAIN_DIR="/Users/dereklomas/sourcelibrary"
 
@@ -32,6 +40,64 @@ print("CWD=" + shlex.quote(cwd))
 ' 2>/dev/null)"
 
 [ -z "${CMD:-}" ] && exit 0
+
+# ---- Ref guard: block force-moves of the shared `main` ref from ANY cwd. ----
+# Cheap prefilter so we don't spawn python on every Bash call.
+if printf '%s' "$CMD" | grep -q "git" && printf '%s' "$CMD" | grep -q "main"; then
+  REF_DECISION=$(printf '%s' "$CMD" | python3 -c '
+import sys, shlex
+cmd = sys.stdin.read()
+try:
+    toks = shlex.split(cmd)
+except Exception:
+    print("ALLOW"); sys.exit(0)
+
+def first_nonflag(args):
+    return next((a for a in args if not a.startswith("-")), None)
+
+verdict = "ALLOW"
+for i, t in enumerate(toks):
+    if t != "git":
+        continue
+    # Skip git-level options to find the subcommand.
+    j = i + 1
+    while j < len(toks):
+        tj = toks[j]
+        if tj in ("-C", "-c", "--git-dir", "--work-tree", "--namespace"):
+            j += 2; continue
+        if tj.startswith("-"):
+            j += 1; continue
+        break
+    if j >= len(toks):
+        continue
+    sub, args = toks[j], toks[j + 1:]
+    if sub in ("checkout", "switch"):
+        # -B/-C/--force-create main  (also attached forms -Bmain / -Cmain)
+        for k, a in enumerate(args):
+            if a in ("-B", "-C", "--force-create") and k + 1 < len(args) and args[k + 1] == "main":
+                verdict = "BLOCK"
+            if a in ("-Bmain", "-Cmain") or a == "--force-create=main":
+                verdict = "BLOCK"
+    elif sub == "branch":
+        flags = [a for a in args if a.startswith("-")]
+        if any(f in ("-f", "--force", "-D", "-d", "--delete", "-M", "-m") for f in flags):
+            if first_nonflag(args) == "main":
+                verdict = "BLOCK"
+    elif sub == "update-ref":
+        if any(a in ("refs/heads/main",) for a in args):
+            verdict = "BLOCK"
+    elif sub == "fetch":
+        if any(a.endswith(":main") or a.endswith(":refs/heads/main") for a in args):
+            verdict = "BLOCK"
+print(verdict)
+' 2>/dev/null)
+  if [ "$REF_DECISION" = "BLOCK" ]; then
+    echo "BLOCKED: refusing to force-move, rename, or delete the shared 'main' ref." >&2
+    echo "Moving 'main' from a worktree strands the main checkout: its index still describes the old commit, which surfaces as a phantom mass-revert 'staged' on main (this happened 2026-08-25 and 08-27)." >&2
+    echo "To sync a worktree with current main: 'git fetch origin' and branch from 'origin/main'. Never take the 'main' ref itself." >&2
+    exit 2
+  fi
+fi
 
 # Only police commands that act on the main directory: either the session cwd is
 # the main dir, or the command explicitly targets it via `git -C <main dir>`.
