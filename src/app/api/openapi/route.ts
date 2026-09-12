@@ -155,11 +155,27 @@ const SPEC = {
         responses: jsonResponse('{ total, activeFilters, counts?, vocabulary?, books?, page, limit, pages }'),
       },
     },
+    '/vectors/{store}': {
+      get: {
+        summary: 'Embedding vectors — the coordinates behind semantic and visual search',
+        description:
+          'For running your own UMAP / clustering / nearest-neighbour work rather than being limited to our ranked results. Stores: `books` (768d, ~35.8k), `gallery` (768d, ~212k illustration descriptions), `clip` (512d, ~313k CLIP VISUAL vectors — use these for "looks alike"), `artworks` (3072d, ~21.9k). Each row carries label fields so points can be captioned without a join. KEYSET pagination: echo `next_cursor` back as `after` until it stops being returned. Page-level vectors (3.9M rows) are not served here — ask for a bulk dump.',
+        parameters: [
+          { name: 'store', in: 'path', required: true, description: 'books | gallery | clip | artworks', schema: { type: 'string' } },
+          q('after', 'Keyset cursor — the last id from the previous page'),
+          q('limit', 'Rows per page (default 200, max 1000)', { type: 'integer' }),
+          q('format', 'json (default, plain float arrays) or base64 (float32 little-endian, ~2.5x smaller)'),
+        ],
+        responses: jsonResponse('{ store, dims, format, returned, next_cursor, vectors: [{ id, …labels, embedding }] }'),
+      },
+    },
     '/books/{id}': {
       get: {
         summary: 'Book metadata, AI reading summary, chapters, editions, DOI',
+        description:
+          'IMAGE URLS: every page returns `image_full` (our full-resolution master), `image_display` (~2000px viewer variant) and `image_thumb`, all on images.sourcelibrary.org. Use `image_full` for archival-quality work — it equals or exceeds what the originating library serves (measured page-for-page: Göttingen 3651x4652 on both sides, Morgan 8308x10576 for ours against 2000x2546 at the source, and one source URL returned HTTP 504 while ours served). The originating institution\'s own image URLs are deliberately NOT returned: we hold a copy of every page, and passing them on would turn this API into a fan-out onto partner libraries. Where a scan came from travels as `attribution` on the book instead. `image_unavailable: true` marks the rare page we hold no copy of.',
         parameters: [pathId('Book id or slug')],
-        responses: jsonResponse('Book record'),
+        responses: jsonResponse('Book record, including pages[] with both our image URLs and source provenance URLs'),
       },
     },
     '/books/{id}/text': {
@@ -218,10 +234,13 @@ const SPEC = {
           q('book', 'Restrict to one book id'),
           q('semantic', 'true — semantic (meaning-based) matching'),
           q('visual', 'true — CLIP visual similarity mode'),
-          q('limit', 'Max results (default 24)', { type: 'integer' }),
+          q('maxPerBook', 'Illustrations per source book (DEFAULT 3). The default keeps one heavily-illustrated volume from dominating the browse — raise it (e.g. 1000) to enumerate the corpus, or most images stay unreachable however far you paginate.', { type: 'integer' }),
+          q('minQuality', 'Minimum gallery_quality, 0–1 (default 0.7). Lower it to include rougher extractions.', { type: 'number' }),
+          q('source', 'all (default) | artwork — the default browse interleaves book illustrations with standalone artworks'),
+          q('limit', 'Max results (default 24, max 200)', { type: 'integer' }),
           q('offset', 'Pagination offset', { type: 'integer' }),
         ],
-        responses: jsonResponse('Illustration records with image URLs and source books'),
+        responses: jsonResponse('Illustration records with image URLs and source books. `total` counts the set your parameters actually select — raising maxPerBook raises it.'),
       },
     },
     '/gallery/collections': {

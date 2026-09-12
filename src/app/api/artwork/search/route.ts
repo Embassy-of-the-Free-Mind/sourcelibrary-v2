@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { artistAuthorRegex } from '@/lib/artist-match';
+import { isOwnInfraUrl } from '@/lib/public-image-fields';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { semanticArtworkSearch } from '@/lib/semantic-search';
 import { resolveTitle } from '@/lib/title-provenance';
@@ -269,10 +270,17 @@ function shapeArtworkRow(
   const title = resolvedTitle.display;
   const description = semantic?.summary_text
     || (typeof doc.summary === 'string' ? (doc.summary as string) : null);
-  const thumbnail = (doc.image_thumb as string) || (doc.thumbnail_blob as string)
-    || (doc.thumbnail as string) || null;
-  const image = (doc.image_display as string) || (doc.image_full as string)
-    || (doc.thumbnail as string) || thumbnail;
+  // Our own images only. `doc.thumbnail` on an artwork record is frequently
+  // the holding museum's URL (rct.uk, wellcomeimages.org, polona.pl, and in
+  // one case a bare IP), and serving those to every API caller points our
+  // traffic at their servers. Measured over 4,000 artwork records: 99.1% have
+  // our thumbnail and 76.9% our display copy, so this costs almost nothing —
+  // and the 0.9% that would go imageless say so explicitly rather than
+  // borrowing a museum's URL. Same rule as page images
+  // (src/lib/public-image-fields.ts).
+  const pickOurs = (...vals: unknown[]) => (vals.find(isOwnInfraUrl) as string | undefined) ?? null;
+  const thumbnail = pickOurs(doc.image_thumb, doc.thumbnail_blob, doc.thumbnail);
+  const image = pickOurs(doc.image_display, doc.image_full, doc.thumbnail) ?? thumbnail;
 
   return {
     id: doc.id as string,
@@ -288,6 +296,7 @@ function shapeArtworkRow(
     description: description ? description.slice(0, 500) : null,
     image_url: image,
     thumbnail_url: thumbnail,
+    ...(image || thumbnail ? {} : { image_unavailable: true as const }),
     url: `https://sourcelibrary.org/book/${slug}`,
     collections: (doc.collections as string[]) ?? [],
     current_location: (doc.current_location as string) ?? null,

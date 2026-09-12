@@ -19,7 +19,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
  *
  * Query params:
  *   - visitor_id: string (required)
- *   - type: 'image' | 'page' | 'book' (required)
+ *   - type: 'image' | 'page' | 'book' | 'collection' (required)
  */
 export async function GET(request: NextRequest) {
   try {
@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
     if (!visitorId) {
       return NextResponse.json({ error: 'visitor_id is required' }, { status: 400 });
     }
-    if (!targetType || !['image', 'page', 'book'].includes(targetType)) {
-      return NextResponse.json({ error: 'type is required (image, page, or book)' }, { status: 400 });
+    if (!targetType || !['image', 'page', 'book', 'collection'].includes(targetType)) {
+      return NextResponse.json({ error: 'type is required (image, page, book, or collection)' }, { status: 400 });
     }
 
     const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000);
@@ -68,6 +68,23 @@ export async function GET(request: NextRequest) {
     ];
     const counts = await db.collection('likes').aggregate(countPipeline).toArray();
     const countMap = new Map(counts.map(c => [c._id, c.count]));
+
+    if (targetType === 'collection') {
+      // Saved collections, most recently saved first. Liked by slug.
+      const colls = await db.collection('collections').find(
+        { slug: { $in: targetIds } },
+        { projection: { _id: 0, slug: 1, name: 1, description: 1, book_count: 1 } }
+      ).toArray();
+      const collMap = new Map(colls.map(c => [c.slug as string, c]));
+      const items = targetIds
+        .map(slug => {
+          const c = collMap.get(slug);
+          if (!c) return null;
+          return { slug, name: c.name, description: c.description, bookCount: c.book_count, likeCount: countMap.get(slug) || 1 };
+        })
+        .filter(Boolean);
+      return NextResponse.json({ items, total: items.length });
+    }
 
     if (targetType === 'book') {
       const booksData = await db.collection('books').find(

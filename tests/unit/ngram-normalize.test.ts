@@ -39,6 +39,18 @@ const STRIP_FIXTURES = [
   '',
 ];
 
+describe('lacuna is dropped by BOTH stripper twins (#4584)', () => {
+  it('never lets a gap description reach counted or quoted text', () => {
+    const page = 'real page words <lacuna>20 lines of hieroglyphic text, not transcribed</lacuna> more words';
+    for (const [label, strip] of [['ts', stripTs], ['mjs', stripMjs]] as const) {
+      const out = strip(page);
+      expect(out, label).not.toMatch(/hieroglyphic|not transcribed|20 lines/i);
+      expect(out, label).toContain('real page words');
+      expect(out, label).toContain('more words');
+    }
+  });
+});
+
 describe('normalizer parity (mjs build twin vs ts query twin)', () => {
   it('NGRAM_CORPORA and language map are identical', () => {
     expect(ts.NGRAM_CORPORA).toEqual(mjs.NGRAM_CORPORA);

@@ -564,6 +564,11 @@ source-library search "alchemy" --json | jq .results`}
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/vectors/:store</td>
+                  <td className="py-2.5 text-secondary">Embedding vectors — books, gallery, clip (visual), artworks. For your own UMAP, clustering, or nearest-neighbour work.</td>
+                </tr>
+                <tr>
+                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/works</td>
                   <td className="py-2.5 text-secondary">Works held in many editions across centuries — witness counts and year spans. Feed work_id back to /books/library.</td>
                 </tr>
@@ -610,7 +615,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations</td>
+                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations. Enumerating the corpus? Pass <code className="text-xs">maxPerBook=1000</code> — it defaults to 3 per book so no single volume dominates the browse.</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
@@ -623,6 +628,41 @@ source-library search "alchemy" --json | jq .results`}
         </div>
       </section>
 
+      {/* Entity layer */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">Entities: people, places and concepts</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          Over a million named entities extracted from the AI-generated indexes of the books
+          themselves, browsable at{' '}
+          <a href="/explore" className="underline">/explore</a>, with the subset that carries
+          coordinates plotted at <a href="/explore/map" className="underline">/explore/map</a>.
+          A growing share is aligned to Wikidata, which brings QIDs, birth and death years,
+          and coordinates with it.
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 max-w-2xl">
+          <h3 className="text-base font-semibold text-primary mb-2">Two limits worth knowing before you build on it</h3>
+          <ul className="text-secondary text-sm space-y-3">
+            <li>
+              <strong className="text-primary">Most entities are extracted, not identified.</strong>{' '}
+              Alignment is by Wikipedia-URL match or exact name string. An unaligned entity means
+              &ldquo;we found this name&rdquo;, not &ldquo;we know what this is&rdquo;.
+            </li>
+            <li>
+              <strong className="text-primary">The source is the index, not the body.</strong>{' '}
+              A place discussed in a book but missing from that book&apos;s index is invisible here.
+            </li>
+          </ul>
+          <p className="text-secondary text-sm mt-4">
+            Ancient toponyms are the known weak spot. The same place is written differently in
+            every tradition that names it — Magan / Makkan / Majan / Ṣuḥār / 甕蠻 / Oman — and
+            string matching cannot join those. Chasing a place across languages works better if
+            you search co-occurring names: a lone toponym also collects homographs in unrelated
+            languages, while a pair like <code>Dilmun Meluhha</code> returns near-pure signal.
+          </p>
+        </div>
+      </section>
+
       {/* Bulk dataset access */}
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-2">Bulk dataset access</h2>
@@ -630,6 +670,42 @@ source-library search "alchemy" --json | jq .results`}
           Pulling OCR text, translations, or page-level data in bulk? That tier is keyed — use the
           form above to request one, or email us with what you&apos;re building. Reviewed within 24 hours.
         </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 max-w-2xl">
+          <h3 className="text-base font-semibold text-primary mb-2">Page images: every URL we return is ours</h3>
+          <p className="text-secondary text-sm mb-3">
+            Each page in an API response carries three image URLs, all on{' '}
+            <code>images.sourcelibrary.org</code>:
+          </p>
+          <ul className="text-secondary text-sm space-y-2 mb-3">
+            <li>
+              <code className="text-accent-rust">image_full</code> — the full-resolution master.
+              Use this for archival work. It <strong>equals or exceeds</strong> what the originating
+              library serves: measured page-for-page, Göttingen is 3651×4652 on both sides, and our
+              Morgan master is 8308×10576 against 2000×2546 at the source.
+            </li>
+            <li>
+              <code className="text-accent-rust">image_display</code> — a ~2000px variant for viewers.
+            </li>
+            <li>
+              <code className="text-accent-rust">image_thumb</code> — thumbnail.
+            </li>
+          </ul>
+          <p className="text-secondary text-sm mb-3">
+            We deliberately do <strong>not</strong> hand back the originating institution&apos;s own
+            image URLs. Roughly three quarters of the corpus was digitized by other libraries —
+            archive.org, the Bavarian State Library, the British Library, e-rara, Gallica, Harvard
+            and around fifteen more — and passing their per-page endpoints to every API consumer
+            would turn this API into a fan-out onto institutions that gave us access. You would get
+            blocked there; so would we.
+          </p>
+          <p className="text-secondary text-sm">
+            Provenance is not lost: the book carries an <code>attribution</code> object naming the
+            institution and linking to the item on their site. Credit the library, don&apos;t hammer
+            it. The rare page we hold no copy of is marked <code>image_unavailable</code> rather
+            than filled in with someone else&apos;s URL.
+          </p>
+        </div>
       </section>
 
       {/* Citations */}

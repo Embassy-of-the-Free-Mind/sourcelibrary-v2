@@ -385,7 +385,11 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
             role="dialog"
             aria-modal="true"
             aria-labelledby="photo-editor-title"
-            className="rounded-xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-hidden flex flex-col"
+            /* dvh, not vh: iOS Safari resolves `vh` against the LARGE viewport
+               (URL bar hidden), so 85vh is taller than the screen whenever the
+               bar is showing — which is how the controls ended up off-screen
+               with no way to reach them (#4577). */
+            className="rounded-xl shadow-2xl w-full max-w-lg max-h-[85dvh] overflow-hidden flex flex-col"
             style={{ background: 'white' }}
           >
             <div className="flex items-center justify-between p-4" style={{ borderBottom: '1px solid var(--border-light)' }}>
@@ -405,7 +409,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
 
             {cropSource ? (
               /* ---- Crop stage ---- */
-              <div className="p-4 flex flex-col items-center gap-4 overflow-y-auto">
+              <div className="p-4 flex flex-col items-center gap-4 overflow-y-auto min-h-0">
                 <div
                   className="relative overflow-hidden touch-none select-none cursor-move shrink-0"
                   style={{ width: VIEW, height: VIEW, background: 'var(--bg-warm)' }}
@@ -481,7 +485,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
               </div>
             ) : (
               /* ---- Source picker ---- */
-              <div className="flex flex-col overflow-hidden">
+              <div className="flex flex-col overflow-hidden min-h-0">
                 <div className="flex gap-1 px-4 pt-3">
                   {(['library', 'upload'] as const).map(t => (
                     <button
@@ -521,7 +525,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
                     />
                   </div>
                 ) : (
-                  <div className="flex flex-col overflow-hidden">
+                  <div className="flex flex-col overflow-hidden min-h-0">
                     <div className="px-4 pt-3 pb-2">
                       <div className="relative">
                         <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-faint)' }} aria-hidden="true" />
@@ -536,7 +540,7 @@ export default function ProfilePhotoEditor({ name, initialImage, size = 'md', th
                       </div>
                     </div>
 
-                    <div className="px-4 pb-4 overflow-y-auto" style={{ maxHeight: '50vh' }}>
+                    <div className="px-4 pb-4 overflow-y-auto min-h-0 flex-1" style={{ maxHeight: '50dvh' }}>
                       {loadingLibrary ? (
                         <div className="flex justify-center py-10">
                           <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--text-muted)' }} aria-hidden="true" />

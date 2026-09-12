@@ -87,8 +87,15 @@ edition path).
 - Seeded: 919 verified-layer works, 1,730 cited entries, 62 sibling-disagreement
   sets exposed (PRs #3890, #3891). Canary: Q1232238 caught wrong at seed —
   `under_review`.
-- Readers of the collection: **none yet.** The label rule (rule 2) ships as its
-  own reviewed PR — that is the moment the registry becomes actuating.
-- The book-grain machinery (verdicts, derive, valve) remains in place and
-  untouched until the card replaces it; then it is deleted, not migrated
-  (#3881 passes 3–6).
+- Readers of the collection: **LIVE since #3910/#3916** — `/book/[id]` renders
+  the card (hero + bibliographic panel) wherever `cardLabel()` is non-null.
+  Every `--apply` against a rendering status is reader-visible actuation.
+- The book-grain machinery's nightly actuators were **retired 2026-09-01**
+  (#4536): the 05:30 derive+reconcile cron and the 09:30 census cron are off
+  (`#RETIRED-3881` in `scripts/workers/crontab.production`). The badge boolean
+  `books.is_first_translation` is frozen except through reviewed card work.
+  Deletion of the machinery itself (verdicts, derive, valve) is #3881 passes
+  3–6 — deleted, not migrated.
+- Citation harvest: `scripts/audit/harvest-priors-to-card-proposals.mjs`
+  (#4536) moves ledger `priors[]` citations toward cards — new cards land as
+  silent `under_review`, existing cards get proposals only.

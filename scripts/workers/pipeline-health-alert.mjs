@@ -18,6 +18,9 @@
  *   set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs
  */
 
+// usage-ok: queries the Gemini API for batch job STATE to decide whether to
+// alert. It never generates, so it spends nothing to record.
+
 import { MongoClient } from 'mongodb';
 import { computeIndexDrift } from '../maintenance/ensure-indexes.mjs';
 

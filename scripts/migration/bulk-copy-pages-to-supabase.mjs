@@ -275,11 +275,6 @@ async function main() {
     }
   }
 
-  // Flush remaining
-  if (batch.length > 0) {
-    copied += await upsertWithRetry(batch);
-  }
-
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
   console.log(`\n\nDone: ${copied.toLocaleString()} copied, ${skipped} skipped, ${errors} errors in ${elapsed}s`);
   console.log(`Mode: ${USE_DIRECT_PG ? 'direct Postgres' : 'REST API'}, batch size: ${BATCH_SIZE}`);

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
+import { galleryFilter, type GalleryScope } from '@/lib/gallery-scope';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
@@ -87,7 +88,9 @@ let cachedFilters: { data: { types: string[]; subjects: string[]; yearRange: { m
  *   - figure: filter by figure tag
  *   - symbol: filter by symbol tag
  *   - minQuality: minimum gallery_quality score (0-1), default 0.7
- *   - maxPerBook: max images per book (via book_rank), default 3
+ *   - maxPerBook: max images per book (via book_rank), default 1000 (uncapped).
+ *     The human gallery passes 3 explicitly; this default is for API callers,
+ *     for whom a low cap is an invisible ceiling rather than curation.
  *   - includeArchive: show 0.5+ quality images (overrides minQuality to 0.5)
  *   - semantic: use embedding search
  */
@@ -130,7 +133,13 @@ export async function GET(request: NextRequest) {
     const yearStart = searchParams.get('yearStart') ? parseInt(searchParams.get('yearStart')!) : null;
     const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
     const includeArchive = searchParams.get('includeArchive') === 'true';
-    const maxPerBook = parseInt(searchParams.get('maxPerBook') || '3');
+    // Uncapped by DEFAULT for API callers (#4509 follow-up). The cap exists so
+    // one heavily-illustrated volume cannot dominate the human gallery — and
+    // that surface sets its own value (src/app/gallery/page.tsx passes 3
+    // explicitly), so it is unaffected. As an API default it was a silent
+    // CEILING: it put ~120,000 of our own images out of reach however far a
+    // consumer paginated. Pass maxPerBook=3 to get the curated spread back.
+    const maxPerBook = parseInt(searchParams.get('maxPerBook') || '1000');
     // Quality thresholds
     let minQuality = 0.7; // default: gallery quality
     if (includeArchive) minQuality = 0.5;
@@ -157,6 +166,8 @@ export async function GET(request: NextRequest) {
       const merged = await mergedGalleryBrowse(db, {
         tenantId, source: sourceParam as 'all' | 'artwork', limit, offset,
         imageType, minQuality, maxPerBook, yearStart, yearEnd, visitorId: visitorIdForMerge,
+        // Honour an explicitly-requested floor instead of silently clamping it.
+        qualityExplicit: searchParams.get('minQuality') !== null,
       });
       const mergedFilters = await getGalleryFilters(db).catch(() => ({ types: [], subjects: [], yearRange: { minYear: null, maxYear: null } }));
       return NextResponse.json({
@@ -189,30 +200,19 @@ export async function GET(request: NextRequest) {
       }, { maxTimeMS: 10000 }) as string[];
     }
 
-    // Build query filter — exclude images without extracted thumbnails or missing source photos
-    const filter: Record<string, unknown> = {
-      ...(tenantId ? { tenantId } : {}),
-      gallery_quality: { $gte: minQuality },
-      book_visible: true,
-      extracted_url: { $ne: null },
-      image_url: { $ne: null },
+    // The core of the filter comes from the shared scope (src/lib/gallery-scope),
+    // so a page showing a count for this URL counts exactly what this route
+    // serves. Anything added below — search, subject, year — narrows it further.
+    const bookIdsForScope = collectionBookIds && libraryBookIds
+      ? collectionBookIds.filter(id => libraryBookIds!.includes(id))
+      : (collectionBookIds || libraryBookIds || undefined);
+    const scope: GalleryScope = {
+      bookId: bookId || undefined,
+      bookIds: bookIdsForScope || undefined,
+      minQuality,
+      maxPerBook,
     };
-
-    // Book diversity: limit to top N images per book (unless filtering by single book or showing all)
-    if (!bookId && maxPerBook < 100) {
-      filter.book_rank = { $lte: maxPerBook };
-    }
-
-    if (bookId) filter.book_id = bookId;
-    if (collectionBookIds && libraryBookIds) {
-      // Intersect both sets
-      const intersection = collectionBookIds.filter(id => libraryBookIds!.includes(id));
-      filter.book_id = { $in: intersection };
-    } else if (collectionBookIds) {
-      filter.book_id = { $in: collectionBookIds };
-    } else if (libraryBookIds) {
-      filter.book_id = { $in: libraryBookIds };
-    }
+    const filter: Record<string, unknown> = galleryFilter(scope, { tenantId });
     if (imageType) filter.type = imageType;
     if (subjectFilter) filter['metadata.subjects'] = subjectFilter;
     if (figureFilter) filter['metadata.figures'] = figureFilter;
@@ -435,13 +435,16 @@ export async function GET(request: NextRequest) {
     const hasMore = items.length > limit;
     if (hasMore) items.splice(limit); // trim to limit
 
-    // Derive total — avoid countDocuments for unfiltered browsing, but use it for searches
+    // Derive total — avoid countDocuments for unfiltered browsing, but use it for
+    // searches. `bookId` was missing from the filtered branch, so a book-scoped
+    // gallery returned the corpus-wide estimate: Lister's 192 plates reported as
+    // 206,230 results while correctly showing only Lister's.
     let total: number;
     if (!hasMore && offset === 0) {
       total = items.length; // we have everything
     } else if (!hasMore) {
       total = offset + items.length; // last page
-    } else if (searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
+    } else if (bookId || searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
       // Filtered query — for Atlas Search queries, countDocuments can't replicate the
       // search pipeline, so estimate from result count. For $text queries, use countDocuments.
       if (searchQuery && !filter.$text) {
