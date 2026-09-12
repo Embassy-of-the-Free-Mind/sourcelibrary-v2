@@ -1,7 +1,7 @@
 /**
- * PRIOR ART: scripts/lib/translate-core.mjs — holds the same policy for the
- * TRANSLATION phase (getTranslateModelForBook) and is documented as "the one
- * door" for translation writes. It does not cover OCR, and the OCR side had
+ * PRIOR ART: scripts/lib/translate-core.mjs — held the same policy for the
+ * TRANSLATION phase (getTranslateModelForBook) until the two split in #4759, and
+ * is documented as "the one door" for translation writes. It does not cover OCR, and the OCR side had
  * grown two private copies of the allowlist instead
  * (scripts/workers/pipeline-orchestrator.mjs, scripts/migration/backfill-ocr-near-complete.mjs),
  * neither importable by a test because the orchestrator runs `run()` on import.
@@ -56,11 +56,18 @@ export function ocrEscalationModel() {
 
 /**
  * THE model routing for OCR. Mirrors getModelForBook in
- * src/lib/types/ai-models.ts and getTranslateModelForBook in translate-core.mjs
- * — except under OCR_LITE_ONLY (above), when every book routes to flash-lite.
+ * src/lib/types/ai-models.ts — except under OCR_LITE_ONLY (above), when every
+ * book routes to flash-lite.
+ *
+ * It does NOT mirror translation routing any more. Since #4759,
+ * getTranslateModelForBook (translate-core.mjs) sends non-Latin scripts to
+ * flash-lite too: the hallucination evidence behind the carve-out below is
+ * about reading IMAGES (vision), and translation reads text. The two policies
+ * diverge on purpose — do not re-sync them in either direction without new
+ * evidence. tests/unit/translate-core-parity.test.ts pins the split.
  *
  * - BPH books: full flash (high-quality manuscripts)
- * - Non-Latin scripts: full flash (flash-lite hallucinates)
+ * - Non-Latin scripts: full flash (flash-lite hallucinates when visual decoding is hard, #1726)
  * - Latin-script European languages: flash-lite (50% cheaper)
  * - Unknown/null language: full flash (safer default)
  */

@@ -80,24 +80,52 @@ function isLatinScriptLanguage(language: string | null | undefined): boolean {
   return LATIN_SCRIPT_LANGUAGES.has(language.toLowerCase().trim());
 }
 
+/** The two book fields the routers read. Project exactly these when looking a book up for routing. */
+export type RoutableBook = { image_source?: { provider?: string }; language?: string | null };
+
 /**
- * Select the appropriate model for a book's OCR/translation.
+ * Select the model for a book's OCR (image-in). .mjs twin: getOcrModelForBook
+ * in scripts/lib/ocr-routing.mjs.
  *
  * - BPH books: full flash (high-quality manuscripts)
  * - Non-Latin scripts (Tibetan, Arabic, Hebrew, CJK, Cyrillic, etc.): full flash
  *   to avoid the flash-lite hallucination problem documented in the
- *   Tibetan-OCR blog post.
+ *   Tibetan-OCR blog post (a VISION failure — see the allowlist comment).
  * - Latin-script European languages: flash-lite (50% cheaper, comparable quality)
  * - Unknown/null language: full flash (safer default)
+ *
+ * NOT for translation — use getTranslateModelForBook below. The two policies
+ * diverged on purpose in #4759; a translation call site that reaches for this
+ * function pays 2x for a carve-out whose evidence is about reading images.
  */
-/** The two book fields the router reads. Project exactly these when looking a book up for routing. */
-export type RoutableBook = { image_source?: { provider?: string }; language?: string | null };
-
 export function getModelForBook(book: RoutableBook | null): string {
   if (book?.image_source?.provider === 'bph') {
     return DEFAULT_MODEL;
   }
   if (!isLatinScriptLanguage(book?.language)) {
+    return DEFAULT_MODEL;
+  }
+  return DEFAULT_LITE_MODEL;
+}
+
+/**
+ * Select the model for a book's TRANSLATION (text-in). .mjs twin:
+ * getTranslateModelForBook in scripts/lib/translate-core.mjs; parity pinned by
+ * tests/unit/translate-core-parity.test.ts.
+ *
+ * - BPH books: full flash.
+ * - Everything else, INCLUDING non-Latin scripts: flash-lite.
+ *
+ * Why this differs from getModelForBook (issue #4759): #1726 carved non-Latin
+ * scripts out to full flash on evidence that was entirely about visual
+ * decoding, and swept translation along without translation evidence.
+ * Translation reads `ocr.data` as text. The only translation A/B on record
+ * (#467) favoured lite, and the observational read over the Mar 27 – May 12
+ * 2026 lite era (scripts/eval/results/translation-model-obs-*) found no
+ * faithfulness gap. Do not re-sync this with OCR routing without new evidence.
+ */
+export function getTranslateModelForBook(book: RoutableBook | null): string {
+  if (book?.image_source?.provider === 'bph') {
     return DEFAULT_MODEL;
   }
   return DEFAULT_LITE_MODEL;
