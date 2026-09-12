@@ -14,6 +14,8 @@
  * Usage:
  *   set -a; source .env.production.local; set +a
  *   node scripts/experiments/batch-size-experiment.mjs [--size=1000] [--dry-run]
+ *
+ * Also accepts --reason="..." — why this run is being done by hand (#4336).
  */
 
 import { MongoClient } from 'mongodb';
@@ -22,6 +24,7 @@ import { nanoid } from 'nanoid';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY_3 || process.env.GEMINI_API_KEY;
@@ -31,6 +34,8 @@ const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const TARGET_SIZE = parseInt(args.find(a => a.startsWith('--size='))?.split('=')[1] || '1000');
+const INITIATED_BY = 'script:batch-size-experiment';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 const IMAGE_CONCURRENCY = 20;
 
@@ -223,6 +228,8 @@ async function run() {
     submission_method: 'file',
     experiment: 'large-batch-size',
     experiment_target: TARGET_SIZE,
+    initiated_by: INITIATED_BY,
+    ...initiatedReasonFields(REASON),
     created_at: new Date(),
     updated_at: new Date(),
   });

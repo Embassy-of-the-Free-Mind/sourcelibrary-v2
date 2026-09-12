@@ -1,3 +1,5 @@
+import { normalizeLanguageToken, sameLanguageFamily } from '@/lib/language-normalize';
+
 /** ISO-639-1 code → canonical English name */
 const CODE_TO_NAME: Record<string, string> = {
   ar: 'Arabic', cs: 'Czech', da: 'Danish', de: 'German', el: 'Greek',
@@ -40,17 +42,25 @@ const CODE3_TO_NAME: Record<string, string> = {
  * callers can treat "no signal" distinctly from a real value.
  */
 export function displayLanguage(raw: string | null | undefined): string | null {
-  if (!raw) return null;
-  const cleaned = String(raw)
-    .toLowerCase()
-    .trim()
-    .replace(/^(modern|ancient|old|classical|medieval|middle|early)\s+/, '');
-  if (!cleaned) return null;
-  if (PLACEHOLDER_LANGS.has(cleaned)) return null;
-  if (CODE_TO_NAME[cleaned]) return CODE_TO_NAME[cleaned];
-  if (CODE3_TO_NAME[cleaned]) return CODE3_TO_NAME[cleaned];
-  // Already a display name: title-case it for storage consistency.
-  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+  // ONE normaliser (2026-09-10). This used to strip any leading
+  // modern|ancient|old|classical|medieval|middle|early and title-case only the first character,
+  // which was wrong in two ways at once, measured over the vocabulary in
+  // tests/unit/language-normalize-parity.test.ts:
+  //   · it COLLAPSED DISTINCT LANGUAGES into their parent — "Old English" -> "English",
+  //     "Old French" -> "French", "Middle English" -> "English", "Classical Chinese" -> "Chinese",
+  //     and "Old Norse" -> "Norse", which is not a language at all;
+  //   · it MANGLED CASE on anything it did not recognise — "Koine greek", "New latin",
+  //     "Church slavonic", "Ottoman turkish", "Judeo-arabic", "High german".
+  // 13 of 27 probe tokens disagreed with normalizeLanguageToken, which carries the considered
+  // policy: collapse period variants that are the same language (Ancient/Modern Greek, Classical
+  // Latin, Koine Greek, New Latin), preserve the ones that are distinct languages.
+  //
+  // Nothing had reached `books.language` yet (0 mangled values in production on 2026-09-10) — this
+  // was a latent trap on the IMPORT path, since resolve-language.ts normalises every incoming
+  // language through here. Comparison semantics are preserved by sameLanguage() below, which now
+  // compares by FAMILY, so "Old French" still counts as the same language as "French" even though
+  // the stored value keeps its register.
+  return normalizeLanguageToken(raw);
 }
 
 /** Tokens that mean "no usable language signal". */
@@ -64,9 +74,23 @@ const PLACEHOLDER_LANGS = new Set([
  * Either argument may be a code or a display name.
  */
 export function sameLanguage(a: string | null | undefined, b: string | null | undefined): boolean {
-  const na = displayLanguage(a);
-  const nb = displayLanguage(b);
-  return !!na && !!nb && na.toLowerCase() === nb.toLowerCase();
+  // Compares by FAMILY, which is what every caller actually wants and what the old
+  // displayLanguage-equality gave them by accident: it collapsed "Old French" to "French" before
+  // comparing, so an Old French edition of a French work was correctly NOT flagged a translation.
+  // Now that displayLanguage preserves the register, the collapse has to live here instead —
+  // otherwise resolve-language.ts would start reporting spurious conflicts and edition-language.ts
+  // would show a work language beside an identical edition language.
+  // It also fixes a false DIFFERENCE the old version had: "Koine Greek" normalised to the
+  // unrecognised "Koine greek" and so never matched "Greek".
+  //
+  // Normalise FIRST, then compare families — the two steps do different halves of the job and
+  // neither alone is enough. languageFamily() strips a register prefix ("Old French" -> French) but
+  // does not touch codes, does not collapse "Ancient Greek", and does not reject placeholders, so
+  // sameLanguageFamily() on raw input answers false for Ancient Greek vs Greek and TRUE for
+  // "Unknown" vs "Unknown". normalizeLanguageToken() handles codes, collapses the same-language
+  // registers and maps placeholders to null; the family step then absorbs the registers that
+  // legitimately survive normalisation.
+  return sameLanguageFamily(normalizeLanguageToken(a), normalizeLanguageToken(b));
 }
 
 /**

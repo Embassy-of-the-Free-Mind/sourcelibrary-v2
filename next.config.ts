@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
   // it explicitly in case static analysis ever misses it. The pdfkit data pin
   // is the same insurance for the externalized package's font metrics.
   outputFileTracingIncludes: {
+    // Gated static deck served from outside public/ (see src/app/talks/ai-case-study).
+    '/talks/ai-case-study/[[...path]]': ['./src/content/talks/ai-case-study/**'],
     '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
     '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
   },
@@ -124,7 +126,11 @@ const nextConfig: NextConfig = {
               // Host list lives in src/lib/csp-img-hosts.ts (shared with getBookThumbnailUrl's
               // renderability screen — edit it there, never inline here).
               CSP_IMG_SRC,
-              "connect-src 'self' https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
+              // images.sourcelibrary.org is in img-src for rendering, but a
+              // DOWNLOAD reads the bytes with fetch() — that is connect-src, and
+              // its absence here silently killed both gallery download buttons
+              // (with the R2 bucket's missing CORS header, #4630).
+              "connect-src 'self' https://images.sourcelibrary.org https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io https://www.google-analytics.com https://region1.google-analytics.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://analytics.ahrefs.com",
               "media-src 'self' blob: https://api.elevenlabs.io https://images.sourcelibrary.org",
               "frame-src 'self' https://translate.google.com",
               "worker-src 'self' blob: data:",

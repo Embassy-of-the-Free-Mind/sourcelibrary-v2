@@ -7,17 +7,22 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/batch/retranslate-stale.mjs [--dry-run] [--limit=N] [--book-id=ID]
+ *
+ * Also accepts --reason="..." — why this run is being done by hand (#4336).
  */
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT_ARG = process.argv.find(a => a.startsWith('--limit='));
 const BOOK_LIMIT = LIMIT_ARG ? parseInt(LIMIT_ARG.split('=')[1]) : Infinity;
 const BOOK_ID_ARG = process.argv.find(a => a.startsWith('--book-id='));
 const SINGLE_BOOK_ID = BOOK_ID_ARG ? BOOK_ID_ARG.split('=')[1] : null;
+const INITIATED_BY = 'script:retranslate-stale';
+const REASON = parseInitiatedReason(process.argv.slice(2), INITIATED_BY);
 
 const CURRENT_MODEL = 'gemini-3-flash-preview';
 const BATCH_MODEL = 'gemini-3-flash-preview';
@@ -244,6 +249,8 @@ async function main() {
           page_ids: batchRequests.map(r => r.key),
           page_count: batchRequests.length,
           status: job.state,
+          initiated_by: INITIATED_BY,
+          ...initiatedReasonFields(REASON),
           created_at: new Date(),
           updated_at: new Date(),
         });

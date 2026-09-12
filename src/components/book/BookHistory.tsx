@@ -24,6 +24,7 @@ interface HistoryEvent {
   doi?: string;
   action?: string;
   triggered_by?: string;
+  reason?: string;
 }
 
 interface HistoryResponse {
@@ -238,6 +239,15 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
                                   </>
                                 )}
                               </div>
+                              {/* Why a human ran this by hand — a sentence, so it gets its own line (#4336) */}
+                              {event.reason && (
+                                <p
+                                  className="text-xs text-stone-500 italic mt-1"
+                                  title="Reason recorded when this job was queued"
+                                >
+                                  “{event.reason}”
+                                </p>
+                              )}
                             </div>
                           </div>
                         </div>

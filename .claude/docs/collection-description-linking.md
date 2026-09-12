@@ -29,8 +29,13 @@ things, in priority order:
    substring of the description, plus author names resolved against the collection's
    author list.
 
-Everything else is plain text. **Markdown emphasis is not parsed**: `**bold**` and
-`*italic*` render with the asterisks visible. Don't write them.
+Emphasis IS parsed as of 2026-09-04 (`src/lib/inline-prose.tsx`): `*italic*`,
+`**bold**`, and inline `<em>`/`<strong>`/`<i>`/`<b>` all render. Before that they
+appeared verbatim to readers — `<em>Corrector</em>` was on the live
+`forum-of-conscience` page — which is why this doc used to say "don't write them".
+`_underscore_` is deliberately NOT emphasis (underscores are common in slugs), and
+every other tag stays escaped: the whitelist is parsed into React elements, never
+injected as HTML. Everything outside links and emphasis is plain text.
 
 ### Why auto-detection is not enough
 
