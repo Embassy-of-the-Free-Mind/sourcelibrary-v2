@@ -27,6 +27,7 @@
  *   --limit=N          Max pages to process (default: 2000)
  *   --concurrency=N    Parallel API calls (default: 30)
  *   --dry-run          Show what would be processed, don't call Gemini
+ *   --reason="..."     Why this run is being done by hand (recorded on the run, #4336)
  */
 
 import fs from 'node:fs';
@@ -34,6 +35,7 @@ import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -58,6 +60,8 @@ const SINGLE_BOOK = getArg('book-id');
 const OFFSET = parseInt(getArg('offset') || '0', 10);
 const PIPELINE_STATUS = getArg('status');
 const PROVIDER = getArg('provider');
+const INITIATED_BY = 'script:realtime-ocr';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // Targeting mode
 const MODE_NO_OCR = hasFlag('no-ocr');
@@ -327,7 +331,7 @@ async function processPage(page, promptText, db) {
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
-    const pageType = extractPageType(result.text, { validate: false });
+    const pageType = extractPageType(result.text);
     const columns = extractColumns(result.text);
     const detectedImages = parseDetectedImages(result.text);
 
@@ -605,15 +609,26 @@ async function main() {
     // left alone.
     if (targetMode !== 'all') {
       pageFilter['ocr.recitation_blocked'] = { $ne: true };
+      // Same reasoning for the general give-up (#4674): three failed reads of any
+      // other kind and the page is out until a human intervenes.
+      pageFilter['ocr.fail_blocked'] = { $ne: true };
     }
 
     const totalEligible = await db.collection('pages').countDocuments(pageFilter);
     console.log(`Eligible pages: ${totalEligible.toLocaleString()}`);
     if (targetMode !== 'all') {
+      // The blocked tests go in $and — pageFilter already owns $or for the
+      // target-mode clauses, and spreading a second $or over it would silently
+      // replace them and count the wrong pages.
+      const { 'ocr.recitation_blocked': _r, 'ocr.fail_blocked': _f, ...unblockedFilter } = pageFilter;
       const blocked = await db.collection('pages').countDocuments({
-        ...pageFilter, 'ocr.recitation_blocked': true,
+        ...unblockedFilter,
+        $and: [
+          ...(unblockedFilter.$and ?? []),
+          { $or: [{ 'ocr.recitation_blocked': true }, { 'ocr.fail_blocked': true }] },
+        ],
       });
-      if (blocked > 0) console.log(`  (excluding ${blocked} page(s) the model has permanently refused)`);
+      if (blocked > 0) console.log(`  (excluding ${blocked} page(s) the model has permanently refused or repeatedly failed)`);
     }
 
     if (totalEligible === 0) {
@@ -685,6 +700,8 @@ async function main() {
       },
       book_ids: uniqueBookIds,
       progress: { completed: 0, failed: 0, skipped: 0, total: pages.length },
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date(),
     });

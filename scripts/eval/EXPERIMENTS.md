@@ -19,6 +19,92 @@ The replication column exists because of 2026-09-02, below.
 
 ---
 
+## 2026-09-11 — Google Cloud Vision as a cheaper OCR lane?
+
+**Headline: no lane. Parity on the pages it reads, but it reads fewer of them —
+and on Tibetan it is the worst engine we have tested on our own scans.**
+
+- **Question.** Cloud Vision DOCUMENT_TEXT_DETECTION is $1.50/1K pages against
+  $3.42/1K measured on flash realtime and $0.85/1K on lite batch; BDRC's Tibetan
+  leaderboard ranks it 3rd of 46. Is it a viable cheaper lane for any of our
+  languages, and is its failure mode "garble, not invent"?
+- **Design.** All 55 pinned ground-truth pages (the July v0.3 set plus the
+  September Latin/Greek/German additions), per-page language hints, same
+  `scoreAgainstReference` + normalisation as the July post, paired per page
+  against the stored `gemini-3-flash-preview` and `gemini-3.1-flash-lite` runs
+  (page = mean over aligned runs, exact sign test). Positive control: the
+  Copernicus reference passage rendered as a clean modern page → **CER 0.00 %**.
+  Plus 20 pages of the #4523 pilot book (`69e7abd05f1a22ab19a9e929`) scored on
+  Derge identity with `kanjur_align.py` on clawdbot against the three Tibetan arms
+  already on disk. 78 Vision units, $0 (free tier).
+- **Result.**
+  - Coverage: Vision aligns **37/55**; lite aligns 52/55 on the same pages. Where
+    both align, Vision loses: vs lite 3W/19T/15L, sign p=0.0075, mean −1.09 pp;
+    vs flash-preview 1W/13T/11L, p=0.0063, mean −0.51 pp. Per language, on
+    aligned pages Vision is at parity on Greek print (median CER 0.21 % vs 0.19 %)
+    and near it on German (0.71 % vs 0 %), behind on Latin (3.7 % vs 1.1 %),
+    Armenian (4.9 % vs 3.1 %) and Chinese (8.2 % vs 1.7 %).
+  - Coverage is the finding: 7/12 Latin pages fail the word guard (early-modern
+    long-s, ligatures, abbreviations), 3/6 Chinese (interlinear commentary read in
+    the wrong order), both Greek manuscripts (Greek minuscule read as Latin letters
+    — the output on the Iliad pages begins `Inches cm 1 2`, the ruler in the
+    photograph).
+  - Failure mode, read by eye on the five worst pages: **garble, wrong reading
+    order and non-text (rulers) — zero invention.** Every disputed string was on
+    the page. Gemini's worst pages are a different kind: RECITATION refusals
+    (8/8 runs on Hero 178 for flash-preview), a MAX_TOKENS loop of quote marks
+    (Zohrab John 1), truncation. The novel-word proxy (output words absent from
+    the reference passage) does not separate the two — it runs 0.30–0.81 for
+    both engines because the reference is a passage, not the page — so the
+    "garbles rather than invents" claim rests on the human read, n=5, and is
+    consistent with but not proven by this run.
+  - Tibetan: Vision median Derge identity **0.339** vs Gemini woodblock-prompt
+    0.453, dbu-can-prompt 0.426, BDRC Yigdzin 0.51 (control 0.968, chance 0.083).
+    Vision loses **20/20** to the woodblock arm and to Yigdzin. The leaderboard
+    rank does not transfer to this manuscript Kanjur.
+  - What Vision has that no VLM does: a per-block confidence. Mean block
+    confidence tracks the guard loosely (0.98 on the control, 0.6–0.7 on the
+    worst pages) — worth a look as a *triage* signal, not as a lane.
+- **Decision.** No routing change. Vision is not a lane for any language here.
+  Its one plausible use is as a non-generative *second reader* for triage
+  (confidence + disagreement with Gemini flags a page), which is a different
+  experiment. The per-language lite-suitability question this was a proxy for is
+  now pre-registered in `PREREGISTRATION-per-language-ocr-suitability.md`.
+- **Side finding.** `latin-la-praetorius-syntagma1-p120` is unpinnable: the
+  stored pipeline OCR (printed p.72) aligns with the reference, but the archived
+  image at `page_number 131` is printed p.73 and every engine run over it since
+  (lite, Vision, Kraken, Surya, CHURRO) reads p.73 — a one-leaf image/text shift
+  on book `69ef2b4685daccce30f2e066`. Filed as an issue; the page must be excluded
+  from cross-engine rollups until repaired.
+- *Replicated?* Single run (Vision is deterministic; the control re-scored
+  identically on a second call). *Artifact:* `results/vision-vs-gemini-2026-09-11.{json,md}`,
+  raw outputs in `results/scorecard-outputs-2026-09-11.jsonl` (model `google-vision`),
+  transcripts in `results/vision-transcripts-2026-09-11/`, runner
+  `google-vision-baseline.mjs`, `runGoogleVision()` in `lib/runners.mjs`.
+
+---
+
+## 2026-09-11 — Music: can a VLM read Shaker letteral notation? (first scored run)
+
+**Headline: pitch yes, rhythm no.** gemini-3-flash-preview on seven verified
+letteral references (180 notes, `scripts/music/ground-truth/`): interval NER
+**0.19 mean, 0–0.08 on the five pages it read the right span of**; rhythm NER
+**0.49** (long group underlines → quarters; half-note bars dropped). The July #3161
+pilot's "85–90% rhythm" was eyeballed and is withdrawn. Cost $0.019. Positive
+control on the scorer passed (0 on self, 0.06 on a one-edit copy). *Replicated?*
+No (single run, temp 0). Artifact:
+`scripts/music/eval-results/2026-09-11-letteral-gemini-3-flash-preview/README.md`.
+Next: crop per music line and re-score the same seven.
+
+**Same day, staff notation:** first mensural reference (Morley 1597 p.8 plainsong
+ex. 1, twelve semibreves, checked against the printed solmization). Same model:
+**pitch NER 0.42** — the candidate is the printed syllables mapped through the
+natural hexachord, i.e. the model read the answer key, not the staff. The doc's
+"VLMs cannot read staff notation" claim is now measured on our own page. Artifact:
+`scripts/music/eval-results/2026-09-11-mensural-gemini-3-flash-preview/README.md`.
+
+---
+
 ## 2026-09-03 — Bench 2 (complete): can self-hosted OCR replace Gemini on print?
 
 **Headline: yes on quality, no decision yet on scope — n is too small.** Three
@@ -176,3 +262,106 @@ occlusion pilot). Their conclusions live in
 `.claude/docs/ocr-memorization-paper.md` and the issues that commissioned them —
 **not** here. Back-filling them is worthwhile but has not been done, and this
 section exists so nobody reads the gap as "nothing was run before September".
+
+## 2026-09-05 — How wrong is the ground truth? (Track B item 1, #4523)
+
+- **Question.** Every engine accuracy we quote is `1 − CER(reference, output)`. At 98–99%
+  the residual is a few characters per page. If the reference is wrong at the same rate,
+  the engine ranking is inside our own noise and nothing downstream is quotable.
+- **Design.** No hand transcription — and deliberately no VLM re-transcription, which
+  would referee a bench about VLMs with the system under test. Wikisource pages carry
+  their own second opinion: `level 3` = one human transcribed it, `level 4` = a second,
+  different human re-read it against the scan. `reference-error-rate.mjs` replays each
+  page's revision history and measures what the validator changed, through the same
+  `normalizeForScript` folding the bench scores through, so the number is on the bench's
+  own scale. Restricted to independent validators and to pages whose predecessor was
+  genuinely level 3 (a level-1 predecessor is raw OCR and prices the whole proofreading
+  pass — one such page carried 10.9% into a 1.1% Latin sample).
+- **Result — the reference is NOT the constraint for Greek, and IS for Latin.**
+  n=69 pages (pinned set + a matched level-4 harvest per wiki), median 0.00%, 39 exact.
+
+  | | level-3 reference error (A) | level-4 residual (B) | reported engine gap |
+  |---|---|---|---|
+  | Greek (n=18) | **0.07%** CI [0.02, 0.13] | 0.00% (5/5 exact) | 1.5pp |
+  | German (n=15) | **0.06%** CI [0.02, 0.11] | 0.01% | — |
+  | Latin (n=36) | **1.15%** CI [0.17, 2.47] | 0.48% | 1.4pp |
+
+  Greek and German engine differences are 20x the reference noise and stand. **The Latin
+  comparison does not** — the reference error and the reported Kraken-vs-Gemini gap are the
+  same size, which is the arithmetic behind "Latin is a tie". Latin's distribution is
+  skewed, not uniformly bad: most references are exact and a handful omit a whole printed
+  block (an apparatus criticus, a clause), so the median is 0 and the mean is 1.15%.
+- **The bigger error was OURS.** Instrument C compares the two cleaners: the pre-fix
+  `cleanPageText` deleted a formatting template together with the text it wrapped —
+  `{{SperrSchrift|D’Glocke het zwölfi gschlage.}}` is a printed line, not scaffolding.
+  Measured **6.0% of Greek reference letters, 3.8% of Latin, 0.9% of German**, single pages
+  losing 40–100%. That is 5–80x the human reference error. Worse, deeply nested apparatus
+  markup survived as literal braces: the Poemander reference was 1,178 characters of
+  `{{κσχασ|εδάφιο=1|σημείωση=μου] μεν A, om Turn. Fluss.}}` soup where the page prints 383
+  characters of Greek.
+- **Consequence, measured on stored outputs (no re-runs, no cost).** Re-scoring the
+  Gemini-lite arm against the corrected references: Greek conditional accuracy **97.8% →
+  99.6%** on coverage 92% → 88%; Latin 96.3% → 96.0%; German unchanged. The single page
+  that drove it went **59.7% → 100.0%** — a perfect transcription charged 40 points for our
+  markup. Coverage fell because a table-of-contents page that the corrupted reference let
+  through now fails the guard honestly. **The Greek correction (1.8pp) is larger than the
+  Greek engine gap it was used to judge (1.5pp), so the Bench 2 Greek result must be
+  recomputed for every arm before it is quoted again** — the Kraken ws outputs live in
+  PR #4651 and were not available to re-score here.
+- **What the instrument cannot see:** errors both readers share, and the 79/149 pages
+  nobody validated. Pages volunteers chose to validate are the well-loved ones, so this is
+  a lower bound.
+- **Artifacts.** `scripts/eval/reference-error-rate.mjs`,
+  `scripts/eval/refresh-ws-references.mjs`, `results/reference-error-2026-09-05.json`,
+  8 new unit tests in `tests/unit/wikisource-text.test.ts`.
+
+## 2026-09-05 — A fabrication detector that needs no reference (Track C, #4523)
+
+- **Question.** Every metric we own compares OCR to a reference. A model that has memorised
+  the published text scores *well* on that comparison while never reading the page — Bench 1
+  E4 caught one folio where Gemini hit 0.790 against the Derge canon while agreeing 0.33 with
+  both specialists' reads of the same image. Production has no reference at all. Can the
+  failure be detected without one?
+- **Design.** A CTC line recogniser carries no language model over the target text, so it
+  cannot recite; two independently-trained ones converging is evidence about the ink rather
+  than about any edition. `fabrication-detector.mjs` scores three signals per page — specialist
+  convergence (`ink`), VLM-to-ink agreement, and unit overrun — and abstains when the
+  specialists do not converge. Every agreement is computed order-sensitively *and* order-free
+  (multiset Dice over 3-unit shingles); a page is flagged only when both are low.
+- **Validated on two sets with known answers, 349 pages.**
+  Positive: Bench 1 Derge Kangyur, 313 folios, two BDRC recognisers + production-era Gemini.
+  51 pages carry an externally-established label — Gemini below 0.2 against the canon where
+  *both* specialists exceed 0.8, which no reading of the image can produce. Negative: the
+  Bench 2 print arms in this repo, Kraken + Surya + Gemini on the same 36 pages.
+
+  **51/51 positives flagged, 0/5 false positives**, and the threshold plateau is wide:
+  precision and recall are both 100% for every gap threshold from 0.10 to 0.40. The default
+  0.35 sits in the middle of that plateau rather than on a cliff, which is the answer to
+  "the guard threshold was picked by hand".
+- **Order is not failure — and it nearly cost 8 of 11 print pages.** On the Bekker
+  *Categories* page Kraken reads across the gutter of a two-column setting while Surya reads
+  down the column: order-sensitive agreement **0.01** between two engines that both transcribe
+  it well. Gating on the sequence number sent those pages to INCONCLUSIVE for a layout reason.
+  Every quantity is now the better of its ordered and order-free form.
+- **The blind spot is the highest-risk population, and it is the real finding.** Recitation and
+  specialist failure share a cause: a hard image is what makes a CTC engine fail *and* what
+  pushes a VLM onto its memory. So "abstain when the ink is unestablished" silently excuses
+  exactly the pages that matter — the seven most flagrant Bench 1 cases (Gemini 0.75–0.98
+  against the canon while both specialists scored 0.00–0.16 against it, emitting up to 13.5x
+  the units on the page) all sat in INCONCLUSIVE. A canon-anchored rule recovers 9 of them as
+  a separate `RECITING?` verdict, reported apart from the verified ones because the
+  specialists being broken is a live alternative explanation.
+- **Overrun is the famous tell and it is not the useful one.** Across the 203 flagged Tibetan
+  pages the median overrun is 0.93x, and only 38/203 exceed 1.6x. The agreement gap carries
+  the signal; syllable count catches the spectacular cases only.
+- **Coverage is the constraint, not accuracy.** Only 56 of 349 pages are both labelled and
+  judgeable. On print, 6 of the 11 pages with a VLM arm are gated out because Kraken and Surya
+  genuinely disagree — Copernicus 1543, the ~1490 Malleus, Weigel 1618, Zesen 1645, the
+  Poemander apparatus page, Bekker. Two specialists that fail together buy nothing.
+- **The validation's own weakness, stated plainly:** the positive and negative classes differ
+  in script, medium *and* engine set. Perfect separation between conditions that different is
+  evidence the statistic orders known-bad above known-good — not that it discriminates *within*
+  early modern print. That needs a print corpus with known fabrication, which we do not have.
+- **Artifacts.** `scripts/eval/fabrication-detector.mjs`,
+  `results/fabrication-detector-2026-09-05.json`. Bench 1 case files are built from ops
+  `eval-tibetan/` + `hetzner:/root/tibetan-eval/pages-*.jsonl` and are not committed here.

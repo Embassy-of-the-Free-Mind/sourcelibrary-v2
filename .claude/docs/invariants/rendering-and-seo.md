@@ -85,3 +85,19 @@ image before adding an id; do not infer from date, printer or collection members
 is a different fount from his 1495 roman, and looks close enough to fool a date-based
 guess) — keep that list, it is what stops the next sweep re-adding them.
 
+
+## `revalidate = false` + a fallible fetch + a rendered fallback = a frozen page
+
+**Read this when:** adding `export const revalidate` to a page, or a `try/catch` that renders a
+fallback around a Mongo/Supabase/fetch call in a server component.
+
+*Demoted from CLAUDE.md 2026-09-11 (budget); text unchanged.*
+
+Never combine `export const revalidate = false` + a fallible fetch (Mongo/Supabase/fetch) + a
+`try/catch` that renders a fallback. One bad render caches that fallback (an "unavailable"
+message, or zeroed/empty stats) permanently, until the next deploy — this is how
+`/explore/timeline` froze (#2973) and how `/explore/map` froze before it. If a static page's
+data can fail, let the error **throw** (ISR then serves the last good page on revalidation
+failure — `src/app/error.tsx` handles cold failures) and give the page a real numeric
+`revalidate` window instead of `false`. Audited and fixed across the app in #2974; don't
+reintroduce the pattern on a new page.
