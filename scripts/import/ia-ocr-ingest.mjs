@@ -51,6 +51,7 @@ import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply');
@@ -63,39 +64,27 @@ const MIN_REF_PAGES = +arg('--min-ref-pages', 5);
 const MAX_OFFSET = +arg('--max-offset', 3);
 const MIN_OFFSET_SHARE = +arg('--min-offset-share', 0.6);
 const CACHE = arg('--cache', null);
-const UA = 'SourceLibrary ia-ocr-ingest (team@sourcelibrary.org)';
 const SOURCE = 'ia_djvu';
 
-// ---------- IA fetch, rate-limited, abort on repeated refusal ----------
-let lastReq = 0, consecutiveRefusals = 0;
-async function iaFetch(url) {
-  const wait = 500 - (Date.now() - lastReq); if (wait > 0) await new Promise((r) => setTimeout(r, wait));
-  lastReq = Date.now();
-  const res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' });
-  if (res.status === 429 || res.status === 503) {
-    consecutiveRefusals++;
-    if (consecutiveRefusals >= 4) { console.error(`ABORT: ${consecutiveRefusals} consecutive ${res.status} from archive.org`); process.exit(3); }
-    await new Promise((r) => setTimeout(r, 15000)); return iaFetch(url);
+/**
+ * Leaf texts for an item. The cache stores the PARSED leaves (`<id>.leaves.json`, ~1/10 the
+ * size of the word-boxed XML): the 2,076-book English run filled 23 GB of XML on a 150 GB
+ * disk, and the Latin shelf is four times larger. Legacy `<id>_djvu.xml` files are still read.
+ */
+async function iaLeaves(id) {
+  const cachedJson = CACHE ? path.join(CACHE, `${id}.leaves.json`) : null;
+  const cachedXml = CACHE ? path.join(CACHE, `${id}_djvu.xml`) : null;
+  if (cachedJson && fs.existsSync(cachedJson)) return JSON.parse(fs.readFileSync(cachedJson, 'utf8'));
+  let xml;
+  if (cachedXml && fs.existsSync(cachedXml)) xml = fs.readFileSync(cachedXml, 'utf8');
+  else {
+    const res = await iaFetch(`https://archive.org/download/${id}/${id}_djvu.xml`);
+    if (!res.ok) return null;
+    xml = await res.text();
   }
-  consecutiveRefusals = 0;
-  return res;
-}
-
-async function iaOcrMeta(id) {
-  const res = await iaFetch(`https://archive.org/metadata/${id}`);
-  if (!res.ok) return {};
-  const j = await res.json(); const m = j?.metadata || {};
-  return { engine: m.ocr || null, version: m.ocr_module_version || null, imagecount: m.imagecount ? +m.imagecount : null };
-}
-
-async function iaDjvuXml(id) {
-  const cached = CACHE ? path.join(CACHE, `${id}_djvu.xml`) : null;
-  if (cached && fs.existsSync(cached)) return fs.readFileSync(cached, 'utf8');
-  const res = await iaFetch(`https://archive.org/download/${id}/${id}_djvu.xml`);
-  if (!res.ok) return null;
-  const xml = await res.text();
-  if (cached) { fs.mkdirSync(CACHE, { recursive: true }); fs.writeFileSync(cached, xml); }
-  return xml;
+  const leaves = leafTexts(xml);
+  if (cachedJson) { fs.mkdirSync(CACHE, { recursive: true }); fs.writeFileSync(cachedJson, JSON.stringify(leaves)); }
+  return leaves;
 }
 
 /** OBJECT[k] → plain text: words joined by spaces, lines by \n, paragraphs by a blank line. */
@@ -154,9 +143,8 @@ await withMongo(async (db) => {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
     if (!iaId) { console.log(`  ${bid} no IA identifier — skip`); continue; }
-    const xml = await iaDjvuXml(iaId);
-    if (!xml) { summary.no_xml++; console.log(`  ${bid} ${iaId}: no _djvu.xml`); continue; }
-    const leaves = leafTexts(xml);
+    const leaves = await iaLeaves(iaId);
+    if (!leaves) { summary.no_xml++; console.log(`  ${bid} ${iaId}: no _djvu.xml`); continue; }
     const meta = await iaOcrMeta(iaId);
     const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, 'ocr.source': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
 
@@ -201,6 +189,7 @@ await withMongo(async (db) => {
         data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
         source_url: `https://archive.org/download/${iaId}/${iaId}_djvu.xml#leaf=${k}`, updated_at: now, has_warning: false,
         agreement_ref: { median: +med.toFixed(3), n: refs.length, min_agreement: MIN_AGREEMENT, offset, offset_share: +offsetShare.toFixed(2) },
+        ia: iaProvenance(iaId, meta),
       };
       const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
         [{ $set: { ocr: { $mergeObjects: [{ $ifNull: ['$ocr', {}] }, { $literal: ocrFields }] }, updated_at: now } }]);
