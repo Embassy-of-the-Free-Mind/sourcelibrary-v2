@@ -49,15 +49,22 @@ citations that open the page. Never a spinner where results should be. The model
 twelve tools already work — `offlinesource` and the `sl-ask` daemon on 127.0.0.1:8766.
 Only the surface is missing.
 
-**3. The wall's two live defects.**
-- *Pictures never settle.* `tile.aspect` is overwritten when the atlas slot lands
-  (`src/wall.rs:7736`); the row packer (`justified_rows`, `:1298`) is greedy and
-  sequential, so one changed aspect re-cuts every row after it, and arrivals keep coming.
-  Freeze a layout-only aspect at first placement, taken from the index. Same rule as the
-  reading page: **geometry comes from the index, never from the pixels.**
-- *Pointer lag.* `tile_at` (`:8087`) walks every tile evaluating animated positions on
-  every mouse move; the constant-time grid path at `:8105` is unreachable because
-  `relayout` always sets `justified_rows > 0`. Restore it for plain grids.
+**3. The wall's live defects.**
+- *Pictures never settle.* `tile.aspect` was overwritten when the atlas slot landed
+  (`src/wall.rs:7736`); the row packer (`justified_rows`) is greedy and sequential, so one
+  changed aspect re-cut every row after it, and arrivals kept coming. **Fixed** — a frozen
+  `layout_aspect` taken from the index at first placement, on branch `wall-panels`. The
+  rule it establishes holds everywhere, including the reading page: **geometry comes from
+  the index, never from the pixels.**
+- *Pointer lag, if it is real.* `tile_at` (`:8092`) walks every tile evaluating animated
+  positions. **Do not "restore" the constant-time path at `:8128`** — an earlier audit
+  said to, and that is wrong. It indexes by rank off square-cell arithmetic, and
+  `a994e21` deliberately abandoned it because justified rows put pictures where their
+  shapes say, so clicks landed on the wrong picture or on nothing. Reverting trades a
+  possible slowdown for a certain correctness bug. The real fix is a row index over the
+  packed rows — binary search on y, then scan one row — which is its own work with its own
+  mis-hit risk, so it gets its own PR. First confirm the cost is real: nobody has verified
+  whether hover fires per mouse-move or only on enter, and the whole item rests on that.
 
 **4. Page scans, for the books that will be in cases.** `mirror-scans.mjs` is written.
 Cased books at full quality, the rest at the 1000 px reading tier. Blocked only on
