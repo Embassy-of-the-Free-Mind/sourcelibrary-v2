@@ -13,14 +13,67 @@ describe('cleanPageText', () => {
   });
 
   it('strips NESTED templates completely — the 2026-09-04 bug', () => {
+    // The guard is that no MARKUP survives. The assertion used to be `toBe('κείμενο')`,
+    // which also pinned the second bug (2026-09-05): the page prints ΤΙΤΛΟΣ, so deleting it
+    // with its wrapper removed printed text from the reference.
     const out = cleanPageText('{{κέντρο|{{μεγάλο|ΤΙΤΛΟΣ}}}}\nκείμενο');
     expect(out).not.toMatch(/[{}]/);
-    expect(out).toBe('κείμενο');
+    expect(out).toBe('ΤΙΤΛΟΣ\nκείμενο');
   });
 
   it('strips three levels of nesting', () => {
-    const out = cleanPageText('{{a|{{b|{{c|x}}}}}}\ntext');
+    const out = cleanPageText('{{a|{{b|{{c|xx}}}}}}\ntext');
     expect(out).not.toMatch(/[{}]/);
+    expect(out).toContain('xx');
+  });
+
+  it('KEEPS the printed payload of a formatting template — the 2026-09-05 bug', () => {
+    // {{SperrSchrift|…}} is letter-spaced type, not scaffolding. Blanking it took whole
+    // printed lines out of the reference (measured: 6.2% of Greek letters, 1.7% of German).
+    expect(cleanPageText("{{idt}}{{SperrSchrift|D’Glocke het zwölfi gschlage.}}"))
+      .toBe('D’Glocke het zwölfi gschlage.');
+    expect(cleanPageText('{{sc|Tabula Combinatoria}}')).toBe('Tabula Combinatoria');
+  });
+
+  it('drops scaffolding templates and their configuration', () => {
+    expect(cleanPageText('{{SimpleLeader|ptxtindent=-4.00em}}body')).toBe('body');
+    expect(cleanPageText('{{gap}}{{rule}}body')).toBe('body');
+    expect(cleanPageText('{{Zitierempfehlung|Projekt=[[Hebel]]: x|Seite=167}}body')).toBe('body');
+  });
+
+  it('treats a footnote the same in both spellings — the phantom-correction bug', () => {
+    // A validator moving a footnote from <ref> to {{CRef}} changed no printed text, but the
+    // cleaner kept one form and dropped the other, so the edit read as a 13.6% correction and
+    // inflated the measured reference error rate. Whichever way footnotes go, they go together.
+    expect(cleanPageText('Gerstner<ref>Gilberts Annalen, Bd. V.</ref> body')).toBe('Gerstner body');
+    expect(cleanPageText('Gerstner{{CRef|2=Gilberts Annalen, Bd. V.}} body')).toBe('Gerstner body');
+  });
+
+  it('picks the printed argument, not the CSS one', () => {
+    expect(cleanPageText('{{larger|0.1em|ΜΕΘΩΝΗ}}')).toBe('ΜΕΘΩΝΗ');
+  });
+
+  it('keeps EVERY printed argument, not just the longest', () => {
+    // A table-of-contents page is nothing but these. An earlier "longest argument wins" rule
+    // cut one such 2,000-character reference down to a 23-character heading.
+    expect(cleanPageText('{{SimpleLeader|17. Διήγησις Ἀπολλωνίου|Ἀπολλώνιος|mright=6.00em}}'))
+      .toBe('17. Διήγησις Ἀπολλωνίου Ἀπολλώνιος');
+  });
+
+  it('emits a sort-key/display pair once', () => {
+    // {{SimpleLeader|<unaccented anchor>|<accented printed form>}} is one printed line, not two.
+    expect(cleanPageText('{{SimpleLeader|Αλεξιου Κομνηνου ποιημα|Ἀλεξίου Κομνηνοῦ ποίημα|mright=6em}}'))
+      .toBe('Αλεξιου Κομνηνου ποιημα');
+  });
+
+  it('takes the fragment THIS page prints from a page-break hyphenation', () => {
+    // {{hws|<on this page>|<whole word>}} — importing the whole word would put letters in
+    // the reference that are printed on the NEXT page.
+    expect(cleanPageText('con{{hws|greſ|congreſſum}}')).toBe('con greſ');
+  });
+
+  it('legacyTemplates reproduces the pre-fix behaviour, for measurement only', () => {
+    expect(cleanPageText('{{sc|Tabula}} rasa', { legacyTemplates: true })).toBe('rasa');
   });
 
   it('leaves no stray braces from unbalanced markup', () => {
