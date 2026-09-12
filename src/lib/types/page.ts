@@ -22,13 +22,17 @@ export interface Page {
    */
   translations?: Record<string, TranslationData>;
   /**
-   * A translation taken out of service because it was made from a
-   * transcription the page no longer serves (#4523). The whole
-   * `TranslationData` is moved here — text, model, dates — and `translation` is
-   * unset, so every surface that reads `translation.data` stops serving it at
-   * once rather than each having to learn a filter. Never rendered; the reader
-   * shows `paneEmpty.translationWithheld` instead. The rule that produces it,
-   * and the sweep that re-derives it, live in
+   * Metadata for a translation taken out of service because it was made from a
+   * transcription the page no longer serves (#4523). `translation` is unset, so
+   * every surface that reads `translation.data` stops serving it at once rather
+   * than each having to learn a filter, and the reader shows
+   * `paneEmpty.translationWithheld` instead.
+   *
+   * **The text is NOT here.** It lives in `page_revisions` under
+   * `withhold-stale-translation-4523`, because this whole document is
+   * serialised into the reader's RSC flight payload — text left in a sibling
+   * field ships inside the HTML of every affected page, unrendered but fully
+   * scrapeable. The rule, the sweep and the restore path live in
    * `scripts/lib/stale-translation.mjs`.
    */
   translation_withheld?: WithheldTranslation;
@@ -234,9 +238,12 @@ export interface TranslationData extends ProcessingMetadata {
  */
 export type WithheldTranslationReason = 'stale_after_reocr' | 'ocr_unreadable';
 
-export interface WithheldTranslation extends TranslationData {
+export interface WithheldTranslation extends Omit<TranslationData, 'data'> {
   reason: WithheldTranslationReason;
   withheld_at: Date;
+  /** Length of the withdrawn text. The text itself is in `page_revisions`. */
+  chars: number;
+  data?: never;
 }
 
 export interface SummaryData extends ProcessingMetadata {

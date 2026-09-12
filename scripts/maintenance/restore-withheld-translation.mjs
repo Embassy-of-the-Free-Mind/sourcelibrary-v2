@@ -11,11 +11,13 @@
  *
  * A withhold is only reversible if the reverse is a thing you can run, so this
  * is part of the deliverable rather than a note that it "could" be undone.
- * Two sources, in order:
- *   1. `pages.translation_withheld` — the object the withhold moved aside.
- *   2. the `page_revisions` row written under
- *      `withhold-stale-translation-4523`, used when the field is gone (someone
- *      cleaned it up) but the snapshot survives.
+ * The text lives in ONE place: the `page_revisions` row written under
+ * `withhold-stale-translation-4523`. `pages.translation_withheld` keeps only
+ * metadata, deliberately — the reader serialises the whole page document into
+ * its RSC payload, so text left there would ship inside the HTML. That makes
+ * the snapshot load-bearing, and a withheld page with no snapshot is a bug the
+ * drift audit reports as UNBACKED rather than something this script papers
+ * over.
  *
  * Restoring puts the page back into the stale set, so the standing sweep would
  * withhold it again on its next run. That is correct — the way OUT of the set
@@ -51,38 +53,26 @@ if (!docs.length) { console.error('no matching pages'); await mongo.close(); pro
 let restored = 0;
 let skipped = 0;
 for (const page of docs) {
-  let update = restoreUpdate(page);
-  let via = 'translation_withheld';
+  if (!page.translation_withheld) { console.log(`${page.id}: nothing withheld — skipping`); skipped++; continue; }
 
-  if (!update) {
-    // Fall back to the snapshot. Newest first: a page can have been withheld
-    // more than once if it was restored and re-swept.
-    const rev = await db.collection('page_revisions')
-      .find({ page_id: page.id, field: 'translation', reason: WITHHOLD_REVISION_SOURCE })
-      .sort({ created_at: -1 }).limit(1).next();
-    if (!rev) { console.log(`${page.id}: nothing withheld and no snapshot — skipping`); skipped++; continue; }
-    via = 'page_revisions';
-    update = {
-      $set: {
-        translation: {
-          data: rev.data,
-          language: rev.language || 'English',
-          model: rev.model,
-          source: rev.source || 'ai',
-          prompt_version: rev.prompt_version,
-          edited_by: rev.edited_by,
-          updated_at: rev.original_date || rev.created_at,
-        },
-        updated_at: new Date(),
-      },
-      $unset: { translation_withheld: '' },
-    };
+  // The text is NOT on the page — the withhold keeps only metadata there, so
+  // that it cannot ride the reader's flight payload. `page_revisions` is the
+  // one place holding it. Newest first: a page can have been withheld more
+  // than once if it was restored and re-swept.
+  const rev = await db.collection('page_revisions')
+    .find({ page_id: page.id, field: 'translation', reason: WITHHOLD_REVISION_SOURCE })
+    .sort({ created_at: -1 }).limit(1).next();
+  if (!rev?.data) {
+    console.log(`${page.id}: withheld but NO SNAPSHOT — cannot restore, and this page should be reported by the drift audit as UNBACKED`);
+    skipped++;
+    continue;
   }
 
-  const text = update.$set.translation?.data || '';
+  const update = restoreUpdate(page, rev.data);
+  const text = update.$set.translation.data;
   const stillStale = staleTranslationReason({ ...page, translation: update.$set.translation });
-  console.log(`\n${page.book_id} p.${page.page_number} (${page.id}) via ${via}`);
-  console.log(`  reason withheld: ${page.translation_withheld?.reason ?? '(from snapshot)'} · ${text.length} chars`);
+  console.log(`\n${page.book_id} p.${page.page_number} (${page.id})`);
+  console.log(`  reason withheld: ${page.translation_withheld?.reason} · ${text.length} chars (recorded ${page.translation_withheld?.chars ?? '—'})`);
   console.log(`  head: ${text.slice(0, 140).replace(/\n/g, ' ')}`);
   if (stillStale && !FORCE) {
     console.log(`  STILL STALE (${stillStale}) — the sweep would withhold it again. Pass --force to restore anyway.`);

@@ -18,10 +18,15 @@
  *      `withhold-stale-translation-4523`. Nothing is destroyed, and the
  *      withheld corpus stays countable — it is a labelled record of what the
  *      old model invented, which has research value of its own.
- *   2. Move `translation` → `translation_withheld` (text, model and dates
- *      intact, plus `reason` and `withheld_at`) and unset `translation`.
- *   3. Resync the book's page counters, because `pages_translated` and the
- *      readable bar are surfaces too.
+ *   2. Unset `translation`, leaving `translation_withheld` with the METADATA
+ *      only — model, dates, length, hash, reason. The text is NOT kept on the
+ *      page: the reader serialises the whole page document into its RSC flight
+ *      payload, so a sibling field ships the withdrawn English inside the HTML
+ *      of every affected page. `page_revisions` is never serialised.
+ *   3. Withdraw featured quotes drawn from those pages, resync the book's page
+ *      counters, and re-sync the Supabase `pages` mirror — each of those is a
+ *      surface that does not read `pages.translation.data` and so is not
+ *      covered by the removal.
  *
  * ACTUATION NOTE (CLAUDE.md: writing to a store an automated job reads).
  * Step 2 bumps `pages.updated_at`, and `embed-gemini.mjs --incremental` runs
@@ -127,9 +132,64 @@ async function withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers) {
   rec({ book: bookId, status: 'quotes-withdrawn', dropped: drop.length, kept: keep.length });
 }
 
+/**
+ * Strip text from any withheld object that still carries it — once, and only
+ * once, its `page_revisions` snapshot is confirmed byte-for-byte.
+ *
+ * The first version of the withhold MOVED the text into
+ * `pages.translation_withheld.data`. That is not out of service: the reader
+ * serialises the whole page document into its RSC flight payload, so the
+ * withdrawn English shipped inside the HTML of every affected reader page —
+ * unrendered, fully scrapeable, and invisible to any probe that reads the
+ * rendered pane. The text belongs in `page_revisions`, which is never
+ * serialised to a client.
+ *
+ * Runs on every sweep, so a page written by an older copy of this script heals
+ * on the next pass instead of waiting for someone to notice.
+ */
+async function stripTextFromWithheldObjects(bookId) {
+  const carrying = await pages.find(
+    { book_id: bookId, 'translation_withheld.data': { $type: 'string' } },
+    { projection: { id: 1, 'translation_withheld.data': 1 } },
+  ).toArray();
+  if (!carrying.length) return;
+  const ids = carrying.map((p) => p.id);
+  const revs = await db.collection('page_revisions')
+    .find({ page_id: { $in: ids }, field: 'translation', reason: WITHHOLD_REVISION_SOURCE },
+      { projection: { page_id: 1, data: 1 } })
+    .toArray();
+  const byPage = new Map(revs.map((r) => [r.page_id, r.data]));
+  const ops = [];
+  for (const p of carrying) {
+    const snap = byPage.get(p.id);
+    // Byte-for-byte. A snapshot that does not match is not a snapshot OF this
+    // text, and dropping the field would then be the one destructive act this
+    // whole mechanism exists to avoid.
+    if (snap !== p.translation_withheld.data) {
+      T.stripSkipped++;
+      rec({ book: bookId, page_id: p.id, status: 'strip-skipped-no-matching-snapshot' });
+      continue;
+    }
+    ops.push({
+      updateOne: {
+        filter: { id: p.id },
+        update: {
+          $unset: { 'translation_withheld.data': '' },
+          $set: { 'translation_withheld.chars': snap.length },
+        },
+      },
+    });
+  }
+  if (!ops.length) return;
+  if (!APPLY) { T.stripped += ops.length; rec({ book: bookId, status: 'dry-run-strip', would_strip: ops.length }); return; }
+  const res = await pages.bulkWrite(ops, { ordered: false });
+  T.stripped += res.modifiedCount;
+  rec({ book: bookId, status: 'stripped-withheld-text', stripped: res.modifiedCount, skipped: carrying.length - ops.length });
+}
+
 const T = {
   books: 0, booksChanged: 0, pendingBooks: 0, candidates: 0, stale: 0, withheld: 0,
-  quotesWithdrawn: 0,
+  quotesWithdrawn: 0, stripped: 0, stripSkipped: 0,
   revisions: 0, chars: 0, byReason: {}, countersResynced: 0, mirrorSynced: 0, aborted: 0,
 };
 
@@ -164,10 +224,15 @@ for (const bookId of bookIds) {
   if (!APPLY) {
     rec({ book: bookId, status: 'dry-run', stale: targets.length, chars });
     await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers);
+    await stripTextFromWithheldObjects(bookId);
     continue;
   }
 
-  if (!targets.length) { await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers); continue; }
+  if (!targets.length) {
+    await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers);
+    await stripTextFromWithheldObjects(bookId);
+    continue;
+  }
 
   // Snapshot FIRST, in batches, and refuse the book if the snapshot is short.
   // A withhold that loses its revision row is the one thing here that is not
@@ -236,6 +301,7 @@ for (const bookId of bookIds) {
   }
 
   await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers);
+  await stripTextFromWithheldObjects(bookId);
 
   // The Supabase `pages` mirror holds its own copy of the text in
   // `translation_data`, and its 5-minute sync worker selects by

@@ -34,13 +34,24 @@
  *
  * ── Where the text goes ──────────────────────────────────────────────────────
  *
- * Withholding MOVES the text rather than filtering it at read time: the page's
- * `translation` object becomes `translation_withheld` and the served field is
- * unset. Nine surfaces read `translation.data`; one of them will always be
+ * Withholding takes the text OFF THE PAGE DOCUMENT, rather than filtering it at
+ * read time. Nine surfaces read `translation.data`; one of them will always be
  * missed by a filter-list, and the one that is missed serves the fabrication.
- * A move cannot be missed. Nothing is deleted: the prior translation is also
- * snapshotted to `page_revisions` under `WITHHOLD_REVISION_SOURCE`, so the
- * fabrication corpus stays countable and studyable in its own right.
+ *
+ * The text goes to `page_revisions` (source `WITHHOLD_REVISION_SOURCE`) and
+ * `pages.translation_withheld` keeps only the METADATA — model, dates, length,
+ * content hash, reason. **The withheld object must never carry the text.** The
+ * first version of this did keep it, and the reader serialises the whole page
+ * document into its RSC flight payload (`findOne(..., { projection:
+ * { detected_images: 0 } })`), so 3.6 KB of withdrawn English shipped inside
+ * the HTML of every affected reader page — unrendered, fully scrapeable, and
+ * invisible to a probe that only looks at the rendered pane. A sibling field on
+ * the same document is not "out of service"; only a different collection is.
+ * `page_revisions` is never serialised to a client, so this is structural
+ * rather than a rule every future serializer has to remember.
+ *
+ * Nothing is deleted: the snapshot is the archive, and the fabrication corpus
+ * stays countable and studyable in its own right.
  */
 
 /** Written into `translation_withheld.reason` and the `page_revisions` row. */
@@ -138,26 +149,35 @@ function toTime(v) {
  */
 export function withholdUpdate(page, reason, now = new Date()) {
   const tr = page?.translation;
-  if (!translationText(tr)) return null;
-  // A legacy bare-string translation is normalised into the object shape on the
-  // way into holding, so the restore path has one shape to put back.
-  const obj = typeof tr === 'string' ? { data: tr } : tr;
+  const text = translationText(tr);
+  if (!text) return null;
+  const obj = typeof tr === 'string' ? {} : { ...tr };
+  // `data` is deliberately dropped, not moved — see the header. Everything that
+  // is NOT the text stays, so the record of what was withheld (which model,
+  // when it was written, how long it was) survives on the page itself and the
+  // audit can reconcile it without opening `page_revisions`.
+  delete obj.data;
   return {
     $set: {
-      translation_withheld: { ...obj, reason, withheld_at: now },
+      translation_withheld: { ...obj, reason, withheld_at: now, chars: text.length },
       updated_at: now,
     },
     $unset: { translation: '' },
   };
 }
 
-/** The inverse of `withholdUpdate`, for the restore path. */
-export function restoreUpdate(page, now = new Date()) {
+/**
+ * The inverse of `withholdUpdate`. The text is not on the page, so a caller has
+ * to supply it — from the `page_revisions` snapshot, which is where it lives.
+ * That asymmetry is the point: there is exactly one place holding the text, and
+ * a restore has to go and read it.
+ */
+export function restoreUpdate(page, text, now = new Date()) {
   const w = page?.translation_withheld;
-  if (!w) return null;
-  const { reason: _r, withheld_at: _w, ...translation } = w;
+  if (!w || typeof text !== 'string' || !text) return null;
+  const { reason: _r, withheld_at: _w, chars: _c, ...meta } = w;
   return {
-    $set: { translation, updated_at: now },
+    $set: { translation: { ...meta, data: text }, updated_at: now },
     $unset: { translation_withheld: '' },
   };
 }

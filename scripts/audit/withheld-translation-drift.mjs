@@ -19,8 +19,13 @@
  *              copies, one of them being served. Should never happen; means a
  *              writer put a translation back without clearing the withhold.
  *   UNBACKED   `translation_withheld` is set but no `page_revisions` snapshot
- *              exists for it. The text is not lost (it is in the field) but the
- *              recoverable-by-design promise is not met for that page.
+ *              exists for it. The snapshot is the ONLY copy of the text, so
+ *              this is not a bookkeeping gap — that page is unrestorable.
+ *   ON-PAGE    `translation_withheld.data` still holds the text. The reader
+ *              serialises the whole page document into its RSC flight payload,
+ *              so text left on the page ships inside the HTML of every affected
+ *              reader page: unrendered, fully scrapeable, and invisible to a
+ *              probe that reads the rendered pane. Must be 0.
  *   RESOLVED   `translation_withheld` is set and the page has since been
  *              retranslated — informational, not a fault. The withheld object
  *              can stay as provenance.
@@ -55,7 +60,7 @@ try {
 const db = mongo.db('bookstore');
 const pages = db.collection('pages');
 
-const out = { leaked: 0, orphaned: 0, unbacked: 0, resolved: 0, withheld: 0, byReason: {}, leakedBooks: [], supabase: null };
+const out = { leaked: 0, orphaned: 0, unbacked: 0, onPage: 0, resolved: 0, withheld: 0, byReason: {}, leakedBooks: [], supabase: null };
 
 // ── LEAKED ───────────────────────────────────────────────────────────────────
 log('scanning candidates …');
@@ -85,12 +90,14 @@ const withheldCursor = pages.find(
     projection: {
       id: 1, book_id: 1, 'translation.data': 1, 'translation.updated_at': 1,
       'translation_withheld.reason': 1, 'translation_withheld.withheld_at': 1,
+      'translation_withheld.data': 1,
     },
   },
 );
 const withheldIds = [];
 for await (const p of withheldCursor) {
   out.withheld++;
+  if (typeof p.translation_withheld?.data === 'string' && p.translation_withheld.data.length) out.onPage++;
   const hasLive = typeof p.translation?.data === 'string' && p.translation.data.length > 0;
   if (hasLive) {
     // A live translation newer than the withhold is the page having been
@@ -140,7 +147,7 @@ if (!process.env.SUPABASE_DB_URL) {
 
 const supabaseUnknown = out.supabase?.status === 'UNKNOWN';
 const supabaseLeak = out.supabase?.reachable_rows > 0;
-const bad = out.leaked > 0 || out.orphaned > 0 || out.unbacked > 0 || supabaseLeak;
+const bad = out.leaked > 0 || out.orphaned > 0 || out.unbacked > 0 || out.onPage > 0 || supabaseLeak;
 
 if (JSON_OUT) {
   console.log(JSON.stringify(out, null, 2));
@@ -148,6 +155,7 @@ if (JSON_OUT) {
   console.log('');
   console.log(`LEAKED    ${out.leaked}  (predicate holds, translation still served)  ${JSON.stringify(out.byReason)}`);
   console.log(`ORPHANED  ${out.orphaned}  (withheld AND live translation on the same page)`);
+  console.log(`ON-PAGE   ${out.onPage}  (withheld object still carrying the text — it ships in the reader's RSC payload)`);
   console.log(`UNBACKED  ${out.unbacked}  (withheld with no page_revisions snapshot; ${out.withheld} withheld vs ${snapshots} snapshots)`);
   console.log(`SUPABASE  ${JSON.stringify(out.supabase)}`);
   if (out.leakedBooks.length) console.log(`first leaked books: ${out.leakedBooks.slice(0, 10).join(' ')}`);

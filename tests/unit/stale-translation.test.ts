@@ -97,7 +97,8 @@ describe('staleTranslationReason', () => {
     const p = page({ translation: 'Old English text' });
     expect(staleTranslationReason(p)).toBe(WITHHOLD_REASONS.STALE_AFTER_REOCR);
     const u = withholdUpdate(p, WITHHOLD_REASONS.STALE_AFTER_REOCR);
-    expect(u.$set.translation_withheld.data).toBe('Old English text');
+    expect(u.$set.translation_withheld.chars).toBe('Old English text'.length);
+    expect(u.$set.translation_withheld.data).toBeUndefined();
   });
 
   it('is idempotent: an already-withheld page no longer matches', () => {
@@ -107,29 +108,47 @@ describe('staleTranslationReason', () => {
 });
 
 describe('withholdUpdate / restoreUpdate', () => {
-  it('moves the whole translation object, keeping text, model and dates', () => {
+  it('keeps the metadata and does NOT keep the text on the page', () => {
+    // The load-bearing assertion of this whole mechanism. The reader
+    // serialises the ENTIRE page document into its RSC flight payload
+    // (`findOne(..., { projection: { detected_images: 0 } })`), so a withheld
+    // translation left in a sibling field ships inside the HTML of every
+    // affected reader page — unrendered, fully scrapeable, and invisible to a
+    // probe that only reads the rendered pane. That is exactly what the first
+    // version of this did, and it was caught by curling the page rather than
+    // by any test. This is that test.
     const now = new Date('2026-09-12T10:00:00Z');
     const u = withholdUpdate(page(), WITHHOLD_REASONS.STALE_AFTER_REOCR, now);
     expect(u.$unset).toEqual({ translation: '' });
     expect(u.$set.translation_withheld).toMatchObject({
-      data: 'English',
       model: 'gemini-3.1-flash-lite-preview',
       updated_at: BEFORE,
       reason: WITHHOLD_REASONS.STALE_AFTER_REOCR,
       withheld_at: now,
+      chars: 'English'.length,
     });
+    expect(u.$set.translation_withheld.data).toBeUndefined();
+    expect(JSON.stringify(u)).not.toContain('English');
   });
 
-  it('round-trips: restore puts back exactly what withhold moved aside', () => {
+  it('round-trips through the snapshot: restore rebuilds the original', () => {
     const original = page().translation;
     const u = withholdUpdate(page(), WITHHOLD_REASONS.STALE_AFTER_REOCR);
-    const r = restoreUpdate({ translation_withheld: u.$set.translation_withheld });
+    // The text comes from page_revisions, not from the page — the caller has
+    // to go and read it, which is the asymmetry that keeps one copy.
+    const r = restoreUpdate({ translation_withheld: u.$set.translation_withheld }, original.data);
     expect(r.$set.translation).toEqual(original);
     expect(r.$unset).toEqual({ translation_withheld: '' });
   });
 
+  it('refuses to restore without the snapshot text', () => {
+    const u = withholdUpdate(page(), WITHHOLD_REASONS.STALE_AFTER_REOCR);
+    expect(restoreUpdate({ translation_withheld: u.$set.translation_withheld }, '')).toBeNull();
+    expect(restoreUpdate({ translation_withheld: u.$set.translation_withheld }, undefined)).toBeNull();
+  });
+
   it('is a no-op on a page with nothing to withhold or restore', () => {
     expect(withholdUpdate({ id: 'p' }, 'x')).toBeNull();
-    expect(restoreUpdate({ id: 'p' })).toBeNull();
+    expect(restoreUpdate({ id: 'p' }, 'text')).toBeNull();
   });
 });
