@@ -1,0 +1,5906 @@
+{
+  "generated_at": "2026-09-04T23:04:42.044Z",
+  "source": "scripts/eval/ground-truth-wikisource-l4/el-1450-1900.json,scripts/eval/ground-truth-wikisource-l4/la-1450-1900.json",
+  "metric": "symmetric char-level Levenshtein after normalizeForScript (same folding the bench scores through), space-stripped",
+  "pages_examined": 149,
+  "fetch_failures": 18,
+  "composition": {
+    "by_current_level": {
+      "L4": 70,
+      "L3": 79
+    },
+    "by_language_level": {
+      "Greek L4": 18,
+      "Latin L4": 37,
+      "German L4": 15,
+      "German L3": 2,
+      "Greek L3": 21,
+      "Latin L3": 56
+    },
+    "never_validated": 79,
+    "self_validated": 0,
+    "excluded_prior_level_not_3": 1
+  },
+  "instrument_A_validation_delta": {
+    "what": "error rate of a LEVEL-3 reference — what an independent second reader changed",
+    "bound": "LOWER bound: the validator misses errors too, and errors both readers share are invisible",
+    "pooled": {
+      "n": 69,
+      "pooled_cer": 0.005863842857603128,
+      "mean_cer": 0.006281524293201555,
+      "median_cer": 0,
+      "p90_cer": 0.00429553264604811,
+      "max_cer": 0.23819095477386934,
+      "clean_pages": 39,
+      "ci95_mean": [
+        0.0010342809712661153,
+        0.015054126318204837
+      ],
+      "total_chars": 93113,
+      "total_changed_chars": 546
+    },
+    "by_language": {
+      "Greek": {
+        "n": 18,
+        "pooled_cer": 0.0007638446849140675,
+        "mean_cer": 0.0006883424439359681,
+        "median_cer": 0,
+        "p90_cer": 0.002380952380952381,
+        "max_cer": 0.0042796005706134095,
+        "clean_pages": 12,
+        "ci95_mean": [
+          0.00020133153960424197,
+          0.0012659237003078555
+        ],
+        "total_chars": 23565,
+        "total_changed_chars": 18
+      },
+      "Latin": {
+        "n": 36,
+        "pooled_cer": 0.010503165337498972,
+        "mean_cer": 0.011450404571959049,
+        "median_cer": 0,
+        "p90_cer": 0.007259528130671506,
+        "max_cer": 0.23819095477386934,
+        "clean_pages": 19,
+        "ci95_mean": [
+          0.0017234011657869684,
+          0.024682514997804068
+        ],
+        "total_chars": 48652,
+        "total_changed_chars": 511
+      },
+      "German": {
+        "n": 15,
+        "pooled_cer": 0.0008135528330781011,
+        "mean_cer": 0.0005880298433022718,
+        "median_cer": 0,
+        "p90_cer": 0.0012033694344163659,
+        "max_cer": 0.00389948006932409,
+        "clean_pages": 8,
+        "ci95_mean": [
+          0.00019122392406592154,
+          0.001137451614192327
+        ],
+        "total_chars": 20896,
+        "total_changed_chars": 17
+      }
+    }
+  },
+  "instrument_B_post_validation_delta": {
+    "what": "residual in a LEVEL-4 reference — corrections made AFTER two humans signed off",
+    "bound": "LOWER bound, and a loose one: it counts only errors somebody later happened to find",
+    "pooled": {
+      "n": 39,
+      "pooled_cer": 0.0034896621280887546,
+      "mean_cer": 0.002352415268651563,
+      "median_cer": 0,
+      "p90_cer": 0.005145797598627788,
+      "max_cer": 0.03380281690140845,
+      "clean_pages": 33,
+      "ci95_mean": [
+        0.0001616916886216657,
+        0.005055668912655897
+      ],
+      "total_chars": 49575,
+      "total_changed_chars": 173
+    },
+    "by_language": {
+      "Greek": {
+        "n": 5,
+        "pooled_cer": 0,
+        "mean_cer": 0,
+        "median_cer": 0,
+        "p90_cer": 0,
+        "max_cer": 0,
+        "clean_pages": 5,
+        "ci95_mean": [
+          0,
+          0
+        ],
+        "total_chars": 3092,
+        "total_changed_chars": 0
+      },
+      "Latin": {
+        "n": 19,
+        "pooled_cer": 0.006644258578910342,
+        "mean_cer": 0.004767579853673357,
+        "median_cer": 0,
+        "p90_cer": 0.033386327503974564,
+        "max_cer": 0.03380281690140845,
+        "clean_pages": 15,
+        "ci95_mean": [
+          0.0005416629051187145,
+          0.010104866732843113
+        ],
+        "total_chars": 25586,
+        "total_changed_chars": 170
+      },
+      "German": {
+        "n": 15,
+        "pooled_cer": 0.00014356127673828778,
+        "mean_cer": 0.00007734521717447828,
+        "median_cer": 0,
+        "p90_cer": 0.00029437739181630853,
+        "max_cer": 0.0008658008658008658,
+        "clean_pages": 13,
+        "ci95_mean": [
+          0,
+          0.0002124104920690143
+        ],
+        "total_chars": 20897,
+        "total_changed_chars": 3
+      }
+    },
+    "bot_only_pages": 7
+  },
+  "instrument_C_template_payload_loss": {
+    "what": "printed text the pre-2026-09-05 cleaner deleted along with its formatting template",
+    "bound": "exact for these pages — it is a diff of our own two cleaners, not an estimate",
+    "by_language": {
+      "Greek": {
+        "n": 39,
+        "pooled_share": 0.06040390784485273,
+        "pages_losing_5plus_chars": 26,
+        "worst_page_share": 1,
+        "total_lost_chars": 3314
+      },
+      "Latin": {
+        "n": 93,
+        "pooled_share": 0.03786519040719676,
+        "pages_losing_5plus_chars": 51,
+        "worst_page_share": 1,
+        "total_lost_chars": 5253
+      },
+      "German": {
+        "n": 17,
+        "pooled_share": 0.00933953341740227,
+        "pages_losing_5plus_chars": 5,
+        "worst_page_share": 0.04193800468872102,
+        "total_lost_chars": 237
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "ws-el--1881-pdf-p18",
+      "wiki": "el",
+      "title": "Σελίδα:Λουκής Λάρας (1881).pdf/18",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1881,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ntetos",
+        "validator": "Αντιγόνη",
+        "priorLevel": 3,
+        "days": 68,
+        "charUnits": 951,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 193,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 951,
+        "legacyChars": 951,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--pdf-p17",
+      "wiki": "el",
+      "title": "Σελίδα:Η Βάρβιτος.pdf/17",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1860,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 2,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 357,
+        "charUnits": 524,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 102,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 524,
+        "legacyChars": 524,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--659-djvu-p5",
+      "wiki": "el",
+      "title": "Σελίδα:Εστία Αριθμός 659.djvu/5",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1888,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 1748,
+        "charUnits": 3170,
+        "charDist": 7,
+        "cer": 0.0022082018927444794,
+        "wordUnits": 603,
+        "wer": 0.006633499170812604,
+        "cerLegacyCleaner": 0.0022913256955810145,
+        "hunks": [
+          {
+            "before": "προηγουμενων",
+            "after": "προηγουμενην"
+          },
+          {
+            "before": "σημαιαν",
+            "after": "σημασιαν"
+          },
+          {
+            "before": "πολλασ",
+            "after": "πολλουσ"
+          },
+          {
+            "before": "",
+            "after": "τον"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 3170,
+        "legacyChars": 3055,
+        "lostChars": 115,
+        "lostShare": 0.03627760252365931
+      }
+    },
+    {
+      "slug": "ws-el--djvu-p18",
+      "wiki": "el",
+      "title": "Σελίδα:Διήγησις ακριβής όπως εβαπτίσθη το των Ρώσσων Έθνος.djvu/18",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1891,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Αντιγόνη",
+        "priorLevel": 3,
+        "days": 219,
+        "charUnits": 658,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 120,
+        "wer": 0,
+        "cerLegacyCleaner": 0.09422492401215805,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 658,
+        "edits": 1,
+        "editors": [
+          "Αντιγόνη"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 658,
+        "legacyChars": 596,
+        "lostChars": 62,
+        "lostShare": 0.09422492401215805
+      }
+    },
+    {
+      "slug": "ws-el--25-1842-djvu-p3",
+      "wiki": "el",
+      "title": "Σελίδα:Λογίδριον εκφωνηθέν παρά του δημάρχου Αθηνών κ. Αναργύρου Πετράκη κατά την εορτήν της του Χριστού Γεννήσεως, την 25 Δεκεμβρίου 1842.djvu/3",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1843,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 1,
+        "charUnits": 1027,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 190,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1027,
+        "legacyChars": 1005,
+        "lostChars": 22,
+        "lostShare": 0.021421616358325218
+      }
+    },
+    {
+      "slug": "ws-el--6-30-03-1841-pdf-p2",
+      "wiki": "el",
+      "title": "Σελίδα:ΦΕΚ Α 6 - 30.03.1841.pdf/2",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1841,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Texniths",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 349,
+        "charUnits": 3140,
+        "charDist": 5,
+        "cer": 0.0015923566878980893,
+        "wordUnits": 576,
+        "wer": 0.006944444444444444,
+        "cerLegacyCleaner": 0.0015979546180888463,
+        "hunks": [
+          {
+            "before": "επι τρεφεσθαι",
+            "after": "επιστρεφεσθαι"
+          },
+          {
+            "before": "νομων",
+            "after": "νομον"
+          },
+          {
+            "before": "",
+            "after": "δεν"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 3140,
+        "legacyChars": 3129,
+        "lostChars": 11,
+        "lostShare": 0.0035031847133757963
+      }
+    },
+    {
+      "slug": "ws-el--25-pdf-p4",
+      "wiki": "el",
+      "title": "Σελίδα:Η 25 Μαρτίου. Η Άνοιξη και το παλληκάρι της Ηπείρου.pdf/4",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1867,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Αντιγόνη",
+        "priorLevel": 3,
+        "days": 260,
+        "charUnits": 590,
+        "charDist": 1,
+        "cer": 0.001694915254237288,
+        "wordUnits": 133,
+        "wer": 0.007518796992481203,
+        "cerLegacyCleaner": 0.001694915254237288,
+        "hunks": [
+          {
+            "before": "διψα",
+            "after": "δειψα"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 590,
+        "legacyChars": 590,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--pdf-p15",
+      "wiki": "el",
+      "title": "Σελίδα:Διηγήματα (Αξιώτης).pdf/15",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1899,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Texniths",
+        "validator": "Αντιγόνη",
+        "priorLevel": 3,
+        "days": 108,
+        "charUnits": 1097,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 241,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1097,
+        "legacyChars": 1097,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el-apollonii-rhodii-argonautica-1900-djvu-p19",
+      "wiki": "el",
+      "title": "Σελίδα:Apollonii Rhodii Argonautica (1900).djvu/19",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1900,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 11,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Αντιγόνη",
+        "validator": "Tujec",
+        "priorLevel": 3,
+        "days": 1420,
+        "charUnits": 636,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 115,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 636,
+        "edits": 1,
+        "editors": [
+          "Αντιγόνη"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 636,
+        "legacyChars": 607,
+        "lostChars": 29,
+        "lostShare": 0.04559748427672956
+      }
+    },
+    {
+      "slug": "ws-el--1832-1862-pdf-p4",
+      "wiki": "el",
+      "title": "Σελίδα:Ιστορία του Όθωνος Βασιλέως της Ελλάδος (1832-1862).pdf/4",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1894,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 2,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Texniths",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 1849,
+        "charUnits": 1246,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 222,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1246,
+        "legacyChars": 1183,
+        "lostChars": 63,
+        "lostShare": 0.05056179775280899
+      }
+    },
+    {
+      "slug": "ws-el--1871-pdf-p19",
+      "wiki": "el",
+      "title": "Σελίδα:Περί του Γαλατικού Πολέμου (1871).pdf/19",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1871,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 2,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 448,
+        "charUnits": 813,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 156,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 813,
+        "legacyChars": 749,
+        "lostChars": 64,
+        "lostShare": 0.07872078720787208
+      }
+    },
+    {
+      "slug": "ws-el-the-new-testament-in-the-original-greek-1894-djv-p26",
+      "wiki": "el",
+      "title": "Σελίδα:The New Testament in the Original Greek (1894).djvu/26",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1894,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 7,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Shenme",
+        "validator": "Αντιγόνη",
+        "priorLevel": 3,
+        "days": 530,
+        "charUnits": 1065,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 242,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1065,
+        "legacyChars": 1065,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--658-djvu-p16",
+      "wiki": "el",
+      "title": "Σελίδα:Εστία Αριθμός 658.djvu/16",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1888,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 512,
+        "charUnits": 4271,
+        "charDist": 1,
+        "cer": 0.00023413720440177945,
+        "wordUnits": 779,
+        "wer": 0.0012836970474967907,
+        "cerLegacyCleaner": 0.00023752969121140142,
+        "hunks": [
+          {
+            "before": "τεταρτη",
+            "after": "τεταρτην"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 4271,
+        "legacyChars": 4210,
+        "lostChars": 61,
+        "lostShare": 0.014282369468508546
+      }
+    },
+    {
+      "slug": "ws-el--djvu-p23",
+      "wiki": "el",
+      "title": "Σελίδα:Διονύσου πλους.djvu/23",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1864,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 11,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ah3kal",
+        "validator": "Αντιγόνη",
+        "priorLevel": 3,
+        "days": 142,
+        "charUnits": 701,
+        "charDist": 3,
+        "cer": 0.0042796005706134095,
+        "wordUnits": 147,
+        "wer": 0.006802721088435374,
+        "cerLegacyCleaner": 0.004366812227074236,
+        "hunks": [
+          {
+            "before": "την",
+            "after": "κορην"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 701,
+        "edits": 5,
+        "editors": [
+          "Αντιγόνη",
+          "Gerakibot",
+          "Ah3kal"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 701,
+        "legacyChars": 687,
+        "lostChars": 14,
+        "lostShare": 0.019971469329529243
+      }
+    },
+    {
+      "slug": "ws-el--djvu-p3",
+      "wiki": "el",
+      "title": "Σελίδα:Περί του Ανατολικού ζητήματος Δημήτριος Αινιάν.djvu/3",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1876,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 19,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Αντιγόνη",
+        "validator": "Ah3kal",
+        "priorLevel": 3,
+        "days": 83,
+        "charUnits": 677,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 123,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 677,
+        "edits": 10,
+        "editors": [
+          "Ah3kal",
+          "Αντιγόνη"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.013293943870014771,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 677,
+        "legacyChars": 668,
+        "lostChars": 9,
+        "lostShare": 0.013293943870014771
+      }
+    },
+    {
+      "slug": "ws-el--pdf-p21",
+      "wiki": "el",
+      "title": "Σελίδα:Γεωγραφία Στοιχειώδης.pdf/21",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1861,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 2,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Texniths",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 2456,
+        "charUnits": 1916,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 392,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1916,
+        "legacyChars": 1864,
+        "lostChars": 52,
+        "lostShare": 0.027139874739039668
+      }
+    },
+    {
+      "slug": "ws-el--x-djvu-p278",
+      "wiki": "el",
+      "title": "Σελίδα:Γεωργίου X. Ζαλοκώστα Τα άπαντα.djvu/278",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1873,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 7,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Texniths",
+        "validator": "Ntetos",
+        "priorLevel": 3,
+        "days": 645,
+        "charUnits": 663,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 137,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 663,
+        "legacyChars": 625,
+        "lostChars": 38,
+        "lostShare": 0.05731523378582202
+      }
+    },
+    {
+      "slug": "ws-el-manussos-djvu-p5",
+      "wiki": "el",
+      "title": "Σελίδα:Manussos.djvu/5",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1876,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 8,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "OrbiliusMagister",
+        "validator": "Αντιγόνη",
+        "priorLevel": 3,
+        "days": 1570,
+        "charUnits": 420,
+        "charDist": 1,
+        "cer": 0.002380952380952381,
+        "wordUnits": 89,
+        "wer": 0.011235955056179775,
+        "cerLegacyCleaner": 0.05476190476190476,
+        "hunks": [
+          {
+            "before": "ταν",
+            "after": "τον"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 420,
+        "edits": 3,
+        "editors": [
+          "Αντιγόνη",
+          "AkBot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 420,
+        "legacyChars": 398,
+        "lostChars": 22,
+        "lostShare": 0.05238095238095238
+      }
+    },
+    {
+      "slug": "ws-la-frontin-les-stratag-mes-aqueducs-de-la-ville-de-p368",
+      "wiki": "la",
+      "title": "Pagina:Frontin - Les Stratagèmes - Aqueducs de la ville de Rome, trad Bailly, 1848.djvu/368",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1848,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Jahl de Vautban",
+        "validator": "Shenme",
+        "priorLevel": 3,
+        "days": 545,
+        "charUnits": 857,
+        "charDist": 1,
+        "cer": 0.0011668611435239206,
+        "wordUnits": 140,
+        "wer": 0.007142857142857143,
+        "cerLegacyCleaner": 0.0012106537530266344,
+        "hunks": [
+          {
+            "before": "necessaria",
+            "after": "necessariae"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 857,
+        "legacyChars": 826,
+        "lostChars": 31,
+        "lostShare": 0.03617269544924154
+      }
+    },
+    {
+      "slug": "ws-la-gauss-carl-friedrich-werke-1870-djvu-p422",
+      "wiki": "la",
+      "title": "Pagina:Gauss, Carl Friedrich - Werke (1870).djvu/422",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1801,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Mudbringer",
+        "validator": "Trlit",
+        "priorLevel": 3,
+        "days": 1643,
+        "charUnits": 1114,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 158,
+        "wer": 0,
+        "cerLegacyCleaner": 0.04950495049504951,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1114,
+        "legacyChars": 1056,
+        "lostChars": 58,
+        "lostShare": 0.05206463195691203
+      }
+    },
+    {
+      "slug": "ws-la-marcus-terentius-varro-de-lingua-latina-ex-typog-p26",
+      "wiki": "la",
+      "title": "Pagina:Marcus Terentius Varro - De Lingua Latina - ex Typographeo Adami Sartorii - 1605.djvu/26",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1605,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Barbaking",
+        "validator": "Nizolan",
+        "priorLevel": 3,
+        "days": 3,
+        "charUnits": 817,
+        "charDist": 3,
+        "cer": 0.0036719706242350062,
+        "wordUnits": 149,
+        "wer": 0.020134228187919462,
+        "cerLegacyCleaner": 0.0036719706242350062,
+        "hunks": [
+          {
+            "before": "puticolae",
+            "after": "puticulae"
+          },
+          {
+            "before": "puticolae",
+            "after": "puticulae"
+          },
+          {
+            "before": "puticolos",
+            "after": "puticulos"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 817,
+        "edits": 2,
+        "editors": [
+          "SZC 03"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 817,
+        "legacyChars": 817,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-le-opere-di-galileo-galilei-i-djvu-p254",
+      "wiki": "la",
+      "title": "Pagina:Le opere di Galileo Galilei I.djvu/254",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1890,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 9,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Alex brollo",
+        "validator": "SZC 03",
+        "priorLevel": 3,
+        "days": 1010,
+        "charUnits": 1256,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 221,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 1256,
+        "edits": 5,
+        "editors": [
+          "SZC 03"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 1256,
+        "legacyChars": 1256,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-alighieri-giuliani-opere-latine-vol-i-1878-djvu-p252",
+      "wiki": "la",
+      "title": "Pagina:Alighieri, Giuliani - Opere latine vol I - 1878.djvu/252",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1878,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 9,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Mizardellorsa",
+        "validator": "Barbaking",
+        "priorLevel": 3,
+        "days": 1,
+        "charUnits": 1136,
+        "charDist": 8,
+        "cer": 0.007042253521126761,
+        "wordUnits": 203,
+        "wer": 0.029556650246305417,
+        "cerLegacyCleaner": 0.007582938388625593,
+        "hunks": [
+          {
+            "before": "prseueniatur",
+            "after": "praeueniatur"
+          },
+          {
+            "before": "arbitrimn",
+            "after": "arbitrium"
+          },
+          {
+            "before": "scilicel",
+            "after": "scilicet"
+          },
+          {
+            "before": "paud",
+            "after": "pauci"
+          },
+          {
+            "before": "quse",
+            "after": "quae"
+          },
+          {
+            "before": "esi",
+            "after": "est"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1136,
+        "legacyChars": 1055,
+        "lostChars": 81,
+        "lostShare": 0.07130281690140845
+      }
+    },
+    {
+      "slug": "ws-la-virgile-g-orgiques-traduction-desportes-1846-2-d-p32",
+      "wiki": "la",
+      "title": "Pagina:Virgile - Géorgiques, traduction Desportes, 1846, 2.djvu/32",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1846,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "MF-Warburg",
+        "validator": "PiRSquared17",
+        "priorLevel": 3,
+        "days": 1,
+        "charUnits": 669,
+        "charDist": 2,
+        "cer": 0.0029895366218236174,
+        "wordUnits": 124,
+        "wer": 0.016129032258064516,
+        "cerLegacyCleaner": 0.0029895366218236174,
+        "hunks": [
+          {
+            "before": "himiles",
+            "after": "humiles"
+          },
+          {
+            "before": "lyaaeo",
+            "after": "lyaeo"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 668,
+        "edits": 1,
+        "editors": [
+          "Wikisource-bot"
+        ],
+        "allBots": true,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 668,
+        "legacyChars": 668,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-de-assensione-stoici-quid-senserint-djvu-p4",
+      "wiki": "la",
+      "title": "Pagina:De assensione Stoici quid senserint.djvu/4",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1879,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 14,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Personne",
+        "validator": "Filipvansnaeskerke",
+        "priorLevel": 1,
+        "days": 96,
+        "charUnits": 1285,
+        "charDist": 140,
+        "cer": 0.10894941634241245,
+        "wordUnits": 232,
+        "wer": 0.2974137931034483,
+        "cerLegacyCleaner": 0.10894941634241245,
+        "hunks": [
+          {
+            "before": "detei tma pfr ay in at h t yza titui litmuiuuu im n ici ti utntnpii ptot paiciitf iu clc ae lt tt siic",
+            "after": "dete"
+          },
+          {
+            "before": "inanimis imprimerent ur",
+            "after": "in animis imprimerentur"
+          },
+          {
+            "before": "proprio asbontiauir",
+            "after": "propria assentiatur"
+          },
+          {
+            "before": "aggredieraur i",
+            "after": "aggrediemur et nbsp"
+          },
+          {
+            "before": "potestatesitam",
+            "after": "potestate sitam"
+          },
+          {
+            "before": "licot yerbaque",
+            "after": "licet uerbaque"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 1202,
+        "edits": 4,
+        "editors": [
+          "Filipvansnaeskerke",
+          "John Vandenberg",
+          "ThomasBot",
+          "Wikisource-bot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 1202,
+        "legacyChars": 1202,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-ass-31-1898-99-pp191-192-pdf-p1",
+      "wiki": "la",
+      "title": "Pagina:ASS-31-1898-99-pp191-192.pdf/1",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1898,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 8,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "JLVwiki",
+        "validator": "SZC 03",
+        "priorLevel": 3,
+        "days": 2010,
+        "charUnits": 1359,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 258,
+        "wer": 0,
+        "cerLegacyCleaner": 0.017660044150110375,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1359,
+        "legacyChars": 1335,
+        "lostChars": 24,
+        "lostShare": 0.017660044150110375
+      }
+    },
+    {
+      "slug": "ws-la-nicolaus-machiavellus-de-principe-pdf-p17",
+      "wiki": "la",
+      "title": "Pagina:Nicolaus Machiavellus De Principe.pdf/17",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1560,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "JimKillock",
+        "validator": "Thensauros Duenos",
+        "priorLevel": 3,
+        "days": 9,
+        "charUnits": 551,
+        "charDist": 4,
+        "cer": 0.007259528130671506,
+        "wordUnits": 110,
+        "wer": 0.03636363636363636,
+        "cerLegacyCleaner": 0.007259528130671506,
+        "hunks": [
+          {
+            "before": "autalios",
+            "after": "aut alios"
+          },
+          {
+            "before": "et",
+            "after": ""
+          },
+          {
+            "before": "et",
+            "after": ""
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 547,
+        "legacyChars": 547,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d-p26",
+      "wiki": "la",
+      "title": "Pagina:Erasmi Colloquia Familiaria Et Encomium Moriae.djvu/26",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1892,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 5,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "JimKillock",
+        "validator": "Ser be etre shi",
+        "priorLevel": 3,
+        "days": 438,
+        "charUnits": 1243,
+        "charDist": 3,
+        "cer": 0.002413515687851971,
+        "wordUnits": 252,
+        "wer": 0.011904761904761904,
+        "cerLegacyCleaner": 0.0025188916876574307,
+        "hunks": [
+          {
+            "before": "uecessitas",
+            "after": "necessitas"
+          },
+          {
+            "before": "auriculis",
+            "after": "auriculas"
+          },
+          {
+            "before": "npn",
+            "after": "non"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1243,
+        "legacyChars": 1191,
+        "lostChars": 52,
+        "lostShare": 0.0418342719227675
+      }
+    },
+    {
+      "slug": "ws-la-systema-naturae-1735-djvu-p2",
+      "wiki": "la",
+      "title": "Pagina:Systema naturae 1735.djvu/2",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1735,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 12,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "MF-Warburg",
+        "validator": "HyperGaruda",
+        "priorLevel": 3,
+        "days": 957,
+        "charUnits": 4055,
+        "charDist": 7,
+        "cer": 0.0017262638717632551,
+        "wordUnits": 642,
+        "wer": 0.010903426791277258,
+        "cerLegacyCleaner": 0.00893743793445879,
+        "hunks": [
+          {
+            "before": "praeferuantur",
+            "after": "praeseruantur"
+          },
+          {
+            "before": "fingulis",
+            "after": "singulis"
+          },
+          {
+            "before": "gronobio",
+            "after": "gronouio"
+          },
+          {
+            "before": "fingula",
+            "after": "singula"
+          },
+          {
+            "before": "definet",
+            "after": "desinet"
+          },
+          {
+            "before": "ilium",
+            "after": "illum"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0.018249075215782985,
+        "charDist": 74,
+        "charUnits": 4055,
+        "edits": 4,
+        "editors": [
+          "ShakespeareFan00",
+          "Trooper57"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.01800450112528132,
+        "hunks": [
+          {
+            "before": "nostrae scientiae",
+            "after": "nostr scienti"
+          },
+          {
+            "before": "diaetae medicinae",
+            "after": "di t medicin"
+          },
+          {
+            "before": "praeseruantur",
+            "after": "pr seruantur"
+          },
+          {
+            "before": "geographicae",
+            "after": "geographic"
+          },
+          {
+            "before": "praedictis",
+            "after": "pr dictis"
+          },
+          {
+            "before": "oeconomiae",
+            "after": "oeconomi"
+          }
+        ]
+      },
+      "templateLoss": {
+        "referenceChars": 3981,
+        "legacyChars": 3927,
+        "lostChars": 54,
+        "lostShare": 0.013564431047475508
+      }
+    },
+    {
+      "slug": "ws-la-easy-latin-stories-djvu-p16",
+      "wiki": "la",
+      "title": "Pagina:Easy Latin Stories.djvu/16",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1878,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 14,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "JimKillock",
+        "validator": "PWidergren",
+        "priorLevel": 3,
+        "days": 320,
+        "charUnits": 1344,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 242,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1344,
+        "legacyChars": 1302,
+        "lostChars": 42,
+        "lostShare": 0.03125
+      }
+    },
+    {
+      "slug": "ws-la-recueil-des-historiens-des-gaules-et-de-la-franc-p46",
+      "wiki": "la",
+      "title": "Pagina:Recueil des Historiens des Gaules et de la France, tome1.djvu/46",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1869,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "SyB~Anicium",
+        "validator": "Laurent Jerry",
+        "priorLevel": 3,
+        "days": 3,
+        "charUnits": 1258,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 223,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0.033386327503974564,
+        "charDist": 42,
+        "charUnits": 1258,
+        "edits": 3,
+        "editors": [
+          "SyB~Anicium",
+          "ShakespeareFan00"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": [
+          {
+            "before": "pharsal lib i u pag",
+            "after": ""
+          },
+          {
+            "before": "lib i inst cap p",
+            "after": ""
+          },
+          {
+            "before": "lib pag",
+            "after": ""
+          },
+          {
+            "before": "lib pag",
+            "after": ""
+          },
+          {
+            "before": "pag",
+            "after": ""
+          }
+        ]
+      },
+      "templateLoss": {
+        "referenceChars": 1216,
+        "legacyChars": 1205,
+        "lostChars": 11,
+        "lostShare": 0.009046052631578948
+      }
+    },
+    {
+      "slug": "ws-la-cuerpo-del-derecho-civil-romano-a-doble-texto-ia-p200",
+      "wiki": "la",
+      "title": "Pagina:Cuerpo del derecho civil romano a doble texto (IA cuerpodelderechocivilromanoP1T1).pdf/200",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1889,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 8,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Decideria",
+        "validator": "Shenme",
+        "priorLevel": 3,
+        "days": 105,
+        "charUnits": 1811,
+        "charDist": 179,
+        "cer": 0.09884041965764771,
+        "wordUnits": 330,
+        "wer": 0.11212121212121212,
+        "cerLegacyCleaner": 0.10147392290249434,
+        "hunks": [
+          {
+            "before": "inpalos por alguien o por el lugar como si se huiuriam",
+            "after": "iniuriam"
+          },
+          {
+            "before": "",
+            "after": "postea ex poenitentia remissam iniuriam non poterit recolere"
+          },
+          {
+            "before": "mo si unmagistrado hubiere sufrido la",
+            "after": ""
+          },
+          {
+            "before": "",
+            "after": "medii actus homine aliud in"
+          },
+          {
+            "before": "iniuria",
+            "after": "iniuriarum"
+          },
+          {
+            "before": "inuitur",
+            "after": "minuitur"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1811,
+        "legacyChars": 1764,
+        "lostChars": 47,
+        "lostShare": 0.025952512424075095
+      }
+    },
+    {
+      "slug": "ws-la--uvres-philosophiques-de-leibniz-alcan-1900-tome-p694",
+      "wiki": "la",
+      "title": "Pagina:Œuvres philosophiques de Leibniz, Alcan, 1900, tome 1.djvu/694",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1900,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Hildepont",
+        "validator": "Jeanthorlon",
+        "priorLevel": 3,
+        "days": 139,
+        "charUnits": 1324,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 224,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1324,
+        "legacyChars": 1252,
+        "lostChars": 72,
+        "lostShare": 0.054380664652567974
+      }
+    },
+    {
+      "slug": "ws-la-praetorius-michael-syntagma-musicum-1-djvu-p4",
+      "wiki": "la",
+      "title": "Pagina:PRAETORIUS, Michael - Syntagma musicum 1.djvu/4",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1615,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 2,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Sakvaka",
+        "validator": "JimKillock",
+        "priorLevel": 3,
+        "days": 11,
+        "charUnits": 724,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 93,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 724,
+        "legacyChars": 534,
+        "lostChars": 190,
+        "lostShare": 0.26243093922651933
+      }
+    },
+    {
+      "slug": "ws-la-foliot-canticum-pdf-p47",
+      "wiki": "la",
+      "title": "Pagina:Foliot Canticum.pdf/47",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1638,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "PMAOpus",
+        "validator": "Jpez",
+        "priorLevel": 3,
+        "days": 530,
+        "charUnits": 1372,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 280,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0.03380281690140845,
+        "charDist": 48,
+        "charUnits": 1420,
+        "edits": 2,
+        "editors": [
+          "VIGNERON",
+          "Wikisource-bot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.03380281690140845,
+        "hunks": [
+          {
+            "before": "c lesti f cundata h c",
+            "after": "coelesti foecundata haec"
+          },
+          {
+            "before": "c lesti f cundata",
+            "after": "coelesti foecundata"
+          },
+          {
+            "before": "c terorum qu",
+            "after": "caeterorum quae"
+          },
+          {
+            "before": "ecclesi qu",
+            "after": "ecclesiae quae"
+          },
+          {
+            "before": "qu rendum",
+            "after": "quaerendum"
+          },
+          {
+            "before": "pr coniis",
+            "after": "praeconiis"
+          }
+        ]
+      },
+      "templateLoss": {
+        "referenceChars": 1420,
+        "legacyChars": 1420,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-rivista-italiana-di-numismatica-1898-djvu-p385",
+      "wiki": "la",
+      "title": "Pagina:Rivista italiana di numismatica 1898.djvu/385",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1898,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Ruthven",
+        "validator": "Barbaking",
+        "priorLevel": 3,
+        "days": 6,
+        "charUnits": 1366,
+        "charDist": 1,
+        "cer": 0.0007320644216691069,
+        "wordUnits": 207,
+        "wer": 0.004830917874396135,
+        "cerLegacyCleaner": 0,
+        "hunks": [
+          {
+            "before": "mentis",
+            "after": "montis"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 1366,
+        "edits": 1,
+        "editors": [
+          "Carlomorino"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.005917159763313609,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 1366,
+        "legacyChars": 1344,
+        "lostChars": 22,
+        "lostShare": 0.016105417276720352
+      }
+    },
+    {
+      "slug": "ws-la-gallia-christiana-1720-t2-djvu-p2",
+      "wiki": "la",
+      "title": "Pagina:Gallia Christiana, 1720, T2.djvu/2",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1720,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 7,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "SyB~Anicium",
+        "validator": "Laurent Jerry",
+        "priorLevel": 3,
+        "days": 6,
+        "charUnits": 2358,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 372,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 2358,
+        "legacyChars": 2344,
+        "lostChars": 14,
+        "lostShare": 0.005937234944868533
+      }
+    },
+    {
+      "slug": "ws-la-virgile-g-orgiques-traduction-desportes-1846-1-d-p30",
+      "wiki": "la",
+      "title": "Pagina:Virgile - Géorgiques, traduction Desportes, 1846, 1.djvu/30",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1846,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 5,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Zyephyrus",
+        "validator": "MF-Warburg",
+        "priorLevel": 3,
+        "days": 106,
+        "charUnits": 627,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 115,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 627,
+        "edits": 1,
+        "editors": [
+          "Thurs"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 627,
+        "legacyChars": 627,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-principia-newton-la-djvu-p284",
+      "wiki": "la",
+      "title": "Pagina:Principia newton la.djvu/284",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1687,
+      "harvestedLevel": 4,
+      "fidelity": "glyph",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "CES1596",
+        "validator": "PMAOpus",
+        "priorLevel": 3,
+        "days": 69,
+        "charUnits": 2644,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 474,
+        "wer": 0.016877637130801686,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 2644,
+        "edits": 2,
+        "editors": [
+          "Wikisource-bot"
+        ],
+        "allBots": true,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 2644,
+        "legacyChars": 2644,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-satires-d-horace-et-de-perse-djvu-p22",
+      "wiki": "la",
+      "title": "Pagina:Satires d'Horace et de Perse.djvu/22",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1829,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 11,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Wuyouyuan",
+        "validator": "Jeanthorlon",
+        "priorLevel": 3,
+        "days": 861,
+        "charUnits": 767,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 153,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 767,
+        "legacyChars": 767,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-hymni-ecclesiae-djvu-p24",
+      "wiki": "la",
+      "title": "Pagina:Hymni Ecclesiae.djvu/24",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1865,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Jayvdb",
+        "validator": "- Luc -",
+        "priorLevel": 3,
+        "days": 91,
+        "charUnits": 497,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 94,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 497,
+        "edits": 1,
+        "editors": [
+          "Wikisource-bot"
+        ],
+        "allBots": true,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 497,
+        "legacyChars": 497,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-columellae-opera-djvu-p282",
+      "wiki": "la",
+      "title": "Pagina:Columellae opera.djvu/282",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1787,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Mizardellorsa",
+        "validator": "SZC 03",
+        "priorLevel": 3,
+        "days": 1010,
+        "charUnits": 1285,
+        "charDist": 38,
+        "cer": 0.029571984435797664,
+        "wordUnits": 230,
+        "wer": 0.06956521739130435,
+        "cerLegacyCleaner": 0.029618082618862042,
+        "hunks": [
+          {
+            "before": "per exiguas portiones",
+            "after": "perexigua portione"
+          },
+          {
+            "before": "et calefacto oleo lumbi regantur",
+            "after": ""
+          },
+          {
+            "before": "uicialibus",
+            "after": "uiciae lib ii s"
+          },
+          {
+            "before": "immistum",
+            "after": "immixtum"
+          },
+          {
+            "before": "thuris",
+            "after": "turis"
+          },
+          {
+            "before": "thuris",
+            "after": "turis"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1254,
+        "legacyChars": 1252,
+        "lostChars": 2,
+        "lostShare": 0.001594896331738437
+      }
+    },
+    {
+      "slug": "ws-la-johannes-kepler-harmonices-mundi-libri-v-pdf-p33",
+      "wiki": "la",
+      "title": "Pagina:Johannes Kepler - Harmonices Mundi Libri V.pdf/33",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1619,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "QCIC56",
+        "validator": "Zabia",
+        "priorLevel": 3,
+        "days": 170,
+        "charUnits": 2352,
+        "charDist": 5,
+        "cer": 0.0021258503401360546,
+        "wordUnits": 381,
+        "wer": 0.0026246719160104987,
+        "cerLegacyCleaner": 0.0021486892995272885,
+        "hunks": [
+          {
+            "before": "nitum",
+            "after": ""
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 2347,
+        "legacyChars": 2322,
+        "lostChars": 25,
+        "lostShare": 0.010651896037494673
+      }
+    },
+    {
+      "slug": "ws-la-prisciani-institutionum-grammaticarum-libri-ii-v-p37",
+      "wiki": "la",
+      "title": "Pagina:Prisciani Institutionum grammaticarum libri II (v. 1, ed Hertz).djvu/37",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1855,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 23,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Saumache",
+        "validator": "JoanSevier",
+        "priorLevel": 3,
+        "days": 54,
+        "charUnits": 834,
+        "charDist": 2,
+        "cer": 0.002398081534772182,
+        "wordUnits": 143,
+        "wer": 0.013986013986013986,
+        "cerLegacyCleaner": 0.021739130434782608,
+        "hunks": [
+          {
+            "before": "deliniunt",
+            "after": "definiunt"
+          },
+          {
+            "before": "seribi",
+            "after": "scribi"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 834,
+        "edits": 5,
+        "editors": [
+          "Saumache"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.01932367149758454,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 834,
+        "legacyChars": 812,
+        "lostChars": 22,
+        "lostShare": 0.026378896882494004
+      }
+    },
+    {
+      "slug": "ws-la-ribbeck-scaenicae-romanorum-poesis-fragmenta-vol-p19",
+      "wiki": "la",
+      "title": "Pagina:Ribbeck - Scaenicae Romanorum Poesis Fragmenta, Vol 1, 1897.djvu/19",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1897,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Trevas",
+        "validator": "Ceciliawolf",
+        "priorLevel": 3,
+        "days": 3095,
+        "charUnits": 995,
+        "charDist": 237,
+        "cer": 0.23819095477386934,
+        "wordUnits": 185,
+        "wer": 0.24864864864864866,
+        "cerLegacyCleaner": 0.7968545216251638,
+        "hunks": [
+          {
+            "before": "",
+            "after": "ne mihi suerdsioeus uind praec bentl p o muellerus sine mihi et emspmartem palmerius ndanae"
+          },
+          {
+            "before": "",
+            "after": "homines uossius hominis et emspeius uolentiam f l et suprascr ius ualentiam uu"
+          },
+          {
+            "before": "",
+            "after": "prouocat uocat cod tuetur bue praeco trisyllabum praeuoco metiens"
+          },
+          {
+            "before": "",
+            "after": "scriptorgnaeus naeuius"
+          },
+          {
+            "before": "paulus",
+            "after": "et emsppaulus"
+          },
+          {
+            "before": "uarro",
+            "after": "et emspuarro"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 995,
+        "edits": 2,
+        "editors": [
+          "Ceciliawolf",
+          "Saumache"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 995,
+        "legacyChars": 156,
+        "lostChars": 839,
+        "lostShare": 0.84321608040201
+      }
+    },
+    {
+      "slug": "ws-la-nicolai-copernici-torinensis-de-revolutionibus-o-p3",
+      "wiki": "la",
+      "title": "Pagina:Nicolai Copernici torinensis De revolutionibus orbium coelestium.djvu/3",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1543,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 12,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Jmb",
+        "validator": "LaosLos",
+        "priorLevel": 3,
+        "days": 89,
+        "charUnits": 1623,
+        "charDist": 2,
+        "cer": 0.0012322858903265558,
+        "wordUnits": 276,
+        "wer": 0.007246376811594203,
+        "cerLegacyCleaner": 0.0012322858903265558,
+        "hunks": [
+          {
+            "before": "aniuersario",
+            "after": "anniuersario"
+          },
+          {
+            "before": "modu",
+            "after": "modum"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 1623,
+        "edits": 7,
+        "editors": [
+          "LaosLos",
+          "Matthead",
+          "Wikisource-bot",
+          "Ratte"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.0018484288354898336,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 1623,
+        "legacyChars": 1620,
+        "lostChars": 3,
+        "lostShare": 0.0018484288354898336
+      }
+    },
+    {
+      "slug": "ws-la-le-opere-di-galileo-galilei-ii-djvu-p264",
+      "wiki": "la",
+      "title": "Pagina:Le opere di Galileo Galilei II.djvu/264",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1891,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 2,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "OrbiliusMagister",
+        "validator": "Alex brollo",
+        "priorLevel": 3,
+        "days": 319,
+        "charUnits": 1193,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 177,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1193,
+        "legacyChars": 1153,
+        "lostChars": 40,
+        "lostShare": 0.03352891869237217
+      }
+    },
+    {
+      "slug": "ws-la-hortus-malabaricus-volume-1-pdf-p4",
+      "wiki": "la",
+      "title": "Pagina:Hortus Malabaricus Volume 1.pdf/4",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1678,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "MF-Warburg",
+        "validator": "Mh7kJ",
+        "priorLevel": 3,
+        "days": 3,
+        "charUnits": 2751,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 474,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 2751,
+        "edits": 1,
+        "editors": [
+          "Wikisource-bot"
+        ],
+        "allBots": true,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 2751,
+        "legacyChars": 2728,
+        "lostChars": 23,
+        "lostShare": 0.008360596146855689
+      }
+    },
+    {
+      "slug": "ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv-p26",
+      "wiki": "la",
+      "title": "Pagina:Cicéron - Œuvres complètes, Lefèvre, 1821, tome 28.djvu/26",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1821,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Hsarrazin",
+        "validator": "Ithinkicahn",
+        "priorLevel": 3,
+        "days": 126,
+        "charUnits": 1164,
+        "charDist": 5,
+        "cer": 0.00429553264604811,
+        "wordUnits": 213,
+        "wer": 0.004694835680751174,
+        "cerLegacyCleaner": 0.010353753235547885,
+        "hunks": [
+          {
+            "before": "",
+            "after": "guber"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0.005145797598627788,
+        "charDist": 6,
+        "charUnits": 1166,
+        "edits": 1,
+        "editors": [
+          "Mudbringer"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": [
+          {
+            "before": "guber",
+            "after": "natorem"
+          }
+        ]
+      },
+      "templateLoss": {
+        "referenceChars": 1166,
+        "legacyChars": 1147,
+        "lostChars": 19,
+        "lostShare": 0.016295025728987993
+      }
+    },
+    {
+      "slug": "ws-la-illustrationes-florae-novae-hollandiae-djvu-p3",
+      "wiki": "la",
+      "title": "Pagina:Illustrationes florae Novae Hollandiae.djvu/3",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1806,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Hesperian",
+        "validator": "VIGNERON",
+        "priorLevel": 3,
+        "days": 272,
+        "charUnits": 773,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 123,
+        "wer": 0,
+        "cerLegacyCleaner": 0.0129366106080207,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 773,
+        "edits": 1,
+        "editors": [
+          "Wikisource-bot"
+        ],
+        "allBots": true,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 773,
+        "legacyChars": 763,
+        "lostChars": 10,
+        "lostShare": 0.0129366106080207
+      }
+    },
+    {
+      "slug": "ws-la-pervigilium-veneris-romagnosi-pdf-p4",
+      "wiki": "la",
+      "title": "Pagina:Pervigilium Veneris (Romagnosi).pdf/4",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1848,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 4,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Candalua",
+        "validator": "OrbiliusMagister",
+        "priorLevel": 3,
+        "days": 98,
+        "charUnits": 647,
+        "charDist": 1,
+        "cer": 0.0015455950540958269,
+        "wordUnits": 119,
+        "wer": 0.008403361344537815,
+        "cerLegacyCleaner": 0.001589825119236884,
+        "hunks": [
+          {
+            "before": "cras",
+            "after": "ras"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 646,
+        "edits": 1,
+        "editors": [
+          "Wikisource-bot"
+        ],
+        "allBots": true,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 646,
+        "legacyChars": 628,
+        "lostChars": 18,
+        "lostShare": 0.02786377708978328
+      }
+    },
+    {
+      "slug": "ws-la-coppernicus-monete-djvu-p4",
+      "wiki": "la",
+      "title": "Pagina:Coppernicus-monete.djvu/4",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1526,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 8,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Base",
+        "validator": "PMAOpus",
+        "priorLevel": 3,
+        "days": 1,
+        "charUnits": 988,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 161,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 988,
+        "edits": 1,
+        "editors": [
+          "Wikisource-bot"
+        ],
+        "allBots": true,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 988,
+        "legacyChars": 988,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-historia-naturalis-brasiliae-1648-pdf-p287",
+      "wiki": "la",
+      "title": "Pagina:Historia Naturalis Brasiliae (1648).pdf/287",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1648,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "EnaldoSS",
+        "validator": "Trooper57",
+        "priorLevel": 3,
+        "days": 40,
+        "charUnits": 1854,
+        "charDist": 13,
+        "cer": 0.007011866235167206,
+        "wordUnits": 376,
+        "wer": 0.005319148936170213,
+        "cerLegacyCleaner": 0.00731981981981982,
+        "hunks": [
+          {
+            "before": "rightpx",
+            "after": ""
+          },
+          {
+            "before": "leftpx",
+            "after": ""
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1841,
+        "legacyChars": 1763,
+        "lostChars": 78,
+        "lostShare": 0.042368278109722976
+      }
+    },
+    {
+      "slug": "ws-la-krueger-studemund-gai-institutiones-berolini-187-p18",
+      "wiki": "la",
+      "title": "Pagina:Krueger, Studemund - Gai Institutiones, Berolini, 1877.djvu/18",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1877,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 35,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Rossanarosati",
+        "validator": "Rubendros",
+        "priorLevel": 3,
+        "days": 42,
+        "charUnits": 1985,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 341,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1985,
+        "legacyChars": 1985,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-gallia-christiana-1715-t1-djvu-p29",
+      "wiki": "la",
+      "title": "Pagina:Gallia Christiana, 1715, T1.djvu/29",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1715,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "revisions": 8,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "SyB~Anicium",
+        "validator": "Laurent Jerry",
+        "priorLevel": 3,
+        "days": 1,
+        "charUnits": 1059,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 162,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "no edits after validation"
+      },
+      "templateLoss": {
+        "referenceChars": 1059,
+        "legacyChars": 0,
+        "lostChars": 1059,
+        "lostShare": 1
+      }
+    },
+    {
+      "slug": "ws-de-agrumi-august-kopisch-1838-pdf-p3",
+      "wiki": "de",
+      "title": "Seite:Agrumi - August Kopisch - 1838.pdf/3",
+      "script": "latin",
+      "language": "German",
+      "year": 1838,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 692,
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Maasikaru",
+        "validator": "René Mettke",
+        "priorLevel": 3,
+        "days": 98,
+        "charUnits": 589,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 99,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 589,
+        "edits": 1,
+        "editors": [
+          "Fkraus"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 589,
+        "legacyChars": 589,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-ah-ca-ira-pdf-p2",
+      "wiki": "de",
+      "title": "Seite:Ah, ca ira!.pdf/2",
+      "script": "latin",
+      "language": "German",
+      "year": 1790,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 857,
+      "revisions": 11,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Konrad Stein",
+        "validator": "Jeb",
+        "priorLevel": 3,
+        "days": 185,
+        "charUnits": 713,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 129,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 713,
+        "edits": 2,
+        "editors": [
+          "Fkraus",
+          "Hvs50"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 713,
+        "legacyChars": 713,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-allemannischegedichte-hebel-pdf-p179",
+      "wiki": "de",
+      "title": "Seite:AllemannischeGedichte Hebel.pdf/179",
+      "script": "latin",
+      "language": "German",
+      "year": 1803,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 682,
+      "revisions": 5,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Jenne1504",
+        "validator": "Mapmarks",
+        "priorLevel": 3,
+        "days": 0,
+        "charUnits": 539,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 122,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 539,
+        "edits": 3,
+        "editors": [
+          "Mapmarks",
+          "THEprotectIT"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.08905380333951762,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 539,
+        "legacyChars": 539,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+      "wiki": "de",
+      "title": "Seite:ALLGEMEINE MUSIKALISCHE ZEITUNG-92-94,97-98,159,168-169.pdf/3",
+      "script": "latin",
+      "language": "German",
+      "year": 1811,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 934,
+      "revisions": 5,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Mapmarks",
+        "validator": "Jmb1982",
+        "priorLevel": 3,
+        "days": 75,
+        "charUnits": 773,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 150,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 773,
+        "edits": 3,
+        "editors": [
+          "Fkraus",
+          "THEbotIT"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 773,
+        "legacyChars": 765,
+        "lostChars": 8,
+        "lostShare": 0.01034928848641656
+      }
+    },
+    {
+      "slug": "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+      "wiki": "de",
+      "title": "Seite:Allgemeine musikalische Zeitung1823-90-93.pdf/2",
+      "script": "latin",
+      "language": "German",
+      "year": 1823,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Mapmarks",
+        "validator": "Maasikaru",
+        "priorLevel": 3,
+        "days": 671,
+        "charUnits": 3397,
+        "charDist": 2,
+        "cer": 0.0005887547836326171,
+        "wordUnits": 641,
+        "wer": 0.0031201248049922,
+        "cerLegacyCleaner": 0.0005887547836326171,
+        "hunks": [
+          {
+            "before": "rohruueike",
+            "after": "rohruuerke"
+          },
+          {
+            "before": "ongefahr",
+            "after": "ohngefahr"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0.00029437739181630853,
+        "charDist": 1,
+        "charUnits": 3397,
+        "edits": 4,
+        "editors": [
+          "Fkraus",
+          "THEbotIT",
+          "AkBot",
+          "Mapmarks"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.00029437739181630853,
+        "hunks": [
+          {
+            "before": "in",
+            "after": "im"
+          }
+        ]
+      },
+      "templateLoss": {
+        "referenceChars": 3397,
+        "legacyChars": 3397,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26",
+      "wiki": "de",
+      "title": "Seite:Annalen der Physik und Chemie Bd 63 1844.pdf/26",
+      "script": "latin",
+      "language": "German",
+      "year": 1844,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 1606,
+      "revisions": 9,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Mapmarks",
+        "validator": "THE IT",
+        "priorLevel": 3,
+        "days": 535,
+        "charUnits": 1345,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 222,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 1345,
+        "edits": 6,
+        "editors": [
+          "Fkraus",
+          "Mapmarks",
+          "THEbotIT",
+          "AkBot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 1345,
+        "legacyChars": 1336,
+        "lostChars": 9,
+        "lostShare": 0.006691449814126394
+      }
+    },
+    {
+      "slug": "ws-de-ansichten-l-beck-marienkirche-pdf-p2",
+      "wiki": "de",
+      "title": "Seite:Ansichten Lübeck Marienkirche.pdf/2",
+      "script": "latin",
+      "language": "German",
+      "year": 1822,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 1145,
+      "revisions": 5,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Enomil",
+        "validator": "Jmb1982",
+        "priorLevel": 3,
+        "days": 31,
+        "charUnits": 955,
+        "charDist": 1,
+        "cer": 0.0010471204188481676,
+        "wordUnits": 166,
+        "wer": 0.006024096385542169,
+        "cerLegacyCleaner": 0.0010471204188481676,
+        "hunks": [
+          {
+            "before": "einer",
+            "after": "eine"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 954,
+        "edits": 3,
+        "editors": [
+          "Paulis",
+          "THEbotIT",
+          "AkBot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 954,
+        "legacyChars": 954,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi-p2",
+      "wiki": "de",
+      "title": "Seite:Antrag auf Befreiung des Kandidaten der Theologie Karl Anselm Henkel aus Allendorf, Kanton Kirchhain, von der Konskription 1813.pdf/2",
+      "script": "latin",
+      "language": "German",
+      "year": 1813,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1160,
+      "revisions": 17,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1015,
+        "legacyChars": 1015,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-apolls-gericht-1769-pdf-p3",
+      "wiki": "de",
+      "title": "Seite:Apolls Gericht 1769.pdf/3",
+      "script": "latin",
+      "language": "German",
+      "year": 1769,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 714,
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Funkhauser",
+        "validator": "Jardín de flores",
+        "priorLevel": 3,
+        "days": 1153,
+        "charUnits": 606,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 101,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 606,
+        "edits": 1,
+        "editors": [
+          "THEprotectIT"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 606,
+        "legacyChars": 606,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101-p2",
+      "wiki": "de",
+      "title": "Seite:Archiv für Künstler und Kunstliebhaber 1805 101-121.pdf/2",
+      "script": "latin",
+      "language": "German",
+      "year": 1805,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 1360,
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "A. Wagner",
+        "validator": "Fräulein von Scuderi",
+        "priorLevel": 3,
+        "days": 572,
+        "charUnits": 1118,
+        "charDist": 1,
+        "cer": 0.0008944543828264759,
+        "wordUnits": 183,
+        "wer": 0.00546448087431694,
+        "cerLegacyCleaner": 0.0009115770282588879,
+        "hunks": [
+          {
+            "before": "diese",
+            "after": "dieses"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 1118,
+        "edits": 1,
+        "editors": [
+          "Fkraus"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 1118,
+        "legacyChars": 1097,
+        "lostChars": 21,
+        "lostShare": 0.018783542039355994
+      }
+    },
+    {
+      "slug": "ws-de-artistisches-notizenblatt-1824-kunstausstellung-p2",
+      "wiki": "de",
+      "title": "Seite:Artistisches Notizenblatt 1824 Kunstausstellung Dresden.djvu/2",
+      "script": "latin",
+      "language": "German",
+      "year": 1824,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 3464,
+        "legacyChars": 3464,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4",
+      "wiki": "de",
+      "title": "Seite:Artistisches Notizenblatt 1834 Dresdener Kustausstellung.djvu/4",
+      "script": "latin",
+      "language": "German",
+      "year": 1834,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "A. Wagner",
+        "validator": "Lydia",
+        "priorLevel": 3,
+        "days": 22,
+        "charUnits": 3839,
+        "charDist": 1,
+        "cer": 0.00026048450117218026,
+        "wordUnits": 667,
+        "wer": 0.0014992503748125937,
+        "cerLegacyCleaner": 0.002170374389582203,
+        "hunks": [
+          {
+            "before": "kerstins",
+            "after": "kersting"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 3839,
+        "edits": 1,
+        "editors": [
+          "THEprotectIT"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 3839,
+        "legacyChars": 3678,
+        "lostChars": 161,
+        "lostShare": 0.04193800468872102
+      }
+    },
+    {
+      "slug": "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p-p4",
+      "wiki": "de",
+      "title": "Seite:Aufdeckung eines literärischen Betruges in der Preussischen Geschichte (1832).pdf/4",
+      "script": "latin",
+      "language": "German",
+      "year": 1832,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 3,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Funkhauser",
+        "validator": "Seedorfjohnny",
+        "priorLevel": 3,
+        "days": 110,
+        "charUnits": 2158,
+        "charDist": 2,
+        "cer": 0.0009267840593141798,
+        "wordUnits": 388,
+        "wer": 0.002577319587628866,
+        "cerLegacyCleaner": 0.0009433962264150943,
+        "hunks": [
+          {
+            "before": "knpufen",
+            "after": "knupfen"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 2158,
+        "edits": 1,
+        "editors": [
+          "Fkraus"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 2158,
+        "legacyChars": 2120,
+        "lostChars": 38,
+        "lostShare": 0.017608897126969416
+      }
+    },
+    {
+      "slug": "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19",
+      "wiki": "de",
+      "title": "Seite:Aus dem Leben eines Taugenichts und das Marmorbild.djvu/19",
+      "script": "latin",
+      "language": "German",
+      "year": 1826,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 1052,
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "CIEL",
+        "validator": "Joergens.mi",
+        "priorLevel": 3,
+        "days": 42,
+        "charUnits": 831,
+        "charDist": 1,
+        "cer": 0.0012033694344163659,
+        "wordUnits": 188,
+        "wer": 0.005319148936170213,
+        "cerLegacyCleaner": 0.0012033694344163659,
+        "hunks": [
+          {
+            "before": "fels",
+            "after": "feld"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 831,
+        "edits": 3,
+        "editors": [
+          "Paulis",
+          "THEbotIT",
+          "AkBot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 831,
+        "legacyChars": 831,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+      "wiki": "de",
+      "title": "Seite:Bartolomé de Las Casas-Die Verheerung Westindiens 1790.pdf/17",
+      "script": "latin",
+      "language": "German",
+      "year": 1790,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 1105,
+      "revisions": 6,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "BunteKartoffel",
+        "validator": "Fkraus",
+        "priorLevel": 3,
+        "days": 3,
+        "charUnits": 907,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 172,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 907,
+        "edits": 3,
+        "editors": [
+          "Fkraus",
+          "THEbotIT",
+          "AkBot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 907,
+        "legacyChars": 907,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151",
+      "wiki": "de",
+      "title": "Seite:Bechstein Thüringische Volksmährchen 1823.pdf/151",
+      "script": "latin",
+      "language": "German",
+      "year": 1823,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 1000,
+      "revisions": 8,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Funkhauser",
+        "validator": "Maasikaru",
+        "priorLevel": 3,
+        "days": 4,
+        "charUnits": 818,
+        "charDist": 0,
+        "cer": 0,
+        "wordUnits": 164,
+        "wer": 0,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0,
+        "charDist": 0,
+        "charUnits": 818,
+        "edits": 3,
+        "editors": [
+          "Fkraus",
+          "THEbotIT",
+          "AkBot"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0,
+        "hunks": []
+      },
+      "templateLoss": {
+        "referenceChars": 818,
+        "legacyChars": 818,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+      "wiki": "de",
+      "title": "Seite:Beethoven’s neunte Symphonie.pdf/2",
+      "script": "latin",
+      "language": "German",
+      "year": 1838,
+      "harvestedLevel": 4,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 7,
+      "currentLevel": 4,
+      "reachedLevel4": true,
+      "validation": {
+        "measurable": true,
+        "independent": true,
+        "proofreader": "Konrad Stein",
+        "validator": "Hvs50",
+        "priorLevel": 3,
+        "days": 4,
+        "charUnits": 2308,
+        "charDist": 9,
+        "cer": 0.00389948006932409,
+        "wordUnits": 407,
+        "wer": 0.014742014742014743,
+        "cerLegacyCleaner": 0.00389948006932409,
+        "hunks": [
+          {
+            "before": "holzblasinstrumenten",
+            "after": "holzblaseinstrumenten"
+          },
+          {
+            "before": "blasinstrumente",
+            "after": "blaseinstrumente"
+          },
+          {
+            "before": "themeneintritte",
+            "after": "themaeintritt"
+          },
+          {
+            "before": "beuuegte",
+            "after": "beuuegter"
+          },
+          {
+            "before": "mittleren",
+            "after": "mittlern"
+          },
+          {
+            "before": "und",
+            "after": "uon"
+          }
+        ]
+      },
+      "postValidation": {
+        "measurable": true,
+        "cer": 0.0008658008658008658,
+        "charDist": 2,
+        "charUnits": 2310,
+        "edits": 4,
+        "editors": [
+          "Hvs50",
+          "Fkraus",
+          "Dorades"
+        ],
+        "allBots": false,
+        "cerLegacyCleaner": 0.0008658008658008658,
+        "hunks": [
+          {
+            "before": "letzen",
+            "after": "letzten"
+          },
+          {
+            "before": "letzen",
+            "after": "letzten"
+          }
+        ]
+      },
+      "templateLoss": {
+        "referenceChars": 2310,
+        "legacyChars": 2310,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--1-1843-djvu-p3",
+      "wiki": "el",
+      "title": "Σελίδα:Ελληνομνήμων Αρ.1 (1843).djvu/3",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1843,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1251,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1023,
+        "legacyChars": 948,
+        "lostChars": 75,
+        "lostShare": 0.07331378299120235
+      }
+    },
+    {
+      "slug": "ws-el--1-djvu-p3",
+      "wiki": "el",
+      "title": "Σελίδα:Αθηναίς Α αρ. 1.djvu/3",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1876,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 10,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2511,
+        "legacyChars": 2326,
+        "lostChars": 185,
+        "lostShare": 0.0736758263639984
+      }
+    },
+    {
+      "slug": "ws-el--2-1843-djvu-p3",
+      "wiki": "el",
+      "title": "Σελίδα:Ελληνομνήμων Αρ.2 (1843).djvu/3",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1843,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1430,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1179,
+        "legacyChars": 1179,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--3-djvu-p3",
+      "wiki": "el",
+      "title": "Σελίδα:Αβδηρίτης Τεύχος 3.djvu/3",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1857,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1777,
+        "legacyChars": 1756,
+        "lostChars": 21,
+        "lostShare": 0.011817670230725942
+      }
+    },
+    {
+      "slug": "ws-el--520-djvu-p16",
+      "wiki": "el",
+      "title": "Σελίδα:Εστία Αριθμός 520.djvu/16",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1885,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 3449,
+        "legacyChars": 3362,
+        "lostChars": 87,
+        "lostShare": 0.025224702812409395
+      }
+    },
+    {
+      "slug": "ws-el--7-djvu-p3",
+      "wiki": "el",
+      "title": "Σελίδα:Αθηναΐς Α αρ. 7.djvu/3",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1876,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 3022,
+        "legacyChars": 2959,
+        "lostChars": 63,
+        "lostShare": 0.02084712111184646
+      }
+    },
+    {
+      "slug": "ws-el--djvu-p19",
+      "wiki": "el",
+      "title": "Σελίδα:Αριστοτέλης Βαλαωρίτης - Υπό Ε. Δ. Ροϊδου.djvu/19",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1879,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1054,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 863,
+        "legacyChars": 863,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--djvu-p20",
+      "wiki": "el",
+      "title": "Σελίδα:Λεξικόν της Ελληνικής Αρχαιολογίας.djvu/20",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1888,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 6,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1799,
+        "legacyChars": 1784,
+        "lostChars": 15,
+        "lostShare": 0.008337965536409116
+      }
+    },
+    {
+      "slug": "ws-el--pdf-p18",
+      "wiki": "el",
+      "title": "Σελίδα:Αττικά ή περί δήμων Αττικής εν οις και περί τινων μερών του Άστεως.pdf/18",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1854,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1794,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1378,
+        "legacyChars": 1378,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el--x-djvu-p264",
+      "wiki": "el",
+      "title": "Σελίδα:Γεωργίου X. Ζαλοκώστα Τα άπαντα.djvu/264",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1873,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 895,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 690,
+        "legacyChars": 653,
+        "lostChars": 37,
+        "lostShare": 0.0536231884057971
+      }
+    },
+    {
+      "slug": "ws-el-apollonii-rhodii-argonautica-1900-djvu-p17",
+      "wiki": "el",
+      "title": "Σελίδα:Apollonii Rhodii Argonautica (1900).djvu/17",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1900,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1692,
+      "revisions": 8,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1414,
+        "legacyChars": 1349,
+        "lostChars": 65,
+        "lostShare": 0.04596888260254597
+      }
+    },
+    {
+      "slug": "ws-el-carmina-graece-medii-aevi-w-wagner-1874-djvu-p21",
+      "wiki": "el",
+      "title": "Σελίδα:Carmina Graece Medii Aevi, W. Wagner (1874).djvu/21",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1874,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1664,
+      "revisions": 6,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1368,
+        "legacyChars": 0,
+        "lostChars": 1368,
+        "lostShare": 1
+      }
+    },
+    {
+      "slug": "ws-el-hermannusenerepicurea1887-djvu-p5",
+      "wiki": "el",
+      "title": "Σελίδα:HermannUsenerEpicurea1887.djvu/5",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1887,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1661,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 0,
+        "legacyChars": 0,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el-hermetis-trismegisti-poemander-1854-djvu-p25",
+      "wiki": "el",
+      "title": "Σελίδα:Hermetis Trismegisti Poemander (1854).djvu/25",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1854,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 383,
+      "revisions": 19,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 317,
+        "legacyChars": 223,
+        "lostChars": 94,
+        "lostShare": 0.29652996845425866
+      }
+    },
+    {
+      "slug": "ws-el-isaak-syrian-k-pantokratorinos-pdf-p27",
+      "wiki": "el",
+      "title": "Σελίδα:Isaak Syrian K.Pantokratorinos.pdf/27",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1871,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1738,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1394,
+        "legacyChars": 1394,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el-manussos-djvu-p213",
+      "wiki": "el",
+      "title": "Σελίδα:Manussos.djvu/213",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1876,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1833,
+      "revisions": 6,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1488,
+        "legacyChars": 1488,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el-marini-vita-procli-graece-et-latine-1814-djvu-p60",
+      "wiki": "el",
+      "title": "Σελίδα:Marini Vita Procli Graece et Latine (1814).djvu/60",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1814,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1704,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1392,
+        "legacyChars": 1379,
+        "lostChars": 13,
+        "lostShare": 0.009339080459770116
+      }
+    },
+    {
+      "slug": "ws-el-on-two-greek-inscriptions-from-kamiros-and-ialys-p4",
+      "wiki": "el",
+      "title": "Σελίδα:On two Greek inscriptions, from Kamiros and Ialysos, in Rhodes, respectively (1878).djvu/4",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1878,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 4,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1381,
+        "legacyChars": 683,
+        "lostChars": 698,
+        "lostShare": 0.5054308472121651
+      }
+    },
+    {
+      "slug": "ws-el-pand-ra-teyxos-1-djvu-p24",
+      "wiki": "el",
+      "title": "Σελίδα:Pandōra teyxos 1.djvu/24",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1850,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 6,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2748,
+        "legacyChars": 2717,
+        "lostChars": 31,
+        "lostShare": 0.011280931586608443
+      }
+    },
+    {
+      "slug": "ws-el-platonis-opera-ed-burnet-tomus-i-djvu-p329",
+      "wiki": "el",
+      "title": "Σελίδα:Platonis opera, ed. Burnet, tomus I.djvu/329",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1900,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1401,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1102,
+        "legacyChars": 1102,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-el-procli-didadochi-in-primum-euclidis-elementorum-p16",
+      "wiki": "el",
+      "title": "Σελίδα:Procli Didadochi in primum Euclidis Elementorum librum (ed. Friedlein).pdf/16",
+      "script": "greek",
+      "language": "Greek",
+      "year": 1873,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1223,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1004,
+        "legacyChars": 1004,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-28233-pdf-pdf-p4",
+      "wiki": "la",
+      "title": "Pagina:28233-pdf.pdf/4",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1686,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2404,
+        "legacyChars": 2404,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-agricola-de-re-metallica-djvu-p406",
+      "wiki": "la",
+      "title": "Pagina:Agricola De re metallica.djvu/406",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1556,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1617,
+      "revisions": 7,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1332,
+        "legacyChars": 1332,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-alegrii-opera-minora-castellana-et-latina-pdf-p232",
+      "wiki": "la",
+      "title": "Pagina:Alegrii opera minora Castellana et Latina.pdf/232",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1889,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1590,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1330,
+        "legacyChars": 1330,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-allorquando-vi-annunziammo-djvu-p2",
+      "wiki": "la",
+      "title": "Pagina:Allorquando vi annunziammo.djvu/2",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1804,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1618,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1374,
+        "legacyChars": 1372,
+        "lostChars": 2,
+        "lostShare": 0.001455604075691412
+      }
+    },
+    {
+      "slug": "ws-la-anaplous-bosporou-1874-pdf-p47",
+      "wiki": "la",
+      "title": "Pagina:Anaplous Bosporou 1874.pdf/47",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1847,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 826,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 696,
+        "legacyChars": 660,
+        "lostChars": 36,
+        "lostShare": 0.05172413793103448
+      }
+    },
+    {
+      "slug": "ws-la-annales-monastici-vol-iv-djvu-p563",
+      "wiki": "la",
+      "title": "Pagina:Annales monastici Vol IV.djvu/563",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1864,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 9,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2163,
+        "legacyChars": 1832,
+        "lostChars": 331,
+        "lostShare": 0.1530282015718909
+      }
+    },
+    {
+      "slug": "ws-la-anniversaria-in-memoriam-reipublic-sacr-et-liter-p15",
+      "wiki": "la",
+      "title": "Pagina:Anniversaria in memoriam reipublicæ sacræ et literariæ.djvu/15",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1832,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1763,
+      "revisions": 4,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1326,
+        "legacyChars": 1326,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-apocalypsis-revelata-djvu-p3",
+      "wiki": "la",
+      "title": "Pagina:Apocalypsis Revelata.djvu/3",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1766,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 1633,
+      "revisions": 7,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1329,
+        "legacyChars": 1274,
+        "lostChars": 55,
+        "lostShare": 0.04138449962377728
+      }
+    },
+    {
+      "slug": "ws-la-arcana-coelestia-vol-i-djvu-p16",
+      "wiki": "la",
+      "title": "Pagina:Arcana Coelestia Vol I.djvu/16",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1749,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 2000,
+      "revisions": 6,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2484,
+        "legacyChars": 2484,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-ars-memorativa-leporeus-djvu-p33",
+      "wiki": "la",
+      "title": "Pagina:Ars Memorativa (Leporeus).djvu/33",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1523,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 15,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1753,
+        "legacyChars": 1512,
+        "lostChars": 241,
+        "lostShare": 0.1374786081003993
+      }
+    },
+    {
+      "slug": "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+      "wiki": "la",
+      "title": "Pagina:Athanasius Kircher - Turris Babel - 1679.djvu/20",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1679,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 14,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 5592,
+        "legacyChars": 5380,
+        "lostChars": 212,
+        "lostShare": 0.03791130185979971
+      }
+    },
+    {
+      "slug": "ws-la-bodleian-library-byw-k-4-6-pdf-p17",
+      "wiki": "la",
+      "title": "Pagina:Bodleian Library Byw K 4 6.pdf/17",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1472,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1439,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1205,
+        "legacyChars": 1205,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-cabaret-dupaty-poetae-minores-1842-djvu-p416",
+      "wiki": "la",
+      "title": "Pagina:Cabaret-Dupaty - Poetae minores, 1842.djvu/416",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1842,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 775,
+      "revisions": 10,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 644,
+        "legacyChars": 639,
+        "lostChars": 5,
+        "lostShare": 0.007763975155279503
+      }
+    },
+    {
+      "slug": "ws-la-cic-ron-uvres-compl-tes-panckoucke-1830-t-7-djvu-p470",
+      "wiki": "la",
+      "title": "Pagina:Cicéron - Œuvres complètes - Panckoucke 1830, t.7.djvu/470",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1830,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1289,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1072,
+        "legacyChars": 1072,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-cl-ver-germania-antiqua-1616-pdf-p23",
+      "wiki": "la",
+      "title": "Pagina:Clüver - Germania antiqua, 1616.pdf/23",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1616,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2333,
+        "legacyChars": 2333,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-columbus-carmen-epicum-pdf-p7",
+      "wiki": "la",
+      "title": "Pagina:Columbus carmen epicum.pdf/7",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1715,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 1435,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1194,
+        "legacyChars": 1194,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-columellae-opera-djvu-p26",
+      "wiki": "la",
+      "title": "Pagina:Columellae opera.djvu/26",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1787,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1483,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1243,
+        "legacyChars": 1241,
+        "lostChars": 2,
+        "lostShare": 0.0016090104585679806
+      }
+    },
+    {
+      "slug": "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis-p15",
+      "wiki": "la",
+      "title": "Pagina:Congestorium artificiose memorie ... - V.P.F. Joa(n)nis Romberch de Kyrspe. Regularis obseruantie predicatorie- (IA hin-wel-all-00002875-001).pdf/15",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1533,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 1720,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1441,
+        "legacyChars": 1441,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-cornelii-taciti-agricola-djvu-p19",
+      "wiki": "la",
+      "title": "Pagina:Cornelii Taciti - Agricola.djvu/19",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1876,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 7,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2639,
+        "legacyChars": 2639,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-costituzione-dogmatica-sulla-fede-cattolica-18-l-p2",
+      "wiki": "la",
+      "title": "Pagina:Costituzione dogmatica sulla fede cattolica 18 luglio 1870 (Pio IX).djvu/2",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1870,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1243,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1048,
+        "legacyChars": 1048,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-cshb42-corpusscriptorum45niebuoft-pdf-p284",
+      "wiki": "la",
+      "title": "Pagina:CSHB42 corpusscriptorum45niebuoft.pdf/284",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1838,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 757,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 630,
+        "legacyChars": 564,
+        "lostChars": 66,
+        "lostShare": 0.10476190476190476
+      }
+    },
+    {
+      "slug": "ws-la-cshb48-corpusscriptorum30niebuoft-pdf-p182",
+      "wiki": "la",
+      "title": "Pagina:CSHB48 corpusscriptorum30niebuoft.pdf/182",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1844,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1196,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1002,
+        "legacyChars": 986,
+        "lostChars": 16,
+        "lostShare": 0.015968063872255488
+      }
+    },
+    {
+      "slug": "ws-la-cuerpo-del-derecho-civil-romano-a-doble-texto-ia-p216",
+      "wiki": "la",
+      "title": "Pagina:Cuerpo del derecho civil romano a doble texto (IA cuerpodelderechocivilromanoP1T1).pdf/216",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1889,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 7,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1895,
+        "legacyChars": 1819,
+        "lostChars": 76,
+        "lostShare": 0.04010554089709763
+      }
+    },
+    {
+      "slug": "ws-la-dal-giorno-in-cui-pervenne-djvu-p3",
+      "wiki": "la",
+      "title": "Pagina:Dal giorno in cui pervenne.djvu/3",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1821,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1816,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1514,
+        "legacyChars": 1514,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-de-bello-rustico-valentino-pdf-p24",
+      "wiki": "la",
+      "title": "Pagina:De bello rustico Valentino.pdf/24",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1752,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 1767,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1497,
+        "legacyChars": 1497,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+      "wiki": "la",
+      "title": "Pagina:De spectris, lemuribus et magnis atque insolitis fragoribus, variisque praesagitionibus, quae plerunque obitum hominum, magnas clades, mutationesque imperiorum praecedunt (IA despectrislemuri00lava 1).pdf/347",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1687,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 953,
+      "revisions": 4,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 681,
+        "legacyChars": 630,
+        "lostChars": 51,
+        "lostShare": 0.07488986784140969
+      }
+    },
+    {
+      "slug": "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17",
+      "wiki": "la",
+      "title": "Pagina:De Sternutatione tractatus copiosus, Vanden Berge, 1664.pdf/17",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1664,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 674,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 570,
+        "legacyChars": 570,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+      "wiki": "la",
+      "title": "Pagina:DELITIAE SAPIENTIAE DE AMORE CONJUGIALI.djvu/2",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1768,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 1223,
+      "revisions": 37,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 998,
+        "legacyChars": 875,
+        "lostChars": 123,
+        "lostShare": 0.12324649298597194
+      }
+    },
+    {
+      "slug": "ws-la-descriptiones-et-icones-plantarum-rariorum-hunga-p105",
+      "wiki": "la",
+      "title": "Pagina:Descriptiones et icones plantarum rariorum Hungariae 2.pdf/105",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1805,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 2000,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2384,
+        "legacyChars": 2335,
+        "lostChars": 49,
+        "lostShare": 0.020553691275167787
+      }
+    },
+    {
+      "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins-p17",
+      "wiki": "la",
+      "title": "Pagina:Dictionarium latinogallicum - Estienne, 1552, A-Ins.djvu/17",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1552,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 4,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 5249,
+        "legacyChars": 5243,
+        "lostChars": 6,
+        "lostShare": 0.001143074871404077
+      }
+    },
+    {
+      "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z-p721",
+      "wiki": "la",
+      "title": "Pagina:Dictionarium latinogallicum - Estienne, 1552, Ins-Z.djvu/721",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1552,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 8,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 5180,
+        "legacyChars": 5131,
+        "lostChars": 49,
+        "lostShare": 0.00945945945945946
+      }
+    },
+    {
+      "slug": "ws-la-dimitrie-cantemir-operele-principelui-demetriu-c-p16",
+      "wiki": "la",
+      "title": "Pagina:Dimitrie Cantemir - Operele Principelui Demetriu Cantemiru, typărite de Societatea Academică Română. Volumul 1 - Descriptio Moldaviae. Cu charta g.pdf/16",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1872,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1908,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1605,
+        "legacyChars": 1600,
+        "lostChars": 5,
+        "lostShare": 0.003115264797507788
+      }
+    },
+    {
+      "slug": "ws-la-disputatio-medica-inauguralis-de-merocele-vel-he-p21",
+      "wiki": "la",
+      "title": "Pagina:Disputatio medica inauguralis de merocele, vel hernia crurali.pdf/21",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1812,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 730,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 585,
+        "legacyChars": 570,
+        "lostChars": 15,
+        "lostShare": 0.02564102564102564
+      }
+    },
+    {
+      "slug": "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu-p369",
+      "wiki": "la",
+      "title": "Pagina:Divini Platonis Opera omnia quæ exstant.djvu/369",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1590,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 3974,
+        "legacyChars": 3887,
+        "lostChars": 87,
+        "lostShare": 0.021892299949672872
+      }
+    },
+    {
+      "slug": "ws-la-ecclesiam-a-iesu-christo-djvu-p3",
+      "wiki": "la",
+      "title": "Pagina:Ecclesiam a Iesu Christo.djvu/3",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1821,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 732,
+      "revisions": 17,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 612,
+        "legacyChars": 612,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22",
+      "wiki": "la",
+      "title": "Pagina:Erycius Puteanus, Bruxella, incomparabili exemplo Septenari, 1646.djvu/22",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1646,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 941,
+      "revisions": 4,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 785,
+        "legacyChars": 783,
+        "lostChars": 2,
+        "lostShare": 0.0025477707006369425
+      }
+    },
+    {
+      "slug": "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia-p38",
+      "wiki": "la",
+      "title": "Pagina:Euripus seu de fluxu et refluxu maris sententia.djvu/38",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1624,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1677,
+      "revisions": 4,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1337,
+        "legacyChars": 1329,
+        "lostChars": 8,
+        "lostShare": 0.005983545250560957
+      }
+    },
+    {
+      "slug": "ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+      "wiki": "la",
+      "title": "Pagina:Exercises on Latin syntax, adapted to Zumpt's grammar; to which are added extracts from the writings of Muretus.djvu/107",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1830,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1828,
+      "revisions": 4,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1506,
+        "legacyChars": 1427,
+        "lostChars": 79,
+        "lostShare": 0.05245683930942895
+      }
+    },
+    {
+      "slug": "ws-la-foenix-domini-petri-ravennatis-memoriae-magistri-p19",
+      "wiki": "la",
+      "title": "Pagina:Foenix. Domini Petri Ravennatis memoriae magistri - (Petrus) (IA hin-wel-all-00002799-001).pdf/19",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1491,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1083,
+      "revisions": 30,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 858,
+        "legacyChars": 719,
+        "lostChars": 139,
+        "lostShare": 0.16200466200466201
+      }
+    },
+    {
+      "slug": "ws-la-foliot-canticum-pdf-p32",
+      "wiki": "la",
+      "title": "Pagina:Foliot Canticum.pdf/32",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1638,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1441,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1205,
+        "legacyChars": 1205,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+      "wiki": "la",
+      "title": "Pagina:Francisci Xaverii Alegre Homeri Ilias Latina.pdf/25",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1788,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1631,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1361,
+        "legacyChars": 1361,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-frontin-les-stratag-mes-aqueducs-de-la-ville-de-p26",
+      "wiki": "la",
+      "title": "Pagina:Frontin - Les Stratagèmes - Aqueducs de la ville de Rome, trad Bailly, 1848.djvu/26",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1848,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1018,
+      "revisions": 10,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 849,
+        "legacyChars": 778,
+        "lostChars": 71,
+        "lostShare": 0.08362779740871613
+      }
+    },
+    {
+      "slug": "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int-p204",
+      "wiki": "la",
+      "title": "Pagina:Galilei - Discorsi e dimostrazioni matematiche intorno a due nuove scienze - 1638.djvu/204",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1638,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1399,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1056,
+        "legacyChars": 902,
+        "lostChars": 154,
+        "lostShare": 0.14583333333333334
+      }
+    },
+    {
+      "slug": "ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+      "wiki": "la",
+      "title": "Pagina:Gauss, Carl Friedrich - Werke (1870).djvu/21",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1801,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1705,
+      "revisions": 22,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1267,
+        "legacyChars": 1255,
+        "lostChars": 12,
+        "lostShare": 0.009471191791633781
+      }
+    },
+    {
+      "slug": "ws-la-gesta-abbatum-monsterii-sancti-albani-vol-2-1290-p27",
+      "wiki": "la",
+      "title": "Pagina:Gesta Abbatum Monsterii Sancti Albani (vol 2 1290, 1349).pdf/27",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1867,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1828,
+      "revisions": 3,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1494,
+        "legacyChars": 1437,
+        "lostChars": 57,
+        "lostShare": 0.03815261044176707
+      }
+    },
+    {
+      "slug": "ws-la-grammatica-fennica-pdf-p48",
+      "wiki": "la",
+      "title": "Pagina:Grammatica Fennica.pdf/48",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1733,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 667,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 497,
+        "legacyChars": 494,
+        "lostChars": 3,
+        "lostShare": 0.006036217303822937
+      }
+    },
+    {
+      "slug": "ws-la-hermeneumata-pseudodositheana-pdf-p680",
+      "wiki": "la",
+      "title": "Pagina:Hermeneumata Pseudodositheana.pdf/680",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1895,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 16,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 947,
+        "legacyChars": 947,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-hermetis-trismegisti-poemander-1854-djvu-p26",
+      "wiki": "la",
+      "title": "Pagina:Hermetis Trismegisti Poemander (1854).djvu/26",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1854,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 777,
+      "revisions": 5,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 631,
+        "legacyChars": 627,
+        "lostChars": 4,
+        "lostShare": 0.006339144215530904
+      }
+    },
+    {
+      "slug": "ws-la-historia-naturalis-brasiliae-1648-pdf-p198",
+      "wiki": "la",
+      "title": "Pagina:Historia Naturalis Brasiliae (1648).pdf/198",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1648,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 7,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 2107,
+        "legacyChars": 1994,
+        "lostChars": 113,
+        "lostShare": 0.053630754627432366
+      }
+    },
+    {
+      "slug": "ws-la-houghtonianus-latinus-224-pdf-p33",
+      "wiki": "la",
+      "title": "Pagina:Houghtonianus Latinus 224.pdf/33",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1716,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1402,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1093,
+        "legacyChars": 1093,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-joseph-piechowski-de-ironia-iliadis-pdf-p16",
+      "wiki": "la",
+      "title": "Pagina:Joseph Piechowski De ironia Iliadis.pdf/16",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1856,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1427,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 997,
+        "legacyChars": 997,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189",
+      "wiki": "la",
+      "title": "Pagina:Josephi Rodrigues de Mello De rusticis Brasiliae rebus Prudentii Amaralii De sacchari opificio carmen.pdf/189",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1781,
+      "harvestedLevel": 3,
+      "fidelity": "glyph",
+      "referenceChars": 785,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 656,
+        "legacyChars": 656,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    },
+    {
+      "slug": "ws-la-le-ons-latines-modernes-de-litt-rature-et-de-mor-p46",
+      "wiki": "la",
+      "title": "Pagina:Leçons latines modernes de littérature et de morale vol 1.djvu/46",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1836,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1713,
+      "revisions": 6,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1410,
+        "legacyChars": 1294,
+        "lostChars": 116,
+        "lostShare": 0.08226950354609928
+      }
+    },
+    {
+      "slug": "ws-la-les-cinquante-livres-du-digeste-ou-des-pandectes-p77",
+      "wiki": "la",
+      "title": "Pagina:Les cinquante livres du Digeste ou des Pandectes de l'Empereur Justinien, Tome 1, trad Hulot, 1805.pdf/77",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1805,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 1764,
+        "legacyChars": 1642,
+        "lostChars": 122,
+        "lostShare": 0.0691609977324263
+      }
+    },
+    {
+      "slug": "ws-la-machumetis-saracenorum-principis-eiusque-success-p259",
+      "wiki": "la",
+      "title": "Pagina:Machumetis Saracenorum principis, eiusque successorum vitae, docrina, ac ipse Alcoran (1555).djvu/259",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1550,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 2000,
+      "revisions": 1,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 3275,
+        "legacyChars": 3165,
+        "lostChars": 110,
+        "lostShare": 0.03358778625954199
+      }
+    },
+    {
+      "slug": "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+      "wiki": "la",
+      "title": "Pagina:Mercurius Gallobelgicus, Cologne, 1592.pdf/20",
+      "script": "latin",
+      "language": "Latin",
+      "year": 1592,
+      "harvestedLevel": 3,
+      "fidelity": "word",
+      "referenceChars": 1115,
+      "revisions": 2,
+      "currentLevel": 3,
+      "reachedLevel4": false,
+      "validation": {
+        "measurable": false,
+        "reason": "never validated — still level 3 or below"
+      },
+      "postValidation": {
+        "measurable": false,
+        "reason": "never validated"
+      },
+      "templateLoss": {
+        "referenceChars": 923,
+        "legacyChars": 923,
+        "lostChars": 0,
+        "lostShare": 0
+      }
+    }
+  ]
+}

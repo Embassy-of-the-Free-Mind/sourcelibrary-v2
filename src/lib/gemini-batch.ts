@@ -7,6 +7,12 @@
  * @see https://ai.google.dev/gemini-api/docs/batch-api
  */
 
+// usage-ok: this module SUBMITS and COLLECTS batch jobs; it never generates
+// inline. A batch job's spend is recorded by its callers — logBatchSubmission()
+// writes the placeholder row at submit time and completeBatchUsage() closes it
+// with the real token counts when results land (#3452). A row written here
+// would be a third, duplicate record of the same job.
+
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 export interface BatchRequest {
