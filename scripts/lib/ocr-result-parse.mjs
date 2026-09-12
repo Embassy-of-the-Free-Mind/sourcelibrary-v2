@@ -38,32 +38,47 @@ import { VALID_IMAGE_TYPES } from './gallery-image-types.mjs';
  */
 export const PROMPT_VERSION = 'v6.1.2026-05';
 
-/** Page-type vocabulary accepted from the model. Mirrors VALID_PAGE_TYPES in defaults.ts. */
-export const VALID_PAGE_TYPES = new Set([
+/**
+ * Page types the OCR prompt offers, in prompt order. Mirrors PROMPT_PAGE_TYPES in
+ * defaults.ts, where the prompt's own `One of:` line is interpolated from it.
+ *
+ * Scripts cannot import the TS module, so this is a copy — but the parity test
+ * asserts element-for-element equality *including order*, which is what makes the
+ * prompt's list and this one one vocabulary rather than two (#4455).
+ */
+export const PROMPT_PAGE_TYPES = [
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
-  'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
-  'digitizer-insert', 'exlibris', 'bookplate',
-]);
+  'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map',
+  'musical-score', 'table', 'cover', 'text', 'digitizer-insert', 'exlibris',
+];
+
+/**
+ * Accepted but not offered — values from an older prompt or a non-OCR writer that
+ * must survive a re-parse. Mirrors LEGACY_PAGE_TYPES in defaults.ts; see its
+ * docblock for why each one is here.
+ */
+export const LEGACY_PAGE_TYPES = ['bookplate', 'digitizer-notice'];
+
+/** Page-type vocabulary accepted from the model. Mirrors VALID_PAGE_TYPES in defaults.ts. */
+export const VALID_PAGE_TYPES = new Set([...PROMPT_PAGE_TYPES, ...LEGACY_PAGE_TYPES]);
 
 /**
  * Extract <page-type> from OCR text. Returns undefined if not found or invalid.
  *
- * `validate: false` returns whatever the model emitted (trimmed, lower-cased)
- * without screening it against VALID_PAGE_TYPES. That is not a preference — it is
- * what four batch collectors have always done, and the two vocabularies genuinely
- * disagree: the OCR prompt offers `musical-score`, `table` and `cover`, none of
- * which VALID_PAGE_TYPES lists. Flipping those callers to validating would
- * silently stop three prompt-sanctioned types from being recorded, so the
- * divergence is a parameter rather than a fork. See #4455 for the gap itself.
+ * The `validate: false` escape hatch is gone (#4455). It existed because the
+ * prompt offered `musical-score` / `table` / `cover` and this set did not, so the
+ * four batch collectors screened nothing rather than lose three real answers.
+ * The set is now derived from the prompt's list, so screening loses nothing and
+ * an unrecognised value is a genuine mis-answer. Widen PROMPT_PAGE_TYPES (in both
+ * files) instead of reintroducing the flag.
  *
  * Unlike the TS canonical this tolerates a non-string argument, because
  * `split-book.mjs` passes `page.ocr`, which is null on an un-OCR'd page.
  */
-export function extractPageType(ocrText, { validate = true } = {}) {
+export function extractPageType(ocrText) {
   const match = ocrText?.match(/<page-type>([\s\S]*?)<\/page-type>/i);
   if (!match) return undefined;
   const type = match[1].trim().toLowerCase();
-  if (!validate) return type || undefined;
   return VALID_PAGE_TYPES.has(type) ? type : undefined;
 }
 

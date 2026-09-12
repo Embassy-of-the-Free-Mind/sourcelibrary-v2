@@ -43,7 +43,7 @@
  *     --cohort            # only pages carrying image_metadata.upgraded_at
  */
 import { MongoClient } from 'mongodb';
-import sharp from 'sharp';
+import { measure } from '../lib/gutter-measure.mjs';
 
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=')[1] ?? d;
 const LANGUAGE = arg('language', null);
@@ -80,47 +80,8 @@ const LIST = process.argv.includes('--list');
  *
  * A 2000px stride carrying a 1200px payload, on every axis, on every book.
  */
-const WHITE_LEVEL = 250;
-const BAND_PURITY = 0.98;
-const MIN_BAND_PX = 200;
-
-function interiorBands(profile) {
-  const runs = [];
-  let start = null;
-  for (let i = 0; i < profile.length; i++) {
-    if (profile[i] >= BAND_PURITY && start === null) start = i;
-    else if (profile[i] < BAND_PURITY && start !== null) { runs.push([start, i]); start = null; }
-  }
-  if (start !== null) runs.push([start, profile.length]);
-  // Border-touching runs are margins, not gutters.
-  return runs.filter(([a, b]) => a > 0 && b < profile.length && b - a >= MIN_BAND_PX);
-}
-
-async function measure(buf) {
-  const { data, info } = await sharp(buf).greyscale().raw().toBuffer({ resolveWithObject: true });
-  const { width, height } = info;
-  const colWhite = new Float64Array(width);
-  const rowWhite = new Float64Array(height);
-  let white = 0;
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      if (data[y * width + x] >= WHITE_LEVEL) { white++; colWhite[x]++; rowWhite[y]++; }
-    }
-  }
-  for (let x = 0; x < width; x++) colWhite[x] /= height;
-  for (let y = 0; y < height; y++) rowWhite[y] /= width;
-  const xb = interiorBands(colWhite).map(([a, b]) => ({ axis: 'x', a, b }));
-  const yb = interiorBands(rowWhite).map(([a, b]) => ({ axis: 'y', a, b }));
-  // BOTH axes. A folio photographed on a white ground can produce one interior
-  // band (two leaves stacked with a white strip between them); a missing tile
-  // stride produces a grid, so it always shows on both. Requiring both is what
-  // separates the gutter cohort from BDRC's legitimately-white pecha scans.
-  return {
-    white: white / data.length, width, height,
-    bands: [...xb, ...yb],
-    guttered: xb.length > 0 && yb.length > 0,
-  };
-}
+// Measurement extracted to scripts/lib/gutter-measure.mjs (#4534) so the
+// repair judges pages with the SAME instrument as this audit.
 
 /** The image the OCR pipeline actually reads — mirrors getPageSource. */
 function ocrSource(p) {

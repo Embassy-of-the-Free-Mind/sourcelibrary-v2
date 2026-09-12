@@ -22,6 +22,12 @@
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --budget 40 --by "top up"
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --remove --by "done"
  *
+ * --books and --collection ADD to the existing scope (set union) — the safe
+ * default for shared state (the 2026-06-20 clobber was a replace). To shrink
+ * a scope, pass --replace-books with the complete new list. Collection-based
+ * scopes grow implicitly too: membership resolves at every gate check, so
+ * tagging a book into the collection adds it to the lane.
+ *
  * Monitor with: scripts/audit/scope-progress.mjs --scope <tag>
  */
 
@@ -87,13 +93,19 @@ await withMongo(async (db) => {
   if (!existing && !books && !collection) {
     console.error(`Scope '${tag}' does not exist — creating one needs --books and/or --collection.`); process.exit(1);
   }
+  if (flag('replace-books') && !books) {
+    console.error('--replace-books needs --books with the complete new list.'); process.exit(1);
+  }
 
   // Build the scope doc: on update, only the passed fields change; the
   // envelope's created_at is set once and never touched by a budget top-up
   // (envelope spend is measured from created_at — resetting it would forgive
-  // spend already accounted).
+  // spend already accounted). Book ids are UNIONED unless --replace-books.
+  const nextBookIds = books
+    ? (flag('replace-books') ? books : [...new Set([...(existing?.book_ids || []), ...books])])
+    : existing?.book_ids ?? [];
   const next = {
-    book_ids: books ?? existing?.book_ids ?? [],
+    book_ids: nextBookIds,
     collections: collection ? [...new Set([...(existing?.collections || []), collection])] : (existing?.collections ?? []),
     created_at: existing?.created_at ?? new Date(),
     created_by: existing?.created_by ?? by,

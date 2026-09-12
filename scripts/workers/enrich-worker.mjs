@@ -36,7 +36,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { logUsage as logUsageToSupabase } from './lib/supabase-usage-logger.mjs';
+import { logUsage as logUsageToSupabase, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
@@ -354,7 +354,7 @@ async function researchBook(title, author) {
 async function processBatch(pages, bookTitle, bookAuthor, bookLanguage) {
   const model = getClient().getGenerativeModel({
     model: LITE_MODEL,
-    generationConfig: { temperature: 0.2, maxOutputTokens: 2000 },
+    generationConfig: { temperature: 0.2, maxOutputTokens: 2000, thinkingConfig: { thinkingBudget: 0 } },
   });
 
   const pageRange = {
@@ -423,7 +423,7 @@ CRITICAL for quotes:
       const usageMetadata = result.response.usageMetadata;
       const usage = {
         input_tokens: usageMetadata?.promptTokenCount || 0,
-        output_tokens: usageMetadata?.candidatesTokenCount || 0,
+        output_tokens: outputTokensFrom(usageMetadata),
       };
 
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
@@ -712,7 +712,7 @@ async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, book
   const usageMetadata = result.response.usageMetadata;
   const usage = {
     input_tokens: usageMetadata?.promptTokenCount || 0,
-    output_tokens: usageMetadata?.candidatesTokenCount || 0,
+    output_tokens: outputTokensFrom(usageMetadata),
   };
 
   const jsonMatch = responseText.match(/\{[\s\S]*\}/);
@@ -1363,7 +1363,10 @@ async function extractChaptersForBook(db, bookId) {
 
   // Call Gemini — flash-lite is sufficient for structured chapter extraction
   const modelId = LITE_MODEL;
-  const model = getClient().getGenerativeModel({ model: modelId });
+  const model = getClient().getGenerativeModel({
+    model: modelId,
+    generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+  });
   const prompt = buildExtractionPrompt(
     book.display_title || book.title,
     book.author || 'Unknown',
@@ -1379,7 +1382,7 @@ async function extractChaptersForBook(db, bookId) {
   const responseText = response.text();
   const usageMetadata = response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   // Parse AI response
   let aiChapters;
@@ -1547,7 +1550,15 @@ async function main() {
       books = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete', ...SCOPE_FILTER })
         .sort({ is_first_translation: -1, pages_count: 1, 'pipeline_auto.retry_count': 1 })  // First translations first, then small books
-        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
+        // The embedding path (composeBookEmbeddingText + upsertBookEmbedding)
+        // reads far more than the enrich loop itself: published/categories go
+        // into the embedded text, content_type + commons_* + resource_type +
+        // medium are the whole descriptive signal for artworks, quality_score/
+        // collections land in the stored metadata. Projected away, artworks got
+        // generic embeddings and book_embeddings.year/categories were always
+        // null/[] — the single-book --book lane (unprojected findOne) was
+        // correct while this batch lane silently wasn't.
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, published: 1, categories: 1, quality_score: 1, content_type: 1, resource_type: 1, medium: 1, collections: 1, commons_description: 1, commons_categories: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
         .toArray();
     }
@@ -1741,7 +1752,7 @@ Guidelines:
 
         const model = getClient().getGenerativeModel({
           model: LITE_MODEL,
-          generationConfig: { temperature: 0.1, maxOutputTokens: 2048, responseMimeType: 'application/json' },
+          generationConfig: { temperature: 0.1, maxOutputTokens: 2048, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } },
         });
 
         const result = await Promise.race([
@@ -1794,7 +1805,7 @@ Guidelines:
             type: 'quality-scoring', mode: 'realtime', model: LITE_MODEL,
             book_id: book.id, book_title: title,
             input_tokens: usageMeta?.promptTokenCount || 0,
-            output_tokens: usageMeta?.candidatesTokenCount || 0,
+            output_tokens: outputTokensFrom(usageMeta),
             status: 'success', endpoint: 'worker/hetzner-enrich',
           });
         }
@@ -1928,6 +1939,7 @@ NO explanation, just the JSON array.`;
                 generationConfig: {
                   temperature: 0.1,
                   responseMimeType: 'application/json',
+                  thinkingConfig: { thinkingBudget: 0 },
                 },
                 systemInstruction: collectionSystemPrompt,
               });
@@ -1945,7 +1957,7 @@ NO explanation, just the JSON array.`;
               await logUsage(db, {
                 type: 'collection-assignment', mode: 'realtime', model: COLLECTION_MODEL,
                 input_tokens: usageMeta?.promptTokenCount || 0,
-                output_tokens: usageMeta?.candidatesTokenCount || 0,
+                output_tokens: outputTokensFrom(usageMeta),
                 status: 'success', endpoint: 'worker/hetzner-enrich',
               });
               break;

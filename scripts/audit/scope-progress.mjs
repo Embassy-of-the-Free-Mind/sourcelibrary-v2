@@ -37,12 +37,12 @@
 
 import { withMongo } from '../lib/mongo.mjs';
 import { getTodaySpendUsd, readDailyBudgetUsd, readScopeEnvelopes, getScopeSpendUsd } from '../lib/spend-guard.mjs';
+import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON, estimatePagesCost } from '../lib/model-pricing.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
 const val = (n) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : null; };
 
-const BATCH_RATE_USD_PER_PAGE = 0.00079; // measured 2026-07-16, gemini_usage
 
 // Status rank: where the state machine THINKS the book is. Used only for the
 // images stage (no output predicate) and for the ahead-of-output drift check.
@@ -198,15 +198,21 @@ await withMongo(async (db) => {
   const books = await db.collection('books')
     .find({ id: { $in: ids } })
     .project({
-      id: 1, title: 1, resource_type: 1, visible: 1, hidden: 1, processing_priority: 1,
+      id: 1, title: 1, resource_type: 1, content_type: 1, visible: 1, hidden: 1, processing_priority: 1,
       pages_count: 1, pages_archived: 1, pages_ocr: 1, pages_translated: 1, pages_translatable: 1,
       summary: 1, chapters: 1, detected_images_count: 1, cover_page: 1, pipeline_auto: 1,
     })
     .toArray();
   const foundIds = new Set(books.map((b) => b.id));
   const missing = ids.filter((id) => !foundIds.has(id));
-  const artworks = books.filter((b) => b.resource_type);
-  const texts = books.filter((b) => !b.resource_type);
+  // Mirrors the orchestrator's ARTWORK_MATCH: content_type is AUTHORITATIVE
+  // ('book' is never artwork, even with an object-ish resource_type — textual
+  // papyri); resource_type is only a fallback, and only for the artwork types.
+  const ARTWORK_TYPES = new Set(['painting', 'print', 'drawing', 'fresco', 'object']);
+  const isArtwork = (b) => b.content_type !== 'book'
+    && (b.content_type === 'artwork' || ARTWORK_TYPES.has(b.resource_type));
+  const artworks = books.filter(isArtwork);
+  const texts = books.filter((b) => !isArtwork(b));
 
   const verified = flag('verify') ? await verifyFromPages(db, texts.map((b) => b.id)) : null;
 
@@ -226,7 +232,13 @@ await withMongo(async (db) => {
     translate_pages_remaining: reports.reduce((s, r) => s + r.remaining.translate_pages, 0),
     drift_books: reports.filter((r) => r.drift.length).length,
   };
-  totals.est_batch_cost_usd = Number(((totals.ocr_pages_remaining + totals.translate_pages_remaining) * BATCH_RATE_USD_PER_PAGE).toFixed(2));
+  // OCR and translation are priced SEPARATELY — they run on different lanes
+  // (batch vs realtime) at different rates, and the old single-rate estimate
+  // understated a translation-heavy remainder by ~3x.
+  totals.est_cost_usd = Number(estimatePagesCost({
+    ocrPages: totals.ocr_pages_remaining,
+    translationPages: totals.translate_pages_remaining,
+  }).toFixed(2));
 
   if (flag('json')) {
     console.log(JSON.stringify({ source, gates, totals, missing, artworks: artworks.map((b) => b.id), books: reports }, null, 2));
@@ -256,6 +268,6 @@ await withMongo(async (db) => {
   }
 
   console.log(`\nTotals: ${totals.done}/${totals.books} complete · OCR remaining ${totals.ocr_pages_remaining} pages · translation remaining ${totals.translate_pages_remaining} pages`);
-  console.log(`Estimated batch cost to finish OCR+translation: ~$${totals.est_batch_cost_usd} (at $${BATCH_RATE_USD_PER_PAGE}/page)`);
+  console.log(`Estimated cost to finish: ~$${totals.est_cost_usd}  (OCR $${PAGE_RATE_USD.ocrBatch}/pg batch + translation $${PAGE_RATE_USD.translationRealtime}/pg realtime, measured ${PAGE_RATES_MEASURED_ON})`);
   if (totals.drift_books) console.log(`⚠ ${totals.drift_books} book(s) have status ahead of output (#3740 shape) — status claims a stage with no output and no recorded skip.`);
 });

@@ -22,6 +22,7 @@
  *   --max-pages=N    Skip books with more than N untranslated pages (default: 9999)
  *   --smallest       Sort smallest books first (default — fastest to complete)
  *   --largest        Sort largest books first
+ *   --reason="..."   Why this batch is being run by hand (recorded on each job, #4336)
  *
  * Requires env: MONGODB_URI, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, SQS_PAGE_TRANSLATION_QUEUE_URL
  */
@@ -31,7 +32,8 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { SKIP_TRANSLATION_PAGE_TYPES, getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // Load .env.production.local for MONGODB_URI + SQS URLs
 try {
@@ -63,7 +65,9 @@ if (!process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_SECRET_ACCESS_KEY_SOUR
 const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
 const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
 const QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
-const DEFAULT_MODEL = 'gemini-3-flash-preview';
+// The model is the BOOK's (getTranslateModelForBook), never a constant. A flash constant
+// here sent every Latin book through the Lambda lane at 2x — the #4729 shape on the
+// translation side. The translation policy itself split from OCR in #4759.
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -79,6 +83,8 @@ const DRY_RUN = hasFlag('dry-run');
 const SINGLE_BOOK = getArg('book-id');
 const MAX_PAGES = parseInt(getArg('max-pages') || '9999', 10);
 const SORT_LARGEST = hasFlag('largest');
+const INITIATED_BY = 'bulk-translate-script';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // --- SQS ---
 const sqsClient = new SQSClient({ region: AWS_REGION });
@@ -234,10 +240,11 @@ async function main() {
       },
       config: {
         page_ids: pageIds,
-        model: DEFAULT_MODEL,
+        model: getTranslateModelForBook(book),
         language: book.language || 'auto-detect',
       },
-      initiated_by: 'bulk-translate-script',
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date(),
     });

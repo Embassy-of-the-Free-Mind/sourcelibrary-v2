@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { decodeShortlink } from '@/lib/shortlinks';
 import { mintCitationToken } from '@/lib/citation-token';
 import { meteredReaderEnabled } from '@/lib/free-preview';
+import { logShortlinkVisit } from '@/lib/shortlink-visit-log';
 import { Page } from '@/lib/types';
 
 interface RouteContext {
@@ -49,6 +50,18 @@ export async function GET(request: NextRequest, context: RouteContext) {
     ]);
     const bookPath = (book?.slug as string) || bookId;
     const prefix = lang && Number(book?.[`pages_translated_${lang}`] || 0) > 0 ? `/${lang}` : '';
+
+    // Record the arrival (#2047). Deferred and timeout-bounded inside the
+    // logger, so the 302 below never waits on it. Both branches log: a
+    // shortlink whose page has vanished is still a share that was clicked, and
+    // the null target_page_id is how we find those.
+    logShortlinkVisit({
+      request,
+      code,
+      bookId,
+      pageNumber: pageNumber ?? null,
+      targetPageId: page?.id ?? null,
+    });
 
     if (!page) {
       // Redirect to book page if specific page not found

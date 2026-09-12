@@ -137,6 +137,14 @@ async function main() {
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[archive-gallica] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
   }
+  // --book-ids=a,b,c: targeted one-off, same intent as archive-bulk's --book-id.
+  // Named books jump the (multi-thousand-book, arbitrarily ordered) queue —
+  // without this there is no way to archive a specific stalled book.
+  const BOOK_IDS = (getArg('book-ids') || '').split(',').map(s => s.trim()).filter(Boolean);
+  if (BOOK_IDS.length) {
+    SCOPE_FILTER = { id: { $in: BOOK_IDS } };
+    console.log(`[archive-gallica] Targeted run: ${BOOK_IDS.length} book(s) by --book-ids.`);
+  }
 
   // Find Gallica books with unarchived pages
   const gallicaBooks = await db.collection('books')

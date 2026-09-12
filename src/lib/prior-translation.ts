@@ -40,6 +40,71 @@ export function priorLinkLabel(p: PriorTranslationCredit): string {
   }
 }
 
+/** One earlier English translation, ready to place on the book timeline. */
+export interface PriorTimelineRow {
+  /** Sort key: the publication year as ms, or +Infinity when undated. */
+  ts: number;
+  /** Year as shown, or null when we have none. */
+  year: string | null;
+  /** The curated, verified credit — renders with its "find it" link. */
+  credit?: PriorTranslationCredit;
+  /** A verification-array pick — renders as a plain summary line. */
+  pick?: { english_title?: string | null; translator?: string | null; publisher?: string | null; pub_year?: string | number | null; url?: string | null };
+}
+
+const priorYearTs = (y?: string | number | null): number => {
+  const m = String(y ?? '').match(/(\d{3,4})/);
+  return m ? Date.UTC(Number(m[1]), 0, 1) : Number.POSITIVE_INFINITY;
+};
+
+/**
+ * Every earlier English translation we hold, oldest first, deduped.
+ *
+ * Why this is a function and not an inline `[0]`: the verification array is
+ * UNORDERED. Taking its first element hid 2,212 recorded translations across
+ * 1,339 books, and in 35% of the books with two or more dated picks the one
+ * shown was not the earliest — so a timeline entry headed "Earlier English
+ * translation" credited a LATER translation and buried the earlier one, by up
+ * to five centuries (Pico's Opera Omnia showed Copenhaver 2022 over Sir Thomas
+ * More 1510). On a date axis, an arbitrary member of a set is not just
+ * incomplete; it is false.
+ *
+ * The curated `prior_translation` credit is emitted first so it wins the dedupe
+ * against any verification pick naming the same translator and year — it is the
+ * verified one, and it carries the outbound link.
+ */
+export function collectPriorTranslations(
+  credit: PriorTranslationCredit | null | undefined,
+  picks: ReadonlyArray<NonNullable<PriorTimelineRow['pick']>> = [],
+): PriorTimelineRow[] {
+  const rows: PriorTimelineRow[] = [];
+  const seen = new Set<string>();
+  const take = (key: string, row: PriorTimelineRow) => {
+    const k = key.trim().toLowerCase();
+    // A row with no translator AND no year cannot be deduped meaningfully; keep it.
+    if (k !== '|infinity' && seen.has(k)) return;
+    seen.add(k);
+    rows.push(row);
+  };
+  if (credit) {
+    take(`${formatTranslators(credit.translators)}|${priorYearTs(credit.year)}`, {
+      ts: priorYearTs(credit.year),
+      year: credit.year ? String(credit.year) : null,
+      credit,
+    });
+  }
+  for (const p of picks) {
+    take(`${p.translator ?? ''}|${priorYearTs(p.pub_year)}`, {
+      ts: priorYearTs(p.pub_year),
+      year: p.pub_year ? String(p.pub_year) : null,
+      pick: p,
+    });
+  }
+  // Oldest first; undated sort last among priors rather than drifting to the top
+  // of the whole timeline on a sentinel year.
+  return rows.sort((a, b) => a.ts - b.ts);
+}
+
 /** "trans. A, B and C" — Oxford-free join of translator names. */
 export function formatTranslators(translators: string[]): string {
   const names = (translators || []).filter(Boolean);

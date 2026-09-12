@@ -628,6 +628,41 @@ source-library search "alchemy" --json | jq .results`}
         </div>
       </section>
 
+      {/* Entity layer */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">Entities: people, places and concepts</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          Over a million named entities extracted from the AI-generated indexes of the books
+          themselves, browsable at{' '}
+          <a href="/explore" className="underline">/explore</a>, with the subset that carries
+          coordinates plotted at <a href="/explore/map" className="underline">/explore/map</a>.
+          A growing share is aligned to Wikidata, which brings QIDs, birth and death years,
+          and coordinates with it.
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 max-w-2xl">
+          <h3 className="text-base font-semibold text-primary mb-2">Two limits worth knowing before you build on it</h3>
+          <ul className="text-secondary text-sm space-y-3">
+            <li>
+              <strong className="text-primary">Most entities are extracted, not identified.</strong>{' '}
+              Alignment is by Wikipedia-URL match or exact name string. An unaligned entity means
+              &ldquo;we found this name&rdquo;, not &ldquo;we know what this is&rdquo;.
+            </li>
+            <li>
+              <strong className="text-primary">The source is the index, not the body.</strong>{' '}
+              A place discussed in a book but missing from that book&apos;s index is invisible here.
+            </li>
+          </ul>
+          <p className="text-secondary text-sm mt-4">
+            Ancient toponyms are the known weak spot. The same place is written differently in
+            every tradition that names it — Magan / Makkan / Majan / Ṣuḥār / 甕蠻 / Oman — and
+            string matching cannot join those. Chasing a place across languages works better if
+            you search co-occurring names: a lone toponym also collects homographs in unrelated
+            languages, while a pair like <code>Dilmun Meluhha</code> returns near-pure signal.
+          </p>
+        </div>
+      </section>
+
       {/* Bulk dataset access */}
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-2">Bulk dataset access</h2>
