@@ -11,12 +11,14 @@
  *   --dry-run     Show what would be queued
  *   --biggest     Sort by largest gap first (default: smallest first)
  *   --book-id=ID  Queue a single book
+ *   --reason="..." Why this batch is being run by hand (recorded on each job, #4336)
  */
 
 import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
 const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
@@ -34,6 +36,8 @@ const LIMIT = parseInt(getArg('limit') || '50', 10);
 const DRY_RUN = hasFlag('dry-run');
 const BIGGEST_FIRST = hasFlag('biggest');
 const SINGLE_BOOK = getArg('book-id');
+const INITIATED_BY = 'script:queue-efm-translations';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // --- SQS setup ---
 const sqsClient = new SQSClient({
@@ -184,7 +188,10 @@ async function main() {
             model: DEFAULT_MODEL,
             language: book.language || 'auto-detect',
           },
-          initiated_by: 'script',
+          // Was the bare 'script', which named no lane — reconstruction needs to know
+          // WHICH hand-run script, not just that one ran (#4336).
+          initiated_by: INITIATED_BY,
+          ...initiatedReasonFields(REASON),
           created_at: new Date(),
           updated_at: new Date(),
         });

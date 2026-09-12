@@ -1,5 +1,10 @@
 # Source Library Translation Roadmap
 
+> **This file is about *which books to translate next*.** For *what to build next* — the
+> ordered list of work in flight across the site, the native apps and the offline stack —
+> see `.claude/BUILD-ORDER.md`. Read by `/batch-translate`.
+> Last substantive revision: 2025-12-27. Re-check a priority before acting on it.
+
 ## Priority System
 
 | Priority | Description | Action |

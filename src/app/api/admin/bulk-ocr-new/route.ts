@@ -7,7 +7,7 @@ import { images } from '@/lib/api-client';
 import { getPageImageUrl } from '@/lib/utils';
 import { createBatchJobInline, type BatchRequest } from '@/lib/gemini-batch';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
-import { DEFAULT_BATCH_MODEL } from '@/lib/types/ai-models';
+import { getModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
@@ -93,6 +93,7 @@ export async function GET(request: NextRequest) {
       projection: {
         _id: 0, id: 1, title: 1, display_title: 1,
         language: 1, original_language: 1, read_count: 1, pages_count: 1,
+        'image_source.provider': 1, // getModelForBook reads it (BPH → flash)
       }
     })
       .sort({ read_count: -1, pages_count: -1 })
@@ -156,6 +157,8 @@ export async function GET(request: NextRequest) {
 
       // Get OCR prompt for this book's language
       const language = book.original_language || book.language || '';
+      // Routed per book: Latin-script allowlist → lite, BPH / non-Latin / unknown → flash (#4729).
+      const ocrModel = getModelForBook(book as RoutableBook);
       const promptResult = await getOcrPrompt();
       const prompt = promptResult.text;
 
@@ -204,7 +207,7 @@ export async function GET(request: NextRequest) {
         try {
           const childJobId = nanoid();
           const batchJob = await createBatchJobInline(
-            DEFAULT_BATCH_MODEL,
+            ocrModel,
             batchRequests,
             `ocr-new-${book.id}-${childJobId}`
           );
@@ -218,7 +221,7 @@ export async function GET(request: NextRequest) {
             page_ids: batchRequests.map(r => r.key),
             page_count: batchRequests.length,
             status: 'pending',
-            model: DEFAULT_BATCH_MODEL,
+            model: ocrModel,
             language,
             prompt_version: PROMPT_VERSION,
             force: false,
@@ -232,7 +235,7 @@ export async function GET(request: NextRequest) {
           await logGeminiCall({
             type: 'ocr',
             mode: 'batch',
-            model: DEFAULT_BATCH_MODEL,
+            model: ocrModel,
             book_id: book.id,
             book_title: book.title,
             page_ids: batchRequests.map(r => r.key),
@@ -271,7 +274,7 @@ export async function GET(request: NextRequest) {
           pending: bookPagesSubmitted, total: bookPagesSubmitted,
         },
         status: 'pending',
-        model: DEFAULT_BATCH_MODEL,
+        model: ocrModel,
         language,
         prompt_version: PROMPT_VERSION,
         force: false,

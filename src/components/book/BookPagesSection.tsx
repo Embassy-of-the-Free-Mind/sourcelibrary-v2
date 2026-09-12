@@ -43,6 +43,7 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
   // const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
+  const [reason, setReason] = useState(''); // Why this batch is being run by hand (#4336)
   const [visibleCount, setVisibleCount] = useState(9); // Pagination — mobile default (3×3); desktop bumps to PAGES_PER_LOAD on mount
 
   // Desktop shows a fuller first screen (2 rows on the 10-col grid); mobile keeps 9.
@@ -389,7 +390,8 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
         bookId,
         pageIds: pageIdsToProcess,
         action,
-        customPrompt
+        customPrompt,
+        reason: reason.trim() || undefined
       });
 
       // Set current job to show progress UI immediately
@@ -407,11 +409,13 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
         config: {},
         created_at: new Date(),
         updated_at: new Date(),
-        initiated_by: 'user'
+        initiated_by: 'user',
+        initiated_reason: reason.trim() || undefined
       });
 
       // Clear selection and exit batch mode
       setSelectedPages(new Set());
+      setReason('');
       setBatchMode(false);
     } catch (error) {
       console.error('Failed to queue job:', error);

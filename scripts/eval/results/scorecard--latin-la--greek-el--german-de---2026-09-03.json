@@ -1,0 +1,304 @@
+{
+  "date": "2026-09-03",
+  "models": [
+    "gemini-3.1-flash-lite"
+  ],
+  "runs": 3,
+  "only": "(latin-la-|greek-el-|german-de-)",
+  "summary": [
+    {
+      "language": "German",
+      "script": "latin",
+      "passages": 2,
+      "aligned": 2,
+      "refChars": 2425,
+      "charAccuracy": 0.9962886597938144,
+      "rows": [
+        {
+          "work": "Weigel, Gnothi seauton, Ander Theil: Astrologia Theologizata (1618) — Vorrede, man rules the stars",
+          "bookId": "68679f27fc518f6dbf334eb6",
+          "pageNumber": -24,
+          "aligned": true,
+          "guard": 0.02553191489361702,
+          "cer": 0.004830917874396135,
+          "charAccuracy": 0.9951690821256038,
+          "refLen": 1242,
+          "matched": 1236,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography layer)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/weigel_gnothi02_1618?p=40",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0050505,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9951690821256038,
+              "cer": 0.004830917874396135
+            }
+          }
+        },
+        {
+          "work": "Zesen, Adriatische Rosemund (1645) — end of Book I, Markhold's sleepless night",
+          "bookId": "69b302af3613a84e6806788a",
+          "pageNumber": 111,
+          "aligned": true,
+          "guard": 0.03153153153153153,
+          "cer": 0.00253592561284869,
+          "charAccuracy": 0.9974640743871513,
+          "refLen": 1183,
+          "matched": 1180,
+          "source": "Deutsches Textarchiv, page-aligned TEI of the SAME edition (original-orthography layer)",
+          "source_url": "https://www.deutschestextarchiv.de/book/view/zesen_rosemund_1645?p=100",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0031904999999999993,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9915469146238377,
+              "cer": 0.0084530853761623
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Greek",
+      "script": "greek",
+      "passages": 4,
+      "aligned": 4,
+      "refChars": 2825,
+      "charAccuracy": 0.9876106194690265,
+      "rows": [
+        {
+          "work": "Aristotle, Categoriae (ed. Bekker 1831, vol. I) — 1a-1b",
+          "bookId": "69afe65fda5fa12b664a75a2",
+          "pageNumber": 17,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 774,
+          "matched": 774,
+          "source": "el.wikisource proofread page-scan (Μεταγραφή:Aristoteles Graece, I (1831).djvu; q3 pages 9, 15, 17 — only 17 is main text)",
+          "source_url": "https://el.wikisource.org/wiki/Σελίδα:Aristoteles_Graece,_I_(1831).djvu/17",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.008971499999999999,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9935400516795866,
+              "cer": 0.006459948320413436
+            }
+          }
+        },
+        {
+          "work": "Marinus, Vita Procli (ed. Boissonade 1814) — chapters 6-8, Proclus's youth",
+          "bookId": "6952ca6e77f38f6761bc3fb2",
+          "pageNumber": 60,
+          "aligned": true,
+          "guard": 0,
+          "cer": 0,
+          "charAccuracy": 1,
+          "refLen": 919,
+          "matched": 919,
+          "source": "el.wikisource proofread page-scan (Μεταγραφή:Marini Vita Procli Graece et Latine (1814).djvu; 30 pages proofread q3, pp.55-84 = the Greek text)",
+          "source_url": "https://el.wikisource.org/wiki/Σελίδα:Marini_Vita_Procli_Graece_et_Latine_(1814).djvu/60",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.005196,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.998911860718172,
+              "cer": 0.001088139281828074
+            }
+          }
+        },
+        {
+          "work": "Orphica (ed. Abel 1885) — Argonautica proem, vv. 1-16",
+          "bookId": "69e7515d10ee9075bcdcd67f",
+          "pageNumber": 18,
+          "aligned": true,
+          "guard": 0.0594059405940594,
+          "cer": 0.004975124378109453,
+          "charAccuracy": 0.9950248756218906,
+          "refLen": 603,
+          "matched": 600,
+          "source": "el.wikisource proofread page-scan (Μεταγραφή:Orphica, ed. Eugenius Abel (1885).djvu; q3 pages 17-18 only)",
+          "source_url": "https://el.wikisource.org/wiki/Σελίδα:Orphica,_ed._Eugenius_Abel_(1885).djvu/17",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0040455,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9917081260364843,
+              "cer": 0.008291873963515755
+            }
+          }
+        },
+        {
+          "work": "Corpus Hermeticum, Poemander (ed. Parthey 1854) — CH I §17-18 with apparatus",
+          "bookId": "69938e765d28b693146d0f99",
+          "pageNumber": 24,
+          "aligned": true,
+          "guard": 0.09565217391304348,
+          "cer": 0.06049149338374291,
+          "charAccuracy": 0.9395085066162571,
+          "refLen": 529,
+          "matched": 497,
+          "source": "el.wikisource proofread page-scan (Μεταγραφή:Hermetis Trismegisti Poemander (1854).djvu; 28 pages proofread q3, main-text section only — apparatus block transcribed separately)",
+          "source_url": "https://el.wikisource.org/wiki/Σελίδα:Hermetis_Trismegisti_Poemander_(1854).djvu/33",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0039705,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9187145557655955,
+              "cer": 0.08128544423440454
+            }
+          }
+        }
+      ]
+    },
+    {
+      "language": "Latin",
+      "script": "latin",
+      "passages": 5,
+      "aligned": 5,
+      "refChars": 4755,
+      "charAccuracy": 0.9863301787592008,
+      "rows": [
+        {
+          "work": "Agricola, De re metallica (1556) — Liber X, silver cupellation furnace",
+          "bookId": "69b6a4c6080b19f98fd20d95",
+          "pageNumber": 404,
+          "aligned": true,
+          "guard": 0.005714285714285714,
+          "cer": 0.0010504201680672268,
+          "charAccuracy": 0.9989495798319328,
+          "refLen": 952,
+          "matched": 951,
+          "source": "la.wikisource proofread page-scan (Liber:Agricola De re metallica.djvu — Basel: Froben & Episcopius 1556, ia georgiiagricolae00agri; q3 incl. mid-book pages)",
+          "source_url": "https://la.wikisource.org/wiki/Pagina:Agricola_De_re_metallica.djvu/406",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0034725,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.9947478991596639,
+              "cer": 0.005252100840336135
+            }
+          }
+        },
+        {
+          "work": "Copernicus, De revolutionibus orbium coelestium (1543) — Book III, Spica observation at Frauenburg, fol. 64v",
+          "bookId": "69af0debbe5fc7f363546478",
+          "pageNumber": 160,
+          "aligned": true,
+          "guard": 0.07777777777777778,
+          "cer": 0.006926406926406926,
+          "charAccuracy": 0.9930735930735931,
+          "refLen": 1155,
+          "matched": 1147,
+          "source": "la.wikisource proofread page-scan (Liber:Nicolai Copernici torinensis De revolutionibus orbium coelestium.djvu, Year=1543; scan 142 = fol. 64b)",
+          "source_url": "https://la.wikisource.org/wiki/Pagina:Nicolai_Copernici_torinensis_De_revolutionibus_orbium_coelestium.djvu/142",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0040245,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.987012987012987,
+              "cer": 0.012987012987012988
+            }
+          }
+        },
+        {
+          "work": "Linnaeus, Systema naturae (1735, Leiden folio) — Observationes in Regnum Lapideum",
+          "bookId": "69b4cc84d5b6c3815e1a0fb2",
+          "pageNumber": 9,
+          "aligned": true,
+          "guard": 0.01875,
+          "cer": 0.0019801980198019802,
+          "charAccuracy": 0.998019801980198,
+          "refLen": 1010,
+          "matched": 1008,
+          "source": "la.wikisource proofread page-scan (Liber:Systema naturae 1735.djvu, q3 p.5, q4 pp.1-2)",
+          "source_url": "https://la.wikisource.org/wiki/Pagina:Systema_naturae_1735.djvu/5",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00648,
+              "consistency": 1,
+              "aligned": true,
+              "charAccuracy": 0.994059405940594,
+              "cer": 0.005940594059405941
+            }
+          }
+        },
+        {
+          "work": "Institoris & Sprenger, Malleus maleficarum (ed. II, before 14 Aug 1490) — pars I, quaestio 1 argumentation",
+          "bookId": "69bd9c796120d54bd036f318",
+          "pageNumber": 82,
+          "aligned": true,
+          "guard": 0.17687074829931973,
+          "cer": 0.05815279361459521,
+          "charAccuracy": 0.9418472063854048,
+          "refLen": 877,
+          "matched": 826,
+          "source": "la.wikisource proofread page-scan (Liber:Malleus maleficarum (ed. II) - pars prima.djvu, HAB Wolfenbüttel copy; 67 pages proofread q3)",
+          "source_url": "https://la.wikisource.org/wiki/Pagina:Malleus_maleficarum_(ed._II)_-_pars_prima.djvu/30",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.0034620000000000002,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        },
+        {
+          "work": "Praetorius, Syntagma Musicum Tomus I (1615) — de Magnificat in liturgia",
+          "bookId": "69ef2b4685daccce30f2e066",
+          "pageNumber": 131,
+          "aligned": true,
+          "guard": 0.061946902654867256,
+          "cer": 0.003942181340341655,
+          "charAccuracy": 0.9960578186596584,
+          "refLen": 761,
+          "matched": 758,
+          "source": "la.wikisource proofread page-scan (Liber:PRAETORIUS, Michael - Syntagma musicum 1.djvu, 488 pages proofread q3)",
+          "source_url": "https://la.wikisource.org/wiki/Pagina:PRAETORIUS,_Michael_-_Syntagma_musicum_1.djvu/120",
+          "models": {
+            "gemini-3.1-flash-lite": {
+              "runs": 3,
+              "refused": 0,
+              "costUsd": 0.00353325,
+              "consistency": 1,
+              "aligned": false,
+              "charAccuracy": null,
+              "cer": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

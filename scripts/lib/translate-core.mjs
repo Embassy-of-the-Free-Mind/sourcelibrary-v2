@@ -36,7 +36,11 @@ export const MODEL_LITE = 'gemini-3.1-flash-lite';
  * (Arabic-script) manuscripts — flash-lite garbles them into confident
  * nonsense (2026-07-18 Hikayat Tanah Hitu pilot). Malay must route to full
  * flash. A drifted copy of this list in translate-worker.mjs used to include
- * it, which is exactly why the copies were consolidated here.
+ * it, which is exactly why the copies were consolidated here. A second pair of
+ * drifted copies, on the OCR side, carried it until 2026-09-04 — batch OCR now
+ * reads this list too, via scripts/lib/ocr-routing.mjs. Do not paste this list
+ * anywhere; import it. Parity across all three surviving implementations is
+ * pinned by tests/unit/translate-core-parity.test.ts.
  */
 export const LATIN_SCRIPT_LANGUAGES = new Set([
   'english', 'en', 'eng',
@@ -308,8 +312,11 @@ export async function persistRefusedTranslation(db, page, text, reason, { jobId,
  * had [blank, digitizer-notice]. Kept equal to the TS canonical
  * SKIP_TRANSLATION_PAGE_TYPES in src/lib/types/prompts/defaults.ts — pinned by
  * tests/unit/translate-edge-cases.test.ts.
+ *
+ * `digitizer-insert` added #4685/#4507: this lane should stop attempting pages the
+ * meter (page-counts.mjs NEVER_TRANSLATED_PAGE_TYPES) no longer counts as translatable.
  */
-export const SKIP_TRANSLATION_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+export const SKIP_TRANSLATION_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert'];
 
 /**
  * Old OCR outputs (pre-pipeline) can describe a blank page without the page

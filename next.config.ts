@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
   // it explicitly in case static analysis ever misses it. The pdfkit data pin
   // is the same insurance for the externalized package's font metrics.
   outputFileTracingIncludes: {
+    // Gated static deck served from outside public/ (see src/app/talks/ai-case-study).
+    '/talks/ai-case-study/[[...path]]': ['./src/content/talks/ai-case-study/**'],
     '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
     '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
   },

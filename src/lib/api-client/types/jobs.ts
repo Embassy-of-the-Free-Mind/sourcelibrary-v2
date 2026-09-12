@@ -33,6 +33,7 @@ export interface JobLog {
   book_id?: string;
   book_title?: string;
   initiated_by?: string;
+  initiated_reason?: string;   // Why a human ran this by hand (#4336)
   created_at: string;
   updated_at: string;
   started_at?: string;
