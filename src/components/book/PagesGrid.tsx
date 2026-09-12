@@ -8,6 +8,19 @@ import { useEmbedHref } from '@/lib/EmbedContext';
 import { useLocale, useLocalePath } from '@/lib/i18n';
 import { BOOK_STRINGS } from '@/lib/book-i18n';
 
+/**
+ * Card body for a page that HAS no image (#4350) — corpus text editions,
+ * mostly. A static state, deliberately not the shimmer: the shimmer promises
+ * an image that is loading, and on these pages nothing will ever arrive.
+ */
+function TextPageCard({ natural }: { natural?: boolean }) {
+  return (
+    <div className={`${natural ? 'w-full aspect-[3/4]' : 'absolute inset-0'} flex items-center justify-center bg-stone-100`}>
+      <FileText className="w-5 h-5 text-stone-300" />
+    </div>
+  );
+}
+
 function PageImage({ src, alt, className, natural }: { src: string; alt: string; className?: string; natural?: boolean }) {
   const [loaded, setLoaded] = useState(false);
   const imgRef = useCallback((img: HTMLImageElement | null) => {
@@ -55,6 +68,12 @@ interface PagesGridProps {
   getImageUrl: (page: Page) => string | null;
   overviewHref?: string;
   subtitle?: string;
+  /**
+   * Stand-in images for pages that have none (#4350): CDLI tablet-witness
+   * photos on corpus editions, cycled across the cards. Serializable — this
+   * crosses the server→client boundary from the book page.
+   */
+  fallbackImages?: Array<{ src: string; alt: string }>;
 }
 
 export default function PagesGrid({
@@ -79,7 +98,10 @@ export default function PagesGrid({
   totalCount,
   overviewHref,
   subtitle,
+  fallbackImages,
 }: PagesGridProps) {
+  const fallbackFor = (index: number) =>
+    fallbackImages && fallbackImages.length > 0 ? fallbackImages[index % fallbackImages.length] : null;
   const embedHref = useEmbedHref();
   // The grid takes its language and its URL prefix from the page it is mounted
   // on: /es/book/… renders Spanish chrome and keeps /es on every page link.
@@ -113,6 +135,7 @@ export default function PagesGrid({
           {pages.slice(0, visibleCount).map((page, index) => {
             const isSelected = selectedPages.has(page.id);
             const imageUrl = getImageUrl(page);
+            const fallback = imageUrl ? null : fallbackFor(index);
             // Check updated_at since data is excluded from projection for performance
             const hasOcr = !!page.ocr?.updated_at;
             const hasTranslation = !!page.translation?.updated_at;
@@ -136,8 +159,10 @@ export default function PagesGrid({
                     }`} style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="pointer-events-none" />
+                    ) : fallback ? (
+                      <PageImage src={fallback.src} alt={fallback.alt} className="pointer-events-none" />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+                      <TextPageCard />
                     )}
                     {/* Drag handle indicator */}
                     <div className="absolute top-1 left-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
@@ -165,8 +190,10 @@ export default function PagesGrid({
                     }`} style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} />
+                    ) : fallback ? (
+                      <PageImage src={fallback.src} alt={fallback.alt} />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+                      <TextPageCard />
                     )}
                     {isSelected && (
                       <div className="absolute inset-0 bg-accent-gold/15 flex items-center justify-center">
@@ -192,8 +219,10 @@ export default function PagesGrid({
                   <div className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} natural className="group-hover:scale-105 transition-transform duration-200" />
+                    ) : fallback ? (
+                      <PageImage src={fallback.src} alt={fallback.alt} natural className="group-hover:scale-105 transition-transform duration-200" />
                     ) : (
-                      <div className="w-full aspect-[3/4] bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+                      <TextPageCard natural />
                     )}
                   </div>
                 </a>

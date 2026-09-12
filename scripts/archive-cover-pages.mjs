@@ -11,6 +11,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { ARCHIVABLE_SOURCES_REGEX } from './lib/archivable-sources.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { assertBookScopedKey } from './lib/r2-key.mjs';
 
@@ -52,7 +53,8 @@ await client.connect();
 const db = client.db('bookstore');
 
 // Archivable source pattern
-const ARCHIVABLE_RE = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/;
+// Shared with the archive route and the watchdog — see scripts/lib/archivable-sources.mjs.
+const ARCHIVABLE_RE = ARCHIVABLE_SOURCES_REGEX;
 
 // Find books with zero archived pages but with archivable source URLs
 let bookFilter = {
@@ -76,8 +78,8 @@ const pipeline = [
         { $match: {
           $expr: { $eq: ['$book_id', '$$bid'] },
           $or: [
-            { photo: { $regex: /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/ } },
-            { photo_original: { $regex: /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/ } },
+            { photo: { $regex: ARCHIVABLE_RE } },
+            { photo_original: { $regex: ARCHIVABLE_RE } },
           ],
         }},
         { $limit: 1 },

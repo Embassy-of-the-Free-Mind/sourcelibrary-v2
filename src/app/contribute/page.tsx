@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
+import { meteredReaderEnabled } from '@/lib/free-preview';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
@@ -369,8 +370,12 @@ export default async function ParticipatePage() {
       {/* Principles */}
       <footer className="border-t border-border-light">
         <div className="max-w-5xl mx-auto px-6 py-8">
+          {/* Metered reader (#4357): flips with the METERED_READER flag in
+              the same deploy — see the FAQ page's twin comment. */}
           <p className="text-muted text-sm leading-relaxed">
-            No paywalls, no login walls. AI translations are first drafts &mdash; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.
+            {meteredReaderEnabled()
+              ? <>Every book is freely browsable, and a free account unlocks full reading. AI translations are first drafts &mdash; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.</>
+              : <>No paywalls, no login walls. AI translations are first drafts &mdash; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.</>}
           </p>
         </div>
       </footer>

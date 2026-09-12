@@ -1,15 +1,21 @@
+import type { GenerativeModel } from '@google/generative-ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { withAuth } from '@/lib/auth-helpers';
+import { resolveHoldingCopy } from '@/lib/holding-library';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { getGeminiClient } from '@/lib/gemini-client';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/books/[id]/editions/front-matter', type: 'other' }));
 
 // POST /api/books/[id]/editions/front-matter - Generate front matter for an edition
 export const POST = withAuth(async (request, session, context) => {
@@ -65,7 +71,7 @@ export const POST = withAuth(async (request, session, context) => {
     const bookContext = buildBookContext(book, pages);
 
     // Generate introduction and methodology in parallel
-    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+    const model = genAI().getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const [introResult, methodResult] = await Promise.all([
       generateIntroduction(model, book, bookContext),
@@ -120,6 +126,10 @@ function buildBookContext(book: Book, pages: Page[]): string {
   if (book.publisher) parts.push(`Printer/Publisher: ${book.publisher}`);
   if (book.ustc_id) parts.push(`USTC catalog number: ${book.ustc_id}`);
   if (bookAny.is_first_translation) parts.push('NOTE: This is believed to be the FIRST English translation of this work.');
+  // The copy behind the scan (#4360): a DOI-minted edition must name whose
+  // physical object it reproduces, not just which host served the images.
+  const holdingCopy = resolveHoldingCopy(bookAny);
+  if (holdingCopy) parts.push(`Source copy: ${holdingCopy.holding_library}${holdingCopy.shelfmark ? `, shelfmark ${holdingCopy.shelfmark}` : ''}`);
   if (bookAny.ia_identifier) parts.push(`Source scan: Internet Archive (${bookAny.ia_identifier})`);
 
   // Categories / tradition
@@ -166,7 +176,7 @@ function buildBookContext(book: Book, pages: Page[]): string {
 }
 
 async function generateIntroduction(
-  model: ReturnType<typeof genAI.getGenerativeModel>,
+  model: GenerativeModel,
   book: Book,
   context: string
 ): Promise<string> {
@@ -208,7 +218,7 @@ Rules:
 }
 
 async function generateMethodology(
-  model: ReturnType<typeof genAI.getGenerativeModel>,
+  model: GenerativeModel,
   book: Book,
   pages: Page[]
 ): Promise<string> {
@@ -219,6 +229,7 @@ async function generateMethodology(
   });
 
   const bookAny = book as any;
+  const holdingCopy = resolveHoldingCopy(bookAny);
   const prompt = `Write a concise methodology section (400-600 words) for this AI-translated scholarly edition.
 
 **Facts about how this book was produced:**
@@ -227,7 +238,10 @@ async function generateMethodology(
 - Published: ${book.published}
 - Total pages processed: ${pages.length}
 - AI models used: ${Array.from(models).join(', ') || 'Google Gemini'}
-- Source scan: ${bookAny.ia_identifier ? `Internet Archive (${bookAny.ia_identifier})` : 'digitized page images from a European digital library'}
+- Source scan: ${[
+    holdingCopy ? `the copy held by ${holdingCopy.holding_library}${holdingCopy.shelfmark ? ` (shelfmark ${holdingCopy.shelfmark})` : ''}` : '',
+    bookAny.ia_identifier ? `Internet Archive (${bookAny.ia_identifier})` : '',
+  ].filter(Boolean).join(', via ') || 'digitized page images from a digital library'}
 
 **The actual pipeline (describe exactly this, no more):**
 1. Page images were imported from a digital library and archived

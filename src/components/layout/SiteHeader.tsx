@@ -31,6 +31,7 @@ function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
   const links: NavLink[] = [
     { label: t.collections, href: '/collections', activePrefix: '/collections' },
     { label: t.gallery, href: '/gallery' },
+    { label: t.identify, href: '/identify' },
     {
       label: t.browse,
       href: '/browse',

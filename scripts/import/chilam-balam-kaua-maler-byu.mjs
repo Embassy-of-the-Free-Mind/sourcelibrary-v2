@@ -126,10 +126,22 @@ const bookDoc = makeBookDoc({
     provider_name: 'Brigham Young University, L. Tom Perry Special Collections',
     source_url: ITEM_URL,
     identifier: `${COLLECTION}/${RECORD}`,
-    // BYU states "Public domain" in its own item metadata — a source claim, not our default.
-    license: 'Public domain',
+    // `IMAGE_LICENSES` is keyed by ID, so this has to be the id and not the
+    // display name — "Public domain" matched nothing and rendered raw. BYU
+    // asserts public domain in its own item metadata, so it is a SOURCE claim.
+    license: 'publicdomain',
     license_url: 'http://lib.byu.edu/about/copyright/special_collections.php',
-    contributing_library: 'Brigham Young University, Harold B. Lee Library (MSS 279, William Gates papers)',
+    // The rest of what `BibliographicInfo.tsx` actually renders. The holding
+    // institution is prose in `contributing_library`; the CLASSMARK belongs in
+    // `shelfmark`, and the manifest lets a reader check a leaf against the
+    // source institution's own copy. An importer can fill every field it knows
+    // about and still leave the record incomplete — what a record NEEDS is
+    // defined by the read path.
+    iiif_manifest: `${HOST}/iiif/2/${COLLECTION}:${RECORD}/manifest.json`,
+    digitized_by: 'Brigham Young University, L. Tom Perry Special Collections',
+    attribution: 'Courtesy of L. Tom Perry Special Collections, Harold B. Lee Library, Brigham Young University',
+    shelfmark: 'MSS 279, Series 9 Subseries 11 Subseries 2, box 75 folders 6-6A and box 75A folders 7-7A',
+    contributing_library: 'Brigham Young University, Harold B. Lee Library — L. Tom Perry Special Collections, MSS 279 (William Gates papers)',
     access_date: now,
   },
   page_count_source: 'contentdm_compound_object',

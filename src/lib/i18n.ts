@@ -28,6 +28,7 @@ export function useLocalePath(): (href: string) => string {
 export interface NavStrings {
   collections: string;
   gallery: string;
+  identify: string;
   browse: string;
   catalogue: string;
   works: string;
@@ -42,6 +43,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
   en: {
     collections: 'Collections',
     gallery: 'Gallery',
+    identify: 'Identify',
     browse: 'Browse',
     catalogue: 'Catalogue',
     works: 'Works',
@@ -54,6 +56,7 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
   es: {
     collections: 'Colecciones',
     gallery: 'Galería',
+    identify: 'Identificar',
     browse: 'Explorar',
     catalogue: 'Catálogo',
     works: 'Obras',
@@ -81,6 +84,7 @@ export interface FooterStrings {
   browseBooks: string;
   browseAZ: string;
   gallery: string;
+  identify: string;
   collections: string;
   search: string;
   // Kept reachable here after the header nav item was retired — the podcast is
@@ -192,6 +196,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     browseBooks: 'Browse Books',
     browseAZ: 'Browse A–Z',
     gallery: 'Gallery',
+    identify: 'Identify an Artwork',
     collections: 'Collections',
     search: 'Search',
     podcast: 'Podcast',
@@ -223,6 +228,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     browseBooks: 'Explorar libros',
     browseAZ: 'Índice A–Z',
     gallery: 'Galería',
+    identify: 'Identificar una obra',
     collections: 'Colecciones',
     search: 'Buscar',
     podcast: 'Pódcast',

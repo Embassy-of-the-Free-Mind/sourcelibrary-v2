@@ -24,6 +24,38 @@ const MEMBERSHIP_INCLUDES = [
   'Annual convening at the Bibliotheca Philosophica Hermetica in Amsterdam with project leadership and scholarly advisors',
 ];
 
+const STEWARDS_TIERS = [
+  {
+    label: 'Reader-Steward',
+    range: '$120 / yr',
+    audience: 'For individuals',
+    benefits: [
+      'Your name on the stewards roll',
+      'The annual stewardship report — what was preserved, translated, and opened this year',
+    ],
+  },
+  {
+    label: 'Institutional Steward',
+    range: '$10K / yr',
+    audience: 'For startups, institutes, and libraries',
+    benefits: [
+      'Named recognition on the library',
+      'The annual transparency report on corpus provenance and preservation',
+      'An annual roadmap briefing with project leadership',
+    ],
+  },
+  {
+    label: 'Corporate Steward',
+    range: '$25K – $50K / yr',
+    audience: 'For companies built on these sources',
+    benefits: [
+      'All of the above, plus an advisory voice on preservation and acquisition priorities',
+      'Named support of one acquisition or digitisation campaign each year',
+      'Invitation to the annual convening at the Bibliotheca Philosophica Hermetica',
+    ],
+  },
+];
+
 const SPONSORSHIP_EXAMPLES = [
   {
     label: 'Scholar-in-Residence',
@@ -279,6 +311,64 @@ export default async function SponsorsPage() {
             priorities, and permanent recognition for the company that helped pay to bring the
             corpus into the open.
           </p>
+        </div>
+      </section>
+
+      {/* Stewards Circle */}
+      <section className="bg-white border-b border-stone-200 py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3">
+            For everyone who depends on the sources
+          </div>
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-6 leading-tight font-display">
+            The Stewards Circle.
+          </h2>
+          <p className="text-lg text-stone-600 leading-relaxed mb-4 max-w-3xl">
+            A voluntary annual membership for stewarding the material itself — the way research
+            institutions fund arXiv and libraries fund HathiTrust, because the commons they
+            depend on should not run on goodwill alone. No licence, no exclusivity, no
+            procurement cycle: just an open commitment to keeping these sources preserved,
+            legible, and free to read.
+          </p>
+          <p className="text-sm text-stone-500 leading-relaxed mb-10 max-w-3xl">
+            Stewardship supports preservation and access. Data licensing is a separate
+            commercial agreement — membership neither includes nor discounts it.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {STEWARDS_TIERS.map((tier) => (
+              <div key={tier.label} className="bg-[#faf8f5] rounded-lg border border-stone-200 p-6 flex flex-col">
+                <div className="text-xs uppercase tracking-wider text-stone-500 mb-1">
+                  {tier.audience}
+                </div>
+                <div className="flex items-baseline justify-between gap-4 mb-4">
+                  <div className="font-semibold text-stone-900">{tier.label}</div>
+                  <div className="text-xs font-semibold text-[#9e4a3a] whitespace-nowrap">
+                    {tier.range}
+                  </div>
+                </div>
+                <ul className="space-y-2 text-sm text-stone-600 leading-relaxed mb-5">
+                  {tier.benefits.map((line) => (
+                    <li key={line} className="flex gap-2">
+                      <span className="text-[#9e4a3a] mt-1 shrink-0">▸</span>
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto">
+                  <OutboundLink
+                    href={mailto}
+                    surface="sponsors_stewards_circle"
+                    channel="email"
+                    intent="inquiry"
+                    className="inline-flex items-center text-sm font-semibold text-[#9e4a3a] hover:text-[#7e3a2e] transition-colors"
+                  >
+                    Become a steward →
+                  </OutboundLink>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

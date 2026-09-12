@@ -380,19 +380,23 @@ export default function TraceAlignment({ bookId, pageId, active, onStatusChange 
   return (
     <>
       {/* ::highlight() rules live here (not globals.css): Next's CSS processor
-          rejects the Custom Highlight API pseudo-element. Gold family from the
-          /blog/word-alignment demo; primary = clicked span, counterparts = the
-          aligned span in each other pane. */}
+          rejects the Custom Highlight API pseudo-element. Primary = clicked
+          span, counterparts = the aligned span in each other pane.
+
+          Blue, not gold. Gold is the editorial-note colour in the text
+          (NOTE_TAG_STYLES.note), so a gold trace highlight was indistinguishable
+          from an annotation — and tracing is a transient machine alignment, not
+          an editorial mark. Blue is used by nothing else in the reading panes. */}
       <style>{`
         ::highlight(${HIGHLIGHT_PRIMARY}) {
-          background-color: rgba(160, 120, 40, 0.22);
+          background-color: color-mix(in srgb, var(--trace-blue, #4a6fa5) 22%, transparent);
         }
+        /* The counterpart is distinguished by a stronger wash, not by an
+           underline as well. Underlining a whole sentence of translation on
+           top of a highlight was two marks doing one job. */
         ::highlight(${HIGHLIGHT_COUNTERPART}),
         ::highlight(${HIGHLIGHT_COUNTERPART_2}) {
-          background-color: rgba(160, 120, 40, 0.38);
-          text-decoration: underline;
-          text-decoration-color: rgba(160, 120, 40, 0.85);
-          text-decoration-thickness: 2px;
+          background-color: color-mix(in srgb, var(--trace-blue, #4a6fa5) 36%, transparent);
         }
       `}</style>
       {sheet && (

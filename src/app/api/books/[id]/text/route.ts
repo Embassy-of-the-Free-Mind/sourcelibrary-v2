@@ -9,8 +9,9 @@ import { isBookReadable } from '@/lib/book-access';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
-import { attributionBlock, attributionMeta, clientKeyFor, extractionRef } from '@/lib/bot-attribution';
+import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
 import { getTranslation } from '@/lib/page-translations';
+import { isMeteredAnonRequest } from '@/lib/metered-gate';
 
 // This route serves quotable page text (get_book_text tells agents to "copy
 // verbatim from the translation field"), so it MUST strip the AI editorial
@@ -119,9 +120,13 @@ export const GET = withApiAuth(async (
 
     const resolvedBookId = book.id || bookId;
 
-    // Bot gating: non-trusted bots get the first 20% of pages from any book
+    // Bot gating: non-trusted bots get the first 20% of pages from any book.
+    // When METERED_READER=1 the same clamp applies to anonymous humans
+    // (#4357) — this route is the highest-volume text egress and would
+    // otherwise hand the reader wall's content out the side door.
     const isBotRequest = isBot(request) && !(await isTrustedBot(request));
-    const botPageLimit = isBotRequest ? botMaxPage(book.pages_count || 0) : undefined;
+    const meteredAnon = !isBotRequest && (await isMeteredAnonRequest(request));
+    const botPageLimit = isBotRequest || meteredAnon ? botMaxPage(book.pages_count || 0) : undefined;
 
     // Provenance. Two layers, deliberately different in reach:
     //   - the INVISIBLE imprimatur goes on every page of every response (this
@@ -132,15 +137,32 @@ export const GET = withApiAuth(async (
     //     callers. Verified search crawlers, user-initiated assistant fetches,
     //     signed-in readers and key holders never see it, so indexing and
     //     ordinary reading are untouched.
-    // The ref ties a recovered passage to an extraction campaign; it is
-    // pseudonymous and recomputable from api_usage (see bot-attribution.ts).
-    const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date()) : undefined;
+    // The ref ties a recovered passage to its puller. Two flavors:
+    //   - bots get a pseudonymous monthly campaign ref (recomputable from
+    //     api_usage, see bot-attribution.ts);
+    //   - API-keyed callers get a STABLE key-derived ref (#4491): a key is
+    //     attribution by design, so keyed egress carries it in the invisible
+    //     colophon — identity upgrades the marking, it never adds visible
+    //     marks. Any response carrying a ref is served private/no-store
+    //     below, so one caller's ref can never be shared-cached to another.
+    const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date())
+      : identity.kind === 'apikey' && identity.apiKeyId ? keyRef(identity.apiKeyId)
+      : undefined;
     const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
     const bookSubject = {
       title: book.display_title || book.title,
       author: book.author,
       url: `https://sourcelibrary.org/book/${resolvedBookId}`,
     };
+
+    // Budget visibility headers: consumers pacing themselves need the numbers,
+    // not just the 429 (#4491 polish). `used` is the prior-24h count at check
+    // time — it does not include this request. limit -1 = unlimited tier, no
+    // headers.
+    const budgetHdrs: Record<string, string> =
+      budget.limit > 0
+        ? { 'X-Daily-Pages-Limit': String(budget.limit), 'X-Daily-Pages-Used': String(budget.used) }
+        : {};
 
     // Per-request page cap. The daily budget check above only sees the PRIOR 24h
     // total, so a single large from/to range (or an unbounded request) could serve
@@ -230,6 +252,7 @@ export const GET = withApiAuth(async (
             'Content-Type': 'text/plain; charset=utf-8',
             'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
             'X-Pages-Served': String(chapterPageCount),
+            ...budgetHdrs,
           },
         });
       }
@@ -258,6 +281,7 @@ export const GET = withApiAuth(async (
         headers: {
           'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
           'X-Pages-Served': String(chapterPageCount),
+            ...budgetHdrs,
         },
       });
     }
@@ -382,6 +406,7 @@ export const GET = withApiAuth(async (
           // to ordinary readers.
           'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
           'X-Pages-Served': String(pages.length),
+          ...budgetHdrs,
         },
       });
     }
@@ -502,8 +527,13 @@ export const GET = withApiAuth(async (
 
     return NextResponse.json(result, {
       headers: {
-        'Cache-Control': 'public, max-age=3600',
+        // Ref-carrying bodies are per-caller — a shared cache would serve one
+        // caller's ref to everyone. The other branches already guard this; the
+        // JSON branch was the one unconditional `public` left (latent since
+        // bot refs shipped).
+        'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
         'X-Pages-Served': String(pagesWithContent.length),
+        ...budgetHdrs,
       },
     });
   } catch (error) {

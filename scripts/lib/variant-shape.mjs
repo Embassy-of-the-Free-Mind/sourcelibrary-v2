@@ -25,6 +25,13 @@
  * The safe repair is to stop MATCHING on these, not to erase them.
  */
 
+/**
+ * How many distinct people must extend a bare form before it is unmatchable.
+ * Deliberately loose: a false positive costs one review line, a false negative
+ * costs a wrong byline on every book carrying the string.
+ */
+export const UNDERSPECIFIED_MIN_EXTENDERS = 5;
+
 /** Separators that mean "and then a different person". */
 const MULTI_SEP = /\s*[|;]\s*|\s+&\s+|\s*,\s+(?:and|et)\s+/;
 
@@ -93,16 +100,37 @@ const INSTITUTIONAL = /\b(collection|library|bibliot|museum|society|academy|inst
  * first even when a role word is also present ("A; B (trans.)" is both, and the
  * multi-person aspect is what makes it dangerous to match on).
  *
+ * Pass `opts.extendingPeople(variant)` — a function returning how many DISTINCT
+ * people in the corpus carry an author string extending this form — to enable the
+ * `underspecified` rule. Without it the classifier judges shape only, exactly as
+ * before, so existing callers are unaffected.
+ *
  * Returns { shape, matchable, people[] }.
- *   shape     multi_person | role_annotated | edition_annotated | overlong | clean
+ *   shape     multi_person | role_annotated | edition_annotated | overlong |
+ *             underspecified | clean
  *   matchable false when using this string as a lookup key can land on the
  *             wrong person — the property the identity layer actually needs
  *   people    for multi_person, the split parts, so a later pass can attach or
  *             mint them instead of discarding the information
  */
-export function classifyVariant(raw) {
+export function classifyVariant(raw, opts = {}) {
   const v = String(raw ?? '').trim();
   if (!v) return { shape: 'clean', matchable: false, people: [] };
+
+  // UNDERSPECIFIED — a bare forename. Shape alone cannot see this one: "Johannes"
+  // is a well-formed name and every other rule here calls it clean. What makes it
+  // unmatchable is the CORPUS, so the caller supplies the evidence — how many
+  // distinct people carry an author string extending this form. `jan-hus` carried
+  // the bare variant "Johannes" and thereby claimed 115 books by Chrysostom,
+  // Sacrobosco and Duns Scotus (#4313); nine more docs had the same defect and 75
+  // more books were mis-linked (#4318). Uniqueness is not validity — each of those
+  // strings matched exactly one doc, which is why the backfill trusted it.
+  // Measured separation: Johannes 77 distinct extenders, Thomas 67, Alexander 31
+  // vs real mononyms Aristoteles 1, Cicero 4, Boethius 5.
+  const extenders = opts.extendingPeople?.(v) ?? 0;
+  if (extenders >= UNDERSPECIFIED_MIN_EXTENDERS && !/[\s,]/.test(v)) {
+    return { shape: 'underspecified', matchable: false, people: [v], extenders };
+  }
 
   const parts = v.split(MULTI_SEP).map((s) => s.trim()).filter(Boolean);
   if (parts.length > 1) {

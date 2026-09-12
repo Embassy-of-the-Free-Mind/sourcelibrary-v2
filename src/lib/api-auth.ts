@@ -14,7 +14,8 @@
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { validateApiKey } from '@/lib/dataset/api-keys';
+import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
+import { API_LIMITS } from '@/lib/api-limits';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { logApiUsage } from '@/lib/api-usage';
 import type { ApiKeyDoc } from '@/lib/dataset/types';
@@ -42,8 +43,8 @@ export interface ApiAuthDecision {
 // browsing. Session 1,000/hr — generous for any human research session;
 // dropped from 5,000 after 16h of data showed the heaviest signed-in user
 // did 13 hits in 16h. Anyone hitting 1,000/hr is using a key anyway.
-const ANON_LIMIT_PER_HOUR = Number(process.env.API_ANON_LIMIT_PER_HOUR || 60);
-const SESSION_LIMIT_PER_HOUR = Number(process.env.API_SESSION_LIMIT_PER_HOUR || 1000);
+const ANON_LIMIT_PER_HOUR = Number(process.env.API_ANON_LIMIT_PER_HOUR || API_LIMITS.anon.requestsPerHour);
+const SESSION_LIMIT_PER_HOUR = Number(process.env.API_SESSION_LIMIT_PER_HOUR || API_LIMITS.session.requestsPerHour);
 
 // User-Agent substrings that get the verified-bot bypass (kind:'bot' → unlimited
 // budget + rate-limit exempt). Once API_AUTH_ENFORCE is on, this is a real
@@ -145,16 +146,25 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
   if (authHeader) {
     const keyDoc = await validateApiKey(authHeader);
     if (keyDoc) {
-      return {
-        allowed: true,
-        status: 200,
-        identity: {
-          kind: 'apikey',
-          apiKeyId: String((keyDoc as ApiKeyDoc)._id),
-          userId: keyDoc.user_id,
-          apiKeyTier: keyDoc.tier,
-        },
+      const identity: ApiIdentity = {
+        kind: 'apikey',
+        apiKeyId: String((keyDoc as ApiKeyDoc)._id),
+        userId: keyDoc.user_id,
+        apiKeyTier: keyDoc.tier,
       };
+      // Per-key requests/minute — the number every key carries and displays
+      // (#4366: previously written and shown but enforced nowhere).
+      const rpm = checkKeyRequestRate(keyDoc as ApiKeyDoc);
+      if (!rpm.allowed) {
+        return {
+          allowed: false,
+          status: 429,
+          retryAfter: rpm.retryAfter,
+          identity,
+          reason: 'key_rate_limit',
+        };
+      }
+      return { allowed: true, status: 200, identity };
     }
   }
 
@@ -170,6 +180,24 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
   // A verified-bot UA that fails rDNS confirmation (likely spoofed) falls
   // through to same-origin / anon below — it gets a normal cap, not unlimited.
   if (sameOrigin(request)) {
+    // Same-origin gets the generous session-level bucket, not a free pass —
+    // an Origin header is spoofable in server-to-server requests, and before
+    // this it removed the rate cap entirely (#4366). The limit is high enough
+    // that real browsers (even many behind one NAT) never feel it.
+    const ip = getClientIp(request);
+    const rl = checkRateLimit(
+      { name: 'api:origin', limit: SESSION_LIMIT_PER_HOUR, windowSeconds: 3600 },
+      ip,
+    );
+    if (!rl.allowed) {
+      return {
+        allowed: false,
+        status: 429,
+        retryAfter: rl.retryAfter,
+        identity: { kind: 'anon' },
+        reason: 'origin_rate_limit',
+      };
+    }
     return { allowed: true, status: 200, identity: { kind: 'anon' } };
   }
 
@@ -224,6 +252,18 @@ function buildSessionRateLimitBody(retryAfter?: number) {
   };
 }
 
+/** Body returned to a keyed caller who blew their tier's requests/minute. */
+function buildKeyRateLimitBody(retryAfter?: number) {
+  return {
+    error:
+      `Your API key's requests-per-minute limit was reached. Wait ${retryAfter ?? '?'}s and slow ` +
+      `your request rate — daily page budgets are unaffected. Higher rates come with paid tiers: ` +
+      `https://sourcelibrary.org/licensing.`,
+    next_steps: { upgrade: 'https://sourcelibrary.org/licensing' },
+    retry_after_seconds: retryAfter,
+  };
+}
+
 type RouteHandler<C = unknown> = (
   request: NextRequest,
   ctx: C,
@@ -243,7 +283,8 @@ export interface WithApiAuthOptions {
 }
 
 type RateLimitBody = ReturnType<typeof buildAnonRateLimitBody>
-  | ReturnType<typeof buildSessionRateLimitBody>;
+  | ReturnType<typeof buildSessionRateLimitBody>
+  | ReturnType<typeof buildKeyRateLimitBody>;
 
 /** JSON-RPC error envelope for MCP-style clients. */
 function buildJsonRpcError(httpStatus: number, body: RateLimitBody) {
@@ -275,6 +316,7 @@ export function withApiAuth<C = unknown>(
     if (!decision.allowed && enforce) {
       const httpBody =
         decision.status === 401 ? buildAnonRateLimitBody(decision.retryAfter)
+        : decision.reason === 'key_rate_limit' ? buildKeyRateLimitBody(decision.retryAfter)
         : buildSessionRateLimitBody(decision.retryAfter);
 
       const headers: Record<string, string> = {};

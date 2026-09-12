@@ -3,7 +3,7 @@
  * badge-verified-firsts.mjs — write the graded first_translation VERDICT for
  * two-stage-verified new firsts found by the #3026 inverse search, plus their
  * provenance attempt. It does NOT set the public is_first_translation boolean —
- * that stays the single job of reconcile-first-translation-flag.ts (run it
+ * that stays the single job of reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] (run it
  * after, scoped `--resolver=tier2_agent`, gated on Derek's sign-off).
  *
  * Each input row is a confirmed_first that survived adversarial ft-verify

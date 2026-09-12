@@ -7,7 +7,8 @@ import path from 'path';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { resolveLanguage } from '@/lib/resolve-language';
-import { checkDuplicate } from '@/lib/dedup';
+import { sourceFingerprint } from '@/lib/dedup';
+import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 
 /**
  * Import a book from a local directory
@@ -73,7 +74,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Edition-aware dedup. The old exact `{ title }` check blocked distinct
     // editions that share a title; checkDuplicate() lets a different year/volume
     // through while still catching true duplicates by source + title+author.
-    const dedupResult = await checkDuplicate(db, {
+    const gate = await acquisitionGate(db, {
       title,
       author,
       display_title,
@@ -81,14 +82,16 @@ export const POST = withCuratorAuth(async (request, session) => {
       ia_identifier,
       dublin_core,
       image_source,
-    });
-    if (dedupResult.isDuplicate) {
-      const best = dedupResult.matches[0];
+    }, { importer: 'api:local-directory' });
+    if (!gate.ok) {
+      const best = gate.matches[0];
       return NextResponse.json(
         {
-          error: `Book already exists (${best.matchType}): matches "${best.matchedTitle}"`,
-          existingId: best.matchedBookId,
-          matches: dedupResult.matches,
+          error: gate.message,
+          existingId: best?.matchedBookId ?? null,
+          reason: gate.reason,
+          evidence: gate.evidence,
+          matches: gate.matches,
         },
         { status: 409 }
       );
@@ -120,6 +123,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       ia_identifier: ia_identifier || null,
       dublin_core: dublin_core || null,
       image_source: image_source || null,
+      source_fingerprint: sourceFingerprint({ ia_identifier, dublin_core, image_source }),
+      source_fingerprints: gate.fingerprints,
       pageCount: pageFiles.length,
       pages_count: pageFiles.length,
       status: 'draft',
@@ -131,6 +136,9 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Classify original-vs-translation at import (issue #2395).
     applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
+    // The claim now points at the row it produced, so it stops being
+    // reclaimable and the acquisition ledger is joinable to `books`.
+    await confirmClaims(db, gate.fingerprints, bookIdStr);
 
     // Create pages
     const pageDocs = pageFiles.map((filename, index) => {

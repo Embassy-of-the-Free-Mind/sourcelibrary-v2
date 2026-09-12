@@ -15,7 +15,20 @@ set -uo pipefail
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 set -a; source .env.production.local; set +a
 
-W="node scripts/workers/archive-iiif-local.mjs --ignore-pause"
+# --any-status is NOT optional here, despite being a flag. Without it the worker
+# selects on `pipeline_auto.status: 'archiving'`, which matches the pipeline
+# QUEUE rather than the archive BACKLOG. Its own header records what that costs:
+# 21 books at 'archiving' while 5.07M pages across ~19,500 books sat unarchived,
+# so it reported "0 unarchived pages across 0 books" and idled.
+#
+# That was diagnosed and fixed in the SCRIPT on 2026-08-04 — and this caller was
+# never updated to pass the flag, so the fix has been inert ever since. Measured
+# 2026-08-27: every cycle in /tmp/archive-iiif-loop.log still reads
+# "0 unarchived pages across 0 books", while Hetzner was concurrently archiving
+# ~60,000 pages from the same providers.
+#
+# A fix in the callee that the caller does not opt into has not shipped.
+W="node scripts/workers/archive-iiif-local.mjs --ignore-pause --any-status"
 
 # Optional per-machine guard: skip cycles while on a metered link (phone hotspot,
 # in-flight wifi), where this daemon would otherwise eat the whole uplink. It is

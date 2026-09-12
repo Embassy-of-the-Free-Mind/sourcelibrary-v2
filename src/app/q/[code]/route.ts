@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { decodeShortlink } from '@/lib/shortlinks';
+import { mintCitationToken } from '@/lib/citation-token';
+import { meteredReaderEnabled } from '@/lib/free-preview';
+import { logShortlinkVisit } from '@/lib/shortlink-visit-log';
 import { Page } from '@/lib/types';
 
 interface RouteContext {
@@ -48,6 +51,18 @@ export async function GET(request: NextRequest, context: RouteContext) {
     const bookPath = (book?.slug as string) || bookId;
     const prefix = lang && Number(book?.[`pages_translated_${lang}`] || 0) > 0 ? `/${lang}` : '';
 
+    // Record the arrival (#2047). Deferred and timeout-bounded inside the
+    // logger, so the 302 below never waits on it. Both branches log: a
+    // shortlink whose page has vanished is still a share that was clicked, and
+    // the null target_page_id is how we find those.
+    logShortlinkVisit({
+      request,
+      code,
+      bookId,
+      pageNumber: pageNumber ?? null,
+      targetPageId: page?.id ?? null,
+    });
+
     if (!page) {
       // Redirect to book page if specific page not found
       return NextResponse.redirect(
@@ -56,9 +71,17 @@ export async function GET(request: NextRequest, context: RouteContext) {
       );
     }
 
+    // Metered reader (#4357): a citation must resolve even past the free
+    // sample, so the redirect carries a per-page capability token the
+    // page-content API honors for exactly this page (citation-token.ts).
+    // Only minted while metering is on — with the flag off the param would
+    // be inert noise on every shared URL.
+    const cite = meteredReaderEnabled() ? mintCitationToken(page.id) : null;
+    const citeSuffix = cite ? `?cite=${cite}` : '';
+
     // Redirect to the full page URL
     return NextResponse.redirect(
-      new URL(`${prefix}/book/${bookPath}/page/${page.id}`, request.url),
+      new URL(`${prefix}/book/${bookPath}/page/${page.id}${citeSuffix}`, request.url),
       { status: 302 }
     );
   } catch (error) {

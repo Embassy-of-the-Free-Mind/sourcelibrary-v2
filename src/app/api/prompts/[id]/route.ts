@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import type { Prompt } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
-import { promptContentHash } from '@/lib/prompts';
+import { promptContentHash, nextPromptVersion } from '@/lib/prompts';
 
 // Helper to extract variables from prompt text
 function extractVariables(text: string): string[] {
@@ -62,13 +62,13 @@ export const PATCH = withAuth(async (
       return NextResponse.json({ error: 'Prompt not found' }, { status: 404 });
     }
 
-    // Get the latest version for this prompt name
-    const latestVersion = await collection.findOne(
-      { name: existingPrompt.name },
-      { sort: { version: -1 } }
+    // Scoped to (type, name) and parsed, not `+ 1` on a raw field: the raw form
+    // turned `'v1'` into `'v11'` and a missing version into `NaN` (#3614).
+    const newVersion = await nextPromptVersion(
+      collection,
+      existingPrompt.type as string,
+      existingPrompt.name as string
     );
-
-    const newVersion = (latestVersion?.version || 0) + 1;
 
     // If setting as default, unset current default for this type
     if (setAsDefault) {

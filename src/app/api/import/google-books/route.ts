@@ -6,8 +6,8 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
-import { queuePreviewOcr } from '@/lib/preview-ocr';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
+import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { resolveLanguage, resolveDate, publishedToYear, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
@@ -96,14 +96,14 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     // Cross-source dedup check
-    const dedupResult = await checkDuplicate(db, {
+    const gate = await acquisitionGate(db, {
       title, author, display_title, ia_identifier, google_books_id, published,
       image_source: { provider: 'google_books', identifier: google_books_id, source_url: `https://books.google.com/books?id=${google_books_id}` },
-    });
-    if (dedupResult.isDuplicate) {
-      const best = dedupResult.matches[0];
+    }, { importer: 'api:google_books' });
+    if (!gate.ok) {
+      const best = gate.matches[0];
       return NextResponse.json(
-        { error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`, existingId: best.matchedBookId, matches: dedupResult.matches },
+        { error: gate.message, existingId: best?.matchedBookId ?? null, reason: gate.reason, evidence: gate.evidence, matches: gate.matches },
         { status: 409 }
       );
     }
@@ -217,6 +217,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       status: 'draft',
       hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ ia_identifier, google_books_id }),
+      source_fingerprints: gate.fingerprints,
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
       created_at: new Date(),
@@ -226,6 +227,9 @@ export const POST = withCuratorAuth(async (request, session) => {
     // Classify original-vs-translation at import (issue #2395).
     applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);
+    // The claim now points at the row it produced, so it stops being
+    // reclaimable and the acquisition ledger is joinable to `books`.
+    await confirmClaims(db, gate.fingerprints, bookIdStr);
 
     // Create pages
     const pageDocs = [];
@@ -247,9 +251,6 @@ export const POST = withCuratorAuth(async (request, session) => {
     }
 
     await db.collection('pages').insertMany(pageDocs);
-
-    // Queue preview OCR for early metadata enrichment (non-blocking)
-    queuePreviewOcr(bookIdStr, title).catch(() => {});
 
     // Audit log (non-blocking)
     logAuditEvent({

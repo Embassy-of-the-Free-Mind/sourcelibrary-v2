@@ -84,11 +84,15 @@ function isProxyableUrl(url: string): boolean {
  *
  * Until 2026-08-21 it did not. `media.getty.edu` was absent from
  * `CSP_IMG_HOSTS`, so all 2,506 Florentine Codex pages resolved to a Getty
- * `image_thumb` that every browser refused — the page grid, the cover picker
- * and the reader itself showed a broken image, while curl got a clean 200 from
- * every one of those URLs. The book-cover resolver (`getBookThumbnailUrl`) had
- * screened against this same list since 2026-08-04; the page resolver never did,
- * and an R2 thumbnail that would have worked sat one field away the whole time.
+ * `image_thumb` that every browser refused — the page grid and the cover picker
+ * rendered nothing — while curl got a clean 200 from every one of those URLs.
+ * The book-cover resolver (`getBookThumbnailUrl`) had screened against this same
+ * list since 2026-08-04; the page resolver never did, and an R2 thumbnail that
+ * would have worked sat one field away the whole time.
+ *
+ * Note the blast radius is per SIZE TIER, not per book: those same pages carry
+ * `display_photo` on R2, so the reader's main image was never affected. A host
+ * can be missing for one tier and present for another.
  *
  * But not every consumer here is a browser. Exports (PDF/EPUB/ZIP) hand the
  * result to a server-side fetcher, where CSP does not apply — so a URL the
@@ -147,14 +151,20 @@ function proxyUrl(
 }
 
 /**
- * Derive a pre-sized R2 variant from a canonical `pages/{bookId}/{NNNN}` photo
- * URL (handles the `sp` prefix for new-era split halves). Returns null if the
- * photo isn't a canonical pages/ URL.
+ * Derive a pre-sized R2 variant from a canonical `pages/{bookId}/…` photo URL.
+ * Returns null if the photo isn't a canonical pages/ URL.
+ *
+ * Two split-half spellings exist and BOTH must match, or the page falls through
+ * to the /api/image proxy and we pay sharp compute for a file R2 already holds:
+ *   - `sp0014`            — sp + page number
+ *   - `sp69f6a12d…aa2`    — sp + the page's 24-char hex id, which the older
+ *                           `\d{4,}` tail could never match. That silently sent
+ *                           every page of a split book through the proxy.
  */
 function deriveVariant(photo: string | null | undefined, size: 'display' | 'thumb'): string | null {
   if (!photo) return null;
   const m = photo.match(
-    /^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(-full)?\.jpg$/,
+    /^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[0-9a-f]{16,}|(?:sp[a-z0-9]*-?)?\d{4,}))(-full)?\.jpg$/,
   );
   if (!m) return null;
   return size === 'thumb' ? `${m[1]}-thumb.jpg` : `${m[1]}.jpg`;
@@ -206,6 +216,44 @@ function cropRegion(page: PageImageFields): { xStart?: number; xEnd?: number } |
  * Resolve a display- or thumb-sized URL. Prefers a pre-sized R2 variant, then an
  * IIIF-native resize, then the /api/image proxy. Always browser-safe and bounded.
  */
+/**
+ * Identity of the page-image an R2 URL names, or null when the URL does not
+ * follow that convention (IIIF, external hosts, anything unparseable).
+ *
+ * Normalises the two things that make one page look like two URLs:
+ *   - variant suffix — `x.jpg`, `x-thumb.jpg`, `x-full.jpg` are one image
+ *   - zero padding across path families — `/archived/{b}/5.jpg` is the same
+ *     page as `/pages/{b}/0005.jpg`
+ */
+function r2PageIdentity(url: string): string | null {
+  const q = url.split('?')[0];
+  if (!q.includes('images.sourcelibrary.org/')) return null;
+  const file = (q.split('/').pop() || '').replace(/-(?:thumb|full|card)(?=\.[a-z0-9]+$)/i, '').replace(/\.[a-z0-9]+$/i, '');
+  if (!file) return null;
+  const book = q.match(/\/(?:pages|archived|thumbnails|cropped)\/([^/]+)\//)?.[1];
+  if (!book) return null;
+  // Numeric page filenames compare by value so 5 and 0005 agree; named ones
+  // (`sp<id>`, a cropped image id) compare literally.
+  return `${book}/${/^\d+$/.test(file) ? String(parseInt(file, 10)) : file}`;
+}
+
+/**
+ * Is `variant` a resize of `source`, as far as we can tell?
+ *
+ * PERMISSIVE BY DESIGN. It only answers false when both URLs follow the R2
+ * page convention and name demonstrably different pages. Every other case —
+ * an IIIF URL (whose filename is always `default.jpg`, the size living in the
+ * path), an external host, anything unparseable — returns true and preserves
+ * the pre-existing behaviour. The point is to catch one specific corruption,
+ * not to start second-guessing every stored variant.
+ */
+function variantMatchesSource(variant: string, source: string | null): boolean {
+  if (!source) return true;
+  const a = r2PageIdentity(variant), b = r2PageIdentity(source);
+  if (a === null || b === null) return true;
+  return a === b;
+}
+
 function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string | null {
   const width = size === 'thumb' ? THUMB_WIDTH : DISPLAY_WIDTH;
   const quality = size === 'thumb' ? 60 : 80;
@@ -222,13 +270,27 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
   const candidates = new SizedCandidates();
 
   // (A) Pre-sized R2 variant — only when it matches the *displayed* content.
-  // Skip for old-era split pages: their display_photo / image_thumb are resizes
-  // of the UNcropped image, so using them would show more than the cropped half.
+  //
+  // Two ways a stored variant can be of the WRONG content, both on split pages:
+  //   - old era: the half is `cropped_photo`, and display_photo / image_thumb
+  //     are resizes of the uncropped image.
+  //   - new era: the half is `photo` (`…/sp{id}.jpg`), but display_photo was
+  //     never repointed and still resizes the whole SPREAD. `hasCroppedHalf`
+  //     does not see this one — there is no cropped_photo to look at — so a
+  //     reader got the neighbouring page's image next to this page's OCR
+  //     (reported 2026-08-29 on an encyclopedic outline… p.15, whose scan panel
+  //     showed an introduction spread beside title-page text).
+  //
+  // So the test is not "is this page split" but "is this stored variant a
+  // resize of the source we are actually going to show". `sharesSourceStem`
+  // answers that directly, which also covers any future era.
   if (!hasCroppedHalf) {
-    if (size === 'display' && candidates.accept(page.display_photo)) return page.display_photo;
+    const source = getPageSource(page);
+    const usable = (variant?: string | null) => !!variant && variantMatchesSource(variant, source);
+    if (size === 'display' && usable(page.display_photo) && candidates.accept(page.display_photo)) return page.display_photo;
     if (size === 'thumb') {
-      if (candidates.accept(page.image_thumb)) return page.image_thumb;
-      if (candidates.accept(page.thumbnail_blob)) return page.thumbnail_blob;
+      if (usable(page.image_thumb) && candidates.accept(page.image_thumb)) return page.image_thumb;
+      if (usable(page.thumbnail_blob) && candidates.accept(page.thumbnail_blob)) return page.thumbnail_blob;
     }
     const derived = deriveVariant(page.photo, size);
     if (derived) return derived;

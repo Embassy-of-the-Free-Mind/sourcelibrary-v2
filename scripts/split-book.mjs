@@ -20,6 +20,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { extractPageType } from './lib/ocr-result-parse.mjs';
 
 // --- Config ---
 const OVERLAP = 0.03;        // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters)
@@ -92,14 +93,11 @@ async function uploadFullImage(buf, bookId, pageNum) {
   return { fullUrl, dispUrl, thumbUrl, width: fm.width, height: fm.height };
 }
 
-// --- Page type extraction ---
-const VALID_PAGE_TYPES = new Set(['title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index', 'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text', 'digitizer-insert']);
-function extractPageType(text) {
-  const m = text?.match(/<page-type>([\s\S]*?)<\/page-type>/i);
-  if (!m) return undefined;
-  const t = m[1].trim().toLowerCase();
-  return VALID_PAGE_TYPES.has(t) ? t : undefined;
-}
+// --- Page type extraction: shared via scripts/lib/ocr-result-parse.mjs (#4443) ---
+// Validating, as this script's private copy always did — but against the current
+// vocabulary rather than the 15-value set it had frozen at (which predated
+// `exlibris` and `bookplate`). The shared function is equally null-tolerant,
+// which matters here: `p.ocr` is null on an un-OCR'd page.
 
 // --- Fetch image with retries ---
 async function fetchImage(url) {

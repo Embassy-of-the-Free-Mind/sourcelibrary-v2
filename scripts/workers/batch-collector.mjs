@@ -19,7 +19,7 @@
 import { MongoClient } from 'mongodb';
 
 import { GoogleGenAI } from '@google/genai';
-import { completeBatchUsage, sumBatchResponseUsage } from './lib/supabase-usage-logger.mjs';
+import { completeBatchUsage, sumBatchResponseUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
@@ -27,6 +27,8 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
+import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
+import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -89,55 +91,12 @@ function calculateCost(model, inputTokens, outputTokens) {
   return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
 }
 
-// ── OCR metadata extraction (mirrors defaults.ts) ──
+// ── OCR metadata extraction: shared with defaults.ts via scripts/lib/ocr-result-parse.mjs (#4443) ──
 
-function extractPageType(text) {
-  const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
-  if (!match) return null;
-  const type = match[1].toLowerCase().trim();
-  const valid = new Set([
-    'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
-    'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
-  ]);
-  return valid.has(type) ? type : null;
-}
-
-function extractColumns(text) {
-  const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
-  if (!match) return null;
-  const n = parseInt(match[1], 10);
-  return n >= 2 ? n : null;
-}
-
-function parseDetectedImages(text) {
-  const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
-  if (!match) return [];
-  const imagesText = match[1].trim();
-  const images = [];
-  const imgRegex = /<image>([\s\S]*?)<\/image>/g;
-  let imgMatch;
-  while ((imgMatch = imgRegex.exec(imagesText)) !== null) {
-    const imgContent = imgMatch[1];
-    const getTag = (tag) => {
-      const m = imgContent.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
-      return m ? m[1].trim() : null;
-    };
-    const bbox = getTag('bbox');
-    const image = {
-      type: getTag('type') || 'illustration',
-      description: getTag('description') || '',
-      subject: getTag('subject')?.split(',').map(s => s.trim()).filter(Boolean) || [],
-    };
-    if (bbox) {
-      const coords = bbox.split(',').map(Number);
-      if (coords.length === 4) {
-        image.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
-      }
-    }
-    images.push(image);
-  }
-  return images;
-}
+// `parseDetectedImages` now comes from scripts/lib/ocr-result-parse.mjs (#4456).
+// The local copy walked `<image>` sub-tags, a shape no OCR prompt here has ever
+// asked for, so it returned [] on every page and the `length > 0` guard at the
+// write site turned that into silence.
 
 /**
  * Parse image extraction response — expects a JSON array of detected images.
@@ -176,19 +135,6 @@ function normalizeBbox(raw) {
     };
   }
   return { x, y, width, height };
-}
-
-function parseMultiPageOcr(text) {
-  const results = new Map();
-  const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    const pageId = match[1];
-    let content = match[2].trim();
-    content = content.replace(/<\/page>\s*$/, '').trim();
-    if (content) results.set(pageId, content);
-  }
-  return results;
 }
 
 // ── Gemini API ──
@@ -365,6 +311,32 @@ async function processOneJob(db, job) {
     let recitationCount = 0;
     const recitationPageIds = []; // Track page IDs for per-page recitation stamping (single-page path only)
 
+    // Why pages failed, tallied by reason.
+    //
+    // A batch can come back JOB_STATE_SUCCEEDED with most of its pages unsaved,
+    // and until now the only record was a failed_pages number — which is enough
+    // to know something went wrong and never enough to find out what. Lister
+    // 1894 lost 80% of its pages this way, twice, and the cause is still
+    // unknown: not the recitation filter, not image size, dimensions, format or
+    // payload size (all four checked and refuted). The responses that would say
+    // are discarded here, so record the shape of them.
+    const failReasons = {};
+    const noteFail = (reason) => { failReasons[reason] = (failReasons[reason] || 0) + 1; };
+
+    // Pages that failed for a reason OTHER than recitation, and the reason.
+    //
+    // RECITATION has had a give-up counter since #2065; nothing else did. A page
+    // that fails deterministically for any other reason was therefore re-selected
+    // every cycle forever: page 620 of the Tabiena Summa (book 6a3a3b98862ce9a5b4d759b3)
+    // was submitted as its own single-page job 197 times between 2026-09-04 and
+    // 2026-09-06, every one of them landing on the `> HALLUCINATION_LIMIT` branch
+    // below, which discarded the response and stamped nothing. `fail_reasons: {}`
+    // on 197 batch_jobs rows is the fingerprint — failCount incremented, no reason
+    // recorded, no page state changed, so the next pass could not tell it had ever
+    // been tried. Only pages we can name are stamped: in the multi-page branch one
+    // response covers N pages and a failure there has no single pageId to blame.
+    const failedPageIds = new Map(); // pageId -> reason
+
     // Job totals come from the RESPONSES, not from the pages we end up saving
     // (#3452) — Gemini bills every response, including the ones we discard.
     const { inputTokens: totalInputTokens, outputTokens: totalOutputTokens } =
@@ -372,12 +344,12 @@ async function processOneJob(db, job) {
 
     if (isMultiPage && job.type === 'ocr') {
       for (const r of responses) {
-        if (r.error) { failCount++; continue; }
+        if (r.error) { failCount++; noteFail(`error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`); continue; }
         const candidate = r.response?.candidates?.[0];
-        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
+        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; noteFail('RECITATION'); continue; }
         const text = candidate?.content?.parts?.[0]?.text;
-        if (!text) { failCount++; continue; }
-        const parsed = parseMultiPageOcr(text);
+        if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
+        const parsed = parseMultiPageOcr(text, { lenient: true });
         // One response covers N pages and reports one usageMetadata — split it
         // evenly for the per-page stamp so pages.ocr.input_tokens doesn't claim
         // the whole request's tokens N times over.
@@ -385,7 +357,7 @@ async function processOneJob(db, job) {
         const share = parsed.length || 1;
         const pageUsage = usage ? {
           promptTokenCount: Math.round((usage.promptTokenCount || 0) / share),
-          candidatesTokenCount: Math.round((usage.candidatesTokenCount || 0) / share),
+          candidatesTokenCount: Math.round(outputTokensFrom(usage) / share),
         } : undefined;
         for (const [pageId, ocrText] of parsed) {
           pageResults.push({ pageId, text: ocrText, usage: pageUsage });
@@ -400,17 +372,26 @@ async function processOneJob(db, job) {
           // Index fallback caused cross-book contamination (2026-03-24 incident).
           console.warn(`  SKIP: response ${idx} missing metadata.key (book: ${job.book_id})`);
           failCount++;
+          noteFail('missing-metadata-key');
           continue;
         }
         const candidate = r.response?.candidates?.[0];
         if (candidate?.finishReason === 'RECITATION') {
           recitationCount++;
           failCount++;
+          noteFail('RECITATION');
           if (job.type === 'ocr') recitationPageIds.push(pageId); // Stamp page-level tracking
           continue;
         }
+        if (r.error) {
+          const reason = `error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`;
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
+        }
         const text = candidate?.content?.parts?.[0]?.text;
-        if (!text) { failCount++; continue; }
+        if (!text) {
+          const reason = `no-text:${candidate?.finishReason || 'no-candidate'}`;
+          failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
+        }
         pageResults.push({ pageId, text, usage: r.response?.usageMetadata });
       }
     }
@@ -525,6 +506,25 @@ async function processOneJob(db, job) {
       }
     }
 
+    // ── TeX-Greek repair (#4580) ────────────────────────────────────────────
+    // The model sometimes spells a Greek word out as LaTeX math rather than
+    // transcribing it: \dot{\alpha}\pi\text{o}\tau... for ἀποτελέσματος. That
+    // markup is a lossless encoding of a correct reading, so unlike the blank-page
+    // guard above this REPAIRS rather than refuses — the model read the word, it
+    // just answered in the wrong alphabet. Applies to translations too: the TeX
+    // was observed surviving into English output. Only fully-decodable spans are
+    // touched, so real equations pass through untouched.
+    let texRepairedPages = 0, texRepairedSpans = 0;
+    if (texGreekRepairEnabled()) {
+      for (const r of pageResults) {
+        const { text: fixed, replacements } = repairTexGreek(r.text);
+        if (replacements > 0) { r.text = fixed; texRepairedPages++; texRepairedSpans += replacements; }
+      }
+      if (texRepairedPages) {
+        console.log(`  TEX-GREEK: decoded ${texRepairedSpans} LaTeX span(s) to Unicode Greek across ${texRepairedPages} page(s) (#4580)`);
+      }
+    }
+
     for (const { pageId, text, usage } of pageResults) {
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (humanEditedIds.has(pageId)) {
@@ -532,11 +532,19 @@ async function processOneJob(db, job) {
         protectedCount++;
         continue;
       }
-      if (text.length > HALLUCINATION_LIMIT) { failCount++; continue; }
+      // A runaway generation — the model looped instead of reading. Deterministic
+      // for a given page+model, so without the stamp below this page comes straight
+      // back on the next pass (see failedPageIds above).
+      if (text.length > HALLUCINATION_LIMIT) {
+        failCount++;
+        noteFail('over-hallucination-limit');
+        failedPageIds.set(pageId, 'over-hallucination-limit');
+        continue;
+      }
 
       // Per-page stamp only — the job totals are summed per response above.
       const inputTokens = usage?.promptTokenCount || 0;
-      const outputTokens = usage?.candidatesTokenCount || 0;
+      const outputTokens = outputTokensFrom(usage);
 
       if (job.type === 'ocr') {
         // Refused by the blank-page guard: keep the evidence, write no OCR.
@@ -553,6 +561,10 @@ async function processOneJob(db, job) {
           blankRefusedCount++;
           continue;
         }
+        // Validating, as this collector's private copy always did — but against
+        // the current vocabulary rather than the 14-value set it had frozen at.
+        // That set had lost `digitizer-insert`, so this collector could not
+        // record the one page type the digitizer guards downstream read (#4443).
         const pageType = extractPageType(text);
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
@@ -563,7 +575,11 @@ async function processOneJob(db, job) {
           'ocr.updated_at': now,
           'ocr.model': job.model,
           'ocr.language': job.language,
-          'ocr.source': 'batch_api',
+          // Submitters may claim a narrower provenance label than "some batch".
+          // Phase 1.5 preview pools stamp `pipeline_preview` so the measurement
+          // stack can still segment previews from full passes now that both
+          // arrive through the Batch API (.claude/docs/data-provenance.md).
+          'ocr.source': job.ocr_source || 'batch_api',
           'ocr.prompt_version': job.prompt_version || 'v5.2026-02',
           'ocr.prompt_id': job.prompt_id,
           'ocr.prompt_hash': job.prompt_hash,
@@ -583,7 +599,19 @@ async function processOneJob(db, job) {
         if (columns) setObj.columns = columns;
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 
-        bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
+        // A page that reads clears its failure history: the counter below must
+        // measure CONSECUTIVE failures, or an intermittent page accumulates
+        // strikes over months and eventually blocks itself for no reason.
+        bulkOps.push({
+          updateOne: {
+            filter: { id: pageId },
+            update: {
+              $set: setObj,
+              $unset: { 'ocr.fail_count': '', 'ocr.fail_reason': '', 'ocr.fail_blocked': '',
+                        'ocr.fail_blocked_at': '', 'ocr.fail_blocked_model': '' },
+            },
+          },
+        });
       } else if (job.type === 'image_extraction') {
         // Parse JSON array of detected images from Gemini response
         const parsed = parseImageExtractionResponse(text);
@@ -735,6 +763,50 @@ async function processOneJob(db, job) {
       }
     }
 
+    // ── Per-page give-up for every failure class that is not RECITATION ──
+    // Same shape as the recitation stamp above (count, timestamp, blocked flag at
+    // N=3) and read by the same page-selection queries. Kept as its own field
+    // rather than folded into recitation_count because the two mean different
+    // things to a human reading the page: one is a copyright refusal, the other is
+    // "we tried three times and could not get a usable read".
+    if (failedPageIds.size > 0 && job.type === 'ocr') {
+      const OCR_FAIL_BLOCK_THRESHOLD = 3;
+      const failNow = new Date();
+      const failOps = [...failedPageIds].map(([pageId, reason]) => ({
+        updateOne: {
+          filter: { id: pageId },
+          update: [
+            { $set: { ocr: { $cond: { if: { $eq: ['$ocr', null] }, then: {}, else: '$ocr' } } } },
+            {
+              $set: {
+                'ocr.fail_count': { $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] },
+                'ocr.fail_reason': reason,
+                'ocr.fail_blocked': {
+                  $gte: [{ $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] }, OCR_FAIL_BLOCK_THRESHOLD],
+                },
+                // WHICH model gave up. The block is scoped to it, so switching
+                // models reopens the page instead of stranding it (#4674).
+                'ocr.fail_blocked_model': job.model ?? null,
+                'ocr.fail_blocked_at': {
+                  $cond: {
+                    if: { $gte: [{ $add: [{ $ifNull: ['$ocr.fail_count', 0] }, 1] }, OCR_FAIL_BLOCK_THRESHOLD] },
+                    then: failNow,
+                    else: { $ifNull: ['$ocr.fail_blocked_at', null] },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      }));
+      try {
+        await db.collection('pages').bulkWrite(failOps, { ordered: false });
+        console.log(`  Stamped OCR failure tracking on ${failOps.length} page(s) (book: ${job.book_id})`);
+      } catch (failErr) {
+        console.error(`  Failed to stamp OCR failure tracking: ${failErr.message}`);
+      }
+    }
+
     // Update batch_jobs status — mark as 'failed' if zero pages saved
     // (pages skipped by the human-edit guard count as handled, not failed)
     // Pages refused by the blank-page guard (#4149) are HANDLED, not failed —
@@ -757,6 +829,7 @@ async function processOneJob(db, job) {
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
+          ...(failCount > 0 ? { fail_reasons: failReasons } : {}),
           ...(protectedCount > 0 && { protected_pages: protectedCount }),
           ...(blankRefusedCount > 0 && { blank_refused_pages: blankRefusedCount }),
           results_collected: true,

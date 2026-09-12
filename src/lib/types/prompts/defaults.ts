@@ -5,18 +5,74 @@ import { VALID_IMAGE_TYPES } from "../../gallery-image-types";
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
 export const PROMPT_VERSION = 'v6.1.2026-05';
 
-const VALID_PAGE_TYPES = new Set([
+/**
+ * Page types the OCR prompt offers the model, in the order the prompt lists them.
+ *
+ * THIS IS THE SOURCE OF TRUTH FOR THE PROMPT'S OWN `One of:` LINE — that line is
+ * interpolated from this array in `DEFAULT_PROMPTS.ocr` below, not written out a
+ * second time. It used to be written out, and the two halves drifted twice in
+ * opposite directions: #3591 was a reader branch for a value the prompt could not
+ * produce, and #4455 was the inverse — the prompt was widened with
+ * `musical-score`, `table` and `cover`, `VALID_PAGE_TYPES` was not, and
+ * `extractPageType` dropped all three on the floor between the model and the
+ * database. A value can no longer be offered without being accepted.
+ *
+ * Adding one here changes what the model is asked for corpus-wide: give it a
+ * `Use "<type>" when …` line in the prompt too (asserted by
+ * `tests/unit/page-type-vocabulary.test.ts`), and bump `PROMPT_VERSION`.
+ */
+export const PROMPT_PAGE_TYPES = [
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
-  'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
-  'digitizer-insert', 'exlibris', 'bookplate',
+  'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map',
+  'musical-score', 'table', 'cover', 'text', 'digitizer-insert', 'exlibris',
+] as const;
+
+/**
+ * Accepted from the model, but deliberately NOT offered by the current prompt.
+ *
+ * Screening happens on re-parses of OCR text we already stored, so a value an
+ * older prompt produced has to survive one — dropping it would silently retype a
+ * real page to nothing. Both of these are also read by live code paths:
+ *
+ *   bookplate        — the pre-`exlibris` name for an ownership plate. Read by
+ *                      SKIP_TRANSLATION_PAGE_TYPES / NEVER_TRANSLATED_PAGE_TYPES.
+ *   digitizer-notice — written by the pipeline's digitizer detection and
+ *                      `scripts/maintenance/backfill-digitizer-pages.mjs`, not by
+ *                      the OCR prompt. Read by SKIP_TRANSLATION_PAGE_TYPES and by
+ *                      `cover-scoring` (a -90 penalty).
+ *
+ * Nothing should be added here to work around a prompt gap — that is what #4455
+ * was. This list is for values the prompt has stopped asking for.
+ *
+ * NOT here, deliberately: `archived-spread` (176,548 pages as of 2026-09-07).
+ * `split-book.mjs` writes it directly onto the pre-split spread so the original
+ * stays recoverable, and a dozen read paths filter on it. It is a *writer's*
+ * label, never a model answer — the model must not be able to type a live page
+ * `archived-spread`, because that would hide it from the reader. Same for
+ * `scanner_metadata` (see `scripts/lib/cover-write.mjs`). Script-written page
+ * types are not part of this vocabulary, which screens model output only.
+ */
+export const LEGACY_PAGE_TYPES = ['bookplate', 'digitizer-notice'] as const;
+
+/**
+ * Page-type vocabulary accepted from the model. Derived, never hand-listed.
+ *
+ * Exported so the scripts-side twin (`scripts/lib/ocr-result-parse.mjs`) can be
+ * pinned against it — six scripts each carried a private, separately-drifted copy
+ * of this set until #4443.
+ */
+export const VALID_PAGE_TYPES: ReadonlySet<string> = new Set<string>([
+  ...PROMPT_PAGE_TYPES,
+  ...LEGACY_PAGE_TYPES,
 ]);
 
 // Page types that should be skipped during translation — no meaningful text content
 // (ex-libris/bookplates are ownership marks, not book content)
 // Keep equal to SKIP_TRANSLATION_PAGE_TYPES in scripts/lib/translate-core.mjs
 // (the scripts-side canonical) — pinned by tests/unit/translate-edge-cases.test.ts.
+// `digitizer-insert` added #4685/#4507: scanning-service boilerplate, never book content.
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'exlibris', 'bookplate', 'digitizer-notice',
+  'blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert',
 ];
 
 // Page types hidden from the reader navigation (still accessible via direct URL)
@@ -27,17 +83,34 @@ export const IMAGE_CANDIDATE_PAGE_TYPES = [
   'illustration', 'diagram', 'map', 'frontispiece', 'mixed',
 ];
 
-/** Extract <page-type> from OCR text. Returns undefined if not found or invalid. */
+/**
+ * Extract <page-type> from OCR text. Returns undefined if not found or invalid.
+ *
+ * There is no longer a `validate: false` escape hatch. It existed for exactly one
+ * reason (#4443): four batch collectors screened nothing, and screening them
+ * would have discarded `musical-score` / `table` / `cover` — real, prompt-
+ * sanctioned answers that `VALID_PAGE_TYPES` had simply never been widened to
+ * include. Now that the accepted set is derived from the prompt's own list, an
+ * unrecognised value is a genuine mis-answer rather than a vocabulary gap, and
+ * storing it raw is how 99 gallery rows came to hold free model text (#3419).
+ * Don't reintroduce the flag; widen `PROMPT_PAGE_TYPES` instead.
+ */
 export function extractPageType(ocrText: string): string | undefined {
-  const match = ocrText.match(/<page-type>([\s\S]*?)<\/page-type>/i);
+  const match = ocrText?.match(/<page-type>([\s\S]*?)<\/page-type>/i);
   if (!match) return undefined;
   const type = match[1].trim().toLowerCase();
   return VALID_PAGE_TYPES.has(type) ? type : undefined;
 }
 
-/** Extract <columns>N</columns> from OCR text. Returns undefined if not found or 1. */
+/**
+ * Extract <columns>N</columns> from OCR text. Returns undefined if not found or 1.
+ *
+ * The `\s*` padding matches what every scripts-side copy accepted; without it
+ * `<columns> 2 </columns>` parses as single-column. Strictly wider than the
+ * pre-#4443 pattern — every input that matched before still matches.
+ */
 export function extractColumns(ocrText: string): number | undefined {
-  const match = ocrText.match(/<columns>(\d+)<\/columns>/i);
+  const match = ocrText?.match(/<columns>\s*(\d+)\s*<\/columns>/i);
   if (!match) return undefined;
   const n = parseInt(match[1], 10);
   return n > 1 ? n : undefined;
@@ -124,9 +197,31 @@ export function parseDetectedImages(ocrText: string): DetectedImage[] {
 /**
  * Parse multi-page OCR response. Expects <page id="PAGE_ID">...</page> blocks.
  * Returns a Map of pageId → OCR text.
+ *
+ * `lenient: true` is the batch-collector dialect (#4443), and it differs in four
+ * ways that all exist for one reason — a truncated Gemini batch response drops
+ * the final `</page>`, and the strict parser silently discards that page's text
+ * even though we already paid to generate it:
+ *   1. accepts any whitespace in `<page   id="…">`, not one literal space;
+ *   2. does not require `</page>` — a block runs to the next `<page id=` or EOF;
+ *   3. strips a trailing `</page>` left over from (2);
+ *   4. omits pages whose content is empty after trimming.
+ * Callers on the request path keep the strict default.
  */
-export function parseMultiPageOcr(text: string): Map<string, string> {
+export function parseMultiPageOcr(
+  text: string,
+  { lenient = false }: { lenient?: boolean } = {},
+): Map<string, string> {
   const results = new Map<string, string>();
+  if (lenient) {
+    const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const content = match[2].trim().replace(/<\/page>\s*$/, '').trim();
+      if (content) results.set(match[1], content);
+    }
+    return results;
+  }
   const regex = /<page id="([^"]+)">([\s\S]*?)<\/page>/g;
   let match;
   while ((match = regex.exec(text)) !== null) {
@@ -161,7 +256,7 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Metadata tags (hidden from readers):**
 - <language>X</language> — the detected language of this page (REQUIRED — always identify the language, e.g. Latin, German, French, English)
-- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, musical-score, table, cover, text, digitizer-insert, exlibris
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: ${PROMPT_PAGE_TYPES.join(', ')}
   - Use "digitizer-insert" for pages added by the digitizer (NOT part of the original book): Internet Archive credit pages, Google Books inserts, "Digitized by Google" pages, library barcode/scan sheets, digital watermark pages
   - Use "exlibris" for an ownership bookplate pasted into the book (usually on a pastedown or endpaper): an armorial or emblematic plate naming or marking the owner, often with a motto. It is provenance, not the book's content — do NOT treat its motto as body text.
   - Use "musical-score" when the page is engraved or printed music with no running prose — staves, notation, tablature. A header, signature or a few words of underlaid text do not make it a "text" page.

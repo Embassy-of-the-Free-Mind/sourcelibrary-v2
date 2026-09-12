@@ -7,6 +7,7 @@ import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook } from '@/lib/book-access';
@@ -47,6 +48,7 @@ import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { AISection } from '@/components/embed/AISection';
 import AuthorAuthority from '@/components/book/AuthorAuthority';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
+import { filterPublishedEntityTerms } from '@/lib/entity-publish';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { BookShare } from '@/components/ui/ShareButton';
@@ -75,8 +77,9 @@ import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
 import { getPageImageUrl } from '@/lib/page-image-url';
+import { galleryFilter, galleryHref, type GalleryScope } from '@/lib/gallery-scope';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
-import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
+import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel, collectPriorTranslations } from '@/lib/prior-translation';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
@@ -213,6 +216,17 @@ async function getBookForMetadata(id: string, tenantId?: string | null, tenantSl
     'index.keyTerms': 0,
   }, tenantId);
   if (scoped) return scoped.book as unknown as Book;
+
+  // A book the tenant's own catalogue links (external-scan edition of a held
+  // work) renders in the reading room even without a tenantId assignment —
+  // mirror of the same admission in getBook(). See src/lib/tenant-catalog-books.ts.
+  if (tenantSlug && tenantSlug !== 'default') {
+    const unscopedId = ((result.book as Record<string, unknown>).id
+      || (result.book as { _id?: { toString(): string } })._id?.toString()) as string;
+    if (await tenantCatalogReferencesBook(tenantSlug, unscopedId)) {
+      return result.book as unknown as Book;
+    }
+  }
 
   // Default tenant is the global namespace. Legacy + corpus-source books
   // (ETCSL, CDLI, etc.) have no `tenantId`/`tenant_id` field at all; the
@@ -482,6 +496,14 @@ export async function generateMetadata({ params, lang = 'en' }: PageProps): Prom
   };
 }
 
+/**
+ * The illustrations of one book, as this page shows them: curated at quality
+ * >= 0.7 rather than the gallery's 0.5 default. Defined once so the count, the
+ * preview row and the "view all" link cannot drift apart — they did, and the
+ * page offered "View all 141 illustrations" into a page of 192.
+ */
+const bookGalleryScope = (bookId: string): GalleryScope => ({ bookId, minQuality: 0.7 });
+
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
@@ -521,12 +543,25 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       'index.concepts': 0,
       'index.keyTerms': 0,
     }, tenantId);
-    if (!scoped) return null;
-    effectiveResult = {
-      book: scoped.book as Record<string, unknown>,
-      matchedBySlug: scoped.matchedBySlug,
-      fromCatalog: false,
-    };
+    if (scoped) {
+      effectiveResult = {
+        book: scoped.book as Record<string, unknown>,
+        matchedBySlug: scoped.matchedBySlug,
+        fromCatalog: false,
+      };
+    } else {
+      // Not assigned to this tenant — but the tenant's own catalogue may link
+      // it as an external-scan edition of a work they hold (sl_external_book_id
+      // on bph_works / library_catalog_records). The catalogue row is the
+      // authorization; without it this stays a hard miss (tenant lockdown).
+      const unscopedId = (result.book.id || result.book._id?.toString()) as string;
+      const referenced = tenantSlug
+        ? await tenantCatalogReferencesBook(tenantSlug, unscopedId)
+        : false;
+      if (!referenced) return null;
+      // Fall through with the unscoped lookup result; the hidden-book gate
+      // downstream still applies to it unchanged.
+    }
   }
 
   const { book: quickBook, matchedBySlug, fromCatalog } = effectiveResult;
@@ -597,22 +632,21 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       .toArray()
       .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100)),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
-    // Top 8 gallery images for preview row
+    // Top 8 gallery images for preview row. Both this and the count below use
+    // BOOK_GALLERY_SCOPE, which also builds the "view all" href — so the number
+    // shown and the page it opens are the same set by construction.
     db.collection('gallery_images')
       .find(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
+        galleryFilter(bookGalleryScope(bookId)),
         { projection: { _id: 0, id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1, type: 1, page_number: 1, gallery_quality: 1, dhash: 1, book_id: 1 }, maxTimeMS: 5000 },
       )
       .sort({ gallery_quality: -1 })
       .limit(30) // over-fetch to allow dhash dedup to filter duplicates
       .toArray()
       .catch(() => []),
-    // Separate count query for accurate image count display
+    // Counted with the same scope the preview and the link use.
     db.collection('gallery_images')
-      .countDocuments(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
-        { maxTimeMS: 5000 },
-      )
+      .countDocuments(galleryFilter(bookGalleryScope(bookId)), { maxTimeMS: 5000 })
       .catch(() => 0),
     // Collections this book belongs to
     (quickBook.collections as string[] | undefined)?.length
@@ -877,6 +911,29 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
   const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
   const totalPages = book.pages_count || pages.length;
+  /**
+   * Does this book have page IMAGES at all, or only text?
+   *
+   * 373 ETCSL works are transcription editions: Oxford keyed the Sumerian and
+   * translated it from published editions, so there is no page image because
+   * there was never a page. The page announced "1 scans" anyway, tooltipped
+   * "Scanned images, including covers and blanks", over "Every page scanned
+   * from the original, digitized by University of Oxford (ETCSL)" — three
+   * claims, none of them true, on a library whose whole proposition is that
+   * you can go and check the source. Measured 2026-08-23: 5,421 pages across
+   * the 336 CDLI compositions alone, zero of them with any image.
+   *
+   * Derived from the pages already fetched rather than from a counter, because
+   * no counter distinguishes "not archived yet" from "there is nothing to
+   * archive" — pages_archived is 0 for both. `pages` is capped at the first
+   * 100, which is the right sample: a book whose first hundred pages carry no
+   * image has no scans.
+   */
+  const hasScans = pages.some(p => {
+    const q = p as unknown as Record<string, unknown>;
+    return !!(q.photo || q.photo_original || q.archived_photo || q.cropped_photo
+      || q.image_display || q.image_thumb || q.thumbnail || q.thumbnail_blob);
+  });
   const pagesBlank = (book as unknown as { pages_blank?: number }).pages_blank ?? 0;
   const ocrPct = totalPages > 0 ? Math.min(100, Math.round((ocrCount / totalPages) * 100)) : 0;
   const readablePages = Math.max(1, ocrCount - pagesBlank);
@@ -939,7 +996,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const hasSummary = !!summaryText;
   const showProposedBanner = previewProposed && !!candidate?.brief;
   const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
-  const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+  // Prose links go only to published-tier entity pages (#4321) — linking every
+  // index term is how one-book vocabulary like "Axis" earned sitewide links.
+  // On lookup failure, degrade to unlinked prose rather than linking unvetted.
+  const summaryEntities = await (async () => {
+    const all = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
+    if (all.length === 0) return all;
+    try {
+      const entityDb = await getReadDb();
+      const published = await filterPublishedEntityTerms(entityDb, all.map(e => e.term));
+      return all.filter(e => published.has(e.term));
+    } catch {
+      return [];
+    }
+  })();
 
   // ============================================================================
   // Book page v2 layout (non-embed only). Tenant/embed reading rooms keep the
@@ -1237,49 +1307,61 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const m = s.match(/(\d{3,4})/);
       return m ? Date.UTC(Number(m[1]), 0, 1) : -0.5;
     };
+    // EVERY earlier English translation we hold evidence for, each on its own year.
+    //
+    // This used to render exactly one: `prior_translation`, else `picks[0]` of the
+    // verification array. Two things were wrong with that. It hid 2,212 recorded
+    // translations across 1,339 books (measured 2026-09-04). Worse, the array is
+    // unordered, so `[0]` is not the earliest — in 35% of books with two or more
+    // dated picks it is a LATER one, and the entry then sits on a date axis under a
+    // heading that says "Earlier". Pico's Opera Omnia credited Copenhaver (2022)
+    // while hiding Sir Thomas More (1510); the Hypnerotomachia credited Godwin
+    // (1999) over Dallington (1592). On a timeline, showing an arbitrary member of
+    // a set is not merely incomplete — it is chronologically false.
     const timelinePrior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
       ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
       : null;
     const timelineVerification = (book as unknown as { translation_verification?: TranslationVerification }).translation_verification;
-    const timelineExistingEvidence = !timelinePrior && timelineVerification?.disposition === 'translation_found'
-      ? (timelineVerification.validated_translations?.[0] || timelineVerification.translations_found?.[0] || timelineVerification.translations?.[0])
-      : undefined;
-    if (timelinePrior) {
-      rawTimeline.push({
-        ts: yearTs(timelinePrior.year),
-        key: 'prior-translation',
-        dateText: timelinePrior.year ? String(timelinePrior.year) : t.tlEarlier,
-        label: t.tlEarlierEnglishTranslation,
-        detail: (
+    const verificationPicks = timelineVerification?.disposition === 'translation_found'
+      ? (timelineVerification.validated_translations ?? timelineVerification.translations_found ?? timelineVerification.translations ?? [])
+      : [];
+
+    collectPriorTranslations(timelinePrior, verificationPicks).forEach((row, i) => {
+      let detail: React.ReactNode;
+      if (row.credit) {
+        detail = (
           <>
-            {priorTranslationSentence(timelinePrior)}
+            {priorTranslationSentence(row.credit)}
             {embedPolicy.showExternalLinks && (
-              <>{' '}<a href={timelinePrior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(timelinePrior)} →</a></>
+              <>{' '}<a href={row.credit.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(row.credit)} →</a></>
             )}
           </>
-        ),
-      });
-    } else if (timelineExistingEvidence) {
-      const ev = timelineExistingEvidence;
-      const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
-      const summary = ev.english_title
-        ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
-        : (bits || t.tlEarlierTranslationExists);
-      rawTimeline.push({
-        ts: yearTs(ev.pub_year),
-        key: 'existing-translation',
-        dateText: ev.pub_year ? String(ev.pub_year) : t.tlEarlier,
-        label: t.tlEarlierEnglishTranslation,
-        detail: (
+        );
+      } else {
+        const ev = row.pick!;
+        const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
+        const summary = ev.english_title
+          ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
+          : (bits || t.tlEarlierTranslationExists);
+        detail = (
           <>
             {summary}
             {ev.url && embedPolicy.showExternalLinks && (
               <>{' '}<a href={ev.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{t.view}</a></>
             )}
           </>
-        ),
+        );
+      }
+      rawTimeline.push({
+        // Undated priors carry +Infinity from the collector; the timeline sorts on
+        // a finite axis, so map that back to the "unknown year" sentinel here.
+        ts: Number.isFinite(row.ts) ? row.ts : -0.5,
+        key: `prior-translation-${i}`,
+        dateText: row.year ?? t.tlEarlier,
+        label: t.tlEarlierEnglishTranslation,
+        detail,
       });
-    }
+    });
     // English editions / translations published on Source Library.
     const publishedEditions = ((book.editions as TranslationEdition[] | undefined) || [])
       .filter((e) => e.status === 'published' && e.published_at)
@@ -1546,7 +1628,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               )}
               <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-3 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
-                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
@@ -1590,8 +1672,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
-                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
-                    <Link href={authorUrl(book.author)!} className="hover:opacity-80 transition-opacity">
+                  {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
+                    <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />}
                     </Link>
                   ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} /></> : <AuthorName author={book.author} />)}
@@ -1634,8 +1716,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                         <Globe className={chipIcon} />{languageName(book.language, lang)}
                       </span>
                     )}
-                    <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={t.scansTooltip}>
-                      <FileText className={chipIcon} />{t.scans(totalPages)}
+                    <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={hasScans ? t.scansTooltip : t.textEditionTooltip}>
+                      <FileText className={chipIcon} />{hasScans ? t.scans(totalPages) : t.pagesOfText(totalPages)}
                     </span>
                     {imageCount > 0 && (
                       <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors hover:opacity-80`} style={{ color: 'rgba(245,240,232,0.88)' }}>
@@ -1702,7 +1784,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
                   <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
@@ -1758,10 +1840,22 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
             {(() => {
               const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
-              const pagesSubtitle = digitizer
-                ? t.pagesDigitizedBy(digitizer)
-                : t.pagesInReadingOrder;
-              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} />;
+              // Corpus editions (#4350): the page cards have no images of
+              // their own, so CDLI witness-tablet photos stand in — cycled
+              // across the grid, and named for what they are in the subtitle.
+              const witnessFallbacks = !hasScans
+                ? (book.cdli_witnesses || [])
+                  .filter(w => w.has_photo && (w.thumbnail_url || w.photo_url))
+                  .map(w => ({ src: (w.thumbnail_url || w.photo_url) as string, alt: `Tablet ${w.designation}` }))
+                : [];
+              const pagesSubtitle = !hasScans
+                ? (witnessFallbacks.length > 0
+                  ? t.textEditionWitnesses(witnessFallbacks.length)
+                  : digitizer ? t.textEditionBy(digitizer) : t.textEdition)
+                : digitizer
+                  ? t.pagesDigitizedBy(digitizer)
+                  : t.pagesInReadingOrder;
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} subtitle={pagesSubtitle} fallbackImages={witnessFallbacks.length > 0 ? witnessFallbacks : undefined} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
                 return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
@@ -1780,7 +1874,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <GalleryMasonry plates={galleryPlates} />
               {imageCount > galleryPlates.length && (
                 <div className="mt-8 text-center">
-                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
+                  {/* imageCount is counted at quality >= 0.7, the bar this section curates
+                      to, but /gallery defaults to 0.5 — so "view all 141" opened a
+                      page of 192. Carry the threshold so the destination matches the
+                      promise. */}
+                  <Link href={galleryHref(bookGalleryScope(book.id))} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
                     <Images className="w-4 h-4" />
                     {t.viewAllIllustrations(imageCount)}
                   </Link>
@@ -1867,8 +1965,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 return (
                   <p className="text-base sm:text-lg text-stone-300 mb-1">
                     {heroByline.role === 'author' ? (
-                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author) ? (
-                        <Link href={authorUrl(book.author)!} className="hover:text-white transition-colors">
+                      embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
+                        <Link href={authorUrl(book.author, book.author_id)!} className="hover:text-white transition-colors">
                           <AuthorName author={book.author} />
                         </Link>
                       ) : <AuthorName author={book.author} />
@@ -1964,10 +2062,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     of the displayed page counts matched the real book. */}
                 <div
                   className="flex items-center gap-2"
-                  title="Scanned images, including covers and blanks. Bibliographic pagination may differ."
+                  title={hasScans
+                    ? 'Scanned images, including covers and blanks. Bibliographic pagination may differ.'
+                    : t.textEditionTooltip}
                 >
                   <FileText className="w-4 h-4" />
-                  {totalPages} scans
+                  {hasScans ? `${totalPages} scans` : t.pagesOfText(totalPages)}
                 </div>
                 {imageCount > 0 && (
                   <Link
@@ -2120,6 +2220,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       ustcId={book.ustc_id}
                       language={book.language}
                       doi={book.doi}
+                      holdingLibrary={book.image_source?.contributing_library}
+                      shelfmark={book.image_source?.shelfmark}
                       editionVersion={currentEdition?.version}
                       tenantSlug={tenantSlug || undefined}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
@@ -2517,6 +2619,35 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     // authority to /artwork rather than keep indexing both. redirect() defaults to
     // a temporary 307, which consolidates nothing — the whole point of the change.
     if (artSlug) permanentRedirect(`/artwork/${artSlug}`);
+
+    // A slug that was RENAMED keeps working through `slug_aliases`
+    // (findBookByIdOrSlug resolves them on its miss path), but until now it kept
+    // working at the OLD address: the proxy only sends a /book/<segment> to the
+    // book-slug resolver when `looksLikeBookId(segment)` is true, and that is
+    // false for every slug-shaped segment — which is every alias a slug repair
+    // creates. So the ~276 books renamed by earlier sweeps, and the 112 renamed
+    // by #4389, each had two live URLs emitting self-referential canonicals.
+    // Confirmed against production before the change: /book/1-10, a real alias
+    // on a real book, returned 200 rather than a redirect.
+    // The redirect belongs here rather than in the proxy because deciding it
+    // needs the resolved book, and the proxy would have to pay a DB lookup on
+    // every book page view to learn what one string compare answers here.
+    //
+    // 308, for the same reason as the artwork case above: this is a permanent
+    // canonicalisation and search engines must move authority to the new URL.
+    // Costs one string comparison on the canonical path, where it is false.
+    // Localized twins are handled by their own branch above (307/308 there).
+    //
+    // The shape guard is a loop guard: a slug carrying a character that the
+    // router re-encodes would never compare equal to the incoming segment, so
+    // the redirect would fire again on its own target. Only redirect TO a
+    // segment that survives a round trip unchanged.
+    if (lang === 'en') {
+      const canonicalSlug = (earlyBook as { slug?: string }).slug;
+      if (canonicalSlug && id !== canonicalSlug && /^[a-z0-9][a-z0-9._~-]*$/i.test(canonicalSlug)) {
+        permanentRedirect(`/book/${canonicalSlug}`);
+      }
+    }
   }
 
   return (

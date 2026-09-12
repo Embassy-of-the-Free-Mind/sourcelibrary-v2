@@ -14,6 +14,9 @@ import { getReadDb } from '@/lib/mongodb';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { aiGenerator } from '@/lib/iiif-provenance';
 import { isBookReadable } from '@/lib/book-access';
+import { isMeteredAnonRequest } from '@/lib/metered-gate';
+import { isPageFree, freeMaxPage } from '@/lib/free-preview';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -68,17 +71,17 @@ export async function GET(
     // doc is found we preserve prior behavior (the page lookup below 404s).
     const gateBook = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },
-      { projection: { id: 1, visible: 1 } }
+      { projection: { id: 1, visible: 1, pages_count: 1 } }
     );
     if (gateBook && !(await isBookReadable(gateBook, request))) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    // Fetch only the field we need
+    // Fetch only the field we need (+ seo_indexable for the metered check)
     const projection =
       type === 'ocr'
-        ? { 'ocr.data': 1, 'ocr.language': 1, 'ocr.model': 1, page_number: 1 }
-        : { 'translation.data': 1, 'translation.language': 1, 'translation.model': 1, page_number: 1 };
+        ? { 'ocr.data': 1, 'ocr.language': 1, 'ocr.model': 1, page_number: 1, seo_indexable: 1 }
+        : { 'translation.data': 1, 'translation.language': 1, 'translation.model': 1, page_number: 1, seo_indexable: 1 };
 
     const page = await db.collection('pages').findOne(
       { book_id: id, page_number: pageNum },
@@ -87,6 +90,29 @@ export async function GET(
 
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    // Metered reader (#4357): this route serves per-page text with no other
+    // gate — the same asset the reader wall withholds. Beyond the free
+    // sample, anonymous callers get an explicit 403 (NOT an empty
+    // AnnotationPage: an empty list reads as "no transcription exists",
+    // which would be a lie). Requests carrying a tenant context (partner
+    // subdomains/embeds) stay exempt, matching the pages API — it is the
+    // SURFACE that is exempt, not the book. No-op unless METERED_READER=1.
+    if (
+      gateBook
+      && !getTenantContextFromRequest(request).id
+      && !isPageFree(page as { page_number?: number | null; seo_indexable?: boolean }, (gateBook.pages_count as number) || 0)
+      && (await isMeteredAnonRequest(request))
+    ) {
+      return NextResponse.json(
+        {
+          error: 'Sign in to read beyond the free sample',
+          free_pages: freeMaxPage((gateBook.pages_count as number) || 0),
+          sign_in_url: `${BASE}/auth/signin`,
+        },
+        { status: 403, headers: CORS_HEADERS }
+      );
     }
 
     const content = type === 'ocr' ? page.ocr : page.translation;

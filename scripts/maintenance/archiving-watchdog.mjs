@@ -37,6 +37,7 @@
  *                     (default off — classification still reports them)
  */
 import { MongoClient } from 'mongodb';
+import { ARCHIVABLE_SOURCES_REGEX } from '../lib/archivable-sources.mjs';
 
 const ARGS = process.argv.slice(2);
 const APPLY = ARGS.includes('--apply');
@@ -59,7 +60,10 @@ const MONGO = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DA
 // If they're making progress we leave them; the Mac worker owns them.
 const MAC_ONLY_PROVIDERS = new Set(['harvard', 'e-rara', 'gallica']);
 // What the on-demand /archive-images route (and Hetzner archiver) can fetch.
-const ARCHIVABLE_RE = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian|tudigit\.ulb\.tu-darmstadt/i;
+// Shared with the archive route — this list used to be private here and 6 hosts
+// longer than the route's, so the watchdog classified books "archivable" that
+// the route then silently refused. See scripts/lib/archivable-sources.mjs.
+const ARCHIVABLE_RE = ARCHIVABLE_SOURCES_REGEX;
 
 function log(...a) { console.log(...a); }
 

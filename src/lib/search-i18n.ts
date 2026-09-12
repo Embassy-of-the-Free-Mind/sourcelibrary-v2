@@ -121,6 +121,8 @@ export interface SearchStrings {
   illustrations: string;
   seeAllImages: string;
   semanticDegraded: string;
+  weakMatchTitle: (q: string) => string;
+  weakMatchBody: string;
   conceptualMatches: string;
   textMatches: string;
   seeAllResults: (n: string) => string;
@@ -149,12 +151,26 @@ export interface SearchStrings {
   pageAbbrev: (n: number) => string;
   pagesCount: (n: number) => string;
   translatedCount: (n: number) => string;
+  /**
+   * Fan-out under a result that stands in for other editions/copies (#4300).
+   * `n` is the count `/work/[id]` renders — the set this link reaches — so the
+   * wording must promise the destination, not the rows we collapsed.
+   */
+  workEditionsLink: (n: number) => string;
   findPassages: string;
   hidePassages: string;
   searchingEllipsis: string;
   searchingPages: string;
   noMatchingPassages: string;
   untitled: string;
+  /**
+   * Subtitle under an illustration in the Images strip. The strip mixes details
+   * cropped from books we hold with standalone artworks held by museums, and
+   * the two used to wear the same bare title. This says the image is a detail
+   * FROM something. The page number is rendered separately so a long book title
+   * can truncate without taking the page number with it.
+   */
+  imageFromBook: (title: string) => string;
   digitized: string;
   catalogOnly: string;
   collectionBooks: (n: string) => string;
@@ -267,6 +283,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     illustrations: 'Illustrations',
     seeAllImages: 'See all images',
     semanticDegraded: 'Related results couldn’t be loaded just now — you may be seeing fewer matches than we hold. Try again in a moment.',
+    weakMatchTitle: (q) => `No strong matches for “${q}”`,
+    weakMatchBody: 'Nothing in the library matches all of your search words. The results below match only part of your search.',
     conceptualMatches: 'Conceptual matches',
     textMatches: 'Text matches',
     seeAllResults: (n) => `See all ${n} results`,
@@ -292,12 +310,14 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     pageAbbrev: (n) => `p. ${n}`,
     pagesCount: (n) => `${n} pages`,
     translatedCount: (n) => `${n} translated`,
+    workEditionsLink: (n) => `${n} editions & copies of this work`,
     findPassages: 'Find passages',
     hidePassages: 'Hide passages',
     searchingEllipsis: 'Searching...',
     searchingPages: 'Searching pages...',
     noMatchingPassages: 'No matching passages found in this book.',
     untitled: '(untitled)',
+    imageFromBook: (title) => `from ${title}`,
     digitized: 'Digitized',
     catalogOnly: 'Catalog only',
     collectionBooks: (n) => `${n} books`,
@@ -394,6 +414,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     illustrations: 'Ilustraciones',
     seeAllImages: 'Ver todas las imágenes',
     semanticDegraded: 'No se han podido cargar los resultados relacionados — puede que veas menos coincidencias de las que tenemos. Inténtalo de nuevo en un momento.',
+    weakMatchTitle: (q) => `No hay coincidencias exactas para «${q}»`,
+    weakMatchBody: 'Nada en la biblioteca coincide con todas las palabras de tu búsqueda. Los resultados siguientes coinciden solo con una parte.',
     conceptualMatches: 'Coincidencias conceptuales',
     textMatches: 'Coincidencias en el texto',
     seeAllResults: (n) => `Ver los ${n} resultados`,
@@ -419,12 +441,14 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     pageAbbrev: (n) => `p. ${n}`,
     pagesCount: (n) => `${n} páginas`,
     translatedCount: (n) => `${n} traducidas`,
+    workEditionsLink: (n) => `${n} ediciones y ejemplares de esta obra`,
     findPassages: 'Buscar pasajes',
     hidePassages: 'Ocultar pasajes',
     searchingEllipsis: 'Buscando...',
     searchingPages: 'Buscando en las páginas...',
     noMatchingPassages: 'No se han encontrado pasajes coincidentes en este libro.',
     untitled: '(sin título)',
+    imageFromBook: (title) => `de ${title}`,
     digitized: 'Digitalizado',
     catalogOnly: 'Solo en catálogo',
     collectionBooks: (n) => `${n} libros`,

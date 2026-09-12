@@ -24,7 +24,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 
 const OUT = process.argv.find(a => a.startsWith('--out='))?.split('=')[1] || null;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 function fingerprintOf(notes) {
   const s = [].concat(notes || []).join(' ');

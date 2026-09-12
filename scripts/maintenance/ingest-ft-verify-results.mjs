@@ -15,7 +15,7 @@
  *           source_language and source_url set. The flywheel: verified
  *           positives make the next check a free membership test.
  *   Sink B  book.first_translation (verdict)    — NOT written here. Verdicts
- *           stay derived-from-evidence (derive-ft-verdict-from-attempts.ts),
+ *           stay derived-from-evidence (derive-ft-verdict-from-attempts.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead]),
  *           and the public flag stays behind the sign-off-gated reconcile.
  *
  * Input file: JSON array; per entry:

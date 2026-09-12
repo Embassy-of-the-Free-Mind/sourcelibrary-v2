@@ -21,7 +21,11 @@ export async function GET(request: NextRequest) {
   const query = searchParams.get('q')?.trim();
   const limit = Math.min(parseInt(searchParams.get('limit') || '24'), 100);
   const offset = parseInt(searchParams.get('offset') || '0');
-  const threshold = parseFloat(searchParams.get('threshold') || '0.20');
+  // Default floor raised 0.20 → 0.26 (#4338): at 0.20–0.25 CLIP returns
+  // confidently unrelated images (an oud player and Wikipedia-vandalism
+  // screenshots for "ancient egyptian"), and users read them as broken search.
+  // Callers that want the speculative tail can still pass ?threshold= lower.
+  const threshold = parseFloat(searchParams.get('threshold') || '0.26');
 
   if (!query || query.length < 2) {
     return NextResponse.json({ results: [], query: '', total: 0 });

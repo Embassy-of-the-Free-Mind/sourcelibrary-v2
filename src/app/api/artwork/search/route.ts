@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { artistAuthorRegex } from '@/lib/artist-match';
+import { isOwnInfraUrl } from '@/lib/public-image-fields';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { semanticArtworkSearch } from '@/lib/semantic-search';
+import { resolveTitle } from '@/lib/title-provenance';
 
 export const maxDuration = 30;
 
@@ -25,6 +28,9 @@ const VISUAL_RESOURCE_TYPES = ['painting', 'drawing', 'print', 'fresco', 'engrav
  *   genre      — genre filter (e.g. "religious", "mythological") — passed to semanticArtworkSearch
  *   year_from  — published year >= (string-compared, since published is stored as string)
  *   year_to    — published year <=
+ *   artist     — artist slug ("albrecht-durer"), the API twin of
+ *                /artwork/artist/[slug]; resolved via the shared
+ *                artistAuthorRegex so both surfaces return the same set
  *   book_id    — return a specific artwork
  *   limit      — max results (default 20, max 50)
  *   offset     — pagination offset (default 0)
@@ -49,11 +55,23 @@ export async function GET(request: NextRequest) {
     const yearStart = searchParams.get('year_from') || searchParams.get('yearStart');
     const yearEnd = searchParams.get('year_to') || searchParams.get('yearEnd');
     const bookId = searchParams.get('book_id') || searchParams.get('bookId');
+    const artistSlug = (searchParams.get('artist') || '').trim();
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 50);
     const offset = parseInt(searchParams.get('offset') || '0');
 
     const db = await getReadDb();
     const tenantScope = tenantId ? { tenantId } : {};
+
+    // `artist=<slug>` resolved ONCE, and applied in BOTH lanes below. A filter
+    // honoured only when the caller omits `q` is inert exactly where it is most
+    // likely to be used, while still reading as active
+    // (search-filters-and-lanes.md). A placeholder slug ("various",
+    // "anonymous") resolves to null: return empty rather than match everything.
+    const artistRegex = artistSlug ? artistAuthorRegex(artistSlug) : null;
+    if (artistSlug && !artistRegex) {
+      return NextResponse.json({ total: 0, showing: 0, items: [], artist: null });
+    }
+    const artistTest = artistRegex ? new RegExp(artistRegex.$regex, artistRegex.$options) : null;
 
     // ── Path A: book_id direct lookup ─────────────────────────────────
     if (bookId) {
@@ -105,6 +123,7 @@ export async function GET(request: NextRequest) {
       if (symbolFilter) merged = merged.filter(r => (r.symbols ?? []).some(s => matchesIgnoreCase(s, symbolFilter)));
       if (yearStart) merged = merged.filter(r => !r.published || r.published >= yearStart);
       if (yearEnd) merged = merged.filter(r => !r.published || r.published <= yearEnd);
+      if (artistTest) merged = merged.filter(r => artistTest.test(r.author ?? ''));
 
       // Fallback: if semantic returned nothing usable, do a regex fallback
       if (merged.length === 0) {
@@ -115,6 +134,7 @@ export async function GET(request: NextRequest) {
           resource_type: typeFilter
             ? typeFilter
             : { $in: VISUAL_RESOURCE_TYPES },
+          ...(artistRegex ? { author: artistRegex } : {}),
           $or: [
             { title: { $regex: pattern, $options: 'i' } },
             { display_title: { $regex: pattern, $options: 'i' } },
@@ -145,6 +165,7 @@ export async function GET(request: NextRequest) {
         ? typeFilter
         : { $in: VISUAL_RESOURCE_TYPES },
     };
+    if (artistRegex) filter.author = artistRegex;
     if (yearStart || yearEnd) {
       const yf: Record<string, string> = {};
       if (yearStart) yf.$gte = yearStart;
@@ -163,8 +184,18 @@ export async function GET(request: NextRequest) {
     if (hasMore) docs.splice(limit);
 
     const items = docs.map(d => shapeArtworkRow(d));
+    // A REAL count on the browse lane, not the limit+1 probe this used to
+    // report. That probe answered "how many works by Goltzius?" with `3` when
+    // the answer is 685 — tolerable while the only browse was an infinite
+    // scroll, misleading now that `artist=` makes cardinality the natural
+    // question a caller asks (agent-tool-results.md: a top-k list cannot
+    // answer "how many"). The q-lane above stays an estimate by construction —
+    // it ranks, so its total is "matches we retrieved", not "matches that
+    // exist".
+    const total = await db.collection('books').countDocuments(filter, { maxTimeMS: 10000 });
+
     return NextResponse.json({
-      total: hasMore ? offset + items.length + 1 : offset + items.length,
+      total,
       showing: items.length,
       items,
     }, {
@@ -181,6 +212,10 @@ export async function GET(request: NextRequest) {
 
 const artworkProjection = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+  // #4288: the stamp that says whether `display_title` is the source record's
+  // title or a label a vision model wrote from the image. Without it in the
+  // projection every consumer treats the two as the same kind of thing.
+  'field_provenance.display_title': 1, content_type: 1,
   published: 1, year: 1, resource_type: 1, medium: 1,
   thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   image_full: 1, summary: 1, current_location: 1, collections: 1,
@@ -190,6 +225,15 @@ interface ArtworkRow {
   id: string;
   source: 'artwork';
   title: string;
+  /**
+   * Where `title` came from (#4288). `descriptive` means a vision model wrote
+   * it by looking at the image — it is a caption, not a work anyone published,
+   * and must not be cited as one. `source` means the museum/Commons record's
+   * own title. `derived` means it was mechanically shortened from that title.
+   */
+  title_provenance: 'source' | 'descriptive' | 'derived';
+  /** The title on the source record — the one that is safe to cite. */
+  source_record_title: string;
   author: string | null;
   published: string | null;
   year: number | null;
@@ -220,18 +264,30 @@ function shapeArtworkRow(
   }
 ): ArtworkRow {
   const slug = (doc.slug as string) || (doc.id as string);
-  const title = (doc.display_title as string) || (doc.title as string);
+  // Resolve, don't collapse (#4288): `display_title || title` erases the
+  // difference between a museum's title and an AI caption of the picture.
+  const resolvedTitle = resolveTitle(doc as Parameters<typeof resolveTitle>[0]);
+  const title = resolvedTitle.display;
   const description = semantic?.summary_text
     || (typeof doc.summary === 'string' ? (doc.summary as string) : null);
-  const thumbnail = (doc.image_thumb as string) || (doc.thumbnail_blob as string)
-    || (doc.thumbnail as string) || null;
-  const image = (doc.image_display as string) || (doc.image_full as string)
-    || (doc.thumbnail as string) || thumbnail;
+  // Our own images only. `doc.thumbnail` on an artwork record is frequently
+  // the holding museum's URL (rct.uk, wellcomeimages.org, polona.pl, and in
+  // one case a bare IP), and serving those to every API caller points our
+  // traffic at their servers. Measured over 4,000 artwork records: 99.1% have
+  // our thumbnail and 76.9% our display copy, so this costs almost nothing —
+  // and the 0.9% that would go imageless say so explicitly rather than
+  // borrowing a museum's URL. Same rule as page images
+  // (src/lib/public-image-fields.ts).
+  const pickOurs = (...vals: unknown[]) => (vals.find(isOwnInfraUrl) as string | undefined) ?? null;
+  const thumbnail = pickOurs(doc.image_thumb, doc.thumbnail_blob, doc.thumbnail);
+  const image = pickOurs(doc.image_display, doc.image_full, doc.thumbnail) ?? thumbnail;
 
   return {
     id: doc.id as string,
     source: 'artwork',
     title,
+    title_provenance: resolvedTitle.provenance,
+    source_record_title: resolvedTitle.citation,
     author: (doc.author as string) ?? null,
     published: (doc.published as string) ?? null,
     year: (doc.year as number) ?? null,
@@ -240,6 +296,7 @@ function shapeArtworkRow(
     description: description ? description.slice(0, 500) : null,
     image_url: image,
     thumbnail_url: thumbnail,
+    ...(image || thumbnail ? {} : { image_unavailable: true as const }),
     url: `https://sourcelibrary.org/book/${slug}`,
     collections: (doc.collections as string[]) ?? [],
     current_location: (doc.current_location as string) ?? null,

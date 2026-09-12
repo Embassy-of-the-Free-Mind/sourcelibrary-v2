@@ -8,6 +8,12 @@
 -- catches the error and returns []. Discovered 2026-05-15 while shipping the
 -- MCP search_concept tool that depends on this.
 --
+-- ⚠️ THE "FIX" DESCRIBED BELOW IS INERT. See issue #4439 and the replacement in
+-- `fix-semantic-language-prefilter.sql`. The paragraph is kept verbatim because
+-- it is the most useful thing in this file: it is a correct diagnosis attached
+-- to a change that does not implement it, and reading the two together is the
+-- fastest way to understand how that happens.
+--
 -- Cross-lingual gotcha (fixed 2026-05-17): HNSW + post-filter returns 0 rows
 -- when filter_language scopes the result set to a language that doesn't appear
 -- in the top-N nearest neighbors of the query. Example: an English query for
@@ -21,6 +27,18 @@
 -- accept arrays for multi-language queries (e.g. ["Chinese","Sanskrit","Arabic"]
 -- or excluding ["Latin","German","English","French"] to focus on non-Western
 -- traditions). Both also branch to seq scan to avoid the HNSW post-filter gotcha.
+--
+-- WHY IT IS INERT (2026-08-31, #4439): the branch does not force a sequential
+-- scan. Both branches below end in `ORDER BY p.embedding <=> query_embedding
+-- LIMIT match_count`, which is exactly the shape pgvector's HNSW index serves,
+-- so the planner takes the index in the "seq scan" branch too and the language
+-- predicate is applied to candidates the index already chose. A branch is not a
+-- plan. Measured: Chinese/Arabic/Sanskrit filters return 0 rows in 60–230ms —
+-- and 60ms is itself the tell, since no scan of 4.5M rows finishes that fast.
+-- Raise match_count to 10,000 and the planner abandons the index, the same
+-- query takes 47.6s, and it returns 1,000 Chinese rows topping out at
+-- similarity 0.704 against a global unfiltered top of 0.728. The material was
+-- always there.
 --
 -- Tenant filter: page_translations doesn't currently carry a tenant_id column,
 -- so we accept the parameter for API compatibility but ignore it.
@@ -55,6 +73,12 @@ DECLARE
     OR (filter_exclude_languages IS NOT NULL AND array_length(filter_exclude_languages, 1) > 0);
 BEGIN
   IF has_language_filter THEN
+    -- ⚠️ THIS COMMENT IS WRONG — #4439. It describes an intent the SQL below
+    -- does not carry out: the ORDER BY still matches the HNSW operator, so the
+    -- planner takes the vector index here too and the language predicate runs
+    -- on candidates it already picked. Left in place, marked, because the gap
+    -- between this comment and the query under it IS the bug.
+    --
     -- Language-scoped path: filter first, sort by distance after.
     -- Avoids the HNSW post-filter gotcha where the index returns top-N
     -- nearest vectors globally and a language filter strips them all.

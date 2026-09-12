@@ -24,6 +24,12 @@ export interface DedupMatch {
   /** Which collection the match was found in: 'books' (live) or 'books_warehouse'
    * (acquired+archived, awaiting promotion). Both count as duplicates. */
   matchedCollection?: 'books' | 'books_warehouse';
+  /** The matched record's publication year, or null when it states none.
+   * Load-bearing for skip review: an edition-key skip where EITHER side lacks a
+   * year rests on normalized title + surname alone, which is weaker evidence
+   * than "same author, same title, same year". 81% of edition-key-only
+   * decisions in `dedup_shadow_decisions` are that case. */
+  matchedYear?: number | null;
 }
 
 export interface DedupResult {
@@ -150,25 +156,29 @@ export function editionYear(book: { year?: number | null; published?: string | n
  * Generate a source fingerprint for a book.
  * Returns null if no identifiable source info is available.
  */
-export function sourceFingerprint(book: {
-  ia_identifier?: string;
-  gallica_ark?: string;
-  bodleian_uuid?: string;
-  mdz_id?: string;
-  bsb_id?: string;
-  google_books_id?: string;
+export interface FingerprintInput {
+  ia_identifier?: string | null;
+  gallica_ark?: string | null;
+  bodleian_uuid?: string | null;
+  mdz_id?: string | null;
+  bsb_id?: string | null;
+  google_books_id?: string | null;
   image_source?: {
     provider?: string;
     identifier?: string;
     iiif_manifest?: string;
     pdf_url?: string;
     source_url?: string;
-  };
+    page_range?: string;
+  } | null;
   dublin_core?: {
-    dc_identifier?: string[];
-  };
+    /** Often a bare string in the wild — see `dcIdentifiers()`. */
+    dc_identifier?: string[] | string;
+  } | null;
   [key: string]: unknown;
-}): string | null {
+}
+
+export function sourceFingerprint(book: FingerprintInput): string | null {
   // Priority order: most specific identifiers first
   if (book.ia_identifier) return `ia:${book.ia_identifier}`;
   if (book.gallica_ark) return `gallica:${book.gallica_ark}`;
@@ -198,6 +208,153 @@ export function sourceFingerprint(book: {
   }
 
   return null;
+}
+
+/**
+ * Every identifier a record carries, as a SET — the tier-1 key.
+ *
+ * WHY (issue: acquisition dedupe enforcement): `sourceFingerprint()` above picks
+ * ONE identifier by priority, so the SAME digital object imported through two
+ * routes gets two different strings and tier 1 — the tier that cannot be wrong —
+ * goes blind. Measured on `books` 2026-08-30: the Internet Archive object
+ * `bim_early-english-books-1475-1640_lac-puerorum-a-latin-gr_holt-john_1511` is
+ * held THREE times, as `ia:<id>`, as `iiif:…/iiif/<id>/manifest.json` and as
+ * `iiif:…/iiif/3/<id>/manifest.json`. Set-intersection matching finds 268
+ * duplicate groups where the scalar finds 139.
+ *
+ * The scalar `source_fingerprint` is unchanged and still written — everything
+ * downstream (indexes, audits, the warehouse) keeps reading it.
+ *
+ * DELIBERATELY EXCLUDED — this set must stay a set of DIGITAL-OBJECT ids:
+ *   - bare `dc:` values. `dublin_core.dc_identifier` is a string (not an array)
+ *     on 89,772 books, so `dc_identifier[0]` is a single CHARACTER there; and
+ *     the real values are largely LCCN/OCLC numbers, which identify a
+ *     bibliographic RECORD, not a scan — every volume of The Century Illustrated
+ *     Monthly Magazine shares `LCCN:412667`. Including them collapsed 56,324
+ *     docs into duplicate groups in the dry run.
+ *   - e-rara internal ids scraped from arbitrary URL path segments (1,511 docs
+ *     of noise; the IIIF manifest URL already identifies an e-rara object exactly).
+ */
+export function sourceFingerprints(book: FingerprintInput): string[] {
+  const suffix = sourceSubrange(book) ? `#${sourceSubrange(book)}` : '';
+  const out = new Set<string>();
+  const add = (v: string | null | undefined) => {
+    if (typeof v === 'string' && v.trim()) out.add(v.trim() + suffix);
+  };
+
+  if (book.ia_identifier) add(`ia:${book.ia_identifier}`);
+  if (book.gallica_ark) add(`gallica:${book.gallica_ark}`);
+  if (book.bodleian_uuid) add(`bodleian:${book.bodleian_uuid}`);
+  if (book.mdz_id) add(`mdz:${String(book.mdz_id).toLowerCase()}`);
+  if (book.bsb_id) add(`mdz:${String(book.bsb_id).toLowerCase()}`);
+  if (book.google_books_id) add(`gbooks:${book.google_books_id}`);
+
+  const is = book.image_source || {};
+  if (is.identifier && is.provider) {
+    // The sub-range already rides in `suffix`; keep the bare item id here so the
+    // two forms of one bundle member don't drift apart.
+    const bare = String(is.identifier).split('#')[0];
+    if (bare) add(`${is.provider}:${bare}`);
+  }
+  const manifestKey = normalizeSourceUrl(is.iiif_manifest);
+  if (manifestKey) add(`iiif:${manifestKey}`);
+  const pdfKey = normalizeSourceUrl(is.pdf_url);
+  if (pdfKey) add(`pdf:${pdfKey}`);
+
+  for (const url of [is.iiif_manifest, is.source_url, is.pdf_url, ...dcIdentifiers(book)]) {
+    for (const derived of deriveSourceIdentifiers(url)) add(derived);
+  }
+
+  return [...out].sort();
+}
+
+/** `dublin_core.dc_identifier` normalised to an array — it is a bare STRING on
+ * 89,772 books, where `.length`/`[0]` silently yield a character. */
+export function dcIdentifiers(book: FingerprintInput): string[] {
+  const raw = book.dublin_core?.dc_identifier as unknown;
+  const arr = Array.isArray(raw) ? raw : typeof raw === 'string' ? [raw] : [];
+  return arr.filter((d): d is string => typeof d === 'string' && d.trim().length > 0);
+}
+
+/**
+ * The discriminator that separates two books cut from ONE source object:
+ * an explicit `page_range`, a `#fragment` on the identifier, or an
+ * `IA-BUNDLE:<item>/<work>`-style Dublin Core id. Without it, the ten works
+ * bundled into IA item `20230305_20230305_1003` all reduce to the item id and
+ * read as one book ten times over.
+ */
+export function sourceSubrange(book: FingerprintInput): string | null {
+  const is = book.image_source || {};
+  const range = (is as { page_range?: string }).page_range;
+  if (typeof range === 'string' && range.trim()) return range.trim();
+  const id = typeof is.identifier === 'string' ? is.identifier : '';
+  if (id.includes('#')) return id.slice(id.indexOf('#') + 1).trim() || null;
+  const bare = id.split('#')[0];
+  if (bare) {
+    for (const d of dcIdentifiers(book)) {
+      const m = d.match(/^[A-Za-z][A-Za-z0-9_-]*:(.+)$/);
+      if (!m) continue;
+      const rest = m[1];
+      if (rest.startsWith(`${bare}/`)) {
+        const tail = rest.slice(bare.length + 1).trim();
+        if (tail) return tail;
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Canonical form of a source URL, so trivially different spellings of one
+ * address collapse: scheme-case, `www.`, a trailing slash, and IIIF's
+ * `/manifest` vs `/manifest.json`. Returns null for anything that isn't http(s).
+ */
+export function normalizeSourceUrl(url: string | null | undefined): string | null {
+  if (typeof url !== 'string') return null;
+  const t = url.trim();
+  if (!/^https?:\/\//i.test(t)) return null;
+  let u: URL;
+  try { u = new URL(t); } catch { return null; }
+  const path = u.pathname.replace(/\/+$/, '').replace(/\/manifest\.json$/i, '/manifest');
+  return `${u.host.toLowerCase().replace(/^www\./, '')}${path}${u.search || ''}`;
+}
+
+/**
+ * Pull provider-native identifiers back OUT of a URL, so a record that only
+ * carries a manifest URL still matches one that carries the bare id. This is
+ * the cross-form catch. Rules are deliberately narrow — a rule that fires on a
+ * shared *catalogue* number (LCCN/OCLC) or on an arbitrary numeric path segment
+ * merges distinct volumes, which is a real acquisition loss, not a cheap
+ * false positive.
+ */
+export function deriveSourceIdentifiers(url: string | null | undefined): string[] {
+  if (typeof url !== 'string' || !url) return [];
+  let host: string;
+  try { host = new URL(url).host.toLowerCase(); } catch { return []; }
+  const out: string[] = [];
+  const unusable = (s: string) => !s || s.length < 5 || /^\d{1,3}$/.test(s) || /^manifest(\.json)?$/i.test(s);
+
+  if (host === 'archive.org' || host.endsWith('.archive.org')) {
+    // `/iiif/<id>/manifest.json` AND `/iiif/3/<id>/manifest.json` — the version
+    // segment is why a naive rule produced `ia:3` on 5,831 books.
+    let m = url.match(/\/iiif\/(?:[23]\/)?([^/?#]+)\/manifest/);
+    if (!m) m = url.match(/\/(?:details|download|stream|metadata)\/([^/?#]+)/);
+    if (m) {
+      const id = decodeURIComponent(m[1]);
+      if (!unusable(id)) out.push(`ia:${id}`);
+    }
+  }
+  const bsb = url.match(/\b(bsb[0-9]{6,})\b/i);
+  if (bsb) out.push(`mdz:${bsb[1].toLowerCase()}`);
+  const ark = url.match(/ark:\/(\d{4,6})\/([A-Za-z0-9._-]{5,})/);
+  if (ark && ark[1] === '12148') out.push(`gallica:ark:/12148/${ark[2]}`);
+  const ppn = url.match(/\b(PPN[0-9]{6,}[0-9X]?)\b/);
+  if (ppn) out.push(`ppn:${ppn[1]}`);
+  if (host.endsWith('google.com')) {
+    const m = url.match(/[?&]id=([A-Za-z0-9_-]{8,})/);
+    if (m) out.push(`gbooks:${m[1]}`);
+  }
+  return out;
 }
 
 // NOTE: dedup does NOT filter on `visible`. A duplicate is a duplicate whether
@@ -277,6 +434,7 @@ export async function editionKeyTierMatches(
         confidence: 'high',
         matchedVisible: doc.visible === true,
         matchedCollection: cn,
+        matchedYear: tmYear,
       });
     }
   }
@@ -336,6 +494,7 @@ export async function titleAuthorTierMatches(
         confidence: 'high',
         matchedVisible: tm.visible === true,
         matchedCollection: cn,
+        matchedYear: tmYear,
       });
     }
   }
@@ -361,48 +520,40 @@ export async function titleAuthorTierMatches(
  * ALREADY in the database (audit scripts) must pass `{ shadowLog: false }` or
  * every replay self-match pollutes the stats.
  */
+export interface DedupCandidate extends FingerprintInput {
+  title: string;
+  author: string;
+  display_title?: string;
+  /** Edition discriminators — two records that share a normalized title+author
+   * but differ in publication year (or volume, parsed from the title) are
+   * distinct editions, NOT duplicates. Pass these so Tier 2 can tell them apart. */
+  year?: number;
+  published?: string;
+}
+
 export async function checkDuplicate(
   db: Db,
-  book: {
-    title: string;
-    author: string;
-    display_title?: string;
-    /** Edition discriminators — two records that share a normalized title+author
-     * but differ in publication year (or volume, parsed from the title) are
-     * distinct editions, NOT duplicates. Pass these so Tier 2 can tell them apart. */
-    year?: number;
-    published?: string;
-    ia_identifier?: string;
-    gallica_ark?: string;
-    bodleian_uuid?: string;
-    mdz_id?: string;
-    bsb_id?: string;
-    google_books_id?: string;
-    image_source?: {
-      provider?: string;
-      identifier?: string;
-      iiif_manifest?: string;
-      pdf_url?: string;
-      source_url?: string;
-    };
-    dublin_core?: {
-      dc_identifier?: string[];
-    };
-  },
+  book: DedupCandidate,
   opts: { shadowLog?: boolean } = {}
 ): Promise<DedupResult> {
   const matches: DedupMatch[] = [];
   const seen = (id: string) => matches.some(m => m.matchedBookId === id);
 
-  // Tier 1: Source fingerprint match (exact)
-  const fp = sourceFingerprint(book);
-  if (fp) {
+  // Tier 1: Source fingerprint match (exact) — SET intersection, not one
+  // priority-chosen string. `source_fingerprints` is the stored set (stamped at
+  // import and by scripts/maintenance/backfill-source-fingerprints.mjs); the
+  // scalar `source_fingerprint` is still matched so a record the backfill has
+  // not reached yet is not invisible.
+  const fps = sourceFingerprints(book);
+  const scalarFp = sourceFingerprint(book);
+  const fpKeys = [...new Set([...fps, ...(scalarFp ? [scalarFp] : [])])];
+  if (fpKeys.length > 0) {
     for (const cn of COLLECTIONS) {
-      const fpMatch = await db.collection(cn).findOne(
-        { source_fingerprint: fp },
+      const fpMatches = await db.collection(cn).find(
+        { $or: [{ source_fingerprint: { $in: fpKeys } }, { source_fingerprints: { $in: fpKeys } }] },
         { projection: VIS_PROJ }
-      );
-      if (fpMatch) {
+      ).limit(10).toArray();
+      for (const fpMatch of fpMatches) {
         const id = fpMatch.id || fpMatch._id.toString();
         if (!seen(id)) matches.push({
           matchedBookId: id,
@@ -411,6 +562,7 @@ export async function checkDuplicate(
           confidence: 'exact',
           matchedVisible: fpMatch.visible === true,
           matchedCollection: cn,
+          matchedYear: editionYear(fpMatch as { year?: number | null; published?: string | null }),
         });
       }
     }
@@ -444,6 +596,7 @@ export async function checkDuplicate(
           confidence: 'exact',
           matchedVisible: iiifMatch.visible === true,
           matchedCollection: cn,
+          matchedYear: editionYear(iiifMatch as { year?: number | null; published?: string | null }),
         });
       }
     }

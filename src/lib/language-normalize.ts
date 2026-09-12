@@ -53,6 +53,16 @@ const CODE3: Record<string, string> = {
 const SYNONYM: Record<string, string> = {
   geez: "Ge'ez", "ge'ez": "Ge'ez", 'ge’ez': "Ge'ez", ethiopic: "Ge'ez",
   'quiche maya': "K'iche' Maya", 'quiché maya': "K'iche' Maya",
+  // The OCR model writes the language of the Popol Vuh with the MODIFIER LETTER
+  // APOSTROPHE (U+02BC, "Kʼicheʼ") — the linguistically correct saltillo — while
+  // the catalogue writes ASCII. Without both spellings a tally over page tags
+  // counts one language twice and reports a bilingual book as trilingual, which
+  // is the non-latin-text-operations trap in miniature: the fold has to happen on
+  // BOTH sides or the comparison is meaningless.
+  "k'iche'": "K'iche' Maya", 'kʼicheʼ': "K'iche' Maya",
+  "k'iche": "K'iche' Maya", 'kʼiche': "K'iche' Maya",
+  "k'iche' maya": "K'iche' Maya", 'kʼicheʼ maya': "K'iche' Maya",
+  quiche: "K'iche' Maya", 'quiché': "K'iche' Maya",
   castilian: 'Spanish', flemish: 'Dutch',
   hellenistic: 'Greek', attic: 'Greek', koine: 'Greek',
   'high german': 'German', 'low german': 'German',

@@ -58,6 +58,21 @@ export function extractionRef(clientKey: string, now: Date): string {
 }
 
 /**
+ * Attribution ref for an API-KEYED caller (#4491 follow-up). Unlike the bot
+ * extractionRef this is deliberately STABLE (no month rotation) and directly
+ * resolvable: the payload is a prefix of the api_keys._id, so a passage that
+ * surfaces in the wild names the consumer that pulled it without any HMAC
+ * round-trip. That asymmetry is the point — an anonymous scraper gets a
+ * pseudonymous campaign ref; a key holder opted into identity, and the ref IS
+ * the attribution their key exists to provide (api-keys-are-attribution
+ * doctrine). The key id is the Mongo doc id, not the secret token — knowing
+ * it grants nothing.
+ */
+export function keyRef(apiKeyId: string): string {
+  return `SLK-${String(apiKeyId).slice(0, 10)}`;
+}
+
+/**
  * Client identity for the ref. Uses the same forwarded-IP resolution as the
  * API logging layer so a ref can be matched back against `api_usage` rows.
  */

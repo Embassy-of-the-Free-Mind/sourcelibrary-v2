@@ -5,12 +5,14 @@ import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
 import { withAuth } from '@/lib/auth-helpers';
 import sharp from 'sharp';
+// Which source hosts we will fetch from — ONE list, shared with the watchdog and
+// the cover archiver. See src/lib/archivable-sources.ts for why three private
+// copies of this became a silent no-op.
+import { ARCHIVABLE_SOURCES_REGEX } from '@/lib/archivable-sources';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
 
-// Regex pattern to match pages from external sources that can be archived
-const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|dl\.ndl\.go\.jp/;
 
 /**
  * Recount archived pages and write the cached counter back onto the book (#3712).
@@ -171,6 +173,24 @@ export const POST = withAuth(async (request, session, context) => {
               addRandomSuffix: false,
               allowOverwrite: true,
             });
+
+            // Generate the 1200px display variant. pagePaths has always
+            // defined three sizes, but this worker only ever wrote `full` and
+            // `thumb` — so `deriveVariant()` in page-image-url.ts, which builds
+            // the display URL by stripping `-full`, pointed at a file that was
+            // never created. Every book archived by this route rendered a broken
+            // cover on its book page as a result.
+            try {
+              const displayBuffer = await compress_photo(buffer, 1200, 78);
+              await storagePut(paths.display, displayBuffer, {
+                access: 'public',
+                contentType: 'image/jpeg',
+                addRandomSuffix: false,
+                allowOverwrite: true,
+              });
+            } catch {
+              // Non-fatal — the reader falls back to the full-res image.
+            }
 
             // Generate 150px thumbnail
             let thumbnailUrl: string | undefined;

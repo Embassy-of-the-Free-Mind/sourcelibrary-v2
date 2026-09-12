@@ -1,5 +1,6 @@
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { tagBooksIntoCollection } from '@/lib/collection-tagging';
 
 export interface CreateCollectionInput {
   slug: string;
@@ -32,7 +33,9 @@ export interface CreateCollectionResult {
  * (`POST /api/collection-proposals/[id]/approve`).
  *
  * Resolves the given book ids (accepting either Mongo `_id` strings or the
- * string `id` field), tags each book with the collection slug via `$addToSet`,
+ * string `id` field), tags each book with the collection slug (via
+ * `tagBooksIntoCollection`, which also bumps `updated_at` so the Supabase
+ * `books_catalog` mirror picks the books up — see #4399),
  * computes the language breakdown + visible book count, and inserts the
  * `collections` doc. Throws `{ code: 'exists' }` if the slug is taken so callers
  * can return a 409.
@@ -75,9 +78,7 @@ export async function createCollection(
 
   const bookMongoIds = books.map((b) => b._id);
   if (bookMongoIds.length > 0) {
-    await db
-      .collection('books')
-      .updateMany({ _id: { $in: bookMongoIds } }, { $addToSet: { collections: slug } });
+    await tagBooksIntoCollection(db, slug, { _id: { $in: bookMongoIds } });
   }
 
   // Language breakdown.

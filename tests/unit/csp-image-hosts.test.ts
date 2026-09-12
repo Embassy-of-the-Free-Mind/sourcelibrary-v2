@@ -162,3 +162,29 @@ describe('CSP_IMG_SRC', () => {
     }
   });
 });
+
+/**
+ * img-src governs RENDERING. A download reads the bytes with `fetch()`, which
+ * CSP governs under `connect-src` — a different directive, and one that listed
+ * only 'self' until 2026-09-03. Both gallery download buttons therefore threw
+ * on every click and failed silently (#4630).
+ *
+ * Our own image host is the only one that needs this: it is the only
+ * cross-origin host whose bytes the browser reads rather than renders.
+ */
+describe('CSP connect-src covers the image host we fetch bytes from (#4630)', () => {
+  const connectSrc = NEXT_CONFIG.match(/"connect-src [^"]+"/)?.[0] ?? '';
+
+  it('finds the connect-src directive', () => {
+    expect(connectSrc).toContain("'self'");
+  });
+
+  it('allows fetching from images.sourcelibrary.org', () => {
+    expect(
+      connectSrc,
+      'A gallery/page-image download fetch()es its bytes from images.sourcelibrary.org. ' +
+        'Without the host in connect-src the browser blocks the fetch and the download ' +
+        'button does nothing at all. Keep it listed.',
+    ).toContain('https://images.sourcelibrary.org');
+  });
+});

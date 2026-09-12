@@ -28,7 +28,8 @@
 
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -132,7 +133,7 @@ async function processEntry(db, entry, idx) {
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
     const slug = await ensureUniqueSlug(db, generateSlug(entry.title, entry.author));
-    const bookDoc = makeBookDoc({
+    const acquired = await insertBookIfNew(db, {
       _id: bookId, id: bookIdStr, slug,
       title: entry.title || 'Unknown', author: entry.author || 'Unknown',
       language: entry.language || 'Unknown', published: entry.year ? String(entry.year) : 'Unknown',
@@ -151,8 +152,9 @@ async function processEntry(db, entry, idx) {
       },
       status: 'draft', hidden: true, visible: false,
       created_at: new Date(), updated_at: new Date(),
-    });
-    await db.collection('books').insertOne(bookDoc);
+    }, { importer: 'script:iiif-direct-import', sourceIdentifier: entry.source_id || null, sourceUrl: manifestUrl });
+    // The gate declined this candidate; the reason is a row in `dedup_skips`.
+    if (!acquired.inserted) { log(`${prefix} SKIP — ${acquired.message}`); skipped++; return; }
     for (let start = 0; start < pages.length; start += 500) {
       const chunk = pages.slice(start, start + 500).map((p, j) => {
         const pageId = new ObjectId();

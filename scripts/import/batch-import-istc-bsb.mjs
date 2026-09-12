@@ -14,7 +14,8 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
-import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
+import { makePageDoc } from '../lib/book-docs.mjs';
+import { insertBookIfNew } from '../lib/acquire-book.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -204,7 +205,7 @@ async function main() {
     const bookIdStr = bookId.toHexString();
     const slug = await ensureUniqueSlug(db, generateSlug(title, author));
 
-    const bookDoc = makeBookDoc({
+    const acquired = await insertBookIfNew(db, {
       _id: bookId,
       id: bookIdStr,
       slug,
@@ -238,9 +239,9 @@ async function main() {
       visible: false,
       created_at: new Date(),
       updated_at: new Date(),
-    });
-
-    await db.collection('books').insertOne(bookDoc);
+    }, { importer: 'script:batch-import-istc-bsb', sourceIdentifier: bsbId, sourceUrl: manifestUrl });
+    // The gate declined this candidate; the reason is a row in `dedup_skips`.
+    if (!acquired.inserted) { console.log(`  SKIP — ${acquired.message}`); dupes++; continue; }
 
     // Create pages
     const pageDocs = pages.map((p, i) => {

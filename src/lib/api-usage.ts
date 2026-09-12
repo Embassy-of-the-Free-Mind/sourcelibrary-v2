@@ -108,12 +108,23 @@ async function writeLogEntry(input: LogApiUsageInput) {
 export async function getPagesServedLast24h(input: {
   identity: ApiIdentity;
   request: NextRequest;
+  /**
+   * Restrict the sum to one logical route (e.g. 'image'), so surfaces with
+   * their own budgets don't drain each other's. Omitted = all routes (the
+   * original /text behaviour — existing callers are unchanged).
+   */
+  route?: string;
 }): Promise<number> {
   await ensureIndexes();
   const db = await getDb();
   const since = new Date(Date.now() - 24 * 3600 * 1000);
 
   const filter: Record<string, unknown> = { ts: { $gte: since }, pages_served: { $gt: 0 } };
+  // Image-proxy rows are a separate budget pool: an omitted route means "all
+  // TEXT surfaces" (the pre-image-gate behaviour), never text + images —
+  // otherwise 500 image loads would silently zero the same caller's /text
+  // budget. Only an explicit route:'image' reads the image pool.
+  filter.route = input.route ?? { $ne: 'image' };
   if (input.identity.apiKeyId) filter.api_key_id = input.identity.apiKeyId;
   else if (input.identity.userId) filter.user_id = input.identity.userId;
   else filter.ip_hash = hashIp(getClientIp(input.request));

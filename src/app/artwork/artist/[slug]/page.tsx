@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
+import { artistAuthorRegex, artistTokens } from '@/lib/artist-match';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -15,12 +16,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Names that should not generate artist pages
-const NON_ARTIST_NAMES = ['Various', 'Unknown', 'Anonymous', 'Splendor Solis'];
-
-function isNonArtist(name: string): boolean {
-  return NON_ARTIST_NAMES.some(n => name.toLowerCase().startsWith(n.toLowerCase()));
-}
+// isNonArtist + the author regex live in src/lib/artist-match.ts so the
+// `artist=` filter on /api/artwork/search resolves exactly this set (#4509).
 
 async function getArtist(slug: string) {
   const db = await getReadDb();
@@ -28,11 +25,10 @@ async function getArtist(slug: string) {
   // Slug can be "Leonardo-da-Vinci" (dashes) or "Leonardo%20da%20Vinci" (encoded)
   const artistName = decodeURIComponent(slug).replace(/-/g, ' ');
 
-  // Don't generate pages for non-artist names
-  if (isNonArtist(artistName)) return null;
-
-  const escaped = artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const authorRegex = { $regex: `^${escaped}$`, $options: 'i' };
+  // Placeholder-name rejection and the dash-or-space regex both live in
+  // artist-match.ts — see there for why a dash cannot be treated as a space.
+  const authorRegex = artistAuthorRegex(slug);
+  if (!authorRegex) return null;
 
   // Fetch artworks and books by this author in parallel
   const [artworks, books] = await Promise.all([
@@ -62,13 +58,13 @@ async function getArtist(slug: string) {
   // Also check reversed name format for books (e.g. "Dürer, Albrecht")
   let allBooks = books;
   if (books.length === 0 && !artistName.includes(',')) {
-    const parts = artistName.split(' ');
+    const parts = artistTokens(slug);
     if (parts.length >= 2) {
-      const reversed = `${parts[parts.length - 1]}, ${parts.slice(0, -1).join(' ')}`;
-      const reversedEscaped = reversed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // Same dash-or-space matching as above, with the surname moved in front.
+      const reversedPattern = `^${parts[parts.length - 1]},[-\\s]+${parts.slice(0, -1).join('[-\\s]+')}$`;
       allBooks = await db.collection('books')
         .find(
-          { author: { $regex: `^${reversedEscaped}$`, $options: 'i' }, resource_type: { $exists: false }, visible: true },
+          { author: { $regex: reversedPattern, $options: 'i' }, resource_type: { $exists: false }, visible: true },
           { projection: {
             slug: 1, title: 1, display_title: 1, author: 1, published: 1,
             language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, pages_translated: 1,
@@ -82,7 +78,9 @@ async function getArtist(slug: string) {
   if (artworks.length === 0 && allBooks.length === 0) return null;
 
   return {
-    name: artistName,
+    // Prefer the stored author string — artistName has real hyphens flattened
+    // to spaces ("Abbas Al Musavi").
+    name: (artworks[0]?.author as string) || (allBooks[0]?.author as string) || artistName,
     artworks: JSON.parse(JSON.stringify(artworks)),
     books: JSON.parse(JSON.stringify(allBooks)),
   };

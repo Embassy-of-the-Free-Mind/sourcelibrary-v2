@@ -50,6 +50,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[1];
@@ -106,7 +107,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const r2 = new S3Client({
   region: 'auto',
@@ -181,7 +182,13 @@ async function main() {
   // state the book is in. Same predicate archive-harvard.mjs and archive-bulk.mjs
   // already use. Safe because mayAdvanceToArchiveComplete() refuses to move an
   // advanced book backward — see that function.
-  const bookFilter = ANY_STATUS
+  // --book-ids=a,b,c: targeted one-off, same intent as archive-bulk's --book-id.
+  // Named books jump the (multi-thousand-book) queue; provider filter is dropped
+  // for them — this worker archives whatever photo URL the page carries anyway.
+  const BOOK_IDS = (getArg('book-ids') || '').split(',').map(s => s.trim()).filter(Boolean);
+  const bookFilter = BOOK_IDS.length
+    ? { id: { $in: BOOK_IDS }, pages_count: { $gt: 0 } }
+    : ANY_STATUS
     ? {
         'image_source.provider': { $in: PROVIDERS },
         pages_count: { $gt: 0 },
@@ -192,6 +199,7 @@ async function main() {
         'image_source.provider': { $in: PROVIDERS },
         pages_count: { $gt: 0 },
       };
+  if (BOOK_IDS.length) console.log(`[archive-iiif] Targeted run: ${BOOK_IDS.length} book(s) by --book-ids.`);
 
   const books = await db.collection('books')
     .find(bookFilter, { projection: { id: 1, title: 1, pages_count: 1, pages_archived: 1, 'pipeline_auto.status': 1 } })
@@ -238,22 +246,24 @@ async function main() {
       await waitForToken();
       const url = page.photo_original || page.photo;
       try {
-        const buffer = await downloadImage(url);
-        const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
-        const dimFields = {};
-        if (urls.width) dimFields.image_width = urls.width;
-        if (urls.height) dimFields.image_height = urls.height;
+        // fetchPageMaster, not downloadImage directly: `/full/full/` is a request,
+        // and seven hosts answer it with something smaller and no error. It keeps
+        // THIS worker's retry/UA policy (downloadImage is passed straight through)
+        // and adds the tile-stitch route plus the native dimensions (#4406).
+        const master = await fetchPageMaster(url, { download: downloadImage });
+        const urls = await uploadPageVariants(master.buffer, page.book_id, page.page_number, uploadToR2);
+        const dimFields = dimensionFields({ width: urls.width, height: urls.height }, master);
         await db.collection('pages').updateOne({ _id: page._id }, {
           $set: {
             archived_photo: urls.archived, display_photo: urls.display, thumbnail_blob: urls.thumb,
             ...dimFields,
             'archive_metadata.archived_at': new Date(),
             'archive_metadata.source_url': url,
-            'archive_metadata.bytes': buffer.byteLength,
+            'archive_metadata.bytes': master.buffer.byteLength,
             updated_at: new Date(),
           },
         });
-        archived++; totalBytes += buffer.byteLength; touchedBookIds.add(page.book_id);
+        archived++; totalBytes += master.buffer.byteLength; touchedBookIds.add(page.book_id);
         consecutiveFails = 0; bookFails.delete(page.book_id);
       } catch (err) {
         failed++; consecutiveFails++;

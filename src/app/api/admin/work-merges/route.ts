@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { withInnerCircleAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { applyWorkMerge, pickWorkWinner, rejectWorkMerge } from '@/lib/identity-review-apply';
 
 export const maxDuration = 30;
 
@@ -67,16 +68,17 @@ function summarizeSide(workId: string, books: Record<string, unknown>[]): WorkSi
 
 /** Default winner: a Wikidata QID beats a local mint; else the id holding more books. */
 function defaultWinner(a: WorkSide, b: WorkSide): string {
-  const aQ = /^Q\d/.test(a.workId);
-  const bQ = /^Q\d/.test(b.workId);
-  if (aQ !== bQ) return aQ ? a.workId : b.workId;
-  return b.nBooks > a.nBooks ? b.workId : a.workId;
+  return pickWorkWinner(a.workId, b.workId, a.nBooks, b.nBooks);
 }
 
 /**
  * GET /api/admin/work-merges?status=pending&limit=50&skip=0&verdict=unsure&author=homer
  * Lists queue rows with live book context; `verdict` filters on the optional
  * `llm` screening stamp (same|different|unsure|none).
+ *
+ * `ids=a,b,c` (max 50) fetches specific rows — the batch lane's spot-check
+ * renders its sample through this exact read path, so what the human eyeballs
+ * before a 980-row approval is the same card a single-row reviewer sees.
  */
 export const GET = withInnerCircleAuth(async (request) => {
   const url = new URL(request.url);
@@ -86,11 +88,17 @@ export const GET = withInnerCircleAuth(async (request) => {
   const verdict = url.searchParams.get('verdict');
   const author = url.searchParams.get('author');
   const bphOnly = url.searchParams.get('bph') === '1';
+  const idsParam = url.searchParams.get('ids');
 
   const db = await getDb();
   const queue = db.collection('work_merge_queue');
 
   const filter: Record<string, unknown> = { status };
+  if (idsParam) {
+    const ids = idsParam.split(',').map((s) => s.trim()).filter(Boolean).slice(0, 50);
+    if (ids.length === 0) return NextResponse.json({ items: [], total: 0, counts: {} });
+    filter._id = { $in: ids };
+  }
   if (verdict === 'none') filter['llm'] = { $exists: false };
   else if (verdict) filter['llm.verdict'] = verdict;
   if (author) filter['evidence.author'] = { $regex: author.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' };
@@ -178,61 +186,17 @@ export const POST = withInnerCircleAuth(async (request, session) => {
     return NextResponse.json({ error: `row is already ${row.status}` }, { status: 409 });
   }
 
-  const now = new Date();
   const reviewer = session.user?.email || 'admin';
 
+  // Both branches run the shared write path in @/lib/identity-review-apply —
+  // the same code the batch lane (#4271) calls, so one approval and one row of
+  // a 980-row batch are byte-for-byte the same write.
   if (action === 'reject') {
-    await queue.updateOne({ _id: id as never }, { $set: { status: 'rejected', note: note || null, reviewed_by: reviewer, reviewed_at: now, updated_at: now } });
+    const res = await rejectWorkMerge(db, id, { note, reviewer });
+    if (res.status === 'error') return NextResponse.json({ error: res.message }, { status: 409 });
     return NextResponse.json({ status: 'rejected' });
   }
 
-  const ids = [row.a as string, row.b as string];
-  const booksCol = db.collection('books');
-  const cluster = await booksCol.find(
-    { work_id: { $in: ids } },
-    { projection: { _id: 0, id: 1, work_id: 1 } }
-  ).toArray();
-  const nA = cluster.filter((b) => b.work_id === row.a).length;
-  const nB = cluster.filter((b) => b.work_id === row.b).length;
-  if (nA === 0 || nB === 0) {
-    // One side has no books left — an earlier merge or repair already moved
-    // them. Nothing to do; mark it so it leaves the pending lane.
-    await queue.updateOne({ _id: id as never }, { $set: { status: 'stale', reviewed_by: reviewer, reviewed_at: now, updated_at: now } });
-    return NextResponse.json({ status: 'stale', message: `no books left on ${nA === 0 ? row.a : row.b}` });
-  }
-
-  const winner = winnerParam && ids.includes(winnerParam)
-    ? winnerParam
-    : (/^Q\d/.test(row.a as string) !== /^Q\d/.test(row.b as string)
-        ? (/^Q\d/.test(row.a as string) ? row.a as string : row.b as string)
-        : (nB > nA ? row.b as string : row.a as string));
-  const loser = winner === row.a ? row.b as string : row.a as string;
-
-  // Revert path: the prior work_id of every rewritten book, kept in provenance
-  // (the script keeps this in a backup file; a request handler keeps it in the doc).
-  const affected = cluster.filter((b) => b.work_id === loser).map((b) => ({ book_id: b.id as string, old_work_id: loser }));
-
-  const moved = await booksCol.updateMany(
-    { work_id: loser },
-    { $set: { work_id: winner, updated_at: now }, $addToSet: { work_id_aliases: loser } }
-  );
-  // Winner-side books carry the alias too: the redirect describes the WORK,
-  // so every edition under it must resolve the retired id.
-  await booksCol.updateMany(
-    { work_id: winner, work_id_aliases: { $ne: loser } },
-    { $set: { updated_at: now }, $addToSet: { work_id_aliases: loser } }
-  );
-
-  await db.collection('work_id_merges').insertOne({
-    winner, losers: [loser], sources: ['queue:human'],
-    books_rewritten: moved.modifiedCount, affected,
-    resolver: 'human', reviewed_by: reviewer, issue: 3846, applied_at: now,
-  });
-
-  await queue.updateOne(
-    { _id: id as never },
-    { $set: { status: 'approved', winner, note: note || null, reviewed_by: reviewer, reviewed_at: now, updated_at: now } }
-  );
-
-  return NextResponse.json({ status: 'approved', winner, loser, booksMoved: moved.modifiedCount });
+  const res = await applyWorkMerge(db, row, { winner: winnerParam, note, reviewer });
+  return NextResponse.json(res);
 });

@@ -39,7 +39,16 @@
  */
 
 const SOURCELIBRARY_HOST = 'images.sourcelibrary.org';
-const THUMB_WIDTH_THRESHOLD = 500;
+// The `-thumb.jpg` variant is 150px wide, so serving it into a 500px slot
+// upscaled it 3.3x and covers rendered visibly soft (de Bary 1864 on
+// /collections/slime-moulds, 2026-08-24). Cap the swap at a slot the 150px
+// image can actually fill: beyond this the original is served instead.
+//
+// The right long-term fix is the 1200px `display` variant, which sits between
+// these two — but it does not exist for every book yet (the archive-images
+// worker only began writing it on 2026-08-24), so pointing mid-width slots at
+// it would 404 for everything archived before that.
+const THUMB_WIDTH_THRESHOLD = 200;
 
 // Only these R2 path families actually materialize a `-thumb.jpg` sibling
 // (page scans, gallery crops, cropped covers, artworks). Other single-variant
@@ -59,6 +68,20 @@ export function bookCoverResponsiveLoader({
   width: number;
   quality?: number;
 }): string {
+  // A `-card.avif` src is ALREADY the right size for every card slot in the
+  // app (500px covers a phone at 3× DPR exactly, and the widest desktop card
+  // at 2× within 6%), so it is returned unchanged at every requested width.
+  //
+  // That is the whole point of the variant: it collapses the srcSet to one
+  // candidate, so the browser cannot pick the 2000px archival scan for a
+  // 265px slot. Measured 2026-08-26, that mispick was costing the 60-card
+  // /catalog grid 43.4 MB and 6-10s on its slowest covers; the same grid on
+  // card variants is 2.8 MB.
+  //
+  // Only reached when `getBookCardUrl()` vouched for the variant — it must be
+  // both present and not stale — so this branch never guesses a URL.
+  if (src.endsWith('-card.avif')) return src;
+
   if (width > THUMB_WIDTH_THRESHOLD) return src;
   if (!src.includes(SOURCELIBRARY_HOST)) return src;
 

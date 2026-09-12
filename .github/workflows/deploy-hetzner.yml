@@ -3,9 +3,24 @@ name: Deploy to Hetzner
 on:
   push:
     branches: [main]
+    # The box runs cron jobs out of EIGHT script directories — measured from its
+    # live crontab 2026-08-30: analysis, analytics, batch, catalog-coverage,
+    # enrichment, eval, maintenance, workers. This filter watched two of them,
+    # and one of those (`scripts/crons/`) does not exist in the repo at all.
+    #
+    # So a fix to a worker's shared library never reached the box on merge. That
+    # is not hypothetical: #4396 fixed the archiver's rate limiter in
+    # `scripts/lib/iiif-utils.mjs` and `scripts/catalog-coverage/`, neither
+    # matched, the workflow stayed silent, and Hetzner kept running the broken
+    # code — with the hourly :17 auto-pull as the only path in. The archiver had
+    # already been livelocked for a day at that point (#4395); a deploy that
+    # silently does not deploy is the worst way to extend an outage.
+    #
+    # `scripts/**` is the honest filter: the box executes from `scripts/`, and
+    # anything under it can change behaviour there. The hourly auto-pull remains
+    # the backstop, not the primary path.
     paths:
-      - 'scripts/workers/**'
-      - 'scripts/crons/**'
+      - 'scripts/**'
 
 jobs:
   deploy:

@@ -69,11 +69,17 @@ test.describe('Librarian', () => {
     // conversations and come back to them later") and broke the test the next
     // morning; the behaviour under test (a soft prompt, not a hard gate) never
     // changed. What matters is that anonymous visitors get a link, not a wall.
-    // Match the composer nudge by its exact href, not by role+name: the header
-    // UserMenu also renders a "Sign in" link (bare /auth/signin), so a name
-    // locator would pass even if the nudge below the input disappeared.
+    // Match the composer nudge by an href PREFIX, not by role+name: the header
+    // UserMenu also renders a "Sign in" link, but it is a bare /auth/signin
+    // with no query, so a name locator would pass even if the nudge below the
+    // input disappeared while `?callbackUrl=` still separates the two.
+    // Not an exact href either — #4134 (Spanish librarian) routed this through
+    // `encodeURIComponent`, so the callback renders as `%2Flibrarian` rather
+    // than `/librarian` and an equality match broke the next morning. The
+    // behaviour under test (a soft prompt carrying you back here, not a wall)
+    // never changed, and both spellings are the same URL.
     await expect(
-      page.locator('a[href="/auth/signin?callbackUrl=/librarian"]')
+      page.locator('a[href^="/auth/signin?callbackUrl="]')
     ).toBeVisible();
   });
 
@@ -128,11 +134,18 @@ test.describe('Librarian - API Routes', () => {
   test('POST /api/embassy/chat allows a first anonymous request', async ({ request }) => {
     // Commit 4516ebc7 deliberately opened anonymous Librarian access — the
     // old "auth required" contract is gone. Anonymous visitors get 5 free
-    // actions/hour (src/app/api/embassy/chat/route.ts, checkRateLimit). We
-    // only assert the happy path here to avoid burning 5 real LLM calls to
+    // actions/hour (src/app/api/embassy/chat/route.ts, checkRateLimitShared).
+    // We only assert the happy path here to avoid burning 5 real LLM calls to
     // prove the 429-after-quota path; that path is untested by this suite.
+    //
+    // A bare greeting, not a research question: this suite runs on a daily
+    // cron against production, and "What is the Emerald Tablet?" cost a full
+    // Gemini turn and a new public thread every morning (#4704 — 39 of them).
+    // A greeting is answered by the desk without a model call and its thread
+    // stays unlisted, while still proving the route accepts an anonymous
+    // first request and returns a thread + message.
     const res = await request.post('/api/embassy/chat', {
-      data: { message: 'What is the Emerald Tablet?' },
+      data: { message: 'Hello' },
     });
     // 429 is still acceptable if a prior test/run in this window already
     // used up the shared IP's quota.

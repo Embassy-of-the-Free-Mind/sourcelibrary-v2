@@ -59,6 +59,7 @@ const OG_BOOK_PROJECTION = {
 };
 const OG_PAGE_PROJECTION = {
   _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1,
+  display_photo: 1,
   cropped_photo: 1, crop: 1, 'translation.data': 1, 'ocr.data': 1,
   // The language-keyed map (and its legacy Spanish field) so the Spanish card
   // can excerpt the Spanish text rather than the English pivot.
@@ -99,7 +100,13 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
   const title = (book ? localizedTitle(book as Book & { localized?: LocalizedBookMap }, lang) : '') || t.unknownTitle;
   const author = book?.author || t.unknownAuthor;
   const pageNum = page?.page_number || '?';
-  const imageUrl = (page as any)?.enhanced_photo || page?.compressed_photo || page?.archived_photo || page?.photo;
+  // Prefer the provenance-marked display variant (#2651/#4406): an OG card is
+  // scraped and re-hosted by every platform that renders a link preview, so it
+  // is one of the most-copied images we emit and should carry its mark.
+  // enhanced_photo stays ahead of it — it is a deliberate cover-selection
+  // preference and is currently ~0% populated.
+  const imageUrl = (page as any)?.enhanced_photo || page?.compressed_photo
+    || (page as any)?.display_photo || page?.archived_photo || page?.photo;
 
   // Truncate title if too long
   const displayTitle = title.length > 50 ? title.substring(0, 47) + '...' : title;

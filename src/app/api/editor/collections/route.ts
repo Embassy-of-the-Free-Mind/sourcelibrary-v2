@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { authenticateEditor, checkCollectionOwnership } from '@/lib/editor-auth';
+import { tagBooksIntoCollection, untagBooksFromCollection } from '@/lib/collection-tagging';
 
 export const maxDuration = 30;
 
@@ -72,11 +73,11 @@ export async function POST(request: NextRequest) {
   const languages: { lang: string; count: number }[] = [];
 
   if (bookIds?.length) {
-    const result = await db.collection('books').updateMany(
-      { $or: [{ id: { $in: bookIds } }, { slug: { $in: bookIds } }], deleted: { $ne: true } },
-      { $addToSet: { collections: slug } }
-    );
-    booksTagged = result.modifiedCount;
+    const result = await tagBooksIntoCollection(db, slug, {
+      $or: [{ id: { $in: bookIds } }, { slug: { $in: bookIds } }],
+      deleted: { $ne: true },
+    });
+    booksTagged = result.changedCount;
 
     // Compute languages
     const langAgg = await db.collection('books').aggregate([
@@ -172,18 +173,17 @@ export async function PATCH(request: NextRequest) {
 
   // Add books
   if (addBookIds?.length) {
-    await db.collection('books').updateMany(
-      { $or: [{ id: { $in: addBookIds } }, { slug: { $in: addBookIds } }], deleted: { $ne: true } },
-      { $addToSet: { collections: slug } }
-    );
+    await tagBooksIntoCollection(db, slug, {
+      $or: [{ id: { $in: addBookIds } }, { slug: { $in: addBookIds } }],
+      deleted: { $ne: true },
+    });
   }
 
   // Remove books
   if (removeBookIds?.length) {
-    await db.collection('books').updateMany(
-      { $or: [{ id: { $in: removeBookIds } }, { slug: { $in: removeBookIds } }] },
-      { $pull: { collections: slug } as any }
-    );
+    await untagBooksFromCollection(db, slug, {
+      $or: [{ id: { $in: removeBookIds } }, { slug: { $in: removeBookIds } }],
+    });
   }
 
   // Recount

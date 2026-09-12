@@ -26,7 +26,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
-import { upgradeToFullRes } from '../lib/iiif-utils.mjs';
+import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = (() => { const i = process.argv.indexOf('--limit'); return i !== -1 ? parseInt(process.argv[i+1]) : 0; })();
@@ -121,18 +121,31 @@ async function archivePageHires(page, db) {
   const domain = getDomain(fullRes);
   await waitForToken(domain);
 
-  let buffer;
+  // This worker exists to get HIGHER resolution for illustrated pages, so a
+  // silently-capped response defeats its whole purpose. fetchPageMaster adds the
+  // tile-stitch route on known cappers and reports what the source said was
+  // available; the retry + full-res-then-original fallback below stays this
+  // worker's own (#4406).
+  let master;
   try {
-    buffer = await downloadImage(fullRes);
+    const download = async (u) => {
+      try {
+        return await downloadImage(u);
+      } catch (err) {
+        if (u !== original) return await downloadImage(original);
+        throw err;
+      }
+    };
+    master = await fetchPageMaster(fullRes, { download });
   } catch (err) {
-    // Fallback to original URL if full-res rejected
-    try { buffer = await downloadImage(original); }
-    catch { return { fail: err.message }; }
+    return { fail: err.message };
   }
+  const buffer = master.buffer;
 
   if (!buffer || buffer.byteLength < 1000) return { fail: `tiny buffer (${buffer?.byteLength || 0}b)` };
 
   const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
+  const dimFields = dimensionFields({ width: urls.width, height: urls.height }, master);
 
   await db.collection('pages').updateOne(
     { _id: page._id },
@@ -140,8 +153,7 @@ async function archivePageHires(page, db) {
       archived_photo: urls.archived,
       display_photo: urls.display,
       thumbnail_blob: urls.thumb,
-      ...(urls.width ? { image_width: urls.width } : {}),
-      ...(urls.height ? { image_height: urls.height } : {}),
+      ...dimFields,
       'archive_metadata.archived_at': new Date(),
       'archive_metadata.source_url': fullRes,
       'archive_metadata.original_url': original,

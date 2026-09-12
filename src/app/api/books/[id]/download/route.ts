@@ -6,6 +6,7 @@ import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
 import { checkAndRecordDownload } from '@/lib/download-cap';
+import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
@@ -83,6 +84,11 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push(`Original Language: ${book.language}`);
   if (book.published) {
     lines.push(`Published: ${book.published}`);
+  }
+  // The physical copy behind the scan (#4360) — cite the holder, not just us.
+  const holdingCopy = resolveHoldingCopy(book);
+  if (holdingCopy) {
+    lines.push(`Source Copy: ${holdingCopy.holding_library}${holdingCopy.shelfmark ? `, shelfmark ${holdingCopy.shelfmark}` : ''}`);
   }
   lines.push('');
 
@@ -2163,7 +2169,11 @@ async function generateScholarlyEpubDownload(
       const illusPageUrl = illusPage
         ? ((illusPage as any).cropped_photo || (illusPage as any).archived_photo || illusPage.photo)
         : null;
-      const illusUrl = illusPageUrl || img.extracted_url || img.image_url;
+      // Prefer the extracted CROP: the figure should show the illustration itself,
+      // not the whole page scan (the figure already links back to the page). Page
+      // scan is the fallback when no crop was generated. The cover block above
+      // deliberately keeps the opposite preference — a cover wants the full page.
+      const illusUrl = img.extracted_url || illusPageUrl || img.image_url;
       if (illusUrl) {
         const illusBuffer = await fetchIllustrationImage(illusUrl);
         if (illusBuffer) {

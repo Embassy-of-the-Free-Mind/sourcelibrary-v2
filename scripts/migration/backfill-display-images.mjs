@@ -206,7 +206,9 @@ async function processPage(page, db) {
       if (!fullResBuffer || fullResBuffer.length === 0) {
         throw new Error(`empty source download: ${source.slice(0, 100)}`);
       }
-      const { display, thumb } = await generateDisplayVariants(fullResBuffer);
+      const { display, thumb } = await generateDisplayVariants(fullResBuffer, {
+        bookId: page.book_id, pageNumber: page.page_number,
+      });
       displayUrl = await uploadToR2(keys.display, display);
       thumbUrl = await uploadToR2(keys.thumb, thumb);
       stats.bytesUploaded += display.length + thumb.length;

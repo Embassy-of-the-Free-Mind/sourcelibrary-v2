@@ -6,8 +6,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   Search, Image as ImageIcon, BookOpen, X,
-  SlidersHorizontal, Loader2, ImagePlus, AlertCircle
+  SlidersHorizontal, Loader2, ImagePlus, AlertCircle, Camera
 } from 'lucide-react';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import LikeButton from '@/components/ui/LikeButton';
 import { canLoadMore } from '@/lib/gallery-pagination';
 import { useIdentity } from '@/hooks/useIdentity';
@@ -93,6 +94,9 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const identity = useIdentity();
   // The global SL header is rendered by the page shell via ConditionalSiteHeader,
   // which suppresses it on embedded/tenant surfaces (CLAUDE.md invariant #5).
+  // Same shared signal the header/footer use to drop global-only links on
+  // partner subdomains (#3364, #3367).
+  const isTenantHost = useIsEmbedded();
 
   // Path-tenants (e.g. /internet-archive/gallery) should never propagate
   // into book/page links — those URLs are canonical at /book/{id}. The
@@ -156,6 +160,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // Merged-gallery source facet: 'all' (default, interleaves illustrations + artworks),
   // 'illustration', or 'artwork'.
   const sourceFilter = searchParams.get('source') || 'all';
+  // /api/gallery caps results at 3 images per book by default, for variety on the
+  // unscoped browse. Collection pages link here with maxPerBook=999 so "view all
+  // N plates" lands on all N — but the param was never read, so those links
+  // opened a page showing 9 of 267 and looked broken.
+  const maxPerBookParam = searchParams.get('maxPerBook');
 
   const limit = 48;
 
@@ -210,6 +219,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           offset: 0,
           bookId: bookId || undefined,
           collection: collectionFilter || undefined,
+          maxPerBook: maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined,
           library: libraryFilter || undefined,
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
@@ -257,6 +267,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         offset: currentOffset,
         bookId: bookId || undefined,
         collection: collectionFilter || undefined,
+        maxPerBook: maxPerBookParam ? parseInt(maxPerBookParam, 10) : undefined,
         library: libraryFilter || undefined,
         query: imageSearchQuery || undefined,
         type: typeFilter || undefined,
@@ -443,6 +454,22 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             <SlidersHorizontal className="w-4 h-4" />
             Filters
           </button>
+
+          {/* Entry point to /identify — the gallery is where someone who has
+              just seen one of these images in the wild lands first (#4232).
+              Hidden on tenant hosts: /identify searches the whole corpus and
+              is on the global-only list (tenant-global-paths.ts). */}
+          {!isTenantHost && (
+            <Link
+              href="/identify"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border bg-white text-stone-600 border-stone-300 hover:bg-stone-50 transition-colors whitespace-nowrap"
+              title="Photograph an artwork to find it in the library"
+            >
+              <Camera className="w-4 h-4" />
+              <span className="hidden sm:inline">Seen it somewhere?</span>
+              <span className="sm:hidden">Identify a photo</span>
+            </Link>
+          )}
         </div>
 
         {/* Active Filters / Book Info */}

@@ -25,7 +25,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const JPEG_QUALITY = 85;
 const MAX_DIMENSION = 3000;
 
