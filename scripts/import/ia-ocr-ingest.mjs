@@ -158,7 +158,7 @@ await withMongo(async (db) => {
     if (!xml) { summary.no_xml++; console.log(`  ${bid} ${iaId}: no _djvu.xml`); continue; }
     const leaves = leafTexts(xml);
     const meta = await iaOcrMeta(iaId);
-    const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
+    const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, 'ocr.source': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
 
     // reference: pages that already carry model OCR, scored at every leaf offset in ±MAX_OFFSET.
     // The book's offset is the one most reference pages prefer; it must be shared by
@@ -166,7 +166,9 @@ await withMongo(async (db) => {
     const leafTok = leaves.map((l) => tokens(l));
     const refs = [];
     for (const p of pages) {
-      const t = p.ocr?.data; if (!t) continue; const k = leafIndex(p); const tt = tokens(t); if (tt.length < 20) continue;
+      // Reference = MODEL OCR only. Pages this script wrote earlier are the IA text itself and
+      // would score 1.000 against it (the Shaker shelf re-scored at 1.000 on 2026-09-12).
+      const t = p.ocr?.data; if (!t || p.ocr?.source === SOURCE) continue; const k = leafIndex(p); const tt = tokens(t); if (tt.length < 20) continue;
       const byOffset = {};
       for (let d = -MAX_OFFSET; d <= MAX_OFFSET; d++) { const j = k + d; if (j < 0 || j >= leaves.length || leafTok[j].length < 20) continue; byOffset[d] = ratio(tt, leafTok[j]); }
       if (!Object.keys(byOffset).length) continue;
