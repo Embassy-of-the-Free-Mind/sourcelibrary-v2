@@ -539,3 +539,15 @@ The Derge-identity scorer (`kanjur_align.score_page` on clawdbot, `/root/tibetan
 - **Build positive controls from the INPUT distribution, not the reference's.** A two-page concatenation control scores 0.496 at the old window and 0.968 at the new one — that control now ships with the scorer (`control --span 2`).
 - **For any ratio with the read in the denominator, window the reference wider than the longest read.** Fix: `score_page(..., window=2)` (retrieved page ±2, now the default; `window=0` reproduces the old number and `identity1` carries it).
 - **Tell:** an external instrument predicts a magnitude you do not see (a 0.7%-CER model reading at 0.48 "identity"), and your gate still passes. That gap is the instrument until proven otherwise. Postmortem and numbers: #4722 comment 5640946736; lesson `lesson_alignment_identity_capped_by_window_span` in auto-memory.
+
+## flash-lite does not ground, and says it did (demoted from CLAUDE.md 2026-09-12)
+
+`gemini-3.1-flash-lite` returns empty `groundingMetadata` on every grounded-search call — 0 of 189
+measured 2026-08-10 — **while the response prose claims it made "extensive searches".** The prose is
+not evidence that a search happened; it is the failure mode.
+
+- Use `gemini-3-flash-preview` with an explicit **positive** `thinkingBudget` (512 → 6/6 grounded,
+  ~$0.003/book; unbounded ≈ $0.19/book). `thinkingBudget: -1` silently suppresses grounding.
+- **Verify groundedness from `queries[]` on the written rows, never from the response text.** Same
+  shape as every other entry in this file: read the artifact the mechanism produces, not the
+  narration of it.
