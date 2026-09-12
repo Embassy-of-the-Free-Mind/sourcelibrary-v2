@@ -76,7 +76,7 @@ if (PRESERVE) {
   const filter = ONLY_PAGE ? { id: ONLY_PAGE } : {
     ...(ONLY_BOOK ? { book_id: ONLY_BOOK } : {}),
     $or: [
-      { translation_withheld: { $exists: true } },
+      { 'translation_withheld.reason': { $exists: true } },
       { 'ocr.pipeline': { $exists: true } },
       { 'ocr.unreadable': true },
     ],
@@ -138,7 +138,7 @@ if (MOVE || UNMOVE) {
   await mongo.connect();
   const filter = ONLY_PAGE
     ? { id: ONLY_PAGE }
-    : { translation_withheld: { $exists: true }, ...(ONLY_BOOK ? { book_id: ONLY_BOOK } : {}) };
+    : { 'translation_withheld.reason': { $exists: true }, ...(ONLY_BOOK ? { book_id: ONLY_BOOK } : {}) };
   const ids = await mongo.db('bookstore').collection('pages').distinct('id', filter);
   await mongo.close();
   console.log(`${ids.length} withheld page ids from Mongo`);

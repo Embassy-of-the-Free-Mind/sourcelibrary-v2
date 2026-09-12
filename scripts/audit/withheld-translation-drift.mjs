@@ -80,7 +80,7 @@ out.leakedBooks = [...leakedBooks];
 
 // ── ORPHANED / RESOLVED / withheld total ─────────────────────────────────────
 const withheldCursor = pages.find(
-  { translation_withheld: { $exists: true } },
+  { 'translation_withheld.reason': { $exists: true } },
   {
     projection: {
       id: 1, book_id: 1, 'translation.data': 1, 'translation.updated_at': 1,

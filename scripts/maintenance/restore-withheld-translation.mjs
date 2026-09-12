@@ -44,7 +44,7 @@ await mongo.connect();
 const db = mongo.db('bookstore');
 const pages = db.collection('pages');
 
-const query = PAGE_ID ? { id: PAGE_ID } : { book_id: BOOK_ID, translation_withheld: { $exists: true } };
+const query = PAGE_ID ? { id: PAGE_ID } : { book_id: BOOK_ID, 'translation_withheld.reason': { $exists: true } };
 const docs = await pages.find(query).toArray();
 if (!docs.length) { console.error('no matching pages'); await mongo.close(); process.exit(1); }
 
