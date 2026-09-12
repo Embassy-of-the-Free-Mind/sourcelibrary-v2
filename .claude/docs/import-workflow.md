@@ -100,3 +100,51 @@ The rule, the incident behind it, and where per-book *actions* go instead (rows 
   Width caps are doubly destructive on wide-format material (palm leaves,
   scrolls), where they crush the readable dimension.
 - Respect source terms: ctext.org and NLC China prohibit automated download — do NOT scrape them.
+
+---
+
+## 3b. SCREEN THE EDITION, NOT THE AUTHOR (added 2026-08-31)
+
+Step 3's subject-filter has a second half that cost a near-miss on 2026-08-30:
+**a source's public-domain label is a claim by whoever uploaded it, not a
+determination.** Screen the IMPRINT before importing.
+
+The case: Rudolf Steiner died in 1925, so his text is PD everywhere. Internet
+Archive holds his complete *Gesamtausgabe* as 335 items under
+`rudolf-steiner-ga-*`, every one tagged
+`licenseurl: creativecommons.org/publicdomain/mark/1.0`. Reading the free
+`_djvu.txt` derivative took one request and showed what the scans actually are:
+
+> RUDOLF STEINER GESAMTAUSGABE … 24. Auflage, Gesamtausgabe Dornach 1993 …
+> **Alle Rechte bei der Rudolf Steiner-Nachlaßverwaltung** … © 1961 …
+> ISBN 3-7274-0100-1 … Hinweise des Herausgebers
+
+Modern critical editions with editorial apparatus, all rights reserved. The PD
+Mark was one private uploader's assertion (`federicoinbox`/`the_stacks`) and it
+was simply wrong. Importing "all 335" would have ingested a wholesale
+infringement. **We had already published one of them** — GA 34, the 1987 revised
+Dornach edition, live and fully translated until it was hidden that night.
+
+**The rule.** An author's death date licenses the TEXT. It says nothing about
+the EDITION in front of you. Before importing at scale from one uploader or one
+identifier pattern, sample 2–3 items and read the imprint page — `_djvu.txt` is
+free, needs no OCR spend, and answers it in seconds. Three tells that an item is
+a modern edition wearing a PD label: a personal-account uploader rather than a
+library or Google scan; **no `date`/`publisher` in the IA metadata** (a real
+library record carries both); and an identifier pattern that selects for a
+publisher's series rather than for a period printing.
+
+**Corollary — an identifier pattern is not a date filter.** `rudolf-steiner-ga-*`
+selects the Gesamtausgabe, i.e. precisely the modern editions. Enumerating the
+same author with `date:[… TO 1928-12-31]` returned genuine period imprints from
+named houses (E. Felber 1894, S. Cronbach 1900, Putnam 1914). Query the property
+you actually care about.
+
+**And screen for apparatus, not just for the main text.** Four books cleared this
+way in one night still failed on a second hand: a 1948 Rilke printing was a
+bilingual edition whose *English version by Nora Wydenbruck* (d. 1959) is in EU
+copyright to 2030; a 1920 Rilke volume carried a *Nachwort* by Fritz Bergemann
+(d. 1963). Read the back matter too, and verify any name you find against
+Wikidata rather than assuming. Related:
+`.claude/docs/invariants/measurement-instruments.md` (the absence of a marker is
+not the absence of the mechanism).
