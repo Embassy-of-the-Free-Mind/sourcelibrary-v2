@@ -609,15 +609,26 @@ async function main() {
     // left alone.
     if (targetMode !== 'all') {
       pageFilter['ocr.recitation_blocked'] = { $ne: true };
+      // Same reasoning for the general give-up (#4674): three failed reads of any
+      // other kind and the page is out until a human intervenes.
+      pageFilter['ocr.fail_blocked'] = { $ne: true };
     }
 
     const totalEligible = await db.collection('pages').countDocuments(pageFilter);
     console.log(`Eligible pages: ${totalEligible.toLocaleString()}`);
     if (targetMode !== 'all') {
+      // The blocked tests go in $and — pageFilter already owns $or for the
+      // target-mode clauses, and spreading a second $or over it would silently
+      // replace them and count the wrong pages.
+      const { 'ocr.recitation_blocked': _r, 'ocr.fail_blocked': _f, ...unblockedFilter } = pageFilter;
       const blocked = await db.collection('pages').countDocuments({
-        ...pageFilter, 'ocr.recitation_blocked': true,
+        ...unblockedFilter,
+        $and: [
+          ...(unblockedFilter.$and ?? []),
+          { $or: [{ 'ocr.recitation_blocked': true }, { 'ocr.fail_blocked': true }] },
+        ],
       });
-      if (blocked > 0) console.log(`  (excluding ${blocked} page(s) the model has permanently refused)`);
+      if (blocked > 0) console.log(`  (excluding ${blocked} page(s) the model has permanently refused or repeatedly failed)`);
     }
 
     if (totalEligible === 0) {

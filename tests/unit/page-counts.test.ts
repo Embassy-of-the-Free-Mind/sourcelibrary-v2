@@ -24,6 +24,7 @@ import {
   isTranslatedPage,
   buildVisiblePageCountPipeline,
   countVisiblePageStats,
+  isBlockedForModel,
 } from '../../scripts/lib/page-counts.mjs';
 
 describe('page-counts convention (#3293)', () => {
@@ -109,6 +110,58 @@ describe('page-counts convention (#3293)', () => {
     expect(stats.with_translation).toBe(2); // pages 1 and 3 (bookplate is not 'blank')
     // pages_blank counts never-translated types that carry OCR: the blank and the bookplate.
     expect(stats.blank).toBe(2);
+  });
+
+  it('a page we have permanently given up on leaves the translatable denominator (#4674)', () => {
+    // The give-up flag is the general sibling of recitation_blocked: three failed
+    // reads of any kind and the page is out of the queue. It has to leave this
+    // denominator too, or every such book reports a gap it will never close — the
+    // Tabiena Summa showed 1002/1003 forever on one runaway-generation folio.
+    const pages = [
+      { page_number: 1, ocr: { data: 'a' }, translation: { data: 'A' } },
+      { page_number: 2, ocr: { data: 'b' }, translation: { data: 'B' } },
+      { page_number: 3, ocr: { fail_blocked: true, fail_count: 3, fail_reason: 'over-hallucination-limit' } },
+    ];
+
+    const stats = countVisiblePageStats(pages);
+    // Only pages 1 and 2. Page 3 is impossible work, not pending work.
+    expect(stats.translatable).toBe(2);
+    expect(stats.translated_translatable).toBe(2);
+    // …so the book reads as fully translated rather than stuck at 2/3 forever.
+    expect(stats.translated_translatable).toBe(stats.translatable);
+  });
+
+  it('a page still under its 3-strike budget stays in the denominator (#4674)', () => {
+    // The counterpart control: fail_count alone must NOT remove a page, or one
+    // transient failure would silently shrink the denominator and overstate
+    // completeness — the exact failure this file exists to pin against.
+    const pages = [
+      { page_number: 1, ocr: { data: 'a' }, translation: { data: 'A' } },
+      { page_number: 2, ocr: { fail_count: 2, fail_reason: 'no-text:SAFETY' } },
+    ];
+
+    const stats = countVisiblePageStats(pages);
+    expect(stats.translatable).toBe(2);
+    expect(stats.translated_translatable).toBe(1);
+  });
+
+  it('a give-up does not outlive the model that made it (#4674)', () => {
+    // 959 of 967 blocked pages had not been retried in over a month, and half of a
+    // re-probed sample read cleanly against the CURRENT model. A block that names no
+    // model is permanent; one that names its model must expire when the model changes.
+    const blocked = { ocr: { fail_blocked: true, fail_blocked_model: 'gemini-3.1-flash-lite' } };
+    expect(isBlockedForModel(blocked, 'gemini-3.1-flash-lite')).toBe(true);   // same model — still blocked
+    expect(isBlockedForModel(blocked, 'gemini-3-flash-preview')).toBe(false); // new model — reopened
+
+    // A legacy block records no model. It stays blocked under every model: reopening
+    // 967 pages is a spend decision, not something a deploy should do by itself.
+    const legacy = { ocr: { fail_blocked: true } };
+    expect(isBlockedForModel(legacy, 'gemini-3.1-flash-lite')).toBe(true);
+    expect(isBlockedForModel(legacy, 'anything-else')).toBe(true);
+
+    // And a page nobody gave up on is never blocked.
+    expect(isBlockedForModel({ ocr: { fail_count: 2 } }, 'gemini-3.1-flash-lite')).toBe(false);
+    expect(isBlockedForModel({}, 'gemini-3.1-flash-lite')).toBe(false);
   });
 
   it('regression: hidden translated pages do not fabricate a low translated count', () => {

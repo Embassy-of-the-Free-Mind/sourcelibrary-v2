@@ -58,6 +58,27 @@ const CONCURRENCY = intArg('concurrency', 6);
 // about buying throughput with memory, so the width stays where it was.
 const PAGE_CONCURRENCY = intArg('page-concurrency', 6);
 const BATCH = intArg('batch', 60);
+// A second archiver on a second egress address. The hourly Hetzner lane drains
+// the queue oldest-first and is rate-limited per IP by the source (MDZ answered
+// 429 to a lone curl from the box on 2026-09-11 while the archiver ran, and it
+// converged on ~0.2 pages/s, ~21K pages/day, against a 3.8M-page MDZ backlog).
+// A laptop on a different address is a separate budget — ten concurrent MDZ
+// fetches came back 200 in 3–4s from the Mac at the same moment. Two flags let
+// that lane share the queue without colliding with the first:
+//   --newest-first   take rows from the NEW end, so the two lanes meet in the
+//                    middle instead of fetching the same books; fresh
+//                    acquisitions no longer wait behind a three-month backlog.
+//   --hosts a,b      only archive books whose page images live on these hosts
+//                    (matched on the first un-archived page). The queue's
+//                    `source` label is not the host — "iiif" rows point at
+//                    MDZ, IA, Gallica and e-rara alike — and each host has its
+//                    own lane and its own blocks (e-rara 403s the Mac, IA times
+//                    out through its tunnel), so the filter is by host.
+// Both lanes are idempotent per page (archiveIiif fetches only pages lacking
+// archived_photo), so an overlap costs a duplicate fetch, never a bad write.
+const NEWEST_FIRST = process.argv.includes('--newest-first');
+const hostsIdx = process.argv.indexOf('--hosts');
+const HOSTS: Set<string> | null = hostsIdx > -1 && process.argv[hostsIdx + 1] ? new Set(process.argv[hostsIdx + 1].split(',').map(h => h.trim()).filter(Boolean)) : null;
 
 // A pool width is load-bearing: at 0 or NaN this script archives nothing and
 // says it succeeded. Fail at startup instead — a constructor that throws beats
@@ -310,10 +331,10 @@ async function main() {
     // existed sort first (missing < 0 in BSON), which is what we want — an
     // untried book outranks one we have already failed on.
     todo = await queue.find({ status: 'acquired', book_id: { $exists: true }, archived: { $ne: true } })
-      .sort({ archive_attempts: 1, _id: 1 })
+      .sort({ archive_attempts: 1, _id: NEWEST_FIRST ? -1 : 1 })
       .limit(BATCH).toArray();
   }
-  let ok = 0, partial = 0, stalled = 0;
+  let ok = 0, partial = 0, stalled = 0, hostSkipped = 0;
   // How many runs a book may make zero progress on before it is parked out of
   // the queue. Eight hours of hourly runs is long enough to ride out a source
   // outage and short enough that a permanently-dead book stops taking a slot.
@@ -327,6 +348,13 @@ async function main() {
   async function processBook(w: any) {
     const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1 } });
     if (!b) { await markQueue(w, { archived: true, archive_note: 'no-book' }); return; }
+    if (HOSTS) {
+      // Not this lane's host: leave the row untouched (no attempt counted, no
+      // note) so the other lane sees it exactly as before.
+      const p0 = await pages.findOne({ book_id: w.book_id, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { photo: 1, photo_original: 1 } });
+      const h = hostOf(p0?.photo_original || p0?.photo || '');
+      if (!HOSTS.has(h)) { hostSkipped++; return; }
+    }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (have0 < (b.pages_count || 0) * 0.99) {
       if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') { await archiveIiif(w.book_id); }
@@ -366,7 +394,7 @@ async function main() {
   }
   let blocked: Error | null = null;
   workTotal = todo.length;
-  log(`starting: ${workTotal} book(s), concurrency ${CONCURRENCY} × ${PAGE_CONCURRENCY} pages — heartbeat every 60s`);
+  log(`starting: ${workTotal} book(s), concurrency ${CONCURRENCY} × ${PAGE_CONCURRENCY} pages${NEWEST_FIRST ? ', newest first' : ''}${HOSTS ? `, hosts ${[...HOSTS].join(',')}` : ''} — heartbeat every 60s`);
   // Books ran in fixed slices of CONCURRENCY behind `await Promise.all(slice)`.
   // A slice does not advance until its SLOWEST book finishes, and its finished
   // workers sit idle in the meantime — so a slice containing one book on a
@@ -410,7 +438,7 @@ async function main() {
     const throttled = [...hostThrottles.entries()].map(([h, n]) => `${h}:${n}`).join(' ');
     const runMins = (Date.now() - runStart) / 60000;
     const runRate = runMins > 0 ? pagesDone / (runMins * 60) : 0;
-    log(`archive-acquired (${reason}): complete ${ok}, partial ${partial}, stalled ${stalled} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
+    log(`archive-acquired (${reason}): complete ${ok}, partial ${partial}, stalled ${stalled} | books ${booksDone}/${workTotal} | pages ${pagesDone} ok, ${pagesFailed} failed, ${pagesSkipped} skipped${hostSkipped ? `, ${hostSkipped} books on other hosts skipped` : ''}${localFailures ? `, ${localFailures} local (store/encode)` : ''} in ${runMins.toFixed(1)}m (${runRate.toFixed(2)} pages/s)${throttled ? ` | throttled ${throttled}` : ''}`);
     // Per-host triage. A failure count without the source's own answer beside
     // it is not a measurement — it is what made #4588 take three rounds of
     // diagnosis to reach a cause this table states outright.

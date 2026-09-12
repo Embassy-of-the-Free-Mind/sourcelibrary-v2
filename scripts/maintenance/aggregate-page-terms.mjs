@@ -14,101 +14,105 @@
  * Global row (one per term_key):
  *   { term_key, term (most frequent surface form), kinds: {vocab,term,keyword,original},
  *     langs: {Latin: n, …}, glosses: [{gloss, n}] (top 5), books: n, pages: n,
+ *     books_text: n (books excluding <keywords> rows), books_by_kind: {vocab, term, keyword, original_verified},
  *     original_verified: n, original_unverified: n,
  *     evidence: [{book_id, page_number, kind, gloss, context}] (≤5, distinct books; context = ≤120 chars of translation before a <term>/<note original>),
- *     field_provenance: {source, method, date} }
+ *     type, type_source, type_confidence, type_id (with --types; scripts/lib/page-terms-type.mjs),
+ *     field_provenance: {source, method, kept_because, rule, date} }
  *
- * Kept for Mongo (--apply) when ANY of: has a gloss; <term>-tagged in ≥2 books; verified
- * original in ≥2 books; <vocab> in ≥3 books; non-Latin script. Everything else stays in the
- * SQLite file (queryable there). Rows are upserted by term_key, so re-running after new
- * shards is safe.
+ * Keep rules live in scripts/lib/page-terms-keep.mjs. `--rule pilot` (default) is the
+ * original rule — any gloss, any non-Latin, <term> in ≥2 books, verified original in ≥2,
+ * <vocab> in ≥3 — which kept 5.18M of 11.6M groups on the full corpus and grows linearly
+ * with it. `--rule bridge` is the book-floored rule (1.21M rows measured 2026-09-11) and is
+ * what --apply should use; the default stays `pilot` so the flag change is reviewable.
+ *
+ * Two input modes:
+ *   shards (default)  --in-dir <dir>: load new shards into SQLite, group, emit. Hours on the
+ *                     full corpus — the per-group detail re-query dominates.
+ *   --from-global <global.jsonl>: re-read a table THIS script already wrote, re-apply the
+ *                     keep rule, re-stamp provenance (+ types), emit. Minutes, no SQLite.
+ *                     This is how a rule or typing change reaches Mongo without re-grouping.
  *
  *   node scripts/maintenance/aggregate-page-terms.mjs --in-dir <dir> [--db page-terms.sqlite] [--out global.jsonl]
- *   node scripts/maintenance/aggregate-page-terms.mjs --in-dir <dir> --apply
- *   thresholds: --min-term-books 2 --min-orig-books 2 --min-vocab-books 3 --min-nonlatin-books 1
+ *   node scripts/maintenance/aggregate-page-terms.mjs --from-global global.jsonl --rule bridge --types types.jsonl --out kept.jsonl --apply
+ *   pilot thresholds: --min-term-books 2 --min-orig-books 2 --min-vocab-books 3 --min-nonlatin-books 1
+ *   --keywords-weight 0: evaluate the rule on non-<keywords> evidence (see KW_WEIGHT below)
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { DatabaseSync } from 'node:sqlite';
-import zlib from 'node:zlib';
+import readline from 'node:readline';
 import { MongoClient } from 'mongodb';
 import { isLatinScript } from '../lib/page-terms-parse.mjs';
+import { KEEP_RULES, RULE_NAMES } from '../lib/page-terms-keep.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (f) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : null; };
+const FROM_GLOBAL = getArg('--from-global');
 const IN_DIR = getArg('--in-dir') || 'scripts/output/page-terms';
 const DB_PATH = getArg('--db') || path.join(IN_DIR, '..', 'page-terms.sqlite');
-const OUT = getArg('--out') || path.join(IN_DIR, '..', 'page-terms-global.jsonl');
+const OUT = getArg('--out') || (FROM_GLOBAL ? FROM_GLOBAL.replace(/\.jsonl$/, '') + '-kept.jsonl' : path.join(IN_DIR, '..', 'page-terms-global.jsonl'));
 const APPLY = args.includes('--apply');
 const REBUILD = args.includes('--rebuild');
-const METHOD = 'aggregate-page-terms.mjs@2';
-// Keep thresholds (distinct books). Defaults reproduce the pilot rule; raise them on the
-// full corpus if the kept count is too large for Atlas — read the stats line first.
-const MIN_TERM_BOOKS = Number(getArg('--min-term-books') || 2);
-const MIN_ORIG_BOOKS = Number(getArg('--min-orig-books') || 2);
-const MIN_VOCAB_BOOKS = Number(getArg('--min-vocab-books') || 3);
-const MIN_NONLATIN_BOOKS = Number(getArg('--min-nonlatin-books') || 1);
+const RULE = getArg('--rule') || 'pilot';
+const TYPES = getArg('--types');
+// <keywords> are the translator's END-OF-PAGE SUMMARY list ("key concepts, names, themes in
+// English, for indexing" — the prompt's own words), not terms that occur in the text. In the
+// vocabulary path they inflate `books` for common English words and are the only source for
+// many of them. --keywords-weight 0 evaluates the keep rule on the term's NON-keyword
+// evidence (`books_text`, counted in the group query); `kinds.keyword` and `books` still
+// report the full picture. Default 1 keeps the old behaviour reviewable.
+const KW_WEIGHT = Number(getArg('--keywords-weight') ?? 1);
+const METHOD = 'aggregate-page-terms.mjs@3';
+// Pilot-rule thresholds (distinct books per kind). Ignored by --rule bridge.
+const PILOT_T = {
+  minTermBooks: Number(getArg('--min-term-books') || 2),
+  minOrigBooks: Number(getArg('--min-orig-books') || 2),
+  minVocabBooks: Number(getArg('--min-vocab-books') || 3),
+  minNonLatinBooks: Number(getArg('--min-nonlatin-books') || 1),
+};
 
-if (APPLY && !process.env.MONGODB_URI) {
-  console.error('MONGODB_URI not set.');
-  process.exit(1);
+if (!RULE_NAMES.includes(RULE)) { console.error(`--rule must be one of ${RULE_NAMES.join('|')}`); process.exit(1); }
+if (APPLY && !process.env.MONGODB_URI) { console.error('MONGODB_URI not set.'); process.exit(1); }
+if (FROM_GLOBAL && path.resolve(FROM_GLOBAL) === path.resolve(OUT)) { console.error('--out must differ from --from-global'); process.exit(1); }
+if (![0, 1].includes(KW_WEIGHT)) { console.error('--keywords-weight must be 0 or 1'); process.exit(1); }
+const isKeywordOnly = (r) => (r.kinds?.keyword || 0) > 0 && !((r.kinds?.vocab || 0) + (r.kinds?.term || 0) + (r.kinds?.original || 0));
+/** The rule sees the term's non-keyword evidence when keywords weigh 0. A table written
+ *  before `books_text` existed cannot be re-counted: keyword-only rows are dropped and the
+ *  rest evaluated on their full `books` (over-keeps, never under-keeps; counted in stats). */
+function ruleView(row) {
+  if (KW_WEIGHT !== 0) return row;
+  if (row.books_text != null) return { ...row, books: row.books_text };
+  if (isKeywordOnly(row)) return { ...row, books: 0 };
+  stats.keywords_approx = (stats.keywords_approx || 0) + 1;
+  return row;
 }
+const keep = (row) => KEEP_RULES[RULE](ruleView(row), PILOT_T);
 
-if (REBUILD && fs.existsSync(DB_PATH)) fs.unlinkSync(DB_PATH);
-const sql = new DatabaseSync(DB_PATH);
-sql.exec(`
-  PRAGMA journal_mode = OFF; PRAGMA synchronous = OFF; PRAGMA temp_store = FILE;
-  CREATE TABLE IF NOT EXISTS raw (term_key TEXT, term TEXT, kind TEXT, lang TEXT, gloss TEXT, book_id TEXT, page_number INTEGER, verified INTEGER, context TEXT);
-  CREATE TABLE IF NOT EXISTS loaded (book_id TEXT PRIMARY KEY);
-`);
-
-// ---- load shards (skip books already loaded) ----
-const shards = fs.readdirSync(IN_DIR).filter((f) => f.endsWith('.jsonl') || f.endsWith('.jsonl.gz'));
-const isLoaded = sql.prepare('SELECT 1 FROM loaded WHERE book_id = ?');
-const markLoaded = sql.prepare('INSERT INTO loaded (book_id) VALUES (?)');
-const ins = sql.prepare('INSERT INTO raw VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-let loaded = 0, rows = 0;
-for (const f of shards) {
-  const bookId = f.replace(/\.jsonl(\.gz)?$/, '');
-  if (isLoaded.get(bookId)) continue;
-  const buf = fs.readFileSync(path.join(IN_DIR, f));
-  const text = f.endsWith('.gz') ? zlib.gunzipSync(buf).toString('utf8') : buf.toString('utf8');
-  sql.exec('BEGIN');
-  for (const line of text.split('\n')) {
-    if (!line) continue;
-    const r = JSON.parse(line);
-    ins.run(r.term_key, r.term, r.kind, r.lang ?? null, r.gloss ?? null, r.book_id, r.page_number, r.verified === true ? 1 : r.verified === false ? 0 : null, r.context ?? null);
-    rows++;
-  }
-  markLoaded.run(bookId);
-  sql.exec('COMMIT');
-  loaded++;
-  if (loaded % 500 === 0) console.log(`loaded ${loaded} shards · ${rows} rows`);
+// ---- typing overlay (sparse: absent key = concept/unmatched) ----
+const types = new Map();
+if (TYPES) {
+  const rl = readline.createInterface({ input: fs.createReadStream(TYPES), crlfDelay: Infinity });
+  for await (const line of rl) { if (!line) continue; const t = JSON.parse(line); types.set(t.term_key, t); }
+  console.log(`types: ${types.size} overlay rows from ${TYPES}`);
 }
-console.log(`shards: ${shards.length} (${loaded} newly loaded, ${rows} rows)`);
-sql.exec('CREATE INDEX IF NOT EXISTS raw_key ON raw (term_key)');
+const stampType = (row) => {
+  if (!TYPES) return row;
+  const t = types.get(row.term_key);
+  row.type = t?.type ?? 'concept';
+  row.type_source = t?.type_source ?? 'unmatched';
+  row.type_confidence = t?.type_confidence ?? null;
+  row.type_id = t?.type_id ?? null;
+  return row;
+};
 
-// ---- group ----
-const groups = sql.prepare(`
-  SELECT term_key,
-         COUNT(*) AS n,
-         COUNT(DISTINCT book_id) AS books,
-         COUNT(DISTINCT book_id || ':' || page_number) AS pages,
-         SUM(kind='vocab') AS k_vocab, SUM(kind='term') AS k_term, SUM(kind='keyword') AS k_keyword, SUM(kind='original') AS k_original,
-         SUM(kind='original' AND verified=1) AS ov, SUM(kind='original' AND verified=0) AS ou,
-         SUM(gloss IS NOT NULL) AS glossed
-  FROM raw GROUP BY term_key
-`);
-const detail = sql.prepare('SELECT term, kind, lang, gloss, book_id, page_number, verified, context FROM raw WHERE term_key = ? ORDER BY (gloss IS NULL), (context IS NULL)');
-const distinctBooksBy = sql.prepare("SELECT COUNT(DISTINCT book_id) AS b FROM raw WHERE term_key = ? AND kind = ? AND (? IS NULL OR verified = ?)");
-
-// fs.writeSync, NOT a WriteStream: the group loop outruns the disk and an un-awaited
-// stream.write() buffers everything in memory — the first corpus run was OOM-killed at
-// 9.8 GB RSS after 4 GiB of output (2026-09-11).
+// ---- output: fs.writeSync, NOT a WriteStream ----
+// The group loop outruns the disk and an un-awaited stream.write() buffers everything in
+// memory — the first corpus run was OOM-killed at 9.8 GB RSS after 4 GiB of output; a
+// WriteStream also fails at exactly 4 GiB (writev, Node 25). (2026-09-11)
 const outFd = fs.openSync(OUT, 'w');
-const stats = { groups: 0, kept: 0, why: { gloss: 0, term2: 0, orig2: 0, vocab3: 0, nonLatin: 0 } };
+const stats = { groups: 0, kept: 0, why: {}, types: {} };
 const now = new Date();
-// --apply streams upserts in batches of 1,000 as groups are produced; nothing is retained.
+// --apply streams upserts in batches of 1,000 as rows are produced; nothing is retained.
 let col = null, written = 0;
 const batch = [];
 async function flush() {
@@ -120,54 +124,140 @@ async function flush() {
     await col.createIndex({ term_key: 1 }, { unique: true });
     await col.createIndex({ books: -1 });
     await col.createIndex({ 'glosses.gloss': 1 });
+    await col.createIndex({ type: 1, books: -1 });
     process.on('exit', () => client.close());
   }
   const res = await col.bulkWrite(batch.splice(0), { ordered: false });
   written += res.upsertedCount + res.matchedCount;
 }
-for (const g of groups.iterate()) {
-  stats.groups++;
-  const nonLatin = !isLatinScript(g.term_key);
-  let why = null;
-  if (g.glossed > 0) why = 'gloss';
-  else if (nonLatin && g.books >= MIN_NONLATIN_BOOKS) why = 'nonLatin';
-  else if (g.k_term > 0 && distinctBooksBy.get(g.term_key, 'term', null, null).b >= MIN_TERM_BOOKS) why = 'term2';
-  else if (g.ov > 0 && distinctBooksBy.get(g.term_key, 'original', 1, 1).b >= MIN_ORIG_BOOKS) why = 'orig2';
-  else if (g.k_vocab > 0 && distinctBooksBy.get(g.term_key, 'vocab', null, null).b >= MIN_VOCAB_BOOKS) why = 'vocab3';
-  if (!why) continue;
-  stats.kept++; stats.why[why]++;
-
-  const surface = new Map(), langs = {}, glosses = new Map(), evidence = [], evBooks = new Set();
-  for (const d of detail.iterate(g.term_key)) {
-    surface.set(d.term, (surface.get(d.term) || 0) + 1);
-    if (d.lang) langs[d.lang] = (langs[d.lang] || 0) + 1;
-    if (d.gloss) glosses.set(d.gloss, (glosses.get(d.gloss) || 0) + 1);
-    if (evidence.length < 5 && !evBooks.has(d.book_id) && (d.kind !== 'original' || d.verified === 1)) {
-      evBooks.add(d.book_id);
-      evidence.push({ book_id: d.book_id, page_number: d.page_number, kind: d.kind, gloss: d.gloss, context: d.context });
-    }
-  }
-  const row = {
-    term_key: g.term_key,
-    term: [...surface.entries()].sort((a, b) => b[1] - a[1])[0][0],
-    kinds: { vocab: g.k_vocab, term: g.k_term, keyword: g.k_keyword, original: g.k_original },
-    langs,
-    glosses: [...glosses.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([gloss, n]) => ({ gloss, n })),
-    books: g.books, pages: g.pages,
-    original_verified: g.ov, original_unverified: g.ou,
-    non_latin: nonLatin,
-    evidence,
-    field_provenance: { source: 'ocr.data <vocab> + translation.data <term>/<gloss>/<keywords>/<note original>', method: METHOD, kept_because: why, date: now },
-  };
+async function emit(row, why) {
+  stats.kept++;
+  stats.why[why] = (stats.why[why] || 0) + 1;
+  stampType(row);
+  if (TYPES) stats.types[row.type] = (stats.types[row.type] || 0) + 1;
+  row.field_provenance = { ...row.field_provenance, method: METHOD, kept_because: why, rule: RULE, keywords_weight: KW_WEIGHT, date: now };
   fs.writeSync(outFd, JSON.stringify(row) + '\n');
   if (APPLY) {
     batch.push({ replaceOne: { filter: { term_key: row.term_key }, replacement: row, upsert: true } });
     if (batch.length >= 1000) await flush();
   }
 }
+
+if (FROM_GLOBAL) {
+  // ---- re-filter an existing global table ----
+  const rl = readline.createInterface({ input: fs.createReadStream(FROM_GLOBAL), crlfDelay: Infinity });
+  for await (const line of rl) {
+    if (!line) continue;
+    const row = JSON.parse(line);
+    stats.groups++;
+    const why = keep(row);
+    if (why) await emit(row, why);
+    if (stats.groups % 1000000 === 0) console.log(`${stats.groups} rows · kept ${stats.kept}`);
+  }
+} else {
+  const { DatabaseSync } = await import('node:sqlite');
+  const zlib = await import('node:zlib');
+  if (REBUILD && fs.existsSync(DB_PATH)) fs.unlinkSync(DB_PATH);
+  const sql = new DatabaseSync(DB_PATH);
+  sql.exec(`
+    PRAGMA journal_mode = OFF; PRAGMA synchronous = OFF; PRAGMA temp_store = FILE;
+    CREATE TABLE IF NOT EXISTS raw (term_key TEXT, term TEXT, kind TEXT, lang TEXT, gloss TEXT, book_id TEXT, page_number INTEGER, verified INTEGER, context TEXT);
+    CREATE TABLE IF NOT EXISTS loaded (book_id TEXT PRIMARY KEY);
+  `);
+
+  // ---- load shards (skip books already loaded) ----
+  const shards = fs.readdirSync(IN_DIR).filter((f) => f.endsWith('.jsonl') || f.endsWith('.jsonl.gz'));
+  const isLoaded = sql.prepare('SELECT 1 FROM loaded WHERE book_id = ?');
+  const markLoaded = sql.prepare('INSERT INTO loaded (book_id) VALUES (?)');
+  const ins = sql.prepare('INSERT INTO raw VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+  let loaded = 0, rows = 0;
+  for (const f of shards) {
+    const bookId = f.replace(/\.jsonl(\.gz)?$/, '');
+    if (isLoaded.get(bookId)) continue;
+    const buf = fs.readFileSync(path.join(IN_DIR, f));
+    const text = f.endsWith('.gz') ? zlib.gunzipSync(buf).toString('utf8') : buf.toString('utf8');
+    sql.exec('BEGIN');
+    for (const line of text.split('\n')) {
+      if (!line) continue;
+      const r = JSON.parse(line);
+      ins.run(r.term_key, r.term, r.kind, r.lang ?? null, r.gloss ?? null, r.book_id, r.page_number, r.verified === true ? 1 : r.verified === false ? 0 : null, r.context ?? null);
+      rows++;
+    }
+    markLoaded.run(bookId);
+    sql.exec('COMMIT');
+    loaded++;
+    if (loaded % 500 === 0) console.log(`loaded ${loaded} shards · ${rows} rows`);
+  }
+  console.log(`shards: ${shards.length} (${loaded} newly loaded, ${rows} rows)`);
+  sql.exec('CREATE INDEX IF NOT EXISTS raw_key ON raw (term_key)');
+
+  // ---- group ----
+  const groups = sql.prepare(`
+    SELECT term_key,
+           COUNT(*) AS n,
+           COUNT(DISTINCT book_id) AS books,
+           COUNT(DISTINCT book_id || ':' || page_number) AS pages,
+           SUM(kind='vocab') AS k_vocab, SUM(kind='term') AS k_term, SUM(kind='keyword') AS k_keyword, SUM(kind='original') AS k_original,
+           SUM(kind='original' AND verified=1) AS ov, SUM(kind='original' AND verified=0) AS ou,
+           SUM(gloss IS NOT NULL) AS glossed, COUNT(DISTINCT gloss) AS glosses_distinct,
+           COUNT(DISTINCT CASE WHEN kind<>'keyword' THEN book_id END) AS books_text,
+           COUNT(DISTINCT CASE WHEN kind='vocab' THEN book_id END) AS b_vocab,
+           COUNT(DISTINCT CASE WHEN kind='term' THEN book_id END) AS b_term,
+           COUNT(DISTINCT CASE WHEN kind='keyword' THEN book_id END) AS b_keyword,
+           COUNT(DISTINCT CASE WHEN kind='original' AND verified=1 THEN book_id END) AS b_original_verified
+    FROM raw GROUP BY term_key
+  `);
+  const detail = sql.prepare('SELECT term, kind, lang, gloss, book_id, page_number, verified, context FROM raw WHERE term_key = ? ORDER BY (gloss IS NULL), (context IS NULL)');
+  const distinctGlosses = sql.prepare('SELECT DISTINCT gloss FROM raw WHERE term_key = ? AND gloss IS NOT NULL LIMIT 20');
+
+  /** The rule's view of a group, before the (slow) detail pass. Per-kind book counts come
+   *  from the group query itself (they used to be three re-queries per unglossed group);
+   *  only the gloss STRINGS are fetched lazily, and only for the non-Latin branch that
+   *  needs them. */
+  const preRow = (g, nonLatin) => ({
+    term_key: g.term_key, books: g.books, books_text: g.books_text, non_latin: nonLatin,
+    kinds: { vocab: g.k_vocab, term: g.k_term, keyword: g.k_keyword, original: g.k_original },
+    original_verified: g.ov,
+    term_books: g.b_term, orig_books: g.b_original_verified, vocab_books: g.b_vocab,
+    get glosses() { return g.glossed ? (nonLatin ? distinctGlosses.all(g.term_key) : Array.from({ length: g.glosses_distinct }, () => ({ gloss: null }))) : []; },
+  });
+
+  for (const g of groups.iterate()) {
+    stats.groups++;
+    const nonLatin = !isLatinScript(g.term_key);
+    const why = keep(preRow(g, nonLatin));
+    if (!why) continue;
+
+    const surface = new Map(), langs = {}, glosses = new Map(), evidence = [], evBooks = new Set();
+    for (const d of detail.iterate(g.term_key)) {
+      surface.set(d.term, (surface.get(d.term) || 0) + 1);
+      if (d.lang) langs[d.lang] = (langs[d.lang] || 0) + 1;
+      if (d.gloss) glosses.set(d.gloss, (glosses.get(d.gloss) || 0) + 1);
+      if (evidence.length < 5 && !evBooks.has(d.book_id) && (d.kind !== 'original' || d.verified === 1)) {
+        evBooks.add(d.book_id);
+        evidence.push({ book_id: d.book_id, page_number: d.page_number, kind: d.kind, gloss: d.gloss, context: d.context });
+      }
+    }
+    await emit({
+      term_key: g.term_key,
+      term: [...surface.entries()].sort((a, b) => b[1] - a[1])[0][0],
+      kinds: { vocab: g.k_vocab, term: g.k_term, keyword: g.k_keyword, original: g.k_original },
+      langs,
+      glosses: [...glosses.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([gloss, n]) => ({ gloss, n })),
+      books: g.books, pages: g.pages,
+      books_text: g.books_text,
+      books_by_kind: { vocab: g.b_vocab, term: g.b_term, keyword: g.b_keyword, original_verified: g.b_original_verified },
+      original_verified: g.ov, original_unverified: g.ou,
+      non_latin: nonLatin,
+      evidence,
+      field_provenance: { source: 'ocr.data <vocab> + translation.data <term>/<gloss>/<keywords>/<note original>' },
+    }, why);
+  }
+  console.log(`sqlite → ${DB_PATH}`);
+}
+
 if (APPLY) await flush();
 fs.closeSync(outFd);
-console.log(JSON.stringify(stats));
-console.log(`global table → ${OUT}; sqlite → ${DB_PATH}`);
-
+console.log(JSON.stringify({ ...stats, rule: RULE, typed: !!TYPES }));
+console.log(`global table → ${OUT}`);
 if (APPLY) console.log(`page_terms: ${written} rows upserted`);
