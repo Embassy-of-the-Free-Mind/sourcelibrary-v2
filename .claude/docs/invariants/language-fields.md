@@ -320,3 +320,72 @@ Sahagún's own — replacing them is a curatorial call, not a technical one) ·
 #3893 (one vocabulary) · #3958 (1,519 live books in `language_review` with no
 consumer) · #2184 (translations catalogued as the original's language) ·
 #3957 / #3261 (`text_role` misclassification, the adjacent axis)
+
+---
+
+## One normaliser, and the two jobs it must not conflate (2026-09-10, PR #4700)
+
+**`normalizeLanguageToken` is the only normaliser.** `src/lib/language-normalize.ts` and its pinned
+`.mjs` twin (`tests/unit/language-normalize-parity.test.ts`) carry the considered policy: period
+variants that are the **same** language collapse (Ancient/Modern Greek, Classical Latin, Koine Greek,
+New Latin), ones that are **distinct** languages survive (Old English, Middle High German, Old
+French, Church Slavonic, Classical Chinese, Ottoman Turkish, Judeo-Arabic).
+
+There were **four** normalisers before this. `displayLanguage` had its own rule — strip a leading
+`modern|ancient|old|classical|medieval|middle|early`, title-case the first character only — and
+disagreed with the twin on **13 of 27** probe tokens, wrong in two opposite directions at once, which
+is why neither direction had been noticed:
+
+- it **collapsed distinct languages** into their parent: `Old English`→`English`,
+  `Old French`→`French`, `Classical Chinese`→`Chinese`, and `Old Norse`→`Norse`, which is not a
+  language;
+- it **mangled case** on everything it did not recognise: `Koine greek`, `New latin`,
+  `Church slavonic`, `Ottoman turkish`, `Judeo-arabic`.
+
+Nothing had reached `books.language` (0 mangled values when measured) — it was a **latent trap on the
+import path**, because `src/lib/resolve-language.ts` normalises every incoming language through it.
+Two further private copies existed, in `scripts/maintenance/backfill-language-provenance.mjs` (now
+importing the shared one) and `scripts/lib/edition-citation-language.mjs` (deliberately untouched: it
+is held in parity with `src/lib/edition-language.ts` by `edition-citation-language-twins.mjs` and
+feeds DOI citation blocks).
+
+**NORMALISE and COMPARE are different jobs; neither function does both.** Normalise a value with
+`normalizeLanguageToken`. Compare two values with `sameLanguage` / `sameLanguageFamily`, which
+**normalise first and then compare FAMILIES** — so an Old French edition of a French work is still
+the same language and does not read as a translation. Do not reach for `languageFamily()` on raw
+input: it strips a register prefix but does not touch codes, does not collapse `Ancient Greek`, and
+answers **true** for `Unknown` vs `Unknown`.
+
+## `field_provenance.language` is a typed entry, never a bare label
+
+`{ source, value, chosen_from, claims[], conflict?, date }` — the shape `resolve-language.ts`
+defines. 454 books had stored only a label string (`caller`, `ia_metadata`,
+`manual_curator_override`…) while 32,712 held the object, so a reader asking a string for
+`.chosen_from` or `.claims` got `undefined`, silently. The direct importers wrote one shape and the
+API routes the other: the same "which door did the data come through" disease the pinned twins exist
+to end. Reshaped 2026-09-10; keep it one shape.
+
+## Provenance is ONE field, not ten columns
+
+Ten fields recorded how a language was decided and **were read by nothing** — retired 2026-09-10
+(8,256 instances / 5,018 books, every value preserved in `sweep_log`, replayable with
+`restore-orphan-book-fields.mjs --sweep language-field-consolidation-2026-09`):
+
+`language_source` · `language_confidence` · `ai_detected_language` · `_language_backfill` ·
+`language_detected` · `language_corrected` · `language_relabel` · `language_verified_content` ·
+`language_review_resolved` · `script_type`
+
+A lane that decides a language writes `field_provenance.language`; a sweep that changed one writes a
+`sweep_log` row (`invariants/field-sprawl.md`). Both are in `--forbid` on the weekly watch, so a
+reappearance fails CI.
+
+**Two fields survived that cut, and they are the reusable lesson:**
+
+- **`language_raw` is LIVE.** It looks exactly like the others — a sweep's "preserve the original"
+  column — but `normalize-language-tags.mjs` projects it and uses `d.language_raw == null` as its
+  **idempotence guard**. Deleting it makes a re-run overwrite the preserved original with the
+  normalised value.
+- **`books.script_type` and `pages.script_type` were two subsystems sharing a name.** The page one is
+  real (`printed|handwritten|mixed`, declared in `src/lib/types/page.ts`, synced to Supabase by six
+  scripts); the book one was a single stray document. Only the book-level field is retired. Check
+  which COLLECTION a name lives on before treating two spellings as one family.

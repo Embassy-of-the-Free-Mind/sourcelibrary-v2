@@ -207,11 +207,11 @@ const SEED_COLLECTIONS: CollectionSeed[] = [
     description:
       'Historical musical notation from liturgical chants to Renaissance polyphony and baroque compositions.',
     slug: 'musical-scores',
-    subjects: ['music'],
-    searchTerms: ['musical', 'score', 'notation', 'polyphon'],
-    anchorBooks: [
-      '69557560f63a7571091747c1', // Guqin works (280 imgs, avgQ 0.74)
-    ],
+    // The old subjects/searchTerms regexes were too loose — 'notation' also
+    // matches "annotations", which pulled Leonardo anatomy pages into this
+    // collection (#4486). The classifier now emits a musical_score type;
+    // seed from that. (Old anchor book 69557560f63a7571091747c1 was deleted.)
+    types: ['musical_score'],
     minQuality: 0.7,
     maxPerBook: 10,
     limit: 200,

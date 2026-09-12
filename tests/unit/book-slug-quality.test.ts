@@ -11,7 +11,7 @@
  * and Sanskrit titles, so that path is load-bearing, not theoretical.
  */
 import { describe, it, expect } from 'vitest';
-import { generateBookSlug, isNonTitle, isPlaceholderSlug, readerPageUrl } from '@/lib/slugify';
+import { generateBookSlug, isGenericAuthor, isNonTitle, isPlaceholderSlug, readerPageUrl } from '@/lib/slugify';
 
 describe('generateBookSlug', () => {
   it('builds title-author for the ordinary case', () => {
@@ -153,5 +153,62 @@ describe('unknown authors', () => {
     // Deliberate, and pinned by tests/unit/slugify.test.ts — an anonymous
     // early-modern imprint is not the same claim as "we do not know".
     expect(generateBookSlug('Some Text', 'Anonymous')).toBe('some-text-anonymous');
+  });
+});
+
+/**
+ * #4521 — the repair sweep's own skip rule stranded 7 of the books it exists
+ * to fix.
+ *
+ * "A rename only earns a changed URL if it adds information" is the right
+ * rule; "the title is where the information comes from" was the wrong reading
+ * of it. generateBookSlug falls back to the author when the title is entirely
+ * non-Latin, and in this corpus that author is very often Latin-script — a
+ * Japanese print signed Hokusai, a Russian painting by Ivan Akimov. Those
+ * books stayed at /book/-15 and /book/-22 because the sweep asked only about
+ * the title.
+ *
+ * isGenericAuthor is the missing half of the question. What this pins: skip
+ * when the author is a stand-in, rename when it names somebody.
+ */
+describe('isGenericAuthor (#4521)', () => {
+  it('reads the stand-ins as generic, in the spellings catalogues write', () => {
+    for (const author of ['', null, undefined, 'Unknown', 'unknown', 'Unknown artist',
+      '未詳 (Unknown)', 'Anonymous', 'Anonymous Sumerian', 'Anonymous (Egyptian)',
+      'Anonymous Yucatec Maya scribes']) {
+      expect(isGenericAuthor(author), `"${author}" is a stand-in, not a person`).toBe(true);
+    }
+  });
+
+  it('reads a named author as named — the 7 books the sweep skipped', () => {
+    for (const author of ['Katsushika Hokusai', 'Yoshitoshi', 'Utagawa Yoshiiku',
+      'Kawanabe Kyōsai', 'Ivan Akimov', 'Hieronymus Bosch', 'Qiu Ying',
+      'Maier, Michael', 'Mousouros, Markos (ed.)']) {
+      expect(isGenericAuthor(author), `"${author}" names a person`).toBe(false);
+    }
+  });
+
+  it('is exactly the difference between a slug worth minting and one that is not', () => {
+    // What the sweep now writes for /book/-15 and /book/-22.
+    expect(generateBookSlug('葛飾北斎筆 鶏と木材鶏図', 'Katsushika Hokusai')).toBe('hokusai');
+    expect(generateBookSlug('Акимов Иван. Прометей делает статую', 'Ivan Akimov')).toBe('akimov');
+    // And what it still refuses to write for /book/216 and /book/untitled-18:
+    // a stand-in author over a non-Latin title is a metadata problem, not a
+    // slug problem — /book/216-anonymous costs a redirect and says nothing.
+    expect(isGenericAuthor('Anonymous')).toBe(true);
+    expect(generateBookSlug('坐禪用心記', '未詳 (Unknown)')).toBe('untitled');
+  });
+
+  it('does not read the digits a non-Latin title leaves behind as a title', () => {
+    // /book/30-6-574-1-ying: the surviving digits are the scroll's dimensions
+    // in centimetres. A title segment needs a letter to be a title.
+    expect(generateBookSlug('​漢宮春曉, 卷, 絹本設色, 纵30.6厘米 横574.1厘米', 'Qiu Ying')).toBe('ying');
+    expect(generateBookSlug('青鬼 2', 'Khunrath, Heinrich')).toBe('khunrath');
+    // With no author either, a letterless title is "untitled", not the digits —
+    // isPlaceholderSlug already reads a letterless slug as broken, so emitting
+    // one would hand the repair sweep its own work back.
+    expect(generateBookSlug('30.6 × 574.1', 'Unknown')).toBe('untitled');
+    // A real title that merely contains a number is untouched.
+    expect(generateBookSlug('De re metallica 1556', 'Agricola')).toBe('de-re-metallica-1556-agricola');
   });
 });

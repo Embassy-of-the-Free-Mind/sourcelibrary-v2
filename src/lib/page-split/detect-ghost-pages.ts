@@ -16,6 +16,7 @@
  */
 
 import type { Db } from 'mongodb';
+import { buildVisiblePageCountPipeline } from '@/lib/page-counts';
 
 export interface GhostDetectionResult {
   bookId: string;
@@ -172,23 +173,23 @@ export async function detectAndRemoveGhostPages(
   }
 
   // Update book-level caches
-  const newCount = remainingPages.length;
-  const ocrCount = await pagesCol.countDocuments({
-    book_id: bookId,
-    'ocr.data': { $exists: true, $ne: '' },
-  });
-  const transCount = await pagesCol.countDocuments({
-    book_id: bookId,
-    'translation.data': { $exists: true, $ne: '' },
-  });
+
+  // Counters come from the canonical pipeline (#4442/#4499). The private counts that
+  // used to live here matched ALL pages — so the soft-hidden pages this very function
+  // had just created were counted back in — and their translated count included
+  // blank-page placeholders. Both inflate; together they are how a book ends up
+  // reporting more translated pages than it has.
+  const [counts] = await pagesCol.aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
 
   await db.collection('books').updateOne(
     { id: bookId },
     {
       $set: {
-        pages_count: newCount,
-        pages_ocr: ocrCount,
-        pages_translated: transCount,
+        pages_count: counts?.total ?? 0,
+        pages_ocr: counts?.with_ocr ?? 0,
+        pages_translated: counts?.with_translation ?? 0,
+        pages_translatable: counts?.translatable ?? 0,
+        pages_blank: counts?.blank ?? 0,
         updated_at: new Date(),
       },
     },
@@ -198,6 +199,6 @@ export async function detectAndRemoveGhostPages(
     bookId,
     ghostPagesFound: ghostPageIds.length,
     pagesRemoved: ghostDocs.length,
-    newPageCount: newCount,
+    newPageCount: counts?.total ?? 0,
   };
 }

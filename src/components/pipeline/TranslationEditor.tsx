@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, type ReactNode } from 'react';
 import { useParams, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { useStableSession } from '@/hooks/useStableSession';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
@@ -50,6 +51,7 @@ import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import ShareButton from '@/components/ui/ShareButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
+import type { ApiClientError } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import { getPageDisplayUrl, getPageThumbUrl, isUsableImageUrl } from '@/lib/utils';
@@ -61,6 +63,28 @@ import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
 import { hasNonLatinScript } from '@/lib/non-latin-scripts';
 
+
+/** Set when the anon-gate walls a signed-out reader; null otherwise. */
+type TransliterationGate = { message: string } | null;
+
+/**
+ * Both transliteration call sites — the panel's auto-fire effect and the
+ * explicit button — share this. Generating a transliteration is a paid Gemini
+ * call, so anonymous volume is capped per hour and the route answers 429 with
+ * `code: 'SIGNIN_REQUIRED'` at the cap. That is a prompt, not a failure: the
+ * panel renders a sign-in CTA rather than an error toast, and nothing retries.
+ * Any other error keeps the existing toast.
+ */
+function handleTransliterationError(
+  err: ApiClientError,
+  setGate: (gate: TransliterationGate) => void,
+): void {
+  if (err?.code === 'SIGNIN_REQUIRED') {
+    setGate({ message: err.message });
+    return;
+  }
+  toast.error(`Transliteration failed: ${err?.message || 'Unknown error'}`);
+}
 
 // Helper to format edit source info
 // EditSourceBadge removed — source info folded into RevisionHistory trigger
@@ -630,6 +654,10 @@ export default function TranslationEditor({
   const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
   const [transliterationLoading, setTransliterationLoading] = useState(false);
+  // Set when the anon-gate walls a signed-out reader. The panel auto-fires the
+  // route, so hitting the hourly cap must read as a sign-in prompt, never as a
+  // failure the reader caused — and nothing may retry into the wall.
+  const [transliterationGate, setTransliterationGate] = useState<TransliterationGate>(null);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
   const [showFontControls, setShowFontControls] = useState(false);
   // Liked state of the CURRENT page, reported by the LikeButtons (#4126) so
@@ -884,12 +912,13 @@ export default function TranslationEditor({
     }
     let cancelled = false;
     setTransliterationLoading(true);
+    setTransliterationGate(null);
     pagesApi.transliterate(page.id)
       .then((res) => {
         if (!cancelled) setTransliterationText(res.transliteration || '');
       })
-      .catch((err) => {
-        if (!cancelled) toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`);
+      .catch((err: ApiClientError) => {
+        if (!cancelled) handleTransliterationError(err, setTransliterationGate);
       })
       .finally(() => {
         if (!cancelled) setTransliterationLoading(false);
@@ -897,9 +926,12 @@ export default function TranslationEditor({
     return () => { cancelled = true; };
   }, [showTransliterationPanel, page.id, isNonLatin, page.ocr?.data, page.transliteration?.data]);
 
-  // Reset transliteration text when page changes
+  // Reset transliteration text when page changes. The gate clears too: it is
+  // per-request state, and a page whose transliteration is already cached is
+  // served free — leaving a stale wall up would hide text we have paid for.
   useEffect(() => {
     setTransliterationText(page.transliteration?.data || '');
+    setTransliterationGate(null);
   }, [page.id, page.transliteration?.data]);
 
   // Detect multi-column structure in OCR (either <column-break/> or ## Column N headers)
@@ -1993,6 +2025,24 @@ export default function TranslationEditor({
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang="und-Latn">
                         <NotesRenderer text={cleanTransliteration} showNotes={false} showMetadata={false} columns={effectiveColumns} />
                       </div>
+                    ) : transliterationGate ? (
+                      // The anon-gate wall. Deliberately NOT an error state: the
+                      // reader has done nothing wrong, and nothing retries.
+                      // Ordered after the cached-text branch so a page we have
+                      // already paid for still renders while the wall is up.
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <Type className="w-8 h-8 mb-3" style={{ color: 'var(--text-faint)' }} />
+                        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+                          {transliterationGate.message}
+                        </p>
+                        <Link
+                          href={`/auth/signin?callbackUrl=${encodeURIComponent(pathname || `/book/${book.id}/page/${page.id}`)}&reason=limit`}
+                          className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
+                          style={{ background: 'var(--accent-rust)' }}
+                        >
+                          Sign in — free
+                        </Link>
+                      </div>
                     ) : page.ocr?.data ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <Type className="w-8 h-8 mb-3" style={{ color: 'var(--text-faint)' }} />
@@ -2002,9 +2052,10 @@ export default function TranslationEditor({
                         <button
                           onClick={() => {
                             setTransliterationLoading(true);
+                            setTransliterationGate(null);
                             pagesApi.transliterate(page.id)
                               .then((res) => setTransliterationText(res.transliteration || ''))
-                              .catch((err) => toast.error(`Transliteration failed: ${err.message || 'Unknown error'}`))
+                              .catch((err: ApiClientError) => handleTransliterationError(err, setTransliterationGate))
                               .finally(() => setTransliterationLoading(false));
                           }}
                           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"

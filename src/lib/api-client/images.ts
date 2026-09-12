@@ -219,7 +219,13 @@ const ia = {
    *
    * @example
    * const metadata = await ia.fetchMetadata('theatrumchemicu00sethgoog');
-   * const pageCount = metadata.metadata.imagecount;
+   *
+   * Do NOT read `metadata.metadata.imagecount` as the page count. It is ABSENT on any
+   * item whose page images ship inside a `Single Page Processed JP2 ZIP` or a DjVu
+   * container, and such an item then reads as having no pages at all — this is how
+   * al-Maqrizi's Khitat (MIFAO 30/33, 207 and 127 canvases) was once passed over as
+   * "PDF-only". Use the IIIF canvas count, via `scripts/lib/ia-page-count.mjs`
+   * (`iaPageCount`), which falls back to `imagecount` only when no manifest exists.
    */
   fetchMetadata: async (identifier: string): Promise<IAMetadata> => {
     const url = `https://archive.org/metadata/${identifier}`;

@@ -77,8 +77,9 @@ import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
 import { getPageImageUrl } from '@/lib/page-image-url';
+import { galleryFilter, galleryHref, type GalleryScope } from '@/lib/gallery-scope';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
-import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
+import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel, collectPriorTranslations } from '@/lib/prior-translation';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
@@ -495,6 +496,14 @@ export async function generateMetadata({ params, lang = 'en' }: PageProps): Prom
   };
 }
 
+/**
+ * The illustrations of one book, as this page shows them: curated at quality
+ * >= 0.7 rather than the gallery's 0.5 default. Defined once so the count, the
+ * preview row and the "view all" link cannot drift apart — they did, and the
+ * page offered "View all 141 illustrations" into a page of 192.
+ */
+const bookGalleryScope = (bookId: string): GalleryScope => ({ bookId, minQuality: 0.7 });
+
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
@@ -623,22 +632,21 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       .toArray()
       .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100)),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
-    // Top 8 gallery images for preview row
+    // Top 8 gallery images for preview row. Both this and the count below use
+    // BOOK_GALLERY_SCOPE, which also builds the "view all" href — so the number
+    // shown and the page it opens are the same set by construction.
     db.collection('gallery_images')
       .find(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
+        galleryFilter(bookGalleryScope(bookId)),
         { projection: { _id: 0, id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1, type: 1, page_number: 1, gallery_quality: 1, dhash: 1, book_id: 1 }, maxTimeMS: 5000 },
       )
       .sort({ gallery_quality: -1 })
       .limit(30) // over-fetch to allow dhash dedup to filter duplicates
       .toArray()
       .catch(() => []),
-    // Separate count query for accurate image count display
+    // Counted with the same scope the preview and the link use.
     db.collection('gallery_images')
-      .countDocuments(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null } },
-        { maxTimeMS: 5000 },
-      )
+      .countDocuments(galleryFilter(bookGalleryScope(bookId)), { maxTimeMS: 5000 })
       .catch(() => 0),
     // Collections this book belongs to
     (quickBook.collections as string[] | undefined)?.length
@@ -1299,49 +1307,61 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const m = s.match(/(\d{3,4})/);
       return m ? Date.UTC(Number(m[1]), 0, 1) : -0.5;
     };
+    // EVERY earlier English translation we hold evidence for, each on its own year.
+    //
+    // This used to render exactly one: `prior_translation`, else `picks[0]` of the
+    // verification array. Two things were wrong with that. It hid 2,212 recorded
+    // translations across 1,339 books (measured 2026-09-04). Worse, the array is
+    // unordered, so `[0]` is not the earliest — in 35% of books with two or more
+    // dated picks it is a LATER one, and the entry then sits on a date axis under a
+    // heading that says "Earlier". Pico's Opera Omnia credited Copenhaver (2022)
+    // while hiding Sir Thomas More (1510); the Hypnerotomachia credited Godwin
+    // (1999) over Dallington (1592). On a timeline, showing an arbitrary member of
+    // a set is not merely incomplete — it is chronologically false.
     const timelinePrior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
       ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
       : null;
     const timelineVerification = (book as unknown as { translation_verification?: TranslationVerification }).translation_verification;
-    const timelineExistingEvidence = !timelinePrior && timelineVerification?.disposition === 'translation_found'
-      ? (timelineVerification.validated_translations?.[0] || timelineVerification.translations_found?.[0] || timelineVerification.translations?.[0])
-      : undefined;
-    if (timelinePrior) {
-      rawTimeline.push({
-        ts: yearTs(timelinePrior.year),
-        key: 'prior-translation',
-        dateText: timelinePrior.year ? String(timelinePrior.year) : t.tlEarlier,
-        label: t.tlEarlierEnglishTranslation,
-        detail: (
+    const verificationPicks = timelineVerification?.disposition === 'translation_found'
+      ? (timelineVerification.validated_translations ?? timelineVerification.translations_found ?? timelineVerification.translations ?? [])
+      : [];
+
+    collectPriorTranslations(timelinePrior, verificationPicks).forEach((row, i) => {
+      let detail: React.ReactNode;
+      if (row.credit) {
+        detail = (
           <>
-            {priorTranslationSentence(timelinePrior)}
+            {priorTranslationSentence(row.credit)}
             {embedPolicy.showExternalLinks && (
-              <>{' '}<a href={timelinePrior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(timelinePrior)} →</a></>
+              <>{' '}<a href={row.credit.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(row.credit)} →</a></>
             )}
           </>
-        ),
-      });
-    } else if (timelineExistingEvidence) {
-      const ev = timelineExistingEvidence;
-      const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
-      const summary = ev.english_title
-        ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
-        : (bits || t.tlEarlierTranslationExists);
-      rawTimeline.push({
-        ts: yearTs(ev.pub_year),
-        key: 'existing-translation',
-        dateText: ev.pub_year ? String(ev.pub_year) : t.tlEarlier,
-        label: t.tlEarlierEnglishTranslation,
-        detail: (
+        );
+      } else {
+        const ev = row.pick!;
+        const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
+        const summary = ev.english_title
+          ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
+          : (bits || t.tlEarlierTranslationExists);
+        detail = (
           <>
             {summary}
             {ev.url && embedPolicy.showExternalLinks && (
               <>{' '}<a href={ev.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{t.view}</a></>
             )}
           </>
-        ),
+        );
+      }
+      rawTimeline.push({
+        // Undated priors carry +Infinity from the collector; the timeline sorts on
+        // a finite axis, so map that back to the "unknown year" sentinel here.
+        ts: Number.isFinite(row.ts) ? row.ts : -0.5,
+        key: `prior-translation-${i}`,
+        dateText: row.year ?? t.tlEarlier,
+        label: t.tlEarlierEnglishTranslation,
+        detail,
       });
-    }
+    });
     // English editions / translations published on Source Library.
     const publishedEditions = ((book.editions as TranslationEdition[] | undefined) || [])
       .filter((e) => e.status === 'published' && e.published_at)
@@ -1854,7 +1874,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <GalleryMasonry plates={galleryPlates} />
               {imageCount > galleryPlates.length && (
                 <div className="mt-8 text-center">
-                  <Link href={`/gallery?bookId=${book.id}`} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
+                  {/* imageCount is counted at quality >= 0.7, the bar this section curates
+                      to, but /gallery defaults to 0.5 — so "view all 141" opened a
+                      page of 192. Carry the threshold so the destination matches the
+                      promise. */}
+                  <Link href={galleryHref(bookGalleryScope(book.id))} className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium">
                     <Images className="w-4 h-4" />
                     {t.viewAllIllustrations(imageCount)}
                   </Link>

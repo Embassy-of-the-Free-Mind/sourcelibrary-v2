@@ -1,7 +1,8 @@
 import { DEFAULT_PROMPTS, DEFAULT_MODEL, ENGLISH_MODERNIZATION_PROMPT } from './types';
 import { getGeminiClient } from './gemini-client';
+import { outputTokensFrom } from './gemini-logger';
 import { images } from './api-client/images';
-import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { HarmCategory, HarmBlockThreshold, type GenerationConfig } from '@google/generative-ai';
 import { sanitizeTranslationTags } from './sanitize-translation-tags';
 
 // Safety settings for OCR/transcription - disable all filters for historical texts
@@ -28,17 +29,65 @@ const OCR_SAFETY_SETTINGS = [
   },
 ];
 
-// Model pricing per 1M tokens (USD)
+// Gemini 3.x runs thinking by default and bills thought tokens at the output rate,
+// while candidatesTokenCount excludes them — so thinking must be explicitly disabled
+// or the meter under-reports the bill (17x in Aug 2026, #4581). The batch writers
+// (pipeline-orchestrator.mjs) already set thinkingBudget: 0; this covers the
+// realtime/Lambda path. thinkingConfig is not in @google/generative-ai 0.24.x types
+// but is passed through verbatim to the API (verified by live probe: thoughtsTokenCount
+// 61 -> absent).
+const THINKING_OFF_CONFIG = {
+  thinkingConfig: { thinkingBudget: 0 },
+} as unknown as GenerationConfig;
+
+function getThinkingOffModel(modelId: string) {
+  // Self-metered: every function here RETURNS its token counts, and the callers
+  // that matter (the OCR/translation workers, /api/process, modernize,
+  // transliterate, stitch-translations) write the usage row themselves with the
+  // book and page context an automatic row could not know. Letting the client
+  // also log would put TWO rows on every page of the pipeline — which would
+  // double the measured spend and close the daily dial on money never spent.
+  return getGeminiClient({
+    selfMetered: true,
+    reason: 'callers log the usage row with book/page context; auto-metering would double-count the pipeline',
+  }).getGenerativeModel({
+    model: modelId,
+    generationConfig: THINKING_OFF_CONFIG,
+  });
+}
+
+// Model pricing per 1M tokens (USD), STANDARD serving tier, text.
+//
+// Verify against Google's own catalogue, never a summary of the pricing page:
+//   scripts/audit/spend-reconcile.mjs   (exits 2 on drift; source is
+//   cloudbilling.googleapis.com/v1/services/AEFD-7695-64FA/skus)
+//
+// Two things this table cannot express, and both matter when reading a number
+// computed from it:
+//   - BATCH is exactly half of every rate below. A batch-heavy month costs less
+//     than this table implies.
+//   - Reasoning ("thinking") tokens bill at the OUTPUT rate. Callers must count
+//     `thoughtsTokenCount` alongside `candidatesTokenCount` or the cost is
+//     understated several-fold (#4581).
 export const MODEL_PRICING: Record<string, { input: number; output: number }> = {
+  // Verified against the SKU catalogue 2026-09-03.
   'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
+  'gemini-3.1-flash-lite': { input: 0.25, output: 1.50 },   // was 0.075/0.30 — 3.3x/5x under list (#4581)
+  'gemini-3.5-flash-lite': { input: 0.30, output: 2.50 },
+  'gemini-3.5-flash': { input: 1.50, output: 9.00 },       // NOT the same as 3.6/3.7 — verify, don't infer
+
+  'gemini-3.6-flash': { input: 0.75, output: 3.75 },
+  'gemini-3.7-flash': { input: 0.75, output: 3.75 },
+  // Legacy models — retained for historical rows; not verifiable against the
+  // current catalogue, which splits 2.5-flash by long/short input.
   'gemini-2.5-flash': { input: 0.15, output: 0.60 },
   'gemini-2.0-flash': { input: 0.10, output: 0.40 },
   'gemini-2.0-flash-exp': { input: 0.10, output: 0.40 },
   'gemini-1.5-flash': { input: 0.075, output: 0.30 },
   'gemini-1.5-pro': { input: 1.25, output: 5.00 },
-  'gemini-3.1-flash-lite': { input: 0.075, output: 0.30 },
-  // Fallback for unknown models
-  'default': { input: 0.10, output: 0.40 },
+  // Fallback for unknown models. Deliberately NOT cheap: an unpriced model
+  // should overstate, so it gets noticed, rather than hide in the noise.
+  'default': { input: 0.75, output: 3.75 },
 };
 
 export interface TokenUsage {
@@ -72,7 +121,7 @@ export async function performOCRWithBuffer(
   previousPageOcr?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = promptText;
 
@@ -103,7 +152,7 @@ export async function performOCRWithBuffer(
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = outputTokensFrom(usageMetadata);
 
     return {
       text: result.response.text(),
@@ -130,7 +179,7 @@ export async function performOCR(
   previousPageOcr?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = promptText;
 
@@ -174,7 +223,7 @@ export async function performOCR(
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = outputTokensFrom(usageMetadata);
 
     return {
       text: result.response.text(),
@@ -200,7 +249,7 @@ export async function performTranslation(
   modelId: string = DEFAULT_MODEL,
   bookContext?: { title?: string; author?: string; year?: number | string }
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   // English books get modernized (Early Modern → Modern English) instead of translated
   const isEnglish = sourceLanguage.toLowerCase() === 'english';
@@ -240,7 +289,7 @@ export async function performTranslation(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   // Carry manuscript warnings through to the translation so both panels show them
   let translationText = sanitizeTranslationTags(result.response.text());
@@ -266,7 +315,7 @@ export async function generateSummary(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = customPrompt || DEFAULT_PROMPTS.summary;
   prompt += `\n\n**Translated text:**\n${translatedText}`;
@@ -279,7 +328,7 @@ export async function generateSummary(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   return {
     text: result.response.text(),
@@ -345,7 +394,7 @@ export async function performModernization(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   let prompt = customPrompt || MODERNIZATION_PROMPT;
 
@@ -363,7 +412,7 @@ export async function performModernization(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   return {
     text: result.response.text(),
@@ -441,7 +490,7 @@ export async function performTransliteration(
   sourceScript: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getThinkingOffModel(modelId);
 
   // Preprocess: strip metadata, convert column headers to <column-break/>
   const cleanedOcr = preprocessOcrForTransliteration(ocrText);
@@ -461,7 +510,7 @@ export async function performTransliteration(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   return {
     text: result.response.text(),

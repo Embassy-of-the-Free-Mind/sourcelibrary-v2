@@ -14,6 +14,8 @@ import { mirrorBookToCatalog } from '@/lib/books-catalog';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
+import { toPublicPageImages } from '@/lib/public-image-fields';
+import { getPartnerByProvider } from '@/lib/library-partners';
 
 export const preferredRegion = 'fra1';
 
@@ -147,7 +149,33 @@ export const GET = withApiAuth(async (
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }
 
-    return NextResponse.json({ ...book, pages }, {
+    // Public responses serve OUR images only. The page docs also carry the
+    // originating institution's URLs (74% of `photo` values point off our
+    // infrastructure), and handing those to a paginating consumer turns our
+    // API into a fan-out attack on twenty partner libraries. We hold a
+    // full-resolution copy of every page, so nothing is lost — see
+    // src/lib/public-image-fields.ts for the measurements.
+    // Provenance survives as ATTRIBUTION on the book below, not as a per-page
+    // image endpoint.
+    const publicPages = pages.map(p => toPublicPageImages(p as Record<string, unknown>));
+
+    const sourceProvider = (book as any).image_source?.provider as string | undefined;
+    const attribution = sourceProvider ? {
+      provider: sourceProvider,
+      name: getPartnerByProvider(sourceProvider)?.name || sourceProvider,
+      url: getPartnerByProvider(sourceProvider)?.url || null,
+      /** Where the scanned object lives at the holding institution, when known. */
+      item_url: (book as any).source_url || (book as any).ia_identifier
+        ? (book as any).source_url || `https://archive.org/details/${(book as any).ia_identifier}`
+        : null,
+      note: 'Digitized by this institution. Page images are served from Source Library\'s own CDN; please do not bulk-fetch the source.',
+    } : undefined;
+
+    return NextResponse.json({
+      ...book,
+      ...(attribution ? { attribution } : {}),
+      pages: publicPages,
+    }, {
       headers: { 'Cache-Control': cacheControl }
     });
   } catch (error) {

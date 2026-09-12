@@ -13,6 +13,7 @@
  * - jobs.findOne (check if cancelled)
  * - jobs.updateOne (set status to 'processing' — once per job)
  * - pages.findOne (get page data)
+ * - books.findOne (language + provider, for model routing — #4729)
  * - prompts.findOne (get OCR prompt)
  * - createRevision (snapshot before overwrite)
  * - jobs.updateOne (skip/already-current progress increment)
@@ -22,7 +23,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { OcrWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types/ai-models';
+import { DEFAULT_MODEL, DEFAULT_LITE_MODEL, getModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import { PROMPT_VERSION, extractPageType, extractColumns, extractScriptType, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
@@ -116,7 +117,19 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     return;
   }
 
-  const modelId = job.config.model || DEFAULT_MODEL;
+  // Model choice belongs to the BOOK, not to this worker. `job.config.model` is
+  // the override for deliberate re-OCR jobs; when the producer named nothing we
+  // consult the canonical router (BPH / non-Latin script / unknown → flash,
+  // Latin-script allowlist → lite). The old `|| DEFAULT_MODEL` here sent every
+  // model-less job to full flash: 125,585 mostly-Latin import-preview pages in
+  // four days at $3.42/1K instead of $0.85/1K (#4729; producer removed in #4432).
+  // A missing book routes to flash, the safe side of the allowlist.
+  const bookDoc = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { _id: 0, language: 1, 'image_source.provider': 1 } }
+  ) as RoutableBook | null;
+  const bookModel = getModelForBook(bookDoc);
+  const modelId: string = job.config.model || bookModel;
 
   // Get image URL with priority fallbacks
   const imageUrl = getPageImageUrl(page);
@@ -255,13 +268,16 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     const classified = classifyError(error);
     console.error(`[OCR] Failed to process page ${pageId} [${classified.category}]:`, error);
 
-    // RECITATION errors: Retry with fallback model
+    // RECITATION errors: retry once on the OTHER model — but only a model the
+    // book is allowed to use. Stepping a non-Latin book down to lite is the
+    // documented hallucination case (#4523), so lite is a fallback only when
+    // the router would have chosen it for this book in the first place.
     if (classified.category === 'safety_filter' && error instanceof Error && error.message.includes('RECITATION')) {
-      const fallbackModels = ['gemini-3-flash-preview', 'gemini-3.1-flash-lite'];
-      const currentModelIndex = fallbackModels.indexOf(modelId);
-      const nextModel = fallbackModels[currentModelIndex + 1];
+      const nextModel = modelId !== DEFAULT_MODEL
+        ? DEFAULT_MODEL
+        : bookModel === DEFAULT_LITE_MODEL ? DEFAULT_LITE_MODEL : undefined;
 
-      if (nextModel && currentModelIndex < fallbackModels.length - 1) {
+      if (nextModel) {
         console.log(`[OCR] RECITATION error on ${modelId}, retrying page ${pageId} with ${nextModel}`);
         try {
           const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);

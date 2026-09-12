@@ -20,8 +20,12 @@
  * metadata* rather than an error, nothing ever went red. These are the collectors
  * that read batch output we have already spent money to generate.
  *
+ * `parseDetectedImages` joined in #4456 — five of those scripts carried a parser
+ * for an `<image>`-sub-tag format the prompt never asked for. See its docblock.
+ *
  * KEEP IN LOCKSTEP WITH `src/lib/types/prompts/defaults.ts`.
  */
+import { VALID_IMAGE_TYPES } from './gallery-image-types.mjs';
 
 /**
  * Bump in `defaults.ts`; this mirrors it. Pinned by the parity test.
@@ -34,32 +38,47 @@
  */
 export const PROMPT_VERSION = 'v6.1.2026-05';
 
-/** Page-type vocabulary accepted from the model. Mirrors VALID_PAGE_TYPES in defaults.ts. */
-export const VALID_PAGE_TYPES = new Set([
+/**
+ * Page types the OCR prompt offers, in prompt order. Mirrors PROMPT_PAGE_TYPES in
+ * defaults.ts, where the prompt's own `One of:` line is interpolated from it.
+ *
+ * Scripts cannot import the TS module, so this is a copy — but the parity test
+ * asserts element-for-element equality *including order*, which is what makes the
+ * prompt's list and this one one vocabulary rather than two (#4455).
+ */
+export const PROMPT_PAGE_TYPES = [
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
-  'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
-  'digitizer-insert', 'exlibris', 'bookplate',
-]);
+  'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map',
+  'musical-score', 'table', 'cover', 'text', 'digitizer-insert', 'exlibris',
+];
+
+/**
+ * Accepted but not offered — values from an older prompt or a non-OCR writer that
+ * must survive a re-parse. Mirrors LEGACY_PAGE_TYPES in defaults.ts; see its
+ * docblock for why each one is here.
+ */
+export const LEGACY_PAGE_TYPES = ['bookplate', 'digitizer-notice'];
+
+/** Page-type vocabulary accepted from the model. Mirrors VALID_PAGE_TYPES in defaults.ts. */
+export const VALID_PAGE_TYPES = new Set([...PROMPT_PAGE_TYPES, ...LEGACY_PAGE_TYPES]);
 
 /**
  * Extract <page-type> from OCR text. Returns undefined if not found or invalid.
  *
- * `validate: false` returns whatever the model emitted (trimmed, lower-cased)
- * without screening it against VALID_PAGE_TYPES. That is not a preference — it is
- * what four batch collectors have always done, and the two vocabularies genuinely
- * disagree: the OCR prompt offers `musical-score`, `table` and `cover`, none of
- * which VALID_PAGE_TYPES lists. Flipping those callers to validating would
- * silently stop three prompt-sanctioned types from being recorded, so the
- * divergence is a parameter rather than a fork. See #4455 for the gap itself.
+ * The `validate: false` escape hatch is gone (#4455). It existed because the
+ * prompt offered `musical-score` / `table` / `cover` and this set did not, so the
+ * four batch collectors screened nothing rather than lose three real answers.
+ * The set is now derived from the prompt's list, so screening loses nothing and
+ * an unrecognised value is a genuine mis-answer. Widen PROMPT_PAGE_TYPES (in both
+ * files) instead of reintroducing the flag.
  *
  * Unlike the TS canonical this tolerates a non-string argument, because
  * `split-book.mjs` passes `page.ocr`, which is null on an un-OCR'd page.
  */
-export function extractPageType(ocrText, { validate = true } = {}) {
+export function extractPageType(ocrText) {
   const match = ocrText?.match(/<page-type>([\s\S]*?)<\/page-type>/i);
   if (!match) return undefined;
   const type = match[1].trim().toLowerCase();
-  if (!validate) return type || undefined;
   return VALID_PAGE_TYPES.has(type) ? type : undefined;
 }
 
@@ -78,6 +97,105 @@ export function extractScriptType(ocrText) {
   const type = match[1].trim().toLowerCase();
   if (type === 'handwritten' || type === 'mixed' || type === 'printed') return type;
   return undefined;
+}
+
+/**
+ * Parse the `<detected-images>` JSON block into DetectedImage-shaped objects.
+ * Returns `[]` when the block is absent, is not a JSON array, or fails to parse.
+ *
+ * ## Why this one arrived a release late (#4456)
+ *
+ * #4443 consolidated the other four parsers and deliberately skipped this one,
+ * because the five scripts-side copies were not forks of the canonical — they
+ * walked `<image>…</image>` sub-tags with `<description>`/`<type>`/`<bbox>`
+ * children, a shape no OCR prompt in this repo has ever asked for. The current
+ * prompt asks for a JSON array, so JSON is what the model emits, so the XML
+ * walkers matched nothing and returned `[]` on every page they were handed.
+ * Every call site guarded with `if (detectedImages.length > 0)`, so nothing was
+ * written and nothing errored: the collectors simply never recorded a detected
+ * image, for as long as they have existed.
+ *
+ * No XML fallback is kept, and no fallback is needed. Measured 2026-08-31 over
+ * EVERY page in `pages` holding a `<detected-images>` block — 31,210 of them, a
+ * full scan rather than a sample — exactly 0 were `<image>`-shaped. A fallback
+ * would be a fallback for output that was never produced, and it would put a
+ * branch in this file that the TS canonical does not have, which is the drift the
+ * parity test exists to prevent. Re-measure with
+ * `scripts/audit/detected-images-parse-gap.mjs --full` before reintroducing one.
+ *
+ * Note the two shapes also disagreed about the *schema they wrote*: the walkers
+ * emitted `bbox: {x1,y1,x2,y2}` in pixels plus a `subject` array, and no
+ * `detection_source`/`detected_at`. The canonical writes fractional
+ * `{x,y,width,height}` and stamps provenance. Since the walkers never wrote a
+ * row, there is no legacy pixel-bbox data from this path to migrate — but do not
+ * reintroduce the pixel shape: `detected_images.bbox` is read as fractional
+ * (see `.claude/docs/invariants/image-quality-and-bboxes.md`).
+ *
+ * @param {string} ocrText
+ * @returns {Array<Record<string, unknown>>}
+ */
+export function parseDetectedImages(ocrText) {
+  const match = ocrText?.match(/<detected-images>([\s\S]*?)<\/detected-images>/i);
+  if (!match) return [];
+
+  try {
+    const raw = JSON.parse(match[1].trim());
+    if (!Array.isArray(raw)) return [];
+
+    const now = new Date();
+    return raw
+      .filter((img) => img && typeof img.description === 'string')
+      .map((img) => {
+        const result = {
+          description: img.description,
+          detection_source: 'ocr_tag',
+          detected_at: now,
+        };
+
+        if (typeof img.type === 'string' && VALID_IMAGE_TYPES.has(img.type)) {
+          result.type = img.type;
+        }
+
+        if (img.bbox && typeof img.bbox === 'object') {
+          const b = img.bbox;
+          if (typeof b.x === 'number' && typeof b.y === 'number' &&
+              typeof b.width === 'number' && typeof b.height === 'number') {
+            result.bbox = { x: b.x, y: b.y, width: b.width, height: b.height };
+          }
+        }
+
+        if (typeof img.gallery_quality === 'number') {
+          result.gallery_quality = Math.max(0, Math.min(1, img.gallery_quality));
+        }
+
+        if (typeof img.museum_rationale === 'string') {
+          result.gallery_rationale = img.museum_rationale;
+        }
+
+        if (typeof img.confidence === 'number') {
+          result.confidence = img.confidence;
+        }
+
+        if (typeof img.museum_description === 'string') {
+          result.museum_description = img.museum_description;
+        }
+
+        if (img.metadata && typeof img.metadata === 'object') {
+          const m = img.metadata;
+          result.metadata = {};
+          if (Array.isArray(m.subjects)) result.metadata.subjects = m.subjects.filter((s) => typeof s === 'string');
+          if (Array.isArray(m.figures)) result.metadata.figures = m.figures.filter((s) => typeof s === 'string');
+          if (Array.isArray(m.symbols)) result.metadata.symbols = m.symbols.filter((s) => typeof s === 'string');
+          if (typeof m.style === 'string') result.metadata.style = m.style;
+          if (typeof m.technique === 'string') result.metadata.technique = m.technique;
+        }
+
+        return result;
+      });
+  } catch {
+    // Malformed JSON — not unusual from AI output
+    return [];
+  }
 }
 
 /**

@@ -10,16 +10,23 @@ import { getReadDb } from '@/lib/mongodb';
 export const runtime = 'nodejs';
 export const revalidate = 86400;
 
-const COLS = 7, COLW = 200, H = 900, W = COLS * COLW;
-const BG = '#1a1612';
+// Match the book hero mosaic (api/books/[id]/hero-mosaic): a thin gap between
+// tiles so the dark ground shows through as a grid, and the same #14100c the
+// book hero uses, so the two heroes read as one system rather than two.
+const GAP = 6;
+const COLS = 7, COLW = 200, H = 900;
+const W = COLS * COLW + (COLS + 1) * GAP;
+const BG = '#14100c';
 const FETCH_LIMIT = 48;
+// Below this many matches a filtered collage looks broken, so we fall back.
+const MIN_COLLAGE = 14;
 
 async function solid(maxAge: number): Promise<Response> {
   const out = await sharp({ create: { width: W, height: H, channels: 3, background: BG } }).webp({ quality: 60 }).toBuffer();
   return new Response(new Uint8Array(out), { headers: { 'Content-Type': 'image/webp', 'Cache-Control': `public, max-age=${maxAge}` } });
 }
 
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   try {
     const db = await getReadDb();
@@ -27,10 +34,30 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     const bookIds = bookDocs.map((d) => d.id as string);
     if (!bookIds.length) return solid(3600);
 
-    const imgs = await db.collection('gallery_images').find(
-      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
-      { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1 }, maxTimeMS: 5000 },
-    ).sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
+    // Optional ?match=<regex> narrows the collage to plates whose description
+    // matches — a collection about one subject inside broader books (slime
+    // moulds inside general mycology) otherwise gets a hero full of the wrong
+    // plates. Falls back to the unfiltered set when the match is too thin to
+    // fill a collage, so the hero degrades to "broadly right" rather than to a
+    // handful of images tiled over seven columns.
+    const match = req.nextUrl.searchParams.get('match');
+    const base = { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } };
+    const proj = { projection: { _id: 0, thumbnail_url: 1, extracted_url: 1, image_url: 1, page_id: 1, detection_index: 1 }, maxTimeMS: 5000 };
+    let imgs: Record<string, unknown>[] = [];
+    if (match) {
+      const rx = match.slice(0, 600);
+      imgs = await db.collection('gallery_images').find({
+        ...base,
+        $or: [
+          { description: { $regex: rx, $options: 'i' } },
+          { museum_description: { $regex: rx, $options: 'i' } },
+        ],
+      }, proj).sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
+    }
+    if (imgs.length < MIN_COLLAGE) {
+      imgs = await db.collection('gallery_images').find(base, proj)
+        .sort({ gallery_quality: -1 }).limit(FETCH_LIMIT).toArray();
+    }
     const urls = imgs.map((g) => (g.thumbnail_url || g.extracted_url || g.image_url) as string | undefined).filter((u): u is string => Boolean(u));
     if (!urls.length) return solid(3600);
 
@@ -47,7 +74,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
     // Masonry pack: each image goes to the currently-shortest column; the bottom
     // overflowing tile in a column is cropped so nothing exceeds the canvas.
-    const colH = new Array(COLS).fill(0);
+    const colH = new Array(COLS).fill(GAP);
     const tiles: OverlayOptions[] = [];
     for (const r of resized) {
       let c = 0;
@@ -57,8 +84,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       const input = r.height > remaining
         ? await sharp(r.data).extract({ left: 0, top: 0, width: COLW, height: remaining }).toBuffer()
         : r.data;
-      tiles.push({ input, left: c * COLW, top: colH[c] });
-      colH[c] += r.height;
+      tiles.push({ input, left: GAP + c * (COLW + GAP), top: colH[c] });
+      colH[c] += r.height + GAP;
     }
     if (!tiles.length) return solid(3600);
 

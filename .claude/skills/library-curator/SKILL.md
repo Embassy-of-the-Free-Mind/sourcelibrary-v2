@@ -263,8 +263,32 @@ Without retry, a 20-book batch will lose 2-3 books to transient errors and you'l
 5. **Check for Related Editions** - Search by author to see if this is another edition of an existing work. If a matching book has a `work_id`, pass the same `work_id` in the import request (e.g., `"work_id": "agrippa-de-occulta-philosophia"`). All import routes accept `work_id` as an optional field.
 6. **Import Batch** - Import 5-20 books with thematic coherence. Use retry-with-backoff for Atlas transients.
 7. **Verify Imports Landed** - Audit-query your own batch (see section above). Don't trust the script's "OK" output alone — confirm the books are in Mongo with the right page counts.
-8. **Generate Report** - Document batch with rationale and notes
-9. **Update Logs** - Add to successes log in agentcurator.md
+8. **Write/Update the Collection Description** - If the batch creates or reshapes a collection, read back the slugs of the books you just tagged and **hyperlink every work the description names** (see "Collection Descriptions" below). A description is not done until its named works are clickable.
+9. **Generate Report** - Document batch with rationale and notes
+10. **Update Logs** - Add to successes log in agentcurator.md
+
+## Collection Descriptions
+
+> **Full rules: `.claude/docs/collection-description-linking.md`. Prose style: `.claude/docs/collection-intro-writing-rules.md`.** Read both before writing collection copy.
+
+**Hyperlink every book you mention.** A collection description is public-facing copy on a site whose whole point is navigation between primary sources — prose that names ten works and links none of them is a dead end, and defeats the purpose of having a collection page at all. This is the #1 defect in curator-generated descriptions (#1867: the microscopy intro named eleven works and linked zero).
+
+The procedure, every time:
+
+1. **Read back the `bookIds` you just tagged** and get their real slugs — never guess a slug:
+   ```bash
+   curl -s "https://sourcelibrary.org/api/collections/SLUG?mode=manifest" \
+     | jq -r '.books[] | "\(.slug // .id)\t\(.display_title // .title)"'
+   ```
+2. **Replace each bare title with an inline markdown link** to `/book/<slug>`:
+   `Hooke's [Micrographia](/book/micrographia-1665)`.
+3. **Fallback when the slug isn't known yet** (first sketch, before import): leave `[Title](TODO)` so the pending link-resolution is visible. Never ship a description containing `TODO`.
+
+Renderer constraints — get these wrong and the page shows raw punctuation:
+- **Internal hrefs only.** The href must start with `/`. An absolute `https://sourcelibrary.org/book/...` is **not** parsed and renders as literal `[brackets](and-parens)`.
+- **Markdown emphasis is not parsed.** `**bold**` and `*italic*` show their asterisks. Don't write them.
+- **Don't rely on auto-linking.** The renderer auto-links a book's *full* title (≥8 chars) found verbatim in the prose. Real titles here are long early-modern Latin ones and good prose names the short form, so the match usually fails.
+- **Don't retro-rewrite existing descriptions.** Adding links to a collection you're already curating is welcome; a bulk sweep over hand-tuned intros is its own reviewed change.
 
 ## Catalog Sources
 
@@ -318,6 +342,8 @@ Without retry, a 20-book batch will lose 2-3 books to transient errors and you'l
 | **Sancai Tuhui** (Illustrated Encyclopedia) | 1609 | Thousands of woodcuts | Already in collection |
 
 ## Report Format
+
+**Hyperlink every book you mention** — in the batch report as well as in any collection description the batch produces. Titles in the report link to `https://sourcelibrary.org/book/<slug>` (a report is read outside the site, so absolute URLs are right there); titles in a **collection description** must use the site-relative `/book/<slug>` form, because the collection page only parses internal hrefs. See "Collection Descriptions" above.
 
 ### Per-Book Report
 ```

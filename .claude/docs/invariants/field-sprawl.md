@@ -20,7 +20,7 @@ Build import documents with `makeBookDoc()` / `makePageDoc()` from `scripts/lib/
 
 `books` reached **477 top-level fields with only 17 on ≥99% of documents**, ~140 written by a single sweep and then abandoned. Compare `books_warehouse`, the newest book collection: 129 fields, 25 core. The difference is not complexity; it is accretion.
 
-**Current state: 423 fields** (2026-08-18), after three families were consolidated and 53 dead fields deleted. The live count is tracked in `scripts/lib/books-known-fields.json` — read it rather than any number written in prose, including this one.
+**Current state: 417 fields** (2026-09-10), after four families were consolidated and 63 dead fields deleted. The live count is tracked in `scripts/lib/books-known-fields.json` — read it rather than any number written in prose, including this one.
 
 ## The lesson that cost the most: consolidation without enforcement is a treadmill
 
