@@ -22,6 +22,7 @@
  *   --max-pages=N    Skip books with more than N untranslated pages (default: 9999)
  *   --smallest       Sort smallest books first (default — fastest to complete)
  *   --largest        Sort largest books first
+ *   --reason="..."   Why this batch is being run by hand (recorded on each job, #4336)
  *
  * Requires env: MONGODB_URI, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, SQS_PAGE_TRANSLATION_QUEUE_URL
  */
@@ -32,6 +33,7 @@ import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // Load .env.production.local for MONGODB_URI + SQS URLs
 try {
@@ -79,6 +81,8 @@ const DRY_RUN = hasFlag('dry-run');
 const SINGLE_BOOK = getArg('book-id');
 const MAX_PAGES = parseInt(getArg('max-pages') || '9999', 10);
 const SORT_LARGEST = hasFlag('largest');
+const INITIATED_BY = 'bulk-translate-script';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // --- SQS ---
 const sqsClient = new SQSClient({ region: AWS_REGION });
@@ -237,7 +241,8 @@ async function main() {
         model: DEFAULT_MODEL,
         language: book.language || 'auto-detect',
       },
-      initiated_by: 'bulk-translate-script',
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date(),
     });

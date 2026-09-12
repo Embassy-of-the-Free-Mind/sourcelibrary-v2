@@ -12,11 +12,14 @@
  *   --dry-run         List books and pages, don't submit
  *   --limit=N         Max books to process (default: 50)
  *   --max-missing=N   Max missing pages per book (default: 50)
+ *   --reason="..."    Why this run is being done by hand (recorded on each job, #4336)
  */
 
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // ── Config ──
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -25,15 +28,13 @@ const IMAGE_CONCURRENCY = 20;
 const OCR_INLINE_BATCH_SIZE = 20;
 const OCR_FILE_BATCH_SIZE = 150;
 
-// Models
-const MODEL_FLASH = 'gemini-3-flash-preview';
-const MODEL_LITE = 'gemini-3.1-flash-lite';
-
 // ── CLI args ──
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '50');
 const MAX_MISSING = parseInt(args.find(a => a.startsWith('--max-missing='))?.split('=')[1] || '50');
+const INITIATED_BY = 'script:backfill-ocr-near-complete';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // ── Gemini Batch API keys ──
 const GEMINI_BATCH_KEYS = [
@@ -49,36 +50,6 @@ if (GEMINI_BATCH_KEYS.length === 0) {
 
 function getGeminiApiKey(keyIndex = 0) {
   return GEMINI_BATCH_KEYS[keyIndex] || GEMINI_BATCH_KEYS[0];
-}
-
-// Latin-script languages safe for flash-lite. Non-Latin scripts get flash
-// because flash-lite hallucinates on low-resource scripts. See
-// src/lib/types/ai-models.ts for the canonical list.
-const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
-  'english', 'en', 'eng', 'latin', 'la', 'lat',
-  'french', 'fr', 'fra', 'italian', 'it', 'ita',
-  'spanish', 'es', 'spa', 'portuguese', 'pt', 'por',
-  'romanian', 'ro', 'ron', 'rum', 'catalan', 'ca', 'cat',
-  'german', 'de', 'deu', 'ger', 'dutch', 'nl', 'nld', 'dut',
-  'swedish', 'sv', 'swe', 'norwegian', 'no', 'nor',
-  'danish', 'da', 'dan', 'finnish', 'fi', 'fin',
-  'icelandic', 'is', 'isl', 'ice',
-  'welsh', 'cy', 'cym', 'wel', 'irish', 'ga', 'gle',
-  'polish', 'pl', 'pol', 'czech', 'cs', 'ces', 'cze',
-  'slovak', 'sk', 'slk', 'slo', 'slovenian', 'sl', 'slv',
-  'croatian', 'hr', 'hrv', 'hungarian', 'hu', 'hun',
-  'estonian', 'et', 'est', 'latvian', 'lv', 'lav',
-  'lithuanian', 'lt', 'lit', 'albanian', 'sq', 'sqi', 'alb',
-  'turkish', 'tr', 'tur', 'indonesian', 'id', 'ind',
-  'vietnamese', 'vi', 'vie', 'malay', 'ms', 'msa',
-  'tagalog', 'tl', 'tgl', 'filipino', 'swahili', 'sw', 'swa',
-]);
-
-function getOcrModelForBook(book) {
-  if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
-  const lang = (book?.language || '').toLowerCase().trim();
-  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return MODEL_FLASH;
-  return MODEL_LITE;
 }
 
 // ── Image helpers ──
@@ -370,6 +341,8 @@ async function main() {
         model: ocrModel,
         status: 'pending',
         api_key_index: batchJob.keyIndex ?? 0,
+        initiated_by: INITIATED_BY,
+        ...initiatedReasonFields(REASON),
         created_at: new Date(),
         source: 'backfill-ocr-near-complete',
       });

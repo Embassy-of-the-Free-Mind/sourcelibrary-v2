@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, useLocale } from '@/lib/i18n';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
+import { transcriptionReliability } from '@/lib/transcription-reliability';
 import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
@@ -1018,6 +1019,45 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
         </span>
       </span>
     </div>
+  );
+}
+
+/**
+ * Says plainly that a transcription cannot be trusted, above the transcription
+ * itself (#4523).
+ *
+ * Placed INSIDE the scrolling pane rather than in the pane header, because the
+ * header is sticky chrome a reader learns to skip, and this needs to sit with
+ * the text it is about. It is deliberately not dismissible: it is a property of
+ * the text, not a notification.
+ *
+ * Suppressed when a paired critical edition is showing, because that surface
+ * already carries its own, more specific version of the same warning and two
+ * stacked disclaimers read as boilerplate.
+ */
+function UnreliableTranscriptionNotice({
+  book,
+  paired,
+}: {
+  book: { language?: string | null };
+  paired: boolean;
+}) {
+  const flag = transcriptionReliability(book);
+  if (!flag || paired) return null;
+  return (
+    <aside
+      className="mb-5 rounded-md px-4 py-3 text-[13.5px] leading-snug"
+      style={{
+        background: 'var(--accent-rust-soft, rgba(158,74,58,0.06))',
+        border: '1px solid rgba(158,74,58,0.28)',
+        color: 'var(--text-primary, #2b2622)',
+      }}
+    >
+      <p className="m-0">{flag.message}</p>
+      <p className="m-0 mt-1.5 text-[12px]" style={{ color: 'var(--text-secondary, #6b6560)' }}>
+        {flag.evidence}
+      </p>
+    </aside>
   );
 }
 
@@ -3500,6 +3540,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
+                    <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
                     {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={17.5} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />}
@@ -3584,6 +3625,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
+                    {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
@@ -3864,6 +3906,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-8">
+                <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
                 {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />}
@@ -3910,6 +3953,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
+                {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish

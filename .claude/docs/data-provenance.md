@@ -140,7 +140,12 @@ That last one is not in `prompts` at all — it is a constant in the route/worke
   field: "ocr" | "translation",
   data: "the full previous text content",
   source: "batch_api" | "ai" | "pipeline_preview" | "manual" | "skip" | "system" |
-          "maintenance" | "mineru" | "realtime_api_sequential" | "unknown" | null |
+          "maintenance" | "mineru" | "ia_djvu" | "realtime_api_sequential" | "unknown" | null |
+          // "ia_djvu" (2026-09-11): the Internet Archive's own per-leaf OCR (`<id>_djvu.xml`,
+          // ABBYY/Tesseract — engine in ocr.model as `ia-ocr/<ocr_module_version>`), written by
+          // scripts/import/ia-ocr-ingest.mjs ONLY to pages with no ocr.data, and only for books
+          // whose 25-page Gemini sample agrees with the IA text at a word-sequence median ≥ 0.85
+          // (ocr.agreement_ref). NOT model output: exclude from any Gemini quality measurement.
           "<sweep-label>",   // ad-hoc, e.g. "shift-repair-erara-2026-07",
                              // "reocr-download-failure-fix-2026-07"
   model: "gemini-3-flash-preview",
