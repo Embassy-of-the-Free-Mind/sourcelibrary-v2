@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReviewQueue } from './useReviewQueue';
 import { QueueShell } from './QueueShell';
 
@@ -27,12 +28,55 @@ type Item = {
   language: string;
 };
 
+/** One drift, pinned to the words that caused it. */
+type Passage = { quote: string; should_say: string };
+
+const EMPTY: Passage = { quote: '', should_say: '' };
+
 export default function TranslationCheckReview() {
+  /**
+   * Passages are the difference between "this page is a bit off" and a defect
+   * somebody can fix. A whole-page verdict alone cannot be acted on and cannot
+   * be counted: it collapses a page with one slipped clause into the same
+   * bucket as a page that is wholly invented. A quoted phrase plus what it
+   * should say is countable (an error RATE, not a binary), aggregatable (the
+   * same failure recurring across books is a pipeline defect, not a page
+   * defect), and directly actionable.
+   *
+   * They ride in `detail`, the jsonb column that already exists on every
+   * rating, so this needs no migration.
+   */
+  const [passages, setPassages] = useState<Passage[]>([{ ...EMPTY }]);
+  const passagesRef = useRef<Passage[]>(passages);
+  passagesRef.current = passages;
+
+  // Stable identity on purpose: the hook rebuilds its keydown listener whenever
+  // this changes, and the file already warns against doing that per keystroke.
+  const itemToDetail = useCallback(
+    (it: Item) => ({
+      url: it.url,
+      campaign: it.campaign,
+      language: it.language,
+      passages: passagesRef.current.filter(p => p.quote.trim() || p.should_say.trim()),
+    }),
+    [],
+  );
+
   const q = useReviewQueue<Item>({
     queue: 'translation-check',
     fetchUrl: '/api/review/translation-check/next',
-    itemToDetail: it => ({ url: it.url, campaign: it.campaign, language: it.language }),
+    itemToDetail,
   });
+
+  // A new page means new passages; carrying them over would attach one page's
+  // evidence to another's verdict.
+  const currentId = q.item?.item_id;
+  useEffect(() => {
+    setPassages([{ ...EMPTY }]);
+  }, [currentId]);
+
+  const setPassage = (i: number, patch: Partial<Passage>) =>
+    setPassages(ps => ps.map((p, n) => (n === i ? { ...p, ...patch } : p)));
 
   const body = q.item ? (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -74,6 +118,43 @@ export default function TranslationCheckReview() {
           <i>transcription wrong</i> rather than blaming the translation for it.
         </li>
       </ol>
+
+      <div className="border-t border-stone-200 pt-5">
+        <h3 className="text-sm font-medium text-stone-800">
+          Found something? Pin it to the words.
+        </h3>
+        <p className="text-xs text-stone-500 mt-0.5 mb-3">
+          Optional, and the most useful thing you can give us. One line of the original and what
+          it should have said is something we can actually fix — and when the same mistake turns
+          up across different books, it tells us the pipeline is wrong, not the page.
+        </p>
+
+        <div className="space-y-3">
+          {passages.map((p, i) => (
+            <div key={i} className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input
+                value={p.quote}
+                onChange={e => setPassage(i, { quote: e.target.value })}
+                placeholder={`What the ${q.item?.language || 'original'} says`}
+                className="px-3 py-2 border border-stone-300 rounded-md text-sm bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
+              />
+              <input
+                value={p.should_say}
+                onChange={e => setPassage(i, { should_say: e.target.value })}
+                placeholder="What the English should say"
+                className="px-3 py-2 border border-stone-300 rounded-md text-sm bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setPassages(ps => [...ps, { ...EMPTY }])}
+          className="mt-2 text-xs text-accent-rust hover:underline"
+        >
+          + another passage
+        </button>
+      </div>
 
       <p className="text-xs text-stone-500">
         Telling us a page is <i>sound</i> is worth exactly as much as telling us it is broken.
