@@ -151,9 +151,9 @@ export default function FreeReadingPage() {
           <h2 className={H2}>What happened on the English shelf</h2>
           <p className={P}>
             We ran the test across every English book in the catalogue with Archive scans and unread
-            pages: 2,076 books. The Archive had no text file at all for 261 of them. For 447 more we had
+            pages: 2,076 books. The Archive had no text file at all for 258 of them. For 452 more we had
             fewer than five pages of our own reading to compare against, so no verdict was possible. That
-            left 1,361 books with a score.
+            left 1,366 books with a score.
           </p>
           <div className="overflow-x-auto mb-6">
             <table className="w-full text-sm font-body">
@@ -165,15 +165,15 @@ export default function FreeReadingPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td className={TD}>Accepted, agreement 0.85 or better</td><td className={TD}>620</td><td className={TD}>65,977</td></tr>
-                <tr><td className={TD}>Rejected</td><td className={TD}>741</td><td className={TD}>136,545</td></tr>
-                <tr><td className={TD}>No reference pages to compare</td><td className={TD}>447</td><td className={TD}>197,914</td></tr>
-                <tr><td className={TD}>No Archive text file</td><td className={TD}>261</td><td className={TD}>&mdash;</td></tr>
+                <tr><td className={TD}>Accepted, agreement 0.85 or better</td><td className={TD}>624</td><td className={TD}>66,322</td></tr>
+                <tr><td className={TD}>Rejected</td><td className={TD}>742</td><td className={TD}>136,545</td></tr>
+                <tr><td className={TD}>No reference pages to compare</td><td className={TD}>452</td><td className={TD}>197,914</td></tr>
+                <tr><td className={TD}>No Archive text file</td><td className={TD}>258</td><td className={TD}>&mdash;</td></tr>
               </tbody>
             </table>
           </div>
           <p className={P}>
-            The accepted pages are being written into the library as this is published. They carry a
+            The accepted pages, 66,322 of them, were written into the library on 12 September. They carry a
             label in the page record saying where the text came from and what the agreement score was, so
             they can be found, measured separately, and replaced if a better reading ever arrives. Showing
             that label in the reader is the next step.
@@ -294,7 +294,7 @@ export default function FreeReadingPage() {
           <h2 className={H2}>What it adds up to</h2>
           <p className={P}>
             For English, the free share is worth a few hundred dollars of reading and a great deal of
-            waiting: the accepted pages arrive today rather than when the queue reaches them. The 447 books
+            waiting: the accepted pages arrive today rather than when the queue reaches them. The 452 books
             with no reference pages are the larger opportunity. Reading eight pages of each, enough to run
             the test, costs about five dollars in total, and would let the same free reading fill on the
             order of a hundred thousand pages more.
