@@ -10,8 +10,9 @@ export const DEFAULT_MODEL = 'gemini-3-flash-preview';
 // Cost-efficient model for standard OCR and translation
 export const DEFAULT_LITE_MODEL = 'gemini-3.1-flash-lite';
 
-// Default model for batch operations (50% cheaper via Batch API)
-export const DEFAULT_BATCH_MODEL = 'gemini-3-flash-preview';
+// There is deliberately NO "default batch model". Batch vs realtime is a
+// lane, not a quality tier; the model is the book's (`getModelForBook`). A
+// flash constant here let three batch routes ignore the router (#4729).
 
 /**
  * Languages written in Latin script that are well-represented in flash-lite's
@@ -89,7 +90,10 @@ function isLatinScriptLanguage(language: string | null | undefined): boolean {
  * - Latin-script European languages: flash-lite (50% cheaper, comparable quality)
  * - Unknown/null language: full flash (safer default)
  */
-export function getModelForBook(book: { image_source?: { provider?: string }; language?: string | null } | null): string {
+/** The two book fields the router reads. Project exactly these when looking a book up for routing. */
+export type RoutableBook = { image_source?: { provider?: string }; language?: string | null };
+
+export function getModelForBook(book: RoutableBook | null): string {
   if (book?.image_source?.provider === 'bph') {
     return DEFAULT_MODEL;
   }

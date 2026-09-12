@@ -60,6 +60,13 @@ export const BOOK_FIELDS = Object.freeze([
   // 45K books; an importer that already knows an edition is facing-page
   // (Chimalpahin's Nahuatl/French) may set it at insert time.
   'languages', 'language_multi',
+  // language_review: set when the caller's language and the SOURCE's disagree, so the record does
+  // not auto-publish on an unreviewed value. src/app/api/import/ia/route.ts has written it at import
+  // since #2185 (resolveLanguage -> `...(lang.language_review ? { language_review: true } : {})`);
+  // the direct importers could not, because it was missing here, so the same conflict was silently
+  // dropped on whichever door the book came through. ~1,519 live books carry it and a Sunday cron
+  // (audit-language-mismatch.mjs --flag) refills the queue.
+  'language_review',
   'published', 'year', 'original_work_year', 'date_earliest', 'date_latest',
   'publisher',
   'place_published', 'place_of_publication', // known duplicate family — #3969 Track B

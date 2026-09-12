@@ -1,0 +1,1 @@
+{"model": "google-vision", "detectedLanguages": [{"languageCode": "zh", "confidence": 0.82653123}, {"languageCode": "sn", "confidence": 0.024677401}], "meanConfidence": 0.583, "minConfidence": 0.282, "blocks": 22, "elapsed": 954, "units": 1, "cost": 0.0015, "error": null}
