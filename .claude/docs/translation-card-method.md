@@ -99,3 +99,10 @@ edition path).
 - Citation harvest: `scripts/audit/harvest-priors-to-card-proposals.mjs`
   (#4536) moves ledger `priors[]` citations toward cards — new cards land as
   silent `under_review`, existing cards get proposals only.
+- **Review is delegated to Claude (Derek, 2026-09-01)** — no waiting human
+  pass; the adversarial bar (unprimed verifiers, opened-source rule) stays.
+  First drain executed same evening: the 191-card verified-method tranche
+  fully adjudicated (154 prior_exists / 19 no_prior_known / 2 not_a_single_work
+  / 16 identity holds) — record: `scripts/eval/results/card-drain-2026-09-01.md`.
+  Open policy call from the holds: whether a scripture witness (lectionary,
+  polyglot Psalter) earns the first-translation sentence.

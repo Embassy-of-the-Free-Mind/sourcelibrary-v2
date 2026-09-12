@@ -322,6 +322,8 @@ export interface ReaderStrings {
      *  translation too) is the corpus editors' scholarly work, not AI's. */
     corpusNoScan: (witnessCount: number) => string;
     corpusTranscript: (name: string, org?: string) => string;
+    /** Text taken from the Internet Archive's own OCR of the scan (ocr.source === 'ia_djvu'). */
+    iaTranscript: (engine: string | null, year: string | null, agreement: number | null) => string;
     corpusTranslation: (name: string) => string;
     corpusNotice: string;
     corpusAiNotice: (name: string) => string;
@@ -351,6 +353,16 @@ export interface ReaderStrings {
   paneEmpty: {
     notTranscribed: string;
     notTranscribedBody: string;
+    /** Attempted but not reliably legible (#4523). */
+    notReliablyLegible: string;
+    notReliablyLegibleBody: string;
+    /**
+     * The transcription is good and shown; the ENGLISH was made from an older,
+     * worse reading of the page and has been taken down until it is redone
+     * (#4523). Distinct from notReliablyLegible, which withholds both panes.
+     */
+    translationWithheld: string;
+    translationWithheldBody: string;
     blankPage: string;
     readyToTranslate: string;
     readyToTranslateBody: string;
@@ -737,6 +749,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         ? `None — this is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
         : 'None — this is a digital text edition; no page images exist.',
       corpusTranscript: (name, org) => `Composite transliteration from the ${name}${org ? ` (${org})` : ''}`,
+      iaTranscript: (engine, year, agreement) =>
+        `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+        (agreement != null ? `, taken because it agrees with our own reading of this book's sample pages (${Math.round(agreement * 100)}% of words)` : ''),
       corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
       corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours — the corpus divides the text by lines, not pages.',
       corpusAiNotice: (name) => `The transliteration follows the ${name}; the English is a machine translation of it and may contain errors.`,
@@ -754,6 +769,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneEmpty: {
       notTranscribed: 'Not transcribed yet',
       notTranscribedBody: 'The scan is here and free to read, but this page has no transcription yet, so there is nothing to translate from.',
+      notReliablyLegible: 'Not reliably legible',
+      notReliablyLegibleBody: 'We attempted to transcribe this page but could not produce a reading we trust, so we are not showing one. The scan beside this is the authoritative source.',
+      translationWithheld: 'Translation withdrawn',
+      translationWithheldBody: 'This page has just been re-transcribed, and the English we had was made from the older, less accurate reading. We have taken it down rather than leave a translation of text that is no longer here. A new one will follow.',
       blankPage: 'Blank page.',
       readyToTranslate: 'Ready to translate',
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
@@ -1114,6 +1133,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         ? `Ninguno — es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
         : 'Ninguno — es una edición digital de texto; no existen imágenes de página.',
       corpusTranscript: (name, org) => `Transliteración compuesta procedente de ${name}${org ? ` (${org})` : ''}`,
+      iaTranscript: (engine, year, agreement) =>
+        `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+        (agreement != null ? `, aceptada porque coincide con nuestra propia lectura de las páginas de muestra de este libro (${Math.round(agreement * 100)}% de las palabras)` : ''),
       corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
       corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra — el corpus divide el texto por líneas, no por páginas.',
       corpusAiNotice: (name) => `La transliteración sigue ${name}; el inglés es una traducción automática de ella y puede contener errores.`,
@@ -1131,6 +1153,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneEmpty: {
       notTranscribed: 'Aún sin transcribir',
       notTranscribedBody: 'El escaneo está aquí y se puede leer libremente, pero esta página todavía no tiene transcripción, así que no hay nada de donde traducir.',
+      notReliablyLegible: 'Sin lectura fiable',
+      notReliablyLegibleBody: 'Intentamos transcribir esta página, pero no pudimos obtener una lectura fiable, así que no mostramos ninguna. El escaneo que la acompaña es la fuente autorizada.',
+      translationWithheld: 'Traducción retirada',
+      translationWithheldBody: 'Acabamos de volver a transcribir esta página, y la traducción al inglés que teníamos se hizo a partir de la lectura anterior, menos exacta. La hemos retirado en lugar de dejar una traducción de un texto que ya no está aquí. Pronto habrá una nueva.',
       blankPage: 'Página en blanco.',
       readyToTranslate: 'Lista para traducir',
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',

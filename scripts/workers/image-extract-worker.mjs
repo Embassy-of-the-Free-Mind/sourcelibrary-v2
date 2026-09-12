@@ -21,7 +21,7 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
-import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 
@@ -732,6 +732,7 @@ async function extractImagesFromPage(page, prompt, groundingCtx) {
       maxOutputTokens: 4096,
       responseMimeType: 'application/json',
       responseSchema: RESPONSE_SCHEMA,
+      thinkingConfig: { thinkingBudget: 0 },
     },
   });
 
@@ -760,7 +761,7 @@ async function extractImagesFromPage(page, prompt, groundingCtx) {
     text,
     characteristics,
     inputTokens: usage.promptTokenCount || 0,
-    outputTokens: usage.candidatesTokenCount || 0,
+    outputTokens: outputTokensFrom(usage),
   };
 }
 

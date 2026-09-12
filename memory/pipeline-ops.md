@@ -26,7 +26,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 40 concurrent books |
 | Batch result collection | **Hetzner** (`batch-collector.mjs`) | Polls Gemini API every 10 min |
 | Archiving | **Hetzner** (`archive-ocr.mjs`, `archive-bulk.mjs`) | Downloads → Cloudflare R2 |
-| Preview OCR (25 pages) | **Lambda** via SQS | Fast preview path, still active |
+| OCR, user-triggered / hand-run | **Lambda** via SQS (`ocr-processor-logic.ts`) | `/api/jobs/queue-books`, `/api/scan/start-ocr`, job retry, `scripts/batch/{bulk-ocr-lambda,queue-ocr-direct,queue-efm-priority}.mjs`. Realtime rate, so NOT for bulk — see "OCR lanes" below. Import-time preview OCR was removed (#4432). |
 | Image extraction | **Lambda** via SQS | Still active (Phase 8) |
 | Metadata enrichment | **Hetzner** (orchestrator Phase 3.5) | HTTP fetch to Vercel `/api/books/[id]/verify-metadata` |
 | Summary + Index | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, every 5 min, 30 books/run |
@@ -46,6 +46,35 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Translation | `gemini-3-flash-preview` | `gemini-3.1-flash-lite` |
 | Transliteration | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 | Summary/Index/Chapters | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
+
+## OCR lanes — which producer, which lane, which model (#4729, measured 2026-09-11)
+
+The model is the BOOK's, decided by one router in three faces (`getModelForBook` TS,
+`getOcrModelForBook` / `getTranslateModelForBook` .mjs; parity pinned by
+`tests/unit/translate-core-parity.test.ts`): Latin-script allowlist → `gemini-3.1-flash-lite`,
+BPH / non-Latin script / unknown language → `gemini-3-flash-preview`. There is no
+"default batch model" constant any more; a producer that names no model gets the book's.
+
+| Producer | Lane | Model | $/1K pages (measured) |
+|---|---|---|---|
+| Orchestrator Phase 2 (`submitOcrDirectly`, cross-book pool) — ALL new pages | Hetzner → Gemini **Batch** | book's (lite for most) | **$0.85** lite batch (3,309 in + 587 out tokens/page); flash batch ≈ $1.75 |
+| Orchestrator Phase 1.5 preview (25 pages post-archive) | Batch | lite | $0.85 |
+| RECITATION ladder (orchestrator) | Batch | lite → flash → MinerU | — |
+| `/api/admin/bulk-ocr-new`, `/api/admin/bulk-reocr`, `/api/books/[id]/batch-ocr-multi` | Vercel → Gemini Batch | book's | as above |
+| `/api/jobs/queue-books`, `/api/scan/start-ocr`, `/api/jobs/[id]/retry` | SQS → **Lambda realtime** | book's (`job.config.model` overrides) | lite realtime ≈ $1.70; **flash realtime $3.42** (3,194 in + 609 out tokens/page) |
+| `scripts/batch/bulk-ocr-lambda.mjs`, `queue-ocr-direct.mjs` | SQS → Lambda realtime | book's, stamped on the job | as above |
+| `scripts/batch/queue-efm-priority.mjs` | SQS → Lambda realtime | flash (EFM/BPH by policy) | $3.42 |
+| `scripts/batch/realtime-ocr.mjs` (hand-run re-OCR) | direct Gemini realtime | flash (its selection depends on it) | ≈ $3.4, unmetered (cost 0 on rows) |
+
+Realtime is for latency (a user waiting, a retry of a handful of pages); everything
+bulk goes through the orchestrator's batch pool, which is dial-gated. The incident that
+produced this table: 125,585 import-preview pages (mostly Latin MDZ/IIIF/IA) ran through
+the Lambda on flash in four days, $430 — the Lambda fell back to a flash constant whenever
+the producer named no model. Producer removed in #4432; sink fixed in #4729.
+
+**Meter caveat:** batch rows carry `cost_usd: 0` at submission and are reconciled
+later (#4566/#4567) — `$/1K` for batch comes from the reconciled lite row (273 pages,
+$0.23), not from summing submissions.
 
 ## The Budget Dial (#3737)
 

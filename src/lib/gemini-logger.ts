@@ -152,6 +152,23 @@ function generateId(): string {
 }
 
 /**
+ * Output tokens as GOOGLE BILLS THEM: visible candidates plus reasoning.
+ *
+ * Gemini 3.x charges `thoughtsTokenCount` at the output rate, and the SDK's
+ * `UsageMetadata` type does not declare the field — so a meter reading
+ * `candidatesTokenCount` alone under-reports the bill and never errors. That is
+ * how August 2026 metered $499.74 against $8,389.32 billed (#4581).
+ *
+ * The `.mjs` worker stack has the same function in
+ * `scripts/workers/lib/supabase-usage-logger.mjs`. Fix the definition in both,
+ * never the call site.
+ */
+export function outputTokensFrom(usage: { candidatesTokenCount?: number } | undefined | null): number {
+  return (usage?.candidatesTokenCount || 0)
+    + ((usage as { thoughtsTokenCount?: number } | undefined | null)?.thoughtsTokenCount || 0);
+}
+
+/**
  * Log a Gemini API call (realtime or batch result)
  */
 export async function logGeminiCall(params: {
@@ -177,14 +194,19 @@ export async function logGeminiCall(params: {
   pages_per_request?: number;
 }): Promise<void> {
   try {
-    const db = await getDb();
+    // Mongo is reached LAZILY. This used to connect on every call, including
+    // the Supabase-only path that never touches it — which made metering cost
+    // a connection on any request-path route that logs (#4599 puts one on the
+    // traffic-driven routes). Connect only to look a title up, or to fall back.
+    let dbPromise: ReturnType<typeof getDb> | null = null;
+    const db = () => (dbPromise ??= getDb());
 
     // Look up book title if missing but book_id is provided
     // Note: book_id is the string `id` field, not the ObjectId `_id`
     let bookTitle = params.book_title;
     if (!bookTitle && params.book_id) {
       try {
-        const book = await db.collection('books').findOne(
+        const book = await (await db()).collection('books').findOne(
           { id: params.book_id },
           { projection: { title: 1, display_title: 1 } }
         );
@@ -250,7 +272,7 @@ export async function logGeminiCall(params: {
       if (error) console.warn('[gemini-logger] Supabase write failed:', error.message);
     } else {
       // Fallback: write to MongoDB if Supabase service key unavailable (e.g., build time)
-      await db.collection('gemini_usage').insertOne(log);
+      await (await db()).collection('gemini_usage').insertOne(log);
     }
   } catch (error) {
     // Don't let logging failures break the main flow

@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        const client = getGeminiClient();
+        const client = getGeminiClient({ endpoint: '/api/search/ai-expand', type: 'other' });
         // flash-lite follows structured format reliably and is 50% cheaper
         const model = client.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 

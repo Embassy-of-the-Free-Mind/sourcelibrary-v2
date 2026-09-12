@@ -37,7 +37,7 @@
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { embedBookPageTexts } from '../lib/embed-book-page-texts.mjs';
 
 const args = process.argv.slice(2);
@@ -75,6 +75,7 @@ let keyIdx = 0;
 const nextModel = () => new GoogleGenerativeAI(API_KEYS[keyIdx++ % API_KEYS.length]).getGenerativeModel({
   model: MODEL,
   safetySettings: ['HARM_CATEGORY_HARASSMENT', 'HARM_CATEGORY_HATE_SPEECH', 'HARM_CATEGORY_SEXUALLY_EXPLICIT', 'HARM_CATEGORY_DANGEROUS_CONTENT'].map(category => ({ category, threshold: 'BLOCK_NONE' })),
+  generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
 });
 
 const WRAP = /<(meta|image-desc|vocab|summary|keywords|warning|scan-quality|language|page-type|page-num|columns|script)\b[^>]*>[\s\S]*?<\/\1>/gi;
@@ -122,12 +123,12 @@ async function translatePage(eng) {
       continue;
     }
     const meta = res.usageMetadata || {};
-    usage.input += meta.promptTokenCount || 0; usage.output += meta.candidatesTokenCount || 0; usage.calls++;
+    usage.input += meta.promptTokenCount || 0; usage.output += outputTokensFrom(meta); usage.calls++;
     let text;
     try { text = res.text(); } catch { continue; } // empty candidate / blocked
     if (sane(text)) {
       const dist = enLen < 200 ? 0 : Math.abs(clean(text).length / enLen - 1);
-      if (dist < bestDist) { best = { text, inputTokens: meta.promptTokenCount || 0, outputTokens: meta.candidatesTokenCount || 0 }; bestDist = dist; }
+      if (dist < bestDist) { best = { text, inputTokens: meta.promptTokenCount || 0, outputTokens: outputTokensFrom(meta) }; bestDist = dist; }
       if (bestDist < 0.3) break;
     }
   }

@@ -33,6 +33,10 @@ export class SemanticSearchError extends Error {
  * Must use the same model as the backfill (embed-gemini.mjs / backfill-book-embeddings.mjs).
  * Returns null if Gemini is unavailable (search degrades to keyword-only).
  */
+// usage-ok: an embedding response carries no usageMetadata — there is no token
+// count to record from it. What embedding costs is measured on the writer side
+// instead (#4162, scripts/lib/embedding-usage.mjs); the two calls in this file
+// are one short query embedding per search.
 export async function getQueryEmbedding(query: string): Promise<number[] | null> {
   const geminiKey = process.env.GEMINI_API_KEY;
   if (!geminiKey) return null;
