@@ -17,6 +17,7 @@ import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { getTranslateModelForBook } from '../lib/translate-core.mjs';
 
 const TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -119,7 +120,7 @@ async function main() {
       progress: { total: pageIds.length, completed: 0, failed: 0 },
       config: {
         page_ids: pageIds,
-        model: 'gemini-3-flash-preview',
+        model: getTranslateModelForBook(book), // the book's model, never a constant (#4729 shape; policy split in #4759)
         language: book.language || 'auto-detect'
       },
       initiated_by: INITIATED_BY,

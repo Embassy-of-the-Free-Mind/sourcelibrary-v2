@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { nanoid } from 'nanoid';
-import { getModelForBook } from '@/lib/types/ai-models';
+import { getModelForBook, getTranslateModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import type { JobStatus, JobType } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { withAuth } from '@/lib/auth-helpers';
@@ -112,7 +112,10 @@ export const POST = withAuth(async (request, session) => {
       config: {
         page_ids: pageIds,
         custom_prompt: customPrompt,
-        model: getModelForBook(book as { image_source?: { provider?: string }; language?: string | null }),
+        // OCR and translation route differently since #4759 (non-Latin scripts translate on lite).
+        model: action === 'translation'
+          ? getTranslateModelForBook(book as RoutableBook)
+          : getModelForBook(book as RoutableBook),
         language: book.language || "auto-detect"
       },
       initiated_by: 'user',
