@@ -212,7 +212,9 @@ export default function FreeReadingPage() {
             Jung&apos;s <em>Studies in Word-Association</em> goes from 0.15 to 0.94 across 592 pages;{' '}
             <em>Collectanea Chemica</em> goes from 0.16 to 0.91. The reader had been fine all along. The
             test now tries each book at several offsets, takes the one most pages agree on, and refuses
-            any book whose alignment drifts from page to page. The 292 books are being re-scored.
+            any book whose alignment drifts from page to page. Re-scored that way, 170 of the 292 came
+            back as accepts, another 18,614 pages, and one book was refused because its alignment
+            drifted, which is the refusal working.
           </p>
           <p className={P}>
             The two long-s books in the same cluster went from 0.15 to 0.77 and 0.69, and stayed rejected.
@@ -306,6 +308,16 @@ export default function FreeReadingPage() {
             Fraktur at 59, and everything printed before 1700 at half or less. Most early books will be
             refused, and that is the point. The test costs nothing to run and the refusals are what
             makes the acceptances worth having.
+          </p>
+          <p className={P}>
+            The first shelves are in as this goes out, and they say the same thing. French: a quarter
+            of the scorable books clear the bar. German: one in eight. Latin, from the first six hundred
+            of 7,684 books: one in twelve. Where Latin fails it fails honestly. On a page of an 1856
+            double-column edition of Su&aacute;rez, the Archive reads &ldquo;qua non rcpelemnsea, qiire ibi
+            dictasunt&rdquo; and splices the two columns together; our reader has &ldquo;qua non repetemus
+            ea, qu&aelig; ibi dicta sunt&rdquo;. A conventional reader trained on modern English does not know
+            Latin, does not know the long s, and does not know what a column is. The books it can read
+            for us are the ones that look like the books it was built for.
           </p>
           <p className={P}>
             The principle underneath is one we keep returning to. A reading is not trustworthy because of
