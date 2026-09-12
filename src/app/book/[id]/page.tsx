@@ -1398,7 +1398,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Digitized by the source library (Internet Archive, a partner, …) — its own
     // entry with the original scan/publication date when we captured it. This
     // predates our own "Added to Source Library" moment.
-    const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+    // A PLATFORM is not a digitizer. `provider_name` was the last fallback, so a
+    // book with no holding-library credit announced "digitized by Internet
+    // Archive" — which IA did not do. Checked 2026-09-05: those items are patron
+    // uploads (individual uploaders, `patron-library-collection`) with no
+    // contributor or sponsor in IA's own metadata, so there is no library to
+    // name. 966 of 41,848 live books fell through this way, 483 of them to IA.
+    // Say less rather than credit the wrong institution: with no digitizer the
+    // subtitle drops the clause entirely.
+    const rawDigitizer = book.image_source?.digitized_by || book.image_source?.contributing_library;
+    const providerPartner = book.image_source?.provider ? getPartnerByProvider(book.image_source.provider) : undefined;
+    const digitizer = rawDigitizer
+      || (providerPartner?.kind === 'platform' ? undefined : book.image_source?.provider_name);
     const catalogMeta = (book as unknown as { catalog_metadata?: { scan_date?: string; public_date?: string } }).catalog_metadata;
     const digitizedRaw = catalogMeta?.scan_date || catalogMeta?.public_date;
     if (digitizedRaw) {
@@ -1839,7 +1850,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         <section id="pages" style={{ background: 'linear-gradient(180deg, #fdfcf9 0%, #f8f2ea 100%)' }} className="pt-14 pb-16 scroll-mt-4">
           <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 reveal-in">
             {(() => {
-              const digitizer = book.image_source?.digitized_by || book.image_source?.contributing_library || book.image_source?.provider_name;
+              // A PLATFORM is not a digitizer. `provider_name` was the last fallback, so a
+    // book with no holding-library credit announced "digitized by Internet
+    // Archive" — which IA did not do. Checked 2026-09-05: those items are patron
+    // uploads (individual uploaders, `patron-library-collection`) with no
+    // contributor or sponsor in IA's own metadata, so there is no library to
+    // name. 966 of 41,848 live books fell through this way, 483 of them to IA.
+    // Say less rather than credit the wrong institution: with no digitizer the
+    // subtitle drops the clause entirely.
+    const rawDigitizer = book.image_source?.digitized_by || book.image_source?.contributing_library;
+    const providerPartner = book.image_source?.provider ? getPartnerByProvider(book.image_source.provider) : undefined;
+    const digitizer = rawDigitizer
+      || (providerPartner?.kind === 'platform' ? undefined : book.image_source?.provider_name);
               // Corpus editions (#4350): the page cards have no images of
               // their own, so CDLI witness-tablet photos stand in — cycled
               // across the grid, and named for what they are in the subtitle.

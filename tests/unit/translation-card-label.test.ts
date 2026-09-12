@@ -14,10 +14,19 @@ const card = (over: Partial<TranslationCard> = {}): TranslationCard => ({
 const englished = { pages_translated: 100 };
 
 describe('cardLabel — the one-sentence rule (#3881)', () => {
-  it('empty card + English rendering → the plain catalog sentence', () => {
+  it('empty card + English rendering → the hedged catalog sentence', () => {
     const l = cardLabel(card(), englished)!;
     expect(l.register).toBe('first');
-    expect(l.sentence).toBe('The first English translation of this work.');
+    expect(l.sentence).toBe('Possibly the first English translation — no earlier one is known to us.');
+  });
+
+  // The point of the 2026-09-04 hedge: the sentence must describe OUR search,
+  // not the world. An unqualified superlative is falsified the moment anyone
+  // finds a prior; this phrasing survives it as a card edit.
+  it('the first-register sentence never asserts an unqualified superlative', () => {
+    const l = cardLabel(card(), englished)!;
+    expect(l.sentence).not.toMatch(/^the first english translation/i);
+    expect(l.sentence.toLowerCase()).toMatch(/possibl|known to us/);
   });
 
   it('empty card but NO English rendering → silence (nothing to badge)', () => {
