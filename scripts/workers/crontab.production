@@ -150,8 +150,10 @@
 # sweep over a re-derived predicate, not a one-off over a frozen id list. Runs
 # 20 minutes after the half-hourly re-OCR relaunch above, so an apply pass and
 # its cleanup do not race; the sweep is idempotent and resumable, so a missed
-# run costs nothing but latency.
-20 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
+# run costs nothing but latency. The `[ -f ]` guard lets these lines be
+# installed on the box BEFORE the PR merges: they no-op until the auto-pull
+# brings the scripts, then start working on their own.
+20 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/withhold-stale-translations.mjs ] && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
 # …and the reconciliation the sweep cannot do for itself: LEAKED / ORPHANED /
 # UNBACKED, plus the Supabase side. Exit 2 means UNKNOWN, which is not PASS.
-50 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
+50 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/withheld-translation-drift.mjs ] && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
