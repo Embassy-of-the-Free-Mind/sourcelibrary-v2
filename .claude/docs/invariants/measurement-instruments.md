@@ -488,3 +488,41 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## A page that prints its own answer key cannot test whether a model can do the task
+
+The Morley 1597 plainsong examples were chosen as the first mensural ground
+truth *because* the print sets the solmization syllable under every note — that
+is what let one person verify twelve staff positions without a musicologist. The
+same property makes the page nearly useless as a test of staff reading, and the
+first run (2026-09-11, `scripts/music/eval-results/2026-09-11-mensural-gemini-3-flash-preview/`)
+showed why: gemini-3-flash-preview returned the printed syllables mapped
+through the natural hexachord — right for 7 of 12 notes by coincidence, wrong
+for every note needing the hard hexachord, pitch NER 0.42. Note count and
+lyrics were perfect. **It transcribed the key instead of doing the task the key
+was meant to check**, and nothing in the output says so.
+
+The general shape, which is not specific to music: **whenever the ground truth
+is derivable from something visible in the model's input, the eval measures
+transcription of that thing, not the skill.** A facing-page translation, a
+labelled diagram, a printed index, a filename that names the class, a caption
+that states the answer — each turns a hard task into an easy one *for the model
+only*, while the human verifying the reference still did the hard work and so
+still believes the page is a fair test.
+
+- **Ask what else on the page answers the question**, before adopting a page as
+  ground truth. If the answer is present, either crop it out of the model's
+  input and keep the human's copy, or find a second page without it and report
+  both numbers.
+- **The tell is structured error, not random error.** Errors that partition
+  cleanly along the key's own coordinate system (here: every natural-hexachord
+  note right, every hard-hexachord note wrong) mean the model is working in the
+  key's frame, not the artifact's. Random-looking errors of the same magnitude
+  would have meant it was genuinely reading and failing.
+- **A correct count with wrong content is the same signature.** Getting the
+  number of notes and every lyric exactly right while missing the pitches is
+  what "read the easy channel" looks like; treat per-element agreement and
+  sequence length as separate metrics so one cannot mask the other.
+
+Corollary: an answer key is still the cheapest way to *verify a reference*. Keep
+using it for that. Just don't let the model see it.

@@ -19,6 +19,7 @@ import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
 
 // Load .env.production.local
 try {
@@ -120,7 +121,7 @@ async function main() {
 
   const books = await db.collection('books')
     .find(bookQuery, {
-      projection: { id: 1, title: 1, language: 1, pages_count: 1, pages_ocr: 1, job: 1, _id: 0 },
+      projection: { id: 1, title: 1, language: 1, 'image_source.provider': 1, pages_count: 1, pages_ocr: 1, job: 1, _id: 0 },
     })
     .sort({ pages_count: 1 })
     .toArray();
@@ -183,7 +184,9 @@ async function main() {
       book_id: book.id,
       book_title: book.title,
       progress: { total: pageIds.length, completed: 0, failed: 0 },
-      config: { page_ids: pageIds, language: book.language || 'Unknown' },
+      // The Lambda routes by book when no model is named; stamping it here makes
+      // the decision visible on the job row (#4729).
+      config: { page_ids: pageIds, model: getOcrModelForBook(book), language: book.language || 'Unknown' },
       initiated_by: INITIATED_BY,
       ...initiatedReasonFields(REASON),
       created_at: new Date(),

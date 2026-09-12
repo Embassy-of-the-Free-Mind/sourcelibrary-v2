@@ -198,3 +198,64 @@ export async function getPage(bookId, pageNumber) {
     },
   );
 }
+
+/**
+ * Draw at most ONE page from each of N distinct books matching `filter`.
+ *
+ * Why this exists next to `samplePages` rather than inside it: `samplePages`
+ * spreads a sample across the FIRST 100 books a filter returns and takes
+ * several pages from each. That is right for auditing one corpus's output, and
+ * wrong for estimating a rate — pages within a book share a scan, a hand, a
+ * typesetter and a translation chain, so they are one observation, not many
+ * (lesson: "sample one page per BOOK", got wrong repeatedly). This draws books
+ * at random with `$sample` and then one page at random from each.
+ *
+ * The page filter mirrors production translatability (scripts/lib/translate-core.mjs
+ * `translatablePageFilter`) so the draw cannot contain a page the pipeline would
+ * never translate; pass it in as `pageFilter` to avoid a scripts/lib import here.
+ *
+ * @param {object} opts
+ * @param {object} opts.bookFilter    Mongo match on `books`
+ * @param {object} [opts.pageFilter]  extra Mongo match on `pages` (merged with book_id)
+ * @param {number} opts.n             how many BOOKS (= how many pages) to return
+ * @param {number} [opts.minOcrChars] skip pages whose ocr.data is shorter than this
+ * @param {number} [opts.oversample]  book candidates to draw per wanted page (default 3)
+ * @returns {Promise<Array<{bookId, bookTitle, language, provider, pageNumber, ocrText, ocrChars}>>}
+ */
+export async function sampleOnePagePerBook({ bookFilter, pageFilter = {}, n, minOcrChars = 200, oversample = 3 }) {
+  const { db } = await connect();
+  const candidates = await db.collection('books').aggregate([
+    { $match: bookFilter },
+    { $sample: { size: n * oversample } },
+    { $project: { id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, published: 1, image_source: 1, pages_count: 1 } },
+  ], { maxTimeMS: 120000 }).toArray();
+
+  const out = [];
+  const seenBooks = new Set();
+  for (const book of candidates) {
+    if (out.length >= n) break;
+    if (seenBooks.has(book.id)) continue;
+    seenBooks.add(book.id);
+    const [page] = await db.collection('pages').aggregate([
+      { $match: { book_id: book.id, ...pageFilter } },
+      { $sample: { size: 8 } },   // a few, so a short one can be skipped without a second round-trip
+      { $project: { page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.language': 1 } },
+      { $match: { $expr: { $gte: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, minOcrChars] } } },
+      { $limit: 1 },
+    ], { maxTimeMS: 60000 }).toArray();
+    if (!page) continue;
+    out.push({
+      bookId: book.id,
+      bookTitle: book.display_title || book.title,
+      author: book.author || null,
+      year: book.year || book.published || null,
+      language: book.language || null,
+      provider: book.image_source?.provider || null,
+      pageNumber: page.page_number,
+      pageType: page.page_type || null,
+      ocrText: page.ocr.data,
+      ocrChars: page.ocr.data.length,
+    });
+  }
+  return out;
+}
