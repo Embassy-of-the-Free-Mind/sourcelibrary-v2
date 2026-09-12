@@ -161,7 +161,7 @@ async function main() {
           continue;
         }
 
-        const pageType = extractPageType(ocrText, { validate: false });
+        const pageType = extractPageType(ocrText);
         const columns = extractColumns(ocrText);
         const detectedImages = parseDetectedImages(ocrText);
 

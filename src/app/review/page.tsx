@@ -9,6 +9,17 @@ export const metadata: Metadata = {
 
 const QUEUES = [
   {
+    slug: 'translation-check',
+    title: 'Translation check',
+    blurb:
+      'Do you read Latin, Greek or Arabic? Almost every translation here was made by a machine ' +
+      'and almost none has been read by someone who knows the language. Tell us whether our ' +
+      'English says what the original says — and whether we transcribed the page correctly ' +
+      'in the first place.',
+    status: 'live',
+    timePerItem: '~5 minutes',
+  },
+  {
     slug: 'page-check',
     title: 'Page check',
     blurb:

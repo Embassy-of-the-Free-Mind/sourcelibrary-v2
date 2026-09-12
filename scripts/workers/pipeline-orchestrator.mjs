@@ -25,9 +25,10 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
-import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -53,8 +54,6 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
-const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
-const OCR_MODEL_LITE = 'gemini-3.1-flash-lite';
 
 // Known-broken Gemini model aliases. The discovery API lists these as
 // available but generateContent / batch execution returns FAILED_PRECONDITION
@@ -76,57 +75,6 @@ function assertModelsAreNotBroken(constants) {
   }
 }
 
-// Latin-script languages safe for flash-lite. Anything else (Tibetan, Arabic,
-// Hebrew, CJK, Cyrillic, Greek, Syriac, etc.) routes to flash because
-// flash-lite hallucinates on low-resource scripts — it over-relies on
-// linguistic priors when visual decoding is hard, producing plausible-sounding
-// content that has nothing to do with the page. See src/app/blog/tibetan-ocr/.
-// Must stay in sync with LATIN_SCRIPT_LANGUAGES in src/lib/types/ai-models.ts.
-const LATIN_SCRIPT_LANGS_FOR_LITE = new Set([
-  'english', 'en', 'eng',
-  'latin', 'la', 'lat',
-  'french', 'fr', 'fra',
-  'italian', 'it', 'ita',
-  'spanish', 'es', 'spa',
-  'portuguese', 'pt', 'por',
-  'romanian', 'ro', 'ron', 'rum',
-  'catalan', 'ca', 'cat',
-  'german', 'de', 'deu', 'ger',
-  'dutch', 'nl', 'nld', 'dut',
-  'swedish', 'sv', 'swe',
-  'norwegian', 'no', 'nor',
-  'danish', 'da', 'dan',
-  'finnish', 'fi', 'fin',
-  'icelandic', 'is', 'isl', 'ice',
-  'welsh', 'cy', 'cym', 'wel',
-  'irish', 'ga', 'gle',
-  'polish', 'pl', 'pol',
-  'czech', 'cs', 'ces', 'cze',
-  'slovak', 'sk', 'slk', 'slo',
-  'slovenian', 'sl', 'slv',
-  'croatian', 'hr', 'hrv',
-  'hungarian', 'hu', 'hun',
-  'estonian', 'et', 'est',
-  'latvian', 'lv', 'lav',
-  'lithuanian', 'lt', 'lit',
-  'albanian', 'sq', 'sqi', 'alb',
-  'turkish', 'tr', 'tur',
-  'indonesian', 'id', 'ind',
-  'vietnamese', 'vi', 'vie',
-  'malay', 'ms', 'msa',
-  'tagalog', 'tl', 'tgl', 'filipino',
-  'swahili', 'sw', 'swa',
-]);
-
-function getOcrModelForBook(book) {
-  // BPH books use Flash Preview for higher quality on historical manuscripts
-  if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
-  // Non-Latin scripts: flash-lite hallucinates on low-resource pretraining data
-  const lang = (book?.language || '').toLowerCase().trim();
-  if (!lang || !LATIN_SCRIPT_LANGS_FOR_LITE.has(lang)) return OCR_MODEL_FLASH;
-  return OCR_MODEL_LITE;
-}
-const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 
 // Code provenance (#2297): the git SHA actually checked out on this worker box.
@@ -263,6 +211,10 @@ let TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
 const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
 let MAX_ACTIVE_IMAGE_JOBS = 50;
 const PREVIEW_PAGE_COUNT = 25;
+// How many times finalize will return a fully-OCR'd, untranslated book to the
+// translate lane before parking it as complete WITH a recorded skip reason.
+// Bounded so a language translation genuinely cannot handle cannot ping-pong.
+const FINALIZE_TRANSLATE_REQUEUES = 3;
 let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
 // How long a submitted preview batch suppresses re-offering its book. Longer
 // than any healthy batch (measured p90 0.4h) so we never double-submit, short
@@ -1358,14 +1310,17 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
         { 'ocr.data': null },
         { 'ocr.data': '' },
       ],
-      $and: [{
-        $or: [
-          { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-          { cropped_photo: { $exists: true, $nin: [null, ''] } },
-          { photo: { $exists: true, $ne: null } },
-          { photo_original: { $exists: true, $ne: null } },
-        ]
-      }]
+      $and: [
+        {
+          $or: [
+            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+            { cropped_photo: { $exists: true, $nin: [null, ''] } },
+            { photo: { $exists: true, $ne: null } },
+            { photo_original: { $exists: true, $ne: null } },
+          ]
+        },
+        notBlockedForModel(ocrModel),
+      ]
     })
     .sort({ page_number: 1 })
     .limit(pageLimit)
@@ -1726,13 +1681,16 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
         page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
         'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
         $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
-        $and: [{
-          $or: [
-            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-            { cropped_photo: { $exists: true, $nin: [null, ''] } },
-            { photo: { $exists: true, $ne: null } },
-          ]
-        }]
+        $and: [
+          {
+            $or: [
+              { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+              { cropped_photo: { $exists: true, $nin: [null, ''] } },
+              { photo: { $exists: true, $ne: null } },
+            ]
+          },
+          notBlockedForModel(model),
+        ]
       })
       .sort({ page_number: 1 })
       .limit(remaining)
@@ -3522,13 +3480,25 @@ Rules:
             // Language: update if Unknown
             const currentLang = book.language || 'Unknown';
             const aiLang = parsed.language || '';
+            // ONE typed provenance entry, not three private fields (2026-09-10) — this mirrors
+            // src/lib/metadata-enrichment.ts, which had the same three writes. language_source /
+            // language_confidence / ai_detected_language were read by nothing.
             if (aiLang && currentLang === 'Unknown') {
               updates.language = aiLang;
-              updates.language_source = 'gemini_text';
-              updates.language_confidence = confidence;
+              updates['field_provenance.language'] = {
+                source: 'enrichment', value: aiLang, chosen_from: 'gemini_text', confidence,
+                claims: [{ source: 'gemini_text', value: aiLang }], date: now.toISOString(),
+              };
               changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
             } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
-              updates.ai_detected_language = aiLang;
+              updates['field_provenance.language'] = {
+                source: 'enrichment', value: currentLang, chosen_from: 'catalogue', confidence, conflict: true,
+                claims: [
+                  { source: 'catalogue', value: currentLang },
+                  { source: 'gemini_text', value: aiLang },
+                ],
+                date: now.toISOString(),
+              };
             }
 
             // Author: update if Unknown/missing
@@ -4116,12 +4086,14 @@ Rules:
           // recitation filter and then corrected against its own image.
           const isLiteRetry = book.pipeline_auto?.recitation_retry_lite === true;
           const isRecitationRetry = book.pipeline_auto?.recitation_retry === true;
+          // Tier 2 is flash-preview only when OCR_LITE_ONLY is off (ocr-routing.mjs);
+          // under lite-only it re-runs lite, and a second refusal still falls to tier 3.
           const ocrOpts = isLiteRetry
-            ? { modelOverride: OCR_MODEL_FLASH }
+            ? { modelOverride: ocrEscalationModel() }
             : isRecitationRetry
               ? { modelOverride: OCR_MODEL_LITE }
               : {};
-          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${OCR_MODEL_FLASH}: ${label}`);
+          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${ocrEscalationModel()}: ${label}`);
           else if (isRecitationRetry) console.log(`  RECITATION retry (tier 1) with ${OCR_MODEL_LITE}: ${label}`);
           else console.log(`  Submitting OCR: ${label}...`);
           const result = await submitOcrDirectly(db, book, ocrOpts);
@@ -4220,9 +4192,20 @@ Rules:
         }
 
         if (isComplete) {
-          // Check for remaining un-OCR'd pages
+          // Check for remaining un-OCR'd pages.
+          //
+          // Permanently-blocked pages are NOT remaining work — they are work that
+          // will never succeed, and counting them here is what kept books one page
+          // short of done circling forever. The selection query above already
+          // refuses to submit them, so a book whose only gap is blocked pages was
+          // resubmitting nothing and being told it was incomplete for it. Excluding
+          // them lets such a book reach `ocr_complete` and go on to translation:
+          // the Tabiena Summa sat at 1002/1003 pages with 0 translated for a month
+          // on the strength of one unreadable folio.
           const remainingOcr = await db.collection('pages').countDocuments({
             book_id: book.id,
+            'ocr.recitation_blocked': { $ne: true },
+            'ocr.fail_blocked': { $ne: true },
             $or: [
               { photo: { $exists: true, $ne: null } },
               { photo_original: { $exists: true, $ne: null } },
@@ -5455,10 +5438,17 @@ Rules:
       let readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1 })
+        // pipeline_auto must survive the projection: the untranslated-finalize
+        // guard below reads finalize_requeues off it, and a projected-away field
+        // read as 0 is the #4563/#4565 starvation family — here it would requeue
+        // the same book forever instead of parking it with a reason.
+        .project({ id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1, pipeline_auto: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1, content_type: 1 });
+      // Same field set as the projection above — applyBookOverride re-fetches, so
+      // a field missing HERE is missing on the scope path only, which is how this
+      // bug family hides (#4563: the guard worked until a scope was active).
+      if (SCOPE_ACTIVE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1, content_type: 1, resource_type: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready to finalize: ${readyToFinalize.length}`);
 
@@ -5509,6 +5499,65 @@ Rules:
           }
           log.needs_attention++;
           log.errors.push(`Finalize blocked ${book.id}: ${ocrCount}/${totalPages} OCR`);
+          continue;
+        }
+
+        // Translation is not consulted anywhere above: `ocrPercent` alone decides
+        // `complete`. But `complete` is TERMINAL for enrichment — Phase 6 selects
+        // strictly on `translate_complete`, Phase 7 on `summary_indexed` — so a
+        // fully-OCR'd book whose translation never ran gets sealed here and is
+        // never seen again by any phase. That is the #3740 shape, and the guard at
+        // setPipelineStatus cannot catch it because nothing claims translation.
+        //
+        // Measured 2026-09-08: 142 books, ~15.4K OCR'd pages, EVERY ONE
+        // non-Latin-script (Chinese 71, Arabic 38, Malay 15, Javanese 5, …), and
+        // not one carrying a translate_skipped_reason.
+        //
+        // The 25-page preview cohort is NOT this case and must still finalize:
+        // PREVIEW_PAGE_COUNT books legitimately carry no translation (full OCR is
+        // bought on demand by bulk-reocr-opened-books.mjs), and refusing them
+        // would re-stall ~17K books — the outage pipeline-status-truth.md warns
+        // about. Hence the `fullyOcrd` conjunct.
+        //
+        // translatedCount is COUNTED from `pages`, exactly as ocrCount is above,
+        // rather than read off `book.pages_translated`: that field is not in this
+        // phase's projection, and a projected-away field read as 0 is the
+        // starvation bug family from #4563/#4565 — here it would bounce every
+        // finalizing book back to ocr_complete forever.
+        const needsTranslation = !['English', 'english', 'en', 'eng'].includes(book.language);
+        const fullyOcrd = ocrCount >= totalPages * 0.9;
+        let untranslatedAndFull = false;
+        if (needsTranslation && fullyOcrd) {
+          const translatedCount = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            'translation.data': { $exists: true, $ne: '', $not: { $eq: null } },
+          });
+          untranslatedAndFull = translatedCount === 0;
+        }
+
+        if (untranslatedAndFull) {
+          // Bounded: send it back to the translate lane, but never more than
+          // FINALIZE_TRANSLATE_REQUEUES times, so a language translation genuinely
+          // cannot handle parks with a REASON instead of ping-ponging forever
+          // (the ocr_complete <-> archive_complete bounce, #4563).
+          const requeues = book.pipeline_auto?.finalize_requeues || 0;
+          if (requeues < FINALIZE_TRANSLATE_REQUEUES) {
+            if (!DRY_RUN) {
+              await setPipelineStatus(db, book.id, 'ocr_complete', {
+                finalize_requeues: requeues + 1,
+                requeue_reason: 'finalize: fully OCR\'d but 0 translated pages — returned to the translate lane',
+              });
+            }
+            log.errors.push(`Finalize requeued ${book.id}: ${ocrCount}/${totalPages} OCR, 0 translated`);
+            continue;
+          }
+          if (!DRY_RUN) {
+            await setPipelineStatus(db, book.id, 'complete', {
+              completed_at: new Date(),
+              translate_skipped_reason: `translation produced nothing after ${requeues} finalize requeues (${book.language})`,
+            });
+          }
+          log.errors.push(`Finalize completed untranslated ${book.id} after ${requeues} requeues (${book.language})`);
           continue;
         }
 

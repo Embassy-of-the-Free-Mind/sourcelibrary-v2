@@ -6,6 +6,11 @@
 // and send you their JSON.
 //
 // Light formatting inside any text field: **bold**, *italic*, [label](url).
+//
+// Budget provenance: the five-year budget and every unit cost quoted below are
+// derived in the private ops repo, docs/program-budget-5yr-2026-09.md. Corpus
+// figures measured 2026-09-07 (visible books at the site's readable bar; the
+// untranslated pool = books with pages_count > 0 under 90% translated).
 
 export interface PlanItem {
   work: string;
@@ -53,13 +58,13 @@ export const visionContent: VisionContent = {
     image: '/vision/hero.jpg',
     imageAlt: 'Historical illustration from the Bibliotheca Philosophica Hermetica',
   },
-  dateline: 'Amsterdam, June 2026',
+  dateline: 'Amsterdam, September 2026',
   salutation: 'Dear friend,',
-  lead: 'The last time the world translated its ancient wisdom, it set off the Renaissance. I think we can do it again — this time for the age of AI.',
+  lead: 'The last time the world translated its ancient wisdom, it set off the Renaissance. I think we can do it again — and this time most of the books are already on the shelf.',
   bodyBeforeQuote: [
-    'That first Renaissance began with an act of translation. When a small circle in fifteenth-century Florence brought Plato and the Hermetic writings out of Greek into Latin, they set loose ideas that reshaped a civilization. Throughout history, the recovery of ancient works has consistently sparked humanity’s most profound and enduring insights.',
-    'And yet the Renaissance itself was written largely in Latin. As the UCLA Renaissance scholar Debora Shuger has observed, **“90 percent of the Latin texts from the Renaissance have never been available in translation”** ([UCLA, 2012](https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883)). The rest is legible only to specialists. Beyond it lie thousands upon thousands of texts in Chinese, Sanskrit, Arabic, Hebrew, Egyptian, and more — and most of this heritage is missing from the data that trains today’s AI.',
-    'As we enter an uncertain age, a strong foundation in wisdom — and the preservation of our full inheritance — has never felt more pressing. Maybe, just maybe, translating the world’s ancient wisdom could make a global AI renaissance more likely than an AI apocalypse. Perhaps that is magical thinking. But what is magic, anyway? I went looking in our own library, and found a lovely answer from Pico della Mirandola.',
+    'The Renaissance began with translation. When a small circle in fifteenth-century Florence brought Plato and the Hermetic writings out of Greek into Latin, the ideas they set loose reshaped a civilization.',
+    'Most of what that civilization then wrote is still locked up. As the UCLA scholar Debora Shuger has observed, **“90 percent of the Latin texts from the Renaissance have never been available in translation”** ([UCLA, 2012](https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883)). Beyond Latin lie thousands of texts in Chinese, Sanskrit, Arabic, Hebrew and more, unread by anyone who does not have the language — and absent from the data that trains today’s AI.',
+    'Pico della Mirandola described the method well, in a book you can open in our library:',
   ],
   quote: {
     en: 'Magic does not so much work wonders as serve nature while she works them.',
@@ -69,22 +74,22 @@ export const visionContent: VisionContent = {
     linkLabel: 'read it at the source',
   },
   bodyBeforeImage1: [
-    'That is the whole idea behind Source Library: to go back to the source, and to make it possible for anyone — any reader, any scholar, any AI — to do the same. Today it is the world’s largest library of translated ancient texts: more than **15,000 books** from over fifty languages, more than half of them into English for the first time. Our word count has already passed English Wikipedia.',
-    'Every translation sits beside the original scanned page, so any line can be verified, quoted, and trusted. It is almost entirely free, Creative Commons share-alike, and open by API and MCP — so that the AI you use can reach for the actual source.',
+    'That is what Source Library does: it goes back to the source and lets anyone — a reader, a scholar, an AI — do the same. Today it holds more than **40,000 books** in over fifty languages. More than **18,000** of them can be read in translation, nearly five million pages, most of them in English for the first time. Counting originals and translations, the library already holds more words than English Wikipedia.',
+    'Every translation sits beside the scanned original, so any line can be checked, quoted and cited. It is free, Creative Commons share-alike, and open by API and MCP, so the AI you use can reach for the actual page.',
   ],
   image1: {
     src: 'https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg',
     alt: "An emblem from Michael Maier's Atalanta Fugiens (1618)",
-    caption: 'One of thousands of pages now readable and quotable — an emblem from Maier’s *Atalanta Fugiens*, 1618.',
+    caption: 'One of millions of pages now readable and quotable — an emblem from Maier’s *Atalanta Fugiens*, 1618.',
     href: '/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/69520c46ab34727b1f044154',
   },
   bodyAfterImage1: [
-    'We are embedded within one of the world’s great collections of ancient texts: the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and the Gambrell Foundation, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status. You can make a tax-deductible gift [here](/support).',
+    'We are based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. Source Library was created with the support of the Wisdom Frontiers Society of La Jolla, California, and the Gambrell Foundation, and runs as an open initiative of the Embassy, a Dutch nonprofit with 501(c)(3) status. Gifts are tax-deductible in the US and the Netherlands ([give here](/support)).',
   ],
-  buildHeading: 'Building something lasting',
+  buildHeading: 'What we need to finish',
   bodyBuild: [
-    'Everything so far has been made possible by a handful of people who believed in the work early. Now I want to build something enduring: a world-class humanist institution devoted to the stewardship of ancient wisdom — from books to oral histories to expeditions in the field. The wisdom, after all, is more than the books.',
-    'I want our founding donors to feel that directly. Picture an evening in the Bibliotheca with the original volumes of Fludd and Ficino open in front of you; an expedition to scan a monastery’s manuscripts before they’re lost; a hand in deciding what humanity translates next; and your name on the work, in perpetuity. I want them in the room, not just on the donor wall.',
+    'Here is the situation. We hold **72,000 more books — sixteen million pages — that no one can read yet.** They are scanned and catalogued and waiting for the pipeline. Translating a page costs about two cents; translating all of them costs about $360,000. That is the single largest thing your money can do here, and it is entirely mechanical: fund it, and the books get read. Finished, the library will hold about four times the words of English Wikipedia. Wikipedia is what we know; this is the shelf it was written from.',
+    'Around that core sit the things a library needs in order to be trusted and to last: scholars checking the translations against the originals, a scanner at the Embassy for the books that exist nowhere else, the hosting that keeps every page online, and a small team to run it. Everything so far has been done by a handful of people, mostly unpaid. The budget below is what it takes to do the next five years properly. It comes to **$2.4 million**: $2 million of work, and $400,000 to run the organization that does it. The first year needs **$672,000**; each year after that, about $430,000.',
   ],
   montage: {
     images: [
@@ -93,10 +98,10 @@ export const visionContent: VisionContent = {
       { src: '/vision/ficino.jpg', alt: 'Bust of Marsilio Ficino at the Embassy of the Free Mind' },
       { src: '/vision/embassy-crowd.jpg', alt: 'A gathering outside the Embassy of the Free Mind, Amsterdam' },
     ],
-    caption: 'The Embassy of the Free Mind, Amsterdam — home of the Bibliotheca Philosophica Hermetica, and the community gathering around it.',
+    caption: 'The Embassy of the Free Mind, Amsterdam — home of the Bibliotheca Philosophica Hermetica.',
   },
   bodyConvener: [
-    'And here is the real reason I’m writing to you. I’m not only hoping for your support — I’m hoping you’ll help us *gather* the founding circle, not just join it. If you’re someone who brings remarkable people together around bold ideas, then helping convene the people who will steward humanity’s wisdom for the next century is something you’d be extraordinary at. I’d love to do it with you.',
+    'If you can help fund this, I would be grateful. If you know the people who can, I would be grateful for an introduction. Either way, the best way to understand the work is to see it, and I would be glad to show you.',
   ],
   signoff: 'With gratitude,',
   signature: {
@@ -106,35 +111,40 @@ export const visionContent: VisionContent = {
     photo: '/founder-derek.jpg',
   },
   plan: {
-    heading: 'The first $640,000',
-    intro: 'We are raising **$640,000** to build Source Library into a real institution by the end of this year — the first step of a five-year vision to translate and preserve the world’s ancient wisdom, a roughly **$15 million** undertaking. Here is what that first $640K puts in place.',
+    heading: 'The five-year budget: $2.4 million',
+    intro: 'Every line is built from a unit cost we have measured. The first year needs **$672,000**; each year after that, about **$432,000**.',
     items: [
-      { work: 'A founding team — operations, a librarian, and design & partnerships to run the institution day to day', resource: '$140K' },
-      { work: 'The platform and AI translation engine — the engineering that keeps every page online, and the AI compute that carries the collection into new languages', resource: '$220K' },
-      { work: 'Scanning rare books at the Embassy — a digitization specialist and a portable scanner, rescuing roughly 2,000 rare books', resource: '$130K' },
-      { work: 'Community and partnerships — gatherings at the Embassy, and carrying the work to scholars and libraries worldwide', resource: '$150K' },
+      { work: 'Translate the 72,000 books (16 million pages) we already hold — about 2 cents a page', resource: '$360K' },
+      { work: 'Scholars reviewing the translations against the originals, language by language', resource: '$150K' },
+      { work: 'Scanning about 2,000 rare books at the Embassy that exist in no other collection', resource: '$130K' },
+      { work: 'A director, a part-time engineer to run the pipeline, and a community manager, for five years', resource: '$800K' },
+      { work: 'Keeping every page online for five years — hosting, storage, database', resource: '$170K' },
+      { work: 'Research commissions, grant-writing, conferences and gatherings at the Embassy', resource: '$150K' },
+      { work: 'Legal foundations (entity, trademark, rights policy), administration and contingency', resource: '$240K' },
+      { work: 'Running the organization: fundraising help, tools, insurance, payment processing, and a three-month reserve', resource: '$400K' },
     ],
-    footnote: 'These figures are a plan, not a fixed budget. Standing the institution up this year proves the model; the full vision — hundreds of thousands of works translated and validated by experts, tens of thousands of books scanned for the first time, a thousand libraries joined together, and an endowment to keep it all online — is the five-year, roughly **$15 million** undertaking this first step begins. The cost is real work: the people who run it, the scholars who validate every translation, the digitizer turning the pages of a 400-year-old book, and the AI compute that carries the collection into new languages.',
+    footnote: 'Translation is priced at 2.3 cents a page, above what our pipeline currently costs, to cover retries and the harder scripts. Scanning is $60 a book, all in. Hosting is our measured run rate with room for the collection to grow. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
   },
   ways: {
-    heading: 'A place in the lineage',
-    intro: 'The men and women who translated the last Renaissance are five centuries gone — and their names are still on the work. This is your turn. Every gift below rescues real books and carries your name with them, in perpetuity.',
+    heading: 'Ways to take part',
+    intro: 'A book costs about $5 to translate. Every gift below is named for you in the register, in perpetuity.',
     tiers: [
-      { gift: '$275', label: 'Adopt a rare manuscript — one irreplaceable hand-written treasure brought to the world, named for you' },
-      { gift: '$1,000+', label: 'Founding Member — your name in the founding register, in perpetuity' },
-      { gift: '$10,000+', label: 'Founding Benefactor — a named shelf of 100 rare books, rescued and translated, and your name in the register' },
-      { gift: '$50,000+', label: 'Founding Patron — your name on the institution, a hand in what we translate next, and an evening with the founders in the Bibliotheca' },
-      { gift: 'from $150,000', label: 'Underwrite a language edition — bring the entire library into Spanish (or Arabic, Hindi, and beyond), expert-validated, with your name on it' },
+      { gift: '$100', label: 'Translates 20 books' },
+      { gift: '$275', label: 'Adopt a rare manuscript — one unscanned volume at the Embassy, scanned and translated, named for you' },
+      { gift: '$1,000+', label: 'Founding Member — 200 books translated; your name in the founding register' },
+      { gift: '$10,000+', label: 'Founding Benefactor — a named shelf of 2,000 books translated' },
+      { gift: '$50,000+', label: 'Founding Patron — 10,000 books translated; your name on the institution, and an evening with us in the Bibliotheca' },
+      { gift: 'from $150,000', label: 'Underwrite a language — bring the whole library into Spanish, Arabic or Hindi, expert-reviewed, with your name on the edition' },
     ],
-    footnote: 'Every tier funds the people and the careful work behind it — the digitizer at the Embassy, the scholars who validate, the pipeline that keeps each page online. You are not funding overhead; you are rescuing a book for the world, with your name beside it.',
+    footnote: 'Gifts are tax-deductible in the US and the Netherlands.',
   },
   cta: {
     heading: 'Let’s talk',
-    body: 'The best way to understand this is to see it. I’d love to show you the library — in person at the Embassy in Amsterdam, or on a call — and talk about what becoming a founding donor could look like for you.',
+    body: 'I’d be glad to show you the library — in person at the Embassy in Amsterdam, or on a call — and to walk through the budget with you.',
     primaryLabel: 'Let’s talk',
     primaryHref: 'mailto:team@sourcelibrary.org?subject=Source%20Library%20%E2%80%94%20let%E2%80%99s%20talk',
     secondaryLabel: 'Make a gift',
     secondaryHref: '/support',
-    footer: 'All gifts are tax-deductible in the US and the Netherlands. I read every message myself.',
+    footer: 'I read every message myself.',
   },
 };
