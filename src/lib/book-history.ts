@@ -52,6 +52,8 @@ export interface HistoryEvent {
   doi?: string;
   action?: string;
   triggered_by?: string;
+  /** Why a human ran this by hand, recorded at queue time (`jobs.initiated_reason`, #4336). */
+  reason?: string;
   changes?: Array<{ field: string; previous: unknown; new_value: unknown }>;
 }
 
@@ -111,6 +113,8 @@ interface JobRow {
   status: string;
   progress?: { completed?: number; total?: number; failed?: number };
   config?: { model?: string };
+  initiated_by?: string;
+  initiated_reason?: string;
   created_at: Date | string;
   completed_at?: Date | string;
 }
@@ -300,7 +304,13 @@ export async function assembleBookHistory(
         .collection('jobs')
         .find(
           { book_id: resolvedBookId },
-          { projection: { id: 1, type: 1, status: 1, progress: 1, config: 1, created_at: 1, completed_at: 1 } },
+          {
+            projection: {
+              id: 1, type: 1, status: 1, progress: 1, config: 1,
+              initiated_by: 1, initiated_reason: 1,
+              created_at: 1, completed_at: 1,
+            },
+          },
         )
         .sort({ created_at: 1 })
         .toArray()
@@ -476,6 +486,9 @@ export async function assembleBookHistory(
       cost_usd: cost && cost > 0 ? Math.round(cost * 1_000_000) / 1_000_000 : undefined,
       model: job.config?.model,
       status: job.status,
+      triggered_by: job.initiated_by,
+      // Answers "why was this done by hand?" — only hand-initiated lanes set it (#4336).
+      reason: job.initiated_reason,
     });
   }
 

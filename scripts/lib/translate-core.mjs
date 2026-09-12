@@ -6,7 +6,9 @@
  * copy of the logic. The door enforces the four promises of the pipeline:
  *
  *   1. The MODEL is chosen by routing (getTranslateModelForBook), never
- *      hardcoded — BPH and non-Latin-script books get full flash, the rest lite.
+ *      hardcoded — BPH books get full flash, everything else (Latin AND
+ *      non-Latin scripts) gets lite. Translation routing differs from OCR
+ *      routing on purpose since #4759; see getTranslateModelForBook.
  *   2. The PROMPT comes from the `prompts` DB collection (loadTranslationPrompts),
  *      and every written page records which prompt produced it.
  *   3. Nothing is overwritten without a `page_revisions` snapshot first
@@ -83,12 +85,28 @@ export function isLatinScriptLanguage(language) {
 }
 
 /**
- * THE model routing for OCR/translation. Mirrors getModelForBook in
- * src/lib/types/ai-models.ts.
+ * THE model routing for TRANSLATION. TS twin: getTranslateModelForBook in
+ * src/lib/types/ai-models.ts (the Lambda sink). Parity between the two is
+ * pinned by tests/unit/translate-core-parity.test.ts.
+ *
+ * This DELIBERATELY DIFFERS from OCR routing (getOcrModelForBook in
+ * ocr-routing.mjs / getModelForBook in ai-models.ts) — issue #4759:
+ *
+ * - BPH books: full flash (partner institution's manuscripts).
+ * - Everything else, INCLUDING non-Latin scripts: flash-lite.
+ *
+ * OCR keeps its non-Latin carve-out because flash-lite hallucinates when
+ * VISUAL decoding is hard (#1726: a Bhutanese astrological text read as a
+ * "ritual manual for weather control"). Translation reads `ocr.data` as
+ * text — no visual decoding — and #1726 offered no translation evidence
+ * when it swept translation along. The only translation A/B on record (#467,
+ * six languages) favoured lite, and the free observational read over the
+ * Mar 27 – May 12 2026 lite era (scripts/eval/results/translation-model-obs-*)
+ * found no faithfulness gap. Worth ~$12K over 5.4M untranslated pages.
+ * Do not "fix" this back into parity with OCR without new evidence.
  */
 export function getTranslateModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
-  if (!isLatinScriptLanguage(book?.language)) return MODEL_FLASH;
   return MODEL_LITE;
 }
 
@@ -312,8 +330,11 @@ export async function persistRefusedTranslation(db, page, text, reason, { jobId,
  * had [blank, digitizer-notice]. Kept equal to the TS canonical
  * SKIP_TRANSLATION_PAGE_TYPES in src/lib/types/prompts/defaults.ts — pinned by
  * tests/unit/translate-edge-cases.test.ts.
+ *
+ * `digitizer-insert` added #4685/#4507: this lane should stop attempting pages the
+ * meter (page-counts.mjs NEVER_TRANSLATED_PAGE_TYPES) no longer counts as translatable.
  */
-export const SKIP_TRANSLATION_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+export const SKIP_TRANSLATION_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert'];
 
 /**
  * Old OCR outputs (pre-pipeline) can describe a blank page without the page

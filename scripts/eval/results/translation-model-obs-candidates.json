@@ -1,0 +1,5059 @@
+{
+ "at": "2026-09-12T16:27:16.883Z",
+ "window": {
+  "$gte": "2026-03-27T00:00:00.000Z",
+  "$lt": "2026-05-13T00:00:00.000Z"
+ },
+ "models": {
+  "gemini-3-flash-preview": 70734,
+  "gemini-3.1-flash-lite-preview": 244304,
+  "undefined": 118
+ },
+ "candidates": [
+  {
+   "id": "6952ca6e77f38f6761bc3fb2",
+   "language": "Greek",
+   "title": "Marini vita Procli"
+  },
+  {
+   "id": "6952e4b477f38f6761bc7d4c",
+   "language": "Greek",
+   "title": "Septuaginta (Greek Old Testament)"
+  },
+  {
+   "id": "6953a91277f38f6761bd545d",
+   "language": "Greek",
+   "title": "Ephraem Syri Opera Omnia (Greek/Latin)"
+  },
+  {
+   "id": "6953ce9377f38f6761be50b6",
+   "language": "Greek",
+   "title": "Plato Laws Vol. 2 (Books 7-12)"
+  },
+  {
+   "id": "6953ce9577f38f6761be535d",
+   "language": "Greek",
+   "title": "Plato Theaetetus & Sophist"
+  },
+  {
+   "id": "6953cf1d77f38f6761be6815",
+   "language": "Greek",
+   "title": "Lucian Vol. 1 (Phalaris, Hippias, The Bath)"
+  },
+  {
+   "id": "6953dd3e77f38f6761be722c",
+   "language": "Arabic",
+   "title": "Awrad Ibn Arabi (Daily Prayers)"
+  },
+  {
+   "id": "6953e28477f38f6761be9922",
+   "language": "Chinese-Latin",
+   "title": "Confucius Sinarum Philosophus (Latin Jesuit Translation 1687)"
+  },
+  {
+   "id": "6955801057e3b773024f5030",
+   "language": "Greek",
+   "title": "Bibliotheca (Myriobiblon)"
+  },
+  {
+   "id": "6958ea57d3a8928334815906",
+   "language": "Chinese",
+   "title": "Ekiken Zenshu (Collected Works Vol. 2)"
+  },
+  {
+   "id": "695aa97dbe4023bd34bd6715",
+   "language": "Greek",
+   "title": "Heronis Alexandrini Opera quae supersunt omnia Vol. 1 (Teubner 1899)"
+  },
+  {
+   "id": "695aa981be4023bd34bd6974",
+   "language": "Greek",
+   "title": "Heronis Alexandrini Opera quae supersunt omnia Vol. 2 (Teubner 1900)"
+  },
+  {
+   "id": "695aa9cbbe4023bd34bd709d",
+   "language": "Greek",
+   "title": "Heronis Alexandrini Opera quae supersunt omnia Vol. 3 (Teubner 1899)"
+  },
+  {
+   "id": "695aa9dabe4023bd34bd722f",
+   "language": "Greek",
+   "title": "Heronis Alexandrini Opera quae supersunt omnia Vol. 4 (Teubner 1899)"
+  },
+  {
+   "id": "699209afbed8f4b5ff5b23f8",
+   "language": "Egyptian",
+   "title": "The Papyrus of Ani: Egyptian Book of the Dead (Facsimile)"
+  },
+  {
+   "id": "69920b90e0a548a13d883e43",
+   "language": "Syriac",
+   "title": "Old Testament in Syriac (Peshitta)"
+  },
+  {
+   "id": "69920be6e0a548a13d8879b3",
+   "language": "Syriac",
+   "title": "Das Johannesbuch der Mandäer"
+  },
+  {
+   "id": "699246abbc722ec0ee8107d8",
+   "language": "Gothic",
+   "title": "Sacrorum Evangeliorum Versio Gothica ex Codice Argento (Lye, 1750)"
+  },
+  {
+   "id": "699246b3bc722ec0ee81144f",
+   "language": "Hebrew-Greek",
+   "title": "The Holy Bible (Wycliffe), Vol. 1"
+  },
+  {
+   "id": "699246b7bc722ec0ee811bce",
+   "language": "Greek",
+   "title": "The Apocrypha: Greek and English in Parallel Columns"
+  },
+  {
+   "id": "699246babc722ec0ee8120e8",
+   "language": "Hebrew-Greek",
+   "title": "The Holy Bible (Wycliffe), Vol. 2"
+  },
+  {
+   "id": "699246bebc722ec0ee81286a",
+   "language": "Greek",
+   "title": "The Greek Versions of the Testaments of the Twelve Patriarchs"
+  },
+  {
+   "id": "699246d2bc722ec0ee814396",
+   "language": "Persian",
+   "title": "Pahlavi Texts, Part 5 (SBE Vol. 47)"
+  },
+  {
+   "id": "699246eb8f106fccb284e122",
+   "language": "Persian",
+   "title": "The Zend-Avesta, Part 1: Vendidad (SBE Vol. 4)"
+  },
+  {
+   "id": "699247034c402ed78ad696ac",
+   "language": "Greek-Latin",
+   "title": "The Ascension of Isaiah (Ethiopic, Greek, Latin & Slavonic Texts)"
+  },
+  {
+   "id": "69924720d263adc1aa7b0b2c",
+   "language": "Greek-Latin",
+   "title": "Joseph and Aseneth (Greek & Latin Texts)"
+  },
+  {
+   "id": "699249a5a2d53df4853bdf7e",
+   "language": "Navajo",
+   "title": "The Night Chant: A Navaho Ceremony"
+  },
+  {
+   "id": "699249aca2d53df4853be568",
+   "language": "Old Norse",
+   "title": "The Elder or Poetic Edda"
+  },
+  {
+   "id": "699249bea2d53df4853bf40c",
+   "language": "Iroquoian",
+   "title": "The Iroquois Book of Rites"
+  },
+  {
+   "id": "699249e7a2d53df4853c0e9c",
+   "language": "Maori",
+   "title": "Ancient History of the Maori, Vol. 1"
+  },
+  {
+   "id": "6992548ad5d1c6dbb2bcdcb8",
+   "language": "Persian",
+   "title": "The Zand i javit sheda dad (Pahlavi Vendidad)"
+  },
+  {
+   "id": "699258f48812793469fdea8f",
+   "language": "Sanskrit",
+   "title": "The Yoga-Vasishtha Maharamayana of Valmiki, Vol. 2 (Mitra translation)"
+  },
+  {
+   "id": "6992cbd8018b80967354ba40",
+   "language": "Chinese",
+   "title": "農政全書 (Nongzheng Quanshu: Complete Treatise on Agricultural Administration)"
+  },
+  {
+   "id": "6992ce0f3ea667fbac827e2c",
+   "language": "Chinese",
+   "title": "本草綱目拾遺(六)"
+  },
+  {
+   "id": "6992ce7477d26f9321776f69",
+   "language": "Punjabi",
+   "title": "Sri Guru Granth Sahib (1691 Manuscript)"
+  },
+  {
+   "id": "6992cea3673ee1e40e321401",
+   "language": "Chinese",
+   "title": "御製數理精蘊(2)"
+  },
+  {
+   "id": "6992f3d4dc69844b023ff228",
+   "language": "Chinese",
+   "title": "釋氏源流應化事蹟 (Shishi Yuanliu: Illustrated Life of the Buddha)"
+  },
+  {
+   "id": "69935b2b8e28d8f4c5d3c6f6",
+   "language": "Persian",
+   "title": "Kīmiyā-yi Saʿādat (Alchemy of Happiness, Persian Original)"
+  },
+  {
+   "id": "699376c6b0a84a5763961826",
+   "language": "Greek",
+   "title": "Homeri Ilias (Books I-XII)"
+  },
+  {
+   "id": "699376e7b0a84a5763961e8f",
+   "language": "Greek",
+   "title": "Aristotelis Opera (Complete Works)"
+  },
+  {
+   "id": "69937991b0a84a5763965383",
+   "language": "Greek-Latin",
+   "title": "Aristophanis Comoediae (Dindorf, Greek-Latin)"
+  },
+  {
+   "id": "699379a0b0a84a576396590a",
+   "language": "Greek",
+   "title": "Euripidis Tragoediae (Alt. Edition)"
+  },
+  {
+   "id": "699379e3b0a84a57639666b4",
+   "language": "Greek",
+   "title": "Pindari Carmina (with Prolegomena and Commentary)"
+  },
+  {
+   "id": "69937a11b0a84a5763967131",
+   "language": "Greek",
+   "title": "Sophocles II: Antigone, Trachiniae, Philoctetes, OC (Loeb)"
+  },
+  {
+   "id": "69937cd4c970b9f8351dd023",
+   "language": "Greek",
+   "title": "Acharnians, Knights, Clouds, Wasps (Loeb L178)"
+  },
+  {
+   "id": "69937e41d85e1d5bbdf3295a",
+   "language": "Greek",
+   "title": "Euthyphro, Apology, Crito, Phaedo, Phaedrus (Loeb L036)"
+  },
+  {
+   "id": "699382d984cf5845c644af1f",
+   "language": "Greek",
+   "title": "Homer, Iliad and Odyssey with Quintus of Smyrna (MS)"
+  },
+  {
+   "id": "699382dd84cf5845c644b377",
+   "language": "Greek",
+   "title": "Homer, Complete Works (MS Rouse 358)"
+  },
+  {
+   "id": "699382e084cf5845c644b8a6",
+   "language": "Greek",
+   "title": "Sophocles, Pindar, Hesiod and Aeschylus (MS Rouse 359)"
+  },
+  {
+   "id": "699382f484cf5845c644c030",
+   "language": "Greek",
+   "title": "Greek Philosophical Miscellany: Aristotle et al. (MS)"
+  },
+  {
+   "id": "6993830384cf5845c644c637",
+   "language": "Greek",
+   "title": "Lucian, Libanius, Aelius Aristides (MS)"
+  },
+  {
+   "id": "6993830684cf5845c644c75a",
+   "language": "Greek",
+   "title": "Ptolemy, Euclid and Greek Mathematics (MS)"
+  },
+  {
+   "id": "6993830984cf5845c644c97b",
+   "language": "Greek",
+   "title": "Hippocratic Corpus (MS, 24 treatises)"
+  },
+  {
+   "id": "6993831d84cf5845c644cea8",
+   "language": "Greek",
+   "title": "Codex Macedoniensis, Four Gospels (9th c.)"
+  },
+  {
+   "id": "6993832950654cbbe29163fb",
+   "language": "Greek",
+   "title": "Euclid, Phaenomena and Optics (MS)"
+  },
+  {
+   "id": "6993837f50654cbbe2916cba",
+   "language": "Greek",
+   "title": "Thucydides, Histories (MS, 11th c.)"
+  },
+  {
+   "id": "6993838f50654cbbe291760f",
+   "language": "Greek",
+   "title": "Homer, Iliad (MS, 12th c.)"
+  },
+  {
+   "id": "699383b050654cbbe291801e",
+   "language": "Greek",
+   "title": "Menologion of Basil II (illuminated, 10th c.)"
+  },
+  {
+   "id": "699383b350654cbbe29181eb",
+   "language": "Greek",
+   "title": "Aeschylus and Aristotle, Posterior Analytics (MS, 14th c.)"
+  },
+  {
+   "id": "699383b750654cbbe291839d",
+   "language": "Greek",
+   "title": "Porphyry, Isagoge and Aristotle, Logic (MS, 13th-14th c.)"
+  },
+  {
+   "id": "6993882474305116d72cf673",
+   "language": "Greek",
+   "title": "Plotinus, Enneads"
+  },
+  {
+   "id": "6993883274305116d72cfe49",
+   "language": "Greek",
+   "title": "Strabo, Geography"
+  },
+  {
+   "id": "699388cf74305116d72d0157",
+   "language": "Greek",
+   "title": "Plato, Republic, Laws, and Timaeus"
+  },
+  {
+   "id": "699388e374305116d72d0502",
+   "language": "Greek",
+   "title": "Aristotle, Physics, Metaphysics, and Ethics"
+  },
+  {
+   "id": "699388ea1075be7d320551a1",
+   "language": "Greek",
+   "title": "Euripides, Sophocles, and Aristophanes: Twenty Plays"
+  },
+  {
+   "id": "699388ed1075be7d3205541a",
+   "language": "Greek",
+   "title": "Homer, Iliad and Odyssey"
+  },
+  {
+   "id": "699388f30f04c37dcfa60530",
+   "language": "Greek",
+   "title": "Greek Siege Warfare Compendium"
+  },
+  {
+   "id": "699388f374305116d72d08a6",
+   "language": "Greek",
+   "title": "Maximus of Tyre, Dissertations; Alcinous, Didaskalikos"
+  },
+  {
+   "id": "6993890274305116d72d0a1c",
+   "language": "Greek",
+   "title": "Hippocrates, Twenty-Seven Treatises"
+  },
+  {
+   "id": "6993890ece15387065946496",
+   "language": "Greek",
+   "title": "Corpus Hermeticum and Plotinus, Enneads"
+  },
+  {
+   "id": "699389190f04c37dcfa60717",
+   "language": "Greek",
+   "title": "Olympiodorus, Commentary on Alcibiades"
+  },
+  {
+   "id": "69938919ce1538706594668e",
+   "language": "Greek",
+   "title": "Euripides, Tragedies"
+  },
+  {
+   "id": "6993891e74305116d72d0f3b",
+   "language": "Greek",
+   "title": "Gregory of Nazianzus, Basil, Chrysostom: Orations"
+  },
+  {
+   "id": "6993895174305116d72d12bb",
+   "language": "Greek",
+   "title": "Homer, Iliad with Scholia"
+  },
+  {
+   "id": "6993895d0f04c37dcfa60d2e",
+   "language": "Greek",
+   "title": "Galen, De simplicium medicamentorum facultatibus"
+  },
+  {
+   "id": "69938963ce15387065946bf9",
+   "language": "Greek",
+   "title": "Tetraevangelium (Erasmus Greek Gospels, 12th c.)"
+  },
+  {
+   "id": "699389640f04c37dcfa60ef7",
+   "language": "Greek",
+   "title": "Tetraevangelium (Greek Gospels, 8th-9th c.)"
+  },
+  {
+   "id": "6993896474305116d72d17e1",
+   "language": "Greek",
+   "title": "Praxapostolos: Acts and Epistles (Erasmus, 12th c.)"
+  },
+  {
+   "id": "699389760f04c37dcfa61180",
+   "language": "Greek",
+   "title": "Athanasius of Alexandria, Works (Vol. 1)"
+  },
+  {
+   "id": "69938976ce15387065946e02",
+   "language": "Greek",
+   "title": "Epistulae Pauli cum catena (Pauline Epistles, 10th c.)"
+  },
+  {
+   "id": "699389830f04c37dcfa616d6",
+   "language": "Greek",
+   "title": "Theon of Alexandria, Commentary on Ptolemy Almagest"
+  },
+  {
+   "id": "6993898374305116d72d2060",
+   "language": "Greek",
+   "title": "Plutarch, Parallel Lives"
+  },
+  {
+   "id": "6993898a74305116d72d23af",
+   "language": "Greek",
+   "title": "Plato, Thirty-Two Dialogues"
+  },
+  {
+   "id": "6993899a0f04c37dcfa61b3c",
+   "language": "Greek",
+   "title": "Sophocles, Hesiod, Euripides (18 tragedies), and Aeschylus"
+  },
+  {
+   "id": "6993899b74305116d72d25ac",
+   "language": "Greek",
+   "title": "Plato, Laws, Epinomis, Spurious Dialogues, and Epistles"
+  },
+  {
+   "id": "699389a10f04c37dcfa61d51",
+   "language": "Greek",
+   "title": "Aristophanes, Comedies"
+  },
+  {
+   "id": "699389a674305116d72d2ba8",
+   "language": "Greek",
+   "title": "Aristotle, Poetics; Plutarch; Herodotus"
+  },
+  {
+   "id": "699389a6ce15387065947dc0",
+   "language": "Greek",
+   "title": "Hierocles on Pythagorean Golden Verses; Hermes Trismegistus"
+  },
+  {
+   "id": "699389dd0f04c37dcfa621b5",
+   "language": "Greek",
+   "title": "Codex Sinaiticus (4th c. Greek Bible)"
+  },
+  {
+   "id": "699389e61075be7d320556aa",
+   "language": "Greek",
+   "title": "Origen, Homiliae in Psalmos (29 homilies, discovered 2012)"
+  },
+  {
+   "id": "69938a88c564adf9fabebf28",
+   "language": "Greek",
+   "title": "Aristotle, Organon (Logical Treatises)"
+  },
+  {
+   "id": "69938a8ed5a98fd66f42cef9",
+   "language": "Greek",
+   "title": "Demosthenes, Epitaphios; Lysias; Synesius"
+  },
+  {
+   "id": "69938d705d28b693146cf97e",
+   "language": "Greek",
+   "title": "Paraphrasis Evangelii Ioannei"
+  },
+  {
+   "id": "69938d9dd5a98fd66f42dc60",
+   "language": "Greek",
+   "title": "Chronographia (Dindorf/CSHB Edition)"
+  },
+  {
+   "id": "69938e6b5d28b693146d0c04",
+   "language": "Greek",
+   "title": "Paraphrasis Evangelii Ioannei (Sylburg Edition)"
+  },
+  {
+   "id": "69942a3c045dfc482ad75e2e",
+   "language": "Greek",
+   "title": "Omnia quae extant opera (Editio Princeps)"
+  },
+  {
+   "id": "69942a40045dfc482ad76029",
+   "language": "Greek",
+   "title": "Opera quae exstant (First Greek Edition, Sylburg)"
+  },
+  {
+   "id": "69942a4a045dfc482ad76532",
+   "language": "Greek",
+   "title": "Clemens Alexandrinus I: Protrepticus und Paedagogus (GCS, Stählin)"
+  },
+  {
+   "id": "69942a7c045dfc482ad7718f",
+   "language": "Greek",
+   "title": "Philocalia (Robinson Greek Edition)"
+  },
+  {
+   "id": "69942a81045dfc482ad7763b",
+   "language": "Greek",
+   "title": "Dialogus contra Marcionitas, Exhortatio ad Martyrium (Wettstein 1674)"
+  },
+  {
+   "id": "69942a91c45f2a20cd0aa59e",
+   "language": "Greek",
+   "title": "Opera Omnia XIX: Contra Celsum V-VIII (Lommatzsch)"
+  },
+  {
+   "id": "69942a9b045dfc482ad7797c",
+   "language": "Greek",
+   "title": "Hexaplorum quae supersunt I (Field Critical Edition)"
+  },
+  {
+   "id": "69942b0ed607f8e57e4b68eb",
+   "language": "Greek",
+   "title": "Patrologia Graeca vol. 44: Gregory of Nyssa"
+  },
+  {
+   "id": "69942bfbb2f6748db4abc883",
+   "language": "Greek",
+   "title": "De Regno ad Arcadium; De Insomniis"
+  },
+  {
+   "id": "69942e1dd607f8e57e4b76fc",
+   "language": "Greek",
+   "title": "Nomon Syngrphes ta Sozomena (Traité des Lois)"
+  },
+  {
+   "id": "69942e44d607f8e57e4b7fb3",
+   "language": "Greek",
+   "title": "In libros Aristotelis De Anima Commentaria (CAG XI)"
+  },
+  {
+   "id": "69942e47d607f8e57e4b8137",
+   "language": "Greek",
+   "title": "Commentaria in tres libros Aristotelis De Anima (1527 editio princeps)"
+  },
+  {
+   "id": "69942e50d607f8e57e4b82da",
+   "language": "Greek",
+   "title": "Hypomnēmatismoi kai Sēmeioseis Gnomikai (Miscellanea Philosophica et Historica)"
+  },
+  {
+   "id": "69942e75d607f8e57e4b93b8",
+   "language": "Greek-Latin",
+   "title": "Stoicheiosis Theologike (Institutio Theologica, Greek/Latin)"
+  },
+  {
+   "id": "69942ebab2f6748db4abfa24",
+   "language": "Greek",
+   "title": "Commentaria in libros De Anima Aristotelis (1535 Greek/Latin)"
+  },
+  {
+   "id": "69942f3bb2f6748db4abfe01",
+   "language": "Greek",
+   "title": "Maximus Confessor Theological Works"
+  },
+  {
+   "id": "69942f45b2f6748db4ac0121",
+   "language": "Greek",
+   "title": "Plethon De Virtutibus"
+  },
+  {
+   "id": "69942f56b2f6748db4ac05fd",
+   "language": "Greek",
+   "title": "Barocci 133 — Blemmydes De Anima and Philosophical Texts"
+  },
+  {
+   "id": "69942f6fb2f6748db4ac0db5",
+   "language": "Greek",
+   "title": "Maximus Confessor De Coelesti Hierarchia"
+  },
+  {
+   "id": "69942f72b2f6748db4ac0f25",
+   "language": "Greek",
+   "title": "Philoponus and Greek Philosophical Miscellany"
+  },
+  {
+   "id": "69942f75b2f6748db4ac1125",
+   "language": "Greek",
+   "title": "Maximus Confessor Quaestiones, Epistles, Mystagogia"
+  },
+  {
+   "id": "69942f88b2f6748db4ac133a",
+   "language": "Greek",
+   "title": "Pachymeres Declamationes XIII"
+  },
+  {
+   "id": "69942fb43046aa8258543ccf",
+   "language": "Greek",
+   "title": "Philoponus In Aristotelis Analytica Priora (CAG XIII.2)"
+  },
+  {
+   "id": "69942fb9bb14908bbd9a0f57",
+   "language": "Greek",
+   "title": "Philoponus In Posteriora Resolutoria Aristotelis (Aldus 1504)"
+  },
+  {
+   "id": "699437d76879ff0184cb79f4",
+   "language": "Greek",
+   "title": "Oneirocritica"
+  },
+  {
+   "id": "6994383a6879ff0184cb803a",
+   "language": "Greek",
+   "title": "Collection des anciens alchimistes grecs, Vols. 2-3"
+  },
+  {
+   "id": "699438446879ff0184cb8593",
+   "language": "Greek",
+   "title": "Macarii Aegyptii Opera Omnia"
+  },
+  {
+   "id": "69943c4f13c9a0dce2757498",
+   "language": "Syriac",
+   "title": "The Odes and Psalms of Solomon, Vol. 1 (Syriac text)"
+  },
+  {
+   "id": "69943c5c13c9a0dce275771a",
+   "language": "Syriac",
+   "title": "The Book of the Bee"
+  },
+  {
+   "id": "69943c7813c9a0dce2757b20",
+   "language": "Syriac",
+   "title": "De Perfectione Religiosa"
+  },
+  {
+   "id": "69943c7e13c9a0dce2757dc2",
+   "language": "Syriac",
+   "title": "Sancti Ephraem Syri Hymni et Sermones, Vol. 1"
+  },
+  {
+   "id": "69943c84a668f66e6953b915",
+   "language": "Syriac",
+   "title": "Sancti Ephraem Syri Hymni et Sermones, Vol. 2"
+  },
+  {
+   "id": "69943cb1a668f66e6953c106",
+   "language": "Armenian",
+   "title": "Collected Works of Nerses Shnorhali"
+  },
+  {
+   "id": "69943cc3a668f66e6953c8a5",
+   "language": "Armenian",
+   "title": "Collection des historiens de l'Arménie, Vol. 2"
+  },
+  {
+   "id": "69943ccaa668f66e6953ca5f",
+   "language": "Armenian",
+   "title": "Preces Sancti Nersetis Clajensis"
+  },
+  {
+   "id": "69943ce1a668f66e6953cccb",
+   "language": "Syriac",
+   "title": "Narsai Doctoris Syri Homiliae et Carmina, Vol. 1"
+  },
+  {
+   "id": "69943dfe7e165aadb1c33097",
+   "language": "Syriac",
+   "title": "Sancti Ephraem Syri Hymni et Sermones, Vol. 3"
+  },
+  {
+   "id": "69943e067e165aadb1c33276",
+   "language": "Syriac",
+   "title": "Sancti Ephraem Syri Hymni et Sermones, Vol. 4"
+  },
+  {
+   "id": "69943f7b338b1d7fd14de029",
+   "language": "Syriac",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Vol. 1"
+  },
+  {
+   "id": "69943f85338b1d7fd14de391",
+   "language": "Syriac",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Vol. 2"
+  },
+  {
+   "id": "69943f8e338b1d7fd14de72e",
+   "language": "Syriac",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Vol. 3"
+  },
+  {
+   "id": "69943f98338b1d7fd14deb17",
+   "language": "Syriac",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Vol. 4"
+  },
+  {
+   "id": "69943fa1338b1d7fd14deeda",
+   "language": "Syriac",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Vol. 5"
+  },
+  {
+   "id": "69943fdd06e186ed6c012329",
+   "language": "Armenian",
+   "title": "Koriwn: Vark Mashtotsi (Life of Mashtots)"
+  },
+  {
+   "id": "6994400f06e186ed6c012a44",
+   "language": "Syriac",
+   "title": "Patrologia Syriaca I.2: Aphraates Demonstrationes"
+  },
+  {
+   "id": "69944861185a84ef595aae5b",
+   "language": "Armenian",
+   "title": "Patmutiwn Hayots (History of the Armenians)"
+  },
+  {
+   "id": "6994493a185a84ef595aba61",
+   "language": "Armenian",
+   "title": "Eusebii Pamphili Chronicon Bipartitum, Vol. 1"
+  },
+  {
+   "id": "6994493e185a84ef595abc3a",
+   "language": "Armenian",
+   "title": "Eusebii Pamphili Chronicon Bipartitum, Vol. 2"
+  },
+  {
+   "id": "69944952185a84ef595ac060",
+   "language": "Armenian",
+   "title": "Girk Tghtots (Book of Letters)"
+  },
+  {
+   "id": "69944b4d1ba8351377905e27",
+   "language": "Greek",
+   "title": "Philonis Judaei Opera Omnia (Vol. 1)"
+  },
+  {
+   "id": "69944b511ba8351377905f76",
+   "language": "Greek",
+   "title": "Philonis Judaei Opera Omnia (Vol. 2)"
+  },
+  {
+   "id": "69944b531ba83513779060dc",
+   "language": "Greek",
+   "title": "Philonis Judaei Opera Omnia (Vol. 5)"
+  },
+  {
+   "id": "69944b561ba8351377906660",
+   "language": "Greek",
+   "title": "Philonis Judaei Opera Omnia (Vol. 3)"
+  },
+  {
+   "id": "69944b581ba8351377906a7b",
+   "language": "Greek",
+   "title": "Philonis Judaei Opera Omnia (Vol. 6)"
+  },
+  {
+   "id": "69944b5a1ba8351377906bfe",
+   "language": "Greek",
+   "title": "Philonis Alexandrini Opera Quae Supersunt (Vol. 7 - Indices)"
+  },
+  {
+   "id": "69944b5b1ba8351377906d62",
+   "language": "Greek",
+   "title": "Philonis Judaei Opera Omnia (Vol. 4)"
+  },
+  {
+   "id": "69944b5e1ba8351377906ed8",
+   "language": "Greek",
+   "title": "Philonis Judaei Opera Omnia (Vol. 7)"
+  },
+  {
+   "id": "69a5e3d6006a4098422163f5",
+   "language": "Greek",
+   "title": "Alchemical Recipes (Codex Rossianus 247)"
+  },
+  {
+   "id": "69a5e461006a409842216e78",
+   "language": "Syriac",
+   "title": "Syriac Manuscript (Codex Vaticanus Syriacus 160)"
+  },
+  {
+   "id": "69a5e462006a40984221706a",
+   "language": "Hebrew",
+   "title": "Hebrew Bible (Codex Vaticanus Hebraicus 14)"
+  },
+  {
+   "id": "69a5e484006a4098422176a4",
+   "language": "Syriac",
+   "title": "Syriac Theological Manuscript (Codex Vaticanus Syriacus 162)"
+  },
+  {
+   "id": "69a5e5d31d73f9668388ee75",
+   "language": "Greek",
+   "title": "Hesiodi Opera et Dies cum Procli Commentario (Grec 2771)"
+  },
+  {
+   "id": "69a5e5d5006a409842217819",
+   "language": "Greek",
+   "title": "Vetus Testamentum Graecum (Grec 2)"
+  },
+  {
+   "id": "69a5e60885fa13e734e42186",
+   "language": "Greek",
+   "title": "Procli In Platonis Alcibiadem Commentarius (Barocci 140)"
+  },
+  {
+   "id": "69a5e9b7787d6e9b8d42df32",
+   "language": "Armenian",
+   "title": "Matenagrutiʿwnkʿ (Writings of Grigor of Narek)"
+  },
+  {
+   "id": "69a5e9bb787d6e9b8d42e183",
+   "language": "Armenian",
+   "title": "Eghtsʿ Aghandotsʿ (Against the Sects)"
+  },
+  {
+   "id": "69a5e9bf787d6e9b8d42e2e5",
+   "language": "Armenian",
+   "title": "Vasn Vardanay ew Hayotsʿ paterazmin (On Vardan and the Armenian War)"
+  },
+  {
+   "id": "69a5e9c6787d6e9b8d42e574",
+   "language": "Armenian",
+   "title": "Patmutiʿwn Sebeʿosi (History)"
+  },
+  {
+   "id": "69a5e9cb787d6e9b8d42e730",
+   "language": "Armenian",
+   "title": "Girkʿ Endhanrakan (The Encyclical)"
+  },
+  {
+   "id": "69a5ea892c1720a023b0c7f9",
+   "language": "Syriac",
+   "title": "Sancti Ephraem Syri Hymni et Sermones, Tomus I"
+  },
+  {
+   "id": "69a5eaa32c1720a023b0cb7e",
+   "language": "Syriac",
+   "title": "Homiliae Selectae Mar-Jacobi Sarugensis, Tomus I"
+  },
+  {
+   "id": "69a5eaa82c1720a023b0ceeb",
+   "language": "Syriac",
+   "title": "S. Ephraemi Syri, Rabulae Episcopi Edesseni, Balaei, Aliorumque Opera Selecta"
+  },
+  {
+   "id": "69a5ead1d507939f0352ced7",
+   "language": "Armenian",
+   "title": "Patmutʻiwn Hayotsʻ (History of the Armenians)"
+  },
+  {
+   "id": "69a5eae5d507939f0352d3c8",
+   "language": "Armenian",
+   "title": "Astuatsashunchʻ Matean Hin ew Nor Ktakaranatsʻ (Armenian Bible, Zohrapean)"
+  },
+  {
+   "id": "69a5eb453af7491d2c6a7c29",
+   "language": "Syriac",
+   "title": "Acta Martyrum et Sanctorum, Tomus I"
+  },
+  {
+   "id": "69a5eb4daa8e0e4092146d10",
+   "language": "Syriac",
+   "title": "Acta Martyrum et Sanctorum, Tomus III"
+  },
+  {
+   "id": "69a5eb54aa8e0e4092146fcc",
+   "language": "Syriac",
+   "title": "Acta Martyrum et Sanctorum, Tomus IV"
+  },
+  {
+   "id": "69a5eb5baa8e0e4092147282",
+   "language": "Syriac",
+   "title": "Acta Martyrum et Sanctorum, Tomus V"
+  },
+  {
+   "id": "69a5eb64aa8e0e4092147557",
+   "language": "Syriac",
+   "title": "Acta Martyrum et Sanctorum, Tomus VI"
+  },
+  {
+   "id": "69a5eb6baa8e0e409214781d",
+   "language": "Syriac",
+   "title": "Acta Martyrum et Sanctorum, Tomus II"
+  },
+  {
+   "id": "69a5ec44da5d3ab76bee3957",
+   "language": "Armenian",
+   "title": "Patmutʻiwn Aristakisi Lastiverttsʻwoy (History of Aristakes Lastivertts'i)"
+  },
+  {
+   "id": "69a5ed1a96d6dd816a5698d5",
+   "language": "Syriac",
+   "title": "Patrologia Syriaca vol. 1: Aphraatis Demonstrationes"
+  },
+  {
+   "id": "69a5ed2c96d6dd816a569bc2",
+   "language": "Syriac",
+   "title": "Chronicon Syriacum"
+  },
+  {
+   "id": "69a5ed3396d6dd816a569e2c",
+   "language": "Syriac",
+   "title": "Ethicon seu Moralia"
+  },
+  {
+   "id": "69a5ed6996d6dd816a56a6de",
+   "language": "Syriac",
+   "title": "Nomocanon"
+  },
+  {
+   "id": "69a5ed6d96d6dd816a56a840",
+   "language": "Syriac",
+   "title": "Le Livre des Splendeurs (Grammaire)"
+  },
+  {
+   "id": "69a5ed7996d6dd816a56aae6",
+   "language": "Syriac",
+   "title": "Anecdota Syriaca vols. 3-4"
+  },
+  {
+   "id": "69a5eda496d6dd816a56ae46",
+   "language": "Syriac",
+   "title": "Homiliae S. Isaaci Antiocheni"
+  },
+  {
+   "id": "69a5edab96d6dd816a56b1c6",
+   "language": "Syriac",
+   "title": "Histoire de Mar-Jabalaha, de trois autres patriarches, d'un prêtre et de deux laïques nestoriens"
+  },
+  {
+   "id": "69a5ee1ebfd8cafd91e432cd",
+   "language": "Syriac",
+   "title": "Sancti Ephraem Syri Opera Omnia vol. 3"
+  },
+  {
+   "id": "69a5f039b29703bc86eb51db",
+   "language": "Syriac",
+   "title": "Chronicon Ecclesiasticum, vol. 3"
+  },
+  {
+   "id": "69a5f088b29703bc86eb5b9f",
+   "language": "Armenian",
+   "title": "Tughtk (Letters)"
+  },
+  {
+   "id": "69a5f099b29703bc86eb5cf4",
+   "language": "Armenian",
+   "title": "Vark ew Vkayabanutiwn Srbots, vol. 1 (Lives and Martyrdoms of the Saints)"
+  },
+  {
+   "id": "69a5f2010a8b44a5d9dc89ba",
+   "language": "Syriac",
+   "title": "Selected Memre; Commentary on the Psalms"
+  },
+  {
+   "id": "69a5f2110a8b44a5d9dc8e20",
+   "language": "Syriac",
+   "title": "Anthology: Memre and Homilies"
+  },
+  {
+   "id": "69a5f2110a8b44a5d9dc9296",
+   "language": "Syriac",
+   "title": "Cathedral Homilies (tr. Paul of Callinicum)"
+  },
+  {
+   "id": "69a5f25a0a8b44a5d9dc961e",
+   "language": "Syriac",
+   "title": "New Testament (Peshitta)"
+  },
+  {
+   "id": "69a5f25b0a8b44a5d9dc982a",
+   "language": "Syriac",
+   "title": "Tetraevangelion (Four Gospels)"
+  },
+  {
+   "id": "69a5f330d4c2e3cf8ecb7b01",
+   "language": "Syriac",
+   "title": "Opera Omnia (Quae Supersunt)"
+  },
+  {
+   "id": "69a5f359d4c2e3cf8ecb82c3",
+   "language": "Syriac",
+   "title": "Liturgical and Patristic Anthology"
+  },
+  {
+   "id": "69a5f366d4c2e3cf8ecb8a85",
+   "language": "Syriac",
+   "title": "Theological and Philosophical Anthology"
+  },
+  {
+   "id": "69a5f367d4c2e3cf8ecb8bea",
+   "language": "Syriac",
+   "title": "Mystical Discourses (Second Collection)"
+  },
+  {
+   "id": "69a5f3b61cf742c3604133ea",
+   "language": "Syriac",
+   "title": "Contra Impium Grammaticum and Homilies"
+  },
+  {
+   "id": "69a5f3b61cf742c3604134ce",
+   "language": "Syriac",
+   "title": "Syriac Theological Anthology"
+  },
+  {
+   "id": "69a5f3e01cf742c360413635",
+   "language": "Syriac",
+   "title": "Patrologia Syriaca, Pars I.2: Aphraatis Demonstrationes (cont.)"
+  },
+  {
+   "id": "69a5f3f01cf742c3604138c1",
+   "language": "Syriac",
+   "title": "Patrologia Syriaca, Pars I.3: Liber Graduum (Book of Steps)"
+  },
+  {
+   "id": "69a5f3f51cf742c360413ba7",
+   "language": "Syriac",
+   "title": "Apocrypha Syriaca: Protevangelium Jacobi et Transitus Mariae"
+  },
+  {
+   "id": "69a5f460d4c2e3cf8ecb90a2",
+   "language": "Syriac",
+   "title": "Ethicon, seu Moralia"
+  },
+  {
+   "id": "69a5f469d4c2e3cf8ecb9324",
+   "language": "Syriac",
+   "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie"
+  },
+  {
+   "id": "69a97a56f3f3d2fb7de27928",
+   "language": "Greek",
+   "title": "Plutarchi De Iside et Osiride"
+  },
+  {
+   "id": "69a99d0a510aaf87d0635bfc",
+   "language": "Syriac",
+   "title": "Patrologia Orientalis, Tome II (inc. Vie de Sévère)"
+  },
+  {
+   "id": "69ac7edb20878c5c9ba51cbc",
+   "language": "Greek",
+   "title": "Iamblichi Protrepticus ad fidem codicis Florentini"
+  },
+  {
+   "id": "69ad65c40b6018c6ed179d1d",
+   "language": "Greek",
+   "title": "Dio's Roman History, Vol. 8"
+  },
+  {
+   "id": "69ad7105c5001c07fa846f0a",
+   "language": "Greek",
+   "title": "Philostratus and Eunapius: Lives of the Sophists"
+  },
+  {
+   "id": "69ad716ac5001c07fa847f7d",
+   "language": "Greek",
+   "title": "Clement of Alexandria, Miscellanies (Stromata) Book VII"
+  },
+  {
+   "id": "69ad72c5a999d314266dbb70",
+   "language": "Greek",
+   "title": "The Geography of Strabo, Vol. 1"
+  },
+  {
+   "id": "69ad76c165c3071e0169b707",
+   "language": "Greek",
+   "title": "Diogenes Laertius: Lives of Eminent Philosophers, Vol. 2 (Loeb)"
+  },
+  {
+   "id": "69ade989bbdf273192a46c0e",
+   "language": "Russian",
+   "title": "Sobranie sochinenii, vol. 4"
+  },
+  {
+   "id": "69ade997bbdf273192a46e68",
+   "language": "Russian",
+   "title": "Sobranie sochinenii, vol. 6"
+  },
+  {
+   "id": "69ade9b4bbdf273192a474bc",
+   "language": "Russian",
+   "title": "The Justification of the Good"
+  },
+  {
+   "id": "69ade9bebbdf273192a476e4",
+   "language": "Russian",
+   "title": "Istoriia i budushchnost teokratii"
+  },
+  {
+   "id": "69adea18fa8a16f03b4b61e3",
+   "language": "Russian",
+   "title": "Sub specie aeternitatis: Opyty filosofskie"
+  },
+  {
+   "id": "69adea345bc19ec9b2edb734",
+   "language": "Russian",
+   "title": "Sochineniia i pisma, vol. 1"
+  },
+  {
+   "id": "69ae907714cd71fa8cd880e8",
+   "language": "Greek",
+   "title": "Enquiry into Plants, Vol. 2 (Loeb)"
+  },
+  {
+   "id": "69ae923286f8cb4a256ee4d6",
+   "language": "Greek",
+   "title": "The Oxyrhynchus Papyri, Part II"
+  },
+  {
+   "id": "69ae92336311f56f9551e616",
+   "language": "Greek",
+   "title": "The Oxyrhynchus Papyri, Part VI"
+  },
+  {
+   "id": "69ae92a572d60a21bf1a5a2e",
+   "language": "Greek",
+   "title": "The Oxyrhynchus Papyri, Part XVI"
+  },
+  {
+   "id": "69aea3113d57a11fc021c0eb",
+   "language": "Greek",
+   "title": "Analekta Hierosolymitikes Stachyologias Vol. I"
+  },
+  {
+   "id": "69aea3b5912e8f072fbef54f",
+   "language": "Greek",
+   "title": "Hierosolymitike Bibliotheke II"
+  },
+  {
+   "id": "69aea5b057ed98c21d25ab74",
+   "language": "Greek",
+   "title": "Greek Papyri in the British Museum, Vol. IV: The Aphrodito Papyri"
+  },
+  {
+   "id": "69aeabd867e6731bc1366de5",
+   "language": "Greek",
+   "title": "Erotemata (expanded edition)"
+  },
+  {
+   "id": "69aead1166bcc9447837c2af",
+   "language": "Greek",
+   "title": "Epistolae diversorum philosophorum, oratorum et rhetorum"
+  },
+  {
+   "id": "69aeb589e43bbf40ffe04937",
+   "language": "Greek",
+   "title": "Doxographi Graeci"
+  },
+  {
+   "id": "69aeb620b6cf480123443359",
+   "language": "Greek",
+   "title": "Hermetica: The Ancient Greek and Latin Writings Attributed to Hermes Trismegistus, Volume II"
+  },
+  {
+   "id": "69aeb647b6cf480123443713",
+   "language": "Greek",
+   "title": "Codex Sinaiticus Petropolitanus"
+  },
+  {
+   "id": "69aebfe651d30e6c1f6c8eaf",
+   "language": "Greek",
+   "title": "De cerimoniis aulae Byzantinae libri duo"
+  },
+  {
+   "id": "69aec41ba1e0be599604e642",
+   "language": "Russian",
+   "title": "Sochineniia A.I. Gertsena, Tom 4"
+  },
+  {
+   "id": "69aec5033b6ebce5e0ee84e8",
+   "language": "Russian",
+   "title": "Istoricheskie pisma"
+  },
+  {
+   "id": "69af0eab067c0c26ee26e95b",
+   "language": "Russian",
+   "title": "Дневник писателя за 1873 г."
+  },
+  {
+   "id": "69af0ebf067c0c26ee26edd4",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 13: Братья Карамазовы"
+  },
+  {
+   "id": "69af0f3a6ff3eb32f96a9085",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 6: Преступление и наказание"
+  },
+  {
+   "id": "69af0f4071c0dcb762286e49",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 7: Идиот"
+  },
+  {
+   "id": "69af0f46af16a5a1d2280684",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 8: Бесы"
+  },
+  {
+   "id": "69af0f4eaf16a5a1d22808db",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 9: Подросток"
+  },
+  {
+   "id": "69af0f5baf16a5a1d2280aa0",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 2: Повести и рассказы"
+  },
+  {
+   "id": "69af0f62af16a5a1d2280c84",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 3: Повести и рассказы"
+  },
+  {
+   "id": "69af0f68af16a5a1d2280ece",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 5: Униженные и оскорблённые. Вечный муж"
+  },
+  {
+   "id": "69af0f767155768d45e5e243",
+   "language": "Russian",
+   "title": "Полное собрание сочинений. Т. 13: Братья Карамазовы (ч. 2)"
+  },
+  {
+   "id": "69af0f9e024c2bf295284db9",
+   "language": "Russian",
+   "title": "Выбранные места из переписки с друзьями"
+  },
+  {
+   "id": "69af0fb1024c2bf29528514f",
+   "language": "Russian",
+   "title": "Сочинения Н. В. Гоголя. Том 2"
+  },
+  {
+   "id": "69af106b266659b71a321df6",
+   "language": "Russian",
+   "title": "Полное собрание сочинений И. С. Тургенева в 12 томах. Т. 4"
+  },
+  {
+   "id": "69af107b266659b71a32251b",
+   "language": "Russian",
+   "title": "Полное собрание сочинений И. С. Тургенева в 12 томах. Т. 8"
+  },
+  {
+   "id": "69af108bd5d111f99e41b779",
+   "language": "Russian",
+   "title": "Сочинения Пушкина. Т. 1"
+  },
+  {
+   "id": "69af1096d5d111f99e41bbbd",
+   "language": "Russian",
+   "title": "Сочинения Пушкина. Т. 4"
+  },
+  {
+   "id": "69af10a4d5d111f99e41c02d",
+   "language": "Russian",
+   "title": "Сочинения Пушкина. Т. 6"
+  },
+  {
+   "id": "69af10b6d5d111f99e41c26b",
+   "language": "Russian",
+   "title": "Полное собрание сочинений М. Ю. Лермонтова"
+  },
+  {
+   "id": "69af10cc06b10527be56603f",
+   "language": "Russian",
+   "title": "Полное собрание сочинений М. Ю. Лермонтова. Т. 2"
+  },
+  {
+   "id": "69af11663bf2d972adad7d68",
+   "language": "Russian",
+   "title": "Полное собрание сочинений И.С. Тургенева. Том 6"
+  },
+  {
+   "id": "69af116e3bf2d972adad8052",
+   "language": "Russian",
+   "title": "Полное собрание сочинений И.С. Тургенева. Том 10"
+  },
+  {
+   "id": "69af11743bf2d972adad82be",
+   "language": "Russian",
+   "title": "Полное собрание сочинений И.С. Тургенева. Том 12"
+  },
+  {
+   "id": "69af119823aa4b6749dc3b70",
+   "language": "Russian",
+   "title": "Стихотворения Н.А. Некрасова"
+  },
+  {
+   "id": "69af119dba5af0cdb3f185e9",
+   "language": "Russian",
+   "title": "Стихотворения Н.А. Некрасова. Том 1"
+  },
+  {
+   "id": "69af11a8630497387e9c7a18",
+   "language": "Russian",
+   "title": "Кому на Руси жить хорошо и другие стихотворения"
+  },
+  {
+   "id": "69af11b4630497387e9c7b26",
+   "language": "Russian",
+   "title": "Полное собрание сочинений И.А. Гончарова"
+  },
+  {
+   "id": "69af11dba03f6f3663ba9133",
+   "language": "Russian",
+   "title": "Сочинения А.П. Чехова. Том 10: Остров Сахалин"
+  },
+  {
+   "id": "69af11e4a93b848eee663ebe",
+   "language": "Russian",
+   "title": "Собрание писем А.П. Чехова. Том 1"
+  },
+  {
+   "id": "69af12076fddf00d98d14aff",
+   "language": "Russian",
+   "title": "Полное собрание сочинений А.П. Чехова. Том 2"
+  },
+  {
+   "id": "69af1234b8bbede5a0085175",
+   "language": "Russian",
+   "title": "Сочинения Н.А. Добролюбова. Том 4"
+  },
+  {
+   "id": "69af123e0092756351e44874",
+   "language": "Chinese",
+   "title": "職方外紀 (Record of Places Outside the Tributaries)"
+  },
+  {
+   "id": "69af1320199e32dea75f9454",
+   "language": "Russian",
+   "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 2. Господа Головлёвы. Сатиры в прозе"
+  },
+  {
+   "id": "69af1331199e32dea75f969a",
+   "language": "Russian",
+   "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 3. Помпадуры и помпадурши. Невинные рассказы"
+  },
+  {
+   "id": "69af1343199e32dea75f9cbd",
+   "language": "Russian",
+   "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 4. Благонамеренные речи. Культурные люди"
+  },
+  {
+   "id": "69af1353199e32dea75f9f1e",
+   "language": "Russian",
+   "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 5. Мелочи жизни. Сборник"
+  },
+  {
+   "id": "69af1382f837644f29a48d55",
+   "language": "Russian",
+   "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 9. Господа ташкентцы. Пошехонские рассказы. Круглый год"
+  },
+  {
+   "id": "69af13bef837644f29a494ef",
+   "language": "Russian",
+   "title": "Собрание сочинений К. Леонтьева. Т. 5. Восток, Россия и славянство"
+  },
+  {
+   "id": "69af13c8f7553c6a79e853d1",
+   "language": "Russian",
+   "title": "Собрание сочинений К. Леонтьева. Т. 7. Восток, Россия и славянство"
+  },
+  {
+   "id": "69af201bb93f9affdf29ddf7",
+   "language": "Russian",
+   "title": "Полное собрание сочинений А.П. Чехова"
+  },
+  {
+   "id": "69af21237c27d4b637fece94",
+   "language": "Russian",
+   "title": "Полное собраніе сочиненій Н.С. Лѣскова. Т. 4"
+  },
+  {
+   "id": "69af212c7c27d4b637fed0e8",
+   "language": "Russian",
+   "title": "Полное собраніе сочиненій Н.С. Лѣскова. Т. 5"
+  },
+  {
+   "id": "69af214e7c27d4b637fed5b5",
+   "language": "Russian",
+   "title": "Сочиненія А.Н. Островскаго. Т. 4"
+  },
+  {
+   "id": "69af2224f98f6eff774cc0d7",
+   "language": "Russian",
+   "title": "Полное собраніе сочиненій А. С. Грибоѣдова. Т. 1: Проза и письма"
+  },
+  {
+   "id": "69af22e7f98f6eff774cda13",
+   "language": "Russian",
+   "title": "Съ того берега"
+  },
+  {
+   "id": "69af23cfc6df16b7172aa795",
+   "language": "Russian",
+   "title": "Исторія Государства Россійскаго. Т.9"
+  },
+  {
+   "id": "69af2424c6df16b7172ab621",
+   "language": "Russian",
+   "title": "Сочиненія, письма и избранные переводы Д.И. Фонъ-Визина"
+  },
+  {
+   "id": "69af380405844800f9d80d60",
+   "language": "Russian",
+   "title": "Сочиненія Ломоносова. Том 3"
+  },
+  {
+   "id": "69af3837677cd73a3221c0d3",
+   "language": "Russian",
+   "title": "Сочиненія В. Бѣлинскаго. Том 1"
+  },
+  {
+   "id": "69af3843677cd73a3221c2cd",
+   "language": "Russian",
+   "title": "Сочиненія В. Бѣлинскаго"
+  },
+  {
+   "id": "69af3972102120ca71f007e7",
+   "language": "Russian",
+   "title": "Сочиненія Н.А. Добролюбова. Том 3"
+  },
+  {
+   "id": "69af3988102120ca71f00a1d",
+   "language": "Russian",
+   "title": "Сочиненія Н.А. Добролюбова. Том 4"
+  },
+  {
+   "id": "69af398f102120ca71f00cd7",
+   "language": "Russian",
+   "title": "Сочиненія Д.И. Писарева"
+  },
+  {
+   "id": "69af39a3102120ca71f01256",
+   "language": "Russian",
+   "title": "Полное собраніе сочиненій Д.И. Писарева. Том 1"
+  },
+  {
+   "id": "69af39b1102120ca71f01750",
+   "language": "Russian",
+   "title": "Полное собраніе сочиненій И.С. Тургенева. Тома 4-5"
+  },
+  {
+   "id": "69af3ab8102120ca71f01ee4",
+   "language": "Russian",
+   "title": "П.Я. Чаадаевъ: жизнь и мышленіе"
+  },
+  {
+   "id": "69af3c12e2921802c6c779e5",
+   "language": "Russian",
+   "title": "Полное собрание сочинений Ф.М. Достоевского, Т. 10: Дневник писателя"
+  },
+  {
+   "id": "69af3c17e2921802c6c77b8e",
+   "language": "Russian",
+   "title": "Полное собрание сочинений Ф.М. Достоевского, Т. 11: Дневник писателя"
+  },
+  {
+   "id": "69af3c1ce2921802c6c77d53",
+   "language": "Russian",
+   "title": "Полное собрание сочинений Ф.М. Достоевского, Т. 12: Дневник писателя"
+  },
+  {
+   "id": "69af3c5fd79faba421042cf2",
+   "language": "Russian",
+   "title": "Подросток, Т. 1"
+  },
+  {
+   "id": "69af3c65d79faba421042e98",
+   "language": "Russian",
+   "title": "Подросток, Т. 2"
+  },
+  {
+   "id": "69af3cf74b4d9535c7f4fdaf",
+   "language": "Russian",
+   "title": "Сочинения Николая Гоголя, Т. 1"
+  },
+  {
+   "id": "69af3cfd4b4d9535c7f4ff92",
+   "language": "Russian",
+   "title": "Сочинения Николая Гоголя, Т. 2"
+  },
+  {
+   "id": "69af3d024b4d9535c7f50189",
+   "language": "Russian",
+   "title": "Сочинения Николая Гоголя, Т. 3"
+  },
+  {
+   "id": "69af3d14dec9c66a7172a8cd",
+   "language": "Russian",
+   "title": "Иллюстрированное полное собрание сочинений, Т. 3"
+  },
+  {
+   "id": "69af3d5b7d9ffe835043e8d2",
+   "language": "Russian",
+   "title": "Сочинения А. С. Пушкина, Т. 1: Лирические стихотворения (1812-1824)"
+  },
+  {
+   "id": "69af3df4dec9c66a7172bb36",
+   "language": "Russian",
+   "title": "Записки революционера"
+  },
+  {
+   "id": "69af3f06dec9c66a7172bfc2",
+   "language": "Russian",
+   "title": "Достоевский и его христианское веропонимание"
+  },
+  {
+   "id": "69af3f29dec9c66a7172c3a5",
+   "language": "Russian",
+   "title": "Sub specie aeternitatis: Опыты философские, социальные и литературные"
+  },
+  {
+   "id": "69af40f5c1333bab26483ca8",
+   "language": "Russian",
+   "title": "Природа и история"
+  },
+  {
+   "id": "69af4101c1333bab26483dbe",
+   "language": "Russian",
+   "title": "Апокалипсическая секта"
+  },
+  {
+   "id": "69af410bc1333bab26483e93",
+   "language": "Russian",
+   "title": "Война 1914 года и русское возрождение"
+  },
+  {
+   "id": "69af414cc1333bab26483ff3",
+   "language": "Russian",
+   "title": "Рассказы"
+  },
+  {
+   "id": "69af4174c1333bab2648449c",
+   "language": "Russian",
+   "title": "Раздумье: разные вариации на старые темы"
+  },
+  {
+   "id": "69af41c6eaef59aff2e0e6a4",
+   "language": "Russian",
+   "title": "Опавшие листья. Короб 2"
+  },
+  {
+   "id": "69af423d3fd91d3991399004",
+   "language": "Russian",
+   "title": "Семейный вопрос в России, том 1"
+  },
+  {
+   "id": "69af42623fd91d39913994f1",
+   "language": "Russian",
+   "title": "Литературные изгнанники, том 1"
+  },
+  {
+   "id": "69af4293eaef59aff2e0f469",
+   "language": "Russian",
+   "title": "Полное собрание сочинений И. В. Киреевского, том 1"
+  },
+  {
+   "id": "69af42b83bd5f6f35ab891b3",
+   "language": "Russian",
+   "title": "Ранние славянофилы"
+  },
+  {
+   "id": "69af42c03bd5f6f35ab892cf",
+   "language": "Russian",
+   "title": "Полное собрание сочинений А. С. Хомякова, том 3"
+  },
+  {
+   "id": "69af42cc3bd5f6f35ab89765",
+   "language": "Russian",
+   "title": "Полное собрание сочинений А. С. Хомякова, том 6"
+  },
+  {
+   "id": "69af42d73bd5f6f35ab89b8f",
+   "language": "Russian",
+   "title": "Полное собрание сочинений К. С. Аксакова, том 1"
+  },
+  {
+   "id": "69af42f13bd5f6f35ab8a0cf",
+   "language": "Russian",
+   "title": "Сочинения И. С. Аксакова, том 2: Славянофильство и западничество"
+  },
+  {
+   "id": "69af453b004a024aaf21615d",
+   "language": "Greek",
+   "title": "Sancti Eusebii Hieronymi Stridonensis Presbyteri Opera Omnia, Vol. II"
+  },
+  {
+   "id": "69af47c14a5e5a377fef964c",
+   "language": "Russian",
+   "title": "Достоевский и Ницше (Философия трагедии)"
+  },
+  {
+   "id": "69af48212a821385be061ea1",
+   "language": "Russian",
+   "title": "Теория ценности Маркса и её значение (Критический этюд)"
+  },
+  {
+   "id": "69af48372a821385be0620a6",
+   "language": "Russian",
+   "title": "Введение в философию"
+  },
+  {
+   "id": "69af48c4d6be7ec9cc324226",
+   "language": "Russian",
+   "title": "Патриотика: Политика, культура, религия, социализм"
+  },
+  {
+   "id": "69af49402a8090156eec1b61",
+   "language": "Russian",
+   "title": "Л. Толстой и Достоевский"
+  },
+  {
+   "id": "69af49a92a821385be062adb",
+   "language": "Russian",
+   "title": "Философия истории"
+  },
+  {
+   "id": "69af4a3f0c7af0237dfb95bb",
+   "language": "Russian",
+   "title": "Христос и Антихрист: Том 1 (Юлиан Отступник)"
+  },
+  {
+   "id": "69af4a490c7af0237dfb9792",
+   "language": "Russian",
+   "title": "Христос и Антихрист: Том 2 (Леонардо да Винчи)"
+  },
+  {
+   "id": "69af4e980fcac371f53b3e57",
+   "language": "Russian",
+   "title": "Л. Толстой и Достоевский. Том 2: Религия"
+  },
+  {
+   "id": "69afcfc25115a4fae488e18c",
+   "language": "Persian",
+   "title": "The Mathnawi of Jalaluddin Rumi, Vols. 5-6"
+  },
+  {
+   "id": "69afe285cf56258c938909b8",
+   "language": "Greek",
+   "title": "Hippocrates, Vol. III (Loeb Classical Library)"
+  },
+  {
+   "id": "69afe65fda5fa12b664a75a2",
+   "language": "Greek",
+   "title": "Aristotelis Opera, Vol. I (Bekker 1831)"
+  },
+  {
+   "id": "69aff2b8c83500af1dbf681e",
+   "language": "Ancient Greek",
+   "title": "Dioscoridis Libri Octo Graece et Latine (Ruel 1549)"
+  },
+  {
+   "id": "69aff32b4fe9cb3694093baf",
+   "language": "Greek",
+   "title": "Apollonii Pergaei Quae Graece Exstant, Vol. II (Heiberg 1893)"
+  },
+  {
+   "id": "69aff3c145364012cf421140",
+   "language": "Russian",
+   "title": "Иконостас. Избранные труды по искусству"
+  },
+  {
+   "id": "69aff41445364012cf4215f0",
+   "language": "Russian",
+   "title": "На весах Иова"
+  },
+  {
+   "id": "69aff41c45364012cf421769",
+   "language": "Greek",
+   "title": "The Geography of Strabo, Vol. VI (Loeb, Jones 1917)"
+  },
+  {
+   "id": "69aff4ad45364012cf421f75",
+   "language": "Russian",
+   "title": "Собрание сочинений в четырёх томах"
+  },
+  {
+   "id": "69aff948d15c6a7e18f40a01",
+   "language": "Greek",
+   "title": "The Geography of Strabo, Vol. VIII (Loeb)"
+  },
+  {
+   "id": "69aff9823346b1fdd94b2ebc",
+   "language": "Greek",
+   "title": "Pappi Alexandrini Collectionis, Vol. III (Hultsch)"
+  },
+  {
+   "id": "69aff9af3346b1fdd94b33c9",
+   "language": "Greek",
+   "title": "Procli Diadochi In Primum Euclidis Elementorum Librum Commentarii"
+  },
+  {
+   "id": "69aff9be745631d276f4d08b",
+   "language": "Greek",
+   "title": "Procli In Platonis Timaeum Commentaria, Vol. I (Diehl)"
+  },
+  {
+   "id": "69b00a0ec42435fcd0cf9acb",
+   "language": "Greek",
+   "title": "Claudii Galeni Opera Omnia, Vol. 18 Pt. 2"
+  },
+  {
+   "id": "69b00fade485bbb15c6b3a19",
+   "language": "Greek",
+   "title": "Hippocratis Coi Aphorismi Graece et Latine (1617)"
+  },
+  {
+   "id": "69b1de8eca46fa60ea1edb69",
+   "language": "Greek",
+   "title": "De Opificio Mundi"
+  },
+  {
+   "id": "69b1de95ca46fa60ea1edcdc",
+   "language": "Greek",
+   "title": "In Aristotelis Physicorum Libros Commentaria (CAG 16)"
+  },
+  {
+   "id": "69b1de9cca46fa60ea1edeed",
+   "language": "Greek",
+   "title": "In Aristotelis Physicorum Libros Commentaria (CAG 17)"
+  },
+  {
+   "id": "69b1deb4ca46fa60ea1ee0fc",
+   "language": "Greek",
+   "title": "In Aristotelis Meteorologicorum Librum Primum Commentarium"
+  },
+  {
+   "id": "69b1deb9ca46fa60ea1ee321",
+   "language": "Greek",
+   "title": "Philosophica Minora, Vol. 1-2"
+  },
+  {
+   "id": "69b1deccca46fa60ea1ee439",
+   "language": "Greek",
+   "title": "Alexander von Tralles: Original-Text und Übersetzung, Vol. 1"
+  },
+  {
+   "id": "69b1ded4ca46fa60ea1ee6bc",
+   "language": "Greek",
+   "title": "Alexander von Tralles: Original-Text und Übersetzung, Vol. 2"
+  },
+  {
+   "id": "69b1deeaca46fa60ea1ee933",
+   "language": "Greek",
+   "title": "Pedanii Dioscuridis De Materia Medica, Vol. 2 (Libri III-IV)"
+  },
+  {
+   "id": "69b1def6ca46fa60ea1eec3d",
+   "language": "Greek",
+   "title": "Commentaires de Théon sur l'Almageste (Halma ed.)"
+  },
+  {
+   "id": "69b1defcca46fa60ea1eed23",
+   "language": "Greek",
+   "title": "Suidae Lexicon (Adler, 5 volumes)"
+  },
+  {
+   "id": "69b20f7baed0c6181c6c67b5",
+   "language": "Greek",
+   "title": "Miscellanea Philosophica et Historica"
+  },
+  {
+   "id": "69b21bbc429e087c6f8632bc",
+   "language": "Greek",
+   "title": "Theophrastus, De Historia Plantarum & De Causis Plantarum (Aldine, Vol. 4, 1497)"
+  },
+  {
+   "id": "69b21bc3429e087c6f863493",
+   "language": "Greek",
+   "title": "Aristotelis Opera, Vol. 5 (Aldine, 1497): Problemata, Mechanica, Metaphysica"
+  },
+  {
+   "id": "69b21bcb429e087c6f8636eb",
+   "language": "Greek",
+   "title": "Comoediae Novem"
+  },
+  {
+   "id": "69b21bd1429e087c6f8639b3",
+   "language": "Greek",
+   "title": "Tragaediae Septem cum Commentariis"
+  },
+  {
+   "id": "69b21bef64fe7db19620a83e",
+   "language": "Greek",
+   "title": "Psalterium Graecum"
+  },
+  {
+   "id": "69b21cf8429e087c6f866456",
+   "language": "Greek",
+   "title": "Novum Testamentum (Greek-Latin, 2nd Froben edition)"
+  },
+  {
+   "id": "69b21d36ddb4fa7c305b4440",
+   "language": "Greek",
+   "title": "Platonis Opera Quae Extant, Vol. 1 (Stephanus)"
+  },
+  {
+   "id": "69b21d42ddb4fa7c305b4693",
+   "language": "Greek",
+   "title": "Platonis Opera Quae Extant, Vol. 2 (Stephanus)"
+  },
+  {
+   "id": "69b21d4addb4fa7c305b4a88",
+   "language": "Greek",
+   "title": "Platonis Opera Quae Extant, Vol. 3 (Stephanus)"
+  },
+  {
+   "id": "69b21e58dbaba63c46019745",
+   "language": "Greek",
+   "title": "Plutarchi Chaeronensis Scripta Moralia, Vol. 3 (Didot, Greek/Latin)"
+  },
+  {
+   "id": "69b21e9d4522d8c1db3bcd85",
+   "language": "Greek",
+   "title": "Plutarch's Moralia, Vol. 11 (Loeb 426: 854E-874C)"
+  },
+  {
+   "id": "69b21edfa66227125eb0632d",
+   "language": "Greek",
+   "title": "Plutarch's Lives, Vol. 7 (Loeb 99: Demosthenes, Cicero, Alexander, Caesar)"
+  },
+  {
+   "id": "69b21eeda66227125eb0656b",
+   "language": "Greek",
+   "title": "Plutarch's Lives, Vol. 9 (Loeb 101: Demetrius, Antony, Pyrrhus, Gaius Marius)"
+  },
+  {
+   "id": "69b220b356715b0e324732e1",
+   "language": "Greek",
+   "title": "Aristotelis Opera, Vol. 6 (Aldine, 1495): Ethica, Politica, Oeconomica"
+  },
+  {
+   "id": "69b220ccf79d8af0eab7fd3a",
+   "language": "Greek",
+   "title": "Erotemata — Greek Grammar with Latin Translation (Aldine Editio Princeps)"
+  },
+  {
+   "id": "69b220d656715b0e324735a8",
+   "language": "Greek",
+   "title": "Institutiones Graecae Grammatices (Aldine Press)"
+  },
+  {
+   "id": "69b220eb56715b0e32473894",
+   "language": "Greek",
+   "title": "Epistolae Diversorum Philosophorum — Greek Letter Collection (Aldine Editio Princeps)"
+  },
+  {
+   "id": "69b2215d08069e96e842f961",
+   "language": "Greek",
+   "title": "Lascaris, De Octo Partibus Orationis — Greek Grammar (Aldine Press)"
+  },
+  {
+   "id": "69b2217f08069e96e842febe",
+   "language": "Greek",
+   "title": "Demosthenes, Orationes (Aldine Editio Princeps)"
+  },
+  {
+   "id": "69b2219108069e96e8430517",
+   "language": "Greek",
+   "title": "Aesop, Fabulae, with Cornutus De Natura Deorum (Aldine Press)"
+  },
+  {
+   "id": "69b221c908069e96e843135b",
+   "language": "Greek",
+   "title": "Isocrates, Orationes, with Alcidamas, Gorgias, and Aristides (Aldine Editio Princeps)"
+  },
+  {
+   "id": "69b2222608069e96e8432997",
+   "language": "Greek",
+   "title": "Gregory of Nazianzus, Orationes Selectae XVI (Aldine Press)"
+  },
+  {
+   "id": "69b222db56715b0e324757a1",
+   "language": "Greek",
+   "title": "Scholia on Homer — Ancient Commentaries on the Iliad and Odyssey (Aldine Press)"
+  },
+  {
+   "id": "69b2235a56715b0e324772cb",
+   "language": "Greek",
+   "title": "Theodore Gaza, Greek Grammar — with Manuel Moschopoulos and George Lecapenus (Aldine Press)"
+  },
+  {
+   "id": "69b267c7fe529639c2e8ac14",
+   "language": "Greek",
+   "title": "Homeri Ilias (1517 Aldine Edition)"
+  },
+  {
+   "id": "69b269d32a2dfd041c5e7509",
+   "language": "Greek",
+   "title": "Lexicon Graeco-Latinum (Aldine Edition)"
+  },
+  {
+   "id": "69b2f30ba9a500a45e5e7ac4",
+   "language": "Greek",
+   "title": "Thucydides, Peloponnesian War"
+  },
+  {
+   "id": "69b2f31b21208ea9dc2776e2",
+   "language": "Greek",
+   "title": "Comicorum Graecorum Sententiae"
+  },
+  {
+   "id": "69b2f32121208ea9dc2779bb",
+   "language": "Greek",
+   "title": "Eklogai ek ton Dionos (Dio Cassius Excerpts)"
+  },
+  {
+   "id": "69b2f33d21208ea9dc277e2a",
+   "language": "Greek",
+   "title": "Medicae artis principes post Hippocratem et Galenum"
+  },
+  {
+   "id": "69b2f34321208ea9dc2781fb",
+   "language": "Greek",
+   "title": "Luciani dialogi aliquot"
+  },
+  {
+   "id": "69b2f354a9a500a45e5e7db1",
+   "language": "Greek",
+   "title": "Ori Apollinis Niliaci de sacris notis et sculpturis libri duo"
+  },
+  {
+   "id": "69b2f35ba9a500a45e5e7f30",
+   "language": "Greek",
+   "title": "Epigrammata ex libris Graecae Anthologiae"
+  },
+  {
+   "id": "69b2f367a9a500a45e5e802d",
+   "language": "Greek",
+   "title": "Institutio Christianae Religionis (Greek trans.)"
+  },
+  {
+   "id": "69b2f3b821208ea9dc278c50",
+   "language": "Hebrew",
+   "title": "Duodecim prophetae (Hebrew text)"
+  },
+  {
+   "id": "69b2f40b0e2f024dfbfba1b5",
+   "language": "Greek",
+   "title": "Thesaurus Graecae Linguae (vol. 1)"
+  },
+  {
+   "id": "69b2f4110e2f024dfbfba9d3",
+   "language": "Greek",
+   "title": "Thesaurus Graecae Linguae (vol. 3)"
+  },
+  {
+   "id": "69b2f4140e2f024dfbfbadd2",
+   "language": "Greek",
+   "title": "Pindari Olympia, Pythia, Nemea, Isthmia"
+  },
+  {
+   "id": "69b2f4160e2f024dfbfbb030",
+   "language": "Greek",
+   "title": "Tragoediae selectae Aeschyli, Sophoclis, Euripidis"
+  },
+  {
+   "id": "69b2f41b0e2f024dfbfbb280",
+   "language": "Greek",
+   "title": "Herodoti Halicarnassei Historiae"
+  },
+  {
+   "id": "69b2f41e0e2f024dfbfbb48f",
+   "language": "Greek",
+   "title": "Poesis Philosophica"
+  },
+  {
+   "id": "69b2f4230e2f024dfbfbb5df",
+   "language": "Greek",
+   "title": "Themistii Orationes"
+  },
+  {
+   "id": "69b2f4250e2f024dfbfbb6bb",
+   "language": "Greek",
+   "title": "Sophoclis quae extant omnia"
+  },
+  {
+   "id": "69b2f4280e2f024dfbfbb79d",
+   "language": "Greek",
+   "title": "Theocriti Idyllia et Epigrammata"
+  },
+  {
+   "id": "69b2f42b0e2f024dfbfbba4c",
+   "language": "Greek",
+   "title": "Callimachi Hymni et Epigrammata"
+  },
+  {
+   "id": "69b2f4300e2f024dfbfbbc64",
+   "language": "Greek",
+   "title": "Homeri et Hesiodi certamen; Batrachomyomachia"
+  },
+  {
+   "id": "69b2f434f9f1ad2b3b15154a",
+   "language": "Greek",
+   "title": "Dicaearchi Messenii quae supersunt"
+  },
+  {
+   "id": "69b2f439f9f1ad2b3b151af5",
+   "language": "Greek",
+   "title": "Eusebii Pamphili Evangelicae praeparationis libri XV"
+  },
+  {
+   "id": "69b2f43cf9f1ad2b3b151d0e",
+   "language": "Greek",
+   "title": "Eusebii Pamphili Evangelicae demonstrationis libri X"
+  },
+  {
+   "id": "69b2f43ef9f1ad2b3b151e6f",
+   "language": "Greek",
+   "title": "Justini Philosophi et Martyris Opera"
+  },
+  {
+   "id": "69b2f441f9f1ad2b3b151fc5",
+   "language": "Greek",
+   "title": "Herodiani Historiarum libri VIII"
+  },
+  {
+   "id": "69b2f443f9f1ad2b3b152090",
+   "language": "Greek",
+   "title": "Dionysii orbis descriptio (Periegetes)"
+  },
+  {
+   "id": "69b2f4a2f9f1ad2b3b1548b3",
+   "language": "Hebrew",
+   "title": "Thesaurus linguae sanctae (Pagnini Hebrew dictionary)"
+  },
+  {
+   "id": "69b2fecf5545150b61b46abe",
+   "language": "Greek",
+   "title": "Eis Organon (Commentaries on the Organon)"
+  },
+  {
+   "id": "69b2fedda1a4246ddb45a8df",
+   "language": "Greek",
+   "title": "Moralia (Opuscula)"
+  },
+  {
+   "id": "69b2ff70e5d6d64d8e196709",
+   "language": "Greek",
+   "title": "De Somniorum Interpretatione"
+  },
+  {
+   "id": "69b2ff7be5d6d64d8e1968f0",
+   "language": "Greek",
+   "title": "Opera Omnia"
+  },
+  {
+   "id": "69b2ff7fe5d6d64d8e196c2c",
+   "language": "Greek",
+   "title": "Opera"
+  },
+  {
+   "id": "69b2ff82e5d6d64d8e196fab",
+   "language": "Greek",
+   "title": "Opera"
+  },
+  {
+   "id": "69b2ffaae5d6d64d8e1972f6",
+   "language": "Greek",
+   "title": "Comoediae Novem"
+  },
+  {
+   "id": "69b30036a1a4246ddb45bd26",
+   "language": "Hebrew",
+   "title": "Talmudis Babylonici Codex Middoth"
+  },
+  {
+   "id": "69b3004ca1a4246ddb45c267",
+   "language": "Greek",
+   "title": "Lucubrationes (1527)"
+  },
+  {
+   "id": "69b3004fe5d6d64d8e198f06",
+   "language": "Greek",
+   "title": "Lucubrationes (1533)"
+  },
+  {
+   "id": "69b3006c5545150b61b4c6b0",
+   "language": "Greek",
+   "title": "Opera Omnia (Froben 1538)"
+  },
+  {
+   "id": "69b3008ce5d6d64d8e1995a3",
+   "language": "Greek",
+   "title": "Contractae ex Veteribus Medicinae Sermones"
+  },
+  {
+   "id": "69b3008fe5d6d64d8e199768",
+   "language": "Hebrew",
+   "title": "Grammatica Hebraica"
+  },
+  {
+   "id": "69b30091e5d6d64d8e199898",
+   "language": "Hebrew",
+   "title": "Composita Verborum et Nominum Hebraicorum"
+  },
+  {
+   "id": "69b30103e28f56bd749434b2",
+   "language": "Greek",
+   "title": "Opera (1558 Froben reprint)"
+  },
+  {
+   "id": "69b30116e5d6d64d8e19a7ba",
+   "language": "Greek",
+   "title": "Opera et Dies et Theogonia (Elzevir pocket)"
+  },
+  {
+   "id": "69b301360b3667b49b94c2f3",
+   "language": "Greek",
+   "title": "Aphorismi (Elzevir pocket)"
+  },
+  {
+   "id": "69b3013f78de5de2306d48b0",
+   "language": "Greek",
+   "title": "Historiae Commentitiae"
+  },
+  {
+   "id": "69b3014578de5de2306d4981",
+   "language": "Greek",
+   "title": "Historiarum Mirabilium Collectanea"
+  },
+  {
+   "id": "69b3014b78de5de2306d4a6c",
+   "language": "Greek",
+   "title": "Variae Historiae"
+  },
+  {
+   "id": "69b3043d1d880408995dff3d",
+   "language": "Arabic",
+   "title": "Vitae et Rerum Gestarum Timuri (Tamerlane)"
+  },
+  {
+   "id": "69b304445facc83a9a3dbf99",
+   "language": "Greek",
+   "title": "Proverbia Graeca"
+  },
+  {
+   "id": "69b3044e5facc83a9a3dc14e",
+   "language": "Greek",
+   "title": "Lexicon Graeco-Latinum in Novum Testamentum"
+  },
+  {
+   "id": "69b3e598c94a4ff7cce22dfc",
+   "language": "Arabic",
+   "title": "Kyranides"
+  },
+  {
+   "id": "69b3e59fc94a4ff7cce22e00",
+   "language": "Arabic",
+   "title": "al-Riyad (Book of Gardens)"
+  },
+  {
+   "id": "69b3e5af304c1c6b39509880",
+   "language": "Hebrew",
+   "title": "Zohar (Parashat Bereshit, with Moses Cordovero commentary Or yakar)"
+  },
+  {
+   "id": "69b3e5b5304c1c6b395099fd",
+   "language": "Hebrew",
+   "title": "Luria's Commentary on the Zohar of Genesis"
+  },
+  {
+   "id": "69b3e5b8304c1c6b39509cc0",
+   "language": "Hebrew",
+   "title": "Collection of kabbalistic texts"
+  },
+  {
+   "id": "69b3e5ba304c1c6b39509ddb",
+   "language": "Hebrew",
+   "title": "Collection of kabbalistic works"
+  },
+  {
+   "id": "69b3e5bd304c1c6b39509eb8",
+   "language": "Hebrew",
+   "title": "Collection of kabbalistic texts"
+  },
+  {
+   "id": "69b3e5c1304c1c6b3950a0a3",
+   "language": "Hebrew",
+   "title": "Kabbalistic works"
+  },
+  {
+   "id": "69b3e5c3304c1c6b3950a1ae",
+   "language": "Greek",
+   "title": "In Platonis theologiam; Institutio theologica"
+  },
+  {
+   "id": "69b3e5c6304c1c6b3950a1b2",
+   "language": "Greek",
+   "title": "De mystica theologia; De caelesti hierarchia"
+  },
+  {
+   "id": "69b3e5ca304c1c6b3950a3a9",
+   "language": "Greek",
+   "title": "Commentary on Porphyry, Isagoge; Philosophical texts"
+  },
+  {
+   "id": "69b3e5e4304c1c6b3950a6ad",
+   "language": "Greek",
+   "title": "Elementa (editio princeps, Grynaeus edition)"
+  },
+  {
+   "id": "69b3e5e9304c1c6b3950a8eb",
+   "language": "Greek",
+   "title": "Geographia (MS. Arch. Selden. B. 46)"
+  },
+  {
+   "id": "69b3e5f7304c1c6b3950a907",
+   "language": "Greek",
+   "title": "Works and Days; Theogony (with scholia)"
+  },
+  {
+   "id": "69b3e5fe304c1c6b3950aad6",
+   "language": "Hebrew",
+   "title": "Collection of philosophical works by Averroes"
+  },
+  {
+   "id": "69b3e609304c1c6b3950af5d",
+   "language": "Greek",
+   "title": "Michael Psellus, works; Philosophical and theological works"
+  },
+  {
+   "id": "69b3e675304c1c6b3950b1fa",
+   "language": "Hebrew",
+   "title": "Zohar (Exodus)"
+  },
+  {
+   "id": "69b3e677304c1c6b3950b41f",
+   "language": "Hebrew",
+   "title": "Zohar on Genesis-Exodus"
+  },
+  {
+   "id": "69b3e679304c1c6b3950b712",
+   "language": "Hebrew",
+   "title": "Collection of Kabbalah and Hekhalot Texts"
+  },
+  {
+   "id": "69b3e67c304c1c6b3950b7c3",
+   "language": "Hebrew",
+   "title": "Collection of Kabbalah and Hekhalot texts (MS. Michael 9)"
+  },
+  {
+   "id": "69b3e67e304c1c6b3950b94a",
+   "language": "Hebrew",
+   "title": "Collection of kabbalistic texts (Thebes/Philippopolis)"
+  },
+  {
+   "id": "69b3e686abb796bfd9de42ab",
+   "language": "Middle English",
+   "title": "Texts on magic and fortune telling"
+  },
+  {
+   "id": "69b3f724a107e55a0ee1b5f5",
+   "language": "Greek",
+   "title": "Elementa / Euclid, with Proclus and Marinus (BPG 7)"
+  },
+  {
+   "id": "69b3f729a107e55a0ee1b895",
+   "language": "Greek",
+   "title": "Ilias / Homer, with Porphyry and Eustathius scholia (VGF 64)"
+  },
+  {
+   "id": "69b43d4dee0300187dbd1906",
+   "language": "Greek",
+   "title": "Porphyrii Introductio, Ammonii, Procli Diadochi commentarii"
+  },
+  {
+   "id": "69b4c04d978ca9526eda33f7",
+   "language": "Greek",
+   "title": "Ars sacra philosophorum"
+  },
+  {
+   "id": "69b4c05e86a5921d5bc434b7",
+   "language": "Greek",
+   "title": "Theonis Expositio in astronomiam"
+  },
+  {
+   "id": "69b4c06386a5921d5bc4362d",
+   "language": "Greek",
+   "title": "Theonis Smyrnaei de mathematicis utilibus ad Platonis lectionem"
+  },
+  {
+   "id": "69b4c07086a5921d5bc43acd",
+   "language": "Greek",
+   "title": "Procli Platonici Expositio in Parmenidem Platonis"
+  },
+  {
+   "id": "69b4c09486a5921d5bc4495d",
+   "language": "Greek",
+   "title": "Hermetis Expositio Phaedri"
+  },
+  {
+   "id": "69b4c09f86a5921d5bc44c9f",
+   "language": "Greek",
+   "title": "Porphyrii et Ammonii Expositio in X praedicamenta"
+  },
+  {
+   "id": "69b4c0a386a5921d5bc44f2f",
+   "language": "Greek",
+   "title": "Lycophron; Apollonii Rhodii Argonautica; Orphei Argonautica et hymni"
+  },
+  {
+   "id": "69b4ccf1d5b6c3815e1a2caf",
+   "language": "Hebrew",
+   "title": "Dictionarium Hebraicum / Hebrew Grammar"
+  },
+  {
+   "id": "69b4cd31d5b6c3815e1a4cc9",
+   "language": "Hebrew",
+   "title": "Tercera parte del sedur"
+  },
+  {
+   "id": "69b4cd3ad5b6c3815e1a4f1b",
+   "language": "Hebrew",
+   "title": "Ḥamišah ḥumše Torah (1630)"
+  },
+  {
+   "id": "69b4cd3dd5b6c3815e1a504b",
+   "language": "Hebrew",
+   "title": "Ḥamišah ḥumše Torah (1631)"
+  },
+  {
+   "id": "69b4cd44d5b6c3815e1a52de",
+   "language": "Hebrew",
+   "title": "Misnaioth"
+  },
+  {
+   "id": "69b4cd49d5b6c3815e1a5454",
+   "language": "Hebrew",
+   "title": "Tehilim / Psalterium"
+  },
+  {
+   "id": "69b4cd4bd5b6c3815e1a5565",
+   "language": "Hebrew",
+   "title": "Ḥamišah ḥumše Torah / Pentateuch (1635)"
+  },
+  {
+   "id": "69b51e2347b06ecd5818aa66",
+   "language": "Greek",
+   "title": "Historiam enthusiasmi philosophici, praesertim Platonici"
+  },
+  {
+   "id": "69b5259a95677df8153c62c0",
+   "language": "Hebrew",
+   "title": "Sefer Toldot ʼAharon :, marʼeh maqom mi-kol ha-pesuqim šeba-Torah u-neviʼim u-k̲etuvim ha-nimz̲aʼim be-Šita sidre /, ḥibro ha-rav ʼAharon mi-Pesaro ... ʻim tosefet Toldot Yaʻaqov marʼeh maqom meha-pesuqim mi-kol ha-miqraʼ ha-nidrašim ba-Talmud Yerušalmi we-ʻaśah yede ... Yaʻaqov Śaśporṭaś ..."
+  },
+  {
+   "id": "69b525a42f891867c1ae4132",
+   "language": "Armenian",
+   "title": "Eražštakan ergecmounkh hogeuorakankh, at̃s̃ajnoc eu erdžankac, srboc vardapetac, Hajoc thargmančac zkargaûorouthĩs Ekeghecuoj vajelčacoucanoghac"
+  },
+  {
+   "id": "69b525a729577f283b579f0c",
+   "language": "Hebrew",
+   "title": "Tiqun qeriʼah le-k̲ol laylah we-yom ..."
+  },
+  {
+   "id": "69b525a829577f283b57a187",
+   "language": "Armenian",
+   "title": "Girkh patmoutheanc /, šaradreal vardapetin Aṙakheloj Davrēžacuoj : saks dipoûatsoc Hajastaneajc' eu eus gauaṙin Araratoj eu masin Goghthan gauaṙi, skseal 'i thoûojn Hajoc 1054 ēn minceu jauart patmagrouthẽs, ajleu 'i jišoumn aceal masnauorabar, asti eu anti."
+  },
+  {
+   "id": "69b525a829577f283b57a2d2",
+   "language": "Armenian",
+   "title": "Nor ktakaran srboy Awetarani Tearn meroy Yisusi Kristosi."
+  },
+  {
+   "id": "69b525ac95677df8153c6c28",
+   "language": "Armenian",
+   "title": "Tšašoc girkh gegheckatip eû vajelouč gaghaphareceal 'i matenic hnoc thagaûoracn Hajoc."
+  },
+  {
+   "id": "69b525b56be6046083030af0",
+   "language": "Hebrew",
+   "title": "Seder ha-tefilot :, mi-kol ha-šanah ʻim peruš bi-lešon ʾAškenaz."
+  },
+  {
+   "id": "69b52c133dd6d9423027d89c",
+   "language": "Greek",
+   "title": "Aelianus De proprietate animalium"
+  },
+  {
+   "id": "69b52c173dd6d9423027db3e",
+   "language": "Greek",
+   "title": "Archimedis De sphaera et cylindro / Eutocius / Heron"
+  },
+  {
+   "id": "69b52c1d3dd6d9423027dcb0",
+   "language": "Greek",
+   "title": "Hippocratis Chirurgica"
+  },
+  {
+   "id": "69b52c223dd6d9423027dff2",
+   "language": "Greek",
+   "title": "Paulli Aeginetae medici optimi libri septem"
+  },
+  {
+   "id": "69b52c323dd6d9423027e830",
+   "language": "Greek",
+   "title": "Oribasii Libri medicinales IX"
+  },
+  {
+   "id": "69b52c363dd6d9423027e964",
+   "language": "Greek",
+   "title": "Hippocratis Aphorismi cum expositione / opera medica"
+  },
+  {
+   "id": "69b52c423dd6d9423027ef56",
+   "language": "Greek",
+   "title": "Galeni Methodus medendi"
+  },
+  {
+   "id": "69b52c583dd6d9423027f75a",
+   "language": "Greek",
+   "title": "Galeni De usu partium corporis humani"
+  },
+  {
+   "id": "69b52c5c3dd6d9423027f9f2",
+   "language": "Greek",
+   "title": "Galeni Anatomicae aggressiones"
+  },
+  {
+   "id": "69b52c603dd6d9423027fcd0",
+   "language": "Greek",
+   "title": "Alexandri medici De febribus / Galeni Opera quaedam"
+  },
+  {
+   "id": "69b52c653dd6d9423027fda4",
+   "language": "Greek",
+   "title": "Actuarius De urinis"
+  },
+  {
+   "id": "69b52c6a3dd6d9423028016a",
+   "language": "Greek",
+   "title": "Galeni De usu partium corporis humani"
+  },
+  {
+   "id": "69b52c6d3dd6d94230280370",
+   "language": "Greek",
+   "title": "Galeni in Aphorismos Hippocratis commentarius"
+  },
+  {
+   "id": "69b52c713dd6d94230280568",
+   "language": "Greek",
+   "title": "Galeni Varia"
+  },
+  {
+   "id": "69b52c793dd6d9423028088e",
+   "language": "Greek",
+   "title": "Galeni De differentiis pulsuum"
+  },
+  {
+   "id": "69b52c823dd6d94230280c5a",
+   "language": "Greek",
+   "title": "Galeni De morborum differentiis"
+  },
+  {
+   "id": "69b52c863dd6d94230280db6",
+   "language": "Greek",
+   "title": "Hipocrates / Ippokrates"
+  },
+  {
+   "id": "69b52cc7b3537347e51e2edd",
+   "language": "Greek",
+   "title": "Aristotelis Praedicamenta / Ioannis Philoponi In analytica priora"
+  },
+  {
+   "id": "69b52cceb3537347e51e316d",
+   "language": "Greek",
+   "title": "Scholia Olympiodori in Meteorologica Aristotelis"
+  },
+  {
+   "id": "69b52fa11a04ee0f3b417dee",
+   "language": "Egyptian",
+   "title": "An Egyptian Hieroglyphic Dictionary Vol. 1"
+  },
+  {
+   "id": "69b52fab1a04ee0f3b4180e9",
+   "language": "Egyptian",
+   "title": "An Egyptian Hieroglyphic Dictionary Vol. 2"
+  },
+  {
+   "id": "69b62f501c1c21a3737f47b7",
+   "language": "Greek",
+   "title": "Pindari Olympia, Pythia, Nemea, Isthmia. Caeterorum octo lyricorum carmina, Alcaeai, Anacreontis, Sapphus, Bacchylidis, Stesichori, Simonidis, Ibyci, Alcmanis, nonnulla etiam aliorum. Omnia graece et latine. Pindari interpretatio nova est, eamque ad verbum : caeteri partim ad verbum,  partim carmine sunt redditi."
+  },
+  {
+   "id": "69b62f671c1c21a3737f51f5",
+   "language": "Greek",
+   "title": "<Aristotelous tou Stageiritou Ta Sôzomena>. Operum Aristotelis Stagiritae philosophorum omnium longe principis, nova editio, graece et latine. Graecus contextus quam emendatissime praeter omnes omnium editiones est editus : adscriptis ad oram libri et interpretum veterum recentiorumque et aliorum doctorum virorum emendationibus : in quibus plurimae nunc primum in lucem prodeunt, ex bibliotheca Isaaci Casauboni. Latinae interpretationes adjectae sunt quae graeco contextui melius responderent, partim recentiorum, partim veterum interpretum : in quibus et ipsis multa nunc emendatius quam antehac eduntur. Accesserunt ex libris Aristotelis, qui hodie desiderantur, fragmenta quaedam. Adjecti sunt etiam indices duo perutiles : quorum alter nomina auctorum qui in Aristotelem scripserunt, continet : alter quid sit à quoque in singulas librorum ejus partes scriptum indicat. Necnon alius index rerum omnium locupletissimus."
+  },
+  {
+   "id": "69b62f971c1c21a3737f76bc",
+   "language": "Greek",
+   "title": "<Ta Sôzomena tôn palaiotatôn poiêtôn geôrgika, boukolixa kai gnômika>. Vetustissimorum authorum georgica, bucolica, et gnomica  poëmata quae supersunt. Accessit huic editioni Is. Hortiboni Theocriticarum lectionum libellus. Caetera sequentes pagina indicant."
+  },
+  {
+   "id": "69b632b166ab51b501d93b92",
+   "language": "Persian",
+   "title": "Bayán-i-Fársí (Persian Bayán)"
+  },
+  {
+   "id": "69b632fb88026507a977076d",
+   "language": "Arabic",
+   "title": "Rasa'il al-Hikma (Epistles of Wisdom)"
+  },
+  {
+   "id": "69b633ca2831a80d67f3a6d3",
+   "language": "Punjabi",
+   "title": "Janam Sakhi, or The Biography of Guru Nanak"
+  },
+  {
+   "id": "69b635ae8ab57a1de53a6a1d",
+   "language": "Arabic",
+   "title": "Ihya Ulum al-Din (Revival of the Religious Sciences)"
+  },
+  {
+   "id": "69b636138ab57a1de53a7205",
+   "language": "Arabic",
+   "title": "Sahih al-Bukhari (Complete)"
+  },
+  {
+   "id": "69b6363a8ab57a1de53a75c8",
+   "language": "Arabic",
+   "title": "Rasa'il Ikhwan al-Safa (Epistles of the Brethren of Purity)"
+  },
+  {
+   "id": "69b63e852a1dde00d5a9e472",
+   "language": "Arabic",
+   "title": "Al-Kashshaf (Quran Commentary)"
+  },
+  {
+   "id": "69b63e87535439aaa48911a3",
+   "language": "Arabic",
+   "title": "Kitab al-Luma (Book of Flashes)"
+  },
+  {
+   "id": "69b875570d6083c38e2e9d59",
+   "language": "Japanese",
+   "title": "将棋図巧詰手 (Shōgi Zukō Tsumete)"
+  },
+  {
+   "id": "69b8755a0d6083c38e2e9d7f",
+   "language": "Japanese",
+   "title": "将棋絶妙 上 (Shōgi Zetsumyō, vol. 1)"
+  },
+  {
+   "id": "69b99f9b6ed9e0490990af77",
+   "language": "Chinese",
+   "title": "大般若波羅蜜多經 (Mahāprajñāpāramitā Sūtra)"
+  },
+  {
+   "id": "69b9a0fe4a1112994cb81c4d",
+   "language": "Avestan",
+   "title": "Yasna (Avestan Liturgical Manuscript)"
+  },
+  {
+   "id": "69bd9da16120d54bd03787c3",
+   "language": "Greek",
+   "title": "Artemidori Daldiani & Achmetis Sereimi F. Oneirocritica : Astrampsychi et Nicephori versus etiam Oneirocritici. Nicolai Rigaltii ad Artemidorum notae"
+  },
+  {
+   "id": "69bfbf1394e521147a83f481",
+   "language": "Greek",
+   "title": "Grammatikēs Biblia IV (Greek Grammar)"
+  },
+  {
+   "id": "69bfcc7e8ab50eb88e8c5059",
+   "language": "Aromanian (in Greek alphabet), Greek",
+   "title": "Christ Church MS 49"
+  },
+  {
+   "id": "69bfcc8c8ab50eb88e8c52da",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 18"
+  },
+  {
+   "id": "69bfcc908ab50eb88e8c5411",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Auct. D. inf. 2. 15"
+  },
+  {
+   "id": "69bfcc988ab50eb88e8c5589",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 29"
+  },
+  {
+   "id": "69bfcc9f8ab50eb88e8c5846",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 240"
+  },
+  {
+   "id": "69bfccb18ab50eb88e8c5ec1",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 235"
+  },
+  {
+   "id": "69bfccc18ab50eb88e8c6317",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Cromwell 11"
+  },
+  {
+   "id": "69bfccc68ab50eb88e8c64cc",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Auct. D. inf. 2. 14"
+  },
+  {
+   "id": "69bfcccc8ab50eb88e8c6673",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 3"
+  },
+  {
+   "id": "69bfccd28ab50eb88e8c68e0",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 99"
+  },
+  {
+   "id": "69bfccd88ab50eb88e8c69fd",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 181"
+  },
+  {
+   "id": "69bfccdf8ab50eb88e8c6c4c",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 241"
+  },
+  {
+   "id": "69bfcce98ab50eb88e8c6ea1",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Auct. T. inf. 1. 3"
+  },
+  {
+   "id": "69bfccf18ab50eb88e8c7050",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 219"
+  },
+  {
+   "id": "69bfccf78ab50eb88e8c7275",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 17"
+  },
+  {
+   "id": "69bfccfb8ab50eb88e8c7380",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 44"
+  },
+  {
+   "id": "69bfcd158ab50eb88e8c7a33",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Auct. D. 2. 17"
+  },
+  {
+   "id": "69bfcd1a8ab50eb88e8c7b74",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 50.1"
+  },
+  {
+   "id": "69bfcd228ab50eb88e8c7d27",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 50.2"
+  },
+  {
+   "id": "69bfcdfd8ab50eb88e8c83c8",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Arch. Selden. B. 54"
+  },
+  {
+   "id": "69bfcf293047130b1c3beced",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Auct. E. 1. 6"
+  },
+  {
+   "id": "69bfcf4e3047130b1c3bf38d",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 90"
+  },
+  {
+   "id": "69bfcf7f3047130b1c3bf676",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 6"
+  },
+  {
+   "id": "69bfcf883047130b1c3bf88b",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 1"
+  },
+  {
+   "id": "69bfcfa33047130b1c3bfa4c",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 33"
+  },
+  {
+   "id": "69bfcfac3047130b1c3bfda3",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 105"
+  },
+  {
+   "id": "69bfcfb83047130b1c3c00ee",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 83"
+  },
+  {
+   "id": "69bfcfc03047130b1c3c02af",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 125"
+  },
+  {
+   "id": "69bfcfc63047130b1c3c04ae",
+   "language": "Greek",
+   "title": "Bodleian Library MS. Barocci 64"
+  },
+  {
+   "id": "69c10d6942741c6568962af2",
+   "language": "Greek",
+   "title": "Patrologia Graeca vol. 25 — Athanasius: Letters"
+  },
+  {
+   "id": "69c10d9a42741c656896364d",
+   "language": "Greek",
+   "title": "Patrologia Graeca vol. 78 — Isidore of Pelusium: Epistulae"
+  },
+  {
+   "id": "69c10ff55485c476fcf7ca3b",
+   "language": "Greek",
+   "title": "Epistolai Diaphorōn Philosophōn — 26 Greek Letter Writers (Aldine 1499)"
+  },
+  {
+   "id": "69c1b79ffe4b8f25b9200411",
+   "language": "Arabic",
+   "title": "The Ibn al-Bawwab Qur'an (Baghdad, c. 1000 CE)"
+  },
+  {
+   "id": "69c1b7a1fe4b8f25b9200659",
+   "language": "Arabic",
+   "title": "The Ruzbihan Qur'an (Shiraz, c. 1410)"
+  },
+  {
+   "id": "69c1b7a3fe4b8f25b92009d9",
+   "language": "Arabic",
+   "title": "The Blue Qur'an (Gold on Indigo, 9th-10th c.)"
+  },
+  {
+   "id": "69c1b88e8522835be844ab43",
+   "language": "Arabic",
+   "title": "Nūr al-anwār fī sharḥ al-manār"
+  },
+  {
+   "id": "69c1b8c88522835be844b371",
+   "language": "Arabic and Turkish",
+   "title": "Collection of Qur'anic suras, prayers and passages"
+  },
+  {
+   "id": "69c1ba588522835be845849d",
+   "language": "Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan language), French and Dutch.",
+   "title": "Collectio 183 Epistolarum variis annis conscriptarum ad Viros toto Oriente celeberrimos Apollines Linguae Arabicae Thomam Erpenium Jacobum Golium & alios etc. etc. Arabice Turcice Persice"
+  },
+  {
+   "id": "69c1ba808522835be8459109",
+   "language": "Hebrew",
+   "title": "Sefer ha-mivḥar ṿe-ṭov ha-misḥar"
+  },
+  {
+   "id": "69c1ba8d8522835be8459371",
+   "language": "Hebrew and Judeo-Arabic",
+   "title": "Compilation of texts on logic and astronomy"
+  },
+  {
+   "id": "69c1ba908522835be845944d",
+   "language": "Hebrew",
+   "title": "The Gates of Exile by Isaac ben Joseph of Corbeil and The Gates of Düren by Isaac ben Meir of Düren"
+  },
+  {
+   "id": "69c1ba928522835be845954d",
+   "language": "Hebrew",
+   "title": "Tree of Life by Hayyim Vital with glosses and prefaces"
+  },
+  {
+   "id": "69c1ba978522835be845973b",
+   "language": "Hebrew",
+   "title": "Illuminated Hebrew Bible in Sephardi script"
+  },
+  {
+   "id": "69c1bab38522835be8459bf4",
+   "language": "Hebrew",
+   "title": "Commentaries on the Bible and the Mishnah"
+  },
+  {
+   "id": "69c1baba8522835be8459dc6",
+   "language": "Hebrew",
+   "title": "Novellae on the Arbaʾah Ṭurim by Rabbi Löw of Prague"
+  },
+  {
+   "id": "69c1babc8522835be845a03e",
+   "language": "German and Hebrew",
+   "title": "Song of Jacob by Jacob Bachmann"
+  },
+  {
+   "id": "69c1bac18522835be845a172",
+   "language": "Hebrew, Judeo-Arabic, and Aramaic",
+   "title": "Yemenite prayer book"
+  },
+  {
+   "id": "69c1bac78522835be845a486",
+   "language": "Hebrew",
+   "title": "Composite manuscript: parts of the work Shaʿar Dan by Rabbi David Nieto"
+  },
+  {
+   "id": "69c1baca8522835be845a644",
+   "language": "Hebrew, Judeo-Arabic, and Aramaic",
+   "title": "Composite manuscript: fragments from several manuscripts"
+  },
+  {
+   "id": "69c1bacc8522835be845a738",
+   "language": "Hebrew, Judeo-Persian, and Aramaic",
+   "title": "Composite manuscript: rabbinical texts in Hebrew, Judeo-Persian, and Aramaic"
+  },
+  {
+   "id": "69c1bad18522835be845aabc",
+   "language": "Hebrew with marginal glosses in Hebrew and Judeo-Persian, and Aramaic",
+   "title": "Hebrew Bible (Writings)"
+  },
+  {
+   "id": "69c1bada8522835be845aee0",
+   "language": "Hebrew, Judeo-Arabic, and Ladino",
+   "title": "Sefer Naʿim Zemirot Yiśraʾel"
+  },
+  {
+   "id": "69c1bade8522835be845b016",
+   "language": "Hebrew",
+   "title": "Pocket-size Jewish prayer book"
+  },
+  {
+   "id": "69c1bae08522835be845b1f6",
+   "language": "Hebrew and Judeo-Arabic",
+   "title": "Composite manuscript: Karaite prayer book for Passover and Shavuot in Hebrew and Judeo-Arabic"
+  },
+  {
+   "id": "69c1bae38522835be845b324",
+   "language": "Karaim and Hebrew",
+   "title": "Karaite Bible in Karaim translation"
+  },
+  {
+   "id": "69c1bae78522835be845b5cc",
+   "language": "Hebrew and Judeo-Arabic",
+   "title": "Miscellaneous fragments from different manuscripts"
+  },
+  {
+   "id": "69c1bae98522835be845b6b8",
+   "language": "Hebrew and Judeo-Arabic",
+   "title": "Miscellaneous texts in Hebrew and Judeo-Arabic, from Yemen"
+  },
+  {
+   "id": "69c1baee8522835be845b7b6",
+   "language": "Hebrew, Judeo-Arabic, and Ladino",
+   "title": "Festival prayer book"
+  },
+  {
+   "id": "69c1baf08522835be845ba94",
+   "language": "Hebrew, Judeo-Arabic, and Ladino",
+   "title": "Composite manuscript: stories in Judeo-Spanish and Hebrew liturgical poems"
+  },
+  {
+   "id": "69c1baf58522835be845bc31",
+   "language": "Hebrew and Ladino",
+   "title": "Mgical, medical and kabbalistic texts, biblical commmentaries, and homilies"
+  },
+  {
+   "id": "69c1baf78522835be845bd29",
+   "language": "Hebrew, Aramaic, and Judeo-Arabic",
+   "title": "Trilingual Bible with Rashi's commentary (volume 1)"
+  },
+  {
+   "id": "69c1baf98522835be845be90",
+   "language": "Hebrew, Aramaic, and Judeo-Arabic",
+   "title": "Trilingual Bible with Rashi's commentary (volume 2)"
+  },
+  {
+   "id": "69c1bafc8522835be845bffa",
+   "language": "Hebrew",
+   "title": "Sifre madaʿ segulot"
+  },
+  {
+   "id": "69c1bb008522835be845c132",
+   "language": "Hebrew",
+   "title": "Collection of magical, kabbalistic and ethical texts"
+  },
+  {
+   "id": "69c1bb038522835be845c210",
+   "language": "Hebrew and Judeo-Italian",
+   "title": "Sermons"
+  },
+  {
+   "id": "69c1bb058522835be845c4d0",
+   "language": "Hebrew",
+   "title": "Halakhic scribal guide"
+  },
+  {
+   "id": "69c1bb078522835be845c606",
+   "language": "Hebrew, Aramaic, and Judeo-Arabic",
+   "title": "Hebrew Bible (Latter Prophets)"
+  },
+  {
+   "id": "69c1bb0c8522835be845c840",
+   "language": "Hebrew",
+   "title": "Maḥzor"
+  },
+  {
+   "id": "69c1bb138522835be845ca86",
+   "language": "Hebrew",
+   "title": "Meʾirat ʿEnayim"
+  },
+  {
+   "id": "69c1bb178522835be845ccc2",
+   "language": "Hebrew",
+   "title": "Maḥzor for the whole year, according to the rite of Burgundy and Mascone"
+  },
+  {
+   "id": "69c1bb1c8522835be845cf19",
+   "language": "Hebrew",
+   "title": "Penitential prayers and poems for the Indian rite"
+  },
+  {
+   "id": "69c1bb1e8522835be845cff1",
+   "language": "Hebrew",
+   "title": "Sefer Maḳor ha-shemot ascribed to Moses Zacuto"
+  },
+  {
+   "id": "69c1bb218522835be845d0eb",
+   "language": "Hebrew",
+   "title": "Collection of responsa"
+  },
+  {
+   "id": "69c1bb238522835be845d393",
+   "language": "Hebrew",
+   "title": "Ḥevrat ha-Ḥasidim"
+  },
+  {
+   "id": "69c1bb398522835be845d733",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb3c8522835be845d9af",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb3e8522835be845dcd3",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb438522835be845df1f",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb458522835be845e1ef",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb478522835be845e4d1",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb4a8522835be845e71f",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb4c8522835be845e9f3",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb538522835be845ee95",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb558522835be845f021",
+   "language": "Hebrew",
+   "title": "ʿAvodat ha-Leṿi by R. Aaron ben Moses Horowitz ha-Levi of Starosielce"
+  },
+  {
+   "id": "69c1bb588522835be845f08d",
+   "language": "Hebrew",
+   "title": "Miscellaneous hasidic texts"
+  },
+  {
+   "id": "69c1bb5c8522835be845f2eb",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb5f8522835be845f48d",
+   "language": "Hebrew",
+   "title": "Hasidic discourses"
+  },
+  {
+   "id": "69c1bb658522835be845f635",
+   "language": "Ladino and French",
+   "title": "Autobiography of Reyna Cohen"
+  },
+  {
+   "id": "69c1bb688522835be845f7d9",
+   "language": "Judeo-Arabic and Hebrew",
+   "title": "Kitāb al-lamḥa"
+  },
+  {
+   "id": "69c1bb6c8522835be845fafb",
+   "language": "Hebrew and Aramaic",
+   "title": "Liturgical poems"
+  },
+  {
+   "id": "69c1bb6f8522835be845fddd",
+   "language": "Judeo-Arabic and Hebrew",
+   "title": "Sharḥ Neviʾim Rishonim"
+  },
+  {
+   "id": "69c1bb7e8522835be845ffbb",
+   "language": "Hebrew, Judeo-Italian, and Judeo-Greek",
+   "title": "Prayer book from Corfu"
+  },
+  {
+   "id": "69c1bb8c8522835be8460259",
+   "language": "Hebrew and Aramaic",
+   "title": "Sefer ha-Peliʾah with notes, indices and a dictionary"
+  },
+  {
+   "id": "69c1bbc28522835be8460598",
+   "language": "Hebrew",
+   "title": "Composite manuscript: liturgical texts for Rosh ha-Shanah and Yom Kippur"
+  },
+  {
+   "id": "69c1bbc68522835be8460774",
+   "language": "Hebrew",
+   "title": "New Testament in Hebrew translation"
+  },
+  {
+   "id": "69c1bbf08522835be8460be7",
+   "language": "Hebrew, Aramaic, and Judeo-Arabic",
+   "title": "Scientific, mystical, magical, and medical miscellany"
+  },
+  {
+   "id": "69c1bbf98522835be8460ee1",
+   "language": "Hebrew and Judeo-Arabic",
+   "title": "Miscellanous texts"
+  },
+  {
+   "id": "69c1bc068522835be8461209",
+   "language": "Hebrew",
+   "title": "Commentary on the Pentateuch by Eleazar ben Judah of Worms"
+  },
+  {
+   "id": "69c1bc0b8522835be84613b7",
+   "language": "Hebrew",
+   "title": "Homilies and novellae"
+  },
+  {
+   "id": "69c1bc148522835be846161f",
+   "language": "Hebrew",
+   "title": "Tiḳun sheṭarot"
+  },
+  {
+   "id": "69c1bc1d8522835be846172b",
+   "language": "Judeo-Arabic and Hebrew",
+   "title": "Medical texts in Judeo-Arabic and Hebrew"
+  },
+  {
+   "id": "69c1bc268522835be84618c7",
+   "language": "Hebrew",
+   "title": "Sefer ha-ʿosher"
+  },
+  {
+   "id": "69c1bc288522835be8461a6f",
+   "language": "Hebrew",
+   "title": "Yemenite prayer book for the whole year"
+  },
+  {
+   "id": "69c1bc338522835be8461c3d",
+   "language": "Hebrew",
+   "title": "Trilingual Bible in Hebrew, Aramaic, and Judeo-Arabic"
+  },
+  {
+   "id": "69c1bc368522835be8461dc5",
+   "language": "Hebrew and Aramaic",
+   "title": "Yemenite Hafṭarot with Aramaic Targum"
+  },
+  {
+   "id": "69c1bc3e8522835be84620a8",
+   "language": "Hebrew",
+   "title": "Yemenite Hebrew Bible (incomplete)"
+  },
+  {
+   "id": "69c1bc438522835be84621e8",
+   "language": "Hebrew and Judeo-Arabic",
+   "title": "Jewish liturgical texts"
+  },
+  {
+   "id": "69c1bc458522835be84622de",
+   "language": "Hebrew",
+   "title": "Seder maʿaśeh Uḳva"
+  },
+  {
+   "id": "69c1bc6b8522835be8463238",
+   "language": "Hebrew, Judeo-Arabic and Aramaic",
+   "title": "Yemenite prayer book for the whole year (Tikhlal)"
+  },
+  {
+   "id": "69c1bc728522835be8463572",
+   "language": "Hebrew",
+   "title": "Hafṭarot in Hebrew, Aramaic and Judeo-Persian"
+  },
+  {
+   "id": "69c1bd308522835be8468096",
+   "language": "Armenian; Armenian",
+   "title": "Romance of Alexander"
+  },
+  {
+   "id": "69c1bd498522835be8468c64",
+   "language": "Geez",
+   "title": "Deggwā"
+  },
+  {
+   "id": "69c1bd4e8522835be8468feb",
+   "language": "Ge'ez",
+   "title": "Dersāna Mikā'ēl"
+  },
+  {
+   "id": "69c1bd518522835be8469111",
+   "language": "Ge'ez",
+   "title": "Dāwit"
+  },
+  {
+   "id": "69c1bd538522835be84692a5",
+   "language": "Ge'ez",
+   "title": "Gebra ḥemāmāt"
+  },
+  {
+   "id": "69c1bd558522835be846949b",
+   "language": "Ge'ez",
+   "title": "Ethiopic New Testament"
+  },
+  {
+   "id": "69c1bd5a8522835be84696c6",
+   "language": "Ge'ez",
+   "title": "Argānona Weddāsē"
+  },
+  {
+   "id": "69c1bd5c8522835be84697ed",
+   "language": "Ge'ez",
+   "title": "'Orit"
+  },
+  {
+   "id": "69c1bd5e8522835be8469a23",
+   "language": "Ge'ez",
+   "title": "Ethiopic MS 27"
+  },
+  {
+   "id": "69c1bd6e8522835be846a10f",
+   "language": "Hebrew",
+   "title": "Samaritan liturgical hymns"
+  },
+  {
+   "id": "69c1bd708522835be846a1df",
+   "language": "Hebrew",
+   "title": "Astronomical calendar"
+  },
+  {
+   "id": "69d00544c451f2fbb3abdc6e",
+   "language": "Sanskrit",
+   "title": "Rasaratnākara (Rasāyanakhaṇḍa)"
+  },
+  {
+   "id": "69d0055e1bed36ac0b5558fa",
+   "language": "Sanskrit",
+   "title": "Rasaratnākara (manuscript)"
+  },
+  {
+   "id": "69d006973b94fe3961729712",
+   "language": "Sanskrit",
+   "title": "Rasa-Jala-Nidhi, vols. 2–5"
+  },
+  {
+   "id": "69d13b3e1c2a66dc094b151a",
+   "language": "Greek",
+   "title": "De Mysteriis liber (editio princeps Graeca)"
+  },
+  {
+   "id": "69d13d751c2a66dc094b168d",
+   "language": "Greek",
+   "title": "De Mysteriis liber (Parthey critical edition)"
+  },
+  {
+   "id": "69d143e91c2a66dc094b1ba5",
+   "language": "Greek",
+   "title": "De Vita Pythagorica liber, Pars 2 (Kiessling)"
+  },
+  {
+   "id": "69d144c11c2a66dc094b1de5",
+   "language": "Greek",
+   "title": "De Vita Pythagorica liber (Codex Florentinus)"
+  },
+  {
+   "id": "69d146041c2a66dc094b1fad",
+   "language": "Greek",
+   "title": "In Nicomachi Arithmeticam Introductionem (+ De Fato)"
+  },
+  {
+   "id": "69d148841c2a66dc094b2304",
+   "language": "Greek",
+   "title": "Theologumena Arithmeticae"
+  },
+  {
+   "id": "69d5ac04d0bd3547a5654b83",
+   "language": "Armenian",
+   "title": "Armenian Manuscript (Armenien 128)"
+  },
+  {
+   "id": "69d66bce4da4f8dce52f1e75",
+   "language": "Armenian",
+   "title": "Works of Gregory of Narek (1374 MS)"
+  },
+  {
+   "id": "69de0b15534b281fb134e880",
+   "language": "Sanskrit",
+   "title": "The Kama Sutra of Vatsyayana"
+  },
+  {
+   "id": "69de0cf680210ba13d79fac9",
+   "language": "Chinese",
+   "title": "Erotic Colour Prints of the Ming Period"
+  },
+  {
+   "id": "69de101d5cedf736edb85346",
+   "language": "Sanskrit",
+   "title": "Anangaranga (Sanskrit)"
+  },
+  {
+   "id": "69de11b086e6d59321ba0fe5",
+   "language": "Japanese",
+   "title": "Empon (Shunga erotic prints)"
+  },
+  {
+   "id": "69de13238a46d0c97eedc7da",
+   "language": "Greek",
+   "title": "Scriptores Erotici Graeci (Longus, Heliodorus, Achilles Tatius)"
+  },
+  {
+   "id": "69de984e1b234a773e4382fb",
+   "language": "Chinese",
+   "title": "琵琶記 (Pipa Ji / The Tale of the Lute)"
+  },
+  {
+   "id": "69de98f51b234a773e439927",
+   "language": "Sanskrit",
+   "title": "Panchatantram with Sanskrit Commentary"
+  },
+  {
+   "id": "69de98fc1b234a773e439adb",
+   "language": "Sanskrit",
+   "title": "Hitopadesha: Sanskrit text with interlinear transliteration and English translation"
+  },
+  {
+   "id": "69de99071b234a773e439b52",
+   "language": "Pali",
+   "title": "Jatakatthavannana (Jataka with Commentary), Vol. 1"
+  },
+  {
+   "id": "69dea1f04d19ec2e9ba757c7",
+   "language": "Sanskrit",
+   "title": "Natyashastram (Sanskrit Text)"
+  },
+  {
+   "id": "69dea5a74d19ec2e9ba76d61",
+   "language": "Sanskrit",
+   "title": "The Taittiriya Samhita of the Krishna Yajur-Veda"
+  },
+  {
+   "id": "69dea7b2914eeed04ca4b42c",
+   "language": "Chinese",
+   "title": "李卓吾先生批評西遊記 (Journey to the West), Vol. 18"
+  },
+  {
+   "id": "69dea7b8914eeed04ca4b485",
+   "language": "Chinese",
+   "title": "李卓吾先生批評西遊記 (Journey to the West), Vol. 28"
+  },
+  {
+   "id": "69dfda6f220eedf04e13b542",
+   "language": "Ge'ez",
+   "title": "The Ethiopic Liturgy"
+  },
+  {
+   "id": "69dfdc1b4c23e88e070e640e",
+   "language": "Ge'ez",
+   "title": "The Queen of Sheba and Her Only Son Menyelek (Kebra Nagast)"
+  },
+  {
+   "id": "69dfee81ce6bb8619e07efec",
+   "language": "Sanskrit",
+   "title": "Aṣṭasāhasrikā Prajñāpāramitā (second manuscript)"
+  },
+  {
+   "id": "69dfee86ce6bb8619e07f683",
+   "language": "Tibetan",
+   "title": "Drang nges legs bshad snying po (Essence of Eloquence)"
+  },
+  {
+   "id": "69e009f9846d79f28d567318",
+   "language": "Zulu",
+   "title": "The Religious System of the Amazulu (in Zulu and English)"
+  },
+  {
+   "id": "69e00f9ac47b5c9f88211b32",
+   "language": "Hawaiian",
+   "title": "Ka Baibala Hemolele (Hawaiian Bible)"
+  },
+  {
+   "id": "69e00fdcc47b5c9f8821241b",
+   "language": "Hawaiian",
+   "title": "Unwritten Literature of Hawaii: Sacred Songs of the Hula (bilingual)"
+  },
+  {
+   "id": "69e0107bc47b5c9f882132ec",
+   "language": "Thai",
+   "title": "Visuddhimagga (วิสุทธิมรรค, Path of Purification) in Thai"
+  },
+  {
+   "id": "69e01091c47b5c9f882137ef",
+   "language": "Burmese",
+   "title": "Vessantara Jataka (ဝေဿန္တရာဇာတ်, in Burmese)"
+  },
+  {
+   "id": "69e010a7c47b5c9f88213ad4",
+   "language": "Burmese",
+   "title": "Mandalay Thathanawin (မန္တလေးသာသနာဝင်, Burmese Buddhist History)"
+  },
+  {
+   "id": "69e010c0c47b5c9f88213cee",
+   "language": "Javanese",
+   "title": "De Boeken des Ouden Verbonds (Old Testament in Javanese)"
+  },
+  {
+   "id": "69e010dbc47b5c9f88214169",
+   "language": "Old Javanese",
+   "title": "Ramayana Kakawin, Vol. 1 (Old Javanese epic)"
+  },
+  {
+   "id": "69e012854e6773d0608565b7",
+   "language": "Egyptian hieroglyphs",
+   "title": "Book of the Dead: Egyptian Hieroglyphic Text, Vol. 3"
+  },
+  {
+   "id": "69e013c593b116d24238b3d7",
+   "language": "Egyptian hieroglyphs",
+   "title": "Urkunden des ägyptischen Altertums (Ancient Egyptian Documents)"
+  },
+  {
+   "id": "69e3ff49b142e5dd9d6afc43",
+   "language": "Greek",
+   "title": "Lysistrata"
+  },
+  {
+   "id": "69e3ff50b142e5dd9d6afd1d",
+   "language": "Greek",
+   "title": "Les amours pastorales de Daphnis et Chloé"
+  },
+  {
+   "id": "69e413102d8eeae86149fb2a",
+   "language": "Mixtec",
+   "title": "Codex Bodley (MS. Mex. d. 1)"
+  },
+  {
+   "id": "69e419cb8a8dae1074c518e6",
+   "language": "Japanese",
+   "title": "The Tale of Genji (Waley translation, Part 1)"
+  },
+  {
+   "id": "69e419e58a8dae1074c51fc2",
+   "language": "Greek",
+   "title": "Daphnis & Chloe (Greek-English, Loeb)"
+  },
+  {
+   "id": "69e41a078a8dae1074c52875",
+   "language": "Greek",
+   "title": "Aethiopica (Greek-Latin)"
+  },
+  {
+   "id": "69e41a108a8dae1074c52a29",
+   "language": "Greek",
+   "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)"
+  },
+  {
+   "id": "69e41e99d0364cb0bcf78b71",
+   "language": "Old French",
+   "title": "Die Lais der Marie de France"
+  },
+  {
+   "id": "69e4207871f02ebac6264aa8",
+   "language": "Japanese",
+   "title": "好色一代男 (Life of an Amorous Man), Vol. 6"
+  },
+  {
+   "id": "69e7007091015041e8f21460",
+   "language": "Greek",
+   "title": "Babrii Fabulae Aesopeae"
+  },
+  {
+   "id": "69e719570b32e23d63bf711e",
+   "language": "Russian",
+   "title": "Russian Folk-Tales"
+  },
+  {
+   "id": "69e7268ca409200ea79ef73b",
+   "language": "Chinese",
+   "title": "聊齋志異 (Liaozhai Zhiyi / Strange Tales from a Chinese Studio), Vol. 1"
+  },
+  {
+   "id": "69e726a2a409200ea79efa2d",
+   "language": "Japanese",
+   "title": "御伽草子 第1冊 (文正草子 / Bunsho Sōshi)"
+  },
+  {
+   "id": "69e7288fa409200ea79f014e",
+   "language": "Chinese",
+   "title": "聊齋志異 Vol. 9"
+  },
+  {
+   "id": "69e72994a409200ea79f093f",
+   "language": "Persian",
+   "title": "انوار سهیلی (Anvār-i Suhaylī)"
+  },
+  {
+   "id": "69e729a7a409200ea79f0e08",
+   "language": "Persian",
+   "title": "مثنوی معنوی (Masnavī-yi Maʻnavī), Books 5-7"
+  },
+  {
+   "id": "69e72b65a409200ea79f24ac",
+   "language": "Armenian",
+   "title": "Առակdelays Եdelays (Aesop's Fables in Armenian)"
+  },
+  {
+   "id": "69e72b79a409200ea79f2a27",
+   "language": "Armenian",
+   "title": "Armenian Folk-tales and Fables"
+  },
+  {
+   "id": "69e7463b831080b8de4a7d1a",
+   "language": "Tibetan",
+   "title": "Mani Kabum: Great Collected Teachings on Avalokiteshvara"
+  },
+  {
+   "id": "69e747e685f786e884a49e40",
+   "language": "Old Norse",
+   "title": "Edda Sæmundar hinns Fróða"
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12",
+   "language": "Hebrew",
+   "title": "ספר תהלים (Sepher Tehillim / Psalms)"
+  },
+  {
+   "id": "69e7518b10ee9075bcdcdf0e",
+   "language": "Chinese",
+   "title": "白氏長慶集 (Bái Shì Chángqìng Jí), Vol. 2"
+  },
+  {
+   "id": "69e75354095c302d3fdda4bf",
+   "language": "Bengali",
+   "title": "ডাকঘর (Ḍākghar / The Post Office)"
+  },
+  {
+   "id": "69e753cf095c302d3fddc2e2",
+   "language": "Sanskrit",
+   "title": "मृच्छकटिक (Mṛcchakaṭika / The Little Clay Cart)"
+  },
+  {
+   "id": "69e753e8095c302d3fddc6f5",
+   "language": "Japanese",
+   "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 2"
+  },
+  {
+   "id": "69e753ef095c302d3fddc962",
+   "language": "Chinese",
+   "title": "繪像第六才子書 / 西廂記 (Xīxiāng Jì / Romance of the Western Chamber)"
+  },
+  {
+   "id": "69e75ccf3f15c712bdb8f086",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 3a"
+  },
+  {
+   "id": "69e75cdd3f15c712bdb8f12e",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 5a"
+  },
+  {
+   "id": "69e75ce43f15c712bdb8f19e",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 8"
+  },
+  {
+   "id": "69e75cec3f15c712bdb8f20c",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 11"
+  },
+  {
+   "id": "69e75cfacc48e59ad74eb323",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 13"
+  },
+  {
+   "id": "69e75cfecc48e59ad74eb35d",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 13a"
+  },
+  {
+   "id": "69e75d11cc48e59ad74eb474",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 16a"
+  },
+  {
+   "id": "69e75d14cc48e59ad74eb4af",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 17"
+  },
+  {
+   "id": "69e75d23cc48e59ad74eb592",
+   "language": "Japanese",
+   "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 19"
+  },
+  {
+   "id": "69e75e0ecc48e59ad74eb9d5",
+   "language": "Bengali",
+   "title": "গিরীশ রচনাবলী (Girish Collected Works)"
+  },
+  {
+   "id": "69e75e13cc48e59ad74ebc9c",
+   "language": "Bengali",
+   "title": "নল-দময়ন্তী (Nal Damayanti)"
+  },
+  {
+   "id": "69e75e30cc48e59ad74ec254",
+   "language": "Chinese",
+   "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 2"
+  },
+  {
+   "id": "69e75e3fcc48e59ad74ec3e7",
+   "language": "Chinese",
+   "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 10"
+  },
+  {
+   "id": "69e75e4bcc48e59ad74ec50d",
+   "language": "Chinese",
+   "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 18"
+  },
+  {
+   "id": "69e75e52cc48e59ad74ec55e",
+   "language": "Chinese",
+   "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 22"
+  },
+  {
+   "id": "69e75e6acc48e59ad74ec89f",
+   "language": "Japanese",
+   "title": "黙阿弥全集 (Mokuami Complete Works), Vol. 1"
+  },
+  {
+   "id": "69e75e8fcc48e59ad74ed344",
+   "language": "Japanese",
+   "title": "黙阿弥全集 (Mokuami Complete Works), Vol. 15"
+  },
+  {
+   "id": "69e75eafcc48e59ad74edeb7",
+   "language": "Arabic",
+   "title": "عهد الشيطان (ʿAhd al-Shayṭān)"
+  },
+  {
+   "id": "69e76144cc48e59ad74eec94",
+   "language": "Tibetan",
+   "title": "dPal sva rod dha'I rgyud"
+  },
+  {
+   "id": "69e76187cc48e59ad74f0397",
+   "language": "Tibetan",
+   "title": "bSang bdag bsnyan yig sogs"
+  },
+  {
+   "id": "69e761b3cc48e59ad74f1209",
+   "language": "Tibetan",
+   "title": "bKra shis mdzes ldan gyi rgyud"
+  },
+  {
+   "id": "69e761b8cc48e59ad74f13fe",
+   "language": "Tibetan",
+   "title": "mKha' 'gro snying thig gi khrid"
+  },
+  {
+   "id": "69e761e6cc48e59ad74f220f",
+   "language": "Tibetan",
+   "title": "mDo sde stag sna rgyas pa"
+  },
+  {
+   "id": "69e761eecc48e59ad74f24c3",
+   "language": "Tibetan",
+   "title": "rNal 'byor bzhi' rim pa sogs"
+  },
+  {
+   "id": "69e761f9cc48e59ad74f292b",
+   "language": "Tibetan",
+   "title": "Guru drag po rtsa ba' sgrub thabs"
+  },
+  {
+   "id": "69e76207cc48e59ad74f2d1b",
+   "language": "Tibetan",
+   "title": "dBang chog don gsal sgron me"
+  },
+  {
+   "id": "69e7620bcc48e59ad74f2e32",
+   "language": "Tibetan",
+   "title": "Ngo sprod lta ba'i brda skor"
+  },
+  {
+   "id": "69e7620dcc48e59ad74f2edc",
+   "language": "Tibetan",
+   "title": "Yid bzhin rin po che'i mdzod"
+  },
+  {
+   "id": "69e76212cc48e59ad74f316e",
+   "language": "Tibetan",
+   "title": "rDzogs chen yang tig nag po gser gyi bru gcig"
+  },
+  {
+   "id": "69e76214cc48e59ad74f329e",
+   "language": "Tibetan",
+   "title": "gTer gsar rig 'dzin thugs thig dang gshin rje skor"
+  },
+  {
+   "id": "69e7639ecc48e59ad74f3895",
+   "language": "Tibetan",
+   "title": "rDor sems thugs sgrub bsnyen pa'i man ngag"
+  },
+  {
+   "id": "69e779f70fc6fc955e35d49d",
+   "language": "Tibetan",
+   "title": "rTa mgrin gnyen po lha gsum gyi las byang"
+  },
+  {
+   "id": "69e779fb0fc6fc955e35d620",
+   "language": "Tibetan",
+   "title": "rDor sems snying thig skor"
+  },
+  {
+   "id": "69e77a130fc6fc955e35d980",
+   "language": "Tibetan",
+   "title": "sNgags drug phyag rgya drug gi cho ga"
+  },
+  {
+   "id": "69e77a160fc6fc955e35da8b",
+   "language": "Tibetan",
+   "title": "Bla ma dgongs pa 'dus pa'i skor"
+  },
+  {
+   "id": "69e77a2c0fc6fc955e35e3be",
+   "language": "Tibetan",
+   "title": "Thugs sgrub gsang 'dus skor sogs"
+  },
+  {
+   "id": "69e77a2e0fc6fc955e35e455",
+   "language": "Tibetan",
+   "title": "sGrub chen zin bris"
+  },
+  {
+   "id": "69e77a310fc6fc955e35e65b",
+   "language": "Tibetan",
+   "title": "Bar do smon lam ngo sprod"
+  },
+  {
+   "id": "69e77a3f0fc6fc955e35ecda",
+   "language": "Tibetan",
+   "title": "Bla ma klu 'dul"
+  },
+  {
+   "id": "69e77a420fc6fc955e35ee3f",
+   "language": "Tibetan",
+   "title": "sNying thig yang sgang rgyud bu chung"
+  },
+  {
+   "id": "69e77a510fc6fc955e35f452",
+   "language": "Tibetan",
+   "title": "bDud dpung zil gnon"
+  },
+  {
+   "id": "69e77a530fc6fc955e35f4a2",
+   "language": "Tibetan",
+   "title": "bShad rgyud"
+  },
+  {
+   "id": "69e77a5e0fc6fc955e35f863",
+   "language": "Tibetan",
+   "title": "Pad 'byung rnam thar"
+  },
+  {
+   "id": "69e77a6b0fc6fc955e35fc1d",
+   "language": "Tibetan",
+   "title": "Pad ma dkan po'i rdo rje glu'i phreng ba"
+  },
+  {
+   "id": "69e77a6e0fc6fc955e35fd3f",
+   "language": "Tibetan",
+   "title": "Pad gling thob yig man ngag zab mo'i gter mdzod"
+  },
+  {
+   "id": "69e77a720fc6fc955e35ff23",
+   "language": "Tibetan",
+   "title": "dGag lan nges don 'brug sgra"
+  },
+  {
+   "id": "69e77a780fc6fc955e360177",
+   "language": "Tibetan",
+   "title": "rDo rje gro lod gnam lcags 'bar ba"
+  },
+  {
+   "id": "69e77a870fc6fc955e360649",
+   "language": "Tibetan",
+   "title": "Drag po lha gsum skor"
+  },
+  {
+   "id": "69e77a880fc6fc955e3606bc",
+   "language": "Tibetan",
+   "title": "gSang spyod spyi 'gro'i dbang gi lag len"
+  },
+  {
+   "id": "69e77a8a0fc6fc955e360764",
+   "language": "Tibetan",
+   "title": "Zab chos zhi khro dgongs pa rang grol lo rgyus sogs"
+  },
+  {
+   "id": "69e77a8f0fc6fc955e360958",
+   "language": "Tibetan",
+   "title": "rTsa rgyud rdo rje gzhon nu"
+  },
+  {
+   "id": "69e77a910fc6fc955e3609da",
+   "language": "Tibetan",
+   "title": "bKa' brgyad bde 'dus skor"
+  },
+  {
+   "id": "69e77a930fc6fc955e360a71",
+   "language": "Tibetan",
+   "title": "O rgyan pad ma 'byung gnas kyi skyes rabs rnam thar"
+  },
+  {
+   "id": "69e77a960fc6fc955e360b81",
+   "language": "Tibetan",
+   "title": "rDo rje theg pa spyi'i rnam bzhag rgyud don gsal byed sogs"
+  },
+  {
+   "id": "69e77aa10fc6fc955e36105e",
+   "language": "Tibetan",
+   "title": "gZa' rgod dug gi spu gri skor"
+  },
+  {
+   "id": "69e77aa50fc6fc955e3611b0",
+   "language": "Tibetan",
+   "title": "bsTan pa'i rnam bzhag bsal ba'i sgron me"
+  },
+  {
+   "id": "69e77aa60fc6fc955e361201",
+   "language": "Tibetan",
+   "title": "Khor lo sdom pa bcu gsum gyi sgrub thabs"
+  },
+  {
+   "id": "69e77aa90fc6fc955e36131b",
+   "language": "Tibetan",
+   "title": "bKa' brgyad kyi gsol 'debs"
+  },
+  {
+   "id": "69e77aab0fc6fc955e361459",
+   "language": "Tibetan",
+   "title": "Lung bstan bka' rgya ma"
+  },
+  {
+   "id": "69e77ab00fc6fc955e3616cd",
+   "language": "Tibetan",
+   "title": "gTor ma'i rim pa"
+  },
+  {
+   "id": "69e77ab20fc6fc955e36172a",
+   "language": "Tibetan",
+   "title": "Bla ma dgongs 'dus skor"
+  },
+  {
+   "id": "69e77ab60fc6fc955e3618ce",
+   "language": "Tibetan",
+   "title": "Mi la'i rnam thar"
+  },
+  {
+   "id": "69e77ab80fc6fc955e36198c",
+   "language": "Tibetan",
+   "title": "sNying thig gi lo rgyus chen mo"
+  },
+  {
+   "id": "69e77abc0fc6fc955e361c3d",
+   "language": "Tibetan",
+   "title": "rNam thar gsol 'debs sogs"
+  },
+  {
+   "id": "69e77ac10fc6fc955e361ec2",
+   "language": "Tibetan",
+   "title": "Ye shes mgon po'i las byang sogs"
+  },
+  {
+   "id": "69e77ac30fc6fc955e361f24",
+   "language": "Tibetan",
+   "title": "Zab lam bde gshegs kun 'dus"
+  },
+  {
+   "id": "69e77ac60fc6fc955e3620bd",
+   "language": "Tibetan",
+   "title": "bKa' brgyad bde gshegs 'dus pa'i skor"
+  },
+  {
+   "id": "69e77ac90fc6fc955e3622a7",
+   "language": "Tibetan",
+   "title": "bKa' brgyad yongs 'dus spyi lung mdor bsdus"
+  },
+  {
+   "id": "69e77acd0fc6fc955e36245f",
+   "language": "Tibetan",
+   "title": "Phur pa yang sgang them byang sogs"
+  },
+  {
+   "id": "69e77ad20fc6fc955e36269e",
+   "language": "Tibetan",
+   "title": "bKa' brgyad yang sang thugs kyi me long"
+  },
+  {
+   "id": "69e77adb0fc6fc955e362b00",
+   "language": "Tibetan",
+   "title": "Yang zab khrid rgya'i sngon 'gro"
+  },
+  {
+   "id": "69e77ae40fc6fc955e362e87",
+   "language": "Tibetan",
+   "title": "Dri ba sna tshogs pa'i lan rim pa spal ba"
+  },
+  {
+   "id": "69e77ae70fc6fc955e362f6f",
+   "language": "Tibetan",
+   "title": "Bla ma dgongs 'dus kyi dpe ris skor"
+  },
+  {
+   "id": "69e78253d93c1f600750405e",
+   "language": "Greek",
+   "title": "On the Nature and Virtues of Foods"
+  },
+  {
+   "id": "69e782a2d93c1f6007504137",
+   "language": "Tibetan",
+   "title": "Rig 'dzin thugs this"
+  },
+  {
+   "id": "69e782a7d93c1f600750427b",
+   "language": "Tibetan",
+   "title": "Tshe khrid rdo rje phreng ba'i skor"
+  },
+  {
+   "id": "69e782bed93c1f6007504611",
+   "language": "Tibetan",
+   "title": "Byang chub rlung 'khor"
+  },
+  {
+   "id": "69e782c0d93c1f600750471a",
+   "language": "Tibetan",
+   "title": "rDo rje phag mo'i zab khrid skor"
+  },
+  {
+   "id": "69e782c7d93c1f6007504987",
+   "language": "Tibetan",
+   "title": "Pad gling gter byon bdud rtsi sman sgrub lag len"
+  },
+  {
+   "id": "69e782d4d93c1f6007504deb",
+   "language": "Tibetan",
+   "title": "bKa' brgyad bde gshegs skor"
+  },
+  {
+   "id": "69e782d8d93c1f6007504fa9",
+   "language": "Tibetan",
+   "title": "Thugs rje chen po mun sel sgron me'i srung ma mchod thags"
+  },
+  {
+   "id": "69e782dad93c1f6007505046",
+   "language": "Tibetan",
+   "title": "Klu bal 'dod kyi dbu sogs"
+  },
+  {
+   "id": "69e782e2d93c1f6007505280",
+   "language": "Tibetan",
+   "title": "Tshe lha dgu'i dkyil 'khor gyi cho ga"
+  },
+  {
+   "id": "69e782e6d93c1f6007505423",
+   "language": "Tibetan",
+   "title": "dPal mgon nag po'i skangs ba chen po"
+  },
+  {
+   "id": "69e782e8d93c1f60075054c5",
+   "language": "Tibetan",
+   "title": "bShad mdzod yid bzhin nor bugter gyi bang mdzod"
+  },
+  {
+   "id": "69e782ffd93c1f6007505aac",
+   "language": "Tibetan",
+   "title": "Bla ma dgongs 'dus las byang tshang pa'i dbyangs sogs"
+  },
+  {
+   "id": "69e78304d93c1f6007505c06",
+   "language": "Tibetan",
+   "title": "rDzog chen sems nyid ngal gso"
+  },
+  {
+   "id": "69e78308d93c1f6007505c84",
+   "language": "Tibetan",
+   "title": "Yang gsang dum dum khrigs pa"
+  },
+  {
+   "id": "69e7830bd93c1f6007505d32",
+   "language": "Tibetan",
+   "title": "mKha' 'gro snying thig bka'I them byang"
+  },
+  {
+   "id": "69e7830ed93c1f6007505e40",
+   "language": "Tibetan",
+   "title": "gZa' bdud dug gi spu dri shor"
+  },
+  {
+   "id": "69e7832fd93c1f600750643d",
+   "language": "Tibetan",
+   "title": "Thugs chen 'gro don las tshogs rat gling thugs dam"
+  },
+  {
+   "id": "69e783390fc6fc955e363107",
+   "language": "Tibetan",
+   "title": "dBud rtsi tshad 'joms sogs"
+  },
+  {
+   "id": "69e7835dd93c1f6007506c9e",
+   "language": "Sanskrit",
+   "title": "वृक्षायुर्वेद (Vṛkṣāyurveda / Science of Plant Life)"
+  },
+  {
+   "id": "69e786b76846fc56c490e7bc",
+   "language": "Tibetan",
+   "title": "rNying ma rgyud 'bum Ta"
+  },
+  {
+   "id": "69e786e46846fc56c490ff0b",
+   "language": "Tibetan",
+   "title": "rNying ma rgyud 'bum Dza"
+  },
+  {
+   "id": "69e786e66846fc56c49100bb",
+   "language": "Tibetan",
+   "title": "rNying ma rgyud 'bum Wa"
+  },
+  {
+   "id": "69e786e76846fc56c49101ed",
+   "language": "Tibetan",
+   "title": "rNying ma rgyud 'bum Zha"
+  },
+  {
+   "id": "69e786ef6846fc56c491089f",
+   "language": "Tibetan",
+   "title": "rNying ma rgyud 'bum La"
+  },
+  {
+   "id": "69e787044a6785cfd60c9da0",
+   "language": "Tibetan",
+   "title": "rNying ma rgyud 'bum Nyi"
+  },
+  {
+   "id": "69e787094a6785cfd60ca250",
+   "language": "Tibetan",
+   "title": "rNying ma rgyud 'bum Di"
+  },
+  {
+   "id": "69e787424a6785cfd60cb29e",
+   "language": "Tibetan",
+   "title": "Bum Cha"
+  },
+  {
+   "id": "69e7875d4a6785cfd60cb5bd",
+   "language": "Tibetan",
+   "title": "Bum Ta"
+  },
+  {
+   "id": "69e787604a6785cfd60cb761",
+   "language": "Tibetan",
+   "title": "Bum Tha"
+  },
+  {
+   "id": "69e787624a6785cfd60cb913",
+   "language": "Tibetan",
+   "title": "Bum Da"
+  },
+  {
+   "id": "69e787894a6785cfd60cbf93",
+   "language": "Tibetan",
+   "title": "rgod ldem gyi gter byon phag mo'i zab khrid nas 'don tshogs"
+  },
+  {
+   "id": "69e7878c4a6785cfd60cc063",
+   "language": "Tibetan",
+   "title": "rig 'dzin gter bdag gling pa'i zab gter zab lam bde gshegs kun 'dus las gter gyi kha byang lde mig sogs bzhugs"
+  },
+  {
+   "id": "69e787904a6785cfd60cc297",
+   "language": "Tibetan",
+   "title": "kun mkhyen klong chen pa'i gsung bdud rtsi skor gsum/ don khrid skor gsum/ rgyab yig skor gsum"
+  },
+  {
+   "id": "69e787924a6785cfd60cc357",
+   "language": "Tibetan",
+   "title": "zab gsang mkha' 'gro snying thig dkar chag"
+  },
+  {
+   "id": "69e7879d4a6785cfd60cc76f",
+   "language": "Tibetan",
+   "title": "nyang gter rgyal po sku nga'i sgrub rim sprin nag 'khrigs pa"
+  },
+  {
+   "id": "69e787a54a6785cfd60ccaf3",
+   "language": "Tibetan",
+   "title": "rdzogs pa chen po yang tig nag po"
+  },
+  {
+   "id": "69e787a84a6785cfd60ccb7d",
+   "language": "Tibetan",
+   "title": "gshin rje dregs 'joms skor"
+  },
+  {
+   "id": "69e787aa4a6785cfd60ccbd7",
+   "language": "Tibetan",
+   "title": "sgang sprul gnyis pa bstan 'dzin legs ldan rin po che'i rnam thar"
+  },
+  {
+   "id": "69e787b24a6785cfd60ccdb1",
+   "language": "Tibetan",
+   "title": "yongs 'dzin ngag dbang bzang po'i zhal gdams gur 'bum grub bcud dga' ston"
+  },
+  {
+   "id": "69e787b34a6785cfd60cce8f",
+   "language": "Tibetan",
+   "title": "pad gling rnam thar dang/ byang gter thugs sgrubs"
+  },
+  {
+   "id": "69e787b64a6785cfd60ccf39",
+   "language": "Japanese",
+   "title": "農業全書 (Nōgyō Zensho), Vol. 2"
+  },
+  {
+   "id": "69e787b84a6785cfd60cd013",
+   "language": "Tibetan",
+   "title": "gu ru drag pod mar chen thems med du bkod pa"
+  },
+  {
+   "id": "69e787bc4a6785cfd60cd18f",
+   "language": "Tibetan",
+   "title": "pad gling gi rta mgrin dpa' bog cig pa'i sgrub thabs"
+  },
+  {
+   "id": "69e787db4a6785cfd60cdeb1",
+   "language": "Japanese",
+   "title": "農書輯略 (Nōsho Shūryaku / Agricultural Anthology)"
+  },
+  {
+   "id": "69e787de4a6785cfd60cdf04",
+   "language": "Tibetan",
+   "title": "tshe khrid nor bu lam khyer skor"
+  },
+  {
+   "id": "69e787e04a6785cfd60cdf64",
+   "language": "Chinese",
+   "title": "本草綱目圖 (Bencao Gangmu Illustrations), Vol. 1"
+  },
+  {
+   "id": "69e787e34a6785cfd60ce0f1",
+   "language": "Chinese",
+   "title": "本草綱目圖 (Bencao Gangmu Illustrations), Vol. 2"
+  },
+  {
+   "id": "69e787e44a6785cfd60ce12b",
+   "language": "Tibetan",
+   "title": "kun bzang dgongs pa kun 'dus kyi skor"
+  },
+  {
+   "id": "69e787e64a6785cfd60ce28f",
+   "language": "Chinese",
+   "title": "本草綱目圖 (Bencao Gangmu Illustrations), Vol. 3"
+  },
+  {
+   "id": "69e787fd4a6785cfd60ce50d",
+   "language": "Chinese",
+   "title": "本草綱目 (Běncǎo Gāngmù), Vol. 1"
+  },
+  {
+   "id": "69e787ff4a6785cfd60ce740",
+   "language": "Tibetan",
+   "title": "klong gsal skor gsum gyi spyi rgyud dam pa"
+  },
+  {
+   "id": "69e788024a6785cfd60ce896",
+   "language": "Chinese",
+   "title": "本草綱目 (Běncǎo Gāngmù), Vol. 5"
+  },
+  {
+   "id": "69e788054a6785cfd60ce99b",
+   "language": "Tibetan",
+   "title": "dpal lha mo nor rgyun ma"
+  },
+  {
+   "id": "69e788094a6785cfd60ceb41",
+   "language": "Chinese",
+   "title": "本草綱目 (Běncǎo Gāngmù), Vol. 10"
+  },
+  {
+   "id": "69e7880a4a6785cfd60cebda",
+   "language": "Tibetan",
+   "title": "zab chos zhi khro dgongs pa rang drol"
+  },
+  {
+   "id": "69e7880c4a6785cfd60cec36",
+   "language": "Tibetan",
+   "title": "thugs rje chen po skyes rabs mthon mthing ma"
+  },
+  {
+   "id": "69e7880e4a6785cfd60ced34",
+   "language": "Chinese",
+   "title": "本草綱目 (Běncǎo Gāngmù), Vol. 15"
+  },
+  {
+   "id": "69e7880f4a6785cfd60cedaf",
+   "language": "Tibetan",
+   "title": "pad ma gling pa'i rnam thar dang ngag dbang rnam rgyal gyi rnam thar"
+  },
+  {
+   "id": "69e788264a6785cfd60cf6c5",
+   "language": "Tibetan",
+   "title": "zla ba rgyal mtshan gyi gter chos rtsa gsum snying thig dang/ sprul sku tse ring rdo rje'i gter chos thugs chen 'khor ba dong sprugs"
+  },
+  {
+   "id": "69e7882a4a6785cfd60cf86f",
+   "language": "Tibetan",
+   "title": "zab chos zhi khro dgongs pa rang grol las/ bar do'i dmar khrid dgongs pa rang grol gyi sngon 'gro rang rgyud 'dul byed kyi lhan thabs"
+  },
+  {
+   "id": "69e788374a6785cfd60cfe80",
+   "language": "Tibetan",
+   "title": "gsang ba ye shes kyi mkha' 'gro ma'i rdzogs rim rnam bshad rdo rje'i gsal byed"
+  },
+  {
+   "id": "69e788424a6785cfd60d00dc",
+   "language": "Tibetan",
+   "title": "tshe sgrub yang snying kun 'dus kyi las byang 'chi med 'dod 'jo"
+  },
+  {
+   "id": "69e788444a6785cfd60d015e",
+   "language": "Tibetan",
+   "title": "chos spyod tshogs gnyis lam bzang"
+  },
+  {
+   "id": "69e7884e4a6785cfd60d0612",
+   "language": "Tibetan",
+   "title": "tshe sgrub bdud rtsi 'kyil ba'i cha rkyen las/ bsangs yig bar chad kun sel"
+  },
+  {
+   "id": "69e788504a6785cfd60d0692",
+   "language": "Tibetan",
+   "title": "rnal 'byor gyi chas brgyad dang dbu skra'i che ba dang dam tshig bshad pa"
+  },
+  {
+   "id": "69e788594a6785cfd60d09f2",
+   "language": "Tibetan",
+   "title": "lung bstan gsal ba'i me long"
+  },
+  {
+   "id": "69e7885c4a6785cfd60d0acc",
+   "language": "Tibetan",
+   "title": "gcod kyi zab don thugs kyi snying po zhes bya ba kyad par can"
+  },
+  {
+   "id": "69e7885d4a6785cfd60d0b4c",
+   "language": "Tibetan",
+   "title": "pad gling gter byon mgon po ma nying sde brgyd kyi bskang gso"
+  },
+  {
+   "id": "69e788634a6785cfd60d0d56",
+   "language": "Tibetan",
+   "title": "khro rol gtor zlog gi las mtha'"
+  },
+  {
+   "id": "69e788644a6785cfd60d0dbb",
+   "language": "Tibetan",
+   "title": "gur drag las byang sogs"
+  },
+  {
+   "id": "69e788954a6785cfd60d131d",
+   "language": "Tibetan",
+   "title": "stong chen mo rab tu 'joms pa zhes bya ba'i gzungs"
+  },
+  {
+   "id": "69e788a74a6785cfd60d17bf",
+   "language": "Tibetan",
+   "title": "mdo mang rin chen phreng ba"
+  },
+  {
+   "id": "69e788b54a6785cfd60d1cf0",
+   "language": "Tibetan",
+   "title": "rdo rje gcod pa"
+  },
+  {
+   "id": "69e788ee4a6785cfd60d228a",
+   "language": "Tibetan",
+   "title": "sbyin sreg dang las mtha' rigs"
+  },
+  {
+   "id": "69e788f44a6785cfd60d233e",
+   "language": "Tibetan",
+   "title": "ri chos yon tan kun 'byung rin po che 'bar ba bzhugs pa'i nyams len"
+  },
+  {
+   "id": "69e788ff4a6785cfd60d24b8",
+   "language": "Tibetan",
+   "title": "bla bslu yid bzhin gter mdzod"
+  },
+  {
+   "id": "69e7890c4a6785cfd60d284c",
+   "language": "Tibetan",
+   "title": "Bla ma nor bu rgya mtsho"
+  },
+  {
+   "id": "69e7890e4a6785cfd60d29a6",
+   "language": "Tibetan",
+   "title": "Mkha’ ’gro gtso mo ye shes mtsho rgyal gyi rnam thar"
+  },
+  {
+   "id": "69e789194a6785cfd60d2b46",
+   "language": "Tibetan",
+   "title": "Nges don phyag rgya chen po’i smon lam gyi ’grel ba bdud rtsi’i snying khu"
+  },
+  {
+   "id": "69e78a374a6785cfd60d30ae",
+   "language": "Tibetan",
+   "title": "rten la gzungs bzhugs 'bul ba'i lag len gyi yi ge zhib mo rnam par dag pa"
+  },
+  {
+   "id": "69e78a704a6785cfd60d347e",
+   "language": "Tibetan",
+   "title": "bla ma nor bu rgya mtsho (gter ma)"
+  },
+  {
+   "id": "69e78a714a6785cfd60d352e",
+   "language": "Tibetan",
+   "title": "do ha skor gsum gyi ti ka 'bring po"
+  },
+  {
+   "id": "69e78a794a6785cfd60d35a4",
+   "language": "Tibetan",
+   "title": "thugs rje chen po yid bzhin nor bu (gter ma)"
+  },
+  {
+   "id": "69e78a934a6785cfd60d470a",
+   "language": "Tibetan",
+   "title": "vajra bho tra lugs kyi pha chos kyi lung thebs tshul"
+  },
+  {
+   "id": "69e78aa74a6785cfd60d4a6b",
+   "language": "Tibetan",
+   "title": "ma mo’i skor tshogs"
+  },
+  {
+   "id": "69e78aab4a6785cfd60d4abf",
+   "language": "Tibetan",
+   "title": "’chi med ’phags ma’i snying thig skor"
+  },
+  {
+   "id": "69e78aad4a6785cfd60d4b4b",
+   "language": "Tibetan",
+   "title": "grub thob chen po’i thugs thig skor"
+  },
+  {
+   "id": "69e78af04a6785cfd60d4db5",
+   "language": "Tibetan",
+   "title": "byang chub bka’ ‘bum las/ gsol ‘debs kyi rim pa dgos ‘dod kun ‘byung yid bzhin nor bu’i do shal"
+  },
+  {
+   "id": "69e78b0f4a6785cfd60d4f68",
+   "language": "Tibetan",
+   "title": "byang chub bka’ ‘bum las/ g.yo ba rlung gi rnam bshad n’a da’i sgra dbyangs"
+  },
+  {
+   "id": "69e78b624a6785cfd60d55ec",
+   "language": "Tibetan",
+   "title": "byang chub sems dpa'i spyod pa la 'jug pa zhes bya ba'i mchan 'grel"
+  },
+  {
+   "id": "69e78b784a6785cfd60d5767",
+   "language": "Tibetan",
+   "title": "bde chog bong zhal snyan brgyud las/ thun mong sngon ‘gro’i chos spyod sku gsum bgrod pa’i them skas"
+  },
+  {
+   "id": "69e78f506cebc5889332213e",
+   "language": "Tibetan",
+   "title": "rtsa skyongs kyi man ngag"
+  },
+  {
+   "id": "69e7928380b52390feb161b8",
+   "language": "Tibetan",
+   "title": "Sbas yul rin chen bsgrod pa’i gtam (gter ma)"
+  },
+  {
+   "id": "69e7929c80b52390feb166c3",
+   "language": "Greek",
+   "title": "Scriptores Erotici Graeci (Heliodorus), Vol. 3"
+  },
+  {
+   "id": "69e7934280b52390feb18445",
+   "language": "Arabic",
+   "title": "حي بن يقظان / Philosophus Autodidactus"
+  },
+  {
+   "id": "69e795f480b52390feb18b82",
+   "language": "Tibetan",
+   "title": "bong zhal snyan brgyud las/ sgrub thabs gser gyi phreng ba"
+  },
+  {
+   "id": "69e7961d80b52390feb18c66",
+   "language": "Tibetan",
+   "title": "gsol kha/ smon lam/ bskang ba sogs chos srung rigs kyi sgrub thabs"
+  },
+  {
+   "id": "69e7963180b52390feb18f45",
+   "language": "Tibetan",
+   "title": "snang mdzad snyan brgyud las/ bde mchog bong zhal can gyi sgrub thabs gser phreng las dmigs gnad zab mo zhal shes shin tu zab pa"
+  },
+  {
+   "id": "69e7963b80b52390feb18ff4",
+   "language": "Tibetan",
+   "title": "spyod ‘jug mchen ‘grel"
+  },
+  {
+   "id": "69e7964180b52390feb191d2",
+   "language": "Tibetan",
+   "title": "blo bzang bka' 'bum las bla ma'i gsol 'debs dang rnal 'byor bskyed rdzogs rim pa sogs bzhugs/ 'di dpe rgyun shin tu dkon pas ces (gces) spras mdzod"
+  },
+  {
+   "id": "69e7965f80b52390feb195e0",
+   "language": "Tibetan",
+   "title": "rje dben sa pa blo bzang don grub kyi tshe sgrub thun mong ma yin pa dang rdo rje rnal ‘byor ma’i sgrub thabs dngos grub kun ‘byung"
+  },
+  {
+   "id": "69e7ab465f1a22ab19a95c5b",
+   "language": "Tibetan",
+   "title": "Thadrak Kanjur Shes rab sna tshogs"
+  },
+  {
+   "id": "69e7ab915f1a22ab19a9a3be",
+   "language": "Tibetan",
+   "title": "Thadrak Thor bu 030 sNyan ngag 'grel pa"
+  },
+  {
+   "id": "69e7ab955f1a22ab19a9a79c",
+   "language": "Tibetan",
+   "title": "Thadrak Thor bu 033 Yang mgon bka' 'bum sogs"
+  },
+  {
+   "id": "69e7abc95f1a22ab19a9e04a",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur mDo sde Ngi"
+  },
+  {
+   "id": "69e7abca5f1a22ab19a9e1ec",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur mDo sde Ci"
+  },
+  {
+   "id": "69e7abcb5f1a22ab19a9e3ac",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur mDo sde Chi"
+  },
+  {
+   "id": "69e7abd65f1a22ab19a9f151",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur rGyud Cha"
+  },
+  {
+   "id": "69e7abe75f1a22ab19aa00d4",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur rGyud Ba"
+  },
+  {
+   "id": "69e7abee5f1a22ab19aa0921",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur Myang 'das Ka"
+  },
+  {
+   "id": "69e7abf05f1a22ab19aa0a8f",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur Myang 'das Kha"
+  },
+  {
+   "id": "69e7abf15f1a22ab19aa0c01",
+   "language": "Tibetan",
+   "title": "Neyphug Kanjur Myang 'das Ga"
+  },
+  {
+   "id": "69e7abfe5f1a22ab19aa1d0d",
+   "language": "Tibetan",
+   "title": "Kanjur 'Dul ba Ta"
+  },
+  {
+   "id": "69e7ac005f1a22ab19aa1f04",
+   "language": "Tibetan",
+   "title": "Kanjur 'Dul ba Tha"
+  },
+  {
+   "id": "69e7ac045f1a22ab19aa24b0",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Ka"
+  },
+  {
+   "id": "69e7ac065f1a22ab19aa262c",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Kha"
+  },
+  {
+   "id": "69e7ac075f1a22ab19aa27bc",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Ga"
+  },
+  {
+   "id": "69e7ac095f1a22ab19aa2934",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Nga"
+  },
+  {
+   "id": "69e7ac0a5f1a22ab19aa2abe",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Ca"
+  },
+  {
+   "id": "69e7ac0c5f1a22ab19aa2c4f",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Cha"
+  },
+  {
+   "id": "69e7ac0e5f1a22ab19aa2dbd",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Ja"
+  },
+  {
+   "id": "69e7ac0f5f1a22ab19aa2f50",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Nya"
+  },
+  {
+   "id": "69e7ac115f1a22ab19aa30d2",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Ta"
+  },
+  {
+   "id": "69e7ac125f1a22ab19aa3256",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Tha"
+  },
+  {
+   "id": "69e7ac145f1a22ab19aa33d0",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Da"
+  },
+  {
+   "id": "69e7ac155f1a22ab19aa3557",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Na"
+  },
+  {
+   "id": "69e7ac175f1a22ab19aa36d5",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Pa"
+  },
+  {
+   "id": "69e7ac185f1a22ab19aa3838",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Pha"
+  },
+  {
+   "id": "69e7ac1a5f1a22ab19aa39bf",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Ba"
+  },
+  {
+   "id": "69e7ac1b5f1a22ab19aa3b51",
+   "language": "Tibetan",
+   "title": "Kanjur 'Bum Ma"
+  },
+  {
+   "id": "69e7ac1d5f1a22ab19aa3cbd",
+   "language": "Tibetan",
+   "title": "Kanjur Phal chen Ka"
+  },
+  {
+   "id": "69e7ac1e5f1a22ab19aa3e47",
+   "language": "Tibetan",
+   "title": "Kanjur Phal chen Kha"
+  },
+  {
+   "id": "69e7ac205f1a22ab19aa3fa6",
+   "language": "Tibetan",
+   "title": "Kanjur Phal chen Ga"
+  },
+  {
+   "id": "69e7ac215f1a22ab19aa412c",
+   "language": "Tibetan",
+   "title": "Kanjur Phal chen Nga"
+  },
+  {
+   "id": "69e7ac225f1a22ab19aa42a0",
+   "language": "Tibetan",
+   "title": "Kanjur dKon brtsegs Ka"
+  },
+  {
+   "id": "69e7ac245f1a22ab19aa444c",
+   "language": "Tibetan",
+   "title": "Kanjur dKon brtsegs Kha"
+  },
+  {
+   "id": "69e7ac275f1a22ab19aa4797",
+   "language": "Tibetan",
+   "title": "Kanjur dKon brtsegs Nga"
+  },
+  {
+   "id": "69e7ac2c5f1a22ab19aa4d48",
+   "language": "Tibetan",
+   "title": "Kanjur Shes rab khri pa"
+  },
+  {
+   "id": "69e7ac2f5f1a22ab19aa502e",
+   "language": "Tibetan",
+   "title": "Kanjur Khri brgyad stong pa Kha"
+  },
+  {
+   "id": "69e7ac345f1a22ab19aa553d",
+   "language": "Tibetan",
+   "title": "Kanjur Nyi khri Kha"
+  },
+  {
+   "id": "69e7ac385f1a22ab19aa5a27",
+   "language": "Tibetan",
+   "title": "Kanjur brGyad stong pa"
+  },
+  {
+   "id": "69e7ac3a5f1a22ab19aa5bbf",
+   "language": "Tibetan",
+   "title": "Kanjur Sras sna tshogs"
+  },
+  {
+   "id": "69e7ac3c5f1a22ab19aa5ce8",
+   "language": "Tibetan",
+   "title": "Thor bu dGe sbyor bdun pa'i nyams len sogs"
+  },
+  {
+   "id": "69e7ac3d5f1a22ab19aa5d49",
+   "language": "Tibetan",
+   "title": "Thor bu rNam grangs gsal byed sogs"
+  },
+  {
+   "id": "69e7ac3e5f1a22ab19aa5def",
+   "language": "Tibetan",
+   "title": "Thor bu Pad dkar bka' 'bum kha thor sogs"
+  },
+  {
+   "id": "69e7ac405f1a22ab19aa5e5b",
+   "language": "Tibetan",
+   "title": "Thor bu Las byang me tog phreng mdzes kyi don 'grel sogs"
+  },
+  {
+   "id": "69e7ac425f1a22ab19aa607c",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Pad gling bka' 'bum"
+  },
+  {
+   "id": "69e7ac445f1a22ab19aa6143",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Lha brag phur dbang sogs"
+  },
+  {
+   "id": "69e7ac455f1a22ab19aa618e",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Tshe khrid sogs"
+  },
+  {
+   "id": "69e7ac465f1a22ab19aa61d8",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu bDe mchog sogs"
+  },
+  {
+   "id": "69e7ac475f1a22ab19aa626a",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Tshe khrid rdo phreng chos skor"
+  },
+  {
+   "id": "69e7ac495f1a22ab19aa633e",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Nor rgyam las byang sogs"
+  },
+  {
+   "id": "69e7ac4a5f1a22ab19aa63f4",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu dGongs 'dus chos skor"
+  },
+  {
+   "id": "69e7ac4c5f1a22ab19aa6531",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu mDzod 'grel brgya sbyin thogs nor bu'i 'od snang"
+  },
+  {
+   "id": "69e7ac4d5f1a22ab19aa6607",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Phyag chen chos skor"
+  },
+  {
+   "id": "69e7ac4e5f1a22ab19aa66c5",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Gu ru zhi drag las tshogs"
+  },
+  {
+   "id": "69e7ac505f1a22ab19aa6763",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu bDe mchog sbyin sreg sogs"
+  },
+  {
+   "id": "69e7ac515f1a22ab19aa682a",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu rNam thar lo rgyus dang mtshan brjod 'grel pa"
+  },
+  {
+   "id": "69e7ac525f1a22ab19aa6858",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu bDe mchog sgrub thabs dang mi 'gyur rdo rje gsung"
+  },
+  {
+   "id": "69e7ac545f1a22ab19aa6870",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu brDa sprod pa ka la pa'i 'grel pa"
+  },
+  {
+   "id": "69e7ac555f1a22ab19aa697d",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu dGongs 'dus las byang bsdus pa'i 'grel pa"
+  },
+  {
+   "id": "69e7ac565f1a22ab19aa69d1",
+   "language": "Tibetan",
+   "title": "Neyphug Thor bu Bla ma'i rnal 'byor byin rlabs kun 'dus sogs"
+  },
+  {
+   "id": "69e7ac6c5f1a22ab19aa760a",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa bKa' brgyad Nya"
+  },
+  {
+   "id": "69e7ac715f1a22ab19aa7a8e",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Kha"
+  },
+  {
+   "id": "69e7ac725f1a22ab19aa7bd5",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Ga"
+  },
+  {
+   "id": "69e7ac785f1a22ab19aa809b",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Ja"
+  },
+  {
+   "id": "69e7ac795f1a22ab19aa822a",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Nya"
+  },
+  {
+   "id": "69e7ac7b5f1a22ab19aa83a5",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Ta"
+  },
+  {
+   "id": "69e7ac7c5f1a22ab19aa84e5",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Tha"
+  },
+  {
+   "id": "69e7ac7d5f1a22ab19aa8611",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Da"
+  },
+  {
+   "id": "69e7ac7f5f1a22ab19aa874d",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Na"
+  },
+  {
+   "id": "69e7ac805f1a22ab19aa8870",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus Pa"
+  },
+  {
+   "id": "69e7ac815f1a22ab19aa8980",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa dGongs 'dus dpe ris"
+  },
+  {
+   "id": "69e7ac835f1a22ab19aa8a0e",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu mThong grol zab lam sogs"
+  },
+  {
+   "id": "69e7ac845f1a22ab19aa8b51",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu Mun sel sgron me sogs"
+  },
+  {
+   "id": "69e7ac855f1a22ab19aa8bd7",
+   "language": "Tibetan",
+   "title": "Thor bu lCe sgom nyams len sogs"
+  },
+  {
+   "id": "69e7ac875f1a22ab19aa8c96",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu Phyag rdor dregs pa kun 'dul"
+  },
+  {
+   "id": "69e7ac895f1a22ab19aa8e0e",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu bKa' brgyad sgrub khog"
+  },
+  {
+   "id": "69e7ac8a5f1a22ab19aa8edc",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu Rig 'dzin thugs thig"
+  },
+  {
+   "id": "69e7ac8c5f1a22ab19aa8f60",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu bKa' thang sde lnga"
+  },
+  {
+   "id": "69e7ac8d5f1a22ab19aa9063",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu Chos byung mkhas pa'i dga' ston sogs"
+  },
+  {
+   "id": "69e7ac8e5f1a22ab19aa919d",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu dGongs 'dus padma'i phreng ba"
+  },
+  {
+   "id": "69e7ac905f1a22ab19aa9269",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu Nor rgyam chos skor"
+  },
+  {
+   "id": "69e7ac925f1a22ab19aa935f",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu Nor rgyam chos skor"
+  },
+  {
+   "id": "69e7ac935f1a22ab19aa9451",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu Nor rgyam chos skor"
+  },
+  {
+   "id": "69e7ac955f1a22ab19aa9713",
+   "language": "Tibetan",
+   "title": "Phurdrup Gonpa Thor bu dPag bsam khri shing"
+  },
+  {
+   "id": "69e8053cfdad300064d9cbc1",
+   "language": "Greek",
+   "title": "Δειπνοσοφισταί (Deipnosophistae)"
+  },
+  {
+   "id": "69e80578fdad300064d9dcb5",
+   "language": "Sanskrit",
+   "title": "मानसोल्लास (Mānasollāsa)"
+  },
+  {
+   "id": "69e80581fdad300064d9de19",
+   "language": "Arabic",
+   "title": "كتاب الطبيخ (Kitāb al-Ṭabīkh / Annals of the Caliphs' Kitchens)"
+  },
+  {
+   "id": "69e80627fdad300064d9e2d7",
+   "language": "Greek",
+   "title": "Ἱπποκράτους Ἀφορισμοί (Hippocratic Aphorisms)"
+  },
+  {
+   "id": "69e8062cfdad300064d9e45c",
+   "language": "Greek",
+   "title": "Galeni Librorum Pars Prima (Opera Omnia, Greek)"
+  },
+  {
+   "id": "69e80631fdad300064d9e531",
+   "language": "Greek",
+   "title": "Περὶ ὕλης ἰατρικῆς (De Materia Medica), Vol. 1"
+  },
+  {
+   "id": "69e8063dfdad300064d9e7e3",
+   "language": "Greek",
+   "title": "De Arte Obstetricia (Gynecology)"
+  },
+  {
+   "id": "69e80646fdad300064d9e91e",
+   "language": "Arabic",
+   "title": "القانون في الطب (al-Qānūn fī al-Ṭibb / Canon of Medicine)"
+  },
+  {
+   "id": "69e80652fdad300064d9eb99",
+   "language": "Arabic",
+   "title": "Liber Theoricae necnon Practicae (Kitāb al-Taṣrīf)"
+  },
+  {
+   "id": "69e80657fdad300064d9ece7",
+   "language": "Arabic",
+   "title": "شرح طبيعة الإنسان (Commentary on Anatomy)"
+  },
+  {
+   "id": "69e80662fdad300064d9ed7c",
+   "language": "Sanskrit",
+   "title": "सुश्रुतसंहिता (Suśruta Saṃhitā)"
+  },
+  {
+   "id": "69e80670fdad300064d9ef9d",
+   "language": "Sanskrit",
+   "title": "चरकसंहिता (Caraka Saṃhitā)"
+  },
+  {
+   "id": "69e80677fdad300064d9f438",
+   "language": "Sanskrit",
+   "title": "अष्टाङ्गहृदय (Aṣṭāṅgahṛdayam)"
+  },
+  {
+   "id": "69e8067cfdad300064d9f6e7",
+   "language": "Chinese",
+   "title": "御纂醫宗金鑑 (Golden Mirror of Medicine), Vol. 1"
+  },
+  {
+   "id": "69e80681fdad300064d9f7a0",
+   "language": "Chinese",
+   "title": "御纂醫宗金鑑 (Golden Mirror of Medicine), Vol. 2"
+  },
+  {
+   "id": "69e80685fdad300064d9f84d",
+   "language": "Chinese",
+   "title": "千金要方 (Qiānjīn Yàofāng), Vol. 2"
+  },
+  {
+   "id": "69e80689fdad300064d9f8a4",
+   "language": "Chinese",
+   "title": "千金要方 (Qiānjīn Yàofāng), Vol. 10"
+  },
+  {
+   "id": "69e80690fdad300064d9f8f3",
+   "language": "Tibetan",
+   "title": "བདུད་རྩི་སྙིང་པོ (rGyud bzhi / Four Medical Tantras)"
+  },
+  {
+   "id": "69e80694fdad300064d9fbd1",
+   "language": "Japanese",
+   "title": "解体新書 (Kaitai Shinsho / New Book of Anatomy), Head Vol."
+  },
+  {
+   "id": "69e80698fdad300064d9fc22",
+   "language": "Japanese",
+   "title": "解体新書 (Kaitai Shinsho), Vol. 1"
+  },
+  {
+   "id": "69e8069cfdad300064d9fc55",
+   "language": "Japanese",
+   "title": "解体新書 (Kaitai Shinsho), Vol. 2"
+  },
+  {
+   "id": "69e806b2fdad300064d9fd79",
+   "language": "Egyptian",
+   "title": "The Edwin Smith Surgical Papyrus, Vol. 1"
+  },
+  {
+   "id": "69e806b8fdad300064d9fff6",
+   "language": "Egyptian",
+   "title": "The Edwin Smith Surgical Papyrus, Vol. 2 (Facsimile)"
+  },
+  {
+   "id": "69e806bcfdad300064da0065",
+   "language": "Egyptian",
+   "title": "Papyrus Ebers: The Earliest Medical Work Extant"
+  },
+  {
+   "id": "69e8b0f0839ca3f47ec568c9",
+   "language": "Greek",
+   "title": "Στοιχεῖα (Euclidis Elementa)"
+  },
+  {
+   "id": "69e8b0f8839ca3f47ec56a34",
+   "language": "Greek",
+   "title": "Ἀρχιμήδους Τὰ σωζόμενα (Archimedis Opera)"
+  },
+  {
+   "id": "69e8b0fd839ca3f47ec56c17",
+   "language": "Arabic",
+   "title": "كتاب الجبر والمقابلة (Kitāb al-Jabr)"
+  },
+  {
+   "id": "69e8b109839ca3f47ec56c99",
+   "language": "Sanskrit",
+   "title": "ब्राह्मस्फुटसिद्धान्त (Brāhma-sphuṭa-siddhānta), Vol. 1"
+  },
+  {
+   "id": "69e8b1332ff2a8dc09e75871",
+   "language": "Greek",
+   "title": "Μεγάλη Σύνταξις (Almagest)"
+  },
+  {
+   "id": "69e8b16f2ff2a8dc09e75c69",
+   "language": "Greek",
+   "title": "De Animalibus (Historia Animalium)"
+  },
+  {
+   "id": "69e8b1a22ff2a8dc09e764f9",
+   "language": "Greek",
+   "title": "Γεωγραφικά (Geographica)"
+  },
+  {
+   "id": "69e8b2192ff2a8dc09e765f5",
+   "language": "Greek",
+   "title": "Πλάτωνος Ἅπαντα (Platonis Opera Omnia)"
+  },
+  {
+   "id": "69e8b21f2ff2a8dc09e768ea",
+   "language": "Greek",
+   "title": "Die Fragmente der Vorsokratiker (Presocratic Fragments)"
+  },
+  {
+   "id": "69e8b22b2ff2a8dc09e76a61",
+   "language": "Greek",
+   "title": "Ἐπικτήτου Διατριβαί (Epicteti Dissertationes)"
+  },
+  {
+   "id": "69e8b2352ff2a8dc09e76de6",
+   "language": "Greek",
+   "title": "Τὰ εἰς ἑαυτόν (Meditationes)"
+  },
+  {
+   "id": "69e8b23d2ff2a8dc09e77073",
+   "language": "Greek",
+   "title": "Sextus Empiricus (manuscript)"
+  },
+  {
+   "id": "69e8b24d2ff2a8dc09e77295",
+   "language": "Chinese",
+   "title": "論語 (Analects) — Chinese Classics Vol. 1"
+  },
+  {
+   "id": "69e8b2562ff2a8dc09e774b0",
+   "language": "Chinese",
+   "title": "孟子 (Mencius) — Chinese Classics Vol. 2"
+  },
+  {
+   "id": "69e8b25c2ff2a8dc09e7773b",
+   "language": "Chinese",
+   "title": "道德經 (Dào Dé Jīng)"
+  },
+  {
+   "id": "69e8b2642ff2a8dc09e778a1",
+   "language": "Chinese",
+   "title": "墨子 (Mòzǐ)"
+  },
+  {
+   "id": "69e8b26b2ff2a8dc09e77afc",
+   "language": "Chinese",
+   "title": "荀子 (Xúnzǐ)"
+  },
+  {
+   "id": "69e8b2742ff2a8dc09e77bdb",
+   "language": "Chinese",
+   "title": "韓非子 (Hán Fēizǐ), Vol. 1"
+  },
+  {
+   "id": "69e8b27a2ff2a8dc09e77e4c",
+   "language": "Chinese",
+   "title": "傳習錄 (Chuánxílù / Wang Yangming Collected)"
+  },
+  {
+   "id": "69e8b27f2ff2a8dc09e77ed7",
+   "language": "Sanskrit",
+   "title": "श्रीमद्भगवद्गीता (Bhagavad Gita, 1492 MS)"
+  },
+  {
+   "id": "69e8b2852ff2a8dc09e77f6d",
+   "language": "Sanskrit",
+   "title": "योगसूत्र (Yoga Sūtra)"
+  },
+  {
+   "id": "69e8b28a2ff2a8dc09e77ff4",
+   "language": "Sanskrit",
+   "title": "मूलमध्यमककारिका (Mūlamadhyamakakārikā)"
+  },
+  {
+   "id": "69e8b2962ff2a8dc09e780a7",
+   "language": "Sanskrit",
+   "title": "ब्रह्मसूत्रभाष्य (Brahma Sūtra Bhāṣya)"
+  },
+  {
+   "id": "69e8b29f2ff2a8dc09e78458",
+   "language": "Arabic",
+   "title": "مقدمة ابن خلدون (Muqaddimah)"
+  },
+  {
+   "id": "69e8b2a72ff2a8dc09e7860d",
+   "language": "Arabic",
+   "title": "إحياء علوم الدين (Iḥyāʾ ʿUlūm al-Dīn)"
+  },
+  {
+   "id": "69e8b2ac2ff2a8dc09e7883c",
+   "language": "Arabic",
+   "title": "فصل المقال (Faṣl al-Maqāl)"
+  },
+  {
+   "id": "69e8b2b32ff2a8dc09e788c7",
+   "language": "Arabic",
+   "title": "كتاب الفصوص (Kitāb al-Fuṣūṣ)"
+  },
+  {
+   "id": "69f080be883d181634179c88",
+   "language": "Greek",
+   "title": "The Mimes of Herodas"
+  }
+ ]
+}
