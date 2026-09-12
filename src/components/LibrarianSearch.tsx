@@ -25,7 +25,7 @@ export default function LibrarianSearch({ placeholder = 'Ask the librarian a que
         onChange={(e) => setQ(e.target.value)}
         placeholder={placeholder}
         aria-label="Ask the librarian"
-        className="flex-1 min-w-0 bg-transparent text-sm text-primary placeholder-muted focus:outline-none"
+        className="flex-1 min-w-0 bg-transparent text-base sm:text-sm text-primary placeholder-muted focus:outline-none"
       />
       <button type="submit" aria-label="Ask" className="shrink-0 text-muted hover:text-accent-rust transition-colors">
         <ArrowRight className="w-4 h-4" />

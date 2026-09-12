@@ -201,6 +201,11 @@ export async function extractWithGemini(
     ? { base64: imageData, mimeType: getMimeType(imageUrl, null) }
     : { base64: imageData.base64, mimeType: imageData.mimeType };
 
+  // usage-ok: this function RETURNS its token counts (input, output including
+  // thoughts) and the image-extraction worker writes the row from them, with the
+  // book and page context this layer does not have — see the
+  // `worker/image-extraction` and `hetzner/image-extract-worker` endpoints in
+  // gemini_usage. Logging here too would double-count the busiest metered lane.
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
@@ -216,6 +221,12 @@ export async function extractWithGemini(
         generationConfig: {
           temperature: 0.1,
           maxOutputTokens: 2048,
+          // Gemini 3.x thinks by default and bills thought tokens at the output
+          // rate, while candidatesTokenCount excludes them — so an unconfigured
+          // call spends money the meter cannot see (#4581, 17x in Aug 2026).
+          // ai.ts's six entry points were fixed in #4591; this REST call was not,
+          // and it is the busiest unattended Gemini path we run (#4599).
+          thinkingConfig: { thinkingBudget: 0 },
         }
       })
     }
@@ -233,7 +244,10 @@ export async function extractWithGemini(
   const usageMetadata = data.usageMetadata;
   const usage = {
     inputTokens: usageMetadata?.promptTokenCount || 0,
-    outputTokens: usageMetadata?.candidatesTokenCount || 0,
+    // Count thought tokens too: if thinking is ever re-enabled here, the meter
+    // sees it instead of going blind again (#4581).
+    outputTokens: (usageMetadata?.candidatesTokenCount || 0) +
+      (usageMetadata?.thoughtsTokenCount || 0),
   };
 
   // Parse JSON from response

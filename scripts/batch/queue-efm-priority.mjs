@@ -7,11 +7,17 @@
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/queue-efm-priority.mjs --dry-run
  *   set -a; source .env.production.local; set +a; node scripts/queue-efm-priority.mjs
+ *
+ * Options:
+ *   --dry-run        Show what would be queued without queuing
+ *   --top=N          How many priority books to consider (default: 100)
+ *   --reason="..."   Why this batch is being run by hand (recorded on each job, #4336)
  */
 
 import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 const OCR_QUEUE_URL = process.env.SQS_PAGE_OCR_QUEUE_URL;
 const TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
@@ -21,6 +27,8 @@ const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const TOP_N = parseInt(args.find(a => a.startsWith('--top='))?.split('=')[1] || '100');
+const INITIATED_BY = 'script:queue-efm-priority';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 async function main() {
   if (!MONGODB_URI) throw new Error('MONGODB_URI not set');
@@ -130,7 +138,8 @@ async function main() {
       status: 'pending',
       progress: { total: pageIds.length, completed: 0, failed: 0 },
       config: { page_ids: pageIds, model: 'gemini-3-flash-preview', language: book.language || 'auto-detect' },
-      initiated_by: 'script:queue-efm-priority',
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date()
     });
@@ -204,7 +213,8 @@ async function main() {
       status: 'pending',
       progress: { total: pageIds.length, completed: 0, failed: 0 },
       config: { page_ids: pageIds, model: 'gemini-3-flash-preview', language: book.language || 'auto-detect' },
-      initiated_by: 'script:queue-efm-priority',
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date()
     });

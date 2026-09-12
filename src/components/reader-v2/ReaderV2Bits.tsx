@@ -212,6 +212,24 @@ export function ReaderProse({
     return <GatedPane page={page} />;
   }
 
+  // Honest-unavailable (#4523): a transcription was ATTEMPTED but is not
+  // reliably legible. Withhold BOTH panes (a translation of untrustworthy OCR
+  // is untrustworthy too) and show the scan as authoritative. Must come before
+  // the empty check — `data` is retained for provenance, so the pane is NOT
+  // empty; rendering it would serve exactly the text we judged unreliable.
+  if (page.ocr?.unreadable) {
+    return <PaneEmptyState page={page} book={book} kind={kind} unreadable />;
+  }
+
+  // Withheld translation (#4523): the transcription beside this is GOOD and is
+  // being shown — it is the English that came down, because it was made from an
+  // older reading the re-OCR replaced. Only the translation pane; saying
+  // "not transcribed yet" or "ready to translate" here would both be false, and
+  // the OCR pane must keep rendering normally.
+  if (kind === 'translation' && page.translation_withheld) {
+    return <PaneEmptyState page={page} book={book} kind={kind} withheld />;
+  }
+
   // An empty pane is several different situations wearing one sentence: a page
   // nobody has transcribed, a page transcribed but not translated, a blank
   // flyleaf. They call for different words and, for one of them, a way to ask

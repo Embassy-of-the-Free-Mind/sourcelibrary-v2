@@ -16,10 +16,11 @@ import CollectionBookCard, { type CollectionBook } from '@/components/Collection
 import MycoSlider, { type MiniBook } from './_components/MycoSlider';
 import MycoMasonry from './_components/MycoMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
-import MycoAnchorBar from './_components/MycoAnchorBar';
+import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
 import { getImageFraming } from '@/lib/image-framing';
-import LibrarianSearch from './_components/LibrarianSearch';
+import { countGalleryImages, galleryFilter, galleryHref, NO_PER_BOOK_CAP, type GalleryScope } from '@/lib/gallery-scope';
+import LibrarianSearch from '@/components/LibrarianSearch';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 /*
@@ -124,12 +125,19 @@ async function getMycologyData() {
   ]);
 
   const bookIds = bookIdDocs.map((d) => d.id as string);
-  const galleryRaw = bookIds.length
-    ? await withTimeout(db.collection('gallery_images').find(
-      { book_id: { $in: bookIds.slice(0, 200) }, gallery_quality: { $gte: 0.5 } },
-      { projection: { _id: 0 }, maxTimeMS: 5000 },
-    ).sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, [])
-    : [];
+  // One scope drives the preview, the count and the browse link, so they cannot
+  // disagree — see src/lib/gallery-scope for the five bugs that motivated it.
+  const scope: GalleryScope = { collection: SLUG, bookIds, maxPerBook: NO_PER_BOOK_CAP, minQuality: 0.5 };
+  const galleryPreviewFilter = galleryFilter(scope);
+  const [galleryRaw, galleryCount] = bookIds.length
+    ? await Promise.all([
+      withTimeout(db.collection('gallery_images').find(galleryPreviewFilter, { projection: { _id: 0 }, maxTimeMS: 5000 })
+        .sort({ gallery_quality: -1 }).limit(60).toArray() as Promise<Record<string, unknown>[]>, 5000, []),
+      // The array above is capped at 60. Reporting its length as the plate count
+      // told readers this collection had 60 plates when it has thousands.
+      withTimeout(countGalleryImages(db as never, scope), 5000, 0),
+    ])
+    : [[] as Record<string, unknown>[], 0];
 
   const firstTranslations = firstRaw.map(toMini);
   const sourceWorks = sourceRaw.map(toMini);
@@ -145,7 +153,8 @@ async function getMycologyData() {
 
   return {
     collection: JSON.parse(JSON.stringify(collection)) as Record<string, unknown>,
-    firstTranslations, sourceWorks, ftCount, total,
+    firstTranslations, sourceWorks, ftCount, total, galleryCount,
+    galleryBrowseHref: galleryHref(scope),
     dateRange: yr && yr.min && yr.max ? { min: yr.min, max: yr.max } : null,
     languages, gallery, featured, featuredPages, parent,
   };
@@ -235,14 +244,14 @@ export default async function MycologyCollectionPage() {
   }
   if (!data) notFound();
 
-  const { collection, firstTranslations, sourceWorks, ftCount, total, dateRange, languages, gallery, featured, featuredPages, parent } = data;
+  const { collection, firstTranslations, sourceWorks, ftCount, total, galleryCount, galleryBrowseHref, dateRange, languages, gallery, featured, featuredPages, parent } = data;
   const parentHref = parent ? `/collections/${parent.slug}` : '/collections';
   const quoteFraming = await getImageFraming('mycology-quote-bg');
 
   // Quote background: the Battarra title-page engraving (lynx, owl, mushrooms),
   // cropped to the illustration with the Greek-motto banner removed.
   const quoteBg = '/collections/mycology/quote-bg.webp';
-  const galleryTotal = gallery.length;
+  const galleryTotal = galleryCount;
   const galleryPlates = gallery
     .filter((g) => imgUrl(g))
     .slice(0, 20)
@@ -293,19 +302,28 @@ export default async function MycologyCollectionPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">Fungi &amp; Mycology</h1>
           <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">Fungi built the soil that built our world. These are the books that first studied them.</p>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{total.toLocaleString('en-US')} works</span>
-            {ftCount > 0 && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>}
-            {dateRange && <span className="text-xs sm:text-sm text-white/90 border border-white/25 px-3 py-1">{dateRange.min} – {dateRange.max}</span>}
-            {languages.length > 0 && <span className="text-xs sm:text-sm text-white/80 border border-white/20 px-3 py-1">{languages.join(' · ')}</span>}
+            {/* Stat chips borrow the book hero's colour language so the two read as
+                one system: soft blue for scope, green for language coverage, gold
+                for the first-translation claim. Same tones as book/[id] page.tsx. */}
+            <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e8e2d6', borderColor: 'rgba(232,226,214,0.3)' }}>{total.toLocaleString('en-US')} works</span>
+            {ftCount > 0 && (
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#e0b46a', borderColor: 'rgba(224,180,106,0.42)' }}>{ftCount} first translation{ftCount === 1 ? '' : 's'}</span>
+            )}
+            {dateRange && (
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#8fbfe6', borderColor: 'rgba(143,191,230,0.4)' }}>{dateRange.min} – {dateRange.max}</span>
+            )}
+            {languages.length > 0 && (
+              <span className="text-xs sm:text-sm px-3 py-1 border" style={{ color: '#86c98f', borderColor: 'rgba(134,201,143,0.4)' }}>{languages.join(' · ')}</span>
+            )}
           </div>
         </div>
       </section>
 
       {/* ===== Anchor row (client: jump collapse + Share/Embed popovers) ===== */}
-      <MycoAnchorBar sections={SECTIONS} slug={SLUG} />
+      <CollectionAnchorBar sections={SECTIONS} slug={SLUG} />
 
       {/* ===== Introduction ===== */}
-      <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-4">
+      <section id="introduction" className="bg-warm border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex flex-col md:flex-row-reverse md:items-start gap-8 lg:gap-12">
             <div className="font-body flex-1 min-w-0">
@@ -336,7 +354,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== First translations — slider ===== */}
       {firstTranslations.length > 0 && (
-        <section id="translations" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="translations" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex items-end justify-between gap-4 mb-1">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">First translations</h2>
@@ -350,7 +368,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Featured work ===== */}
       {featured && (
-        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-4">
+        <section id="featured" className="bg-warm border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <div className="flex flex-col md:flex-row md:items-start gap-8 lg:gap-14">
               {/* Cover (desktop: left, 33% of section width, max 80vh tall, 2:3 — matches
@@ -407,7 +425,7 @@ export default async function MycologyCollectionPage() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href={featuredHref} className={BTN_DARK}>Read in full <ArrowRight className="w-4 h-4" /></Link>
-                  <Link href={`/gallery?collection=${SLUG}`} className={BTN_OUTLINE}>Browse all 612 plates <ArrowRight className="w-3.5 h-3.5" /></Link>
+                  <Link href={galleryBrowseHref} className={BTN_OUTLINE}>Browse all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-3.5 h-3.5" /></Link>
                 </div>
               </div>
             </div>
@@ -417,7 +435,7 @@ export default async function MycologyCollectionPage() {
 
       {/* ===== Gallery — all visual material ===== */}
       {gallery.length > 0 && (
-        <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-4">
+        <section id="gallery" className="bg-cream border-b border-border-light scroll-mt-16">
           <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
             <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">Gallery</h2>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">Plates, figures, engravings, and other visual material from across the collection.</p>
@@ -433,14 +451,14 @@ export default async function MycologyCollectionPage() {
               <MycoMasonry plates={galleryPlates} />
             </div>
             <div className="mt-6 flex justify-center">
-              <Link href={`/gallery?collection=${SLUG}`} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
+              <Link href={galleryBrowseHref} className={BTN_DARK}>View all {galleryTotal.toLocaleString('en-US')} plates <ArrowRight className="w-4 h-4" /></Link>
             </div>
           </div>
         </section>
       )}
 
       {/* ===== Ask the librarian ===== */}
-      <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-4">
+      <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
           <div className="w-full max-w-[520px] mx-auto md:mx-0 shrink-0 lg:w-auto lg:max-w-none">
@@ -461,7 +479,7 @@ export default async function MycologyCollectionPage() {
       </section>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
-      <section id="works" className="bg-cream border-b border-border-light scroll-mt-4">
+      <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <div className="flex items-end justify-between gap-4 mb-1">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">Works in this collection</h2>
@@ -548,7 +566,7 @@ export default async function MycologyCollectionPage() {
       />
 
       {/* ===== Get involved ===== */}
-      <section id="involved" className="bg-cream scroll-mt-4">
+      <section id="involved" className="bg-cream scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16">
           <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">Get involved</h2>
           <p className="text-sm text-muted mb-6 max-w-2xl">Source Library is built in the open. Every contribution keeps these works free to read.</p>
