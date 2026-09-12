@@ -25,7 +25,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
-import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
@@ -1310,14 +1310,17 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
         { 'ocr.data': null },
         { 'ocr.data': '' },
       ],
-      $and: [{
-        $or: [
-          { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-          { cropped_photo: { $exists: true, $nin: [null, ''] } },
-          { photo: { $exists: true, $ne: null } },
-          { photo_original: { $exists: true, $ne: null } },
-        ]
-      }]
+      $and: [
+        {
+          $or: [
+            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+            { cropped_photo: { $exists: true, $nin: [null, ''] } },
+            { photo: { $exists: true, $ne: null } },
+            { photo_original: { $exists: true, $ne: null } },
+          ]
+        },
+        notBlockedForModel(ocrModel),
+      ]
     })
     .sort({ page_number: 1 })
     .limit(pageLimit)
@@ -1678,13 +1681,16 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
         page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
         'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
         $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
-        $and: [{
-          $or: [
-            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-            { cropped_photo: { $exists: true, $nin: [null, ''] } },
-            { photo: { $exists: true, $ne: null } },
-          ]
-        }]
+        $and: [
+          {
+            $or: [
+              { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+              { cropped_photo: { $exists: true, $nin: [null, ''] } },
+              { photo: { $exists: true, $ne: null } },
+            ]
+          },
+          notBlockedForModel(model),
+        ]
       })
       .sort({ page_number: 1 })
       .limit(remaining)
@@ -4186,9 +4192,20 @@ Rules:
         }
 
         if (isComplete) {
-          // Check for remaining un-OCR'd pages
+          // Check for remaining un-OCR'd pages.
+          //
+          // Permanently-blocked pages are NOT remaining work — they are work that
+          // will never succeed, and counting them here is what kept books one page
+          // short of done circling forever. The selection query above already
+          // refuses to submit them, so a book whose only gap is blocked pages was
+          // resubmitting nothing and being told it was incomplete for it. Excluding
+          // them lets such a book reach `ocr_complete` and go on to translation:
+          // the Tabiena Summa sat at 1002/1003 pages with 0 translated for a month
+          // on the strength of one unreadable folio.
           const remainingOcr = await db.collection('pages').countDocuments({
             book_id: book.id,
+            'ocr.recitation_blocked': { $ne: true },
+            'ocr.fail_blocked': { $ne: true },
             $or: [
               { photo: { $exists: true, $ne: null } },
               { photo_original: { $exists: true, $ne: null } },

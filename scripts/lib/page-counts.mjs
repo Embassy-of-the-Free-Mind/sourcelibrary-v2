@@ -109,6 +109,7 @@ export function isTranslatablePageForCount(page) {
   if (page?.translation?.recitation_blocked === true) return false;
   if (page?.translation?.safety_blocked === true) return false;
   if (page?.ocr?.recitation_blocked === true) return false;
+  if (page?.ocr?.fail_blocked === true) return false;
   return true;
 }
 
@@ -121,6 +122,7 @@ const TRANSLATABLE_COND = {
     { $ne: ['$translation.recitation_blocked', true] },
     { $ne: ['$translation.safety_blocked', true] },
     { $ne: ['$ocr.recitation_blocked', true] },
+    { $ne: ['$ocr.fail_blocked', true] },
   ],
 };
 
@@ -227,4 +229,35 @@ export function countVisiblePageStats(pages) {
     translated_translatable: translatable.filter(hasTranslation).length,
     blank: visible.filter(p => NEVER_TRANSLATED_PAGE_TYPES.includes(p?.page_type ?? '') && hasOcr(p)).length,
   };
+}
+
+/**
+ * Mongo clause: pages this MODEL has not permanently given up on (#4674).
+ *
+ * A give-up must not outlive the model that caused it. When we blocked per-page,
+ * 959 of the 967 blocked pages had not been retried in over a month — and half of
+ * a re-probed sample read cleanly on the first attempt against the current model.
+ * They were not unreadable; they were blocked by a transcriber we no longer run.
+ *
+ * So the block is scoped: a page is out of the queue only while the model that
+ * failed it is still the model we would send it to. Point the pipeline at a new
+ * model and the whole backlog becomes eligible again, with no sweep to remember
+ * to run. Pages blocked before this field existed carry no model and stay
+ * blocked — deliberately: re-opening 967 pages is a spend decision, not a
+ * migration side effect.
+ */
+export function notBlockedForModel(model) {
+  return {
+    $or: [
+      { 'ocr.fail_blocked': { $ne: true } },
+      { 'ocr.fail_blocked_model': { $nin: [null, model] } },
+    ],
+  };
+}
+
+/** JS twin of notBlockedForModel(), for callers holding the page in memory. */
+export function isBlockedForModel(page, model) {
+  if (page?.ocr?.fail_blocked !== true) return false;
+  const blockedBy = page?.ocr?.fail_blocked_model;
+  return blockedBy == null || blockedBy === model;
 }
