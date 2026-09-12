@@ -18,6 +18,8 @@ interface ProcessingPanelProps {
   queueing: boolean;
   brightness?: number;
   previewUrl?: string | null;
+  /** Optional free text: why this batch is being run by hand (#4336). */
+  reason?: string;
   onActionChange: (action: ActionType) => void;
   onOverwriteModeChange: (overwrite: boolean) => void;
   onSelectAll: () => void;
@@ -27,6 +29,7 @@ interface ProcessingPanelProps {
   onEditPrompt: (action: JobType, value: string) => void;
   onStartProcess: () => void;
   onBrightnessChange?: (value: number) => void;
+  onReasonChange?: (value: string) => void;
 }
 
 const actionIcons: Record<ActionType, any> = {
@@ -61,6 +64,7 @@ export default function ProcessingPanel({
   queueing,
   brightness = 1.0,
   previewUrl,
+  reason = '',
   onActionChange,
   onOverwriteModeChange,
   onSelectAll,
@@ -69,7 +73,8 @@ export default function ProcessingPanel({
   onSelectPrompt,
   onEditPrompt,
   onStartProcess,
-  onBrightnessChange
+  onBrightnessChange,
+  onReasonChange
 }: ProcessingPanelProps) {
   const isBrightnessAction = action === 'adjust_images';
 
@@ -230,6 +235,26 @@ export default function ProcessingPanel({
           <p className="text-xs text-stone-400">
             Use {'{language}'} and {'{target_language}'} as placeholders. Changes apply to this batch only.
           </p>
+        </div>
+      )}
+
+      {/* Reason — why this is being run by hand. Optional, never a gate: the point is
+          that "there is always a reason" survives the run (#4336). Not shown for
+          brightness, which writes no job row. */}
+      {!isBrightnessAction && onReasonChange && (
+        <div className="flex items-center gap-2">
+          <label htmlFor="job-reason" className="text-sm text-stone-600 whitespace-nowrap">
+            Reason:
+          </label>
+          <input
+            id="job-reason"
+            type="text"
+            value={reason}
+            maxLength={500}
+            onChange={e => onReasonChange(e.target.value)}
+            placeholder="Optional — why by hand? (e.g. reader request, bad OCR on plates)"
+            className="flex-1 px-3 py-1.5 text-sm bg-white border border-accent-gold/20 rounded-lg text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
+          />
         </div>
       )}
 

@@ -31,7 +31,18 @@ const EDITORIAL_WRAPPERS =
   // Tablet, Code of Hammurabi, Neo-Assyrian Medical Prescriptions, Manishtusu
   // Obelisk) — zero hits in a random 30,240-page sample. Small, but a fabricated
   // citation is a fabricated citation.
-  + '|condition|period|surface|genre';
+  + '|condition|period|surface|genre'
+  // `<lacuna>` (#4195 item 5, #3591, #4584) states that a REGION of an otherwise
+  // readable page carries no legible source — "20 lines of hieroglyphic text, not
+  // transcribed". Its content is a description OF the gap, never the page's own
+  // words, so it is dropped content-and-all like any other editorial wrapper.
+  // This is precisely why it is a distinct tag and not `<unclear>`: `<unclear>`
+  // wraps a best-guess READING and unwraps to body text everywhere, so a lacuna
+  // description carried in an `<unclear>` would be quoted, counted, embedded and
+  // exported as if it were text on the page. The reader still SHOWS the gap —
+  // see NotesRenderer — because a silently dropped region reads as a complete
+  // page, which is the failure this whole tag exists to prevent.
+  + '|lacuna';
 
 function flattenMarkdownTables(text) {
   return text

@@ -10,11 +10,12 @@
  */
 
 import { Db } from 'mongodb';
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 import { logAuditEvent } from './audit-logger';
 import { logMetadataChange } from './book-changelog';
 import { generateUniqueBookSlug, isPlaceholderSlug } from './slugify';
+import { getGeminiClient } from './gemini-client';
 
 const MODEL = 'gemini-3-flash-preview';
 const MAX_OCR_PAGES = 25;
@@ -213,7 +214,7 @@ export async function enrichBookMetadata(
   }));
 
   // Call Gemini
-  const client = new GoogleGenerativeAI(apiKey);
+  const client = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' });
   const model = client.getGenerativeModel({
     model: MODEL,
     safetySettings: SAFETY_SETTINGS,
@@ -333,16 +334,31 @@ export async function enrichBookMetadata(
   const currentLang = (book.language as string) || 'Unknown';
   const aiLang = parsed.language || '';
 
+  // Provenance goes in ONE typed entry, not three private fields (2026-09-10). This used to write
+  // `language_source` + `language_confidence` + `ai_detected_language`, which between them reached
+  // 3,019 / 3,019 / 1,733 books and were read by NOTHING — a decision recorded where no one would
+  // find it. `field_provenance.language` is the canonical home (src/lib/resolve-language.ts), and
+  // `.conflict` is the documented way to find disagreements after a bulk run.
   if (aiLang && currentLang === 'Unknown') {
     updates.language = aiLang;
-    updates.language_source = 'gemini_text';
-    updates.language_confidence = confidence;
+    updates['field_provenance.language'] = {
+      source: 'enrichment', value: aiLang, chosen_from: 'gemini_text', confidence,
+      claims: [{ source: 'gemini_text', value: aiLang }], date: now.toISOString(),
+    };
     changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
   } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
-    // Don't overwrite, but record the discrepancy for review
-    updates.language_source = 'gemini_text';
-    updates.language_confidence = confidence;
-    updates.ai_detected_language = aiLang;
+    // Don't overwrite — many "mismatches" are intentional. Record BOTH claims and mark the conflict.
+    // Deliberately not setting `language_review`: that queue already holds ~1,519 live books with
+    // nothing draining it and a weekly cron refilling it, so adding machine-generated volume makes
+    // it less usable, not more. A conflict here is found by querying field_provenance.language.conflict.
+    updates['field_provenance.language'] = {
+      source: 'enrichment', value: currentLang, chosen_from: 'catalogue', confidence, conflict: true,
+      claims: [
+        { source: 'catalogue', value: currentLang },
+        { source: 'gemini_text', value: aiLang },
+      ],
+      date: now.toISOString(),
+    };
   }
 
   // Author: auto-update if Unknown or missing

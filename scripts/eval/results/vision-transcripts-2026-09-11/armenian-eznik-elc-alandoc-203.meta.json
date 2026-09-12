@@ -1,0 +1,1 @@
+{"model": "google-vision", "detectedLanguages": [{"languageCode": "hy", "confidence": 0.9545275}, {"languageCode": "en", "confidence": 0.032721143}], "meanConfidence": 0.766, "minConfidence": 0.398, "blocks": 10, "elapsed": 796, "units": 1, "cost": 0.0015, "error": null}

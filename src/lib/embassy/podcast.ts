@@ -15,6 +15,7 @@
  */
 
 import { GoogleGenAI } from '@google/genai';
+import { logAiUsage } from '@/lib/log-ai-usage';
 import { getDb } from '@/lib/mongodb';
 import { storagePut } from '@/lib/storage';
 import { ObjectId } from 'mongodb';
@@ -164,11 +165,13 @@ async function generateScript(
   const draftPrompt = promptFn(topic, findingsText, findings);
 
   // Pass 1: Draft
+  const draftStartedAt = Date.now();
   const draftResponse = await ai.models.generateContent({
     model: SCRIPT_MODEL,
     contents: draftPrompt,
     config: { temperature: format === 'brief' ? 0.6 : 0.85 },
   });
+  recordPodcastUsage(SCRIPT_MODEL, draftResponse.usageMetadata, draftStartedAt);
 
   const draft = draftResponse.text;
   if (!draft) throw new Error('Script draft returned empty response');
@@ -177,13 +180,38 @@ async function generateScript(
   if (format === 'brief') return draft;
 
   const critiquePrompt = buildCritiquePrompt(draft, format);
+  const revisedStartedAt = Date.now();
   const revisedResponse = await ai.models.generateContent({
     model: SCRIPT_MODEL,
     contents: critiquePrompt,
     config: { temperature: 0.7 },
   });
+  recordPodcastUsage(SCRIPT_MODEL, revisedResponse.usageMetadata, revisedStartedAt);
 
   return revisedResponse.text || draft;
+}
+
+/**
+ * Record what a podcast generation call cost (#4599).
+ *
+ * Podcast script and TTS calls are admin-triggered and low-volume, but they run
+ * on the most expensive models we use and they were writing no usage row at all.
+ * `logAiUsage` is the request-path store (Mongo `ai_usage`), same as the
+ * librarian and explain; it is fire-and-forget and never fails the request.
+ */
+function recordPodcastUsage(
+  model: string,
+  usage: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } | undefined,
+  startedAt: number,
+): void {
+  logAiUsage({
+    feature: 'podcast',
+    model,
+    inputTokens: usage?.promptTokenCount ?? 0,
+    outputTokens: (usage?.candidatesTokenCount ?? 0) + (usage?.thoughtsTokenCount ?? 0),
+    ms: Date.now() - startedAt,
+    ok: true,
+  });
 }
 
 // ── Format-Specific Prompts ──────────────────────────────────────────
@@ -354,11 +382,13 @@ async function generateAudio(
     ? `TTS the following conversation between ${HOST_A} and ${HOST_B}. ${styleNote}\n\n${script}`
     : `TTS the following narration by ${NARRATOR}. ${styleNote}\n\n${script}`;
 
+  const ttsStartedAt = Date.now();
   const response = await ai.models.generateContent({
     model: TTS_MODEL,
     contents: prompt,
     config,
   });
+  recordPodcastUsage(TTS_MODEL, response.usageMetadata, ttsStartedAt);
 
   const candidate = response.candidates?.[0];
   const part = candidate?.content?.parts?.[0];

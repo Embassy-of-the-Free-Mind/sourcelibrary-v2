@@ -428,11 +428,40 @@ async function main() {
   // SECTION 5 — Notable gaps
   // -----------------------------------------------------------------
   print(`## 5. Instrumentation gaps surfaced by this run`);
+
+  // Shortlink arrivals come from the server-side `shortlink_visit` event
+  // (#2047), not from pageviews: /q/<code> answers 302 before any page renders,
+  // so the client-side /api/track call never fires and the pageview count below
+  // only ever caught the handful of crawlers that log the redirect itself.
+  const shortlinkVisits = await db.collection('analytics_events').aggregate([
+    { $match: { event: 'shortlink_visit', timestamp: { $gte: SINCE } } },
+    { $group: { _id: { $ifNull: ['$traffic_class', 'unclassified'] }, n: { $sum: 1 } } },
+  ]).toArray();
+  const visitsBy = new Map(shortlinkVisits.map((r) => [r._id, r.n]));
+  const humanVisits = visitsBy.get('human') || 0;
+  const totalVisits = shortlinkVisits.reduce((a, r) => a + r.n, 0);
+  if (totalVisits === 0) {
+    print(`- shortlink_visit events: 0 — either nobody opened a /q/ link in this window, or the route logging regressed (src/lib/shortlink-visit-log.ts)`);
+  } else {
+    const breakdown = [...visitsBy.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k}=${n}`).join(', ');
+    print(`- shortlink_visit events: ${totalVisits.toLocaleString()} total, ${humanVisits.toLocaleString()} human (${breakdown})`);
+    const topLinks = await db.collection('analytics_events').aggregate([
+      { $match: { event: 'shortlink_visit', traffic_class: 'human', timestamp: { $gte: SINCE } } },
+      { $group: { _id: { book: '$book_id', page: '$page_number' }, n: { $sum: 1 } } },
+      { $sort: { n: -1 } },
+      { $limit: 10 },
+    ]).toArray();
+    if (topLinks.length) {
+      print(``);
+      print(table(topLinks.map((r) => [r._id.book || '(unknown)', r._id.page ?? '-', r.n]), ['book_id', 'page', 'visits']));
+      print(``);
+    }
+  }
   const shortlinkHits = kindHits.get('shortlink') || 0;
-  print(`- /q/<code> shortlink hits captured in pageviews: ${shortlinkHits} (likely undercount — shortlinks may redirect before pageview fires)`);
+  print(`- /q/<code> hits that also produced a pageview row: ${shortlinkHits} (expected to be ~0; the redirect fires first)`);
   const apiHits = kindHits.get('api') || 0;
   print(`- /api/* pageview hits: ${apiHits} (API endpoints are not the source of truth for usage)`);
-  print(`- No client-side "quote copied", "citation exported", or "shortlink opened" events`);
+  print(`- No client-side "quote copied" or "citation exported" events`);
   print(`- search_queries has its own ip_hash separate from analytics_events.ip — can't trivially join`);
   print(``);
 

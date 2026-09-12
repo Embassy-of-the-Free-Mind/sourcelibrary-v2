@@ -72,3 +72,37 @@ Same family as the `archived_photo` invariant in `CLAUDE.md` (a marker that reco
 becomes its own skip condition) and `archive-fetch-failures.md`. Repairing the existing
 backlog means re-running enrichment at scale — budget-dial work (#3737), visible books
 first.
+
+## "Complete" must mean the work is FINISHED, not that some output exists (#4661)
+
+Phase 9 decided completion with a floor: anything above **10%** OCR coverage was stamped
+`complete`. The preview pass transcribes the first **25 pages**, so a 250-page book sat
+at exactly 10%, cleared the floor, and finalized as done — after which it was invisible
+to every later pass, because the OCR queue reads only `archive_complete`.
+
+Measured 2026-09-04: **13,329 books** (13,318 visible to readers) stamped `complete`
+with ≤30 of >50 pages transcribed. They hold 1,870,238 pages of which 322,861 are
+transcribed — **1.55M pages never read**, in books the pipeline believed it had
+finished. Control, run because a number that size is usually a definition problem:
+11,387 `complete` books have ≥90% OCR, so the status is normally honest.
+
+**The tell is that it does not look like a failure.** A book showing 25 of 250 pages
+reads as a *curatorial choice* — "we hold it, we didn't translate it" — not as a dropped
+queue. That is why it survived: nothing was red, no job errored, and the reader-facing
+page was merely thin. When you find a book that looks deliberately un-translated, check
+`pages_ocr` against `pages_count` before believing the story.
+
+**The rule, now executable:** `scripts/lib/finalize-decision.mjs` (`decideFinalize`).
+This doc stated the principle for months and did not prevent the bug, because the logic
+lived inline in a 5,400-line worker where nothing could test it. Extracting it was the
+fix; the prose is now just the pointer.
+
+Two thresholds, deliberately not one — ≥90% completes (the canonical readable bar, not a
+second invented one), <50% requeues to `archive_complete`, and the 50–90% band completes
+on purpose because those books have usually hit pages that will never transcribe
+(damage, blanks, RECITATION blocks). **A requeue must be bounded**: only continue while
+the OCR count is still growing, or the state machine is an infinite loop.
+
+The 13,329 existing books are NOT repaired by that fix — finalize only revisits
+`cover_selected`. Requeuing them queues ~$8,000 of OCR and translation behind the next
+open valve, which is actuation two hops upstream of the spend and belongs to a human.

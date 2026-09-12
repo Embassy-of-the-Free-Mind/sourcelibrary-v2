@@ -46,9 +46,15 @@
  * E. Absence is reported, never silently skipped. A vendor we cannot read
  *    prints as UNREADABLE with the reason — an omitted line reads as $0.
  *
+ * F. There are TWO `gemini_usage` stores (Supabase primary, Mongo fallback) and
+ *    they are DISJOINT per row. Reading one is #3826, and this script did it
+ *    until 2026-09-05 — reporting August as $499.74/154,888 calls when both
+ *    stores together hold $2,316.68/305,800. An unreadable store now prints
+ *    UNREADABLE and suppresses the reconciliation, per trap E.
+ *
  * EXIT CODES
  *   0  reconciled within tolerance, no drift
- *   1  usage error / could not run at all
+ *   1  usage error / could not run at all / a usage store was unreadable
  *   2  PRICE DRIFT: MODEL_PRICING disagrees with Google's catalogue, or a model
  *      with real traffic has no price entry. This is the CI-usable signal.
  *
@@ -214,20 +220,144 @@ async function billedInput(token, projectId) {
 }
 
 // ─────────────────────────────────────────── our own meters
+//
+// There are TWO `gemini_usage` stores and they are DISJOINT per row: the
+// logger writes Supabase first and falls back to Mongo only when the service
+// key is missing or the write errors (`scripts/workers/lib/supabase-usage-logger.mjs`,
+// `src/lib/gemini-logger.ts`). Sampled 100 recent Mongo rows across four days
+// 2026-08-05 → 2026-09-04: 0 of them exist in Supabase.
+//
+// Reading ONE store is the #3826 failure, and until now this script — the
+// instrument built to catch a blind meter — was making it. It reported August
+// 2026 as 154,888 calls / $499.74 (Mongo only) when the two stores together
+// hold 305,800 calls / $2,316.68. That understated metered spend 4.6x, and so
+// overstated the metered-vs-billed gap as 11.1x when it is 2.4x, and reported
+// meter coverage as 37% when it is 73%.
+//
+// FAIL LOUDLY, never quietly: a store we cannot read prints UNREADABLE and
+// suppresses the reconciliation line. A half-read meter presented as "the
+// meter" is worse than no number — it is the exact shape of the bug this file
+// exists to detect.
 
-async function meteredCost(db) {
+/** Mongo fallback store, by model and by endpoint. */
+async function meteredMongo(db) {
   const rows = await db.collection('gemini_usage').aggregate([
     { $match: { timestamp: { $gte: start, $lt: end } } },
-    { $group: { _id: '$model', calls: { $sum: 1 }, cost: { $sum: '$cost_usd' },
+    { $group: { _id: { model: '$model', endpoint: '$endpoint', status: '$status' },
+                calls: { $sum: 1 }, cost: { $sum: '$cost_usd' },
                 inTok: { $sum: '$input_tokens' }, outTok: { $sum: '$output_tokens' } } },
   ], { allowDiskUse: true }).toArray();
-  const byModel = {};
-  let calls = 0, cost = 0;
-  for (const r of rows) {
-    byModel[r._id || 'unknown'] = { calls: r.calls, cost: r.cost || 0, inTok: r.inTok || 0, outTok: r.outTok || 0 };
-    calls += r.calls; cost += r.cost || 0;
+  return tally(rows.map(r => ({
+    model: r._id.model, endpoint: r._id.endpoint, status: r._id.status,
+    calls: r.calls, cost: r.cost || 0, inTok: r.inTok || 0, outTok: r.outTok || 0,
+  })));
+}
+
+/**
+ * Supabase primary store. PostgREST aggregates are disabled on this project
+ * (PGRST123), so page and sum client-side — with an explicit `order`, because
+ * an unordered range samples the query plan rather than the population.
+ */
+async function meteredSupabase() {
+  const url = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!key) return { error: 'SUPABASE_SERVICE_ROLE_KEY not set' };
+  const groups = new Map();
+  const qs = `timestamp=gte.${start.toISOString()}&timestamp=lt.${end.toISOString()}`;
+  try {
+    for (let from = 0; ; from += 1000) {
+      // 600 pages = 600K rows/month. Past that the sum is truncated, which is a
+      // read failure, not a smaller number.
+      if (from > 600_000) return { error: '>600K rows this month — sum truncated' };
+      const r = await fetch(
+        `${url}/rest/v1/gemini_usage?${qs}&select=model,endpoint,status,cost_usd,input_tokens,output_tokens&order=id.asc`,
+        { headers: { apikey: key, Authorization: `Bearer ${key}`, Range: `${from}-${from + 999}` },
+          signal: AbortSignal.timeout(90_000) },
+      );
+      if (!r.ok && r.status !== 206) return { error: `Supabase read failed (${r.status})` };
+      const batch = await r.json();
+      for (const b of batch) {
+        const k = `${b.model} ${b.endpoint} ${b.status}`;
+        const g = groups.get(k) || { model: b.model, endpoint: b.endpoint, status: b.status, calls: 0, cost: 0, inTok: 0, outTok: 0 };
+        g.calls++; g.cost += b.cost_usd || 0; g.inTok += b.input_tokens || 0; g.outTok += b.output_tokens || 0;
+        groups.set(k, g);
+      }
+      if (batch.length < 1000) break;
+    }
+  } catch (err) {
+    return { error: `Supabase read error: ${err.message}` };
   }
-  return { byModel, calls, cost };
+  return tally([...groups.values()]);
+}
+
+/**
+ * Fold per-(model, endpoint, status) groups into the shape the report needs.
+ *
+ * `spendCalls` excludes placeholder rows — a batch submission logs a row
+ * before any tokens exist (#3452) and counting it as a metered call inflates
+ * coverage. It also excludes failed calls, because the Google denominator
+ * counts HTTP 200s only; mixing the two compares different populations.
+ */
+const PLACEHOLDER = new Set(['submitted', 'pending', 'duplicate', 'unknown']);
+const FAILED = new Set(['failed', 'error']);
+function tally(groups) {
+  const byModel = {}, byEndpoint = {};
+  let calls = 0, spendCalls = 0, cost = 0, placeholders = 0, failed = 0;
+  for (const g of groups) {
+    const m = g.model || 'unknown';
+    byModel[m] = byModel[m] || { calls: 0, cost: 0, inTok: 0, outTok: 0 };
+    byModel[m].calls += g.calls; byModel[m].cost += g.cost;
+    byModel[m].inTok += g.inTok; byModel[m].outTok += g.outTok;
+
+    const e = g.endpoint || '(unlabelled)';
+    byEndpoint[e] = byEndpoint[e] || { calls: 0, cost: 0, outTok: 0 };
+    byEndpoint[e].calls += g.calls; byEndpoint[e].cost += g.cost; byEndpoint[e].outTok += g.outTok;
+
+    calls += g.calls; cost += g.cost;
+    if (PLACEHOLDER.has(g.status)) placeholders += g.calls;
+    else if (FAILED.has(g.status)) failed += g.calls;
+    else spendCalls += g.calls;
+  }
+  return { byModel, byEndpoint, calls, spendCalls, cost, placeholders, failed, error: null };
+}
+
+/**
+ * The THIRD store: Mongo `ai_usage`, written by `src/lib/log-ai-usage.ts` for the
+ * request-path features (librarian, explain, ai_search_expand, voice, podcast).
+ *
+ * Reported on its own line and never added to the call count, because the unit is
+ * different: a librarian row is one TURN, and a turn is agentic — several Gemini
+ * calls. Adding turns to calls would produce a number that is neither. August 2026:
+ * 8,784 rows, $77.00, of which the librarian is $76.48.
+ */
+async function requestPathUsage(db) {
+  const rows = await db.collection('ai_usage').aggregate([
+    { $match: { timestamp: { $gte: start, $lt: end } } },
+    { $group: { _id: '$feature', rows: { $sum: 1 }, cost: { $sum: { $ifNull: ['$costUsd', 0] } } } },
+    { $sort: { cost: -1 } },
+  ]).toArray();
+  return {
+    byFeature: rows.map(r => ({ feature: r._id || 'unknown', rows: r.rows, cost: r.cost })),
+    rows: rows.reduce((a, r) => a + r.rows, 0),
+    cost: rows.reduce((a, r) => a + r.cost, 0),
+  };
+}
+
+/** Merge the two stores into one metered picture. */
+function mergeMetered(a, b) {
+  const out = { byModel: {}, byEndpoint: {}, calls: 0, spendCalls: 0, cost: 0, placeholders: 0, failed: 0 };
+  for (const s of [a, b]) {
+    for (const [m, v] of Object.entries(s.byModel)) {
+      out.byModel[m] = out.byModel[m] || { calls: 0, cost: 0, inTok: 0, outTok: 0 };
+      for (const k of ['calls', 'cost', 'inTok', 'outTok']) out.byModel[m][k] += v[k];
+    }
+    for (const [e, v] of Object.entries(s.byEndpoint)) {
+      out.byEndpoint[e] = out.byEndpoint[e] || { calls: 0, cost: 0, outTok: 0 };
+      for (const k of ['calls', 'cost', 'outTok']) out.byEndpoint[e][k] += v[k];
+    }
+    for (const k of ['calls', 'spendCalls', 'cost', 'placeholders', 'failed']) out[k] += s[k];
+  }
+  return out;
 }
 
 /** Successful GenerateContent calls Google saw — the denominator for meter coverage. */
@@ -367,29 +497,68 @@ async function main() {
     }
     log(`  ${''.padEnd(30)} ${''.padStart(8)} ${'TOTAL'.padStart(10)}   ${money(est).padStart(9)}`);
 
-    // ---- our meters -------------------------------------------------------
+    // ---- our meters (BOTH stores — see the block comment above) ------------
     const uri = process.env.MONGODB_URI;
-    let metered = null;
+    let mongo = { error: 'MONGODB_URI not set' };
+    let requestPath = null;
     if (uri) {
       const client = new MongoClient(uri, { serverSelectionTimeoutMS: 30000 });
       try {
         await client.connect();
-        metered = await meteredCost(client.db(process.env.MONGODB_DB || 'bookstore'));
+        const db = client.db(process.env.MONGODB_DB || 'bookstore');
+        mongo = await meteredMongo(db);
+        requestPath = await requestPathUsage(db).catch(() => null);
+      } catch (err) {
+        mongo = { error: `Mongo read failed: ${err.message}` };
       } finally { await client.close().catch(() => {}); }
     }
+    const supa = await meteredSupabase();
 
-    log('\nMETERED (our own gemini_usage rows)');
-    if (!metered) {
-      log('  UNREADABLE — MONGODB_URI not set.');
+    log('\nMETERED (our own gemini_usage rows — BOTH stores, they are disjoint)');
+    log(`  Supabase (primary) ...... ${supa.error ? `UNREADABLE — ${supa.error}` : `${supa.calls.toLocaleString()} rows, ${money(supa.cost)}`}`);
+    log(`  Mongo (fallback) ........ ${mongo.error ? `UNREADABLE — ${mongo.error}` : `${mongo.calls.toLocaleString()} rows, ${money(mongo.cost)}`}`);
+
+    if (mongo.error || supa.error) {
+      // Trap E again, and the reason this script exists: a partial meter must
+      // never be reported as the meter.
+      log('  → METER UNREADABLE. No coverage or reconciliation figure is printed,');
+      log('    because a one-store number is not a smaller answer — it is a wrong one.');
+      out.metered = { unreadable: { supabase: supa.error || null, mongo: mongo.error || null } };
+      exitCode = Math.max(exitCode, 1);
     } else {
+      const metered = mergeMetered(mongo, supa);
       log(`  cost_usd sum ............ ${money(metered.cost)}`);
-      log(`  calls logged ............ ${metered.calls.toLocaleString()}`);
-      log(`  calls Google saw ........ ${googleCalls.toLocaleString()}`);
-      const cov = googleCalls ? (100 * metered.calls / googleCalls) : 0;
+      log(`  calls logged ............ ${metered.calls.toLocaleString()}` +
+        (metered.placeholders || metered.failed
+          ? `  (${metered.spendCalls.toLocaleString()} comparable — excludes ${metered.placeholders.toLocaleString()} batch placeholders, ${metered.failed.toLocaleString()} failed)`
+          : ''));
+      log(`  calls Google saw ........ ${googleCalls.toLocaleString()}  (successful GenerateContent)`);
+      const cov = googleCalls ? (100 * metered.spendCalls / googleCalls) : 0;
       log(`  meter coverage .......... ${cov.toFixed(0)}% of successful GenerateContent calls`);
-      if (googleCalls > metered.calls) {
-        log(`  UNLOGGED ................ ${(googleCalls - metered.calls).toLocaleString()} calls write no usage row (#4599)`);
+      if (googleCalls > metered.spendCalls) {
+        log(`  UNLOGGED ................ ${(googleCalls - metered.spendCalls).toLocaleString()} calls write no usage row (#4599)`);
       }
+
+      // Attribution by caller. `endpoint` is the only label that says WHICH
+      // workstream spent the money; rows without one cannot be attributed at
+      // all, so print that count rather than letting it hide in a total.
+      const eps = Object.entries(metered.byEndpoint).sort((a, b) => b[1].cost - a[1].cost);
+      log('\n  ATTRIBUTION BY CALLER (endpoint label on the usage row)');
+      log(`    ${'endpoint'.padEnd(38)} ${'calls'.padStart(9)} ${'cost'.padStart(10)}`);
+      for (const [e, v] of eps.slice(0, 18)) {
+        log(`    ${e.slice(0, 38).padEnd(38)} ${v.calls.toLocaleString().padStart(9)} ${money(v.cost).padStart(10)}`);
+      }
+      if (eps.length > 18) log(`    ${`… ${eps.length - 18} more`.padEnd(38)}`);
+
+      if (requestPath && requestPath.rows) {
+        // Separate line, separate unit — see requestPathUsage() above.
+        log(`\n  REQUEST-PATH FEATURES (Mongo ai_usage — TURNS, not calls; not added above)`);
+        for (const f of requestPath.byFeature) {
+          log(`    ${f.feature.slice(0, 38).padEnd(38)} ${f.rows.toLocaleString().padStart(9)} ${money(f.cost).padStart(10)}`);
+        }
+        out.requestPath = requestPath;
+      }
+
       const gap = est - metered.cost;
       log(`\nRECONCILIATION`);
       log(`  billed (est. from tokens) ${money(est)}`);
@@ -398,6 +567,11 @@ async function main() {
       log(`  NB: compare the billed estimate to the Gemini SKUs on the invoice,`);
       log(`      never to the invoice total — the billing account carries six projects.`);
       out.reconciliation = { estimated: est, metered: metered.cost, gap, meterCoveragePct: cov };
+      out.metered = {
+        supabase: { calls: supa.calls, cost: supa.cost },
+        mongo: { calls: mongo.calls, cost: mongo.cost },
+        byEndpoint: metered.byEndpoint,
+      };
     }
 
     // ---- price drift guard (the durable bit) ------------------------------

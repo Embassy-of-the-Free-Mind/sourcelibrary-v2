@@ -30,6 +30,14 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'm', rating: 'microfilm',        label: '⚠ microfilm',        color: '#f59e0b', hint: 'Microfilm/microfiche, washed out, low contrast' },
     { key: 'j', rating: 'degraded',         label: '✗ degraded',         color: '#ef4444', hint: 'Blurry / cropped / corrupt — unusable' },
     { key: 'n', rating: 'blank',            label: '∅ blank',            color: '#6b7280', hint: 'Effectively blank page' },
+    // Added 2026-09-01 because volunteers kept typing it. Of the three
+    // qualitative notes this queue has ever received, all three said the same
+    // thing — "This is not a page" — because every button above assumes the
+    // image IS a page of the book and only asks how well it scanned. A rater
+    // looking at a colour target or a ruler had no honest answer, so the
+    // signal arrived as prose that nothing reads. If a queue's notes keep
+    // repeating one sentence, that sentence is a missing option.
+    { key: 'x', rating: 'not-a-page',       label: '⊘ not a page',       color: '#6366f1', hint: 'Colour chart, ruler, scanner furniture, box or shelf — not a page of the book' },
     { key: 'u', rating: 'unclear',          label: '? unclear',          color: '#9ca3af', hint: "Can't tell" },
   ],
   // UI copy, not book pages. The item is a translated interface string and the
@@ -53,6 +61,24 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'k', rating: 'fine',    label: '\u2713 looks right', color: '#10b981', hint: 'I looked, nothing wrong' },
     { key: 'j', rating: 'problem', label: '\u2717 found something', color: '#ef4444', hint: 'Something is off \u2014 please say what in the box' },
     { key: 'u', rating: 'unclear', label: '? unclear', color: '#6b7280', hint: "Couldn't tell, or the page wouldn't load" },
+  ],
+  // Translation fidelity, judged by someone who reads the original language.
+  //
+  // THE VERDICTS SEPARATE TWO LAYERS ON PURPOSE. A page has to pass through
+  // transcription before it can be translated, and the two fail differently:
+  // where the OCR invented the original, the English can be perfectly faithful
+  // TO THAT INVENTION and still tell the reader something the book never said.
+  // One "is this translation any good?" button would fold those together and
+  // the resulting number would be uninterpretable — we could not tell a
+  // translation problem from an OCR problem, and they have different fixes.
+  // This is the failure that produced 529 books of invented Tibetan scripture
+  // (#4523): the translation layer did its job faithfully on a fabricated text.
+  'translation-check': [
+    { key: 'k', rating: 'both_sound',        label: '✓ both sound',           color: '#10b981', hint: 'The transcription matches the page, and the English matches the original' },
+    { key: 'j', rating: 'translation_drift', label: '✗ translation drifts',   color: '#ef4444', hint: 'The transcription is right, but the English departs from it' },
+    { key: 'x', rating: 'transcription_off', label: '✗ transcription wrong',  color: '#f59e0b', hint: "The text doesn't match the page — so the English can't be judged" },
+    { key: 'b', rating: 'both_off',          label: '✗✗ both wrong',          color: '#b91c1c', hint: 'Neither the transcription nor the English can be trusted here' },
+    { key: 'u', rating: 'unclear',           label: '? unclear',              color: '#6b7280', hint: "Can't tell — say why in the box if you can" },
   ],
   // Wikipedia contribution events. Not a rating queue — used as an event log
   // for the /contribute/wikipedia playbook (claim → post → response → merged).
@@ -92,7 +118,7 @@ export function getRatingOptions(queue: string): RatingOption[] {
   return QUEUE_RATINGS[queue] ?? [];
 }
 
-export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'wikipedia'] as const;
+export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'translation-check', 'wikipedia'] as const;
 export type QueueKey = (typeof QUEUE_KEYS)[number];
 
 // Wikipedia event ordering: defines what's a "later" status. Used to roll up

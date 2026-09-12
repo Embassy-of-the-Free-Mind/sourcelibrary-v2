@@ -38,6 +38,12 @@
 //   node scripts/maintenance/backfill-language-provenance.mjs --json report.json
 
 import { MongoClient } from 'mongodb';
+// ONE normaliser (2026-09-10). This file carried a fourth private copy of displayLanguage, and
+// each copy had drifted: this one title-cased only the first character ("Koine greek"), the copy in
+// scripts/lib/edition-citation-language.mjs title-cases every word, and src/lib/language-utils.ts
+// collapsed distinct registers outright ("Old French" -> "French"). normalizeLanguageToken is the
+// pinned twin, held against the TS side by tests/unit/language-normalize-parity.test.ts.
+import { normalizeLanguageToken, sameLanguageFamily } from '../lib/language-normalize.mjs';
 
 const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
@@ -51,29 +57,11 @@ const JSON_OUT = (() => { const i = args.indexOf('--json'); return i >= 0 ? args
 const SAMPLE_PAGES = 20;
 
 // ---- language normalisation (mirror of src/lib/language-utils.ts displayLanguage) ----
-const CODE = {
-  ar:'Arabic',cs:'Czech',da:'Danish',de:'German',el:'Greek',en:'English',es:'Spanish',fa:'Persian',
-  fr:'French',he:'Hebrew',hu:'Hungarian',it:'Italian',ja:'Japanese',la:'Latin',nl:'Dutch',no:'Norwegian',
-  pl:'Polish',pt:'Portuguese',ru:'Russian',sa:'Sanskrit',sv:'Swedish',tr:'Turkish',zh:'Chinese',
-  ara:'Arabic',ces:'Czech',cze:'Czech',dan:'Danish',deu:'German',ger:'German',ell:'Greek',gre:'Greek',
-  grc:'Greek',eng:'English',spa:'Spanish',fas:'Persian',per:'Persian',fra:'French',fre:'French',heb:'Hebrew',
-  hun:'Hungarian',ita:'Italian',jpn:'Japanese',lat:'Latin',nld:'Dutch',dut:'Dutch',nor:'Norwegian',pol:'Polish',
-  por:'Portuguese',rus:'Russian',san:'Sanskrit',swe:'Swedish',tur:'Turkish',zho:'Chinese',chi:'Chinese',
-  hin:'Hindi',tel:'Telugu',tam:'Tamil',mar:'Marathi',syr:'Syriac',urd:'Urdu',
-  // Indic / other 2-letter codes (the gap that produced "Hi"/"Te" in the first dry run)
-  hi:'Hindi',te:'Telugu',ta:'Tamil',mr:'Marathi',ml:'Malayalam',kn:'Kannada',bn:'Bengali',
-  gu:'Gujarati',pa:'Punjabi',or:'Odia',si:'Sinhala',ur:'Urdu',ko:'Korean',vi:'Vietnamese',
-  mal:'Malayalam',kan:'Kannada',ben:'Bengali',guj:'Gujarati',pan:'Punjabi',ori:'Odia',
-};
-const PLACEHOLDER = new Set(['none','n/a','na','unknown','und','null','','multiple','mul','mixed','various','zxx','undetermined']);
-function displayLanguage(raw) {
-  if (!raw) return null;
-  const x = String(raw).toLowerCase().trim().replace(/^(modern|ancient|old|classical|medieval|middle|early)\s+/, '');
-  if (!x || PLACEHOLDER.has(x)) return null;
-  if (CODE[x]) return CODE[x];
-  return x.charAt(0).toUpperCase() + x.slice(1);
-}
-const same = (a, b) => { const x = displayLanguage(a), y = displayLanguage(b); return !!x && !!y && x.toLowerCase() === y.toLowerCase(); };
+// (the private ISO code table and placeholder set that lived here are gone — normalizeLanguageToken owns both)
+const displayLanguage = (raw) => normalizeLanguageToken(raw);
+// Normalise first, then compare FAMILIES: languageFamily alone does not touch codes, does not
+// collapse "Ancient Greek", and answers true for "Unknown" vs "Unknown".
+const same = (a, b) => sameLanguageFamily(normalizeLanguageToken(a), normalizeLanguageToken(b));
 
 // ---- connect ----
 const uri = process.env.MONGODB_URI;
