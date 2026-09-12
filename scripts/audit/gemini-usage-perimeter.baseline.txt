@@ -19,6 +19,7 @@ scripts/analysis/experience-map/build/reconstruct-bodies.mjs
 scripts/analysis/experience-map/classify/classify-jhana.mjs
 scripts/analysis/experience-map/classify/classify-v2.mjs
 scripts/analysis/experience-map/classify/classify-v3.mjs
+scripts/analysis/experience-map/classify/classify-v5.mjs
 scripts/analysis/experience-map/retrieve/retrieve-probeset.mjs
 scripts/analysis/experience-map/retrieve/retrieve-v3.mjs
 scripts/analysis/experience-map/retrieve/retrieve-v4.mjs
@@ -84,6 +85,7 @@ scripts/eval/prompt-ab.mjs
 scripts/eval/reocr-pairing-check.mjs
 scripts/eval/suda-sol/census.mjs
 scripts/eval/suda-sol/validate-lite.mjs
+scripts/eval/translation-prompt-ab.mjs
 scripts/eval/tuned-vs-base-eval.mjs
 scripts/experiments/batch-size-experiment.mjs
 scripts/experiments/check-implicit-caching.mjs
@@ -118,6 +120,7 @@ scripts/match-bph-orphans-gemini.mjs
 scripts/migration/backfill-artwork-embeddings.mjs
 scripts/migration/backfill-book-embeddings.mjs
 scripts/migration/backfill-ocr-near-complete.mjs
+scripts/music/transcribe-notation.mjs
 scripts/one-off/test-translate.mjs
 scripts/one-off/verify-kloss-unscanned.mjs
 scripts/quality/reference-check.mjs
