@@ -140,6 +140,13 @@ describe('body length as a content-loss proxy', () => {
     expect(withCitation.body_chars).toBe(clean.body_chars);
   });
 
+  it('does not treat centred-text markers (->text<-) as tags', () => {
+    // Found on the real run: `<[^>]+>` swallowed 3,000 chars of a Latin page
+    // between two centred headings and reported body=563.
+    const s = scoreTranslation('->*APOLLO.*<-\n\nOffspring of Latona. Scion of Latona.\n\n->*APOLLONIA.*<-\n\nAlexandrian maiden.', OCR);
+    expect(s.body_chars).toBeGreaterThan(60);
+  });
+
   it('IS reduced by dropping an interpretive note', () => {
     const withNote = scoreTranslation('Water <note>that is, the humid radical</note> is first.', OCR);
     const without = scoreTranslation('Water is first.', OCR);
