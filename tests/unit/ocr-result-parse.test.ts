@@ -24,6 +24,8 @@
 import { describe, it, expect } from 'vitest';
 import {
   PROMPT_VERSION,
+  PROMPT_PAGE_TYPES,
+  LEGACY_PAGE_TYPES,
   VALID_PAGE_TYPES,
   extractPageType,
   extractColumns,
@@ -33,6 +35,8 @@ import {
 } from '@/lib/types/prompts/defaults';
 import {
   PROMPT_VERSION as PROMPT_VERSION_JS,
+  PROMPT_PAGE_TYPES as PROMPT_PAGE_TYPES_JS,
+  LEGACY_PAGE_TYPES as LEGACY_PAGE_TYPES_JS,
   VALID_PAGE_TYPES as VALID_PAGE_TYPES_JS,
   extractPageType as extractPageTypeJs,
   extractColumns as extractColumnsJs,
@@ -140,15 +144,20 @@ describe('TS canonical and scripts JS twin agree — extractPageType', () => {
     }
   });
 
-  it('validate:false mode returns identical results for every fixture', () => {
-    for (const [name, text] of Object.entries(pageTypeFixtures)) {
-      expect(extractPageTypeJs(text, { validate: false }), name)
-        .toBe(extractPageType(text, { validate: false }));
-    }
-  });
-
   it('the two vocabulary sets are the same set', () => {
     expect([...VALID_PAGE_TYPES_JS].sort()).toEqual([...VALID_PAGE_TYPES].sort());
+  });
+
+  it('the prompt-offered list matches element-for-element, IN ORDER', () => {
+    // Order matters here in a way it does not for the set: the TS side
+    // interpolates this array into the prompt's `One of:` line, so a reordering
+    // on one side alone would mean the scripts twin is mirroring a list the
+    // model was never shown.
+    expect([...PROMPT_PAGE_TYPES_JS]).toEqual([...PROMPT_PAGE_TYPES]);
+  });
+
+  it('the accepted-but-not-offered list is mirrored', () => {
+    expect([...LEGACY_PAGE_TYPES_JS].sort()).toEqual([...LEGACY_PAGE_TYPES].sort());
   });
 });
 
@@ -196,20 +205,34 @@ describe('extractPageType behaviour', () => {
     expect(extractPageType(pageTypeFixtures.plain)).toBe('title-page');
   });
 
-  it('validate:false passes the model string through, screening nothing', () => {
-    expect(extractPageType(pageTypeFixtures.garbage, { validate: false }))
-      .toBe('a page of some kind');
+  it('the three formerly-dropped prompt types now survive (#4455)', () => {
+    // These were the gap: the OCR prompt offered them and the reader rendered
+    // them (tests/unit/page-type-vocabulary.test.ts), but VALID_PAGE_TYPES did
+    // not list them, so the canonical parser returned undefined and the page was
+    // stored with no type at all. This is the assertion that was inverted.
+    for (const t of ['musical-score', 'table', 'cover']) {
+      expect(VALID_PAGE_TYPES.has(t), `${t} missing from VALID_PAGE_TYPES`).toBe(true);
+      expect(extractPageType(`<page-type>${t}</page-type>`)).toBe(t);
+    }
   });
 
-  it('the three prompt-only types are the measured vocabulary gap (#4455)', () => {
-    // The OCR prompt offers musical-score / table / cover and the reader renders
-    // them (tests/unit/page-type-vocabulary.test.ts), but VALID_PAGE_TYPES does
-    // not list them — which is why the four unvalidated collectors could NOT be
-    // flipped to validating in #4443 without silently dropping all three.
-    for (const t of ['musical-score', 'table', 'cover']) {
-      expect(VALID_PAGE_TYPES.has(t), `${t} unexpectedly in VALID_PAGE_TYPES`).toBe(false);
-      expect(extractPageType(`<page-type>${t}</page-type>`)).toBeUndefined();
-      expect(extractPageType(`<page-type>${t}</page-type>`, { validate: false })).toBe(t);
+  it('there is no unvalidated mode left to reintroduce the gap', () => {
+    // The bypass is gone, not merely unused: an extra argument must not revive
+    // it. `extractPageType` takes one parameter, and a stray options object is
+    // ignored rather than honoured.
+    expect(extractPageType.length).toBe(1);
+    // @ts-expect-error — the option no longer exists; this pins that it is inert.
+    expect(extractPageType(pageTypeFixtures.garbage, { validate: false })).toBeUndefined();
+    // @ts-expect-error — same, on the scripts twin.
+    expect(extractPageTypeJs(pageTypeFixtures.garbage, { validate: false })).toBeUndefined();
+  });
+
+  it('accepts the two legacy types the prompt no longer offers', () => {
+    // Screening runs over OCR text we already stored, so a value an older prompt
+    // produced has to survive a re-parse — otherwise a re-collect retypes a real
+    // page to nothing.
+    for (const t of LEGACY_PAGE_TYPES) {
+      expect(extractPageType(`<page-type>${t}</page-type>`), t).toBe(t);
     }
   });
 
@@ -223,7 +246,7 @@ describe('extractPageType behaviour', () => {
   });
 
   it('an empty tag is undefined, never the empty string', () => {
-    expect(extractPageType(pageTypeFixtures.empty, { validate: false })).toBeUndefined();
+    expect(extractPageType(pageTypeFixtures.empty)).toBeUndefined();
   });
 });
 

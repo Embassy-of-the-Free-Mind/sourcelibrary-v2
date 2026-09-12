@@ -1,0 +1,58 @@
+name: Library registry coverage watch
+
+# Standing detector for issue #4627: every image_source.provider with visible
+# books must be mapped by a LIBRARY_PARTNERS entry, or those books are silently
+# absent from /libraries (the crediting surface) — the absence reads as "we
+# hold nothing from that institution". The 2026-09-03 audit found 16 unmapped
+# keys / ~1,050 invisible books (fixed in #4615); a new importer minting a new
+# provider key recreates the gap without failing anything, and the key usually
+# starts existing when the import RUNS, not when code merges — hence a
+# schedule, not a PR gate.
+#
+# Read-only. Findings go to an issue, not a red X on someone's PR (same
+# reasoning as field-sprawl-watch.yml, whose exit-code convention this
+# follows: 1 = findings, 2 = could not measure).
+
+on:
+  schedule:
+    # Weekly, Tuesdays 08:00 UTC (after field-sprawl's 07:30).
+    - cron: '0 8 * * 2'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  library-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Audit provider-key coverage of LIBRARY_PARTNERS
+        id: run
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/audit/library-registry-coverage.mjs --threshold 10 > report.txt 2>&1
+          echo "fired=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+      - name: File findings
+        if: steps.run.outputs.fired == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Unmapped library providers on /libraries — $(date -u +'%Y-%m-%d')"
+          BODY=$(printf '%s\n\n```\n%s\n```\n' \
+            "Provider keys with visible books but no LIBRARY_PARTNERS entry — those books are invisible on /libraries. Add a registry entry, or fold the key into an existing partner via aliasProviderKeys (see PR #4615 for both patterns). Playbook: issue #4627." \
+            "$(tail -40 report.txt)")
+          gh issue create --title "$TITLE" --body "$BODY" --label pipeline
+      - name: Fail if the audit could not run
+        if: steps.run.outputs.fired != '0' && steps.run.outputs.fired != '1'
+        run: |
+          echo "::error::library-registry-coverage could not measure (exit ${{ steps.run.outputs.fired }}) — DB unreachable or registry parser broken. Nothing was checked."
+          exit 1

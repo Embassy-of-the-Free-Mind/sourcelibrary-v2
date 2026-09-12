@@ -40,7 +40,7 @@ import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { makeTier0Catalog, type CatalogPrior, type CatalogLookup } from '@/lib/first-translation/tier0-catalog';
-import type { ResolvableBook } from '@/lib/first-translation/resolve';
+import type { ResolvableBook } from '@/lib/first-translation/tier';
 import { appendAttempt, makeAttemptId, type FirstTranslationAttempt, type PriorTranslation } from '@/lib/first-translation/attempt-log';
 import { renderRubric, routeBook, postSearchRoute } from '@/lib/first-translation/casebook';
 import {
@@ -61,7 +61,14 @@ const arg = (name: string) => process.argv.find((a) => a.startsWith(`--${name}=`
 const RUN = process.argv.includes('--run');
 const APPLY = process.argv.includes('--apply');
 const QUEUE = arg('queue') ?? 'badged-weak';
-const IDS = arg('ids')?.split(',').map((s) => s.trim()).filter(Boolean);
+/**
+ * `--ids` takes a comma list; `--ids-file` takes a path with one id per line
+ * (or a comma list). Prefer the file for anything sampler-sized — a thousand
+ * ids on argv is near the shell's limit and gets mangled rather than rejected.
+ */
+const idsFile = arg('ids-file');
+const idsRaw = idsFile ? fs.readFileSync(idsFile, 'utf8') : arg('ids');
+const IDS = idsRaw?.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
 const LIMIT = parseInt(arg('limit') ?? '0', 10);
 const MODEL = arg('model') ?? 'gemini-3.1-flash-lite';
 const BUDGET = parseFloat(arg('budget-usd') ?? '0');

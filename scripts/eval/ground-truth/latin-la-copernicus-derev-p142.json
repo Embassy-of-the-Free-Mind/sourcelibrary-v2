@@ -1,0 +1,13 @@
+{
+  "work": "Copernicus, De revolutionibus orbium coelestium (1543) — Book III, Spica observation at Frauenburg, fol. 64v",
+  "book_id": "69af0debbe5fc7f363546478",
+  "page_number": 160,
+  "script": "latin",
+  "language": "Latin",
+  "source": "la.wikisource proofread page-scan (Liber:Nicolai Copernici torinensis De revolutionibus orbium coelestium.djvu, Year=1543; scan 142 = fol. 64b)",
+  "source_url": "https://la.wikisource.org/wiki/Pagina:Nicolai_Copernici_torinensis_De_revolutionibus_orbium_coelestium.djvu/142",
+  "edition": "Nuremberg: Johannes Petreius, 1543 (editio princeps)",
+  "non_canonical": true,
+  "memorization_risk": "low",
+  "ocr_ground_truth": "ab Autumni æquinoctio visa sunt pervenisse, in quibus omnibus latitudo cuiusque sua semper mansit eadem, ut non amplius in hac parte habeant aliquid dubitationis. Quapropter nos etiam Anno Christi M.D.XXV. primo post intercalarem secundum, qui ab Alexandri morte, Ægyptiorum annorum est M.DCCC.XLIX observavimus saepe nominatam Spicam in Frueburgio Prussiae, & videbatur maxima eius altitudo in circulo meridiano partium proxime XXVII. Latitudinem vero Frueburgi invenimus esse partium LIIII. scrup. primorum XIX.s. Quapropter constabit eius declinatio ab aequinoctiali partium VIII. scrup. XL. Unde patefactus est locus eius, ut sequitur. Descripsimus enim meridianum circulum per polos utriusque signiferi & aequinoctials A B C D, in quibus sectiones communes atque dimetientes fuerint AEC aequinoctialis, & zodiaci B E D, cuius polus Boreus sit F axis F E G. Sitque Capricorni, D Cancri principium: assumatur autem B H circumferentia, quae sit aequalis Austrinae latitudini stellae duarum partium, & ab H signo ad ED parallelus agatur H L, que secet axem zodiaci in I, aequinoctialem in K. Capiatur etiam secundum declinationem stellae Austrinam circumferentia partium VIII. scrup. XL. M A, & à signo M, agatur M N parallelus ad AC que secabit parallelum Zodiaci H I L : secet ergo in O signo, & O P recta linea ad angulos rectos, aequalis erit semissi subtendentis duplam ipsius A M declinationis."
+}

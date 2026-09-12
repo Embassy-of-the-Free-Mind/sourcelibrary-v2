@@ -1,0 +1,1 @@
+{"id":"morley-1597-p14-plainsong-ex1","pooled":{"pitch_ner":0.4167,"interval_ner":0.3636,"rhythm_ner":0,"note_ner":0.4167,"lyric_wer":0},"per_voice":[{"voice":1,"ref_notes":12,"cand_notes":12,"pitch_ner":0.4167,"interval_ner":0.3636,"rhythm_ner":0,"note_ner":0.4167}],"candidate_warnings":0,"reference_warnings":0}

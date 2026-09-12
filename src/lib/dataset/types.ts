@@ -102,6 +102,7 @@ export interface DatasetAccessLog {
   records_returned: number;
   book_ids: string[];
   format: 'jsonl' | 'json';
+  /** Anonymized (last octet zeroed) by logAccess before storage — never a full IP. */
   ip_address: string;
 }
 

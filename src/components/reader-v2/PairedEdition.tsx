@@ -112,7 +112,9 @@ export function PairedTranscriptionProse({
   settings: ReaderSettings;
   baseSize: number;
 }) {
-  const ocrText = page.ocr?.data || '';
+  // Never surface a reading we judged not reliably legible (#4523), even in the
+  // collapsed supplementary-OCR disclosure.
+  const ocrText = page.ocr?.unreadable ? '' : (page.ocr?.data || '');
   return (
     <div className="prose-manuscript" data-reader-v2-typeface={settings.typeface} style={pairedProseStyle(settings, baseSize)} lang="el">
       <NotesRenderer text={paired.transcription} showMetadata={false} showNotes={settings.glosses} language="Ancient Greek" />

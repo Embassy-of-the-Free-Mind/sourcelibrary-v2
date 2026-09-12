@@ -10,6 +10,8 @@ import { queueBooks } from '@/lib/api-client/queues';
 import { getPageGridUrl } from '@/lib/utils';
 import { buildCoverUpdate } from '@/lib/cover-fields';
 import JobStatusBanner from './JobStatusBanner';
+import ProcessingNotice from './ProcessingNotice';
+import { useSession } from 'next-auth/react';
 import PagesGrid from './PagesGrid';
 
 interface BookPagesSectionProps {
@@ -41,6 +43,7 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
   // const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
+  const [reason, setReason] = useState(''); // Why this batch is being run by hand (#4336)
   const [visibleCount, setVisibleCount] = useState(9); // Pagination — mobile default (3×3); desktop bumps to PAGES_PER_LOAD on mount
 
   // Desktop shows a fuller first screen (2 rows on the 10-col grid); mobile keeps 9.
@@ -126,6 +129,13 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
 
   // Current job status (fetched from API on-demand)
   const [currentJob, setCurrentJob] = useState<Job | null>(null);
+  // What a reader may know: that processing is happening, and of what kind.
+  // Comes from /api/books/[id], which is public — unlike /api/jobs/[id], which
+  // is authenticated, so anonymous visitors previously saw nothing at all.
+  const [publicJobType, setPublicJobType] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const role = (session?.user as { role?: string } | undefined)?.role;
+  const isStaff = role === 'admin' || role === 'superadmin' || role === 'editor';
   // Initial job check loading - hide actions until we know if a job is active
   const [checkingActiveJob, setCheckingActiveJob] = useState(true);
   const [loadingJob, setLoadingJob] = useState(false);
@@ -145,6 +155,8 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
         const book = await books.get(bookId);
 
         if (book.job) {
+          setPublicJobType((book.job as { action?: string; job_type?: string }).action
+            || (book.job as { job_type?: string }).job_type || null);
           if (book.job.type === 'realtime') {
             // Fetch real-time job
             const job = await jobs.get(book.job.job_id);
@@ -378,7 +390,8 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
         bookId,
         pageIds: pageIdsToProcess,
         action,
-        customPrompt
+        customPrompt,
+        reason: reason.trim() || undefined
       });
 
       // Set current job to show progress UI immediately
@@ -396,11 +409,13 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
         config: {},
         created_at: new Date(),
         updated_at: new Date(),
-        initiated_by: 'user'
+        initiated_by: 'user',
+        initiated_reason: reason.trim() || undefined
       });
 
       // Clear selection and exit batch mode
       setSelectedPages(new Set());
+      setReason('');
       setBatchMode(false);
     } catch (error) {
       console.error('Failed to queue job:', error);
@@ -495,8 +510,9 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
 
   return (
     <div className="space-y-6">
-      {/* Job Status Banner */}
-      {currentJob && (
+      {/* Operators get the controls; everyone else gets the fact. */}
+      {!isStaff && publicJobType && <ProcessingNotice type={publicJobType} />}
+      {isStaff && currentJob && (
         <JobStatusBanner
           job={currentJob}
           loading={loadingJob}

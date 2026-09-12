@@ -287,6 +287,8 @@ cost sign-off.
 
 ## 8. Current best estimate (how many of the ~16k are firsts)
 
+> **SUPERSEDED (2026-08-31, round 5 — PR #4524):** the current canonical estimate is **~8,565 books never previously translated into English, 95% CI 7,362–9,768**, over a 16,151-book pool. The ~5,000 below was built on the pre-July `not_applicable` rubric (46% badged-genuine) that Derek's July 2026 policies replaced; it is kept as history. See `scripts/eval/results/ft-pilot-round-5.md` and the runs ledger.
+
 | pool | books | genuine-first rate | genuine firsts |
 |---|---|---|---|
 | Badged eligible | 5,570 | 46–66% | ~2,560–3,680 |

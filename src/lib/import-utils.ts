@@ -10,6 +10,7 @@ import { computeIdentityFields } from '@/lib/identity-fields';
 import { resolveLanguage, resolveDate, publishedToYear } from '@/lib/resolve-language';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { applyTextRole } from '@/lib/text-role';
+import { usableManifestLabel } from '@/lib/manifest-label';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -145,6 +146,25 @@ export function extractPlace(manifest: IIIFManifest): string | null {
   for (const entry of manifest.metadata) {
     const label = extractLabel(entry.label as string | Record<string, string[]>)?.toLowerCase();
     if (label && placeLabels.some(p => label.includes(p))) {
+      const value = extractLabel(entry.value as string | Record<string, string[]>);
+      if (value) return value.trim();
+    }
+  }
+  return null;
+}
+
+/**
+ * Extract the shelfmark / call number from a IIIF manifest metadata array.
+ *
+ * Used to recognise a manifest `label` that is really a holding statement — see
+ * `usableManifestLabel` in `src/lib/manifest-label.ts` and #4572.
+ */
+export function extractCallNumber(manifest: IIIFManifest): string | null {
+  if (!Array.isArray(manifest.metadata)) return null;
+  const callLabels = ['call number', 'shelfmark', 'shelf mark', 'signatur', 'cote', 'segnatura'];
+  for (const entry of manifest.metadata) {
+    const label = extractLabel(entry.label as string | Record<string, string[]>)?.toLowerCase();
+    if (label && callLabels.some(c => label.includes(c))) {
       const value = extractLabel(entry.value as string | Record<string, string[]>);
       if (value) return value.trim();
     }
@@ -355,6 +375,7 @@ export async function importBookFromIIIF(
   // Extract metadata from manifest
   const manifestDate = extractDate(manifest);
   const manifestLabel = extractLabel(manifest.label);
+  const manifestCallNumber = extractCallNumber(manifest);
   const manifestPublisher = extractPublisher(manifest);
   const manifestPlace = extractPlace(manifest);
   const rawLicenseUrl = manifest.rights
@@ -389,7 +410,9 @@ export async function importBookFromIIIF(
     id: bookIdStr,
     slug,
     title: config.title,
-    display_title: config.display_title || manifestLabel || null,
+    // A manifest label that is really a shelfmark must not become the name the
+    // reader sees (#4572) — same guard as the /api/import/iiif route.
+    display_title: config.display_title || usableManifestLabel(manifestLabel, manifestCallNumber) || null,
     author: config.author,
     language: lang.language,
     ...(lang.original_language ? { original_language: lang.original_language } : {}),

@@ -2,7 +2,7 @@
 // Likes System
 // =============================================================================
 
-export type LikeTargetType = 'image' | 'page' | 'book';
+export type LikeTargetType = 'image' | 'page' | 'book' | 'collection';
 
 /**
  * A like from an anonymous visitor
