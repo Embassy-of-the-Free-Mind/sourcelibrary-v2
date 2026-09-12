@@ -27,10 +27,16 @@ const BOOK = arg('--book', null);
 
 await withMongo(async (db) => {
   const P = db.collection('pages'), B = db.collection('books');
-  const match = { 'ocr.source': 'ia_djvu', 'ocr.ia': { $exists: false } };
-  if (BOOK) match.book_id = BOOK;
-  const perBook = await P.aggregate([{ $match: match }, { $group: { _id: '$book_id', pages: { $sum: 1 } } }, { $limit: LIMIT }]).toArray();
-  console.log(`${perBook.length} books with ia_djvu pages lacking ocr.ia (${perBook.reduce((s, b) => s + b.pages, 0)} pages) — ${APPLY ? 'APPLY' : 'dry run'}`);
+  // Drive from book_events, not from a scan of `pages` — `ocr.source` is unindexed and a
+  // corpus-wide match times out; the ingester wrote one 'ia_ocr_ingest' event per book.
+  const evMatch = { type: 'ia_ocr_ingest' }; if (BOOK) evMatch.book_id = BOOK;
+  const bookIds = await db.collection('book_events').distinct('book_id', evMatch);
+  const perBook = [];
+  for (const bid of bookIds.slice(0, LIMIT)) {
+    const pages = await P.countDocuments({ book_id: bid, 'ocr.source': 'ia_djvu', 'ocr.ia': { $exists: false } });
+    if (pages) perBook.push({ _id: bid, pages });
+  }
+  console.log(`${perBook.length} of ${bookIds.length} ingested books have ia_djvu pages lacking ocr.ia (${perBook.reduce((s, b) => s + b.pages, 0)} pages) — ${APPLY ? 'APPLY' : 'dry run'}`);
   let books = 0, pages = 0, missingMeta = 0;
   for (const { _id: bid, pages: n } of perBook) {
     const b = await B.findOne({ id: bid }, { projection: { ia_identifier: 1, image_source: 1, title: 1 } });
