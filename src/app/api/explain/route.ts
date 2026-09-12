@@ -164,7 +164,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       );
     }
 
-    const model = getGeminiClient().getGenerativeModel({ model: DEFAULT_MODEL });
+    const model = getGeminiClient({ endpoint: '/api/explain', type: 'other' }).getGenerativeModel({ model: DEFAULT_MODEL });
 
     // Build context string
     const contextInfo = [
