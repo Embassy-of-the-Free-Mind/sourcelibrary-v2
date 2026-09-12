@@ -80,23 +80,53 @@ describe('translate-core routing parity', () => {
   });
 });
 
+// The script-aware rule is pinned with the OCR_LITE_ONLY switch held OFF, so the
+// parity guarantee survives the "flash-lite only, in the meantime" period
+// (2026-09-11) and is what returns the day the switch is lifted.
+const scriptAware = { liteOnly: false };
+
 describe('OCR routing parity (batch OCR vs translation vs API)', () => {
   it.each(probes)('$name', ({ book }) => {
-    expect(routeOcr(book)).toBe(routeTs(book));
-    expect(routeOcr(book)).toBe(routeMjs(book));
+    expect(routeOcr(book, scriptAware)).toBe(routeTs(book));
+    expect(routeOcr(book, scriptAware)).toBe(routeMjs(book));
   });
 
   it('routes Malay (Jawi) OCR to full flash — the orchestrator drift', () => {
     for (const lang of ['malay', 'ms', 'msa']) {
-      expect(routeOcr({ language: lang })).toBe(MODEL_FLASH);
+      expect(routeOcr({ language: lang }, scriptAware)).toBe(MODEL_FLASH);
     }
   });
 
   it('routes plain Latin-script books to lite for OCR too', () => {
-    expect(routeOcr({ language: 'latin' })).toBe(MODEL_LITE);
+    expect(routeOcr({ language: 'latin' }, scriptAware)).toBe(MODEL_LITE);
   });
 
   it('sends BPH books to full flash regardless of language', () => {
-    expect(routeOcr({ image_source: { provider: 'bph' }, language: 'latin' })).toBe(MODEL_FLASH);
+    expect(routeOcr({ image_source: { provider: 'bph' }, language: 'latin' }, scriptAware)).toBe(MODEL_FLASH);
+  });
+});
+
+describe('OCR_LITE_ONLY (2026-09-11): every batch OCR submission is flash-lite', () => {
+  const liteOnly = { liteOnly: true };
+
+  it('overrides the BPH branch', () => {
+    expect(routeOcr({ image_source: { provider: 'bph' }, language: 'latin' }, liteOnly)).toBe(MODEL_LITE);
+  });
+
+  it('overrides the non-Latin and unknown-language branches', () => {
+    for (const language of ['malay', 'tibetan', 'chinese', 'arabic', null, '']) {
+      expect(routeOcr({ language }, liteOnly)).toBe(MODEL_LITE);
+    }
+  });
+
+  it('is the default unless OCR_LITE_ONLY=0 is set in the environment', () => {
+    // The module reads the env once at import; this pins the default of that read.
+    expect(process.env.OCR_LITE_ONLY === '0' ? MODEL_FLASH : MODEL_LITE)
+      .toBe(routeOcr({ image_source: { provider: 'bph' } }));
+  });
+
+  it('does not touch translation routing', () => {
+    expect(routeMjs({ image_source: { provider: 'bph' }, language: 'latin' })).toBe(MODEL_FLASH);
+    expect(routeMjs({ language: 'tibetan' })).toBe(MODEL_FLASH);
   });
 });
