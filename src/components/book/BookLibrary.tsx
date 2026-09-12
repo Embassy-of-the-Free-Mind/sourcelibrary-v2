@@ -14,6 +14,7 @@ import { collectionCountLabel } from '@/lib/collections-utils';
 
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
+import { stripInlineMarkup } from '@/lib/inline-prose';
 
 interface CollectionInfo {
   slug: string;
@@ -590,9 +591,9 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                   {collectionInfo.description && (
                     <div>
                       <p className={`text-sm text-stone-600 leading-relaxed ${!introExpanded ? 'line-clamp-2' : ''}`}>
-                        {collectionInfo.description}
+                        {stripInlineMarkup(collectionInfo.description)}
                       </p>
-                      {collectionInfo.description.length > 150 && (
+                      {stripInlineMarkup(collectionInfo.description).length > 150 && (
                         <button
                           onClick={() => setIntroExpanded(!introExpanded)}
                           className="mt-1 flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors"

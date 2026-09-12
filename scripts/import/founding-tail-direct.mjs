@@ -17,6 +17,7 @@ import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 // the `born|died|fl|circa|ca` date strip — and is left in place deliberately:
 // swapping it would change this script's dedup keys. See #4444 for the plan.
 import { normalizeTitle } from '../lib/dedup-normalize.mjs';
+import { resolveIaLanguage } from '../lib/ia-language.mjs';
 const COMMIT = process.argv.includes('--commit');
 
 const SETS = [
@@ -82,11 +83,16 @@ async function main(){
     for(const k of Object.keys(iaCatalog)){const v=iaCatalog[k];if(v===null||v===undefined||(Array.isArray(v)&&v.length===0))delete iaCatalog[k];}
     const licenseUrl=meta.licenseurl||meta.license||null,rights=meta.rights||meta.possible_copyright_status||null;
     const contributor=typeof meta.contributor==='string'?stripText(meta.contributor):null,sponsor=typeof meta.sponsor==='string'?stripText(meta.sponsor):null;
+    // Language: IA's own signals outrank the hardcoded value in SETS above. This script previously
+    // wrote `language: b.language` with `field_provenance:{language:'caller'}` — literally accurate,
+    // and the defect: a caller value describing the WORK silently overrode the source's record of
+    // what this PRINTING is (#2184). resolveIaLanguage applies the route's precedence.
+    const lang=resolveIaLanguage(meta,b.language);
     const bookId=new ObjectId(),bookIdStr=bookId.toHexString();
     const slug=await uniqueSlug(db,slugify(`${b.title} ${b.author}`));const now=new Date();
     const photo=i=>`https://archive.org/download/${b.ia}/page/n${i}/full/full/0/default.jpg`;
     const thumb=i=>`https://archive.org/download/${b.ia}/page/n${i}/full/pct:15/0/default.jpg`;
-    const bookDoc=makeBookDoc({_id:bookId,id:bookIdStr,slug,title:b.title,display_title:null,author:b.author,language:b.language,published:b.published,field_provenance:{language:'caller'},categories:['History','Political Philosophy'],ia_identifier:b.ia,thumbnail:thumb(0),pages_count:pageCount,pages_ocr:0,pages_translated:0,content_type:'book',text_role:'original',
+    const bookDoc=makeBookDoc({_id:bookId,id:bookIdStr,slug,title:b.title,display_title:null,author:b.author,language:lang.language,...(lang.original_language?{original_language:lang.original_language}:{}),published:b.published,field_provenance:{language:lang.provenance},...(lang.conflict?{language_review:true}:{}),categories:['History','Political Philosophy'],ia_identifier:b.ia,thumbnail:thumb(0),pages_count:pageCount,pages_ocr:0,pages_translated:0,content_type:'book',text_role:'original',
       dublin_core:{dc_identifier:[`IA:${b.ia}`,...(iaCatalog.ark?[String(iaCatalog.ark)]:[]),...(iaCatalog.oclc_id?[`OCLC:${iaCatalog.oclc_id}`]:[]),...(iaCatalog.lccn?[`LCCN:${iaCatalog.lccn}`]:[])],dc_source:`https://archive.org/details/${b.ia}`,...(iaCatalog.publisher?{dc_publisher:iaCatalog.publisher}:{}),...(iaCatalog.description?{dc_description:iaCatalog.description}:{}),...(iaCatalog.subjects?.length?{dc_subject:iaCatalog.subjects}:{})},
       catalog_metadata:iaCatalog,...(iaCatalog.place?{place_published:String(iaCatalog.place)}:{}),...(iaCatalog.publisher?{publisher:String(iaCatalog.publisher)}:{}),
       image_source:{provider:'internet_archive',provider_name:'Internet Archive',source_url:`https://archive.org/details/${b.ia}`,identifier:b.ia,license:licenseUrl||'publicdomain',license_url:licenseUrl,rights,...(contributor?{contributing_library:contributor}:{}),...(sponsor?{sponsor}:{}),access_date:now},

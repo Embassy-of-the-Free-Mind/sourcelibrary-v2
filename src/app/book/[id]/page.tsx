@@ -79,7 +79,7 @@ import { buildSeoTitle, buildSeoDescription } from '@/lib/book-seo';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { galleryFilter, galleryHref, type GalleryScope } from '@/lib/gallery-scope';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
-import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel } from '@/lib/prior-translation';
+import { hasPublishablePriorTranslation, priorTranslationSentence, priorLinkLabel, collectPriorTranslations } from '@/lib/prior-translation';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
@@ -1307,49 +1307,61 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const m = s.match(/(\d{3,4})/);
       return m ? Date.UTC(Number(m[1]), 0, 1) : -0.5;
     };
+    // EVERY earlier English translation we hold evidence for, each on its own year.
+    //
+    // This used to render exactly one: `prior_translation`, else `picks[0]` of the
+    // verification array. Two things were wrong with that. It hid 2,212 recorded
+    // translations across 1,339 books (measured 2026-09-04). Worse, the array is
+    // unordered, so `[0]` is not the earliest — in 35% of books with two or more
+    // dated picks it is a LATER one, and the entry then sits on a date axis under a
+    // heading that says "Earlier". Pico's Opera Omnia credited Copenhaver (2022)
+    // while hiding Sir Thomas More (1510); the Hypnerotomachia credited Godwin
+    // (1999) over Dallington (1592). On a timeline, showing an arbitrary member of
+    // a set is not merely incomplete — it is chronologically false.
     const timelinePrior = hasPublishablePriorTranslation(book as unknown as { prior_translation?: PriorTranslationCredit })
       ? (book as unknown as { prior_translation: PriorTranslationCredit }).prior_translation
       : null;
     const timelineVerification = (book as unknown as { translation_verification?: TranslationVerification }).translation_verification;
-    const timelineExistingEvidence = !timelinePrior && timelineVerification?.disposition === 'translation_found'
-      ? (timelineVerification.validated_translations?.[0] || timelineVerification.translations_found?.[0] || timelineVerification.translations?.[0])
-      : undefined;
-    if (timelinePrior) {
-      rawTimeline.push({
-        ts: yearTs(timelinePrior.year),
-        key: 'prior-translation',
-        dateText: timelinePrior.year ? String(timelinePrior.year) : t.tlEarlier,
-        label: t.tlEarlierEnglishTranslation,
-        detail: (
+    const verificationPicks = timelineVerification?.disposition === 'translation_found'
+      ? (timelineVerification.validated_translations ?? timelineVerification.translations_found ?? timelineVerification.translations ?? [])
+      : [];
+
+    collectPriorTranslations(timelinePrior, verificationPicks).forEach((row, i) => {
+      let detail: React.ReactNode;
+      if (row.credit) {
+        detail = (
           <>
-            {priorTranslationSentence(timelinePrior)}
+            {priorTranslationSentence(row.credit)}
             {embedPolicy.showExternalLinks && (
-              <>{' '}<a href={timelinePrior.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(timelinePrior)} →</a></>
+              <>{' '}<a href={row.credit.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{priorLinkLabel(row.credit)} →</a></>
             )}
           </>
-        ),
-      });
-    } else if (timelineExistingEvidence) {
-      const ev = timelineExistingEvidence;
-      const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
-      const summary = ev.english_title
-        ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
-        : (bits || t.tlEarlierTranslationExists);
-      rawTimeline.push({
-        ts: yearTs(ev.pub_year),
-        key: 'existing-translation',
-        dateText: ev.pub_year ? String(ev.pub_year) : t.tlEarlier,
-        label: t.tlEarlierEnglishTranslation,
-        detail: (
+        );
+      } else {
+        const ev = row.pick!;
+        const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
+        const summary = ev.english_title
+          ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
+          : (bits || t.tlEarlierTranslationExists);
+        detail = (
           <>
             {summary}
             {ev.url && embedPolicy.showExternalLinks && (
               <>{' '}<a href={ev.url} target="_blank" rel="noopener noreferrer" className="hover:underline whitespace-nowrap" style={{ color: '#a5503d' }}>{t.view}</a></>
             )}
           </>
-        ),
+        );
+      }
+      rawTimeline.push({
+        // Undated priors carry +Infinity from the collector; the timeline sorts on
+        // a finite axis, so map that back to the "unknown year" sentinel here.
+        ts: Number.isFinite(row.ts) ? row.ts : -0.5,
+        key: `prior-translation-${i}`,
+        dateText: row.year ?? t.tlEarlier,
+        label: t.tlEarlierEnglishTranslation,
+        detail,
       });
-    }
+    });
     // English editions / translations published on Source Library.
     const publishedEditions = ((book.editions as TranslationEdition[] | undefined) || [])
       .filter((e) => e.status === 'published' && e.published_at)

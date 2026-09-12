@@ -15,16 +15,42 @@ import type { Document } from 'mongodb';
 /** Match fragment selecting only visible (renderable) pages. */
 export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } } as const;
 
-/** Page types that will never carry a translation. Mirror of the .mjs list. */
-export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+/**
+ * Page types that will never carry a translation. Mirror of the .mjs list.
+ *
+ * `digitizer-insert` added #4685/#4507: 10/10 sampled digitizer-insert pages were
+ * scanning-service boilerplate (Google/IA/ProQuest cover sheets), never book content.
+ */
+export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert'];
 
-/** Shared by the `translatable` denominator and its numerator, so they cannot drift. */
+/**
+ * Shared by the `translatable` denominator and its numerator, so they cannot drift.
+ *
+ * The illustration guard (#4685) reads the stamped `ocr.text_free` boolean rather than
+ * re-deriving it: Mongo cannot exactly strip `<image-desc>…</image-desc>`-style blocks
+ * and measure what remains. `ocr.text_free` is computed exactly, in JS, by
+ * `isTextFreeIllustration` in scripts/lib/page-counts.mjs (the tag-stripping regex has
+ * no TS twin — it only ever runs against pages already fetched into memory) and stamped
+ * by recount-page-stats.mjs immediately before this pipeline runs. A page whose stamp
+ * is missing reads as `false` and stays IN the denominator — "pending, not proven
+ * empty," the same default every other unclassified page already gets.
+ */
 const TRANSLATABLE_COND = {
   $and: [
     // No `ocr.data` requirement: a page awaiting OCR is PENDING work, not impossible
     // work, and excluding it badges half-OCR'd books as 100% translated. Mirror of the
     // .mjs rule — keep the two in step.
     { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] }] },
+    {
+      $not: [
+        {
+          $and: [
+            { $eq: [{ $ifNull: ['$page_type', ''] }, 'illustration'] },
+            { $eq: [{ $ifNull: ['$ocr.text_free', false] }, true] },
+          ],
+        },
+      ],
+    },
     { $ne: ['$translation.recitation_blocked', true] },
     { $ne: ['$translation.safety_blocked', true] },
     { $ne: ['$ocr.recitation_blocked', true] },
@@ -50,6 +76,9 @@ export function buildVisiblePageCountPipeline(bookId: string): Document[] {
                 { $ne: ['$ocr.data', null] },
                 { $ne: ['$ocr.data', ''] },
                 { $ifNull: ['$ocr.data', false] },
+                // Attempted-but-not-legible pages retain `data` for provenance
+                // but are not served (#4523) — they must not count as OCR'd.
+                { $ne: ['$ocr.unreadable', true] },
               ] },
               1, 0,
             ],

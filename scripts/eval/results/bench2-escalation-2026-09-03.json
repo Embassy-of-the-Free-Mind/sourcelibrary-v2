@@ -1,0 +1,86 @@
+{
+  "date": "2026-09-03",
+  "gate_pp": 2,
+  "guard_max": 0.35,
+  "gemini_usd_per_page": 0.0045,
+  "engine_cost": {
+    "kraken-catmus-cpu": 0,
+    "kraken-austriannewspapers-cpu": 0,
+    "surya2-l4": 0.00094,
+    "churro3b-l4": 0.01435
+  },
+  "summary": [
+    {
+      "seg": "Latin",
+      "engine": "kraken-catmus-cpu",
+      "n": 5,
+      "meanDeltaPp": -0.5,
+      "clearAccPct": 100,
+      "clearGuardPct": 60
+    },
+    {
+      "seg": "Latin",
+      "engine": "surya2-l4",
+      "n": 5,
+      "meanDeltaPp": 0.15,
+      "clearAccPct": 100,
+      "clearGuardPct": 60
+    },
+    {
+      "seg": "Latin",
+      "engine": "churro3b-l4",
+      "n": 5,
+      "meanDeltaPp": 0.06,
+      "clearAccPct": 100,
+      "clearGuardPct": 60
+    },
+    {
+      "seg": "Greek",
+      "engine": "kraken-catmus-cpu",
+      "n": 4,
+      "meanDeltaPp": 0.74,
+      "clearAccPct": 100,
+      "clearGuardPct": 100
+    },
+    {
+      "seg": "Greek",
+      "engine": "surya2-l4",
+      "n": 4,
+      "meanDeltaPp": -2.21,
+      "clearAccPct": 67,
+      "clearGuardPct": 75
+    },
+    {
+      "seg": "Greek",
+      "engine": "churro3b-l4",
+      "n": 4,
+      "meanDeltaPp": -1.83,
+      "clearAccPct": 67,
+      "clearGuardPct": 75
+    },
+    {
+      "seg": "German",
+      "engine": "kraken-austriannewspapers-cpu",
+      "n": 2,
+      "meanDeltaPp": -4.31,
+      "clearAccPct": 0,
+      "clearGuardPct": 50
+    },
+    {
+      "seg": "German",
+      "engine": "surya2-l4",
+      "n": 2,
+      "meanDeltaPp": -0.57,
+      "clearAccPct": 100,
+      "clearGuardPct": 100
+    },
+    {
+      "seg": "German",
+      "engine": "churro3b-l4",
+      "n": 2,
+      "meanDeltaPp": 0.37,
+      "clearAccPct": 100,
+      "clearGuardPct": 100
+    }
+  ]
+}

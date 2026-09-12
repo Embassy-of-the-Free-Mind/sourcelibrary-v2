@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Cache-Control" content="no-store">
+<title>What nine million pages taught us · Source Library</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%231a1612%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%2710%27/%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%277%27/%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%274%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="/talks/ai-case-study/assets/covers-true.jpg">
+<link rel="preload" as="fetch" crossorigin href="/talks/ai-case-study/assets/covers-true.json">
+<link rel="stylesheet" href="/talks/ai-case-study/styles.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('sl-talk-theme')||'light'}catch(e){}</script>
+</head>
+<body>
+
+<header class="site">
+  <a class="logo" href="#hero" aria-label="Source Library">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="1"/><circle cx="12" cy="12" r="7" stroke="#fff" stroke-width="1"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="1"/></svg>
+    <span class="wm"><b>Source</b><span>Library</span><span class="beta">Beta</span></span>
+  </a>
+  <div class="vtabs" id="vtabs"></div>
+  <div class="right">
+    <span><kbd>←</kbd><kbd>→</kbd> · <kbd>N</kbd> notes · <kbd>D</kbd> theme</span>
+    <button id="theme" type="button">Dark</button>
+    <span class="draft">Internal draft</span>
+  </div>
+</header>
+<nav id="rail" aria-label="Slides"></nav>
+<div id="smallscreen" role="note"><div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1" width="34" height="34"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="4"/></svg><h1>Made for a desktop screen</h1><p>This deck was built for a presentation and does not fit a phone or tablet. Open it on a laptop or desktop browser.</p></div></div>
+<div class="tip" id="tip"></div>
+
+<section class="slide" id="hero" data-part="" data-title="Title">
+  <canvas id="wall" aria-hidden="true"></canvas>
+  <div class="in">
+    <div class="eyebrow">AI in collection management · Erfgoedhuis Zuid-Holland · Space Expo · 23 November 2026</div>
+    <h1>What nine million pages taught us</h1>
+    <div class="pills" id="hero-pills"></div>
+    <div class="meta">Source Library · a case study · figures read from the database on 7 September 2026</div>
+  </div>
+  <div class="notes"><b>Open.</b> We run a library of early printed books that machines read and translate. You have just seen the site, so this is not a demo. It is what we learned: four moments the machine was wrong and we only knew because we measured, and the questions that raises for anyone holding a collection. Behind me: 320 of the most-read books.</div>
+</section>
+
+<section class="slide v7" id="aimap" data-title="Everything we use AI for" data-part="how" data-versions="network:Network,pipeline:Pipeline" data-v="pipeline">
+  <div class="head"><div><span class="eyebrow-pill">How we use AI</span><h2>Everything the machine does here</h2></div><div class="sub"><span class="v-network">Each task is a node, sized by how often it ran. Each small dot is 25,000 model calls, January to September 2026.</span><span class="v-pipeline">Every step a model touches, with its real count, January to September 2026.</span></div></div>
+  <div class="stage" id="aimap-stage"></div>
+  <div class="stage" id="pipe-stage"></div>
+  <div class="notes"><b>The map.</b> Five clusters. Reading in blue: transcribing pages, finding illustrations, transliterating scripts, and re-reading pages to check agreement. Translating in green: 1.6 million page translations, the collapse check over 4.25 million pages, 556 repairs. Describing in yellow: index terms, summaries, chapters, museum-style descriptions of 101,967 illustrations, cover choice, quality scores. Checking in red: 75,927 verification attempts on first-translation claims, author linking, collection assignment. Serving in black: Ask the Librarian, 27,600 tool calls from AI agents, the dataset API. Everything in colour is a model call; every dot is real volume from the usage log.</div>
+</section>
+
+
+<section class="slide" id="collapse" data-part="hard" data-title="Fluent is not right">
+  <div class="head"><div><span class="eyebrow-pill">Limit</span><h2>Fluent is not the same as right</h2></div><div class="sub">Dicaearchus, Estienne 1589, page 34. Real page, real repair.</div></div>
+  <div class="stage two w" style="grid-template-columns:7fr 3fr"><div id="collapse-reader"></div><div class="stats" id="collapse-nums"></div></div>
+  <div class="notes"><b>Collapse.</b> Twenty lines of Latin and Greek. The first translation, in full: "continued from previous page… structure". Fluent, confident, missing the page. We checked 4.25M pages with one cheap signal, English far shorter than source. 51,227 flagged; half was our own measurement error, so about 25,000 real, 0.59%. 556 repaired in published books, prior versions kept. The cheap model collapses 11 times more than the better one on Latin; on Tibetan the transcription itself was looping. A cheap signal triages, a read calibrates. Repair non-destructively. Keep the checker independent of the checked.</div>
+</section>
+
+<section class="slide alt" id="ocr" data-part="hard" data-title="Cannot see its own mistakes">
+  <div class="head"><div><span class="eyebrow-pill">Limit</span><h2>The machine cannot see its own mistakes</h2></div><div class="sub">Same leaf, two scans, two readings. 32 pages in nine million have a human reference transcription.</div></div>
+  <div class="stage two"><div id="diff-stage"></div><div class="chart grow" id="ch-ocr-lang"></div></div>
+  <div class="notes"><b>OCR.</b> Left: the same page from two scans of the same book, read independently; differing words marked. We cannot measure accuracy at scale, so we measure self-agreement: 163,495 pages read twice in August. Right: disagreement by language. English 2%, Latin 15%, Greek 23%, Arabic 60%, Persian 70%. Non-Latin script: budget for the better model or a person. Our own correction: we reported plate misreads at 30%; the true rate was 0.34%.</div>
+</section>
+
+<section class="slide alt v7" id="first" data-title="What counts as a first translation" data-part="hard" data-versions="colour:Colour,folium:Folium" data-v="folium">
+  <div class="head"><div><span class="eyebrow-pill red">Difficult choice</span><h2>What counts as a first translation</h2></div><div class="sub">100 badged books, checked. And what it took to check one.</div></div>
+  <div class="stage two" style="grid-template-columns:6fr 5fr;gap:40px">
+    <div class="ftcol"><div class="ftgrid-wrap colour"><div class="ftgrid" id="ftgrid"></div><div class="ftkey" id="ftkey"></div></div><div class="ftgrid-wrap folium"><div class="ftgrid folium" id="ftgrid2"></div><div class="ftkey folium" id="ftkey2"></div></div></div>
+    <div class="trail" id="trail"></div>
+  </div>
+  <div class="notes"><b>First translations.</b> These are real covers from the library, each one badged "First Translation". We told funders we had about 5,800. In a stratified study of 462 badged books: 46 in 100 were a clean first, 18 had already been translated, 30 were not one work at all, bundles like the Articella where one binding holds a dozen texts, 6 could not be resolved. We also found firsts we had never badged, in roughly equal number. Best estimate about 5,000, range 4,000 to 6,500. The cheap verifier fabricated 63% of its "a prior translation exists" answers. 75,927 verification attempts, 811 by a person. A first translation is not a property of a book. It is an event that happens to a work.</div>
+</section>
+
+<section class="slide" id="humans" data-part="people" data-title="Where the humans are">
+  <div class="head"><div><span class="eyebrow-pill">Human oversight</span><h2>Where the humans are</h2></div><div class="sub">Every action at each stage. Blue by the machine, yellow by a person.</div></div>
+  <div class="stage" id="bands"></div>
+  <div class="notes"><b>Where the humans are.</b> Read left to right. Choosing what to digitise: 78 acquisition campaigns, all human. Reading: 438,329 machine revisions against 32 human reference pages. Translating: 4.9M pages against five logged editor corrections. Verifying claims: 75,116 machine attempts, 811 human verdicts. Attribution: 133 hand checks. Publishing: 93 curator sessions, 962 volunteers, 461 feedback messages. Nobody reads every page. Oversight here means provenance on every field, prior versions kept, and human time spent on samples and on the measurements that decide where to look. That is defensible. It is not "a human checked this", and no badge should imply it.</div>
+</section>
+
+<section class="slide" id="gap" data-title="The gap" data-part="why" data-versions="bars:Bars,circles:Circles" data-v="bars">
+  <div class="head"><div><span class="eyebrow-pill">Why bother</span><h2>How much of the written past can anyone read today?</h2></div></div>
+  <div class="stage" id="bubbles"></div>
+  <div class="notes"><b>The gap, three steps; arrow right advances.</b> Step one, Dutch: 82,651 distinct works printed in Dutch before 1700 in the Universal Short Title Catalogue. 1.2 percent have a scan we could find. 0.56 percent have an English translation on record. That is the province's own printed past. Step two, Europe: 1.39 million works; Latin alone 444,000 at 1.95 percent translated; German 0.14 percent. Across all languages about 0.9 percent, a figure the site's own translation-gap study stress-tested four ways; it cannot exceed 3.8 percent. Step three, beyond Europe: the catalogues we can measure, Tibetan 30,437 works at 2.7 percent, Islamicate 6,531 pre-1900 works at 5.3 percent, the Siku Quanshu canon of 3,461 Chinese works at one to three percent. Those are catalogues, not the whole of each tradition, so the true circles are larger and the rates lower. The choice is not perfect versus quick. It is quick and labelled, or nothing for another century.</div>
+</section>
+
+<section class="slide alt" id="advice" data-part="why" data-title="What we would tell you">
+  <div class="head"><div><span class="eyebrow-pill">For a collection-holding institution</span><h2>What we would tell you</h2></div></div>
+  <div class="stage dd">
+    <div class="do"><h3>Do</h3><ul>
+      <li style="--i:0">Keep your own copy of every scan and every output</li>
+      <li style="--i:1">Stamp every field: model, prompt, date</li>
+      <li style="--i:2">Measure a rate before you fix anything. Re-measure.</li>
+      <li style="--i:3">Cheap signal first, then read a sample</li>
+      <li style="--i:4">Budget dial in front of the pipeline</li>
+      <li style="--i:5">Pay for the checking. That is the new job.</li>
+    </ul></div>
+    <div class="dont"><h3>Don't</h3><ul>
+      <li style="--i:1">Let a badge imply a human read it</li>
+      <li style="--i:2">Use the model to check the model</li>
+      <li style="--i:3">Overwrite. Ever.</li>
+      <li style="--i:4">Assume the cheap model can read your script</li>
+      <li style="--i:5">Report records fixed. Report the rate.</li>
+      <li style="--i:6">Forget that the models will read what you publish</li>
+    </ul></div>
+  </div>
+  <div class="credit">Image: Flamsteed, Historia Coelestis Britannica, vol. 3, 1725. The library's own "Join the project" plate.</div>
+  <div class="notes"><b>Close.</b> Pick three to say aloud and leave the slide up for questions. The one to land: a machine reading is a first reading. Enormously valuable, and not a verified one. Label it as what it is, and pay the people who check it.</div>
+</section>
+
+<footer class="colophon">Internal draft, not for circulation. Figures read from the Source Library production database on 7 September 2026; audit figures from unpublished internal write-ups (translation collapse, OCR quality loop 2026-08-01, first-translation census 2026-06-26 and 462-book study, attribution health 2026-08-12, pipeline operations). Visitor counts exclude a scraper identified on 7 September. Fludd and Kircher "never fully translated" claims are marked in those drafts as needing an external check. Page images: Fludd 1617 (Getty Research Institute via Internet Archive), Dicaearchus 1589 (Google Books via Internet Archive), public domain.</footer>
+
+<script src="/talks/ai-case-study/data.js"></script>
+<script src="/talks/ai-case-study/talk.js"></script>
+</body>
+</html>
