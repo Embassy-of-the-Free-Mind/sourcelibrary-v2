@@ -13,12 +13,14 @@
  *   --dry-run     Show what would be queued without actually submitting
  *   --limit N     Only process the first N books (sorted by read_count desc)
  *   --book-id ID  Process a single book by ID
+ *   --reason="..." Why this batch is being run by hand (recorded on each job, #4336)
  */
 
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON } from '../lib/model-pricing.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -44,6 +46,8 @@ const limitIdx = args.indexOf('--limit');
 const LIMIT = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 const bookIdIdx = args.indexOf('--book-id');
 const SINGLE_BOOK_ID = bookIdIdx >= 0 ? args[bookIdIdx + 1] : null;
+const INITIATED_BY = 'script:bulk-reocr-opened-books';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // --- Image fetching ---
 async function fetchImageAsBase64(url, timeout = 30000) {
@@ -221,6 +225,8 @@ async function run() {
       language,
       prompt_version: PROMPT_VERSION,
       force: true,
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date()
     });
@@ -281,6 +287,8 @@ async function run() {
           language,
           prompt_version: PROMPT_VERSION,
           force: true,
+          initiated_by: INITIATED_BY,
+          ...initiatedReasonFields(REASON),
           created_at: new Date(),
           updated_at: new Date()
         });

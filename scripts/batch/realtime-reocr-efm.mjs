@@ -168,7 +168,7 @@ async function processPage(page, promptText, db) {
     }
 
     // Extract metadata
-    const pageType = extractPageType(result.text, { validate: false });
+    const pageType = extractPageType(result.text);
     const columns = extractColumns(result.text);
     const detectedImages = parseDetectedImages(result.text);
 

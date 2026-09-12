@@ -12,6 +12,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import collectionRedirects from '@/lib/collection-redirects.json';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
+import CollectionFurtherReading from '@/components/collections/CollectionFurtherReading';
 import IndexCatalogBrowser from '@/components/collections/IndexCatalogBrowser';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
@@ -27,6 +28,12 @@ import { browseBooks } from '@/lib/books-catalog';
 import { supabase } from '@/lib/supabase';
 import { authorUrl } from '@/lib/slugify';
 import { localizedEditionFilter } from '@/lib/localized';
+import {
+  resolveFurtherReading,
+  resolveReadingListGaps,
+  type FurtherReadingBook,
+  type FurtherReadingRef,
+} from '@/lib/further-reading';
 import { ObjectId } from 'mongodb';
 
 // ISR: rebuild at most once per day
@@ -486,6 +493,17 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
+  // Further reading — books we HOLD that are adjacent to this collection without
+  // being members of it (#4653). Deliberately NOT part of `collections`, so it
+  // never reaches `book_count` / `total_book_count` or the works grid: those
+  // describe membership, and these books are not members. The ids are
+  // `books.id`, matching `highlighted_books` / `mentioned_books` — never the
+  // Mongo `_id`, which 16,343 books have had re-minted.
+  const furtherReadingRefs: FurtherReadingRef[] = Array.isArray(collection.further_reading)
+    ? (collection.further_reading as FurtherReadingRef[])
+    : [];
+  const furtherReadingIds = furtherReadingRefs.map(r => r?.book_id).filter(Boolean);
+
   // Art collections share one canonical filter with the manifest API
   // (/api/collections/[id]?mode=manifest) — keep them in sync or the
   // server-rendered grid and the expanded grid show different works.
@@ -599,7 +617,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     }
   }
 
-  const [books, highlights, galleryImages, mentionedBooks, firstTranslations] = await Promise.all([
+  const [books, highlights, galleryImages, mentionedBooks, firstTranslations, furtherReadingBooks] = await Promise.all([
     fetchBooksWithFallback(),
     curatedBookIds.length > 0
       ? withTimeout(
@@ -690,6 +708,24 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
           .toArray(),
         8000, [],
       ),
+    // Further reading — resolved by id, NOT by a `pages_translated > 0` filter:
+    // the whole point of the band is books we hold and cannot yet read. The
+    // `visible: true` filter is load-bearing, not decorative — an authored id
+    // list inside a collection document is a takedown surface, and this is the
+    // only thing standing between a removed book and a dead link on a public
+    // page (visibility-and-stats.md, /collections/freemasonry). Order is
+    // restored from the authored refs afterwards; `$in` does not preserve it.
+    furtherReadingIds.length > 0
+      ? withTimeout(
+        db.collection('books')
+          .find(
+            { id: { $in: furtherReadingIds }, visible: true, ...(tenantId ? { tenantId } : {}) },
+            { projection, maxTimeMS: 8000 },
+          )
+          .toArray(),
+        8000, [],
+      )
+      : Promise.resolve([]),
   ]);
 
   const artworks = await artworksPromise;
@@ -859,6 +895,12 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: JSON.parse(JSON.stringify(galleryImages)) as any[],
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
+    furtherReading: resolveFurtherReading(
+      furtherReadingRefs,
+      (sanitizeBookThumbs(furtherReadingBooks as Record<string, unknown>[]) as unknown as FurtherReadingBook[])
+        .map(b => ({ ...b, title: b.title || '' })),
+    ),
+    readingListGaps: resolveReadingListGaps(collection.reading_list_gaps),
     parentCollection,
     galleryCollectionSlug,
     galleryTotalCount,
@@ -947,7 +989,10 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
   // tenant-scoped mismatch can still return null here.
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, spanishBookCount } = data;
+  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, furtherReading, readingListGaps, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, spanishBookCount } = data;
+
+  // The band self-gates on empty, but the hero anchor needs to know in advance.
+  const hasFurtherReading = furtherReading.length > 0 || readingListGaps.length > 0;
 
   // Collections that carry an Index catalogue (index_catalogs editions) render
   // the catalogue browser as their centrepiece — hide the Visual Art section
@@ -1154,6 +1199,21 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
             >
               {total.toLocaleString('en-US')} {itemLabel}
             </a>
+            {/* Counts the band, not the collection — the two are different sets
+                on purpose, and this link lands on exactly what it counts. */}
+            {hasFurtherReading && (
+              <>
+                <span className="w-px h-4 bg-white/20" />
+                <a
+                  href="#further-reading"
+                  className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+                >
+                  {furtherReading.length > 0
+                    ? `${furtherReading.length.toLocaleString('en-US')} further reading`
+                    : 'Further reading'}
+                </a>
+              </>
+            )}
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
@@ -1771,6 +1831,16 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           defaultView={(collection as { all_books_default_view?: 'grid' | 'list' }).all_books_default_view}
         />
       </div>
+
+      {/* Further reading — adjacent works we hold, and the ones we don't. Sits
+          AFTER the works grid on purpose: it is a handoff, not a member list,
+          and it feeds no counter above it. Self-gates when both halves empty. */}
+      <CollectionFurtherReading
+        books={furtherReading}
+        gaps={readingListGaps}
+        tenantSlug={tenantSlug}
+      />
+
       <SignUpCTA />
     </div>
   );

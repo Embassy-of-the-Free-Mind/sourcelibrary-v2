@@ -67,3 +67,41 @@ export function diffCI(armA, armB, iters = 10000) {
   const ci = [diffs[Math.floor(iters * 0.025)], diffs[Math.floor(iters * 0.975)]];
   return { delta, ci, decisive: (ci[0] > 0 && ci[1] > 0) || (ci[0] < 0 && ci[1] < 0) };
 }
+
+/**
+ * The module's seeded PRNG, exported so a harness that needs a reproducible
+ * SHUFFLE (blinding a judge packet, picking a subsample) draws from the same
+ * stream `resetSeed` controls instead of `Math.random`, which would make the
+ * artifact different on every run and therefore unauditable.
+ */
+export const seededRand = () => rand();
+
+/**
+ * Bootstrap 95% CI on a RATIO of two per-unit counts (e.g. verified notes /
+ * notes emitted), resampling the UNITS — pages — not the numerator events.
+ *
+ * Why it belongs here rather than in a harness: a rate whose denominator is
+ * itself random (a page emits 0, 1 or 7 notes) has a CI that a plain binomial
+ * interval understates, because the notes inside one page are not independent
+ * draws. Resampling pages is the cluster bootstrap that fixes it, and it is the
+ * shape every "rate over pages" outcome in this repo has.
+ *
+ * @param {number[]} nums per-unit numerators
+ * @param {number[]} dens per-unit denominators (same length)
+ * @returns {{rate: number|null, ci: [number, number]|null, units: number, denom: number}}
+ */
+export function bootstrapRatioCI(nums, dens, iters = 10000) {
+  const units = nums.length;
+  const denom = dens.reduce((s, x) => s + x, 0);
+  if (!units || !denom) return { rate: null, ci: null, units, denom };
+  const rate = nums.reduce((s, x) => s + x, 0) / denom;
+  const out = [];
+  for (let i = 0; i < iters; i++) {
+    let a = 0, b = 0;
+    for (let j = 0; j < units; j++) { const k = Math.floor(rand() * units); a += nums[k]; b += dens[k]; }
+    if (b) out.push(a / b);
+  }
+  if (out.length < 2) return { rate, ci: null, units, denom };
+  out.sort((x, y) => x - y);
+  return { rate, ci: [out[Math.floor(out.length * 0.025)], out[Math.floor(out.length * 0.975)]], units, denom };
+}

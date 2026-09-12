@@ -33,15 +33,39 @@ export const OCR_MODEL_FLASH = MODEL_FLASH;
 export const OCR_MODEL_LITE = MODEL_LITE;
 
 /**
+ * OCR_LITE_ONLY — the deliberate divergence the header comment reserves.
+ *
+ * Derek, 2026-09-11: "OCR should only be flash-lite batch, in the meantime."
+ * The August usage log showed the OCR lane dominated by gemini-3-flash-preview
+ * rows (BPH, non-Latin/unknown language, and recitation tier 2 all route there)
+ * at ~2x the input price, while the spend dial is $5/day. Until the dial is
+ * raised, every batch OCR submission uses flash-lite, and the recitation ladder
+ * skips its flash-preview tier (tier 3, MinerU, is not a Gemini model and is
+ * unaffected). Translation routing is untouched — this is OCR only.
+ *
+ * Default ON. Set OCR_LITE_ONLY=0 in the orchestrator's environment (Hetzner
+ * crontab / .env) to restore script-aware routing without a deploy.
+ * tests/unit/translate-core-parity.test.ts pins both behaviours.
+ */
+export const OCR_LITE_ONLY = process.env.OCR_LITE_ONLY !== '0';
+
+/** Model for the recitation escalation tier that used to be flash-preview. */
+export function ocrEscalationModel() {
+  return OCR_LITE_ONLY ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
+}
+
+/**
  * THE model routing for OCR. Mirrors getModelForBook in
- * src/lib/types/ai-models.ts and getTranslateModelForBook in translate-core.mjs.
+ * src/lib/types/ai-models.ts and getTranslateModelForBook in translate-core.mjs
+ * — except under OCR_LITE_ONLY (above), when every book routes to flash-lite.
  *
  * - BPH books: full flash (high-quality manuscripts)
  * - Non-Latin scripts: full flash (flash-lite hallucinates)
  * - Latin-script European languages: flash-lite (50% cheaper)
  * - Unknown/null language: full flash (safer default)
  */
-export function getOcrModelForBook(book) {
+export function getOcrModelForBook(book, { liteOnly = OCR_LITE_ONLY } = {}) {
+  if (liteOnly) return OCR_MODEL_LITE;
   if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
   const lang = (book?.language || '').toLowerCase().trim();
   if (!lang || !LATIN_SCRIPT_LANGUAGES.has(lang)) return OCR_MODEL_FLASH;

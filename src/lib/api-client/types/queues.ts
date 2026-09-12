@@ -23,4 +23,5 @@ export interface QueueBooksRequest {
   pageIds: string[];       // Specific page IDs to process
   action: JobType;         // 'ocr' | 'translation' | 'image_extraction'
   customPrompt?: string;   // Optional custom prompt for OCR/translation
+  reason?: string;         // Optional: why this is being run by hand (#4336)
 }
