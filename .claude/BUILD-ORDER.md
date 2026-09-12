@@ -39,6 +39,28 @@ English, see its plates in place, with no scan on disk and no network.
 wall app; the kiosk has its own column reader. Does the kiosk get the book, or does the
 wall become the reading surface? The audit assumed the kiosk, before this was found.
 
+**1a. Paginate the text into leaves.** The kiosk reader (sl-kiosk at `de8292d` on
+`spiral-timeline`) sets a cream leaf in Aldine with the apparatus correctly lifted out —
+but it is a PortalList, so the text scrolls off the foot and a scrollbar gives it away. A
+page whose text scrolls is a pane with a paper background. Cut each source page into as
+many leaves as it needs, both columns on the same span of source lines so they keep
+facing each other. Handoff, posture first, with six checks:
+`~/sourcelibrary-ops/handoffs/2026-09-12-kiosk-paginate-leaves.md`.
+
+Measured on the bundle, one page sampled per book over 502 books — **size the leaf from
+these, do not guess**: the median page is **10 lines** of original text, p75 **23**, p90
+**35**, p99 **92**, longest seen 221. So a leaf holding ~24 lines carries three quarters
+of all pages whole, and splitting is the exception — but a common one.
+
+**1b. The empty second column.** Measured on the same sample, positive-controlled:
+**55% of pages have no translation at all** (44% real, 1% tag-only blanks). The two-column
+reader shows an empty English column on the majority of pages in the corpus; it never
+showed in review because the demo book, PH150, is fully translated. Decide what one
+column looks like before this reaches a case. The `<summary>` the pipeline already
+writes — present on 31% of translated pages, e.g. *"the traditional opening of the Divine
+Office, based on Psalm 51 and Psalm 70"* — is written, paid for, and currently discarded;
+it is the one sentence a standing visitor most needs.
+
 ---
 
 ## Next, in this order
