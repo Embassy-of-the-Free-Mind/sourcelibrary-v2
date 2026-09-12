@@ -351,6 +351,16 @@ export interface ReaderStrings {
   paneEmpty: {
     notTranscribed: string;
     notTranscribedBody: string;
+    /** Attempted but not reliably legible (#4523). */
+    notReliablyLegible: string;
+    notReliablyLegibleBody: string;
+    /**
+     * The transcription is good and shown; the ENGLISH was made from an older,
+     * worse reading of the page and has been taken down until it is redone
+     * (#4523). Distinct from notReliablyLegible, which withholds both panes.
+     */
+    translationWithheld: string;
+    translationWithheldBody: string;
     blankPage: string;
     readyToTranslate: string;
     readyToTranslateBody: string;
@@ -754,6 +764,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneEmpty: {
       notTranscribed: 'Not transcribed yet',
       notTranscribedBody: 'The scan is here and free to read, but this page has no transcription yet, so there is nothing to translate from.',
+      notReliablyLegible: 'Not reliably legible',
+      notReliablyLegibleBody: 'We attempted to transcribe this page but could not produce a reading we trust, so we are not showing one. The scan beside this is the authoritative source.',
+      translationWithheld: 'Translation withdrawn',
+      translationWithheldBody: 'This page has just been re-transcribed, and the English we had was made from the older, less accurate reading. We have taken it down rather than leave a translation of text that is no longer here. A new one will follow.',
       blankPage: 'Blank page.',
       readyToTranslate: 'Ready to translate',
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
@@ -1131,6 +1145,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneEmpty: {
       notTranscribed: 'Aún sin transcribir',
       notTranscribedBody: 'El escaneo está aquí y se puede leer libremente, pero esta página todavía no tiene transcripción, así que no hay nada de donde traducir.',
+      notReliablyLegible: 'Sin lectura fiable',
+      notReliablyLegibleBody: 'Intentamos transcribir esta página, pero no pudimos obtener una lectura fiable, así que no mostramos ninguna. El escaneo que la acompaña es la fuente autorizada.',
+      translationWithheld: 'Traducción retirada',
+      translationWithheldBody: 'Acabamos de volver a transcribir esta página, y la traducción al inglés que teníamos se hizo a partir de la lectura anterior, menos exacta. La hemos retirado en lugar de dejar una traducción de un texto que ya no está aquí. Pronto habrá una nueva.',
       blankPage: 'Página en blanco.',
       readyToTranslate: 'Lista para traducir',
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',

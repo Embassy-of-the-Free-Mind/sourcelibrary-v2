@@ -191,7 +191,7 @@ export const INDEXES = [
   // ── failed_imports ────────────────────────────────────────────
   { collection: 'failed_imports', key: { 'source_id': 1 }, options: { 'name': 'source_id_1', 'unique': true }, why: 'Unique per-source id — prevents re-processing a failed import twice (no exact creation script found in-repo).' },
   // ── ft_reverify_proposal ──────────────────────────────────────
-  { collection: 'ft_reverify_proposal', key: { 'book_id': 1 }, options: { 'name': 'book_id_1', 'unique': true }, why: 'One reverify proposal per book, unique. scripts/analysis/ft-ground-remediation.mjs.' },
+  { collection: 'ft_reverify_proposal', key: { 'book_id': 1 }, options: { 'name': 'book_id_1', 'unique': true }, why: 'One reverify proposal per book, unique. Producer (scripts/analysis/ft-ground-remediation.mjs) deleted in #4536; index kept for the existing rows.' },
   // ── gallery_collections ───────────────────────────────────────
   { collection: 'gallery_collections', key: { 'slug': 1 }, options: { 'name': 'gallery_collections_slug_idx', 'background': true, 'unique': true }, why: 'Collection-page slug lookup, unique. Archived ensure-indexes route.' },
   { collection: 'gallery_collections', key: { 'featured': 1, 'sort_order': 1 }, options: { 'name': 'gallery_collections_featured_idx', 'background': true }, why: 'Featured-listing sort. Archived ensure-indexes route.' },

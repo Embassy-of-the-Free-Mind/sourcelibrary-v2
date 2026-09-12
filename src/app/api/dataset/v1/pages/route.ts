@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
 import { logAccess, getDailyPageCount } from '@/lib/dataset/access-logger';
+import { getClientIp } from '@/lib/rate-limit';
 import { DatasetPageRecord } from '@/lib/dataset/types';
 import { markForExport } from '@/lib/provenance';
 import { keyRef } from '@/lib/bot-attribution';
@@ -232,7 +233,9 @@ export async function GET(request: NextRequest) {
     records_returned: lines.length,
     book_ids: Array.from(bookIdsAccessed),
     format: 'jsonl',
-    ip_address: request.headers.get('x-forwarded-for') || 'unknown',
+    // cf-connecting-ip first — behind the CDN, x-forwarded-for is a Cloudflare
+    // edge node (#3491). logAccess anonymizes before storing.
+    ip_address: getClientIp(request),
   });
 
   // Keyset cursor for the next page. Derived from the last PAGE row, not the

@@ -10,11 +10,14 @@
  *   --book-id=ID     Queue a specific book
  *   --dry-run        Show what would be queued without actually queuing
  *   --limit=N        Max books to queue (default: all in BOOKS list)
+ *   --reason="..."   Why this batch is being run by hand (recorded on each job, #4336)
  */
 
 import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { getTranslateModelForBook } from '../lib/translate-core.mjs';
 
 // ── Configuration ──────────────────────────────────────────────────────
 
@@ -112,6 +115,8 @@ const DRY_RUN = args.includes('--dry-run');
 const SPECIFIC_BOOK = args.find(a => a.startsWith('--book-id='))?.split('=')[1];
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '999');
 const AUTO_MODE = args.includes('--auto');
+const INITIATED_BY = 'script:queue-translations';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // ── Main ───────────────────────────────────────────────────────────────
 
@@ -209,10 +214,11 @@ async function main() {
       progress: { total: pageIds.length, completed: 0, failed: 0 },
       config: {
         page_ids: pageIds,
-        model: 'gemini-3-flash-preview',
+        model: getTranslateModelForBook(book), // the book's model, never a constant (#4729 shape; policy split in #4759)
         language: book.language || 'auto-detect'
       },
-      initiated_by: 'script:queue-translations',
+      initiated_by: INITIATED_BY,
+      ...initiatedReasonFields(REASON),
       created_at: new Date(),
       updated_at: new Date()
     });

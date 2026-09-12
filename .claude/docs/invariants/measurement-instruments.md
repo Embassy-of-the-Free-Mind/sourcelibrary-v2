@@ -133,6 +133,28 @@ what was new is that a *safety control* embodied it.
   hourly buckets — day-aligned queries anchor to the query END time and silently become
   rolling-24h windows). Verified 2026-08-09 for ~$0.05.
 
+**It recurred inside the audit written to catch it (2026-09-05, #4593/#4657).** `spend-reconcile.mjs`
+— the instrument whose whole purpose is comparing our meter to Google's bill — read Mongo
+`gemini_usage` alone. For August 2026 it reported 154,888 calls / $499.74 when the two stores hold
+305,800 / $2,316.68, so meter coverage printed 37% (true: 72%) and the billed-vs-metered gap printed
+11.1x (true: 2.4x). #4599 was then filed against a 250K-call hole that is ~117K. Three lessons the
+first incident did not carry:
+
+- **"Sum both stores" is a property of every spend instrument, so pin it in a test that names them
+  all** — `tests/unit/usage-meter-reads-both-stores.test.ts` asserts it for the guard, the reconciler
+  and `true-gemini-spend.mjs` together. Fixing the one that broke leaves the next one to be
+  discovered by a bill.
+- **Count the stores before trusting a coverage figure: there are THREE.** Mongo `ai_usage`
+  (`logAiUsage()`, request-path features — librarian, explain, ai_search_expand) held $77.00 in
+  August and no spend instrument read it. Report it separately: a librarian row is one agentic
+  TURN, several Gemini calls, so it can never be added to a call count.
+- **A silent-zero diagnosis deserves the inverse hypothesis.** #4593 was filed as "writers dropped
+  `created_at`, so every date-scoped read sees $0". The writers had moved to `timestamp` in 2026-03
+  and all 14 live readers followed; nothing reads `created_at` on that collection, and the dial reads
+  neither (ObjectId ranges, on purpose). What was actually invisible was the mirror image — 1,381
+  legacy rows carrying `created_at` and no `timestamp`. The ad-hoc query that produced the $0 was the
+  broken instrument, which is the theme of this whole file.
+
 ## An output that cannot vary with its input is reporting nothing — and a plausible list hides it best
 
 The `/encyclopedia/[name]` **Connections** panel showed "other entities that appear in
@@ -338,10 +360,33 @@ reads all three:
   is not failure — no silent skips" (#3740): here the skip was counted but
   unexplained, which reads as a working instrument reporting a broken world.
 
+- **A finding must be ACTIONABLE, or the dedupe that protects your inbox becomes
+  a mute button.** `book-slug-placeholders` fired on every placeholder book slug,
+  and `corpus-integrity-watch.yml` files **one open issue at a time** — correct on
+  its own, since a deterministic finding filed daily buries the first report under
+  30 copies. But after the #4521 repair, 38 of the 39 remaining bad URLs were
+  waiting on an English `display_title` (#4390), not on slug logic: nothing the
+  repair sweep can touch, ever. So the issue stays open forever, and the *next*
+  importer that bypasses `generateBookSlug` — the regression the detector exists
+  for — files **nothing**. The alarm was masked by its own backlog. Worse, the
+  issue body said "Repair with `repair-book-slugs.ts`", which was now false for
+  every row in it: the next reader runs the sweep, gets 0 renames, and re-derives
+  the whole triage. **Split "broken" from "fixable" and fire only on fixable**
+  (#4530): `classifySlugRepair` in `src/lib/book-slug-repair.ts` returns
+  `repairable` vs a named blocker, the repairable count drives the exit code, and
+  the blocked tail is *reported with its reason and its owning issue* so it reads
+  as a known backlog rather than N mysterious rows. **Put the triage in ONE module
+  the detector and its repair tool both import** — a detector that disagrees with
+  its own sweep reports work that cannot be done, which is the failure itself.
+  **Tell:** a standing detector whose count never reaches zero, or an auto-filed
+  issue whose remedy you have already run.
+
 **Diagnostic tell for the next person:** an auto-filed issue whose fenced block is
 an *error message* rather than a *measurement*. Read the body before believing the
 title — and when a watchdog has filed the same title on a regular cadence with no
-one acting on it, suspect the watchdog before the corpus.
+one acting on it, suspect the watchdog before the corpus. Conversely, a watchdog
+that filed **once** and has been quiet since may be muzzled by its own open issue
+rather than satisfied: check whether its finding is still actionable.
 
 Related: the same self-referential shape as the error reporter that reported its
 own failures (#4045/#4047), and the inverse of "absence is not failure — no silent
@@ -465,3 +510,108 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## Two meters, two clocks: reconcile by MONTH, never by window (2026-09-04)
+
+Our `gemini_usage` rows and Google's Cloud Monitoring token telemetry measure the same
+spend on **different clocks**. A batch row is timestamped when the job is *collected*;
+Google counts the tokens when they were *generated*, hours earlier.
+
+Over a 3-hour window that made Google's total (6.52M output tokens) line up with our
+**realtime** rows (5.81M) while our batch rows (4.09M) looked uncounted — from which I
+concluded "the metric excludes batch." **That was wrong.** At month scale it resolves:
+September meter 78.0M vs Google 69.7M, i.e. batch *is* counted and the meter runs ~12%
+high on boundary effects (late-August batches collected in September).
+
+**Rule:** reconcile monthly (`scripts/audit/spend-reconcile.mjs --month=YYYY-MM`) and
+treat ±15% as clock noise, not signal. A short window cannot distinguish "this lane is
+unmetered" from "these two clocks disagree", and the first conclusion is much more
+alarming than the truth.
+
+Generalisation worth keeping: **when two instruments disagree, check whether they share
+a clock before concluding one is broken.** The disagreement was real and the mechanism
+was mundane; the short window manufactured the drama.
+
+## The convenient artifact is the misleading one — that is not a coincidence
+
+Three instruments failed in one afternoon (2026-09-04, #4523), and in every case the
+artifact a reasonable person would reach for FIRST was the wrong one. That is the
+pattern, not bad luck: the convenient artifact is convenient because it is complete,
+always present, or already open — and those are exactly the properties a stale or
+partial record has.
+
+- **A failures-only log reads as a complete log.** `reocr_worker.py` writes
+  `worker-0.jsonl` containing only failures and skips; successes go to the output
+  directory and are never logged. Reading it produced "2,016 failures, ZERO
+  successes — the job is broken", published as an operational alert. The job was
+  healthy: the output dir grew 7,430 → 7,451 files in 15 minutes, with valid
+  Tibetan in them. **Verify a worker by its OUTPUT growing, never by its error log
+  being non-empty.** If a log records only one outcome class, say so in its NAME.
+- **An error field that captures a stderr TAIL reports the last warning, not the
+  cause.** Every failure in that log read `kenlm python bindings are not installed`
+  — a benign notice the BDRC CLI prints on every invocation, successful or not. The
+  real failure modes (`No lines detected` on blank folios, http 403/502) were
+  invisible. Capture the exception, not the tail.
+- **A field present on 100% of rows beats a correct field present on 27% — in
+  adoption, not in truth.** `pages.image_width` exists on all 285,373 OCR'd Tibetan
+  pages; `image_metadata.width` on 27.3%. Where both exist they disagree **4,000 of
+  4,000 sampled times**: `image_width` is the DISPLAY derivative, `image_metadata`
+  the archived master (one page reads 1200×800 against a real 3888×2592). A
+  corpus-wide "42% of pages are too low-res to OCR" was built on the populated field
+  and was wrong. **Before a cohort query, check the field's coverage AND cross-check
+  it against a second source on rows carrying both.** For image size the authority is
+  the provider's own `info.json`, since our copy can never exceed the source master.
+
+Corollary for the writing side: **if you know which artifact is authoritative, make
+it the easy one to reach.** A warning in a doc loses to a field that autocompletes.
+
+**An instrument that reads only your own records cannot discover that your records are wrong.** Every rule above is about an instrument that measures the wrong thing. This one is about a whole *set* of instruments that measure the right thing, correctly, and still miss a fact none of them can see — because they all draw from the same well. We had three spend instruments: `true-gemini-spend.mjs` (reads every meter we write), `spend-perimeter.mjs` (checks every spender asks the dial), and the Gemini lines in `daily-health-snapshot.mjs` (reports `batch_jobs.cost_usd`). All three were well-built and encoded real scar tissue. **None of them ever asked Google what it charged.** So for three months they agreed with each other at ~$500/month against a billed $8,389.32 — a 17× gap that no amount of cross-checking *between* them could have surfaced, because the missing quantity (reasoning tokens, billed at the output rate) was absent from every source they read. The meters recorded `candidatesTokenCount`, which excludes `thoughtsTokenCount`; the bill counted both (#4581).
+
+Two compounding failures made it invisible, and both are worth recognising in other domains. First, **the cost figures were computed from a constant, not observed** — `gemini_usage.cost_usd` is derived from `MODEL_PRICING`, so a wrong constant produced wrong costs that were internally consistent and looked fine. Second, **the constant had been "validated" against those same computed costs**: `scripts/lib/model-pricing.mjs` chose `0.075/0.30` for flash-lite as the "closest fit to recorded costs," where the recorded costs were themselves generated by `0.075/0.30`. A constant fitted to numbers it produced is a mirror, not a measurement, and it will fit perfectly forever. Google's SKU catalogue says `0.25/1.50`.
+
+So when you build an instrument over a quantity that some **external party is authoritative for** — a vendor's bill, a partner's catalogue, an upstream API's idea of what it returned — at least one instrument in the set has to reach *outside* and reconcile. `scripts/audit/spend-reconcile.mjs` is that one for spend: it pulls billed tokens from Cloud Monitoring and live prices from the Cloud Billing SKU catalogue (`cloudbilling.googleapis.com/v1/services/AEFD-7695-64FA/skus` — an API, not a console), diffs both against our meters, and exits 2 on drift. It also reports **meter coverage** as a first-class number, which is the second half of the lesson: it found that only 72% of Google's successful `GenerateContent` calls write a usage row at all (#4599 — first read as 37%, because the reconciler itself was reading one of the two usage stores, #4593/#4657). An instrument should say how much of the thing it can see, not only what it found in the part it looked at. And when it cannot see a vendor, it must print UNREADABLE with the reason — an omitted line reads as $0, which is the silent-zero failure from the parser rule above wearing a different hat.
+
+## A page that prints its own answer key cannot test whether a model can do the task
+
+The Morley 1597 plainsong examples were chosen as the first mensural ground
+truth *because* the print sets the solmization syllable under every note — that
+is what let one person verify twelve staff positions without a musicologist. The
+same property makes the page nearly useless as a test of staff reading, and the
+first run (2026-09-11, `scripts/music/eval-results/2026-09-11-mensural-gemini-3-flash-preview/`)
+showed why: gemini-3-flash-preview returned the printed syllables mapped
+through the natural hexachord — right for 7 of 12 notes by coincidence, wrong
+for every note needing the hard hexachord, pitch NER 0.42. Note count and
+lyrics were perfect. **It transcribed the key instead of doing the task the key
+was meant to check**, and nothing in the output says so.
+
+The general shape, which is not specific to music: **whenever the ground truth
+is derivable from something visible in the model's input, the eval measures
+transcription of that thing, not the skill.** A facing-page translation, a
+labelled diagram, a printed index, a filename that names the class, a caption
+that states the answer — each turns a hard task into an easy one *for the model
+only*, while the human verifying the reference still did the hard work and so
+still believes the page is a fair test.
+
+- **Ask what else on the page answers the question**, before adopting a page as
+  ground truth. If the answer is present, either crop it out of the model's
+  input and keep the human's copy, or find a second page without it and report
+  both numbers.
+- **The tell is structured error, not random error.** Errors that partition
+  cleanly along the key's own coordinate system (here: every natural-hexachord
+  note right, every hard-hexachord note wrong) mean the model is working in the
+  key's frame, not the artifact's. Random-looking errors of the same magnitude
+  would have meant it was genuinely reading and failing.
+- **A correct count with wrong content is the same signature.** Getting the
+  number of notes and every lyric exactly right while missing the pitches is
+  what "read the easy channel" looks like; treat per-element agreement and
+  sequence length as separate metrics so one cannot mask the other.
+
+Corollary: an answer key is still the cheapest way to *verify a reference*. Keep
+using it for that. Just don't let the model see it.
+
+## A positive control certifies the instrument only on inputs shaped like the control (#4722)
+The Derge-identity scorer (`kanjur_align.score_page` on clawdbot, `/root/tibetan-eval/`) computed identity = matches / len(read) against **one** retrieved e-text page. Its positive control — a true e-text page plus 5% noise — scored 0.968, because the control was built from the **reference** side. Real reads are EAP two-leaf captures, ~470–600 syllables against a ~350–400-syllable e-text page, so a verbatim read of a folio straddling two pages was capped near **0.5** and the gate still passed. Every Derge identity published before 2026-09-11 (old Gemini 0.182 → BDRC 0.664, the 0.60 align rescue in `adjudicate.py`, the 5,086-page concordance) is an underestimate for long pages; the same Yigdzin reads score 0.93–0.97 once windowed.
+
+- **Build positive controls from the INPUT distribution, not the reference's.** A two-page concatenation control scores 0.496 at the old window and 0.968 at the new one — that control now ships with the scorer (`control --span 2`).
+- **For any ratio with the read in the denominator, window the reference wider than the longest read.** Fix: `score_page(..., window=2)` (retrieved page ±2, now the default; `window=0` reproduces the old number and `identity1` carries it).
+- **Tell:** an external instrument predicts a magnitude you do not see (a 0.7%-CER model reading at 0.48 "identity"), and your gate still passes. That gap is the instrument until proven otherwise. Postmortem and numbers: #4722 comment 5640946736; lesson `lesson_alignment_identity_capped_by_window_span` in auto-memory.

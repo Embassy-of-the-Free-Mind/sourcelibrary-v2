@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { publishedToYear } from '@/lib/resolve-language';
+import { usableManifestLabel } from '@/lib/manifest-label';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
@@ -495,12 +496,19 @@ export const POST = withCuratorAuth(async (request, session) => {
       id: bookIdStr,
       slug,
       title,
-      display_title: display_title || manifestLabel || null,
+      // usableManifestLabel drops a label that is really a holding statement.
+      // Gallica publishes the shelfmark as the manifest label, so taking it
+      // verbatim named books after a shelf (#4572).
+      display_title: display_title || usableManifestLabel(manifestLabel, iiifCallNumber) || null,
       author,
       language: language || 'Unknown',
-      published: published || 'Unknown',
-      ...(publishedToYear(typeof year === 'number' ? year : published) !== null
-        ? { year: publishedToYear(typeof year === 'number' ? year : published)! }
+      // The manifest's own publication date is the last resort before giving up
+      // and writing 'Unknown'. It was already extracted for catalog_metadata
+      // above, so refusing to use it here left the year sitting unread in the
+      // same document while the book fell out of every date-bounded query.
+      published: published || iiifPubDate || 'Unknown',
+      ...(publishedToYear(typeof year === 'number' ? year : (published || iiifPubDate)) !== null
+        ? { year: publishedToYear(typeof year === 'number' ? year : (published || iiifPubDate))! }
         : {}),
       categories: categories || [],
       ...(requestCollections?.length ? { collections: requestCollections } : {}),

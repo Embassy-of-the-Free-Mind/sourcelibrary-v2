@@ -45,13 +45,48 @@ export const DOMAIN_LIMITS = {
 
 const DEFAULT_LIMIT = 5;
 
-// Per-host scheduling state: { nextSlot, penalty }.
-//   nextSlot — epoch ms of the next unclaimed send slot for this host.
-//   penalty  — divisor applied to the configured limit after a 429, so a host
-//              that tells us to slow down actually gets a slower caller.
+// Per-host scheduling state: { nextSlot, penalty, penalizedAt }.
+//   nextSlot    — epoch ms of the next unclaimed send slot for this host.
+//   penalty     — divisor applied to the configured limit after a 429, so a host
+//                 that tells us to slow down actually gets a slower caller.
+//   penalizedAt — epoch ms of the last 429, used to decay `penalty` back toward 1.
 const _domainBuckets = new Map();
 
 const MAX_PENALTY = 16; // floor: a 2/s host lands at one request every 8s
+
+/**
+ * How long a host must go without a 429 before the penalty halves.
+ *
+ * #4396 gave the limiter multiplicative DECREASE and no increase: `penalty`
+ * doubled on every 429 and nothing ever lowered it. Four 429s pinned a host at
+ * 1/16th of its configured rate for the rest of the process, and the archiver
+ * runs 50-minute batches — so one early burst crippled the whole run. Measured
+ * on production 2026-09-03: gallica granted 3.27 req/s healthy and 0.29 req/s
+ * after four 429s, with no recovery, while the hourly archiver logged a flat
+ * 0.08 pages/s and `books 0/240`.
+ *
+ * Halving per quiet minute is deliberately slower than the doubling on the way
+ * down: we back off fast and return slowly, which is the safe asymmetry when
+ * the other party is a library that can block us outright (#4311, #4395).
+ */
+const PENALTY_HALFLIFE_MS = 60_000;
+
+/**
+ * Decay `penalty` toward 1 based on how long the host has been quiet.
+ *
+ * Called from the read path rather than on a timer so there is nothing to
+ * schedule or clean up, and a host that is never touched again costs nothing.
+ */
+function decayPenalty(b, now) {
+  if (b.penalty <= 1 || !b.penalizedAt) return;
+  const halvings = Math.floor((now - b.penalizedAt) / PENALTY_HALFLIFE_MS);
+  if (halvings <= 0) return;
+  b.penalty = Math.max(1, b.penalty / 2 ** halvings);
+  // Advance the clock by the halvings consumed, so partial progress is kept
+  // instead of being re-counted on the next call.
+  b.penalizedAt += halvings * PENALTY_HALFLIFE_MS;
+  if (b.penalty <= 1) { b.penalty = 1; b.penalizedAt = 0; }
+}
 
 export function getDomainLimit(url) {
   try {
@@ -64,7 +99,7 @@ export function getDomainLimit(url) {
 
 function bucketFor(host) {
   let b = _domainBuckets.get(host);
-  if (!b) { b = { nextSlot: 0, penalty: 1 }; _domainBuckets.set(host, b); }
+  if (!b) { b = { nextSlot: 0, penalty: 1, penalizedAt: 0 }; _domainBuckets.set(host, b); }
   return b;
 }
 
@@ -86,8 +121,9 @@ function bucketFor(host) {
  */
 export async function claimSlot(host, limit) {
   const b = bucketFor(host);
-  const interval = 1000 / Math.max(limit / b.penalty, 0.05);
   const now = Date.now();
+  decayPenalty(b, now);
+  const interval = 1000 / Math.max(limit / b.penalty, 0.05);
   const slot = Math.max(now, b.nextSlot);
   b.nextSlot = slot + interval;         // claimed synchronously — no await above
   const wait = slot - now;
@@ -106,18 +142,38 @@ export async function claimSlot(host, limit) {
 export function noteRateLimited(url, retryAfterSeconds) {
   let host; try { host = new URL(url).hostname; } catch { return; }
   const b = bucketFor(host);
+  const now = Date.now();
+  // Decay first, so a host that has been quiet for minutes is penalised from
+  // its recovered rate rather than from a stale worst case.
+  decayPenalty(b, now);
   b.penalty = Math.min(b.penalty * 2, MAX_PENALTY);
+  b.penalizedAt = now;
   const cooldown = Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0
     ? retryAfterSeconds * 1000
     : 5000;
-  b.nextSlot = Math.max(b.nextSlot, Date.now() + cooldown);
+  b.nextSlot = Math.max(b.nextSlot, now + cooldown);
   return b.penalty;
 }
 
 /** Effective (post-penalty) rate for a host, for logging. */
 export function effectiveLimit(url) {
   let host; try { host = new URL(url).hostname; } catch { return null; }
-  return getDomainLimit(url) / bucketFor(host).penalty;
+  const b = bucketFor(host);
+  decayPenalty(b, Date.now());
+  return getDomainLimit(url) / b.penalty;
+}
+
+/**
+ * Test seam: age a host's penalty clock by `ms` without sleeping.
+ *
+ * Recovery is measured in minutes, so a test that actually waited would be a
+ * test nobody runs. Exported only for the behavioural guard in
+ * tests/unit/domain-rate-limiter.test.ts.
+ */
+export function _agePenaltyClockForTest(url, ms) {
+  let host; try { host = new URL(url).hostname; } catch { return; }
+  const b = bucketFor(host);
+  if (b.penalizedAt) b.penalizedAt -= ms;
 }
 
 /**
@@ -214,7 +270,44 @@ export function upgradeToFullRes(url) {
     // this reason — 0 of 28 sampled books could be archived, while the STORED
     // url returned 200 the moment it was requested unmodified. MDZ escaped only
     // because its rule happens to require a comma (`/full/2000,/`).
-    if (/\/full\/full\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) return url;
+    // IIIF Image API 3.0 REMOVED the size keyword `full`; its spelling is `max`.
+    // A v3 service answers `/full/full/` with `400 Bad Request — Invalid size`,
+    // in ~0.2s, which reads in our logs as an ordinary page failure rather than
+    // as "this URL cannot ever work". Measured on Hetzner 2026-09-04 against
+    // iiif.archive.org (`/image/iiif/3/`), 4 pages of one IA item:
+    //
+    //   /full/full/  ->  400 in 0.5s   (or 504 after 60s on a cold decode)
+    //   /full/max/   ->  200 in 2.9s, 1.3–1.8 MB
+    //
+    // Every unarchived Internet Archive page in the corpus is on this endpoint,
+    // so this single segment is why the archiver's IA books never advanced and
+    // why ~58% of its page attempts failed.
+    //
+    // Keyed on the version declared in the PATH (`/iiif/3/`), not on a hostname,
+    // because that is what the service itself is asserting. dl.ndl.go.jp is
+    // excluded explicitly: it serves a v3-shaped path but 500s on `max` and
+    // wants `full` (the rule further down), and two rules must not fight over
+    // the same URL.
+    const isIiifV3 = /\/iiif\/3\//.test(url) && !url.includes('dl.ndl.go.jp');
+    if (isIiifV3 && /\/full\/full\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) {
+      return url.replace(/\/full\/full\/(\d+\/[a-z]+\.)/i, '/full/max/$1');
+    }
+    // The size keyword this URL's API version understands. Used by the generic
+    // rules below so an upgrade never hands a v3 service a v2-only keyword.
+    const FULL_SIZE = isIiifV3 ? 'max' : 'full';
+    // NDL Japan returns HTTP 500 on /full/max/ (IIIF v3 syntax their server
+    // doesn't honor); /full/full/ returns the native-resolution image. Many
+    // imported NDL URLs use /full/max/ from a v3-style manifest crawl.
+    //
+    // This runs BEFORE the "already at a full-size keyword" early return below,
+    // because that return now recognises `max` as well as `full` and would
+    // otherwise swallow this rule — leaving NDL pinned to the spelling that
+    // 500s. Caught by the negative-control case in
+    // tests/unit/iiif-upgrade-full-res.test.ts, not by reading the diff.
+    if (url.includes('dl.ndl.go.jp') && url.includes('/full/max/')) {
+      return url.replace('/full/max/', '/full/full/');
+    }
+    if (/\/full\/(?:full|max)\/\d+\/[a-z]+\.[a-z0-9]+$/i.test(url)) return url;
     // Harvard MPS rate-limits /full/full/ much more aggressively than /full/2000,/
     // — at 1 req/s the full-res endpoint still 429s out (5 cold-start fails =
     // circuit breaker, 0 successes). The existing 2000px variant in the photo
@@ -223,7 +316,7 @@ export function upgradeToFullRes(url) {
       return url;
     }
     if (url.includes('archive.org') && url.includes('/full/pct:')) {
-      return url.replace(/\/full\/pct:\d+\//, '/full/full/');
+      return url.replace(/\/full\/pct:\d+\//, `/full/${FULL_SIZE}/`);
     }
     if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) {
       return url.replace(/\/full\/\d+,\//, '/full/full/');
@@ -238,14 +331,8 @@ export function upgradeToFullRes(url) {
     if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\/\d+\/[a-z]+\./i)) {
       return url.replace(/\/full\/\d+,?\d*\/(\d+\/[a-z]+\.)/i, '/full/full/$1');
     }
-    // NDL Japan returns HTTP 500 on /full/max/ (IIIF v3 syntax their server
-    // doesn't honor); /full/full/ returns the native-resolution image. Many
-    // imported NDL URLs use /full/max/ from a v3-style manifest crawl.
-    if (url.includes('dl.ndl.go.jp') && url.includes('/full/max/')) {
-      return url.replace('/full/max/', '/full/full/');
-    }
     if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
-      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
+      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, `/full/${FULL_SIZE}/`);
     }
   } catch {}
   return url;
@@ -321,6 +408,21 @@ async function fetchIiifTile(serviceBase, x, y, w, h, opts) {
 }
 
 /**
+ * Does a returned tile actually fill the cell it was requested for?
+ *
+ * A `false` here means the server downscaled the region behind our back, and
+ * compositing it would leave canvas showing through. ±1px because IIIF servers
+ * round a scaled region's height differently; anything larger is a real cap.
+ *
+ * Split out from the stitch loop so the invariant is testable without a network
+ * (#4523 — the failure it guards is silent everywhere downstream).
+ */
+export function tileFits(reqW, reqH, gotW, gotH) {
+  if (!gotW || !gotH) return false;
+  return Math.abs(gotW - reqW) <= 1 && Math.abs(gotH - reqH) <= 1;
+}
+
+/**
  * Fetch a IIIF image at native pixel resolution, stitching tiles when the
  * server caps single-request output below the master dimensions.
  *
@@ -328,13 +430,26 @@ async function fetchIiifTile(serviceBase, x, y, w, h, opts) {
  *  1. Fetch info.json to learn the true master size.
  *  2. Pick a per-request chunk size: min(1024, info.maxWidth ?? 1024, info.maxHeight ?? 1024).
  *     (1024 is the empirically-largest output that BL/EAP returns at native pixel density.)
- *  3. Tile across (cols × rows), fetch each chunk, composite with sharp.
+ *  3. PROBE one chunk and shrink the stride to whatever the server actually
+ *     served — the advertised cap is a hint, and on SILENT_CAP_HOSTS a lie.
+ *  4. Tile across (cols × rows), fetch each chunk, verify its dimensions,
+ *     composite with sharp.
  *
  * If the server already serves /full/full/ at native, this still works
  * (it'd be 1 tile of size = master). Callers that know native is reachable
  * can skip this and use the simpler path.
  *
- * Throws on failure of any tile fetch.
+ * Throws on failure of any tile fetch, and on any tile whose returned size
+ * does not match the region requested.
+ *
+ * WHY THE SIZE CHECK (#4523): the canvas is painted white and `composite`
+ * places a short tile at the cell's top-left, so a silently-downscaled tile
+ * leaves a white gutter instead of an error. `rearchive-iiif-fullres.mjs`
+ * passed `maxChunk` from EAP's *advertised* 2000px while EAP serves 1200,
+ * giving a 0.6 linear / 0.36 area coverage — masters that are 64% white.
+ * ~30% of OCR-bearing Tibetan pages were archived that way in July 2026 and
+ * the OCR model read them as complete pages and invented the missing text.
+ * A gap in a page image has no downstream detector; it must fail here.
  *
  * @param {string} photoUrl   A IIIF Image API URL anywhere in the service
  *                            (used to derive the service base).
@@ -356,10 +471,34 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
 
   // Cap chunk by server-advertised maxWidth/maxHeight (some IIIF v3 servers do
   // honor sizeByConfinedWh and announce a higher cap).
+  //
+  // The advertised cap is a HINT, never a contract — this whole function exists
+  // because SILENT_CAP_HOSTS lie about it. The probe below is what actually
+  // decides the stride. See #4523 / assertTileFits.
   let chunk = opts.maxChunk ?? 1024;
   if (info.maxWidth) chunk = Math.min(chunk, info.maxWidth);
   if (info.maxHeight) chunk = Math.min(chunk, info.maxHeight);
   if (chunk < 256) chunk = 256;
+
+  // PROBE: ask for one full-size chunk and see what actually comes back. A host
+  // that silently downscales returns a SMALLER image for the same region; if we
+  // then step the grid by the requested size, every tile lands at 60% scale in
+  // the top-left of its cell and the rest of the cell stays canvas-white. That
+  // is exactly how ~89k Tibetan pages were archived two-thirds blank (#4523).
+  if (W > chunk || H > chunk) {
+    const probeW = Math.min(chunk, W);
+    const probeH = Math.min(chunk, H);
+    const probe = await fetchIiifTile(serviceBase, 0, 0, probeW, probeH, opts);
+    const meta = await sharp(probe).metadata();
+    if (meta.width && meta.width < probeW) {
+      // Server capped us. Its real per-request ceiling is what it just returned.
+      const served = meta.width;
+      if (served < 256) {
+        throw new Error(`tile-stitch: server caps output at ${served}px — too small to stitch ${W}x${H}`);
+      }
+      chunk = served;
+    }
+  }
 
   const cols = Math.ceil(W / chunk);
   const rows = Math.ceil(H / chunk);
@@ -375,6 +514,16 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
       const w = Math.min(chunk, W - x);
       const h = Math.min(chunk, H - y);
       const buf = await fetchIiifTile(serviceBase, x, y, w, h, opts);
+      // Fail loudly rather than paste a short tile and leave a white gutter.
+      // A gap in a page image is invisible downstream: OCR reads it as a real
+      // page and invents text to fill the silence.
+      const meta = await sharp(buf).metadata();
+      if (!tileFits(w, h, meta.width, meta.height)) {
+        throw new Error(
+          `tile-stitch: requested ${w}x${h} at (${x},${y}) but server returned `
+          + `${meta.width}x${meta.height} — refusing to composite a gapped master`,
+        );
+      }
       composites.push({ input: buf, left: x, top: y });
       done++;
       if (opts.onProgress) opts.onProgress(done, totalTiles);
@@ -394,7 +543,7 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
     .jpeg({ quality: 92, mozjpeg: true })
     .toBuffer();
 
-  return { buffer: stitched, width: W, height: H, tiles: totalTiles };
+  return { buffer: stitched, width: W, height: H, tiles: totalTiles, chunk };
 }
 
 /**

@@ -94,8 +94,16 @@ export function isBookScopedUrl(url, bookId) {
   if (typeof url !== 'string' || !url.startsWith('http')) return true; // not our concern
   // A shared-key segment is always wrong, under any prefix.
   if (/\/(undefined|null|NaN)\//.test(url)) return false;
-  // Only judge our own page-image prefixes; other assets are not book-scoped.
-  if (!/\/(archived|pages|thumbnails)\//.test(url)) return true;
+  // Only judge our own page-image prefixes; other assets (gallery/, artwork/,
+  // manuscripts/) are not book-scoped and must not be flagged.
+  //
+  // `cropped/` and `uploads/` were added for #4376. Leaving them out is what let
+  // a mis-keyed cover — `cropped/<another book's id>/<page>.jpg` — sit in front
+  // of a visible book while this helper called it fine. Both were measured over
+  // the whole corpus first (2026-09-02): `uploads/` had zero mismatches, and
+  // `cropped/` had exactly one book (69a02781bd4078a454714f6d, 372 pages, the
+  // subject of #4376), so judging them costs no false positives.
+  if (!/\/(archived|pages|thumbnails|cropped|uploads)\//.test(url)) return true;
   if (!bookId) return false;
   // The corpus carries several key conventions across eras (see src/lib/storage.ts):
   // `archived/<bookId>/<N>.jpg` and `archived/<bookId>-<NNNN>.jpg` are both real and

@@ -11,16 +11,19 @@
  *   --dry-run     Show what would be queued
  *   --biggest     Sort by largest gap first (default: smallest first)
  *   --book-id=ID  Queue a single book
+ *   --reason="..." Why this batch is being run by hand (recorded on each job, #4336)
  */
 
 import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { SKIP_TRANSLATION_PAGE_TYPES, getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
 const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
-const DEFAULT_MODEL = 'gemini-3-flash-preview';
+// EFM = the BPH provider, which getTranslateModelForBook routes to full flash. Going through
+// the router keeps this script honest if a non-BPH book ever lands in its query (#4759).
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -34,6 +37,8 @@ const LIMIT = parseInt(getArg('limit') || '50', 10);
 const DRY_RUN = hasFlag('dry-run');
 const BIGGEST_FIRST = hasFlag('biggest');
 const SINGLE_BOOK = getArg('book-id');
+const INITIATED_BY = 'script:queue-efm-translations';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // --- SQS setup ---
 const sqsClient = new SQSClient({
@@ -181,10 +186,13 @@ async function main() {
           progress: { total: pageIds.length, completed: 0, failed: 0 },
           config: {
             page_ids: pageIds,
-            model: DEFAULT_MODEL,
+            model: getTranslateModelForBook(book),
             language: book.language || 'auto-detect',
           },
-          initiated_by: 'script',
+          // Was the bare 'script', which named no lane — reconstruction needs to know
+          // WHICH hand-run script, not just that one ran (#4336).
+          initiated_by: INITIATED_BY,
+          ...initiatedReasonFields(REASON),
           created_at: new Date(),
           updated_at: new Date(),
         });

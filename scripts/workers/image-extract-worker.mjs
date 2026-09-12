@@ -21,9 +21,9 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
-import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -732,6 +732,7 @@ async function extractImagesFromPage(page, prompt, groundingCtx) {
       maxOutputTokens: 4096,
       responseMimeType: 'application/json',
       responseSchema: RESPONSE_SCHEMA,
+      thinkingConfig: { thinkingBudget: 0 },
     },
   });
 
@@ -760,7 +761,7 @@ async function extractImagesFromPage(page, prompt, groundingCtx) {
     text,
     characteristics,
     inputTokens: usage.promptTokenCount || 0,
-    outputTokens: usage.candidatesTokenCount || 0,
+    outputTokens: outputTokensFrom(usage),
   };
 }
 
@@ -1052,9 +1053,15 @@ async function main() {
 
   // The dial caps money regardless of pause/scope state (#3826): a scope
   // confines WHICH books, the budget caps HOW MUCH. Vision calls are paid work.
-  if (!await budgetAllowsDispatch(db, 'image-extract-worker', { control: ctrl })) {
+  // A scope envelope (#4540) can open a confined lane when the dial is closed.
+  const _gate = await budgetAllowsDispatchScoped(db, 'image-extract-worker', { control: ctrl });
+  if (!_gate.allowed) {
     await client.close();
     return;
+  }
+  if (_gate.envelopeIds) {
+    SCOPE_FILTER = { id: { $in: [..._gate.envelopeIds] } };
+    console.log(`[IMAGE-EXTRACT] Global dial closed, scope envelope open — confining to ${_gate.envelopeIds.size} envelope book(s).`);
   }
 
   // Find books ready for image extraction

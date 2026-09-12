@@ -1,29 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import {
   parseSkepticResponse, normalizeSkepticAttempt, buildSkepticPrompt,
-  SKEPTIC_PROMPT_VERSION, type SkepticResponse,
+  type SkepticResponse,
 } from '@/lib/first-translation/skeptic';
-import { deriveVerdictFromAttempts } from '@/lib/first-translation/derive-from-evidence';
-import type { FirstTranslationAttempt } from '@/lib/first-translation/attempt-log';
-import type { FirstTranslationBook } from '@/lib/first-translation/types';
-
-const BOOK: FirstTranslationBook = {
-  title: 'De occulta philosophia', author: 'Agrippa von Nettesheim', language: 'Latin',
-  visible: true, pages_translated: 10,
-} as FirstTranslationBook;
-
 const GROUNDED = { queries: ['q1', 'q2', 'q3'], sources: ['WorldCat', 'archive.org'] };
 
 const resp = (over: Partial<SkepticResponse>): SkepticResponse => ({
   result: 'none_found', priors: [], queries_run: ['q1'], sources_consulted: [], ...over,
-});
-
-/** Build a full ledger row from a normalized skeptic result, as the driver does. */
-const toRow = (r: SkepticResponse, grounded = GROUNDED): FirstTranslationAttempt => ({
-  attempt_id: 'a', book_id: 'b', date: '2026-08-08T00:00:00Z',
-  sources_checked: grounded.sources, queries: grounded.queries,
-  prompt_version: SKEPTIC_PROMPT_VERSION,
-  ...normalizeSkepticAttempt(r, grounded).attempt,
 });
 
 describe('parseSkepticResponse', () => {
@@ -90,65 +73,6 @@ describe('normalizeSkepticAttempt — legal enums only (the ft-search-unexamined
     expect(attempt.result).toBe('none');
     expect(attempt.verdict).toBe('uncertain');
     expect(attempt.evidence_strength).toBe('weak');
-  });
-});
-
-describe('actuation pins (#3776 — rung 2 can never move a badge)', () => {
-  // The nightly cron (scripts/workers/crontab.production) runs the reconcile with
-  // --resolver=tier2_agent,human. These tests pin the OTHER half of that valve:
-  // every verdict a rung-2-only ledger can produce carries a resolver outside
-  // that set. If methodToResolver ever maps a gemini method into the admitted
-  // set, this fails. (The crontab itself is not readable from a unit test —
-  // changing the cron's --resolver list is a reviewed change by convention.)
-  const CRON_VALVE_ADMITS = new Set(['tier2_agent', 'human']);
-
-  it('a rung-2-only demote verdict resolves to tier1_catalog — outside the valve', () => {
-    const row = toRow(resp({
-      result: 'complete_prior_found',
-      priors: [{ translator: 'V. Perrone Compagni', year: 1992, english_title: 'De occulta philosophia libri tres (English)', completeness: 'complete', relationship: 'same_text', source_url: 'https://brill.com/x' }],
-    }));
-    const ft = deriveVerdictFromAttempts([row], BOOK);
-    expect(ft?.verdict).toBe('not_first');
-    expect(ft?.resolver).toBe('tier1_catalog');
-    expect(CRON_VALVE_ADMITS.has(ft!.resolver)).toBe(false);
-  });
-
-  it('a rung-2-only absence promotes nothing above weak first_no_prior, resolver outside the valve', () => {
-    const ft = deriveVerdictFromAttempts([toRow(resp({ result: 'none_found' }))], BOOK);
-    expect(ft?.verdict).toBe('first_no_prior');
-    expect(ft?.evidence_strength).toBe('weak'); // one family, never more
-    expect(CRON_VALVE_ADMITS.has(ft!.resolver)).toBe(false);
-  });
-});
-
-describe('derive excludes uncertain rows from absence and refute votes', () => {
-  const at = (over: Partial<FirstTranslationAttempt>): FirstTranslationAttempt => ({
-    attempt_id: 'a', book_id: 'b', date: '2026-06-29T00:00:00Z',
-    method: 'tier1_catalog', match_key: 'author_title',
-    sources_checked: ['search_local_catalogs'],
-    result: 'none', evidence_strength: 'moderate', ...over,
-  });
-
-  it('an uncertain row alone derives nothing', () => {
-    expect(deriveVerdictFromAttempts([toRow(resp({ result: 'uncertain' }))], BOOK)).toBeNull();
-  });
-
-  it('an agent-family uncertain row does not add an absence family', () => {
-    const ft = deriveVerdictFromAttempts([
-      at({}), // one real catalog absence
-      at({ method: 'claude_subagent_verify', verdict: 'uncertain', queries: ['q'] }),
-    ], BOOK);
-    expect(ft?.verdict).toBe('first_no_prior');
-    expect(ft?.evidence_strength).toBe('weak'); // still ONE family — uncertain excluded
-  });
-
-  it('an agent-family uncertain row does not refute a trustworthy found', () => {
-    const ft = deriveVerdictFromAttempts([
-      at({ result: 'found', found_refs: ['cat:1'], priors: [{ english_title: 'X', source_url: 'https://a/x' }] }),
-      at({ method: 'claude_subagent_verify', verdict: 'uncertain', queries: ['q'] }),
-    ], BOOK);
-    // Without the exclusion this graded needs_review (a fake §17 refute).
-    expect(ft?.verdict).toBe('not_first');
   });
 });
 

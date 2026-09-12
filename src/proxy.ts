@@ -55,6 +55,10 @@ const BLOCKED_BOT_PATTERNS = [
   'PetalBot', 'SemrushBot', 'AhrefsBot', 'MJ12bot', 'DotBot',
   'BLEXBot', 'DataForSeoBot', 'serpstatbot', 'Seekport',
   'MegaIndex', 'Linguee', 'YandexBot', 'Amazonbot',
+  // Headless scraping browsers that self-identify. Lightpanda drove 32K
+  // reads/24h from 26.8K residential proxy IPs on 2026-09-01 (#4476); the
+  // Cloudflare rule covers only the zone — this covers every hostname.
+  'Lightpanda',
 ];
 
 const BLOCKED_BOT_RE = new RegExp(BLOCKED_BOT_PATTERNS.join('|'), 'i');

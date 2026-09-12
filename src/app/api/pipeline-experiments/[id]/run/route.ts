@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { MODEL_PRICING } from '@/lib/ai';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { getGeminiClient } from '@/lib/gemini-client';
 
 export const maxDuration = 300;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/pipeline-experiments/[id]/run', type: 'other' }));
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
@@ -106,7 +110,7 @@ export const POST = withAuth(async (request, session, context) => {
       }
     );
 
-    const model = genAI.getGenerativeModel({ model: condition.ocrModel });
+    const model = genAI().getGenerativeModel({ model: condition.ocrModel });
     const results: Array<{
       page_id: string;
       page_number: number;
@@ -177,7 +181,7 @@ export const POST = withAuth(async (request, session, context) => {
           totalTokens += ocrInputTokens + ocrOutputTokens;
 
           // Step 2: Translate
-          const translateModel = genAI.getGenerativeModel({ model: condition.translateModel });
+          const translateModel = genAI().getGenerativeModel({ model: condition.translateModel });
           const translatePrompt = TWO_PASS_TRANSLATE_PROMPT.replace('{ocr_text}', ocrText);
 
           const translateResult = await translateModel.generateContent(translatePrompt);

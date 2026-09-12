@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getReadDb } from '@/lib/mongodb';
+import { galleryFilter, type GalleryScope } from '@/lib/gallery-scope';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
@@ -199,30 +200,19 @@ export async function GET(request: NextRequest) {
       }, { maxTimeMS: 10000 }) as string[];
     }
 
-    // Build query filter — exclude images without extracted thumbnails or missing source photos
-    const filter: Record<string, unknown> = {
-      ...(tenantId ? { tenantId } : {}),
-      gallery_quality: { $gte: minQuality },
-      book_visible: true,
-      extracted_url: { $ne: null },
-      image_url: { $ne: null },
+    // The core of the filter comes from the shared scope (src/lib/gallery-scope),
+    // so a page showing a count for this URL counts exactly what this route
+    // serves. Anything added below — search, subject, year — narrows it further.
+    const bookIdsForScope = collectionBookIds && libraryBookIds
+      ? collectionBookIds.filter(id => libraryBookIds!.includes(id))
+      : (collectionBookIds || libraryBookIds || undefined);
+    const scope: GalleryScope = {
+      bookId: bookId || undefined,
+      bookIds: bookIdsForScope || undefined,
+      minQuality,
+      maxPerBook,
     };
-
-    // Book diversity: limit to top N images per book (unless filtering by single book or showing all)
-    if (!bookId && maxPerBook < 100) {
-      filter.book_rank = { $lte: maxPerBook };
-    }
-
-    if (bookId) filter.book_id = bookId;
-    if (collectionBookIds && libraryBookIds) {
-      // Intersect both sets
-      const intersection = collectionBookIds.filter(id => libraryBookIds!.includes(id));
-      filter.book_id = { $in: intersection };
-    } else if (collectionBookIds) {
-      filter.book_id = { $in: collectionBookIds };
-    } else if (libraryBookIds) {
-      filter.book_id = { $in: libraryBookIds };
-    }
+    const filter: Record<string, unknown> = galleryFilter(scope, { tenantId });
     if (imageType) filter.type = imageType;
     if (subjectFilter) filter['metadata.subjects'] = subjectFilter;
     if (figureFilter) filter['metadata.figures'] = figureFilter;
@@ -445,13 +435,16 @@ export async function GET(request: NextRequest) {
     const hasMore = items.length > limit;
     if (hasMore) items.splice(limit); // trim to limit
 
-    // Derive total — avoid countDocuments for unfiltered browsing, but use it for searches
+    // Derive total — avoid countDocuments for unfiltered browsing, but use it for
+    // searches. `bookId` was missing from the filtered branch, so a book-scoped
+    // gallery returned the corpus-wide estimate: Lister's 192 plates reported as
+    // 206,230 results while correctly showing only Lister's.
     let total: number;
     if (!hasMore && offset === 0) {
       total = items.length; // we have everything
     } else if (!hasMore) {
       total = offset + items.length; // last page
-    } else if (searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
+    } else if (bookId || searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
       // Filtered query — for Atlas Search queries, countDocuments can't replicate the
       // search pipeline, so estimate from result count. For $text queries, use countDocuments.
       if (searchQuery && !filter.$text) {

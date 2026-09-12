@@ -25,7 +25,7 @@
  *   - a BACKUP of the current flag/verdict state for every flagged book,
  *   - `…-demote-verdicts.json`  — class A+B, shaped for `ft-ingest-verdicts.ts`
  *     (the verdict-only writer). Apply ONLY after Derek's sign-off, then run
- *     `reconcile-first-translation-flag.ts --apply` (the single flag writer).
+ *     `reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] --apply` (the single flag writer).
  *   - `…-workresolve.json`      — class C, for the work-identity layer. NEVER a
  *     demote — these are real works at the wrong granularity.
  *
