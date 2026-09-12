@@ -93,8 +93,43 @@ if (ONLY_BOOK) {
 }
 if (LIMIT) bookIds = bookIds.slice(0, LIMIT);
 
+/**
+ * A featured quote is page text PROMOTED to the book page and displayed as the
+ * book's own words. `books.reading_summary.quotes` does not read
+ * `pages.translation.data`, so the field move leaves it serving — and on these
+ * books it is serving English drawn from a transcription that is gone. Measured
+ * mid-sweep: 618 quotes across 42 of the 196 books, and every one that could be
+ * traced to a page already withheld matched the withheld text. Exactly the
+ * #4584 shape (an invented funerary formula promoted to a featured quote), one
+ * derivation further out.
+ *
+ * Moved, not deleted: `reading_summary.quotes_withheld` keeps them, so the
+ * removal is as recoverable as the translation it came from.
+ */
+async function withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers) {
+  if (!withheldPageNumbers.size) return;
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { reading_summary: 1 } });
+  const quotes = book?.reading_summary?.quotes;
+  if (!Array.isArray(quotes) || !quotes.length) return;
+  const drop = quotes.filter((q) => q && withheldPageNumbers.has(q.page));
+  if (!drop.length) return;
+  const keep = quotes.filter((q) => !(q && withheldPageNumbers.has(q.page)));
+  if (!APPLY) {
+    T.quotesWithdrawn += drop.length;
+    rec({ book: bookId, status: 'dry-run-quotes', would_drop: drop.length, kept: keep.length });
+    return;
+  }
+  await db.collection('books').updateOne({ id: bookId }, {
+    $set: { 'reading_summary.quotes': keep, updated_at: new Date() },
+    $push: { 'reading_summary.quotes_withheld': { $each: drop } },
+  });
+  T.quotesWithdrawn += drop.length;
+  rec({ book: bookId, status: 'quotes-withdrawn', dropped: drop.length, kept: keep.length });
+}
+
 const T = {
-  books: 0, booksChanged: 0, candidates: 0, stale: 0, withheld: 0,
+  books: 0, booksChanged: 0, pendingBooks: 0, candidates: 0, stale: 0, withheld: 0,
+  quotesWithdrawn: 0,
   revisions: 0, chars: 0, byReason: {}, countersResynced: 0, mirrorSynced: 0, aborted: 0,
 };
 
@@ -107,12 +142,19 @@ for (const bookId of bookIds) {
   T.candidates += candidates.length;
 
   const targets = [];
+  // Pages already withheld count for the quote sweep below even when there is
+  // nothing left to withhold — a re-run must still be able to clean up quotes
+  // the first run missed, and on a re-run `targets` is empty by design.
+  const withheldPageNumbers = new Set();
   for (const p of candidates) {
+    if (p.translation_withheld?.reason) withheldPageNumbers.add(p.page_number);
     const reason = staleTranslationReason(p);
     if (!reason) continue;
     targets.push({ page: p, reason });
+    withheldPageNumbers.add(p.page_number);
   }
-  if (!targets.length) continue;
+  if (!targets.length && !withheldPageNumbers.size) continue;
+  if (targets.length) T.pendingBooks++;
 
   T.stale += targets.length;
   for (const { reason } of targets) T.byReason[reason] = (T.byReason[reason] || 0) + 1;
@@ -121,8 +163,11 @@ for (const bookId of bookIds) {
 
   if (!APPLY) {
     rec({ book: bookId, status: 'dry-run', stale: targets.length, chars });
+    await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers);
     continue;
   }
+
+  if (!targets.length) { await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers); continue; }
 
   // Snapshot FIRST, in batches, and refuse the book if the snapshot is short.
   // A withhold that loses its revision row is the one thing here that is not
@@ -189,6 +234,8 @@ for (const bookId of bookIds) {
   } catch (e) {
     rec({ book: bookId, status: 'counter-resync-failed', error: e.message?.slice(0, 120) });
   }
+
+  await withdrawQuotesOnWithheldPages(bookId, withheldPageNumbers);
 
   // The Supabase `pages` mirror holds its own copy of the text in
   // `translation_data`, and its 5-minute sync worker selects by
