@@ -312,8 +312,11 @@ export async function persistRefusedTranslation(db, page, text, reason, { jobId,
  * had [blank, digitizer-notice]. Kept equal to the TS canonical
  * SKIP_TRANSLATION_PAGE_TYPES in src/lib/types/prompts/defaults.ts — pinned by
  * tests/unit/translate-edge-cases.test.ts.
+ *
+ * `digitizer-insert` added #4685/#4507: this lane should stop attempting pages the
+ * meter (page-counts.mjs NEVER_TRANSLATED_PAGE_TYPES) no longer counts as translatable.
  */
-export const SKIP_TRANSLATION_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+export const SKIP_TRANSLATION_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert'];
 
 /**
  * Old OCR outputs (pre-pipeline) can describe a blank page without the page

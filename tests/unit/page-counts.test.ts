@@ -24,8 +24,13 @@ import {
   isTranslatedPage,
   buildVisiblePageCountPipeline,
   countVisiblePageStats,
+  NEVER_TRANSLATED_PAGE_TYPES as NEVER_TRANSLATED_MJS,
+  isTextFreeIllustration,
+  stripIllustrationBoilerplate,
+  isTranslatablePageForCount,
   isBlockedForModel,
 } from '../../scripts/lib/page-counts.mjs';
+import { NEVER_TRANSLATED_PAGE_TYPES as NEVER_TRANSLATED_TS } from '../../src/lib/page-counts';
 
 describe('page-counts convention (#3293)', () => {
   it('VISIBLE_PAGE_MATCH selects only page_number > 0', () => {
@@ -110,6 +115,10 @@ describe('page-counts convention (#3293)', () => {
     expect(stats.with_translation).toBe(2); // pages 1 and 3 (bookplate is not 'blank')
     // pages_blank counts never-translated types that carry OCR: the blank and the bookplate.
     expect(stats.blank).toBe(2);
+  });
+
+  it('.ts and .mjs NEVER_TRANSLATED_PAGE_TYPES stay in lock-step (#4685)', () => {
+    expect([...NEVER_TRANSLATED_MJS].sort()).toEqual([...NEVER_TRANSLATED_TS].sort());
   });
 
   it('a page we have permanently given up on leaves the translatable denominator (#4674)', () => {
@@ -268,5 +277,100 @@ describe('blank pages are excluded from pages_translated', () => {
     expect(stats.translated_translatable).toBe(1985);
     const pct = Math.round((100 * stats.translated_translatable) / stats.translatable);
     expect(pct).toBe(47); // honest, and nowhere near 100
+  });
+});
+
+/**
+ * Illustration text-free guard (#4685, also closes #4507).
+ *
+ * digitizer-insert is excluded outright (added to NEVER_TRANSLATED_PAGE_TYPES above,
+ * like blank/exlibris/bookplate/digitizer-notice): 10/10 sampled digitizer-insert
+ * pages were scanning-service boilerplate.
+ *
+ * illustration is guarded, not blanket-excluded: 37/40 sampled illustration +
+ * digitizer-insert pages had nothing to translate, but 1 was a mistagged manuscript
+ * spread carrying a full Latin prayer under an `illustration` tag, and diagram/map
+ * pages (kept IN unconditionally, never guarded) were substantive 3/3. The guard
+ * strips <image-desc>/<meta>/<warning>/<insert>/<vocab> blocks WITH their content,
+ * then all remaining tag markup (the always-present <language>/<page-type>/<script>
+ * wrapper, which would otherwise put a ~40-char floor under every page regardless of
+ * content), and excludes only if under 40 chars remain.
+ */
+describe('illustration text-free guard (#4685)', () => {
+  it('digitizer-insert is excluded outright, unconditionally', () => {
+    expect(NEVER_TRANSLATED_MJS).toContain('digitizer-insert');
+    const page = { page_number: 1, page_type: 'digitizer-insert', ocr: { data: 'Digitized by Google as part of an ongoing effort.' } };
+    expect(isTranslatablePageForCount(page)).toBe(false);
+  });
+
+  it('illustration with description-only OCR (a fore-edge/binding photo) is excluded', () => {
+    // Real sample (#4685 C-cohort record #1): fore-edge photo, ProQuest credit line,
+    // and a shelfmark — nothing a translator can act on.
+    const ocr = '<language>English</language>\n<page-type>illustration</page-type>\n\n' +
+      '<image-desc>A photograph showing the fore-edge and spine of a bound book.</image-desc>\n\n' +
+      '<vocab>vellum binding, stained edges</vocab>';
+    const page = { page_number: 4, page_type: 'illustration', ocr: { data: ocr } };
+    expect(isTextFreeIllustration(page)).toBe(true);
+    expect(isTranslatablePageForCount(page)).toBe(false);
+  });
+
+  it('illustration carrying 1,000+ chars of real Latin text (a mistagged manuscript spread) stays IN', () => {
+    // Real sample (#4685 C-cohort record #3): a Book of Hours spread mistagged
+    // `illustration`, actually a full Latin prayer. The guard must not exclude it.
+    const latinPrayer = 'De sancto Iacobo apostolo. '.repeat(40); // > 1,000 chars
+    const ocr = `<language>la</language>\n<page-type>illustration</page-type>\n<script>handwritten</script>\n\n${latinPrayer}`;
+    const page = { page_number: 257, page_type: 'illustration', ocr: { data: ocr } };
+    expect(isTextFreeIllustration(page)).toBe(false);
+    expect(isTranslatablePageForCount(page)).toBe(true);
+  });
+
+  it('diagram with labelled content stays IN — never guarded, whatever its length', () => {
+    // Real sample (#4685 C-cohort records #26, #33): Chinese cosmological diagrams
+    // with labels, substantive 2/2. diagram is not in NEVER_TRANSLATED_PAGE_TYPES and
+    // isTextFreeIllustration only ever fires on page_type === 'illustration'.
+    const shortDiagram = { page_number: 6, page_type: 'diagram', ocr: { data: '<language>Chinese</language>\n<page-type>diagram</page-type>' } };
+    expect(isTextFreeIllustration(shortDiagram)).toBe(false);
+    expect(isTranslatablePageForCount(shortDiagram)).toBe(true);
+  });
+
+  it('map stays IN — never guarded', () => {
+    const map = { page_number: 4, page_type: 'map', ocr: { data: '<language>None</language>\n<page-type>map</page-type>' } };
+    expect(isTextFreeIllustration(map)).toBe(false);
+    expect(isTranslatablePageForCount(map)).toBe(true);
+  });
+
+  it('an illustration page with no OCR yet is pending work, not proven-empty — stays IN', () => {
+    const page = { page_number: 4, page_type: 'illustration' };
+    expect(isTextFreeIllustration(page)).toBe(false);
+    expect(isTranslatablePageForCount(page)).toBe(true);
+  });
+
+  it('stripIllustrationBoilerplate removes descriptive-block CONTENT but keeps other tags\' inner text', () => {
+    // <image-desc> is stripped WITH its content (it's pure description, never page
+    // content); <language>/<page-type> markup is stripped but their trivial inner
+    // text survives — a tag we didn't anticipate (<header>) keeps its text too, so
+    // real content is never silently discarded.
+    const ocr = '<language>Latin</language><page-type>illustration</page-type>' +
+      '<image-desc>A woodcut.</image-desc><header>Chapter One</header>';
+    expect(stripIllustrationBoilerplate(ocr)).toBe('LatinillustrationChapter One');
+  });
+
+  it('countVisiblePageStats excludes a text-free illustration from translatable', () => {
+    const pages = [
+      { page_number: 1, page_type: 'illustration', ocr: { data: '<language>None</language><page-type>illustration</page-type>' } },
+      { page_number: 2, page_type: 'text', ocr: { data: 'real body text' }, translation: { data: 'x' } },
+    ];
+    const stats = countVisiblePageStats(pages);
+    expect(stats.translatable).toBe(1); // only page 2
+    expect(stats.translated_translatable).toBe(1);
+  });
+
+  it('buildVisiblePageCountPipeline expresses the guard as a read of ocr.text_free, not a re-derivation', () => {
+    // Mongo cannot exactly regex-strip the descriptive tags, so the pipeline reads a
+    // stamped field instead — see the TRANSLATABLE_COND comment. Confirm the group
+    // stage references it.
+    const group = buildVisiblePageCountPipeline('b1')[1].$group;
+    expect(JSON.stringify(group.translatable)).toContain('text_free');
+    expect(JSON.stringify(group.translatable)).toContain('illustration');
   });
 });
