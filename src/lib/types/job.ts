@@ -60,6 +60,12 @@ export interface Job {
 
   // Metadata
   initiated_by?: string;  // Name/email of user who started the job
+  /**
+   * Why a HUMAN started this job, captured at queue time (#4336). Only ever set on
+   * hand-initiated lanes (`initiated_by: 'user'` or a `script:*` queue script) —
+   * automated lanes (orchestrator, import_preview) have no human reason to record.
+   */
+  initiated_reason?: string;
   created_at: Date;
   updated_at: Date;
   started_at?: Date;
