@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'free-reading',
+    title: 'The Reading We Did Not Have to Pay For',
+    subtitle:
+      'Five and a half million of our unread pages came from the Internet Archive, which had already read them once. We tested that reading book by book against our own, took it where the two agree, and measured whether a cheap language model can rescue the rest. It cannot: it invents.',
+    date: '12 September 2026',
+    readTime: '9 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/pages/69b1863dc4be2cdd0edc573a/0011.jpg',
+    imageAlt: 'Title page of Oriatrike, or Physick Refined, the 1662 English Van Helmont, with an ink blot over one word.',
+  },
+  {
     slug: 'atlas-of-lost-instruments',
     title: 'An Atlas of Lost Instruments',
     subtitle:
