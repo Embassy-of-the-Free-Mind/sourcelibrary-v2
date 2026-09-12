@@ -164,7 +164,10 @@ function bodyText(text) {
     .replace(TERM_RUN_RE, ' ')
     .replace(/<note(?:\s[^>]*)?>\s*original:\s*["“«'][^<]{0,120}<\/note>/gi, ' ')
     .replace(new RegExp(`<(${wrappers})\\b[^>]*>[\\s\\S]*?</\\1>`, 'gi'), ' ')
-    .replace(/<[^>]+>/g, ' ')
+    // A tag starts with a letter. `<[^>]+>` would also match from the `<-` of a
+    // centred line (->text<-) to the next `>`, eating whole paragraphs of prose.
+    .replace(/<\/?[a-zA-Z][^>]*>/g, ' ')
+    .replace(/->|<-/g, ' ')
     .replace(/\s+/g, ' ')
     .replace(/\s+([.,;:!?])/g, '$1')   // "water ." left behind by a removed note is not a char of prose
     .trim();

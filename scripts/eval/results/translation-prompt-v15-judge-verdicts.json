@@ -1,0 +1,220 @@
+{
+ "n": 30,
+ "v13_worse": 1,
+ "v15_worse": 8,
+ "equivalent": 21,
+ "ratio_v15_over_v13": 8.0,
+ "pass": false,
+ "verdicts": [
+  {
+   "id": "6a426208744db9e3105ac8c6:14",
+   "stratum": "latin-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both fully translate the dedicatory poem and both ornament descriptions; nothing is dropped on either side."
+  },
+  {
+   "id": "69b418c72b0edf3eaa2ddcf7:25",
+   "stratum": "bph-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render the full three paragraphs including the Precion and Salniterisch terms and the sentence-fragment ending; nothing is cut on either side."
+  },
+  {
+   "id": "6a2032c118654bf8e1903718:6",
+   "stratum": "arabic",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Every title in both tables, including Zubdat al-Irfan, Al-Jawahir al-Mukallalah, and the trailing cut-off A treatise explaining, appears on both sides; no row is dropped."
+  },
+  {
+   "id": "6953a86177f38f6761bd0d10:178",
+   "stratum": "greek-print",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 15,
+   "why": "Left drops the clause she said I will not see between for she said and the death of my child, while right explicitly translates it as For she said, I will not see, the death of my child."
+  },
+  {
+   "id": "69dbcca30f8c5edf20f4cc75:2",
+   "stratum": "latin-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both sides translate the same short title-page elements, date, author, emblem description, library banner, and Hain reference, with nothing omitted."
+  },
+  {
+   "id": "6a26bdcf0e247ebad6de578e:11",
+   "stratum": "german-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Right wraps the opening paragraph in a <meta continues from previous page> tag but keeps all the same content (\"Suns, in Gemini and Virgo\"); nothing is dropped on either side."
+  },
+  {
+   "id": "69e7ac415f1a22ab19aa5ed8:202",
+   "stratum": "tibetan-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Source is an extremely repetitive/garbled string repeating \"...devoid of intrinsic nature\" dozens of times; both sides condense it to the same two-sentence rendering without dropping distinct content."
+  },
+  {
+   "id": "6a3cbbe0ec254ff6cadeb805:2",
+   "stratum": "cjk-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both fully translate every element (officials names, title, seal text 翰林/Hanlin); differences are naming/wording choices, not omissions."
+  },
+  {
+   "id": "69c7b18425ec2ba5ccd7f44e:185",
+   "stratum": "hebrew",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 15,
+   "why": "Right drops the page header entirely, while left renders it as \"Gate 20, Gate of Deaths, Chapter\" from the OCR header שער כ שער שהמות פרק."
+  },
+  {
+   "id": "6a26da19863cf28d8f64c59b:14",
+   "stratum": "german-print",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 15,
+   "why": "Right omits the page header translation \"Preface.\" (OCR header Vorrede.), which left preserves as <header>Preface.</header>."
+  },
+  {
+   "id": "69dbc9d51040d1d5e20a75a2:324",
+   "stratum": "greek-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both fully render all four letters with no dropped clauses or omitted phrases."
+  },
+  {
+   "id": "6a08546449638a50931bfa1b:220",
+   "stratum": "latin-print",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 15,
+   "why": "Right drops the explanatory notes left keeps identifying the Nuncio as The Papal Ambassador and Bembo as Pietro Bembo, the influential cardinal and scholar."
+  },
+  {
+   "id": "6985ca74925975beb6da3bef:70",
+   "stratum": "bph-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the full passage; right adds term/gloss tags for Kunst, Pfund, Mitbruedern, Finsternis, Liecht but neither omits content the other keeps."
+  },
+  {
+   "id": "6a2032bf18654bf8e19036c9:44",
+   "stratum": "arabic",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render all of Surah An-Nisa verses 95-105 in full, including the fear-prayer regulations, with no dropped sentences."
+  },
+  {
+   "id": "69942a7c045dfc482ad7718f:193",
+   "stratum": "greek-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the full Origen passage identically in coverage, ending at the same source cutoff (the rational governing/ruling faculty and)."
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12:158",
+   "stratum": "hebrew",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both fully render Psalm 105:8-22 plus the margin note and summary; only wording/gloss choices differ, nothing dropped."
+  },
+  {
+   "id": "6a43982bc3ccb765a9840ae7:14",
+   "stratum": "german-print",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 15,
+   "why": "Left drops the translated header entirely, while right opens with Preface translating the OCR header Vorrede."
+  },
+  {
+   "id": "69e7aafa5f1a22ab19a90bc8:408",
+   "stratum": "tibetan-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both translate the full sutra passage end-to-end with equivalent content; differences are phrasing only, nothing material is missing on either side."
+  },
+  {
+   "id": "6a3c7b4701fe4f593c21d53d:3",
+   "stratum": "cjk-print",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 15,
+   "why": "Left omits the translated header and volume meta (Jingzhen Supplement, continues from Vol 27) and drops the editorial note about the possibly-typo character in the source gloss, both preserved by right."
+  },
+  {
+   "id": "69b5258e2379d2fed6c28eb9:2",
+   "stratum": "hebrew",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render the same title, insert block, and unclear markers identically; only the summary and keyword phrasing differs."
+  },
+  {
+   "id": "6a2032e418654bf8e1903b68:6",
+   "stratum": "arabic",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both sides render every marginal note, gloss, and inserted phrase; differences are in gloss wording/definitions, not dropped content."
+  },
+  {
+   "id": "6a76d53af28570a9bf4e7a22:18",
+   "stratum": "greek-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both fully translate the preface including the opening clause about supplying a hanging sentiment/suspended meaning and the closing colophon; right just tags it as a meta continuation instead of plain prose."
+  },
+  {
+   "id": "6a4d8d089af8d45d310d5d92:13",
+   "stratum": "latin-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both cover the full passage; left adds original-quote notes but the translated phrase true image of virtue is present on both sides, so nothing substantive is lost either way."
+  },
+  {
+   "id": "69b4191c2b0edf3eaa2decde:100",
+   "stratum": "bph-mss",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both give a complete parallel translation of the alchemical and creation passages, including all margin notes and the closing Jubilation of the Soul or line."
+  },
+  {
+   "id": "6a2032d718654bf8e19038a2:12",
+   "stratum": "arabic",
+   "verdict": "RIGHT_WORSE",
+   "worse_arm": 15,
+   "why": "Left includes two explanatory annotations right lacks: a note that the content and the one who asks references Quran 22:36, and a note on the wordplay in qawail (midday heat/afflictions), which right renders plainly with no annotation."
+  },
+  {
+   "id": "6992f412c8c6ac61574e753f:16",
+   "stratum": "cjk-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both fully translate the title, shelfmark codes, and vocab; the differing meta/note additions are editorial elaboration, not source content either side drops."
+  },
+  {
+   "id": "69c1bc048522835be8461149:164",
+   "stratum": "hebrew",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both render the full Hananiah/Zechariah ben Kabutal exchange start to finish, including the closing Because so...; differences are only in gloss-vs-note styling of terms like golah and Beit HaMikdash."
+  },
+  {
+   "id": "69b51dfecf111105c4294c34:145",
+   "stratum": "german-print",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 15,
+   "why": "Left omits the page header entirely, while right translates it as Libri medici in Octavo -> Medical books in octavo format before entry 480."
+  },
+  {
+   "id": "69e78a5a4a6785cfd60d32e9:23",
+   "stratum": "tibetan-mss",
+   "verdict": "LEFT_WORSE",
+   "worse_arm": 13,
+   "why": "Left's title collapses the opening line into a title without the detail that the supplication was bestowed by the face of Ugyen Rinpoche, i.e. spoken directly by him, which right keeps."
+  },
+  {
+   "id": "6a3c70cc01fe4f593c1d4f15:20",
+   "stratum": "cjk-print",
+   "verdict": "EQUIVALENT",
+   "worse_arm": null,
+   "why": "Both sides translate every fragmentary column of the commentary with no dropped clauses, only paraphrase differences."
+  }
+ ]
+}

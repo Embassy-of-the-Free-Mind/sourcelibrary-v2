@@ -163,3 +163,50 @@ explicit, and the harness refuses to start without `--approved-usd` ≥ estimate
 None yet. If the rule must change after the run, the change goes here with the
 date and the reason, the original stays above, and the results are reported
 under both — a preregistration that is quietly rewritten stops being one.
+
+### As executed — 2026-09-12
+
+Run **flat on `gemini-3.1-flash-lite`**, not `--route`, by Derek's explicit call
+(relayed via the parent session, recorded on PR #4758): the routing of non-Latin
+books to full flash rests on OCR evidence (visual decoding) that was never
+measured for text-to-text translation, and a single model keeps the arm effect
+unconfounded with model across strata. The open question that raised is #4759.
+640 calls, 0 errors, actual spend **$1.26** (estimate $1.47). Ran on Hetzner:
+the laptop's network returned `400 User location is not supported` on every call.
+
+### Amendment 1 — 2026-09-12, recorded AFTER the run, applied only PROSPECTIVELY
+
+**What happened.** Criterion 4 (body length not more than 10% below v13) FAILED on
+the rule as written: mean body chars v13 2,828 → v15 2,092, −26.1%. The
+decomposition shows the mean is the wrong estimator for this failure, which
+`prompt-ab.mjs`'s header already said in September and this plan did not carry
+over:
+
+- Two of 320 pages are v13 **runaway loops** (`finishReason: MAX_TOKENS`, 96,108
+  and 138,013 body chars on corrupted, repetitive source pages — a Syriac page
+  labelled Hebrew, and a Tibetan folio that repeats one phrase). v15 issued a
+  `<warning>` on both. Those two pages contribute the entire gap: excluding
+  them, mean body is 2,110 → 2,104 (**−0.3%**); the median per-page ratio is
+  0.994; p25 0.95, p75 1.03.
+- A looped run is a categorical catastrophe, not a long reading. Averaging it
+  with normal pages produces a number that describes neither, and here it
+  describes v13's failure as v15's loss.
+
+**The rule is not rewritten.** The verdict under the pre-registered rule is
+recorded in `results/translation-prompt-v15-report-2026-09-12.json` as
+"DO NOT FLIP (not established)" and stays there. The recommendation to Derek is
+made in the report with both numbers side by side and the reason for the gap
+named, so the judgement call is his and visible.
+
+**Prospective change, for the next study that reuses this harness:** classify
+each (page, arm) output as looped / normal by `finishReason === 'MAX_TOKENS'`
+(or a repetition detector), report LOOP RATE per arm as its own outcome, and
+compute the body-length criterion on normal pages only — the fix
+`prompt-ab.mjs` prescribed for itself. Not applied to this run's verdict.
+
+**Also found and fixed during scoring, before the judge ran:** the body-text
+measure used `<[^>]+>` to strip tags, which also matched from the `<-` of a
+centred line (`->text<-`, a marker the prompt itself defines) to the next `>`,
+eating whole paragraphs on ~60 pages per arm. Fixed to require a tag name;
+positive control added to the test file. Re-scoring moved the mean by <1% —
+the loop pages dominate either way.

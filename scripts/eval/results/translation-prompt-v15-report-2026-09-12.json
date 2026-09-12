@@ -1,0 +1,355 @@
+{
+ "at": "2026-09-12T16:15:08.945Z",
+ "arms": [
+  13,
+  15
+ ],
+ "model": "gemini-3.1-flash-lite",
+ "n_pages": 320,
+ "dropped": 0,
+ "verified_rate": {
+  "a": {
+   "rate": 0.6666666666666666,
+   "ci": [
+    0.5255474452554745,
+    0.8137254901960784
+   ],
+   "n": 320,
+   "denom": 135
+  },
+  "b": {
+   "rate": 0.9634146341463414,
+   "ci": [
+    0.9325153374233128,
+    0.9870967741935484
+   ],
+   "n": 320,
+   "denom": 246
+  },
+  "paired_n": 33,
+  "paired_delta": {
+   "delta": 0.2893939393939393,
+   "ci": [
+    0.14747474747474754,
+    0.44696969696969713
+   ],
+   "decisive": true
+  },
+  "better": 13,
+  "worse": 0,
+  "sign_p": 0.00024414062500000016
+ },
+ "note_emission": {
+  "a": 0.421875,
+  "b": 0.76875,
+  "relative": 0.8222222222222223,
+  "delta": {
+   "delta": 0.34687500000000004,
+   "ci": [
+    0.015625,
+    0.6531250000000001
+   ],
+   "decisive": true
+  }
+ },
+ "gates": [
+  {
+   "label": "invented tags / page",
+   "a": 0.25,
+   "b": 0.0125,
+   "delta": -0.2375,
+   "relative": -0.95,
+   "ci": [
+    -0.525,
+    0
+   ],
+   "decisive": false,
+   "floor": 0,
+   "regressed": false
+  },
+  {
+   "label": "housekeeping tags / page",
+   "a": 0.29375,
+   "b": 0.025,
+   "delta": -0.26875,
+   "relative": -0.9148936170212765,
+   "ci": [
+    -0.39999999999999997,
+    -0.16875
+   ],
+   "decisive": true,
+   "floor": 0,
+   "regressed": false
+  },
+  {
+   "label": "glossary block (0/1)",
+   "a": 0,
+   "b": 0,
+   "delta": 0,
+   "relative": null,
+   "ci": [
+    0,
+    0
+   ],
+   "decisive": false,
+   "floor": 0,
+   "regressed": false
+  },
+  {
+   "label": "em-dashes / page",
+   "a": 0.415625,
+   "b": 0.553125,
+   "delta": 0.13749999999999996,
+   "relative": 0.3308270676691728,
+   "ci": [
+    -0.024999999999999967,
+    0.31875
+   ],
+   "decisive": false,
+   "floor": 0,
+   "regressed": false
+  },
+  {
+   "label": "body chars / page",
+   "a": 2828.43125,
+   "b": 2091.58125,
+   "delta": -736.8499999999999,
+   "relative": -0.26051543589754916,
+   "ci": [
+    -1838.915625,
+    17.587499999999636
+   ],
+   "decisive": false,
+   "floor": 0.1,
+   "regressed": false
+  },
+  {
+   "label": "inline terms / page",
+   "a": 4.015625,
+   "b": 4.9,
+   "delta": 0.8843750000000004,
+   "relative": 0.22023346303501953,
+   "ci": [
+    -0.7093750000000001,
+    2.7093749999999996
+   ],
+   "decisive": false,
+   "floor": 0.2,
+   "regressed": false
+  }
+ ],
+ "descriptive": {
+  "terms_total": {
+   "a": 2.484375,
+   "b": 3.025
+  },
+  "keywords": {
+   "a": 6.9,
+   "b": 6.959375
+  }
+ },
+ "body_relative": -0.26051543589754916,
+ "by_stratum": [
+  {
+   "stratum": "latin-print",
+   "n": 40,
+   "a": {
+    "rate": 0.9615384615384616,
+    "ci": [
+     0.8181818181818182,
+     1
+    ],
+    "n": 40,
+    "denom": 26
+   },
+   "b": {
+    "rate": 0.92,
+    "ci": [
+     0.8333333333333334,
+     1
+    ],
+    "n": 40,
+    "denom": 25
+   },
+   "emit_a": 0.65,
+   "emit_b": 0.625
+  },
+  {
+   "stratum": "german-print",
+   "n": 40,
+   "a": {
+    "rate": 0.9090909090909091,
+    "ci": [
+     0.8333333333333334,
+     1
+    ],
+    "n": 40,
+    "denom": 11
+   },
+   "b": {
+    "rate": 0.9761904761904762,
+    "ci": [
+     0.9523809523809523,
+     1
+    ],
+    "n": 40,
+    "denom": 42
+   },
+   "emit_a": 0.275,
+   "emit_b": 1.05
+  },
+  {
+   "stratum": "greek-print",
+   "n": 40,
+   "a": {
+    "rate": 0.7666666666666667,
+    "ci": [
+     0.3333333333333333,
+     0.9565217391304348
+    ],
+    "n": 40,
+    "denom": 30
+   },
+   "b": {
+    "rate": 0.9545454545454546,
+    "ci": [
+     0.7692307692307693,
+     1
+    ],
+    "n": 40,
+    "denom": 44
+   },
+   "emit_a": 0.75,
+   "emit_b": 1.1
+  },
+  {
+   "stratum": "hebrew",
+   "n": 40,
+   "a": {
+    "rate": 0.08333333333333333,
+    "ci": [
+     0,
+     0.5
+    ],
+    "n": 40,
+    "denom": 12
+   },
+   "b": {
+    "rate": 0.9333333333333333,
+    "ci": [
+     0.8181818181818182,
+     1
+    ],
+    "n": 40,
+    "denom": 30
+   },
+   "emit_a": 0.3,
+   "emit_b": 0.75
+  },
+  {
+   "stratum": "arabic",
+   "n": 40,
+   "a": {
+    "rate": 0.2857142857142857,
+    "ci": [
+     0,
+     1
+    ],
+    "n": 40,
+    "denom": 7
+   },
+   "b": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 12
+   },
+   "emit_a": 0.175,
+   "emit_b": 0.3
+  },
+  {
+   "stratum": "cjk-print",
+   "n": 40,
+   "a": {
+    "rate": 0.6296296296296297,
+    "ci": [
+     0.1111111111111111,
+     0.9047619047619048
+    ],
+    "n": 40,
+    "denom": 27
+   },
+   "b": {
+    "rate": 0.9846153846153847,
+    "ci": [
+     0.96,
+     1
+    ],
+    "n": 40,
+    "denom": 65
+   },
+   "emit_a": 0.675,
+   "emit_b": 1.625
+  },
+  {
+   "stratum": "bph-mss",
+   "n": 40,
+   "a": {
+    "rate": 0.8,
+    "ci": [
+     0.3333333333333333,
+     1
+    ],
+    "n": 40,
+    "denom": 5
+   },
+   "b": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 7
+   },
+   "emit_a": 0.125,
+   "emit_b": 0.175
+  },
+  {
+   "stratum": "tibetan-mss",
+   "n": 40,
+   "a": {
+    "rate": 0.47058823529411764,
+    "ci": [
+     0.11428571428571428,
+     0.8571428571428571
+    ],
+    "n": 40,
+    "denom": 17
+   },
+   "b": {
+    "rate": 0.9523809523809523,
+    "ci": [
+     0.8421052631578947,
+     1
+    ],
+    "n": 40,
+    "denom": 21
+   },
+   "emit_a": 0.425,
+   "emit_b": 0.525
+  }
+ ],
+ "criteria": {
+  "paired CI on verified-rate excludes zero and is positive": true,
+  "verified-rate gain >= 3pp": true,
+  "note emission not down more than 20%": true,
+  "body length not down more than 10%": false,
+  "no regression gate fired": true
+ },
+ "recommendation": "DO NOT FLIP (not established)",
+ "note": "The blind Claude regression judge (--judge-packet) is a separate gate and is NOT included above; both must pass."
+}
