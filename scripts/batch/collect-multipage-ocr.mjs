@@ -6,6 +6,9 @@
  * Usage: secret-lover run -- node scripts/collect-multipage-ocr.mjs [--dry-run]
  */
 
+// usage-ok: polls batch job status and downloads results — no generation, no
+// spend at this call site. The batch row is closed by completeBatchUsage().
+
 import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';

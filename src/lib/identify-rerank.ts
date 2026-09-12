@@ -2,6 +2,7 @@ import { Db } from 'mongodb';
 import { supabase } from './supabase';
 import { getQueryEmbedding } from './semantic-search';
 import { getNextApiKey } from './gemini-client';
+import { logGeminiCall, outputTokensFrom } from './gemini-logger';
 
 // Two-stage identification (issue #3193): cheap retrieval channels propose
 // candidates (CLIP crop-index + gallery-description text match), then a single
@@ -146,10 +147,30 @@ export async function rerankByVisualComparison(
     parts.push({ text: `Candidate ${i + 1}:` }, { inline_data: { mime_type: t.mime, data: t.base64 } });
   });
 
+  // Raw REST rather than the SDK, so the metering that rides on
+  // `getGeminiClient()` cannot apply — this call site logs its own row (#4599).
+  // It is also visitor-triggered, so its volume tracks traffic, not the
+  // pipeline, and it is invisible to the daily dial by construction.
+  const MODEL = 'gemini-3-flash-preview';
+  const startedAt = Date.now();
+  const meter = (usage: { promptTokenCount?: number; candidatesTokenCount?: number; thoughtsTokenCount?: number } | undefined,
+                 status: 'success' | 'failed', errorMessage?: string) =>
+    logGeminiCall({
+      type: 'other',
+      mode: 'realtime',
+      model: MODEL,
+      input_tokens: usage?.promptTokenCount || 0,
+      output_tokens: outputTokensFrom(usage),
+      status,
+      error_message: errorMessage,
+      duration_ms: Date.now() - startedAt,
+      endpoint: 'identify-rerank',
+    });
+
   try {
     const apiKey = getNextApiKey();
     const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -159,9 +180,13 @@ export async function rerankByVisualComparison(
     );
     if (!resp.ok) {
       const body = await resp.text().catch(() => '');
+      // A non-200 still consumed the prompt in most cases, and always consumed
+      // our time — record it rather than letting a failure lane go dark.
+      await meter(undefined, 'failed', `gemini_${resp.status}`);
       return { picked: null, sure: false, thumbsFetched: kept.length, error: `gemini_${resp.status}:${body.slice(0, 120)}` };
     }
     const data = await resp.json();
+    await meter(data.usageMetadata, 'success');
     const text = (data.candidates?.[0]?.content?.parts || []).map((p: { text?: string }) => p.text || '').join('');
     const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
     const parsed = JSON.parse((jsonMatch?.[1] || text).trim());
@@ -171,6 +196,7 @@ export async function rerankByVisualComparison(
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.warn('[identify] rerank failed:', msg);
+    await meter(undefined, 'failed', msg.slice(0, 200));
     return { picked: null, sure: false, thumbsFetched: kept.length, error: `rerank_call:${msg.slice(0, 120)}` };
   }
 }
