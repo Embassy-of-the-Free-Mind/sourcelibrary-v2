@@ -149,7 +149,7 @@ export async function selectBestCover(
 
   // 3. Call Gemini with all images
   try {
-    const model = getGeminiClient().getGenerativeModel({
+    const model = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' }).getGenerativeModel({
       model: 'gemini-3-flash-preview'
     });
 
