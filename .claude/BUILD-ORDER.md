@@ -17,8 +17,9 @@ and `design/DECISIONS.md` beside it.
 
 **1. The reading page — text set onto the turning leaf.**
 
-The native app already has a book whose leaves turn (`Book` at `src/wall.rs:2245`, the
-`DrawPage` leaf shader at `:301`, drag and flip in `BookView`/`BookDrag`). It already
+The native app already has a book whose leaves turn (`Book`, the `DrawPage` leaf shader,
+drag and flip in `BookView`/`BookDrag` — all in `src/wall.rs`; line numbers move weekly,
+so the current ones live in the lift handoff below, not here). It already
 loads page text (`Book::texts`, `book_want_texts`). But the leaf is only ever a *scan*,
 and the text runs in a column beside the book (`src/reader.rs`), so a book with no scan
 opens as blank paper. We have **no scans mirrored at all**, so that is every book.
@@ -44,13 +45,22 @@ wall panels; do not build a second search on the kiosk.
 This is cheaper than it sounds, because they are **already one crate** —
 `~/makepad/apps/source-library-spiral`, four binaries over one `lib.rs`. `sl_kiosk.rs`
 already imports four shared modules (`backend`, `ask`, `kiosk`, `phone`); `wall` is
-public too. So "the kiosk gets the turning book" is not a port. It is lifting the leaf
-out of `wall.rs` into its own module both binaries use: the `DrawPage` leaf shader
-(`:301`, and it already takes a flat RGBA texture — no shader work), `Book`/`PageTurn`/
-`BookDrag`/`spread_view` (`:2245`–`:2420`), `open_book_of`/`close_book`/`turn_pages`
-(`:7310`–`:7420`) and `draw_book` (`:9053`). Roughly 600–800 lines, entangled with the
-wall's camera and tile state, so mechanical but not trivial — and it is wall-side work,
-so it belongs to whoever owns `wall.rs`.
+public too. So "the kiosk gets the turning book" is not a port, it is a lift — and the
+session that owns `wall.rs` has since worked out the two seams that make it one:
+
+- **The book already owns its camera** (`BookView` + `BOOK_CAM_D`). The wall's camera is
+  consulted in exactly one place, to compute the closed pose. So the lifted module owns
+  its camera and *takes* that pose: the wall passes the picture's screen rect, the kiosk
+  passes the plate under glass or `None`.
+- **`page_texture` already returns one tuple** that `draw_page_strips` consumes. So
+  `Book` takes a page-source closure returning that tuple and never sees a tile, shard
+  or atlas. The wall implements it over its caches; the kiosk over its own RGBA
+  textures. `DrawPage`'s `rgba` flag already mixes flat RGBA against atlas YUV, so a
+  typeset page is **zero shader work**.
+
+Two members stay behind: `pages` (page → tile index) and `texts`/`text_chunks`. ~600–800
+lines. Full spec, corrected line numbers and definition of done:
+`~/sourcelibrary-ops/handoffs/2026-09-12-lift-the-leaf-out-of-wall.md`.
 
 **1a. Paginate the text into leaves.** The kiosk reader (sl-kiosk at `de8292d` on
 `spiral-timeline`) sets a cream leaf in Aldine with the apparatus correctly lifted out —
