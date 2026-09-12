@@ -43,6 +43,55 @@ export function isBlankPage(page) {
 }
 
 /**
+ * Tags whose entire content is descriptive/administrative — never page content —
+ * so they are stripped wholesale (open tag, content, close tag) when judging
+ * whether an `illustration` page carries anything to translate (#4685).
+ */
+const ILLUSTRATION_STRIP_BLOCK_TAGS = ['image-desc', 'meta', 'warning', 'insert', 'vocab'];
+
+/**
+ * Chars remaining on an OCR'd page after: (1) the five descriptive/admin blocks
+ * above are removed WITH their content, and (2) every other tag's markup
+ * (`<language>en</language>`, `<page-type>`, `<script>`, `<page-num>`, …) is
+ * stripped down to whatever prose it wraps — those tags are fixed structural
+ * vocabulary, always present, and would otherwise put a floor of ~35-60 chars
+ * under every page regardless of content and make the guard below fire on
+ * nothing. A tag we didn't anticipate (`<header>`, `<note>`) still contributes
+ * its inner text, so real content is never silently discarded.
+ */
+export function stripIllustrationBoilerplate(ocrText) {
+  let t = ocrText || '';
+  for (const tag of ILLUSTRATION_STRIP_BLOCK_TAGS) {
+    t = t.replace(new RegExp(`<${tag}(?:\\s[^>]*)?>[\\s\\S]*?</${tag}>`, 'gi'), '');
+  }
+  t = t.replace(/<\/?[a-zA-Z][a-zA-Z0-9_-]*(?:\s[^>]*)?\/?>/g, '');
+  return t.replace(/\s+/g, ' ').trim();
+}
+
+/** Below this many chars of stripped content, an `illustration` page counts as text-free. */
+export const ILLUSTRATION_TEXT_FREE_THRESHOLD = 40;
+
+/**
+ * True iff an `illustration` page's OCR, after stripIllustrationBoilerplate, carries
+ * no real content — a binding photo, fore-edge, bookplate stamp, calibration card
+ * (#4685: 37/40 sampled illustration+digitizer-insert pages had nothing to
+ * translate). The exclusion is illustration-ONLY and guarded, not blanket: 1 of the
+ * 40 was a mistagged manuscript spread carrying a full Latin prayer under an
+ * `illustration` tag, and `diagram`/`map` pages (2/2 and 1/1 substantive in the
+ * same sample — Chinese cosmological diagrams with labels) are never guarded here
+ * at all, only `illustration` is.
+ *
+ * A page with no OCR yet returns false (not text-free) — pending OCR is pending
+ * work, not proven-empty work, same rule isTranslatablePageForCount already
+ * applies to every other page type.
+ */
+export function isTextFreeIllustration(page) {
+  if ((page?.page_type ?? '') !== 'illustration') return false;
+  if (!hasOcr(page)) return false;
+  return stripIllustrationBoilerplate(page.ocr.data).length < ILLUSTRATION_TEXT_FREE_THRESHOLD;
+}
+
+/**
  * True iff a page counts toward `pages_translated`.
  *
  * A blank leaf does NOT, even though it carries translation text: the
@@ -64,11 +113,16 @@ export function isTranslatedPage(page) {
 /**
  * Page types that will never carry a translation, whatever we spend.
  *
+ * `digitizer-insert` added #4685/#4507: 10/10 sampled digitizer-insert pages were
+ * scanning-service boilerplate (Google/IA/ProQuest cover sheets), never book content —
+ * unlike `illustration`, which sometimes IS content (see isTextFreeIllustration below),
+ * this type is safe to exclude outright.
+ *
  * Kept as a literal rather than imported from `translate-core.mjs` because that
  * module imports THIS one; the two must stay in step and
  * `tests/unit/page-counts.test.ts` is where that is asserted.
  */
-export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice'];
+export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert'];
 
 /**
  * True iff a page is work the translator could actually do — the honest
@@ -106,6 +160,7 @@ export const NEVER_TRANSLATED_PAGE_TYPES = ['blank', 'exlibris', 'bookplate', 'd
 export function isTranslatablePageForCount(page) {
   if (!isVisiblePage(page)) return false;
   if (NEVER_TRANSLATED_PAGE_TYPES.includes(page?.page_type ?? '')) return false;
+  if (isTextFreeIllustration(page)) return false;
   if (page?.translation?.recitation_blocked === true) return false;
   if (page?.translation?.safety_blocked === true) return false;
   if (page?.ocr?.recitation_blocked === true) return false;
@@ -113,12 +168,34 @@ export function isTranslatablePageForCount(page) {
   return true;
 }
 
-/** Mongo twin of isTranslatablePageForCount(), shared by the denominator and its numerator. */
+/**
+ * Mongo twin of isTranslatablePageForCount(), shared by the denominator and its numerator.
+ *
+ * The illustration guard is expressed here as a read of the stamped `ocr.text_free`
+ * boolean, NOT a re-derivation of isTextFreeIllustration's regex tag-stripping — Mongo
+ * has no exact way to strip `<image-desc>…</image-desc>`-style blocks and count what's
+ * left (no regex-replace-and-measure primitive). `ocr.text_free` is written by
+ * recount-page-stats.mjs immediately before it reads this pipeline, computed by the
+ * exact JS function on the same pages, so denominator and stamp never disagree for a
+ * book that has gone through a recount. A page whose stamp is missing (never recounted
+ * since this shipped) reads as `false` here and stays IN the denominator — the same
+ * "pending, not proven-empty" default every other unclassified page already gets.
+ */
 const TRANSLATABLE_COND = {
   $and: [
     // No `ocr.data` requirement — see isTranslatablePageForCount. A page awaiting OCR
     // is pending work and belongs in the denominator.
     { $not: [{ $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] }] },
+    {
+      $not: [
+        {
+          $and: [
+            { $eq: [{ $ifNull: ['$page_type', ''] }, 'illustration'] },
+            { $eq: [{ $ifNull: ['$ocr.text_free', false] }, true] },
+          ],
+        },
+      ],
+    },
     { $ne: ['$translation.recitation_blocked', true] },
     { $ne: ['$translation.safety_blocked', true] },
     { $ne: ['$ocr.recitation_blocked', true] },
