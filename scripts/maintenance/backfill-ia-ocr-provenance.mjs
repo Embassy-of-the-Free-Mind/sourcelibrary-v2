@@ -52,4 +52,4 @@ await withMongo(async (db) => {
     if (r.modifiedCount !== n) console.log(`  ${bid}: expected ${n}, modified ${r.modifiedCount}`);
   }
   console.log(JSON.stringify({ books, pages, missingMeta, applied: APPLY }));
-});
+}, { timeoutMs: 4 * 60 * 60 * 1000 }); // one archive.org request per book at ≤ 2/s; the 5-min default killed the first run
