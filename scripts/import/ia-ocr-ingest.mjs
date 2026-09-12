@@ -34,6 +34,16 @@
  *   node scripts/import/ia-ocr-ingest.mjs --language english --limit 200  # a slice
  *   node scripts/import/ia-ocr-ingest.mjs --collection shakers --apply
  * Options: --min-agreement 0.85  --min-ref-pages 5  --cache <dir> (keeps the XML)
+ *          --max-offset 3  --min-offset-share 0.6
+ *
+ * LEAF OFFSET (2026-09-12). The first English dry run rejected 292 books at agreement
+ * 0.10–0.20 — the detector's biggest cluster, and an artifact: probed books scored 0.15
+ * at offset 0 and 0.70–0.94 at offset −1 on 500 of 515 reference pages (the XML's
+ * <OBJECT> sequence starts one leaf later than our `/page/n<k>` index on those items).
+ * So each book is scored at every offset in ±MAX_OFFSET; the offset most reference
+ * pages prefer is the book's, provided ≥ MIN_OFFSET_SHARE of them agree (UNSTABLE
+ * otherwise — never fill a book whose alignment drifts). The chosen offset is applied
+ * to the fillable leaves and recorded in `ocr.agreement_ref.offset`.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -50,6 +60,8 @@ const LANGUAGE = arg('--language', null);
 const LIMIT = +arg('--limit', 50);
 const MIN_AGREEMENT = +arg('--min-agreement', 0.85);
 const MIN_REF_PAGES = +arg('--min-ref-pages', 5);
+const MAX_OFFSET = +arg('--max-offset', 3);
+const MIN_OFFSET_SHARE = +arg('--min-offset-share', 0.6);
 const CACHE = arg('--cache', null);
 const UA = 'SourceLibrary ia-ocr-ingest (team@sourcelibrary.org)';
 const SOURCE = 'ia_djvu';
@@ -137,7 +149,7 @@ await withMongo(async (db) => {
     .sort({ processing_priority: -1, visible: -1 }).limit(LIMIT).toArray();
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT}, min ref pages ${MIN_REF_PAGES})`);
 
-  const summary = { scored: 0, accepted: 0, rejected: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
+  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
@@ -148,17 +160,31 @@ await withMongo(async (db) => {
     const meta = await iaOcrMeta(iaId);
     const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
 
-    // reference: pages that already carry model OCR
-    const scores = [];
-    for (const p of pages) { const t = p.ocr?.data; if (!t) continue; const k = leafIndex(p); if (k >= leaves.length) continue; const r = ratio(tokens(t), tokens(leaves[k])); if (tokens(leaves[k]).length >= 20) scores.push(r); }
-    const med = median(scores);
+    // reference: pages that already carry model OCR, scored at every leaf offset in ±MAX_OFFSET.
+    // The book's offset is the one most reference pages prefer; it must be shared by
+    // ≥ MIN_OFFSET_SHARE of them (front matter and plates are allowed to disagree).
+    const leafTok = leaves.map((l) => tokens(l));
+    const refs = [];
+    for (const p of pages) {
+      const t = p.ocr?.data; if (!t) continue; const k = leafIndex(p); const tt = tokens(t); if (tt.length < 20) continue;
+      const byOffset = {};
+      for (let d = -MAX_OFFSET; d <= MAX_OFFSET; d++) { const j = k + d; if (j < 0 || j >= leaves.length || leafTok[j].length < 20) continue; byOffset[d] = ratio(tt, leafTok[j]); }
+      if (!Object.keys(byOffset).length) continue;
+      refs.push(byOffset);
+    }
     const title = (b.title || '').slice(0, 44);
-    if (scores.length < MIN_REF_PAGES) { summary.no_ref++; console.log(`  ${bid} ${String(b.published || '').slice(0, 4)} ${title} | ref pages ${scores.length} < ${MIN_REF_PAGES} — cannot calibrate`); continue; }
+    if (refs.length < MIN_REF_PAGES) { summary.no_ref++; console.log(`  ${bid} ${String(b.published || '').slice(0, 4)} ${title} | ref pages ${refs.length} < ${MIN_REF_PAGES} — cannot calibrate`); continue; }
     summary.scored++;
-    const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) })).filter(({ k }) => k < leaves.length && tokens(leaves[k]).length >= 20);
-    const verdict = med >= MIN_AGREEMENT ? 'ACCEPT' : 'REJECT';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}`);
-    if (verdict === 'REJECT') { summary.rejected++; continue; }
+    const votes = {};
+    for (const r of refs) { const best = Object.entries(r).sort((x, y) => y[1] - x[1])[0][0]; votes[best] = (votes[best] || 0) + 1; }
+    const [offsetStr, nVotes] = Object.entries(votes).sort((x, y) => y[1] - x[1])[0];
+    const offset = +offsetStr; const offsetShare = nVotes / refs.length;
+    const scores = refs.map((r) => r[offset] ?? 0);
+    const med = median(scores);
+    const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) + offset })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
+    const verdict = med < MIN_AGREEMENT ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : 'ACCEPT';
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${refs.length} pages | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}`);
+    if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
 
@@ -166,10 +192,16 @@ await withMongo(async (db) => {
     await saveRevisionsBeforeOverwrite(db, fillable.map(({ p }) => p.id), 'ocr', { reason: 'ia_ocr_ingest' });
     let n = 0;
     for (const { p, k } of fillable) {
-      const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] }, { $set: {
-        'ocr.data': leaves[k], 'ocr.source': SOURCE, 'ocr.model': `ia-ocr/${meta.version || meta.engine || 'unknown'}`, 'ocr.language': b.language || null,
-        'ocr.source_url': `https://archive.org/download/${iaId}/${iaId}_djvu.xml#leaf=${k}`, 'ocr.updated_at': now, 'ocr.has_warning': false,
-        'ocr.agreement_ref': { median: +med.toFixed(3), n: scores.length, min_agreement: MIN_AGREEMENT }, updated_at: now } });
+      // Pipeline update: `ocr` is literally null on many never-OCR'd pages, and a dotted
+      // $set cannot create fields inside null (MongoServerError 28 — crashed the first
+      // English apply run, 2026-09-12). $mergeObjects over $ifNull handles null, missing and {}.
+      const ocrFields = {
+        data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
+        source_url: `https://archive.org/download/${iaId}/${iaId}_djvu.xml#leaf=${k}`, updated_at: now, has_warning: false,
+        agreement_ref: { median: +med.toFixed(3), n: refs.length, min_agreement: MIN_AGREEMENT, offset, offset_share: +offsetShare.toFixed(2) },
+      };
+      const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
+        [{ $set: { ocr: { $mergeObjects: [{ $ifNull: ['$ocr', {}] }, { $literal: ocrFields }] }, updated_at: now } }]);
       n += r.modifiedCount;
     }
     summary.pages_written += n;
