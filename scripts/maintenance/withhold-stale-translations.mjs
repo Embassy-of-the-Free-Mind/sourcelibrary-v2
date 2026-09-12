@@ -45,14 +45,16 @@
  *   … --books-file=PATH   newline-separated book ids
  *   … --limit=N           stop after N books (dry-run sizing)
  *   … --report=PATH
+ *   … --skip-supabase-mirror   don't re-sync the Supabase `pages` mirror per book
  */
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import {
   STALE_CANDIDATE_FILTER, WITHHOLD_REVISION_SOURCE,
-  staleTranslationReason, withholdUpdate,
+  staleTranslationReason, withholdUpdate, translationText,
 } from '../lib/stale-translation.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
@@ -61,6 +63,7 @@ const ONLY_BOOK = ARG('--book', null);
 const BOOKS_FILE = ARG('--books-file', null);
 const LIMIT = Number(ARG('--limit', '0')) || 0;
 const REPORT = ARG('--report', `scripts/output/withhold-stale-translations-${new Date().toISOString().slice(0, 10)}.jsonl`);
+const SKIP_MIRROR = process.argv.includes('--skip-supabase-mirror');
 const BATCH = 250;
 
 const mongo = new MongoClient(process.env.MONGODB_URI);
@@ -92,7 +95,7 @@ if (LIMIT) bookIds = bookIds.slice(0, LIMIT);
 
 const T = {
   books: 0, booksChanged: 0, candidates: 0, stale: 0, withheld: 0,
-  revisions: 0, chars: 0, byReason: {}, countersResynced: 0, aborted: 0,
+  revisions: 0, chars: 0, byReason: {}, countersResynced: 0, mirrorSynced: 0, aborted: 0,
 };
 
 for (const bookId of bookIds) {
@@ -113,7 +116,7 @@ for (const bookId of bookIds) {
 
   T.stale += targets.length;
   for (const { reason } of targets) T.byReason[reason] = (T.byReason[reason] || 0) + 1;
-  const chars = targets.reduce((n, t) => n + (t.page.translation?.data?.length || 0), 0);
+  const chars = targets.reduce((n, t) => n + translationText(t.page.translation).length, 0);
   T.chars += chars;
 
   if (!APPLY) {
@@ -127,7 +130,7 @@ for (const bookId of bookIds) {
   // throughput. (Pages whose translation is a marker string are skipped by
   // saveRevisionsBeforeOverwrite by design — those are counted and excluded
   // from the expectation below.)
-  const revisionable = targets.filter((t) => (t.page.translation?.data || '').length > 0);
+  const revisionable = targets.filter((t) => translationText(t.page.translation).length > 0);
   let saved = 0;
   for (let i = 0; i < revisionable.length; i += BATCH) {
     const slice = revisionable.slice(i, i + BATCH).map((t) => t.page.id);
@@ -150,12 +153,13 @@ for (const bookId of bookIds) {
       // Pin the write to the state we judged: if another writer retranslated
       // this page since we read it, the filter misses and we leave it alone
       // rather than withhold a translation that is now fresh.
-      ops.push({
-        updateOne: {
-          filter: { id: page.id, 'translation.data': page.translation.data },
-          update,
-        },
-      });
+      // Two shapes: the object and the legacy bare string. Pin on whichever
+      // this page actually has — `'translation.data': undefined` on a
+      // string-shaped page matches nothing, and the write would silently skip.
+      const pin = typeof page.translation === 'string'
+        ? { translation: page.translation }
+        : { 'translation.data': page.translation.data };
+      ops.push({ updateOne: { filter: { id: page.id, ...pin }, update } });
     }
     if (!ops.length) continue;
     const res = await pages.bulkWrite(ops, { ordered: false });
@@ -184,6 +188,23 @@ for (const bookId of bookIds) {
     }
   } catch (e) {
     rec({ book: bookId, status: 'counter-resync-failed', error: e.message?.slice(0, 120) });
+  }
+
+  // The Supabase `pages` mirror holds its own copy of the text in
+  // `translation_data`, and its 5-minute sync worker selects by
+  // `translation.updated_at` — a field this write REMOVES. So the mirror would
+  // keep the withheld English indefinitely, and nothing would report it. Re-sync
+  // the book explicitly, through the worker that owns the row shape rather than
+  // a second flattener that can drift from it.
+  if (!SKIP_MIRROR) {
+    try {
+      execFileSync(process.execPath, ['scripts/workers/sync-pages-content.mjs', `--book=${bookId}`], {
+        stdio: 'pipe', timeout: 300000, env: process.env,
+      });
+      T.mirrorSynced++;
+    } catch (e) {
+      rec({ book: bookId, status: 'supabase-pages-mirror-sync-failed', error: String(e.message).slice(0, 160) });
+    }
   }
 
   T.booksChanged++;
