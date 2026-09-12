@@ -91,6 +91,13 @@ async function main() {
   const db = client.db('bookstore');
 
   let ok = 0, skipped = 0, failed = 0, totalPages = 0;
+  // Consecutive-throttle guard. The first run of this script failed 169 times in
+  // a row on 429 and kept going — an hour of hammering a partner institution
+  // with nothing to show, and the shape that earns a longer block (Wellcome,
+  // #4341). The enumerator already had this guard; not carrying it here was the
+  // whole defect. Abort loudly, name the host, exit non-zero.
+  let consecutive429 = 0;
+  const MAX_CONSECUTIVE_429 = 5;
   for (const [i, r] of batch.entries()) {
     const isGreek = GREEK_WORK.test(r.title || '');
     const title = String(r.title || '').replace(/\s+/g, ' ').trim().slice(0, 300) || `Arabic manuscript ${r.ark}`;
@@ -100,8 +107,21 @@ async function main() {
     catch (e) { failed++; console.error(`  FAIL ${r.ark}: ${e.name}`); await new Promise(s => setTimeout(s, DELAY_MS)); continue; }
     if (res.error || !res.pages?.length) {
       failed++; console.error(`  FAIL ${r.ark}: ${res.error || 'no pages in manifest'}`);
+      if (/\b429\b/.test(String(res.error))) {
+        consecutive429++;
+        if (consecutive429 >= MAX_CONSECUTIVE_429) {
+          console.error(`\nABORT: ${consecutive429} consecutive 429s from gallica.bnf.fr.`);
+          console.error(`This IP is throttled. Continuing would batter the source for nothing and`);
+          console.error(`risks a longer block. Let it cool, then re-run — the dedup gate makes a`);
+          console.error(`re-run free, and ${ok} books are already in.`);
+          break;
+        }
+      } else {
+        consecutive429 = 0;   // a non-throttle failure is not evidence of a block
+      }
       await new Promise(s => setTimeout(s, DELAY_MS)); continue;
     }
+    consecutive429 = 0;
 
     if (!COMMIT) {
       console.log(`  [dry] ${r.ark} ${String(res.pages.length).padStart(4)}pp ${isGreek ? '[GREEK]' : '       '} ${title.slice(0, 62)}`);
@@ -171,6 +191,9 @@ async function main() {
   console.log(`\nimported ${ok}, skipped ${skipped}, failed ${failed}, ${totalPages} pages`);
   console.log('Vercel function invocations used: 0');
   await client.close();
+  // Non-zero exit when we stopped because the source blocked us, so a wrapper
+  // or cron can tell "finished" from "gave up".
+  if (consecutive429 >= MAX_CONSECUTIVE_429) process.exitCode = 3;
 }
 
 if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {

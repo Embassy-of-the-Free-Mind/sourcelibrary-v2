@@ -98,6 +98,63 @@ const ENTITY_PROJECTION = {
   wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1,
 };
 
+/**
+ * The three-key union that defines "this author's books" (see module header).
+ * Every consumer of author membership must use this same $or — a filter that
+ * checks only `author_id` silently drops the ~26% of live books whose link is
+ * an entity id or a not-yet-backfilled author string.
+ */
+function buildAuthorBookOr(doc: AuthorThesaurusDoc): Record<string, unknown>[] {
+  const canonicalSlug = doc.slug || doc._id;
+  const entityIds = (doc.entity_ids || []).filter(Boolean);
+  const variants = (doc.variants || []).filter(Boolean);
+  const orClauses: Record<string, unknown>[] = [{ author_id: canonicalSlug }];
+  if (entityIds.length) orClauses.push({ author_entity_id: { $in: entityIds } });
+  if (variants.length) orClauses.push({ author: { $in: variants } });
+  // Safety net: a doc with no variants/entities still matches by canonical_name.
+  if (orClauses.length === 1) orClauses.push({ author: doc.canonical_name });
+  return orClauses;
+}
+
+export interface AuthorBookFilter {
+  /** Canonical slug — echo to the caller so they see the canonicalization. */
+  canonicalSlug: string;
+  canonicalName: string;
+  /** Drop-in Mongo condition selecting this author's books ({ $or: [...] }). */
+  match: { $or: Record<string, unknown>[] };
+}
+
+/**
+ * Resolve an author slug (canonical or variant, tombstones followed) to a Mongo
+ * filter over `books`, for API routes that filter a listing by author rather
+ * than render the author page. Unlike resolveCanonicalAuthor this does not
+ * fetch books or entity enrichment, and it skips the legacy `author_slugs`
+ * cache fallback — API callers get slugs from /api/catalog/author-search or
+ * from `author_id` on listing rows, both of which are thesaurus-backed.
+ * Returns null for an unknown slug.
+ */
+export async function resolveAuthorBookFilter(
+  db: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  slug: string,
+): Promise<AuthorBookFilter | null> {
+  const authors = db.collection('authors');
+  let doc: AuthorThesaurusDoc | null = await authors.findOne({
+    $or: [{ _id: slug }, { variant_slugs: slug }, { slug }],
+  });
+  if (doc?.merged_into) {
+    const primary: AuthorThesaurusDoc | null = await authors.findOne({
+      $or: [{ _id: doc.merged_into }, { slug: doc.merged_into }],
+    });
+    if (primary) doc = primary;
+  }
+  if (!doc) return null;
+  return {
+    canonicalSlug: doc.slug || doc._id,
+    canonicalName: doc.canonical_name,
+    match: { $or: buildAuthorBookOr(doc) },
+  };
+}
+
 // Memoized normalized-name → canonical-slug index for the orphan-slug fallback
 // (step 2 below). Built once per server instance and refreshed every 10 min,
 // instead of scanning the whole `authors` collection on every cache-miss render.
@@ -190,12 +247,7 @@ export async function resolveCanonicalAuthor(
   //      c. author ∈ variants      — self-healing fallback for not-yet-backfilled
   //                                   books (and freshly imported ones).
   const entityIds = (doc.entity_ids || []).filter(Boolean);
-  const variants = (doc.variants || []).filter(Boolean);
-  const orClauses: any[] = [{ author_id: canonicalSlug }]; // eslint-disable-line @typescript-eslint/no-explicit-any
-  if (entityIds.length) orClauses.push({ author_entity_id: { $in: entityIds } });
-  if (variants.length) orClauses.push({ author: { $in: variants } });
-  // Safety net: a doc with no variants/entities still matches by canonical_name.
-  if (orClauses.length === 1) orClauses.push({ author: doc.canonical_name });
+  const orClauses = buildAuthorBookOr(doc);
 
   const books = await db.collection('books')
     .find({ visible: true, $or: orClauses }, { projection: bookProjection })

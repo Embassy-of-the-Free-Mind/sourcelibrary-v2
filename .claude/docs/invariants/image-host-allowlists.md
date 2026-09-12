@@ -1,6 +1,6 @@
 # Two allowlists decide whether an image appears — and every resolver must consult them
 
-**Read this when:** adding or editing an image-URL resolver; adding a provider host; storing a new `image_*` / `*_photo` / `thumbnail*` field; or triaging "the images are broken" when the URLs return 200 to curl.
+**Read this when:** adding or editing an image-URL resolver; adding a provider host; storing a new `image_*` / `*_photo` / `thumbnail*` field; or triaging "the images are broken" — or "the download button does nothing" — when the URLs return 200 to curl.
 
 *Written 2026-08-21 after #4163: every page thumbnail on 2,506 Florentine Codex pages was refused by every browser for months, while each of those URLs returned a clean `200 image/jpeg` to curl.*
 
@@ -73,5 +73,42 @@ curl -sI https://sourcelibrary.org/book/<slug> | grep -o "img-src[^;]*"
 ## Server-side consumers must sign their /api/image fetches (#4356)
 
 `/api/image` and `/api/crop-image` budget anonymous non-browser traffic (`src/lib/image-gate.ts`). A server-side consumer of the proxy — an export, a pipeline step, anything handing a proxy URL to a worker — is exactly "anonymous non-browser" unless it carries the internal HMAC token (`itk`, `src/lib/image-proxy-auth.ts`). The `images.fetchBuffer/fetchBase64/fetchBufferWithMimeType` helpers sign automatically; a new consumer using bare `fetch()` against the proxy will work in testing (under 500/day) and then starve mid-batch. Fetch through the helpers, or call `signImageProxyUrl()` yourself.
+
+## A DOWNLOAD is not a render — it needs a third and fourth permission (#4630)
+
+*Added 2026-09-03, after both gallery download buttons were found dead for every reader.*
+
+`img-src` governs whether the browser will **paint** an image. Saving one to disk means
+reading its **bytes** with `fetch()`, and that crosses two more boundaries our own image
+host did not permit:
+
+| permission | where it lives | miss looks like |
+|---|---|---|
+| CSP `connect-src` | `next.config.ts` (guarded by `tests/unit/csp-image-hosts.test.ts`) | `fetch()` throws; button does nothing |
+| CORS `Access-Control-Allow-Origin` | the **R2 bucket's** CORS rules — infrastructure, not this repo | `fetch()` throws; button does nothing |
+
+`images.sourcelibrary.org` is a **different origin** from `sourcelibrary.org`, so both
+apply to our own files. Neither was set until 2026-09-03: every click on the gallery's
+*Download* / *Download High-Res* threw, and the `window.open` fallback ran after an
+`await` — no longer a user gesture, so the popup blocker swallowed it and the page did
+nothing at all, with no console error a reader would ever see.
+
+The bucket CORS rule allows `GET`/`HEAD` from `sourcelibrary.org`, `*.sourcelibrary.org`
+(tenants), `*.vercel.app` (previews) and `localhost:3000` — deliberately **not** `*`, so
+this does not widen #4373 (unmarked `/archived/` originals) to arbitrary websites.
+Verified cache-safe: Cloudflare returns `Vary: Origin` and MISSes an Origin request
+against a primed no-Origin entry, so an ACAO-less body is never served to the site.
+
+Read it back with `GetBucketCorsCommand` against the R2 S3 endpoint using
+`R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY`; the fastest check is the served header:
+
+```
+curl -sI -H "Origin: https://sourcelibrary.org" <image-url> | grep -i access-control
+```
+
+**Rule:** a browser-side download of one of our own images fetches it directly (clean
+bytes) and falls back to the same-origin `/api/image` proxy, which always works but
+re-encodes and stamps the visible provenance mark. Keep the fallback — it is what makes
+the button survive a CDN or CORS regression instead of dying silently again.
 
 Related: `content-urls-and-libraries.md` (provider prefixes), `image-quality-and-bboxes.md` (crops and bboxes), `text-helpers-and-exports.md` (the export surfaces that consume these URLs), `crawler-access-gate.md` (the image-proxy budget ladder).

@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
     db.collection('books')
       .find(filter)
       .project({
-        _id: 1, title: 1, author: 1, year: 1, language: 1, slug: 1,
+        _id: 1, id: 1, title: 1, author: 1, year: 1, language: 1, slug: 1,
         pages_count: 1, pages_ocr: 1, pages_translated: 1,
         'taxonomy.cluster': 1, 'taxonomy.subcluster': 1,
         categories: 1, ia_identifier: 1,
@@ -111,7 +111,9 @@ export async function GET(request: NextRequest) {
     offset,
     limit,
     books: books.map(b => ({
-      id: String(b._id),
+      // The PUBLIC id — 16K+ re-created books re-minted their _id, and the id
+      // returned here is what consumers feed to /pages and /api/books/:id.
+      id: b.id || String(b._id),
       title: b.title,
       author: b.author,
       year: b.year,

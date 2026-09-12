@@ -30,6 +30,18 @@ const fixtures: Record<string, PageImageFields> = {
     archived_photo: `${R2}/pages/${BOOK}/sp0014-full.jpg`,
     display_photo: `${R2}/pages/${BOOK}/sp0014.jpg`,
   },
+  // New-era split whose display_photo was never repointed at the half — it is
+  // still a resize of the WHOLE SPREAD. Measured in production 2026-08-29 on
+  // "An encyclopedic outline of masonic… philosophy" p.15, whose reader showed
+  // an introduction spread beside OCR of the title page. The fixture above
+  // assumes display_photo is an `sp…` URL; a large part of the corpus is this
+  // shape instead, so the optimistic fixture hid the bug.
+  newSplitStaleDisplay: {
+    split_from_spread: true,
+    photo: `${R2}/pages/${BOOK}/sp0014-full.jpg`,
+    archived_photo: `${R2}/cropped/${BOOK}/sp0014.jpg`,
+    display_photo: `${R2}/pages/${BOOK}/0015.jpg`,
+  },
   // IIIF source, no R2 variant: origin server resizes via /full/{w},/.
   iiif: {
     photo: `https://digi.vatlib.it/iiifimage/MSS_Vat.arm.19/Vat.arm.19_0003.jp2/full/1000,/0/default.jpg`,
@@ -101,6 +113,26 @@ describe('split-from-spread source identity', () => {
   });
   it('new-era: original → the sp… half', () => {
     expect(getPageImageUrl(fixtures.newSplit, 'original')).toBe(`${R2}/pages/${BOOK}/sp0014-full.jpg`);
+  });
+
+  // The reader renders `display`. If that resolves to the spread while the OCR
+  // beside it was read from the half, the two panels describe different pages —
+  // which is what a reader reported on 2026-08-29. `getPageSource` already
+  // returns the half here; the pre-sized-variant tier was overriding it.
+  it('new-era with a STALE display_photo: display must not fall back to the spread', () => {
+    const url = getPageImageUrl(fixtures.newSplitStaleDisplay, 'display')!;
+    expect(url).not.toContain('0015.jpg'); // the spread — the trap
+    expect(url).toContain('sp0014');
+  });
+  it('new-era with a STALE display_photo: thumb stays on the half', () => {
+    const url = getPageImageUrl(fixtures.newSplitStaleDisplay, 'thumb')!;
+    expect(url).not.toContain('0015');
+    expect(url).toContain('sp0014');
+  });
+  it('new-era with a STALE display_photo: source identity is unchanged', () => {
+    // getPageSource was never the problem — it returns the half. The pre-sized
+    // variant tier in resolveSized was overriding it.
+    expect(getPageSource(fixtures.newSplitStaleDisplay)).toBe(`${R2}/pages/${BOOK}/sp0014-full.jpg`);
   });
 });
 

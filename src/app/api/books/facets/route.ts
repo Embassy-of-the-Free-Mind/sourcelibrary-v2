@@ -28,15 +28,23 @@ export async function GET(request: NextRequest) {
   const db = await getReadDb();
   const { id: tenantId } = getTenantContextFromRequest(request);
 
-  if (!tenantId) {
-    return NextResponse.json({ books: [], total: 0 });
-  }
-
   const countsOnly = searchParams.get('counts') === 'true';
 
-  // Build MongoDB query from facet filters
+  // Build MongoDB query from facet filters.
+  //
+  // Tenant scoping is ADDITIVE, matching /api/languages and /api/gallery: a
+  // tenant subdomain sees only its own books (lockdown invariant unchanged),
+  // and a request with no tenant sees the GLOBAL set — which is exactly what
+  // `/topics` already renders publicly and anonymously for humans
+  // (src/app/topics/page.tsx aggregates faceted_tags with no tenant filter).
+  //
+  // Until #4509 this route returned `{books:[],total:0}` to every caller
+  // without a tenant header: not a 4xx, just a silent empty, so the whole
+  // 6-facet vocabulary was undiscoverable via API even though the page built
+  // on it is public. A silently empty filtered result is the same failure
+  // class as the gallery collection that claimed 200 images and served none.
   const query: Record<string, unknown> = {
-    tenantId,
+    ...(tenantId ? { tenantId } : {}),
     'faceted_tags': { $exists: true },
     visible: true,
     pages_count: { $gt: 0 },

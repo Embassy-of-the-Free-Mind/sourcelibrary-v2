@@ -158,7 +158,7 @@ const resp = await fetch(`${BASE}/api/collections`, {
 - Use clear, descriptive names (not jargon)
 - Slug format: `kebab-case` (e.g., `persian-literary-tradition`)
 - Colors: `rust` (warm/ancient), `sage` (natural/philosophical), `violet` (mystical/esoteric), `gold` (royal/classical)
-- Write a substantive description — it appears on the public collection page
+- Write a substantive description — it appears on the public collection page. **Hyperlink every book you name in it**: read back the slugs of the `bookIds` you just tagged and write `[Short Title](/book/<slug>)`. See "Collection Page Rendering & `mentioned_books`" below and `.claude/docs/collection-description-linking.md`.
 
 ### Step 6: Run
 ```bash
@@ -245,18 +245,24 @@ const r2 = new S3Client({
 
 ## Collection Page Rendering & `mentioned_books`
 
-**Critical:** The collection page (`/collections/{slug}`) renders `description` and `expanded_description` as **plain text** — Markdown is **NOT parsed**. Links written as `[text](url)` show literal brackets and parentheses; `*italic*` and `**bold**` show literal asterisks.
+> **Full rules: `.claude/docs/collection-description-linking.md`** — read it before writing or editing any collection description. The essentials are below.
 
-Three things the renderer **does** handle:
+**Every work you name in a collection description must be clickable** (#1867). These pages are public copy on a site built for navigating between primary sources; naming ten books and linking none is a dead end.
+
+The collection page (`/collections/{slug}`) renders `description` and `expanded_description` through `linkBookTitles()`, which handles exactly four things:
 1. **Paragraph breaks** on `\n\n` (split into `<p>` tags).
-2. **Auto-linking of book titles** ≥8 chars that appear as exact substrings in the description text. Matches the book's `title` or `display_title` against the collection's books. Renders as `text-accent-rust hover:underline italic`.
-3. **Explicit `mentioned_books` overrides** that take priority over auto-detection.
+2. **Inline markdown links** — `[anchor](/book/some-slug)`, honored since #3040. **Internal hrefs only**: the href must start with `/`. An absolute `https://sourcelibrary.org/book/...` is not matched and renders as literal brackets.
+3. **Explicit `mentioned_books` overrides**, matched case-insensitively, longest text first.
+4. **Auto-linking of book titles** ≥8 chars that appear as exact substrings in the description text. Matches the book's `title` or `display_title` against the collection's books.
+
+Everything else is plain text. **Markdown emphasis is NOT parsed** — `*italic*` and `**bold**` show literal asterisks.
 
 ### When writing a new collection description
 
-- **Plain prose only.** No Markdown syntax.
-- **Use exact title substrings** ≥8 chars from books in the collection — they'll auto-link.
-- **For shorter references** (e.g. "Liezi" = 5 chars, "Hesiod" = 6) or paraphrased titles that don't match book records — populate `mentioned_books`.
+- **Link every named work.** Prefer inline `[Micrographia](/book/<slug>)` — explicit, and no second field to keep in sync. Use the real `slug` read back from the books you tagged; never guess one.
+- **Don't rely on auto-linking.** It searches for the *full* book title inside your prose, and real titles here are long Latin ones while good prose names the short form — so the match usually fails. Assume a named work does not auto-link unless you've checked it.
+- **`mentioned_books` instead** when the same short name recurs across paragraphs, or when patching links onto prose you don't want to rewrite. Needed for references too short or too paraphrased to auto-match ("Liezi", "Hesiod").
+- **No absolute URLs, no Markdown emphasis, and never ship a `[Title](TODO)` placeholder.**
 
 ### `mentioned_books` schema
 

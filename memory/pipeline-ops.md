@@ -26,7 +26,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 40 concurrent books |
 | Batch result collection | **Hetzner** (`batch-collector.mjs`) | Polls Gemini API every 10 min |
 | Archiving | **Hetzner** (`archive-ocr.mjs`, `archive-bulk.mjs`) | Downloads → Cloudflare R2 |
-| Preview OCR (25 pages) | **Lambda** via SQS | Fast preview path, still active |
+| OCR, user-triggered / hand-run | **Lambda** via SQS (`ocr-processor-logic.ts`) | `/api/jobs/queue-books`, `/api/scan/start-ocr`, job retry, `scripts/batch/{bulk-ocr-lambda,queue-ocr-direct,queue-efm-priority}.mjs`. Realtime rate, so NOT for bulk — see "OCR lanes" below. Import-time preview OCR was removed (#4432). |
 | Image extraction | **Lambda** via SQS | Still active (Phase 8) |
 | Metadata enrichment | **Hetzner** (orchestrator Phase 3.5) | HTTP fetch to Vercel `/api/books/[id]/verify-metadata` |
 | Summary + Index | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, every 5 min, 30 books/run |
@@ -46,6 +46,35 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Translation | `gemini-3-flash-preview` | `gemini-3.1-flash-lite` |
 | Transliteration | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
 | Summary/Index/Chapters | `gemini-3.1-flash-lite` | `gemini-3.1-flash-lite` |
+
+## OCR lanes — which producer, which lane, which model (#4729, measured 2026-09-11)
+
+The model is the BOOK's, decided by one router in three faces (`getModelForBook` TS,
+`getOcrModelForBook` / `getTranslateModelForBook` .mjs; parity pinned by
+`tests/unit/translate-core-parity.test.ts`): Latin-script allowlist → `gemini-3.1-flash-lite`,
+BPH / non-Latin script / unknown language → `gemini-3-flash-preview`. There is no
+"default batch model" constant any more; a producer that names no model gets the book's.
+
+| Producer | Lane | Model | $/1K pages (measured) |
+|---|---|---|---|
+| Orchestrator Phase 2 (`submitOcrDirectly`, cross-book pool) — ALL new pages | Hetzner → Gemini **Batch** | book's (lite for most) | **$0.85** lite batch (3,309 in + 587 out tokens/page); flash batch ≈ $1.75 |
+| Orchestrator Phase 1.5 preview (25 pages post-archive) | Batch | lite | $0.85 |
+| RECITATION ladder (orchestrator) | Batch | lite → flash → MinerU | — |
+| `/api/admin/bulk-ocr-new`, `/api/admin/bulk-reocr`, `/api/books/[id]/batch-ocr-multi` | Vercel → Gemini Batch | book's | as above |
+| `/api/jobs/queue-books`, `/api/scan/start-ocr`, `/api/jobs/[id]/retry` | SQS → **Lambda realtime** | book's (`job.config.model` overrides) | lite realtime ≈ $1.70; **flash realtime $3.42** (3,194 in + 609 out tokens/page) |
+| `scripts/batch/bulk-ocr-lambda.mjs`, `queue-ocr-direct.mjs` | SQS → Lambda realtime | book's, stamped on the job | as above |
+| `scripts/batch/queue-efm-priority.mjs` | SQS → Lambda realtime | flash (EFM/BPH by policy) | $3.42 |
+| `scripts/batch/realtime-ocr.mjs` (hand-run re-OCR) | direct Gemini realtime | flash (its selection depends on it) | ≈ $3.4, unmetered (cost 0 on rows) |
+
+Realtime is for latency (a user waiting, a retry of a handful of pages); everything
+bulk goes through the orchestrator's batch pool, which is dial-gated. The incident that
+produced this table: 125,585 import-preview pages (mostly Latin MDZ/IIIF/IA) ran through
+the Lambda on flash in four days, $430 — the Lambda fell back to a flash constant whenever
+the producer named no model. Producer removed in #4432; sink fixed in #4729.
+
+**Meter caveat:** batch rows carry `cost_usd: 0` at submission and are reconciled
+later (#4566/#4567) — `$/1K` for batch comes from the reconciled lite row (273 pages,
+$0.23), not from summing submissions.
 
 ## The Budget Dial (#3737)
 
@@ -152,3 +181,30 @@ boost) inside their computed `_priority` — it now acts as a tiebreak below
 - **Bulk OCR belongs in the orchestrator, NOT the Vercel route (2026-06-26):** For any backlog OCR, enroll books (`pipeline_auto.status='queued'`; orchestrator advances already-archived ones to `archive_complete` and archives the rest, then OCRs) — the orchestrator submits to Gemini *directly* from Hetzner. The route `POST /api/books/[id]/batch-ocr-async` downloads ALL page images synchronously before creating batches, so it **edge-timeouts on books >~300pp** (Cloudflare 524 / Vercel 500 / Next `__next_error__`); only small books (<~150pp, or a small `limit:`) submit cleanly. **Rule: don't drive bulk OCR by looping the route from a laptop — enroll and let the pipeline do it.**
 - **Route batch-OCR: client abort loses the batch; 524 does not; batch_jobs is ground truth (2026-06-26):** A client-side `AbortController` on `batch-ocr-async` cancels the Vercel function → no batch created. A Cloudflare **524** (origin keeps running) DOES create the batch server-side. The route does **not** dedupe against pending `batch_jobs`, so re-calling a book that already has pending jobs **double-submits and double-charges**. **Rule: never abort early; treat 524/500 as "verify via `batch_jobs`," and use `batch_jobs` (created in last N h, per `book_id`) as the dedup/coverage source of truth before resubmitting.**
 - **A chunk of `language:'english'` books are IA lending-locked = copyright (2026-06-26):** IA Controlled-Digital-Lending scans have the `*0000xxxx` "inlibrary" identifier; their page images 403 and they're copyright-restricted — `batch-ocr-async` returns `400 "Failed to prepare any images"` and `archive-bulk` skips them as broken-source. **They cannot/should-not be archived or OCR'd — detect (identifier `…0000<libcode>` or 403 on the image URL) and drop / re-source from an open copy.** Two more gotchas from the same sweep: (a) the route OCRs from `pages.photo`/`photo_original` (for archived books these point to `images.sourcelibrary.org` R2; "has external `photo`" ≠ "archived to R2"); (b) `pages_count − pages_ocr` **overcounts** the real OCR gap — blank/plate pages count toward `pages_count` but are intentionally never OCR'd, so filter to books <~85% OCR'd to find genuine gaps.
+
+## Batch OCR can report success and save almost nothing (2026-08-24, UNRESOLVED)
+
+A Gemini batch returns `JOB_STATE_SUCCEEDED` while most of its pages never
+save. Measured on one import: Lister 1894 lost **80%** of 250 submitted pages,
+twice; Cooke 1877 52%; Massee 1892 10%; the German/Latin/Polish books in the
+same batch lost ~0-3%. The identical pages then went through the realtime
+Lambda path (`/api/jobs/queue-books`) without trouble, so it is not the pages
+and not the scans.
+
+**Checked and refuted** (do not re-spend on these): the RECITATION filter (no
+page carries `ocr.recitation_count`); image byte size (Zopf succeeds at a
+1,329KB median while Lister fails at 917KB); pixel dimensions; JPEG encoding
+(progressive vs baseline correlates loosely but de Bary is progressive and
+barely failed); inline payload size (the largest payload had the lowest
+failure rate).
+
+**Why it stayed undiagnosable:** `batch-collector.mjs` discarded the responses
+that would say. It now tallies failures by reason into `batch_jobs.fail_reasons`
+(transport error / RECITATION / missing metadata key / no-text + finishReason).
+**Next occurrence: read that field first.**
+
+Two things still wrong and unfixed: the pipeline reports success on a job that
+saved almost nothing, and these jobs log **no cost at all** even though every
+response is billed — so the spend is invisible too. A batch saving under some
+threshold should mark the book for retry and fall back to the realtime path,
+which is what had to be done by hand five times.

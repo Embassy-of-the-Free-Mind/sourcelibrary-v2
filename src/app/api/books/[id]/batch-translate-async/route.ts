@@ -405,6 +405,7 @@ export const GET = withAuth(async (request, session, context) => {
                 pages_count: counts.total,
                 pages_ocr: counts.with_ocr,
                 pages_translated: counts.with_translation,
+                pages_translatable: counts.translatable,
               } : {}),
               last_translation_at: new Date(),
               updated_at: new Date()

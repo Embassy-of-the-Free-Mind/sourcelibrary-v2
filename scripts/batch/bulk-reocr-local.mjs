@@ -16,6 +16,7 @@
  *   --book-id=ID     Process a single book
  *   --new-only       Only target pages WITHOUT OCR (instead of re-OCR)
  *   --provider=X     Filter by provider (e.g. 'efm', 'ia')
+ *   --reason="..."   Why this batch is being run by hand (recorded on each job, #4336)
  *
  * Requires: MONGODB_URI, GEMINI_API_KEY_TIER3 (or GEMINI_API_KEY) in env
  */
@@ -23,6 +24,7 @@
 import { MongoClient } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
+import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -55,6 +57,8 @@ const PROVIDER = getArg('provider');
 // image (bypasses the possibly-downscaled archived R2 copy). Used by the batch-OCR
 // contamination repair (#3362) so re-OCR reads full-res, correct source images.
 const SOURCE = getArg('source');
+const INITIATED_BY = 'script:bulk-reocr-local';
+const REASON = parseInitiatedReason(args, INITIATED_BY);
 
 // --- Gemini API ---
 function getApiKey() {
@@ -473,6 +477,8 @@ async function main() {
             prompt_version: TARGET_PROMPT,
             submission_method: useFileBased ? 'file' : 'inline',
             force: !NEW_ONLY,
+            initiated_by: INITIATED_BY,
+            ...initiatedReasonFields(REASON),
             created_at: new Date(),
             updated_at: new Date(),
           });
@@ -531,6 +537,8 @@ async function main() {
         language,
         prompt_version: TARGET_PROMPT,
         force: !NEW_ONLY,
+        initiated_by: INITIATED_BY,
+        ...initiatedReasonFields(REASON),
         created_at: new Date(),
         updated_at: new Date(),
       });

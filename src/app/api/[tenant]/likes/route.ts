@@ -37,9 +37,9 @@ export async function POST(
       );
     }
 
-    if (!['image', 'page', 'book'].includes(target_type)) {
+    if (!['image', 'page', 'book', 'collection'].includes(target_type)) {
       return NextResponse.json(
-        { error: 'target_type must be image, page, or book' },
+        { error: 'target_type must be image, page, book, or collection' },
         { status: 400 }
       );
     }

@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, useLocale } from '@/lib/i18n';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
+import { transcriptionReliability } from '@/lib/transcription-reliability';
 import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/layout/Logo';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { FeedbackPanel } from './FeedbackPanel';
+import ReaderWebMCP from './ReaderWebMCP';
 import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
@@ -67,6 +69,8 @@ const STRIP_KEY = 'sl-reader-v2c-strip';
 const MOBILE_TOOLBAR_H = 52;
 /** Breathing room kept above a mobile sheet, so it never meets the top edge. */
 const SHEET_TOP_GAP = 24;
+/** How far the sheet has to be pulled down before letting go puts it away. */
+const SHEET_DISMISS_PULL = 90;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -1015,6 +1019,45 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
         </span>
       </span>
     </div>
+  );
+}
+
+/**
+ * Says plainly that a transcription cannot be trusted, above the transcription
+ * itself (#4523).
+ *
+ * Placed INSIDE the scrolling pane rather than in the pane header, because the
+ * header is sticky chrome a reader learns to skip, and this needs to sit with
+ * the text it is about. It is deliberately not dismissible: it is a property of
+ * the text, not a notification.
+ *
+ * Suppressed when a paired critical edition is showing, because that surface
+ * already carries its own, more specific version of the same warning and two
+ * stacked disclaimers read as boilerplate.
+ */
+function UnreliableTranscriptionNotice({
+  book,
+  paired,
+}: {
+  book: { language?: string | null };
+  paired: boolean;
+}) {
+  const flag = transcriptionReliability(book);
+  if (!flag || paired) return null;
+  return (
+    <aside
+      className="mb-5 rounded-md px-4 py-3 text-[13.5px] leading-snug"
+      style={{
+        background: 'var(--accent-rust-soft, rgba(158,74,58,0.06))',
+        border: '1px solid rgba(158,74,58,0.28)',
+        color: 'var(--text-primary, #2b2622)',
+      }}
+    >
+      <p className="m-0">{flag.message}</p>
+      <p className="m-0 mt-1.5 text-[12px]" style={{ color: 'var(--text-secondary, #6b6560)' }}>
+        {flag.evidence}
+      </p>
+    </aside>
   );
 }
 
@@ -2656,7 +2699,74 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
    * with no height of its own snaps between sizes, so measure what the content
    * wants — the header plus its scroller's full content — and animate to it.
    */
+  const sheetOpen = !!leftPanel && !isDesktop;
+  /**
+   * Whether the sheet's list runs on past its bottom edge. On a 568px phone
+   * ten grouped items do not fit, and the list happened to cut cleanly at a
+   * hairline divider — which reads as the end of the menu rather than as more
+   * to come, so Reading settings and Send feedback looked like they did not
+   * exist. A fade over the last few pixels says the list continues.
+   */
+  const [sheetHasMore, setSheetHasMore] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
+  /**
+   * Pull the sheet down to put it away. It opened with one way out: a 16px
+   * glyph tucked under the site header, at the far end of a panel you had just
+   * scrolled to the bottom of. A sheet you can push away with the thumb that
+   * opened it is the whole point of a sheet.
+   */
+  const sheetDrag = useRef<{ y: number; dy: number } | null>(null);
+  const onSheetDragStart = (e: React.TouchEvent) => {
+    if (e.touches.length !== 1) { sheetDrag.current = null; return; }
+    sheetDrag.current = { y: e.touches[0].clientY, dy: 0 };
+    const el = sheetRef.current;
+    if (el) el.style.transition = 'none';
+  };
+  const onSheetDragMove = (e: React.TouchEvent) => {
+    const s = sheetDrag.current;
+    const el = sheetRef.current;
+    if (!s || !el || e.touches.length !== 1) return;
+    // Downward only: dragging up would tear the sheet off its own bottom edge.
+    s.dy = Math.max(0, e.touches[0].clientY - s.y);
+    el.style.transform = `translateY(${s.dy}px)`;
+  };
+  const onSheetDragEnd = () => {
+    const s = sheetDrag.current;
+    const el = sheetRef.current;
+    sheetDrag.current = null;
+    if (!s || !el) return;
+    el.style.transition = 'transform 200ms ease-out';
+    if (s.dy > SHEET_DISMISS_PULL) {
+      el.style.transform = `translateY(${el.offsetHeight}px)`;
+      window.setTimeout(() => setLeftPanel(null), 170);
+    } else {
+      el.style.transform = '';
+    }
+  };
+  // A sheet that closed mid-pull would open again already pushed down.
+  useEffect(() => {
+    const el = sheetRef.current;
+    if (!el) return;
+    el.style.transition = '';
+    el.style.transform = '';
+  }, [leftPanel]);
+
+  // The scroller belongs to whichever panel is mounted, so find it rather than
+  // holding a ref to it, and watch the content too: panels fetch.
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    if (!sheet || !leftPanel) { setSheetHasMore(false); return; }
+    const body = sheet.querySelector<HTMLElement>('[class*="overflow-y-auto"]');
+    if (!body) { setSheetHasMore(false); return; }
+    const measure = () => setSheetHasMore(body.scrollHeight - body.scrollTop - body.clientHeight > 8);
+    measure();
+    body.addEventListener('scroll', measure, { passive: true });
+    const ro = new ResizeObserver(measure);
+    ro.observe(body);
+    for (const child of Array.from(body.children)) ro.observe(child);
+    return () => { body.removeEventListener('scroll', measure); ro.disconnect(); };
+    // The observer covers the sheet being resized, so its height is not a dep.
+  }, [leftPanel]);
   const [sheetHeight, setSheetHeight] = useState<number | null>(null);
   useLayoutEffect(() => {
     if (!leftPanel || isDesktop) { setSheetHeight(null); return; }
@@ -2676,8 +2786,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     if (!sheet) return;
     const measure = () => {
       const header = sheet.firstElementChild as HTMLElement | null;
-      const body = sheet.lastElementChild as HTMLElement | null;
-      if (!header || !body) return;
+      // Skip the fade overlay: it is a later sibling of the panel and 36px
+      // tall, and measured as the body it sized the whole sheet to 113px.
+      const body = Array.from(sheet.children)
+        .filter((c): c is HTMLElement => c instanceof HTMLElement && c.dataset.sheetFade === undefined)
+        .pop() ?? null;
+      if (!header || !body || body === header) return;
       setSheetHeight(Math.min(cap, Math.ceil(header.offsetHeight + body.scrollHeight)));
     };
     measure();
@@ -3092,6 +3206,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   return (
     <div data-reader-v2 data-reader-theme={themeAttr(r.settings.theme)} className="flex flex-col h-[100dvh]">
+      {/* WebMCP only on the main site: get_citation emits /book/… URLs whose
+          shape is wrong on tenant reading rooms, and embedded iframes would
+          need an explicit allow="tools" grant from the partner page anyway. */}
+      {!isEmbedded && <ReaderWebMCP r={r} />}
       {/* Never in an embed or on a tenant subdomain. A partner reading room
           exists to hold one collection; a menu offering Explore, Works and
           Support sends the reader to URLs the tenant host 404s, and out of the
@@ -3422,6 +3540,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
+                    <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
                     {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={17.5} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />}
@@ -3506,6 +3625,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
+                    {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
@@ -3603,11 +3723,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             height: BAR_H,
             background: INK,
             color: '#fdfcf9',
-            transform: barHidden ? 'translateY(-100%)' : 'none',
+            // Also away while a sheet is open. The sheet is a modal with its
+            // own title and its own way out, and it is tall enough to reach
+            // the top of the screen — where it slid UNDER this bar, taking the
+            // grab handle with it and clipping the close button into a flat
+            // white square. Nothing to collide with, and the sheet gets the
+            // height back.
+            transform: barHidden || sheetOpen ? 'translateY(-100%)' : 'none',
             // Same reason as the filmstrips: a bar off the top of the screen
             // still held a focusable back-link and menu button, and aria-hidden
             // over them made that worse rather than better.
-            visibility: barHidden ? 'hidden' : 'visible',
+            visibility: barHidden || sheetOpen ? 'hidden' : 'visible',
             // visibility is in the transition on purpose. It is a discrete
             // property, so transitioning it holds the old value for the whole
             // duration instead of applying at once — without that the contents
@@ -3780,6 +3906,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-8">
+                <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
                 {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />}
@@ -3826,6 +3953,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
+                {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish
@@ -3883,6 +4011,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             the keyboard is up it sits directly on the keyboard instead (the
             toolbar and strip are behind it), so the field being typed in and
             its results stay on screen. */}
+        {/* Something to tap that is not a 16px glyph. The sheet had no ground
+            behind it, so the only way out was the corner button — with a panel
+            of content between your thumb and it. */}
+        {leftPanel && !isDesktop && (
+          <button
+            type="button"
+            aria-label={t.panels.closeAria(leftPanelTitle)}
+            onClick={() => setLeftPanel(null)}
+            className="fixed left-0 right-0 top-0 z-40 rv2-scrim"
+            style={{ bottom: keyboardInset > 0 ? keyboardInset : MOBILE_TOOLBAR_H }}
+          />
+        )}
         {leftPanel && !isDesktop && (
           <div
             ref={sheetRef}
@@ -3903,34 +4043,78 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             role="dialog"
             aria-labelledby="rv2-sheet-title"
           >
-            <div className="shrink-0 px-4 pt-3 pb-2.5 border-b" style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG }}>
+            {/* The header is also the grip: the handle says the sheet can be
+                pushed away, and the whole band answers the drag, so the pull
+                works wherever the thumb lands rather than on a 4px bar. */}
+            <div
+              className="shrink-0 px-4 pb-2.5 border-b select-none"
+              style={{ borderColor: 'var(--border-light)', background: PANEL_HEADER_BG, touchAction: 'none' }}
+              onTouchStart={onSheetDragStart}
+              onTouchMove={onSheetDragMove}
+              onTouchEnd={onSheetDragEnd}
+              onTouchCancel={onSheetDragEnd}
+            >
+              {/* Square, like everything else here: globals.css flattens every
+                  rounded-* utility site-wide with !important, so a pill grip or
+                  a round close button silently becomes a block. */}
+              <div className="flex justify-center pt-2.5 pb-2">
+                <span
+                  aria-hidden="true"
+                  className="block"
+                  style={{ width: 40, height: 4, background: 'color-mix(in srgb, var(--bg-dark) 22%, transparent)' }}
+                />
+              </div>
               {/* One fixed row: back (when there is somewhere to go back to),
                   title, close. Close holds the top-right corner whatever else
                   is in the row — it used to shift down whenever a back button
                   appeared above it. */}
-              <div className="flex items-center gap-1.5 min-h-[28px]">
+              <div className="flex items-center gap-2 min-h-[44px]">
                 {MORE_TOOLS.some(k => k === leftPanel) && (
                   <button
                     type="button"
                     aria-label={t.panels.backToMore}
                     onClick={() => setLeftPanel('more')}
-                    className="w-11 h-11 -ml-3 shrink-0 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
-                    style={{ color: 'var(--text-muted)' }}
+                    className="w-11 h-11 shrink-0 -ml-1.5 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                    style={{ color: 'var(--text-secondary)' }}
                   >
-                    <ChevronLeft size={17} />
+                    <ChevronLeft size={20} />
                   </button>
                 )}
-                <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate" style={{ color: 'var(--text-muted)' }}>{leftPanelTitle}</CapsLabel>
-                <button type="button" aria-label={t.panels.closeAria(leftPanelTitle)} onClick={() => setLeftPanel(null)}
-                  className="w-11 h-11 -mr-3 shrink-0 flex items-center justify-center text-[var(--text-muted)]"><X size={16} /></button>
+                <CapsLabel as="h2" id="rv2-sheet-title" className="flex-1 min-w-0 truncate !text-[12px] tracking-[0.13em]" style={{ color: 'var(--text-primary)' }}>{leftPanelTitle}</CapsLabel>
+                {/* 20px in a 44px target, on the header's own ground. A 16px
+                    cross on a bare band read as decoration rather than the way
+                    out — and it is no longer the only way out: the ground
+                    behind the sheet and a pull on this bar both close it. */}
+                <button
+                  type="button"
+                  aria-label={t.panels.closeAria(leftPanelTitle)}
+                  onClick={() => setLeftPanel(null)}
+                  className="w-11 h-11 shrink-0 -mr-1.5 flex items-center justify-center transition-colors active:bg-[var(--bg-white)]"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  <X size={20} />
+                </button>
               </div>
               {leftPanelBlurb && (
-                <p className="mt-1 font-sans text-[11.5px] leading-snug" style={{ color: 'var(--text-faint)' }}>
+                <p className="mt-0.5 pr-10 pb-1 font-sans text-[12.5px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                   {leftPanelBlurb}
                 </p>
               )}
             </div>
             <PanelContent panel={leftPanel} {...panelProps} />
+            {/* Over the foot of the sheet, not inside the scroller: a mask on
+                the scroller itself would fade the last row at the end of the
+                list too, which is exactly when there is nothing left to say. */}
+            <div
+              aria-hidden="true"
+              data-sheet-fade=""
+              className="pointer-events-none absolute left-0 right-0 bottom-0 transition-opacity duration-200"
+              style={{
+                height: 36,
+                opacity: sheetHasMore ? 1 : 0,
+                background: `linear-gradient(to top, ${SURFACE.panel}, transparent)`,
+              }}
+            />
           </div>
         )}
 
