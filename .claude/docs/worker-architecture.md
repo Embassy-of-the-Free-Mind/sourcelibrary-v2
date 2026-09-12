@@ -5,7 +5,7 @@
 The pipeline uses two execution environments for page processing:
 
 1. **Hetzner workers** (primary) — `translate-worker.mjs` handles all production translation inline via Gemini API. `batch-collector.mjs` collects OCR results from Gemini Batch API. No SQS or Lambda involved.
-2. **AWS Lambda workers** (secondary) — handle preview OCR, image extraction, and serve as a fallback for translation. Each Lambda invocation handles ONE page via SQS queues.
+2. **AWS Lambda workers** (secondary) — handle image extraction, user-triggered single-book OCR, and serve as a fallback for translation. Each Lambda invocation handles ONE page via SQS queues. (Import-time preview OCR used to run here; #4432 removed it — the lane bypassed the pause and the dial.)
 
 A **Writer Lambda** receives results from Lambda workers via a write-results queue and performs MongoDB writes, preventing connection storms.
 
@@ -13,7 +13,7 @@ A **Writer Lambda** receives results from Lambda workers via a write-results que
 
 | Worker | Handler | Logic | Queue | Concurrency | Active Use |
 |--------|---------|-------|-------|-------------|------------|
-| OCR | `src/workers/ocr-processor.ts` | `ocr-processor-logic.ts` | Standard (parallel) | Reserved: 10 | Preview OCR (first 25 pages) |
+| OCR | `src/workers/ocr-processor.ts` | `ocr-processor-logic.ts` | Standard (parallel) | Reserved: 10 | User-triggered OCR (`/api/jobs/queue-books`, `/api/scan/start-ocr`, job retry) and hand-run `scripts/batch/{bulk-ocr-lambda,queue-ocr-direct}.mjs`. Model = the book's (`getModelForBook`) unless `job.config.model` overrides (#4729). |
 | Translation | `src/workers/translation-processor.ts` | `translation-processor-logic.ts` | FIFO (sequential per job) | N/A | Preview translation, manual jobs only |
 | Image Extraction | `src/workers/image-extraction-processor.ts` | `image-extraction-processor-logic.ts` | Standard (parallel) | Reserved: 10 | All image extraction (Phase 8) |
 | **Writer** | `src/workers/write-processor.ts` | `write-processor-logic.ts` | Standard (batched) | Reserved: 50 | All Lambda result writes |
@@ -132,7 +132,7 @@ The Writer Lambda receives batches of up to 10 write result messages:
 
 **Classification:** `classifyError()` in `src/lib/errors.ts` → `rate_limit`, `safety_filter`, `network`, `invalid_input`, `unknown`
 
-**RECITATION fallback (OCR only):** On safety filter error with "RECITATION", retries with fallback model chain: `gemini-2.5-flash` → `gemini-2.0-flash` → `gemini-1.5-flash`
+**RECITATION fallback (OCR only):** On safety filter error with "RECITATION", retries once on the other model — lite → flash always; flash → lite only when the book is lite-eligible (`getModelForBook` would have chosen lite). Non-Latin books never step down to lite (#4523, #4729).
 
 **Logging:** All AI calls logged to `gemini_usage` via `logGeminiCall()` (non-blocking — failures don't crash workers).
 

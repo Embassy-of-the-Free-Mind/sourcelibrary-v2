@@ -209,7 +209,7 @@ async function processOneJob(db, job) {
       if (text.length > 25000) { failCount++; continue; }
 
       if (job.type === 'ocr') {
-        const pageType = extractPageType(text, { validate: false });
+        const pageType = extractPageType(text);
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
 

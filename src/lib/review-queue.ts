@@ -62,6 +62,24 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'j', rating: 'problem', label: '\u2717 found something', color: '#ef4444', hint: 'Something is off \u2014 please say what in the box' },
     { key: 'u', rating: 'unclear', label: '? unclear', color: '#6b7280', hint: "Couldn't tell, or the page wouldn't load" },
   ],
+  // Translation fidelity, judged by someone who reads the original language.
+  //
+  // THE VERDICTS SEPARATE TWO LAYERS ON PURPOSE. A page has to pass through
+  // transcription before it can be translated, and the two fail differently:
+  // where the OCR invented the original, the English can be perfectly faithful
+  // TO THAT INVENTION and still tell the reader something the book never said.
+  // One "is this translation any good?" button would fold those together and
+  // the resulting number would be uninterpretable — we could not tell a
+  // translation problem from an OCR problem, and they have different fixes.
+  // This is the failure that produced 529 books of invented Tibetan scripture
+  // (#4523): the translation layer did its job faithfully on a fabricated text.
+  'translation-check': [
+    { key: 'k', rating: 'both_sound',        label: '✓ both sound',           color: '#10b981', hint: 'The transcription matches the page, and the English matches the original' },
+    { key: 'j', rating: 'translation_drift', label: '✗ translation drifts',   color: '#ef4444', hint: 'The transcription is right, but the English departs from it' },
+    { key: 'x', rating: 'transcription_off', label: '✗ transcription wrong',  color: '#f59e0b', hint: "The text doesn't match the page — so the English can't be judged" },
+    { key: 'b', rating: 'both_off',          label: '✗✗ both wrong',          color: '#b91c1c', hint: 'Neither the transcription nor the English can be trusted here' },
+    { key: 'u', rating: 'unclear',           label: '? unclear',              color: '#6b7280', hint: "Can't tell — say why in the box if you can" },
+  ],
   // Wikipedia contribution events. Not a rating queue — used as an event log
   // for the /contribute/wikipedia playbook (claim → post → response → merged).
   // No keyboard shortcuts; events come from explicit button clicks.
@@ -100,7 +118,7 @@ export function getRatingOptions(queue: string): RatingOption[] {
   return QUEUE_RATINGS[queue] ?? [];
 }
 
-export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'wikipedia'] as const;
+export const QUEUE_KEYS = ['hallucination', 'gallery-quality', 'scan-quality', 'spanish-copy', 'page-check', 'translation-check', 'wikipedia'] as const;
 export type QueueKey = (typeof QUEUE_KEYS)[number];
 
 // Wikipedia event ordering: defines what's a "later" status. Used to roll up

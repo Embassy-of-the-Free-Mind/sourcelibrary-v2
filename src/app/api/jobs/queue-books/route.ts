@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { nanoid } from 'nanoid';
-import { getModelForBook } from '@/lib/types/ai-models';
+import { getModelForBook, getTranslateModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import type { JobStatus, JobType } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { withAuth } from '@/lib/auth-helpers';
@@ -16,7 +16,8 @@ import { withAuth } from '@/lib/auth-helpers';
  *   bookId: string,
  *   pageIds: string[],
  *   action: JobType,  // 'ocr' | 'translation' | 'image_extraction'
- *   customPrompt?: string  // Optional, for OCR and Translation only
+ *   customPrompt?: string,  // Optional, for OCR and Translation only
+ *   reason?: string  // Optional: why an operator is running this by hand (#4336)
  * }
  *
  * Flow:
@@ -39,12 +40,14 @@ export const POST = withAuth(async (request, session) => {
       bookId,
       pageIds,
       action,
-      customPrompt
+      customPrompt,
+      reason
     }: {
       bookId: string;
       pageIds: string[];
       action: JobType;
       customPrompt?: string;
+      reason?: string;
     } = await request.json();
 
     // Validate required fields
@@ -61,6 +64,10 @@ export const POST = withAuth(async (request, session) => {
         { status: 400 }
       );
     }
+
+    // Free text from an operator: trimmed, and capped so a paste cannot bloat the row.
+    const initiatedReason =
+      typeof reason === 'string' ? reason.trim().slice(0, 500) || undefined : undefined;
 
     const db = await getDb();
 
@@ -105,10 +112,16 @@ export const POST = withAuth(async (request, session) => {
       config: {
         page_ids: pageIds,
         custom_prompt: customPrompt,
-        model: getModelForBook(book as { image_source?: { provider?: string }; language?: string | null }),
+        // OCR and translation route differently since #4759 (non-Latin scripts translate on lite).
+        model: action === 'translation'
+          ? getTranslateModelForBook(book as RoutableBook)
+          : getModelForBook(book as RoutableBook),
         language: book.language || "auto-detect"
       },
       initiated_by: 'user',
+      // Why a human queued this, captured at queue time — the field is absent, not
+      // empty, when no reason was given, so "unrecorded" stays distinguishable (#4336).
+      ...(initiatedReason ? { initiated_reason: initiatedReason } : {}),
       created_at: new Date(),
       updated_at: new Date()
     });
