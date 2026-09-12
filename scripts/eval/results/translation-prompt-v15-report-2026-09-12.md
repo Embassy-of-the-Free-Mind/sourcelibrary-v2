@@ -66,7 +66,7 @@ One sentence, in the verbatim rule: make explicit that the OMIT instruction appl
 
 ## Does this extrapolate to the strata that ship on full flash?
 
-Measured on `gemini-3.1-flash-lite` only. Six of eight strata ship on `gemini-3-flash-preview` in production. I would **not** assume the magnitudes carry: the fabrication baseline on lite (8% verified on Hebrew) may be much better on full flash to begin with, which would shrink the gain; and the interpretive-note suppression may be smaller or larger on a model that follows instructions more literally. The *direction* is probably robust — the rule is a copy-or-omit instruction, and a more capable model should follow it at least as well — but that is a belief, not a measurement. #4759 is the place to settle whether those strata should be on lite at all; if they move to lite, this result applies to them directly.
+**Moot as of the same afternoon:** #4762 (closing #4759) merged while this was being scored and routes **all** translation to `gemini-3.1-flash-lite`, keeping full flash for OCR only. Every stratum in this study now ships on the model it was measured on, so the numbers above describe production directly — no extrapolation needed. (Had it not: the direction would probably have carried — the rule is a copy-or-omit instruction — but the magnitudes would not have been assumed; the Hebrew/Arabic baselines in particular are lite's.)
 
 ## Files
 
