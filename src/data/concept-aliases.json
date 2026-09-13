@@ -8587,12 +8587,6 @@
    "tradition": "Chinese Daoist",
    "variants": [
     {
-     "term": "tuna",
-     "confidence": 0.7,
-     "reason": "headword: Genuine Daoist breathing practice attested via 吐納 and 'Tu Na' forms, but the plain-ASCII 'tuna' key is heavily contaminated by unrelated homographs (see below).",
-     "note": "headword row: judge seed confidence 0.6 raised to the 0.7 floor"
-    },
-    {
      "term": "tu na",
      "confidence": 0.85,
      "reason": "Romanized form, evidence (Classified Compendium on Nurturing Life) glosses it 'breathing exercises of expelling the old and inhaling the new'."
@@ -8606,6 +8600,12 @@
     }
    ],
    "related": [
+    {
+     "term": "tuna",
+     "confidence": 0.6,
+     "reason": "headword: Genuine Daoist breathing practice attested via 吐納 and 'Tu Na' forms, but the plain-ASCII 'tuna' key is heavily contaminated by unrelated homographs (see below).",
+     "note": "demoted 2026-09-13: the bare ASCII key matches the prickly pear (Nahuatl/Spanish), the eel Tuna (Māori myth) and the fish — round-1 instruction judges hit all three; expand only through 吐納 / tu na"
+    },
     {
      "term": "expelling and inhaling",
      "confidence": 0.6,
