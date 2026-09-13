@@ -38,7 +38,7 @@ let detectGutterPixel; // lazy-loaded in gutter-only mode (avoids sharp import c
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
-  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only]');
+  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl]');
   process.exit(1);
 }
 
@@ -278,12 +278,28 @@ function parseSpreadOCR(ocrText) {
 
 const book = await db.collection('books').findOne(
   { $or: [{ slug: targetSlug }, { id: targetSlug }] },
-  { projection: { id: 1, title: 1, pages_count: 1, slug: 1, split_completed: 1, needs_splitting: 1, image_source: 1 } }
+  { projection: { id: 1, title: 1, pages_count: 1, slug: 1, split_completed: 1, needs_splitting: 1, image_source: 1, language: 1, split_page_order: 1 } }
 );
 
 if (!book) { console.log('Book not found:', targetSlug); process.exit(1); }
 console.log(`\n=== ${book.title} ===`);
 console.log(`Current: ${book.pages_count} pages | needs_splitting: ${book.needs_splitting} | split_completed: ${book.split_completed}`);
+
+// --- Reading order (#4796) ---
+// A spread's two halves become consecutive pages. In a left-to-right book the
+// left leaf is read first; in a right-to-left book (Hebrew, Arabic, Persian,
+// Syriac, Urdu) and a vertically-set CJK book (Chinese, Japanese, Korean) the
+// RIGHT leaf is read first. Emitting left-then-right for every book put 41
+// books' pages in reversed reading order (Pardes Rimmonim: page 101 is ch.
+// 17–18, page 100 is ch. 18–19). `--page-order ltr|rtl` overrides the language
+// default (a modern horizontally-set Japanese book is ltr); the decision is
+// recorded on the book as `split_page_order` so it can be audited and undone.
+const RIGHT_FIRST = /arabic|hebrew|aramaic|syriac|persian|urdu|ottoman|chinese|japanese|korean|manchu/i;
+const orderArg = args.find(a => a.startsWith('--page-order='))?.split('=')[1];
+if (orderArg && orderArg !== 'ltr' && orderArg !== 'rtl') { console.log(`--page-order must be ltr or rtl, got "${orderArg}"`); process.exit(1); }
+const PAGE_ORDER = orderArg || (RIGHT_FIRST.test(String(book.language || '')) ? 'rtl' : 'ltr');
+const SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
+console.log(`Reading order: ${PAGE_ORDER} (${orderArg ? '--page-order' : `language "${book.language || 'unknown'}"`}) — ${SIDE_ORDER[0]} leaf first`);
 
 // --- Step 1: Get original image URLs ---
 const manifestUrl = book.image_source?.iiif_manifest;
@@ -690,8 +706,9 @@ for (let idx = 0; idx < existingPages.length; idx++) {
     } else {
       // Spread: two OCR-less pages; the normal pipeline OCRs them as singles.
       const pos = typeof page._gutter === 'number' ? page._gutter : 500;
-      newPages.push({ side: 'left', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
-      newPages.push({ side: 'right', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
+      for (const side of SIDE_ORDER) {
+        newPages.push({ side, ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
+      }
     }
     continue;
   }
@@ -702,7 +719,9 @@ for (let idx = 0; idx < existingPages.length; idx++) {
     continue;
   }
 
-  for (const p of parsed.pages) {
+  // parseSpreadOCR returns [left, right]; emit in reading order.
+  const orderedPages = [...parsed.pages].sort((a, b) => SIDE_ORDER.indexOf(a.side) - SIDE_ORDER.indexOf(b.side));
+  for (const p of orderedPages) {
     newPages.push({
       side: p.side,
       ocr: p.ocr,
@@ -932,6 +951,7 @@ await db.collection('books').updateOne({ id: book.id }, {
     needs_splitting: false,
     split_completed: true,
     split_completed_at: new Date(),
+    split_page_order: PAGE_ORDER, // #4796: which leaf of each spread became the lower page number
     thumbnail: coverPage?.url,
     cover_page: coverPage?.num,
     updated_at: new Date(),
