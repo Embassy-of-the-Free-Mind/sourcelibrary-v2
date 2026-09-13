@@ -33,8 +33,22 @@
  *   node scripts/import/ia-ocr-ingest.mjs --book <id>                     # one book
  *   node scripts/import/ia-ocr-ingest.mjs --language english --limit 200  # a slice
  *   node scripts/import/ia-ocr-ingest.mjs --collection shakers --apply
+ *   node scripts/import/ia-ocr-ingest.mjs --ids <file>                    # re-score these book ids
  * Options: --min-agreement 0.85  --min-ref-pages 5  --cache <dir> (keeps the XML)
  *          --max-offset 3  --min-offset-share 0.6
+ * `--ids <file>` (one book id per line) skips the "still has untranscribed pages" filter, so an
+ * already-filled book can be re-scored against its model pages (dry unless --apply).
+ *
+ * TEXT QUALITY (#4780, 2026-09-13). Three defects found by reading ingested pages against the scan:
+ *  1. The XML keeps the typesetter's line-end hyphens (`am-\nmunition`; 84% of pages). Every leaf
+ *     is run through `dehyphenateLineBreaks` (scripts/lib/dehyphenate.mjs) after loading — after,
+ *     not inside `leafTexts`, so cached `.leaves.json` files get it too — before scoring and writing.
+ *  2. The agreement tokenizer was `[a-z0-9']`: Greek, Cyrillic and Hebrew were invisible to the
+ *     score, so a bilingual edition was judged on its English apparatus alone (De Anima accepted at
+ *     0.91 without a single Greek word counted). Now `\p{L}\p{N}'` with the `u` flag.
+ *  3. No language guard: an item whose IA-detected OCR language is not the book's language is now
+ *     LANG_MISMATCH (counted as rejected), unless the book's `languages[]` lists it — a facing-page
+ *     edition is tagged that way (language-fields.md). Both values are logged.
  *
  * LEAF OFFSET (2026-09-12). The first English dry run rejected 292 books at agreement
  * 0.10–0.20 — the detector's biggest cluster, and an artifact: probed books scored 0.15
@@ -52,6 +66,8 @@ import { withMongo } from '../lib/mongo.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
+import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
+import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply');
@@ -64,6 +80,7 @@ const MIN_REF_PAGES = +arg('--min-ref-pages', 5);
 const MAX_OFFSET = +arg('--max-offset', 3);
 const MIN_OFFSET_SHARE = +arg('--min-offset-share', 0.6);
 const CACHE = arg('--cache', null);
+const IDS_FILE = arg('--ids', null);
 const SOURCE = 'ia_djvu';
 
 /**
@@ -108,7 +125,9 @@ function leafTexts(xml) {
 const decode = (s) => s.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n));
 
 // ---------- agreement: word-sequence ratio (difflib-style 2M/(|a|+|b|)) ----------
-const tokens = (s) => (s || '').replace(/<[^>]+>/g, ' ').toLowerCase().match(/[a-z0-9']+/g) || [];
+// Unicode-aware (#4780): letters and digits of ANY script count, so non-Latin garbage lowers the
+// score instead of vanishing from it. Curly apostrophes fold to ASCII (Gemini writes ’, IA writes ').
+const tokens = (s) => (s || '').replace(/<[^>]+>/g, ' ').normalize('NFC').replace(/[’‘ʼ]/g, "'").toLowerCase().match(/[\p{L}\p{N}']+/gu) || [];
 function ratio(a, b) {
   a = a.slice(0, 600); b = b.slice(0, 600);
   if (!a.length || !b.length) return 0;
@@ -134,18 +153,29 @@ await withMongo(async (db) => {
   if (COLLECTION) q.collections = COLLECTION;
   if (LANGUAGE) q.language = new RegExp(`^${LANGUAGE}$`, 'i');
   if (BOOK) q.$and = [{ $or: [{ id: BOOK }, ...(ObjectId.isValid(BOOK) ? [{ _id: new ObjectId(BOOK) }] : [])] }];
-  const books = await B.find(q, { projection: { id: 1, title: 1, language: 1, published: 1, ia_identifier: 1, image_source: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1 } })
-    .sort({ processing_priority: -1, visible: -1 }).limit(LIMIT).toArray();
+  if (IDS_FILE) {
+    // Re-score mode: the listed books, whether or not they still have untranscribed pages.
+    const ids = fs.readFileSync(IDS_FILE, 'utf8').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+    delete q.$expr; delete q.hidden_reason;
+    q.$and = [{ $or: [{ id: { $in: ids } }, { _id: { $in: ids.filter((x) => ObjectId.isValid(x)).map((x) => new ObjectId(x)) } }] }];
+  }
+  const projection = { id: 1, title: 1, language: 1, languages: 1, published: 1, ia_identifier: 1, image_source: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1 };
+  const books = await B.find(q, { projection }).sort({ processing_priority: -1, visible: -1 }).limit(IDS_FILE ? 100000 : LIMIT).toArray();
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT}, min ref pages ${MIN_REF_PAGES})`);
 
-  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
+  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
     if (!iaId) { console.log(`  ${bid} no IA identifier — skip`); continue; }
-    const leaves = await iaLeaves(iaId);
-    if (!leaves) { summary.no_xml++; console.log(`  ${bid} ${iaId}: no _djvu.xml`); continue; }
+    const rawLeaves = await iaLeaves(iaId);
+    if (!rawLeaves) { summary.no_xml++; console.log(`  ${bid} ${iaId}: no _djvu.xml`); continue; }
+    const leaves = rawLeaves.map(dehyphenateLineBreaks);
     const meta = await iaOcrMeta(iaId);
+    // Language guard (#4780): the Archive's own detection of what its OCR read vs what the book is.
+    const detectedLang = normalizeLanguageToken(Array.isArray(meta.detected_lang) ? meta.detected_lang[0] : meta.detected_lang);
+    const bookLangs = [b.language, ...(Array.isArray(b.languages) ? b.languages : [])].map(normalizeLanguageToken).filter(Boolean);
+    const langMismatch = !!(detectedLang && bookLangs.length && !bookLangs.includes(detectedLang));
     const pages = await P.find({ book_id: bid }, { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, display_photo: 1, 'ocr.data': 1, 'ocr.source': 1, hidden: 1 } }).sort({ page_number: 1 }).toArray();
 
     // reference: pages that already carry model OCR, scored at every leaf offset in ±MAX_OFFSET.
@@ -172,9 +202,10 @@ await withMongo(async (db) => {
     const scores = refs.map((r) => r[offset] ?? 0);
     const med = median(scores);
     const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) + offset })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
-    const verdict = med < MIN_AGREEMENT ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : 'ACCEPT';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${refs.length} pages | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}`);
-    if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; continue; }
+    const verdict = med < MIN_AGREEMENT ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
+    const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${refs.length} pages | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
+    if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
 
