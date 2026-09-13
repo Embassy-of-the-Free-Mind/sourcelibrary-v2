@@ -19,6 +19,180 @@ The replication column exists because of 2026-09-02, below.
 
 ---
 
+## 2026-09-14 — Which model should translate classical Chinese? (樂舞 preview pages, SIX arms) — RESULT
+
+**Headline: no arm displaces `gemini-3.1-flash-lite`. `gemini-3-flash-preview` is the
+only arm that beats lite blind (31 W – 16 L – 13 T, p = 0.040) and it costs 2.2×, so
+the pre-registered rule keeps lite. The Chinese-lab arms are cheaper but write LESS:
+DeepSeek v4.1-flash leaves 16 % of the page in Chinese (12/60 pages > 20 % untranslated)
+and emits no house-format notes at all; Qwen3.8-flash is the worst-ranked arm and
+invents tags on 0.8 tags/page. And the judge's own test-retest is 52 % — a coin flip —
+so read every ranking here as weak.**
+
+- **Question / design.** As pre-registered below. Same n = 60 pages / 60 books, same
+  production prompt v13 (hash 51651014…), no thinking, no previous-page context. Six arms
+  delivered: lite (baseline), gemini-3-flash-preview, gemini-2.5-flash,
+  deepseek-v4.1-flash, qwen3.8-flash, deepseek-v4-pro-0813 — 60/60 each except
+  deepseek-v4-pro (59, one empty reply). $0.62 spent on translation, judging on subscription.
+- **Skipped, recorded not failed.** `z-ai/glm-5.3-flash` and `qwen/qwen3.8-max-0902`
+  refuse `reasoning.enabled=false` ("Reasoning is mandatory for this endpoint", HTTP 400);
+  a reasoning-on run of both was delivered ($0.86) and is preserved UNJUDGED in
+  `results/translation-model-ab-zh-arms-reasoning-excluded.jsonl` — judging it would have
+  compared a thinking model against five non-thinking ones. `gemini-2.5-flash-lite`: HTTP 404,
+  closed to new users.
+- **Primary (blind ranking, 60 pages, 6 labels/page, fresh shuffle seed 20260914).**
+  Mean rank / first place: preview 2.30 / 28, deepseek-v4.1-flash 2.85 / 26, lite 3.07 / 19,
+  deepseek-v4-pro 3.37 / 21, 2.5-flash 3.45 / 17, qwen3.8-flash 3.60 / 12. Sign test vs lite:
+  preview 31–16–13 (p = 0.040), deepseek-v4.1 28–18–14 (p = 0.184), deepseek-pro 24–26–9
+  (p = 0.888), 2.5-flash 21–31–8 (p = 0.212), qwen 20–30–10 (p = 0.203).
+- **Co-primary (fabrication).** deepseek-v4.1 14, deepseek-pro 16, preview 21, lite 22,
+  2.5-flash 28, qwen 31 of 60. Eligible (refusals ≤ lite + 4 AND fabrication ≤ lite's):
+  preview, deepseek-v4.1, deepseek-pro. **A low fabrication count is not free here** —
+  deepseek-v4.1 writes 378 fewer chars/page than lite, emits 0.00 notes/page against lite's
+  0.93, and leaves 16.4 % of the page as untranslated Chinese (lite 0.3 %): it asserts less
+  because it says less, and its omission count is higher (16 vs 13).
+- **Judge reliability (second pass, 20 pages, labels re-shuffled).** Arm-vs-lite direction
+  agreed on 52/100 comparisons (**52 %**, chance ≈ 50 %); same first place 14/20; mean
+  Spearman ρ 0.50; fabrication flags identical 86/120 (72 %). The three-arm read below put
+  preview at 27–26 (p = 1.000) on the SAME translations; this six-arm read puts it at 31–16
+  (p = 0.040). That swing between judging passes, not a change in the models, is the finding
+  to carry: **a Sonnet judge cannot carry a p-value on this task at this n.** Fabrication
+  flags and the mechanical measures are the sturdier signal.
+- **Reference-free (per delivered page).** Untranslated CJK share: preview 0.000, lite 0.003,
+  2.5-flash 0.050, qwen 0.057, deepseek-v4.1 0.164, deepseek-pro 0.197 (pages > 20 %
+  untranslated: 0 / 0 / 5 / 5 / 12 / 13). House format: notes/page 1.13 preview, 0.93 lite,
+  0.62 2.5-flash, 0.37 qwen and deepseek-pro, 0.00 deepseek-v4.1; invented tags/page 0.00
+  lite and preview, 0.82 qwen. `verified-note rate` stays a citation-FORMAT measure (preview
+  writes pinyin), not a fabrication measure.
+- **Cost, measured (realtime; Gemini batch halves it).** $/page → 樂舞 20K pages:
+  qwen3.8-flash $0.0005 → $11, deepseek-v4.1 $0.0010 → $19, 2.5-flash $0.0012 → $24,
+  **lite $0.0017 → $34**, deepseek-pro $0.0024 → $48, preview $0.0037 → $73. OpenRouter arms
+  are provider-reported charges; Gemini arms are list price × tokens.
+- **Recommendation (rule applied as written).** Run 樂舞 on `gemini-3.1-flash-lite`. The rule
+  recommends the cheapest arm that beats lite at ≤ 2× its price; preview beats lite but costs
+  2.2×, and lite's fabrication gap over it is 1 page, far under the 5-page override. Named but
+  NOT recommended: deepseek-v4.1-flash is cheaper (0.6× lite) with a better mean rank and lower
+  fabrication at p = 0.184 — its untranslated residue disqualifies it for production as-is,
+  but a residue-fixing prompt tweak plus a stronger judge is the run that would settle it.
+- **What would change the answer.** A judge with real test-retest (a stronger model, or two
+  independent judges per page with disagreements adjudicated) before any preview-vs-lite call;
+  n = 60 is powered for a large effect only.
+- **Replicated?** Partly, and it did NOT replicate: three Gemini arms were judged twice
+  (three-arm read below, six-arm read here) and the preview-vs-lite verdict flipped from
+  p = 1.000 to p = 0.040. Treat both as one weak read, not two.
+- **Artifact.** `results/translation-model-ab-zh-report.md` (+ .json, arms, score, packets,
+  keys, verdicts ×2; the three-arm pass kept as `…-3arm-judge-{key,verdicts}*`); harness
+  `translation-model-ab.mjs`; judge prompt `translation-model-ab-JUDGE-PROMPT.md`.
+
+---
+
+## 2026-09-13 — Which model should translate classical Chinese? (樂舞 preview pages) — RESULT (three arms; superseded by the six-arm read above, which re-judged these same translations)
+
+**Headline: on 60 Chinese pages, `gemini-3.1-flash-lite` and `gemini-3-flash-preview`
+are indistinguishable to a blind judge (27 : 26, p = 1.0) at 2.2× the price;
+`gemini-2.5-flash` is worse (17 : 33, p = 0.033, 5/60 pages > 20 % untranslated).
+Lite stays the route. The Chinese-lab arms were NOT run (no OpenRouter key) and
+`gemini-2.5-flash-lite` is closed to new users (HTTP 404) — both recorded as skipped.**
+
+- **Question / design.** As pre-registered below (same-day entry). n = 60 pages / 60
+  books, production prompt v13 (hash 51651014…), no thinking, no previous-page
+  context. Three Gemini arms delivered 60/60 each, zero refusals, $0.39 total.
+- **Primary (blind ranking, 60 pages).** Mean rank lite 1.73, preview 1.72,
+  2.5-flash 2.23; first place 29 / 32 / 15. Sign test vs lite: preview 27 W – 26 L –
+  7 T (p = 1.000); 2.5-flash 17 – 33 – 10 (p = 0.033).
+- **Co-primary (fabrication flags).** lite 19, preview 23, 2.5-flash 27 of 60 — no
+  arm is eligible under the rule (fabrication ≤ lite's), so the rule returns lite.
+  Paired: lite-only 14, preview-only 18, both 5, neither 23. The absolute rate is
+  high because the judge flags ANY unsupported gloss or meta-note (e.g. an invented
+  author in `<meta>`, an unsupported "Coromandel" gloss for 西洋); the ORDER is the
+  signal, and it favours lite weakly.
+- **Judge reliability (second pass, 20 pages re-shuffled).** Arm-vs-lite direction
+  agreed 24/40 (60 %); same first place 11/20; mean Spearman ρ 0.42; fabrication
+  flags identical 39/60. **The judge cannot reliably separate lite from preview**;
+  it does separate 2.5-flash (omission 17 vs 9, untranslated residue 5 % vs 0.3 %).
+  n = 60 is powered for a large effect only — read "no large difference", not "equal".
+- **Reference-free.** Preview writes 9 % more prose and leaves 0 CJK residue; lite
+  0.3 %; 2.5-flash 5 % (5 pages > 20 % untranslated, tables left as raw Chinese).
+  `verified-note rate` 0.79 / 0.02 / 1.00 is a citation-FORMAT artefact: preview
+  writes `original: "Zuo Zhuan"` in pinyin, which the verbatim verifier cannot
+  match; it is not fabrication (instrument note now in the report).
+- **Cost, measured.** $0.0017 / $0.0037 / $0.0012 per page realtime → 樂舞 20K pages
+  ≈ $34 / $73 / $24 (batch halves it).
+- **Recommendation.** Run 樂舞 on lite. What would change it: an OpenRouter key on
+  Hetzner (`--run` resumes; the DeepSeek/Qwen/GLM arms cost ≈ $1.55) and a judge with
+  better test-retest (a stronger model, or two independent judges per page) before
+  trusting any preview-vs-lite call at this n.
+- **Replicated?** No. k = 1 per (page, arm); judge pass 2 is the only repeat.
+- **Artifact.** `results/translation-model-ab-zh-report.md` (+ .json, arms, score,
+  packets, keys, verdicts ×2); harness `translation-model-ab.mjs`; judge prompt
+  `translation-model-ab-JUDGE-PROMPT.md`.
+
+---
+
+## 2026-09-13 — Which model should translate classical Chinese? (樂舞 preview pages, N-arm) — PREREGISTRATION
+
+_Written before the paid run; the result entry goes above this one when it exists.
+Handoff: ops repo `handoffs/2026-09-13-zh-translation-model-ab.md` (+ amendment); research:
+ops repo `docs/improvement-research-2026-09-11-data/trackA3-chinese-translation-models.md`._
+
+- **Question.** The 136 ritual-dance (樂舞) books (~20K pages) await full translation.
+  Production routes all non-BPH translation to `gemini-3.1-flash-lite` (#4762) on price,
+  not on any Chinese measurement — none exists (only OCR numbers). Which model, among
+  the cheap Gemini tiers and the Chinese-lab models, gives the most faithful English per
+  dollar on THESE pages? Derek: "is it best to use flash-lite on chinese or qwen or
+  another model, do we know?" / "doesn't need to be qwen — could be deepseek or another
+  chinese model".
+- **Design.** Paired over arms, SAME production translation prompt (whatever
+  `is_default` resolves to; no v15 arm — a model comparison, not a prompt one), no
+  thinking (`thinkingBudget: 0` / `reasoning.enabled=false`), no previous-page context.
+  **n = 60 pages from 60 books, one page per book**, interior (page_number > 3), ≥ 150
+  CJK chars of `ocr.data`, drawn by seeded shuffle from the 136-book list
+  (`results/translation-model-ab-zh-books.txt`; sample pinned in `-sample.json`).
+  Harness `scripts/eval/translation-model-ab.mjs`.
+  Arms (baseline first): `gemini-3.1-flash-lite`, `gemini-3-flash-preview`,
+  `gemini-2.5-flash`, `gemini-2.5-flash-lite`; via OpenRouter (`OPENROUTER_API_KEY`):
+  `deepseek/deepseek-v4.1-flash`, `qwen/qwen3.8-flash`, `z-ai/glm-5.3-flash`,
+  `deepseek/deepseek-v4-pro-0813`, `qwen/qwen3.8-max-0902`. **An arm whose key is absent
+  is recorded as SKIPPED — a result, not a failure** (no OpenRouter key exists on Hetzner
+  as of writing; a later `--run` with the key adds those arms without re-spending).
+  Every arm is written to `-arms.jsonl` with refusals kept as rows.
+- **Primary outcome.** Blind RANKING of all delivered translations per page by Sonnet
+  lean-worker judges (labels T1..Tk shuffled per page, key in a separate file; ties
+  allowed as grouped ranks; ≤ 3 pages per dispatch, ≤ 8 concurrent; prompt
+  `translation-model-ab-JUDGE-PROMPT.md`: fidelity → omission → term consistency →
+  readability last). Per arm: mean rank; **vs baseline: pages ranked above lite minus
+  pages ranked below, exact two-sided sign test.**
+- **Co-primary.** Judge fabrication flag per arm (something asserted the Chinese does
+  not say — the disqualifier for classical text). Also omission and terms-ok flags.
+- **Secondary.** Refusals per arm (HTTP error / blocked / RECITATION-class finish /
+  empty body) as a ROW, never dropped; reference-free table per arm —
+  `scoreTranslation` fields (notes emitted, verified-note rate, inline terms, invented
+  and housekeeping tags, glossary blocks), English chars per CJK char, untranslated CJK
+  residue share of the prose (citations inside `<note original>`/`<term>` excluded),
+  pages > 20 % untranslated; measured $/page per arm (OpenRouter's reported charge
+  where available, list price otherwise). Second judge pass over the first 20 pages,
+  labels re-shuffled: arm-vs-lite direction agreement, same-first-place rate, mean
+  Spearman ρ, fabrication-flag agreement.
+- **Decision rule (fixed now).** *Eligible* = refused at most 4 more pages than lite
+  AND fabrication-flagged on no more pages than lite. *Beats lite* = eligible AND ranked
+  above lite on more pages than below AND sign-test p < 0.05. Recommend the CHEAPEST
+  arm that beats lite and costs ≤ 2× lite per page; a dearer winner only if lite is
+  fabrication-flagged on ≥ 5 more pages than it. If nothing beats lite: **lite**, unless
+  a cheaper eligible arm has a mean rank at least as good as lite's (p ≥ 0.05) or an
+  arm leads lite at p < 0.2 — then **undecided**, and the report names the run that
+  would settle it (120 more pages, ≈ the two arms' $/page × 120). n = 60 is powered
+  for a large effect only (sign test 60 pairs detects ~65:35); a null is "no large
+  difference", not "equal".
+- **Cost cap.** `--max-usd 2` enforced by the harness (`--dry-run` prints the estimate
+  and exits 2 above it). Estimate for the four keyed Gemini arms: $0.58; all nine arms
+  would be ≈ $2.13, so the OpenRouter arms are a second `--run` under their own cap.
+  Nothing is written to Mongo; the 136 books stay at preview posture.
+- **What would falsify the premise.** If lite is not last on fabrication and no cheaper
+  arm ties it, the price-list routing was right for Chinese and the 樂舞 run goes to
+  lite unchanged.
+
+---
+
 ## 2026-09-12 — Does translation prompt v15 (#3825) make original-notes real?
 
 **Headline: the verbatim rule works — verified-note rate 66.7% → 96.3% while
