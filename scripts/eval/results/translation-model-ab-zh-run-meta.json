@@ -1,46 +1,43 @@
 {
  "arms": {
   "deepseek/deepseek-v4.1-flash": {
-   "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.115Z"
+   "status": "ran",
+   "at": "2026-09-13T21:51:43.195Z"
   },
   "qwen/qwen3.8-flash": {
-   "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.115Z"
+   "status": "ran",
+   "at": "2026-09-13T21:51:43.195Z"
   },
   "z-ai/glm-5.3-flash": {
    "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.115Z"
+   "reason": "probe failed: HTTP 400: {\"error\":{\"message\":\"Reasoning is mandatory for this endpoint and cannot be disabled.\",\"code\":400,\"metadata\":{",
+   "at": "2026-09-13T21:51:29.502Z"
   },
   "deepseek/deepseek-v4-pro-0813": {
-   "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.116Z"
+   "status": "ran",
+   "at": "2026-09-13T21:51:43.195Z"
   },
   "qwen/qwen3.8-max-0902": {
    "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.116Z"
+   "reason": "probe failed: HTTP 400: {\"error\":{\"message\":\"Reasoning is mandatory for this endpoint and cannot be disabled.\",\"code\":400,\"metadata\":{",
+   "at": "2026-09-13T21:51:43.192Z"
   },
   "gemini-2.5-flash-lite": {
    "status": "skipped",
    "reason": "probe failed: HTTP 404: {\"error\":{\"code\":404,\"message\":\"This model models/gemini-2.5-flash-lite is no longer available to new users. P",
-   "at": "2026-09-13T20:54:23.568Z"
+   "at": "2026-09-13T21:50:16.699Z"
   },
   "gemini-3.1-flash-lite": {
    "status": "ran",
-   "at": "2026-09-13T20:54:23.570Z"
+   "at": "2026-09-13T21:51:43.195Z"
   },
   "gemini-3-flash-preview": {
    "status": "ran",
-   "at": "2026-09-13T20:54:23.570Z"
+   "at": "2026-09-13T21:51:43.195Z"
   },
   "gemini-2.5-flash": {
    "status": "ran",
-   "at": "2026-09-13T20:54:23.570Z"
+   "at": "2026-09-13T21:51:43.195Z"
   }
  },
  "prompt": {
