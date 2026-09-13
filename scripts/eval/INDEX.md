@@ -111,6 +111,7 @@ Read these for the house conventions before designing a new study.
 | `hard-page-sample.mjs` | Draw a labelled exemplar set of HARD pages, one bucket per failure class (#3469). |
 | `harvest-wikisource-gt.mjs` | harvest-wikisource-gt.mjs — bulk OCR ground truth from Wikisource proofread pages. |
 | `ia-ocr-baseline.mjs` | IA-OCR corpus baseline (#3235 — "IA-OCR corpus baseline" entry in .claude/docs/ocr-memorization-paper.md, priority 2 after the calibration scorecard). |
+| `ia-ocr-delivered-quality.mjs` | Delivered quality of the IA OCR text we WROTE (#4780): one interior page per book across agreement bands incl. REJECTED ones, CER/WER + bag-of-words-vs-sequence gap against a fresh flash-lite read, per-language cutoff sweep, prose-only book score, mis-pairing check. Runs on Hetzner. |
 | `identify-bench.mjs` | Identify benchmark (#3193): measures "photo of an artwork -> the right library image" retrieval quality. |
 | `lexicon-grc-treebank-eval.mjs` | Validate lexicon_lemma_map_grc against the UD Ancient Greek (Perseus) treebank: for each human-verified (form, lemma) token, if the form is in our map, does our key set contain the gold lemma's LSJ… |
 | `lexicon-la-treebank-eval.ts` | Validate the Latin lemma machinery against the UD Latin-ITTB treebank (Index Thomisticus: Aquinas — medieval Latin, the closest gold standard to our early modern corpus). |
