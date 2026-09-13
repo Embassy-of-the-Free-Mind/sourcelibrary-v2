@@ -45,6 +45,7 @@
  *   set -a; source .env.production.local; set +a
  *   node scripts/eval/ia-ocr-delivered-quality.mjs --stage=sample   # pick books+pages, re-score gate, no cost
  *   node scripts/eval/ia-ocr-delivered-quality.mjs --stage=ocr      # fresh Gemini read per page (PAID), resumable
+ *   node scripts/eval/ia-ocr-delivered-quality.mjs --stage=rediagnose  # re-read flagged pages from the SOURCE leaf (PAID, ~30 pages)
  *   node scripts/eval/ia-ocr-delivered-quality.mjs --stage=report   # markdown tables to stdout
  * Options: --cell-cap 25 (books per band × language)  --anchor-cap 10 (books per language in the
  *   <0.60 anchor band)  --concurrency 4  --max-cost 3 (USD, hard stop)  --seed 4780
@@ -361,6 +362,49 @@ async function stageOcr(db) {
   if (aborted) process.exit(3);
 }
 
+// ---------- stage: rediagnose (paid, ~30 pages) ----------
+// A flagged page can be wrong on EITHER side: the delivered TEXT is the neighbouring leaf (the gate's
+// offset was locally wrong), or the archived IMAGE is the neighbouring leaf (#3368 bulk-JP2 leaf offset,
+// .claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md) while the text is right. The two need opposite
+// repairs, so each flagged page is re-read from the SOURCE leaf the record points at (`pages.photo`, the
+// archive.org IIIF URL) and classified. Peer verification of four cases on #4790 found both kinds.
+async function stageRediagnose(db) {
+  const all = fs.readFileSync(RESULTS, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+  const plan = new Map(fs.readFileSync(PLAN, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).map((r) => [r.page_id, r]));
+  const flagged = all.filter((r) => r.misaligned);
+  const pages = new Map((await db.collection('pages').find({ id: { $in: flagged.map((r) => r.page_id) } }, { projection: { id: 1, photo: 1 } }).toArray()).map((p) => [p.id, p.photo]));
+  const prompt = await getProductionOcrPrompt(db);
+  const authors = new Map((await db.collection('books').find({ id: { $in: [...new Set(flagged.map((r) => r.book_id))] } }, { projection: { id: 1, author: 1, title: 1, year: 1 } }).toArray()).map((b) => [b.id, b]));
+  let cost = 0, lastIa = 0;
+  console.log(`rediagnose: ${flagged.length} flagged pages`);
+  for (const r of flagged) {
+    const photo = pages.get(r.page_id); const pl = plan.get(r.page_id);
+    const out = { iiif_url: photo || null, pairing_cause: 'unclear', iiif_seq_delivered: null, iiif_best_neighbour: null };
+    if (!photo || !/^https?:/.test(photo)) { out.pairing_cause = 'unclear:no-source-url'; }
+    else if (photo === r.image_url) { out.pairing_cause = 'text-side'; out.iiif_seq_delivered = r.seq; out.iiif_best_neighbour = r.neighbour_best; } // the read WAS of the source leaf
+    else {
+      try {
+        if (/archive\.org/.test(photo)) { const w = 500 - (Date.now() - lastIa); if (w > 0) await new Promise((x) => setTimeout(x, w)); lastIa = Date.now(); }
+        const img = await fetchImage(photo, 45000);
+        const b = authors.get(r.book_id) || {}; const year = r.year || b.year;
+        const res = await runGemini(OCR_MODEL_LITE, img, `${prompt.text}\n\n**Document context:** "${b.title || r.title}" by ${b.author || 'Unknown'}. ${year ? `Published ${year}.` : ''} ${year && year < 1930 ? 'This work is in the public domain.' : ''}`.trim(), { temperature: 0.1, maxTokens: 16384, thinkingBudget: 0 });
+        cost += res.costUsd;
+        const rt = tokens(normalise(res.text));
+        const seqD = r3(ratio(tokens(normalise(pl.ia_text)), rt));
+        const nb = (pl.neighbours || []).map((x) => ({ d: x.d, seq: r3(ratio(tokens(normalise(x.text)), rt)) })).sort((a, c) => c.seq - a.seq)[0] || null;
+        out.iiif_seq_delivered = seqD; out.iiif_best_neighbour = nb; out.iiif_finish = res.finishReason;
+        if (res.finishReason !== 'STOP' || rt.length < 20) out.pairing_cause = `unclear:${res.finishReason}`;
+        else if (seqD > 0.5 && seqD >= (nb?.seq ?? 0)) out.pairing_cause = 'image-side';
+        else if (nb && nb.seq > 0.5 && nb.seq > seqD + 0.2) out.pairing_cause = 'text-side';
+      } catch (e) { out.pairing_cause = `unclear:${e.message.slice(0, 60)}`; }
+    }
+    Object.assign(r, out);
+    console.log(`  ${out.pairing_cause.padEnd(12)} ${r.language.padEnd(8)} ${r.title.slice(0, 36).padEnd(36)} p.${r.page_number} | source-leaf read vs delivered ${out.iiif_seq_delivered} vs best neighbour ${JSON.stringify(out.iiif_best_neighbour)}`);
+  }
+  fs.writeFileSync(RESULTS, all.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  console.log(`rediagnose done: ${JSON.stringify(flagged.reduce((m, r) => ((m[r.pairing_cause] = (m[r.pairing_cause] || 0) + 1), m), {}))} | cost $${cost.toFixed(4)}`);
+}
+
 // ---------- stage: report ----------
 function stageReport() {
   const all = fs.readFileSync(RESULTS, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
@@ -409,9 +453,11 @@ function stageReport() {
   L.push(`Books with ≥3 prose reference pages: ${withProse.length}. Prose-median moves ${crossUp.length} rejected books ABOVE 0.85 (their delivered-page median CER ${fmt(median(crossUp.map((r) => r.cer)))}) and ${crossDown.length} accepted books BELOW it (median CER ${fmt(median(crossDown.map((r) => r.cer)))}). Median |prose − all| = ${fmt(median(withProse.map((r) => Math.abs(r.agreement_prose - r.agreement_now))))}.`);
   L.push(`\n| language | n | median all | median prose | median p75 | books moved up | their CER |\n|---|---|---|---|---|---|---|`);
   for (const lang of LANGS) { const xs = withProse.filter((r) => r.language === lang); if (!xs.length) continue; const up = xs.filter((r) => r.agreement_now < 0.85 && r.agreement_prose >= 0.85); L.push(`| ${lang} | ${xs.length} | ${fmt(median(xs.map((r) => r.agreement_now)))} | ${fmt(median(xs.map((r) => r.agreement_prose)))} | ${fmt(median(xs.map((r) => r.agreement_p75)))} | ${up.length} | ${fmt(median(up.map((r) => r.cer)))} |`); }
-  L.push(`\n## Delivery errors: the text is the WRONG PAGE (a neighbouring leaf fits the fresh read better)\n`);
+  L.push(`\n## Delivery errors: text and image are DIFFERENT PAGES (a neighbouring leaf fits the fresh read of the archived image better)\n`);
+  const cause = (c) => misaligned.filter((r) => (r.pairing_cause || 'unclear').startsWith(c));
+  if (misaligned.some((r) => r.pairing_cause)) L.push(`Re-diagnosed against the SOURCE leaf the record points at (\`pages.photo\`, archive.org IIIF): **image-side ${cause('image').length}** (the delivered text matches the source leaf; the archived R2 image is the neighbouring leaf — the #3368 bulk-JP2 leaf offset; the TEXT is right), **text-side ${cause('text').length}** (the source leaf matches a neighbouring leaf's text; the gate's per-book offset was locally wrong; the text is the wrong page), unclear ${cause('unclear').length}. Written pages among them: image-side ${cause('image').filter((r) => r.stored).length}, text-side ${cause('text').filter((r) => r.stored).length}. **A repair must classify first: shifting text to match the archived image would corrupt the image-side class, where the text is already right.**\n`);
   L.push(`${misaligned.length} of ${rows.length} pages. By band: ${bandNames.map((b) => `${b} ${misaligned.filter((r) => r.band === b).length}/${rows.filter((r) => r.band === b).length}`).join(', ')}. By language: ${LANGS.map((l) => `${l} ${misaligned.filter((r) => r.language === l).length}/${rows.filter((r) => r.language === l).length}`).join(', ')}. Stored (already written) among them: ${misaligned.filter((r) => r.stored).length}.`);
-  if (misaligned.length) { L.push(`\n| best neighbour | its seq | delivered seq | agreement_now | offset (share) | language | book | page |\n|---|---|---|---|---|---|---|---|`); for (const r of misaligned.slice(0, 20)) L.push(`| ${r.neighbour_best.d} | ${fmt(r.neighbour_best.seq)} | ${fmt(r.seq)} | ${fmt(r.agreement_now)} | ${r.offset} (${fmt(r.offset_share, 2)}) | ${r.language} | ${r.title.slice(0, 40)} | [p.${r.page_number}](${r.image_url}) |`); }
+  if (misaligned.length) { L.push(`\n| cause | best neighbour (archived image) | its seq | delivered seq | source-leaf read: delivered / best nb | agreement_now | offset (share) | language | book | page |\n|---|---|---|---|---|---|---|---|---|---|`); for (const r of misaligned) L.push(`| ${r.pairing_cause || '—'} | ${r.neighbour_best.d} | ${fmt(r.neighbour_best.seq)} | ${fmt(r.seq)} | ${fmt(r.iiif_seq_delivered)} / ${r.iiif_best_neighbour ? `${fmt(r.iiif_best_neighbour.seq)} (${r.iiif_best_neighbour.d})` : '—'} | ${fmt(r.agreement_now)} | ${r.offset} (${fmt(r.offset_share, 2)}) | ${r.language} | ${r.title.slice(0, 40)} | [p.${r.page_number}](${r.image_url})${r.iiif_url ? ` [src](${r.iiif_url})` : ''} |`); }
   L.push(`\n## The instrument\n`);
   const flagged = rows.filter((r) => r.ref_flags?.length);
   const byFlag = {}; for (const r of flagged) for (const f of r.ref_flags) byFlag[f] = (byFlag[f] || 0) + 1;
@@ -430,5 +476,6 @@ if (STAGE === 'report') stageReport();
 else await withMongo(async (db) => {
   if (STAGE === 'sample' || STAGE === 'all') await stageSample(db);
   if (STAGE === 'ocr' || STAGE === 'all') await stageOcr(db);
+  if (STAGE === 'rediagnose') await stageRediagnose(db);
   if (STAGE === 'all') stageReport();
 }, { timeoutMs: 4 * 60 * 60 * 1000 });

@@ -477,12 +477,19 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   delivered pages median **9.1% CER**, worse than the 3.9% accepted median. The Basil
   case (facing-page Greek dragging a verbatim English book to 0.35) is real and rare; as a
   policy the prose score admits mediocre books.
-- **Delivery errors: 31 of 573 pages (5.4%) deliver a NEIGHBOURING page's text** — the
-  fresh read fits leaf k±1 at seq > 0.5 while the delivered leaf scores < 0.3. Greek
-  13/97 (the Oxyrhynchus Papyri volumes: offset −1 with 95% share on the reference pages,
-  yet the sampled interior page fits offset 0 — the alignment drifts inside the book),
-  English 11/150. Four of the 31 are already written. The gate's single per-book offset
-  cannot see this; a follow-up needs a drift check (the vote as a function of page number).
+- **Delivery errors: 31 of 573 pages (5.4%) show text and image as DIFFERENT pages** — the fresh
+  read of the archived image fits leaf k±1 at seq > 0.5 while the delivered leaf scores < 0.3.
+  Re-read from the SOURCE leaf the record points at (`pages.photo`, IIIF) and classified, because
+  the two causes need OPPOSITE repairs: **24 text-side** (the source leaf matches the NEXT leaf's
+  text: the gate's per-book offset was locally wrong — every one is "text one leaf behind", the
+  Oxyrhynchus volumes worst; 2 already written), **5 image-side** (the text matches the source
+  leaf; the archived R2 image is the neighbouring leaf — the #3368 bulk-JP2 leaf offset,
+  `.claude/handoffs/2026-07-27-bulk-jp2-leaf-offset.md`; the TEXT is right; 2 written), 2 unclear.
+  Mechanism for the text-side class: the reference pages are the book's FIRST 25 (the preview
+  sample), so the offset is calibrated at the front and drifts by the interior; an 86% vote
+  (`--min-offset-share` 0.60 passes it) was locally wrong. **A repair must classify first —
+  shifting text to match the archived image would corrupt the image-side class.** Peer
+  verification of the four written cases on #4790 (against IIIF, by printed page number) agrees.
 - **Refusals are the instrument's big limit.** 193/742 first-pass references (26%) came
   back RECITATION/PROHIBITED_CONTENT because the run omitted production's document-context
   line; adding it recovered only 24, leaving **169 (23%) unscored — concentrated in the
@@ -493,5 +500,7 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   and are excluded. Stored-text check: 70 pages read from `pages.ocr.data` matched the
   regenerated leaf exactly, all 70.
 - **Decision:** per-language cutoffs (English/French 0.80; Latin/German/Italian 0.85;
-  Greek: do not fill) and a page-alignment drift check before more languages are applied.
+  Greek: do not fill); before more languages are applied, raise `--min-offset-share` (0.60 let an
+  86% vote through that was locally wrong) or refuse books whose reference pages disagree, and
+  spread the reference pages through the book instead of the front 25.
   Issue: #4790.
