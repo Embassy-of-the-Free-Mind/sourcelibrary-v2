@@ -198,13 +198,21 @@ await withMongo(async (db) => {
     const votes = {};
     for (const r of refs) { const best = Object.entries(r).sort((x, y) => y[1] - x[1])[0][0]; votes[best] = (votes[best] || 0) + 1; }
     const [offsetStr, nVotes] = Object.entries(votes).sort((x, y) => y[1] - x[1])[0];
-    const offset = +offsetStr; const offsetShare = nVotes / refs.length;
-    const scores = refs.map((r) => r[offset] ?? 0);
+    const offset = +offsetStr;
+    // Score only the reference pages that HAVE an IA leaf at the chosen offset. Google-scanned items
+    // carry `<HIDDENTEXT/>` (no words) on many leaves — 528 of 841 on Ante-Nicene Fathers vol. 8 — and
+    // a reference page whose own leaf is empty but whose neighbour has text used to score 0 here
+    // (`?? 0`), dragging a 0.86 book to 0.00 on re-score (#4780). An empty leaf is "IA has nothing
+    // for this page", never "IA disagrees"; such leaves are never filled either (the ≥ 20-token check).
+    const eligible = refs.filter((r) => r[offset] !== undefined);
+    const offsetShare = eligible.filter((r) => Object.entries(r).sort((x, y) => y[1] - x[1])[0][0] === offsetStr).length / Math.max(1, eligible.length);
+    const scores = eligible.map((r) => r[offset]);
     const med = median(scores);
+    if (scores.length < MIN_REF_PAGES) { summary.no_ref++; console.log(`  ${bid} ${String(b.published || '').slice(0, 4)} ${title} | ref pages with an IA leaf at offset ${offset}: ${scores.length} < ${MIN_REF_PAGES} — cannot calibrate`); continue; }
     const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) + offset })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
     const verdict = med < MIN_AGREEMENT ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${refs.length} pages | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
     if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
