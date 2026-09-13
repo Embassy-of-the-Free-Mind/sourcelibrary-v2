@@ -7,7 +7,8 @@
    "equivalent": "a translator's rendering in another language — expand, label the hit",
    "related": "adjacent concept or cross-tradition analogue — graph only, never expansion"
   },
-  "caveat": "single CJK characters (占, 卜, 德, 夢) need word-boundary handling on the search side; never substring-match them"
+  "caveat": "single CJK characters (占, 卜, 德, 夢) need word-boundary handling on the search side; never substring-match them",
+  "body": "2026-09-13: 41 body-practice concepts (theme \"body\") from 8 Sonnet judges over scripts/graph/body-vocab-gather.mjs output; finalised by body-vocab-finalize.mjs (floor 0.7)"
  },
  "concepts": [
   {
@@ -8388,6 +8389,2485 @@
     }
    ],
    "rejected": 17
+  },
+  {
+   "concept": "prostration",
+   "theme": "body",
+   "tradition": "Islamic / Buddhist / Christian",
+   "variants": [
+    {
+     "term": "prostration",
+     "confidence": 1,
+     "reason": "Is the headword itself."
+    },
+    {
+     "term": "prostrations",
+     "confidence": 0.97,
+     "reason": "Plural inflection, evidence (Chinese mourning rite, Werner) confirms same physical act."
+    },
+    {
+     "term": "ཕྱག་འཚལ",
+     "confidence": 0.85,
+     "reason": "Native Tibetan script rendering of phyag 'tshal, glossed 'Prostration'/'Homage' in same evidence pattern."
+    },
+    {
+     "term": "prostrating",
+     "confidence": 0.7,
+     "reason": "Gerund of prostrate; evidence (Luther's fore-runners: 'worshipped...bowing down') matches the ritual/worship sense."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "sujud",
+     "confidence": 0.9,
+     "reason": "Arabic term for the Islamic prostration, glossed 'prostration' by translators (Rumi, Ibn Arabi, Quran)."
+    },
+    {
+     "term": "sajda",
+     "confidence": 0.85,
+     "reason": "Same Arabic root/act as sujud, evidence (Ruzbihan Qur'an) glosses it 'sajda'/prostration directly.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "sajdah",
+     "confidence": 0.85,
+     "reason": "Alternate transliteration of sajda/sujud, glossed 'prostration' (Picatrix, Compendium of Chronicles).",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "proskynesis",
+     "confidence": 0.9,
+     "reason": "Greek/Latinized term consistently glossed 'ritual prostration' or 'act of bowing or prostration' across evidence."
+    },
+    {
+     "term": "phyag 'tshal",
+     "confidence": 0.75,
+     "reason": "Tibetan term glossed both 'prostration' and 'homage' in evidence (Gangtey, Drametse texts); weaker tier chosen for the dual sense per rule 3."
+    },
+    {
+     "term": "hishtachavayah",
+     "confidence": 0.85,
+     "reason": "Hebrew term consistently glossed 'prostration'/'bowing' (Pagnini dictionary, Zohar commentary, Gaster Hebrew MS)."
+    },
+    {
+     "term": "prostratio",
+     "confidence": 0.8,
+     "reason": "Latin noun form, evidence (Bestiary) shows it directly paired with 'Prostration' as the Latin original."
+    },
+    {
+     "term": "proskynein",
+     "confidence": 0.85,
+     "reason": "Greek infinitive 'to worship/prostrate', evidence (Life of Proclus, Chronographia) shows the physical prostration/obeisance act."
+    },
+    {
+     "term": "proskyneo",
+     "confidence": 0.85,
+     "reason": "Greek verb lemma glossed 'to worship/bow down' across papyri evidence, same act as proskynesis."
+    },
+    {
+     "term": "proskyno",
+     "confidence": 0.8,
+     "reason": "First-person verb form 'I worship/bow down', same verb family as proskynesis (Macrobius, Lascaris)."
+    },
+    {
+     "term": "proskyneseis",
+     "confidence": 0.8,
+     "reason": "Verb form ('you shall worship'/'worship') of the same Greek family, evidence from Septuagint and papyri confirms worship/reverence sense."
+    },
+    {
+     "term": "phyag 'tshal lo",
+     "confidence": 0.85,
+     "reason": "phyag 'tshal plus imperative particle, evidence glosses consistently 'Homage'/'Prostration/Homage' matching the seed form.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "phyag 'tshal ba",
+     "confidence": 0.85,
+     "reason": "Verbal-noun form of phyag 'tshal, evidence (Thadrak Temple text) glosses it directly 'prostration'.",
+     "note": "retagged: different-language rendering, expand with label"
+    }
+   ],
+   "related": [
+    {
+     "term": "prostrate",
+     "confidence": 0.4,
+     "reason": "Evidence rows (Angela of Foligno, Crowley, Hegel) don't confirm the ritual sense; likely the generic adjective (lying flat/collapsed), weaker tier chosen per rule 3."
+    },
+    {
+     "term": "五體投地",
+     "confidence": 0.6,
+     "reason": "Standard Chinese Buddhist term ('five limbs cast to ground') for full prostration; no evidence rows returned so confidence lowered.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "prostrators",
+     "confidence": 0.65,
+     "reason": "Morphological agent-plural of prostrate/prostration; no evidence rows so confidence held below 0.7.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "prostrated",
+     "confidence": 0.4,
+     "reason": "Evidence (Quimby illness, Flammarion grief) shows generic collapse sense, not the ritual act; weaker tier per rule 3."
+    },
+    {
+     "term": "prostratus",
+     "confidence": 0.6,
+     "reason": "Latin adjective; dictionary evidence ties it to 'prostrate oneself' and Cassiodorus uses it in a penitential/humility context.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "prostrations performed with the eight limbs",
+     "confidence": 0.45,
+     "reason": "Names a specific known variant (eight-limbed prostration) but evidence rows (drums, singing, dancing) don't confirm the sense, so kept weaker."
+    },
+    {
+     "term": "sujud al-sahw",
+     "confidence": 0.85,
+     "reason": "A specific named sub-type ('prostration of forgetfulness', Al-Ghazali) -- narrower ritual variant, not a plain alias of sujud."
+    },
+    {
+     "term": "proskynema",
+     "confidence": 0.55,
+     "reason": "Papyri evidence shows it as a votive 'act of worship/reverence/greeting' formula, broader than the physical prostration itself."
+    },
+    {
+     "term": "proskynetes",
+     "confidence": 0.7,
+     "reason": "Agent noun 'worshipper' -- the practitioner, not the act; adjacent but not itself the practice."
+    }
+   ],
+   "rejected": 5
+  },
+  {
+   "concept": "daoyin",
+   "theme": "body",
+   "tradition": "Chinese Daoist",
+   "variants": [
+    {
+     "term": "daoyin",
+     "confidence": 1,
+     "reason": "Is the headword itself."
+    },
+    {
+     "term": "導引",
+     "confidence": 0.95,
+     "reason": "Chinese-script source term, glossed 'Daoyin' directly across evidence (Baopuzi, Collected Illustrations of the Three Realms)."
+    },
+    {
+     "term": "dao yin",
+     "confidence": 0.95,
+     "reason": "Spaced pinyin form, evidence (Great Compendium of Acupuncture, Treatise on Nurturing Life) glosses 'stretching and guiding exercises'."
+    },
+    {
+     "term": "導引法",
+     "confidence": 0.7,
+     "reason": "'Daoyin method/technique' -- same headword with the '-method' suffix, no evidence rows but transparent morphology."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "tao-yin",
+     "confidence": 0.8,
+     "reason": "Standard Wade-Giles romanization of daoyin; no evidence rows but unambiguous transliteration.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "guiding and pulling",
+     "confidence": 0.9,
+     "reason": "Translator's English rendering, evidence glosses it directly 'Daoyin' (Essence of the Taoist Canon)."
+    }
+   ],
+   "related": [],
+   "rejected": 1
+  },
+  {
+   "concept": "tuna",
+   "theme": "body",
+   "tradition": "Chinese Daoist",
+   "variants": [
+    {
+     "term": "tuna",
+     "confidence": 0.7,
+     "reason": "headword: Genuine Daoist breathing practice attested via 吐納 and 'Tu Na' forms, but the plain-ASCII 'tuna' key is heavily contaminated by unrelated homographs (see below).",
+     "note": "headword row: judge seed confidence 0.6 raised to the 0.7 floor"
+    },
+    {
+     "term": "tu na",
+     "confidence": 0.85,
+     "reason": "Romanized form, evidence (Classified Compendium on Nurturing Life) glosses it 'breathing exercises of expelling the old and inhaling the new'."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "吐納",
+     "confidence": 0.85,
+     "reason": "Chinese source term, glossed 'Tuina/Breathing exercises' directly across the Classified Compendium volumes."
+    }
+   ],
+   "related": [
+    {
+     "term": "expelling and inhaling",
+     "confidence": 0.6,
+     "reason": "English descriptive rendering matching the tu na gloss pattern, though evidence context (Essence of the Taoist Canon, 'Repelling Illness' formulas) is only loosely confirmatory.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "exhaling the old and inhaling the new",
+     "confidence": 0.65,
+     "reason": "Matches the standard gloss for tu na ('expelling the old and inhaling the new') though no evidence rows returned.",
+     "note": "below 0.7 floor"
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "xingqi",
+   "theme": "body",
+   "tradition": "Chinese Daoist",
+   "variants": [
+    {
+     "term": "xingqi",
+     "confidence": 1,
+     "reason": "Is the headword itself."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "行氣",
+     "confidence": 0.9,
+     "reason": "Chinese source term, evidence (Baopuzi) glosses it 'xíngqì'/'circulating breath' directly."
+    },
+    {
+     "term": "circulating qi",
+     "confidence": 0.85,
+     "reason": "English rendering, evidence glosses it back to 'Xingqi' directly (Essence of the Taoist Canon, Biographies of Divine Immortals)."
+    },
+    {
+     "term": "circulation of qi",
+     "confidence": 0.7,
+     "reason": "Clear paraphrase of circulating qi/xingqi, though no evidence rows returned."
+    }
+   ],
+   "related": [
+    {
+     "term": "xing qi",
+     "confidence": 0.5,
+     "reason": "One evidence row (Yellow Emperor's Classic) glosses this romanization as 形氣 ('form and vital energy'), a different word from 行氣 -- two senses collide under the same romanization, so weaker tier chosen per rule 3."
+    }
+   ],
+   "rejected": 3
+  },
+  {
+   "concept": "taixi",
+   "theme": "body",
+   "tradition": "Chinese Daoist",
+   "variants": [
+    {
+     "term": "taixi",
+     "confidence": 0.75,
+     "reason": "headword: Genuine embryonic-breathing practice attested (Essence of the Taoist Canon, Baopuzi), but the romanized 'taixi' key collides with the acupoint Taixi/Great Ravine (KI3), a homograph within the seed's own gloss list."
+    },
+    {
+     "term": "tai xi",
+     "confidence": 0.85,
+     "reason": "Spaced romanization, evidence (Baopuzi) directly ties it to 'Embryonic Breathing'."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "胎息",
+     "confidence": 0.9,
+     "reason": "Unambiguous Chinese source term, evidence (Great Compendium of Acupuncture, Baopuzi) glosses it 'Taixi'/embryonic breathing directly."
+    },
+    {
+     "term": "embryonic breathing",
+     "confidence": 0.9,
+     "reason": "Standard English translation, evidence glosses it 'Taixi' directly (Great Compendium of Acupuncture, Baopuzi)."
+    },
+    {
+     "term": "embryonic respiration",
+     "confidence": 0.7,
+     "reason": "Clear synonym of embryonic breathing though no evidence rows returned."
+    }
+   ],
+   "related": [
+    {
+     "term": "taixi",
+     "confidence": 0.6,
+     "reason": "Evidence shows two senses under one romanization: embryonic breathing (Essence of the Taoist Canon) and the acupoint 'Great Ravine (KI3)' -- weaker confidence per rule 3 for the dual sense.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "taixian",
+     "confidence": 0.6,
+     "reason": "'Embryonic Immortal'/'womb immortal' -- an adjacent neidan concept (the spiritual embryo formed by cultivation) but a distinct term (胎仙) from the breathing technique."
+    }
+   ],
+   "rejected": 2
+  },
+  {
+   "concept": "baduanjin",
+   "theme": "body",
+   "tradition": "Chinese Daoist",
+   "variants": [
+    {
+     "term": "baduanjin",
+     "confidence": 1,
+     "reason": "Is the headword itself."
+    },
+    {
+     "term": "ba duan jin",
+     "confidence": 0.9,
+     "reason": "Spaced romanization, evidence (Essence of the Taoist Canon, Detailed Annotated Catalogue) ties it to the same 八段錦/Eight Pieces of Brocade set."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "八段錦",
+     "confidence": 0.9,
+     "reason": "Chinese source term, evidence (Daozang Catalogue) glosses it 'Baduanjin' directly."
+    },
+    {
+     "term": "eight pieces of brocade",
+     "confidence": 0.85,
+     "reason": "Standard English translation appearing repeatedly alongside baduanjin evidence rows (Great Compendium of Acupuncture)."
+    },
+    {
+     "term": "eight sections of brocade",
+     "confidence": 0.85,
+     "reason": "Alternate standard English translation of the same set, co-occurring with 'Eight Pieces of Brocade' (Essence of the Taoist Canon)."
+    }
+   ],
+   "related": [],
+   "rejected": 0
+  },
+  {
+   "concept": "wuqinxi",
+   "theme": "body",
+   "tradition": "Chinese Daoist",
+   "variants": [
+    {
+     "term": "wuqinxi",
+     "confidence": 0.95,
+     "reason": "headword: Attested Daoist/qigong exercise set (tiger, deer, bear, monkey, crane) across multiple books and glosses."
+    },
+    {
+     "term": "五禽戲",
+     "confidence": 0.9,
+     "reason": "Chinese script form of Wuqinxi (Five Animal Frolics), matches concept directly."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "five animals",
+     "confidence": 0.7,
+     "reason": "Translator's English rendering glossed as the same qigong set mimicking tiger, deer, bear, monkey, crane."
+    },
+    {
+     "term": "five animal frolics",
+     "confidence": 0.85,
+     "reason": "Standard English translation, evidence gloss explicitly equates it to Wuqinxi."
+    }
+   ],
+   "related": [],
+   "rejected": 0
+  },
+  {
+   "concept": "āsana",
+   "theme": "body",
+   "tradition": "Indian Hatha",
+   "variants": [
+    {
+     "term": "asana",
+     "confidence": 0.85,
+     "reason": "Headword itself; evidence dominated by posture/seat glosses (Patanjali, Gheranda) though a minority sense is the Pterocarpus tree, a known homograph."
+    },
+    {
+     "term": "asanas",
+     "confidence": 0.85,
+     "reason": "Plural of asana, evidence shows yogic postures (Compendium of Shiva, Kularnava Tantra)."
+    },
+    {
+     "term": "आसन",
+     "confidence": 0.75,
+     "reason": "Devanagari script form glossed directly as Asana/posture in the evidence rows."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "siddhasana",
+     "confidence": 0.85,
+     "reason": "A specific named āsana (the Accomplished Pose), narrower term under the general concept, not the same word."
+    },
+    {
+     "term": "padmasana",
+     "confidence": 0.85,
+     "reason": "A specific named āsana (lotus posture), narrower term under the general concept."
+    },
+    {
+     "term": "postures",
+     "confidence": 0.6,
+     "reason": "Plural generic term but all three evidence rows are specifically yoga texts (Patanjali, Gheranda, Kularnava Tantra) rendering āsana.",
+     "note": "below 0.7 floor"
+    }
+   ],
+   "rejected": 6
+  },
+  {
+   "concept": "mudrā",
+   "theme": "body",
+   "tradition": "Indian / Buddhist",
+   "variants": [
+    {
+     "term": "mudra",
+     "confidence": 0.9,
+     "reason": "Headword, dominant gloss 'ritual/symbolic hand gesture' across thousands of pages."
+    },
+    {
+     "term": "mudras",
+     "confidence": 0.9,
+     "reason": "Plural form, same dominant gloss of ritual/hand gestures."
+    },
+    {
+     "term": "मुद्रा",
+     "confidence": 0.8,
+     "reason": "Devanagari script form glossed directly as Mudra/seal in evidence."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "phyag rgya",
+     "confidence": 0.85,
+     "reason": "Tibetan translator's term consistently glossed as mudra/symbolic hand gesture across Tibetan Buddhist evidence."
+    },
+    {
+     "term": "ཕྱག་རྒྱ",
+     "confidence": 0.8,
+     "reason": "Tibetan script form of phyag rgya, glossed as Mudra in evidence."
+    }
+   ],
+   "related": [
+    {
+     "term": "mudra hum",
+     "confidence": 0.6,
+     "reason": "A specific tantric mantra-gesture phrase pairing mudra with the seed syllable hum; adjacent but not the general concept alone."
+    }
+   ],
+   "rejected": 9
+  },
+  {
+   "concept": "bandha",
+   "theme": "body",
+   "tradition": "Indian Hatha",
+   "variants": [
+    {
+     "term": "bandha",
+     "confidence": 0.9,
+     "reason": "headword: The Hatha yoga 'lock' technique is well attested via named bandhas (mula, uddiyana, jalandhara) with consistent glosses in Hatha Yoga Pradipika-lineage texts."
+    },
+    {
+     "term": "bandhas",
+     "confidence": 0.8,
+     "reason": "Plural, glosses explicitly 'yogic locks'/'energy locks' matching the Hatha technique."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "bandha",
+     "confidence": 0.6,
+     "reason": "Headword is polysemous: evidence shows both the yogic lock technique (Compendium of Shiva) and the unrelated philosophical 'bondage' sense (Patanjali); weaker confidence for the two senses.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "mula bandha",
+     "confidence": 0.85,
+     "reason": "A specific named bandha (Root Lock), narrower term under the general concept."
+    },
+    {
+     "term": "uddiyana bandha",
+     "confidence": 0.85,
+     "reason": "A specific named bandha (Upward Lock), narrower term under the general concept."
+    },
+    {
+     "term": "jalandhara bandha",
+     "confidence": 0.85,
+     "reason": "A specific named bandha (Chin/Throat Lock), narrower term under the general concept."
+    },
+    {
+     "term": "bandhatraya",
+     "confidence": 0.75,
+     "reason": "Evidence explicitly refers to 'the three locks' (mula/uddiyana/jalandhara bandha) as a set, a specific compound term for the group."
+    }
+   ],
+   "rejected": 17
+  },
+  {
+   "concept": "kumbhaka",
+   "theme": "body",
+   "tradition": "Indian Hatha",
+   "variants": [
+    {
+     "term": "kumbhaka",
+     "confidence": 0.9,
+     "reason": "Headword, dominant gloss 'breath retention' across pranayama evidence."
+    },
+    {
+     "term": "kumbhak",
+     "confidence": 0.8,
+     "reason": "Spelling variant, evidence shows same breath-holding practice in Geomancy and Discourse on the Rising of the Breath."
+    },
+    {
+     "term": "kumbhakas",
+     "confidence": 0.8,
+     "reason": "Plural form, glossed 'breath retentions', evidence in Hatha yoga texts."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "retention of breath",
+     "confidence": 0.75,
+     "reason": "Translator's English rendering of the same pranayama technique."
+    },
+    {
+     "term": "breath retention",
+     "confidence": 0.85,
+     "reason": "Consistent English translation across evidence rows explicitly paired with Kumbhaka in the source text."
+    }
+   ],
+   "related": [
+    {
+     "term": "kumbhakam",
+     "confidence": 0.55,
+     "reason": "Likely an inflected (accusative) Sanskrit form of kumbhaka in a pranayama-practice context (Crowley's Magick), though the term itself is not directly quoted in the visible excerpt.",
+     "note": "below 0.7 floor"
+    }
+   ],
+   "rejected": 5
+  },
+  {
+   "concept": "samāʿ",
+   "theme": "body",
+   "tradition": "Sufi",
+   "variants": [
+    {
+     "term": "samāʿ",
+     "confidence": 0.75,
+     "reason": "headword: سماع evidence (Kashf al-Mahjub, glossed Sama/Listening) shows the real Sufi practice of ecstatic listening"
+    },
+    {
+     "term": "سماع",
+     "confidence": 0.85,
+     "reason": "Arabic script of the headword; Kashf al-Mahjub evidence glossed Sama/Listening in context of ecstatic listening"
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "audition",
+     "confidence": 0.6,
+     "reason": "translator's rendering 'spiritual audition' for samāʿ; History of Arabian Music and Underhill's Mystic Way evidence discuss musical/mystical hearing in the Sufi/mystic sense",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "spiritual concert",
+     "confidence": 0.5,
+     "reason": "standard English gloss for samāʿ in Sufi scholarship but no evidence rows to confirm this occurrence"
+    }
+   ],
+   "rejected": 23
+  },
+  {
+   "concept": "ṭawāf",
+   "theme": "body",
+   "tradition": "Islamic",
+   "variants": [
+    {
+     "term": "tawaf",
+     "confidence": 0.9,
+     "reason": "direct spelling variants attested with gloss 'circumambulation of the Kaaba' in Quran and Religious Ceremonies"
+    },
+    {
+     "term": "طواف",
+     "confidence": 0.85,
+     "reason": "Arabic script of the headword, glossed Tawaf in Persian/Ottoman Turkish sources"
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "circumambulation",
+     "confidence": 0.55,
+     "reason": "generic English translation term used broadly (Rumi's Sufi circling of a dog, Crowley's magick circle), not specific to the Islamic Kaaba rite in its own evidence rows"
+    },
+    {
+     "term": "circumambulations",
+     "confidence": 0.5,
+     "reason": "same generic broader term; evidence shows Manly Hall (occult) and biblical Jericho, not tawaf specifically"
+    },
+    {
+     "term": "circumambulate",
+     "confidence": 0.5,
+     "reason": "generic circling verb; evidence is Tibetan Buddhist shrine visits and a Hindu ritual, not the Kaaba rite"
+    },
+    {
+     "term": "pradaksina",
+     "confidence": 0.6,
+     "reason": "the Hindu circumambulation practice (pradakṣiṇā), an adjacent but distinct ritual tradition, not tawaf itself"
+    },
+    {
+     "term": "pradakshina",
+     "confidence": 0.6,
+     "reason": "variant spelling of the Hindu pradakṣiṇā ritual, adjacent practice not the Islamic tawaf"
+    },
+    {
+     "term": "skor ba",
+     "confidence": 0.55,
+     "reason": "Tibetan Buddhist circumambulation term, adjacent practice in a different tradition"
+    },
+    {
+     "term": "tawaf al-qudum",
+     "confidence": 0.7,
+     "reason": "named sub-type of tawaf (the arrival circumambulation), narrower term under the general rite per Al-Ghazali evidence"
+    },
+    {
+     "term": "tawaf al-wada",
+     "confidence": 0.7,
+     "reason": "named sub-type (farewell circumambulation), narrower term under the general tawaf rite"
+    },
+    {
+     "term": "tawaf-al-ifada",
+     "confidence": 0.7,
+     "reason": "named sub-type (the principal Hajj circumambulation), narrower term under general tawaf per Sahih al-Bukhari evidence"
+    },
+    {
+     "term": "circumambulated",
+     "confidence": 0.5,
+     "reason": "inflection of the generic term; evidence is a Buddhist funeral pyre (Vinaya) and a Chinese Buddhist rào of the Buddha, not tawaf"
+    },
+    {
+     "term": "circumambulating",
+     "confidence": 0.5,
+     "reason": "inflection of the generic term; evidence is Hindu (Genealogy of Hari, Vishnu Purana) and Hajj-adjacent Burton text, not the tawaf rite specifically"
+    },
+    {
+     "term": "pradakshinam",
+     "confidence": 0.6,
+     "reason": "Sanskrit inflection of pradakṣiṇā, the adjacent Hindu circumambulation practice"
+    },
+    {
+     "term": "pradakchina",
+     "confidence": 0.6,
+     "reason": "variant transliteration of pradakṣiṇā, explicitly glossed as the Brahmanic/Buddhist ceremony, not tawaf"
+    },
+    {
+     "term": "pradaksinam",
+     "confidence": 0.6,
+     "reason": "Sanskrit inflection of pradakṣiṇā, adjacent Hindu/Vedic practice"
+    },
+    {
+     "term": "pradaksinyena",
+     "confidence": 0.55,
+     "reason": "Sanskrit instrumental form of pradakṣiṇā, adjacent Hindu/Vedic ritual-clockwise term"
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "saʿy",
+   "theme": "body",
+   "tradition": "Islamic",
+   "variants": [
+    {
+     "term": "sa'y",
+     "confidence": 0.9,
+     "reason": "direct spelling variant, glossed 'ritual walking between Safa and Marwa' and 'the ritual running between the hills' in Al-Ghazali and Nasir Khusraw"
+    },
+    {
+     "term": "saʿy",
+     "confidence": 0.85,
+     "reason": "diacritic spelling of the same headword, glossed 'the ritual striving' in the Arabic Ihya Ulum al-Din"
+    },
+    {
+     "term": "سعي",
+     "confidence": 0.7,
+     "reason": "Arabic script of the headword; no evidence context given but the surface and lack of any competing gloss support the same word"
+    }
+   ],
+   "equivalents": [],
+   "related": [],
+   "rejected": 0
+  },
+  {
+   "concept": "rukūʿ",
+   "theme": "body",
+   "tradition": "Islamic",
+   "variants": [
+    {
+     "term": "rukūʿ",
+     "confidence": 0.85,
+     "reason": "headword: Rumi and Qisas al-Anbiya evidence confirm the Islamic prayer bowing posture attested in the corpus"
+    },
+    {
+     "term": "ruku",
+     "confidence": 0.8,
+     "reason": "direct spelling variant, glossed 'bowing in prayer'/'bowing posture in prayer' in Rumi and Qisas al-Anbiya, though one gloss ('sections in the Quran') shows a homograph sense to watch"
+    },
+    {
+     "term": "ركوع",
+     "confidence": 0.7,
+     "reason": "Arabic script of the headword, no competing gloss shown"
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "bowing",
+     "confidence": 0.5,
+     "reason": "generic English word with two senses in its evidence: Rumi's prayer bowing (matches) but also Chladni/Rayleigh acoustics texts about bowing a vibrating string (unrelated), so kept at the weaker tier"
+    }
+   ],
+   "rejected": 3
+  },
+  {
+   "concept": "genuflection",
+   "theme": "body",
+   "tradition": "Latin Christian",
+   "variants": [
+    {
+     "term": "genuflection",
+     "confidence": 0.9,
+     "reason": "the headword itself; evidence (Silva Gadelica, Bogomils) shows kneeling in prayer"
+    },
+    {
+     "term": "genuflexion",
+     "confidence": 0.85,
+     "reason": "French/archaic spelling variant, evidence from Cassian and Sarum Liturgy confirms the same liturgical kneeling act"
+    },
+    {
+     "term": "genuflexio",
+     "confidence": 0.85,
+     "reason": "Latin spelling variant, glossed 'Genuflection'/'kneeling' in Sacred Dictionary and Mechthild von Hackeborn"
+    },
+    {
+     "term": "genuflections",
+     "confidence": 0.85,
+     "reason": "plural inflection, evidence from Catherine of Siena and Angela of Foligno describe the same act"
+    },
+    {
+     "term": "genuflexions",
+     "confidence": 0.7,
+     "reason": "French plural inflection; evidence (Masonic ritual 'kneeling bows') still describes the same physical kneeling act"
+    },
+    {
+     "term": "genuflexiones",
+     "confidence": 0.75,
+     "reason": "Latin plural, evidence (Agrippa, Iamblichus) glossed 'kneelings as an act of worship'"
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "gonyklisia",
+     "confidence": 0.75,
+     "reason": "Greek term literally 'knee-bending', explicitly glossed 'kneeling' and equated with genuflecto/genuflexio in Crastone's dictionary"
+    },
+    {
+     "term": "γονυκλισία",
+     "confidence": 0.75,
+     "reason": "Greek script of gonyklisia, evidence (Apostolic Fathers) glosses it 'kneeling or genuflection'"
+    }
+   ],
+   "related": [
+    {
+     "term": "genuflect",
+     "confidence": 0.6,
+     "reason": "verb form of the headword; no evidence rows but the surface is unambiguous",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "kneeling",
+     "confidence": 0.55,
+     "reason": "the literal English gloss for genuflection, but evidence includes a non-ritual sense (Ovid's Metamorphoses 'nixus'), so kept at the weaker tier"
+    },
+    {
+     "term": "genuflectio",
+     "confidence": 0.6,
+     "reason": "Latin spelling variant of genuflexio, prefix match with no competing evidence",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "genuflectitur",
+     "confidence": 0.55,
+     "reason": "Latin passive verb inflection ('is genuflected'), same root act, no competing evidence",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "genuflectentes",
+     "confidence": 0.55,
+     "reason": "Latin present participle ('kneeling ones'), evidence glossary entry 'The Kneelers' confirms the same practice",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "genuflexio versus altare",
+     "confidence": 0.65,
+     "reason": "a specific named practice (genuflection toward the altar) narrower than the general headword, per Joseph Mede's controversy over altar-ward kneeling"
+    },
+    {
+     "term": "genuflexus",
+     "confidence": 0.5,
+     "reason": "Latin agent-noun sharing the root but evidence shows it used chiefly as the astronomical name for the constellation Hercules ('the Kneeler'), a different referent from the liturgical act"
+    }
+   ],
+   "rejected": 2
+  },
+  {
+   "concept": "procession",
+   "theme": "body",
+   "tradition": "Christian / general",
+   "variants": [
+    {
+     "term": "procession",
+     "confidence": 0.7,
+     "reason": "headword: Genuine physical ritual-walking practice is attested in the corpus (processional cross, processionale, Procession des Palmes) though the plain-word evidence sample here happens to be the unrelated theological sense (procession = emanation/Trinity).",
+     "note": "headword row: judge seed confidence 0.65 raised to the 0.7 floor"
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "procession des palmes",
+     "confidence": 0.7,
+     "reason": "Names the Palm Sunday procession, a French rendering of the physical liturgical walking rite - the body practice directly."
+    }
+   ],
+   "related": [
+    {
+     "term": "procession",
+     "confidence": 0.45,
+     "reason": "Sampled evidence is entirely the theological/Neoplatonic sense (Pseudo-Dionysius: 'the vast procession', proodos/emanation), a different sense from the body practice, though the same spelling also names the physical rite elsewhere in the corpus."
+    },
+    {
+     "term": "processions",
+     "confidence": 0.4,
+     "reason": "Evidence is Trinitarian ('internal relations of the Trinity', 'proodoi'), the theological-emanation sense, not the walking rite."
+    },
+    {
+     "term": "processio",
+     "confidence": 0.4,
+     "reason": "Evidence (Dionysius 'Father of Lights', Tauler's 'fourth procession' in a doctrinal enumeration) is the theological sense, not the physical rite; one Kircher row is unrelated Egyptian-ritual context, not procession at all."
+    },
+    {
+     "term": "processional",
+     "confidence": 0.65,
+     "reason": "Sarum Liturgy evidence names 'The Processional' as the liturgical book/rite of the physical walking ceremony, the body-practice sense.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "processiones",
+     "confidence": 0.45,
+     "reason": "Mixed: Lange's 'pagan festivals converted' row suggests real physical processions, but Solovyov's row is the theological 'two eternal internal [processions]' of the Trinity - two senses, weaker tier."
+    },
+    {
+     "term": "processional hymn",
+     "confidence": 0.55,
+     "reason": "Names a hymn genre performed during a physical procession - adjacent to the practice, not the practice itself."
+    },
+    {
+     "term": "processional cross",
+     "confidence": 0.6,
+     "reason": "Names an object carried in a procession - adjacent to the practice, not the walking rite itself."
+    },
+    {
+     "term": "processionen",
+     "confidence": 0.6,
+     "reason": "Rieger evidence ('led them out in a triumph...in the many processions') describes actual physical processions, a German rendering of the body practice.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "processionale",
+     "confidence": 0.55,
+     "reason": "Names the liturgical book of chants for processions (Sarum evidence) - an adjacent artifact, not the rite itself."
+    },
+    {
+     "term": "processionalia",
+     "confidence": 0.5,
+     "reason": "Evidence describes books of litanies/chants for processions and crusade vows - adjacent objects/institutions, not the walking practice."
+    },
+    {
+     "term": "processional chant",
+     "confidence": 0.55,
+     "reason": "Names music performed during a procession, adjacent to but not the practice itself; no evidence rows to confirm further."
+    },
+    {
+     "term": "processionum",
+     "confidence": 0.35,
+     "reason": "No evidence rows; genitive/plural form of a word family whose attested senses split between physical rite and theological emanation."
+    },
+    {
+     "term": "processioni",
+     "confidence": 0.35,
+     "reason": "No evidence rows; same ambiguous word family as processionum."
+    },
+    {
+     "term": "processional way",
+     "confidence": 0.55,
+     "reason": "Names a physical route/pathway used for processions - adjacent to the practice, not the rite itself; no evidence rows."
+    }
+   ],
+   "rejected": 10
+  },
+  {
+   "concept": "flagellation",
+   "theme": "body",
+   "tradition": "Latin Christian",
+   "variants": [
+    {
+     "term": "flagellation",
+     "confidence": 0.85,
+     "reason": "Direct headword; evidence includes explicit gloss 'ritual of whipping oneself for spiritual discipline' and York Plays listing Flagellation as a Passion event."
+    },
+    {
+     "term": "flagellatio",
+     "confidence": 0.75,
+     "reason": "Latin cognate; Besold evidence ties it to scourging/flogging, York Plays lists 'Flagellation' among Passion acts - same practice."
+    },
+    {
+     "term": "self-flagellation",
+     "confidence": 0.75,
+     "reason": "Explicit compound naming the same self-inflicted whipping practice; morphological variant of the headword."
+    },
+    {
+     "term": "flagellantes",
+     "confidence": 0.7,
+     "reason": "Latin plural form of Flagellants; evidence (Medici: 'groups who practiced public self-flagellation') confirms same sense."
+    },
+    {
+     "term": "flagellare",
+     "confidence": 0.7,
+     "reason": "Latin infinitive 'to whip/scourge'; Complutensian Polyglot and Valla dictionary evidence confirm the sense directly."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "flagellants",
+     "confidence": 0.6,
+     "reason": "Names the practitioners/sect (Picard: 'those who...whip themselves out of religious devotion'), not the act itself."
+    },
+    {
+     "term": "flagellant",
+     "confidence": 0.5,
+     "reason": "Agent noun for a practitioner, not the act; no evidence rows to confirm sense."
+    },
+    {
+     "term": "scourging",
+     "confidence": 0.5,
+     "reason": "Evidence shows two senses: Julian of Norwich uses it for Christ's Passion (inflicted by others) while the gloss 'ritual flogging' points to the ascetic self-practice - weaker tier for the mixed sense."
+    },
+    {
+     "term": "flagellum",
+     "confidence": 0.6,
+     "reason": "Names the whip instrument used in the practice, not the act itself."
+    },
+    {
+     "term": "flagella",
+     "confidence": 0.5,
+     "reason": "Evidence mostly whip/scourge sense (Enchiridion 'ready for scourges') but glosses also show a botanical false-friend sense ('young shoots', tendrils) - weaker tier for the mixed sense."
+    },
+    {
+     "term": "flagello",
+     "confidence": 0.65,
+     "reason": "Latin ablative/Italian verb form of the same whip/scourge word; Erasmus evidence glosses 'μάστιγος' as scourge.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "flagellanten",
+     "confidence": 0.65,
+     "reason": "German rendering of 'Flagellants', evidence confirms the same self-flagellating religious orders (Lange, Semler).",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "flagellans",
+     "confidence": 0.65,
+     "reason": "Picard evidence: 'Procession of the Flagellants' - same practitioners/practice, Latin participial form.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "flagellatus",
+     "confidence": 0.55,
+     "reason": "Gregory of Nazianzus evidence is Christ being flogged before Herod - the passive/punishment sense of the same act, adjacent to but not the ascetic self-practice."
+    },
+    {
+     "term": "flagellari",
+     "confidence": 0.55,
+     "reason": "Evidence (Column of Flagellation where Jesus was tied to be whipped; Jacquier's divine permission to be scourged) is the punishment/Passion sense, adjacent to the ascetic self-practice."
+    },
+    {
+     "term": "flagellatores",
+     "confidence": 0.5,
+     "reason": "Evidence mixes the relevant sense (Verdier, Tritheim: flagellants) with an unrelated agricultural homograph (Comenius: 'Threshers') - weaker tier for the mixed sense."
+    },
+    {
+     "term": "flagelli",
+     "confidence": 0.6,
+     "reason": "Latin genitive of the whip/scourge word; evidence (da Lucca, Tertullian: 'whips or scourges') confirms the practice's instrument.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "flagellations",
+     "confidence": 0.65,
+     "reason": "English plural; More's evidence ('cruel penances...merciless whippings', 'processions of whipping') confirms the ascetic/penitential practice.",
+     "note": "below 0.7 floor"
+    }
+   ],
+   "rejected": 9
+  },
+  {
+   "concept": "mortification",
+   "theme": "body",
+   "tradition": "Christian",
+   "variants": [
+    {
+     "term": "mortification",
+     "confidence": 0.85,
+     "reason": "Direct headword; Abernethy's 'A Christian and Heavenly Treatise' evidence explicitly discusses 'true...Christian mortification'."
+    },
+    {
+     "term": "mortification of the flesh",
+     "confidence": 0.85,
+     "reason": "Evidence (Book of Concord: 'discipline, pious ceremonies...mortification of the flesh'; Douzetemps: spiritual training the soul undergoes) confirms the Christian ascetic sense directly."
+    },
+    {
+     "term": "mortification of sin",
+     "confidence": 0.7,
+     "reason": "Unambiguous Christian theological phrase for subduing sin through bodily discipline; no evidence rows but the phrase itself is unambiguous."
+    },
+    {
+     "term": "mortificatio carnis",
+     "confidence": 0.8,
+     "reason": "Latin 'mortification of the flesh' - unambiguously the Christian ascetic body practice, not the alchemical sense (carnis = flesh, not metal)."
+    },
+    {
+     "term": "mortification of the body",
+     "confidence": 0.85,
+     "reason": "Evidence (Lewis Spence: 'practice extreme bodily mortification'; Thomas a Kempis: fasting, vigils, labor) confirms the ascetic body practice directly."
+    },
+    {
+     "term": "mortification of the will",
+     "confidence": 0.7,
+     "reason": "Unambiguous Christian ascetic phrase for subduing the will through bodily discipline; no evidence rows but phrase is unambiguous."
+    },
+    {
+     "term": "mortification of the self",
+     "confidence": 0.7,
+     "reason": "Unambiguous Christian ascetic phrase; no evidence rows but the phrase is unambiguous within this tradition."
+    },
+    {
+     "term": "mortificationem carnis",
+     "confidence": 0.85,
+     "reason": "Evidence (Book of Concord: 'discipline and the mortification of the flesh'; Weigel: promotes 'mortification of the flesh') confirms the Christian ascetic body practice directly."
+    },
+    {
+     "term": "mortification of the senses",
+     "confidence": 0.8,
+     "reason": "Guyon evidence ('practice of denying physical desires to strengthen the spirit') confirms the Christian ascetic sense."
+    },
+    {
+     "term": "mortification of self",
+     "confidence": 0.8,
+     "reason": "Evidence (Arnold: 'death of the selfish nature'; Gertrud von Helfta: 'subduing one's own desires') confirms the Christian ascetic sense."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "mortificatie",
+     "confidence": 0.75,
+     "reason": "Dutch rendering; evidence (Brown: 'putting to death of the old sinful nature'; Cave: 'examples of practical abstinence and mortification') confirms the Christian ascetic sense."
+    }
+   ],
+   "related": [
+    {
+     "term": "hair shirt",
+     "confidence": 0.6,
+     "reason": "Names the penitential garment used in the practice (evidence: 'garment of rough animal hair worn for penance'), an adjacent object rather than the act itself."
+    },
+    {
+     "term": "hairshirt",
+     "confidence": 0.6,
+     "reason": "Same as 'hair shirt' - the penitential garment, an adjacent object to the mortification practice."
+    },
+    {
+     "term": "cilice",
+     "confidence": 0.65,
+     "reason": "Latin-derived term for the penitential hairshirt worn for bodily mortification (Cassian evidence) - an object of the practice, not the act."
+    },
+    {
+     "term": "cilicium",
+     "confidence": 0.65,
+     "reason": "Latin term for the same penitential garment (glossed 'hair-shirt', 'sackcloth'); an object of the practice."
+    },
+    {
+     "term": "mortifications",
+     "confidence": 0.5,
+     "reason": "Mixed senses in evidence: Henry More and Teresa of Ávila use it in the Christian ascetic sense, but Sendivogius's 'New Light of Alchemy' uses it for 'mortification of metals' - the alchemical homograph - weaker tier for the split."
+    },
+    {
+     "term": "mortificationes",
+     "confidence": 0.5,
+     "reason": "Evidence (Morienus's distillations/mortifications, Nuysement's corruptions and mortifications of animals/plants/stones) leans alchemical, though glosses also list 'acts of self-denial' - weaker tier for the mixed sense."
+    },
+    {
+     "term": "mortification of nature",
+     "confidence": 0.6,
+     "reason": "Phrase consistent with the Christian ascetic subduing of corrupt nature; no evidence rows to confirm further.",
+     "note": "below 0.7 floor"
+    }
+   ],
+   "rejected": 9
+  },
+  {
+   "concept": "ritual dance",
+   "theme": "body",
+   "tradition": "Chinese Confucian",
+   "variants": [
+    {
+     "term": "ritual dance",
+     "confidence": 0.85,
+     "reason": "headword: Well-attested Confucian ritual court dance (Sancai Tuhui's 'Ritual Music and Dance' entry), documented with its Civil (文舞) and Martial (武舞) dance subtypes."
+    },
+    {
+     "term": "樂舞",
+     "confidence": 0.85,
+     "reason": "Direct headword; Sancai Tuhui evidence glosses it 'Yuewu' under 'Ritual Music and Dance' vocabulary."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "ritual dance",
+     "confidence": 0.5,
+     "reason": "Generic English label spanning multiple traditions - glosses show Tibetan bro/bro-brdung and Cham alongside the one Chinese (Shen Kuo) row, so it is only weakly specific to 樂舞 rather than a direct rendering of it."
+    },
+    {
+     "term": "文舞",
+     "confidence": 0.7,
+     "reason": "Names the 'civil dance' subtype of the ritual dance pair (Legge: 'civil dances' with flute and feather; Sancai Tuhui: one of the Six Dances) - narrower than the concept, kept for the graph."
+    },
+    {
+     "term": "wenwu",
+     "confidence": 0.5,
+     "reason": "Romanization of 文舞 confirmed by one row (Sancai Tuhui: 'Civil Dances'), but other evidence shows homograph senses ('meaningless/cultured', an herbal plant) - weaker tier for the mixed sense."
+    },
+    {
+     "term": "武舞",
+     "confidence": 0.7,
+     "reason": "Names the 'martial dance' subtype (Legge: 'martial pantomimes'; Sancai Tuhui: 'Military dance') - narrower than the concept, kept for the graph."
+    },
+    {
+     "term": "civil dance",
+     "confidence": 0.65,
+     "reason": "English rendering of the 文舞 subtype (glossed 'Wenwu' directly in Sancai Tuhui) - narrower than the ritual-dance concept."
+    },
+    {
+     "term": "military dance",
+     "confidence": 0.65,
+     "reason": "English rendering of the 武舞 subtype (glossed 'Wuwu' directly in Sancai Tuhui) - narrower than the ritual-dance concept."
+    }
+   ],
+   "rejected": 2
+  },
+  {
+   "concept": "mitote",
+   "theme": "body",
+   "tradition": "Mesoamerican",
+   "variants": [
+    {
+     "term": "mitote",
+     "confidence": 0.85,
+     "reason": "Direct headword; Acosta's evidence describes it as the traditional/festive dance of the Mexicans."
+    },
+    {
+     "term": "mitotes",
+     "confidence": 0.8,
+     "reason": "Plural of the headword; Acosta and Herrera evidence confirm 'native dances/ceremonial gatherings' and 'ceremonial dances'."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "netotiliztli",
+     "confidence": 0.55,
+     "reason": "The Nahuatl root term ('to dance') that Spanish 'mitote' derives from; no evidence rows given but the word is the source-language name for the same practice.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "areito",
+     "confidence": 0.6,
+     "reason": "A Taíno/Caribbean term for ceremonial dance-and-song (Benzoni, Bernal Díaz evidence), a related practice from an adjacent culture rather than the same Nahua-rooted word."
+    },
+    {
+     "term": "areyto",
+     "confidence": 0.6,
+     "reason": "Same Taíno-origin ceremonial dance term as areito (Oviedo evidence), adjacent practice, distinct etymology from mitote."
+    },
+    {
+     "term": "areytos",
+     "confidence": 0.55,
+     "reason": "Plural of areyto; evidence (Acosta: 'Taqui... Areytos') shows it named as the Caribbean/general Spanish-colonial term distinct from mitote."
+    },
+    {
+     "term": "taqui",
+     "confidence": 0.55,
+     "reason": "Andean (Peru) term for ceremonial dance/song explicitly distinguished from areyto/mitote in Acosta's text ('In Piru, they commonly called these dances Taqui') - an adjacent practice from a different tradition."
+    },
+    {
+     "term": "areitos",
+     "confidence": 0.6,
+     "reason": "Florentine Codex evidence applies this Taíno-origin term to actual Aztec/Nahua ceremonial dances (Tlaloc temple context) - a Spanish-colonial rendering used for the same category of Mesoamerican ritual dance as mitote.",
+     "note": "below 0.7 floor"
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "ghost dance",
+   "theme": "body",
+   "tradition": "North American",
+   "variants": [
+    {
+     "term": "ghost dance",
+     "confidence": 0.9,
+     "reason": "Direct headword; Mooney's monograph evidence describes the dance's ceremony, ritual objects, and trance states."
+    },
+    {
+     "term": "ghost-dance",
+     "confidence": 0.9,
+     "reason": "Hyphenated spelling of the same term; Dorsey's Skidi Pawnee evidence uses it for the same practice."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "ghost dancers",
+     "confidence": 0.6,
+     "reason": "Names the practitioners of the dance, not the act itself; no evidence rows but the term is unambiguous."
+    },
+    {
+     "term": "ghost dance religion",
+     "confidence": 0.65,
+     "reason": "Names the broader religious movement built around the dance, adjacent to but wider than the dance practice itself."
+    },
+    {
+     "term": "ghost dance songs",
+     "confidence": 0.6,
+     "reason": "Names the songs performed during the dance, adjacent to but not the dance itself; no evidence rows but term is unambiguous."
+    },
+    {
+     "term": "ghost dancer",
+     "confidence": 0.6,
+     "reason": "Singular form naming a practitioner, not the act itself."
+    },
+    {
+     "term": "ghost-dance religion",
+     "confidence": 0.65,
+     "reason": "Hyphenated variant of 'ghost dance religion', naming the broader movement rather than the dance itself."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "sun dance",
+   "theme": "body",
+   "tradition": "North American",
+   "variants": [
+    {
+     "term": "sun dance",
+     "confidence": 0.95,
+     "reason": "Standard spelling, dominant surface form in the corpus, same ceremony."
+    },
+    {
+     "term": "sun-dance",
+     "confidence": 0.95,
+     "reason": "Hyphenated spelling of the same ceremony, same evidence context (sacred pole, dancers)."
+    },
+    {
+     "term": "sun dances",
+     "confidence": 0.9,
+     "reason": "Plural inflection referring to the same ceremony (vow of a war party)."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "sun-dance pipe",
+     "confidence": 0.6,
+     "reason": "A ritual object used in the sun dance ceremony, not the dance/practice itself."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "kachina",
+   "theme": "body",
+   "tradition": "North American",
+   "variants": [
+    {
+     "term": "kachina",
+     "confidence": 0.85,
+     "reason": "headword: Voth's Traditions of the Hopi attests katcina/katcinas extensively as ancestral spirits/masked dancers, a real attested practice/being in the corpus."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "katcina",
+     "confidence": 0.9,
+     "reason": "Alternate transliteration used throughout Voth's Hopi text, glossed 'ancestral spirit or masked dancer'.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "katcinas",
+     "confidence": 0.9,
+     "reason": "Plural of katcina, same glosses (ancestral spirits/masked dancers) in the same Hopi text.",
+     "note": "retagged: different-language rendering, expand with label"
+    }
+   ],
+   "related": [
+    {
+     "term": "kachinas",
+     "confidence": 0.65,
+     "reason": "Standard English plural spelling of kachina; evidence context is a weak index snippet but the word itself is unambiguous.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "katcin-mana",
+     "confidence": 0.75,
+     "reason": "'Katcina maiden' is a specific named katcina figure/compound, narrower than the general concept, kept for the graph not expansion."
+    }
+   ],
+   "rejected": 2
+  },
+  {
+   "concept": "nō",
+   "theme": "body",
+   "tradition": "Japanese",
+   "variants": [
+    {
+     "term": "nō",
+     "confidence": 0.85,
+     "reason": "headword: Noh masked dance-drama is attested at length via Zeami's Fushikaden treatise and many glosses ('traditional Japanese masked drama/dance-drama'), a real practice in the corpus."
+    },
+    {
+     "term": "noh",
+     "confidence": 0.75,
+     "reason": "Aggregate glosses confirm the Noh-theater sense dominates ('traditional Japanese masked drama' x3+) though sampled evidence rows happened to hit the Noah/geometry homographs."
+    },
+    {
+     "term": "no drama",
+     "confidence": 0.7,
+     "reason": "Surfaces carry the macron (Nō drama, Nô drama) confirming Noh theater, not the colloquial English phrase, despite unrelated sampled evidence context."
+    },
+    {
+     "term": "noh drama",
+     "confidence": 0.85,
+     "reason": "Same concept as headword with 'drama' appended, unambiguous surfaces (Noh drama)."
+    },
+    {
+     "term": "noh play",
+     "confidence": 0.8,
+     "reason": "Same concept, 'play' descriptor for a Noh performance."
+    },
+    {
+     "term": "noh theater",
+     "confidence": 0.8,
+     "reason": "Same concept, 'theater' descriptor for Noh."
+    },
+    {
+     "term": "能楽",
+     "confidence": 0.75,
+     "reason": "Nōgaku is the formal Japanese term for the Noh performing arts, same concept as headword."
+    },
+    {
+     "term": "noh performance",
+     "confidence": 0.7,
+     "reason": "Generic phrase for performing Noh, same concept as headword."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "能",
+     "confidence": 0.45,
+     "reason": "Evidence rows show two senses: the character glossed 'Noh' in Japanese contexts but the three sampled evidence rows are all Chinese texts (Li Ki, Sanhcai Tuhui) glossing it as néng/nai 'able, capable, endure' — a genuine homograph collision, so kept weaker/related rather than variant."
+    },
+    {
+     "term": "sarugaku",
+     "confidence": 0.75,
+     "reason": "Glossed as 'precursor to Noh' / 'early form of Noh theatre' in Zeami's own treatise — an adjacent, earlier art form, not Noh itself."
+    },
+    {
+     "term": "猿楽",
+     "confidence": 0.7,
+     "reason": "Kanji form of sarugaku, the Noh precursor, same relation as the sarugaku seed."
+    },
+    {
+     "term": "noh chant",
+     "confidence": 0.55,
+     "reason": "A specific chanted element within Noh performance, narrower than the practice itself; no evidence rows to confirm further, kept for the graph only."
+    },
+    {
+     "term": "noh masks",
+     "confidence": 0.65,
+     "reason": "Refers to the masks used in Noh performance, an associated object rather than the practice itself."
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "kagura",
+   "theme": "body",
+   "tradition": "Japanese",
+   "variants": [
+    {
+     "term": "kagura",
+     "confidence": 0.9,
+     "reason": "Headword itself, richly attested with consistent glosses (sacred dance, Shinto theatrical music/dance)."
+    },
+    {
+     "term": "神楽",
+     "confidence": 0.85,
+     "reason": "Kanji spelling of kagura, glossed directly as 'Kagura' in the Kanze School texts."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "sacred dance",
+     "confidence": 0.5,
+     "reason": "Generic English phrase used across 33 books with no evidence rows shown; too broad a label likely covering other traditions' dances as well as kagura, so kept as related rather than a confident equivalent."
+    },
+    {
+     "term": "mikagura",
+     "confidence": 0.7,
+     "reason": "Honorific-prefixed compound denoting court Shinto music specifically (Heike Monogatari, 'court Shinto music'), a narrower court-based sub-form of kagura rather than a plain spelling variant."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "trulkhor",
+   "theme": "body",
+   "tradition": "Tibetan Buddhist",
+   "variants": [
+    {
+     "term": "trulkhor",
+     "confidence": 0.85,
+     "reason": "Headword itself, glossed 'yogic postures or physical exercises' across multiple Tibetan texts."
+    },
+    {
+     "term": "trul khor",
+     "confidence": 0.85,
+     "reason": "Spaced spelling of the same word, glossed 'mystical physical exercises'/'yantra/physical exercises' in Drukpa Kagyu texts."
+    },
+    {
+     "term": "འཁྲུལ་འཁོར",
+     "confidence": 0.8,
+     "reason": "Tibetan script of the headword, glossed 'Yogic exercises'/'Yantra Yoga' directly."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "yantra yoga",
+     "confidence": 0.75,
+     "reason": "Standard English scholarly rendering of trulkhor as 'yantra yoga', evidence context ('the physical exercises') matches the same practice."
+    }
+   ],
+   "related": [
+    {
+     "term": "rtsa rlung",
+     "confidence": 0.4,
+     "reason": "'Channels and winds' is the subtle-energy (nadi-prana) system worked with alongside trulkhor, but is a distinct named concept, not a spelling variant of the physical-movement practice."
+    },
+    {
+     "term": "tsa lung",
+     "confidence": 0.4,
+     "reason": "Same as rtsa rlung — 'channels and winds', an adjacent subtle-energy concept, not the same word as trulkhor."
+    },
+    {
+     "term": "tsalung",
+     "confidence": 0.4,
+     "reason": "Same as rtsa rlung — 'channels and winds', adjacent concept."
+    },
+    {
+     "term": "རྩ་རླུང",
+     "confidence": 0.4,
+     "reason": "Tibetan script for rtsa rlung, the adjacent channels-and-winds concept, not trulkhor itself."
+    },
+    {
+     "term": "rtsa rlung thig le",
+     "confidence": 0.35,
+     "reason": "'Channels, winds, and drops' — a broader completion-stage subtle-body compound distinct from trulkhor's physical movements."
+    },
+    {
+     "term": "tsa lung thigle",
+     "confidence": 0.35,
+     "reason": "Same compound concept as rtsa rlung thig le, adjacent to but distinct from trulkhor."
+    },
+    {
+     "term": "tsa lung thig le",
+     "confidence": 0.35,
+     "reason": "Same compound concept as rtsa rlung thig le, adjacent to but distinct from trulkhor."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "'cham",
+   "theme": "body",
+   "tradition": "Tibetan Buddhist",
+   "variants": [
+    {
+     "term": "'cham",
+     "confidence": 0.7,
+     "reason": "headword: Tibetan ritual masked dance is a real attested practice (gloss 'ritual dance'x5, and unambiguous compounds cham dance/lama dance), though the bare form is heavily polluted by the Ham/Noah homograph."
+    },
+    {
+     "term": "cham dance",
+     "confidence": 0.7,
+     "reason": "The 'dance' suffix disambiguates the Tibetan ritual masked dance from the Ham homograph, same practice as headword."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "lama dance",
+     "confidence": 0.65,
+     "reason": "Common English descriptive rendering of the Tibetan monastic masked dance ('cham performed by lamas).",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "lama dances",
+     "confidence": 0.65,
+     "reason": "Plural of lama dance, same English rendering of 'cham.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "masked dance",
+     "confidence": 0.4,
+     "reason": "Generic descriptive phrase with no evidence rows; likely covers masked dance traditions beyond Tibetan 'cham (kept for graph, not expansion)."
+    },
+    {
+     "term": "devil dance",
+     "confidence": 0.4,
+     "reason": "A missionary-era label sometimes applied to 'cham but also used for unrelated traditions (e.g. Sri Lankan devil dancing); no evidence rows to confirm the sense here."
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "walking meditation",
+   "theme": "body",
+   "tradition": "Buddhist / Chan",
+   "variants": [
+    {
+     "term": "walking meditation",
+     "confidence": 0.9,
+     "reason": "headword: Cankama evidence shows an attested Buddhist walking-meditation practice (Visuddhimagga, Mahavamsa contexts of monks walking in meditation)."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "cankama",
+     "confidence": 0.9,
+     "reason": "Pali term for the walking-meditation path/practice; evidence rows show monks 'walking in meditation' and gloss 'walking path'.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "經行",
+     "confidence": 0.75,
+     "reason": "Chinese/Sino-Japanese term for walking meditation, glossed 'Kinhin' in a Zen meditation manual (坐禅用心記)."
+    },
+    {
+     "term": "行禅",
+     "confidence": 0.7,
+     "reason": "Literally 'walking chan', a standard Chinese Buddhist term for walking meditation, though no evidence row is present to confirm sense here."
+    }
+   ],
+   "related": [],
+   "rejected": 2
+  },
+  {
+   "concept": "zazen",
+   "theme": "body",
+   "tradition": "Zen",
+   "variants": [
+    {
+     "term": "zazen",
+     "confidence": 0.95,
+     "reason": "headword: Well-attested Zen seated-meditation practice across multiple English-language studies of Japanese Buddhism."
+    },
+    {
+     "term": "坐禪",
+     "confidence": 0.9,
+     "reason": "Chinese/Japanese characters for zazen, glossed 'Zazen' and 'Zazen/Sitting Meditation' directly in evidence rows."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "seated meditation",
+     "confidence": 0.85,
+     "reason": "Translator's English rendering explicitly glossed 'zazen' in the evidence row."
+    }
+   ],
+   "related": [
+    {
+     "term": "sitting meditation",
+     "confidence": 0.45,
+     "reason": "Evidence row glosses this as 'Zuogong', a Taoist inner-cultivation sitting practice term distinct from the Zen zazen, so treated as adjacent rather than equivalent."
+    },
+    {
+     "term": "zuochan",
+     "confidence": 0.5,
+     "reason": "Evidence rows show two senses: seated/sitting meditation (Zen and tantric texts) and 'cicada' (materia medica homograph); weaker tier chosen given the mixed senses."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "tāṇḍava",
+   "theme": "body",
+   "tradition": "Indian dance",
+   "variants": [
+    {
+     "term": "tāṇḍava",
+     "confidence": 0.9,
+     "reason": "headword: Well-attested vigorous/cosmic dance of Shiva across Natya Shastra corpus and commentaries."
+    },
+    {
+     "term": "ताण्डव",
+     "confidence": 0.9,
+     "reason": "Devanagari script form of tandava, glossed directly as 'Tandava'/'tāṇḍava' in evidence rows."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "lasya",
+     "confidence": 0.55,
+     "reason": "The paired graceful/feminine dance style contrasted with tandava's vigorous/masculine style in the Natya Shastra taxonomy, not the same dance."
+    },
+    {
+     "term": "nrtta",
+     "confidence": 0.5,
+     "reason": "'Pure dance' is a distinct classificatory term in Natya Shastra (non-representational movement), adjacent to but not tandava itself."
+    },
+    {
+     "term": "nrtya",
+     "confidence": 0.5,
+     "reason": "'Expressive dance' (emotion/meaning-bearing) is a distinct Natya Shastra category, adjacent to tandava but not the same term."
+    },
+    {
+     "term": "natya",
+     "confidence": 0.45,
+     "reason": "Glossed 'drama'/'dramatic performance' throughout evidence; the broader dance-drama art form, not tandava specifically."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "karaṇa",
+   "theme": "body",
+   "tradition": "Indian dance",
+   "variants": [
+    {
+     "term": "karaṇa",
+     "confidence": 0.7,
+     "reason": "headword: Real attested Natya Shastra dance-unit term ('dance unit(s)' glosses across many books) but heavily homograph-polluted with astrological 'half-lunar day' and grammatical 'karma/instrument' senses, which dominate the sampled evidence rows.",
+     "note": "headword row: judge seed confidence 0.65 raised to the 0.7 floor"
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "karanas",
+     "confidence": 0.6,
+     "reason": "Plural form; sampled evidence rows are all from Natya Shastra 'basic units' dance context, though the wider gloss list still shows the half-lunar-day homograph mixed in.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "angahara",
+     "confidence": 0.6,
+     "reason": "A major dance sequence composed of multiple karanas (per evidence: 'hāra refers to the major sequence'), a broader adjacent unit, not the same term."
+    },
+    {
+     "term": "angaharas",
+     "confidence": 0.6,
+     "reason": "Plural of the broader dance-sequence unit built from karanas; evidence explicitly distinguishes it from karanas as basic units."
+    },
+    {
+     "term": "sthana",
+     "confidence": 0.35,
+     "reason": "Evidence rows show two dominant senses, musical register/place (Sangita Ratnakara, Compendium of Music) and dance posture/stance (Natya Shastra 'foundational stances'); weaker tier chosen given the mixed senses, neither clearly karaṇa itself."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "gymnastica",
+   "theme": "body",
+   "tradition": "Greco-Roman / Renaissance",
+   "variants": [
+    {
+     "term": "gymnastica",
+     "confidence": 1,
+     "reason": "Headword itself."
+    },
+    {
+     "term": "gymnastics",
+     "confidence": 0.85,
+     "reason": "English cognate of gymnastica, used interchangeably in the same Plato-translation evidence rows glossed 'physical exercise'."
+    },
+    {
+     "term": "gymnastic",
+     "confidence": 0.8,
+     "reason": "Adjectival cognate glossed 'training'/'physical training' in the same Plato corpus."
+    },
+    {
+     "term": "gymnastike",
+     "confidence": 0.85,
+     "reason": "Transliterated Greek form, glossed 'gymnastic training'/'gymnastics' in Plato's Laws and Republic."
+    },
+    {
+     "term": "γυμναστική",
+     "confidence": 0.85,
+     "reason": "Original Greek script form, glossed 'gymnastics' directly in the Republic/Theaetetus evidence."
+    },
+    {
+     "term": "ars gymnastica",
+     "confidence": 0.8,
+     "reason": "Latin phrase 'the art of gymnastics', same concept as the headword with an article noun."
+    },
+    {
+     "term": "gymnastic exercises",
+     "confidence": 0.75,
+     "reason": "Direct English descriptive phrase for the same practice, drawn from the same Plato Laws context."
+    },
+    {
+     "term": "gymnastice",
+     "confidence": 0.8,
+     "reason": "Latin spelling variant, glossed 'gymnastics or physical training' directly in evidence."
+    },
+    {
+     "term": "gymnastic art",
+     "confidence": 0.75,
+     "reason": "Synonymous phrase for the art of gymnastics, evidence from the same Plato and Mercuriale texts."
+    },
+    {
+     "term": "gymnasticam",
+     "confidence": 0.75,
+     "reason": "Latin accusative inflection of gymnastica, same concept."
+    },
+    {
+     "term": "gymnastic training",
+     "confidence": 0.7,
+     "reason": "Direct synonymous descriptive phrase for the practice."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "palaestra",
+     "confidence": 0.6,
+     "reason": "The wrestling-school/gymnasium PLACE where gymnastica was practiced, not the practice itself (glossed 'wrestling school' throughout)."
+    },
+    {
+     "term": "palestra",
+     "confidence": 0.55,
+     "reason": "Italian/vernacular spelling of palaestra, same place-not-practice sense (glossed 'wrestling school')."
+    },
+    {
+     "term": "παλαίστρα",
+     "confidence": 0.55,
+     "reason": "Original Greek for palaestra/wrestling-ground, a place term adjacent to but distinct from gymnastica the practice."
+    },
+    {
+     "term": "gymnast",
+     "confidence": 0.5,
+     "reason": "Agent noun (the practitioner), not the practice; evidence shows mixed uses including a Rabelais character name."
+    },
+    {
+     "term": "gymnastique",
+     "confidence": 0.65,
+     "reason": "French rendering of the same concept (no direct evidence gloss but consistent cross-language cognate pattern seen elsewhere in this cluster).",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "gymnastic contests",
+     "confidence": 0.5,
+     "reason": "Narrower term for competitive athletic events, not the practice/training itself."
+    },
+    {
+     "term": "gymnasta",
+     "confidence": 0.55,
+     "reason": "Agent noun for the trainer/coach, glossed 'gymnastic master/coach', not the practice."
+    },
+    {
+     "term": "gymnastici",
+     "confidence": 0.5,
+     "reason": "Agent noun plural ('physical trainers'), not the practice itself."
+    },
+    {
+     "term": "gymnastik",
+     "confidence": 0.65,
+     "reason": "German cognate/rendering, evidence context discusses the same 'Leibesübungen'/physical-exercise concept.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "gymnasticus",
+     "confidence": 0.4,
+     "reason": "Mixed senses in evidence: agent/adjectival 'physical trainer' sense and a work-title sense (Philostratus's treatise *Gymnasticus*); weaker tier chosen given the title homograph."
+    },
+    {
+     "term": "gymnastes",
+     "confidence": 0.55,
+     "reason": "Agent noun (trainer), glossed 'physical trainer'/'trainer' in evidence, not the practice."
+    },
+    {
+     "term": "gymnastae",
+     "confidence": 0.55,
+     "reason": "Latin plural agent noun for trainers, not the practice itself."
+    },
+    {
+     "term": "gymnastic games",
+     "confidence": 0.5,
+     "reason": "Narrower term for athletic competitions, glossed 'athletic competitions'."
+    },
+    {
+     "term": "gymnastica medica",
+     "confidence": 0.55,
+     "reason": "A specific medical subtype of gymnastica ('medical gymnastics'), narrower than the general practice."
+    },
+    {
+     "term": "gymnastas",
+     "confidence": 0.5,
+     "reason": "Latin accusative plural agent noun for trainers, glossed 'trainers', not the practice."
+    },
+    {
+     "term": "gymnastic trainer",
+     "confidence": 0.5,
+     "reason": "Agent-role phrase (the trainer), not the practice itself."
+    },
+    {
+     "term": "gymnastikos",
+     "confidence": 0.6,
+     "reason": "Greek adjectival form glossed 'gymnastic'/'pertaining to gymnastics', though one evidence row shows a rhetorical-exercise sense.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "gymnastica bellica",
+     "confidence": 0.5,
+     "reason": "A specific military subtype ('war gymnastics'), narrower than the general concept."
+    }
+   ],
+   "rejected": 0
+  },
+  {
+   "concept": "pyrrhic dance",
+   "theme": "body",
+   "tradition": "Greek",
+   "variants": [
+    {
+     "term": "pyrrhic dance",
+     "confidence": 0.95,
+     "reason": "Identical to headword, evidence confirms armed war-dance sense."
+    },
+    {
+     "term": "pyrrhichia",
+     "confidence": 0.85,
+     "reason": "Latin plural form glossed 'war dance', evidence (Mercuriale) confirms the armed dance."
+    },
+    {
+     "term": "pyrrhiche",
+     "confidence": 0.9,
+     "reason": "Latinized Greek form consistently glossed 'war dance'/'martial dance' in Plato/Plotinus evidence."
+    },
+    {
+     "term": "πυρρίχη",
+     "confidence": 0.9,
+     "reason": "Original Greek headword, glossed 'Pyrrhic dance' and 'war-dance' in evidence."
+    },
+    {
+     "term": "pyrrhica",
+     "confidence": 0.85,
+     "reason": "Latin form glossed 'war dance'/'Pyrrhic dance' (Kircher, Aldrovandi)."
+    },
+    {
+     "term": "pyrrhicha",
+     "confidence": 0.85,
+     "reason": "Consistently glossed 'war dance'/'martial dance' in Latin sources (Macromelitensis, Wissowa, Homer ed.)."
+    },
+    {
+     "term": "pyrrhichium",
+     "confidence": 0.75,
+     "reason": "Explicitly glossed 'the Pyrrhic dance' in evidence."
+    },
+    {
+     "term": "pyrrhichio",
+     "confidence": 0.7,
+     "reason": "Inflected form glossed 'a martial dance in armor' (Herodian evidence)."
+    },
+    {
+     "term": "pyrrhica saltatio",
+     "confidence": 0.75,
+     "reason": "Full Latin phrase explicitly glossed 'the Pyrrhic dance' (Budé evidence)."
+    },
+    {
+     "term": "pyrrhice",
+     "confidence": 0.85,
+     "reason": "Glossed 'a war dance'/'armed war dance'/'the Trojan dance in armor' consistently."
+    },
+    {
+     "term": "pyrrhichas",
+     "confidence": 0.75,
+     "reason": "Accusative plural glossed 'war dances'/'martial dances' (Diogenes Laertius evidence)."
+    },
+    {
+     "term": "pyrrhicae",
+     "confidence": 0.7,
+     "reason": "Glossed 'war dances'/'armed dances' in Latin evidence (Augustan History)."
+    },
+    {
+     "term": "pyrrhicas",
+     "confidence": 0.7,
+     "reason": "Glossed 'war dances'/'armed dances' (Dion Casio, Aldo Manuzio evidence)."
+    },
+    {
+     "term": "pyrrhicham",
+     "confidence": 0.75,
+     "reason": "Accusative form glossed 'Pyrrhic dance'/'a rhythmic war dance' (Apuleius, Stobaeus evidence)."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "pyrrhic",
+     "confidence": 0.4,
+     "reason": "Evidence shows two senses - the war dance and the metrical foot of two shorts - weaker tier for the mixed sense."
+    },
+    {
+     "term": "armed dance",
+     "confidence": 0.4,
+     "reason": "Generic descriptive phrase for armed dances broadly, no evidence rows to confirm it names this specific dance rather than any war dance."
+    },
+    {
+     "term": "sword dance",
+     "confidence": 0.3,
+     "reason": "A distinct dance genre (sword dance) with no evidence rows tying it specifically to the pyrrhic dance."
+    },
+    {
+     "term": "pyrrhichius",
+     "confidence": 0.35,
+     "reason": "Evidence overwhelmingly shows the grammatical metrical-foot sense (two short syllables), only incidental dance gloss - mixed sense, weaker tier."
+    },
+    {
+     "term": "pyrrhich",
+     "confidence": 0.3,
+     "reason": "Evidence shows only the metrical-foot sense (two short syllables), not the dance - homograph/adjacent grammatical term."
+    },
+    {
+     "term": "pyrrhichus",
+     "confidence": 0.6,
+     "reason": "Evidence (Nonnus) shows a martial leap/dance context, though also used as a person-name root elsewhere - kept at moderate confidence.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "pyrrhichios",
+     "confidence": 0.4,
+     "reason": "Evidence mixes the dance ('the inventor of this dance'), the metrical foot, and person reference - weaker tier for mixed senses."
+    },
+    {
+     "term": "pyrrhics",
+     "confidence": 0.35,
+     "reason": "Evidence (Salinas) is the metrical-foot sense (proceleusmatic/short-short feet), only one gloss 'war dances' - mixed sense, weaker tier."
+    }
+   ],
+   "rejected": 6
+  },
+  {
+   "concept": "yangsheng",
+   "theme": "body",
+   "tradition": "Chinese / Japanese",
+   "variants": [
+    {
+     "term": "yangsheng",
+     "confidence": 0.9,
+     "reason": "Identical to headword romanization, glossed 'nourishing life' consistently."
+    },
+    {
+     "term": "養生",
+     "confidence": 0.9,
+     "reason": "The traditional Chinese characters for the headword, glossed 'nurturing/nourishing life' across 182 books."
+    },
+    {
+     "term": "养生",
+     "confidence": 0.85,
+     "reason": "Simplified-character form of the same word, no evidence to contradict."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "nourishing life",
+     "confidence": 0.85,
+     "reason": "Standard English translator's rendering of yangsheng, cross-glossed with the Chinese term directly."
+    },
+    {
+     "term": "nurturing life",
+     "confidence": 0.85,
+     "reason": "Alternate English translator's rendering of yangsheng, cross-glossed with Yangsheng/Yang Sheng."
+    }
+   ],
+   "related": [
+    {
+     "term": "yang sheng",
+     "confidence": 0.65,
+     "reason": "Spaced romanization mostly glossed 'nurturing/nourishing life'; one stray gloss 'Excess Yang' suggests an unrelated medical sense but is a minority reading.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "yojo",
+     "confidence": 0.4,
+     "reason": "Japanese reading of 養生 in one evidence row ('maintenance of health'), but another evidence row shows an unrelated sense ('lingering sentiment in poetry', likely a different kanji homograph) - mixed sense, weaker tier."
+    },
+    {
+     "term": "養生法",
+     "confidence": 0.5,
+     "reason": "Narrower compound meaning 'methods/techniques of nourishing life', no evidence rows to confirm context, kept as adjacent rather than a bare variant."
+    },
+    {
+     "term": "養生方",
+     "confidence": 0.4,
+     "reason": "Generic compound 'nourishing-life formulas/methods', narrower than the concept but not clearly a single work title."
+    },
+    {
+     "term": "養生之道",
+     "confidence": 0.5,
+     "reason": "Generic phrase 'the way of nourishing life/health preservation', broader framing rather than a strict variant."
+    }
+   ],
+   "rejected": 9
+  },
+  {
+   "concept": "whirling",
+   "theme": "body",
+   "tradition": "Sufi (Mevlevi)",
+   "variants": [
+    {
+     "term": "whirling",
+     "confidence": 0.75,
+     "reason": "headword: The Mevlevi whirling ceremony is attested via 'whirling dervishes' and Mevlevi evidence (Evliya Celebi), though the bare seed forms 'whirling' and 'sema' are largely homographs."
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "sema ceremony",
+     "confidence": 0.5,
+     "reason": "Phrase names the Sufi ceremony directly but has no evidence rows to confirm context, kept below variant confidence."
+    },
+    {
+     "term": "whirling dervishes",
+     "confidence": 0.65,
+     "reason": "Standard English rendering of the Mevlevi practitioners of sema, evidence (Evliya Celebi travel account, Al-Ghazali) ties it to the Sufi/Mevlevi context; one evidence row (Minucius Felix) is ambiguous.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "whirling dervish",
+     "confidence": 0.6,
+     "reason": "Singular form of the same English rendering, same practice.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "mevlevi",
+     "confidence": 0.7,
+     "reason": "Names the Sufi order that performs the whirling ceremony, not the practice itself - adjacent institution, per rubric example."
+    },
+    {
+     "term": "mawlawi",
+     "confidence": 0.55,
+     "reason": "Variant spelling of Mevlevi/dervish, same adjacent-institution relation to the whirling practice; sparse evidence (one poem gloss 'a dervish or spiritual master')."
+    },
+    {
+     "term": "raqs",
+     "confidence": 0.5,
+     "reason": "Generic Arabic/Persian word for 'dance', broader than the specific Sufi whirling ceremony (evidence glosses it simply as 'dance')."
+    },
+    {
+     "term": "رقص",
+     "confidence": 0.45,
+     "reason": "Arabic script form of raqs, same generic 'dance' sense, no evidence rows to narrow it to the whirling ceremony specifically."
+    }
+   ],
+   "rejected": 12
+  },
+  {
+   "concept": "shuckling",
+   "theme": "body",
+   "tradition": "Jewish",
+   "variants": [
+    {
+     "term": "shuckling",
+     "confidence": 0.7,
+     "reason": "headword: Unambiguous Yiddish term for swaying during prayer; attested by keyword occurrence though evidence rows are sparse.",
+     "note": "headword row: judge seed confidence 0.65 raised to the 0.7 floor"
+    }
+   ],
+   "equivalents": [],
+   "related": [
+    {
+     "term": "shuckling",
+     "confidence": 0.65,
+     "reason": "Identical to headword, an unambiguous Yiddish word with no competing sense despite lack of evidence text.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "shokeling",
+     "confidence": 0.6,
+     "reason": "Alternate transliteration spelling of the same Yiddish word for prayer-swaying.",
+     "note": "below 0.7 floor"
+    },
+    {
+     "term": "swaying",
+     "confidence": 0.35,
+     "reason": "Generic English word; the evidence rows shown are unrelated (Homeric Hymns courtyard description), so it cannot be confirmed as specifically davening-swaying rather than any physical swaying."
+    },
+    {
+     "term": "swaying in prayer",
+     "confidence": 0.6,
+     "reason": "Phrase specifically ties swaying to prayer context, a plausible English rendering of shuckling, though no evidence rows are available.",
+     "note": "below 0.7 floor"
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "kowtow",
+   "theme": "body",
+   "tradition": "Chinese",
+   "variants": [
+    {
+     "term": "kowtow",
+     "confidence": 0.9,
+     "reason": "Identical to headword, evidence confirms 'kneel and touch forehead to ground' sense."
+    },
+    {
+     "term": "叩頭",
+     "confidence": 0.85,
+     "reason": "Standard Chinese characters for kowtow ('knock head'), directly glossed kowtow/kòutóu in Soushen Ji evidence."
+    },
+    {
+     "term": "磕頭",
+     "confidence": 0.8,
+     "reason": "Alternate Chinese characters meaning kowtow, glossed 'Kowtow' in Treatise on Military Preparedness evidence."
+    },
+    {
+     "term": "kowtowed",
+     "confidence": 0.85,
+     "reason": "Inflected past-tense form, evidence (Dream of the Red Chamber, Journey to the West) confirms 'knelt and touched forehead to ground'."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "kotow",
+     "confidence": 0.85,
+     "reason": "Standard alternate English spelling, evidence (Pu Songling translations, Korean Repository) confirms the same practice.",
+     "note": "retagged: different-language rendering, expand with label"
+    }
+   ],
+   "related": [
+    {
+     "term": "ketou",
+     "confidence": 0.35,
+     "reason": "Evidence shows at least three distinct senses - 'ritual kowtow', unrelated 'whale-oil/fat', and 'Ketu' (a Vedic astrological entity) - mixed sense gets the weaker tier."
+    }
+   ],
+   "rejected": 4
+  },
+  {
+   "concept": "fencing",
+   "theme": "body",
+   "tradition": "European",
+   "variants": [
+    {
+     "term": "fencing",
+     "confidence": 0.95,
+     "reason": "headword itself, English spelling, glossed 'skill or mastery'."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "escrime",
+     "confidence": 0.75,
+     "reason": "French rendering of fencing; no evidence rows but the word denotes the same practice in French."
+    },
+    {
+     "term": "scherma",
+     "confidence": 0.7,
+     "reason": "Italian word for fencing, same practice rendered in another language."
+    },
+    {
+     "term": "fechtkunst",
+     "confidence": 0.7,
+     "reason": "German compound 'art of fencing', a translator's rendering of the practice."
+    },
+    {
+     "term": "swordsmanship",
+     "confidence": 0.85,
+     "reason": "English synonym denoting the same skill/practice as fencing."
+    }
+   ],
+   "related": [
+    {
+     "term": "rapier",
+     "confidence": 0.75,
+     "reason": "a sword type used in fencing, not the practice itself — evidence rows are about the weapon (Guarinoni, Digby)."
+    },
+    {
+     "term": "escrimeurs",
+     "confidence": 0.55,
+     "reason": "French plural for 'fencers' (practitioners), not the practice; no evidence rows to confirm sense."
+    },
+    {
+     "term": "schermer",
+     "confidence": 0.7,
+     "reason": "Dutch for 'fencer' (person), evidence gloss confirms 'fencer' sense but denotes the practitioner not the practice."
+    },
+    {
+     "term": "schermire",
+     "confidence": 0.65,
+     "reason": "Italian 'schermire' shares the etymological root of fencing ('to fence'/'to fend') but evidence rows gloss it as shelter/screen, an adjacent sense."
+    },
+    {
+     "term": "schermo",
+     "confidence": 0.6,
+     "reason": "etymological root of Italian fencing vocabulary but evidence rows show the 'shield/screen' sense, not the practice."
+    },
+    {
+     "term": "schermers",
+     "confidence": 0.5,
+     "reason": "plural of schermer ('fencers'), practitioners not the practice; no evidence rows to confirm."
+    },
+    {
+     "term": "schermutseling",
+     "confidence": 0.55,
+     "reason": "Dutch for 'skirmish/scuffle', an adjacent combat term but not formal fencing; no evidence rows to confirm sense further."
+    },
+    {
+     "term": "fechter",
+     "confidence": 0.7,
+     "reason": "German for 'fencer/brawler/combatant' (person), evidence glosses 'Brawler' and context shows fencer/gladiator sense — adjacent practitioner term, not the practice."
+    },
+    {
+     "term": "fechtmeister",
+     "confidence": 0.75,
+     "reason": "'fencing master', evidence context explicitly glosses 'fencing master' — adjacent role, not the practice itself."
+    },
+    {
+     "term": "fechtschulen",
+     "confidence": 0.7,
+     "reason": "'fencing schools', evidence gloss confirms — an institution for the practice, adjacent to but not the practice itself."
+    }
+   ],
+   "rejected": 12
+  },
+  {
+   "concept": "wrestling",
+   "theme": "body",
+   "tradition": "Greco-Roman / general",
+   "variants": [
+    {
+     "term": "wrestling",
+     "confidence": 0.95,
+     "reason": "headword, English spelling."
+    },
+    {
+     "term": "πάλη",
+     "confidence": 0.9,
+     "reason": "Greek original, glossed 'wrestling' repeatedly and evidence rows (Oxyrhynchus athletic event lists) confirm the sport sense."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "pale",
+     "confidence": 0.7,
+     "reason": "romanized Greek πάλη, glossed 'wrestling' 33x, but shares the word with unrelated senses (goddess Pales, flour, young saithe) — weaker tier for the mixed-sense form per rule 3.",
+     "note": "retagged: different-language rendering, expand with label"
+    },
+    {
+     "term": "ringen",
+     "confidence": 0.85,
+     "reason": "German verb 'to wrestle', evidence rows (Boehme) explicitly use 'wrestle'/'wrestling' in translation."
+    },
+    {
+     "term": "lutte",
+     "confidence": 0.7,
+     "reason": "French for wrestling/struggle, glossed 'wrestling match' and evidence shows a combat context, but the word also denotes 'luting' (sealing with clay) in alchemy — weaker tier for the mixed sense."
+    }
+   ],
+   "related": [
+    {
+     "term": "pancratium",
+     "confidence": 0.85,
+     "reason": "an ancient combat sport combining boxing AND wrestling — adjacent, broader sport, not wrestling itself."
+    },
+    {
+     "term": "pankration",
+     "confidence": 0.85,
+     "reason": "same combined boxing/wrestling sport as pancratium, adjacent not identical to wrestling."
+    },
+    {
+     "term": "παγκράτιον",
+     "confidence": 0.85,
+     "reason": "Greek original for pankration, the combined sport — adjacent to wrestling."
+    },
+    {
+     "term": "wrestler",
+     "confidence": 0.55,
+     "reason": "agent noun for a wrestling practitioner, not the practice; evidence rows shown are unrelated grammar/art-treatise contexts, so sense unconfirmed."
+    },
+    {
+     "term": "wrestlers",
+     "confidence": 0.6,
+     "reason": "plural agent noun; one evidence row (Mercuriale, 'WRESTLERS'/'LVCTATORES') confirms the sport sense, others are unrelated grammar examples."
+    },
+    {
+     "term": "wrestling with god",
+     "confidence": 0.65,
+     "reason": "biblical/mystical metaphor (Jacob and the angel) — adjacent figurative use, not the physical sport."
+    },
+    {
+     "term": "wrestling school",
+     "confidence": 0.7,
+     "reason": "glossed 'palaestra' — the institution/venue for wrestling, adjacent to the practice itself."
+    },
+    {
+     "term": "wrestling metaphor",
+     "confidence": 0.45,
+     "reason": "an editorial label for figurative use of wrestling, not the practice; no evidence rows to confirm specific sense."
+    },
+    {
+     "term": "wrestling wheel",
+     "confidence": 0.5,
+     "reason": "fragment of Boehme's mystical phrase 'wrestling wheel of nature' — adjacent metaphor, not the sport."
+    },
+    {
+     "term": "wrestling with the angel",
+     "confidence": 0.7,
+     "reason": "the biblical Jacob episode — adjacent figurative use of wrestling."
+    },
+    {
+     "term": "wrestling wheel of nature",
+     "confidence": 0.6,
+     "reason": "Boehme's mystical term for conflicting natural/psychological forces, evidence confirms this figurative sense — adjacent to, not identical with, physical wrestling."
+    },
+    {
+     "term": "wrestling match",
+     "confidence": 0.55,
+     "reason": "an instance/event of wrestling rather than the practice word itself; no evidence rows shown."
+    },
+    {
+     "term": "wrestling techniques",
+     "confidence": 0.55,
+     "reason": "compound referring to methods within wrestling, adjacent but not the headword itself."
+    },
+    {
+     "term": "wrestling-school",
+     "confidence": 0.7,
+     "reason": "glossed 'palaestra', same as 'wrestling school' — venue/institution adjacent to the practice."
+    },
+    {
+     "term": "wrestling metaphors",
+     "confidence": 0.45,
+     "reason": "plural of the editorial 'wrestling metaphor' label, adjacent figurative usage."
+    },
+    {
+     "term": "wrestling angel",
+     "confidence": 0.65,
+     "reason": "variant phrasing of the Jacob-wrestling-the-angel motif — adjacent figurative use."
+    },
+    {
+     "term": "wrestling schools",
+     "confidence": 0.5,
+     "reason": "plural institution term; evidence rows (Fulgentius/Palaephatus) don't clearly confirm sense, kept at weaker tier."
+    },
+    {
+     "term": "wrestling power",
+     "confidence": 0.45,
+     "reason": "fragment of Boehme's mystical 'combat'/'power' language — figurative, not the sport."
+    },
+    {
+     "term": "wrestling terminology",
+     "confidence": 0.4,
+     "reason": "a meta-label about the corpus vocabulary itself, not the practice or a translator's rendering."
+    },
+    {
+     "term": "wrestling analogy",
+     "confidence": 0.4,
+     "reason": "editorial label for figurative comparison to wrestling, not the practice."
+    },
+    {
+     "term": "wrestling terms",
+     "confidence": 0.4,
+     "reason": "meta-label for vocabulary about wrestling, not the practice itself."
+    },
+    {
+     "term": "pancration",
+     "confidence": 0.85,
+     "reason": "alternate spelling of pancratium/pankration, the combined boxing-and-wrestling sport — adjacent, not identical to wrestling."
+    },
+    {
+     "term": "pancratiast",
+     "confidence": 0.8,
+     "reason": "practitioner of pancration (boxing+wrestling combo sport), adjacent role, not a wrestling practitioner specifically."
+    }
+   ],
+   "rejected": 1
+  },
+  {
+   "concept": "haka",
+   "theme": "body",
+   "tradition": "Māori",
+   "variants": [
+    {
+     "term": "haka",
+     "confidence": 0.85,
+     "reason": "headword; majority of glosses ('posture dance', 'ceremonial dance') confirm the practice despite noisy sample evidence rows."
+    },
+    {
+     "term": "hakas",
+     "confidence": 0.8,
+     "reason": "English plural of haka, evidence glosses confirm 'traditional posture dances/songs' in the same Grey Polynesian Mythology corpus as the headword."
+    }
+   ],
+   "equivalents": [
+    {
+     "term": "war dance",
+     "confidence": 0.85,
+     "reason": "English rendering, evidence row explicitly glosses the keyword as 'haka' (Grey's Polynesian Mythology)."
+    },
+    {
+     "term": "war-dance",
+     "confidence": 0.75,
+     "reason": "hyphenated variant of 'war dance', same English rendering of haka."
+    }
+   ],
+   "related": [
+    {
+     "term": "hakafot",
+     "confidence": 0.35,
+     "reason": "a Jewish ritual of circumambulation ('ceremonial circuits') — an adjacent body practice (circling) but from an unrelated tradition, not a rendering of haka."
+    }
+   ],
+   "rejected": 18
   }
  ]
 }
