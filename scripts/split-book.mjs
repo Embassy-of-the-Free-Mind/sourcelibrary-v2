@@ -34,11 +34,25 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const WITH_OCR = args.includes('--with-ocr');
 const GUTTER_ONLY = args.includes('--gutter-only');
+// Review override for a parked book (#4792): a person who has opened the pages
+// and confirmed the cut is safe records that decision here. It is persisted on
+// the book (pipeline_auto.split_approved) so Phase 1.3 honours it on every later
+// run instead of re-parking. --approve-center = cut at 500; --approve-split=N =
+// cut at N/1000. --by is mandatory: an approval without a name is not a review.
+const APPROVE_CENTER = args.includes('--approve-center');
+const approveSplitArg = args.find(a => a.startsWith('--approve-split='))?.split('=')[1];
+const APPROVE_SPLIT = approveSplitArg != null ? Number(approveSplitArg) : null;
+const APPROVED_BY = args.find(a => a.startsWith('--by='))?.split('=').slice(1).join('=') || null;
+if (APPROVE_CENTER && APPROVE_SPLIT != null) { console.log('Use --approve-center OR --approve-split=N, not both'); process.exit(1); }
+if (APPROVE_SPLIT != null && !(APPROVE_SPLIT > 0 && APPROVE_SPLIT < 1000)) { console.log(`--approve-split must be 1–999 (0–1000 scale), got "${approveSplitArg}"`); process.exit(1); }
+if ((APPROVE_CENTER || APPROVE_SPLIT != null) && !APPROVED_BY) { console.log('An approval needs --by=<name>'); process.exit(1); }
+if ((APPROVE_CENTER || APPROVE_SPLIT != null) && !GUTTER_ONLY) { console.log('Approvals apply to --gutter-only runs'); process.exit(1); }
+const APPROVAL_ARG = APPROVE_CENTER ? 500 : APPROVE_SPLIT;
 let detectGutterPixel; // lazy-loaded in gutter-only mode (avoids sharp import cost on OCR runs) // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
-  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl]');
+  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl] [--approve-center | --approve-split=N] --by=<name>');
   process.exit(1);
 }
 
@@ -287,7 +301,7 @@ function parseSpreadOCR(ocrText) {
 
 const book = await db.collection('books').findOne(
   { $or: [{ slug: targetSlug }, { id: targetSlug }] },
-  { projection: { id: 1, title: 1, pages_count: 1, slug: 1, split_completed: 1, needs_splitting: 1, image_source: 1, language: 1, split_page_order: 1 } }
+  { projection: { id: 1, title: 1, pages_count: 1, slug: 1, split_completed: 1, needs_splitting: 1, image_source: 1, language: 1, split_page_order: 1, 'pipeline_auto.split_approved': 1 } }
 );
 
 if (!book) { console.log('Book not found:', targetSlug); process.exit(1); }
@@ -615,7 +629,7 @@ if (GUTTER_ONLY) {
   // (a 10-page book parked over one diagram page is the failure this fixes).
   // Robust median + MAD over confident positions; scatter = no stable binding.
   const sorted = [...confidentPositions].sort((a, b) => a - b);
-  const median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
+  let median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
   const mad = sorted.length
     ? [...sorted.map(p => Math.abs(p - median))].sort((a, b) => a - b)[Math.floor(sorted.length / 2)]
     : 0;
@@ -630,11 +644,35 @@ if (GUTTER_ONLY) {
 
   // Park only when there's no trustworthy consensus: too few confident pages, or
   // genuinely scattered positions (maps/plates, not a spread book).
-  const parkReason = !enoughSignal
+  let parkReason = !enoughSignal
     ? `only ${confidentPositions.length}/${landscapeCount} landscape pages gave a confident gutter — too little signal`
     : scattered
       ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — inconsistent binding, needs review`
       : null;
+  const consensus = { median, mad, confident: confidentPositions.length, landscape: landscapeCount, methods: { ...stats }, at: new Date() };
+
+  // #4792: a review gate needs a path through it. A recorded approval (from
+  // --approve-center / --approve-split on this run, or persisted on the book by
+  // an earlier one) releases a parked book: the approved position becomes the
+  // book median, uncertain and outlier pages snap to it, confident pages within
+  // OUTLIER_TOL keep their own cut. Nothing here loosens the gate for books
+  // nobody has looked at — without an approval the park below is unchanged.
+  const approval = APPROVAL_ARG != null
+    ? { position: APPROVAL_ARG, by: APPROVED_BY, at: new Date(), consensus_seen: { median, mad, confident: confidentPositions.length, landscape: landscapeCount } }
+    : book.pipeline_auto?.split_approved || null;
+  if (parkReason && approval && typeof approval.position === 'number') {
+    console.log(`  REVIEW OVERRIDE: ${parkReason}`);
+    console.log(`  → approved cut at ${approval.position}/1000 by ${approval.by || 'unknown'} (${approval.at instanceof Date ? approval.at.toISOString() : approval.at}); proceeding`);
+    median = approval.position;
+    parkReason = null;
+    if (APPROVAL_ARG != null && !DRY_RUN) {
+      await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.split_approved': approval, 'pipeline_auto.last_updated': new Date() } });
+    } else if (APPROVAL_ARG != null) {
+      console.log('  (dry run — approval not recorded)');
+    }
+  } else if (approval && typeof approval.position === 'number') {
+    console.log(`  Note: book carries a split approval (${approval.position} by ${approval.by}) but the detector reached consensus on its own — using the detector's median ${median}`);
+  }
 
   // Resolve every landscape page against the consensus: outliers and uncertain
   // pages snap to the book median; pages near the median keep their own (more
@@ -668,6 +706,9 @@ if (GUTTER_ONLY) {
         'pipeline_auto.status': 'needs_attention',
         'pipeline_auto.error': `Split review needed (#2454): ${parkReason}`,
         'pipeline_auto.split_review_needed': true,
+        // What the detector saw, so a reviewer can judge without re-running
+        // (#4792) — and release with: --gutter-only --approve-center --by=<name>
+        'pipeline_auto.split_consensus': consensus,
         'pipeline_auto.last_updated': new Date(),
       },
     });
@@ -986,6 +1027,8 @@ if (GUTTER_ONLY) {
   // so no spread prompt and no Phase 1.5 skip).
   await db.collection('books').updateOne({ id: book.id }, {
     $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() },
+    // A book released from the review gate (#4792) must not still read as parked.
+    $unset: { 'pipeline_auto.split_review_needed': '', 'pipeline_auto.error': '' },
   });
   console.log('  Requeued at archive_complete for single-page OCR');
 }
