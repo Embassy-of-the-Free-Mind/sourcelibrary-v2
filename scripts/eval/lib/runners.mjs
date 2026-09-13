@@ -96,7 +96,7 @@ function getAnthropic() {
  * one image per call and therefore has no cross-page context at all.
  */
 export async function runGemini(model, imageBuffer, prompt, opts = {}) {
-  const { temperature = 0, maxTokens = 8000, thinking = false, mediaResolution } = opts;
+  const { temperature = 0, maxTokens = 8000, thinking = false, mediaResolution, thinkingBudget } = opts;
   const apiKey = getNextGeminiKey();
   const buffers = Array.isArray(imageBuffer) ? imageBuffer : [imageBuffer];
 
@@ -122,6 +122,11 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
     body.generationConfig.thinkingConfig = isGemini3
       ? { thinkingLevel: 'HIGH' }
       : { thinkingBudget: 8192 };
+  } else if (typeof thinkingBudget === 'number') {
+    // Explicit budget (production OCR/translation use 0 — Gemini 3.x thinks by default and bills
+    // it at the output rate, CLAUDE.md "AI Models"). Opt-in so earlier runs stay reproducible; the
+    // default-thinking path is the #4599 sweep's business.
+    body.generationConfig.thinkingConfig = { thinkingBudget };
   }
 
   const start = Date.now();
