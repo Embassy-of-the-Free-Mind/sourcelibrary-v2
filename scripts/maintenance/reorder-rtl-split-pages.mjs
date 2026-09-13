@@ -31,6 +31,7 @@
  * skipped: that path has its own order and is not covered here.
  */
 import { withMongo } from '../lib/mongo.mjs';
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
@@ -88,9 +89,12 @@ await withMongo(async (db) => {
       }
       const res = await P.bulkWrite(ops, { ordered: false });
       if (res.modifiedCount !== ops.length) throw new Error(`${b.id}: expected ${ops.length} page updates, modified ${res.modifiedCount} — stop and inspect`);
-      const set = { split_page_order: 'rtl', split_page_order_repaired_at: new Date(), updated_at: new Date() };
+      // A sweep records a ROW, not a COLUMN (#3969): the repair itself goes to
+      // sweep_log; the book only gains the field the splitter now writes anyway.
+      const set = { split_page_order: 'rtl', updated_at: new Date() };
       if (coverFix != null) { set.cover_page = coverFix; summary.coverFixed++; }
       await B.updateOne({ id: b.id }, { $set: set });
+      await recordSweepAction(db, { sweep: 'reorder-rtl-split-pages-4796', book_id: b.id, action: 'swapped-split-pairs', detail: { pairs: pairs.length, cover_page: coverFix, language: b.language } });
       console.log(`  APPLIED ${b.id}: ${pairs.length} pairs swapped${coverFix != null ? `, cover_page → ${coverFix}` : ''}`);
     }
   }
