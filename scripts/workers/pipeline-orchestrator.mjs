@@ -38,7 +38,7 @@ import { promisify } from 'util';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { logUsage, logUsageAsync, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd } from './lib/supabase-usage-logger.mjs';
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
@@ -1599,6 +1599,8 @@ Output structure:
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'ocr', model: ocrModel, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -1869,6 +1871,8 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     page_ids: allDownloaded.map(d => d.pageId), page_count: allDownloaded.length,
     batch_job_id: childJobId, gemini_job_name: batchJob.name,
     input_tokens: 0, output_tokens: 0, status: 'submitted',
+    // Committed, not yet collected: price it now so the dial sees it (#4567).
+    cost_usd: estimateBatchCostUsd({ type: 'ocr', model: ocrModel, pageCount: allDownloaded.length }),
     endpoint: 'hetzner/pipeline-orchestrator',
   }, db);
 
@@ -2185,6 +2189,8 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'image_extraction', model: IMAGE_EXTRACTION_MODEL, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -2396,6 +2402,8 @@ async function submitCrossBookImageBatches(db, bookItems) {
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'image_extraction', model: IMAGE_EXTRACTION_MODEL, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
