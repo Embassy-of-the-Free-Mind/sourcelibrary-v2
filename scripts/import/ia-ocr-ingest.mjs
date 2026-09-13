@@ -50,6 +50,12 @@
  *     LANG_MISMATCH (counted as rejected), unless the book's `languages[]` lists it — a facing-page
  *     edition is tagged that way (language-fields.md). Both values are logged.
  *
+ * LEAF OFFSET — RETIRED AS A CALIBRATION (#4790, 2026-09-13). The offset search below survives as a
+ * DETECTOR only: the XML OBJECT sequence and the IIIF `/page/n<k>` index skip the same scandata-excluded
+ * leaves, so the right offset is always 0. A non-zero winning vote means the reference pages were read
+ * from #3368 bulk-archived images (which do not skip them); the book is refused as REF_SHIFTED and
+ * never filled at a compensating offset. The 2026-09-12 history that introduced the search follows.
+ *
  * LEAF OFFSET (2026-09-12). The first English dry run rejected 292 books at agreement
  * 0.10–0.20 — the detector's biggest cluster, and an artifact: probed books scored 0.15
  * at offset 0 and 0.70–0.94 at offset −1 on 500 of 515 reference pages (the XML's
@@ -163,7 +169,7 @@ await withMongo(async (db) => {
   const books = await B.find(q, { projection }).sort({ processing_priority: -1, visible: -1 }).limit(IDS_FILE ? 100000 : LIMIT).toArray();
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT}, min ref pages ${MIN_REF_PAGES})`);
 
-  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
+  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
@@ -209,11 +215,18 @@ await withMongo(async (db) => {
     const scores = eligible.map((r) => r[offset]);
     const med = median(scores);
     if (scores.length < MIN_REF_PAGES) { summary.no_ref++; console.log(`  ${bid} ${String(b.published || '').slice(0, 4)} ${title} | ref pages with an IA leaf at offset ${offset}: ${scores.length} < ${MIN_REF_PAGES} — cannot calibrate`); continue; }
-    const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) + offset })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
-    const verdict = med < MIN_AGREEMENT ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
+    // OFFSET IS ALWAYS 0 (#4790, 2026-09-13). The XML OBJECT sequence and the IIIF page index skip the
+    // same scandata-excluded leaves, so leaf k IS `/page/n<k>`. A winning vote ≠ 0 means the reference
+    // pages were OCR'd from images that do not skip them — the #3368 bulk-archived set — and is a TELL
+    // to refuse on, never a calibration: compensating for it wrote 51,851 pages of the neighbouring
+    // leaf (repaired by scripts/maintenance/repair-ia-ocr-leaf-offset.mjs). The vote is still computed
+    // and logged for diagnosis; the book is only ever filled at offset 0.
+    const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
+    const refShifted = offset !== 0 && offsetShare >= MIN_OFFSET_SHARE;
+    const verdict = refShifted ? 'REF_SHIFTED' : med < MIN_AGREEMENT ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
     console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
-    if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; continue; }
+    if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
 
@@ -227,7 +240,7 @@ await withMongo(async (db) => {
       const ocrFields = {
         data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
         source_url: `https://archive.org/download/${iaId}/${iaId}_djvu.xml#leaf=${k}`, updated_at: now, has_warning: false,
-        agreement_ref: { median: +med.toFixed(3), n: refs.length, min_agreement: MIN_AGREEMENT, offset, offset_share: +offsetShare.toFixed(2) },
+        agreement_ref: { median: +med.toFixed(3), n: refs.length, min_agreement: MIN_AGREEMENT, offset: 0, offset_share: +offsetShare.toFixed(2) },
         ia: iaProvenance(iaId, meta),
       };
       const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },

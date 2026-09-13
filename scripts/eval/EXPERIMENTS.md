@@ -504,6 +504,16 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   #3368 dHash audit can count it). Folio continuity inside the written text was tried first and
   is blind to this: a fixed shift of a continuous sequence (Open Court delivered folios
   355/356/357 vs archived 353/354/355 vs IIIF 356/357/358).
+- **The 2×2 and the repair (same evening).** dHash of each bulk-archived written book's images
+  against IIIF at the aligned vs the scandata-predicted leaf (`--stage=images`): CLASS A (images
+  aligned, text offset ≠ 0 — reader sees the wrong text) **39 books / 940 pages, repaired**: 910
+  pages re-pointed to offset 0 from the cache with revisions, 30 held (offset-0 leaf has no words),
+  second run 0 changes; 7/7 readable IIIF re-reads confirm (new text 0.90–0.97 vs old 0.11–0.17).
+  CLASS B (images shifted, text right) 42 / 2,270 → the #3368 image repair. **CLASS C (images
+  shifted, text at a compensating offset) 188 books / 48,006 pages: text and image AGREE on screen
+  except 2,062 pages past an interior excluded leaf — HELD**, must be repaired together with the
+  images, images first. So the offset search mostly *masked* #3368 rather than breaking pages.
+  Ingester now forces offset 0 and refuses a non-zero vote as `REF_SHIFTED`.
 - **Refusals are the instrument's big limit.** 193/742 first-pass references (26%) came
   back RECITATION/PROHIBITED_CONTENT because the run omitted production's document-context
   line; adding it recovered only 24, leaving **169 (23%) unscored — concentrated in the

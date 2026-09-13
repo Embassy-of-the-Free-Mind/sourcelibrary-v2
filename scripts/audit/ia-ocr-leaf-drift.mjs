@@ -33,17 +33,74 @@
  * Writes NOTHING to Mongo; fetches scandata at ≤ 2 req/s and caches it as `<id>.scandata.json`.
  *   set -a; source .env.production.local; set +a
  *   node scripts/audit/ia-ocr-leaf-drift.mjs [--limit N] [--book <id>] [--cache /root/sl-ia-cache] [--out <jsonl>]
+ *   node scripts/audit/ia-ocr-leaf-drift.mjs --stage=images   # dHash the image side; needs the rows above (≈2 IIIF fetches/page, ≤2/s)
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { iaFetch } from '../lib/ia-ocr-meta.mjs';
 import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
+import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 
-const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
+const arg = (k, d) => { const eq = process.argv.find((a) => a.startsWith(`${k}=`)); if (eq) return eq.slice(k.length + 1); const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const LIMIT = +arg('--limit', 100000), BOOK = arg('--book', null), CACHE = arg('--cache', '/root/sl-ia-cache');
 const OUT = arg('--out', path.join(CACHE, '_runs', 'leaf-drift-2026-09-13.jsonl'));
 const SOURCE = 'ia_djvu';
+const STAGE = arg('--stage', 'offsets'); // offsets (default) | images
+
+/**
+ * --stage=images: is each bulk-archived written book's IMAGE set aligned with IIIF, or shifted as
+ * scandata predicts? bulk-archive-alignment.mjs (#3368) tests a shift of exactly +1, so a book whose
+ * shift GROWS at an interior excluded leaf (Open Court: 1, then 3) comes out "ambiguous". Here each
+ * sampled page's archived image is hashed against IIIF at the ALIGNED leaf (n<p−1>) and at the
+ * PREDICTED leaf (n<p−1−E(p−1)>); pages with E = 0 cannot discriminate and are not sampled.
+ * Then the 2×2 the repair needs: image verdict × text offset → pages wrong ON SCREEN.
+ */
+async function stageImages(rows) {
+  const IMG_OUT = OUT.replace(/\.jsonl$/, '') + '.images.jsonl';
+  const done = new Set(fs.existsSync(IMG_OUT) ? fs.readFileSync(IMG_OUT, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).book_id) : []);
+  const out = fs.createWriteStream(IMG_OUT, { flags: 'a' });
+  const thumb = (u) => String(u).replace(/\/full\/(full|pct:\d+)\//, '/full/pct:12/');
+  let lastIa = 0;
+  const hashUrl = async (u) => { if (/archive\.org/.test(u)) { const w = 550 - (Date.now() - lastIa); if (w > 0) await new Promise((r) => setTimeout(r, w)); lastIa = Date.now(); } const r = await fetch(u, { headers: { 'User-Agent': 'SourceLibrary ia-ocr (team@sourcelibrary.org)' }, signal: AbortSignal.timeout(45000) }); if (!r.ok) throw new Error(`http ${r.status}`); return hashBuffer(Buffer.from(await r.arrayBuffer())); };
+  await withMongo(async (db) => {
+    const P = db.collection('pages'); let n = 0;
+    for (const r of rows) {
+      if (done.has(r.book_id) || !r.has_scandata || !r.bulk_pages) continue;
+      const E = (L) => r.excluded.filter((x) => x < L).length;
+      const pages = await P.find({ book_id: r.book_id, hidden: { $ne: true }, 'ocr.source': SOURCE, 'archive_metadata.source': 'bulk_jp2' }, { projection: { page_number: 1, photo: 1, archived_photo: 1 } }).sort({ page_number: 1 }).toArray();
+      const usable = pages.filter((p) => /\/page\/n\d+\//.test(p.photo || '') && /^https?:/.test(p.archived_photo || '') && E(p.page_number - 1) >= 1);
+      const picks = []; for (let i = 1; i <= 3; i++) { const p = usable[Math.floor(usable.length * (i / 4))]; if (p && !picks.includes(p)) picks.push(p); }
+      const votes = { aligned: 0, shifted: 0, checked: 0 }; const detail = [];
+      for (const p of picks) {
+        try {
+          const k = +p.photo.match(/\/page\/n(\d+)\//)[1]; const pred = k - E(p.page_number - 1); if (pred < 0) continue;
+          const ah = await hashUrl(p.archived_photo);
+          const dA = hammingHex(ah, await hashUrl(thumb(p.photo)));
+          const dP = hammingHex(ah, await hashUrl(thumb(p.photo.replace(/\/page\/n\d+\//, `/page/n${pred}/`))));
+          votes.checked++; detail.push({ page: p.page_number, E: E(p.page_number - 1), dAligned: dA, dPredicted: dP });
+          if (dA <= HASH_MATCH && dA < dP) votes.aligned++; else if (dP <= HASH_MATCH && dP < dA) votes.shifted++;
+        } catch (e) { detail.push({ page: p.page_number, err: e.message.slice(0, 40) }); }
+      }
+      const verdict = !votes.checked ? 'unknown' : votes.aligned === votes.checked ? 'aligned' : votes.shifted === votes.checked ? 'shifted' : 'ambiguous';
+      // pages wrong ON SCREEN under the verdict
+      let wrongShown = null;
+      if (verdict === 'aligned') wrongShown = r.offset !== 0 ? r.written : 0;
+      else if (verdict === 'shifted') { const w = await P.find({ book_id: r.book_id, hidden: { $ne: true }, 'ocr.source': SOURCE }, { projection: { page_number: 1, 'archive_metadata.source': 1 } }).toArray(); wrongShown = w.filter((p) => (p.archive_metadata?.source === 'bulk_jp2') ? r.offset !== -E(p.page_number - 1) : r.offset !== 0).length; }
+      out.write(JSON.stringify({ book_id: r.book_id, language: r.language, title: r.title, offset: r.offset, written: r.written, bulk_pages: r.bulk_pages, sampled: picks.length, verdict, votes, detail, wrong_shown: wrongShown }) + '\n'); n++;
+      if (n % 25 === 0) console.log(`  ${n} books imaged`);
+    }
+  }, { timeoutMs: 4 * 60 * 60 * 1000 });
+  out.end();
+  const img = fs.readFileSync(IMG_OUT, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+  const cell = (v, o) => img.filter((r) => r.verdict === v && (o === 'zero' ? r.offset === 0 : r.offset !== 0));
+  console.log(`\nimage verdict × text offset — ${img.length} bulk-archived written books with a discriminating page (E ≥ 1):`);
+  console.log('verdict   | offset 0: books / pages wrong on screen | offset≠0: books / pages wrong on screen');
+  for (const v of ['aligned', 'shifted', 'ambiguous', 'unknown']) { const a = cell(v, 'zero'), b = cell(v, 'nonzero'); const sum = (xs) => xs.reduce((s, r) => s + (r.wrong_shown ?? 0), 0); console.log(`${v.padEnd(9)} | ${a.length} / ${v === 'ambiguous' || v === 'unknown' ? '?' : sum(a)} | ${b.length} / ${v === 'ambiguous' || v === 'unknown' ? '?' : sum(b)}`); }
+  const resolved = img.filter((r) => r.wrong_shown != null);
+  console.log(`resolved books ${resolved.length}: reader-visible wrong pages ${resolved.reduce((s, r) => s + r.wrong_shown, 0)} in ${resolved.filter((r) => r.wrong_shown > 0).length} books | unresolved (ambiguous/unknown) ${img.length - resolved.length} books, ${img.filter((r) => r.wrong_shown == null).reduce((s, r) => s + r.written, 0)} written pages`);
+}
+if (STAGE === 'images') { await stageImages(fs.readFileSync(OUT, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l))); process.exit(0); }
 
 /** scandata → { leaves, excluded: [leafNum...] }, cached. null when the item has no scandata. */
 async function scandata(id) {
