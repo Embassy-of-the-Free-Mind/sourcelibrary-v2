@@ -16,6 +16,7 @@ import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -230,7 +231,7 @@ async function processOneJob(db, job) {
           'ocr.prompt_version': job.prompt_version || 'v4.2026-02',
           'ocr.batch_job_id': jobIdStr,
           'ocr.input_tokens': usage?.promptTokenCount || 0,
-          'ocr.output_tokens': usage?.candidatesTokenCount || 0,
+          'ocr.output_tokens': outputTokensFrom(usage),
           updated_at: now,
         };
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
@@ -260,7 +261,7 @@ async function processOneJob(db, job) {
                 'translation.prompt_version': job.prompt_version || 'v4.2026-02',
                 'translation.batch_job_id': jobIdStr,
                 'translation.input_tokens': usage?.promptTokenCount || 0,
-                'translation.output_tokens': usage?.candidatesTokenCount || 0,
+                'translation.output_tokens': outputTokensFrom(usage),
                 updated_at: now,
               },
             },

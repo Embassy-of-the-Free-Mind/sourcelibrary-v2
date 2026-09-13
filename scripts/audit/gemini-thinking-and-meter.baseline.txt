@@ -1,30 +1,45 @@
 # Known #4581-class call sites outside the worker-stack fix. Tracked by #4599.
 # One `<path>:<kind>` per line. Delete a line when you fix that file; never add one
 # by hand — declare a deliberate exception with `// thinking-ok: <reason>` instead.
-scripts/batch/batch-extract-chapters.mjs:meter
+#
+# 2026-09-14: the scan now walks src/app and src/workers too (it had never seen them).
+# Every METER entry it found there is FIXED, not baselined — counting thinking tokens is
+# bookkeeping, never a quality decision, so there was nothing to weigh. The THINKING
+# entries below for src/app are the traffic-driven routes (chat, ask, explain, identify,
+# index, detect-split, contribute, split-gemini). #4599 is explicit that each wants its
+# own quality decision rather than a blanket zero, and #4633's extraction A/B does not
+# transfer to creative paths — so they stay recorded here until that measurement is made.
 scripts/batch/batch-extract-chapters.mjs:thinking
-scripts/batch/batch-generate-indexes.mjs:meter
 scripts/batch/batch-generate-indexes.mjs:thinking
 scripts/batch/batch-mint-doi.mjs:thinking
-scripts/batch/batch-transliterate.mjs:meter
-scripts/batch/realtime-ocr.mjs:meter
-scripts/batch/realtime-reocr-efm.mjs:meter
-scripts/batch/realtime-translate.mjs:meter
 scripts/lib/batch-mint-doi.mjs:thinking
-src/lib/chapter-extraction.ts:meter
+src/app/api/[tenant]/books/[id]/chat/route.ts:thinking
+src/app/api/[tenant]/books/[id]/editions/front-matter/route.ts:thinking
+src/app/api/[tenant]/books/[id]/index/route.ts:thinking
+src/app/api/[tenant]/pages/[id]/ask/route.ts:thinking
+src/app/api/[tenant]/pages/[id]/detect-split/route.ts:thinking
+src/app/api/books/[id]/chat/route.ts:thinking
+src/app/api/books/[id]/editions/front-matter/route.ts:thinking
+src/app/api/books/[id]/identify/route.ts:thinking
+src/app/api/books/[id]/index/route.ts:thinking
+src/app/api/books/[id]/index/stream/route.ts:thinking
+src/app/api/books/[id]/stitch-translations/route.ts:thinking
+src/app/api/contribute/process/route.ts:thinking
+src/app/api/contribute/validate-key/route.ts:thinking
+src/app/api/experiments/ocr-quality/[id]/run/route.ts:thinking
+src/app/api/explain/route.ts:thinking
+src/app/api/pages/[id]/ask/route.ts:thinking
+src/app/api/pages/[id]/detect-split/route.ts:thinking
+src/app/api/pipeline-experiments/[id]/run/route.ts:thinking
+src/app/api/search/ai-expand/route.ts:thinking
+src/app/api/split-gemini/check/route.ts:thinking
+src/app/api/split-gemini/route.ts:thinking
 src/lib/chapter-extraction.ts:thinking
 src/lib/collection-relevance.ts:thinking
-src/lib/cover-selection.ts:meter
 src/lib/cover-selection.ts:thinking
-src/lib/email-digest-generator.ts:meter
 src/lib/email-digest-generator.ts:thinking
-src/lib/image-extraction.ts:meter
-src/lib/metadata-enrichment.ts:meter
 src/lib/metadata-enrichment.ts:thinking
 src/lib/page-split/splitDetectionML.ts:thinking
-src/lib/quality-scoring.ts:meter
 src/lib/quality-scoring.ts:thinking
 src/lib/tweet-generator.ts:thinking
-src/lib/ustc-matcher.ts:meter
-src/lib/verify-first-translation.ts:meter
 src/lib/word-alignment.ts:thinking

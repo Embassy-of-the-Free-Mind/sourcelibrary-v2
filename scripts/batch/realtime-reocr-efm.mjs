@@ -20,6 +20,7 @@ import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -135,7 +136,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
     text,
     usage: {
       inputTokens: usage.promptTokenCount || 0,
-      outputTokens: usage.candidatesTokenCount || 0,
+      outputTokens: outputTokensFrom(usage),
     },
   };
 }

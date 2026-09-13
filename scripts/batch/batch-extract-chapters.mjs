@@ -19,6 +19,7 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -244,7 +245,7 @@ async function processBook(db, book) {
   const usage = response.usageMetadata;
 
   const inputTokens = usage?.promptTokenCount || 0;
-  const outputTokens = usage?.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usage);
 
   // Parse response
   let aiChapters;

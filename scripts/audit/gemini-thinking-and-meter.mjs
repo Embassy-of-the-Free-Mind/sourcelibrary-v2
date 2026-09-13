@@ -38,7 +38,11 @@ import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from '
 import { join, relative } from 'path';
 
 const ROOT = process.cwd();
-const SCAN_DIRS = ['scripts/workers', 'scripts/lib', 'scripts/batch', 'src/lib'];
+// Every directory that can call Gemini. `src/app` and `src/workers` were missing until
+// 2026-09-14 and held 20 unguarded meter lines — including `/api/explain` and
+// `/api/search/ai-expand`, which bill on the request path every day. A guard's coverage
+// is the list of directories it walks; nothing announces the ones it does not.
+const SCAN_DIRS = ['scripts/workers', 'scripts/lib', 'scripts/batch', 'src/lib', 'src/app', 'src/workers'];
 const EXTS = ['.mjs', '.ts', '.js'];
 const WAIVER = /\/\/\s*thinking-ok:/;
 

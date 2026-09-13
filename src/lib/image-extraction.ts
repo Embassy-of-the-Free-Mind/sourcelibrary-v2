@@ -7,6 +7,7 @@ import Replicate from 'replicate';
 import { images } from '@/lib/api-client';
 import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
 import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
 
@@ -246,8 +247,7 @@ export async function extractWithGemini(
     inputTokens: usageMetadata?.promptTokenCount || 0,
     // Count thought tokens too: if thinking is ever re-enabled here, the meter
     // sees it instead of going blind again (#4581).
-    outputTokens: (usageMetadata?.candidatesTokenCount || 0) +
-      (usageMetadata?.thoughtsTokenCount || 0),
+    outputTokens: outputTokensFrom(usageMetadata),
   };
 
   // Parse JSON from response
