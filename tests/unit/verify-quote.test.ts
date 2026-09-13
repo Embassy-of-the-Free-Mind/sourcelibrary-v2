@@ -34,10 +34,16 @@ describe('verifyQuote tiers (#4777)', () => {
     expect(verifyQuote('singularia', 'de rebus singularibus dicendum est')).toBe('stem');
   });
 
-  it('script: a Latin quote against a page in another script is UNCHECKABLE, not absent', () => {
-    // The note romanises what the page prints. Counting this as fabrication was half the bug.
-    expect(verifyQuote('alloprosallon', 'ὁ δὲ ἀλλοπρόσαλλος ἐστιν')).toBe('script');
-    expect(verifyQuote('bDud rtsi', 'བདུད་རྩི་ཡི་')).toBe('script');
+  it('translit: a Latin quote that romanises what the page prints in another script', () => {
+    // Counting this as fabrication was half the bug (#4778 made it `script`, uncheckable);
+    // the skeleton romaniser (translit-skeleton.mjs) now returns a real verdict.
+    expect(verifyQuote('alloprosallon', 'ὁ δὲ ἀλλοπρόσαλλος ἐστιν')).toBe('translit');
+    expect(verifyQuote('bDud rtsi', 'བདུད་རྩི་ཡི་')).toBe('translit');
+    expect(quoteVerified('translit')).toBe(true);
+  });
+
+  it('script: a Latin quote against a script that cannot be romanised is UNCHECKABLE, not absent', () => {
+    expect(verifyQuote('nianfo', '念佛三昧 經')).toBe('script');
     expect(quoteVerified('script')).toBeNull();
   });
 
