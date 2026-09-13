@@ -1,41 +1,29 @@
 {
- "scored_at": "2026-09-13T20:58:36.022Z",
+ "scored_at": "2026-09-13T22:54:09.570Z",
  "baseline": "gemini-3.1-flash-lite",
  "arms": [
   "gemini-3.1-flash-lite",
   "gemini-3-flash-preview",
-  "gemini-2.5-flash"
+  "gemini-2.5-flash",
+  "deepseek/deepseek-v4.1-flash",
+  "qwen/qwen3.8-flash",
+  "deepseek/deepseek-v4-pro-0813"
  ],
  "skipped": {
-  "deepseek/deepseek-v4.1-flash": {
-   "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.115Z"
-  },
-  "qwen/qwen3.8-flash": {
-   "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.115Z"
-  },
   "z-ai/glm-5.3-flash": {
    "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.115Z"
-  },
-  "deepseek/deepseek-v4-pro-0813": {
-   "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.116Z"
+   "reason": "reasoning is mandatory on this endpoint (HTTP 400, cannot be disabled) — excluded from the no-thinking comparison; a later reasoning-on run (mandatory-low, 60/60, $0.86 for both) is preserved unjudged in arms-reasoning-excluded.jsonl",
+   "at": "2026-09-13T21:51:29.502Z"
   },
   "qwen/qwen3.8-max-0902": {
    "status": "skipped",
-   "reason": "no OPENROUTER_API_KEY in env",
-   "at": "2026-09-13T20:54:09.116Z"
+   "reason": "reasoning is mandatory on this endpoint (HTTP 400, cannot be disabled) — excluded from the no-thinking comparison; a later reasoning-on run (mandatory-low, 60/60, $0.86 for both) is preserved unjudged in arms-reasoning-excluded.jsonl",
+   "at": "2026-09-13T21:51:43.192Z"
   },
   "gemini-2.5-flash-lite": {
    "status": "skipped",
-   "reason": "probe failed: HTTP 404: {\"error\":{\"code\":404,\"message\":\"This model models/gemini-2.5-flash-lite is no longer available to new users. P",
-   "at": "2026-09-13T20:54:23.568Z"
+   "reason": "HTTP 404 — model closed to new users",
+   "at": "2026-09-13T21:50:16.699Z"
   }
  },
  "prompt": {
@@ -45,7 +33,7 @@
   "content_hash": "516510147237b6a79d9d3f6e797bba7f"
  },
  "n_pages": 60,
- "spend_usd": 0.39257370000000014,
+ "spend_usd": 0.6243714667039999,
  "refusals": {
   "gemini-3.1-flash-lite": {
    "n": 0,
@@ -71,6 +59,33 @@
     "STOP": 59,
     "MAX_TOKENS": 1
    }
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "n": 0,
+   "of": 60,
+   "kinds": {},
+   "finish": {
+    "stop": 60
+   }
+  },
+  "qwen/qwen3.8-flash": {
+   "n": 0,
+   "of": 60,
+   "kinds": {},
+   "finish": {
+    "stop": 59,
+    "error": 1
+   }
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "n": 1,
+   "of": 60,
+   "kinds": {
+    "empty": 1
+   },
+   "finish": {
+    "stop": 60
+   }
   }
  },
  "per_arm": {
@@ -87,6 +102,9 @@
    },
    "max_tokens_hits": 0,
    "usd_per_page": 0.001692095833333334,
+   "reasoning_mode": {
+    "off": 60
+   },
    "metrics": {
     "prose_chars": {
      "mean": 1758.75,
@@ -161,6 +179,9 @@
    },
    "max_tokens_hits": 0,
    "usd_per_page": 0.003656191666666667,
+   "reasoning_mode": {
+    "off": 60
+   },
    "metrics": {
     "prose_chars": {
      "mean": 1913.8166666666666,
@@ -235,6 +256,9 @@
    },
    "max_tokens_hits": 1,
    "usd_per_page": 0.0011946075000000003,
+   "reasoning_mode": {
+    "off": 60
+   },
    "metrics": {
     "prose_chars": {
      "mean": 2839.9333333333334,
@@ -293,6 +317,237 @@
     "glossary_block": {
      "count": 0,
      "of": 60
+    }
+   }
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "provider": "openrouter",
+   "calls": 60,
+   "delivered": 60,
+   "inTok": 150794,
+   "outTok": 41852,
+   "thoughtTok": 0,
+   "usd": 0.05753286000000002,
+   "cost_source": {
+    "provider": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.0009588810000000003,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1380.9333333333334,
+     "median": 1320,
+     "n": 60
+    },
+    "length_ratio": {
+     "mean": 4.829032530885494,
+     "median": 5.962441314553991,
+     "n": 60
+    },
+    "cjk_residue_share": {
+     "mean": 0.16390095895097986,
+     "median": 0.002785515320334262,
+     "n": 60
+    },
+    "notes_emitted": {
+     "mean": 0,
+     "median": 0,
+     "n": 60
+    },
+    "verified_rate": {
+     "mean": null,
+     "median": null,
+     "n": 0
+    },
+    "inline_terms": {
+     "mean": 4.6,
+     "median": 0,
+     "n": 60
+    },
+    "keywords_emitted": {
+     "mean": 14.85,
+     "median": 14,
+     "n": 60
+    },
+    "invented_tags": {
+     "mean": 0.06666666666666667,
+     "median": 0,
+     "n": 60
+    },
+    "housekeeping_tags": {
+     "mean": 0.6666666666666666,
+     "median": 0,
+     "n": 60
+    },
+    "emdashes": {
+     "mean": 0.5333333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "untranslated": {
+     "count": 12,
+     "of": 60
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 60
+    }
+   }
+  },
+  "qwen/qwen3.8-flash": {
+   "provider": "openrouter",
+   "calls": 60,
+   "delivered": 60,
+   "inTok": 153684,
+   "outTok": 46699,
+   "thoughtTok": 0,
+   "usd": 0.03194618600000001,
+   "cost_source": {
+    "provider": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.0005324364333333335,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1829.2333333333333,
+     "median": 1810,
+     "n": 60
+    },
+    "length_ratio": {
+     "mean": 6.234863686493701,
+     "median": 6.847058823529411,
+     "n": 60
+    },
+    "cjk_residue_share": {
+     "mean": 0.05709509002896597,
+     "median": 0,
+     "n": 60
+    },
+    "notes_emitted": {
+     "mean": 0.36666666666666664,
+     "median": 0,
+     "n": 60
+    },
+    "verified_rate": {
+     "mean": 0.6111111111111112,
+     "median": 0.8333333333333334,
+     "n": 3
+    },
+    "inline_terms": {
+     "mean": 3.033333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "keywords_emitted": {
+     "mean": 10.333333333333334,
+     "median": 10,
+     "n": 60
+    },
+    "invented_tags": {
+     "mean": 0.8166666666666667,
+     "median": 0,
+     "n": 60
+    },
+    "housekeeping_tags": {
+     "mean": 3.8,
+     "median": 2,
+     "n": 60
+    },
+    "emdashes": {
+     "mean": 0.13333333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "untranslated": {
+     "count": 5,
+     "of": 60
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 60
+    }
+   }
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "provider": "openrouter",
+   "calls": 60,
+   "delivered": 59,
+   "inTok": 150794,
+   "outTok": 41340,
+   "thoughtTok": 0,
+   "usd": 0.14231872070400003,
+   "cost_source": {
+    "provider": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.0024121817068474584,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1503.406779661017,
+     "median": 1416,
+     "n": 59
+    },
+    "length_ratio": {
+     "mean": 5.176755402267403,
+     "median": 6.2368421052631575,
+     "n": 59
+    },
+    "cjk_residue_share": {
+     "mean": 0.19687608372016172,
+     "median": 0,
+     "n": 59
+    },
+    "notes_emitted": {
+     "mean": 0.3728813559322034,
+     "median": 0,
+     "n": 59
+    },
+    "verified_rate": {
+     "mean": 0.48214285714285715,
+     "median": 0.9285714285714286,
+     "n": 4
+    },
+    "inline_terms": {
+     "mean": 4.084745762711864,
+     "median": 0,
+     "n": 59
+    },
+    "keywords_emitted": {
+     "mean": 10.457627118644067,
+     "median": 10,
+     "n": 59
+    },
+    "invented_tags": {
+     "mean": 0.15254237288135594,
+     "median": 0,
+     "n": 59
+    },
+    "housekeeping_tags": {
+     "mean": 1.5254237288135593,
+     "median": 0,
+     "n": 59
+    },
+    "emdashes": {
+     "mean": 0,
+     "median": 0,
+     "n": 59
+    },
+    "untranslated": {
+     "count": 13,
+     "of": 59
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 59
     }
    }
   }
@@ -478,6 +733,273 @@
     ],
     "decisive": false
    }
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "prose_chars": {
+    "n": 60,
+    "delta": -377.81666666666666,
+    "ci": [
+     -604.7166666666667,
+     -177.36666666666667
+    ],
+    "decisive": true
+   },
+   "length_ratio": {
+    "n": 60,
+    "delta": -1.0672974869661023,
+    "ci": [
+     -1.6666754974078775,
+     -0.5223404480671613
+    ],
+    "decisive": true
+   },
+   "cjk_residue_share": {
+    "n": 60,
+    "delta": 0.1607179466309734,
+    "ci": [
+     0.08556495996286076,
+     0.256866359874463
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 60,
+    "delta": -0.9333333333333333,
+    "ci": [
+     -2.1333333333333333,
+     -0.21666666666666667
+    ],
+    "decisive": true
+   },
+   "verified_rate": {
+    "n": 0,
+    "delta": null,
+    "ci": null,
+    "decisive": false
+   },
+   "inline_terms": {
+    "n": 60,
+    "delta": -4.4,
+    "ci": [
+     -7.116666666666666,
+     -2.15
+    ],
+    "decisive": true
+   },
+   "keywords_emitted": {
+    "n": 60,
+    "delta": 7.883333333333334,
+    "ci": [
+     6.583333333333333,
+     9.283333333333333
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 60,
+    "delta": 0.06666666666666667,
+    "ci": [
+     0,
+     0.16666666666666666
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 60,
+    "delta": 0.26666666666666666,
+    "ci": [
+     -0.16666666666666666,
+     0.7
+    ],
+    "decisive": false
+   },
+   "emdashes": {
+    "n": 60,
+    "delta": 0.48333333333333334,
+    "ci": [
+     -0.1,
+     1.9833333333333334
+    ],
+    "decisive": false
+   }
+  },
+  "qwen/qwen3.8-flash": {
+   "prose_chars": {
+    "n": 60,
+    "delta": 70.48333333333333,
+    "ci": [
+     -97.78333333333333,
+     253.86666666666667
+    ],
+    "decisive": false
+   },
+   "length_ratio": {
+    "n": 60,
+    "delta": 0.338533668642105,
+    "ci": [
+     -0.20693647852272357,
+     1.0241296094785322
+    ],
+    "decisive": false
+   },
+   "cjk_residue_share": {
+    "n": 60,
+    "delta": 0.053912077708959526,
+    "ci": [
+     0.015028279845532651,
+     0.10966620664289622
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 60,
+    "delta": -0.5666666666666667,
+    "ci": [
+     -1.8833333333333333,
+     0.3
+    ],
+    "decisive": false
+   },
+   "verified_rate": {
+    "n": 1,
+    "delta": 0,
+    "ci": null,
+    "decisive": false
+   },
+   "inline_terms": {
+    "n": 60,
+    "delta": -5.966666666666667,
+    "ci": [
+     -8.316666666666666,
+     -3.4
+    ],
+    "decisive": true
+   },
+   "keywords_emitted": {
+    "n": 60,
+    "delta": 3.3666666666666667,
+    "ci": [
+     2.6,
+     4.2
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 60,
+    "delta": 0.8166666666666667,
+    "ci": [
+     0,
+     2.45
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 60,
+    "delta": 3.4,
+    "ci": [
+     2.1666666666666665,
+     4.8
+    ],
+    "decisive": true
+   },
+   "emdashes": {
+    "n": 60,
+    "delta": 0.08333333333333333,
+    "ci": [
+     -0.05,
+     0.2833333333333333
+    ],
+    "decisive": false
+   }
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "prose_chars": {
+    "n": 59,
+    "delta": -263.5593220338983,
+    "ci": [
+     -490.4406779661017,
+     -56.610169491525426
+    ],
+    "decisive": true
+   },
+   "length_ratio": {
+    "n": 59,
+    "delta": -0.7141796303555531,
+    "ci": [
+     -1.356613829961635,
+     -0.11208464047580474
+    ],
+    "decisive": true
+   },
+   "cjk_residue_share": {
+    "n": 59,
+    "delta": 0.19363912203879924,
+    "ci": [
+     0.10158597426376266,
+     0.2838995615398178
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 59,
+    "delta": -0.576271186440678,
+    "ci": [
+     -1.8644067796610169,
+     0.4067796610169492
+    ],
+    "decisive": false
+   },
+   "verified_rate": {
+    "n": 1,
+    "delta": 0,
+    "ci": null,
+    "decisive": false
+   },
+   "inline_terms": {
+    "n": 59,
+    "delta": -5.016949152542373,
+    "ci": [
+     -7.8474576271186445,
+     -2.2711864406779663
+    ],
+    "decisive": true
+   },
+   "keywords_emitted": {
+    "n": 59,
+    "delta": 3.542372881355932,
+    "ci": [
+     2.3220338983050848,
+     4.745762711864407
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 59,
+    "delta": 0.15254237288135594,
+    "ci": [
+     0,
+     0.4576271186440678
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 59,
+    "delta": 1.11864406779661,
+    "ci": [
+     0.3728813559322034,
+     2.0338983050847457
+    ],
+    "decisive": true
+   },
+   "emdashes": {
+    "n": 59,
+    "delta": -0.05084745762711865,
+    "ci": [
+     -0.13559322033898305,
+     0
+    ],
+    "decisive": false
+   }
   }
  },
  "pages": [
@@ -487,7 +1009,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -549,6 +1074,66 @@
      "cjk_residue": 6,
      "cjk_residue_share": 0.023715415019762844,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1731,
+     "prose_chars": 697,
+     "length_ratio": 2.7549407114624507,
+     "cjk_residue": 6,
+     "cjk_residue_share": 0.023715415019762844,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2055,
+     "prose_chars": 1853,
+     "length_ratio": 7.324110671936759,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1634,
+     "prose_chars": 667,
+     "length_ratio": 2.6363636363636362,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -558,7 +1143,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -620,6 +1208,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1397,
+     "prose_chars": 1397,
+     "length_ratio": 7.0201005025125625,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 3,
+     "inline_terms": 3,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2076,
+     "prose_chars": 1621,
+     "length_ratio": 8.14572864321608,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1553,
+     "prose_chars": 1553,
+     "length_ratio": 7.8040201005025125,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -629,7 +1279,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -691,6 +1344,78 @@
      "cjk_residue": 167,
      "cjk_residue_share": 0.4812680115273775,
      "untranslated": true
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 22,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2682,
+     "prose_chars": 2530,
+     "length_ratio": 7.29106628242075,
+     "cjk_residue": 9,
+     "cjk_residue_share": 0.025936599423631124,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 9,
+     "invented_tags": 49,
+     "invented_names": [
+      "br"
+     ],
+     "housekeeping_tags": 14,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "columns",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2564,
+     "prose_chars": 2174,
+     "length_ratio": 6.265129682997118,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2420,
+     "prose_chars": 2224,
+     "length_ratio": 6.409221902017291,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -700,7 +1425,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -764,6 +1492,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 443,
+     "prose_chars": 443,
+     "length_ratio": 1.1657894736842105,
+     "cjk_residue": 331,
+     "cjk_residue_share": 0.8710526315789474,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2727,
+     "prose_chars": 2727,
+     "length_ratio": 7.176315789473684,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2720,
+     "prose_chars": 2620,
+     "length_ratio": 6.894736842105263,
+     "cjk_residue": 10,
+     "cjk_residue_share": 0.02631578947368421,
+     "untranslated": false
     }
    }
   },
@@ -773,7 +1565,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -835,6 +1630,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2844,
+     "prose_chars": 2305,
+     "length_ratio": 6.474719101123595,
+     "cjk_residue": 2,
+     "cjk_residue_share": 0.0056179775280898875,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2871,
+     "prose_chars": 2575,
+     "length_ratio": 7.23314606741573,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2683,
+     "prose_chars": 2683,
+     "length_ratio": 7.536516853932584,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.0028089887640449437,
+     "untranslated": false
     }
    }
   },
@@ -844,7 +1699,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -906,6 +1764,81 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 6,
+     "housekeeping_names": [
+      "header",
+      "page-num",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1906,
+     "prose_chars": 1891,
+     "length_ratio": 7.0559701492537314,
+     "cjk_residue": 12,
+     "cjk_residue_share": 0.04477611940298507,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 16,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "columns",
+      "page-num",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2223,
+     "prose_chars": 1877,
+     "length_ratio": 7.003731343283582,
+     "cjk_residue": 2,
+     "cjk_residue_share": 0.007462686567164179,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 8,
+     "inline_terms": 13,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2285,
+     "prose_chars": 1980,
+     "length_ratio": 7.388059701492537,
+     "cjk_residue": 241,
+     "cjk_residue_share": 0.8992537313432836,
+     "untranslated": true
     }
    }
   },
@@ -915,7 +1848,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -977,6 +1913,70 @@
      "cjk_residue": 25,
      "cjk_residue_share": 0.07225433526011561,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2361,
+     "prose_chars": 2362,
+     "length_ratio": 6.826589595375722,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.002890173410404624,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 491,
+     "prose_chars": 491,
+     "length_ratio": 1.4190751445086704,
+     "cjk_residue": 300,
+     "cjk_residue_share": 0.8670520231213873,
+     "untranslated": true
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2267,
+     "prose_chars": 2229,
+     "length_ratio": 6.442196531791907,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -986,7 +1986,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1048,6 +2051,78 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 25,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 416,
+     "prose_chars": 416,
+     "length_ratio": 1.1212938005390836,
+     "cjk_residue": 319,
+     "cjk_residue_share": 0.8598382749326146,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 4,
+     "housekeeping_names": [
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 379,
+     "prose_chars": 379,
+     "length_ratio": 1.0215633423180592,
+     "cjk_residue": 319,
+     "cjk_residue_share": 0.8598382749326146,
+     "untranslated": true
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 16,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "columns",
+      "page-num",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2362,
+     "prose_chars": 2362,
+     "length_ratio": 6.366576819407008,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1057,7 +2132,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1121,6 +2199,73 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 2,
+     "keywords_emitted": 19,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2615,
+     "prose_chars": 2439,
+     "length_ratio": 6.700549450549451,
+     "cjk_residue": 17,
+     "cjk_residue_share": 0.046703296703296704,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 12,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2407,
+     "prose_chars": 2407,
+     "length_ratio": 6.612637362637362,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2522,
+     "prose_chars": 2527,
+     "length_ratio": 6.9423076923076925,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1130,7 +2275,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1192,6 +2340,72 @@
      "cjk_residue": 282,
      "cjk_residue_share": 0.7877094972067039,
      "untranslated": true
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 20,
+     "invented_tags": 2,
+     "invented_names": [
+      "center"
+     ],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2099,
+     "prose_chars": 1195,
+     "length_ratio": 3.3379888268156424,
+     "cjk_residue": 29,
+     "cjk_residue_share": 0.08100558659217877,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 8,
+     "housekeeping_names": [
+      "header",
+      "page-num",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1989,
+     "prose_chars": 1853,
+     "length_ratio": 5.175977653631285,
+     "cjk_residue": 25,
+     "cjk_residue_share": 0.06983240223463687,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 4,
+     "inline_terms": 4,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2152,
+     "prose_chars": 2002,
+     "length_ratio": 5.592178770949721,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1201,7 +2415,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1263,6 +2480,70 @@
      "cjk_residue": 1,
      "cjk_residue_share": 0.002898550724637681,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2691,
+     "prose_chars": 2589,
+     "length_ratio": 7.504347826086956,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 1,
+     "body_chars": 2505,
+     "prose_chars": 2505,
+     "length_ratio": 7.260869565217392,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2806,
+     "prose_chars": 2375,
+     "length_ratio": 6.884057971014493,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.002898550724637681,
+     "untranslated": false
     }
    }
   },
@@ -1272,7 +2553,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1336,6 +2620,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 20,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 477,
+     "prose_chars": 477,
+     "length_ratio": 1.2015113350125946,
+     "cjk_residue": 353,
+     "cjk_residue_share": 0.889168765743073,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 4,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3036,
+     "prose_chars": 2974,
+     "length_ratio": 7.491183879093199,
+     "cjk_residue": 5,
+     "cjk_residue_share": 0.012594458438287154,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3122,
+     "prose_chars": 3127,
+     "length_ratio": 7.876574307304786,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1345,7 +2691,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1409,6 +2758,79 @@
      "cjk_residue": 4,
      "cjk_residue_share": 0.00997506234413965,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 32,
+     "body_chars": 2475,
+     "prose_chars": 2475,
+     "length_ratio": 6.172069825436409,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.0024937655860349127,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 16,
+     "inline_terms": 16,
+     "keywords_emitted": 22,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 10,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "page-num"
+     ],
+     "glossary_block": false,
+     "emdashes": 4,
+     "body_chars": 2591,
+     "prose_chars": 2359,
+     "length_ratio": 5.882793017456359,
+     "cjk_residue": 82,
+     "cjk_residue_share": 0.20448877805486285,
+     "untranslated": true
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 27,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 12,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "page-num",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3721,
+     "prose_chars": 2806,
+     "length_ratio": 6.997506234413965,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1418,7 +2840,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1480,6 +2905,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2709,
+     "prose_chars": 2709,
+     "length_ratio": 6.543478260869565,
+     "cjk_residue": 6,
+     "cjk_residue_share": 0.014492753623188406,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3111,
+     "prose_chars": 3111,
+     "length_ratio": 7.5144927536231885,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 411,
+     "prose_chars": 411,
+     "length_ratio": 0.9927536231884058,
+     "cjk_residue": 342,
+     "cjk_residue_share": 0.8260869565217391,
+     "untranslated": true
     }
    }
   },
@@ -1489,7 +2974,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1551,6 +3039,68 @@
      "cjk_residue": 8,
      "cjk_residue_share": 0.018648018648018648,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2368,
+     "prose_chars": 140,
+     "length_ratio": 0.32634032634032634,
+     "cjk_residue": 61,
+     "cjk_residue_share": 0.14219114219114218,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2643,
+     "prose_chars": 355,
+     "length_ratio": 0.8275058275058275,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2810,
+     "prose_chars": 116,
+     "length_ratio": 0.2703962703962704,
+     "cjk_residue": 40,
+     "cjk_residue_share": 0.09324009324009325,
+     "untranslated": false
     }
    }
   },
@@ -1560,7 +3110,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1622,6 +3175,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 13,
+     "inline_terms": 13,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2655,
+     "prose_chars": 2325,
+     "length_ratio": 5.684596577017115,
+     "cjk_residue": 24,
+     "cjk_residue_share": 0.05867970660146699,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2576,
+     "prose_chars": 2575,
+     "length_ratio": 6.295843520782396,
+     "cjk_residue": 21,
+     "cjk_residue_share": 0.05134474327628362,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2959,
+     "prose_chars": 2887,
+     "length_ratio": 7.058679706601467,
+     "cjk_residue": 3,
+     "cjk_residue_share": 0.007334963325183374,
+     "untranslated": false
     }
    }
   },
@@ -1631,7 +3248,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1693,6 +3313,68 @@
      "cjk_residue": 33,
      "cjk_residue_share": 0.07317073170731707,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 19,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 611,
+     "prose_chars": 590,
+     "length_ratio": 1.3082039911308203,
+     "cjk_residue": 398,
+     "cjk_residue_share": 0.8824833702882483,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3271,
+     "prose_chars": 3273,
+     "length_ratio": 7.25720620842572,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.0022172949002217295,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 807,
+     "prose_chars": 588,
+     "length_ratio": 1.3037694013303769,
+     "cjk_residue": 408,
+     "cjk_residue_share": 0.9046563192904656,
+     "untranslated": true
     }
    }
   },
@@ -1702,7 +3384,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1766,6 +3451,73 @@
      "cjk_residue": 1,
      "cjk_residue_share": 0.0025188916876574307,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 18,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2795,
+     "prose_chars": 2563,
+     "length_ratio": 6.455919395465995,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 12,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "page-num",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2885,
+     "prose_chars": 2645,
+     "length_ratio": 6.662468513853904,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2665,
+     "prose_chars": 2434,
+     "length_ratio": 6.130982367758186,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1775,7 +3527,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1837,6 +3592,78 @@
      "cjk_residue": 108,
      "cjk_residue_share": 0.21643286573146292,
      "untranslated": true
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 24,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 510,
+     "prose_chars": 510,
+     "length_ratio": 1.0220440881763526,
+     "cjk_residue": 418,
+     "cjk_residue_share": 0.8376753507014028,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 6,
+     "notes_verified": 5,
+     "verified_rate": 0.8333333333333334,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 18,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "columns",
+      "header",
+      "page-num",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3041,
+     "prose_chars": 2991,
+     "length_ratio": 5.993987975951904,
+     "cjk_residue": 2,
+     "cjk_residue_share": 0.004008016032064128,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 4,
+     "housekeeping_names": [
+      "header",
+      "page-num"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 614,
+     "prose_chars": 581,
+     "length_ratio": 1.1643286573146292,
+     "cjk_residue": 391,
+     "cjk_residue_share": 0.7835671342685371,
+     "untranslated": true
     }
    }
   },
@@ -1846,7 +3673,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1910,6 +3740,68 @@
      "cjk_residue": 8,
      "cjk_residue_share": 0.018306636155606407,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 529,
+     "prose_chars": 529,
+     "length_ratio": 1.2105263157894737,
+     "cjk_residue": 371,
+     "cjk_residue_share": 0.8489702517162472,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3086,
+     "prose_chars": 3086,
+     "length_ratio": 7.061784897025172,
+     "cjk_residue": 36,
+     "cjk_residue_share": 0.08237986270022883,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3029,
+     "prose_chars": 197,
+     "length_ratio": 0.45080091533180777,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1919,7 +3811,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": "empty:stop"
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -1981,6 +3876,46 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1316,
+     "prose_chars": 741,
+     "length_ratio": 3.6146341463414635,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1439,
+     "prose_chars": 787,
+     "length_ratio": 3.8390243902439023,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -1990,7 +3925,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2059,6 +3997,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1701,
+     "prose_chars": 1398,
+     "length_ratio": 6.6571428571428575,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 2,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1733,
+     "prose_chars": 1383,
+     "length_ratio": 6.585714285714285,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1457,
+     "prose_chars": 1457,
+     "length_ratio": 6.938095238095238,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2068,7 +4066,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2130,6 +4131,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1677,
+     "prose_chars": 883,
+     "length_ratio": 4.165094339622642,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1656,
+     "prose_chars": 947,
+     "length_ratio": 4.466981132075472,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1644,
+     "prose_chars": 860,
+     "length_ratio": 4.056603773584905,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2139,7 +4202,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2201,6 +4267,72 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 7,
+     "inline_terms": 8,
+     "keywords_emitted": 19,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 182,
+     "prose_chars": 157,
+     "length_ratio": 0.7969543147208121,
+     "cjk_residue": 143,
+     "cjk_residue_share": 0.7258883248730964,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 14,
+     "inline_terms": 34,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 6,
+     "housekeeping_names": [
+      "page-num",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1260,
+     "prose_chars": 1027,
+     "length_ratio": 5.213197969543147,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 23,
+     "inline_terms": 24,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1540,
+     "prose_chars": 1142,
+     "length_ratio": 5.7969543147208125,
+     "cjk_residue": 143,
+     "cjk_residue_share": 0.7258883248730964,
+     "untranslated": true
     }
    }
   },
@@ -2210,7 +4342,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2279,6 +4414,72 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 2,
+     "invented_names": [
+      "mmeta"
+     ],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1264,
+     "prose_chars": 1240,
+     "length_ratio": 7.005649717514125,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1231,
+     "prose_chars": 1231,
+     "length_ratio": 6.954802259887006,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 3,
+     "inline_terms": 3,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1224,
+     "prose_chars": 1110,
+     "length_ratio": 6.271186440677966,
+     "cjk_residue": 21,
+     "cjk_residue_share": 0.11864406779661017,
+     "untranslated": false
     }
    }
   },
@@ -2288,7 +4489,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2350,6 +4554,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 6,
+     "inline_terms": 7,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2019,
+     "prose_chars": 1828,
+     "length_ratio": 7.879310344827586,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 8,
+     "inline_terms": 11,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2161,
+     "prose_chars": 1810,
+     "length_ratio": 7.801724137931035,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.004310344827586207,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 10,
+     "inline_terms": 11,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2385,
+     "prose_chars": 1829,
+     "length_ratio": 7.883620689655173,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.004310344827586207,
+     "untranslated": false
     }
    }
   },
@@ -2359,7 +4623,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2424,6 +4691,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 5,
+     "inline_terms": 5,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3147,
+     "prose_chars": 2549,
+     "length_ratio": 6.94550408719346,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2903,
+     "prose_chars": 2528,
+     "length_ratio": 6.888283378746594,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3044,
+     "prose_chars": 2582,
+     "length_ratio": 7.03542234332425,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2433,7 +4760,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2495,6 +4825,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 23,
+     "inline_terms": 31,
+     "keywords_emitted": 31,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1771,
+     "prose_chars": 787,
+     "length_ratio": 2.6952054794520546,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 17,
+     "inline_terms": 17,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1672,
+     "prose_chars": 642,
+     "length_ratio": 2.1986301369863015,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 17,
+     "inline_terms": 17,
+     "keywords_emitted": 23,
+     "invented_tags": 1,
+     "invented_names": [
+      "br"
+     ],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1868,
+     "prose_chars": 644,
+     "length_ratio": 2.2054794520547945,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2504,7 +4896,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2568,6 +4963,69 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 22,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 190,
+     "prose_chars": 190,
+     "length_ratio": 0.8444444444444444,
+     "cjk_residue": 160,
+     "cjk_residue_share": 0.7111111111111111,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 3,
+     "inline_terms": 4,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 4,
+     "housekeeping_names": [
+      "page-num",
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 4573,
+     "prose_chars": 3854,
+     "length_ratio": 17.128888888888888,
+     "cjk_residue": 204,
+     "cjk_residue_share": 0.9066666666666666,
+     "untranslated": true
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 22,
+     "inline_terms": 22,
+     "keywords_emitted": 7,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1372,
+     "prose_chars": 784,
+     "length_ratio": 3.4844444444444442,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2577,7 +5035,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2641,6 +5102,66 @@
      "cjk_residue": 2,
      "cjk_residue_share": 0.00625,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2141,
+     "prose_chars": 2023,
+     "length_ratio": 6.321875,
+     "cjk_residue": 8,
+     "cjk_residue_share": 0.025,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2339,
+     "prose_chars": 2339,
+     "length_ratio": 7.309375,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2059,
+     "prose_chars": 2059,
+     "length_ratio": 6.434375,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2650,7 +5171,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2717,6 +5241,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 5,
+     "inline_terms": 5,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2453,
+     "prose_chars": 2323,
+     "length_ratio": 6.83235294117647,
+     "cjk_residue": 2,
+     "cjk_residue_share": 0.0058823529411764705,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 6,
+     "housekeeping_names": [
+      "page-num",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 2,
+     "body_chars": 2328,
+     "prose_chars": 2328,
+     "length_ratio": 6.847058823529411,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2317,
+     "prose_chars": 2317,
+     "length_ratio": 6.814705882352941,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2726,7 +5314,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2790,6 +5381,70 @@
      "cjk_residue": 19,
      "cjk_residue_share": 0.10614525139664804,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 15,
+     "inline_terms": 17,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1267,
+     "prose_chars": 1089,
+     "length_ratio": 6.083798882681564,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1857,
+     "prose_chars": 1750,
+     "length_ratio": 9.776536312849162,
+     "cjk_residue": 42,
+     "cjk_residue_share": 0.2346368715083799,
+     "untranslated": true
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 7,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 168,
+     "prose_chars": 147,
+     "length_ratio": 0.8212290502793296,
+     "cjk_residue": 135,
+     "cjk_residue_share": 0.7541899441340782,
+     "untranslated": true
     }
    }
   },
@@ -2799,7 +5454,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2861,6 +5519,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 2,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1451,
+     "prose_chars": 1357,
+     "length_ratio": 6.888324873096447,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 1,
+     "body_chars": 1415,
+     "prose_chars": 1355,
+     "length_ratio": 6.878172588832487,
+     "cjk_residue": 8,
+     "cjk_residue_share": 0.04060913705583756,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1405,
+     "prose_chars": 1405,
+     "length_ratio": 7.131979695431472,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -2870,7 +5592,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -2934,6 +5659,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1287,
+     "prose_chars": 154,
+     "length_ratio": 0.8105263157894737,
+     "cjk_residue": 149,
+     "cjk_residue_share": 0.7842105263157895,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1064,
+     "prose_chars": 1064,
+     "length_ratio": 5.6,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 272,
+     "prose_chars": 272,
+     "length_ratio": 1.431578947368421,
+     "cjk_residue": 235,
+     "cjk_residue_share": 1.236842105263158,
+     "untranslated": true
     }
    }
   },
@@ -2943,7 +5728,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3005,6 +5793,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 26,
+     "inline_terms": 37,
+     "keywords_emitted": 26,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1238,
+     "prose_chars": 900,
+     "length_ratio": 3.9130434782608696,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 10,
+     "inline_terms": 14,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1300,
+     "prose_chars": 1173,
+     "length_ratio": 5.1,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 24,
+     "inline_terms": 28,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1189,
+     "prose_chars": 796,
+     "length_ratio": 3.4608695652173913,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3014,7 +5864,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3076,6 +5929,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 3,
+     "inline_terms": 19,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2159,
+     "prose_chars": 1538,
+     "length_ratio": 4.381766381766382,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3625,
+     "prose_chars": 3601,
+     "length_ratio": 10.25925925925926,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2736,
+     "prose_chars": 2736,
+     "length_ratio": 7.794871794871795,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3085,7 +6002,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3147,6 +6067,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1348,
+     "prose_chars": 1348,
+     "length_ratio": 7.094736842105263,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1335,
+     "prose_chars": 1335,
+     "length_ratio": 7.026315789473684,
+     "cjk_residue": 6,
+     "cjk_residue_share": 0.031578947368421054,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1185,
+     "prose_chars": 1185,
+     "length_ratio": 6.2368421052631575,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3156,7 +6136,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3218,6 +6201,72 @@
      "cjk_residue": 162,
      "cjk_residue_share": 0.8663101604278075,
      "untranslated": true
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 2,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1187,
+     "prose_chars": 1158,
+     "length_ratio": 6.192513368983957,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 10,
+     "inline_terms": 12,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 10,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "page-num"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1551,
+     "prose_chars": 1318,
+     "length_ratio": 7.048128342245989,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1244,
+     "prose_chars": 1244,
+     "length_ratio": 6.652406417112299,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3227,7 +6276,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3291,6 +6343,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1270,
+     "prose_chars": 1270,
+     "length_ratio": 5.962441314553991,
+     "cjk_residue": 6,
+     "cjk_residue_share": 0.028169014084507043,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 12,
+     "inline_terms": 14,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1247,
+     "prose_chars": 1027,
+     "length_ratio": 4.821596244131455,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 9,
+     "inline_terms": 10,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1275,
+     "prose_chars": 1064,
+     "length_ratio": 4.995305164319249,
+     "cjk_residue": 4,
+     "cjk_residue_share": 0.018779342723004695,
+     "untranslated": false
     }
    }
   },
@@ -3300,7 +6412,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3362,6 +6477,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 9,
+     "inline_terms": 9,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1888,
+     "prose_chars": 1504,
+     "length_ratio": 6.995348837209303,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 3,
+     "inline_terms": 3,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "page-num"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 654,
+     "prose_chars": 602,
+     "length_ratio": 2.8,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1935,
+     "prose_chars": 1795,
+     "length_ratio": 8.348837209302326,
+     "cjk_residue": 168,
+     "cjk_residue_share": 0.7813953488372093,
+     "untranslated": true
     }
    }
   },
@@ -3371,7 +6548,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3435,6 +6615,73 @@
      "cjk_residue": 3,
      "cjk_residue_share": 0.015228426395939087,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1645,
+     "prose_chars": 1088,
+     "length_ratio": 5.522842639593908,
+     "cjk_residue": 3,
+     "cjk_residue_share": 0.015228426395939087,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 2,
+     "notes_verified": 2,
+     "verified_rate": 1,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 12,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "page-num",
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1916,
+     "prose_chars": 1381,
+     "length_ratio": 7.01015228426396,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 14,
+     "notes_verified": 13,
+     "verified_rate": 0.9285714285714286,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1662,
+     "prose_chars": 1185,
+     "length_ratio": 6.0152284263959395,
+     "cjk_residue": 19,
+     "cjk_residue_share": 0.09644670050761421,
+     "untranslated": false
     }
    }
   },
@@ -3444,7 +6691,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3506,6 +6756,76 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2068,
+     "prose_chars": 1986,
+     "length_ratio": 6.7322033898305085,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 14,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "page-num",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2197,
+     "prose_chars": 2090,
+     "length_ratio": 7.084745762711864,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 492,
+     "prose_chars": 471,
+     "length_ratio": 1.5966101694915253,
+     "cjk_residue": 378,
+     "cjk_residue_share": 1.2813559322033898,
+     "untranslated": true
     }
    }
   },
@@ -3515,7 +6835,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3577,6 +6900,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2585,
+     "prose_chars": 2386,
+     "length_ratio": 6.278947368421052,
+     "cjk_residue": 27,
+     "cjk_residue_share": 0.07105263157894737,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3239,
+     "prose_chars": 2622,
+     "length_ratio": 6.9,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2462,
+     "prose_chars": 2462,
+     "length_ratio": 6.478947368421053,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3586,7 +6971,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3648,6 +7036,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 4,
+     "inline_terms": 12,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1825,
+     "prose_chars": 203,
+     "length_ratio": 0.9620853080568721,
+     "cjk_residue": 136,
+     "cjk_residue_share": 0.6445497630331753,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1694,
+     "prose_chars": 1106,
+     "length_ratio": 5.241706161137441,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1936,
+     "prose_chars": 1807,
+     "length_ratio": 8.563981042654028,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3657,7 +7109,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3719,6 +7174,66 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 6,
+     "inline_terms": 8,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2421,
+     "prose_chars": 2199,
+     "length_ratio": 7.429054054054054,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2326,
+     "prose_chars": 2261,
+     "length_ratio": 7.638513513513513,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 329,
+     "prose_chars": 329,
+     "length_ratio": 1.1114864864864864,
+     "cjk_residue": 265,
+     "cjk_residue_share": 0.8952702702702703,
+     "untranslated": true
     }
    }
   },
@@ -3728,7 +7243,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3792,6 +7310,78 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1481,
+     "prose_chars": 1140,
+     "length_ratio": 5.205479452054795,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 14,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "page-num",
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1622,
+     "prose_chars": 1105,
+     "length_ratio": 5.045662100456621,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 270,
+     "prose_chars": 209,
+     "length_ratio": 0.954337899543379,
+     "cjk_residue": 165,
+     "cjk_residue_share": 0.7534246575342466,
+     "untranslated": true
     }
    }
   },
@@ -3801,7 +7391,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3869,6 +7462,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1233,
+     "prose_chars": 969,
+     "length_ratio": 4.614285714285714,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1462,
+     "prose_chars": 1102,
+     "length_ratio": 5.247619047619048,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 2,
+     "notes_verified": 0,
+     "verified_rate": 0,
+     "terms_emitted": 5,
+     "inline_terms": 8,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1291,
+     "prose_chars": 961,
+     "length_ratio": 4.576190476190476,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3878,7 +7533,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -3940,6 +7598,68 @@
      "cjk_residue": 77,
      "cjk_residue_share": 0.2894736842105263,
      "untranslated": true
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2200,
+     "prose_chars": 780,
+     "length_ratio": 2.9323308270676693,
+     "cjk_residue": 77,
+     "cjk_residue_share": 0.2894736842105263,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1938,
+     "prose_chars": 773,
+     "length_ratio": 2.906015037593985,
+     "cjk_residue": 10,
+     "cjk_residue_share": 0.03759398496240601,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1753,
+     "prose_chars": 669,
+     "length_ratio": 2.5150375939849625,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -3949,7 +7669,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4011,6 +7734,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 14,
+     "inline_terms": 23,
+     "keywords_emitted": 24,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1330,
+     "prose_chars": 1019,
+     "length_ratio": 4.674311926605505,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 2,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1520,
+     "prose_chars": 1266,
+     "length_ratio": 5.807339449541284,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1366,
+     "prose_chars": 1318,
+     "length_ratio": 6.045871559633028,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4020,7 +7807,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4086,6 +7876,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2079,
+     "prose_chars": 1320,
+     "length_ratio": 5.365853658536586,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 7,
+     "inline_terms": 7,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2400,
+     "prose_chars": 1272,
+     "length_ratio": 5.170731707317073,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2131,
+     "prose_chars": 1363,
+     "length_ratio": 5.540650406504065,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4095,7 +7947,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4159,6 +8014,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 20,
+     "inline_terms": 31,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1692,
+     "prose_chars": 1198,
+     "length_ratio": 4.716535433070866,
+     "cjk_residue": 3,
+     "cjk_residue_share": 0.011811023622047244,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 14,
+     "notes_verified": 0,
+     "verified_rate": 0,
+     "terms_emitted": 15,
+     "inline_terms": 26,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1968,
+     "prose_chars": 1443,
+     "length_ratio": 5.681102362204724,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1416,
+     "prose_chars": 1416,
+     "length_ratio": 5.574803149606299,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4168,7 +8085,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4230,6 +8150,72 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 3,
+     "inline_terms": 3,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1987,
+     "prose_chars": 1885,
+     "length_ratio": 6.8545454545454545,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 12,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2272,
+     "prose_chars": 2014,
+     "length_ratio": 7.323636363636363,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 10,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1983,
+     "prose_chars": 1904,
+     "length_ratio": 6.923636363636364,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4239,7 +8225,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4301,6 +8290,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 13,
+     "inline_terms": 14,
+     "keywords_emitted": 16,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 6,
+     "housekeeping_names": [
+      "header",
+      "sig",
+      "page-num"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2817,
+     "prose_chars": 2044,
+     "length_ratio": 5.46524064171123,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2634,
+     "prose_chars": 2174,
+     "length_ratio": 5.81283422459893,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 427,
+     "prose_chars": 351,
+     "length_ratio": 0.9385026737967914,
+     "cjk_residue": 278,
+     "cjk_residue_share": 0.7433155080213903,
+     "untranslated": true
     }
    }
   },
@@ -4310,7 +8363,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4372,6 +8428,80 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 0,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2792,
+     "prose_chars": 2304,
+     "length_ratio": 6.417827298050139,
+     "cjk_residue": 1,
+     "cjk_residue_share": 0.002785515320334262,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 6,
+     "inline_terms": 6,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 12,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "columns",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3106,
+     "prose_chars": 2653,
+     "length_ratio": 7.389972144846797,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 1,
+     "notes_verified": 0,
+     "verified_rate": 0,
+     "terms_emitted": 19,
+     "inline_terms": 48,
+     "keywords_emitted": 13,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 12,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "columns",
+      "sig"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2421,
+     "prose_chars": 1841,
+     "length_ratio": 5.128133704735376,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4381,7 +8511,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4447,6 +8580,73 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 316,
+     "prose_chars": 278,
+     "length_ratio": 0.9205298013245033,
+     "cjk_residue": 263,
+     "cjk_residue_share": 0.8708609271523179,
+     "untranslated": true
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2164,
+     "prose_chars": 1982,
+     "length_ratio": 6.562913907284768,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 4,
+     "housekeeping_names": [
+      "header",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2071,
+     "prose_chars": 1989,
+     "length_ratio": 6.586092715231788,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4456,7 +8656,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4518,6 +8721,72 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 17,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 255,
+     "prose_chars": 255,
+     "length_ratio": 0.01638185789541308,
+     "cjk_residue": 161,
+     "cjk_residue_share": 0.010343055377103944,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 10,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type",
+      "columns"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1075,
+     "prose_chars": 1041,
+     "length_ratio": 0.06687652576127458,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1140,
+     "prose_chars": 996,
+     "length_ratio": 0.06398560966208403,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4527,7 +8796,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4589,6 +8861,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1332,
+     "prose_chars": 1120,
+     "length_ratio": 4.705882352941177,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 2,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1510,
+     "prose_chars": 1098,
+     "length_ratio": 4.61344537815126,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 4,
+     "housekeeping_names": [
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1895,
+     "prose_chars": 1357,
+     "length_ratio": 5.701680672268908,
+     "cjk_residue": 157,
+     "cjk_residue_share": 0.6596638655462185,
+     "untranslated": true
     }
    }
   },
@@ -4598,7 +8934,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4662,6 +9001,70 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 1,
+     "inline_terms": 1,
+     "keywords_emitted": 11,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1702,
+     "prose_chars": 1561,
+     "length_ratio": 7.095454545454546,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1535,
+     "prose_chars": 1535,
+     "length_ratio": 6.9772727272727275,
+     "cjk_residue": 2,
+     "cjk_residue_share": 0.00909090909090909,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1758,
+     "prose_chars": 1758,
+     "length_ratio": 7.990909090909091,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4671,7 +9074,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4740,6 +9146,68 @@
      "cjk_residue": 0,
      "cjk_residue_share": 0,
      "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 2,
+     "inline_terms": 23,
+     "keywords_emitted": 10,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 2,
+     "housekeeping_names": [
+      "header"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 2816,
+     "prose_chars": 2681,
+     "length_ratio": 7.573446327683616,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3196,
+     "prose_chars": 3196,
+     "length_ratio": 9.028248587570621,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 5,
+     "notes_verified": 5,
+     "verified_rate": 1,
+     "terms_emitted": 5,
+     "inline_terms": 22,
+     "keywords_emitted": 9,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 3195,
+     "prose_chars": 2889,
+     "length_ratio": 8.161016949152541,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
     }
    }
   },
@@ -4749,7 +9217,10 @@
    "refusal": {
     "gemini-3.1-flash-lite": null,
     "gemini-3-flash-preview": null,
-    "gemini-2.5-flash": null
+    "gemini-2.5-flash": null,
+    "deepseek/deepseek-v4.1-flash": null,
+    "qwen/qwen3.8-flash": null,
+    "deepseek/deepseek-v4-pro-0813": null
    },
    "scores": {
     "gemini-3.1-flash-lite": {
@@ -4810,6 +9281,78 @@
      "length_ratio": 6.650246305418719,
      "cjk_residue": 4,
      "cjk_residue_share": 0.019704433497536946,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4.1-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 3,
+     "inline_terms": 3,
+     "keywords_emitted": 15,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 8,
+     "housekeeping_names": [
+      "scan-quality",
+      "language",
+      "script",
+      "page-type"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1463,
+     "prose_chars": 1421,
+     "length_ratio": 7,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "qwen/qwen3.8-flash": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 14,
+     "invented_tags": 0,
+     "invented_names": [],
+     "housekeeping_tags": 4,
+     "housekeeping_names": [
+      "scan-quality",
+      "vocab"
+     ],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1708,
+     "prose_chars": 1708,
+     "length_ratio": 8.413793103448276,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
+     "untranslated": false
+    },
+    "deepseek/deepseek-v4-pro-0813": {
+     "notes_emitted": 0,
+     "notes_verified": 0,
+     "verified_rate": null,
+     "terms_emitted": 0,
+     "inline_terms": 0,
+     "keywords_emitted": 8,
+     "invented_tags": 8,
+     "invented_names": [
+      "page-number",
+      "translation",
+      "add"
+     ],
+     "housekeeping_tags": 0,
+     "housekeeping_names": [],
+     "glossary_block": false,
+     "emdashes": 0,
+     "body_chars": 1629,
+     "prose_chars": 1629,
+     "length_ratio": 8.024630541871922,
+     "cjk_residue": 0,
+     "cjk_residue_share": 0,
      "untranslated": false
     }
    }

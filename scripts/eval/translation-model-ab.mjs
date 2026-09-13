@@ -524,7 +524,7 @@ function phaseJudgePacket() {
   const { pages, arms } = loadPages();
   const usable = pages.map((p) => ({ ...p, delivered: arms.filter((a) => p.arms[a] && !p.arms[a].refusal) })).filter((p) => p.delivered.length >= 2);
   const write = (list, seedOffset, packetName, keyName) => {
-    resetSeed(0x5eed + seedOffset);
+    resetSeed(Number(arg('seed', 0x5eed)) + seedOffset);
     const packet = [], key = [];
     for (const p of list) {
       const order = [...p.delivered];
@@ -667,7 +667,7 @@ function renderMd(r) {
   L.push(`## Recommendation for the 樂舞 run: **${r.recommendation}**`, '', r.why, '');
   L.push('Pre-registered rule (EXPERIMENTS.md 2026-09-13): an arm is eligible if it refused at most 4 more pages than lite and was flagged for fabrication on no more pages; it beats lite if the blind judge ranked it above lite on more pages than below at sign-test p < 0.05. Recommend the cheapest arm that beats lite and costs ≤ 2× lite; a dearer winner only if lite fabricates on ≥ 5 more pages; otherwise lite, unless a cheaper arm ties lite, which is "undecided" with the run that would settle it.', '');
   const sk = Object.entries(r.skipped || {});
-  if (sk.length) { L.push('## Arms skipped (recorded, not failed)', '', '| arm | reason |', '|---|---|'); for (const [m, v] of sk) L.push(`| ${m} | ${v.reason} |`); L.push('', 'Add `OPENROUTER_API_KEY` to the Hetzner env and re-run `--run` (the harness resumes; existing arms are not re-spent), then `--score --judge-packet`, re-judge, `--report`.', ''); }
+  if (sk.length) { L.push('## Arms skipped (recorded, not failed)', '', '| arm | reason |', '|---|---|'); for (const [m, v] of sk) L.push(`| ${m} | ${v.reason} |`); L.push(''); }
   L.push('## Blind ranking (Sonnet lean-workers; labels shuffled per page, key withheld)', '', `| arm | pages ranked | mean rank | 1st place | vs lite W-L-T | sign p | fabrication | omission | terms ok |`, '|---|---|---|---|---|---|---|---|---|');
   for (const m of r.arms) { const j = r.judge[m]; L.push(`| ${m}${m === r.baseline ? ' (baseline)' : ''} | ${j.n_ranked} | ${num(j.mean_rank)} | ${j.first_place} | ${j.vs_baseline ? `${j.vs_baseline.wins}-${j.vs_baseline.losses}-${j.vs_baseline.ties}` : '—'} | ${j.vs_baseline ? num(j.vs_baseline.p, 3) : '—'} | ${j.fabrication} | ${j.omission} | ${j.terms_ok}/${j.terms_judged} |`); }
   L.push('', `Mean judge confidence ${num(r.mean_confidence)}. Fabrication = the judge found something asserted that the Chinese does not say (the disqualifier); omission = a clause/entry present in the source and absent from the translation.`, '');

@@ -10,7 +10,7 @@
   },
   "z-ai/glm-5.3-flash": {
    "status": "skipped",
-   "reason": "probe failed: HTTP 400: {\"error\":{\"message\":\"Reasoning is mandatory for this endpoint and cannot be disabled.\",\"code\":400,\"metadata\":{",
+   "reason": "reasoning is mandatory on this endpoint (HTTP 400, cannot be disabled) — excluded from the no-thinking comparison; a later reasoning-on run (mandatory-low, 60/60, $0.86 for both) is preserved unjudged in arms-reasoning-excluded.jsonl",
    "at": "2026-09-13T21:51:29.502Z"
   },
   "deepseek/deepseek-v4-pro-0813": {
@@ -19,12 +19,12 @@
   },
   "qwen/qwen3.8-max-0902": {
    "status": "skipped",
-   "reason": "probe failed: HTTP 400: {\"error\":{\"message\":\"Reasoning is mandatory for this endpoint and cannot be disabled.\",\"code\":400,\"metadata\":{",
+   "reason": "reasoning is mandatory on this endpoint (HTTP 400, cannot be disabled) — excluded from the no-thinking comparison; a later reasoning-on run (mandatory-low, 60/60, $0.86 for both) is preserved unjudged in arms-reasoning-excluded.jsonl",
    "at": "2026-09-13T21:51:43.192Z"
   },
   "gemini-2.5-flash-lite": {
    "status": "skipped",
-   "reason": "probe failed: HTTP 404: {\"error\":{\"code\":404,\"message\":\"This model models/gemini-2.5-flash-lite is no longer available to new users. P",
+   "reason": "HTTP 404 — model closed to new users",
    "at": "2026-09-13T21:50:16.699Z"
   },
   "gemini-3.1-flash-lite": {
