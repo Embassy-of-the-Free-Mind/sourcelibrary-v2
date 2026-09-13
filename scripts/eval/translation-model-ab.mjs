@@ -74,6 +74,14 @@ const MIN_CJK = Number(arg('min-cjk', 150));
 const SKIP_LEAVES = Number(arg('skip-leaves', 3));
 const MAX_USD = Number(arg('max-usd', 2));
 const CONCURRENCY = Number(arg('concurrency', 4));
+/**
+ * `--reasoning-fallback`: some OpenRouter endpoints refuse `reasoning.enabled=false`
+ * ("Reasoning is mandatory for this endpoint"). With this flag an arm whose probe was
+ * skipped for that reason is re-run with reasoning ON at the lowest effort the API
+ * offers, reasoning text excluded from the reply, reasoning TOKENS counted in the cost.
+ * A pre-registration deviation, recorded per row (`reasoning_mode`) and in run-meta.
+ */
+const REASONING_FALLBACK = has('reasoning-fallback');
 
 /** Arms, in order; the FIRST is the baseline every sign test compares against. A `/` in the id = OpenRouter. */
 const DEFAULT_ARMS = [
@@ -287,7 +295,7 @@ async function callGemini(model, promptText, maxOutputTokens) {
 }
 
 /** OpenAI-compatible chat completion through OpenRouter, reasoning off, actual charge requested. */
-async function callOpenRouter(model, promptText, maxOutputTokens) {
+async function callOpenRouter(model, promptText, maxOutputTokens, reasoning = { enabled: false }) {
   const key = keyFor(model);
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
@@ -296,7 +304,7 @@ async function callOpenRouter(model, promptText, maxOutputTokens) {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}`, 'HTTP-Referer': 'https://sourcelibrary.org', 'X-Title': 'Source Library translation eval' },
         body: JSON.stringify({
           model, messages: [{ role: 'user', content: promptText }], max_tokens: maxOutputTokens, temperature: 1,
-          reasoning: { enabled: false },   // non-thinking where the provider allows; ignored otherwise
+          reasoning,                       // { enabled: false } by default; { effort: 'low', exclude: true } under --reasoning-fallback
           usage: { include: true },        // OpenRouter returns the actual USD charge
         }),
         signal: AbortSignal.timeout(240000),
@@ -354,7 +362,9 @@ async function phaseRun() {
   meta.baseline = BASELINE;
   meta.arms_requested = [...new Set([...(meta.arms_requested || []), ...ARMS])];
   const active = [];
+  const modeOf = {};
   for (const model of ARMS) {
+    modeOf[model] = reasoningModeFor(model, meta);
     if (!keyFor(model)) { meta.arms[model] = { status: 'skipped', reason: `no ${providerOf(model) === 'openrouter' ? 'OPENROUTER_API_KEY' : 'GEMINI_API_KEY'} in env`, at: new Date().toISOString() }; console.log(`SKIPPED ${model}: ${meta.arms[model].reason}`); continue; }
     active.push(model);
   }
@@ -370,7 +380,7 @@ async function phaseRun() {
   const first = payload.sample[0];
   for (const model of active) {
     if (done.has(`${first.bookId}:${first.pageNumber}:${model}`)) continue;
-    const res = await translateOne(prompts, first, model);
+    const res = await translateOne(prompts, first, model, modeOf[model]);
     if (res.error && res.status && res.status >= 400 && res.status < 500 && res.status !== 429) {
       meta.arms[model] = { status: 'skipped', reason: `probe failed: ${res.error.slice(0, 120)}`, at: new Date().toISOString() };
       console.log(`SKIPPED ${model}: ${meta.arms[model].reason}`);
@@ -380,14 +390,17 @@ async function phaseRun() {
     done.add(`${first.bookId}:${first.pageNumber}:${model}`);
   }
   for (const r of payload.sample) for (const model of active) if (!dead.has(model) && !done.has(`${r.bookId}:${r.pageNumber}:${model}`)) jobs.push({ r, model });
-  for (const model of active) if (!dead.has(model)) meta.arms[model] = { status: 'ran', at: new Date().toISOString() };
+  for (const model of active) if (!dead.has(model)) meta.arms[model] = { status: 'ran', reasoning_mode: modeOf[model], at: new Date().toISOString() };
   writeMeta(meta);
   console.log(`${jobs.length} calls to make across ${active.length - dead.size} arms\n`);
 
-  let spent = 0, n = 0;
+  let spent = 0, n = 0, stopped = false;
   const refusals = {};
   await pool(jobs, CONCURRENCY, async ({ r, model }) => {
-    const res = await translateOne(prompts, r, model);
+    // Hard stop on ACTUAL spend, not the estimate: a reasoning arm can bill many times
+    // its list-price estimate. Rows not made are simply absent (resumable).
+    if (stopped || spent >= MAX_USD) { stopped = true; return; }
+    const res = await translateOne(prompts, r, model, modeOf[model]);
     const line = rowFor(r, model, res, prompts);
     const row = JSON.parse(line);
     spent += row.cost_usd;
@@ -396,19 +409,24 @@ async function phaseRun() {
     if (++n % 25 === 0) console.log(`  ${n}/${jobs.length}  spent $${spent.toFixed(3)}  refusals ${JSON.stringify(refusals)}`);
   });
   await new Promise((res) => stream.end(res));
+  if (stopped) { meta.hard_stop = { at: new Date().toISOString(), spent_this_run: spent, max_usd: MAX_USD, calls_made: n, calls_planned: jobs.length }; writeMeta(meta); console.log(`HARD STOP: actual spend $${spent.toFixed(3)} reached --max-usd ${MAX_USD} after ${n}/${jobs.length} calls; re-run resumes the rest`); }
   console.log(`\ndone: ${n} calls, spend this run $${spent.toFixed(3)} (estimate was $${est.usd.toFixed(2)}); refusals ${JSON.stringify(refusals)}`);
   console.log(`wrote ${ARMS_FILE}; arm status in ${META_FILE}`);
 }
 
-async function translateOne(prompts, r, model) {
+const REASONING_MANDATORY = /Reasoning is mandatory/i;
+const reasoningModeFor = (model, meta) => (REASONING_FALLBACK && providerOf(model) === 'openrouter' && REASONING_MANDATORY.test(meta?.arms?.[model]?.reason || '') ? 'mandatory-low' : 'off');
+
+async function translateOne(prompts, r, model, reasoningMode = 'off') {
   const book = { id: r.bookId, title: r.bookTitle, display_title: r.bookTitle, author: r.author, published: r.year, language: r.language, image_source: { provider: r.provider } };
   // Same door the pipeline uses, no previous-page context (each page stands alone in every arm).
   const { prompt, promptRef } = buildTranslationPrompt({ prompts, book, ocrText: r.ocrText, previousTranslation: null });
   const maxOut = Math.min(32768, Math.max(4096, r.ocrCjk * 4 + 1200));
   // OpenRouter providers reject max_tokens above their own ceiling with a 400, which the probe
   // would read as "arm unavailable"; 8K covers every page but the one 17K-char outlier (finish=length is recorded).
-  const res = providerOf(model) === 'openrouter' ? await callOpenRouter(model, prompt, Math.min(maxOut, 8192)) : await callGemini(model, prompt, maxOut);
-  return { ...res, promptRef };
+  const reasoning = reasoningMode === 'mandatory-low' ? { effort: 'low', exclude: true } : { enabled: false };
+  const res = providerOf(model) === 'openrouter' ? await callOpenRouter(model, prompt, Math.min(maxOut, 8192), reasoning) : await callGemini(model, prompt, maxOut);
+  return { ...res, promptRef, reasoningMode };
 }
 
 function rowFor(r, model, res, prompts) {
@@ -422,7 +440,7 @@ function rowFor(r, model, res, prompts) {
     ocrChars: r.ocrChars, ocrCjk: r.ocrCjk,
     text: refusal ? (res.text || null) : sanitizeTranslationTags(res.text),
     refusal, error: res.error || null, finish: res.finish || null, blockReason: res.blockReason || null,
-    inTok: res.inTok || 0, outTok: res.outTok || 0, thoughtTok: res.thoughtTok || 0,
+    inTok: res.inTok || 0, outTok: res.outTok || 0, thoughtTok: res.thoughtTok || 0, reasoning_mode: res.reasoningMode || 'off',
     cost_usd: cost, cost_source: typeof res.cost_reported === 'number' ? 'provider' : (price.unknown ? 'default-unknown' : 'list'),
     at: new Date().toISOString(),
   });
@@ -460,6 +478,7 @@ function phaseScore() {
     out.refusals[model] = { n: refused.length, of: armRows.length, kinds: countBy(refused.map((r) => r.refusal.split(':')[0])), finish: countBy(armRows.map((r) => r.finish || 'none')) };
     out.per_arm[model] = { provider: providerOf(model), calls: armRows.length, delivered: armRows.length - refused.length, inTok: sum(armRows.map((r) => r.inTok)), outTok: sum(armRows.map((r) => r.outTok)), thoughtTok: sum(armRows.map((r) => r.thoughtTok)), usd: sum(armRows.map((r) => r.cost_usd)), cost_source: countBy(armRows.map((r) => r.cost_source)), max_tokens_hits: armRows.filter((r) => ['MAX_TOKENS', 'length'].includes(r.finish)).length };
     out.per_arm[model].usd_per_page = out.per_arm[model].delivered ? out.per_arm[model].usd / out.per_arm[model].delivered : null;
+    out.per_arm[model].reasoning_mode = countBy(armRows.map((r) => r.reasoning_mode || 'off'));
   }
   for (const p of pages) {
     const row = { id: p.key, ocrCjk: p.page?.ocrCjk, refusal: {}, scores: {} };
@@ -663,9 +682,9 @@ function renderMd(r) {
   const cell = (d) => (d && d.n ? `${num(d.delta, 3)}${d.decisive ? ' **' : ''} [${num(d.ci?.[0], 3)}, ${num(d.ci?.[1], 3)}] n=${d.n}` : '—');
   for (const m of r.arms.slice(1)) { const p = r.paired[m] || {}; L.push(`| ${m} | ${cell(p.prose_chars)} | ${cell(p.cjk_residue_share)} | ${cell(p.notes_emitted)} | ${cell(p.verified_rate)} | ${cell(p.invented_tags)} |`); }
   L.push('');
-  L.push('## Cost actually spent', '', '| arm | in tok | out tok | thought tok | USD | $/page | cost source | 樂舞 20K pages ≈ |', '|---|---|---|---|---|---|---|---|');
-  for (const m of r.arms) { const a = r.per_arm[m]; L.push(`| ${m} | ${a.inTok.toLocaleString()} | ${a.outTok.toLocaleString()} | ${a.thoughtTok} | $${a.usd.toFixed(3)} | $${num(a.usd_per_page, 4)} | ${Object.keys(a.cost_source).join(',')} | $${num(20000 * (a.usd_per_page || 0), 0)} |`); }
-  L.push('', 'Realtime list rates (Gemini batch is half). `list` = tokens × the price table; `provider` = the charge OpenRouter reported.', '');
+  L.push('## Cost actually spent', '', '| arm | reasoning | in tok | out tok | thought tok | USD | $/page | cost source | 樂舞 20K pages ≈ |', '|---|---|---|---|---|---|---|---|---|');
+  for (const m of r.arms) { const a = r.per_arm[m]; L.push(`| ${m} | ${Object.keys(a.reasoning_mode || { off: 1 }).join(',')} | ${a.inTok.toLocaleString()} | ${a.outTok.toLocaleString()} | ${a.thoughtTok} | $${a.usd.toFixed(3)} | $${num(a.usd_per_page, 4)} | ${Object.keys(a.cost_source).join(',')} | $${num(20000 * (a.usd_per_page || 0), 0)} |`); }
+  L.push('', 'Realtime list rates (Gemini batch is half). `list` = tokens × the price table; `provider` = the charge OpenRouter reported. `reasoning = mandatory-low` marks an endpoint that refuses non-thinking mode and ran at the lowest effort with reasoning tokens billed (a pre-registration deviation, see EXPERIMENTS.md).', '');
   L.push('## Judge reasons (unblinded; rank per arm)', '');
   for (const v of r.verdicts) L.push(`- \`${v.id}\` conf ${num(v.confidence, 1)} — ${r.arms.filter((m) => typeof v.rank[m] === 'number').sort((a, b) => v.rank[a] - v.rank[b]).map((m) => `${v.rank[m]}. ${m.replace(/^.*\//, '')}${v.fabrication[m] ? ' ⚠fab' : ''}${v.omission[m] ? ' ⚠omit' : ''}`).join(' · ')} — ${v.reason}`);
   L.push('', 'Artifacts: `translation-model-ab-zh-{books.txt,sample.json,arms.jsonl,run-meta.json,score.json,judge-packet.jsonl,judge-key.json,judge-verdicts.jsonl,judge-packet-pass2.jsonl,judge-key-pass2.json,judge-verdicts-pass2.jsonl,report.json}`. Harness: `scripts/eval/translation-model-ab.mjs`. Judge prompt: `scripts/eval/translation-model-ab-JUDGE-PROMPT.md`.');
