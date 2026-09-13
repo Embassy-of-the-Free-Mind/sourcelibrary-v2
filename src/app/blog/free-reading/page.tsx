@@ -49,6 +49,22 @@ export default function FreeReadingPage() {
       </div>
 
       <article className="prose-content max-w-none">
+        {/* Correction banner — the offset finding below was itself wrong; see #4790. */}
+        <div className="bg-amber-50 border border-amber-200/50 rounded-lg p-4 mb-10">
+          <p className="text-sm text-stone-700 leading-relaxed">
+            <strong>Correction (13 September 2026):</strong> the leaf-offset repair described under
+            &ldquo;The rejects that were our fault&rdquo; was itself a mistake, and a more interesting one
+            than the bug it claimed to fix. The Archive&apos;s text file and its page images skip exactly
+            the same leaves, so the correct offset is always zero. The books our search appeared to
+            rescue were books whose reference pages had been transcribed from <em>our own</em> scans,
+            which were themselves one leaf out. The test was faithfully compensating for a defect in
+            its own instrument. About 940 pages were written carrying the neighbouring leaf&apos;s text
+            and have since been repaired and checked by hand; about 50,900 more carry a wrong leaf
+            reference while still reading correctly on screen, and wait on a separate repair to the
+            images. The importer now refuses these books instead of compensating. The rest of this
+            note stands as written.
+          </p>
+        </div>
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           The library holds 21.2 million page images. Machines have read 6.5 million of them into text
           you can search, quote and translate. The other 12.6 million pages are pictures. A picture of a
@@ -215,6 +231,17 @@ export default function FreeReadingPage() {
             any book whose alignment drifts from page to page. Re-scored that way, 170 of the 292 came
             back as accepts, another 18,614 pages, and one book was refused because its alignment
             drifted, which is the refusal working.
+          </p>
+          <p className={P}>
+            <strong>That last paragraph is wrong, and it took two days and a hand check to find out.</strong>{' '}
+            The Archive&apos;s text file and its page images skip the same leaves, so the two sequences
+            never disagree and the correct offset is always zero. What our search had actually found was
+            that the pages we were comparing against — our own earlier transcriptions — had been made
+            from scans that were one leaf out, a fault in our image importer dating from last year. The
+            offset search was not correcting the Archive. It was quietly matching the Archive&apos;s
+            correct text to our incorrect scans, and every book it &ldquo;rescued&rdquo; was a book it
+            should have refused. A calibration fitted against a corrupted reference does not look like a
+            failure. It looks like a rescue. That is the part worth remembering.
           </p>
           <p className={P}>
             The two long-s books in the same cluster went from 0.15 to 0.77 and 0.69, and stayed rejected.
