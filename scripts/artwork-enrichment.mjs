@@ -22,7 +22,13 @@ const COLLECTION_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--collect
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+// thinkingBudget: 0 — Gemini 3.x thinks by default and bills it at the output rate (CLAUDE.md, #4581).
+// Measured no quality loss for extraction; without it the meter under-reports and the call can
+// hit maxOutputTokens before writing the JSON.
+const model = genAI.getGenerativeModel({
+  model: 'gemini-3.1-flash-lite',
+  generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+});
 
 // Visual art collections that artworks can be assigned to
 const VISUAL_ART_COLLECTIONS = [
