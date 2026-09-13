@@ -132,7 +132,7 @@ case 2. Historical stages stay **distinct as catalogue values** — a reader
 looking for Old English does not want modern English — and count as **one
 language** when asking whether a book is bilingual. Families today: Chinese
 (+ Classical, Literary), English (+ Old, Middle), French (+ Old, Middle),
-German (+ Middle High, Old High, Early New High), Hebrew (+ Biblical,
+German (+ Middle High, Old High, Early New High), Dutch (+ Middle, Old), Hebrew (+ Biblical,
 Samaritan), Church Slavonic (+ Old).
 
 **The general rule, worth more than either instance:** when a detector fires and
