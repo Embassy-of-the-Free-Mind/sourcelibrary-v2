@@ -490,6 +490,20 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   (`--min-offset-share` 0.60 passes it) was locally wrong. **A repair must classify first —
   shifting text to match the archived image would corrupt the image-side class.** Peer
   verification of the four written cases on #4790 (against IIIF, by printed page number) agrees.
+- **Corpus-wide sizing, free and deterministic (`scripts/audit/ia-ocr-leaf-drift.mjs`).** IA's
+  scandata marks leaves excluded from access formats; BOTH the IIIF page index and the djvu.xml
+  OBJECT sequence skip them (access-leaf count == XML object count on 478/478 written books), so
+  the correct offset is 0 for every book. The bulk-JP2 archived images (#3368) do NOT skip them,
+  and the reference pages were OCR'd from those images — the offset vote fitted the XML to the
+  wrong image set. **236 of 893 written books (26%), 51,851 of 152,997 written pages (34%), were
+  written at offset −1/−2/−3 and carry the text of the wrong leaf against their own source.** The
+  paid sample's "2 of 56" was a wide interval around the wrong quantity: at the front of an
+  offset −1 bulk book the text matches the *shifted* image, so only pages past an interior
+  excluded leaf were caught. Shown-image mismatch is an upper bound (98 books / 4,544 pages,
+  assuming every bulk image set is shifted; Possidius is aligned, Century shift+1 — only the
+  #3368 dHash audit can count it). Folio continuity inside the written text was tried first and
+  is blind to this: a fixed shift of a continuous sequence (Open Court delivered folios
+  355/356/357 vs archived 353/354/355 vs IIIF 356/357/358).
 - **Refusals are the instrument's big limit.** 193/742 first-pass references (26%) came
   back RECITATION/PROHIBITED_CONTENT because the run omitted production's document-context
   line; adding it recovered only 24, leaving **169 (23%) unscored — concentrated in the
@@ -500,7 +514,8 @@ fall: a prose-page-only book score admits books whose delivered pages are medioc
   and are excluded. Stored-text check: 70 pages read from `pages.ocr.data` matched the
   regenerated leaf exactly, all 70.
 - **Decision:** per-language cutoffs (English/French 0.80; Latin/German/Italian 0.85;
-  Greek: do not fill); before more languages are applied, raise `--min-offset-share` (0.60 let an
-  86% vote through that was locally wrong) or refuse books whose reference pages disagree, and
-  spread the reference pages through the book instead of the front 25.
+  Greek: do not fill); force offset 0 in the ingester — a non-zero vote means the reference
+  pages were read from #3368-shifted images, a tell to refuse on, not a calibration; re-pair the
+  236 books' written pages at offset 0 from the cache (no model calls), images FIRST or both per
+  book, since at the front the text currently matches the shifted image.
   Issue: #4790.
