@@ -34,6 +34,14 @@ describe('tokens', () => {
     expect(tokens('漢字abc字')).toEqual(['漢', '字', 'abc', '字']);
   });
 
+  it('keeps a Devanagari word whole but strips Arabic and Hebrew pointing (edition-level, not text)', () => {
+    expect(tokens('कि तु')).toEqual(['कि', 'तु']);
+    expect(legacyTokens('कि')).toEqual(['क']); // the pre-#4806 tokenizer dropped the vowel sign
+    expect(tokens('بِسْمِ اللَّهِ')).toEqual(tokens('بسم الله'));
+    expect(tokens('בְּרֵאשִׁית')).toEqual(tokens('בראשית'));
+    expect(tokens('ab́c')).toEqual(['ab́c']); // a Latin combining mark stays (NFC has no precomposed form)
+  });
+
   it('folds edition glyph variants and full-width forms in space-less runs', () => {
     expect(tokens('爲靑')).toEqual(['為', '青']);
     expect(tokens('隆')).toEqual(['隆']); // CJK compatibility ideograph → unified (NFKC)

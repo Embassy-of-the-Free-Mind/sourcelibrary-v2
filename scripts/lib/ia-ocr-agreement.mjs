@@ -23,8 +23,9 @@
 //     SPACELESS_RE) is one token PER CHARACTER, folded by normalizeCJK (edition glyph variants) and
 //     NFKC (full-width forms);
 //   - everything else stays a word token exactly as before (`[\p{L}\p{N}']+` plus `\p{M}` so a
-//     Devanagari or Arabic word is not cut at every vowel mark; lower-cased, NFC, curly apostrophes
-//     folded) — measured byte-identical on 270 English/Latin/Greek books (PR #4806);
+//     Devanagari or Arabic word is not cut at every vowel mark, with Arabic/Hebrew pointing stripped;
+//     lower-cased, NFC, curly apostrophes folded) — measured byte-identical on 270 English/Latin/Greek
+//     books (PR #4810);
 //   - a mixed page is segmented run by run, never classified whole.
 //   Tibetan is tsheg-delimited and already split into syllables by the word regex; it is listed in
 //   SPACELESS_RE for metrics' own reasons and character units are also fine for it.
@@ -52,9 +53,16 @@ const SPACELESS_RUN_RE = new RegExp(`${SPACELESS_RE.source}+`, 'gu');
 /** `tokens()` of the transcribed text only: editorial blocks dropped with their content (see header). */
 export const tokensBody = (s) => tokens((s || '').replace(EDITORIAL_RE, ' '));
 
+// Arabic tashkeel + tatweel and Hebrew niqqud + cantillation are EDITION-level pointing, not text:
+// one side vowelled and the other not read as two different words once `\p{M}` stays inside a word
+// (measured 2026-09-13: a pointed Qurʾān fell 0.106 → 0.016). Stripped before tokenizing, as
+// metrics' SCRIPT_DEFS.arabic/hebrew folds do. Devanagari vowel signs are NOT stripped — they are
+// part of the word in every edition. Maqaf (U+05BE) is punctuation and already splits.
+const POINTING_RE = /[ً-ْٰـ֑-ׇֽֿׁׂׅׄ]/g;
+
 /** Text of one side → token list: characters for space-less runs, words elsewhere. */
 export function tokens(s) {
-  const text = (s || '').replace(/<[^>]+>/g, ' ').normalize('NFC').replace(/[’‘ʼ]/g, "'").toLowerCase();
+  const text = (s || '').replace(/<[^>]+>/g, ' ').normalize('NFC').replace(POINTING_RE, '').replace(/[’‘ʼ]/g, "'").toLowerCase();
   const out = [];
   for (const w of text.match(WORD_RE) || []) {
     if (!SPACELESS_RE.test(w)) { out.push(w); continue; }
