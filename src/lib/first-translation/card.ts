@@ -135,8 +135,18 @@ export function cardLabel(
     // Plain catalog voice (2026-08-11): state the fact like a catalog states
     // "first edition". The search record backs it, one click away — not as a
     // disclaimer in the reader's face.
+    //
+    // Hedged 2026-09-04. "The first English translation of this work" is a claim
+    // about the WORLD, and the world can always produce a counterexample: on the
+    // day this changed, 74 live cards were asserting it over evidence of a prior
+    // sitting on the same page. A claim about the world makes each of those a
+    // falsehood; a claim about our own search makes it a card edit. So the
+    // sentence now reports what we did — the search record beneath it is the
+    // evidence, and it stays true when someone finds an earlier translation
+    // tomorrow. The discovery is still the point; it is just no longer a
+    // superlative we cannot defend across 11,530 works.
     return {
-      sentence: 'The first English translation of this work.',
+      sentence: 'Possibly the first English translation — no earlier one is known to us.',
       register: 'first',
       entries: [],
     };

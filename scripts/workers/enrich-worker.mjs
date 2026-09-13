@@ -83,6 +83,7 @@ const RUN_PHASE_6 = phaseArg === 'all' || phaseArg === '6';
 const RUN_PHASE_7 = phaseArg === 'all' || phaseArg === '7';
 const RUN_PHASE_7_5 = phaseArg === 'all' || phaseArg === '7.5';
 const RUN_PHASE_7_6 = phaseArg === 'all' || phaseArg === '7.6';
+const RUN_PHASE_7_7 = phaseArg === 'all' || phaseArg === '7.7';
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
 const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 30;
 const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 30;
@@ -2040,8 +2041,33 @@ NO explanation, just the JSON array.`;
   }
 
   // Summary
+  // ── Phase 7.7: Prior-translation check ──
+  // Every other phase here asks what the book IS. This one asks whether anyone
+  // has Englished it before — the question that decides whether a reader sees a
+  // first-translation card. Before this existed, a book could finish OCR,
+  // translation, summary, chapters, quality and collections and never be asked:
+  // 13 of the 15 most recently translated Forum-of-Conscience books had no card
+  // at all, which is the whole reason a retroactive 11,530-work drain (#4617)
+  // exists. Deterministic — catalogue match, then public bibliographic APIs. No
+  // Gemini call, and no model is ever asked to assert an absence.
+  let priorChecked = 0;
+  if (RUN_PHASE_7_7) {
+    console.log('\n=== Phase 7.7: Prior-translation check ===');
+    try {
+      const { runPriorTranslationCheck } = await import('./prior-translation-check.mjs');
+      const res = await runPriorTranslationCheck({ db, limit: 40, apply: !DRY_RUN, book: SINGLE_BOOK ?? null });
+      priorChecked = res.written;
+      console.log(`  ${res.summary}`);
+    } catch (e) {
+      // Never let a network-bound check break enrichment. A miss here is a card
+      // that stays unwritten, which is silence — the safe direction.
+      console.error(`  Phase 7.7 failed (non-fatal): ${e.message}`);
+      errors.push(`phase7.7: ${e.message}`);
+    }
+  }
+
   const durationMs = Date.now() - startTime;
-  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, quality=${qualityScored}, collections=${collectionAssigned}, errors=${errors.length}, ${(durationMs/1000).toFixed(0)}s`);
+  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, quality=${qualityScored}, collections=${collectionAssigned}, priorChecked=${priorChecked}, errors=${errors.length}, ${(durationMs/1000).toFixed(0)}s`);
   if (errors.length > 0) {
     console.log('  Errors:');
     for (const err of errors.slice(0, 10)) console.log(`    ${err}`);
