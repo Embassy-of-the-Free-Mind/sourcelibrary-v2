@@ -36,7 +36,7 @@
  *             A 'clear' verdict writes. A 'review' verdict NEVER overwrites a stored value; it records
  *             the claim and sets `language_review` for a human, matching src/lib/resolve-language.ts.
  *
- * Scope (one required): --ia-ids-file=F (JSON array of ia_identifier) | --book-ids=a,b,c | --weak-provenance
+ * Scope (one required): --ia-ids-file=F (JSON array of ia_identifier) | --book-ids=a,b,c | --book-ids-file=F (JSON array of id) | --weak-provenance
  *   --weak-provenance  = language absent, or provenance that never saw page text.
  *
  *   set -a; source .env.production.local; set +a
@@ -71,13 +71,18 @@ async function targets(db) {
     return db.collection('books').find({ ia_identifier: { $in: ids } }, { projection: proj }).toArray();
   }
   if (bookIds) return db.collection('books').find({ id: { $in: bookIds.split(',') } }, { projection: proj }).toArray();
+  const bookIdsFile = val('--book-ids-file');
+  if (bookIdsFile) {
+    const ids = JSON.parse(fs.readFileSync(bookIdsFile, 'utf8'));
+    return db.collection('books').find({ id: { $in: ids } }, { projection: proj }).toArray();
+  }
   if (has('--weak-provenance')) {
     return db.collection('books').find(
       { $or: [{ language: { $in: [null, '', 'Unknown'] } }, { 'field_provenance.language': { $exists: false } }] },
       { projection: proj },
     ).limit(parseInt(val('--limit') || '200', 10)).toArray();
   }
-  console.error('Scope required: --ia-ids-file=F | --book-ids=a,b | --weak-provenance');
+  console.error('Scope required: --ia-ids-file=F | --book-ids=a,b | --book-ids-file=F | --weak-provenance');
   process.exit(1);
 }
 

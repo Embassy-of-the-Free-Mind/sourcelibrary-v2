@@ -38,6 +38,11 @@
  *   --threshold=F      share at which a second language is "real" (default 0.10)
  *   --min-pages=N      fewest tagged pages for a verdict (default 10)
  *   --all              include hidden/unpublished books (default: live only)
+ *   --mirror=DIR       read the LOCAL corpus mirror (~/sl-corpus: books.jsonl + books/<id>.jsonl)
+ *                      instead of Atlas — the same per-page rule, zero database load, minutes not
+ *                      hours. The mirror carries no languages[]/text_role, so those columns are
+ *                      null in mirror rows; join them from the catalogue afterwards (#4781).
+ *   --ids-file=F       only these book ids (JSON array or one id per line), either source
  *
  * Checkpointing is not optional here and not a nicety: this is a corpus walk
  * over ~57K books, and three long jobs died mid-walk in one day in July 2026
@@ -47,6 +52,7 @@
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { normalizeLanguageToken, parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
 
 const arg = (name, dflt) => {
@@ -64,6 +70,8 @@ const CONCURRENCY = Math.max(1, Number(arg('concurrency', '6')));
 const THRESHOLD = Number(arg('threshold', '0.10'));
 const MIN_PAGES = Number(arg('min-pages', '10'));
 const ALL = flag('all');
+const MIRROR = arg('mirror', '');
+const IDS_FILE = arg('ids-file', '');
 const BATCH = 200;
 /** A page needs this much text left, after metadata, to vote on the book's language mix. */
 const MIN_BODY_CHARS = Number(arg('min-body', '60'));
@@ -144,6 +152,55 @@ async function tagCounts(pages, bookId) {
     { $project: { tag: { $regexFind: { input: '$head', regex: '<language>([^<]{0,60})</language>' } } } },
     { $group: { _id: { $arrayElemAt: ['$tag.captures', 0] }, n: { $sum: 1 } } },
   ], { maxTimeMS: 60000, allowDiskUse: false }).toArray();
+}
+
+/** The metadata blocks a page may carry before its transcription — must match the pipeline above. */
+const META_BLOCKS = [['<language>', '</language>'], ['<page-type>', '</page-type>'], ['<script>', '</script>'],
+  ['<image-desc', '</image-desc>'], ['<vocab>', '</vocab>'], ['<scan-quality>', '</scan-quality>']];
+
+/**
+ * The same rule as `tagCounts`, applied in JavaScript to the mirror's page rows (`p`, `ocr`).
+ * Kept beside the pipeline on purpose: one exclusion added to one and not the other is how two
+ * instruments come to disagree about the same book. Returns the pipeline's row shape.
+ */
+export function tagCountsLocal(pageRows) {
+  const counts = new Map();
+  for (const row of pageRows) {
+    const pn = Number(row.p);
+    if (!(pn >= 0) || typeof row.ocr !== 'string') continue;
+    let body = row.ocr;
+    for (const [open, close] of META_BLOCKS) {
+      const st = body.indexOf(open);
+      const en = body.indexOf(close);
+      if (st >= 0 && en > st) body = body.slice(0, st) + body.slice(en + close.length);
+    }
+    if (body.trim().length < MIN_BODY_CHARS) continue;
+    const m = row.ocr.slice(0, 300).match(/<language>([^<]{0,60})<\/language>/);
+    const tag = m ? m[1] : null;
+    counts.set(tag, (counts.get(tag) || 0) + 1);
+  }
+  return [...counts.entries()].map(([_id, n]) => ({ _id, n }));
+}
+
+/** Books from the local mirror, in the catalogue's shape (fields the mirror lacks are null). */
+function* mirrorBooks(dir, wanted) {
+  const lines = fs.readFileSync(path.join(dir, 'books.jsonl'), 'utf8').split('\n');
+  for (const line of lines) {
+    if (!line) continue;
+    const b = JSON.parse(line);
+    if (wanted && !wanted.has(b.id)) continue;
+    if (!ALL && !b.visible) continue;
+    if (!(b.pages_ocr > 0)) continue;
+    const file = path.join(dir, 'books', `${b.id}.jsonl`);
+    if (!fs.existsSync(file)) continue;
+    yield { ...b, languages: null, language_multi: null, text_role: null, _file: file };
+  }
+}
+
+function readIdsFile(file) {
+  const text = fs.readFileSync(file, 'utf8').trim();
+  const ids = text.startsWith('[') ? JSON.parse(text) : text.split('\n').map((l) => l.trim()).filter(Boolean);
+  return new Set(ids);
 }
 
 /**
@@ -252,8 +309,8 @@ function sensitivity(prof) {
 }
 
 async function main() {
-  if (!process.env.MONGODB_URI) {
-    console.error('MONGODB_URI not set (set -a; source .env.production.local; set +a).');
+  if (!MIRROR && !process.env.MONGODB_URI) {
+    console.error('MONGODB_URI not set (set -a; source .env.production.local; set +a), or pass --mirror=DIR.');
     process.exit(1);
   }
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
@@ -266,22 +323,87 @@ async function main() {
     fs.writeFileSync(OUT, '');
   }
 
+  const wanted = IDS_FILE ? readIdsFile(IDS_FILE) : (BOOK_ID ? new Set([BOOK_ID]) : null);
+  const sink = fs.createWriteStream(OUT, { flags: RESUME ? 'a' : 'w' });
+  const totals = { seen: 0, written: 0 };
+  const buckets = {};
+  const sensTotals = Object.fromEntries(SENSITIVITY.map((t) => [t, 0]));
+  const started = process.hrtime.bigint();
+
+  /** One output row per book — the same row whichever source produced the counts. */
+  const emit = (book, prof, error) => {
+    totals.seen++;
+    // An error is recorded as a ROW, never skipped silently — an absent
+    // book in the output must mean "not reached", not "failed quietly".
+    if (error) {
+      sink.write(JSON.stringify({ id: book.id, bucket: 'error', error }) + '\n');
+      buckets.error = (buckets.error || 0) + 1;
+      return;
+    }
+    const v = verdict(book, prof);
+    const sens = sensitivity(prof);
+    for (const t of SENSITIVITY) if (sens[t] > 1) sensTotals[t]++;
+    buckets[v.bucket] = (buckets[v.bucket] || 0) + 1;
+    sink.write(JSON.stringify({
+      id: book.id,
+      title: book.title,
+      language: book.language,
+      catalogued: v.catalogued,
+      languages_current: book.languages ?? null,
+      language_multi_current: book.language_multi ?? null,
+      text_role: book.text_role ?? null,
+      visible: book.visible ?? null,
+      pages_ocr: book.pages_ocr ?? null,
+      tagged: prof.tagged,
+      untagged: prof.untagged,
+      unparsed: prof.unparsed,
+      shares: prof.shares,
+      bucket: v.bucket,
+      proposed: v.proposed,
+      changed: v.changed ?? null,
+      primary_shifted: v.primary_shifted ?? null,
+      unsupported: v.unsupported ?? null,
+      // Same-family variant spellings on this book's pages ("Chinese" AND
+      // "Classical Chinese"). Never counted as a second language; recorded
+      // because an inconsistent tag vocabulary is itself a finding (#3893).
+      variants: v.variants ?? null,
+      multi_at: sens,
+    }) + '\n');
+    totals.written++;
+  };
+
+  if (MIRROR) {
+    const dir = MIRROR.replace(/^~/, process.env.HOME);
+    let skipTo = after;
+    for (const book of mirrorBooks(dir, wanted)) {
+      if (skipTo) { if (book.id === skipTo) skipTo = null; continue; }
+      try {
+        const rows = fs.readFileSync(book._file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+        emit(book, profile(tagCountsLocal(rows)), null);
+      } catch (e) {
+        emit(book, null, String(e && e.message || e));
+      }
+      if (totals.seen % BATCH === 0) {
+        fs.writeFileSync(CHECKPOINT, book.id);
+        const secs = Number(process.hrtime.bigint() - started) / 1e9;
+        console.error(`${totals.seen} books · ${(totals.seen / secs).toFixed(1)}/s · ${JSON.stringify(buckets)}`);
+      }
+      if (LIMIT && totals.seen >= LIMIT) break;
+    }
+    await new Promise((r) => sink.end(r));
+    summary(totals, buckets, sensTotals);
+    return;
+  }
+
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db('bookstore');
   const books = db.collection('books');
   const pages = db.collection('pages');
-  const sink = fs.createWriteStream(OUT, { flags: RESUME ? 'a' : 'w' });
-
   const query = BOOK_ID
     ? { id: BOOK_ID }
-    : { pages_ocr: { $gt: 0 }, ...(ALL ? {} : { visible: true }) };
+    : { pages_ocr: { $gt: 0 }, ...(ALL ? {} : { visible: true }), ...(wanted ? { id: { $in: [...wanted] } } : {}) };
   const projection = { id: 1, title: 1, language: 1, languages: 1, language_multi: 1, pages_ocr: 1, text_role: 1, visible: 1 };
-
-  const totals = { seen: 0, written: 0 };
-  const buckets = {};
-  const sensTotals = Object.fromEntries(SENSITIVITY.map((t) => [t, 0]));
-  const started = process.hrtime.bigint();
 
   for (;;) {
     const q = after ? { ...query, _id: { $gt: after } } : query;
@@ -299,45 +421,7 @@ async function main() {
           return { book, prof: null, error: String(e && e.message || e) };
         }
       }));
-      for (const { book, prof, error } of results) {
-        totals.seen++;
-        // An error is recorded as a ROW, never skipped silently — an absent
-        // book in the output must mean "not reached", not "failed quietly".
-        if (error) {
-          sink.write(JSON.stringify({ id: book.id, bucket: 'error', error }) + '\n');
-          buckets.error = (buckets.error || 0) + 1;
-          continue;
-        }
-        const v = verdict(book, prof);
-        const sens = sensitivity(prof);
-        for (const t of SENSITIVITY) if (sens[t] > 1) sensTotals[t]++;
-        buckets[v.bucket] = (buckets[v.bucket] || 0) + 1;
-        sink.write(JSON.stringify({
-          id: book.id,
-          title: book.title,
-          language: book.language,
-          catalogued: v.catalogued,
-          languages_current: book.languages ?? null,
-          language_multi_current: book.language_multi ?? null,
-          text_role: book.text_role ?? null,
-          pages_ocr: book.pages_ocr ?? null,
-          tagged: prof.tagged,
-          untagged: prof.untagged,
-          unparsed: prof.unparsed,
-          shares: prof.shares.map((s) => [s.lang, Number(s.share.toFixed(4)), s.pages]),
-          bucket: v.bucket,
-          proposed_languages: v.proposed,
-          changed: v.changed ?? null,
-          primary_shifted: v.primary_shifted ?? null,
-          unsupported: v.unsupported ?? null,
-          // Same-family variant spellings on this book's pages ("Chinese" AND
-          // "Classical Chinese"). Never counted as a second language; recorded
-          // because an inconsistent tag vocabulary is itself a finding (#3893).
-          variants: v.variants ?? null,
-          multi_at: sens,
-        }) + '\n');
-        totals.written++;
-      }
+      for (const { book, prof, error } of results) emit(book, prof, error);
     }
 
     after = batch[batch.length - 1]._id;
@@ -349,7 +433,10 @@ async function main() {
 
   await new Promise((r) => sink.end(r));
   await client.close();
+  summary(totals, buckets, sensTotals);
+}
 
+function summary(totals, buckets, sensTotals) {
   console.error('\n--- summary (DRY RUN — nothing written to the database) ---');
   console.error(`books examined: ${totals.seen}, rows written: ${totals.written} -> ${OUT}`);
   console.error(`buckets: ${JSON.stringify(buckets, null, 1)}`);
@@ -363,4 +450,7 @@ async function main() {
   console.error('is the EDITION language, and a sweep that forgot nearly relabelled 547 books.');
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+// Run only when executed directly, so `tagCountsLocal` can be imported by its unit test.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((e) => { console.error(e); process.exit(1); });
+}
