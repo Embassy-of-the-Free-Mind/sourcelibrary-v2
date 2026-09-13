@@ -156,7 +156,19 @@ const PROJECTS = [
   { id: 'gen-lang-client-0278315411', name: 'booksplit', note: 'primary pipeline key lives here; also holds smartpaper + Kaiju Rampage keys' },
   { id: 'gen-lang-client-0352480887', name: 'Sourcelibrary', note: '' },
   { id: 'gen-lang-client-0720939617', name: 'soma', note: 'GEMINI_API_KEY_TIER3 lives here; also non-SL keys' },
+  // Added 2026-09-14: holds GEMINI_API_KEY_FREE, which IS installed on Hetzner and
+  // made 338 successful GenerateContent calls in September. Three projects were
+  // audited because three were known; the way to find the fourth is to enumerate
+  // every project holding a generativelanguage key, not to list the ones you use.
+  { id: 'gen-lang-client-0181126711', name: 'sourcelibrary2', note: 'GEMINI_API_KEY_FREE lives here' },
+  { id: 'gen-lang-client-0101787750', name: 'Gemini API', note: 'holds 2 keys; no traffic in September, listed so silence is a reading' },
 ];
+
+// NOT covered, and it is not an oversight to leave unstated: Vercel production
+// carries GEMINI_API_KEY and GEMINI_API_KEY_TIER3 whose key strings match NO key
+// in any project this account can see (checked against all 10, 2026-09-14). The
+// request path may therefore bill a project outside this list entirely. Whoever
+// owns that project has to add it here, or its spend is invisible to this script.
 
 /** Gemini API service in the Cloud Billing catalogue. */
 const GEMINI_SERVICE = 'services/AEFD-7695-64FA';
@@ -376,11 +388,15 @@ async function meteredMongo(db) {
     { $group: { _id: { model: '$model', endpoint: '$endpoint', status: '$status', mode: '$mode',
                        day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } } },
                 calls: { $sum: 1 }, cost: { $sum: '$cost_usd' },
-                inTok: { $sum: '$input_tokens' }, outTok: { $sum: '$output_tokens' } } },
+                inTok: { $sum: '$input_tokens' }, outTok: { $sum: '$output_tokens' },
+                // Rows that carry a price but no token counts. They are spend the
+                // TOKEN comparison below cannot see, so they inflate the apparent
+                // gap: `script/ft-ladder` writes 4,896 such rows ($36 in September).
+                noTok: { $sum: { $cond: [{ $and: [{ $gt: ['$cost_usd', 0] }, { $not: [{ $gt: ['$output_tokens', 0] }] }] }, 1, 0] } } } },
   ], { allowDiskUse: true }).toArray();
   return tally(rows.map(r => ({
     model: r._id.model, endpoint: r._id.endpoint, status: r._id.status, day: r._id.day, mode: r._id.mode,
-    calls: r.calls, cost: r.cost || 0, inTok: r.inTok || 0, outTok: r.outTok || 0,
+    calls: r.calls, cost: r.cost || 0, inTok: r.inTok || 0, outTok: r.outTok || 0, noTok: r.noTok || 0,
   })));
 }
 
@@ -410,8 +426,9 @@ async function meteredSupabase() {
       for (const b of batch) {
         const day = dayKey(b.timestamp || '');
         const k = `${b.model}${b.endpoint}${b.status}${b.mode}${day}`;
-        const g = groups.get(k) || { model: b.model, endpoint: b.endpoint, status: b.status, mode: b.mode, day, calls: 0, cost: 0, inTok: 0, outTok: 0 };
+        const g = groups.get(k) || { model: b.model, endpoint: b.endpoint, status: b.status, mode: b.mode, day, calls: 0, cost: 0, inTok: 0, outTok: 0, noTok: 0 };
         g.calls++; g.cost += b.cost_usd || 0; g.inTok += b.input_tokens || 0; g.outTok += b.output_tokens || 0;
+        if ((b.cost_usd || 0) > 0 && !(b.output_tokens > 0)) g.noTok++;
         groups.set(k, g);
       }
       if (batch.length < 1000) break;
@@ -434,7 +451,7 @@ const PLACEHOLDER = new Set(['submitted', 'pending', 'duplicate', 'unknown']);
 const FAILED = new Set(['failed', 'error']);
 function tally(groups) {
   const byModel = {}, byEndpoint = {}, byDay = {};
-  let calls = 0, spendCalls = 0, cost = 0, placeholders = 0, failed = 0;
+  let calls = 0, spendCalls = 0, cost = 0, placeholders = 0, failed = 0, pricedNoTokens = 0;
   for (const g of groups) {
     const m = g.model || 'unknown';
     byModel[m] = byModel[m] || { calls: 0, cost: 0, inTok: 0, outTok: 0 };
@@ -453,12 +470,12 @@ function tally(groups) {
     if (g.mode === 'batch') byDay[d].batchOutTok += g.outTok;
     else byDay[d].realtimeOutTok += g.outTok;
 
-    calls += g.calls; cost += g.cost;
+    calls += g.calls; cost += g.cost; pricedNoTokens += g.noTok || 0;
     if (PLACEHOLDER.has(g.status)) placeholders += g.calls;
     else if (FAILED.has(g.status)) failed += g.calls;
     else { spendCalls += g.calls; byDay[d].spendCalls += g.calls; }
   }
-  return { byModel, byEndpoint, byDay, calls, spendCalls, cost, placeholders, failed, error: null };
+  return { byModel, byEndpoint, byDay, calls, spendCalls, cost, placeholders, failed, pricedNoTokens, error: null };
 }
 
 /**
@@ -591,7 +608,7 @@ async function requestPathUsage(db) {
 
 /** Merge the two stores into one metered picture. */
 function mergeMetered(a, b) {
-  const out = { byModel: {}, byEndpoint: {}, byDay: {}, calls: 0, spendCalls: 0, cost: 0, placeholders: 0, failed: 0 };
+  const out = { byModel: {}, byEndpoint: {}, byDay: {}, calls: 0, spendCalls: 0, cost: 0, placeholders: 0, failed: 0, pricedNoTokens: 0 };
   for (const s of [a, b]) {
     for (const [m, v] of Object.entries(s.byModel)) {
       out.byModel[m] = out.byModel[m] || { calls: 0, cost: 0, inTok: 0, outTok: 0 };
@@ -605,7 +622,7 @@ function mergeMetered(a, b) {
       out.byDay[d] = out.byDay[d] || { calls: 0, spendCalls: 0, cost: 0, outTok: 0, realtimeOutTok: 0, batchOutTok: 0 };
       for (const k of ['calls', 'spendCalls', 'cost', 'outTok', 'realtimeOutTok', 'batchOutTok']) out.byDay[d][k] += v[k];
     }
-    for (const k of ['calls', 'spendCalls', 'cost', 'placeholders', 'failed']) out[k] += s[k];
+    for (const k of ['calls', 'spendCalls', 'cost', 'placeholders', 'failed', 'pricedNoTokens']) out[k] += s[k] || 0;
   }
   return out;
 }
@@ -864,6 +881,12 @@ async function main() {
         log(`    ${'window'.padEnd(12)} ${M(billedTok).padStart(9)} ${M(meterTok).padStart(9)} ${M(billedTok - meterTok).padStart(10)}   ${M(batchTok).padStart(23)}`);
         log(`\n  realtime token coverage . ${v.coveragePct.toFixed(0)}%  (tolerance: gap below ${GAP_TOLERANCE_PCT}%)`);
         log(`  of which ai_usage-only features (librarian, podcast, voice): ${M(requestTok)}`);
+        if (metered.pricedNoTokens) {
+          // A row with a price and no token counts is spend this comparison cannot
+          // see: it lands in "unmetered" even though somebody did record it. Name
+          // it rather than letting it masquerade as a coverage hole.
+          log(`  ${metered.pricedNoTokens.toLocaleString()} metered row(s) carry a cost but NO token counts — they read as unmetered above.`);
+        }
         out.gapCheck = {
           tolerancePct: GAP_TOLERANCE_PCT, billedTokens: billedTok, meteredRealtimeTokens: meterTok,
           meteredBatchTokens: batchTok, requestPathTokens: requestTok, gapPct: v.gapPct, verdict: v.verdict, byDay: rows,
