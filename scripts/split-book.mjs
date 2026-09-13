@@ -141,10 +141,19 @@ async function getOriginalImageUrls(bookId, manifestUrl, pageCount) {
     }
   } catch {}
 
-  // Fallback: IIIF manifest
+  // Fallback: IIIF manifest. A non-OK or non-JSON answer (Harvard's nrs.harvard.edu
+  // returns 429 with an empty body) is "no manifest", not a crash (#4796) — the
+  // caller falls through to its own error message.
   console.log('  No archived copies — falling back to IIIF manifest (slow)');
-  const resp = await fetch(manifestUrl, { signal: AbortSignal.timeout(15000) });
-  const manifest = await resp.json();
+  let manifest;
+  try {
+    const resp = await fetch(manifestUrl, { signal: AbortSignal.timeout(15000) });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    manifest = await resp.json();
+  } catch (e) {
+    console.log(`  Manifest unusable (${e.message?.slice(0, 60)}) — no images from ${manifestUrl}`);
+    return [];
+  }
 
   const canvases = manifest.sequences?.[0]?.canvases || manifest.items || [];
   for (const canvas of canvases) {
@@ -295,7 +304,33 @@ console.log('\n--- Step 1: Get original image URLs ---');
 const existingPageCount = book.pages_count || 0;
 let iiifUrls;
 
-// Try archived copies first — use known page count instead of sequential HEAD probing.
+// Source order (#4796): the book's OWN page records first, then the two
+// /archived/{id}/ naming eras, then the IIIF manifest. The page record is the
+// one place every archiver writes, whatever path convention it used
+// (/pages/{id}/0001.jpg for Harvard and cmc_kloss, /archived/{id}/N.jpg for
+// IA-era books, …). Guessing paths first and falling back to the manifest
+// crashed 19 Harvard books whose manifest answers 429 — the page records had
+// the right URL the whole time.
+// Only safe for never-split books: on an already-split book `photo` is a
+// cropped half, not the spread. A URL that does not carry this book's id is
+// not trusted (#3362: a book-independent key is another book's page).
+if (book.split_completed !== true) {
+  const srcPages = await db.collection('pages')
+    .find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { page_number: 1, archived_photo: 1, photo: 1 } })
+    .sort({ page_number: 1 })
+    .toArray();
+  const urls = srcPages
+    .map(p => [p.archived_photo, p.photo].find(u => typeof u === 'string' && /^https?:\/\//.test(u) && u.includes(book.id)))
+    .filter(Boolean);
+  if (urls.length > 0 && urls.length >= srcPages.length * 0.9) {
+    iiifUrls = urls;
+    console.log(`  Using ${iiifUrls.length} page-record image URLs (provider: ${book.image_source?.provider || 'unknown'})`);
+  } else if (srcPages.length) {
+    console.log(`  Page records: only ${urls.length}/${srcPages.length} carry a book-scoped image URL — trying archive paths`);
+  }
+}
+
+// Archived copies by path — use known page count instead of sequential HEAD probing.
 // BPH books use zero-padded names (0001.jpg), others use plain (1.jpg). Try both.
 const archivePatterns = [
   { fmt: (i) => `${R2_URL}/archived/${book.id}/${String(i).padStart(4, '0')}.jpg`, label: '0001.jpg' },
@@ -335,25 +370,6 @@ for (const pattern of archivePatterns) {
 
 if (!iiifUrls && manifestUrl) {
   iiifUrls = await getOriginalImageUrls(book.id, manifestUrl, existingPageCount);
-}
-
-// Page-record fallback: providers that don't use the /archived/{id}/{n}.jpg
-// convention (e.g. cmc_kloss PDF extracts at /books/{id}/pages/NNNN.jpg, the
-// largest cohort) still carry the correct R2 URL on the page document itself.
-// Only safe for never-split books — on an already-split book `photo` is a
-// cropped half, not the spread. All #2454 first-time splits qualify.
-if (!iiifUrls && book.split_completed !== true) {
-  const srcPages = await db.collection('pages')
-    .find({ book_id: book.id }, { projection: { page_number: 1, archived_photo: 1, photo: 1 } })
-    .sort({ page_number: 1 })
-    .toArray();
-  const urls = srcPages
-    .map(p => p.archived_photo || p.photo)
-    .filter(u => typeof u === 'string' && /^https?:\/\//.test(u));
-  if (urls.length > 0 && urls.length >= srcPages.length * 0.9) {
-    iiifUrls = urls;
-    console.log(`  Using ${iiifUrls.length} page-record image URLs (provider: ${book.image_source?.provider || 'unknown'})`);
-  }
 }
 
 if (!iiifUrls || iiifUrls.length === 0) {
@@ -533,7 +549,13 @@ if (GUTTER_ONLY) {
         let gemPos = null;
         if (gemSampleIdx.has(idx)) {
           if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
-          try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch { /* gemini optional */ }
+          try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch (e) {
+            // Gemini is optional (pixel carries the page) but a silent skip hid
+            // a dead model name / geo-blocked key for months (#4796): count it
+            // and show the first message so "gemini-only 0" is explained.
+            stats.geminiErr = (stats.geminiErr || 0) + 1;
+            if (stats.geminiErr === 1) console.log(`  Gemini gutter sample failed: ${e.message?.slice(0, 100)}`);
+          }
         }
 
         if (pixPos != null && gemPos != null) {
@@ -587,7 +609,7 @@ if (GUTTER_ONLY) {
   const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscapeCount * 0.25));
   const SCATTER_MAD = 60; // 0-1000 → 6% — robust scatter measure (MAD, not stdev: one outlier won't trip it)
   const scattered = confidentPositions.length >= 3 && mad > SCATTER_MAD;
-  console.log(`  Methods: agree ${stats.agree}, pixel-only ${stats.pixelOnly}, gemini-only ${stats.geminiOnly}, disagree ${stats.disagree}, portrait ${stats.portrait}, center-unc ${stats.centerUncertain}, kept-whole-unc ${stats.keptWholeUncertain}`);
+  console.log(`  Methods: agree ${stats.agree}, pixel-only ${stats.pixelOnly}, gemini-only ${stats.geminiOnly}, disagree ${stats.disagree}, portrait ${stats.portrait}, center-unc ${stats.centerUncertain}, kept-whole-unc ${stats.keptWholeUncertain}${stats.geminiErr ? `, GEMINI ERRORS ${stats.geminiErr}` : ''}`);
   console.log(`  Book consensus: median ${median}/1000, MAD ${mad}/1000, ${confidentPositions.length} confident/${landscapeCount} landscape${scattered ? ' — SCATTERED' : ''}`);
 
   // Park only when there's no trustworthy consensus: too few confident pages, or
