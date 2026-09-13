@@ -12,11 +12,22 @@
 const UA = 'SourceLibrary ia-ocr (team@sourcelibrary.org)';
 
 // ---------- rate-limited fetch, abort on repeated refusal (a guard travels with the file) ----------
+// A refusal is a 429/503 response OR a thrown network error ("fetch failed", "other side
+// closed"): the Latin dry run died at book 3,510 of 7,684 on 2026-09-13 because only the
+// former was handled. Both back off 15 s and count toward the abort.
 let lastReq = 0, consecutiveRefusals = 0;
 export async function iaFetch(url, { minIntervalMs = 500, maxRefusals = 4 } = {}) {
   const wait = minIntervalMs - (Date.now() - lastReq); if (wait > 0) await new Promise((r) => setTimeout(r, wait));
   lastReq = Date.now();
-  const res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' });
+  let res;
+  try {
+    res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' });
+  } catch (e) {
+    consecutiveRefusals++;
+    console.error(`  archive.org network error (${consecutiveRefusals}/${maxRefusals}): ${e?.cause?.code || e?.message || e}`);
+    if (consecutiveRefusals >= maxRefusals) { console.error(`ABORT: ${consecutiveRefusals} consecutive network errors from archive.org`); process.exit(3); }
+    await new Promise((r) => setTimeout(r, 15000)); return iaFetch(url, { minIntervalMs, maxRefusals });
+  }
   if (res.status === 429 || res.status === 503) {
     consecutiveRefusals++;
     if (consecutiveRefusals >= maxRefusals) { console.error(`ABORT: ${consecutiveRefusals} consecutive ${res.status} from archive.org`); process.exit(3); }
