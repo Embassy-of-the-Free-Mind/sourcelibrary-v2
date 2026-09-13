@@ -8588,8 +8588,9 @@
    "variants": [
     {
      "term": "tuna",
-     "confidence": 0.6,
-     "reason": "headword: Genuine Daoist breathing practice attested via 吐納 and 'Tu Na' forms, but the plain-ASCII 'tuna' key is heavily contaminated by unrelated homographs (see below)."
+     "confidence": 0.7,
+     "reason": "headword: Genuine Daoist breathing practice attested via 吐納 and 'Tu Na' forms, but the plain-ASCII 'tuna' key is heavily contaminated by unrelated homographs (see below).",
+     "note": "headword row: judge seed confidence 0.6 raised to the 0.7 floor"
     },
     {
      "term": "tu na",
@@ -9228,8 +9229,9 @@
    "variants": [
     {
      "term": "procession",
-     "confidence": 0.65,
-     "reason": "headword: Genuine physical ritual-walking practice is attested in the corpus (processional cross, processionale, Procession des Palmes) though the plain-word evidence sample here happens to be the unrelated theological sense (procession = emanation/Trinity)."
+     "confidence": 0.7,
+     "reason": "headword: Genuine physical ritual-walking practice is attested in the corpus (processional cross, processionale, Procession des Palmes) though the plain-word evidence sample here happens to be the unrelated theological sense (procession = emanation/Trinity).",
+     "note": "headword row: judge seed confidence 0.65 raised to the 0.7 floor"
     }
    ],
    "equivalents": [
@@ -10079,8 +10081,9 @@
    "variants": [
     {
      "term": "karaṇa",
-     "confidence": 0.65,
-     "reason": "headword: Real attested Natya Shastra dance-unit term ('dance unit(s)' glosses across many books) but heavily homograph-polluted with astrological 'half-lunar day' and grammatical 'karma/instrument' senses, which dominate the sampled evidence rows."
+     "confidence": 0.7,
+     "reason": "headword: Real attested Natya Shastra dance-unit term ('dance unit(s)' glosses across many books) but heavily homograph-polluted with astrological 'half-lunar day' and grammatical 'karma/instrument' senses, which dominate the sampled evidence rows.",
+     "note": "headword row: judge seed confidence 0.65 raised to the 0.7 floor"
     }
    ],
    "equivalents": [],
@@ -10513,8 +10516,9 @@
    "variants": [
     {
      "term": "shuckling",
-     "confidence": 0.65,
-     "reason": "headword: Unambiguous Yiddish term for swaying during prayer; attested by keyword occurrence though evidence rows are sparse."
+     "confidence": 0.7,
+     "reason": "headword: Unambiguous Yiddish term for swaying during prayer; attested by keyword occurrence though evidence rows are sparse.",
+     "note": "headword row: judge seed confidence 0.65 raised to the 0.7 floor"
     }
    ],
    "equivalents": [],

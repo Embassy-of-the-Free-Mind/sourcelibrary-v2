@@ -11,8 +11,9 @@ const FLOOR = 0.7;
 describe('concept-aliases data contract', () => {
   const concepts = allConcepts();
 
-  it('has the 62 map concepts, each with a headword and tiers', () => {
-    expect(concepts.length).toBe(62);
+  it('has the 62 map concepts plus the 41 body-practice concepts, each with a headword and tiers', () => {
+    expect(concepts.length).toBe(103);
+    expect(concepts.filter((c) => c.theme === 'body').length).toBe(41);
     for (const c of concepts) {
       expect(typeof c.concept).toBe('string');
       expect(Array.isArray(c.variants) && Array.isArray(c.equivalents) && Array.isArray(c.related)).toBe(true);
