@@ -135,7 +135,29 @@ is public):
 
     db.feedback.find({ wants_to_help: true }).sort({ created_at: 1 })
 
-### 3. Unwritten, worth considering
+### 3. "Joost Ritman, 1941–2026" — the SEPTEMBER letter, first week of September
+
+`scripts/email/queued/ritman-memoriam.body.html`
+
+Decided 2026-08-27: the standalone memoriam is the September send, not the
+serpent letter with a farewell opening — a two-sentence farewell as the
+on-ramp to a fish story treats the deaths as a segue, and memorials do not
+keep (Joost died 5 June, Jons Hensel late July). Ask: **read one of his
+books** (the 1472 Pimander). Text-only, no counts, no images.
+
+Carries a PROPOSED paragraph for Jons Hensel (one paragraph, no ask, no
+pivot — per the ops-repo rule: never make a death a reason to give). Gates,
+all three hard: (1) EFM + family blessing — including the explicit question
+of whether Jons's name appears at all; who signs off is Derek's call, and
+the routing + contacts live in the PRIVATE ops repo
+(`~/sourcelibrary-ops/email-campaign/memorial-signoff.md` — this repo is
+public, so no names or addresses here); (2) Derek rewrites the copy;
+(3) re-verify the Pimander link on send day.
+
+The serpent letter moves to October as a plain reader's letter, farewell
+opening deleted (note in its header).
+
+### 4. Unwritten, worth considering
 - **What we got wrong and fixed** — the reader reports that found the leaf
   offset (#3368) and the fabricated encyclopedia citations (#3361), told
   properly. Strong material, cut from letter 1 when Derek rewrote it; it is a
