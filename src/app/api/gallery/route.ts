@@ -555,7 +555,14 @@ export async function GET(request: NextRequest) {
 
         // (1) Title-matching artworks — strongest signal (e.g. "John the Apostle" in the name)
         const titleArtDocs = await db.collection('books').find(
-          { content_type: 'artwork', visible: true, ...tenantF, $and: [{ $or: [{ title: rx }, { display_title: rx }] }, imgPresent] },
+          // Inscriptions are the words written ON the artwork (enrichment.inscriptions,
+          // transcribed by scripts/artwork-enrichment.mjs). Until now they were rendered on
+          // the artwork page but matched by nothing, so "hypotyposin" — a word that appears
+          // only in Sadeler's engraved caption — returned an anatomy plate. Measured against
+          // production 2026-09-14: adding the two fields to this $or examines the same 57,614
+          // docs as the title-only version (869ms) because the lane already collection-scans.
+          // A dedicated artwork search index is the real fix — see the follow-up issue.
+          { content_type: 'artwork', visible: true, ...tenantF, $and: [{ $or: [{ title: rx }, { display_title: rx }, { 'enrichment.inscriptions': rx }, { 'enrichment.inscriptions_translation': rx }] }, imgPresent] },
           artProj,
         ).limit(10).toArray().catch(() => []);
         // (2) Books whose title matches → their top plates
