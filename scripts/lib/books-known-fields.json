@@ -438,6 +438,7 @@
     "split_completed_at",
     "split_geometry",
     "split_note",
+    "split_page_order",
     "spread_translation_crisis",
     "status",
     "subject",
