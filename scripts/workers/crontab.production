@@ -157,3 +157,9 @@
 # …and the reconciliation the sweep cannot do for itself: LEAKED / ORPHANED /
 # UNBACKED, plus the Supabase side. Exit 2 means UNKNOWN, which is not PASS.
 50 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/withheld-translation-drift.mjs ] && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
+
+# Pipeline HOLD reconciliation (#4790, scripts/lib/pipeline-hold.mjs): a held book is a status no
+# lane selects plus a marker the status writers refuse. This finds the writer nobody guarded —
+# CLOBBERED (marker, wrong status) / ORPHANED / LEAKED (translated after the hold) — and lists
+# RELEASABLE books whose release condition has been met. Exit 1 = drift, 2 = UNKNOWN (not PASS).
+55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1

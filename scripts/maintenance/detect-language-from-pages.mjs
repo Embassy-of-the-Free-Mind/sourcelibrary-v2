@@ -33,8 +33,8 @@
  *               node scripts/batch/realtime-ocr.mjs --page-ids-file=<file> --reason="language detection"
  *             The OCR is KEPT, so nothing is spent twice — those pages were going to be OCR'd anyway.
  *   --apply   read the OCR that now exists, detect, and write `language` + typed provenance.
- *             A 'clear' verdict writes. A 'review' verdict NEVER overwrites a stored value; it records
- *             the claim and sets `language_review` for a human, matching src/lib/resolve-language.ts.
+ *             ONLY a 'clear' verdict writes. A 'review' verdict — stored value or not — records the
+ *             claim and sets `language_review` + detail for a human, matching src/lib/resolve-language.ts.
  *
  * Scope (one required): --ia-ids-file=F (JSON array of ia_identifier) | --book-ids=a,b,c | --book-ids-file=F (JSON array of id) | --weak-provenance
  *   --weak-provenance  = language absent, or provenance that never saw page text.
@@ -168,10 +168,18 @@ if (APPLY) {
     // A 'review' verdict must never silently replace a catalogued value — record and flag.
     // `language_review_detail` is written in the shape scripts/audit/language-review-triage.mjs
     // reads, so these land in the EXISTING queue rather than beside it.
+    //
+    // …and it must not be WRITTEN on an empty catalogue value either. Until 2026-09-13 an
+    // empty `language` fell through to the write below, so the sampler's "script wins" verdict
+    // (2,536 Greek chars but the OCR tag says latin) put `language: Greek` on Schegk's 1580
+    // Latin treatise, with only a bare `language_review: true` to show for it. A spot check of
+    // 15 visible writes found 2 of that shape; 32 books were repaired from the page-tag
+    // aggregation (#4781). A review verdict is a review verdict whether or not a value is
+    // stored: flag with detail, write nothing.
     const detail = { detected: d.language, confidence: d.confidence, bucket: 'page_ocr_sample',
       sampled: d.sampled, modal: d.modal, modal_share: +d.modalShare.toFixed(2), scripts: d.scripts, why: d.why };
-    if (d.confidence !== 'clear' && stored) {
-      console.log(`  !   ${tag} stored=${stored} detected=${d.language}${d.language === stored ? ' (same value, but the sample is mixed)' : ''} — FLAGGED for review (${d.why})`);
+    if (d.confidence !== 'clear') {
+      console.log(`  !   ${tag} stored=${stored || 'none'} detected=${d.language}${d.language === stored ? ' (same value, but the sample is mixed)' : ''} — FLAGGED for review (${d.why})`);
       flagged++;
       if (COMMIT) {
         await db.collection('books').updateOne({ id: b.id }, { $set: {
@@ -197,8 +205,7 @@ if (APPLY) {
     wrote++;
     if (COMMIT) {
       await db.collection('books').updateOne({ id: b.id }, { $set: {
-        language: d.language, 'field_provenance.language': prov,
-        ...(d.confidence !== 'clear' ? { language_review: true } : {}), updated_at: new Date(),
+        language: d.language, 'field_provenance.language': prov, updated_at: new Date(),
       } });
     }
   }

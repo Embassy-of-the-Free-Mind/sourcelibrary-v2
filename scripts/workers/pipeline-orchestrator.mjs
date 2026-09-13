@@ -42,6 +42,7 @@ import { logUsage, logUsageAsync, outputTokensFrom } from './lib/supabase-usage-
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
+import { holdViolation } from '../lib/pipeline-hold.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -838,6 +839,24 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
     }
   );
   const prevStatus = book?.pipeline_auto?.status;
+
+  // A HELD book accepts no status from a worker (#4790). The hold is a decision with a reason and
+  // a release condition (scripts/lib/pipeline-hold.mjs); every phase already skips `held` books
+  // by selection, and this refusal is what stops a rollback or a retry from lifting it by accident.
+  // Always enforced — unlike the output guard below there is no observe mode, because a hold is
+  // explicit and rare, and advancing past one is the exact failure it exists to prevent.
+  const holdRefusal = book ? holdViolation(book, status) : null;
+  if (holdRefusal) {
+    console.log(`  [pipeline-hold] ${bookId}: ${holdRefusal}`);
+    db.collection('audit_log').insertOne({
+      action: 'pipeline_status_refused_held',
+      book_id: bookId,
+      book_title: book?.title,
+      metadata: { attempted: status, from: prevStatus || 'none', hold: book.pipeline_auto.hold },
+      timestamp: new Date(),
+    }).catch(() => {});
+    return;
+  }
 
   const violation = book ? statusOutputViolation(book, status, extra) : null;
   if (violation) {
@@ -2929,10 +2948,10 @@ async function run() {
           'pipeline_auto.split_checked': { $ne: true },
         })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 })
         .limit(SPLIT_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1 });
+      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 });
 
       console.log(`  Candidates for split check: ${candidates.length}`);
 
@@ -3057,19 +3076,30 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               signal: AbortSignal.timeout(20000),
             });
 
-            if (geminiRes.ok) {
-              const geminiData = await geminiRes.json();
-              const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-              const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-              if (jsonMatch) {
-                const result = JSON.parse(jsonMatch[0]);
-                isConfirmedSpread = !!result.is_spread;
-              }
-            }
+            // A non-OK response or an unparseable answer is a FAILED check, not a
+            // "not a spread" verdict — before #4796 a 429 here silently wrote
+            // needs_splitting:false + split_checked:true and the book was never
+            // looked at again.
+            if (!geminiRes.ok) throw new Error(`Gemini HTTP ${geminiRes.status}`);
+            const geminiData = await geminiRes.json();
+            const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error(`Gemini returned no JSON: ${rawText.slice(0, 40)}`);
+            isConfirmedSpread = !!JSON.parse(jsonMatch[0]).is_spread;
           } catch (err) {
-            // On Gemini failure, assume spread (safer — OCR prompt handles non-spreads gracefully)
-            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}), assuming spread`);
-            isConfirmedSpread = true;
+            // Fail CLOSED (#4796). A classifier that could not see the image must
+            // not guess — the old branch "assumed spread", which sent single wide
+            // pages (maps, foldouts) into the splitter. Leave split_checked unset
+            // so the next cycle retries; after 3 failures park for a human.
+            const fails = (book.pipeline_auto?.split_confirm_failures || 0) + 1;
+            const $set = { 'pipeline_auto.split_confirm_failures': fails, 'pipeline_auto.last_updated': new Date() };
+            if (fails >= 3) {
+              $set['pipeline_auto.status'] = 'needs_attention';
+              $set['pipeline_auto.error'] = `Spread confirmation failed ${fails} times (#4796): ${err.message?.slice(0, 120)}`;
+            }
+            await db.collection('books').updateOne({ id: book.id }, { $set });
+            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}) — left unchecked, ${fails}/3${fails >= 3 ? ', PARKED' : ''}`);
+            continue;
           }
 
           if (!isConfirmedSpread) {

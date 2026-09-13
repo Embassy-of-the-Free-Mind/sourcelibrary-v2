@@ -34,8 +34,22 @@
  *   node scripts/import/ia-ocr-ingest.mjs --language english --limit 200  # a slice
  *   node scripts/import/ia-ocr-ingest.mjs --collection shakers --apply
  *   node scripts/import/ia-ocr-ingest.mjs --ids <file>                    # re-score these book ids
- * Options: --min-agreement 0.85  --min-ref-pages 5  --cache <dir> (keeps the XML)
- *          --max-offset 3  --min-offset-share 0.6
+ * Options: --min-ref-pages 5  --cache <dir> (keeps the XML)  --max-offset 3  --min-offset-share 0.6
+ *          --min-agreement X   OVERRIDE the per-language cutoff for every book in the run (dry-run
+ *                              sweeps only; it also scores languages the policy excludes, e.g. Greek)
+ *
+ * CUTOFF IS PER LANGUAGE (#4790, 2026-09-13). The delivered text was measured (CER of the written
+ * page against a fresh model read, one interior page per book) and the right cutoff differs by
+ * language: English/French 0.80, Latin/German/Italian 0.85, Greek never, unmeasured languages 0.85.
+ * The table lives in scripts/lib/ia-ocr-gate.mjs — ONE place; do not put a number at a call site.
+ * The cutoff used is recorded on every written page (`ocr.agreement_ref.min_agreement`).
+ *
+ * "NO _djvu.xml" WAS MOSTLY A FILE NAME (2026-09-13). The English run skipped 257 items as having
+ * no XML; a metadata survey found 165 of the first 166 DO carry one — named after the uploaded
+ * file, not the identifier (`0327725.nlm.nih.gov` → `0327725_djvu.xml`). The metadata's file list
+ * is now the authority (`iaOcrMeta().djvu_xml_files`); an item with several XMLs (several scans) is
+ * refused as ambiguous, never guessed. Plain `_djvu.txt` is NOT used: it has no per-leaf structure
+ * and per-leaf alignment is the whole safety property of this lane.
  * `--ids <file>` (one book id per line) skips the "still has untranscribed pages" filter, so an
  * already-filled book can be re-scored against its model pages (dry unless --apply).
  *
@@ -80,6 +94,7 @@ import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
 import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
 import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
+import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { tokens, ratio } from '../lib/ia-ocr-agreement.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -88,7 +103,14 @@ const COLLECTION = arg('--collection', null);
 const BOOK = arg('--book', null);
 const LANGUAGE = arg('--language', null);
 const LIMIT = +arg('--limit', 50);
-const MIN_AGREEMENT = +arg('--min-agreement', 0.85);
+// Per-language cutoff (scripts/lib/ia-ocr-gate.mjs) unless overridden for the whole run.
+const MIN_AGREEMENT_OVERRIDE = arg('--min-agreement', null) === null ? null : +arg('--min-agreement');
+if (MIN_AGREEMENT_OVERRIDE !== null && !(MIN_AGREEMENT_OVERRIDE > 0 && MIN_AGREEMENT_OVERRIDE <= 1)) { console.error(`--min-agreement must be in (0, 1], got ${arg('--min-agreement')}`); process.exit(2); }
+/** The cutoff for one book: the run-wide override if given, else the language policy. */
+function gateFor(book) {
+  if (MIN_AGREEMENT_OVERRIDE !== null) return { cutoff: MIN_AGREEMENT_OVERRIDE, source: 'override', language: normalizeLanguageToken(book.language) || null };
+  return iaOcrMinAgreement(book.language);
+}
 const MIN_REF_PAGES = +arg('--min-ref-pages', 5);
 const MAX_OFFSET = +arg('--max-offset', 3);
 const MIN_OFFSET_SHARE = +arg('--min-offset-share', 0.6);
@@ -101,20 +123,27 @@ const SOURCE = 'ia_djvu';
  * size of the word-boxed XML): the 2,076-book English run filled 23 GB of XML on a 150 GB
  * disk, and the Latin shelf is four times larger. Legacy `<id>_djvu.xml` files are still read.
  */
-async function iaLeaves(id) {
+async function iaLeaves(id, xmlFiles = []) {
   const cachedJson = CACHE ? path.join(CACHE, `${id}.leaves.json`) : null;
   const cachedXml = CACHE ? path.join(CACHE, `${id}_djvu.xml`) : null;
-  if (cachedJson && fs.existsSync(cachedJson)) return JSON.parse(fs.readFileSync(cachedJson, 'utf8'));
+  if (cachedJson && fs.existsSync(cachedJson)) return { leaves: JSON.parse(fs.readFileSync(cachedJson, 'utf8')) };
   let xml;
   if (cachedXml && fs.existsSync(cachedXml)) xml = fs.readFileSync(cachedXml, 'utf8');
   else {
-    const res = await iaFetch(`https://archive.org/download/${id}/${id}_djvu.xml`);
-    if (!res.ok) return null;
+    // XML FILE NAME (2026-09-13). The derivative is named after the uploaded file, not the item:
+    // `<id>_djvu.xml` is the common case, not the rule. The metadata's file list is the authority.
+    // One XML → that is the scan the IIIF `/page/n<k>` index runs over, same alignment property as
+    // ever (the gate still verifies it per book). Several XMLs → several scans in one item; which
+    // one our page URLs index is not knowable here, so the item is refused rather than guessed.
+    if (xmlFiles.length > 1) return { leaves: null, reason: `${xmlFiles.length} _djvu.xml files on the item (ambiguous): ${xmlFiles.slice(0, 3).join(' | ')}` };
+    const name = xmlFiles[0] || `${id}_djvu.xml`;
+    const res = await iaFetch(`https://archive.org/download/${id}/${encodeURIComponent(name)}`);
+    if (!res.ok) return { leaves: null, reason: `HTTP ${res.status} for ${name}${xmlFiles.length ? '' : ' (metadata lists no _djvu.xml)'}` };
     xml = await res.text();
   }
   const leaves = leafTexts(xml);
   if (cachedJson) { fs.mkdirSync(CACHE, { recursive: true }); fs.writeFileSync(cachedJson, JSON.stringify(leaves)); }
-  return leaves;
+  return { leaves };
 }
 
 /** OBJECT[k] → plain text: words joined by spaces, lines by \n, paragraphs by a blank line. */
@@ -164,17 +193,22 @@ await withMongo(async (db) => {
   }
   const projection = { id: 1, title: 1, language: 1, languages: 1, published: 1, ia_identifier: 1, image_source: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1 };
   const books = await B.find(q, { projection }).sort({ processing_priority: -1, visible: -1 }).limit(IDS_FILE ? 100000 : LIMIT).toArray();
-  console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT}, min ref pages ${MIN_REF_PAGES})`);
+  console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT_OVERRIDE !== null ? `${MIN_AGREEMENT_OVERRIDE} (OVERRIDE for every language)` : 'per language (scripts/lib/ia-ocr-gate.mjs)'}, min ref pages ${MIN_REF_PAGES})`);
 
-  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
+  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
     if (!iaId) { console.log(`  ${bid} no IA identifier — skip`); continue; }
-    const rawLeaves = await iaLeaves(iaId);
-    if (!rawLeaves) { summary.no_xml++; console.log(`  ${bid} ${iaId}: no _djvu.xml`); continue; }
-    const leaves = rawLeaves.map(dehyphenateLineBreaks);
+    // Policy first, before any archive.org call: a language the table says never to fill (Greek)
+    // is refused without fetching its leaves. `--min-agreement` overrides this too (dry sweeps).
+    const gate = gateFor(b);
+    if (gate.cutoff === null) { summary.lang_excluded++; console.log(`  LANG_EXCLUDED ${bid} ${String(b.published || '').slice(0, 4)} ${(b.title || '').slice(0, 44)} | language ${gate.language} is never filled from IA OCR (#4790)`); continue; }
+    // Metadata first: it names the item's `_djvu.xml` file(s), which is how the leaves are found.
     const meta = await iaOcrMeta(iaId);
+    const { leaves: rawLeaves, reason: noXmlReason } = await iaLeaves(iaId, meta.djvu_xml_files || []);
+    if (!rawLeaves) { summary.no_xml++; console.log(`  ${bid} ${iaId}: no _djvu.xml — ${noXmlReason}`); continue; }
+    const leaves = rawLeaves.map(dehyphenateLineBreaks);
     // Language guard (#4780): the Archive's own detection of what its OCR read vs what the book is.
     const detectedLang = normalizeLanguageToken(Array.isArray(meta.detected_lang) ? meta.detected_lang[0] : meta.detected_lang);
     const bookLangs = [b.language, ...(Array.isArray(b.languages) ? b.languages : [])].map(normalizeLanguageToken).filter(Boolean);
@@ -220,9 +254,9 @@ await withMongo(async (db) => {
     // and logged for diagnosis; the book is only ever filled at offset 0.
     const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
     const refShifted = offset !== 0 && offsetShare >= MIN_OFFSET_SHARE;
-    const verdict = refShifted ? 'REF_SHIFTED' : med < MIN_AGREEMENT ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
+    const verdict = refShifted ? 'REF_SHIFTED' : med < gate.cutoff ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
     if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
@@ -236,8 +270,8 @@ await withMongo(async (db) => {
       // English apply run, 2026-09-12). $mergeObjects over $ifNull handles null, missing and {}.
       const ocrFields = {
         data: leaves[k], source: SOURCE, model: `ia-ocr/${meta.version || meta.engine || 'unknown'}`, language: b.language || null,
-        source_url: `https://archive.org/download/${iaId}/${iaId}_djvu.xml#leaf=${k}`, updated_at: now, has_warning: false,
-        agreement_ref: { median: +med.toFixed(3), n: refs.length, min_agreement: MIN_AGREEMENT, offset: 0, offset_share: +offsetShare.toFixed(2) },
+        source_url: `https://archive.org/download/${iaId}/${encodeURIComponent(meta.djvu_xml_files?.[0] || `${iaId}_djvu.xml`)}#leaf=${k}`, updated_at: now, has_warning: false,
+        agreement_ref: { median: +med.toFixed(3), n: refs.length, min_agreement: gate.cutoff, offset: 0, offset_share: +offsetShare.toFixed(2) },
         ia: iaProvenance(iaId, meta),
       };
       const r = await P.updateOne({ _id: p._id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] },
