@@ -36,6 +36,7 @@ picks.push({ bid: '69d14a6c1c2a66dc094b41b2', band: 'E long-s (offset -1)' }, { 
 async function clean(text, year, title) {
   const prompt = `The text below is OCR output from a printed English book (${title}, ${year}) produced by a conventional OCR engine. Correct OCR errors only: long s read as f (e.g. "fome" -> "some"), broken or merged words, misrecognised letters and punctuation, line-end hyphenation. Keep the original wording, spelling conventions of the period, line breaks and paragraphing. Do not add, remove, modernise or paraphrase anything. Return only the corrected text.\n\n${text}`;
   const body = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0, maxOutputTokens: 4000, thinkingConfig: { thinkingBudget: 0 } } };
+  // usage-ok: one-off hand-run eval (60 pages, $0.076 on 2026-09-12), never scheduled; it meters its own tokens and prints the dollar figure, recorded in EXPERIMENTS.md
   const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   if (!r.ok) throw new Error(`${r.status} ${(await r.text()).slice(0, 200)}`);
   const j = await r.json(); const u = j.usageMetadata || {};
