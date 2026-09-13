@@ -41,7 +41,12 @@ export async function iaOcrMeta(id) {
   const res = await iaFetch(`https://archive.org/metadata/${id}`);
   if (!res.ok) return {};
   const j = await res.json(); const m = j?.metadata || {};
-  const xmlFile = (j?.files || []).find((f) => /_djvu\.xml$/.test(f.name || ''));
+  // Every `_djvu.xml` on the item, by name. The derivative is named after the UPLOADED file, not
+  // the identifier: 129 of the first 184 "no _djvu.xml" English items (2026-09-13 survey) carried
+  // one under another name (`0327725.nlm.nih.gov` → `0327725_djvu.xml`, `4725496worshipofpriapus`
+  // → `4725496-Worship-of-Priapus_djvu.xml`). An item with several is several scans — ambiguous.
+  const xmlFiles = (j?.files || []).filter((f) => /_djvu\.xml$/.test(f.name || ''));
+  const xmlFile = xmlFiles.find((f) => f.name === `${id}_djvu.xml`) || xmlFiles[0];
   const converter = m.ocr_converted || null;
   const engine = m.ocr || (/abbyy/i.test(converter || '') ? 'ABBYY FineReader' : /tesseract/i.test(converter || '') ? 'Tesseract' : null);
   return {
@@ -52,6 +57,7 @@ export async function iaOcrMeta(id) {
     detected_lang: m.ocr_detected_lang || null,
     imagecount: m.imagecount ? +m.imagecount : null,
     has_djvu_xml: !!xmlFile,
+    djvu_xml_files: xmlFiles.map((f) => f.name),
   };
 }
 
