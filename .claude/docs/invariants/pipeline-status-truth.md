@@ -106,3 +106,16 @@ the OCR count is still growing, or the state machine is an infinite loop.
 The 13,329 existing books are NOT repaired by that fix — finalize only revisits
 `cover_selected`. Requeuing them queues ~$8,000 of OCR and translation behind the next
 open valve, which is actuation two hops upstream of the spend and belongs to a human.
+
+## `held` — the one status a worker may never write (#4790)
+
+`held` is set only by `scripts/lib/pipeline-hold.mjs` (via
+`scripts/maintenance/hold-pipeline-books.mjs`) and always together with
+`pipeline_auto.hold` — reason, issue, `held_at`, `held_from_status`, and a one-sentence
+release condition. No phase selects it, so a held book leaves every lane; and
+`setPipelineStatus` refuses any other status while the marker is present, so no rollback
+or retry can put it back. Release restores `held_from_status` and records a
+`pipeline_release` book_event. It is the opposite of `needs_attention`: not "something went
+wrong, a human should look" but "nothing is wrong yet, and running the lane would make it
+so". `scripts/audit/pipeline-hold-drift.mjs` finds a marker without the status (a writer
+this rule does not know about) and a hold whose release condition has been met.

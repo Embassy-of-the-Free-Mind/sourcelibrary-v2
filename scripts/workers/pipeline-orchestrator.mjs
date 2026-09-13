@@ -42,6 +42,7 @@ import { logUsage, logUsageAsync, outputTokensFrom } from './lib/supabase-usage-
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
+import { holdViolation } from '../lib/pipeline-hold.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -838,6 +839,24 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
     }
   );
   const prevStatus = book?.pipeline_auto?.status;
+
+  // A HELD book accepts no status from a worker (#4790). The hold is a decision with a reason and
+  // a release condition (scripts/lib/pipeline-hold.mjs); every phase already skips `held` books
+  // by selection, and this refusal is what stops a rollback or a retry from lifting it by accident.
+  // Always enforced — unlike the output guard below there is no observe mode, because a hold is
+  // explicit and rare, and advancing past one is the exact failure it exists to prevent.
+  const holdRefusal = book ? holdViolation(book, status) : null;
+  if (holdRefusal) {
+    console.log(`  [pipeline-hold] ${bookId}: ${holdRefusal}`);
+    db.collection('audit_log').insertOne({
+      action: 'pipeline_status_refused_held',
+      book_id: bookId,
+      book_title: book?.title,
+      metadata: { attempted: status, from: prevStatus || 'none', hold: book.pipeline_auto.hold },
+      timestamp: new Date(),
+    }).catch(() => {});
+    return;
+  }
 
   const violation = book ? statusOutputViolation(book, status, extra) : null;
   if (violation) {
