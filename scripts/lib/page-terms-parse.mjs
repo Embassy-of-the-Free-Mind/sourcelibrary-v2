@@ -19,6 +19,8 @@
  * Folding "ἡσυχία" or "三昧" would be destructive, and lowercasing is meaningless there.
  */
 
+import { skeletonMatch } from './translit-skeleton.mjs';
+
 const MAX_TERM = 80;
 const MAX_GLOSS = 160;
 /** Characters of translated text kept BEFORE a <term>/<note original> as `context` — the
@@ -92,24 +94,42 @@ export function hasNonLatinLetter(s) {
  *   'exact'   the phrase is on the page, character for character
  *   'folded'  on the page once Latin diacritics and historic letter-forms are folded
  *   'stem'    the leading 80% of the phrase is on the page (the note gave another inflection)
- *   'script'  CANNOT BE CHECKED THIS WAY: a Latin-script quote against a page that carries
- *             another script — the note romanises what the page prints. Not evidence of
- *             fabrication, and must never be counted as such.
+ *   'translit' a Latin-script quote whose consonant skeleton is on the page once the page's
+ *             Greek / Devanagari / Tibetan / Arabic / Hebrew / Syriac / Cyrillic is romanised
+ *             the same way (translit-skeleton.mjs) — the note romanises what the page prints
+ *   'script'  CANNOT BE CHECKED: a Latin-script quote against a page in a script we cannot
+ *             romanise (Han, Kana, …). Not evidence of fabrication, and must never be counted
+ *             as such.
  *   'absent'  not on the page by any of the above. The honest suspect class.
  *
  * `absent` still includes benign cases seen in hand review — a note citing ANOTHER work, or
  * quoting the Greek behind a Coptic text — so it is an upper bound on fabrication, not a count
  * of it.
  */
+const TIER_RANK = { exact: 0, folded: 1, stem: 2, translit: 3, script: 4, absent: 5 };
+
 export function verifyQuote(quote, ocrText) {
   const q = String(quote || '').trim();
   const ocr = String(ocrText || '');
   if (!q || !ocr) return 'absent';
+
+  // An elided quote — `imberbem... Cometam` — is two fragments the translator saw on the page
+  // with something between them. Verify each fragment; the verdict is the WEAKEST fragment's.
+  // Without this the ellipsis itself guaranteed an 'absent'.
+  const parts = q.split(/\s*(?:\.{3,}|…)\s*/).map(p => p.trim()).filter(p => p.length >= 4);
+  if (parts.length > 1) {
+    return parts.map(p => verifyQuote(p, ocrText)).reduce((a, b) => (TIER_RANK[a] >= TIER_RANK[b] ? a : b));
+  }
+
   const ocrNfc = ocr.normalize('NFC').replace(/\s+/g, ' ');
   if (ocrNfc.includes(q.normalize('NFC'))) return 'exact';
 
   const fq = foldForQuoteMatch(q);
-  const fo = foldForQuoteMatch(ocrNfc);
+  // Printed text breaks words at line ends with a hyphen ("infal-\nlibilem"); by the time the
+  // page reaches here its whitespace is collapsed, so the break reads "infal- libilem". Join a
+  // letter–hyphen–space–lowercase-letter sequence before comparing: a quote of the whole word
+  // could otherwise never match its own page.
+  const fo = foldForQuoteMatch(ocrNfc.replace(/(\p{L})[-‐‑]\s+(\p{Ll})/gu, '$1$2'));
   if (fq && fo.includes(fq)) return 'folded';
 
   // Inflection: the note gives a lemma or a different case ending. Require a real stem so a
@@ -119,9 +139,18 @@ export function verifyQuote(quote, ocrText) {
     if (stem.length >= 5 && fo.includes(stem)) return 'stem';
   }
 
-  // A Latin-script quote against a page that prints another script is a romanisation. We do not
-  // hold a general transliterator, so this is UNCHECKABLE here — say so rather than accuse.
-  if (isLatinScript(q) && hasNonLatinLetter(ocrNfc)) return 'script';
+  // A Latin-script quote against a page that prints another script is a romanisation. Reduce
+  // both to a per-script consonant skeleton (translit-skeleton.mjs) and compare: a hit is
+  // 'translit'. A miss on a page whose every non-Latin script we can romanise is 'absent' —
+  // measured 2026-09-13, a quarter of the Greek- and Devanagari-page cases were an ENGLISH
+  // word noted as "original" on a Latin-script page with one stray foreign letter. A miss on
+  // a page carrying a script we cannot romanise (Han, Kana, …) stays 'script': uncheckable,
+  // and never to be counted as fabrication.
+  if (isLatinScript(q) && hasNonLatinLetter(ocrNfc)) {
+    const m = skeletonMatch(q, ocrNfc);
+    if (m.matched) return 'translit';
+    return m.uncovered ? 'script' : 'absent';
+  }
 
   return 'absent';
 }
@@ -131,7 +160,7 @@ export function verifyQuote(quote, ocrText) {
  *  as fabrication get null instead of a false accusation. */
 export function quoteVerified(tier) {
   if (tier === 'script') return null;
-  return tier === 'exact' || tier === 'folded' || tier === 'stem';
+  return tier === 'exact' || tier === 'folded' || tier === 'stem' || tier === 'translit';
 }
 
 function clean(s) {
