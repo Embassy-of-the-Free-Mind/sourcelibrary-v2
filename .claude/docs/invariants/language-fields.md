@@ -194,7 +194,10 @@ the detector's `contradict` bucket is a review queue and not a patch.
 The two figures above (5 apparent mislabels, 6,230 bilingual books) come from the
 detector's FIRST run and are artifacts. Here is the whole live corpus after both
 fixes, so nobody has to re-derive it: `detect-book-languages.mjs`, all 21,481
-live books with OCR, 2026-08-21.
+live books with OCR, 2026-08-21. (Since #4781 the same rule runs off the local
+corpus mirror — `--mirror=~/sl-corpus --all` — in about fifteen minutes for
+every book with OCR, with zero Atlas load; measured identical to the Atlas
+path on 60 books. Use that for any corpus-wide re-measurement.)
 
 | bucket | books | what it means |
 |---|---:|---|
