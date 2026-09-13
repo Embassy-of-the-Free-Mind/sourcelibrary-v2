@@ -114,9 +114,9 @@ public badges removed seven hours later, by a safety valve the evidence itself u
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
-- OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
+- **OCR and translation route DIFFERENTLY since #4762 — do not "fix" the divergence.** OCR: full flash for BPH, non-Latin scripts and unknown language; lite only for the Latin-script allowlist. Translation: lite for all but BPH. **Tell:** "everything non-BPH is on lite" is the Mar–May 2026 policy, three policies stale. Detail → `language-fields.md`.
 - **Gemini 3.x thinks by default and bills it at the output rate, invisibly** — every `generateContent` call site MUST set an explicit `thinkingConfig` (`thinkingBudget: 0` for OCR/translation/extraction — measured no quality loss) and count `thoughtsTokenCount` when metering. Six unconfigured call sites cost ~$2K/mo for months (#4581, 17× meter gap); sweep of remaining sites: #4599.
-- **Grounded search: flash-lite does NOT ground** (0/189 measured 2026-08-10 — empty `groundingMetadata` while the prose claims "extensive searches"). Use `gemini-3-flash-preview` with an explicit positive `thinkingBudget` (512 → 6/6 grounded, ~$0.003/book; unbounded ≈ $0.19/book; `-1` silently suppresses grounding). Verify groundedness from `queries[]` on written rows, never from response prose.
+- **Grounded search: flash-lite does NOT ground, silently** — read `measurement-instruments.md` before using grounding.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
 ## Conditional invariants — read the one matching what you're touching
@@ -181,7 +181,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Adding or changing a Librarian / MCP tool, or the text one returns → `agent-tool-results.md` (**a ranker cannot answer "how many"**, and a URL you leave out is one the model will invent — two 404s came out of the first live turn)
 
 **Writing a sweep, an import, or a new field**
-- A BULK import/sweep, or choosing `/api/import/*` vs a `*-direct.mjs` script → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$3,069/mo bill; run it on Hetzner, not the laptop).
+- A BULK import/sweep, or choosing `/api/import/*` vs a `*-direct.mjs` script → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$1,750/mo bill; run it on Hetzner, not the laptop).
 - Running any script/worker under `secret-lover run`, or running one **from a worktree**, or a job that reports a store as empty → `credential-injection.md` (**secret-lover reports an unreadable secret as a missing one and runs anyway**; a worktree resolves to the wrong project and gets zero secrets)
 - Adding a field to `books`/`pages`, writing a maintenance sweep, or touching `book-docs.mjs`/`sweep-log.mjs`/`field-sprawl.mjs` → `field-sprawl.md` (**a sweep records a ROW, not a COLUMN**; consolidation without enforcement re-polluted 4.16M rows in 3 months)
 
@@ -199,7 +199,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
 - **MCP server/CLI:** read `memory/mcp-server.md`
 - **Embeddings / semantic search:** read `.claude/docs/embeddings.md` — five Supabase tables (`page_translations`, `book_embeddings`, `artwork_embeddings`, `gallery_text_embeddings`, `clip_embeddings`), three workers, five RPCs.
-- **Book acquisition / curation:** `/curator` or `/library-curator`. For importing at scale without duplicates, follow the canonical loop in `.claude/docs/import-workflow.md` (enumerate → dedupe → subject-filter → source → import hidden → process → QA → visible). Dedup runs in `src/lib/dedup.ts` (matches hidden books too — don't reintroduce a `visible:true` filter); reusable tool `scripts/import/enumerate-dedupe-source.ts`; sources that 429 datacenter IPs (Harvard, likely Gallica) use the residential direct-insert pattern (`scripts/import/harvard-wuzhen-direct.mjs`). Work-level dedup is not yet automatic — issue #2318.
+- **Book acquisition / curation:** `/curator` or `/library-curator`. For importing at scale without duplicates, follow the canonical loop in `.claude/docs/import-workflow.md` (enumerate → dedupe → subject-filter → source → import hidden → process → QA → visible). Dedup runs in `src/lib/dedup.ts` (matches hidden books too — don't reintroduce a `visible:true` filter); reusable tool `scripts/import/enumerate-dedupe-source.ts`; sources that 429 datacenter IPs (Harvard, likely Gallica) use the residential direct-insert pattern (`scripts/import/harvard-wuzhen-direct.mjs`). Work-level dedup (work_id) landed in #2318 (closed 2026-07-08).
 - **Quality auditing:** `/qa-audit`
 - **Anything reading `page_revisions` as a double-OCR corpus** (agreement, calibration, repeat-instability, disagreement typologies): read **`.claude/docs/data-provenance.md`** FIRST — it carries the row schema, the per-source counts, and critically the `source` label that says which mechanism wrote each row. Most of the collection is not what the name suggests: the largest source by far is bulk *text relocation*, not double OCR, and it reads as catastrophic disagreement in any metric that doesn't exclude it. The measurement stack built on top is `.claude/docs/ocr-quality-measurement-loop.md`. **`page_revisions` is a mixed record of pipeline output AND bulk maintenance — always segment by `source` before quoting a number over it.**
 - **Batch processing:** `/batch-translate`

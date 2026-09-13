@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { createBookRevisions } from '@/lib/book-revisions';
@@ -17,10 +16,15 @@ import {
   type PagePrecision,
 } from '@/lib/entity-page-match';
 import { entityCounters, type EntityBookRef } from '@/lib/entity-books';
+import { getGeminiClient } from '@/lib/gemini-client';
 
 export const maxDuration = 300;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ selfMetered: true, reason: 'this route logs its own row after the call' }));
 
 // Research a book/author using Wikipedia API and web search
 async function researchBook(title: string, author: string): Promise<string> {
@@ -103,7 +107,7 @@ async function processBatch(
   triggeredBy: import('@/lib/gemini-logger').GeminiTrigger,
   bookLanguage?: string
 ): Promise<BatchExtraction> {
-  const model = genAI.getGenerativeModel({
+  const model = genAI().getGenerativeModel({
     model: 'gemini-3.1-flash-lite',
     generationConfig: {
       temperature: 0.2, // Low temperature for consistent extraction
@@ -687,7 +691,7 @@ async function generateBookSummary(
   researchContext?: string,
   chapters?: ChapterInfo[]
 ): Promise<GeneratedSummary> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+  const model = genAI().getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 
   // If no batch extractions, fall back to research-only summary
   if (batchExtractions.length === 0) {

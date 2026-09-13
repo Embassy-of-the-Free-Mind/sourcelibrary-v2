@@ -1,5 +1,4 @@
 import { NextRequest } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { DEFAULT_MODEL, extractPageType, extractColumns } from '@/lib/types';
@@ -11,6 +10,7 @@ import { images } from '@/lib/api-client';
 import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
 import { getSession } from '@/lib/auth-helpers';
+import { getUnmeteredGeminiClient } from '@/lib/gemini-client';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -35,7 +35,7 @@ async function performOCRWithKey(
   language: string,
   previousPageOcr?: string
 ): Promise<ContributorAiResult> {
-  const genAI = new GoogleGenerativeAI(apiKey);
+  const genAI = getUnmeteredGeminiClient(apiKey);
   const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
 
   const promptResult = await getOcrPrompt({ language });
@@ -74,7 +74,7 @@ async function performTranslationWithKey(
   sourceLanguage: string,
   previousPageTranslation?: string
 ): Promise<ContributorAiResult> {
-  const genAI = new GoogleGenerativeAI(apiKey);
+  const genAI = getUnmeteredGeminiClient(apiKey);
   const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
 
   const promptResult = await getTranslationPrompt(sourceLanguage);

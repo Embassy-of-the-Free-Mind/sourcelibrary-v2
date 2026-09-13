@@ -1456,7 +1456,15 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {ocrCorpus ? t.corpusTranscript(ocrCorpus.name, ocrCorpus.org) : t.transcribedBy(page.ocr.model)}
+                  {ocrCorpus
+                    ? t.corpusTranscript(ocrCorpus.name, ocrCorpus.org)
+                    : page.ocr.source === 'ia_djvu'
+                      ? t.iaTranscript(
+                          page.ocr.ia?.engine ?? null,
+                          page.ocr.ia?.ocr_date ? String(new Date(page.ocr.ia.ocr_date).getFullYear()) : null,
+                          page.ocr.agreement_ref?.median ?? null,
+                        )
+                      : t.transcribedBy(page.ocr.model)}
                 </dd>
               </div>
             )}

@@ -1,5 +1,6 @@
 import { DEFAULT_PROMPTS, DEFAULT_MODEL, ENGLISH_MODERNIZATION_PROMPT } from './types';
 import { getGeminiClient } from './gemini-client';
+import { outputTokensFrom } from './gemini-logger';
 import { images } from './api-client/images';
 import { HarmCategory, HarmBlockThreshold, type GenerationConfig } from '@google/generative-ai';
 import { sanitizeTranslationTags } from './sanitize-translation-tags';
@@ -40,7 +41,16 @@ const THINKING_OFF_CONFIG = {
 } as unknown as GenerationConfig;
 
 function getThinkingOffModel(modelId: string) {
-  return getGeminiClient().getGenerativeModel({
+  // Self-metered: every function here RETURNS its token counts, and the callers
+  // that matter (the OCR/translation workers, /api/process, modernize,
+  // transliterate, stitch-translations) write the usage row themselves with the
+  // book and page context an automatic row could not know. Letting the client
+  // also log would put TWO rows on every page of the pipeline — which would
+  // double the measured spend and close the daily dial on money never spent.
+  return getGeminiClient({
+    selfMetered: true,
+    reason: 'callers log the usage row with book/page context; auto-metering would double-count the pipeline',
+  }).getGenerativeModel({
     model: modelId,
     generationConfig: THINKING_OFF_CONFIG,
   });
@@ -142,8 +152,7 @@ export async function performOCRWithBuffer(
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
-      ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
+    const outputTokens = outputTokensFrom(usageMetadata);
 
     return {
       text: result.response.text(),
@@ -214,8 +223,7 @@ export async function performOCR(
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
-      ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
+    const outputTokens = outputTokensFrom(usageMetadata);
 
     return {
       text: result.response.text(),
@@ -281,8 +289,7 @@ export async function performTranslation(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
-    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   // Carry manuscript warnings through to the translation so both panels show them
   let translationText = sanitizeTranslationTags(result.response.text());
@@ -321,8 +328,7 @@ export async function generateSummary(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
-    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   return {
     text: result.response.text(),
@@ -406,8 +412,7 @@ export async function performModernization(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
-    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   return {
     text: result.response.text(),
@@ -505,8 +510,7 @@ export async function performTransliteration(
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = (usageMetadata?.candidatesTokenCount || 0) +
-    ((usageMetadata as { thoughtsTokenCount?: number } | undefined)?.thoughtsTokenCount || 0);
+  const outputTokens = outputTokensFrom(usageMetadata);
 
   return {
     text: result.response.text(),

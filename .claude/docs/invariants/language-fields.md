@@ -389,3 +389,43 @@ reappearance fails CI.
   real (`printed|handwritten|mixed`, declared in `src/lib/types/page.ts`, synced to Supabase by six
   scripts); the book one was a single stray document. Only the book-level field is retired. Check
   which COLLECTION a name lives on before treating two spellings as one family.
+
+## Model routing reads this field — and OCR and translation read it DIFFERENTLY (2026-09-12, #4762)
+
+`books.language` is not only a display and filter field. Two routers read it, and since #4762 they
+deliberately disagree:
+
+| | full flash (`gemini-3-flash-preview`) | flash-lite (`gemini-3.1-flash-lite`) |
+|---|---|---|
+| **OCR** — `getModelForBook`, `src/lib/types/ai-models.ts` | BPH provider, **any language outside the Latin-script allowlist**, unknown/null language | Latin-script allowlist only |
+| **Translation** — `getTranslateModelForBook`, `scripts/lib/translate-core.mjs` | BPH provider only | everything else |
+
+**Do not "restore the mirroring."** The two functions were identical until #4762 and the comments
+said so; they now differ on purpose, and the comments say that instead.
+
+**Why they differ.** #1726 carved non-Latin scripts out to full flash because flash-lite
+*hallucinates rather than fails* on low-resource scripts — it read a Bhutanese astrological text as a
+"ritual manual for weather control". The cited mechanism (Wu et al. 2025) is that vision models lean
+on linguistic priors **when visual decoding is hard**. That is a vision failure, and it is real: OCR
+keeps the carve-out. Translation never decodes an image; it reads `ocr.data` as text. The carve-out
+was applied to the translation worker in the same change with no translation evidence offered.
+The free observational read in #4759 (137 books, 303 within-book pairs matched on `ocr.model`, plus a
+blind judge over 30 pairs) found no fabrication and no comprehension failure on lite. Worth ~$12K over
+5.4M untranslated pages. Report: `scripts/eval/results/translation-model-obs-report.md`.
+
+**A policy's history is not the policy.** Three eras so far: everything non-BPH on lite
+(2026-03-27, #467) → non-Latin carved out for both lanes (2026-05-12, #1726) → translation carved
+back (2026-09-12, #4762). Rows written under an old era look exactly like a live violation of the
+current one. **Date the rows and `git log -S` the rule before calling anything drift** — a session
+reported the Mar–May lite translations of Tibetan books as a live bypass, and they were history.
+The retired `gemini-3.1-flash-lite-preview` id in a row is itself a date stamp.
+
+**A router only routes if the caller asks it.** #4762 also found four Lambda-lane producers
+(`bulk-translate-lambda`, `queue-translations`, `queue-translations-to-80pct`,
+`queue-efm-translations`) that hardcoded full flash and bypassed routing for every book, because
+`job.config.model` wins in the sink. When you change a routing policy, **find every producer**, not
+just the router. A split policy that half the writers honour is worse than either policy.
+
+**A mislabel now picks a model.** Judges in the #4759 read found Syriac and Avestan books carrying
+`language: hebrew` (#4766). Under the OCR table above, a non-Latin book mislabelled as a
+*Latin-script* language routes to flash-lite for OCR — precisely the case #1726 exists to prevent.

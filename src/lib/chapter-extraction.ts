@@ -293,7 +293,7 @@ export async function extractChaptersForBook(
 
   // Step 4: Call Gemini
   const modelId = DEFAULT_MODEL;
-  const model = getGeminiClient().getGenerativeModel({ model: modelId });
+  const model = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' }).getGenerativeModel({ model: modelId });
   const prompt = buildExtractionPrompt(
     book.display_title || book.title,
     book.author || 'Unknown',

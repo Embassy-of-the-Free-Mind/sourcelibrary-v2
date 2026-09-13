@@ -16,6 +16,7 @@
 import { Db } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
+import { getGeminiClient } from './gemini-client';
 
 const EMBEDDING_MODEL = 'gemini-embedding-001';
 const BATCH_SIZE = 5;
@@ -192,7 +193,7 @@ export async function scoreBookAlignment(
     return { success: false, error: 'No GEMINI_API_KEY configured' };
   }
 
-  const genai = new GoogleGenerativeAI(apiKey);
+  const genai = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' });
   const startTime = Date.now();
 
   // Fetch pages with both OCR and translation
