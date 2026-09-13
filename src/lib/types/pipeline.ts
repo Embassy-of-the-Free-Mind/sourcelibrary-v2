@@ -66,10 +66,30 @@ export type PipelineAutoStatus =
   | 'images_complete'
   | 'complete'
   | 'needs_attention'
-  | 'failed';
+  | 'failed'
+  /** Held out of every lane by a named decision — see `hold` and scripts/lib/pipeline-hold.mjs (#4790). */
+  | 'held';
+
+/**
+ * Why a book is `held`, written by scripts/lib/pipeline-hold.mjs. Present ⇔ status is `held`;
+ * the drift audit (scripts/audit/pipeline-hold-drift.mjs) reconciles the two. Release restores
+ * `held_from_status`.
+ */
+export interface PipelineHold {
+  /** kebab-case label, e.g. 'ia-wrong-leaf-4790' */
+  reason: string;
+  issue?: number | null;
+  held_at: Date;
+  held_from_status: PipelineAutoStatus | null;
+  /** One sentence: what must be true before the hold may be lifted. */
+  release: string;
+  detail?: Record<string, unknown> | null;
+}
 
 export interface PipelineAutoState {
   status: PipelineAutoStatus;
+  /** Set while status is `held`; never written by a worker. */
+  hold?: PipelineHold;
   source: 'import' | 'admin' | 'cron';
   queued_at: Date;
   started_at?: Date;

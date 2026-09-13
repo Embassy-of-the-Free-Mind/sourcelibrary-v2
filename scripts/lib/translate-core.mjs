@@ -362,6 +362,10 @@ export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
   if (page?.page_type && skip.has(page.page_type)) return { ok: false, reason: 'skip-type' };
   const ocr = page?.ocr?.data;
   if (typeof ocr !== 'string' || ocr === '') return { ok: false, reason: 'no-ocr' };
+  // `ocr.unreadable` keeps `data` for provenance but the page has no transcription we trust
+  // (#4523); translating it only makes work for the stale-translation sweep, which withholds
+  // the result an hour later. Same rule as page-counts.hasOcr.
+  if (page?.ocr?.unreadable === true) return { ok: false, reason: 'ocr-unreadable' };
   if (isBlankFromOcr(ocr)) return { ok: false, reason: 'blank-ocr' };
   if (page?.translation?.recitation_blocked) return { ok: false, reason: 'recitation-blocked' };
   if (page?.translation?.safety_blocked) return { ok: false, reason: 'safety-blocked' };
@@ -377,6 +381,7 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
   return {
     page_number: { $gt: 0 },
     'ocr.data': { $exists: true, $nin: [null, ''] },
+    'ocr.unreadable': { $ne: true },
     page_type: { $nin: [...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes] },
     'translation.recitation_blocked': { $ne: true },
     'translation.safety_blocked': { $ne: true },

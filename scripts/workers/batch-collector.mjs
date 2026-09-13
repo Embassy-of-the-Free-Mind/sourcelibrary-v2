@@ -29,6 +29,7 @@ import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -1043,8 +1044,9 @@ async function advancePipelineStatus(db, bookId, jobType) {
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
     if (pendingOcr === 0) {
+      // NOT_HELD: a batch write-back must never lift a pipeline hold (scripts/lib/pipeline-hold.mjs, #4790).
       await db.collection('books').updateOne(
-        { id: bookId },
+        { id: bookId, ...NOT_HELD },
         {
           $set: {
             'pipeline_auto.status': 'ocr_complete',
