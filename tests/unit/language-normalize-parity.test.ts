@@ -92,6 +92,8 @@ describe('language families', () => {
     expect(sameLanguageFamily('English', 'Old English')).toBe(true);
     expect(sameLanguageFamily('German', 'Middle High German')).toBe(true);
     expect(sameLanguageFamily('Hebrew', 'Biblical Hebrew')).toBe(true);
+    // #4781: 7 Books of Hours catalogued Dutch and tagged Middle Dutch read as contradictions.
+    expect(sameLanguageFamily('Dutch', 'Middle Dutch')).toBe(true);
   });
 
   it('still keeps the names distinct for cataloguing', () => {

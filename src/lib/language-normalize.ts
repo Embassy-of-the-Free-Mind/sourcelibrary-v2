@@ -120,6 +120,9 @@ const FAMILY: Record<string, string> = {
   'Early New High German': 'German',
   'Biblical Hebrew': 'Hebrew', 'Samaritan Hebrew': 'Hebrew',
   'Old Church Slavonic': 'Church Slavonic',
+  // Found by the #4781 free-lane run: 7 Books of Hours catalogued Dutch, tagged
+  // Middle Dutch on every leaf, reported as `contradict` — the instrument, not the data.
+  'Middle Dutch': 'Dutch', 'Old Dutch': 'Dutch',
 };
 
 /**
