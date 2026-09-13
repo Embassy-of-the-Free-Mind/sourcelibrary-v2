@@ -640,7 +640,16 @@ function phaseReport() {
     why = `no eligible arm ranks above lite (eligible = refusals ≤ lite + 4 and fabrication ≤ lite's: ${eligible.join(', ') || 'none'}); lite stays the route.`;
   }
 
-  const report = { reported_at: new Date().toISOString(), baseline: BASELINE, arms, skipped: score.skipped, prompt: score.prompt, n_pages: score.n_pages, n_judged: verdicts.length, spend_usd: score.spend_usd, refusals: score.refusals, per_arm: score.per_arm, paired: score.paired, judge, mean_confidence: mean(verdicts.map((v) => v.confidence).filter((x) => typeof x === 'number')), second_pass: agreement, eligible, beats_baseline: beats, recommendation, why, verdicts };
+  /**
+   * Arms the rule does not recommend but the next run should carry: eligible, at least as
+   * good as lite on mean rank, and not significant. The branch above can return lite while
+   * a CHEAPER arm sits here (it only reaches the cheap-tie branch when nothing beats lite),
+   * so name them in `why` rather than letting the recommendation hide them.
+   */
+  const notable = eligible.filter((m) => !beats.includes(m) && judge[m].mean_rank <= judge[BASELINE].mean_rank).sort(byCost);
+  if (notable.length) why += ` Not significant, and not what the rule returns, but the arms worth the next run: ${notable.map(lineFor).join('; ')}.`;
+
+  const report = { reported_at: new Date().toISOString(), notable, baseline: BASELINE, arms, skipped: score.skipped, prompt: score.prompt, n_pages: score.n_pages, n_judged: verdicts.length, spend_usd: score.spend_usd, refusals: score.refusals, per_arm: score.per_arm, paired: score.paired, judge, mean_confidence: mean(verdicts.map((v) => v.confidence).filter((x) => typeof x === 'number')), second_pass: agreement, eligible, beats_baseline: beats, recommendation, why, verdicts };
   fs.writeFileSync(P('report.json'), JSON.stringify(report, null, 1));
   fs.writeFileSync(P('report.md'), renderMd(report));
   for (const m of arms) console.log(`${m.padEnd(30)} mean rank ${fmt(judge[m].mean_rank)} first ${judge[m].first_place}  fab ${judge[m].fabrication} omit ${judge[m].omission}  ${m === BASELINE ? '(baseline)' : `vs lite ${judge[m].vs_baseline.wins}-${judge[m].vs_baseline.losses}-${judge[m].vs_baseline.ties} p=${judge[m].vs_baseline.p.toFixed(3)}`}  refusals ${score.refusals[m].n}  $${(score.per_arm[m].usd_per_page || 0).toFixed(4)}/p`);
@@ -671,7 +680,10 @@ function renderMd(r) {
   L.push('## Blind ranking (Sonnet lean-workers; labels shuffled per page, key withheld)', '', `| arm | pages ranked | mean rank | 1st place | vs lite W-L-T | sign p | fabrication | omission | terms ok |`, '|---|---|---|---|---|---|---|---|---|');
   for (const m of r.arms) { const j = r.judge[m]; L.push(`| ${m}${m === r.baseline ? ' (baseline)' : ''} | ${j.n_ranked} | ${num(j.mean_rank)} | ${j.first_place} | ${j.vs_baseline ? `${j.vs_baseline.wins}-${j.vs_baseline.losses}-${j.vs_baseline.ties}` : '—'} | ${j.vs_baseline ? num(j.vs_baseline.p, 3) : '—'} | ${j.fabrication} | ${j.omission} | ${j.terms_ok}/${j.terms_judged} |`); }
   L.push('', `Mean judge confidence ${num(r.mean_confidence)}. Fabrication = the judge found something asserted that the Chinese does not say (the disqualifier); omission = a clause/entry present in the source and absent from the translation.`, '');
-  if (r.second_pass) L.push(`Second judge pass over ${r.second_pass.n} pages (labels re-shuffled): arm-vs-lite direction agreed on ${r.second_pass.direction_vs_baseline_same}/${r.second_pass.direction_n} comparisons (${pct(r.second_pass.direction_rate)}); same first place on ${r.second_pass.first_place_same}/${r.second_pass.n}; mean Spearman ρ between the two rankings ${num(r.second_pass.mean_spearman)}; fabrication flags identical on ${r.second_pass.fabrication_same}/${r.second_pass.fabrication_n}.`, '');
+  if (r.second_pass) {
+    L.push(`Second judge pass over ${r.second_pass.n} pages (labels re-shuffled): arm-vs-lite direction agreed on ${r.second_pass.direction_vs_baseline_same}/${r.second_pass.direction_n} comparisons (${pct(r.second_pass.direction_rate)}); same first place on ${r.second_pass.first_place_same}/${r.second_pass.n}; mean Spearman ρ between the two rankings ${num(r.second_pass.mean_spearman)}; fabrication flags identical on ${r.second_pass.fabrication_same}/${r.second_pass.fabrication_n}.`, '');
+    if ((r.second_pass.direction_rate ?? 1) < 0.6) L.push(`**Read the ranking as weak evidence.** Re-shown the same page with the labels re-shuffled, the judge put an arm on the same side of lite only ${pct(r.second_pass.direction_rate)} of the time — a coin flip is 50 %. An instrument that unstable cannot carry a sign-test p on its own: a p just under 0.05 here is a hint about which arm to test next, not a finding. The fabrication flags (${pct(r.second_pass.fabrication_same / r.second_pass.fabrication_n)} identical across passes) and the mechanical reference-free measures below are the sturdier signal.`, '');
+  }
   L.push('## Refusals by arm (reported, never dropped)', '', '| arm | calls | delivered | refused | kinds | MAX_TOKENS |', '|---|---|---|---|---|---|');
   for (const m of r.arms) L.push(`| ${m} | ${r.per_arm[m].calls} | ${r.per_arm[m].delivered} | ${r.refusals[m].n} | ${JSON.stringify(r.refusals[m].kinds)} | ${r.per_arm[m].max_tokens_hits} |`);
   L.push('');

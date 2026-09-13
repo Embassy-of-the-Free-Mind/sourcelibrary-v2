@@ -1,0 +1,233 @@
+{
+ "baseline": "gemini-3.1-flash-lite",
+ "arms": [
+  "gemini-3.1-flash-lite",
+  "gemini-3-flash-preview",
+  "gemini-2.5-flash",
+  "deepseek/deepseek-v4.1-flash",
+  "qwen/qwen3.8-flash",
+  "deepseek/deepseek-v4-pro-0813"
+ ],
+ "pages": [
+  {
+   "id": "6a3c5f8a40c88a541d8e7613:12",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c5fb9879008ba7e157560:11",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3c5fe1879008ba7e1587c6:4",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c5ffc879008ba7e1595e1:14",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-2.5-flash",
+    "T4": "qwen/qwen3.8-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c6083879008ba7e15ce83:17",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "gemini-2.5-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c60a040c88a541d8e90c2:5",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-2.5-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c60aa40c88a541d8e97c5:17",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3-flash-preview",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c610240c88a541d8eca7b:13",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c610240c88a541d8ecb2f:16",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "gemini-2.5-flash",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c612940c88a541d8ee5a2:22",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-2.5-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c615f879008ba7e15dbf9:17",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "gemini-3-flash-preview",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c625c40c88a541d8f3d42:22",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-2.5-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-3-flash-preview",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c628e40c88a541d8f46a4:6",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-2.5-flash",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c62ed879008ba7e16439a:22",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "gemini-2.5-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c62fe879008ba7e164d31:17",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-2.5-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c63ecaf3c49b59c5c9940:19",
+   "labels": {
+    "T1": "deepseek/deepseek-v4-pro-0813",
+    "T2": "gemini-2.5-flash",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c641139b4508b04e24015:15",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c641439b4508b04e2412d:20",
+   "labels": {
+    "T1": "deepseek/deepseek-v4-pro-0813",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "gemini-2.5-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c642739b4508b04e24987:18",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "qwen/qwen3.8-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c64e039b4508b04e2acdb:16",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "gemini-3-flash-preview",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  }
+ ]
+}
