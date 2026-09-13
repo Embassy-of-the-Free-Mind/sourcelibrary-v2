@@ -405,7 +405,9 @@ async function translateOne(prompts, r, model) {
   // Same door the pipeline uses, no previous-page context (each page stands alone in every arm).
   const { prompt, promptRef } = buildTranslationPrompt({ prompts, book, ocrText: r.ocrText, previousTranslation: null });
   const maxOut = Math.min(32768, Math.max(4096, r.ocrCjk * 4 + 1200));
-  const res = providerOf(model) === 'openrouter' ? await callOpenRouter(model, prompt, maxOut) : await callGemini(model, prompt, maxOut);
+  // OpenRouter providers reject max_tokens above their own ceiling with a 400, which the probe
+  // would read as "arm unavailable"; 8K covers every page but the one 17K-char outlier (finish=length is recorded).
+  const res = providerOf(model) === 'openrouter' ? await callOpenRouter(model, prompt, Math.min(maxOut, 8192)) : await callGemini(model, prompt, maxOut);
   return { ...res, promptRef };
 }
 
