@@ -86,17 +86,53 @@ describe('completeBatchUsage', () => {
     expect(PLACEHOLDER_STATUSES).toContain('pending');
   });
 
-  it('falls back to inserting when no placeholder exists, so spend is never dropped', async () => {
-    const calls = stubSupabase([]); // PATCH matched nothing
+  it('falls back to inserting when the batch has NO row at all, so spend is never dropped', async () => {
+    const calls = stubSupabase([]); // PATCH matched nothing, and the lookup finds nothing
 
     const result = await completeBatchUsage(params);
 
     expect(result).toBe('inserted');
     expect(calls[0].init.method).toBe('PATCH');
-    expect(calls[1].init.method).toBe('POST');
-    const inserted = JSON.parse(String(calls[1].init.body));
+    const post = calls.find(c => c.init.method === 'POST');
+    expect(post, 'a batch with no row anywhere must still be recorded').toBeTruthy();
+    const inserted = JSON.parse(String(post!.init.body));
     expect(inserted.input_tokens).toBe(113961);
     expect(inserted.cost_usd).toBeGreaterThan(0);
+  });
+
+  it('a SECOND collection of the same batch updates its row instead of adding one', async () => {
+    // The defect this pins (2026-09-14): the placeholder PATCH matches nothing
+    // once a job has been collected — the row is terminal, not a placeholder —
+    // and the old code took that as "no row exists" and inserted. Measured over
+    // 2026-09-01..13: 1,645 of 2,139 batch jobs carried a byte-identical
+    // surplus row, 50.6M phantom output tokens and $39.51 of metered spend that
+    // never happened. A batch job is one Gemini job; its usage is fixed once
+    // read, so a second reading is never new money — and over-recording is not
+    // the safe direction, because `cost_usd` closes the daily dial.
+    const calls: Call[] = [];
+    let patches = 0;
+    vi.stubGlobal('fetch', vi.fn(async (url: string, init: RequestInit = {}) => {
+      calls.push({ url: String(url), init });
+      if (init.method === 'PATCH') {
+        patches++;
+        // First PATCH is placeholder-scoped and matches nothing; the second is
+        // scoped to the batch and finds the terminal row.
+        return new Response(JSON.stringify(patches === 1 ? [] : [{ id: 'gu_1' }]), { status: 200 });
+      }
+      if (init.method === 'GET' || !init.method) return new Response(JSON.stringify([{ id: 'gu_1' }]), { status: 200 });
+      return new Response('', { status: 200 });
+    }));
+    vi.stubEnv('SUPABASE_SERVICE_ROLE_KEY', 'test-key');
+
+    const result = await completeBatchUsage(params);
+
+    expect(result).toBe('updated');
+    expect(calls.filter(c => c.init.method === 'POST'), 'no second row').toHaveLength(0);
+    const second = calls.filter(c => c.init.method === 'PATCH')[1];
+    expect(second.url).toContain('batch_job_id=eq.batch-abc');
+    for (const status of PLACEHOLDER_STATUSES) expect(second.url).not.toContain(`status=in.(${status}`);
+    const patch = JSON.parse(String(second.init.body));
+    expect(patch.output_tokens).toBe(25727);
   });
 
   it('does not manufacture a zero row when the caller only wanted to close one', async () => {
