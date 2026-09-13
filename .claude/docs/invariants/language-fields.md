@@ -180,6 +180,25 @@ K'iche' there and a share-ordered rule renames the K'iche' Popol Vuh
 curatorial judgement; the leaves are evidence that something is MISSING from the
 record, never that it is backwards.
 
+## A public language write needs two instruments, not one (#4781, 2026-09-13)
+
+The first visible relabel sweep put 746 books through `detect-language-from-pages.mjs`
+alone. A spot check of 15 found 2 wrong, both the sampler's "script wins" verdict —
+`2,536 GREEK chars but the OCR tag says "latin"` — written as `Greek` on Latin and
+German books with Greek quotations, because an EMPTY catalogue value fell through to
+the write path. 32 books had to be repaired. The hidden batch the same day had zero
+errors, and the only difference was a second instrument: the page-tag aggregation
+(`detect-book-languages.mjs`) had to name the same language at ≥ 90% of tagged pages.
+
+Two rules follow. **The mechanism** is now in the writer (PR #4812): a `review`
+verdict never writes `language`, stored value or not — only `clear` does. **The
+judgment** cannot be: before any write that reaches a published record, require the
+aggregation's top language to agree with the sampler's, and spot-check by READING
+interior pages from the mirror, not by re-reading the tag. The tag is one witness.
+Also: every language write must set `languages[] = [language]` (a stale array keeps
+the old value matching in filters — #3942) and record a `sweep_log` row; the writer
+does neither.
+
 ## The Korean/hanmun class must never be auto-flipped
 
 A book catalogued `Korean` whose pages are Classical Chinese is not mislabelled.
