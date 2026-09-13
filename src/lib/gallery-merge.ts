@@ -40,6 +40,12 @@ export function artworkToGalleryItem(a: any) {
   // ("e.normalize is not a function" in the highlighter) for any query whose
   // AI expansion surfaced such an artwork.
   const summaryText = typeof a.summary === 'string' ? a.summary : a.summary?.data;
+  // Most artworks carry no summary; their prose lives in enrichment.description
+  // (artwork-enrichment.mjs). Falling straight through to the title left ~3,300
+  // enriched artworks reading as title-only on the gallery, the picture mirror
+  // and the museum kiosk (measured 2026-09-13).
+  const enrichedText = typeof a.enrichment?.description === 'string' ? a.enrichment.description : '';
+  const plainText = typeof a.description === 'string' ? a.description : '';
   const year = typeof a.year === 'number' ? a.year : (parseInt(a.published, 10) || undefined);
   const w = a.full_width || a.commons_width;
   const h = a.full_height || a.commons_height;
@@ -56,7 +62,7 @@ export function artworkToGalleryItem(a: any) {
     bookTitle: a.display_title || a.title || 'Untitled',
     author: a.author,
     year,
-    description: summaryText || a.display_title || a.title || '',
+    description: summaryText || enrichedText || plainText || a.display_title || a.title || '',
     type: a.resource_type,
     source: 'artwork' as const,
     // /artwork is the canonical route for a standalone artwork. This field is
@@ -143,7 +149,7 @@ export async function mergedGalleryBrowse(
   }
   const artDocs = await db.collection('books')
     .find(af, {
-      projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 },
+      projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 },
       allowDiskUse: true,
     })
     .sort({ year: 1, title: 1 })
