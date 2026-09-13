@@ -707,7 +707,7 @@ if (GUTTER_ONLY) {
         'pipeline_auto.error': `Split review needed (#2454): ${parkReason}`,
         'pipeline_auto.split_review_needed': true,
         // What the detector saw, so a reviewer can judge without re-running
-        // (#4792) — and release with: --gutter-only --approve-center --by=<name>
+        // (#4792); a reviewed book is released by --gutter-only --approve-center --by=<name>
         'pipeline_auto.split_consensus': consensus,
         'pipeline_auto.last_updated': new Date(),
       },
