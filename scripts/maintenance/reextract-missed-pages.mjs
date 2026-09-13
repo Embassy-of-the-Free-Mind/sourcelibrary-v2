@@ -56,6 +56,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { readFileSync } from 'fs';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
@@ -260,8 +261,19 @@ async function main() {
       const ctx = [book.title && `Book: "${book.title}"`, book.author && `Author: ${book.author}`, book.year && `Year: ${book.year}`, book.language && `Language: ${book.language}`, book.subjects?.length && `Subjects: ${book.subjects.join(', ')}`].filter(Boolean).join(' | ');
       const prompt = ctx ? `BOOK CONTEXT:\n${ctx}\n\n${PROMPT}` : PROMPT;
       try {
-        const model = nextClient().getGenerativeModel({ model: MODEL, safetySettings: SAFETY, generationConfig: { temperature: 0.1, maxOutputTokens: 4096, responseMimeType: 'application/json' } });
+        // thinkingBudget 0: image extraction measured not-worse with thinking off
+        // (#4633 A/B, 4 pages — OFF found an emblem ON missed), and flash-preview
+        // otherwise bills ~1.5 thought tokens per visible one (#4581).
+        const model = nextClient().getGenerativeModel({ model: MODEL, safetySettings: SAFETY, generationConfig: { temperature: 0.1, maxOutputTokens: 4096, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } } });
         const res = await model.generateContent([{ text: prompt }, { inlineData: { mimeType: img.mimeType, data: img.data } }]);
+        // Record before parsing — a response we throw away was still billed (#4599).
+        await logUsage({
+          type: 'extract_images', mode: 'realtime', model: MODEL,
+          book_id: page._book, page_ids: [page.id],
+          input_tokens: res.response.usageMetadata?.promptTokenCount || 0,
+          output_tokens: outputTokensFrom(res.response.usageMetadata),
+          status: 'success', endpoint: 'script/reextract-missed-pages', triggered_by: 'workflow',
+        }, db).catch(() => {});
         const now = new Date();
         const raw = parseExtracted(res.response.text())
           .filter(x => x && x.bbox && typeof x.gallery_quality === 'number') // drop zombie rows
