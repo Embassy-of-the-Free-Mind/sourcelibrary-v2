@@ -85,13 +85,13 @@ const BASELINE = ARMS[0];
 const providerOf = (model) => (model.includes('/') ? 'openrouter' : 'gemini');
 
 /**
- * USD per 1M tokens. `scripts/lib/model-pricing.mjs` is authoritative for the models
- * it lists; the rest are vendor list prices read 2026-09-13 (ops repo, trackA3), kept
- * HERE rather than added to the shared table because they are unverified against a
- * bill. OpenRouter reports the actual charge per call (`usage.cost`), which wins.
+ * USD per 1M tokens. `scripts/lib/model-pricing.mjs` is authoritative for every Gemini
+ * model (the single-source test forbids a Gemini price literal anywhere else); the
+ * OpenRouter arms are vendor list prices read 2026-09-13 (ops repo, trackA3), kept
+ * HERE because they are unverified against a bill and not Gemini. OpenRouter reports
+ * the actual charge per call (`usage.cost`), which wins over the list price.
  */
 const LOCAL_PRICING = {
-  'gemini-2.5-flash-lite':          { input: 0.10, output: 0.40 },
   'deepseek/deepseek-v4.1-flash':   { input: 0.15, output: 0.60 },
   'deepseek/deepseek-v4-pro-0813':  { input: 1.32, output: 3.96 },
   'qwen/qwen3.8-flash':             { input: 0.15, output: 0.47 },
@@ -250,6 +250,9 @@ const OPENROUTER_BASE = 'https://openrouter.ai/api/v1';
 const sleep = (ms) => new Promise((s) => setTimeout(s, ms));
 
 async function callGemini(model, promptText, maxOutputTokens) {
+  // usage-ok: one-off preregistered eval (60 pages x N arms, $0.39 on 2026-09-13), hand-run on Hetzner, never
+  // scheduled; it meters its own tokens per row, refuses above --max-usd, and the report's cost table is the
+  // record (EXPERIMENTS.md). Not routed through gemini_usage: it is not pipeline spend.
   const key = keyFor(model);
   for (let attempt = 0; attempt < 4; attempt++) {
     try {

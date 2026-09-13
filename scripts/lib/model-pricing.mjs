@@ -48,6 +48,7 @@ export const MODEL_PRICING = {
   'gemini-3.1-pro-preview':  { input: 2.50, output: 15.00 }, // not verifiable — no unambiguous SKU
   'gemini-3-pro-preview':    { input: 2.50, output: 10.00 }, // not verifiable — no unambiguous SKU
   'gemini-2.5-flash':        { input: 0.15, output: 0.60 },  // catalogue splits by long/short input
+  'gemini-2.5-flash-lite':   { input: 0.10, output: 0.40 },  // vendor list 2026-09-13; model returns 404 "no longer available to new users" on our key (translation-model-ab, 2026-09-13)
   'gemini-2.5-pro':          { input: 1.25, output: 5.00 },
 };
 
