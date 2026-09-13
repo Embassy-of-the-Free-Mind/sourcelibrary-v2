@@ -81,6 +81,25 @@ The general form: **when a probe returns "nothing found" for every input, that i
 result about the probe.** Give it a positive control — a case you know should come back
 positive — before believing a negative. The same session's badge check hit this twice.
 
+**A gutter detector must measure text STRUCTURE, not darkness — and it must find the
+gap, not the darkest or lightest column** (2026-09-13, #4796). The pixel detector took
+the single least-inked column in the central window and confirmed it by "ink within
+8% on both sides". On a page with a wide inner margin that column is anywhere in the
+margin, so 14 Japanese books were cut inside the LEFT page's blank margin and served a
+strip of the facing page; on yellowed Chinese paper the absolute ink threshold read the
+paper itself as ink and the detector abstained on 69 of 79 spreads (the book parked);
+on tightly bound BPH octavos the curvature shadow read as solid ink and the gap ended
+4% early. The rebuilt detector (`scripts/lib/gutter-detect.mjs`) counts dark/light
+transitions down each column with a per-column threshold, takes the run of non-text
+columns between the two text blocks, and cuts at the binding shadow inside it — or at
+the gap centre — never within the overlap distance of text. Validated by eye on 33
+real spreads across six scripts and 6 wide single pages (`tests/unit/gutter-detect.test.ts`
+pins the fixtures, with inverted controls). Corollary: **a detector that fails silently
+on its cross-check reads as "consistent"** — the Gemini sample was swallowed by an empty
+`catch` for months and `gemini-only 0` looked like agreement. Count and print the first
+error. `src/lib/spread-guard.ts` still carries the old min-column logic; its 91% refusal
+rate in the #3593 rehearsal is probably this same defect.
+
 **Splitting specifically:** `src/lib/spread-guard.ts` refuses to split an image that is
 not a spread, using content (a central ink-free channel with text on *both* sides) not
 shape. It ships in `report` mode — log a real batch and confirm the refusals before

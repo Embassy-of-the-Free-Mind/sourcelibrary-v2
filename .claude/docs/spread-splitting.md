@@ -1,5 +1,19 @@
 # BPH Spread Page Splitting — System Design Document
 
+> **Status (2026-09-13, #4796):** the sections below describe the ORIGINAL post-OCR
+> design (Phase 2 spread prompt → `<split-position>` → Phase 3.1 crop). Since
+> #2454/#2464 (June 2026) the **default path is pre-OCR**: Phase 1.25 screens by
+> aspect ratio and confirms with Gemini, Phase 1.3 runs
+> `scripts/split-book.mjs <id> --gutter-only`, which locates the gutter per page
+> with the pixel detector in `scripts/lib/gutter-detect.mjs` (text-structure gap +
+> binding shadow; #4796), cross-checks a ~8-page Gemini sample, snaps outliers to the
+> book median, crops with **3%** overlap (not the 1% below), archives the spreads in
+> place at negative `page_number`, and requeues the halves for ordinary single-page
+> OCR. Phase 3.1 and the spread prompt remain only for books that were already
+> mid-OCR when #2454 landed. Where this document disagrees with
+> `pipeline-orchestrator.mjs` or `split-book.mjs`, the code is right. The N-leaf
+> (pecha) geometry is a separate design: `multi-leaf-scan-splitting.md`.
+
 ## Purpose
 
 Source Library acquires historical texts from institutional archives and makes them accessible: OCR'd, translated, searchable. The Embassy of the Free Mind (BPH) collection has **1,122 books** where the physical books were scanned as two-page spreads — a single photograph showing both left and right pages of an open book. These need to be split into individual pages for:
