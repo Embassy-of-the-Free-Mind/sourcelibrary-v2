@@ -685,3 +685,41 @@ not evidence that a search happened; it is the failure mode.
 - **Verify groundedness from `queries[]` on the written rows, never from the response text.** Same
   shape as every other entry in this file: read the artifact the mechanism produces, not the
   narration of it.
+
+## A verifier that fails closed on a legitimate input manufactures the finding it was built to detect (#4777)
+
+The original-note verifier asked "is this quoted phrase on the page?" with an exact
+substring match, and counted every miss as unverified. Unverified was then read as
+*fabricated* — by #3308, by the v15 prompt A/B (#4767), and in a session report to Derek
+that put 950,222 fabricated citations in the corpus.
+
+A 797-note random sample of that population, re-checked:
+
+| tier | share | what it really was |
+|---|---:|---|
+| `script` | 51.6% | the page is in another script; the note romanises it |
+| **`absent`** | **26.7%** | **genuinely not on the page** |
+| `folded` | 15.2% | on the page, differing only by Latin diacritics |
+| `stem` | 6.5% | on the page in another inflection |
+
+**Three quarters of the "finding" was the instrument.** The clearest case is the long s:
+early-modern printing uses `ſ` throughout, so a Latin quotation containing any s could not
+match its own page — `lustris` against a page printing `luſtris`.
+
+- **A boolean is the bug.** `verified: false` conflated "I looked and it is not there" with
+  "I cannot check this by the method I have". The fix is a TIER, and `quoteVerified()`
+  returns **`null`, not `false`, for the uncheckable case** — so an unromanisable comparison
+  can never be recorded as an accusation.
+- **Positive-control the instrument on inputs shaped like the real corpus**, not on clean
+  ones. A verifier tested only on modern Latin script passes while being wrong about every
+  early-modern page and every non-Latin page we hold.
+- **Tell:** a large, precise, alarming number produced by a cheap string comparison, on a
+  corpus whose whole character is many scripts and four centuries of orthography. Precision
+  is not accuracy. Before quoting such a number, hand-read twenty cases of the class it
+  claims to have found — twenty was enough here to overturn it.
+- The guard is `tests/unit/verify-quote.test.ts`, negative-controlled: deleting the long-s
+  mapping turns it red.
+
+Downstream corollary: **a measurement built on a broken verifier inherits the break.**
+#4767's Hebrew 8%→93% used the old scorer, so part of it may be the prompt teaching the
+model to quote in the original script rather than teaching it to stop inventing.
