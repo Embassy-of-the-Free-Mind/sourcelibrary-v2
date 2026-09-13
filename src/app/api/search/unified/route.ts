@@ -1097,6 +1097,9 @@ async function lexicalArtworkSearch(
         { display_title: queryRegex },
         { title: queryRegex },
         { author: queryRegex },
+        // the words written ON the artwork — see the note in /api/gallery's artwork lane
+        { 'enrichment.inscriptions': queryRegex },
+        { 'enrichment.inscriptions_translation': queryRegex },
       ],
     },
     {
