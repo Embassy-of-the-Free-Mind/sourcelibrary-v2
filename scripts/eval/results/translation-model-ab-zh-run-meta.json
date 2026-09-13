@@ -1,0 +1,64 @@
+{
+ "arms": {
+  "deepseek/deepseek-v4.1-flash": {
+   "status": "skipped",
+   "reason": "no OPENROUTER_API_KEY in env",
+   "at": "2026-09-13T20:54:09.115Z"
+  },
+  "qwen/qwen3.8-flash": {
+   "status": "skipped",
+   "reason": "no OPENROUTER_API_KEY in env",
+   "at": "2026-09-13T20:54:09.115Z"
+  },
+  "z-ai/glm-5.3-flash": {
+   "status": "skipped",
+   "reason": "no OPENROUTER_API_KEY in env",
+   "at": "2026-09-13T20:54:09.115Z"
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "status": "skipped",
+   "reason": "no OPENROUTER_API_KEY in env",
+   "at": "2026-09-13T20:54:09.116Z"
+  },
+  "qwen/qwen3.8-max-0902": {
+   "status": "skipped",
+   "reason": "no OPENROUTER_API_KEY in env",
+   "at": "2026-09-13T20:54:09.116Z"
+  },
+  "gemini-2.5-flash-lite": {
+   "status": "skipped",
+   "reason": "probe failed: HTTP 404: {\"error\":{\"code\":404,\"message\":\"This model models/gemini-2.5-flash-lite is no longer available to new users. P",
+   "at": "2026-09-13T20:54:23.568Z"
+  },
+  "gemini-3.1-flash-lite": {
+   "status": "ran",
+   "at": "2026-09-13T20:54:23.570Z"
+  },
+  "gemini-3-flash-preview": {
+   "status": "ran",
+   "at": "2026-09-13T20:54:23.570Z"
+  },
+  "gemini-2.5-flash": {
+   "status": "ran",
+   "at": "2026-09-13T20:54:23.570Z"
+  }
+ },
+ "prompt": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "baseline": "gemini-3.1-flash-lite",
+ "arms_requested": [
+  "gemini-3.1-flash-lite",
+  "gemini-3-flash-preview",
+  "gemini-2.5-flash",
+  "gemini-2.5-flash-lite",
+  "deepseek/deepseek-v4.1-flash",
+  "qwen/qwen3.8-flash",
+  "z-ai/glm-5.3-flash",
+  "deepseek/deepseek-v4-pro-0813",
+  "qwen/qwen3.8-max-0902"
+ ]
+}
