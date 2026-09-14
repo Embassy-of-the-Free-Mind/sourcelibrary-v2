@@ -61,6 +61,7 @@ import { readFileSync } from 'fs';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { normalizeBbox } from '../lib/bbox.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => { const a = args.find(x => x.startsWith(`--${n}=`)); return a ? a.split('=')[1] : d; };
@@ -142,14 +143,6 @@ function parseExtracted(text) {
   const a = cleaned.match(/\[[\s\S]*\]/);
   if (a) { try { const p = JSON.parse(a[0]); return Array.isArray(p) ? p : []; } catch {} }
   return [];
-}
-function normalizeBbox(raw) {
-  const x = parseFloat(raw.x) || 0, y = parseFloat(raw.y) || 0, width = parseFloat(raw.width) || 0, height = parseFloat(raw.height) || 0;
-  if (x > 1 || y > 1 || width > 1 || height > 1) {
-    const scale = Math.max(x + width, y + height, 1000);
-    return { x: Math.min(x / scale, 0.95), y: Math.min(y / scale, 0.95), width: Math.min(width / scale, 1), height: Math.min(height / scale, 1) };
-  }
-  return { x, y, width, height };
 }
 
 function pageHasNonTrivialHighSigMarker(ocr) {
@@ -279,7 +272,7 @@ async function main() {
           .filter(x => x && x.bbox && typeof x.gallery_quality === 'number') // drop zombie rows
           .map(x => ({
             description: x.description || '', type: x.type || 'unknown',
-            bbox: normalizeBbox(x.bbox), confidence: x.confidence,
+            bbox: normalizeBbox(x.bbox) ?? undefined, confidence: x.confidence,
             gallery_quality: x.gallery_quality, gallery_rationale: x.gallery_rationale || undefined,
             metadata: x.metadata || undefined, museum_description: x.museum_description || undefined,
             detected_at: now, detection_source: 'vision_model', model: MODEL,
