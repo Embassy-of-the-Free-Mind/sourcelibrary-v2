@@ -27,6 +27,7 @@
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenAI } from '@google/genai';
+import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // Flag-absent means indexOf() is -1 and argv[0] (the node path) gets parseInt'd to NaN —
 // which made a bare invocation claim rows and process none. Parse defensively.
@@ -145,7 +146,26 @@ async function catalogResolve(w) {
 const withTimeout = (p, ms, tag) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(tag || 'timeout')), ms))]);
 async function verify(w, cands) {
   const prompt = `Which candidate (if any) is THE SAME WORK as the target (same text, any edition; a different work by the same author is NOT a match)?\nTARGET: author="${w.author}" title="${w.title}" year=${w.year || '?'}\n${cands.map((c, i) => `${i}: title="${(c.title || '').slice(0, 80)}" year=${c.year || '?'}`).join('\n')}\nReply ONLY JSON: {"match":<index or -1>,"confidence":"high"|"medium"|"low"}`;
-  try { const r = await withTimeout(ai.models.generateContent({ model: MODEL, contents: prompt, config: { temperature: 0, maxOutputTokens: 60 } }), 30000, 'verify'); const j = JSON.parse((r.text || '').match(/\{[^}]*\}/)[0]); return (j.match >= 0 && j.confidence === 'high') ? cands[j.match] : null; } catch { return null; }
+  let r;
+  try {
+    // thinkingBudget 0: picking the same work out of six titles is matching, not
+    // deliberation. It also matters for correctness here, not only cost — with a
+    // 60-token output cap, any silent reasoning eats the answer and the parse below
+    // returns null, which reads as "no match" and declines a work we could acquire.
+    r = await withTimeout(ai.models.generateContent({
+      model: MODEL, contents: prompt,
+      config: { temperature: 0, maxOutputTokens: 60, thinkingConfig: { thinkingBudget: 0 } },
+    }), 30000, 'verify');
+  } catch { return null; }
+  // Record BEFORE parsing: an answer we cannot parse was still billed. This script
+  // runs on the live crontab and wrote no usage row until 2026-09-14 (#4599).
+  await logUsage({
+    type: 'other', mode: 'realtime', model: MODEL,
+    input_tokens: r?.usageMetadata?.promptTokenCount || 0,
+    output_tokens: outputTokensFrom(r?.usageMetadata),
+    status: 'success', endpoint: 'script/acquire-gap-batch', triggered_by: 'cron',
+  }, db).catch(() => {});
+  try { const j = JSON.parse((r.text || '').match(/\{[^}]*\}/)[0]); return (j.match >= 0 && j.confidence === 'high') ? cands[j.match] : null; } catch { return null; }
 }
 async function importWork(w, hit) {
   // Collections by seed category. Unknown categories (e.g. broad Greek classics) get NO
