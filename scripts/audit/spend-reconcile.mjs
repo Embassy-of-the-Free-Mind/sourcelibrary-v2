@@ -57,11 +57,36 @@
  *   1  usage error / could not run at all / a usage store was unreadable
  *   2  PRICE DRIFT: MODEL_PRICING disagrees with Google's catalogue, or a model
  *      with real traffic has no price entry. This is the CI-usable signal.
+ *   3  METER GAP: with --check-gap, billed output tokens exceed metered output
+ *      tokens by more than the tolerance. The unattended-detector signal.
+ *
+ * THE DAILY DETECTOR (--days=N --check-gap)
+ * -----------------------------------------
+ * Everything above runs on a month, because a month is what an invoice covers.
+ * A month is also up to 30 days late: the 140,013-call classifier run of
+ * 2026-09-11 (#4599) reached none of the three usage stores and would have
+ * waited until October to surface in a monthly report.
+ *
+ * `--days=N --check-gap` reconciles a trailing window instead, and exits 3 when
+ * the gap exceeds the tolerance. Two properties keep it honest:
+ *
+ *   - It compares TOKENS, not dollars. A dollar figure is computed from
+ *     constants (#3379), so a wrong constant moves both sides together and the
+ *     gap stays flat while the bill does not. Tokens are counted by Google and
+ *     by us independently, which is the whole point of an external instrument.
+ *   - The window trails and never includes today. Our rows and Google's
+ *     telemetry run on DIFFERENT CLOCKS — a batch row is timestamped at
+ *     collection, Google counts the tokens at generation — so a short window
+ *     manufactures alarm out of ordinary lag (measured: a 3-hour window once
+ *     "proved" batch was unmetered; at month scale it reconciled). Seven days
+ *     absorbs it. --days=1 is allowed for diagnosis and is not the default.
  *
  * Run:
  *   node --env-file=.env.production.local scripts/audit/spend-reconcile.mjs
  *   node --env-file=.env.production.local scripts/audit/spend-reconcile.mjs --month=2026-08
  *   node --env-file=.env.production.local scripts/audit/spend-reconcile.mjs --month=2026-08 --json
+ *   node --env-file=.env.production.local scripts/audit/spend-reconcile.mjs --days=7 --check-gap
+ *   node --env-file=.env.production.local scripts/audit/spend-reconcile.mjs --days=7 --check-gap=25
  *
  * Google auth: uses `gcloud auth print-access-token` if available, else
  * GOOGLE_OAUTH_ACCESS_TOKEN. Without one the Gemini half prints UNREADABLE
@@ -81,11 +106,45 @@ const defMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 
   .toISOString().slice(0, 7);
 const MONTH = arg('month', defMonth);
 if (!/^\d{4}-\d{2}$/.test(MONTH)) {
-  console.error('Usage: spend-reconcile.mjs [--month=YYYY-MM] [--json]');
+  console.error('Usage: spend-reconcile.mjs [--month=YYYY-MM | --days=N [--ending=YYYY-MM-DD]] [--check-gap[=pct]] [--json]');
   process.exit(1);
 }
-const start = new Date(`${MONTH}-01T00:00:00Z`);
-const end = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 1, 1));
+
+/**
+ * Trailing-window mode. The window ENDS at the last complete UTC day, or at
+ * --ending=, which is how the detector is tested against a day known to have a
+ * gap. Today is excluded deliberately: a partial day is not a small day, it is
+ * a day whose meter rows have not all been written yet.
+ */
+const DAYS = args.some(a => a.startsWith('--days=')) ? Number(arg('days', '7')) : null;
+const CHECK_GAP = args.some(a => a === '--check-gap' || a.startsWith('--check-gap='));
+const GAP_TOLERANCE_PCT = Number(arg('check-gap', '10')) || 10;
+const ENDING = arg('ending', null);
+const ALERT = args.includes('--alert');
+if (DAYS != null && (!Number.isFinite(DAYS) || DAYS < 1 || DAYS > 42)) {
+  // Cloud Monitoring retains this metric ~6 weeks; a longer window silently
+  // reads zero on its early days, which would look like perfect coverage.
+  console.error('--days must be between 1 and 42 (Cloud Monitoring retains ~6 weeks).');
+  process.exit(1);
+}
+if (CHECK_GAP && DAYS == null) {
+  console.error('--check-gap needs --days=N. A month-scale gap check reports a leak up to 30 days late.');
+  process.exit(1);
+}
+
+const midnightUTC = d => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+let start, end, WINDOW;
+if (DAYS != null) {
+  end = ENDING ? new Date(`${ENDING}T00:00:00Z`) : midnightUTC(now);
+  if (Number.isNaN(end.getTime())) { console.error('--ending must be YYYY-MM-DD'); process.exit(1); }
+  start = new Date(end.getTime() - DAYS * 864e5);
+  WINDOW = `${start.toISOString().slice(0, 10)} .. ${new Date(end.getTime() - 864e5).toISOString().slice(0, 10)} (${DAYS}d)`;
+} else {
+  start = new Date(`${MONTH}-01T00:00:00Z`);
+  end = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 1, 1));
+  WINDOW = MONTH;
+}
+const dayKey = iso => String(iso).slice(0, 10);
 
 /**
  * Every billing-enabled project that can reach the Gemini API.
@@ -97,7 +156,19 @@ const PROJECTS = [
   { id: 'gen-lang-client-0278315411', name: 'booksplit', note: 'primary pipeline key lives here; also holds smartpaper + Kaiju Rampage keys' },
   { id: 'gen-lang-client-0352480887', name: 'Sourcelibrary', note: '' },
   { id: 'gen-lang-client-0720939617', name: 'soma', note: 'GEMINI_API_KEY_TIER3 lives here; also non-SL keys' },
+  // Added 2026-09-14: holds GEMINI_API_KEY_FREE, which IS installed on Hetzner and
+  // made 338 successful GenerateContent calls in September. Three projects were
+  // audited because three were known; the way to find the fourth is to enumerate
+  // every project holding a generativelanguage key, not to list the ones you use.
+  { id: 'gen-lang-client-0181126711', name: 'sourcelibrary2', note: 'GEMINI_API_KEY_FREE lives here' },
+  { id: 'gen-lang-client-0101787750', name: 'Gemini API', note: 'holds 2 keys; no traffic in September, listed so silence is a reading' },
 ];
+
+// NOT covered, and it is not an oversight to leave unstated: Vercel production
+// carries GEMINI_API_KEY and GEMINI_API_KEY_TIER3 whose key strings match NO key
+// in any project this account can see (checked against all 10, 2026-09-14). The
+// request path may therefore bill a project outside this list entirely. Whoever
+// owns that project has to add it here, or its spend is invisible to this script.
 
 /** Gemini API service in the Cloud Billing catalogue. */
 const GEMINI_SERVICE = 'services/AEFD-7695-64FA';
@@ -107,15 +178,76 @@ const M = n => (n / 1e6).toFixed(1) + 'M';
 
 // ─────────────────────────────────────────── Google auth
 
-function googleToken() {
-  if (process.env.GOOGLE_OAUTH_ACCESS_TOKEN) return process.env.GOOGLE_OAUTH_ACCESS_TOKEN;
+/**
+ * A signed JWT exchanged for an access token — the unattended path.
+ *
+ * Hetzner has no `gcloud` and no browser, so the daily run authenticates with a
+ * service-account key holding `roles/monitoring.viewer` on the three Gemini
+ * projects and nothing else. Minted here rather than pulled from a library: it
+ * is twenty lines, and adding a dependency to a spend auditor to read a spend
+ * number is its own kind of cost.
+ *
+ * GOOGLE_SERVICE_ACCOUNT_JSON may be the key's PATH or the JSON itself.
+ */
+async function serviceAccountToken() {
+  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+  if (!raw) return null;
+  const { createSign } = await import('node:crypto');
+  const { readFileSync } = await import('node:fs');
+  let key;
   try {
-    return execFileSync('gcloud', ['auth', 'print-access-token'], {
-      encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 20000,
-    }).trim();
-  } catch {
+    key = JSON.parse(raw.trim().startsWith('{') ? raw : readFileSync(raw.trim(), 'utf8'));
+  } catch (err) {
+    console.error(`GOOGLE_SERVICE_ACCOUNT_JSON is set but unreadable: ${err.message}`);
     return null;
   }
+  const b64 = o => Buffer.from(JSON.stringify(o)).toString('base64url');
+  const iat = Math.floor(Date.now() / 1000);
+  const claim = {
+    iss: key.client_email,
+    scope: 'https://www.googleapis.com/auth/monitoring.read https://www.googleapis.com/auth/cloud-platform.read-only',
+    aud: key.token_uri || 'https://oauth2.googleapis.com/token',
+    iat, exp: iat + 3600,
+  };
+  const body = `${b64({ alg: 'RS256', typ: 'JWT' })}.${b64(claim)}`;
+  const sig = createSign('RSA-SHA256').update(body).sign(key.private_key, 'base64url');
+  const r = await fetch(claim.aud, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: `${body}.${sig}` }),
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || !j.access_token) {
+    console.error(`Service-account token exchange failed: ${j.error_description || j.error || r.status}`);
+    return null;
+  }
+  return j.access_token;
+}
+
+async function googleToken() {
+  if (process.env.GOOGLE_OAUTH_ACCESS_TOKEN) return process.env.GOOGLE_OAUTH_ACCESS_TOKEN;
+  const sa = await serviceAccountToken();
+  if (sa) return sa;
+  // `gcloud auth print-access-token` fails intermittently — twice in one hour
+  // here, refreshing its cached token while another copy held the lock. The old
+  // code swallowed stderr and returned null, so a five-second hiccup read as
+  // "no credential", and with --check-gap that would have been a day the
+  // detector silently did not run. Retry once, and SAY why if it still fails.
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      return execFileSync('gcloud', ['auth', 'print-access-token'], {
+        encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 30000,
+      }).trim();
+    } catch (err) {
+      const why = String(err.stderr || err.message || '').trim().split('\n')[0].slice(0, 200);
+      if (attempt === 2) {
+        console.error(`  gcloud auth print-access-token failed twice: ${why}`);
+        return null;
+      }
+      execFileSync('sleep', ['3']);
+    }
+  }
+  return null;
 }
 
 async function gapi(token, url, init = {}) {
@@ -189,16 +321,26 @@ async function timeSeries(token, projectId, filter, groupBy = []) {
 
 const sumPoints = s => (s.points || []).reduce((a, b) => a + Number(b.value?.int64Value || b.value?.doubleValue || 0), 0);
 
-/** Billed OUTPUT tokens per model. Includes thinking — that is the point. */
+/**
+ * Billed OUTPUT tokens per model, and per day. Includes thinking — that is the point.
+ *
+ * Each point covers [startTime, endTime); label it by its START. Labelling by the
+ * end shifts every day forward by one, which is exactly how the 2026-09-11
+ * classifier burst first read as having happened on the 12th.
+ */
 async function billedOutput(token, projectId) {
   const ts = await timeSeries(token, projectId,
     'metric.type="generativelanguage.googleapis.com/generate_content_usage_output_token_count"');
-  const byModel = {};
+  const byModel = {}, byDay = {};
   for (const s of ts) {
     const m = s.metric?.labels?.model || 'unknown';
     byModel[m] = (byModel[m] || 0) + sumPoints(s);
+    for (const pt of s.points || []) {
+      const d = dayKey(pt.interval?.startTime || pt.interval?.endTime || '');
+      if (d) byDay[d] = (byDay[d] || 0) + Number(pt.value?.int64Value || pt.value?.doubleValue || 0);
+    }
   }
-  return byModel;
+  return { byModel, byDay };
 }
 
 /** Billed INPUT tokens per model, summed across the paid-tier quota buckets. */
@@ -243,13 +385,18 @@ async function billedInput(token, projectId) {
 async function meteredMongo(db) {
   const rows = await db.collection('gemini_usage').aggregate([
     { $match: { timestamp: { $gte: start, $lt: end } } },
-    { $group: { _id: { model: '$model', endpoint: '$endpoint', status: '$status' },
+    { $group: { _id: { model: '$model', endpoint: '$endpoint', status: '$status', mode: '$mode',
+                       day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } } },
                 calls: { $sum: 1 }, cost: { $sum: '$cost_usd' },
-                inTok: { $sum: '$input_tokens' }, outTok: { $sum: '$output_tokens' } } },
+                inTok: { $sum: '$input_tokens' }, outTok: { $sum: '$output_tokens' },
+                // Rows that carry a price but no token counts. They are spend the
+                // TOKEN comparison below cannot see, so they inflate the apparent
+                // gap: `script/ft-ladder` writes 4,896 such rows ($36 in September).
+                noTok: { $sum: { $cond: [{ $and: [{ $gt: ['$cost_usd', 0] }, { $not: [{ $gt: ['$output_tokens', 0] }] }] }, 1, 0] } } } },
   ], { allowDiskUse: true }).toArray();
   return tally(rows.map(r => ({
-    model: r._id.model, endpoint: r._id.endpoint, status: r._id.status,
-    calls: r.calls, cost: r.cost || 0, inTok: r.inTok || 0, outTok: r.outTok || 0,
+    model: r._id.model, endpoint: r._id.endpoint, status: r._id.status, day: r._id.day, mode: r._id.mode,
+    calls: r.calls, cost: r.cost || 0, inTok: r.inTok || 0, outTok: r.outTok || 0, noTok: r.noTok || 0,
   })));
 }
 
@@ -270,16 +417,18 @@ async function meteredSupabase() {
       // read failure, not a smaller number.
       if (from > 600_000) return { error: '>600K rows this month — sum truncated' };
       const r = await fetch(
-        `${url}/rest/v1/gemini_usage?${qs}&select=model,endpoint,status,cost_usd,input_tokens,output_tokens&order=id.asc`,
+        `${url}/rest/v1/gemini_usage?${qs}&select=model,endpoint,status,mode,timestamp,cost_usd,input_tokens,output_tokens&order=id.asc`,
         { headers: { apikey: key, Authorization: `Bearer ${key}`, Range: `${from}-${from + 999}` },
           signal: AbortSignal.timeout(90_000) },
       );
       if (!r.ok && r.status !== 206) return { error: `Supabase read failed (${r.status})` };
       const batch = await r.json();
       for (const b of batch) {
-        const k = `${b.model} ${b.endpoint} ${b.status}`;
-        const g = groups.get(k) || { model: b.model, endpoint: b.endpoint, status: b.status, calls: 0, cost: 0, inTok: 0, outTok: 0 };
+        const day = dayKey(b.timestamp || '');
+        const k = `${b.model}${b.endpoint}${b.status}${b.mode}${day}`;
+        const g = groups.get(k) || { model: b.model, endpoint: b.endpoint, status: b.status, mode: b.mode, day, calls: 0, cost: 0, inTok: 0, outTok: 0, noTok: 0 };
         g.calls++; g.cost += b.cost_usd || 0; g.inTok += b.input_tokens || 0; g.outTok += b.output_tokens || 0;
+        if ((b.cost_usd || 0) > 0 && !(b.output_tokens > 0)) g.noTok++;
         groups.set(k, g);
       }
       if (batch.length < 1000) break;
@@ -301,8 +450,8 @@ async function meteredSupabase() {
 const PLACEHOLDER = new Set(['submitted', 'pending', 'duplicate', 'unknown']);
 const FAILED = new Set(['failed', 'error']);
 function tally(groups) {
-  const byModel = {}, byEndpoint = {};
-  let calls = 0, spendCalls = 0, cost = 0, placeholders = 0, failed = 0;
+  const byModel = {}, byEndpoint = {}, byDay = {};
+  let calls = 0, spendCalls = 0, cost = 0, placeholders = 0, failed = 0, pricedNoTokens = 0;
   for (const g of groups) {
     const m = g.model || 'unknown';
     byModel[m] = byModel[m] || { calls: 0, cost: 0, inTok: 0, outTok: 0 };
@@ -313,12 +462,20 @@ function tally(groups) {
     byEndpoint[e] = byEndpoint[e] || { calls: 0, cost: 0, outTok: 0 };
     byEndpoint[e].calls += g.calls; byEndpoint[e].cost += g.cost; byEndpoint[e].outTok += g.outTok;
 
-    calls += g.calls; cost += g.cost;
+    const d = g.day || 'unknown';
+    byDay[d] = byDay[d] || { calls: 0, spendCalls: 0, cost: 0, outTok: 0, realtimeOutTok: 0, batchOutTok: 0 };
+    byDay[d].calls += g.calls; byDay[d].cost += g.cost; byDay[d].outTok += g.outTok;
+    // Split by SERVING MODE, because only one half is externally checkable —
+    // see the gap check below.
+    if (g.mode === 'batch') byDay[d].batchOutTok += g.outTok;
+    else byDay[d].realtimeOutTok += g.outTok;
+
+    calls += g.calls; cost += g.cost; pricedNoTokens += g.noTok || 0;
     if (PLACEHOLDER.has(g.status)) placeholders += g.calls;
     else if (FAILED.has(g.status)) failed += g.calls;
-    else spendCalls += g.calls;
+    else { spendCalls += g.calls; byDay[d].spendCalls += g.calls; }
   }
-  return { byModel, byEndpoint, calls, spendCalls, cost, placeholders, failed, error: null };
+  return { byModel, byEndpoint, byDay, calls, spendCalls, cost, placeholders, failed, pricedNoTokens, error: null };
 }
 
 /**
@@ -330,22 +487,128 @@ function tally(groups) {
  * calls. Adding turns to calls would produce a number that is neither. August 2026:
  * 8,784 rows, $77.00, of which the librarian is $76.48.
  */
+const DOUBLE_WRITTEN_FEATURES = /^(explain:|ai_search_expand$)/;
+
+/**
+ * Email the verdict, at most once a day.
+ *
+ * Reuses the pipeline-health channel rather than inventing one: same Resend
+ * sender, same ALERT_EMAIL, and a cooldown recorded in `system_config` so a
+ * daily cron cannot turn a standing gap into a standing inbox. An alert nobody
+ * can bear to read is an alert nobody reads.
+ */
+async function sendAlert(verdictText, subject) {
+  if (!process.env.RESEND_API_KEY || !process.env.MONGODB_URI) {
+    console.error('  (--alert: RESEND_API_KEY or MONGODB_URI missing — not sent)');
+    return;
+  }
+  const COOLDOWN_MS = 20 * 3600 * 1000;
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
+  try {
+    await client.connect();
+    const db = client.db(process.env.MONGODB_DB || 'bookstore');
+    const state = await db.collection('system_config').findOne({ _id: 'spend_gap_alert_state' });
+    const elapsed = state?.last_sent_at ? Date.now() - new Date(state.last_sent_at).getTime() : Infinity;
+    if (elapsed < COOLDOWN_MS) {
+      console.error(`  (--alert: cooldown, ${((COOLDOWN_MS - elapsed) / 3600000).toFixed(1)}h remaining)`);
+      return;
+    }
+    const { Resend } = await import('resend');
+    await new Resend(process.env.RESEND_API_KEY).emails.send({
+      from: 'Source Library <noreply@sourcelibrary.org>',
+      to: process.env.ALERT_EMAIL || 'derek@sourcelibrary.org',
+      subject,
+      html: `<h2>${subject}</h2><pre style="font-family:ui-monospace,monospace;font-size:13px">${
+        verdictText.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))
+      }</pre>`,
+    });
+    await db.collection('system_config').updateOne(
+      { _id: 'spend_gap_alert_state' },
+      { $set: { last_sent_at: new Date(), last_subject: subject } },
+      { upsert: true },
+    );
+    console.error('  (--alert: sent)');
+  } catch (err) {
+    console.error(`  (--alert: failed — ${err.message})`);
+  } finally {
+    await client.close().catch(() => {});
+  }
+}
+
+/**
+ * The detector's arithmetic, as a pure function so it can be tested.
+ *
+ * A guard nobody can make fail on purpose is not known to work — and this one
+ * cannot be exercised in CI against the real thing, because it needs a Google
+ * credential and two databases. So the judgement lives here and
+ * `tests/unit/spend-gap-detector.test.ts` drives it with the shape of a day we
+ * know had a gap (2026-09-11: 18.2M billed against 1.9M metered) and the shape
+ * of a day we know did not.
+ *
+ * @param billedByDay   {day: output tokens} from Cloud Monitoring — realtime only
+ * @param meteredByDay  {day: {realtimeOutTok, batchOutTok}} from our two gemini_usage stores
+ * @param requestByDay  {day: output tokens} from ai_usage, EXCLUDING double-written features
+ * @param tolerancePct  gap above which the verdict is 'gap'
+ */
+export function gapVerdict({ billedByDay = {}, meteredByDay = {}, requestByDay = {}, tolerancePct = 10 }) {
+  const days = [...new Set([...Object.keys(billedByDay), ...Object.keys(meteredByDay)])]
+    .filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort();
+
+  let billedTok = 0, meterTok = 0, batchTok = 0, requestTok = 0;
+  const rows = [];
+  for (const d of days) {
+    const billed = billedByDay[d] || 0;
+    const metered = (meteredByDay[d]?.realtimeOutTok || 0) + (requestByDay[d] || 0);
+    const batch = meteredByDay[d]?.batchOutTok || 0;
+    billedTok += billed; meterTok += metered; batchTok += batch; requestTok += requestByDay[d] || 0;
+    rows.push({ day: d, billed, metered, unmetered: billed - metered, batch,
+                over: billed > 0 && (billed - metered) / billed > tolerancePct / 100 });
+  }
+
+  const gapPct = billedTok > 0 ? (100 * (billedTok - meterTok) / billedTok) : 0;
+  const coveragePct = billedTok > 0 ? (100 * meterTok / billedTok) : 0;
+  // Zero billed tokens is an unreadable instrument, not a quiet week: the
+  // positive-control rule. Never report 'ok' for it.
+  const verdict = billedTok === 0 ? 'unreadable' : gapPct > tolerancePct ? 'gap' : 'ok';
+  return { rows, billedTok, meterTok, batchTok, requestTok, gapPct, coveragePct, verdict, tolerancePct };
+}
+
 async function requestPathUsage(db) {
   const rows = await db.collection('ai_usage').aggregate([
     { $match: { timestamp: { $gte: start, $lt: end } } },
-    { $group: { _id: '$feature', rows: { $sum: 1 }, cost: { $sum: { $ifNull: ['$costUsd', 0] } } } },
-    { $sort: { cost: -1 } },
+    { $group: { _id: { feature: '$feature', day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } } },
+                rows: { $sum: 1 }, cost: { $sum: { $ifNull: ['$costUsd', 0] } },
+                outTok: { $sum: { $ifNull: ['$outputTokens', 0] } } } },
   ]).toArray();
+  const byFeature = {}, byDay = {}, exclusiveByDay = {};
+  for (const r of rows) {
+    const f = r._id.feature || 'unknown';
+    byFeature[f] = byFeature[f] || { feature: f, rows: 0, cost: 0, outTok: 0 };
+    byFeature[f].rows += r.rows; byFeature[f].cost += r.cost; byFeature[f].outTok += r.outTok;
+    const d = r._id.day || 'unknown';
+    byDay[d] = (byDay[d] || 0) + r.outTok;
+    // DOUBLE-WRITERS. `/api/explain` and `/api/search/ai-expand` go through the
+    // metered client AND call logAiUsage, so their tokens are already in
+    // gemini_usage; adding them again would credit the meter twice and shrink
+    // a real gap. The rest (librarian, podcast, voice) write only here, and
+    // leaving them out would invent one. Checked by reading the call sites:
+    // both spellings of the rule are wrong, so the split is explicit.
+    if (!DOUBLE_WRITTEN_FEATURES.test(f)) exclusiveByDay[d] = (exclusiveByDay[d] || 0) + r.outTok;
+  }
+  const list = Object.values(byFeature).sort((a, b) => b.cost - a.cost);
   return {
-    byFeature: rows.map(r => ({ feature: r._id || 'unknown', rows: r.rows, cost: r.cost })),
-    rows: rows.reduce((a, r) => a + r.rows, 0),
-    cost: rows.reduce((a, r) => a + r.cost, 0),
+    byFeature: list, byDay, exclusiveByDay,
+    rows: list.reduce((a, r) => a + r.rows, 0),
+    cost: list.reduce((a, r) => a + r.cost, 0),
+    // TOKENS add across stores even though TURNS do not: a librarian row counts
+    // one turn and several calls, but its tokens are just tokens.
+    outTok: list.reduce((a, r) => a + r.outTok, 0),
   };
 }
 
 /** Merge the two stores into one metered picture. */
 function mergeMetered(a, b) {
-  const out = { byModel: {}, byEndpoint: {}, calls: 0, spendCalls: 0, cost: 0, placeholders: 0, failed: 0 };
+  const out = { byModel: {}, byEndpoint: {}, byDay: {}, calls: 0, spendCalls: 0, cost: 0, placeholders: 0, failed: 0, pricedNoTokens: 0 };
   for (const s of [a, b]) {
     for (const [m, v] of Object.entries(s.byModel)) {
       out.byModel[m] = out.byModel[m] || { calls: 0, cost: 0, inTok: 0, outTok: 0 };
@@ -355,7 +618,11 @@ function mergeMetered(a, b) {
       out.byEndpoint[e] = out.byEndpoint[e] || { calls: 0, cost: 0, outTok: 0 };
       for (const k of ['calls', 'cost', 'outTok']) out.byEndpoint[e][k] += v[k];
     }
-    for (const k of ['calls', 'spendCalls', 'cost', 'placeholders', 'failed']) out[k] += s[k];
+    for (const [d, v] of Object.entries(s.byDay || {})) {
+      out.byDay[d] = out.byDay[d] || { calls: 0, spendCalls: 0, cost: 0, outTok: 0, realtimeOutTok: 0, batchOutTok: 0 };
+      for (const k of ['calls', 'spendCalls', 'cost', 'outTok', 'realtimeOutTok', 'batchOutTok']) out.byDay[d][k] += v[k];
+    }
+    for (const k of ['calls', 'spendCalls', 'cost', 'placeholders', 'failed', 'pricedNoTokens']) out[k] += s[k] || 0;
   }
   return out;
 }
@@ -440,30 +707,38 @@ async function r2Cost() {
 // ─────────────────────────────────────────── report
 
 async function main() {
-  const out = { month: MONTH, generatedAt: new Date().toISOString() };
+  const out = { month: MONTH, window: WINDOW, days: DAYS, generatedAt: new Date().toISOString() };
   let exitCode = 0;
   const log = (...a) => { if (!JSON_OUT) console.log(...a); };
 
-  log(`\n═══ Spend reconciliation — ${MONTH} ═══\n`);
+  log(`\n═══ Spend reconciliation — ${WINDOW} ═══\n`);
 
   // ---- Gemini: billed vs metered -----------------------------------------
-  const token = googleToken();
+  const token = await googleToken();
   if (!token) {
     // Trap E: say so, loudly. An omitted line reads as zero.
     out.gemini = { unreadable: 'no Google access token (run `gcloud auth login`, or set GOOGLE_OAUTH_ACCESS_TOKEN)' };
     log('GEMINI: UNREADABLE — no Google access token.');
     log('        Run `gcloud auth login`, or set GOOGLE_OAUTH_ACCESS_TOKEN.\n');
+    // FAIL CLOSED. A detector that exits 0 when it could not read the vendor
+    // reports "no gap" on every day its credential is broken — and a transient
+    // token failure did exactly that on the first run of this check.
+    if (CHECK_GAP) {
+      log('        --check-gap cannot run without it. Exiting 1 rather than reporting no gap.');
+      exitCode = Math.max(exitCode, 1);
+    }
   } else {
     const skus = await fetchSkus(token);
     log(`Price catalogue: ${skus.length} Gemini SKUs loaded (live from Cloud Billing).\n`);
 
-    const billedOut = {}, billedIn = {};
+    const billedOut = {}, billedIn = {}, billedOutByDay = {};
     let googleCalls = 0;
     for (const p of PROJECTS) {
       const [o, i, c] = await Promise.all([
         billedOutput(token, p.id), billedInput(token, p.id), googleCallCount(token, p.id),
       ]);
-      for (const [m, v] of Object.entries(o)) billedOut[m] = (billedOut[m] || 0) + v;
+      for (const [m, v] of Object.entries(o.byModel)) billedOut[m] = (billedOut[m] || 0) + v;
+      for (const [d, v] of Object.entries(o.byDay)) billedOutByDay[d] = (billedOutByDay[d] || 0) + v;
       for (const [m, v] of Object.entries(i)) billedIn[m] = (billedIn[m] || 0) + v;
       googleCalls += c;
     }
@@ -567,11 +842,93 @@ async function main() {
       log(`  NB: compare the billed estimate to the Gemini SKUs on the invoice,`);
       log(`      never to the invoice total — the billing account carries six projects.`);
       out.reconciliation = { estimated: est, metered: metered.cost, gap, meterCoveragePct: cov };
-      out.metered = {
-        supabase: { calls: supa.calls, cost: supa.cost },
-        mongo: { calls: mongo.calls, cost: mongo.cost },
-        byEndpoint: metered.byEndpoint,
-      };
+
+      // ---- the detector: billed TOKENS vs metered TOKENS, per day ---------
+      //
+      // Dollars are computed from constants on our side and from a SKU table on
+      // the billed side, so a wrong constant moves both and the gap stays flat.
+      // Tokens are counted independently by each party. That is the comparison
+      // an unattended check has to make.
+      //
+      // REALTIME ONLY, and this is the whole subtlety. Measured 2026-09-14:
+      // `generate_content_usage_output_token_count` does NOT count batch
+      // generation. On 2026-09-09 it reported 5.60M output tokens for the day
+      // while our own rows hold 5.02M realtime and a further 19.29M of batch —
+      // four times the day's entire billed figure. Batch success rows carry
+      // token counts read straight from Gemini's own responses, so the tokens
+      // are real; the METRIC is what does not see them. (A note added on
+      // 2026-09-04 concluded the opposite from a month whose batch volume was
+      // small next to realtime. September, batch-heavy, settles it.)
+      //
+      // So batch is REPORTED, never summed in: an unmeasurable is not a zero,
+      // and it is not a gap either. The external check on batch spend is the
+      // invoice plus `batch_jobs`; `scripts/maintenance/reconcile-batch-usage.mjs`
+      // is its reconciler.
+      if (CHECK_GAP) {
+        const v = gapVerdict({
+          billedByDay: billedOutByDay,
+          meteredByDay: metered.byDay,
+          requestByDay: requestPath?.exclusiveByDay || {},
+          tolerancePct: GAP_TOLERANCE_PCT,
+        });
+        const { rows, billedTok, meterTok, batchTok, requestTok } = v;
+
+        log('\nMETER GAP — billed output tokens vs metered REALTIME output tokens, by day');
+        log(`    ${'day'.padEnd(12)} ${'billed'.padStart(9)} ${'metered'.padStart(9)} ${'unmetered'.padStart(10)}   ${'(batch, not comparable)'.padStart(23)}`);
+        for (const r of rows) {
+          log(`    ${r.day.padEnd(12)} ${M(r.billed).padStart(9)} ${M(r.metered).padStart(9)} ${M(r.unmetered).padStart(10)}   ${M(r.batch).padStart(23)}${r.over ? '  <-- over tolerance' : ''}`);
+        }
+        log(`    ${'window'.padEnd(12)} ${M(billedTok).padStart(9)} ${M(meterTok).padStart(9)} ${M(billedTok - meterTok).padStart(10)}   ${M(batchTok).padStart(23)}`);
+        log(`\n  realtime token coverage . ${v.coveragePct.toFixed(0)}%  (tolerance: gap below ${GAP_TOLERANCE_PCT}%)`);
+        log(`  of which ai_usage-only features (librarian, podcast, voice): ${M(requestTok)}`);
+        if (metered.pricedNoTokens) {
+          // A row with a price and no token counts is spend this comparison cannot
+          // see: it lands in "unmetered" even though somebody did record it. Name
+          // it rather than letting it masquerade as a coverage hole.
+          log(`  ${metered.pricedNoTokens.toLocaleString()} metered row(s) carry a cost but NO token counts — they read as unmetered above.`);
+        }
+        out.gapCheck = {
+          tolerancePct: GAP_TOLERANCE_PCT, billedTokens: billedTok, meteredRealtimeTokens: meterTok,
+          meteredBatchTokens: batchTok, requestPathTokens: requestTok, gapPct: v.gapPct, verdict: v.verdict, byDay: rows,
+        };
+        const pct = v.gapPct;
+
+        if (v.verdict === 'unreadable') {
+          // A window Google reports nothing for is an unreadable instrument, not
+          // a quiet week — the positive-control rule. Never pass on it.
+          log('\n  \u2718 Cloud Monitoring reported ZERO billed output tokens for this window.');
+          log('    That is a broken query or an out-of-retention window, not a quiet one.');
+          exitCode = Math.max(exitCode, 1);
+          if (ALERT) {
+            await sendAlert(
+              `Cloud Monitoring returned no billed output tokens for ${WINDOW}.\n` +
+              'The gap check could not run. This is an instrument failure, not a quiet week.',
+              '[SPEND] meter-gap check could not read Cloud Monitoring');
+          }
+        } else if (v.verdict === 'gap') {
+          log(`\n  \u2718 METER GAP ${pct.toFixed(0)}% — ${M(billedTok - meterTok)} realtime output tokens billed and never recorded.`);
+          log('    The day column says WHEN. For WHO:');
+          log('    node --env-file=.env.production.local scripts/audit/gemini-key-attribution.mjs --hetzner --days=N');
+          log('    names the API key, and therefore the machine, that made the calls.');
+          exitCode = Math.max(exitCode, 3);
+          if (ALERT) {
+            const table = [
+              `Window ${WINDOW} — ${v.gapPct.toFixed(0)}% of billed realtime output tokens reached no usage row.`,
+              '',
+              `${'day'.padEnd(12)}${'billed'.padStart(10)}${'metered'.padStart(10)}${'unmetered'.padStart(11)}`,
+              ...rows.map(r => `${r.day.padEnd(12)}${M(r.billed).padStart(10)}${M(r.metered).padStart(10)}${M(r.unmetered).padStart(11)}${r.over ? '   <-- over tolerance' : ''}`),
+              `${'window'.padEnd(12)}${M(billedTok).padStart(10)}${M(meterTok).padStart(10)}${M(billedTok - meterTok).padStart(11)}`,
+              '',
+              'Who: scripts/audit/gemini-key-attribution.mjs --hetzner --days=N names the key,',
+              'and therefore the machine. Batch generation is excluded on both sides — the',
+              'billed metric does not count it.',
+            ].join('\n');
+            await sendAlert(table, `[SPEND] ${v.gapPct.toFixed(0)}% of Gemini output tokens unmetered (${WINDOW})`);
+          }
+        } else {
+          log(`\n  \u2714 within tolerance (${pct.toFixed(0)}% gap).`);
+        }
+      }
     }
 
     // ---- price drift guard (the durable bit) ------------------------------
@@ -651,6 +1008,14 @@ async function main() {
   }
 
   // ---- the rest of the surface -------------------------------------------
+  //
+  // A monthly run-rate view. The daily detector skips it: R2 analytics are
+  // clamped to 30 days and the receipts-only vendors cannot change overnight,
+  // so printing them every morning teaches nothing and buries the verdict.
+  if (CHECK_GAP) {
+    if (JSON_OUT) console.log(JSON.stringify(out, null, 2));
+    process.exit(exitCode);
+  }
   log('\n─── the rest of what we spend on ───\n');
   const r2 = await r2Cost();
   if (r2.unreadable) {
@@ -681,4 +1046,7 @@ async function main() {
   process.exit(exitCode);
 }
 
-main().catch(e => { console.error('spend-reconcile failed:', e.message); process.exit(1); });
+const invokedDirectly = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+if (invokedDirectly) {
+  main().catch(e => { console.error('spend-reconcile failed:', e.message); process.exit(1); });
+}

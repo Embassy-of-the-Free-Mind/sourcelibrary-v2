@@ -569,26 +569,47 @@ The correction — count pages awaiting OCR *in* the denominator — moved the c
 
 Two practical rules fall out. **Ask what each excluded item is excluded FOR** — "impossible" and "not done yet" look identical in a filter and mean opposite things, and only the first belongs outside a completeness denominator. And **check the extremes before publishing a ratio**: the books at 100% and the books at 0% are where a wrong denominator is visible in one glance. Both of the defects above were found by reading a single book's real page counts, after the aggregate looked fine. Related: [[tests-that-are-not-guards]] on the writer ratchet that now pins the rule, and the numerator/denominator invariant on keeping both sides of a ratio consistent.
 
-## Two meters, two clocks: reconcile by MONTH, never by window (2026-09-04)
+## Google's output-token metric counts REALTIME ONLY — never reconcile batch against it (2026-09-14)
 
-Our `gemini_usage` rows and Google's Cloud Monitoring token telemetry measure the same
-spend on **different clocks**. A batch row is timestamped when the job is *collected*;
-Google counts the tokens when they were *generated*, hours earlier.
+`generativelanguage.googleapis.com/generate_content_usage_output_token_count` is the
+only token metric Cloud Monitoring exposes for Gemini (the descriptor list has exactly
+one; everything else is a quota gauge). **It does not count batch generation.**
 
-Over a 3-hour window that made Google's total (6.52M output tokens) line up with our
-**realtime** rows (5.81M) while our batch rows (4.09M) looked uncounted — from which I
-concluded "the metric excludes batch." **That was wrong.** At month scale it resolves:
-September meter 78.0M vs Google 69.7M, i.e. batch *is* counted and the meter runs ~12%
-high on boundary effects (late-August batches collected in September).
+Measured over 2026-09-06..12, output tokens in millions:
 
-**Rule:** reconcile monthly (`scripts/audit/spend-reconcile.mjs --month=YYYY-MM`) and
-treat ±15% as clock noise, not signal. A short window cannot distinguish "this lane is
-unmetered" from "these two clocks disagree", and the first conclusion is much more
-alarming than the truth.
+| day | billed metric | our realtime rows | our batch rows |
+|---|---|---|---|
+| 09-08 | 10.85 | 10.0 | 27.4 |
+| 09-09 | 5.60 | 5.2 | 19.3 |
+| 09-10 | 4.79 | 4.6 | 14.4 |
+
+Billed tracks realtime within ~10% every day, while batch — three to four times the
+whole billed figure on a batch-heavy day — has nowhere to fit. Batch success rows carry
+counts read straight from Gemini's own response `usageMetadata`, so those tokens are
+real and billed; the METRIC is what cannot see them.
+
+**Rule:** compare realtime to realtime. `scripts/audit/spend-reconcile.mjs --days=N
+--check-gap` does, and prints batch in its own column marked *not comparable* — an
+unmeasurable is not a zero, and it is not a gap either. The external check on batch
+spend is the invoice plus `batch_jobs` (`scripts/maintenance/reconcile-batch-usage.mjs`).
+
+**This overturns a note written here on 2026-09-04**, which said batch *is* counted and
+the meter merely runs ~12% high. That reading came from early September, when batch
+volume was small next to realtime, so summing both sides still landed close; the
+batch-heavy days above separate them. If you sum batch into the metered side, a 60% gap
+reads as a 90% surplus, and the alarm never fires again.
+
+### What remains true from that note: the two stores keep different clocks
+
+A batch row is timestamped when the job is *collected*; Google counts tokens when they
+were *generated*, hours earlier. A three-hour window once "proved" batch was unmetered
+for exactly this reason. **A short window cannot distinguish "this lane is unmetered"
+from "these two clocks disagree"**, and the first conclusion is far more alarming than
+the truth. Reconcile over a month for the invoice, and a trailing week for the daily
+detector — never a few hours.
 
 Generalisation worth keeping: **when two instruments disagree, check whether they share
-a clock before concluding one is broken.** The disagreement was real and the mechanism
-was mundane; the short window manufactured the drama.
+a clock — and whether they share a POPULATION — before concluding one is broken.**
 
 ## The convenient artifact is the misleading one — that is not a coincidence
 
