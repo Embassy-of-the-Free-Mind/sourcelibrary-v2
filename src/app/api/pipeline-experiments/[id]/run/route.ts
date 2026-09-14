@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const maxDuration = 300;
 
@@ -150,7 +151,7 @@ export const POST = withAuth(async (request, session, context) => {
           const text = result.response.text();
           const usage = result.response.usageMetadata;
           const inputTokens = usage?.promptTokenCount || 0;
-          const outputTokens = usage?.candidatesTokenCount || 0;
+          const outputTokens = outputTokensFrom(usage);
           totalCost += calculateCost(inputTokens, outputTokens, condition.ocrModel);
           totalTokens += inputTokens + outputTokens;
 
@@ -176,7 +177,7 @@ export const POST = withAuth(async (request, session, context) => {
           const ocrText = ocrResult.response.text();
           const ocrUsage = ocrResult.response.usageMetadata;
           const ocrInputTokens = ocrUsage?.promptTokenCount || 0;
-          const ocrOutputTokens = ocrUsage?.candidatesTokenCount || 0;
+          const ocrOutputTokens = outputTokensFrom(ocrUsage);
           totalCost += calculateCost(ocrInputTokens, ocrOutputTokens, condition.ocrModel);
           totalTokens += ocrInputTokens + ocrOutputTokens;
 
@@ -188,7 +189,7 @@ export const POST = withAuth(async (request, session, context) => {
           const translation = translateResult.response.text();
           const transUsage = translateResult.response.usageMetadata;
           const transInputTokens = transUsage?.promptTokenCount || 0;
-          const transOutputTokens = transUsage?.candidatesTokenCount || 0;
+          const transOutputTokens = outputTokensFrom(transUsage);
           totalCost += calculateCost(transInputTokens, transOutputTokens, condition.translateModel);
           totalTokens += transInputTokens + transOutputTokens;
 

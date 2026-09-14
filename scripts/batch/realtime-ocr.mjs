@@ -36,6 +36,7 @@ import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
+import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -228,7 +229,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
     // were then discarded as 'empty', which is how a legible page could vanish with
     // no record (#4458). RECITATION in particular returns zero content parts.
     finishReason: candidate?.finishReason || null,
-    usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: usage.candidatesTokenCount || 0 },
+    usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: outputTokensFrom(usage) },
   };
 }
 

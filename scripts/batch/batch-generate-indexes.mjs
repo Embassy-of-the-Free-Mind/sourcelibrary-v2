@@ -21,6 +21,7 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/ge
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
+import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -192,7 +193,7 @@ CRITICAL for quotes:
 
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', tokens: { input: usage?.promptTokenCount || 0, output: usage?.candidatesTokenCount || 0 } };
+      return { pageRange, themes: [], quotes: [], people: [], places: [], concepts: [], summary: '', tokens: { input: usage?.promptTokenCount || 0, output: outputTokensFrom(usage) } };
     }
 
     const parsed = JSON.parse(jsonMatch[0]);
@@ -204,7 +205,7 @@ CRITICAL for quotes:
       places: Array.isArray(parsed.places) ? parsed.places : [],
       concepts: Array.isArray(parsed.concepts) ? parsed.concepts : [],
       summary: typeof parsed.summary === 'string' ? parsed.summary : '',
-      tokens: { input: usage?.promptTokenCount || 0, output: usage?.candidatesTokenCount || 0 },
+      tokens: { input: usage?.promptTokenCount || 0, output: outputTokensFrom(usage) },
     };
   } catch (e) {
     console.error(`    Batch ${pageRange.start}-${pageRange.end} error: ${e.message}`);
@@ -306,7 +307,7 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
     abstract: ensureString(parsed.abstract),
     detailed: ensureString(parsed.detailed),
     sections: Array.isArray(parsed.sections) ? parsed.sections : [],
-    tokens: { input: usage?.promptTokenCount || 0, output: usage?.candidatesTokenCount || 0 },
+    tokens: { input: usage?.promptTokenCount || 0, output: outputTokensFrom(usage) },
   };
 }
 

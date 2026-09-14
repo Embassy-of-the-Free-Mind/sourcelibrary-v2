@@ -13,6 +13,7 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -188,7 +189,7 @@ async function main() {
               'ocr.batch_job_id': String(job._id),
               'ocr.pages_per_request': job.pages_per_request,
               'ocr.input_tokens': usage?.promptTokenCount || 0,
-              'ocr.output_tokens': usage?.candidatesTokenCount || 0,
+              'ocr.output_tokens': outputTokensFrom(usage),
               ...(pageType && { page_type: pageType }),
               ...(columns && { columns }),
               ...(detectedImages.length > 0 && { detected_images: detectedImages }),

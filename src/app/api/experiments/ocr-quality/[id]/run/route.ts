@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 // Allow long-running OCR processing
 export const maxDuration = 300; // 5 minutes
@@ -210,7 +211,7 @@ export const POST = withAuth(async (request, session, context) => {
           const text = result.response.text();
           const usage = result.response.usageMetadata;
           const inputTokens = usage?.promptTokenCount || 0;
-          const outputTokens = usage?.candidatesTokenCount || 0;
+          const outputTokens = outputTokensFrom(usage);
           const cost = calculateCost(inputTokens, outputTokens, DEFAULT_MODEL);
 
           totalCost += cost;
@@ -305,7 +306,7 @@ Return each transcription clearly separated:
           const responseText = result.response.text();
           const usage = result.response.usageMetadata;
           const inputTokens = usage?.promptTokenCount || 0;
-          const outputTokens = usage?.candidatesTokenCount || 0;
+          const outputTokens = outputTokensFrom(usage);
           const cost = calculateCost(inputTokens, outputTokens, DEFAULT_MODEL);
 
           totalCost += cost;
