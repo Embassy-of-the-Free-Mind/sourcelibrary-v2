@@ -395,7 +395,10 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, nav
             </div>
             <div className="min-w-0">
               <p className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>
-                From this manuscript
+                {/* 496 of the 502 linked sources are printed books (#4037 Phase 1, 2026-09-14);
+                    a shelfmark-style slug is the tell for a codex. */}
+                {/^(zurich-|harley-|marcianus-|bl-|ms-|cod-)/.test(sourceBook.slug) || /\bms\b|manuscript|codex/i.test(sourceBook.title)
+                  ? 'From this manuscript' : 'From this book'}
               </p>
               <p className="text-sm font-medium mt-0.5 group-hover:text-accent-rust transition-colors truncate" style={{ color: 'var(--text-primary)' }}>
                 {sourceBook.title}
