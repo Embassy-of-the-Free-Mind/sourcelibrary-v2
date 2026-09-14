@@ -22,6 +22,7 @@ vi.hoisted(() => { process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-key'; });
 import {
   completeBatchUsage,
   sumBatchResponseUsage,
+  estimateBatchCostUsd,
   PLACEHOLDER_STATUSES,
 } from '../../scripts/workers/lib/supabase-usage-logger.mjs';
 import { resolvePlaceholder, indexJobsByEveryKey } from '../../scripts/maintenance/reconcile-batch-usage.mjs';
@@ -256,5 +257,42 @@ describe('indexJobsByEveryKey', () => {
     const map = indexJobsByEveryKey([{ id: 'only-id' }]);
     expect(map.size).toBe(1);
     expect(map.has(undefined as never)).toBe(false);
+  });
+});
+
+describe('estimateBatchCostUsd — committed spend is priced at submit (#4567)', () => {
+  it('prices a measured lane from its blended per-page rate', () => {
+    // flash-lite OCR: $2.25 per 1K pages, blended with loop-to-cap failures.
+    expect(estimateBatchCostUsd({ type: 'ocr', model: 'gemini-3.1-flash-lite', pageCount: 1000 })).toBeCloseTo(2.25, 6);
+    expect(estimateBatchCostUsd({ type: 'ocr', model: 'gemini-3-flash-preview', pageCount: 1000 })).toBeCloseTo(1.83, 6);
+  });
+
+  it('never returns 0 for real pages on an unmeasured lane — a ceiling must fail closed', () => {
+    expect(estimateBatchCostUsd({ type: 'image_extraction', model: 'gemini-3-flash-preview', pageCount: 100 })).toBeGreaterThan(0);
+  });
+
+  it('prices zero pages at zero', () => {
+    expect(estimateBatchCostUsd({ type: 'ocr', model: 'gemini-3.1-flash-lite', pageCount: 0 })).toBe(0);
+  });
+});
+
+describe('resolvePlaceholder and the submit-time estimate (#4567)', () => {
+  // The placeholder now carries an ESTIMATE. Where the batch's real figure lives
+  // on another row, the estimate would count the batch twice and must go. Where
+  // the batch ran (or may have) and its tokens were never read, the estimate is
+  // the most truthful cost available and must stay — zeroing it would assert the
+  // $0.00 that the orphan and superseded branches exist to refuse (#3452).
+  const row = { batch_job_id: 'b1', model: 'gemini-3.1-flash-lite', status: 'submitted', cost_usd: 2.25 };
+
+  it('duplicate: a sibling row already holds the real figure, so the estimate is withdrawn', () => {
+    expect(resolvePlaceholder(row, { status: 'saved' }, true).patch?.cost_usd).toBe(0);
+  });
+
+  it('orphan: the estimate stands — unmeasurable is not zero', () => {
+    expect(resolvePlaceholder(row, null, false).patch).not.toHaveProperty('cost_usd');
+  });
+
+  it('superseded: the job ran and was billed, so the estimate stands', () => {
+    expect(resolvePlaceholder(row, { status: 'superseded' }, false).patch).not.toHaveProperty('cost_usd');
   });
 });

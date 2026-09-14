@@ -75,6 +75,54 @@ export function calculateUsageCost(model, inputTokens, outputTokens, isBatch) {
  * Use this at every site that records what a call cost. Fix the definition,
  * not the call site.
  */
+/**
+ * What a batch job is expected to cost, written on its placeholder AT SUBMIT (#4567).
+ *
+ * A placeholder used to carry `cost_usd: 0` until the collector patched it, on
+ * average 12 minutes later. Every ceiling that reads measured spend — the daily
+ * dial, the #4540 scope envelopes — under-read by everything in flight, which is
+ * failure mode 4 of the spend ceiling ("committed but unpriced"): the 2026-08-31
+ * relight cut off at $5.08 visible and settled at $6.32 once 13 in-flight batches
+ * were priced. Writing an estimate makes the ceiling fail CLOSED on committed work.
+ *
+ * The estimate is overwritten, never added to: `completeBatchUsage()` replaces it
+ * with actuals at collection, `closeUsagePlaceholder()` zeroes it when a job never
+ * ran, and `reconcile-batch-usage.mjs` zeroes it on every other terminal state.
+ *
+ * RATES ARE MEASURED, per batch job not per row (the duplicate rows of #4822 would
+ * double them), over completed jobs 2026-08-31..09-13. They are BLENDED with failed
+ * jobs deliberately: flash-lite's loop-to-cap failures cost $8.87/1K pages against
+ * $1.46/1K for successes (#4674), and a ceiling that assumes every job succeeds
+ * under-reserves on exactly the days that go wrong.
+ *
+ *   ocr   gemini-3.1-flash-lite   38,644 ok pages $1.46/1K + 4,620 failed $8.87/1K  -> $2.25/1K
+ *   ocr   gemini-3-flash-preview  34,902 ok pages $1.83/1K                           -> $1.83/1K
+ *   translation gemini-3-flash-preview   70 pages $1.78/1K (thin sample)             -> $1.78/1K
+ *
+ * Anything unmeasured is priced from the batch rate card at a conservative
+ * 4,000 input / 1,500 output tokens per page — high on purpose, for the same
+ * reason. Re-measure before trusting a rate older than a month.
+ */
+const MEASURED_BATCH_USD_PER_PAGE = {
+  'ocr|gemini-3.1-flash-lite': 0.00225,
+  'ocr|gemini-3-flash-preview': 0.00183,
+  'translation|gemini-3-flash-preview': 0.00178,
+};
+const UNMEASURED_TOKENS_PER_PAGE = { input: 4000, output: 1500 };
+
+export function estimateBatchCostUsd({ type, model, pageCount }) {
+  const pages = Math.max(0, Number(pageCount) || 0);
+  if (!pages) return 0;
+  const rate = MEASURED_BATCH_USD_PER_PAGE[`${type}|${model}`];
+  if (rate != null) return +(rate * pages).toFixed(6);
+  return +calculateCost(
+    model || 'gemini-3-flash-preview',
+    UNMEASURED_TOKENS_PER_PAGE.input * pages,
+    UNMEASURED_TOKENS_PER_PAGE.output * pages,
+    true,
+  ).toFixed(6);
+}
+
 export function outputTokensFrom(usageMetadata) {
   return (usageMetadata?.candidatesTokenCount || 0) + (usageMetadata?.thoughtsTokenCount || 0);
 }

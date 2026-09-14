@@ -100,6 +100,10 @@ export function resolvePlaceholder(row, job, hasSiblingRow) {
       action: 'orphan',
       patch: {
         status: 'unknown',
+        // cost_usd deliberately untouched. Since #4567 the placeholder carries a
+        // submit-time ESTIMATE, and for a batch that may have run and been billed
+        // an estimate is the most truthful figure there is — truer than the $0.00
+        // this branch exists to refuse to assert.
         error_message: 'Reconcile #3452: no batch_jobs record for this batch_job_id — spend unmeasurable',
       },
     };
@@ -115,6 +119,9 @@ export function resolvePlaceholder(row, job, hasSiblingRow) {
       action: 'duplicate',
       patch: {
         status: 'duplicate',
+        // The sibling row holds the real figure; an estimate left here would
+        // count the batch twice (#4567).
+        cost_usd: 0,
         error_message: 'Reconcile #3452: spend recorded on the collector-written row for this batch',
       },
     };
@@ -143,6 +150,8 @@ export function resolvePlaceholder(row, job, hasSiblingRow) {
       action: 'superseded',
       patch: {
         status: 'superseded',
+        // cost_usd untouched: a superseded job RAN and was billed; only its tokens
+        // were never read. The submit-time estimate (#4567) stands as its cost.
         error_message: job.error || 'Superseded — results discarded, tokens not read',
       },
     };
