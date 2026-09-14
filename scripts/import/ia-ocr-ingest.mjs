@@ -173,6 +173,8 @@ function ratio(a, b) {
   }
   return (2 * prev[b.length]) / (a.length + b.length);
 }
+/** Model OCR that carries an image description or a plate/illustration page-type: not a text page. */
+const isPlatePage = (t) => /<image-desc\b|\[Image:|<page-type>\s*(plate|illustration|image|photograph|figure|map)\b/i.test(t);
 const median = (xs) => { const s = [...xs].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
 
 /** leaf index (0-based) for a page: from the IA photo URL, else page_number - 1 */
@@ -223,10 +225,19 @@ await withMongo(async (db) => {
     // ≥ MIN_OFFSET_SHARE of them (front matter and plates are allowed to disagree).
     const leafTok = leaves.map((l) => tokens(l));
     const refs = [];
+    let plateRefs = 0;
     for (const p of pages) {
       // Reference = MODEL OCR only. Pages this script wrote earlier are the IA text itself and
       // would score 1.000 against it (the Shaker shelf re-scored at 1.000 on 2026-09-12).
-      const t = p.ocr?.data; if (!t || p.ocr?.source === SOURCE) continue; const k = leafIndex(p); const tt = tokens(t); if (tt.length < 20) continue;
+      const t = p.ocr?.data; if (!t || p.ocr?.source === SOURCE) continue;
+      // Reference = TEXT pages only (2026-09-14). A plate page is where the model DESCRIBES the
+      // picture and the Archive's engine reads the caption (often rotated, so garbage): the
+      // ratio there measures neither engine. Hassanein 1925 (6aa734a338e15c149514ce9b, 24 plates
+      // among 67 reference pages) scored 0.649 overall and was REJECTED at the 0.80 English gate
+      // while its 43 text pages agreed at 0.946. Pages the model tagged as pictures leave the
+      // reference; they are never filled either (the leaf-token check below still applies to them).
+      if (isPlatePage(t)) { plateRefs++; continue; }
+      const k = leafIndex(p); const tt = tokens(t); if (tt.length < 20) continue;
       const byOffset = {};
       for (let d = -MAX_OFFSET; d <= MAX_OFFSET; d++) { const j = k + d; if (j < 0 || j >= leaves.length || leafTok[j].length < 20) continue; byOffset[d] = ratio(tt, leafTok[j]); }
       if (!Object.keys(byOffset).length) continue;
@@ -259,7 +270,7 @@ await withMongo(async (db) => {
     const refShifted = offset !== 0 && offsetShare >= MIN_OFFSET_SHARE;
     const verdict = refShifted ? 'REF_SHIFTED' : med < gate.cutoff ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
     if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
