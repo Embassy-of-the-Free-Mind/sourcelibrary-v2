@@ -164,11 +164,12 @@ const PROJECTS = [
   { id: 'gen-lang-client-0101787750', name: 'Gemini API', note: 'holds 2 keys; no traffic in September, listed so silence is a reading' },
 ];
 
-// NOT covered, and it is not an oversight to leave unstated: Vercel production
-// carries GEMINI_API_KEY and GEMINI_API_KEY_TIER3 whose key strings match NO key
-// in any project this account can see (checked against all 10, 2026-09-14). The
-// request path may therefore bill a project outside this list entirely. Whoever
-// owns that project has to add it here, or its spend is invisible to this script.
+// Vercel production holds GEMINI_API_KEY (= booksplit "smartpaper", the key the
+// Lambdas also use) and GEMINI_API_KEY_TIER3 (= Sourcelibrary "sourcelibrary"),
+// both inside this list — matched by SHA-256 fingerprint through
+// /api/admin/key-fingerprints, 2026-09-14. A first attempt matched them by
+// `vercel env pull` and found nothing, because sensitive Vercel variables pull
+// as EMPTY strings: an unreadable value is not an unmatched one.
 
 /** Gemini API service in the Cloud Billing catalogue. */
 const GEMINI_SERVICE = 'services/AEFD-7695-64FA';
@@ -205,7 +206,10 @@ async function serviceAccountToken() {
   const iat = Math.floor(Date.now() / 1000);
   const claim = {
     iss: key.client_email,
-    scope: 'https://www.googleapis.com/auth/monitoring.read https://www.googleapis.com/auth/cloud-platform.read-only',
+    // Measured 2026-09-14 from Hetzner with the real key: `cloud-platform.read-only`
+    // reads Monitoring but the SKU catalogue answers 403 "insufficient scopes";
+    // `cloud-billing.readonly` is the scope it wants. Least privilege that works.
+    scope: 'https://www.googleapis.com/auth/monitoring.read https://www.googleapis.com/auth/cloud-billing.readonly',
     aud: key.token_uri || 'https://oauth2.googleapis.com/token',
     iat, exp: iat + 3600,
   };
