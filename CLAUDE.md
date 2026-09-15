@@ -114,7 +114,7 @@ public badges removed seven hours later, by a safety valve the evidence itself u
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
-- **OCR and translation route DIFFERENTLY since #4762 — do not "fix" the divergence.** OCR: full flash for BPH, non-Latin scripts and unknown language; lite only for the Latin-script allowlist. Translation: lite for all but BPH. **Tell:** "everything non-BPH is on lite" is the Mar–May 2026 policy, three policies stale. Detail → `language-fields.md`.
+- **OCR and translation route DIFFERENTLY since #4762 — do not "fix" the divergence.** Translation: lite for all but BPH. OCR *as written* sends BPH, non-Latin and unknown language to full flash — **but `OCR_LITE_ONLY` (default ON since 2026-09-11) returns lite before any of that runs**, so in production that carve-out never fires; measured bad on manuscripts and early print, #4877. **Tell:** reading the router and assuming the carve-out applied. Detail → `language-fields.md`.
 - **Gemini 3.x thinks by default and bills it at the output rate, invisibly** — every `generateContent` call site MUST set an explicit `thinkingConfig` (`thinkingBudget: 0` for OCR/translation/extraction — measured no quality loss) and count `thoughtsTokenCount` when metering. Six unconfigured call sites cost ~$2K/mo for months (#4581, 17× meter gap); sweep of remaining sites: #4599.
 - **Grounded search: flash-lite does NOT ground, silently** — read `measurement-instruments.md` before using grounding.
 - Reference: https://ai.google.dev/gemini-api/docs/models
