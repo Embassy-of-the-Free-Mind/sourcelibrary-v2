@@ -243,20 +243,13 @@ export default function WhereTheInstructionsArePage() {
             than the shoulders and no wider, held so at every extension before the breast.
           </p>
           <p className={P}>
-            Two more. A German{' '}
-            <Link href="/book/69c26825b82ba5d5beda0f80?page=54" className={A}>
-              lodge ritual of the first degree
-            </Link>
-            , written after 1771: three knocks at the door, answered by the Master with the hammer;
-            as the candidate is brought in, all the brothers draw their swords; later he is turned to
-            face the Orient to be shown the yoke. A lodge ritual is a movement score for a room full
-            of people. And the English{' '}
+            And the English{' '}
             <Link href="/book/69592ee9a41e40e9146a4289?page=143" className={A}>
               Ars Notoria
             </Link>{' '}
-            of 1657, for an answer that comes in sleep: write Alpha and Omega on your right hand with
-            the sign of the cross, put that hand under your right ear, fast the day before, and at
-            the second or third hour of the night you will see what you asked for.
+            of 1657 gives an instruction for an answer that comes in sleep: write Alpha and Omega on
+            your right hand with the sign of the cross, put that hand under your right ear, fast the
+            day before, and at the second or third hour of the night you will see what you asked for.
           </p>
           <p className={P}>
             Cassian is older than all of them and gives the reason as well as the rule. His account
