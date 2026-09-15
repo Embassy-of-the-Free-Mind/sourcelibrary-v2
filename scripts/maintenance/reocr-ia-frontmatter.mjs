@@ -62,6 +62,8 @@ const FLAG = (n) => process.argv.includes(n);
 const OUT = ARG('--out', 'scripts/output/frontmatter-4815');
 const LEAVES = parseInt(ARG('--leaves', '25'), 10);
 const RUN_ID = ARG('--run-id', null);
+/** --plan: leave out pages a run since this time already tried and recorded a skip on (a restart must not re-pay refusals). */
+const SKIP_ATTEMPTED_SINCE = ARG('--skip-attempted-since', null) ? new Date(ARG('--skip-attempted-since')) : null;
 const APPLY = FLAG('--apply');
 const SWEEP = 'ia-frontmatter-reocr-2026-09';
 const EVENT = 'ia_frontmatter_reocr';
@@ -88,10 +90,12 @@ async function frontMatterPages(db, bookIds, projection) {
 
 async function plan(db) {
   const { lane, held, live } = await laneBooks(db);
-  const pages = await frontMatterPages(db, live.map((b) => b.id), { 'ocr.source': 1, 'ocr.recitation_blocked': 1, 'ocr.fail_blocked': 1 });
+  const pages = await frontMatterPages(db, live.map((b) => b.id), { 'ocr.source': 1, 'ocr.recitation_blocked': 1, 'ocr.fail_blocked': 1, 'ocr.last_skip.at': 1 });
   const target = pages.filter((p) => p.ocr?.source === 'ia_djvu');
   const blocked = target.filter((p) => p.ocr?.recitation_blocked || p.ocr?.fail_blocked);
-  const todo = target.filter((p) => !(p.ocr?.recitation_blocked || p.ocr?.fail_blocked));
+  const attempted = SKIP_ATTEMPTED_SINCE ? target.filter((p) => p.ocr?.last_skip?.at && p.ocr.last_skip.at >= SKIP_ATTEMPTED_SINCE) : [];
+  const attemptedIds = new Set(attempted.map((p) => p.id));
+  const todo = target.filter((p) => !(p.ocr?.recitation_blocked || p.ocr?.fail_blocked) && !attemptedIds.has(p.id));
   const perBook = new Map();
   for (const p of todo) perBook.set(p.book_id, (perBook.get(p.book_id) || 0) + 1);
   const heldPages = held.length ? (await frontMatterPages(db, held.map((b) => b.id), { 'ocr.source': 1 })).filter((p) => p.ocr?.source === 'ia_djvu').length : 0;
@@ -99,7 +103,7 @@ async function plan(db) {
   writeJson('books.json', live.filter((b) => perBook.has(b.id)).map((b) => ({ ...b, planned_pages: perBook.get(b.id) })));
   writeJson('held-books.json', held.map((b) => b.id));
   console.log(`lane books ${lane.length} (held ${held.length}, live ${live.length})`);
-  console.log(`front matter (page_number ≤ ${LEAVES}) in live books: ${pages.length} pages; Archive-read: ${target.length}; blocked ${blocked.length}; TO READ ${todo.length} in ${perBook.size} books`);
+  console.log(`front matter (page_number ≤ ${LEAVES}) in live books: ${pages.length} pages; Archive-read: ${target.length}; blocked ${blocked.length}; already attempted ${attempted.length}; TO READ ${todo.length} in ${perBook.size} books`);
   console.log(`excluded with the held books: ${heldPages} Archive-read front-matter pages`);
   console.log(`wrote ${outPath('pages.json')} — feed it to realtime-ocr.mjs --page-ids-file`);
 }

@@ -28,6 +28,11 @@
  *                      behaviour). `lite` is gemini-3.1-flash-lite — the model the batch OCR
  *                      lane already routes every book to (scripts/lib/ocr-routing.mjs). Added
  *                      for #4815: re-reading the Archive-filled front matter of 279 books.
+ *   --max-output-tokens=N  Output cap per page (default: 16384). A page the model
+ *                      loops on runs to the cap and is then discarded as a
+ *                      hallucination — at 16K that is ~3 minutes and $0.025 of
+ *                      output per looping page, and #4815 measured 10% of
+ *                      front-matter reads looping. A dense page needs ~2–4K.
  *   --limit=N          Max pages to process (default: 2000)
  *   --concurrency=N    Parallel API calls (default: 30)
  *   --dry-run          Show what would be processed, don't call Gemini
@@ -77,6 +82,7 @@ const TARGET_MODEL = MODEL_CHOICE === 'lite' ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
 const PRICE = MODEL_PRICING[TARGET_MODEL];
 /** Computed estimate at the standard (realtime) rate, never billed truth — see model-pricing.mjs. */
 const costUsd = (inTok, outTok) => (PRICE ? (inTok * PRICE.input + outTok * PRICE.output) / 1e6 : null);
+const MAX_OUTPUT_TOKENS = parseInt(getArg('max-output-tokens') || '16384', 10);
 const MAX_PAGES = parseInt(getArg('limit') || '2000', 10);
 const CONCURRENCY = parseInt(getArg('concurrency') || '30', 10);
 const DRY_RUN = hasFlag('dry-run');
@@ -226,7 +232,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
       ]}],
       generationConfig: {
         temperature: 0.1,
-        maxOutputTokens: 16384,
+        maxOutputTokens: MAX_OUTPUT_TOKENS,
         thinkingConfig: { thinkingBudget: 0 },
       },
     }),
@@ -730,6 +736,7 @@ async function main() {
       config: {
         mode: targetMode,
         model: TARGET_MODEL,
+        max_output_tokens: MAX_OUTPUT_TOKENS,
         page_ids_file: PAGE_IDS_FILE || null,
         concurrency: CONCURRENCY,
         pipeline_status: PIPELINE_STATUS,
