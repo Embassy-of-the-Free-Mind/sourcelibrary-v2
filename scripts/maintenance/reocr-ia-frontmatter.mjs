@@ -139,9 +139,11 @@ async function outcomes(db, planned, since) {
 }
 
 async function record(db) {
-  if (!RUN_ID) throw new Error('--record needs --run-id=<jobs.id of the realtime-ocr run>');
-  const run = await db.collection('jobs').findOne({ id: RUN_ID, type: 'realtime_ocr' }, { projection: { created_at: 1, config: 1, progress: 1 } });
-  if (!run) throw new Error(`no realtime_ocr job ${RUN_ID}`);
+  if (!RUN_ID) throw new Error('--record needs --run-id=<jobs.id of the realtime-ocr run> (comma-separated if the pass was restarted)');
+  // A restarted pass is several realtime-ocr runs; outcomes are read from the earliest start.
+  const runs = await db.collection('jobs').find({ id: { $in: RUN_ID.split(',') }, type: 'realtime_ocr' }, { projection: { id: 1, created_at: 1, config: 1, progress: 1 } }).sort({ created_at: 1 }).toArray();
+  if (runs.length !== RUN_ID.split(',').length) throw new Error(`realtime_ocr jobs found ${runs.map((r) => r.id).join(',')} for ${RUN_ID}`);
+  const run = runs[0];
   const { pages: planned } = readJson('pages.json');
   const res = await outcomes(db, planned, run.created_at);
   writeJson('outcomes.json', res.map(({ archive_text, model_text, ...r }) => r));
