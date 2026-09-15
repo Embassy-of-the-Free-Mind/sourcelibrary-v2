@@ -53,6 +53,16 @@ export default function WhereTheInstructionsArePage() {
       </div>
 
       <article className="prose-content max-w-none">
+        <div className="bg-stone-50 border border-border-light rounded-lg p-5 mb-10">
+          <p className="text-sm text-stone-700 leading-relaxed font-body">
+            The passages themselves — each in the language it was printed in, with the woodcut or
+            plate beside it — are laid out on{' '}
+            <a href="https://sourcelibrary-atlas.vercel.app/body" className={A}>
+              Techniques of the Body
+            </a>
+            . This note is the account of the search that produced it.
+          </p>
+        </div>
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           Almost every tradition in this library tells someone how to hold their body. Where to put
           the heel, how long to keep the breath in, which knee touches the ground first, how many
