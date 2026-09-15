@@ -42,6 +42,7 @@ import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd } from 
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
+import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
 const execFileAsync = promisify(execFile);
 
@@ -4531,13 +4532,30 @@ Rules:
       // Workers crash, get OOM-killed, or stall — their jobs rot forever, blocking the in-flight cap.
       if (!DRY_RUN) {
         const zombieThreshold = new Date(Date.now() - 1 * 60 * 60 * 1000);
-        const zombieJobs = await db.collection('jobs').find({
+        const allZombieJobs = await db.collection('jobs').find({
           status: 'processing',
           $or: [
             { updated_at: { $lt: zombieThreshold } },
             { updated_at: { $exists: false }, created_at: { $lt: zombieThreshold } },
           ],
-        }).project({ _id: 1, book_id: 1, book_title: 1, type: 1 }).toArray();
+        }).project({ _id: 1, id: 1, book_id: 1, book_title: 1, type: 1, config: 1, created_at: 1, progress: 1 }).toArray();
+
+        // Image jobs finalize on DRAIN, not on an exact count — see lib/image-job-drain.mjs and
+        // #4839. Cancelling them here is what fed the re-dispatch loop.
+        const imageZombies = allZombieJobs.filter(j => j.type === 'image_extraction');
+        let zombieJobs = allZombieJobs.filter(j => j.type !== 'image_extraction');
+        if (imageZombies.length > 0) {
+          try {
+            const { finalized, noResults } = await drainStalledImageJobs(db, imageZombies, { dryRun: DRY_RUN, source: 'orchestrator' });
+            for (const f of finalized) {
+              console.log(`  Image job drained: ${f.jobId} ${f.status} (${f.attempted}/${f.total} extracted, ${f.missing} never reported)`);
+            }
+            zombieJobs = zombieJobs.concat(noResults);
+          } catch (err) {
+            console.log(`  Image drain failed: ${err.message}`);
+            zombieJobs = zombieJobs.concat(imageZombies);
+          }
+        }
 
         if (zombieJobs.length > 0) {
           const zombieBookIds = zombieJobs.map(j => j.book_id);
@@ -4580,10 +4598,32 @@ Rules:
           const orphans = await db.collection('books').find({
             'pipeline_auto.status': from,
             $or: [{ job: { $exists: false } }, { job: null }],
-          }).project({ id: 1 }).toArray();
+          }).project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 }).toArray();
           if (orphans.length > 0) {
             // Verify no active jobs exist for these books
-            const orphanIds = orphans.map(b => b.id);
+            let orphanIds = orphans.map(b => b.id);
+
+            // A FINISHED image job is not an orphan — it is a book waiting to be advanced.
+            // The writer unsets `book.job` the moment a job completes, and this detector runs in
+            // Phase 4, before Phase 8's completion check. So it used to roll perfectly good books
+            // back to chapters_complete and Phase 8 re-extracted every page: 59 of the last 60
+            // COMPLETED image jobs were re-dispatched this way (measured 2026-09-15, #4839).
+            if (from === 'images_submitted') {
+              const finishedJobIds = orphans.map(b => b.pipeline_auto?.image_extraction_job_id).filter(Boolean);
+              if (finishedJobIds.length > 0) {
+                const finished = await db.collection('jobs').find({
+                  id: { $in: finishedJobIds },
+                  status: { $in: ['completed', 'completed_with_errors'] },
+                }).project({ id: 1 }).toArray();
+                const finishedSet = new Set(finished.map(j => j.id));
+                const waiting = orphans.filter(b => finishedSet.has(b.pipeline_auto?.image_extraction_job_id));
+                if (waiting.length > 0) {
+                  console.log(`  Orphan detector: ${waiting.length} images_submitted books have a finished job — leaving them for Phase 8 to advance`);
+                }
+                orphanIds = orphans.filter(b => !finishedSet.has(b.pipeline_auto?.image_extraction_job_id)).map(b => b.id);
+              }
+            }
+            if (orphanIds.length === 0) continue;
             const activeJobCount = await db.collection('jobs').countDocuments({
               book_id: { $in: orphanIds },
               status: { $in: ['pending', 'processing'] },
@@ -4593,7 +4633,7 @@ Rules:
                 { id: { $in: orphanIds }, 'pipeline_auto.status': from },
                 { $set: { 'pipeline_auto.status': to, updated_at: new Date() } },
               );
-              console.log(`  Orphan detector: rolled back ${orphans.length} books from ${from} to ${to}`);
+              console.log(`  Orphan detector: rolled back ${orphanIds.length} books from ${from} to ${to}`);
             }
           }
         }
@@ -5201,6 +5241,21 @@ Rules:
 
               if (DRY_RUN) {
                 console.log(`  Would submit image extraction: ${book.title} (${bookPages.length} pages)`);
+                continue;
+              }
+
+              // Bounded retries (#4839). A book whose dispatches keep draining with NOTHING
+              // reported has a broken lane, not a slow one — park it where a human can find it
+              // instead of re-paying for it every 35 minutes. Only drain-detected empty runs
+              // count, so this starts at zero for every book and cannot be inflated by the
+              // pre-fix loop's history.
+              const emptyDispatches = await countNoResultDispatches(db, book.id);
+              if (emptyDispatches >= MAX_NO_RESULT_DISPATCHES) {
+                await setPipelineStatus(db, book.id, 'needs_attention', {
+                  error: `Image extraction: ${emptyDispatches} dispatches drained with no page reporting a result (#4839)`,
+                });
+                console.log(`  Image extraction PARKED: ${book.title} — ${emptyDispatches} empty dispatches`);
+                log.errors.push(`Images gave up ${book.id}: ${emptyDispatches} empty dispatches`);
                 continue;
               }
 

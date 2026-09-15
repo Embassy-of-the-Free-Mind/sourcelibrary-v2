@@ -47,6 +47,8 @@ import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
+import { startHeartbeat } from './lib/worker-heartbeat.mjs';
 import pg from 'pg';
 
 // Selective-unpause scope confinement, set in main() after the pause check.
@@ -96,6 +98,8 @@ const PHASE_7_5_BOOK_TIMEOUT_MS = 2 * 60 * 1000; // 2 min per book for quality s
 const PHASE_7_6_BATCH_TIMEOUT_MS = 3 * 60 * 1000; // 3 min per collection-assignment batch
 const PROCESS_START = Date.now();
 const PER_BOOK_TIMEOUT_MS = 10 * 60 * 1000; // 10 min per book max
+const GROUNDING_BUDGET_MS = 60 * 1000;      // 60s of quote grounding per book (#4837)
+const BACKGROUND_DRAIN_MS = 3 * 60 * 1000;  // how long to wait for fire-and-forget writes at exit
 
 // ── Gemini API keys ──
 const API_KEYS = [
@@ -109,6 +113,10 @@ if (API_KEYS.length === 0) {
   process.exit(1);
 }
 
+// Liveness: a file the scheduler can stat. Silence means the event loop is blocked — the only
+// signal that distinguishes a wedged worker from a slow one (#4837). No-op outside the scheduler.
+const heartbeat = startHeartbeat();
+
 let currentKeyIndex = 0;
 function getClient() {
   return new GoogleGenerativeAI(API_KEYS[currentKeyIndex % API_KEYS.length]);
@@ -120,6 +128,37 @@ function rotateKey() {
 
 // ── Utility ──
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ── Background writes ──
+// Entity sync, book embeddings and page embeddings are deliberately not awaited per book — they
+// must not slow the lane down. But un-tracked, they outlive the run: the Sep-10 process printed
+// "Entity sync failed: Client must be connected before running operations" because main() had
+// already closed the Mongo client, and then held the lock for 4d18h on whatever handle was left.
+// Tracking them makes both halves fixable — every book's entity sync now actually completes, and
+// exit waits for a bounded drain instead of hoping the event loop empties (#4837).
+const backgroundTasks = new Set();
+
+function trackBackground(promise) {
+  const tracked = Promise.resolve(promise).finally(() => backgroundTasks.delete(tracked));
+  backgroundTasks.add(tracked);
+  return tracked;
+}
+
+async function drainBackgroundTasks(ms = BACKGROUND_DRAIN_MS) {
+  if (backgroundTasks.size === 0) return 0;
+  const pending = backgroundTasks.size;
+  console.log(`[ENRICH] Waiting for ${pending} background write(s)...`);
+  let timer;
+  await Promise.race([
+    Promise.allSettled([...backgroundTasks]),
+    new Promise(resolve => { timer = setTimeout(resolve, ms); }),
+  ]);
+  clearTimeout(timer);
+  if (backgroundTasks.size > 0) {
+    console.warn(`[ENRICH] ${backgroundTasks.size} background write(s) still pending after ${Math.round(ms / 1000)}s — exiting anyway`);
+  }
+  return pending;
+}
 
 // Per-call timeouts for Gemini. The Google SDK has no built-in request
 // timeout, so a stuck `generateContent()` would otherwise hang until the
@@ -756,143 +795,9 @@ async function generateBookSummary(batchExtractions, bookTitle, bookAuthor, book
 }
 
 // ── Quote grounding ──
-function cleanTranslationText(text) {
-  return text
-    .replace(/<[a-z-]+>[\s\S]*?<\/[a-z-]+>/gi, '')
-    .replace(/\[\[[^\]]+\]\]/g, '')
-    .replace(/^```(?:markdown)?\s*\n?/i, '')
-    .replace(/\n?```\s*$/i, '')
-    .trim();
-}
-
-function cleanExtractedQuote(text) {
-  return text
-    .replace(/^>\s*/gm, '')
-    .replace(/\*{1,2}([^*]+)\*{1,2}/g, '$1')
-    .replace(/\*/g, '')
-    .replace(/^\d{1,3}\s+/g, '')
-    .replace(/\s+\d{1,3}\s*\*?\s*\*/g, '')
-    .replace(/<\/?[a-z-]+\/?>/gi, '')
-    .replace(/->/g, '')
-    .replace(/<-/g, '')
-    .replace(/^[IVX]+\s+/g, '')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
-}
-
-function snapToSentenceBoundaries(words, start, end) {
-  const sentenceEnd = /[.!?]["'\u201d\u2019)]*$/;
-  const maxExtend = 12;
-
-  let newStart = start;
-  let foundStart = false;
-  for (let i = start - 1; i >= Math.max(0, start - maxExtend); i--) {
-    if (sentenceEnd.test(words[i])) { newStart = i + 1; foundStart = true; break; }
-  }
-  if (!foundStart) {
-    for (let i = start; i < Math.min(words.length, start + maxExtend); i++) {
-      if (/^[A-Z\u201c\u201e"'(]/.test(words[i])) { newStart = i; break; }
-    }
-  }
-
-  let newEnd = end;
-  for (let i = end - 1; i < Math.min(words.length, end + maxExtend); i++) {
-    if (sentenceEnd.test(words[i])) { newEnd = i + 1; break; }
-  }
-
-  return { start: newStart, end: newEnd };
-}
-
-function findBestMatch(quoteText, sourceText) {
-  const quoteWords = quoteText.toLowerCase().split(/\s+/).filter(w => w.length > 3);
-  if (quoteWords.length === 0) return null;
-
-  const sourceWords = sourceText.split(/\s+/);
-  if (sourceWords.length === 0) return null;
-
-  const windowSize = Math.max(quoteWords.length, 5);
-  const maxWindow = Math.min(windowSize + Math.ceil(windowSize * 0.5), sourceWords.length);
-
-  let bestScore = 0, bestStart = 0, bestEnd = 0;
-
-  for (let start = 0; start <= sourceWords.length - windowSize; start++) {
-    for (let winSize = windowSize; winSize <= maxWindow && start + winSize <= sourceWords.length; winSize++) {
-      const windowText = sourceWords.slice(start, start + winSize).join(' ').toLowerCase();
-      const matchCount = quoteWords.filter(w => windowText.includes(w)).length;
-      const score = matchCount / quoteWords.length;
-      if (score > bestScore) { bestScore = score; bestStart = start; bestEnd = start + winSize; }
-    }
-  }
-
-  if (bestScore < 0.8) return null;
-
-  const snapped = snapToSentenceBoundaries(sourceWords, bestStart, bestEnd);
-  let extractedText = sourceWords.slice(snapped.start, snapped.end).join(' ');
-  extractedText = cleanExtractedQuote(extractedText);
-
-  if (extractedText.length > 60 && !/[.!?]["'\u201d\u2019)]*$/.test(extractedText)) {
-    const lastSentenceEnd = Math.max(extractedText.lastIndexOf('.'), extractedText.lastIndexOf('!'), extractedText.lastIndexOf('?'));
-    if (lastSentenceEnd > extractedText.length * 0.4) {
-      extractedText = extractedText.substring(0, lastSentenceEnd + 1);
-    }
-  }
-
-  if (/^[a-z]/.test(extractedText)) {
-    const firstSentenceStart = extractedText.search(/[.!?]\s+[A-Z]/);
-    if (firstSentenceStart > 0 && firstSentenceStart < extractedText.length * 0.4) {
-      extractedText = extractedText.substring(firstSentenceStart + 2).trim();
-    }
-  }
-
-  if (extractedText.length < 30) return null;
-
-  return { score: bestScore, extractedText };
-}
-
-const NON_CONTENT_PAGE_TYPES = new Set([
-  'index', 'table_of_contents', 'title_page', 'blank_page', 'colophon', 'errata',
-]);
-
-function groundQuotes(quotes, pages) {
-  const pageIndex = new Map();
-  for (const page of pages) {
-    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '')) {
-      pageIndex.set(page.page_number, {
-        text: cleanTranslationText(page.translation.data),
-        page_id: page.id,
-      });
-    }
-  }
-
-  const grounded = [];
-  for (const quote of quotes) {
-    if (!quote.text || quote.text.length < 30) continue;
-
-    const specifiedPage = pageIndex.get(quote.page);
-    if (specifiedPage) {
-      const match = findBestMatch(quote.text, specifiedPage.text);
-      if (match) {
-        grounded.push({ text: match.extractedText, page: quote.page, page_id: specifiedPage.page_id, context: quote.context, significance: quote.significance });
-        continue;
-      }
-    }
-
-    let bestOverall = null;
-    for (const [pageNum, pageData] of pageIndex) {
-      if (pageNum === quote.page) continue;
-      const match = findBestMatch(quote.text, pageData.text);
-      if (match && (!bestOverall || match.score > bestOverall.score)) {
-        bestOverall = { score: match.score, extractedText: match.extractedText, pageNum, pageId: pageData.page_id };
-      }
-    }
-
-    if (bestOverall) {
-      grounded.push({ text: bestOverall.extractedText, page: bestOverall.pageNum, page_id: bestOverall.pageId, context: quote.context, significance: quote.significance });
-    }
-  }
-
-  return grounded;
-}
+// findBestMatch/groundQuotes and their helpers now live in ./lib/quote-grounding.mjs, bounded by
+// a lossless page prefilter, a wall-clock budget and yields between pages — see that file for
+// what wedged the lane for five days (#4837).
 
 // ── Entity sync ──
 async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex, bookYear) {
@@ -1060,18 +965,33 @@ async function enrichBook(db, book) {
     }
   }
 
-  // Ground quotes
+  // Ground quotes. One page index and ONE wall-clock budget for the whole book: grounding is a
+  // nice-to-have that once held the entire lane hostage for five days, so it gets a fixed slice of
+  // the book's time and reports what it did not reach (#4837).
+  const groundingDeadline = Date.now() + GROUNDING_BUDGET_MS;
+  const groundingIndex = buildPageIndex(pages);
+
   const allBatchQuotes = batchExtractions.flatMap(b => b.quotes);
-  const groundedBatchQuotes = groundQuotes(allBatchQuotes, pages);
-  const droppedBatch = allBatchQuotes.length - groundedBatchQuotes.length;
+  const batchGrounding = await groundQuotes(allBatchQuotes, groundingIndex, { deadline: groundingDeadline });
+  const groundedBatchQuotes = batchGrounding.grounded;
+  const droppedBatch = allBatchQuotes.length - groundedBatchQuotes.length - batchGrounding.unattempted;
   if (droppedBatch > 0) {
     console.log(`    Quote grounding: dropped ${droppedBatch}/${allBatchQuotes.length} batch quotes`);
   }
+  if (batchGrounding.unattempted > 0) {
+    console.log(`    Quote grounding: budget of ${Math.round(GROUNDING_BUDGET_MS / 1000)}s exhausted — ${batchGrounding.unattempted}/${allBatchQuotes.length} batch quotes not attempted`);
+  }
 
+  let sectionQuotesUnattempted = 0;
   for (const section of sectionSummaries) {
     if (section.quotes && section.quotes.length > 0) {
-      section.quotes = groundQuotes(section.quotes, pages);
+      const sectionGrounding = await groundQuotes(section.quotes, groundingIndex, { deadline: groundingDeadline });
+      section.quotes = sectionGrounding.grounded;
+      sectionQuotesUnattempted += sectionGrounding.unattempted;
     }
+  }
+  if (sectionQuotesUnattempted > 0) {
+    console.log(`    Quote grounding: ${sectionQuotesUnattempted} section quotes not attempted (budget exhausted)`);
   }
 
   // Build index
@@ -1165,21 +1085,21 @@ async function enrichBook(db, book) {
   }
 
   // Sync entities (non-blocking)
-  syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex, book.year || null).catch(err => {
+  trackBackground(syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex, book.year || null).catch(err => {
     console.error(`    Entity sync failed:`, err.message);
-  });
+  }));
 
   // Upsert book embedding to Supabase (non-blocking, issue #1158)
-  upsertBookEmbedding(book, index).catch(err => {
+  trackBackground(upsertBookEmbedding(book, index).catch(err => {
     console.warn(`    [embed] Book embedding failed: ${err.message}`);
-  });
+  }));
 
   // Page-level vectors, so this book is searchable BY MEANING the moment it
   // finishes enrichment rather than whenever a separate cron next runs — see
   // the note on upsertPageEmbeddings for what that separation cost.
-  upsertPageEmbeddings(db, book).catch(err => {
+  trackBackground(upsertPageEmbeddings(db, book).catch(err => {
     console.warn(`    [embed] Page embeddings failed: ${err.message}`);
-  });
+  }));
 
   console.log(`    Done — ${batchExtractions.length} batches, ${groundedBatchQuotes.length} quotes, ${sectionSummaries.length} sections`);
 }
@@ -2063,10 +1983,21 @@ NO explanation, just the JSON array.`;
     summary: `E:${enriched} C:${chaptersExtracted} Q:${qualityScored} COL:${collectionAssigned} err:${errors.length}`,
   }).catch(() => {});
 
+  // Let the fire-and-forget writes finish BEFORE the client they use is closed.
+  await drainBackgroundTasks();
   await client.close();
 }
 
-main().catch(err => {
-  console.error('[ENRICH] Fatal:', err);
-  process.exit(1);
-});
+main()
+  .then(() => {
+    // Exit explicitly. A finished run that merely stops doing work is indistinguishable, from the
+    // scheduler's side, from a wedged one — and one such run held the enrich lock for 4d18h while
+    // the scheduler reported it as healthily "running" (#4837).
+    heartbeat.stop();
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error('[ENRICH] Fatal:', err);
+    heartbeat.stop();
+    process.exit(1);
+  });

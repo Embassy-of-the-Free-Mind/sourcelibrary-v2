@@ -19,8 +19,10 @@
 
 import { MongoClient } from 'mongodb';
 import { execSync, spawn } from 'child_process';
-import { existsSync, readFileSync, writeFileSync, openSync, closeSync, appendFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, openSync, closeSync, appendFileSync, statSync } from 'fs';
 import { shouldBypassPause, hasScope } from './lib/selective-unpause.mjs';
+import { drainStalledImageJobs, NO_RESULTS_MARK } from './lib/image-job-drain.mjs';
+import { heartbeatIsStale } from './lib/worker-heartbeat.mjs';
 
 // ── Config ──
 
@@ -152,6 +154,11 @@ const WORKERS = [
     interval: 300,      // every 5 min
     healthMin: 'degraded',
     log: '/var/log/sourcelibrary/enrich.log',
+    // Liveness (#4837). The worker beats every 60s from an unref'd timer, so silence means a
+    // blocked event loop or a run that finished without exiting — both killed the lane for 5 days.
+    // 10 min is well clear of any legitimate wait: every Gemini call is awaited, not blocking.
+    heartbeat: '/tmp/sl-enrich.heartbeat',
+    maxSilenceMin: 10,
   },
   {
     name: 'enrich-scoring',
@@ -162,6 +169,8 @@ const WORKERS = [
     interval: 300,      // every 5 min
     healthMin: 'healthy',
     log: '/var/log/sourcelibrary/enrich-scoring.log',
+    heartbeat: '/tmp/sl-enrich-scoring.heartbeat',
+    maxSilenceMin: 10,
   },
   {
     name: 'enrich-collections',
@@ -172,6 +181,8 @@ const WORKERS = [
     interval: 300,      // every 5 min
     healthMin: 'healthy',
     log: '/var/log/sourcelibrary/enrich-collections.log',
+    heartbeat: '/tmp/sl-enrich-collections.heartbeat',
+    maxSilenceMin: 10,
   },
 
   // Tier 3: Image extraction — realtime Gemini vision, parallel books
@@ -330,6 +341,12 @@ function spawnWorker(worker) {
   // Open log file as fd for spawn stdio (streams don't work with spawn)
   const logFd = openSync(worker.log, 'a');
 
+  // Seed the heartbeat at spawn time, so the gap between "lock taken" and the worker's first beat
+  // is never read as a stall (#4837).
+  if (worker.heartbeat) {
+    try { writeFileSync(worker.heartbeat, `${timestamp} spawned\n`); } catch {}
+  }
+
   // Use flock so the worker's own lock is held while it runs
   const fullCmd = `flock -n "${worker.lock}" bash -c "set -a; source .env.production.local; set +a; ${worker.cmd}"`;
 
@@ -337,7 +354,9 @@ function spawnWorker(worker) {
     cwd: process.env.HOME ? `${process.env.HOME}/sourcelibrary` : '/root/sourcelibrary',
     stdio: ['ignore', logFd, logFd],
     detached: true,
-    env: process.env,
+    // SL_HEARTBEAT_FILE is inherited by the shell and the worker; .env.production.local does not
+    // define it, so sourcing that file cannot clobber it.
+    env: { ...process.env, ...(worker.heartbeat ? { SL_HEARTBEAT_FILE: worker.heartbeat } : {}) },
   });
 
   child.unref();
@@ -406,16 +425,41 @@ async function main() {
     const ZOMBIE_THRESHOLD_MS = 30 * 60 * 1000;
     const zombieCutoff = new Date(Date.now() - ZOMBIE_THRESHOLD_MS);
     // First find zombie jobs so we can clean up their book locks too
-    const zombieJobs = await db.collection('jobs').find({
+    const allZombieJobs = await db.collection('jobs').find({
       status: 'processing',
       $or: [
         { updated_at: { $lt: zombieCutoff } },
         { updated_at: { $exists: false }, started_at: { $lt: zombieCutoff } },
       ],
-    }).project({ _id: 1, book_id: 1 }).toArray().catch(err => {
+    }).project({ _id: 1, id: 1, book_id: 1, type: 1, config: 1, created_at: 1, progress: 1 }).toArray().catch(err => {
       console.log(`[scheduler] zombie find failed: ${err.message}`);
       return [];
     });
+
+    // Image-extraction jobs are finalized on DRAIN, not on an exact count. Their progress counter
+    // only counts pages that produced `detected_images`, so any book with an illustration-free
+    // candidate page can never reach its total: cancelling it hands the book to the orchestrator's
+    // orphan detector, which rolls it back and re-dispatches every page again. That loop cost
+    // 1,385 cancellations and 3,209 re-paid pages in one week (#4839).
+    const imageZombies = allZombieJobs.filter(j => j.type === 'image_extraction');
+    let zombieJobs = allZombieJobs.filter(j => j.type !== 'image_extraction');
+    let noResultJobIds = [];
+
+    if (imageZombies.length > 0) {
+      try {
+        const { finalized, noResults } = await drainStalledImageJobs(db, imageZombies, { source: 'scheduler' });
+        for (const f of finalized) {
+          console.log(`[scheduler] DRAINED image job ${f.jobId}: ${f.status} (${f.attempted}/${f.total} pages extracted, ${f.missing} never reported)`);
+        }
+        // A drained job that produced NOTHING is a broken lane, not a finished one — cancel it, but
+        // mark it so Phase 8 can count how many times this book has come back empty.
+        zombieJobs = zombieJobs.concat(noResults);
+        noResultJobIds = noResults.map(j => j._id);
+      } catch (err) {
+        console.log(`[scheduler] image drain failed: ${err.message}`);
+        zombieJobs = zombieJobs.concat(imageZombies);
+      }
+    }
 
     if (zombieJobs.length > 0) {
       // Cancel the zombie jobs
@@ -430,6 +474,15 @@ async function main() {
         }
       ).catch(err => { console.log(`[scheduler] zombie cancel failed: ${err.message}`); });
 
+      // An image job that drained with nothing at all gets a reason Phase 8 can count, so a book
+      // whose extraction is genuinely broken is parked after a few tries instead of looping (#4839).
+      if (noResultJobIds.length > 0) {
+        await db.collection('jobs').updateMany(
+          { _id: { $in: noResultJobIds } },
+          { $set: { cancel_reason: `scheduler: zombie reaper — ${NO_RESULTS_MARK}` } },
+        ).catch(() => {});
+      }
+
       // Unset book.job on affected books so they can be re-dispatched
       const zombieBookIds = zombieJobs.map(j => j.book_id).filter(Boolean);
       if (zombieBookIds.length > 0) {
@@ -440,6 +493,45 @@ async function main() {
         console.log(`[scheduler] REAPED ${zombieJobs.length} zombie jobs, unset book.job on ${bookCleanup.modifiedCount} books`);
       } else {
         console.log(`[scheduler] REAPED ${zombieJobs.length} zombie jobs (no book_ids to clean)`);
+      }
+    }
+
+    // 2c. Kill wedged workers — a held lock whose heartbeat has stopped.
+    //     "Running" here has always meant "holds its lock", which cannot tell a working worker from
+    //     a worker whose event loop is dead. enrich-worker held its lock for 4d18h twice over while
+    //     the scheduler logged `running=[enrich-worker]` every 2 minutes (#4837). A heartbeat file
+    //     touched from a timer separates the two: a blocked loop cannot touch it.
+    const stalledKilled = [];
+    for (const worker of WORKERS) {
+      if (!worker.heartbeat || !worker.maxSilenceMin) continue;
+      if (!isLocked(worker.lock)) continue;
+
+      let mtimeMs = null;
+      try { mtimeMs = statSync(worker.heartbeat).mtimeMs; } catch { mtimeMs = null; }
+      const maxSilenceMs = worker.maxSilenceMin * 60 * 1000;
+      if (!heartbeatIsStale(mtimeMs, Date.now(), maxSilenceMs)) continue;
+
+      const silentMin = Math.round((Date.now() - mtimeMs) / 60000);
+      // Escalate: a process that ignored SIGTERM through a whole extra window is not going to
+      // handle the next one either.
+      const signal = silentMin > 2 * worker.maxSilenceMin ? 'KILL' : 'TERM';
+      console.log(`[scheduler] STALLED ${worker.name}: no heartbeat for ${silentMin}min (max ${worker.maxSilenceMin}) — sending SIG${signal} to lock holders`);
+
+      if (!DRY_RUN) {
+        try {
+          execSync(`fuser -k -${signal} "${worker.lock}" 2>/dev/null`, { timeout: 5000 });
+        } catch {
+          // fuser exits non-zero when it finds no holder — the lock was released as we looked.
+        }
+        try {
+          appendFileSync(worker.log, `\n--- Killed by scheduler at ${new Date().toISOString()}: no heartbeat for ${silentMin}min (SIG${signal}) ---\n`);
+        } catch {}
+        await db.collection('cron_runs').insertOne({
+          cron: 'scheduler', timestamp: new Date(), status: 'killed_stalled', failed: true,
+          actions: { worker: worker.name, silent_min: silentMin, max_silence_min: worker.maxSilenceMin, signal },
+          summary: `killed ${worker.name}: no heartbeat for ${silentMin}min`,
+        }).catch(() => {});
+        stalledKilled.push(`${worker.name}(${silentMin}min)`);
       }
     }
 
@@ -514,7 +606,8 @@ async function main() {
     }
 
     // 5. Log run
-    const summary = `spawned=[${spawned.join(', ')}] skipped=[${skipped.join(', ')}] running=[${runningWorkers.join(', ')}] health=${healthGrade}`;
+    const summary = `spawned=[${spawned.join(', ')}] skipped=[${skipped.join(', ')}] running=[${runningWorkers.join(', ')}]`
+      + `${stalledKilled.length ? ` killed_stalled=[${stalledKilled.join(', ')}]` : ''} health=${healthGrade}`;
     console.log(`[scheduler] ${summary}`);
 
     await db.collection('cron_runs').insertOne({
