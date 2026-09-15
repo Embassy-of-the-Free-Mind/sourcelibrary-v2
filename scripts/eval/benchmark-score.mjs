@@ -47,7 +47,7 @@ const REFS_DIR = path.join(__dirname, 'benchmark', 'refs');
 if (!ROOT) { console.error('--root required'); process.exit(1); }
 
 // ── normalisation ──────────────────────────────────────────────────
-const CJK_STRATA = new Set(['chinese', 'japanese']);
+const CJK_STRATA = new Set(['chinese', 'japanese', 'japanese-ext']);
 function normAlpha(s) {
   return String(s || '')
     .replace(/<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
@@ -58,7 +58,14 @@ function normAlpha(s) {
 }
 const tokensAlpha = s => (s.match(/[\p{L}\p{N}']+/gu) || []);
 const lettersOnly = s => s.replace(/[^\p{L}\p{N}]+/gu, '');
+// Kyūjitai → shinjitai folding for CJK scoring: NDL classical OCR writes modern forms (気 for 氣, 発 for 發,
+// 伝 for 傳…) while the page and the Gemini arms carry the traditional ones; without folding every such
+// glyph is a CER "error" that is an orthographic convention, not a misread. Common pairs only; extend as met.
+const KYU_SHIN = '氣気觸触發発傳伝禮礼醫医體体國国學学會会當当對対經経藥薬寶宝齊斉齋斎變変邊辺圓円廣広應応惡悪榮栄營営藝芸壓圧鹽塩澤沢擇択譯訳驛駅釋釈澁渋濕湿實実寫写收収從従縱縦讀読續続賣売讓譲亂乱亞亜圍囲爲為僞偽衞衛舊旧兒児條条處処與与齒歯齡齢壽寿圖図團団晝昼點点黨党燈灯獨独樂楽靈霊勞労勵励歷歴曆暦龍竜隸隷兩両獵猟錄録麥麦滿満萬万默黙彌弥譽誉餘余豫予嚴厳髓髄隨随數数樞枢聲声靜静濟済劑剤攝摂淺浅錢銭賤賎踐践纖繊專専戰戦禪禅單単彈弾斷断遲遅廳庁徵徴聽聴鎭鎮鐵鉄轉転屆届縣県驗験險険檢検劍剣顯顕權権勸勧觀観歡歓鑛鉱鑄鋳絲糸獸獣敍叙將将奬奨狀状乘乗剩剰淨浄燒焼稱称證証囑嘱眞真盡尽竊窃說説拜拝廢廃佛仏拂払辯弁辨弁步歩豐豊每毎黑黒龜亀假仮價価繪絵壞壊懷懐覺覚舉挙歸帰據拠徑径輕軽莖茎繼継惠恵鷄鶏缺欠儉倹圈圏獻献效効號号碎砕櫻桜參参慘惨產産蠶蚕贊賛殘残辭辞肅粛緖緒涉渉疊畳醉酔雙双壯壮莊荘裝装藏蔵臟臓總総騷騒增増屬属帶帯滯滞臺台擔担膽胆蟲虫貳弐惱悩腦脳霸覇髮髪拔抜晚晩蠻蛮濱浜搖揺樣様謠謡來来賴頼覽覧樓楼灣湾淚涙沒没稻稲廐厩冨富鬪闘關関陷陥隱隠靑青淸清敎教卽即槪概旣既溉漑硏研卷巻內内册冊咒呪曾曽溫温縕緼醬醤獎奨妝粧姊姉曉暁迴回廻回瀧滝籠篭鬭闘';
+const KYU_MAP = new Map(); for (let i = 0; i + 1 < KYU_SHIN.length; i += 2) KYU_MAP.set(KYU_SHIN[i], KYU_SHIN[i + 1]);
+const foldVariants = (s) => { let o = ''; for (const ch of s) o += KYU_MAP.get(ch) || ch; return o; };
 function normCJK(s) {
+  s = foldVariants(s);
   // Han + kana + Hangul kept; Latin digits dropped; punctuation and layout dropped (normalizeCJK
   // keeps only Han/ideographic — extend for kana so Japanese pages are scored on their kana too).
   const t = String(s || '').replace(/<[^>]+>/g, ' ').normalize('NFC');
@@ -147,7 +154,7 @@ function scoreRefTier(stratum) {
   for (const lang of langs) {
     const L = summary.languages[lang];
     console.log(`\n### ${lang} (n=${L.n})\n| engine | run | aligned | median CER | mean acc (windowed / upper) | catastrophic | paired CER vs ${REF_ENGINE} W/L/T (p) on both-aligned |\n|---|---|---|---|---|---|---|`);
-    for (const e of engines) { const s = L.engines[e]; const pv = s.paired_vs_ref ? `${s.paired_vs_ref.wins}/${s.paired_vs_ref.losses}/${s.paired_vs_ref.ties} (p=${s.paired_vs_ref.p_sign}) n=${s.paired_vs_ref.n}` : '—'; console.log(`| ${e} | ${s.pages_run} | ${s.aligned} | ${s.median_cer_windowed ?? '—'} | ${s.mean_acc_windowed ?? '—'} / ${s.mean_acc_upper ?? '—'} | ${s.catastrophic} | ${pv} |`); }
+    for (const e of engines) { const s = L.engines[e]; if (!s.pages_run) continue; const pv = s.paired_vs_ref ? `${s.paired_vs_ref.wins}/${s.paired_vs_ref.losses}/${s.paired_vs_ref.ties} (p=${s.paired_vs_ref.p_sign}) n=${s.paired_vs_ref.n}` : '—'; console.log(`| ${e} | ${s.pages_run} | ${s.aligned} | ${s.median_cer_windowed ?? '—'} | ${s.mean_acc_windowed ?? '—'} / ${s.mean_acc_upper ?? '—'} | ${s.catastrophic} | ${pv} |`); }
   }
   return summary;
 }
@@ -164,7 +171,14 @@ for (const stratum of strata) {
   const reg = fs.existsSync(regPath) ? JSON.parse(fs.readFileSync(regPath, 'utf8')) : null;
   const meta = new Map((reg?.pages || []).map(p => [p.slug, p]));
   const outRoot = path.join(ROOT, stratum, 'out');
-  const engines = fs.readdirSync(outRoot).filter(e => fs.statSync(path.join(outRoot, e)).isDirectory()).sort();
+  const engines = fs.readdirSync(outRoot).filter(e => fs.statSync(path.join(outRoot, e)).isDirectory() && fs.readdirSync(path.join(outRoot, e)).some(f => f.endsWith('.txt'))).sort();
+  // SCRIPT CLASS per page (out/script-class/<slug>.json, written by the flash-preview page classifier and
+  // spot-checked by eye): what is physically on the page — typeset / woodblock / cursive / other. The
+  // catalogue year is the WORK's date (a 1716 Hagakure is a modern typeset reprint), so the per-class
+  // roll-up below is the one that answers "does engine X read kuzushiji".
+  const classDir = path.join(outRoot, 'script-class');
+  const classOf = new Map();
+  if (fs.existsSync(classDir)) for (const f of fs.readdirSync(classDir).filter(f => f.endsWith('.json'))) { try { const j = JSON.parse(fs.readFileSync(path.join(classDir, f), 'utf8')); classOf.set(f.replace(/\.json$/, ''), j.script_class || null); } catch { /* unparsed */ } }
   // Only the SEALED pages are scored: registry entries that are not spares, plus spares
   // promoted in place of a textless page. Stray images in the directory are ignored.
   const slugs = fs.readdirSync(path.join(ROOT, stratum)).filter(f => f.endsWith('.jpg')).map(f => f.replace(/\.jpg$/, '')).sort()
@@ -182,7 +196,12 @@ for (const stratum of strata) {
     if (maxContent < 30) { textless.push(s); continue; }
     const hasRef = !!refText[s];
     const ref = hasRef ? prep(refText[s], cjk) : prepped[REF_ENGINE];
-    const row = { slug: s, substratum: meta.get(s)?.substratum || null, title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
+    const row = { slug: s, substratum: meta.get(s)?.substratum || null, script_class: classOf.get(s) || meta.get(s)?.observed_substratum || null, title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
+    // LOOP: the failure kind a CER against a proxy cannot see (both arms loop on kuzushiji; flash-preview
+    // wrote 448 lines for a 35-line Serto page). Repeated non-blank lines ≥ 30 % with ≥ 5 lines, or an
+    // output more than 3× the median length of the other engines' and over 2,000 characters.
+    const lens = engines.map(e => texts[s][e]?.length || 0);
+    const loopOf = (e) => { const t = texts[s][e] || ''; const lines = t.split('\n').map(l => l.trim()).filter(Boolean); const rep = lines.length >= 5 ? 1 - new Set(lines).size / lines.length : 0; const others = lens.filter((_, i) => engines[i] !== e && lens[i] > 0); const med = median(others) || 0; return rep >= 0.3 || (t.length > 2000 && med > 0 && t.length > 3 * med); };
     for (const e of engines) {
       const h = prepped[e];
       if (!h) { row.engines[e] = { missing: true }; continue; }
@@ -196,7 +215,7 @@ for (const stratum of strata) {
       let invRef = null, invRefSample = [];
       if (hasRef) { const R = new Set(ref.content); const miss = uniq.filter(t => !R.has(t)); invRef = uniq.length ? miss.length / uniq.length : null; invRefSample = miss.slice(0, 8); }
       const base = (e === REF_ENGINE && !hasRef) ? null : (ref ? compare(h, ref) : null);
-      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, ...(base || {}), invention: r3(inv), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
+      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, loop: loopOf(e), ...(base || {}), invention: r3(inv), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
       // agreement with every other engine, order-free, for the reference-free strata
       row.engines[e].agree = {}; for (const o of engines) if (o !== e && prepped[o]) row.engines[e].agree[o] = r3(bagDice(h.tokens, prepped[o].tokens));
     }
@@ -209,7 +228,7 @@ for (const stratum of strata) {
       if (!(best <= 0.5)) {
         row.ref_mismatch = true; row.has_ref = false;
         const proxy = prepped[REF_ENGINE];
-        for (const e of engines) { const h = prepped[e]; if (!h) continue; const base = (e === REF_ENGINE) ? null : (proxy ? compare(h, proxy) : null); const keep = row.engines[e]; row.engines[e] = { n_content: keep.n_content, empty: keep.empty, ...(base || {}), invention: keep.invention, invention_ref: null, unsupported_sample: keep.unsupported_sample, invention_ref_sample: [], agree: keep.agree }; }
+        for (const e of engines) { const h = prepped[e]; if (!h) continue; const base = (e === REF_ENGINE) ? null : (proxy ? compare(h, proxy) : null); const keep = row.engines[e]; row.engines[e] = { n_content: keep.n_content, empty: keep.empty, loop: keep.loop, ...(base || {}), invention: keep.invention, invention_ref: null, unsupported_sample: keep.unsupported_sample, invention_ref_sample: [], agree: keep.agree }; }
       }
     }
     pages.push(row);
@@ -222,7 +241,7 @@ for (const stratum of strata) {
     const withRef = rows.filter(x => x.p.has_ref && x.m.cer != null);
     const proxy = rows.filter(x => !x.p.has_ref && x.m.cer != null);
     const s = {
-      pages_run: rows.length, empty: rows.filter(x => x.m.empty).length,
+      pages_run: rows.length, empty: rows.filter(x => x.m.empty).length, loop: rows.filter(x => x.m.loop).length,
       ref: { n: withRef.length, median_cer: r3(median(withRef.map(x => x.m.cer))), mean_cer: r3(mean(withRef.map(x => x.m.cer))), catastrophic: withRef.filter(x => x.m.cer > 0.5).length, median_gap: r3(median(withRef.map(x => x.m.gap))), median_seq: r3(median(withRef.map(x => x.m.seq))) },
       proxy_vs_ref_engine: { n: proxy.length, median_cer: r3(median(proxy.map(x => x.m.cer))), catastrophic: proxy.filter(x => x.m.cer > 0.5).length, median_gap: r3(median(proxy.map(x => x.m.gap))), median_bow: r3(median(proxy.map(x => x.m.bow))) },
       invention: { median: r3(median(rows.map(x => x.m.invention))), mean: r3(mean(rows.map(x => x.m.invention))), n_engines: engines.length,
@@ -242,18 +261,41 @@ for (const stratum of strata) {
     s.worst = rows.filter(x => x.m.cer != null || x.m.invention != null).sort((a, b) => key(b) - key(a)).slice(0, 5).map(x => ({ slug: x.p.slug, title: x.p.title, year: x.p.year, cer: x.m.cer, gap: x.m.gap, invention: x.m.invention, has_ref: x.p.has_ref, unsupported: x.m.unsupported_sample }));
     summary.engines[e] = s;
   }
+  // ── per script class (typeset / woodblock / cursive / other): the roll-up that answers the routing question ──
+  const classes = [...new Set(pages.map(p => p.script_class).filter(Boolean))].sort();
+  if (classes.length) {
+    summary.by_class = {};
+    for (const c of classes) {
+      const cp = pages.filter(p => p.script_class === c);
+      summary.by_class[c] = { n: cp.length, engines: {} };
+      for (const e of engines) {
+        const rows = cp.map(p => ({ p, m: p.engines[e] })).filter(x => x.m && !x.m.missing);
+        const cer = rows.filter(x => x.m.cer != null).map(x => x.m.cer);
+        summary.by_class[c].engines[e] = { n: rows.length, empty: rows.filter(x => x.m.empty).length, loop: rows.filter(x => x.m.loop).length,
+          median_cer: r3(median(cer)), catastrophic: cer.filter(v => v > 0.5).length, median_unsupported: r3(median(rows.map(x => x.m.invention))) };
+      }
+    }
+  }
   summaryAll[stratum] = summary;
   fs.writeFileSync(path.join(OUT_DIR, `${stratum}-${date}.json`), JSON.stringify({ summary, pages }, null, 2));
 
   // ── console table ──
   console.log(`\n## ${stratum} (#${summary.issue}) — ${pages.length} pages scored (${summary.n_with_ref} with reference; ${summary.ref_mismatch.length} reference-mismatch → proxy: ${summary.ref_mismatch.join(', ') || '—'}), ${textless.length} textless: ${textless.join(', ') || '—'}`);
-  console.log('| engine | pages | empty | ref n | median CER | catastrophic | median gap | invention (vs ref) | vs ref-engine (proxy) n / median CER / catastrophic | unsupported (vs other engines) | paired CER vs ' + REF_ENGINE + ' W/L/T (p) | invention W/L |');
-  console.log('|---|---|---|---|---|---|---|---|---|---|---|---|');
+  console.log('| engine | pages | empty | loop | ref n | median CER | catastrophic | median gap | invention (vs ref) | vs ref-engine (proxy) n / median CER / catastrophic | unsupported (vs other engines) | paired CER vs ' + REF_ENGINE + ' W/L/T (p) | invention W/L |');
+  console.log('|---|---|---|---|---|---|---|---|---|---|---|---|---|');
   for (const e of engines) {
     const s = summary.engines[e];
     const pv = s.paired_vs_ref ? `${s.paired_vs_ref.wins}/${s.paired_vs_ref.losses}/${s.paired_vs_ref.ties} (p=${s.paired_vs_ref.p_sign})` : '—';
     const iv = s.paired_vs_ref ? `${s.paired_vs_ref.invention_wins}/${s.paired_vs_ref.invention_losses}` : '—';
-    console.log(`| ${e} | ${s.pages_run} | ${s.empty} | ${s.ref.n} | ${s.ref.median_cer ?? '—'} | ${s.ref.catastrophic} | ${s.ref.median_gap ?? '—'} | ${s.invention.ref_median ?? '—'} | ${s.proxy_vs_ref_engine.n} / ${s.proxy_vs_ref_engine.median_cer ?? '—'} / ${s.proxy_vs_ref_engine.catastrophic} | ${s.invention.median ?? '—'} | ${pv} | ${iv} |`);
+    console.log(`| ${e} | ${s.pages_run} | ${s.empty} | ${s.loop} | ${s.ref.n} | ${s.ref.median_cer ?? '—'} | ${s.ref.catastrophic} | ${s.ref.median_gap ?? '—'} | ${s.invention.ref_median ?? '—'} | ${s.proxy_vs_ref_engine.n} / ${s.proxy_vs_ref_engine.median_cer ?? '—'} / ${s.proxy_vs_ref_engine.catastrophic} | ${s.invention.median ?? '—'} | ${pv} | ${iv} |`);
+  }
+  if (summary.by_class) {
+    for (const [c, bc] of Object.entries(summary.by_class)) {
+      console.log(`\n### script class: ${c} (n=${bc.n}) — CER is vs reference where one exists, else distance to ${REF_ENGINE}`);
+      console.log('| engine | n | empty | loop | median CER | catastrophic | median unsupported |');
+      console.log('|---|---|---|---|---|---|---|');
+      for (const [e, v] of Object.entries(bc.engines)) console.log(`| ${e} | ${v.n} | ${v.empty} | ${v.loop} | ${v.median_cer ?? '—'} | ${v.catastrophic} | ${v.median_unsupported ?? '—'} |`);
+    }
   }
   // worst pages, excerpts for reading by eye
   for (const e of engines) {

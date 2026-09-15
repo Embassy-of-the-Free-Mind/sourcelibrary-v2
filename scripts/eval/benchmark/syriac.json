@@ -259,7 +259,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Digital Syriac Corpus / Peshitta where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "manuscript",
+      "eye_check": "eye-checked 2026-09-15 (sourcelibrary-83 + this session): a Rylands manuscript page, not print — drawn into the print substratum because the catalogue has no MS flag for this provider. Kept in place (the file is the seal); count it as manuscript when quoting substrata."
     },
     {
       "slug": "syriac-146d10-p81",
@@ -403,7 +405,9 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Digital Syriac Corpus / Peshitta where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "manuscript",
+      "eye_check": "eye-checked 2026-09-15 (sourcelibrary-83 + this session): a Rylands manuscript page, not print — drawn into the print substratum because the catalogue has no MS flag for this provider. Kept in place (the file is the seal); count it as manuscript when quoting substrata."
     },
     {
       "slug": "syriac-4138c1-p623",
@@ -467,7 +471,12 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Digital Syriac Corpus / Peshitta where the text exists, else agreement",
-      "spare": true
+      "spare": true,
+      "observed_substratum": "manuscript",
+      "eye_check": "eye-checked 2026-09-15 (sourcelibrary-83 + this session): a Rylands manuscript page, not print — drawn into the print substratum because the catalogue has no MS flag for this provider. Kept in place (the file is the seal); count it as manuscript when quoting substrata."
     }
+  ],
+  "notes": [
+    "2026-09-15: the three Manchester (Rylands) pages drawn as print are manuscripts (eye-checked). Effective sealed split: 12 manuscript / 8 print, not 10/10."
   ]
 }

@@ -35,7 +35,8 @@
       "stored_ocr_chars": 17796,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-fa8afe-p32",
@@ -51,7 +52,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-facd04-p50",
@@ -67,7 +69,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-fa4343-p159",
@@ -83,7 +86,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa39b7-p29",
@@ -99,7 +103,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa8c8c-p48",
@@ -115,7 +120,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-2e9d7f-p31",
@@ -131,7 +137,8 @@
       "stored_ocr_chars": 545,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa5475-p37",
@@ -147,7 +154,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-f9ecb4-p5",
@@ -165,7 +173,8 @@
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
       "spare": false,
       "retired": "textless",
-      "replaced_by": "japanese-0cd596-p8"
+      "replaced_by": "japanese-0cd596-p8",
+      "observed_substratum": "illustration"
     },
     {
       "slug": "japanese-fb00d5-p41",
@@ -181,7 +190,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa5bbb-p16",
@@ -197,7 +207,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa6362-p23",
@@ -213,7 +224,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-c5965c-p48",
@@ -229,7 +241,8 @@
       "stored_ocr_chars": 5831,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "manuscript-cursive"
     },
     {
       "slug": "japanese-fa29c3-p76",
@@ -245,7 +258,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-b8f086-p33",
@@ -261,7 +275,8 @@
       "stored_ocr_chars": 483,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-c5960a-p14",
@@ -277,7 +292,8 @@
       "stored_ocr_chars": 322,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-faa728-p22",
@@ -293,7 +309,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa9542-p22",
@@ -309,7 +326,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-ba0fe5-p40",
@@ -325,7 +343,8 @@
       "stored_ocr_chars": 8340,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-264a74-p5",
@@ -341,7 +360,8 @@
       "stored_ocr_chars": 774,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-59945e-p51",
@@ -357,7 +377,8 @@
       "stored_ocr_chars": 1294,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-f9e95a-p31",
@@ -373,7 +394,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-4eb403-p40",
@@ -389,7 +411,8 @@
       "stored_ocr_chars": 8340,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-fa9501-p17",
@@ -405,7 +428,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa4d57-p115",
@@ -421,7 +445,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa4642-p126",
@@ -437,7 +462,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-a4e6d2-p115",
@@ -471,7 +497,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-faa4bc-p12",
@@ -487,7 +514,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-faa11b-p23",
@@ -505,7 +533,8 @@
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
       "spare": false,
       "retired": "textless",
-      "replaced_by": "japanese-faf130-p82"
+      "replaced_by": "japanese-faf130-p82",
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-4eb5ff-p87",
@@ -523,7 +552,8 @@
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
       "spare": true,
       "promoted": true,
-      "replaces": "japanese-a4e6d2-p115"
+      "replaces": "japanese-a4e6d2-p115",
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-0cd596-p8",
@@ -541,7 +571,8 @@
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
       "spare": true,
       "promoted": true,
-      "replaces": "japanese-f9ecb4-p5"
+      "replaces": "japanese-f9ecb4-p5",
+      "observed_substratum": "woodblock-cursive"
     },
     {
       "slug": "japanese-faf130-p82",
@@ -559,7 +590,8 @@
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
       "spare": true,
       "promoted": true,
-      "replaces": "japanese-faa11b-p23"
+      "replaces": "japanese-faa11b-p23",
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fa0c6b-p35",
@@ -575,7 +607,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held",
-      "spare": true
+      "spare": true,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-fb4874-p291",
@@ -591,7 +624,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-821d72-p70",
@@ -607,7 +641,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-b790a0-p188",
@@ -623,7 +658,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-4ecfab-p355",
@@ -639,7 +675,8 @@
       "stored_ocr_chars": 533,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-f25897-p6",
@@ -655,7 +692,8 @@
       "stored_ocr_chars": 1310,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-fa2694-p34",
@@ -671,7 +709,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-4ec638-p497",
@@ -687,7 +726,8 @@
       "stored_ocr_chars": 638,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-59963c-p267",
@@ -703,7 +743,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-fa315a-p27",
@@ -719,7 +760,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-4ecbfe-p686",
@@ -735,7 +777,8 @@
       "stored_ocr_chars": 522,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": false
+      "spare": false,
+      "observed_substratum": "typeset"
     },
     {
       "slug": "japanese-b172fc-p54",
@@ -751,7 +794,8 @@
       "stored_ocr_chars": 598,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": true
+      "spare": true,
+      "observed_substratum": "illustration"
     },
     {
       "slug": "japanese-821ddf-p57",
@@ -767,7 +811,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": true
+      "spare": true,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-821f7e-p9",
@@ -783,7 +828,8 @@
       "stored_ocr_chars": 0,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": true
+      "spare": true,
+      "observed_substratum": "woodblock-regular"
     },
     {
       "slug": "japanese-88a16c-p24",
@@ -799,7 +845,11 @@
       "stored_ocr_chars": 1555,
       "multi_column_tag": false,
       "reference_plan": "Aozora Bunko where the text exists, else agreement",
-      "spare": true
+      "spare": true,
+      "observed_substratum": "typeset"
     }
+  ],
+  "notes": [
+    "2026-09-15: observed_substratum = script class of the page as classified by gemini-3-flash-preview (six classes: typeset / woodblock-regular / woodblock-cursive / manuscript-regular / manuscript-cursive / illustration; thinkingBudget 0, JSON prompt in the benchmark harness), spot-checked by eye on 10 pages (10/10 on the cursive-vs-regular axis, 1 manuscript-vs-woodblock disagreement). The catalogue year is the WORK's date (a 1716 Hagakure is a modern typeset reprint), so per-class roll-ups, not the drawn substratum, answer the kuzushiji question (#4745)."
   ]
 }

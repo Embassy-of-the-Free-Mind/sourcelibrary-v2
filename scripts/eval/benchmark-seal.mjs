@@ -62,6 +62,8 @@ const MS_RE = /manuscript|\bMS\b|codex|palimpsest|lectionary|\bmss\b/i;
 // multi-column tag (#4800 asks for ≥5 multi-column pages per Latin stratum).
 const ZH = { language: /^(Chinese|Classical Chinese|Literary Chinese)$/i, pages_count: { $gt: 5 } };
 const BUDDHIST_RE = /佛|般若|菩薩|陀羅尼|華嚴|法華|楞嚴|楞伽|金剛|阿含|大藏|禪|涅槃|起信|淨土|地藏|藥師|觀音|sutra|sūtra/;
+// Book ids already sealed in another stratum's registry (so an extension never re-draws them).
+const sealedBooks = (name) => { const f = path.join(__dirname, 'benchmark', `${name}.json`); return new Set(fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')).pages.map(p => p.book_id) : []); };
 export const STRATA = {
   chinese: { issue: 4743, seed: 4743, subs: [
     { name: 'buddhist-canon', n: 20, filter: { ...ZH, title: BUDDHIST_RE }, reference: 'CBETA (full-text search, cbdata.dila.edu.tw)' },
@@ -74,6 +76,12 @@ export const STRATA = {
   japanese: { issue: 4745, seed: 4745, subs: [
     { name: 'pre-1868', n: 30, filter: { language: /^Japanese/i, pages_count: { $gt: 3 } }, pick: inRange(1500, 1868), reference: 'agreement + invention (no aligned e-text); NDL tsugidigi where the item is NDL-held' },
     { name: 'meiji-and-later', n: 10, filter: { language: /^Japanese/i, pages_count: { $gt: 3 } }, pick: inRange(1868, 1950), reference: 'Aozora Bunko where the text exists, else agreement' },
+  ] },
+  // Extension (2026-09-15, approved on #4745's cap): NDL classical OCR v3 read the sealed kuzushiji
+  // pages where neither Gemini arm did, so the pre-1868 arm is extended to a real n for the 21K-page
+  // routing decision. Same rule, its own seed, books already in japanese.json excluded.
+  'japanese-ext': { issue: 4745, seed: 47451, subs: [
+    { name: 'pre-1868-ext', n: 120, spares: 10, filter: { language: /^Japanese/i, pages_count: { $gt: 3 } }, pick: b => inRange(1500, 1868)(b) && !sealedBooks('japanese').has(b.id), reference: 'agreement + invention (no aligned e-text); NDL v3 vs both Gemini arms' },
   ] },
   syriac: { issue: 4746, seed: 4746, subs: [
     { name: 'manuscript', n: 10, filter: { language: /syriac|^syc$/i, pages_count: { $gt: 3 } }, pick: b => { const y = yearOf(b.published); return y == null || y < 1500; }, reference: 'agreement + invention' },
