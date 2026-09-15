@@ -5304,6 +5304,15 @@ Rules:
         }
       }
 
+      console.log(`  Images submitted: ${log.images_submitted}`);
+    }
+
+    // ── Phase 8 (advance): images_submitted -> images_complete ──
+    // Deliberately OUTSIDE the budget gate: advancing a book whose extraction already finished
+    // writes a status and spends nothing, while dispatch above is paid work. Keeping the two
+    // together meant a closed dial froze finished books at images_submitted until the 48h
+    // staleness sweep rolled them back — straight into another re-dispatch (#4839).
+    if (shouldRun(8)) {
       // Check completed image extraction — both batch API and Lambda/SQS paths
       let imagesPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_submitted' })
@@ -5365,7 +5374,7 @@ Rules:
           }
         }
       }
-      console.log(`  Images submitted: ${log.images_submitted}, advanced: ${log.images_advanced}`);
+      console.log(`  Images advanced: ${log.images_advanced}`);
     }
 
     // ── Phase 8.5: Staleness detection ──
