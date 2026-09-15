@@ -460,6 +460,9 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
 
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
+    // `collections` is here for resolveFurtherReading's membership check — a
+    // guard that reads a projected-away field passes everything silently.
+    collections: 1,
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
@@ -899,6 +902,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       furtherReadingRefs,
       (sanitizeBookThumbs(furtherReadingBooks as Record<string, unknown>[]) as unknown as FurtherReadingBook[])
         .map(b => ({ ...b, title: b.title || '' })),
+      collection.slug,
     ),
     readingListGaps: resolveReadingListGaps(collection.reading_list_gaps),
     parentCollection,
