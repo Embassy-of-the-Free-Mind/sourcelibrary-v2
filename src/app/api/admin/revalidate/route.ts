@@ -16,6 +16,8 @@ export const maxDuration = 60;
  *
  * Body:
  *   { "paths": ["/collections/alchemy", "/encyclopedia"] }
+ *   or { "paths": ["/book/[id]/page/[pageId]"], "type": "layout" }  — a route
+ *      pattern, or a path whose cached response came from a layout
  *   or { "collections": true }  — revalidate all collection pages
  *   or { "all": true }          — revalidate all content pages
  *
@@ -30,11 +32,22 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const revalidated: string[] = [];
 
+  // `type` is passed straight to revalidatePath. Two cases need it and neither
+  // works without it (#4843):
+  //   - a ROUTE PATTERN ("/book/[id]/page/[pageId]") is a no-op unless a type is
+  //     given, so "revalidate every page of this route" is unreachable by default;
+  //   - a 404 raised in a route-group LAYOUT (the reader's hidden-book gate lives
+  //     there so it can set a real status above loading.tsx) is a layout-level
+  //     cache entry, and revalidating the same path as a 'page' leaves it served.
+  const type: 'page' | 'layout' | undefined =
+    body.type === 'layout' || body.type === 'page' ? body.type : undefined;
+
   if (body.paths && Array.isArray(body.paths)) {
     for (const path of body.paths) {
       if (typeof path === 'string' && path.startsWith('/')) {
-        revalidatePath(path);
-        revalidated.push(path);
+        if (type) revalidatePath(path, type);
+        else revalidatePath(path);
+        revalidated.push(type ? `${path} (${type})` : path);
       }
     }
   }
