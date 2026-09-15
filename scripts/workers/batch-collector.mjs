@@ -30,6 +30,7 @@ import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { normalizeBbox } from '../lib/bbox.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -117,26 +118,6 @@ function parseImageExtractionResponse(text) {
   }
 }
 
-/**
- * Normalize bbox values to 0-1 range.
- * AI models sometimes return 0-1000 scale instead of the requested 0-1.
- */
-function normalizeBbox(raw) {
-  const x = parseFloat(raw.x) || 0;
-  const y = parseFloat(raw.y) || 0;
-  const width = parseFloat(raw.width) || 0;
-  const height = parseFloat(raw.height) || 0;
-  if (x > 1 || y > 1 || width > 1 || height > 1) {
-    const scale = Math.max(x + width, y + height, 1000);
-    return {
-      x: Math.min(x / scale, 0.95),
-      y: Math.min(y / scale, 0.95),
-      width: Math.min(width / scale, 1),
-      height: Math.min(height / scale, 1),
-    };
-  }
-  return { x, y, width, height };
-}
 
 // ── Gemini API ──
 
@@ -620,7 +601,7 @@ async function processOneJob(db, job) {
           const detectedImages = parsed.map(img => ({
             description: img.description || '',
             type: img.type || 'unknown',
-            bbox: img.bbox ? normalizeBbox(img.bbox) : undefined,
+            bbox: normalizeBbox(img.bbox) ?? undefined,
             confidence: img.confidence,
             gallery_quality: typeof img.gallery_quality === 'number' ? img.gallery_quality : undefined,
             gallery_rationale: img.gallery_rationale || undefined,

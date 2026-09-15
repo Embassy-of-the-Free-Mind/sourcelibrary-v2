@@ -4,6 +4,7 @@
  */
 
 import Replicate from 'replicate';
+import { normalizeBbox } from '@/lib/bbox';
 import { images } from '@/lib/api-client';
 import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
 import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
@@ -104,24 +105,6 @@ export interface ImageMetadata {
   condition?: string;
   iconclass?: string[];
   cit?: string[];
-}
-
-/**
- * Normalize bbox values to 0-1 range at storage time.
- * AI models sometimes return 0-1000 scale instead of the requested 0-1.
- */
-function normalizeBbox(raw: { x: number; y: number; width: number; height: number }) {
-  const { x, y, width, height } = raw;
-  if (x > 1 || y > 1 || width > 1 || height > 1) {
-    const scale = Math.max(x + width, y + height, 1000);
-    return {
-      x: Math.min(x / scale, 0.95),
-      y: Math.min(y / scale, 0.95),
-      width: Math.min(width / scale, 1),
-      height: Math.min(height / scale, 1),
-    };
-  }
-  return { x, y, width, height };
 }
 
 export interface DetectedImage {
@@ -266,12 +249,7 @@ export async function extractWithGemini(
   const detectedImages: DetectedImage[] = parsed.map(item => ({
     description: item.description || '',
     type: item.type || 'unknown',
-    bbox: item.bbox ? normalizeBbox({
-      x: parseFloat(item.bbox.x) || 0,
-      y: parseFloat(item.bbox.y) || 0,
-      width: parseFloat(item.bbox.width) || 0,
-      height: parseFloat(item.bbox.height) || 0,
-    }) : undefined,
+    bbox: normalizeBbox(item.bbox) ?? undefined,
     confidence: item.confidence,
     gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
     gallery_rationale: item.gallery_rationale || undefined,
@@ -347,12 +325,7 @@ export async function extractWithMistral(imageUrl: string): Promise<DetectedImag
   return parsed.map(item => ({
     description: item.description || '',
     type: item.type || 'unknown',
-    bbox: item.bbox ? normalizeBbox({
-      x: parseFloat(item.bbox.x) || 0,
-      y: parseFloat(item.bbox.y) || 0,
-      width: parseFloat(item.bbox.width) || 0,
-      height: parseFloat(item.bbox.height) || 0,
-    }) : undefined,
+    bbox: normalizeBbox(item.bbox) ?? undefined,
     confidence: item.confidence,
     gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
     gallery_rationale: item.gallery_rationale || undefined,
