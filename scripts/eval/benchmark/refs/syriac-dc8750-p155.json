@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-dc8750-p155",
+  "substratum": "manuscript",
+  "title": "Hymns on the Church (Madrashe d-Idta)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 520 overlap 0.01 < 0.25"
+}

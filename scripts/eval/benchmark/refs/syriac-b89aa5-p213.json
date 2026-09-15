@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-b89aa5-p213",
+  "substratum": "manuscript",
+  "title": "Psalterium Quadrilingue (Hebrew, Syriac, Greek, Arabic)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "no corpus text shares ≥ 8 word bigrams with any engine output"
+}

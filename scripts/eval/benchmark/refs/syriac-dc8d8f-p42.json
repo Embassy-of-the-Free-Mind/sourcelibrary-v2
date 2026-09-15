@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-dc8d8f-p42",
+  "substratum": "manuscript",
+  "title": "Mystical Discourses",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "no corpus text shares ≥ 8 word bigrams with any engine output"
+}

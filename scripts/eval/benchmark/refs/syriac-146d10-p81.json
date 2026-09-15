@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-146d10-p81",
+  "substratum": "print",
+  "title": "Acta Martyrum et Sanctorum, Tomus III",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 485 overlap 0.05 < 0.25"
+}

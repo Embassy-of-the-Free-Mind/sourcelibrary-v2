@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-b899e7-p169",
+  "substratum": "manuscript",
+  "title": "Mingana-Lewis Palimpsest (Syriac/Arabic/Quranic)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "no corpus text shares ≥ 8 word bigrams with any engine output"
+}

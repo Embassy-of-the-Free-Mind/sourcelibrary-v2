@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-46821a-p128",
+  "substratum": "print",
+  "title": "Old Testament",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 526 overlap 0.19 < 0.25"
+}

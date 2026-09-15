@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-cb9324-p377",
+  "substratum": "print",
+  "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "no corpus text shares ≥ 8 word bigrams with any engine output"
+}

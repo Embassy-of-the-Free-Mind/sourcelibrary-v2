@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-df4c22-p35",
+  "substratum": "other",
+  "title": "葉氏春秋傳·卷八~卷十 (vol 10)",
+  "probe_chars": 133,
+  "source": "Kanripo",
+  "work": "KR1e0032",
+  "work_title": "葉氏春秋傳-宋-葉夢得",
+  "juan": "8,9,10",
+  "url": "https://github.com/kanripo/KR1e0032",
+  "etext_chars": 19746,
+  "window_chars": 141,
+  "overlap": 0.845
+}

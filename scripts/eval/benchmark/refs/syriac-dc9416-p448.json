@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-dc9416-p448",
+  "substratum": "manuscript",
+  "title": "Syriac Bible of Paris (Peshitta, illuminated)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 548 overlap 0.08 < 0.25"
+}

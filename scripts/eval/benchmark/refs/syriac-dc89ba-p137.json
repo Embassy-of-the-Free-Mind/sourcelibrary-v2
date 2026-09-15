@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-dc89ba-p137",
+  "substratum": "manuscript",
+  "title": "Selected Memre; Commentary on the Psalms",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 358 overlap 0.02 < 0.25"
+}

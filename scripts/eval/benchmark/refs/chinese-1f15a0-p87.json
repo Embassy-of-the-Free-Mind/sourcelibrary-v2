@@ -1,0 +1,15 @@
+{
+  "slug": "chinese-1f15a0-p87",
+  "substratum": "other",
+  "title": "春秋地名考略·卷三~卷五 (vol 2)",
+  "probe_chars": 205,
+  "source": "Kanripo",
+  "work": "KR1e0105",
+  "work_title": "春秋地名考略-清-高士奇",
+  "juan": "3,4,5",
+  "url": "https://github.com/kanripo/KR1e0105",
+  "etext_chars": 40097,
+  "window_chars": 307,
+  "overlap": 0,
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

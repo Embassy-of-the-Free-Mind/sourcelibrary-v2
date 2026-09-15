@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-cb88c5-p185",
+  "substratum": "manuscript",
+  "title": "Ecclesiastical History (Chronicle)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 526 overlap 0.04 < 0.25"
+}

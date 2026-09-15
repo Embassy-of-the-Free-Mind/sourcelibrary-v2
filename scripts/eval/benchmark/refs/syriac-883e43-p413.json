@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-883e43-p413",
+  "substratum": "print",
+  "title": "Old Testament in Syriac (Peshitta)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 480 overlap 0.17 < 0.25"
+}

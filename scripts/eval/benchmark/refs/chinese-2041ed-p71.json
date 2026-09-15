@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-2041ed-p71",
+  "substratum": "other",
+  "title": "六藝綱目·卷上 (vol 1)",
+  "probe_chars": 151,
+  "source": "Kanripo",
+  "work": "KR1j0088",
+  "work_title": "六藝綱目-元-舒天民",
+  "juan": "1",
+  "url": "https://github.com/kanripo/KR1j0088",
+  "etext_chars": 15585,
+  "window_chars": 169,
+  "overlap": 0.716
+}

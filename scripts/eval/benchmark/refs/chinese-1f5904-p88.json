@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-1f5904-p88",
+  "substratum": "other",
+  "title": "欽定執中成憲·卷六~卷八 (vol 7)",
+  "probe_chars": 126,
+  "source": "Kanripo",
+  "work": "KR3a0109",
+  "work_title": "欽定執中成憲-清-雍正",
+  "juan": "6,7,8",
+  "url": "https://github.com/kanripo/KR3a0109",
+  "etext_chars": 24164,
+  "window_chars": 139,
+  "overlap": 0.707
+}

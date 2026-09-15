@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-1e9cd1-p43",
+  "substratum": "other",
+  "title": "白孔六帖·卷四十五~卷四十六 (vol 21)",
+  "probe_chars": 269,
+  "source": "Kanripo",
+  "work": "KR3k0008",
+  "work_title": "白孔六帖-唐-白居易",
+  "juan": "45,46",
+  "url": "https://github.com/kanripo/KR3k0008",
+  "etext_chars": 33759,
+  "window_chars": 316,
+  "overlap": 0.528
+}

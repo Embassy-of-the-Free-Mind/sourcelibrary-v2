@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-75771a-p235",
+  "substratum": "print",
+  "title": "The Book of the Bee",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 548 overlap 0.02 < 0.25"
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-1d8a47-p56",
+  "substratum": "other",
+  "title": "御纂朱子全書·卷三十八 (vol 109)",
+  "probe_chars": 133,
+  "source": "Kanripo",
+  "work": "KR3a0108",
+  "work_title": "御纂朱子全書-宋-朱熹",
+  "juan": "38",
+  "url": "https://github.com/kanripo/KR3a0108",
+  "etext_chars": 20822,
+  "window_chars": 144,
+  "overlap": 0.762
+}

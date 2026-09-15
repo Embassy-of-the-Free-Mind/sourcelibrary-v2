@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-5dd970-p110",
+  "substratum": "other",
+  "title": "普濟方·卷四十四~卷四十五 (vol 31)",
+  "probe_chars": 103,
+  "source": "Kanripo",
+  "work": "KR3e0067",
+  "work_title": "普濟方-明-朱橚",
+  "juan": "44,45",
+  "url": "https://github.com/kanripo/KR3e0067",
+  "etext_chars": 24669,
+  "window_chars": 109,
+  "overlap": 0.62
+}

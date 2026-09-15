@@ -1,0 +1,14 @@
+{
+  "slug": "chinese-e5addb-p100",
+  "substratum": "other",
+  "title": "唐摭言·卷十~卷十五 (vol 3)",
+  "probe_chars": 140,
+  "source": "Kanripo",
+  "work": "KR3l0017",
+  "work_title": "唐摭言-五代-王定保",
+  "juan": "10,11,12,13,14,15",
+  "url": "https://github.com/kanripo/KR3l0017",
+  "etext_chars": 24767,
+  "window_chars": 144,
+  "overlap": 0.723
+}

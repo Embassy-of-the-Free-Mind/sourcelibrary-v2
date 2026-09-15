@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-42e92d-p15",
+  "substratum": "print",
+  "title": "Chronicle of Edessa (Chronicon Edessenum)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "best text 57 overlap 0.24 < 0.25"
+}

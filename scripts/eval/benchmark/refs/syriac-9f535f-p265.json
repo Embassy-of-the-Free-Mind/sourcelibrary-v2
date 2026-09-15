@@ -1,0 +1,11 @@
+{
+  "slug": "syriac-9f535f-p265",
+  "substratum": "print",
+  "title": "Die Fabeln des Sophos (Syriac Syntipas)",
+  "probes": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite",
+    "surya2"
+  ],
+  "reason": "no corpus text shares ≥ 8 word bigrams with any engine output"
+}
