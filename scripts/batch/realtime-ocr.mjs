@@ -50,6 +50,7 @@ import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 
 // --- Config ---
 // Statuses a fully-OCR'd book may be ADVANCED from — the ones where OCR is the
@@ -372,6 +373,19 @@ async function processPage(page, promptText, db) {
     if (result.text.length > 25000) {
       await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
+    }
+
+    // Degeneration-loop guard (#4850). The length guard above only catches a loop
+    // that ran far enough; most stop short of 25k and are stored, then translated
+    // into invented prose (#4765). The refused text is kept in `page_revisions`.
+    const loop = loopVerdict(result.text);
+    if (loop.refuse) {
+      await recordLoopRefusal(db, {
+        pageId: page.id, bookId: page.book_id, pageNumber: page.page_number,
+        text: result.text, model: TARGET_MODEL, verdict: loop,
+      });
+      await recordSkip(db, page, { reason: 'repetition-loop', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
+      return { pageId: page.id, status: 'skip', reason: `repetition loop (${(loop.share * 100).toFixed(0)}% of body)`, durationMs };
     }
 
     const pageType = extractPageType(result.text);
