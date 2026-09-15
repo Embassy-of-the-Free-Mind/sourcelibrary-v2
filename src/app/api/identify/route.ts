@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { getNextApiKey } from '@/lib/gemini-client';
+import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
@@ -243,6 +244,15 @@ export async function POST(request: NextRequest) {
     }
 
     const geminiData = await resp.json();
+    // Visitor-triggered spend, on a raw REST call the metered client cannot
+    // wrap — so it records its own row (#4599). Anyone can trigger this route,
+    // so its volume tracks traffic and bots, not the pipeline.
+    await logGeminiCall({
+      type: 'other', mode: 'realtime', model,
+      input_tokens: geminiData.usageMetadata?.promptTokenCount || 0,
+      output_tokens: outputTokensFrom(geminiData.usageMetadata),
+      status: 'success', endpoint: '/api/identify',
+    });
     const text = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     // Parse JSON from response
@@ -476,6 +486,12 @@ Return JSON only:
 
         if (!verifyResp.ok) return null;
         const verifyData = await verifyResp.json();
+        await logGeminiCall({
+          type: 'other', mode: 'realtime', model: verifyModel,
+          input_tokens: verifyData.usageMetadata?.promptTokenCount || 0,
+          output_tokens: outputTokensFrom(verifyData.usageMetadata),
+          status: 'success', endpoint: '/api/identify:verify',
+        });
 
         // Extract grounding sources from metadata
         const groundingMeta = verifyData.candidates?.[0]?.groundingMetadata;

@@ -17,6 +17,7 @@ import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
 import { classifyError } from './errors';
 import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { MODEL_PRICING } from './ai';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 // Safety settings for Gemini Vision - disable filters for historical texts
 const OCR_SAFETY_SETTINGS = [
@@ -149,7 +150,7 @@ export async function selectBestCover(
 
   // 3. Call Gemini with all images
   try {
-    const model = getGeminiClient().getGenerativeModel({
+    const model = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' }).getGenerativeModel({
       model: 'gemini-3-flash-preview'
     });
 
@@ -233,7 +234,7 @@ If all pages are poor quality or blank, select page 1 and mark confidence as "lo
 
     // Calculate cost
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = outputTokensFrom(usageMetadata);
     const costUsd = calculateCost(inputTokens, outputTokens, 'gemini-3-flash-preview');
 
     // Log success

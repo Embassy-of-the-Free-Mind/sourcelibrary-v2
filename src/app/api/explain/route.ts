@@ -4,6 +4,7 @@ import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { withAuth } from '@/lib/auth-helpers';
 import { logAiUsage } from '@/lib/log-ai-usage';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
@@ -164,7 +165,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       );
     }
 
-    const model = getGeminiClient().getGenerativeModel({ model: DEFAULT_MODEL });
+    const model = getGeminiClient({ endpoint: '/api/explain', type: 'other' }).getGenerativeModel({ model: DEFAULT_MODEL });
 
     // Build context string
     const contextInfo = [
@@ -207,7 +208,7 @@ export const POST = withAuth(async (request: NextRequest) => {
     // Track usage
     const usageMetadata = response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = outputTokensFrom(usageMetadata);
     logAiUsage({
       feature: `explain:${mode}`,
       model: DEFAULT_MODEL,

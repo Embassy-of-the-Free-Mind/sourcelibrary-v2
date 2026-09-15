@@ -1,0 +1,3819 @@
+{
+ "reported_at": "2026-09-13T23:09:12.888Z",
+ "notable": [
+  "deepseek/deepseek-v4.1-flash"
+ ],
+ "baseline": "gemini-3.1-flash-lite",
+ "arms": [
+  "gemini-3.1-flash-lite",
+  "gemini-3-flash-preview",
+  "gemini-2.5-flash",
+  "deepseek/deepseek-v4.1-flash",
+  "qwen/qwen3.8-flash",
+  "deepseek/deepseek-v4-pro-0813"
+ ],
+ "skipped": {
+  "z-ai/glm-5.3-flash": {
+   "status": "skipped",
+   "reason": "reasoning is mandatory on this endpoint (HTTP 400, cannot be disabled) — excluded from the no-thinking comparison; a later reasoning-on run (mandatory-low, 60/60, $0.86 for both) is preserved unjudged in arms-reasoning-excluded.jsonl",
+   "at": "2026-09-13T21:51:29.502Z"
+  },
+  "qwen/qwen3.8-max-0902": {
+   "status": "skipped",
+   "reason": "reasoning is mandatory on this endpoint (HTTP 400, cannot be disabled) — excluded from the no-thinking comparison; a later reasoning-on run (mandatory-low, 60/60, $0.86 for both) is preserved unjudged in arms-reasoning-excluded.jsonl",
+   "at": "2026-09-13T21:51:43.192Z"
+  },
+  "gemini-2.5-flash-lite": {
+   "status": "skipped",
+   "reason": "HTTP 404 — model closed to new users",
+   "at": "2026-09-13T21:50:16.699Z"
+  }
+ },
+ "prompt": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "n_pages": 60,
+ "n_judged": 60,
+ "spend_usd": 0.6243714667039999,
+ "refusals": {
+  "gemini-3.1-flash-lite": {
+   "n": 0,
+   "of": 60,
+   "kinds": {},
+   "finish": {
+    "STOP": 60
+   }
+  },
+  "gemini-3-flash-preview": {
+   "n": 0,
+   "of": 60,
+   "kinds": {},
+   "finish": {
+    "STOP": 60
+   }
+  },
+  "gemini-2.5-flash": {
+   "n": 0,
+   "of": 60,
+   "kinds": {},
+   "finish": {
+    "STOP": 59,
+    "MAX_TOKENS": 1
+   }
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "n": 0,
+   "of": 60,
+   "kinds": {},
+   "finish": {
+    "stop": 60
+   }
+  },
+  "qwen/qwen3.8-flash": {
+   "n": 0,
+   "of": 60,
+   "kinds": {},
+   "finish": {
+    "stop": 59,
+    "error": 1
+   }
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "n": 1,
+   "of": 60,
+   "kinds": {
+    "empty": 1
+   },
+   "finish": {
+    "stop": 60
+   }
+  }
+ },
+ "per_arm": {
+  "gemini-3.1-flash-lite": {
+   "provider": "gemini",
+   "calls": 60,
+   "delivered": 60,
+   "inTok": 150311,
+   "outTok": 42632,
+   "thoughtTok": 0,
+   "usd": 0.10152575000000004,
+   "cost_source": {
+    "list": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.001692095833333334,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1758.75,
+     "median": 1556,
+     "n": 60
+    },
+    "length_ratio": {
+     "mean": 5.896330017851596,
+     "median": 6.385390428211587,
+     "n": 60
+    },
+    "cjk_residue_share": {
+     "mean": 0.0031830123200064482,
+     "median": 0,
+     "n": 60
+    },
+    "notes_emitted": {
+     "mean": 0.9333333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "verified_rate": {
+     "mean": 0.7928571428571429,
+     "median": 1,
+     "n": 10
+    },
+    "inline_terms": {
+     "mean": 9,
+     "median": 3,
+     "n": 60
+    },
+    "keywords_emitted": {
+     "mean": 6.966666666666667,
+     "median": 7,
+     "n": 60
+    },
+    "invented_tags": {
+     "mean": 0,
+     "median": 0,
+     "n": 60
+    },
+    "housekeeping_tags": {
+     "mean": 0.4,
+     "median": 0,
+     "n": 60
+    },
+    "emdashes": {
+     "mean": 0.05,
+     "median": 0,
+     "n": 60
+    },
+    "untranslated": {
+     "count": 0,
+     "of": 60
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 60
+    }
+   }
+  },
+  "gemini-3-flash-preview": {
+   "provider": "gemini",
+   "calls": 60,
+   "delivered": 60,
+   "inTok": 150311,
+   "outTok": 48072,
+   "thoughtTok": 0,
+   "usd": 0.2193715,
+   "cost_source": {
+    "list": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.003656191666666667,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1913.8166666666666,
+     "median": 1920,
+     "n": 60
+    },
+    "length_ratio": {
+     "mean": 6.413514320050209,
+     "median": 6.895604395604396,
+     "n": 60
+    },
+    "cjk_residue_share": {
+     "mean": 0.00011986982013316109,
+     "median": 0,
+     "n": 60
+    },
+    "notes_emitted": {
+     "mean": 1.1333333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "verified_rate": {
+     "mean": 0.017112299465240642,
+     "median": 0,
+     "n": 17
+    },
+    "inline_terms": {
+     "mean": 9.033333333333333,
+     "median": 4,
+     "n": 60
+    },
+    "keywords_emitted": {
+     "mean": 8.716666666666667,
+     "median": 9,
+     "n": 60
+    },
+    "invented_tags": {
+     "mean": 0,
+     "median": 0,
+     "n": 60
+    },
+    "housekeeping_tags": {
+     "mean": 0.1,
+     "median": 0,
+     "n": 60
+    },
+    "emdashes": {
+     "mean": 0.6666666666666666,
+     "median": 0,
+     "n": 60
+    },
+    "untranslated": {
+     "count": 0,
+     "of": 60
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 60
+    }
+   }
+  },
+  "gemini-2.5-flash": {
+   "provider": "gemini",
+   "calls": 60,
+   "delivered": 60,
+   "inTok": 150311,
+   "outTok": 81883,
+   "thoughtTok": 0,
+   "usd": 0.07167645000000002,
+   "cost_source": {
+    "list": 60
+   },
+   "max_tokens_hits": 1,
+   "usd_per_page": 0.0011946075000000003,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 2839.9333333333334,
+     "median": 1425,
+     "n": 60
+    },
+    "length_ratio": {
+     "mean": 5.2977809742935555,
+     "median": 5.69205298013245,
+     "n": 60
+    },
+    "cjk_residue_share": {
+     "mean": 0.050166832865687634,
+     "median": 0,
+     "n": 60
+    },
+    "notes_emitted": {
+     "mean": 0.6166666666666667,
+     "median": 0,
+     "n": 60
+    },
+    "verified_rate": {
+     "mean": 1,
+     "median": 1,
+     "n": 3
+    },
+    "inline_terms": {
+     "mean": 19.466666666666665,
+     "median": 5,
+     "n": 60
+    },
+    "keywords_emitted": {
+     "mean": 14.633333333333333,
+     "median": 13,
+     "n": 60
+    },
+    "invented_tags": {
+     "mean": 0.016666666666666666,
+     "median": 0,
+     "n": 60
+    },
+    "housekeeping_tags": {
+     "mean": 0.8,
+     "median": 0,
+     "n": 60
+    },
+    "emdashes": {
+     "mean": 0.43333333333333335,
+     "median": 0,
+     "n": 60
+    },
+    "untranslated": {
+     "count": 5,
+     "of": 60
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 60
+    }
+   }
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "provider": "openrouter",
+   "calls": 60,
+   "delivered": 60,
+   "inTok": 150794,
+   "outTok": 41852,
+   "thoughtTok": 0,
+   "usd": 0.05753286000000002,
+   "cost_source": {
+    "provider": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.0009588810000000003,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1380.9333333333334,
+     "median": 1320,
+     "n": 60
+    },
+    "length_ratio": {
+     "mean": 4.829032530885494,
+     "median": 5.962441314553991,
+     "n": 60
+    },
+    "cjk_residue_share": {
+     "mean": 0.16390095895097986,
+     "median": 0.002785515320334262,
+     "n": 60
+    },
+    "notes_emitted": {
+     "mean": 0,
+     "median": 0,
+     "n": 60
+    },
+    "verified_rate": {
+     "mean": null,
+     "median": null,
+     "n": 0
+    },
+    "inline_terms": {
+     "mean": 4.6,
+     "median": 0,
+     "n": 60
+    },
+    "keywords_emitted": {
+     "mean": 14.85,
+     "median": 14,
+     "n": 60
+    },
+    "invented_tags": {
+     "mean": 0.06666666666666667,
+     "median": 0,
+     "n": 60
+    },
+    "housekeeping_tags": {
+     "mean": 0.6666666666666666,
+     "median": 0,
+     "n": 60
+    },
+    "emdashes": {
+     "mean": 0.5333333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "untranslated": {
+     "count": 12,
+     "of": 60
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 60
+    }
+   }
+  },
+  "qwen/qwen3.8-flash": {
+   "provider": "openrouter",
+   "calls": 60,
+   "delivered": 60,
+   "inTok": 153684,
+   "outTok": 46699,
+   "thoughtTok": 0,
+   "usd": 0.03194618600000001,
+   "cost_source": {
+    "provider": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.0005324364333333335,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1829.2333333333333,
+     "median": 1810,
+     "n": 60
+    },
+    "length_ratio": {
+     "mean": 6.234863686493701,
+     "median": 6.847058823529411,
+     "n": 60
+    },
+    "cjk_residue_share": {
+     "mean": 0.05709509002896597,
+     "median": 0,
+     "n": 60
+    },
+    "notes_emitted": {
+     "mean": 0.36666666666666664,
+     "median": 0,
+     "n": 60
+    },
+    "verified_rate": {
+     "mean": 0.6111111111111112,
+     "median": 0.8333333333333334,
+     "n": 3
+    },
+    "inline_terms": {
+     "mean": 3.033333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "keywords_emitted": {
+     "mean": 10.333333333333334,
+     "median": 10,
+     "n": 60
+    },
+    "invented_tags": {
+     "mean": 0.8166666666666667,
+     "median": 0,
+     "n": 60
+    },
+    "housekeeping_tags": {
+     "mean": 3.8,
+     "median": 2,
+     "n": 60
+    },
+    "emdashes": {
+     "mean": 0.13333333333333333,
+     "median": 0,
+     "n": 60
+    },
+    "untranslated": {
+     "count": 5,
+     "of": 60
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 60
+    }
+   }
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "provider": "openrouter",
+   "calls": 60,
+   "delivered": 59,
+   "inTok": 150794,
+   "outTok": 41340,
+   "thoughtTok": 0,
+   "usd": 0.14231872070400003,
+   "cost_source": {
+    "provider": 60
+   },
+   "max_tokens_hits": 0,
+   "usd_per_page": 0.0024121817068474584,
+   "reasoning_mode": {
+    "off": 60
+   },
+   "metrics": {
+    "prose_chars": {
+     "mean": 1503.406779661017,
+     "median": 1416,
+     "n": 59
+    },
+    "length_ratio": {
+     "mean": 5.176755402267403,
+     "median": 6.2368421052631575,
+     "n": 59
+    },
+    "cjk_residue_share": {
+     "mean": 0.19687608372016172,
+     "median": 0,
+     "n": 59
+    },
+    "notes_emitted": {
+     "mean": 0.3728813559322034,
+     "median": 0,
+     "n": 59
+    },
+    "verified_rate": {
+     "mean": 0.48214285714285715,
+     "median": 0.9285714285714286,
+     "n": 4
+    },
+    "inline_terms": {
+     "mean": 4.084745762711864,
+     "median": 0,
+     "n": 59
+    },
+    "keywords_emitted": {
+     "mean": 10.457627118644067,
+     "median": 10,
+     "n": 59
+    },
+    "invented_tags": {
+     "mean": 0.15254237288135594,
+     "median": 0,
+     "n": 59
+    },
+    "housekeeping_tags": {
+     "mean": 1.5254237288135593,
+     "median": 0,
+     "n": 59
+    },
+    "emdashes": {
+     "mean": 0,
+     "median": 0,
+     "n": 59
+    },
+    "untranslated": {
+     "count": 13,
+     "of": 59
+    },
+    "glossary_block": {
+     "count": 0,
+     "of": 59
+    }
+   }
+  }
+ },
+ "paired": {
+  "gemini-3-flash-preview": {
+   "prose_chars": {
+    "n": 60,
+    "delta": 155.06666666666666,
+    "ci": [
+     97.75,
+     219.28333333333333
+    ],
+    "decisive": true
+   },
+   "length_ratio": {
+    "n": 60,
+    "delta": 0.5171843021986152,
+    "ci": [
+     0.3103914455184949,
+     0.7321844882452562
+    ],
+    "decisive": true
+   },
+   "cjk_residue_share": {
+    "n": 60,
+    "delta": -0.003063142499873287,
+    "ci": [
+     -0.006177439816784121,
+     -0.0005490888499964095
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 60,
+    "delta": 0.2,
+    "ci": [
+     -1.15,
+     1.35
+    ],
+    "decisive": false
+   },
+   "verified_rate": {
+    "n": 4,
+    "delta": -0.95,
+    "ci": [
+     -1,
+     -0.8500000000000001
+    ],
+    "decisive": true
+   },
+   "inline_terms": {
+    "n": 60,
+    "delta": 0.03333333333333333,
+    "ci": [
+     -2.2666666666666666,
+     2.6333333333333333
+    ],
+    "decisive": false
+   },
+   "keywords_emitted": {
+    "n": 60,
+    "delta": 1.75,
+    "ci": [
+     1.35,
+     2.1666666666666665
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 60,
+    "delta": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 60,
+    "delta": -0.3,
+    "ci": [
+     -0.5333333333333333,
+     -0.1
+    ],
+    "decisive": true
+   },
+   "emdashes": {
+    "n": 60,
+    "delta": 0.6166666666666667,
+    "ci": [
+     -0.03333333333333333,
+     2.1333333333333333
+    ],
+    "decisive": false
+   }
+  },
+  "gemini-2.5-flash": {
+   "prose_chars": {
+    "n": 60,
+    "delta": 1081.1833333333334,
+    "ci": [
+     -263.68333333333334,
+     3723.616666666667
+    ],
+    "decisive": false
+   },
+   "length_ratio": {
+    "n": 60,
+    "delta": -0.5985490435580402,
+    "ci": [
+     -0.9126251363172982,
+     -0.23614084738325367
+    ],
+    "decisive": true
+   },
+   "cjk_residue_share": {
+    "n": 60,
+    "delta": 0.04698382054568118,
+    "ci": [
+     0.009461970355747588,
+     0.09033557037546575
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 60,
+    "delta": -0.31666666666666665,
+    "ci": [
+     -1.8,
+     1.3666666666666667
+    ],
+    "decisive": false
+   },
+   "verified_rate": {
+    "n": 0,
+    "delta": null,
+    "ci": null,
+    "decisive": false
+   },
+   "inline_terms": {
+    "n": 60,
+    "delta": 10.466666666666667,
+    "ci": [
+     -0.6666666666666666,
+     30.8
+    ],
+    "decisive": false
+   },
+   "keywords_emitted": {
+    "n": 60,
+    "delta": 7.666666666666667,
+    "ci": [
+     6.316666666666666,
+     9.083333333333334
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 60,
+    "delta": 0.016666666666666666,
+    "ci": [
+     0,
+     0.05
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 60,
+    "delta": 0.4,
+    "ci": [
+     0.1,
+     0.7666666666666667
+    ],
+    "decisive": true
+   },
+   "emdashes": {
+    "n": 60,
+    "delta": 0.38333333333333336,
+    "ci": [
+     -0.1,
+     1.5833333333333333
+    ],
+    "decisive": false
+   }
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "prose_chars": {
+    "n": 60,
+    "delta": -377.81666666666666,
+    "ci": [
+     -604.7166666666667,
+     -177.36666666666667
+    ],
+    "decisive": true
+   },
+   "length_ratio": {
+    "n": 60,
+    "delta": -1.0672974869661023,
+    "ci": [
+     -1.6666754974078775,
+     -0.5223404480671613
+    ],
+    "decisive": true
+   },
+   "cjk_residue_share": {
+    "n": 60,
+    "delta": 0.1607179466309734,
+    "ci": [
+     0.08556495996286076,
+     0.256866359874463
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 60,
+    "delta": -0.9333333333333333,
+    "ci": [
+     -2.1333333333333333,
+     -0.21666666666666667
+    ],
+    "decisive": true
+   },
+   "verified_rate": {
+    "n": 0,
+    "delta": null,
+    "ci": null,
+    "decisive": false
+   },
+   "inline_terms": {
+    "n": 60,
+    "delta": -4.4,
+    "ci": [
+     -7.116666666666666,
+     -2.15
+    ],
+    "decisive": true
+   },
+   "keywords_emitted": {
+    "n": 60,
+    "delta": 7.883333333333334,
+    "ci": [
+     6.583333333333333,
+     9.283333333333333
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 60,
+    "delta": 0.06666666666666667,
+    "ci": [
+     0,
+     0.16666666666666666
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 60,
+    "delta": 0.26666666666666666,
+    "ci": [
+     -0.16666666666666666,
+     0.7
+    ],
+    "decisive": false
+   },
+   "emdashes": {
+    "n": 60,
+    "delta": 0.48333333333333334,
+    "ci": [
+     -0.1,
+     1.9833333333333334
+    ],
+    "decisive": false
+   }
+  },
+  "qwen/qwen3.8-flash": {
+   "prose_chars": {
+    "n": 60,
+    "delta": 70.48333333333333,
+    "ci": [
+     -97.78333333333333,
+     253.86666666666667
+    ],
+    "decisive": false
+   },
+   "length_ratio": {
+    "n": 60,
+    "delta": 0.338533668642105,
+    "ci": [
+     -0.20693647852272357,
+     1.0241296094785322
+    ],
+    "decisive": false
+   },
+   "cjk_residue_share": {
+    "n": 60,
+    "delta": 0.053912077708959526,
+    "ci": [
+     0.015028279845532651,
+     0.10966620664289622
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 60,
+    "delta": -0.5666666666666667,
+    "ci": [
+     -1.8833333333333333,
+     0.3
+    ],
+    "decisive": false
+   },
+   "verified_rate": {
+    "n": 1,
+    "delta": 0,
+    "ci": null,
+    "decisive": false
+   },
+   "inline_terms": {
+    "n": 60,
+    "delta": -5.966666666666667,
+    "ci": [
+     -8.316666666666666,
+     -3.4
+    ],
+    "decisive": true
+   },
+   "keywords_emitted": {
+    "n": 60,
+    "delta": 3.3666666666666667,
+    "ci": [
+     2.6,
+     4.2
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 60,
+    "delta": 0.8166666666666667,
+    "ci": [
+     0,
+     2.45
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 60,
+    "delta": 3.4,
+    "ci": [
+     2.1666666666666665,
+     4.8
+    ],
+    "decisive": true
+   },
+   "emdashes": {
+    "n": 60,
+    "delta": 0.08333333333333333,
+    "ci": [
+     -0.05,
+     0.2833333333333333
+    ],
+    "decisive": false
+   }
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "prose_chars": {
+    "n": 59,
+    "delta": -263.5593220338983,
+    "ci": [
+     -490.4406779661017,
+     -56.610169491525426
+    ],
+    "decisive": true
+   },
+   "length_ratio": {
+    "n": 59,
+    "delta": -0.7141796303555531,
+    "ci": [
+     -1.356613829961635,
+     -0.11208464047580474
+    ],
+    "decisive": true
+   },
+   "cjk_residue_share": {
+    "n": 59,
+    "delta": 0.19363912203879924,
+    "ci": [
+     0.10158597426376266,
+     0.2838995615398178
+    ],
+    "decisive": true
+   },
+   "notes_emitted": {
+    "n": 59,
+    "delta": -0.576271186440678,
+    "ci": [
+     -1.8644067796610169,
+     0.4067796610169492
+    ],
+    "decisive": false
+   },
+   "verified_rate": {
+    "n": 1,
+    "delta": 0,
+    "ci": null,
+    "decisive": false
+   },
+   "inline_terms": {
+    "n": 59,
+    "delta": -5.016949152542373,
+    "ci": [
+     -7.8474576271186445,
+     -2.2711864406779663
+    ],
+    "decisive": true
+   },
+   "keywords_emitted": {
+    "n": 59,
+    "delta": 3.542372881355932,
+    "ci": [
+     2.3220338983050848,
+     4.745762711864407
+    ],
+    "decisive": true
+   },
+   "invented_tags": {
+    "n": 59,
+    "delta": 0.15254237288135594,
+    "ci": [
+     0,
+     0.4576271186440678
+    ],
+    "decisive": false
+   },
+   "housekeeping_tags": {
+    "n": 59,
+    "delta": 1.11864406779661,
+    "ci": [
+     0.3728813559322034,
+     2.0338983050847457
+    ],
+    "decisive": true
+   },
+   "emdashes": {
+    "n": 59,
+    "delta": -0.05084745762711865,
+    "ci": [
+     -0.13559322033898305,
+     0
+    ],
+    "decisive": false
+   }
+  }
+ },
+ "judge": {
+  "gemini-3.1-flash-lite": {
+   "n_ranked": 60,
+   "mean_rank": 3.066666666666667,
+   "first_place": 19,
+   "vs_baseline": null,
+   "fabrication": 22,
+   "omission": 13,
+   "terms_ok": 45,
+   "terms_judged": 60
+  },
+  "gemini-3-flash-preview": {
+   "n_ranked": 60,
+   "mean_rank": 2.3,
+   "first_place": 28,
+   "vs_baseline": {
+    "n": 60,
+    "wins": 31,
+    "losses": 16,
+    "ties": 13,
+    "p": 0.03998605682605194
+   },
+   "fabrication": 21,
+   "omission": 7,
+   "terms_ok": 52,
+   "terms_judged": 60
+  },
+  "gemini-2.5-flash": {
+   "n_ranked": 60,
+   "mean_rank": 3.45,
+   "first_place": 17,
+   "vs_baseline": {
+    "n": 60,
+    "wins": 21,
+    "losses": 31,
+    "ties": 8,
+    "p": 0.2116085687615157
+   },
+   "fabrication": 28,
+   "omission": 15,
+   "terms_ok": 42,
+   "terms_judged": 60
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "n_ranked": 60,
+   "mean_rank": 2.85,
+   "first_place": 26,
+   "vs_baseline": {
+    "n": 60,
+    "wins": 28,
+    "losses": 18,
+    "ties": 14,
+    "p": 0.1839248213769904
+   },
+   "fabrication": 14,
+   "omission": 16,
+   "terms_ok": 47,
+   "terms_judged": 60
+  },
+  "qwen/qwen3.8-flash": {
+   "n_ranked": 60,
+   "mean_rank": 3.6,
+   "first_place": 12,
+   "vs_baseline": {
+    "n": 60,
+    "wins": 20,
+    "losses": 30,
+    "ties": 10,
+    "p": 0.20263875106453944
+   },
+   "fabrication": 31,
+   "omission": 11,
+   "terms_ok": 39,
+   "terms_judged": 60
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "n_ranked": 59,
+   "mean_rank": 3.3728813559322033,
+   "first_place": 21,
+   "vs_baseline": {
+    "n": 59,
+    "wins": 24,
+    "losses": 26,
+    "ties": 9,
+    "p": 0.8877248273407757
+   },
+   "fabrication": 16,
+   "omission": 22,
+   "terms_ok": 44,
+   "terms_judged": 59
+  }
+ },
+ "mean_confidence": 0.5948333333333335,
+ "second_pass": {
+  "n": 20,
+  "direction_vs_baseline_same": 52,
+  "direction_n": 100,
+  "direction_rate": 0.52,
+  "first_place_same": 14,
+  "mean_spearman": 0.5028780284342984,
+  "fabrication_same": 86,
+  "fabrication_n": 120
+ },
+ "eligible": [
+  "gemini-3-flash-preview",
+  "deepseek/deepseek-v4.1-flash",
+  "deepseek/deepseek-v4-pro-0813"
+ ],
+ "beats_baseline": [
+  "gemini-3-flash-preview"
+ ],
+ "recommendation": "gemini-3.1-flash-lite",
+ "why": "gemini-3-flash-preview (ranked above gemini-3.1-flash-lite on 31 pages, below on 16, p=0.040; fabrication 21 vs 22; $0.0037/page vs $0.0017) beat lite blind but cost more than 2× and lite's fabrication gap is under 5 pages; lite stays. Not significant, and not what the rule returns, but the arms worth the next run: deepseek/deepseek-v4.1-flash (ranked above gemini-3.1-flash-lite on 28 pages, below on 18, p=0.184; fabrication 14 vs 22; $0.0010/page vs $0.0017).",
+ "verdicts": [
+  {
+   "id": "6a3c5f8a40c88a541d8e7613:12",
+   "rank": {
+    "gemini-2.5-flash": 3,
+    "qwen/qwen3.8-flash": 1,
+    "gemini-3.1-flash-lite": 6,
+    "gemini-3-flash-preview": 5,
+    "deepseek/deepseek-v4.1-flash": 4,
+    "deepseek/deepseek-v4-pro-0813": 1
+   },
+   "fabrication": {
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.6,
+   "reason": "T3 renders 卷五十 as \"Volume 40\" (fabricated number); T6 invents unsupported note \"continues from previous page\"; T1/T2/T4/T5/T6 all drop the stray 三 marker after 百花 (T3 alone keeps it); T5 leaves 欽定四庫全書 untranslated; T4 adds speculative geographic glosses (Guozijian for 太學, Coromandel Coast for 西洋) not in source.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3c5fb9879008ba7e157560:11",
+   "rank": {
+    "gemini-2.5-flash": 3,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3-flash-preview": 6,
+    "gemini-3.1-flash-lite": 5,
+    "qwen/qwen3.8-flash": 4
+   },
+   "fabrication": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.65,
+   "reason": "T4 invents \"Volume 107 of the Compendium of Diagrams and Books by Zhang Huang\" and reads 岐 as the Yellow Emperor and Qi Bo (medicine/governance gloss), none of which is in the source, replacing the real meaning of 入息之期後世岐教養之政; T5/T6 drop the trailing 有 that marks the page cutting off mid-sentence (T1/T2/T3 keep and possess/who have); T1 and T5 render 入息 as income rather than rest/breath.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c5fe1879008ba7e1587c6:4",
+   "rank": {
+    "gemini-3-flash-preview": 1,
+    "qwen/qwen3.8-flash": 3,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "deepseek/deepseek-v4.1-flash": 4,
+    "gemini-3.1-flash-lite": 5,
+    "gemini-2.5-flash": 6
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": false
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": true
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.55,
+   "reason": "T4 asserts an unstated title, Imperially Commissioned Parallel Phrase Classification (御定駢字類編), not present anywhere on the source page; T5 turns the plain phrase 遊日華 (roaming in the suns splendor) into a proper place, Visiting Mount Hua, inventing a location; T2 glosses chi-dragon 螭龍 as horned dragons when the source term denotes a hornless dragon; T6 leaves most cell content as raw untranslated Chinese (arrows around hanzi) with only titles/authors rendered in English, the largest omission of the six.",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c5ffc879008ba7e1595e1:14",
+   "rank": {
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4-pro-0813": 3,
+    "gemini-3.1-flash-lite": 5,
+    "gemini-2.5-flash": 1,
+    "deepseek/deepseek-v4.1-flash": 6,
+    "qwen/qwen3.8-flash": 4
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.65,
+   "reason": "T5 leaves nearly the entire body untranslated, wrapping the original Chinese in unclear tags instead of rendering it, and its summary fabricates a compiler name Wu Shiyu not present anywhere on the page; T3 mislabels the source work as Imperial Parallel Characters when the meta line clearly reads Meishan Ma Shi Wen Lei, confusing it with the prior pages compendium; T6 splits Wen Tingyuns name across the column break and invents a second poet Ji Yun for the same poem; T2 leaves the Chinese book title untranslated as a heading instead of rendering it in English.",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-2.5-flash",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c6083879008ba7e15ce83:17",
+   "rank": {
+    "gemini-2.5-flash": 2,
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4.1-flash": 6,
+    "gemini-3-flash-preview": 2,
+    "deepseek/deepseek-v4-pro-0813": 4,
+    "qwen/qwen3.8-flash": 5
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "T3 invents volume 158 for the Imperial Parallel Characters in its summary, a number nowhere on the page (only page 8 is given); T6 misreads 閽黎 (gatekeeper monk) as a named dog Li and adds a fanciful invented anecdote about it; T1/T4 render the source's generic 唐書 as Old Book of Tang while T5 renders it New Book of Tang, opposite unsupported guesses; T2 alone translates the marginal-title meta line but mistranslates 藺 (rush) as water-chestnuts; T1/T3/T4/T5/T6 all drop the marginal-title meta about 御定駢字類編 and 欽定四庫全書.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c60a040c88a541d8e90c2:5",
+   "rank": {
+    "gemini-2.5-flash": 4,
+    "gemini-3-flash-preview": 1,
+    "qwen/qwen3.8-flash": 6,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-3.1-flash-lite": 3,
+    "deepseek/deepseek-v4.1-flash": 5
+   },
+   "fabrication": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "T3 invents a volume number (vol 183) and T6 invents a different one (vol. 238) for the header 御定駢字類編, though no juan number appears anywhere on this page (only page-num 二); T3 also garbles and then duplicates the closing Su Shi clause (marking 躁厚鄙薄 as unclear rather than translating it) whereas the others render it fully; T1 renders 職方考 as Record of Officials rather than the geography treatise it actually is (Treatise on Administrative Geography, as T2/T4/T5 correctly have it).",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c60aa40c88a541d8e97c5:17",
+   "rank": {
+    "gemini-2.5-flash": 5,
+    "gemini-3-flash-preview": 2,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 4,
+    "qwen/qwen3.8-flash": 6,
+    "gemini-3.1-flash-lite": 2
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": true
+   },
+   "confidence": 0.72,
+   "reason": "T5 leaves the body untranslated (only summary/keywords in English) = total omission; T1 fabricates '300,000 men' for 三軍之衆, splits 中央黃老 into two deities, mistranslates 水經注 as generic 'Commentary on the Classics', and invents 'Huashangling/mausoleum' for 即漢...陵; T4 invents a 'Tang River' for 唐漏 (source names no river); T2/T6 both drop 唐 from the water-clock/leak line (minor omission) but otherwise faithful; T3 is most literal, keeps 唐 and all 15 headers, no invented facts.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "id": "6a3c610240c88a541d8eca7b:13",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 5,
+    "qwen/qwen3.8-flash": 5,
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-2.5-flash": 4,
+    "gemini-3-flash-preview": 1
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.75,
+   "reason": "T1 and T2 leave the entire body untranslated (Chinese verbatim, only an English summary/keywords appended) = total omission; T3/T4/T6 fully and faithfully translate all 16 poet entries with no invented facts (minor quirks: T6 renders 三伏 as 'Volts' but clarifies with a correct note); T5 translates fully but adds unsupported dynasty attributions not in the source (labels Yuan-era poets Song Wu and Chen Tai as 'Ming dynasty').",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-2.5-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c610240c88a541d8ecb2f:16",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 1,
+    "qwen/qwen3.8-flash": 5,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-3-flash-preview": 3,
+    "gemini-2.5-flash": 6,
+    "gemini-3.1-flash-lite": 3
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true
+   },
+   "confidence": 0.55,
+   "reason": "T5 invents the surname 'Zhu' for the commentator 如淳 (Ru Chun) and, with T6, drops the '見三殿下' cross-reference entirely; T4 fabricates a note citing '原文: 騂騂' that is not in the source and invents 'third section' for a bare 三; T2 invents 'King and Empress' for 王皇初 and reads 金 as the proper name 'Jin'; T1/T3 are the most careful with <unclear> tags but both still render 王皇初 as 'the Jade Emperor', an unsupported specific deity not clearly in this garbled fragment; T6 avoids inventing names but shares the omission.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "gemini-3-flash-preview",
+    "T5": "gemini-2.5-flash",
+    "T6": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "id": "6a3c612940c88a541d8ee5a2:22",
+   "rank": {
+    "gemini-2.5-flash": 6,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "gemini-3-flash-preview": 3,
+    "qwen/qwen3.8-flash": 3,
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4.1-flash": 1
+   },
+   "fabrication": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "confidence": 0.55,
+   "reason": "T1 leaves most of the page as raw untranslated Chinese with only scattered term glosses = major omission; T2 invents the specific wrong identity 'Lu Zhaolin' for 虛照 (all others correctly render 'Xu Zhao') and mistranslates 三相 as 'three forms'; T3/T4 share the same 三相→'three phases' mistranslation (losing the 'ministers/chancellors' sense) but no invented names; T5/T6 correctly render 三相 as ministerial positions and keep names consistent, with appropriate <unclear> markers for the blanked headword repeats.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3-flash-preview",
+    "T4": "qwen/qwen3.8-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c615f879008ba7e15dbf9:17",
+   "rank": {
+    "gemini-3-flash-preview": 4,
+    "qwen/qwen3.8-flash": 5,
+    "deepseek/deepseek-v4-pro-0813": 2,
+    "deepseek/deepseek-v4.1-flash": 2,
+    "gemini-3.1-flash-lite": 5,
+    "gemini-2.5-flash": 1
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": false
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.65,
+   "reason": "T2 mistranslates 閽黎 (the temple gatekeeper/monk) as 'guard-cat', prematurely revealing and distorting the poem's twist that the supposed monk is secretly a wild animal; T5 mislabels the office 諫議大夫 as 'Censor-in-Chief' (a different real office, 御史大夫), contradicting its own clarifying note; T1/T3/T4/T6 correctly render the office as a form of 'Remonstrance Official' and keep the gatekeeper-is-secretly-an-animal joke intact, with T6 also using the more precise 'civet' for 狸.",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c625c40c88a541d8f3d42:22",
+   "rank": {
+    "gemini-3.1-flash-lite": 4,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-2.5-flash": 3,
+    "deepseek/deepseek-v4.1-flash": 6,
+    "qwen/qwen3.8-flash": 4,
+    "gemini-3-flash-preview": 2
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": true
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.5,
+   "reason": "T4 returns the raw Chinese verbatim (only summary/keywords in English) = total omission, worst on the page; T1 distorts the famous Confucius/Qi anecdote into 'people feared HE [Confucius] would become a hegemon' rather than the state of Qi fearing Lu's rise, and also drops the specific 'Kangle' dance-tune name; T5 mislabels the source as 'Sayings of Qi' instead of the Kongzi Jiayu; T2/T3/T6 correctly keep Qi as the fearful party, with T6 most precisely attributing the feared hegemony to Lu (T6 does drop the 'Kangle' name, T2 keeps it).",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-2.5-flash",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c628e40c88a541d8f46a4:6",
+   "rank": {
+    "qwen/qwen3.8-flash": 3,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "gemini-3.1-flash-lite": 2,
+    "gemini-3-flash-preview": 4,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-2.5-flash": 5
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": true
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.55,
+   "reason": "T2 invents the recurring elided headword as 蕭蕭 though the source visibly opens with 翩, then supplies ~19 mutually inconsistent glosses for it -- the worst fabrication; T6 fabricates precise poet birth/death dates absent from the page and a specific '10 lines of text' unclear-count not indicated in the OCR; T4 mistranslates 卷十七 as 'Volume 71' instead of Seventeen; T1 leaves the assumed headword 翩 untranslated ~19 times (omission of meaning); T3 drops the page-num/structural tags but is otherwise complete and invents nothing; T5 is most honest, explicitly flags the fragmentary dashes rather than guessing at content.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c62ed879008ba7e16439a:22",
+   "rank": {
+    "gemini-3.1-flash-lite": 3,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "gemini-2.5-flash": 4,
+    "deepseek/deepseek-v4.1-flash": 2,
+    "gemini-3-flash-preview": 1,
+    "qwen/qwen3.8-flash": 5
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "confidence": 0.5,
+   "reason": "T2 never renders the page in English at all -- its 'translation' is a Chinese reconstruction with only the summary/keywords in English, a total omission of the deliverable; T5 correctly identifies the recurring elided place-name as Guangwu (matching the well-known Ruan Ji anecdote) and applies it consistently; T1 misassigns the blank in Cen Shen's couplet to 'Cheng-gao' instead of Guangwu; T3 speculates unsupported that a garbled term is 'likely Chengdu'; T6 invents specific but unsupported identifications ('Chengguan', 'Xicheng') for the elided Guangwu references, contradicting the real place name; T4 marks the gaps with || and adds no unsupported identifications.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-2.5-flash",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "gemini-3-flash-preview",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c62fe879008ba7e164d31:17",
+   "rank": {
+    "deepseek/deepseek-v4-pro-0813": 4,
+    "gemini-3-flash-preview": 1,
+    "gemini-2.5-flash": 6,
+    "gemini-3.1-flash-lite": 4,
+    "deepseek/deepseek-v4.1-flash": 3,
+    "qwen/qwen3.8-flash": 2
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.4,
+   "reason": "All six avoid inventing facts on this heavily fragmentary zhuan-headword dictionary page; T2 is the cleanest, correctly sectioning by each of the twelve headword compounds (Qing zhuan, Yi zhuan, Di zhuan...) matching the vocab list with full English headers and coherent notes; T6 is similar but keeps pinyin headers; T5 preserves the Chinese header/juan line untranslated (欽定四庫全書 / 卷四十六之二 left as-is); T3 drops the volume header and juan number entirely and has stray formatting ('->Fugue<-'); T1 and T4 are near-duplicate continuous-prose renderings of comparable, adequate quality, T4 dropping 溪 ('stream') that T1 keeps.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4-pro-0813",
+    "T2": "gemini-3-flash-preview",
+    "T3": "gemini-2.5-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c63ecaf3c49b59c5c9940:19",
+   "rank": {
+    "gemini-3-flash-preview": 3,
+    "gemini-3.1-flash-lite": 3,
+    "gemini-2.5-flash": 6,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "qwen/qwen3.8-flash": 1,
+    "deepseek/deepseek-v4.1-flash": 2
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "confidence": 0.45,
+   "reason": "T3 renders the ambiguous digit pair 三六 as 'three hundred and sixty' -- an invented tenfold inflation not supported by the source's literal 'three-six'; T4 adds specific unsupported biographical dates for Guo Pu ('276-384') not present on the page; T1 and T2 both commit to the plausible reading 36/29 but flag it transparently with a <note> citing the original digits; T5 and T6 are safest, preserving the numeral ambiguity literally ('three-six'/'two-nine') without committing to an unverifiable reading or adding outside facts.",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "gemini-2.5-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c641139b4508b04e24015:15",
+   "rank": {
+    "gemini-3-flash-preview": 1,
+    "gemini-2.5-flash": 3,
+    "qwen/qwen3.8-flash": 4,
+    "gemini-3.1-flash-lite": 2,
+    "deepseek/deepseek-v4.1-flash": 5,
+    "deepseek/deepseek-v4-pro-0813": 5
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.4,
+   "reason": "T5 and T6 leave the entire body untranslated -- they reproduce the Chinese source (T5 repunctuated, T6 with tiny inline notes on the bold headwords only) and put English only in the summary/keywords, a near-total omission of the actual translation. T3 invents a 'Marquis of Cai' among the rulers meeting at 首止 who is not in the source's list (齊侯宋公陳侯衞侯鄭伯許男曹伯). T1 mislabels a passage in the Bian Que medical citation with the unrelated headword <term>Qu Zhi</term> (曲止), attaching content to a term it does not belong to. T2 and T4 give complete, reasonably faithful renderings without clear invention; T4 is slightly more careful (e.g. correctly flags '不可一一' as 'cannot count one by one' with a note) versus T2's minor rank-title slip (Duke of Song rendered as 'Marquis').",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "gemini-2.5-flash",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3c641439b4508b04e2412d:20",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-2.5-flash": 5,
+    "gemini-3.1-flash-lite": 4,
+    "gemini-3-flash-preview": 6,
+    "qwen/qwen3.8-flash": 3
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.5,
+   "reason": "T5 mistranslates Cao Cao's 不上殿 ('do not ascend the hall') as 'I do not remove my shoes when ascending the palace hall,' inventing a shoe-removal action absent from the source. T3 renders 錫命 (the Nine Bestowals) as the much grander 'Mandate of Heaven' and mangles the place name 狄道 (Didao) as 'Dixiang.' T4 misidentifies the cited work 東觀漢記 (Dongguan Hanji) as 'Records of the Eastern Han,' a different bibliographic entity. T1, T2, and T6 render all entries faithfully with no invented facts; T6 has only a minor name-reading quirk (隗囂 as 'Kui Xiao' rather than the standard 'Wei Xiao').",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-2.5-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "gemini-3-flash-preview",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c642739b4508b04e24987:18",
+   "rank": {
+    "gemini-2.5-flash": 1,
+    "deepseek/deepseek-v4.1-flash": 5,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "gemini-3.1-flash-lite": 3,
+    "gemini-3-flash-preview": 1,
+    "qwen/qwen3.8-flash": 3
+   },
+   "fabrication": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.75,
+   "reason": "T2/T3 leave the whole body in Chinese (only summary/keywords translated) = total omission of the translation task; T4/T6 render unclear gaps like 書一一一一維揚 as flat assertions ('Our military might is displayed in the region of Yang'/'Only my military power spreads widely') without unclear-marking = fabrication; T1/T5 consistently tag the 一一 gaps with <unclear> and attach <note>original:...</note> citations, keeping headings like 湯武/奮武 rendered consistently.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "gemini-3-flash-preview",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c64e039b4508b04e2acdb:16",
+   "rank": {
+    "gemini-3.1-flash-lite": 1,
+    "qwen/qwen3.8-flash": 4,
+    "deepseek/deepseek-v4.1-flash": 6,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-3-flash-preview": 1,
+    "gemini-2.5-flash": 4
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.65,
+   "reason": "the 丨丨 marks are ditto-repeats of the entry headword (e.g. 翠幄 restated as 丨丨 in its own quotations), correctly substituted back in by T1/T4/T5/T6; T3 leaves the whole body in restored Chinese with only an English summary = omission; T6 drops '訓丨丨贊軌堯門' entirely under an <unclear> tag instead of translating it, and adds an unsourced gloss calling 五通祠 'associated with wealth or local protection'; T2 mislabels every 丨丨 as '[unclear/omitted]' rather than the repeated term, a fidelity slip but not full omission.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-3-flash-preview",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c666039b4508b04e346e3:24",
+   "rank": {
+    "qwen/qwen3.8-flash": 1,
+    "gemini-3.1-flash-lite": 1,
+    "gemini-3-flash-preview": 5,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-2.5-flash": 1
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "for 嘽嘽焞焞如(霆)如雷 T3 alone invents 'like a courtly procession or a storm' from a misread 庭, an added image none of the source supports; T1/T2/T4/T5 all render the passage (詩云有來雍雍..., 薄伐玁狁至于太原, 顯允方叔征伐玁狁蠻荆來威) faithfully and completely with consistent Xianyun/Xiongnu/Quanrong terminology.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c672baf3c49b59c5d0e02:17",
+   "rank": {
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-2.5-flash": 1,
+    "gemini-3-flash-preview": 4,
+    "gemini-3.1-flash-lite": 5,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "qwen/qwen3.8-flash": 5
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "confidence": 0.55,
+   "reason": "關洛 names the Guan and Luo NEO-CONFUCIAN SCHOOLS (Zhang Zai / the Cheng brothers), not places or the 'Cheng-Zhu school': T4's note wrongly calls it 'the Cheng-Zhu school of Neo-Confucianism' (conflating in Zhu Xi himself) and T6's body text renders it as the geographic 'Guanxi and Luoyang', then drops the 文公/Wen Gong name for 'this Teacher [Zhu Xi]' inconsistently; T1/T2/T3/T5 keep 文公 rendered consistently and gloss 關洛 correctly as schools/thinkers without asserting extra facts.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4-pro-0813",
+    "T2": "gemini-2.5-flash",
+    "T3": "gemini-3-flash-preview",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c679439b4508b04e372b8:4",
+   "rank": {
+    "gemini-3.1-flash-lite": 5,
+    "gemini-2.5-flash": 1,
+    "qwen/qwen3.8-flash": 1,
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "deepseek/deepseek-v4.1-flash": 5
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "confidence": 0.55,
+   "reason": "幽厲 names the historical bad kings You and Li cited as the object of 刺 (satire) — T2/T3/T4/T5 correctly gloss 'King You and King Li'; T6 instead translates it as the abstract 'the dark and the tyrannical', losing the specific historical referent. Separately, T1 collapses the headword 中 into its gloss and prints 'Loyalty' as the term itself instead of 'Centrality/Moderation' (the gloss 猶忠也 only says it is LIKE loyalty), breaking the term/gloss distinction every other translation preserves.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "gemini-2.5-flash",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c6ac0af3c49b59c5e9c24:10",
+   "rank": {
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "deepseek/deepseek-v4.1-flash": 5,
+    "gemini-3-flash-preview": 1,
+    "gemini-2.5-flash": 1,
+    "qwen/qwen3.8-flash": 6
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "confidence": 0.6,
+   "reason": "source gives 一毫九抄二忽 (one hao, NINE chao, two hu) for Zu Chongzhi's diameter; T6 alone writes 'one hao, two chao, and two hu', dropping the nine, and its summary invents an artifact name 'New Mang Tong Quan' nowhere in the page — fabrication outranks T3's fault, which is omission only: T3 leaves the entire body as raw untranslated Chinese with just an English summary/keywords. T1/T2/T4/T5 all translate the full passage (gui/chao/cuo/shao chain, Ying Shao, Meng Kang, Zu Chongzhi's figures, Liu Xin) accurately and with consistent romanization; T2's habit of repeating the Chinese line before its translation is a formatting quirk, not a fidelity or omission fault.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "gemini-2.5-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c6c0f01fe4f593c1afdd4:18",
+   "rank": {
+    "gemini-3.1-flash-lite": 1,
+    "gemini-3-flash-preview": 5,
+    "qwen/qwen3.8-flash": 1,
+    "gemini-2.5-flash": 5,
+    "deepseek/deepseek-v4-pro-0813": 4,
+    "deepseek/deepseek-v4.1-flash": 3
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "confidence": 0.65,
+   "reason": "T2 invents unsourced biographical/bibliographic facts (Zhang Shi/Song dynasty, Suoyin as Shiji commentary, Rites of Zhou attribution) as if from the page; T4 fabricates a closing clause 'Thus yangu is a bird' and misnests the linghu comparison inside the Yupian quote; T5 leaves the opening Chinese line untranslated/duplicated verbatim before rendering it; T6 renders 鴻 inconsistently as both 'goose' and transliterated 'hong' on the same page; T1 and T3 track the source cleanly with consistent, source-supported glosses.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "gemini-3-flash-preview",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-2.5-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c6c6b01fe4f593c1b1009:9",
+   "rank": {
+    "gemini-3.1-flash-lite": 3,
+    "deepseek/deepseek-v4-pro-0813": 4,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-2.5-flash": 1,
+    "qwen/qwen3.8-flash": 6,
+    "gemini-3-flash-preview": 4
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": true
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.6,
+   "reason": "T5 glosses 釋奠 (shidian, offered here to 武成王/King Wucheng) as 'sacrifice to Confucius' and splits 尹司命 into an invented 'Gate Keeper' plus 'Master of Fate' — real content errors; T2 and T6 both pad the list with unsourced biographical notes (Jiang Ziya as King Wucheng's identity, Shennong/Houji, sericulture-inventor claims) not stated on the page; T1 mistranslates 馬社 as 'Horse Market' instead of the earth-altar sense; T3 and T4 render the full 14+13-item calendar with glosses tied only to what the term itself denotes, no invented facts.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-2.5-flash",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c6d6601fe4f593c1baafb:24",
+   "rank": {
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-2.5-flash": 4,
+    "qwen/qwen3.8-flash": 6,
+    "gemini-3-flash-preview": 1
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.6,
+   "reason": "The source's commentator tag '氏曰' is missing its surname (OCR cut); T1/T3/T6 correctly hedge ('[the commentator]', 'The Master', 'likely referring to an earlier commentator'), T4 flags it honestly with <unclear>Shi</unclear> but mistranslates 官(宫)商 as 'jiao and shang' instead of gong/shang, T2 invents a specific identity 'Master Cheng', and T5 goes furthest by asserting in its <meta> 'commentary by Wu Cheng' (an invented named source), drops the 氏曰 quotative structure entirely, and omits naming the gong/shang notes, replacing them with generic 'notes'.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-2.5-flash",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c6d7d01fe4f593c1bba0c:5",
+   "rank": {
+    "qwen/qwen3.8-flash": 4,
+    "gemini-2.5-flash": 5,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-3.1-flash-lite": 6,
+    "deepseek/deepseek-v4.1-flash": 2,
+    "gemini-3-flash-preview": 3
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": false
+   },
+   "confidence": 0.55,
+   "reason": "The opening 子 marks the earthly-branch topic of the entry (paired later with 丑,寅... throughout the page); T3 and T6 correctly render it as 'Zi'/'the first earthly branch', T5 keeps it but mislabels it a 'note', T1 and T4 drop it entirely (omission), and T2 mistranslates it as 'the son' — a referential error. T4 additionally invents in its <meta> 'commentaries by Zhu Shen', contradicting its own correct margin rendering of 金氏 as 'Jin family' — a fabricated named source. T6 also misattaches the 即中呂也 (Zhonglü) identification from 夷則's gloss onto 小呂's gloss, scrambling which pitch it names.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "gemini-2.5-flash",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c6d8301fe4f593c1bbdf2:21",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 6,
+    "gemini-2.5-flash": 5,
+    "qwen/qwen3.8-flash": 4,
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-3-flash-preview": 1
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.7,
+   "reason": "T1 leaves almost the entire body untranslated, reproducing the raw Chinese under a Markdown heading instead of rendering it into English — a near-total omission. T2 glosses 壽星 (Shouxing) as 'Alpha Canis Majoris', an invented/incorrect modern star identification not supported by the page (大火=Antares is a defensible traditional identification elsewhere in the same translation, making the Shouxing claim stand out as fabricated precision). T3's final translation is accurate and complete but is preceded by a long exposed reasoning scratchpad with self-corrected wrong guesses, a serious format defect though it does not corrupt the delivered answer. T4, T5, and T6 render the full solar-term/lunar-mansion/branch/pitch chain accurately and consistently, with T5 and T6 correctly and consistently numbering the branches and pitch-pipes without contradicting the source.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "gemini-2.5-flash",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c6db901fe4f593c1bdc1e:7",
+   "rank": {
+    "gemini-2.5-flash": 6,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3.1-flash-lite": 2,
+    "gemini-3-flash-preview": 4,
+    "deepseek/deepseek-v4-pro-0813": 3,
+    "qwen/qwen3.8-flash": 4
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "confidence": 0.55,
+   "reason": "T1 misparses 氏 as part of each scholar's name throughout ('Cao Shi Cuizhong', 'Ji Shi Cheng', 'Zheng Shi Qiao', 'Chen Shi Zhi' instead of the honorific 'Mr./Master X'), and appends a stray untranslated '依然' after a column-break that does not correspond to anything in the given OCR — phantom text. T5 mistransliterates 曹粹中 as 'Cao Shizhong' instead of Cuizhong. T4 mistranslates 黍離 as 'Sorghum in Bloom' (wrong grain and sense) and garbles 頌/Song as 'Sot'. T6 renders 二南 (Zhounan and Shaonan together) as 'the Two Shao', misidentifying the pair. T3 is accurate but inconsistently alternates between 'The X family, Y said' and 'Master X, Y said' for the same 氏+name pattern. T2 handles every scholar's name correctly (dropping 氏 as the honorific it is) and shows no other term or content errors.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c6dd139b4508b04e4a8ab:22",
+   "rank": {
+    "qwen/qwen3.8-flash": 3,
+    "gemini-2.5-flash": 2,
+    "deepseek/deepseek-v4.1-flash": 4,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "gemini-3-flash-preview": 1,
+    "gemini-3.1-flash-lite": 6
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": true
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false
+   },
+   "confidence": 0.6,
+   "reason": "the scrambled '...是\\n達曰...○孔氏穎...' fragment is one Kong Yingda (孔氏穎達) quote; T5/T2 correctly consolidate it under Kong Yingda, T1 wrongly reattributes the closing clause to 'Mao also notes', T3/T4 invent a phantom scholar 'Master Da'/'DA', and T6 invents a full fictitious name 'Zheng Da' and conflates 路寢 with 房中之樂; T4 also drops the entire margin preface line (序曰君子陽陽閔周澤哉) outright; T2 additionally asserts unsupported that '澤哉' is 'the title of the poem'.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "gemini-2.5-flash",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-3-flash-preview",
+    "T6": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "id": "6a3c6f3a01fe4f593c1ca3a3:5",
+   "rank": {
+    "qwen/qwen3.8-flash": 5,
+    "gemini-3-flash-preview": 2,
+    "gemini-2.5-flash": 4,
+    "gemini-3.1-flash-lite": 3,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 6
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "confidence": 0.55,
+   "reason": "T6 returns the Chinese source untouched (total omission); T1 invents an unsupported work title 'Shichikei Mengzi Kaobun' in its meta and mistranslates 世子 (heir apparent) as generic 'sons of the state'; T4 asserts as fact that the passage is from the 'Classic of Filial Piety or Mencius' when it is 禮記·學記; T3 drops '升於學者下舞羽吹籥下以緜播詩下共有也字' into an untranslated <unclear> tag and wrongly claims both 干 and 盾 (not just 盾) are written as 楯; T2 mislabels 楯 with the pinyin 'dun' (盾's reading, not 楯's); T5 correctly identifies 禮記·學記 and keeps the disputed characters untransliterated, avoiding these errors.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "gemini-2.5-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3c702101fe4f593c1d0fad:23",
+   "rank": {
+    "gemini-2.5-flash": 6,
+    "gemini-3-flash-preview": 3,
+    "gemini-3.1-flash-lite": 2,
+    "deepseek/deepseek-v4.1-flash": 4,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "qwen/qwen3.8-flash": 5
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "the source cuts off mid-clause at '此非諸生所'; T3/T4/T5 correctly trail off, T2 hedges its completion with an <unclear> tag, but T1 and T6 confidently invent a finished sentence ('were not merely for students' / 'could claim') not present in the source; T1 also drops the entire margin title 金石崑崙/卷五十一 (renders it as 'continues from previous page'); T4's summary/keywords assert an unsupported bibliographic identification ('Tang anthology', 'Liji Jishuo'); T3 renders 瞽宗 as a generic 'ancestral hall of music', losing the 瞽 (blind) sense that T2/T4/T5/T6 preserve.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c703701fe4f593c1d1e84:13",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3-flash-preview": 3,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "gemini-2.5-flash": 2,
+    "gemini-3.1-flash-lite": 4,
+    "qwen/qwen3.8-flash": 4
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.55,
+   "reason": "T3 renders the page into modern vernacular CHINESE, not English, failing the task outright; the source's paradox ('武之備戒已久,武之始也;久立於綴,武之終也' — preparation=beginning, standing-in-position=end) is correctly kept by T1 and T4, but T5 and T6 both flip it (assign standing-in-formation to the beginning), and T2 invents an unsupported gloss ('at the conclusion of the Wu, it refers to the actual use of force') not clearly in the source while also misplacing the standing-in-position clause at the beginning.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "gemini-2.5-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c722e01fe4f593c1dcddd:18",
+   "rank": {
+    "deepseek/deepseek-v4-pro-0813": 3,
+    "deepseek/deepseek-v4.1-flash": 4,
+    "gemini-3-flash-preview": 1,
+    "gemini-2.5-flash": 5,
+    "gemini-3.1-flash-lite": 6,
+    "qwen/qwen3.8-flash": 2
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "the page uses only 宮角徵羽 (skipping 商), so the correct scale-degree numbering is 1st/3rd/4th/5th, which T1/T2/T3 give correctly and T6 avoids stating; T4 mislabels 角 as 'second degree' and 徵 as 'third degree' (both off by one, repeated 3x), and T5 invents an impossible 'sixth' degree for 羽 in a five-tone scale (also repeated 3x) — a factual fabrication; the page cuts off mid-clause at '於宗廟之', which T3 (<unclear>...</unclear>) and T6 (ellipsis) correctly flag as incomplete while T1/T2/T4/T5 render it as a finished sentence.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4-pro-0813",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-3-flash-preview",
+    "T4": "gemini-2.5-flash",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3c748639b4508b04e5734d:9",
+   "rank": {
+    "gemini-2.5-flash": 5,
+    "qwen/qwen3.8-flash": 4,
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "deepseek/deepseek-v4.1-flash": 2,
+    "gemini-3-flash-preview": 3
+   },
+   "fabrication": {
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": false
+   },
+   "confidence": 0.4,
+   "reason": "the source is a scrambled column-major character grid (needs reconstruction, not row-major reading); T1 and T4 translate it as a literal word/phrase grid that is unreadable as sentences, effectively failing to deliver the translation (omission); T2 turns it into fluent prose but invents a named commentator 'Zhao Deyu' and extra rite names ('xian rite', 'zhi rite') absent from the vocab list (only 禘/祫 appear) — fabrication; T5's summary attributes the text to a nonexistent work 'Zhang Zichao's Chunqiu Zong Zhu Bian Yi', contradicting the page's own stated title 欽定春秋傳說彙纂; T6 calls the same 趙氏 both 'Zhao Pengfei' and 'Boxun' within one page and wrongly glosses the Duke of Zhou as 'the first lord of Lu'; T3 sticks closest to the given vocab (禘, 祫, 魯, 周公, 莊公, 閔公, 趙氏, 鄭康成, 朱子) without inventing extra names or rites.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3c75b939b4508b04e5d01c:4",
+   "rank": {
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "gemini-3.1-flash-lite": 6,
+    "gemini-2.5-flash": 1,
+    "qwen/qwen3.8-flash": 1,
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4.1-flash": 1
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "confidence": 0.65,
+   "reason": "T2 recasts 誠敬之旨 as the subject that 'emphasizes practical governance' instead of the object of 不虛談, inverting the source's not-X-but-Y contrast and dropping the sincerity/reverence topic from the first clause; T1 drops the literal header/margin translation (欽定四庫全書/提要) in favor of an editorial meta-note; T3-T6 render both parallel contrasts faithfully and completely, with accurate supplementary date glosses that don't assert anything false.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4-pro-0813",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "gemini-2.5-flash",
+    "T4": "qwen/qwen3.8-flash",
+    "T5": "gemini-3-flash-preview",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c766401fe4f593c1fab79:14",
+   "rank": {
+    "qwen/qwen3.8-flash": 6,
+    "gemini-3-flash-preview": 1,
+    "gemini-3.1-flash-lite": 4,
+    "deepseek/deepseek-v4.1-flash": 4,
+    "deepseek/deepseek-v4-pro-0813": 3,
+    "gemini-2.5-flash": 1
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "T1 mislabels 鑮 as jue (an unrelated wine vessel, not the bo bell) and doubles the count in the Zheng Kangcheng quote (二八 = 16 total, T1 says two groups of eight bells PLUS two groups of eight chimes = 32); T3 and T4 both misread 頌磬 as referring to the Song dynasty (an anachronistic homophone confusion, this is Zhou-era ritual music, not a Song-dynasty object) though otherwise complete; T5 drops the ode/eulogy nuance of 頌 (calls it plain sounding-stones) but adds no false claim; T2 and T6 render 鑮/bo, the si/du unit counts, and 頌磬 (ode-chime) correctly and consistently, T6 only marred by redundantly reprinting the raw Chinese block before its translation.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c766b01fe4f593c1faeeb:13",
+   "rank": {
+    "gemini-2.5-flash": 6,
+    "gemini-3-flash-preview": 1,
+    "qwen/qwen3.8-flash": 3,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "deepseek/deepseek-v4.1-flash": 5,
+    "gemini-3.1-flash-lite": 3
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": true
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": true
+   },
+   "confidence": 0.6,
+   "reason": "T1 invents specific Western-zodiac equivalences not in the source for all four star-stations (Chunhuo=Hydra, Tiansi=Sagittarius, Ximu=Pegasus, Tianyuan=Ursa Major), a clear fabrication; T5 mis-renders 天駟 as Tianzhu instead of Tiansi, repeated twice; T6 collapses the parallel 自鶉及駟七列/南北之揆七同 clause into one muddled sentence, losing the two-sevens structure; T3 has an odd unsupported gloss (Axle Tree ferry) for Ximu; T2 and T4 render the star-stations, the seven pitch-pipe/mode mappings (黃鍾-宮 etc, correct and consistent across all six), and Ban Gu’s 傅會 (forced/contrived analogy) faithfully with no invented content.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "id": "6a3c766f01fe4f593c1faf77:16",
+   "rank": {
+    "gemini-3.1-flash-lite": 5,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4.1-flash": 4,
+    "qwen/qwen3.8-flash": 6,
+    "gemini-2.5-flash": 1
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.7,
+   "reason": "T5 stops mid-sentence after the Zhide-era passage, omitting the entire second half of the page (Xizong's Guangming-era loss of the bells, Zhaozong's reconstruction order, Zhang Jun, Shang Yingsun, and the Huangzhong/Yingzhong measurement); T1 drops the key numeric relation 倍應鍾 (Huangzhong is double the Yingzhong), leaving it as a vague 'relative to' with no stated ratio; T2, T3 and T6 all give the nine-cun-five-fen figure and correctly state it is double the Yingzhong, and are complete and accurate on the office titles, era names, and the Zhang Jun/Shang Yingsun restoration narrative.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3c767901fe4f593c1fb3ec:24",
+   "rank": {
+    "gemini-2.5-flash": 3,
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "gemini-3.1-flash-lite": 3,
+    "qwen/qwen3.8-flash": 6,
+    "deepseek/deepseek-v4.1-flash": 1
+   },
+   "fabrication": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "T3 leaves the opening costume line (景雲舞八人花錦為袍...) entirely untranslated in Chinese, a clear omission; T1 and T4 misparse the trailing dance-name list, splitting the single dance title 鳥歌萬歲 (Bird Song of Ten Thousand Years) into separate items ('Bird Song, Wansui'/'the songs of the bird, the ten thousand years'), dropping the proper name; T5 goes further and renders 鳥歌 as the nonexistent term 'Wuge', a fabricated transliteration, on top of the same split error; T2 and T6 translate the opening costume description in full and correctly keep 鳥歌萬歲 as one dance name in the closing list, with consistent terms throughout (Kucha, Standing/Seated Section, the Seven Virtues/Nine Merits dance pairing).",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "gemini-3-flash-preview",
+    "T3": "deepseek/deepseek-v4-pro-0813",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3c76e601fe4f593c1fe431:15",
+   "rank": {
+    "gemini-2.5-flash": 5,
+    "qwen/qwen3.8-flash": 3,
+    "gemini-3.1-flash-lite": 1,
+    "gemini-3-flash-preview": 4,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 6
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.65,
+   "reason": "T6 is not a translation at all - the entire body is rendered in modern Chinese, not English, a total omission of the task; T1 badly garbles 吾子之言也 (an honorific 'as you, sir, said') into 'Hong also spoke like my son', inventing a comparison the source doesn't make; T4 makes the same 吾子='my son' substitution, though its sentence structure is less distorted than T1's; T2 gets the sense right ('as you did') but reverses the historical figure's name to 'Hong Chang' instead of Chang Hong (萇弘); T3 and T5 both render 丘也聞諸萇弘亦若吾子之言也 cleanly and correctly ('I, Qiu, have heard the same from Chang Hong, which is just as you have said'/'as you, sir, have said'), and are accurate and complete throughout the rest of the exegetical passage on King Wu's dance.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4.1-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3c79d701fe4f593c212ce7:25",
+   "rank": {
+    "qwen/qwen3.8-flash": 3,
+    "gemini-2.5-flash": 6,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3-flash-preview": 2,
+    "gemini-3.1-flash-lite": 5,
+    "deepseek/deepseek-v4-pro-0813": 4
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.6,
+   "reason": "T2 invents an 'eleventh rider' not in 二人夾者八人騎 and mislabels legible 六合鞋 as unclear; T1/T4/T6 each assert specific content (headwear color, silk robes) for the 一一 gap in 絶巾一一絶生色一一 or 一一曰柘枝隊衣一一一一 without flagging it, T6 doing this twice; T5 flags honestly but drops legible clauses (袍帔乘馬雙控雙搭青蓋前導; 皆無法度不足紀寬袍; 位尚早) into unclear notes instead of translating them; T3 alone isolates only the true OCR gaps and translates every legible clause.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "gemini-2.5-flash",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "gemini-3.1-flash-lite",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3cb6fa57c1f37219c4e227:19",
+   "rank": {
+    "qwen/qwen3.8-flash": 4,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "deepseek/deepseek-v4.1-flash": 6,
+    "gemini-3-flash-preview": 2,
+    "gemini-2.5-flash": 2,
+    "gemini-3.1-flash-lite": 5
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false
+   },
+   "confidence": 0.55,
+   "reason": "Source pairs 儆人/warning with 鉦 not 鐲: T1 and T6 swap it ('warning function...called Zhuo'); T4 invents a 'Guoyu/State Discourses' source for the truncated 馬氏端臨曰...，國 citation; T5 misreads 丁寧 (an alternate name for 鉦) as 'a scholar'; T6 also invents a completion for the same truncated citation and mistranslates 彼是公 as 'the public' rather than 'the Duke'; T3 leaves the entire main passage as untranslated raw Chinese and hides the actual English rendering inside a single <note>, which is omission of translated prose; T2 alone gets the zhuo/zheng attribution right and avoids inventing a source title.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "gemini-2.5-flash",
+    "T6": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "id": "6a3cb70157c1f37219c4e6aa:18",
+   "rank": {
+    "gemini-2.5-flash": 4,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3-flash-preview": 3,
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "qwen/qwen3.8-flash": 5
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": false
+   },
+   "confidence": 0.6,
+   "reason": "T5 leaves the whole page as raw Chinese, never translating it (total omission). T3 invents a full sentence not in the OCR ('Upward generation produces Yang. Yang governs increase...') to parallel the given Yin clause. T6 fabricates an editorial claim that 大族 (Dazu, a valid classical alternate name for the Taicu pitch) is 'likely a misprint for Da Cuxi.' T1's gloss of 大族 as 'Great Bell' is a weaker but still inaccurate rendering versus T3's correct 'Great Cluster' or T2/T4's safe functional glosses. T2 and T4 handle the garbled opening clause and the Dazu term without inventing unsupported content, using ellipsis/brackets to flag gaps honestly.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-3-flash-preview",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3cb79b57c1f37219c516fb:9",
+   "rank": {
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "gemini-2.5-flash": 4,
+    "qwen/qwen3.8-flash": 3,
+    "gemini-3.1-flash-lite": 4,
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4.1-flash": 1
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "confidence": 0.55,
+   "reason": "T1 leaves the entire page as untranslated Chinese, only the summary/keywords are English (total omission). Source header reads 卷五 (Volume 5), but T2 and T3 both invent 'Volume 50'. On 方猶文章也 (fang is like literary pattern), T2 misparses 文章 into a spurious separate term 'Zhang: document' and adds an invented 'Dun' term; T4 goes further, wrongly glossing 方 itself as 'shield' and dropping 干 (gan, the actual word for shield) entirely, a real definitional fabrication/omission. T5 and T6 correctly render fang as pattern/ornamentation and gan/qi as shield/axe without inventing a volume number or misparsing terms.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4-pro-0813",
+    "T2": "gemini-2.5-flash",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "gemini-3-flash-preview",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3cb79e57c1f37219c5181a:4",
+   "rank": {
+    "gemini-3.1-flash-lite": 5,
+    "deepseek/deepseek-v4.1-flash": 5,
+    "gemini-2.5-flash": 1,
+    "gemini-3-flash-preview": 2,
+    "deepseek/deepseek-v4-pro-0813": 2,
+    "qwen/qwen3.8-flash": 4
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.5,
+   "reason": "The header is only partially legible (金[..] 卷五十一); T1 asserts it is 'the Book of Rites' with no basis, while T3 correctly flags it <unclear>Jin</unclear> and T2/T4/T5/T6 safely omit it. On 尸子離說, T2 splits this into two separate works, 'the Shi Zi and Li Shuo,' inventing a nonexistent second text (ironic given the passage is itself about which sources count as reliable evidence); T6 keeps it as one compound title 'Shizi Li Shuo,' an unverified but less severe assumption; T1, T3, T4, T5 render it safely as 'sayings/miscellany/fragmented accounts of Shizi' without naming a false second work. T4's attribution of the two extra qin strings to King Wen and King Wu is a standard, correct gloss, not an invention.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-2.5-flash",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3cb7e43dce6cfad74891ea:5",
+   "rank": {
+    "qwen/qwen3.8-flash": 3,
+    "deepseek/deepseek-v4-pro-0813": 3,
+    "gemini-2.5-flash": 6,
+    "gemini-3.1-flash-lite": 1,
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4.1-flash": 5
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": true
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "confidence": 0.55,
+   "reason": "The source names one city, 費 (demolished after Confucius's warning); T6's gloss says 'the tearing down of the walls of Bi and Fei,' inventing a second city where the text names only one. T3 leaves nearly all the main prose as raw untranslated Chinese, putting only the footnote glosses into English (major omission). On the Duke Zhao / Son of Heaven parallel clause, T4 and T5 correctly parse the two-tier structure (Duke Zhao : Son of Heaven :: great officers : feudal lords); T1 and T2 blur it into a single generic usurpation claim, a fidelity slip but not an outright fabrication.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "gemini-2.5-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "gemini-3-flash-preview",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3cb95d3d799518cd71d6cc:21",
+   "rank": {
+    "gemini-3-flash-preview": 3,
+    "qwen/qwen3.8-flash": 1,
+    "deepseek/deepseek-v4.1-flash": 2,
+    "gemini-3.1-flash-lite": 5,
+    "gemini-2.5-flash": 3,
+    "deepseek/deepseek-v4-pro-0813": 5
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "omission": {
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.6,
+   "reason": "T4 and T6 invent a nonexistent sixth pentatonic degree (labeling Nanlu/Yingzhong \"sixth note\" when only five tones exist); T1 pads notes with unverifiable invented specifics (\"eight faces\", \"north side of a hill\"); T5 misnumbers jiao as second and zhi as third; T1 and T3 drop the 古樂經傳 margin title; T2 is cleanest apart from a circular note (\"Dalu should be read as Dalu\").",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "gemini-2.5-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3cbabf3dce6cfad749e6e5:22",
+   "rank": {
+    "gemini-3-flash-preview": 6,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-2.5-flash": 5,
+    "gemini-3.1-flash-lite": 1,
+    "qwen/qwen3.8-flash": 4,
+    "deepseek/deepseek-v4-pro-0813": 1
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-2.5-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.65,
+   "reason": "The page cuts off mid-clause (\"贊樞密以\"); T2/T3/T4/T5/T6 all trail off with an ellipsis, but T1 invents a finished sentence (\"...to perform the ritual bows\") past the source. T3 mislabels 知客省事/簽書知客省事 (Bureau of Guest Reception) as \"Commissioner/Assistant Commissioner of the Ministry of Rites\", confusing it with the unrelated 禮部 office named elsewhere. On the unambiguous second occurrence of 西向北上 (Guest Reception group), T2/T4/T6 correctly render \"facing west, north senior\"; T5 mistranslates it as \"facing north\"; T1/T3 are internally inconsistent between the two occurrences.",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-2.5-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3cbad13dce6cfad749f093:12",
+   "rank": {
+    "gemini-2.5-flash": 6,
+    "qwen/qwen3.8-flash": 1,
+    "gemini-3.1-flash-lite": 5,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 4,
+    "gemini-3-flash-preview": 1
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.6,
+   "reason": "Source splits the wine list into 在壇上 (on the altar: taizun/fanqi+liqi, zhuzun/angqi, xizun/tiqi, shanlei/xijiu) and 在壇下 (below: taizun/shenqi, shanlei/shijiu+qingjiu), with 從祀 a separate unlocated third group; T2/T4/T6 map this correctly. T1 and T3 invert it, calling the 壇下 set \"on the altar\"; T5 conflates \"below the altar\" with the 從祀 group instead. T1 additionally swaps vessel/wine identities (glosses angqi, a wine, as \"round-mouthed vessel\" and xizun, a vessel, as \"sacrificial wine\") and invents an unsourced \"dengqi\" term, dropping the real 犧尊/醍齊 pairing. T3 adds an unsourced \"qingjiu\" to the 從祀 Xizun entry, which the source gives only 事酒 for.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "deepseek/deepseek-v4.1-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3cbadb3dce6cfad749f7c3:22",
+   "rank": {
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3-flash-preview": 1,
+    "qwen/qwen3.8-flash": 1,
+    "gemini-2.5-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 6
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.55,
+   "reason": "T1-T5 give substantively consistent, faithful renderings of the Wenzu/Shenzong discussion and the seven-generation genealogy back to the Yellow Emperor, with no fabricated facts or names. T6 fails the basic task: it echoes the raw input housekeeping tags (<scan-quality>, <language>, <script>, <page-type>, the literal \"Catchword: 卷五十八\") and dumps the untranslated Chinese <vocab> list verbatim at the end instead of rendering them, an omission of required translation work not present in the other five.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-3-flash-preview",
+    "T4": "qwen/qwen3.8-flash",
+    "T5": "gemini-2.5-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3cbb873dce6cfad74a4992:12",
+   "rank": {
+    "qwen/qwen3.8-flash": 1,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3-flash-preview": 1,
+    "gemini-2.5-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "gemini-3.1-flash-lite": 1
+   },
+   "fabrication": {
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": false
+   },
+   "omission": {
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3.1-flash-lite": false
+   },
+   "terms_ok": {
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3.1-flash-lite": true
+   },
+   "confidence": 0.7,
+   "reason": "T5 is not a translation at all — it reproduces the Chinese source verbatim (with added punctuation) instead of rendering it in English, a total omission of the required work. T1, T2, T3, T4 and T6 all give substantively equivalent, faithful accounts of the Da Zhang/Xianchi/Da Juan/Yunmen renaming chain and the Han Wenshi-Wuxing dance history, with no invented facts; minor differences (e.g. how each handles the ambiguous quoted phrase \"武王章章之也\") are stylistic, not fidelity failures.",
+   "labels": {
+    "T1": "qwen/qwen3.8-flash",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-3-flash-preview",
+    "T4": "gemini-2.5-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "id": "6a3cbb9c87ee3d48c89cf74d:14",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 4,
+    "qwen/qwen3.8-flash": 1,
+    "gemini-3.1-flash-lite": 4,
+    "gemini-3-flash-preview": 2,
+    "deepseek/deepseek-v4-pro-0813": 4,
+    "gemini-2.5-flash": 2
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.5,
+   "reason": "柷夏 in the Zhongshi passage is one of the Nine Xia (九夏) ritual pieces, not a dynasty or season; T1/T2/T3/T4 gloss it as \"Xia dynasty\" and T6 as \"summer\" (T5 leaves it as an ambiguous name and is the only one that does not assert a wrong specific fact here). T1 additionally leaves the opening term 敔 completely untranslated in Chinese, a real omission of a core word. T3 garbles the 笙管在堂下近堂...遠堂在庭 logic into a self-contradictory claim (asserting both \"below the hall\" and \"in the courtyard\" from the same premise, dropping the near/far antithesis). T5 omits that whole clause outright. T2, T4, and T6 preserve the full content most completely, with T2 cleanest overall.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "qwen/qwen3.8-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-3-flash-preview",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3cbffbf9474f825c16cf99:10",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 6,
+    "gemini-3.1-flash-lite": 1,
+    "gemini-3-flash-preview": 4,
+    "deepseek/deepseek-v4-pro-0813": 1,
+    "qwen/qwen3.8-flash": 4,
+    "gemini-2.5-flash": 1
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true
+   },
+   "confidence": 0.75,
+   "reason": "T1 leaves the whole body untranslated (only summary/keywords in English) = total omission; T3 drops the clause '疑其為僭禮樂者發也' from the heading and invents a closing 'essence of Ritual and Music' to complete the source's truncated final sentence; T5 mislabels the 丘耕反/千羊反 fanqie spellings as a 'rhyme note' explaining a rhyme relationship that isn't in the source; T2/T4/T6 render the full passage faithfully with consistent terms (Master You/Cheng/Li/Rao, 八佾/雍徹, 禮樂/仁) and correctly trail off at the source's mid-sentence cutoff.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-2.5-flash"
+   }
+  },
+  {
+   "id": "6a3cc307af74b230c690bd0f:23",
+   "rank": {
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4.1-flash": 6,
+    "gemini-3.1-flash-lite": 4,
+    "gemini-2.5-flash": 5,
+    "qwen/qwen3.8-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 1
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true
+   },
+   "confidence": 0.7,
+   "reason": "Source OCR degenerates into ~300 mechanical repeats of one line (下別云舞大武謂武詩之樂亦為象矣但記文於管之), a scanning artifact not real content; T1/T5/T6 give a full accurate English rendering of the coherent opening (大武/象/清廟/武 handled consistently) and explicitly flag the repetition as OCR corruption; T3 is equally accurate and complete but doesn't flag the artifact; T4 mechanically re-translates the repeated clause ~300 times with no corruption note, technically literal but unusable; T2 never actually translates the coherent passage into English at all, leaving it as untranslated Chinese with only a warning note = omission of the translation itself.",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-3.1-flash-lite",
+    "T4": "gemini-2.5-flash",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "deepseek/deepseek-v4-pro-0813"
+   }
+  },
+  {
+   "id": "6a3ce8080a0011cb4bc0be59:23",
+   "rank": {
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3.1-flash-lite": 3,
+    "qwen/qwen3.8-flash": 5,
+    "gemini-2.5-flash": 1,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "gemini-3-flash-preview": 3
+   },
+   "fabrication": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.72,
+   "reason": "T5 leaves the entire body untranslated (source Chinese pasted verbatim, only the note/summary is English) = major omission; T3 glosses 猶 (yóu, \"to scheme/plot\") as an invented term <term>Youto</term>, a garbled label not supported by the text; T1/T4 render the full Kong/Dong/Zheng/Ouyang/Zhu/Li/Lü commentary chain faithfully and honestly show the source cutting off mid-phrase at 似續; T2/T6 are equally accurate but round off that same truncated closing phrase into a complete-sounding clause (\"to resemble and to continue\" / \"to continue the line\") rather than flagging the cutoff.",
+   "labels": {
+    "T1": "deepseek/deepseek-v4.1-flash",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-2.5-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "gemini-3-flash-preview"
+   }
+  },
+  {
+   "id": "6a3cee124701a906f10e5ee9:18",
+   "rank": {
+    "gemini-3-flash-preview": 1,
+    "gemini-3.1-flash-lite": 3,
+    "qwen/qwen3.8-flash": 5,
+    "gemini-2.5-flash": 4,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "deepseek/deepseek-v4.1-flash": 2
+   },
+   "fabrication": {
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "omission": {
+    "gemini-3-flash-preview": false,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "terms_ok": {
+    "gemini-3-flash-preview": true,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false
+   },
+   "confidence": 0.65,
+   "reason": "Source says 圖畫七十弟子 (seventy disciples); T3 fabricates \"seventy-two disciples.\" Source's closing 衮贊 (a eulogy for the ceremonial robe) is invented into \"eulogy in verse\" by T5, and 宣父 (Confucius's honorific) is rendered as an invented epithet \"Propagator of Culture\" by T4; both T4/T5 also drop the 衮 (robe) detail, as does T2, which also generalizes 宣父 to just \"the Master.\" 顏子等十人 (Yanzi among a group totalling ten) is correctly read by T1 alone; T2/T3/T4/T5/T6 all inflate it to \"Yanzi and ten others\" (eleven). T3/T5/T6 also drop 司業's \"vice/assistant\" nuance, calling Li Yuanguan a \"Director\"; T6 additionally mistranslates 四科 (\"four categories [of disciples]\") as \"the four disciples.\" T1 is the only translation free of these specific errors, correctly keeping both the headcount and the ceremonial-robe (衮) detail.",
+   "labels": {
+    "T1": "gemini-3-flash-preview",
+    "T2": "gemini-3.1-flash-lite",
+    "T3": "qwen/qwen3.8-flash",
+    "T4": "gemini-2.5-flash",
+    "T5": "deepseek/deepseek-v4-pro-0813",
+    "T6": "deepseek/deepseek-v4.1-flash"
+   }
+  },
+  {
+   "id": "6a3cee184701a906f10e6198:6",
+   "rank": {
+    "gemini-3.1-flash-lite": 1,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3-flash-preview": 1,
+    "deepseek/deepseek-v4-pro-0813": 5,
+    "gemini-2.5-flash": 1,
+    "qwen/qwen3.8-flash": 5
+   },
+   "fabrication": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": true
+   },
+   "omission": {
+    "gemini-3.1-flash-lite": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3-flash-preview": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": false,
+    "qwen/qwen3.8-flash": false
+   },
+   "terms_ok": {
+    "gemini-3.1-flash-lite": true,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3-flash-preview": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "gemini-2.5-flash": true,
+    "qwen/qwen3.8-flash": true
+   },
+   "confidence": 0.6,
+   "reason": "The OCR itself is internally corrupted in the 禘/祫 (Di/Xia) heading (禘 repeated where context and the later 三年一祫...五歲一禘 passage show it should distinguish Di from Xia). T4 resolves this by flatly asserting \"the xia... is the greater and the di... is the lesser,\" which directly contradicts its own later correct rendering (di = quinquennial/major, xia = triennial/minor) — an internal factual reversal. T6 states 元始五年 (Yuanshi year 5) is \"1 CE\"; it is 5 CE (Yuanshi 1 began 1 CE), a fabricated date not supported by the text and inconsistent with T3/T4's correct \"5 AD/CE\" gloss of the same phrase. T1/T2 preserve the ambiguous duplicated 禘/禘 literally without inventing a resolution; T3 smooths the phrasing slightly but adds no false fact; T5 flags the ambiguity honestly with <unclear> tags. All six keep 禘/祫/太祖/毀廟/昭穆 terms internally consistent except T4's self-contradicting great/small swap.",
+   "labels": {
+    "T1": "gemini-3.1-flash-lite",
+    "T2": "deepseek/deepseek-v4.1-flash",
+    "T3": "gemini-3-flash-preview",
+    "T4": "deepseek/deepseek-v4-pro-0813",
+    "T5": "gemini-2.5-flash",
+    "T6": "qwen/qwen3.8-flash"
+   }
+  },
+  {
+   "id": "6a3cef064701a906f10ece0d:15",
+   "rank": {
+    "gemini-2.5-flash": 5,
+    "deepseek/deepseek-v4-pro-0813": 6,
+    "deepseek/deepseek-v4.1-flash": 1,
+    "gemini-3.1-flash-lite": 1,
+    "qwen/qwen3.8-flash": 3,
+    "gemini-3-flash-preview": 3
+   },
+   "fabrication": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": true,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false
+   },
+   "omission": {
+    "gemini-2.5-flash": true,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": false,
+    "gemini-3.1-flash-lite": false,
+    "qwen/qwen3.8-flash": false,
+    "gemini-3-flash-preview": false
+   },
+   "terms_ok": {
+    "gemini-2.5-flash": false,
+    "deepseek/deepseek-v4-pro-0813": false,
+    "deepseek/deepseek-v4.1-flash": true,
+    "gemini-3.1-flash-lite": true,
+    "qwen/qwen3.8-flash": true,
+    "gemini-3-flash-preview": true
+   },
+   "confidence": 0.7,
+   "reason": "劉琰...封都鄉侯 (Marquis of Duxiang) is mistransliterated by T1 as 'Marquis of Duchang', a wrong place name; T1 also drops 增 ('supplement/added from'), the marker that this is a quoted excerpt. T2 mistransliterates 威碩 (Weishuo) as 'Weisheng', and invents a <page-number>318</page-number> tag with no basis in the OCR. T3/T4/T5/T6 all get 都鄉/Duxiang and 威碩/Weishuo right and correctly mark the 增 citation boundary; T5 slightly over-specifies the Liu Yan quote as 'Also in the History of Shu' where the source doesn't restate the source title, a minor addition rather than an error.",
+   "labels": {
+    "T1": "gemini-2.5-flash",
+    "T2": "deepseek/deepseek-v4-pro-0813",
+    "T3": "deepseek/deepseek-v4.1-flash",
+    "T4": "gemini-3.1-flash-lite",
+    "T5": "qwen/qwen3.8-flash",
+    "T6": "gemini-3-flash-preview"
+   }
+  }
+ ]
+}

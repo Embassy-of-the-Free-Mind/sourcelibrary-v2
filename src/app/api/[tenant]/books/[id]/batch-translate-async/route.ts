@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
-import { logGeminiCall } from '@/lib/gemini-logger';
+import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
@@ -433,7 +433,7 @@ export const GET = withAuth(async (request, session, context) => {
           const usage = response.response?.usageMetadata;
           if (usage) {
             totalInputTokens += usage.promptTokenCount || 0;
-            totalOutputTokens += usage.candidatesTokenCount || 0;
+            totalOutputTokens += outputTokensFrom(usage);
           }
         }
 

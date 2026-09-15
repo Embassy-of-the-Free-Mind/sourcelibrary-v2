@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { LATIN_PROMPTS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { getOcrPrompt } from '@/lib/prompts';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { getGeminiClient } from '@/lib/gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 // Allow long-running OCR processing
 export const maxDuration = 300; // 5 minutes
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/experiments/ocr-quality/[id]/run', type: 'ocr' }));
 
 // Simple prompt for comparison
 const SIMPLE_OCR_PROMPT = `Transcribe the text from this historical manuscript page accurately.
@@ -127,7 +132,7 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ success: true, condition_id, pages_processed: saved, success_count: saved, failed_count: 0, cost: 0, tokens: 0 });
     }
 
-    const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
+    const model = genAI().getGenerativeModel({ model: DEFAULT_MODEL });
 
     // Select prompt — custom prompts go through getOcrPrompt for {language_instruction} substitution
     let basePrompt: string;
@@ -206,7 +211,7 @@ export const POST = withAuth(async (request, session, context) => {
           const text = result.response.text();
           const usage = result.response.usageMetadata;
           const inputTokens = usage?.promptTokenCount || 0;
-          const outputTokens = usage?.candidatesTokenCount || 0;
+          const outputTokens = outputTokensFrom(usage);
           const cost = calculateCost(inputTokens, outputTokens, DEFAULT_MODEL);
 
           totalCost += cost;
@@ -301,7 +306,7 @@ Return each transcription clearly separated:
           const responseText = result.response.text();
           const usage = result.response.usageMetadata;
           const inputTokens = usage?.promptTokenCount || 0;
-          const outputTokens = usage?.candidatesTokenCount || 0;
+          const outputTokens = outputTokensFrom(usage);
           const cost = calculateCost(inputTokens, outputTokens, DEFAULT_MODEL);
 
           totalCost += cost;

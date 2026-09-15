@@ -2,8 +2,41 @@
 /**
  * Bulk e-rara Archive Worker (PDF download)
  *
- * Downloads full PDF per book instead of individual IIIF page requests.
- * ~10-50x faster than per-page IIIF, politer (1 request vs hundreds), full quality.
+ * Downloads a full PDF per book instead of individual IIIF page requests.
+ * ~10-50x faster than per-page IIIF, and far politer: 1 request instead of
+ * hundreds, against a partner that rate-limits at 2/s and 403s datacenter IPs
+ * (this worker is Mac-only for that reason). Those remain good reasons.
+ *
+ * ⚠ "FULL QUALITY" IS TOO STRONG, BUT THE RESULT IS UNEVEN, NOT UNIFORMLY BAD.
+ *
+ * Measured 2026-08-31 against e-rara's own info.json — 30 pages, ONE PER BOOK, so
+ * the sample is not one book counted thirty times:
+ *
+ *     at full resolution (>=0.95 of native)   19/30  (63%)
+ *     below master                            11/30
+ *     stored/native ratio   p10 0.59   median 1.14   p90 1.34
+ *     worst 0.28            best 1.48
+ *
+ * So the median page holds MORE width than the IIIF service reports as native —
+ * the PDF evidently embeds images larger than that endpoint serves — while about
+ * a third sit below it, one at barely a quarter. The honest summary is UNEVEN.
+ *
+ * A first pass had reported "0 of 14 at full resolution, median 0.667" and that
+ * number reached a commit message, a PR, an invariant doc and this header before
+ * anything checked it. It was 14 pages that were probably a handful of books
+ * repeated — the same clustering that made the corpus-wide figure read 11%, then
+ * 42.8%, then 63.8% on three runs of one instrument. **Sample one page per book,
+ * or a page count will impersonate an independent sample.**
+ *
+ * PDF_DPI is 400 rather than 200. The justification is NOT the withdrawn number:
+ * it is that ratios above 1.0 show the PDF carries more resolution than a 200-DPI
+ * rasterization extracts, so sampling it harder recovers real detail — and the
+ * worst cases (0.28) are exactly where that matters. Per-page IIIF with
+ * tile-stitching (fetchPageMaster) would still be the ceiling-free answer and
+ * would eliminate the #3186 cover-sheet offset as a side effect, but it costs
+ * hundreds of requests per book instead of one — on the order of 267 hours at
+ * e-rara's 2/s — from a residential IP, against a partner already sensitive to
+ * load. That is a conversation with them, not a switch to flip unilaterally.
  *
  * PDF URL pattern: https://www.e-rara.ch/download/pdf/{manifestId}
  * Manifest ID extracted from: https://www.e-rara.ch/i3f/v21/{manifestId}/manifest

@@ -1,14 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { MODEL_PRICING } from '@/lib/ai';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { getGeminiClient } from '@/lib/gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const maxDuration = 300;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/pipeline-experiments/[id]/run', type: 'other' }));
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
@@ -106,7 +111,7 @@ export const POST = withAuth(async (request, session, context) => {
       }
     );
 
-    const model = genAI.getGenerativeModel({ model: condition.ocrModel });
+    const model = genAI().getGenerativeModel({ model: condition.ocrModel });
     const results: Array<{
       page_id: string;
       page_number: number;
@@ -146,7 +151,7 @@ export const POST = withAuth(async (request, session, context) => {
           const text = result.response.text();
           const usage = result.response.usageMetadata;
           const inputTokens = usage?.promptTokenCount || 0;
-          const outputTokens = usage?.candidatesTokenCount || 0;
+          const outputTokens = outputTokensFrom(usage);
           totalCost += calculateCost(inputTokens, outputTokens, condition.ocrModel);
           totalTokens += inputTokens + outputTokens;
 
@@ -172,19 +177,19 @@ export const POST = withAuth(async (request, session, context) => {
           const ocrText = ocrResult.response.text();
           const ocrUsage = ocrResult.response.usageMetadata;
           const ocrInputTokens = ocrUsage?.promptTokenCount || 0;
-          const ocrOutputTokens = ocrUsage?.candidatesTokenCount || 0;
+          const ocrOutputTokens = outputTokensFrom(ocrUsage);
           totalCost += calculateCost(ocrInputTokens, ocrOutputTokens, condition.ocrModel);
           totalTokens += ocrInputTokens + ocrOutputTokens;
 
           // Step 2: Translate
-          const translateModel = genAI.getGenerativeModel({ model: condition.translateModel });
+          const translateModel = genAI().getGenerativeModel({ model: condition.translateModel });
           const translatePrompt = TWO_PASS_TRANSLATE_PROMPT.replace('{ocr_text}', ocrText);
 
           const translateResult = await translateModel.generateContent(translatePrompt);
           const translation = translateResult.response.text();
           const transUsage = translateResult.response.usageMetadata;
           const transInputTokens = transUsage?.promptTokenCount || 0;
-          const transOutputTokens = transUsage?.candidatesTokenCount || 0;
+          const transOutputTokens = outputTokensFrom(transUsage);
           totalCost += calculateCost(transInputTokens, transOutputTokens, condition.translateModel);
           totalTokens += transInputTokens + transOutputTokens;
 

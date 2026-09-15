@@ -45,6 +45,8 @@
  *   node scripts/maintenance/fix-3942-edition-vs-work-language.mjs --apply  # write
  */
 import { MongoClient, ObjectId } from 'mongodb';
+// A sweep records a ROW, not a COLUMN (invariants/field-sprawl.md).
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
 const APPLY = process.argv.includes('--apply');
@@ -91,7 +93,8 @@ const uri = process.env.MONGODB_URI;
 if (!uri) { console.error('MONGODB_URI is not set.'); process.exit(1); }
 const mc = new MongoClient(uri);
 await mc.connect();
-const B = mc.db('bookstore').collection('books');
+const db = mc.db('bookstore');
+const B = db.collection('books');
 
 const backup = [];
 let changed = 0;
@@ -141,8 +144,14 @@ for (const fix of FIXES) {
         script: 'fix-3942-edition-vs-work-language.mjs',
         date: NOW,
       },
-      language_review_resolved: { issue: 3942, at: NOW, outcome: 'relabelled from page evidence' },
     },
+  });
+  // language_review_resolved was a 2-document COLUMN nothing read; it is a row now (retired 2026-09-10).
+  await recordSweepAction(db, {
+    sweep: 'fix-3942-edition-vs-work-language',
+    book_id: String(fix.id ?? fix._id),
+    action: 'language-review-resolved',
+    detail: { issue: 3942, outcome: 'relabelled from page evidence', note: fix.note },
   });
   changed++;
 }

@@ -18,6 +18,8 @@
  *   node scripts/maintenance/backfill-language-from-ocr.mjs --limit 50
  */
 import { MongoClient, ObjectId } from 'mongodb';
+// A sweep records a ROW, not a COLUMN (invariants/field-sprawl.md).
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const LIMIT = (() => {
@@ -132,16 +134,15 @@ for await (const book of cursor) {
   if (APPLY) {
     const res = await db.collection('books').updateOne(
       { _id: book._id },
-      { $set: {
-        language: proposed,
-        _language_backfill: {
-          at: new Date(),
-          source: 'ocr_language_tag',
-          confidence: `${vote.count}/${vote.total}`,
-          distribution: vote.distribution,
-        },
-      }}
+      { $set: { language: proposed } }
     );
+    // _language_backfill carried this audit/revert trail as a COLUMN; it is a row now (retired 2026-09-10).
+    await recordSweepAction(db, {
+      sweep: 'backfill-language-from-ocr',
+      book_id: String(book._id),
+      action: 'language-backfilled-from-ocr',
+      detail: { to: proposed, source: 'ocr_language_tag', confidence: `${vote.count}/${vote.total}`, distribution: vote.distribution },
+    });
     if (res.modifiedCount > 0) written++;
   }
 }

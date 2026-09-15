@@ -434,6 +434,21 @@ export default function PageMetadataPanel({
             {page.ocr?.source && (
               <MetadataRow label="OCR source" value={page.ocr.source} />
             )}
+            {page.ocr?.ia && (
+              <>
+                <MetadataRow label="IA engine" value={[page.ocr.ia.engine, page.ocr.ia.module_version].filter(Boolean).join(' · ') || 'unknown'} />
+                {page.ocr.ia.ocr_date && (
+                  <MetadataRow label="IA OCR date" value={formatDate(page.ocr.ia.ocr_date)} />
+                )}
+                {page.ocr.ia.contributor && (
+                  <MetadataRow label="Scanned by" value={page.ocr.ia.contributor} />
+                )}
+                <MetadataRow label="IA item" value={page.ocr.ia.item} mono />
+                {page.ocr.agreement_ref && (
+                  <MetadataRow label="Agreement with our sample" value={`${page.ocr.agreement_ref.median} over ${page.ocr.agreement_ref.n} pages`} />
+                )}
+              </>
+            )}
             {page.ocr?.updated_at && (
               <MetadataRow label="OCR updated" value={formatDate(page.ocr.updated_at)} />
             )}

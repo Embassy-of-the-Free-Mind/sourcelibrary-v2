@@ -25,10 +25,10 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { buildPageGrounding } from '../lib/page-grounding.mjs';
-import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
-import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
@@ -38,9 +38,11 @@ import { promisify } from 'util';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { logUsage, logUsageAsync, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd } from './lib/supabase-usage-logger.mjs';
+import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
+import { holdViolation } from '../lib/pipeline-hold.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -75,7 +77,6 @@ function assertModelsAreNotBroken(constants) {
   }
 }
 
-const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 
 // Code provenance (#2297): the git SHA actually checked out on this worker box.
@@ -839,6 +840,24 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
   );
   const prevStatus = book?.pipeline_auto?.status;
 
+  // A HELD book accepts no status from a worker (#4790). The hold is a decision with a reason and
+  // a release condition (scripts/lib/pipeline-hold.mjs); every phase already skips `held` books
+  // by selection, and this refusal is what stops a rollback or a retry from lifting it by accident.
+  // Always enforced — unlike the output guard below there is no observe mode, because a hold is
+  // explicit and rare, and advancing past one is the exact failure it exists to prevent.
+  const holdRefusal = book ? holdViolation(book, status) : null;
+  if (holdRefusal) {
+    console.log(`  [pipeline-hold] ${bookId}: ${holdRefusal}`);
+    db.collection('audit_log').insertOne({
+      action: 'pipeline_status_refused_held',
+      book_id: bookId,
+      book_title: book?.title,
+      metadata: { attempted: status, from: prevStatus || 'none', hold: book.pipeline_auto.hold },
+      timestamp: new Date(),
+    }).catch(() => {});
+    return;
+  }
+
   const violation = book ? statusOutputViolation(book, status, extra) : null;
   if (violation) {
     console.log(`  [status-guard] ${bookId}: ${violation}${STATUS_GUARD_ENFORCE ? ' — REFUSED' : ''}`);
@@ -1311,14 +1330,17 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
         { 'ocr.data': null },
         { 'ocr.data': '' },
       ],
-      $and: [{
-        $or: [
-          { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-          { cropped_photo: { $exists: true, $nin: [null, ''] } },
-          { photo: { $exists: true, $ne: null } },
-          { photo_original: { $exists: true, $ne: null } },
-        ]
-      }]
+      $and: [
+        {
+          $or: [
+            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+            { cropped_photo: { $exists: true, $nin: [null, ''] } },
+            { photo: { $exists: true, $ne: null } },
+            { photo_original: { $exists: true, $ne: null } },
+          ]
+        },
+        notBlockedForModel(ocrModel),
+      ]
     })
     .sort({ page_number: 1 })
     .limit(pageLimit)
@@ -1577,6 +1599,8 @@ Output structure:
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'ocr', model: ocrModel, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -1679,13 +1703,16 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
         page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
         'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
         $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
-        $and: [{
-          $or: [
-            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
-            { cropped_photo: { $exists: true, $nin: [null, ''] } },
-            { photo: { $exists: true, $ne: null } },
-          ]
-        }]
+        $and: [
+          {
+            $or: [
+              { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+              { cropped_photo: { $exists: true, $nin: [null, ''] } },
+              { photo: { $exists: true, $ne: null } },
+            ]
+          },
+          notBlockedForModel(model),
+        ]
       })
       .sort({ page_number: 1 })
       .limit(remaining)
@@ -1844,6 +1871,8 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     page_ids: allDownloaded.map(d => d.pageId), page_count: allDownloaded.length,
     batch_job_id: childJobId, gemini_job_name: batchJob.name,
     input_tokens: 0, output_tokens: 0, status: 'submitted',
+    // Committed, not yet collected: price it now so the dial sees it (#4567).
+    cost_usd: estimateBatchCostUsd({ type: 'ocr', model: ocrModel, pageCount: allDownloaded.length }),
     endpoint: 'hetzner/pipeline-orchestrator',
   }, db);
 
@@ -2160,6 +2189,8 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'image_extraction', model: IMAGE_EXTRACTION_MODEL, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -2371,6 +2402,8 @@ async function submitCrossBookImageBatches(db, bookItems) {
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'image_extraction', model: IMAGE_EXTRACTION_MODEL, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -2923,10 +2956,10 @@ async function run() {
           'pipeline_auto.split_checked': { $ne: true },
         })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 })
         .limit(SPLIT_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1 });
+      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 });
 
       console.log(`  Candidates for split check: ${candidates.length}`);
 
@@ -3051,19 +3084,30 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               signal: AbortSignal.timeout(20000),
             });
 
-            if (geminiRes.ok) {
-              const geminiData = await geminiRes.json();
-              const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-              const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-              if (jsonMatch) {
-                const result = JSON.parse(jsonMatch[0]);
-                isConfirmedSpread = !!result.is_spread;
-              }
-            }
+            // A non-OK response or an unparseable answer is a FAILED check, not a
+            // "not a spread" verdict — before #4796 a 429 here silently wrote
+            // needs_splitting:false + split_checked:true and the book was never
+            // looked at again.
+            if (!geminiRes.ok) throw new Error(`Gemini HTTP ${geminiRes.status}`);
+            const geminiData = await geminiRes.json();
+            const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error(`Gemini returned no JSON: ${rawText.slice(0, 40)}`);
+            isConfirmedSpread = !!JSON.parse(jsonMatch[0]).is_spread;
           } catch (err) {
-            // On Gemini failure, assume spread (safer — OCR prompt handles non-spreads gracefully)
-            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}), assuming spread`);
-            isConfirmedSpread = true;
+            // Fail CLOSED (#4796). A classifier that could not see the image must
+            // not guess — the old branch "assumed spread", which sent single wide
+            // pages (maps, foldouts) into the splitter. Leave split_checked unset
+            // so the next cycle retries; after 3 failures park for a human.
+            const fails = (book.pipeline_auto?.split_confirm_failures || 0) + 1;
+            const $set = { 'pipeline_auto.split_confirm_failures': fails, 'pipeline_auto.last_updated': new Date() };
+            if (fails >= 3) {
+              $set['pipeline_auto.status'] = 'needs_attention';
+              $set['pipeline_auto.error'] = `Spread confirmation failed ${fails} times (#4796): ${err.message?.slice(0, 120)}`;
+            }
+            await db.collection('books').updateOne({ id: book.id }, { $set });
+            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}) — left unchecked, ${fails}/3${fails >= 3 ? ', PARKED' : ''}`);
+            continue;
           }
 
           if (!isConfirmedSpread) {
@@ -3475,13 +3519,25 @@ Rules:
             // Language: update if Unknown
             const currentLang = book.language || 'Unknown';
             const aiLang = parsed.language || '';
+            // ONE typed provenance entry, not three private fields (2026-09-10) — this mirrors
+            // src/lib/metadata-enrichment.ts, which had the same three writes. language_source /
+            // language_confidence / ai_detected_language were read by nothing.
             if (aiLang && currentLang === 'Unknown') {
               updates.language = aiLang;
-              updates.language_source = 'gemini_text';
-              updates.language_confidence = confidence;
+              updates['field_provenance.language'] = {
+                source: 'enrichment', value: aiLang, chosen_from: 'gemini_text', confidence,
+                claims: [{ source: 'gemini_text', value: aiLang }], date: now.toISOString(),
+              };
               changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
             } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
-              updates.ai_detected_language = aiLang;
+              updates['field_provenance.language'] = {
+                source: 'enrichment', value: currentLang, chosen_from: 'catalogue', confidence, conflict: true,
+                claims: [
+                  { source: 'catalogue', value: currentLang },
+                  { source: 'gemini_text', value: aiLang },
+                ],
+                date: now.toISOString(),
+              };
             }
 
             // Author: update if Unknown/missing
@@ -4069,12 +4125,14 @@ Rules:
           // recitation filter and then corrected against its own image.
           const isLiteRetry = book.pipeline_auto?.recitation_retry_lite === true;
           const isRecitationRetry = book.pipeline_auto?.recitation_retry === true;
+          // Tier 2 is flash-preview only when OCR_LITE_ONLY is off (ocr-routing.mjs);
+          // under lite-only it re-runs lite, and a second refusal still falls to tier 3.
           const ocrOpts = isLiteRetry
-            ? { modelOverride: OCR_MODEL_FLASH }
+            ? { modelOverride: ocrEscalationModel() }
             : isRecitationRetry
               ? { modelOverride: OCR_MODEL_LITE }
               : {};
-          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${OCR_MODEL_FLASH}: ${label}`);
+          if (isLiteRetry) console.log(`  RECITATION retry (tier 2) with ${ocrEscalationModel()}: ${label}`);
           else if (isRecitationRetry) console.log(`  RECITATION retry (tier 1) with ${OCR_MODEL_LITE}: ${label}`);
           else console.log(`  Submitting OCR: ${label}...`);
           const result = await submitOcrDirectly(db, book, ocrOpts);
@@ -4173,9 +4231,20 @@ Rules:
         }
 
         if (isComplete) {
-          // Check for remaining un-OCR'd pages
+          // Check for remaining un-OCR'd pages.
+          //
+          // Permanently-blocked pages are NOT remaining work — they are work that
+          // will never succeed, and counting them here is what kept books one page
+          // short of done circling forever. The selection query above already
+          // refuses to submit them, so a book whose only gap is blocked pages was
+          // resubmitting nothing and being told it was incomplete for it. Excluding
+          // them lets such a book reach `ocr_complete` and go on to translation:
+          // the Tabiena Summa sat at 1002/1003 pages with 0 translated for a month
+          // on the strength of one unreadable folio.
           const remainingOcr = await db.collection('pages').countDocuments({
             book_id: book.id,
+            'ocr.recitation_blocked': { $ne: true },
+            'ocr.fail_blocked': { $ne: true },
             $or: [
               { photo: { $exists: true, $ne: null } },
               { photo_original: { $exists: true, $ne: null } },
@@ -5425,50 +5494,51 @@ Rules:
       for (const book of readyToFinalize) {
         const totalPages = book.pages_count || await db.collection('pages').countDocuments({ book_id: book.id });
 
-        if (totalPages === 0) {
-          // Single-object artworks legitimately have 0 pages — finalize, don't flag as a
-          // failed import. (Phase 0 normally diverts these, but the dedicated `--phase 9`
-          // finalize cron doesn't run Phase 0, so guard here too.)
-          if (book.content_type === 'artwork') {
-            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'complete', { skipped: 'artwork', completed_at: new Date() });
-            log.completed = (log.completed || 0) + 1;
-            continue;
-          }
-          if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'needs_attention', {
-              error: 'Empty book: 0 pages. Likely a failed import.',
-            });
-          }
-          log.needs_attention++;
-          log.errors.push(`Finalize blocked ${book.id}: 0 pages`);
-          continue;
-        }
-
-        const ocrCount = await db.collection('pages').countDocuments({
+        const ocrCount = totalPages === 0 ? 0 : await db.collection('pages').countDocuments({
           book_id: book.id,
           'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
         });
 
-        if (ocrCount === 0) {
-          if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'needs_attention', {
-              error: `Finalize blocked: 0/${totalPages} OCR pages. Needs manual investigation.`,
-            });
-          }
+        // "Finished" means the OCR is FINISHED, not that some of it exists. The
+        // old test here was a 10% floor, which the 25-page preview pass cleared
+        // on any book of 250 pages — 13,329 books were stamped complete holding
+        // 1.55M pages that had never been transcribed. See finalize-decision.mjs.
+        const verdict = decideFinalize({
+          totalPages,
+          ocrCount,
+          contentType: book.content_type,
+          // Its OWN counter: finalize_requeues below belongs to the untranslated
+          // loop (FINALIZE_TRANSLATE_REQUEUES); sharing one field would let OCR
+          // requeues eat a book's translate retries, and vice versa.
+          requeues: book.pipeline_auto?.finalize_ocr_requeues || 0,
+          lastOcrCount: book.pipeline_auto?.finalize_last_ocr ?? null,
+        });
+
+        if (verdict.action === 'needs_attention') {
+          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'needs_attention', { error: verdict.reason });
           log.needs_attention++;
-          log.errors.push(`Finalize blocked ${book.id}: 0/${totalPages} OCR pages`);
+          log.errors.push(`Finalize blocked ${book.id}: ${verdict.reason}`);
           continue;
         }
 
-        const ocrPercent = ocrCount / totalPages;
-        if (ocrPercent < 0.1) {
+        if (verdict.action === 'requeue') {
+          // Back to the state the OCR queue actually reads. Record the count so
+          // the next lap can tell progress from a stall and stop looping.
           if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'needs_attention', {
-              error: `Very low OCR coverage: ${ocrCount}/${totalPages} (${(ocrPercent * 100).toFixed(1)}%)`,
+            await setPipelineStatus(db, book.id, 'archive_complete', {
+              finalize_ocr_requeues: (book.pipeline_auto?.finalize_ocr_requeues || 0) + 1,
+              finalize_last_ocr: ocrCount,
             });
           }
-          log.needs_attention++;
-          log.errors.push(`Finalize blocked ${book.id}: ${ocrCount}/${totalPages} OCR`);
+          log.requeued_for_ocr = (log.requeued_for_ocr || 0) + 1;
+          console.log(`  Requeued ${book.id}: ${verdict.reason}`);
+          continue;
+        }
+
+        if (totalPages === 0) {
+          // Single-object artworks legitimately have 0 pages (verdict: complete).
+          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'complete', { skipped: 'artwork', completed_at: new Date() });
+          log.completed = (log.completed || 0) + 1;
           continue;
         }
 

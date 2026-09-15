@@ -15,6 +15,8 @@
  *   node scripts/maintenance/apply-greek-relabel.mjs plan.json --apply    # write
  */
 import { MongoClient, ObjectId } from 'mongodb';
+// A sweep records a ROW, not a COLUMN (invariants/field-sprawl.md).
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const planPath = process.argv[2];
@@ -24,7 +26,8 @@ const plan = JSON.parse(readFileSync(planPath, 'utf8'));
 
 const mc = new MongoClient(process.env.MONGODB_URI);
 await mc.connect();
-const B = mc.db('bookstore').collection('books');
+const db = mc.db('bookstore');
+const B = db.collection('books');
 
 const backup = [];
 let changed = 0;
@@ -37,13 +40,17 @@ for (const item of plan) {
   console.log(`${APPLY ? 'RELABEL' : 'WOULD RELABEL'} ${item._id} "${(book.title||'').slice(0,70)}" : ${book.language} -> ${item.to.language} (greek ${item.greekFrac}%)`);
   if (APPLY) {
     await B.updateOne({ _id }, {
-      $set: {
-        language: item.to.language,
-        language_relabel: {
-          from: book.language, to: item.to.language, issue: 2761,
-          reason: 'Greek facing-page edition mislabeled English; relabel unblocks real translation (passthrough prompt fires on language===English).',
-          greek_page_fraction: item.greekFrac, at: new Date().toISOString(),
-        },
+      $set: { language: item.to.language },
+    });
+    // language_relabel was a COLUMN carrying this sweep's own record; it is a row now (retired 2026-09-10).
+    await recordSweepAction(db, {
+      sweep: 'apply-greek-relabel',
+      book_id: String(_id),
+      action: 'language-relabelled',
+      detail: {
+        from: book.language, to: item.to.language, issue: 2761,
+        reason: 'Greek facing-page edition mislabeled English; relabel unblocks real translation (passthrough prompt fires on language===English).',
+        greek_page_fraction: item.greekFrac,
       },
     });
     changed++;

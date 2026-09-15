@@ -1,0 +1,41 @@
+112
+IV. Abschnitt.
+[Gleich. 118]
+berechtigt diese Annahme ist, wird am besten demjenigen klar,
+der über Experimente zum directen Beweise der atomistischen
+Constitution der Materie nachsinnt. Selbst in der nächsten
+Umgebung der kleinsten in einem Gase suspendirten Körperchen
+ist die Zahl der Moleküle schon so gross, dass es aussichtslos
+erscheint, selbst in sehr kleinen Zeiten irgendwie eine beobacht-
+bare Abweichung von der Limite zu hoffen, der sich die Er-
+scheinungen bei unendlicher Zahl der Moleküle nähern.
+Unter dieser Annahme müssen wir aber auch Ueberein-
+stimmung mit der Erfahrung erhalten, wenn wir die Limite
+berechnen, der sich die Gesetze der Erscheinungen bei stets
+ins Unendliche wachsender Anzahl und abnehmender Grösse
+der Moleküle nähern. Bei Berechnung der letzteren Limite
+haben wir aber in der That wieder zwei Grössen, die unab-
+hängig von einander beliebig klein gemacht werden können:
+die Grösse der Volumelemente, und die Dimensionen der Mole-
+küle, und wir können bei jeder gegebenen Kleinheit der ersteren
+letztere noch so klein wählen, dass jedes Volumelement noch
+sehr viele Moleküle enthält, deren Eigenschaften in gegebenen
+engen Grenzen eingeschlossen sind.
+Wenn man sich mit Kirchhoff unter den Ausdrücken
+115) und 118) blosse Angaben des Grades einer Wahrscheinlich-
+keit vorstellt, so kann man diese Ausdrücke allerdings auch
+als Brüche oder sogar als sehr kleine Grössen auffassen; doch
+verliert man hierbei sehr an Anschaulichkeit. Wir kommen
+darauf noch am Schlusse dieses Buches in § 92 zurück.
+§ 39. Betrachtung der Zusammenstösse zweier
+Moleküle.
+Wir haben bisher die Wechselwirkung je zweier Moleküle
+nicht berücksichtigt und haben noch die Bedingungen zu unter-
+suchen, unter denen die zu Anfang unter den Molekülen be-
+stehende Zustandsvertheilung auch durch die Zusammenstösse
+der Moleküle nicht verändert wird. Zu diesem Zwecke müssen
+wir die Wahrscheinlichkeit des Vorkommens von Gruppen
+mehrerer Moleküle untersuchen. Wir wollen uns zunächst auf
+den Fall beschränken, dass die gleichzeitige Wechselwirkung
+von mehr als zwei Molekülen so ausserordentlich selten vor-
+kommt, dass sie ganz einflusslos ist und daher nicht betrachtet

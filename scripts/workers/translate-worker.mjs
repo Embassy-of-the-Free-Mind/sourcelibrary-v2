@@ -39,6 +39,7 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 
 // Selective-unpause scope confinement, set in main() after the pause check and
 // read by the candidate queries (incl. selfDispatch). In normal operation
@@ -562,6 +563,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       book_id: book.id,
       page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
       'ocr.data': { $exists: true, $nin: [null, ''] },
+      'ocr.unreadable': { $ne: true }, // no trusted transcription (#4523) — same rule as translate-core
       page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
       'translation.safety_blocked': { $ne: true },
@@ -603,7 +605,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       { $set: { status: 'completed', updated_at: new Date(), completed_at: new Date() } },
     );
     await db.collection('books').updateOne(
-      { id: book.id },
+      { id: book.id, ...NOT_HELD },
       { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
     );
     console.log(`  [${label}] Already complete`);
@@ -971,7 +973,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
     }
 
     await db.collection('books').updateOne(
-      { id: book.id },
+      { id: book.id, ...NOT_HELD },
       { $set: bookUpdate, $unset: { job: '' } },
     );
     console.log(`  [${label}] Complete — ${newCompleted} translated, ${newFailed} failed (synced: ${countAgg?.with_translation}/${countAgg?.total} pages)`);
@@ -998,7 +1000,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
         ? 'Translation made zero progress on consecutive attempts'
         : `High error rate: ${failed} failures / ${translated + failed} attempts (${(errorRate * 100).toFixed(0)}%) across multiple runs`;
       await db.collection('books').updateOne(
-        { id: book.id },
+        { id: book.id, ...NOT_HELD },
         { $set: {
           'pipeline_auto.status': 'needs_attention',
           'pipeline_auto.attention_reason': reason,
@@ -1011,8 +1013,10 @@ async function processBook(db, book, job, globalCounter, deadline) {
     } else {
       // Park this book — it got its 200-page chunk, let other books go first.
       // Status moves to translate_partial so it's no longer picked up as translate_submitted.
+      // NOT_HELD on every status write below: a book held mid-run (scripts/lib/pipeline-hold.mjs,
+      // #4790) keeps its hold; the pages already translated this run stay, the status does not move.
       await db.collection('books').updateOne(
-        { id: book.id },
+        { id: book.id, ...NOT_HELD },
         { $set: {
           'pipeline_auto.status': 'translate_partial',
           pages_translated: newCompleted,
@@ -1146,6 +1150,7 @@ async function selfDispatch(db, limit) {
       .find({
         book_id: book.id,
         'ocr.data': { $exists: true, $nin: [null, ''] },
+        'ocr.unreadable': { $ne: true },
         page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
       'translation.safety_blocked': { $ne: true },
@@ -1164,7 +1169,7 @@ async function selfDispatch(db, limit) {
     if (pages.length === 0) {
       // Already fully translated — advance
       await db.collection('books').updateOne(
-        { id: book.id },
+        { id: book.id, ...NOT_HELD },
         { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
       );
       continue;
@@ -1311,7 +1316,7 @@ async function main() {
   if (nearZero.length > 0) {
     const ids = nearZero.map(b => b.id);
     await db.collection('books').updateMany(
-      { id: { $in: ids } },
+      { id: { $in: ids }, ...NOT_HELD },
       { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
     );
     await db.collection('jobs').updateMany(
@@ -1437,8 +1442,9 @@ async function main() {
         console.log(`  [${(book.title || '').substring(0, 40)}] Re-linked orphan job ${jobId}`);
       } else {
         console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to ocr_complete`);
+        // NOT_HELD: a rollback must never lift a pipeline hold (scripts/lib/pipeline-hold.mjs, #4790).
         await db.collection('books').updateOne(
-          { id: book.id },
+          { id: book.id, ...NOT_HELD },
           { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
         return zero;
@@ -1448,7 +1454,7 @@ async function main() {
     if (!job || job.status === 'cancelled' || job.status === 'failed') {
       console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} is ${job?.status || 'missing'}, resetting`);
       await db.collection('books').updateOne(
-        { id: book.id },
+        { id: book.id, ...NOT_HELD },
         { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
       );
       return zero;

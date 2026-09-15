@@ -1,32 +1,54 @@
 /**
- * Gutter detection for two-page spreads (#2454 decision tree).
+ * Gutter detection for two-page spreads (#2454 decision tree, rebuilt in #4796).
  *
- * Primary: pixel ink-density detector — free, no model call. Ported from the
- * battle-tested `detectGutterColumn()` in scripts/workers/batch-split-bph.mjs
- * (which survived four false starts — see memory lesson-splitter-gutter-detection),
- * but here it returns a CONFIDENCE signal instead of silently falling back to a
- * center cut. Center-cutting is the documented way text gets clipped: BPH gutters
- * are offset from center by up to 19%.
+ * Primary: pixel detector — free, no model call. Returns a CONFIDENCE signal
+ * instead of silently falling back to a centre cut: centre-cutting is the
+ * documented way text gets clipped (BPH gutters sit up to 19% off centre), and
+ * the caller (split-book.mjs) snaps low-confidence pages to the book median
+ * anchored by the confident pages plus a Gemini sample.
  *
- * The caller uses confidence to decide whether to trust the pixel result or fall
- * back to a Gemini vision call (the manuscript / tight-binding tail), and to
- * refuse to cut at all when neither detector is confident.
+ * What it looks for (validated by eye on 33 real spreads across Japanese, Chinese,
+ * Hebrew, Arabic, German and Latin books, plus 6 wide single pages, 2026-09-13):
  *
- * Operating principle (hard-won): measure ink CONTENT presence per column, not
- * brightness. Ink = min(R,G,B) < 120 so colored rubrication registers (grayscale
- * weights red at ~21% and missed vermillion titles).
+ *   1. TEXT-LIKE columns — measured as dark/light TRANSITIONS down the column,
+ *      not as darkness. A line of type alternates ink and paper every few rows;
+ *      a binding shadow is dark but uniform; blank paper is light and uniform.
+ *      The old detector measured darkness, so a binding shadow counted as "ink"
+ *      and tan paper (yellowed Chinese woodblock prints) counted as ink
+ *      everywhere; it then cut at the single least-inked column, which on a
+ *      page with a wide inner margin is anywhere in that margin — 14 Japanese
+ *      books were cut inside the LEFT page's blank margin and served a strip of
+ *      the facing page.
+ *   2. The GAP — the run of non-text columns between the two text blocks that
+ *      crosses the central 30–70% window and has text within 15% on both sides.
+ *      A gap reaching the image edge is a blank facing page; it is accepted
+ *      only when a binding shadow inside the window says where the pages meet.
+ *   3. The CUT — at the binding shadow (luminance dip inside the gap, smoothed
+ *      over ±6 columns so a 1–2px frame rule does not pass for a binding) when
+ *      the shadow is clear of both text edges by the 3% overlap split-book.mjs
+ *      adds; otherwise the gap centre. Either way the cut never sits inside text.
+ *
+ * The ink threshold is per COLUMN (80th percentile of that column minus 55), so
+ * type inside the curvature shadow next to the binding still registers as text
+ * — with one global threshold that region read as solid ink and the gap ended
+ * 4% early on tightly bound BPH octavos.
+ *
+ * Operating principle (hard-won, still true): measure CONTENT, not brightness.
+ * Ink = min(R,G,B) so coloured rubrication registers (grayscale weights red at
+ * ~21% and missed vermilion titles).
  */
 
 import sharp from 'sharp';
 
 /**
- * @returns {Promise<{ column: number|null, confidence: 'high'|'low', reason: string, ar: number }>}
+ * @returns {Promise<{ column: number|null, confidence: 'high'|'low', reason: string, ar: number, gap?: {start:number,end:number} }>}
  *   column     — gutter x in ORIGINAL image pixels, or null when not found
- *   confidence — 'high' only when a clear ink-free run was located in the search band
+ *   confidence — 'high' only when a text-flanked gap was located in the search band
  *   reason     — short human label for logs / provenance
  *   ar         — width/height aspect ratio of the source image
+ *   gap        — the inter-text gap in 0–1000 units (start, end), when found
  */
-export async function detectGutterPixel(spreadBuf) {
+export async function detectGutterPixel(spreadBuf, opts = {}) {
   const meta = await sharp(spreadBuf).metadata();
   const imgWidth = meta.width || 1;
   const imgHeight = meta.height || 1;
@@ -45,75 +67,114 @@ export async function detectGutterPixel(spreadBuf) {
 
     const bandStart = Math.round(H * 0.25);
     const bandEnd = Math.round(H * 0.75);
-    const DARK = 120;
-    const inkPerCol = new Float32Array(W);
-    const lumPerCol = new Float32Array(W); // mean luminance — for binding-shadow valley
+    const rows = bandEnd - bandStart;
+
+    // Per column: text-likeness (transitions/row) and mean luminance.
+    const trans = new Float32Array(W);
+    const lum = new Float32Array(W);
+    const col = new Uint8Array(rows);
     for (let x = 0; x < W; x++) {
-      let d = 0, lum = 0;
-      for (let y = bandStart; y < bandEnd; y++) {
+      let l = 0;
+      for (let y = bandStart, r = 0; y < bandEnd; y++, r++) {
         const i = (y * W + x) * 3;
-        const m = Math.min(raw[i], raw[i + 1], raw[i + 2]);
-        if (m < DARK) d++;
-        lum += (raw[i] + raw[i + 1] + raw[i + 2]) / 3;
+        col[r] = Math.min(raw[i], raw[i + 1], raw[i + 2]);
+        l += (raw[i] + raw[i + 1] + raw[i + 2]) / 3;
       }
-      inkPerCol[x] = d / (bandEnd - bandStart);
-      lumPerCol[x] = lum / (bandEnd - bandStart);
+      lum[x] = l / rows;
+      const sorted = Uint8Array.from(col).sort();
+      const paper = sorted[Math.floor(rows * 0.8)];
+      const dark = Math.max(40, Math.min(150, paper - 55));
+      let t = 0;
+      let prev = col[0] < dark;
+      for (let r = 1; r < rows; r++) {
+        const d = col[r] < dark;
+        if (d !== prev) t++;
+        prev = d;
+      }
+      trans[x] = t / rows;
     }
 
-    // LIGHT smoothing (±2px) — bridges inter-character white slivers without
-    // smearing a NARROW gutter above the detection floor. ±5px used to erase
-    // 1-2px bright gutters entirely (the bug that sent clean pages to Gemini's
-    // useless center-guess).
-    const smooth = (src) => {
+    const smooth = (src, half) => {
       const out = new Float32Array(W);
-      const half2 = 2;
       for (let x = 0; x < W; x++) {
-        const lo = Math.max(0, x - half2), hi = Math.min(W - 1, x + half2);
-        let s = 0; for (let i = lo; i <= hi; i++) s += src[i];
+        const lo = Math.max(0, x - half), hi = Math.min(W - 1, x + half);
+        let s = 0;
+        for (let i = lo; i <= hi; i++) s += src[i];
         out[x] = s / (hi - lo + 1);
       }
       return out;
     };
-    const ink = smooth(inkPerCol);
-    const lum = smooth(lumPerCol);
+    const text = smooth(trans, 2);   // ±2: bridges inter-character slivers, keeps narrow gaps
+    const lumS = smooth(lum, 6);     // ±6: a binding shadow survives, a frame rule does not
 
-    // Search the CENTRAL third only (35%–65%). These books are 2-columns-per-page,
-    // so the intra-page column gaps sit near 25% and 75% — outside this window —
-    // leaving the binding gutter as the dominant central valley.
-    const cs = Math.round(W * 0.35);
-    const ce = Math.round(W * 0.65);
-    const flank = Math.round(W * 0.08);
+    const GAP_MAX = opts.gapMax ?? 0.02;    // fewer transitions than this = no text in the column
+    const TEXT_MIN = opts.textMin ?? 0.05;  // flanking text must reach this
+    const SHADOW_DIP = opts.shadowDip ?? 25; // luminance dip that counts as a binding shadow
+    const FLANK_W = Math.round(W * 0.15);
+    const cs = Math.round(W * 0.30);
+    const ce = Math.round(W * 0.70);
+    const MARGIN = Math.round(W * 0.03);     // split-book.mjs adds 3% overlap; keep the cut this far from text
 
-    // ── Signal A: bright gutter — the relative ink MINIMUM in the window,
-    // confirmed as a valley flanked by text (higher ink) on both sides.
-    let inkX = cs, inkMin = Infinity;
-    for (let x = cs; x < ce; x++) if (ink[x] < inkMin) { inkMin = ink[x]; inkX = x; }
-    let lInk = 0, rInk = 0;
-    for (let x = Math.max(0, inkX - flank); x < inkX; x++) lInk = Math.max(lInk, ink[x]);
-    for (let x = inkX + 1; x <= Math.min(W - 1, inkX + flank); x++) rInk = Math.max(rInk, ink[x]);
-    if (inkMin < 0.10 && lInk - inkMin >= 0.10 && rInk - inkMin >= 0.10) {
-      return { column: Math.round(inkX / ratio), confidence: 'high', reason: `ink-valley-${Math.round(inkMin * 100)}pct`, ar };
+    // Maximal runs of non-text columns that touch the central window.
+    const runs = [];
+    let x = 0;
+    while (x < W) {
+      if (text[x] >= GAP_MAX) { x++; continue; }
+      const s = x;
+      while (x < W && text[x] < GAP_MAX) x++;
+      const e = x - 1;
+      if (e < cs || s > ce) continue;
+      const edge = s === 0 ? 'left' : e === W - 1 ? 'right' : null;
+      let lFl = 0, rFl = 0;
+      for (let i = Math.max(0, s - FLANK_W); i < s; i++) lFl = Math.max(lFl, text[i]);
+      for (let i = e + 1; i <= Math.min(W - 1, e + FLANK_W); i++) rFl = Math.max(rFl, text[i]);
+      let lumMean = 0;
+      for (let i = s; i <= e; i++) lumMean += lumS[i];
+      lumMean /= (e - s + 1);
+      let lumMin = Infinity, lumX = -1;
+      for (let i = Math.max(s, cs); i <= Math.min(e, ce); i++) {
+        if (lumS[i] < lumMin) { lumMin = lumS[i]; lumX = i; }
+      }
+      runs.push({
+        s, e, w: e - s + 1, edge,
+        flanked: lFl >= TEXT_MIN && rFl >= TEXT_MIN,
+        shadow: lumX >= 0 && lumMean - lumMin >= SHADOW_DIP,
+        lumX,
+        center: Math.round((s + e) / 2),
+      });
     }
 
-    // ── Signal B: dark gutter (binding shadow) — the luminance MINIMUM, as a
-    // valley flanked by brighter margins. Returned as a LOW-confidence HINT only,
-    // NOT a standalone cut: on manuscripts a dark figure / shadow / margin is
-    // easily mistaken for the binding (it mis-cut Figurae p6 → 594, Annvae p11 →
-    // 540, both ~50px off the true gutter). The caller treats a low-confidence
-    // result as "snap to the book median", which is anchored by the reliable
-    // ink-valley pages + the Gemini sample. Photographed codices with no bright
-    // gap (Euclid) are covered by that median, so we lose nothing by demoting it.
-    let lumX = cs, lumMin = Infinity;
-    for (let x = cs; x < ce; x++) if (lum[x] < lumMin) { lumMin = lum[x]; lumX = x; }
-    let lLum = 0, rLum = 0;
-    for (let x = Math.max(0, lumX - flank); x < lumX; x++) lLum = Math.max(lLum, lum[x]);
-    for (let x = lumX + 1; x <= Math.min(W - 1, lumX + flank); x++) rLum = Math.max(rLum, lum[x]);
-    if (lLum - lumMin >= 25 && rLum - lumMin >= 25) {
-      return { column: Math.round(lumX / ratio), confidence: 'low', reason: `dark-valley-hint-${Math.round(lumMin)}lum`, ar };
+    const eligible = runs.filter(r => r.flanked || (r.edge && r.shadow));
+    if (eligible.length === 0) {
+      return { column: null, confidence: 'low', reason: runs.length ? `gaps-unflanked(${runs.length})` : 'no-central-gap', ar };
     }
+    // A gap with a binding shadow beats one without; text on both sides beats a
+    // blank facing page; then the widest.
+    eligible.sort((a, b) => (Number(b.shadow) - Number(a.shadow)) || (Number(b.flanked) - Number(a.flanked)) || (b.w - a.w));
+    const best = eligible[0];
+    const gap = { start: Math.round(best.s / W * 1000), end: Math.round(best.e / W * 1000) };
 
-    // Neither a bright nor (trusted) dark central valley → LOW; snap to median.
-    return { column: null, confidence: 'low', reason: 'no-central-valley', ar };
+    let cutX, how;
+    if (best.edge) {
+      // Blank facing page: the shadow is the only evidence of where the pages
+      // meet, and it must sit clear of the text edge on the printed side.
+      const textEdge = best.edge === 'left' ? best.e : best.s;
+      if (Math.abs(best.lumX - textEdge) < MARGIN) {
+        return { column: null, confidence: 'low', reason: 'blank-side-shadow-at-text', ar, gap };
+      }
+      cutX = best.lumX; how = `blank-${best.edge}+shadow`;
+    } else if (best.shadow && best.lumX - best.s >= MARGIN && best.e - best.lumX >= MARGIN) {
+      cutX = best.lumX; how = 'gap+shadow';
+    } else {
+      cutX = best.center; how = best.shadow ? 'gap-centre(shadow-at-edge)' : 'gap-centre';
+    }
+    return {
+      column: Math.round(cutX / ratio),
+      confidence: 'high',
+      reason: `${how}-w${Math.round(best.w / W * 1000)}`,
+      ar,
+      gap,
+    };
   } catch (e) {
     return { column: null, confidence: 'low', reason: `pixel-error:${(e.message || '').slice(0, 40)}`, ar };
   }

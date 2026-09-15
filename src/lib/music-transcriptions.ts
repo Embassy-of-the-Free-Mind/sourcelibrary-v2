@@ -20,6 +20,43 @@ export interface MusicTranscription {
   transcriber: string;
   verified_by?: string;
   notes?: string;
+  /**
+   * How the music is written on the page. Decides which recogniser can read it
+   * (see .claude/docs/music-notation.md): letteral = pitch printed as a letter
+   * (Shaker); neumes = plainchant on a four-line staff; mensural = pre-1650
+   * diamond/void noteheads; tablature = lute/keyboard finger positions;
+   * common-practice = engraved modern staff notation.
+   */
+  notation_system?: 'letteral' | 'neumes' | 'mensural' | 'tablature' | 'common-practice' | 'unknown';
+  /**
+   * Who or what produced `abc`, so a future model's rows are distinguishable
+   * from today's and from a human's. Any automated writer MUST fill this
+   * (the page_revisions lesson: a store that mixes mechanisms without a label
+   * cannot be measured afterwards).
+   */
+  provenance?: {
+    /** e.g. "gemini-3-flash-preview", "rokot-omr-2b", "human" */
+    method: string;
+    /** prompt or config hash, model revision — whatever pins the run */
+    version?: string;
+    date: string; // ISO
+    /** page image(s) the run saw, as R2/IIIF URLs, so the run is reproducible */
+    inputs?: string[];
+  };
+  /**
+   * Scores from scripts/music/eval-transcription.mjs against a verified row
+   * (`against` = that row's page_id). Draft rows carry this; verified rows are
+   * the reference and never score themselves.
+   */
+  evaluation?: {
+    against: string;
+    date: string;
+    pitch_ner: number;
+    interval_ner: number;
+    rhythm_ner: number;
+    note_ner: number;
+    lyric_wer?: number;
+  };
 }
 
 const PROJECTION = {
@@ -32,6 +69,7 @@ const PROJECTION = {
   status: 1,
   transcriber: 1,
   notes: 1,
+  notation_system: 1,
 } as const;
 
 /** All transcriptions that include this page (starting on it or spanning it). */

@@ -75,6 +75,54 @@ export function calculateUsageCost(model, inputTokens, outputTokens, isBatch) {
  * Use this at every site that records what a call cost. Fix the definition,
  * not the call site.
  */
+/**
+ * What a batch job is expected to cost, written on its placeholder AT SUBMIT (#4567).
+ *
+ * A placeholder used to carry `cost_usd: 0` until the collector patched it, on
+ * average 12 minutes later. Every ceiling that reads measured spend — the daily
+ * dial, the #4540 scope envelopes — under-read by everything in flight, which is
+ * failure mode 4 of the spend ceiling ("committed but unpriced"): the 2026-08-31
+ * relight cut off at $5.08 visible and settled at $6.32 once 13 in-flight batches
+ * were priced. Writing an estimate makes the ceiling fail CLOSED on committed work.
+ *
+ * The estimate is overwritten, never added to: `completeBatchUsage()` replaces it
+ * with actuals at collection, `closeUsagePlaceholder()` zeroes it when a job never
+ * ran, and `reconcile-batch-usage.mjs` zeroes it on every other terminal state.
+ *
+ * RATES ARE MEASURED, per batch job not per row (the duplicate rows of #4822 would
+ * double them), over completed jobs 2026-08-31..09-13. They are BLENDED with failed
+ * jobs deliberately: flash-lite's loop-to-cap failures cost $8.87/1K pages against
+ * $1.46/1K for successes (#4674), and a ceiling that assumes every job succeeds
+ * under-reserves on exactly the days that go wrong.
+ *
+ *   ocr   gemini-3.1-flash-lite   38,644 ok pages $1.46/1K + 4,620 failed $8.87/1K  -> $2.25/1K
+ *   ocr   gemini-3-flash-preview  34,902 ok pages $1.83/1K                           -> $1.83/1K
+ *   translation gemini-3-flash-preview   70 pages $1.78/1K (thin sample)             -> $1.78/1K
+ *
+ * Anything unmeasured is priced from the batch rate card at a conservative
+ * 4,000 input / 1,500 output tokens per page — high on purpose, for the same
+ * reason. Re-measure before trusting a rate older than a month.
+ */
+const MEASURED_BATCH_USD_PER_PAGE = {
+  'ocr|gemini-3.1-flash-lite': 0.00225,
+  'ocr|gemini-3-flash-preview': 0.00183,
+  'translation|gemini-3-flash-preview': 0.00178,
+};
+const UNMEASURED_TOKENS_PER_PAGE = { input: 4000, output: 1500 };
+
+export function estimateBatchCostUsd({ type, model, pageCount }) {
+  const pages = Math.max(0, Number(pageCount) || 0);
+  if (!pages) return 0;
+  const rate = MEASURED_BATCH_USD_PER_PAGE[`${type}|${model}`];
+  if (rate != null) return +(rate * pages).toFixed(6);
+  return +calculateCost(
+    model || 'gemini-3-flash-preview',
+    UNMEASURED_TOKENS_PER_PAGE.input * pages,
+    UNMEASURED_TOKENS_PER_PAGE.output * pages,
+    true,
+  ).toFixed(6);
+}
+
 export function outputTokensFrom(usageMetadata) {
   return (usageMetadata?.candidatesTokenCount || 0) + (usageMetadata?.thoughtsTokenCount || 0);
 }
@@ -108,11 +156,23 @@ async function supabaseFetch(path, init) {
  *
  * Without this the submit-time row stays at $0.00 forever and the collector's
  * own insert becomes a SECOND row for the same batch — so the meter reads zero
- * for real spend while double-counting the pages. Falls back to inserting a
- * fresh row when no placeholder is found (re-collected batches, or jobs
- * submitted before the placeholder existed), so nothing goes unlogged.
+ * for real spend while double-counting the pages.
  *
- * @returns {Promise<'updated'|'inserted'|'error'>}
+ * IDEMPOTENT PER batch_job_id, and that is the whole point (2026-09-14). The
+ * first version fell back to an INSERT whenever the placeholder PATCH matched
+ * nothing — and after the first collection the row is no longer a placeholder,
+ * so every re-collection of the same job inserted a fresh full-token row.
+ * Measured over 2026-09-01..13: 1,645 of 2,139 batch jobs carried a surplus
+ * row, all byte-identical in tokens and cost — 50.6M phantom output tokens,
+ * $39.51 of metered spend that was never spent, and 4,747 phantom pages.
+ * August, before whatever made re-collection routine, had exactly one.
+ *
+ * A batch job is ONE Gemini job and its usage is fixed once collected, so the
+ * second reading is never new money. Over-recording is not the harmless
+ * direction: `cost_usd` drives the daily dial, and a dial closed by spend that
+ * never happened stops real work for free.
+ *
+ * @returns {Promise<'updated'|'inserted'|'skipped'|'error'>}
  */
 export async function completeBatchUsage(params, db = null) {
   const batchJobId = params.batch_job_id;
@@ -151,6 +211,28 @@ export async function completeBatchUsage(params, db = null) {
         const text = await resp.text().catch(() => '');
         console.warn(`[supabase-usage] Batch completion patch failed (${resp.status}): ${text}`);
       }
+
+      // No PLACEHOLDER left. Before inserting, ask whether this batch already
+      // has a row at all — a second collection must overwrite its own reading,
+      // never add one beside it.
+      const existing = await supabaseFetch(
+        `gemini_usage?batch_job_id=eq.${encodeURIComponent(batchJobId)}&select=id&limit=1`,
+        { method: 'GET' },
+      );
+      if (existing.ok) {
+        const found = await existing.json().catch(() => []);
+        if (Array.isArray(found) && found.length > 0) {
+          const again = await supabaseFetch(
+            `gemini_usage?batch_job_id=eq.${encodeURIComponent(batchJobId)}`,
+            { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: JSON.stringify(patch) },
+          );
+          if (again.ok) return 'updated';
+          const text = await again.text().catch(() => '');
+          console.warn(`[supabase-usage] Batch re-completion patch failed (${again.status}): ${text}`);
+          // Fall through to the insert only if we could not update: losing the
+          // reading entirely is worse than recording it twice.
+        }
+      }
     } catch (err) {
       console.warn('[supabase-usage] Batch completion error:', err.message);
     }
@@ -160,6 +242,12 @@ export async function completeBatchUsage(params, db = null) {
       { $set: { ...patch, completed_at: new Date() } },
     ).catch(() => null);
     if (res?.matchedCount > 0) return 'updated';
+    // Same idempotency rule on the fallback store.
+    const again = await db.collection('gemini_usage').updateOne(
+      { batch_job_id: batchJobId },
+      { $set: { ...patch, completed_at: new Date() } },
+    ).catch(() => null);
+    if (again?.matchedCount > 0) return 'updated';
   }
 
   // No placeholder to close — log the result as its own row so the spend is

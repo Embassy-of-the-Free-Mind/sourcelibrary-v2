@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const maxDuration = 300;
 
@@ -120,7 +121,7 @@ export const POST = withAuth(async (request, session) => {
                     batch_job_id: job.id,
                     prompt_reference: job.prompt_reference, // Track which prompt was used
                     input_tokens: usage?.promptTokenCount || 0,
-                    output_tokens: usage?.candidatesTokenCount || 0,
+                    output_tokens: outputTokensFrom(usage),
                   },
                   updated_at: now,
                 },
@@ -141,7 +142,7 @@ export const POST = withAuth(async (request, session) => {
                     source: 'batch_api',
                     batch_job_id: job.id,
                     input_tokens: usage?.promptTokenCount || 0,
-                    output_tokens: usage?.candidatesTokenCount || 0,
+                    output_tokens: outputTokensFrom(usage),
                   },
                   updated_at: now,
                 },

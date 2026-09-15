@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { getGeminiClient } from '@/lib/gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/split-gemini', type: 'other' }));
 const geminiModel = process.env.GEMINI_MODEL || 'gemini-3-flash-preview';
 
 export const POST = withAuth(async (request: NextRequest) => {
@@ -38,7 +43,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       : { base64: imageData.base64, mimeType: imageData.mimeType };
 
     // Use Gemini 3 Flash for vision
-    const model = genAI.getGenerativeModel({ model: geminiModel });
+    const model = genAI().getGenerativeModel({ model: geminiModel });
 
     const prompt = `You are an expert at analyzing scanned book spreads to find the optimal vertical split line.
 
@@ -92,7 +97,7 @@ Example output: 487`;
     // Get token usage for cost tracking
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = outputTokensFrom(usageMetadata);
 
     return NextResponse.json({
       position,

@@ -12,6 +12,7 @@
 
 import { MongoClient } from 'mongodb';
 import crypto from 'crypto';
+import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -51,7 +52,7 @@ function getKey() {
   return key;
 }
 
-async function transliteratePage(db, page) {
+async function transliteratePage(db, page, bookId) {
   const ocrText = page.ocr?.data;
   if (!ocrText || typeof ocrText !== 'string' || ocrText.length < 10) return false;
 
@@ -79,6 +80,20 @@ async function transliteratePage(db, page) {
   }
 
   const data = await res.json();
+  // Record the spend. An unattended worker that writes no usage row is money
+  // the dial cannot see and no report can attribute (#4599).
+  await logUsage({
+    type: 'transliterate',
+    mode: 'realtime',
+    model: MODEL,
+    book_id: bookId,
+    page_ids: [String(page._id)],
+    input_tokens: data.usageMetadata?.promptTokenCount || 0,
+    output_tokens: outputTokensFrom(data.usageMetadata),
+    status: 'success',
+    endpoint: 'worker/transliterate-greek',
+  }, db);
+
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) throw new Error('Empty response from Gemini');
 
@@ -158,7 +173,7 @@ for (const book of books) {
   for (let i = 0; i < pages.length; i += CONCURRENCY) {
     const chunk = pages.slice(i, i + CONCURRENCY);
     const results = await Promise.allSettled(
-      chunk.map(page => transliteratePage(db, page))
+      chunk.map(page => transliteratePage(db, page, book.id))
     );
 
     for (const r of results) {

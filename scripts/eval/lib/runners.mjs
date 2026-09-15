@@ -6,6 +6,8 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { logUsage } from '../../workers/lib/supabase-usage-logger.mjs';
+import { execFileSync } from 'child_process';
 // Prices come from the one shared table — this file used to carry its own copy,
 // which is how `gemini-3.1-flash-lite` ended up costed 3.3x apart across lanes.
 import { priceFor } from '../../lib/model-pricing.mjs';
@@ -95,7 +97,7 @@ function getAnthropic() {
  * one image per call and therefore has no cross-page context at all.
  */
 export async function runGemini(model, imageBuffer, prompt, opts = {}) {
-  const { temperature = 0, maxTokens = 8000, thinking = false, mediaResolution } = opts;
+  const { temperature = 0, maxTokens = 8000, thinking = false, mediaResolution, thinkingBudget } = opts;
   const apiKey = getNextGeminiKey();
   const buffers = Array.isArray(imageBuffer) ? imageBuffer : [imageBuffer];
 
@@ -121,6 +123,11 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
     body.generationConfig.thinkingConfig = isGemini3
       ? { thinkingLevel: 'HIGH' }
       : { thinkingBudget: 8192 };
+  } else if (typeof thinkingBudget === 'number') {
+    // Explicit budget (production OCR/translation use 0 — Gemini 3.x thinks by default and bills
+    // it at the output rate, CLAUDE.md "AI Models"). Opt-in so earlier runs stay reproducible; the
+    // default-thinking path is the #4599 sweep's business.
+    body.generationConfig.thinkingConfig = { thinkingBudget };
   }
 
   const start = Date.now();
@@ -153,13 +160,33 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
   const outputTokens = usage.candidatesTokenCount || 0;
   const thinkingTokens = usage.thoughtsTokenCount || 0;
 
+  // Every eval harness in scripts/eval reaches Gemini through this one function,
+  // and until 2026-09-14 none of that spend reached a usage store (#4599). Paid
+  // evals run on Hetzner, where the Supabase key is present, so they now land in
+  // the same attribution table as the pipeline. The label says which harness:
+  // pass `opts.endpoint`; unlabelled calls still record, as `eval/runner`.
+  await logUsage({
+    type: opts.usageType || 'other',
+    mode: 'realtime',
+    model,
+    input_tokens: inputTokens,
+    // Billed output = visible + reasoning. The eval tables keep the two apart
+    // (outputTokens / thinkingTokens below); the MONEY never did, which is how
+    // `costUsd` understated every thinking-on arm.
+    output_tokens: outputTokens + thinkingTokens,
+    status: 'success',
+    duration_ms: durationMs,
+    endpoint: opts.endpoint || 'eval/runner',
+    triggered_by: 'manual',
+  }).catch(() => {});
+
   return {
     text,
     model,
     inputTokens,
     outputTokens,
     thinkingTokens,
-    costUsd: calcCost(model, inputTokens, outputTokens),
+    costUsd: calcCost(model, inputTokens, outputTokens + thinkingTokens),
     durationMs,
     finishReason: data.candidates?.[0]?.finishReason || 'unknown',
     ...(thinking && thoughtParts.length > 0 && { thoughtText: thoughtParts.map(p => p.thought || p.text).join('') }),
@@ -517,12 +544,102 @@ export function isMistralModel(model) {
 export async function runModel(model, imageBuffer, prompt, opts = {}) {
   const resolved = resolveModel(model);
   if (isClaudeModel(resolved)) return runClaude(resolved, imageBuffer, prompt, opts);
+  if (isGoogleVisionModel(resolved)) return runGoogleVision(Array.isArray(imageBuffer) ? imageBuffer[0] : imageBuffer, opts);
   if (isMistralOcrModel(resolved)) return runMistralOcr(resolved, imageBuffer, prompt, opts);
   if (isMistralModel(resolved)) return runMistralChat(resolved, imageBuffer, prompt, opts);
   if (isReplicateOcrModel(resolved)) return runReplicateDeepSeekOcr(resolved, imageBuffer, prompt, opts);
   if (isScalewayModel(resolved)) return runScaleway(resolved, imageBuffer, prompt, opts);
   if (isMuleModel(resolved)) return runMuleRouter(resolved, imageBuffer, prompt, opts);
   return runGemini(resolved, imageBuffer, prompt, opts);
+}
+
+// ── Google Cloud Vision (classical OCR, non-generative) ───────────
+//
+// DOCUMENT_TEXT_DETECTION over the REST endpoint. This is NOT a language model:
+// it cannot recite, so it is a non-generative comparator for the memorization-
+// subsidy design (see tesseract-baseline.mjs) and a candidate budget lane at
+// $1.50/1K pages. Unlike every VLM runner here it returns a CONFIDENCE (per
+// block) and the engine's own language detection.
+//
+// Auth, in order: GOOGLE_VISION_API_KEY (an API key restricted to Vision), else
+// GOOGLE_CLOUD_ACCESS_TOKEN, else `gcloud auth print-access-token` (cached for
+// the process). Token auth needs GOOGLE_CLOUD_PROJECT for billing attribution
+// (x-goog-user-project). Never write a key into this file.
+//
+// Billing unit: one image = one unit (first 1,000 units/month free, then $1.50/1K).
+let _gcloudToken = null;
+function getGoogleAccessToken() {
+  if (process.env.GOOGLE_CLOUD_ACCESS_TOKEN) return process.env.GOOGLE_CLOUD_ACCESS_TOKEN;
+  if (_gcloudToken) return _gcloudToken;
+  _gcloudToken = execFileSync('gcloud', ['auth', 'print-access-token'], { encoding: 'utf8' }).trim();
+  return _gcloudToken;
+}
+
+export function isGoogleVisionModel(model) {
+  return model === 'google-vision' || model.startsWith('google-vision@');
+}
+
+/**
+ * @param {Buffer} imageBuffer  JPEG/PNG bytes (Vision sniffs the type)
+ * @param {{languageHints?: string[], feature?: 'DOCUMENT_TEXT_DETECTION'|'TEXT_DETECTION', timeoutMs?: number}} opts
+ * @returns {{text, detectedLanguages, blockConfidences, meanConfidence, minConfidence,
+ *            blocks, pages, elapsed, units, cost, error}}
+ */
+export async function runGoogleVision(imageBuffer, opts = {}) {
+  const { languageHints = [], feature = 'DOCUMENT_TEXT_DETECTION', timeoutMs = 60000 } = opts;
+  const req = {
+    image: { content: imageBuffer.toString('base64') },
+    features: [{ type: feature }],
+  };
+  if (languageHints.length) req.imageContext = { languageHints };
+
+  const headers = { 'Content-Type': 'application/json' };
+  let url = 'https://vision.googleapis.com/v1/images:annotate';
+  if (process.env.GOOGLE_VISION_API_KEY) {
+    url += `?key=${process.env.GOOGLE_VISION_API_KEY}`;
+  } else {
+    headers.Authorization = `Bearer ${getGoogleAccessToken()}`;
+    if (process.env.GOOGLE_CLOUD_PROJECT) headers['x-goog-user-project'] = process.env.GOOGLE_CLOUD_PROJECT;
+  }
+
+  const start = Date.now();
+  const resp = await fetch(url, {
+    method: 'POST', headers, body: JSON.stringify({ requests: [req] }),
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+  const elapsed = Date.now() - start;
+  if (!resp.ok) {
+    const body = await resp.text().catch(() => '');
+    throw new Error(`Vision HTTP ${resp.status}: ${body.slice(0, 300)}`);
+  }
+  const data = await resp.json();
+  const r = data.responses?.[0] || {};
+  const fta = r.fullTextAnnotation;
+  const pages = fta?.pages || [];
+  const blockConfidences = [];
+  const detectedLanguages = [];
+  for (const p of pages) {
+    for (const dl of p.property?.detectedLanguages || []) {
+      detectedLanguages.push({ languageCode: dl.languageCode, confidence: dl.confidence ?? null });
+    }
+    for (const b of p.blocks || []) if (typeof b.confidence === 'number') blockConfidences.push(+b.confidence.toFixed(3));
+  }
+  const mean = xs => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : null);
+  return {
+    model: 'google-vision',
+    text: fta?.text || '',
+    detectedLanguages,
+    blockConfidences,
+    meanConfidence: mean(blockConfidences) == null ? null : +mean(blockConfidences).toFixed(3),
+    minConfidence: blockConfidences.length ? Math.min(...blockConfidences) : null,
+    blocks: blockConfidences.length,
+    pages: pages.length,
+    elapsed,
+    units: 1,
+    cost: 0.0015, // list price per unit above the free tier; the free tier is not modelled
+    error: r.error ? `${r.error.code}: ${r.error.message}` : null,
+    inputTokens: 0, outputTokens: 0,
+  };
 }
 
 // ── Image fetching helper ──────────────────────────────────────────

@@ -132,7 +132,7 @@ case 2. Historical stages stay **distinct as catalogue values** — a reader
 looking for Old English does not want modern English — and count as **one
 language** when asking whether a book is bilingual. Families today: Chinese
 (+ Classical, Literary), English (+ Old, Middle), French (+ Old, Middle),
-German (+ Middle High, Old High, Early New High), Hebrew (+ Biblical,
+German (+ Middle High, Old High, Early New High), Dutch (+ Middle, Old), Hebrew (+ Biblical,
 Samaritan), Church Slavonic (+ Old).
 
 **The general rule, worth more than either instance:** when a detector fires and
@@ -180,6 +180,25 @@ K'iche' there and a share-ordered rule renames the K'iche' Popol Vuh
 curatorial judgement; the leaves are evidence that something is MISSING from the
 record, never that it is backwards.
 
+## A public language write needs two instruments, not one (#4781, 2026-09-13)
+
+The first visible relabel sweep put 746 books through `detect-language-from-pages.mjs`
+alone. A spot check of 15 found 2 wrong, both the sampler's "script wins" verdict —
+`2,536 GREEK chars but the OCR tag says "latin"` — written as `Greek` on Latin and
+German books with Greek quotations, because an EMPTY catalogue value fell through to
+the write path. 32 books had to be repaired. The hidden batch the same day had zero
+errors, and the only difference was a second instrument: the page-tag aggregation
+(`detect-book-languages.mjs`) had to name the same language at ≥ 90% of tagged pages.
+
+Two rules follow. **The mechanism** is now in the writer (PR #4812): a `review`
+verdict never writes `language`, stored value or not — only `clear` does. **The
+judgment** cannot be: before any write that reaches a published record, require the
+aggregation's top language to agree with the sampler's, and spot-check by READING
+interior pages from the mirror, not by re-reading the tag. The tag is one witness.
+Also: every language write must set `languages[] = [language]` (a stale array keeps
+the old value matching in filters — #3942) and record a `sweep_log` row; the writer
+does neither.
+
 ## The Korean/hanmun class must never be auto-flipped
 
 A book catalogued `Korean` whose pages are Classical Chinese is not mislabelled.
@@ -194,7 +213,10 @@ the detector's `contradict` bucket is a review queue and not a patch.
 The two figures above (5 apparent mislabels, 6,230 bilingual books) come from the
 detector's FIRST run and are artifacts. Here is the whole live corpus after both
 fixes, so nobody has to re-derive it: `detect-book-languages.mjs`, all 21,481
-live books with OCR, 2026-08-21.
+live books with OCR, 2026-08-21. (Since #4781 the same rule runs off the local
+corpus mirror — `--mirror=~/sl-corpus --all` — in about fifteen minutes for
+every book with OCR, with zero Atlas load; measured identical to the Atlas
+path on 60 books. Use that for any corpus-wide re-measurement.)
 
 | bucket | books | what it means |
 |---|---:|---|
@@ -320,3 +342,112 @@ Sahagún's own — replacing them is a curatorial call, not a technical one) ·
 #3893 (one vocabulary) · #3958 (1,519 live books in `language_review` with no
 consumer) · #2184 (translations catalogued as the original's language) ·
 #3957 / #3261 (`text_role` misclassification, the adjacent axis)
+
+---
+
+## One normaliser, and the two jobs it must not conflate (2026-09-10, PR #4700)
+
+**`normalizeLanguageToken` is the only normaliser.** `src/lib/language-normalize.ts` and its pinned
+`.mjs` twin (`tests/unit/language-normalize-parity.test.ts`) carry the considered policy: period
+variants that are the **same** language collapse (Ancient/Modern Greek, Classical Latin, Koine Greek,
+New Latin), ones that are **distinct** languages survive (Old English, Middle High German, Old
+French, Church Slavonic, Classical Chinese, Ottoman Turkish, Judeo-Arabic).
+
+There were **four** normalisers before this. `displayLanguage` had its own rule — strip a leading
+`modern|ancient|old|classical|medieval|middle|early`, title-case the first character only — and
+disagreed with the twin on **13 of 27** probe tokens, wrong in two opposite directions at once, which
+is why neither direction had been noticed:
+
+- it **collapsed distinct languages** into their parent: `Old English`→`English`,
+  `Old French`→`French`, `Classical Chinese`→`Chinese`, and `Old Norse`→`Norse`, which is not a
+  language;
+- it **mangled case** on everything it did not recognise: `Koine greek`, `New latin`,
+  `Church slavonic`, `Ottoman turkish`, `Judeo-arabic`.
+
+Nothing had reached `books.language` (0 mangled values when measured) — it was a **latent trap on the
+import path**, because `src/lib/resolve-language.ts` normalises every incoming language through it.
+Two further private copies existed, in `scripts/maintenance/backfill-language-provenance.mjs` (now
+importing the shared one) and `scripts/lib/edition-citation-language.mjs` (deliberately untouched: it
+is held in parity with `src/lib/edition-language.ts` by `edition-citation-language-twins.mjs` and
+feeds DOI citation blocks).
+
+**NORMALISE and COMPARE are different jobs; neither function does both.** Normalise a value with
+`normalizeLanguageToken`. Compare two values with `sameLanguage` / `sameLanguageFamily`, which
+**normalise first and then compare FAMILIES** — so an Old French edition of a French work is still
+the same language and does not read as a translation. Do not reach for `languageFamily()` on raw
+input: it strips a register prefix but does not touch codes, does not collapse `Ancient Greek`, and
+answers **true** for `Unknown` vs `Unknown`.
+
+## `field_provenance.language` is a typed entry, never a bare label
+
+`{ source, value, chosen_from, claims[], conflict?, date }` — the shape `resolve-language.ts`
+defines. 454 books had stored only a label string (`caller`, `ia_metadata`,
+`manual_curator_override`…) while 32,712 held the object, so a reader asking a string for
+`.chosen_from` or `.claims` got `undefined`, silently. The direct importers wrote one shape and the
+API routes the other: the same "which door did the data come through" disease the pinned twins exist
+to end. Reshaped 2026-09-10; keep it one shape.
+
+## Provenance is ONE field, not ten columns
+
+Ten fields recorded how a language was decided and **were read by nothing** — retired 2026-09-10
+(8,256 instances / 5,018 books, every value preserved in `sweep_log`, replayable with
+`restore-orphan-book-fields.mjs --sweep language-field-consolidation-2026-09`):
+
+`language_source` · `language_confidence` · `ai_detected_language` · `_language_backfill` ·
+`language_detected` · `language_corrected` · `language_relabel` · `language_verified_content` ·
+`language_review_resolved` · `script_type`
+
+A lane that decides a language writes `field_provenance.language`; a sweep that changed one writes a
+`sweep_log` row (`invariants/field-sprawl.md`). Both are in `--forbid` on the weekly watch, so a
+reappearance fails CI.
+
+**Two fields survived that cut, and they are the reusable lesson:**
+
+- **`language_raw` is LIVE.** It looks exactly like the others — a sweep's "preserve the original"
+  column — but `normalize-language-tags.mjs` projects it and uses `d.language_raw == null` as its
+  **idempotence guard**. Deleting it makes a re-run overwrite the preserved original with the
+  normalised value.
+- **`books.script_type` and `pages.script_type` were two subsystems sharing a name.** The page one is
+  real (`printed|handwritten|mixed`, declared in `src/lib/types/page.ts`, synced to Supabase by six
+  scripts); the book one was a single stray document. Only the book-level field is retired. Check
+  which COLLECTION a name lives on before treating two spellings as one family.
+
+## Model routing reads this field — and OCR and translation read it DIFFERENTLY (2026-09-12, #4762)
+
+`books.language` is not only a display and filter field. Two routers read it, and since #4762 they
+deliberately disagree:
+
+| | full flash (`gemini-3-flash-preview`) | flash-lite (`gemini-3.1-flash-lite`) |
+|---|---|---|
+| **OCR** — `getModelForBook`, `src/lib/types/ai-models.ts` | BPH provider, **any language outside the Latin-script allowlist**, unknown/null language | Latin-script allowlist only |
+| **Translation** — `getTranslateModelForBook`, `scripts/lib/translate-core.mjs` | BPH provider only | everything else |
+
+**Do not "restore the mirroring."** The two functions were identical until #4762 and the comments
+said so; they now differ on purpose, and the comments say that instead.
+
+**Why they differ.** #1726 carved non-Latin scripts out to full flash because flash-lite
+*hallucinates rather than fails* on low-resource scripts — it read a Bhutanese astrological text as a
+"ritual manual for weather control". The cited mechanism (Wu et al. 2025) is that vision models lean
+on linguistic priors **when visual decoding is hard**. That is a vision failure, and it is real: OCR
+keeps the carve-out. Translation never decodes an image; it reads `ocr.data` as text. The carve-out
+was applied to the translation worker in the same change with no translation evidence offered.
+The free observational read in #4759 (137 books, 303 within-book pairs matched on `ocr.model`, plus a
+blind judge over 30 pairs) found no fabrication and no comprehension failure on lite. Worth ~$12K over
+5.4M untranslated pages. Report: `scripts/eval/results/translation-model-obs-report.md`.
+
+**A policy's history is not the policy.** Three eras so far: everything non-BPH on lite
+(2026-03-27, #467) → non-Latin carved out for both lanes (2026-05-12, #1726) → translation carved
+back (2026-09-12, #4762). Rows written under an old era look exactly like a live violation of the
+current one. **Date the rows and `git log -S` the rule before calling anything drift** — a session
+reported the Mar–May lite translations of Tibetan books as a live bypass, and they were history.
+The retired `gemini-3.1-flash-lite-preview` id in a row is itself a date stamp.
+
+**A router only routes if the caller asks it.** #4762 also found four Lambda-lane producers
+(`bulk-translate-lambda`, `queue-translations`, `queue-translations-to-80pct`,
+`queue-efm-translations`) that hardcoded full flash and bypassed routing for every book, because
+`job.config.model` wins in the sink. When you change a routing policy, **find every producer**, not
+just the router. A split policy that half the writers honour is worse than either policy.
+
+**A mislabel now picks a model.** Judges in the #4759 read found Syriac and Avestan books carrying
+`language: hebrew` (#4766). Under the OCR table above, a non-Latin book mislabelled as a
+*Latin-script* language routes to flash-lite for OCR — precisely the case #1726 exists to prevent.

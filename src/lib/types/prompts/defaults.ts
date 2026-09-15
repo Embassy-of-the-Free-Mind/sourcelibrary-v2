@@ -70,8 +70,9 @@ export const VALID_PAGE_TYPES: ReadonlySet<string> = new Set<string>([
 // (ex-libris/bookplates are ownership marks, not book content)
 // Keep equal to SKIP_TRANSLATION_PAGE_TYPES in scripts/lib/translate-core.mjs
 // (the scripts-side canonical) — pinned by tests/unit/translate-edge-cases.test.ts.
+// `digitizer-insert` added #4685/#4507: scanning-service boilerplate, never book content.
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'exlibris', 'bookplate', 'digitizer-notice',
+  'blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert',
 ];
 
 // Page types hidden from the reader navigation (still accessible via direct URL)

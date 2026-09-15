@@ -2,7 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { TranslationWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performTranslation } from '@/lib/ai';
-import { DEFAULT_MODEL, getModelForBook } from '@/lib/types';
+import { DEFAULT_MODEL, getTranslateModelForBook, type RoutableBook } from '@/lib/types';
 import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
@@ -202,7 +202,9 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     }
   }
 
-  const modelId = job.config.model || getModelForBook(bookDoc as { image_source?: { provider?: string }; language?: string | null } | null) || DEFAULT_MODEL;
+  // Translation routing, not OCR routing: non-Latin scripts translate on lite (#4759).
+  // An explicit job.config.model still wins — deliberate re-translations set one on purpose.
+  const modelId = job.config.model || getTranslateModelForBook(bookDoc as RoutableBook | null) || DEFAULT_MODEL;
   const startTime = Date.now();
 
   // Resolve the translation prompt from DB (source of truth for prompt content + version)

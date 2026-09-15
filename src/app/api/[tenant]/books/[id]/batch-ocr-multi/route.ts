@@ -8,7 +8,7 @@ import { images } from '@/lib/api-client';
 import { getPageImageUrl } from '@/lib/utils';
 import { createBatchJobInline, type BatchRequest } from '@/lib/gemini-batch';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
-import { DEFAULT_BATCH_MODEL } from '@/lib/types/ai-models';
+import { getModelForBook } from '@/lib/types/ai-models';
 import type { BatchJob } from '@/lib/types/batch-job';
 import type { JobType, JobStatus } from '@/lib/types/job';
 import type { Book } from '@/lib/types/book';
@@ -66,6 +66,8 @@ export const POST = withAuth(async (request, session, context) => {
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+    // Routed per book: Latin-script allowlist → lite, BPH / non-Latin / unknown → flash (#4729).
+    const ocrModel = getModelForBook(book);
 
     // Build filter: pages must have images, optionally filter by OCR status
     let query: any = {
@@ -193,7 +195,7 @@ export const POST = withAuth(async (request, session, context) => {
 
       // Submit to Gemini Batch API using helper
       const batchJob = await createBatchJobInline(
-        DEFAULT_BATCH_MODEL,
+        ocrModel,
         batchRequests,
         `ocr-${bookId}-${childJobId}-${Date.now()}`
       );
@@ -230,7 +232,7 @@ export const POST = withAuth(async (request, session, context) => {
         page_ids: child.pageIds,
         page_count: child.pageCount,
         status: pendingStatus,
-        model: DEFAULT_BATCH_MODEL,
+        model: ocrModel,
         language,
         prompt_id: promptRef.id,
         prompt_name: promptRef.name,
@@ -247,7 +249,7 @@ export const POST = withAuth(async (request, session, context) => {
       await logGeminiCall({
         type: jobType,
         mode: 'batch',
-        model: DEFAULT_BATCH_MODEL,
+        model: ocrModel,
         book_id: bookId,
         book_title: book.title,
         page_ids: child.pageIds,

@@ -46,6 +46,7 @@ import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/ent
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import pg from 'pg';
 
 // Selective-unpause scope confinement, set in main() after the pause check.
@@ -157,10 +158,14 @@ async function logUsage(db, params) {
 
 // ── Pipeline status helpers ──
 async function setPipelineStatus(db, bookId, status, extra = {}) {
-  await db.collection('books').updateOne(
-    { id: bookId },
+  // NOT_HELD: a held book (scripts/lib/pipeline-hold.mjs, #4790) keeps its hold whatever this
+  // worker decided — it is never selected by status, so this only matters for --book overrides,
+  // and there the refusal is the point.
+  const r = await db.collection('books').updateOne(
+    { id: bookId, ...NOT_HELD },
     { $set: { 'pipeline_auto.status': status, 'pipeline_auto.updated_at': new Date(), updated_at: new Date(), ...extra } },
   );
+  if (r.matchedCount === 0) console.log(`  [pipeline-hold] ${bookId}: refusing status '${status}' — book is held or missing`);
 }
 
 async function markFailed(db, bookId, reason, retries) {

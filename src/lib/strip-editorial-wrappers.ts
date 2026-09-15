@@ -243,6 +243,37 @@ export interface StripEditorialWrappersOptions {
   keepTables?: boolean;
 }
 
+/**
+ * The wrapper-block strip ALONE — the #2232 guarantee with none of the
+ * plain-text flattening (tables, headings, emphasis, `->centered<-`) that
+ * {@link stripEditorialWrappers} adds for snippet surfaces.
+ *
+ * For surfaces that render the page's markdown themselves and so cannot take
+ * the full function: the EPUB/HTML exporter (`export-markdown-html.ts`), which
+ * turns `# heading` and `**bold**` into real elements and would lose them if the
+ * markers were stripped first. Before this existed the exporter kept its OWN
+ * hide-list, which drifted from this one and lacked attribute tolerance —
+ * `<scan-quality>good</scan-quality>` and `<image-desc size="medium">…` reached
+ * every downloaded book as literal text, the AI's account of a plate sitting
+ * inline in the running text with nothing to mark it (#4782). One list; import
+ * it, do not copy it.
+ *
+ * Paired blocks go content-and-all (multiline). The backreference keeps one
+ * wrapper type from swallowing text between it and a different one. The
+ * `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag: the OCR prompt emits
+ * `<image-desc size="medium" type="emblem" significance="high">` on 0.77% of
+ * page-fields, and without it the pair never matched — the description survived
+ * as quotable text while the generic tag-strip removed only its closing tag.
+ * Never tighten this back to a bare `<tag>`.
+ */
+export function stripEditorialWrapperBlocks(text: string): string {
+  if (!text) return text;
+  return text
+    .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
+    // Any orphan opening/closing wrapper tag left by malformed AI output.
+    .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' ');
+}
+
 export function stripEditorialWrappers(
   text: string,
   opts?: StripEditorialWrappersOptions,
@@ -262,20 +293,7 @@ export function stripEditorialWrappers(
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
       flattenTables(
-        text
-          // Paired blocks, content and all (multiline). Backreference keeps it from
-          // swallowing text between two different wrapper types.
-          //
-          // The `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag. The OCR prompt
-          // emits them — `<image-desc size="medium" type="emblem" significance="high">`
-          // appears on 0.77% of page-fields — and without this the pair never matched:
-          // the AI's description of a plate survived as quotable text while the generic
-          // tag-strip below removed its closing tag, leaving editorial prose
-          // indistinguishable from the page's own words. That is the #2232 misquote
-          // class. Never tighten this back to a bare `<tag>`.
-          .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
-          // Any orphan opening/closing wrapper tag left by malformed AI output.
-          .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' '),
+        stripEditorialWrapperBlocks(text),
       ),
     ),
   );

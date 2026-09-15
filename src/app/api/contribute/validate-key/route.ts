@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getUnmeteredGeminiClient } from '@/lib/gemini-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,8 +11,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ valid: false, error: 'Invalid API key format' });
     }
 
+    // usage-ok: this call is billed to the CONTRIBUTOR's key, not ours. A
+    // gemini_usage row here would attribute someone else's spend to us.
     // Test the key by making a simple request
-    const genAI = new GoogleGenerativeAI(apiKey);
+    const genAI = getUnmeteredGeminiClient(apiKey);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     // Simple test prompt

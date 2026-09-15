@@ -8,6 +8,8 @@
  * Usage: node scripts/maintenance/detect-language-untagged-ocr.mjs [--apply]
  */
 import { MongoClient } from 'mongodb';
+// A sweep records a ROW, not a COLUMN (invariants/field-sprawl.md).
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 const APPLY=process.argv.includes('--apply');
 const KEY=process.env.GEMINI_API_KEY, M='gemini-3.1-flash-lite';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -20,13 +22,16 @@ async function detect(title){
   return null;
 }
 const c=new MongoClient(process.env.MONGODB_URI); await c.connect();
-const B=c.db('bookstore').collection('books');
+const db=c.db('bookstore');
+const B=db.collection('books');
 const cand=await B.find({language:{$in:['Unknown',null]},pages_ocr:{$gt:0}},{projection:{title:1}}).toArray();
 let set=0,flagged=0,err=0; const results=[];
 for(const b of cand){ const v=await detect(b.title); 
   if(!v){err++;continue;}
   if(v.language && v.confidence==='high'){ set++; results.push(`${v.language}  ← ${(b.title||'').slice(0,45)}`);
-    if(APPLY) await B.updateOne({_id:b._id},{$set:{language:v.language,languages:[v.language],language_raw:'Unknown',language_detected:'gemini_title'}}); }
+    if(APPLY) { await B.updateOne({_id:b._id},{$set:{language:v.language,languages:[v.language],language_raw:'Unknown'}});
+      // language_detected held only the label 'gemini_title' and nothing read it (retired 2026-09-10).
+      await recordSweepAction(db,{sweep:'detect-language-untagged-ocr',book_id:String(b._id),action:'language-set-from-title',detail:{to:v.language,confidence:v.confidence,detector:'gemini_title'}}); } }
   else { flagged++; if(APPLY) await B.updateOne({_id:b._id},{$set:{language_review:true}}); }
   await sleep(200);
 }

@@ -31,6 +31,8 @@
  *   node scripts/maintenance/classify-language-mismatch-content.mjs --apply  # fix clear vernacular + clear false-positive flags
  */
 import { MongoClient } from 'mongodb';
+// A sweep records a ROW, not a COLUMN (invariants/field-sprawl.md).
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 import fs from 'fs';
 // Classifier extracted to a lib so the #3958 triage reuses it rather than
 // copying it. Behaviour here is unchanged.
@@ -45,8 +47,9 @@ const APPLY = process.argv.includes('--apply');
 
 const cand = JSON.parse(fs.readFileSync('/tmp/noneng-triage.json','utf8'));
 const mc = new MongoClient(process.env.MONGODB_URI); await mc.connect();
-const P = mc.db('bookstore').collection('pages');
-const B = mc.db('bookstore').collection('books');
+const db = mc.db('bookstore');
+const P = db.collection('pages');
+const B = db.collection('books');
 
 const out = { falsePositive: [], vernacular: [], unclear: [] };
 for (const c of cand) {
@@ -91,8 +94,19 @@ if (APPLY) {
   const before = await B.find({ id:{$in:ids} }, { projection:{ id:1, language:1, language_review:1, _id:0 } }).toArray();
   fs.writeFileSync('scripts/output/classify-noneng-backup-2026-06-16.json', JSON.stringify(before,null,2));
   let fixedLang=0, clearedFp=0;
-  for (const r of out.vernacular) fixedLang += (await B.updateOne({ id:r.id }, { $set: { language: fmtLang(r.dominant), 'field_provenance.language':'content_classifier_2026_06_16', updated_at:new Date() }, $unset: { language_review:'', language_review_detail:'' } })).modifiedCount;
-  for (const r of out.falsePositive) clearedFp += (await B.updateOne({ id:r.id }, { $unset: { language_review:'', language_review_detail:'' }, $set: { language_verified_content:true, updated_at:new Date() } })).modifiedCount;
+  // field_provenance.language is a TYPED entry, not a bare label string (consolidated 2026-09-10):
+  // 454 books carried only a string here, so a reader asking for .chosen_from or .claims got undefined.
+  for (const r of out.vernacular) fixedLang += (await B.updateOne({ id:r.id }, { $set: { language: fmtLang(r.dominant),
+    'field_provenance.language': { source: 'content_classifier', value: fmtLang(r.dominant), chosen_from: 'page_content_classifier',
+      claims: [{ source: 'page_content_classifier', value: fmtLang(r.dominant) }], issue: 2534, date: new Date().toISOString() },
+    updated_at:new Date() }, $unset: { language_review:'', language_review_detail:'' } })).modifiedCount;
+  // language_verified_content was a 13-document COLUMN nothing read; the verification is a ROW now
+  // (retired 2026-09-10). Clearing the review flag is the behaviour that mattered.
+  for (const r of out.falsePositive) {
+    clearedFp += (await B.updateOne({ id:r.id }, { $unset: { language_review:'', language_review_detail:'' }, $set: { updated_at:new Date() } })).modifiedCount;
+    await recordSweepAction(db, { sweep: 'classify-language-mismatch-content', book_id: r.id,
+      action: 'language-verified-from-content', detail: { verdict: 'original-language confirmed', issue: 2534 } });
+  }
   console.log(`\n[--apply] fixed language on ${fixedLang} vernacular books; cleared review flag on ${clearedFp} verified-original false-positives. Backup saved.`);
 }
 await mc.close();

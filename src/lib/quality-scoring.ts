@@ -12,8 +12,10 @@
  */
 
 import { Db } from 'mongodb';
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
+import { getGeminiClient } from './gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 const MODEL = 'gemini-3-flash-preview';
 
@@ -181,7 +183,7 @@ export async function scoreBookQuality(
     .countDocuments({ book_id: bookId });
 
   // Call Gemini
-  const client = new GoogleGenerativeAI(apiKey);
+  const client = getGeminiClient({ selfMetered: true, reason: 'this module logs its own row after the call' });
   const model = client.getGenerativeModel({
     model: MODEL,
     safetySettings: SAFETY_SETTINGS,
@@ -208,7 +210,7 @@ export async function scoreBookQuality(
     const usageMeta = response.usageMetadata;
     usage = {
       input_tokens: usageMeta?.promptTokenCount || 0,
-      output_tokens: usageMeta?.candidatesTokenCount || 0,
+      output_tokens: outputTokensFrom(usageMeta),
     };
 
     try {

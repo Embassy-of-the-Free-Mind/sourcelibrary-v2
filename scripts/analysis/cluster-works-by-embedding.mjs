@@ -161,7 +161,7 @@ for (const c of multi) {
 const stat = a => { if (!a.length) return { n: 0 }; a = [...a].sort((x, y) => x - y); const m = a.reduce((s, v) => s + v, 0) / a.length; return { n: a.length, mean: +m.toFixed(3), p50: +a[a.length >> 1].toFixed(3), p90: +a[Math.floor(a.length * 0.9)].toFixed(3), p10: +a[Math.floor(a.length * 0.1)].toFixed(3) }; };
 const sweep = (T, G) => { const tp = calPos.filter(p => p.s >= T && p.ts >= G).length, fp = calNeg.filter(p => p.s >= T && p.ts >= G).length; return { tp, fp, prec: (tp + fp) ? tp / (tp + fp) : 0, rec: calPos.length ? tp / calPos.length : 0 }; };
 const at = sweep(THRESHOLD, TITLE_GATE);
-const labeledPrecision = at.prec, recallProxy = at.rec;
+const labeledPrecision = at.prec, recallProxy = at.rec, labTP = at.tp, labFP = at.fp;
 
 console.log('\n── Calibration (within-author labeled pairs) ──');
 console.log('same-work (positives) emb:', JSON.stringify(stat(calPos.map(p => p.s))), ' title:', JSON.stringify(stat(calPos.map(p => p.ts))));

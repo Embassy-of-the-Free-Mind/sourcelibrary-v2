@@ -5,8 +5,10 @@
  * - Pings the browse API to detect DB saturation early.
  * - Clears the book.job lock so the pipeline can re-submit.
  *
- * Run via Hetzner cron every 30 minutes:
- *   */30 * * * * cd /root/sourcelibrary && set -a && source .env.production.local && set +a && node scripts/workers/auto-cancel-stuck-jobs.mjs >> /tmp/auto-cancel.log 2>&1
+ * Run via Hetzner cron every 30 minutes. The crontab schedule is star-slash-30
+ * on the minute field; it is not written literally here because a star-slash
+ * sequence terminates this comment and broke the file's syntax (#4702):
+ *   (every 30 min) cd /root/sourcelibrary && set -a && source .env.production.local && set +a && node scripts/workers/auto-cancel-stuck-jobs.mjs >> /tmp/auto-cancel.log 2>&1
  */
 
 import { MongoClient } from 'mongodb';

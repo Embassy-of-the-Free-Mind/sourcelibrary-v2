@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Laptop archive lane (see archive-acquired-mac.sh). Install:
+       cp scripts/catalog-coverage/org.sourcelibrary.archive-acquired-mac.plist ~/Library/LaunchAgents/
+       launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.sourcelibrary.archive-acquired-mac.plist
+     Edit the script path below if the checkout lives elsewhere. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>org.sourcelibrary.archive-acquired-mac</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/dereklomas/sourcelibrary/scripts/catalog-coverage/archive-acquired-mac.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict><key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string></dict>
+  <key>KeepAlive</key><true/>
+  <key>RunAtLoad</key><true/>
+  <key>ThrottleInterval</key><integer>60</integer>
+  <key>StandardOutPath</key><string>/tmp/archive-acquired-mac.log</string>
+  <key>StandardErrorPath</key><string>/tmp/archive-acquired-mac.log</string>
+  <key>ProcessType</key><string>Background</string>
+  <key>LowPriorityIO</key><true/>
+</dict>
+</plist>

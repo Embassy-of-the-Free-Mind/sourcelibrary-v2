@@ -1,8 +1,17 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { withAuth } from '@/lib/auth-helpers';
+import { getGeminiClient } from '@/lib/gemini-client';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Embedding calls (`embedContent`) are NOT metered by the client wrapper: the
+// response carries no usageMetadata, so there is nothing to record from. What
+// embedding costs is tracked on the worker side instead (#4162,
+// scripts/lib/embedding-usage.mjs). Routed through the shared client anyway,
+// for key rotation and so no construction of the SDK escapes it.
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/experiments/embed', type: 'other' }));
 
 export const POST = withAuth(async (req) => {
   try {
@@ -14,7 +23,7 @@ export const POST = withAuth(async (req) => {
       return NextResponse.json({ error: 'max 300 texts per request' }, { status: 400 });
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-embedding-001' });
+    const model = genAI().getGenerativeModel({ model: 'gemini-embedding-001' });
     const result = await model.batchEmbedContents({
       requests: texts.map((t: string) => ({
         content: { role: 'user' as const, parts: [{ text: t }] },

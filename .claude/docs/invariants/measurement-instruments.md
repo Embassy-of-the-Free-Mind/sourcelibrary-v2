@@ -133,6 +133,28 @@ what was new is that a *safety control* embodied it.
   hourly buckets — day-aligned queries anchor to the query END time and silently become
   rolling-24h windows). Verified 2026-08-09 for ~$0.05.
 
+**It recurred inside the audit written to catch it (2026-09-05, #4593/#4657).** `spend-reconcile.mjs`
+— the instrument whose whole purpose is comparing our meter to Google's bill — read Mongo
+`gemini_usage` alone. For August 2026 it reported 154,888 calls / $499.74 when the two stores hold
+305,800 / $2,316.68, so meter coverage printed 37% (true: 72%) and the billed-vs-metered gap printed
+11.1x (true: 2.4x). #4599 was then filed against a 250K-call hole that is ~117K. Three lessons the
+first incident did not carry:
+
+- **"Sum both stores" is a property of every spend instrument, so pin it in a test that names them
+  all** — `tests/unit/usage-meter-reads-both-stores.test.ts` asserts it for the guard, the reconciler
+  and `true-gemini-spend.mjs` together. Fixing the one that broke leaves the next one to be
+  discovered by a bill.
+- **Count the stores before trusting a coverage figure: there are THREE.** Mongo `ai_usage`
+  (`logAiUsage()`, request-path features — librarian, explain, ai_search_expand) held $77.00 in
+  August and no spend instrument read it. Report it separately: a librarian row is one agentic
+  TURN, several Gemini calls, so it can never be added to a call count.
+- **A silent-zero diagnosis deserves the inverse hypothesis.** #4593 was filed as "writers dropped
+  `created_at`, so every date-scoped read sees $0". The writers had moved to `timestamp` in 2026-03
+  and all 14 live readers followed; nothing reads `created_at` on that collection, and the dial reads
+  neither (ObjectId ranges, on purpose). What was actually invisible was the mirror image — 1,381
+  legacy rows carrying `created_at` and no `timestamp`. The ad-hoc query that produced the $0 was the
+  broken instrument, which is the theme of this whole file.
+
 ## An output that cannot vary with its input is reporting nothing — and a plausible list hides it best
 
 The `/encyclopedia/[name]` **Connections** panel showed "other entities that appear in
@@ -488,3 +510,199 @@ Rules for any third-party search you draw conclusions from:
 
 Same shape as the guard-reads-the-wrong-store entry above: the instrument was
 healthy-looking and pointed at nothing.
+
+## A positive control drawn from the data the process REPAIRS invalidates itself on success
+
+A repair sweep for #4580 (OCR writing Greek as LaTeX) refused to report a count unless
+a probe first matched the page the defect was reported from. Correct instinct — a
+"not found" is worthless until the probe has returned "found" for a known positive, and
+that guard had already caught a real escaping bug where the candidate pattern carried
+one backslash level too many and matched `\\alpha` rather than `\alpha`, reporting a
+confident **7 pages across 4 books** when the true population was in the thousands.
+
+Then the sweep repaired the control page. The TeX was gone, the control failed, and
+every subsequent run aborted with *"the probe is broken, not the corpus."*
+
+The guard behaved correctly; the **control** was wrong. It was measuring *"has this page
+been fixed yet"*, not *"does the probe work"*. **Any check whose subject the process
+under test can MODIFY starts testing the wrong thing the moment that process succeeds.**
+
+Use a frozen fixture — the defect text as originally reported, pasted into the script —
+and assert against it both that the candidate pattern matches and that the transform
+produces the expected output. Neither can be repaired out from under the check, and both
+fail loudly on the two regressions that actually happen: an over-escaped pattern, and a
+transform that silently stops producing the right answer.
+
+Related: `lesson_probe_needs_a_positive_control` (auto-memory).
+
+## A parser's error mode belongs to its INPUT distribution, not its code
+
+`publishedToYear` (`src/lib/resolve-language.ts`) takes the first 3–4 digit run it
+finds. That is right for a curator-typed hint (`"1561"`, `"ca. 1524"`). Reused on IIIF
+catalogue strings during a 1,698-book repair it fabricated precision, silently:
+
+| catalogue string | returns | truth |
+|---|---|---|
+| `1601-1700` | **1601** | a century, not a year |
+| `after 1599/1st half of the 17th century` | **1599** | the one year it demonstrably is NOT |
+| `1301-1500 / 1401-1500 / 1301-1400` | **1301** | three overlapping ranges |
+
+Nothing errors and every output is a plausible year, so the damage is invisible
+downstream — those books then answer `year_from=1601&year_to=1601` with false confidence
+and a reader cannot tell a measured year from a guessed one.
+
+**Before reusing a parser on a new source, print 10–20 real inputs from that source
+beside the outputs.** Distribution first, code second. And when a value can be a range,
+a century or an open bound, **do not collapse it to a point**: write the honest free-text
+field and leave the numeric one unset. An absent year is recoverable; a fabricated one
+is indistinguishable from a real one. The #4572 sweep splits exactly this way — 1,495
+books got an exact year, 121 got `published` with no `year`.
+
+Diverging from an existing helper is sometimes correct. Say WHY at the divergence, or
+the next person will "fix" the inconsistency back.
+
+**When a denominator is uncertain, err toward the LARGER one — the two ways of being wrong are not symmetric.** Everything above is about whether an instrument measures what you think. This is about which direction to fail when you have to choose, and it is not a coin flip: understating completeness is invisible and merely annoying, while overstating it is visible and destroys trust, because the reader can open the thing and see for themselves.
+
+Measured the hard way on 2026-08-31 (#4442/#4516). `pages_translatable` was introduced as the honest denominator for translation completeness — `pages_count` counts blank leaves and plates that will never carry text, so ~10% of live books reported complete when far more actually were. The first version of the rule excluded pages **with no OCR yet**, which conflates two different things: a page that will *never* be translatable, and a page simply *not transcribed yet*. The result shipped: **Theatrum Chemicum vol. 6 — 4,198 pages, 2,003 with OCR — displayed 100% TRANSLATED with 2,195 pages carrying no text at all**, and 1,701 books (11.4% of everything badged complete) were in the same state. A reader who opens a book badged 100% and pages into blanks has learned that our numbers are decoration, and that lesson generalises to every other number we show them.
+
+The correction — count pages awaiting OCR *in* the denominator — moved the corpus figure from 47.2% to **34.7%**. That is the fourth value the same number took in one session: **41% → 49.9% → 47.2% → 34.7%**, and *not one revision came from new data*. Every one came from specifying the denominator more carefully. When a number keeps moving under you while the underlying facts are unchanged, the instability is a message: the quantity is not yet defined, and no amount of extra sampling will settle it. Stop measuring and go define what counts.
+
+Two practical rules fall out. **Ask what each excluded item is excluded FOR** — "impossible" and "not done yet" look identical in a filter and mean opposite things, and only the first belongs outside a completeness denominator. And **check the extremes before publishing a ratio**: the books at 100% and the books at 0% are where a wrong denominator is visible in one glance. Both of the defects above were found by reading a single book's real page counts, after the aggregate looked fine. Related: [[tests-that-are-not-guards]] on the writer ratchet that now pins the rule, and the numerator/denominator invariant on keeping both sides of a ratio consistent.
+
+## Google's output-token metric counts REALTIME ONLY — never reconcile batch against it (2026-09-14)
+
+`generativelanguage.googleapis.com/generate_content_usage_output_token_count` is the
+only token metric Cloud Monitoring exposes for Gemini (the descriptor list has exactly
+one; everything else is a quota gauge). **It does not count batch generation.**
+
+Measured over 2026-09-06..12, output tokens in millions:
+
+| day | billed metric | our realtime rows | our batch rows |
+|---|---|---|---|
+| 09-08 | 10.85 | 10.0 | 27.4 |
+| 09-09 | 5.60 | 5.2 | 19.3 |
+| 09-10 | 4.79 | 4.6 | 14.4 |
+
+Billed tracks realtime within ~10% every day, while batch — three to four times the
+whole billed figure on a batch-heavy day — has nowhere to fit. Batch success rows carry
+counts read straight from Gemini's own response `usageMetadata`, so those tokens are
+real and billed; the METRIC is what cannot see them.
+
+**Rule:** compare realtime to realtime. `scripts/audit/spend-reconcile.mjs --days=N
+--check-gap` does, and prints batch in its own column marked *not comparable* — an
+unmeasurable is not a zero, and it is not a gap either. The external check on batch
+spend is the invoice plus `batch_jobs` (`scripts/maintenance/reconcile-batch-usage.mjs`).
+
+**This overturns a note written here on 2026-09-04**, which said batch *is* counted and
+the meter merely runs ~12% high. That reading came from early September, when batch
+volume was small next to realtime, so summing both sides still landed close; the
+batch-heavy days above separate them. If you sum batch into the metered side, a 60% gap
+reads as a 90% surplus, and the alarm never fires again.
+
+### What remains true from that note: the two stores keep different clocks
+
+A batch row is timestamped when the job is *collected*; Google counts tokens when they
+were *generated*, hours earlier. A three-hour window once "proved" batch was unmetered
+for exactly this reason. **A short window cannot distinguish "this lane is unmetered"
+from "these two clocks disagree"**, and the first conclusion is far more alarming than
+the truth. Reconcile over a month for the invoice, and a trailing week for the daily
+detector — never a few hours.
+
+Generalisation worth keeping: **when two instruments disagree, check whether they share
+a clock — and whether they share a POPULATION — before concluding one is broken.**
+
+## The convenient artifact is the misleading one — that is not a coincidence
+
+Three instruments failed in one afternoon (2026-09-04, #4523), and in every case the
+artifact a reasonable person would reach for FIRST was the wrong one. That is the
+pattern, not bad luck: the convenient artifact is convenient because it is complete,
+always present, or already open — and those are exactly the properties a stale or
+partial record has.
+
+- **A failures-only log reads as a complete log.** `reocr_worker.py` writes
+  `worker-0.jsonl` containing only failures and skips; successes go to the output
+  directory and are never logged. Reading it produced "2,016 failures, ZERO
+  successes — the job is broken", published as an operational alert. The job was
+  healthy: the output dir grew 7,430 → 7,451 files in 15 minutes, with valid
+  Tibetan in them. **Verify a worker by its OUTPUT growing, never by its error log
+  being non-empty.** If a log records only one outcome class, say so in its NAME.
+- **An error field that captures a stderr TAIL reports the last warning, not the
+  cause.** Every failure in that log read `kenlm python bindings are not installed`
+  — a benign notice the BDRC CLI prints on every invocation, successful or not. The
+  real failure modes (`No lines detected` on blank folios, http 403/502) were
+  invisible. Capture the exception, not the tail.
+- **A field present on 100% of rows beats a correct field present on 27% — in
+  adoption, not in truth.** `pages.image_width` exists on all 285,373 OCR'd Tibetan
+  pages; `image_metadata.width` on 27.3%. Where both exist they disagree **4,000 of
+  4,000 sampled times**: `image_width` is the DISPLAY derivative, `image_metadata`
+  the archived master (one page reads 1200×800 against a real 3888×2592). A
+  corpus-wide "42% of pages are too low-res to OCR" was built on the populated field
+  and was wrong. **Before a cohort query, check the field's coverage AND cross-check
+  it against a second source on rows carrying both.** For image size the authority is
+  the provider's own `info.json`, since our copy can never exceed the source master.
+
+Corollary for the writing side: **if you know which artifact is authoritative, make
+it the easy one to reach.** A warning in a doc loses to a field that autocompletes.
+
+**An instrument that reads only your own records cannot discover that your records are wrong.** Every rule above is about an instrument that measures the wrong thing. This one is about a whole *set* of instruments that measure the right thing, correctly, and still miss a fact none of them can see — because they all draw from the same well. We had three spend instruments: `true-gemini-spend.mjs` (reads every meter we write), `spend-perimeter.mjs` (checks every spender asks the dial), and the Gemini lines in `daily-health-snapshot.mjs` (reports `batch_jobs.cost_usd`). All three were well-built and encoded real scar tissue. **None of them ever asked Google what it charged.** So for three months they agreed with each other at ~$500/month against a billed $8,389.32 — a 17× gap that no amount of cross-checking *between* them could have surfaced, because the missing quantity (reasoning tokens, billed at the output rate) was absent from every source they read. The meters recorded `candidatesTokenCount`, which excludes `thoughtsTokenCount`; the bill counted both (#4581).
+
+Two compounding failures made it invisible, and both are worth recognising in other domains. First, **the cost figures were computed from a constant, not observed** — `gemini_usage.cost_usd` is derived from `MODEL_PRICING`, so a wrong constant produced wrong costs that were internally consistent and looked fine. Second, **the constant had been "validated" against those same computed costs**: `scripts/lib/model-pricing.mjs` chose `0.075/0.30` for flash-lite as the "closest fit to recorded costs," where the recorded costs were themselves generated by `0.075/0.30`. A constant fitted to numbers it produced is a mirror, not a measurement, and it will fit perfectly forever. Google's SKU catalogue says `0.25/1.50`.
+
+So when you build an instrument over a quantity that some **external party is authoritative for** — a vendor's bill, a partner's catalogue, an upstream API's idea of what it returned — at least one instrument in the set has to reach *outside* and reconcile. `scripts/audit/spend-reconcile.mjs` is that one for spend: it pulls billed tokens from Cloud Monitoring and live prices from the Cloud Billing SKU catalogue (`cloudbilling.googleapis.com/v1/services/AEFD-7695-64FA/skus` — an API, not a console), diffs both against our meters, and exits 2 on drift. It also reports **meter coverage** as a first-class number, which is the second half of the lesson: it found that only 72% of Google's successful `GenerateContent` calls write a usage row at all (#4599 — first read as 37%, because the reconciler itself was reading one of the two usage stores, #4593/#4657). An instrument should say how much of the thing it can see, not only what it found in the part it looked at. And when it cannot see a vendor, it must print UNREADABLE with the reason — an omitted line reads as $0, which is the silent-zero failure from the parser rule above wearing a different hat.
+
+## A page that prints its own answer key cannot test whether a model can do the task
+
+The Morley 1597 plainsong examples were chosen as the first mensural ground
+truth *because* the print sets the solmization syllable under every note — that
+is what let one person verify twelve staff positions without a musicologist. The
+same property makes the page nearly useless as a test of staff reading, and the
+first run (2026-09-11, `scripts/music/eval-results/2026-09-11-mensural-gemini-3-flash-preview/`)
+showed why: gemini-3-flash-preview returned the printed syllables mapped
+through the natural hexachord — right for 7 of 12 notes by coincidence, wrong
+for every note needing the hard hexachord, pitch NER 0.42. Note count and
+lyrics were perfect. **It transcribed the key instead of doing the task the key
+was meant to check**, and nothing in the output says so.
+
+The general shape, which is not specific to music: **whenever the ground truth
+is derivable from something visible in the model's input, the eval measures
+transcription of that thing, not the skill.** A facing-page translation, a
+labelled diagram, a printed index, a filename that names the class, a caption
+that states the answer — each turns a hard task into an easy one *for the model
+only*, while the human verifying the reference still did the hard work and so
+still believes the page is a fair test.
+
+- **Ask what else on the page answers the question**, before adopting a page as
+  ground truth. If the answer is present, either crop it out of the model's
+  input and keep the human's copy, or find a second page without it and report
+  both numbers.
+- **The tell is structured error, not random error.** Errors that partition
+  cleanly along the key's own coordinate system (here: every natural-hexachord
+  note right, every hard-hexachord note wrong) mean the model is working in the
+  key's frame, not the artifact's. Random-looking errors of the same magnitude
+  would have meant it was genuinely reading and failing.
+- **A correct count with wrong content is the same signature.** Getting the
+  number of notes and every lyric exactly right while missing the pitches is
+  what "read the easy channel" looks like; treat per-element agreement and
+  sequence length as separate metrics so one cannot mask the other.
+
+Corollary: an answer key is still the cheapest way to *verify a reference*. Keep
+using it for that. Just don't let the model see it.
+
+## A positive control certifies the instrument only on inputs shaped like the control (#4722)
+The Derge-identity scorer (`kanjur_align.score_page` on clawdbot, `/root/tibetan-eval/`) computed identity = matches / len(read) against **one** retrieved e-text page. Its positive control — a true e-text page plus 5% noise — scored 0.968, because the control was built from the **reference** side. Real reads are EAP two-leaf captures, ~470–600 syllables against a ~350–400-syllable e-text page, so a verbatim read of a folio straddling two pages was capped near **0.5** and the gate still passed. Every Derge identity published before 2026-09-11 (old Gemini 0.182 → BDRC 0.664, the 0.60 align rescue in `adjudicate.py`, the 5,086-page concordance) is an underestimate for long pages; the same Yigdzin reads score 0.93–0.97 once windowed.
+
+- **Build positive controls from the INPUT distribution, not the reference's.** A two-page concatenation control scores 0.496 at the old window and 0.968 at the new one — that control now ships with the scorer (`control --span 2`).
+- **For any ratio with the read in the denominator, window the reference wider than the longest read.** Fix: `score_page(..., window=2)` (retrieved page ±2, now the default; `window=0` reproduces the old number and `identity1` carries it).
+- **Tell:** an external instrument predicts a magnitude you do not see (a 0.7%-CER model reading at 0.48 "identity"), and your gate still passes. That gap is the instrument until proven otherwise. Postmortem and numbers: #4722 comment 5640946736; lesson `lesson_alignment_identity_capped_by_window_span` in auto-memory.
+
+## flash-lite does not ground, and says it did (demoted from CLAUDE.md 2026-09-12)
+
+`gemini-3.1-flash-lite` returns empty `groundingMetadata` on every grounded-search call — 0 of 189
+measured 2026-08-10 — **while the response prose claims it made "extensive searches".** The prose is
+not evidence that a search happened; it is the failure mode.
+
+- Use `gemini-3-flash-preview` with an explicit **positive** `thinkingBudget` (512 → 6/6 grounded,
+  ~$0.003/book; unbounded ≈ $0.19/book). `thinkingBudget: -1` silently suppresses grounding.
+- **Verify groundedness from `queries[]` on the written rows, never from the response text.** Same
+  shape as every other entry in this file: read the artifact the mechanism produces, not the
+  narration of it.

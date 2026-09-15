@@ -80,7 +80,7 @@ export function GatedPane({ page }: { page: Page }) {
  * because there's nothing to translate from, if OCR is also missing —
  * handled below by falling through to the same states as `kind: 'ocr'`).
  */
-export function PaneEmptyState({ page, book, kind, unreadable }: { page: Page; book: Book; kind: 'ocr' | 'translation'; unreadable?: boolean }) {
+export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { page: Page; book: Book; kind: 'ocr' | 'translation'; unreadable?: boolean; withheld?: boolean }) {
   const { data: sessionData } = useStableSession();
   const pathname = usePathname();
   const t = getReaderStrings(useLocale()).paneEmpty;
@@ -101,6 +101,20 @@ export function PaneEmptyState({ page, book, kind, unreadable }: { page: Page; b
       <EmptyPane
         label={t.notReliablyLegible}
         body={t.notReliablyLegibleBody}
+      />
+    );
+  }
+
+  // Withheld translation (#4523): the transcription is sound and rendering
+  // beside this; the English was derived from the reading it replaced and has
+  // been taken out of service. No request-translation CTA — the retranslation
+  // is already owed, and offering a button that queues what is queued would be
+  // a second untruth on a pane that exists to stop telling the first.
+  if (withheld) {
+    return (
+      <EmptyPane
+        label={t.translationWithheld}
+        body={t.translationWithheldBody}
       />
     );
   }

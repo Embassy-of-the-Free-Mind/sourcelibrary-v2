@@ -22,7 +22,13 @@ const COLLECTION_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--collect
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+// thinkingBudget: 0 — Gemini 3.x thinks by default and bills it at the output rate (CLAUDE.md, #4581).
+// Measured no quality loss for extraction; without it the meter under-reports and the call can
+// hit maxOutputTokens before writing the JSON.
+const model = genAI.getGenerativeModel({
+  model: 'gemini-3.1-flash-lite',
+  generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
+});
 
 // Visual art collections that artworks can be assigned to
 const VISUAL_ART_COLLECTIONS = [
@@ -230,27 +236,35 @@ async function main() {
 
   // Fetch artworks in batches to avoid MongoDB cursor timeout
   async function* batchIterator() {
-    let skip = 0;
-    while (skip < LIMIT) {
-      const batchLimit = Math.min(BATCH_SIZE, LIMIT - skip);
+    // Keyset paging on _id, not skip/limit. Without --re-enrich the query is
+    // `enrichment: {$exists: false}`, so every artwork this loop enriches LEAVES
+    // the result set; advancing `skip` over a shrinking set jumped past one
+    // unprocessed artwork for each one enriched. The 2026-09-13 run stopped at
+    // 801 of 1,557 for exactly that reason. `_id > lastId` never skips, and an
+    // artwork that errors is not re-fetched in the same run.
+    let lastId = null;
+    let yielded = 0;
+    while (yielded < LIMIT) {
+      const batchLimit = Math.min(BATCH_SIZE, LIMIT - yielded);
       let batch;
-      if (!ARTIST_FILTER && DRY_RUN && skip === 0) {
+      if (!ARTIST_FILTER && DRY_RUN && yielded === 0) {
         batch = await books.aggregate([
           { $match: query },
           { $sample: { size: batchLimit } },
           { $project: projection },
         ]).toArray();
       } else {
-        batch = await books.find(query, { projection })
+        const pageQuery = lastId ? { $and: [query, { _id: { $gt: lastId } }] } : query;
+        batch = await books.find(pageQuery, { projection })
           .sort({ _id: 1 })
-          .skip(skip)
           .limit(batchLimit)
           .toArray();
       }
       if (batch.length === 0) break;
       for (const doc of batch) yield doc;
-      skip += batch.length;
-      if (batch.length < batchLimit) break;
+      yielded += batch.length;
+      lastId = batch[batch.length - 1]._id;
+      if (DRY_RUN || batch.length < batchLimit) break;
     }
   }
 
@@ -429,8 +443,11 @@ async function main() {
   const estimatedCost = totalTokens * 0.00000015; // ~$0.15/M tokens for Flash input+output blended
   console.log(`Estimated cost for this run: $${estimatedCost.toFixed(4)}`);
   if (success > 0) {
-    const fullCorpusCost = (totalTokens / success) * 7069 * 0.00000015;
-    console.log(`Projected cost for full 7,069 artworks: $${fullCorpusCost.toFixed(2)}`);
+    // Project over what is actually left, not a hardcoded corpus size (was 7,069; the real
+    // unenriched population on 2026-09-13 was 1,557).
+    const remaining = await books.countDocuments({ ...query, enrichment: { $exists: false } });
+    const remainingCost = (totalTokens / success) * remaining * 0.00000015;
+    console.log(`Still unenriched: ${remaining}; projected cost to finish: $${remainingCost.toFixed(2)}`);
   }
 
   // Save detailed results

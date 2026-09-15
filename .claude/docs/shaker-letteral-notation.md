@@ -31,9 +31,24 @@ A trailing `·` is a dot (×1.5); a long dash after a letter extends the note; a
 (unless when a change in the mi is made), and all those notes contained in an
 octave, counting from the medium to the eighth note above it, are placed on a
 line above the center." Ascending past an octave → a second line above; the
-same mirrored below. So: identify the medium note (stated by the tune's opening
-letter on the center line), then each printed line above/below shifts the
-letter's octave register up/down relative to it.
+same mirrored below. So: identify the medium note, then each printed line
+above/below shifts the letter's octave register up/down relative to it.
+
+**Finding the medium note (corrected 2026-09-11 against seven pages).** It is
+*not* the tune's opening letter — that was a guess from a single page and it is
+wrong on most of them. The preface's word is "exclusively": the medium row holds
+**one letter and no other**, repeated as often as the tune touches it, so the
+medium is whichever letter appears alone on a row. It varies per tune — c, e and
+g all occur in the seven verified references — and reading it off the opening
+note mis-registers every octave in the piece. A line may print only two of the
+three rows; decide by the one-letter rule, never by a row's position on the page.
+
+**A single underline can cover a GROUP**, not just one letter: one dash runs
+under several adjacent letters and makes every one of them a quaver. When the
+group spans two rows the dash is printed at the lower row's level and still
+covers the letters above it. This is the single largest source of rhythm error
+in AI transcription (measured 0.49 rhythm NER, 2026-09-11) — a whole bar of
+eighths comes back as quarters.
 
 **Other marks**: curved arc = slur/tie (slurred group carries one syllable);
 `:` columns = repeat marks; `(3` style numerals at the tune head = the mode /

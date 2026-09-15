@@ -113,6 +113,40 @@ export function findEmbeddedImageUrls(text: string): string[] {
   return urls;
 }
 
+/**
+ * Image URLs the Librarian may legitimately re-embed on a later turn: every
+ * embed that SURVIVED an earlier assistant message in this thread.
+ *
+ * The fabricated-image guard allows only URLs a tool returned THIS turn. Built
+ * per turn, it called a plate the Librarian itself showed on turn one
+ * "fabricated" on turn three — measured over 45 days, 281 of 508 stripped
+ * embeds had appeared verbatim earlier in the same thread (#4704). Prior
+ * assistant text is persisted after removals were applied, so anything still
+ * embedded there was tool-sourced when it was first shown.
+ *
+ * History is client-supplied, so only our own image hosts are trusted from it;
+ * an off-site URL must still be re-returned by a tool to be embeddable.
+ */
+export function priorTurnImageUrls(history: Array<{ role: string; content: string }>): string[] {
+  const urls = new Set<string>();
+  for (const msg of history) {
+    if (msg.role !== 'assistant' || !msg.content) continue;
+    for (const url of findEmbeddedImageUrls(msg.content)) {
+      if (isOwnImageHost(url)) urls.add(url);
+    }
+  }
+  return [...urls];
+}
+
+function isOwnImageHost(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === 'sourcelibrary.org' || host.endsWith('.sourcelibrary.org');
+  } catch {
+    return false;
+  }
+}
+
 export function applyImageRemovals(text: string, removeUrls: string[]): string {
   let out = text;
   for (const url of removeUrls) {

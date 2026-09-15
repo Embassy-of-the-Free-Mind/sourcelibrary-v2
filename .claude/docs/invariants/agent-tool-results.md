@@ -135,3 +135,29 @@ the rationale (which cites him, and whose *sequel* was already in the list) so i
 was substituted, while the "Postel (1635)" entry was dropped outright — Postel
 died in 1581, so the date is invented too and there is no record to substitute.
 A silent substitution is a second fabrication, just one with better manners.
+
+---
+
+## A verifier's allowlist is scoped to the CONVERSATION, not the turn
+
+The fabricated-image guard collected every image URL a tool returned *this
+turn* and stripped any `![](url)` not in that set. Readers hold multi-turn
+conversations (16% reach the 10-message cap), and on turn three the model
+legitimately refers back to the plate it was handed on turn one — which the
+turn-scoped set had never seen. Measured over 45 days, **281 of 508 stripped
+embeds had appeared verbatim earlier in the same thread**, and 25 of 41
+HEAD-checked strips were live URLs (#4704). The reader watched a real plate
+render during streaming, vanish at `image_removals`, and the answer end with
+"an illustration I could not source, which I removed". The link verifier had
+the mirror-image bug earlier (#3114, trap 3: scanning the whole history
+re-flagged every old answer). Fixed in #4705: `priorTurnImageUrls(history)`
+seeds the allowlist from prior *assistant* messages, own image hosts only —
+history is client-supplied.
+
+**Every allowlist or denylist a Librarian verifier consults must state which
+scope it has — TURN or THREAD — and be tested for the other case.** Links are
+verified per turn (so old breakage is not re-disclaimed); images are allowed
+per thread (so the model may point at what it already showed). The tell for
+the wrong scope: a disclaimer that names something the reader can see on
+screen. Diagnose from `embassy_errors` (`fabricatedImages`, `brokenLinks`)
+joined against the thread's earlier messages before touching the prompt.

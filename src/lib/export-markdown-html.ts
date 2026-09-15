@@ -1,5 +1,6 @@
 import { pipeTableToHtml } from '@/lib/markdown-table-html';
 import { applyNotesOff } from '@/lib/notes-off';
+import { stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
 
 /**
  * Convert a page's markdown-like text to the basic HTML the EPUB/HTML exports embed.
@@ -35,19 +36,42 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   }
 
   // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
-  // These are our custom tags that should become actual HTML elements
-  html = html.replace(/<note>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
-  html = html.replace(/<margin>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
-  html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
-  html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
-  html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
+  // These are our custom tags that should become actual HTML elements.
+  // `(?:\s[^>]*)?` tolerates attributes on the opening tag — the prompts emit
+  // them (see stripEditorialWrapperBlocks) and a bare `<tag>` pattern lets the
+  // whole span through as literal angle-bracket text.
+  html = html.replace(/<note(?:\s[^>]*)?>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
+  html = html.replace(/<margin(?:\s[^>]*)?>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
+  html = html.replace(/<gloss(?:\s[^>]*)?>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
+  html = html.replace(/<term(?:\s[^>]*)?>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
+  html = html.replace(/<unclear(?:\s[^>]*)?>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
+  // Two tags the reader shows and the exporter must show too, MARKED — not as
+  // running text and not silently dropped (#4782):
+  //  - <image-desc> is the AI's account of a plate. With notes on the reader
+  //    renders it as a labelled chip; here it becomes a labelled span. With
+  //    notes off applyNotesOff has already removed it above.
+  //  - <lacuna> describes a region with no legible reading. The reader shows it
+  //    in BOTH note states because a dropped region reads as a complete page —
+  //    the fabrication the tag exists to prevent — so it is placeholdered here
+  //    before the wrapper strip, which would otherwise delete it content-and-all.
+  html = html.replace(/<image-desc(?:\s[^>]*)?>([\s\S]*?)<\/image-desc>/gi, '[[IMAGE_DESC_PLACEHOLDER:$1]]');
+  html = html.replace(/<lacuna(?:\s[^>]*)?>([\s\S]*?)<\/lacuna>/gi, '[[LACUNA_PLACEHOLDER:$1]]');
   // Strip <insert> tags (keep content) and <column-break/> markers
-  html = html.replace(/<insert>([\s\S]*?)<\/insert>/gi, '$1');
+  html = html.replace(/<insert(?:\s[^>]*)?>([\s\S]*?)<\/insert>/gi, '$1');
   html = html.replace(/<column-break\s*\/?>/gi, '');
   // Strip ->...<- centering markers (OCR convention for centered text)
   html = html.replace(/->/g, '').replace(/<-/g, '');
-  // Remove metadata tags (hidden)
-  html = html.replace(/<(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>[\s\S]*?<\/(?:lang|language|page-num|page-type|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords|columns|detected-images|blockquote)>/gi, '');
+  // Editorial wrappers — the AI's DESCRIPTION of the page (<meta>, <summary>,
+  // <vocab>, <scan-quality>, <script>, <warning>, …) — go content-and-all through
+  // the one canonical list. This helper used to keep its own copy of that list;
+  // it drifted (no <scan-quality>, no <script>, no attribute tolerance) and the
+  // housekeeping reached every downloaded book as literal text (#4782).
+  html = stripEditorialWrapperBlocks(html);
+  // Export-only hides: page furniture that IS printed on the page (page numbers,
+  // signatures, running headers) but interrupts a continuous reading text, plus
+  // legacy tags. Kept separate from the canonical list on purpose — the quote
+  // surfaces are right to serve a printed page number as page text.
+  html = html.replace(/<(page-num|folio|sig|header|abbrev|detected-images|blockquote)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '');
   html = html.replace(/<(?:column-break|page-break)\s*\/?>/gi, '');
 
   // Escape HTML entities
@@ -56,12 +80,18 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  // Convert placeholders to inline styled elements (no line breaks)
-  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<span class="note">[$1]</span>');
-  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<span class="margin">[$1]</span>');
-  html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
-  html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
-  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
+  // Convert placeholders to inline styled elements. `[\s\S]` because a note or
+  // an image description can run several lines — `.` stopped at the first
+  // newline and left the placeholder itself in the book; the span's inner
+  // newlines are collapsed so the paragraph split below cannot cut it in half.
+  const inline = (s: string) => s.replace(/\s*\n\s*/g, ' ').trim();
+  html = html.replace(/\[\[NOTE_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="note">[${inline(s)}]</span>`);
+  html = html.replace(/\[\[MARGIN_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="margin">[${inline(s)}]</span>`);
+  html = html.replace(/\[\[GLOSS_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="gloss">${inline(s)}</span>`);
+  html = html.replace(/\[\[TERM_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<em class="term">${inline(s)}</em>`);
+  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="unclear">${inline(s)}?</span>`);
+  html = html.replace(/\[\[IMAGE_DESC_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="image-desc">[Image description: ${inline(s)}]</span>`);
+  html = html.replace(/\[\[LACUNA_PLACEHOLDER:([\s\S]*?)\]\]/gi, (_, s) => `<span class="lacuna">[Not transcribed: ${inline(s)}]</span>`);
 
   // Convert legacy [[notes: ...]] to inline
   html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<span class="note">[$1]</span>');

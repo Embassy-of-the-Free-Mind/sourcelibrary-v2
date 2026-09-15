@@ -32,6 +32,7 @@ const TEMPERATURE = 0.1;
 const OPENALEX_MAILTO = 'derek@sourcelibrary.org';
 
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -717,7 +718,7 @@ export async function verifyFirstTranslationFromMetadata(
 
       const usage = response.usageMetadata || {};
       totalInputTokens += (usage.promptTokenCount || 0);
-      totalOutputTokens += (usage.candidatesTokenCount || 0);
+      totalOutputTokens += (outputTokensFrom(usage));
 
       const candidate = response.candidates?.[0];
       if (!candidate?.content?.parts) break;

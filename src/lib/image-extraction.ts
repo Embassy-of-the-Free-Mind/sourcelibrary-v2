@@ -7,6 +7,7 @@ import Replicate from 'replicate';
 import { images } from '@/lib/api-client';
 import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
 import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
 
@@ -201,6 +202,11 @@ export async function extractWithGemini(
     ? { base64: imageData, mimeType: getMimeType(imageUrl, null) }
     : { base64: imageData.base64, mimeType: imageData.mimeType };
 
+  // usage-ok: this function RETURNS its token counts (input, output including
+  // thoughts) and the image-extraction worker writes the row from them, with the
+  // book and page context this layer does not have — see the
+  // `worker/image-extraction` and `hetzner/image-extract-worker` endpoints in
+  // gemini_usage. Logging here too would double-count the busiest metered lane.
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
@@ -241,8 +247,7 @@ export async function extractWithGemini(
     inputTokens: usageMetadata?.promptTokenCount || 0,
     // Count thought tokens too: if thinking is ever re-enabled here, the meter
     // sees it instead of going blind again (#4581).
-    outputTokens: (usageMetadata?.candidatesTokenCount || 0) +
-      (usageMetadata?.thoughtsTokenCount || 0),
+    outputTokens: outputTokensFrom(usageMetadata),
   };
 
   // Parse JSON from response

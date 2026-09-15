@@ -4,6 +4,7 @@ import {
   findCitedBookLinks,
   findCitedCollectionSlugs,
   findEmbeddedImageUrls,
+  priorTurnImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
 import { PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
@@ -386,7 +387,7 @@ const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish' };
 // Replaces the prior executeSearchCollection (keyword-only) and
 // executeSearchSemantic (book-then-page only) with a single unified path.
 async function executeSearch(query: string, collection?: string | null): Promise<{
-  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string }>;
+  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string; year?: number; language?: string; textRole?: string }>;
   books: Array<{ id: string; title: string; author?: string; authorSlug?: string; year?: number; slug?: string }>;
   collectionUsed: string | null;
 }> {
@@ -400,9 +401,30 @@ async function executeSearch(query: string, collection?: string | null): Promise
   const { passages, books } = await hybridSearch(query, {
     tenantId: null,
     collection: collectionUsed,
+    // Ad fontes: at comparable relevance, hand the model the 1591 imprint
+    // before the 1928 handbook that paraphrases it (#4704).
+    preferPeriodEditions: true,
     // collectionWeight defaults to 2 in hybridSearch.
   });
   return { passages, books, collectionUsed };
+}
+
+/**
+ * " (1591, Latin, original)" / " (1928, English)" / "" — the edition tag on a
+ * passage header. The model cannot prefer the source over the compendium
+ * quoting it unless it can see which is which: 35% of page citations landed
+ * on 1850–1949 English compendia, and Poimandres was quoted from
+ * Reitzenstein's 1904 study while the Turnebus editio princeps sat in the same
+ * result list (#4704).
+ */
+export function editionTag(p: { year?: number; language?: string; textRole?: string }): string {
+  const role = p.textRole === 'original'
+    ? 'original'
+    : p.textRole
+      ? p.textRole.replace(/-/g, ' ')
+      : undefined;
+  const bits = [p.year, p.language, role].filter(Boolean);
+  return bits.length ? ` (${bits.join(', ')})` : '';
 }
 
 async function executeSearchWikipedia(query: string): Promise<{ title: string; summary: string; url: string } | null> {
@@ -946,7 +968,11 @@ async function executeTool(
             : (localized.has(`${p.book_id}:${p.page_number}`)
               ? ` [text: ${LANG_NAMES[lang]} edition]`
               : ` [text: English only — no ${LANG_NAMES[lang]} edition of this page]`);
-          context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
+          // Edition tag: "(1591, Latin, original)" / "(1928, English)". The
+          // model cannot prefer the source over the compendium quoting it
+          // unless it can see which is which (#4704: 35% of page citations
+          // landed on 1850–1949 English compendia).
+          context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
         }
       }
       if (totalFound === 0) context = 'No results found for this query.';
@@ -1270,6 +1296,8 @@ Every mention of a book should link to it. Every mention of an author should lin
 
 When quoting a key passage, include the original language text (Latin, German, Hebrew, etc.) alongside the English if it is notable or if the user appears to be working in that language. Use a blockquote with both versions.
 
+**Ad fontes — cite the source, not the compendium.** Each passage header carries the edition's year, language, and whether it is the original text. When the same idea is available both in an original (or a period edition) and in a later compendium or history that quotes it — Waite's *Hermetic Museum*, Hall's *Secret Teachings*, Mead, Thorndike, the *Kybalion* — quote and link the original and, if the modern book adds something, cite it second as commentary. Never present a nineteenth- or twentieth-century paraphrase as the words of a Renaissance author. If only a modern edition turned up, say so in a clause ("in Waite's 1893 translation") and consider one search in the original language before answering. The reader came for the primary source; a page in a 1928 handbook is a detour, not an arrival.
+
 **Step 6: Show images and suggest next steps.**
 When search_images or search_artworks returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. **Only use URLs returned by a tool call this turn.** NEVER invent, paraphrase, guess, or recall image URLs — copy them character for character, and never build one by slugifying a title or an artwork's description. Fabricated embeds are stripped from your answer before the reader sees it, and the answer is then labelled as containing an illustration that could not be sourced. If you have no tool-returned image URL, do not write any \`![...](...)\` syntax at all.
 
@@ -1399,9 +1427,10 @@ export async function* streamAgenticResponse(
   // (search hits + get_book_page + read_nearby_pages). Used to ground the
   // page citations in the final answer — see verifyCitations.
   const retrievedPageKeys = new Set<string>();
-  // Every image URL any tool returned this turn. The model is allowed to embed
-  // these and nothing else; anything else in an `![](...)` is fabricated.
-  const toolImageUrls = new Set<string>();
+  // Every image URL any tool returned this turn, plus every embed that survived
+  // an earlier answer in this thread (see priorTurnImageUrls). The model may
+  // embed these and nothing else; anything else in an `![](...)` is fabricated.
+  const toolImageUrls = new Set<string>(priorTurnImageUrls(history));
   // Text the model produced THIS turn. `contents` is seeded with the thread
   // history, so scanning it for citations re-flags every earlier answer's
   // broken links — which crowds real, new breakage out of the repair budget.
@@ -1412,6 +1441,9 @@ export async function* streamAgenticResponse(
   // force a final synthesis turn below so the reader never gets a stub or an
   // empty reply (see the "kites" regression, issue #2826).
   let answeredNaturally = false;
+  // The last finishReason Gemini reported (SAFETY, RECITATION, MAX_TOKENS,
+  // STOP…). Only read when the turn ends with no visible text, to say why.
+  let lastFinishReason: string | undefined;
   const usage: TurnUsage = { model: MODEL, rounds: 0, promptTokens: 0, outputTokens: 0, thinkingTokens: 0, cachedTokens: 0 };
 
   // Harvest every URL a tool handed back, wherever it sits in the payload
@@ -1462,6 +1494,7 @@ export async function* streamAgenticResponse(
     for await (const chunk of stream) {
       if (chunk.usageMetadata) roundUsage = chunk.usageMetadata;
       const candidate = chunk.candidates?.[0];
+      if (candidate?.finishReason) lastFinishReason = String(candidate.finishReason);
       if (!candidate?.content?.parts) continue;
       for (const part of candidate.content.parts) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1574,6 +1607,7 @@ export async function* streamAgenticResponse(
       for await (const chunk of finalStream) {
         if (chunk.usageMetadata) finalUsage = chunk.usageMetadata;
         const candidate = chunk.candidates?.[0];
+        if (candidate?.finishReason) lastFinishReason = String(candidate.finishReason);
         if (!candidate?.content?.parts) continue;
         for (const part of candidate.content.parts) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1597,6 +1631,32 @@ export async function* streamAgenticResponse(
     } catch (err) {
       console.error('[Librarian] Forced synthesis failed:', err instanceof Error ? err.message : err);
     }
+  }
+
+  // Last resort: the turn ends with NO visible text. Measured over 45 days,
+  // 48 of 2,328 answers (2.1%) persisted as blank prose with 2–4 tool rounds
+  // and a full source list (#4704) — the reader saw source cards and nothing
+  // else, and nothing was logged. The model can return an empty candidate
+  // (SAFETY / RECITATION / a 500 that the retry didn't cover), and the forced
+  // synthesis above can hit the same wall. Hand the reader the pages that were
+  // retrieved, as a deterministic answer, and leave a trace with the reason.
+  if (generatedChunks.join('').trim() === '' && !choicesPresented) {
+    const fallback = emptyAnswerFallback(deduplicateSources(allSources), lang);
+    generatedChunks.push(fallback);
+    yield { type: 'text', text: fallback };
+    console.warn('[Librarian] empty answer', { finishReason: lastFinishReason, rounds: usage.rounds, sources: allSources.length });
+    try {
+      const db = await getDb();
+      await db.collection('embassy_errors').insertOne({
+        kind: 'empty_answer',
+        threadId: threadId ?? null,
+        message: userMessage.slice(0, 500),
+        finishReason: lastFinishReason ?? null,
+        rounds: usage.rounds,
+        sourceCount: allSources.length,
+        createdAt: new Date(),
+      });
+    } catch { /* best effort */ }
   }
 
   if (allSources.length > 0) {
@@ -1867,7 +1927,70 @@ const SLUG_STOPWORDS = new Set([
   // Cataloguing / format words — describe the artefact, not the work.
   'manuscript', 'manuscripts', 'codex', 'facsimile', 'collection',
   'collections', 'compilation', 'digitization', 'unknown', 'author', 'authors',
+  // Jesuit imprint boilerplate the model copies into Kircher slugs
+  // (`athanasii-kircheri-e-societate-iesu-…`) — describes the author's order,
+  // never the work, and our titles rarely carry it.
+  'societate', 'soc', 'iesu', 'jesu', 'iesv', 'hoc', 'est',
 ]);
+
+/** 2–4 digit numbers in a slug or title: years, shelfmarks (`reg-lat-1266`), volumes. */
+function numbersOf(s: string): Set<string> {
+  return new Set(s.match(/\d{2,4}/g) ?? []);
+}
+
+/**
+ * Never swap shelfmarks or dates: when both the broken slug and the candidate
+ * carry numbers and share none, the candidate is a different object.
+ * `reg-lat-1266` was "repaired" onto `…-reg-lat-1228` — a different Vatican
+ * manuscript — because the digits were filtered out before matching.
+ */
+export function numbersAgree(slug: string, cand: Pick<RepairCandidate, 'slug' | 'title' | 'display_title'>): boolean {
+  const want = numbersOf(slug);
+  const have = numbersOf(`${cand.slug} ${cand.title ?? ''} ${cand.display_title ?? ''}`);
+  if (want.size === 0 || have.size === 0) return true;
+  return [...want].some(n => have.has(n));
+}
+
+/** Levenshtein distance, capped: returns 3 as soon as it cannot be ≤ 2. */
+function editDistance(a: string, b: string): number {
+  if (Math.abs(a.length - b.length) > 2) return 3;
+  const prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    let diag = prev[0];
+    prev[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = prev[j];
+      prev[j] = Math.min(prev[j] + 1, prev[j - 1] + 1, diag + (a[i - 1] === b[j - 1] ? 0 : 1));
+      diag = tmp;
+    }
+  }
+  return prev[b.length];
+}
+
+/**
+ * The fuzzy tier's acceptance test: every DISTINCTIVE token of the broken slug
+ * (5+ characters) must correspond to some word of the candidate's title or
+ * author — as a substring, or within a small edit distance (1 for short
+ * tokens, 2 for 8+). That tolerates the ways a model-composed slug drifts
+ * from the catalogue (dropped umlauts: `weytber-mpten`/`weytberuempten` for
+ * *weytberümpten*; Latin inflection: `subterranei` for *subterraneus*) while
+ * still refusing a candidate that lacks a real title word: Gassendi's *Life of
+ * Tycho* shares six tokens with `tychonis-brahe-…-astronomiae-instauratae` but
+ * has no `instauratae`, and Meder's judgment on the Rosicrucians has no
+ * `fraternity`. Measured on 195 unrepaired slugs: 14 accepted, 0 wrong (#4704).
+ */
+export function distinctiveTokensAccounted(tokens: string[], cand: Pick<RepairCandidate, 'title' | 'display_title' | 'english_title' | 'author'>): boolean {
+  const words = normalizeForMatch([cand.title, cand.display_title, cand.english_title, cand.author].filter(Boolean).join(' '))
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter(Boolean);
+  return tokens
+    .filter(t => t.length >= 5)
+    .every(t => {
+      const tok = normalizeForMatch(t);
+      const tolerance = tok.length >= 8 ? 2 : 1;
+      return words.some(w => w.includes(tok) || editDistance(tok, w) <= tolerance);
+    });
+}
 
 /**
  * Fields carried by the `books_search` Atlas index. `slug` is NOT among them,
@@ -1927,6 +2050,7 @@ async function findRepairCandidates(
   tokens: string[],
   minimumShouldMatch: number,
   excludeSlug: string,
+  fuzzy = false,
 ): Promise<RepairCandidate[]> {
   const db = await getDb();
   const pipeline = [
@@ -1934,7 +2058,17 @@ async function findRepairCandidates(
       $search: {
         index: BOOK_SEARCH_INDEX,
         compound: {
-          should: tokens.map(t => ({ text: { query: t, path: REPAIR_SEARCH_PATHS } })),
+          should: tokens.map(t => ({
+            text: {
+              query: t,
+              path: REPAIR_SEARCH_PATHS,
+              // One edit per token, first two letters fixed: catches dropped
+              // diacritics and inflection without letting `vita` find `vitae`
+              // in every book. The acceptance test after the query is what
+              // keeps this honest (distinctiveTokensAccounted).
+              ...(fuzzy ? { fuzzy: { maxEdits: 1, prefixLength: 2 } } : {}),
+            },
+          })),
           minimumShouldMatch,
         },
       },
@@ -2003,6 +2137,19 @@ export async function resolveSlugToHeldBook(
     candidates = await findRepairCandidates(tokens, tokens.length - 1, slug);
   }
 
+  // Third tier: the composed slug is the RIGHT book spelled slightly wrong —
+  // dropped umlauts, Latin case endings, a typo. Exact matching cannot see
+  // that, so query fuzzily for 60% of the tokens and then insist that every
+  // distinctive token is accounted for within edit distance (the acceptance
+  // test is what makes this tier safe; the query only proposes).
+  let fuzzyTier = false;
+  if (candidates.length === 0 && tokens.length >= 2) {
+    const msm = Math.max(2, Math.ceil(tokens.length * 0.6));
+    candidates = (await findRepairCandidates(tokens, Math.min(msm, tokens.length), slug, true))
+      .filter(cand => distinctiveTokensAccounted(tokens, cand));
+    fuzzyTier = true;
+  }
+
   // Never swap volumes: if both slugs carry a volume designator and they
   // disagree, the candidate is a different physical book of the same work.
   const wantVol = volumeOf(slug);
@@ -2010,13 +2157,55 @@ export async function resolveSlugToHeldBook(
     const candVol = volumeOf(cand.slug);
     return !(wantVol && candVol && wantVol !== candVol);
   });
+  // Never swap shelfmarks or dates (reg-lat-1266 is not reg-lat-1228).
+  candidates = candidates.filter(cand => numbersAgree(slug, cand));
   // Never swap works: an author-only match is a different book by the same hand.
   candidates = candidates.filter(cand => matchesBeyondAuthor(tokens, cand));
   if (candidates.length === 0) return null;
 
+  if (fuzzyTier) {
+    // Rank by how many tokens landed in the title; a tie between two
+    // DIFFERENT titles is ambiguity, and ambiguity is a dead link, not a guess.
+    // A tie between editions of the same work (`…-khunrath-2`/`-3`) is fine.
+    const hits = (cand: RepairCandidate) => tokens.filter(t => {
+      const tok = normalizeForMatch(t);
+      return normalizeForMatch([cand.title, cand.display_title, cand.english_title].filter(Boolean).join(' ')).includes(tok);
+    }).length;
+    candidates.sort((a, b) => hits(b) - hits(a) || (b.read_count || 0) - (a.read_count || 0));
+    const [first, second] = candidates;
+    if (second && hits(second) === hits(first)) {
+      const titleOf = (c: RepairCandidate) => normalizeForMatch(c.display_title || c.title || '');
+      if (titleOf(first) !== titleOf(second)) return null;
+    }
+    return { slug: first.slug, title: first.display_title || first.title || first.slug };
+  }
+
   candidates.sort((a, b) => (b.read_count || 0) - (a.read_count || 0) || (b.pages_count || 0) - (a.pages_count || 0));
   const best = candidates[0];
   return { slug: best.slug, title: best.display_title || best.title || best.slug };
+}
+
+/**
+ * The answer a reader gets when the model produced no text at all: the pages
+ * that were retrieved, as page-level links, plus an honest one-liner. Pure, so
+ * it is testable; the wording is deliberately the desk's, not an error code.
+ */
+export function emptyAnswerFallback(sources: SourceCard[], lang: Locale = 'en'): string {
+  const top = sources.filter(s => s.pageNumber != null).slice(0, 6);
+  const prefix = lang === 'es' ? '/es' : '';
+  const lines = top.map(s => {
+    const url = `https://sourcelibrary.org${prefix}/book/${s.bookSlug || s.book_id}/page-number/${s.pageNumber}`;
+    const page = lang === 'es' ? `Página ${s.pageNumber}` : `Page ${s.pageNumber}`;
+    return `- *${s.bookTitle}*${s.bookAuthor ? ` — ${s.bookAuthor}` : ''}, [${page}](${url})`;
+  });
+  if (lang === 'es') {
+    return top.length
+      ? `Encontré estas páginas pero no logré redactar la respuesta. Ábralas directamente, o vuelva a preguntar con otras palabras:\n\n${lines.join('\n')}`
+      : 'No logré redactar una respuesta esta vez. Vuelva a preguntar con otras palabras, o nombre un autor u obra concretos.';
+  }
+  return top.length
+    ? `I found these pages but couldn't compose the answer. Open them directly, or ask again in other words:\n\n${lines.join('\n')}`
+    : 'I couldn\'t compose an answer this time. Ask again in other words, or name a specific author or work.';
 }
 
 function deduplicateSources(sources: SourceCard[]): SourceCard[] {

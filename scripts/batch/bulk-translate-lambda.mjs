@@ -32,7 +32,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { SKIP_TRANSLATION_PAGE_TYPES, getTranslateModelForBook } from '../lib/translate-core.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // Load .env.production.local for MONGODB_URI + SQS URLs
@@ -65,7 +65,9 @@ if (!process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_SECRET_ACCESS_KEY_SOUR
 const SKIP_PAGE_TYPES = SKIP_TRANSLATION_PAGE_TYPES; // canonical (#3734)
 const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
 const QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
-const DEFAULT_MODEL = 'gemini-3-flash-preview';
+// The model is the BOOK's (getTranslateModelForBook), never a constant. A flash constant
+// here sent every Latin book through the Lambda lane at 2x — the #4729 shape on the
+// translation side. The translation policy itself split from OCR in #4759.
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -238,7 +240,7 @@ async function main() {
       },
       config: {
         page_ids: pageIds,
-        model: DEFAULT_MODEL,
+        model: getTranslateModelForBook(book),
         language: book.language || 'auto-detect',
       },
       initiated_by: INITIATED_BY,

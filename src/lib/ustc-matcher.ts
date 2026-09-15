@@ -25,6 +25,7 @@ const MAX_ROUNDS = 5;
 const TEMPERATURE = 0.1;
 
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -782,7 +783,7 @@ export async function matchToUstc(
 
       const usage = response.usageMetadata || {};
       totalInputTokens += (usage.promptTokenCount || 0);
-      totalOutputTokens += (usage.candidatesTokenCount || 0);
+      totalOutputTokens += (outputTokensFrom(usage));
 
       const candidate = response.candidates?.[0];
       if (!candidate?.content?.parts) break;

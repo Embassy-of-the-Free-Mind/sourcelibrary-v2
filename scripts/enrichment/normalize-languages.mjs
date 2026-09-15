@@ -364,10 +364,16 @@ async function run() {
       updateOne: {
         filter: { _id: u.id },
         update: {
+          // ONE typed provenance entry, not two private fields (2026-09-10). language_source and
+          // language_confidence were read by nothing; field_provenance.language is the canonical
+          // home (src/lib/resolve-language.ts).
           $set: {
             language: u.language,
-            language_source: u.source,
-            language_confidence: u.confidence,
+            'field_provenance.language': {
+              source: 'enrichment', value: u.language, chosen_from: u.source,
+              confidence: u.confidence, claims: [{ source: u.source, value: u.language }],
+              date: new Date().toISOString(),
+            },
           }
         }
       }

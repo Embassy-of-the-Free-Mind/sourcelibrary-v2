@@ -210,7 +210,7 @@ p {
   margin: 0.8em 0;
   text-align: justify;
 }
-.note, .margin {
+.note, .margin, .image-desc, .lacuna {
   font-size: 0.85em;
   font-style: italic;
   color: #666;
@@ -284,7 +284,7 @@ p {
   margin: 0.5em 0;
   text-align: justify;
 }
-.note, .margin {
+.note, .margin, .image-desc, .lacuna {
   font-size: 0.85em;
   font-style: italic;
   color: #666;
@@ -1372,7 +1372,7 @@ p { margin: 0.8em 0; text-align: justify; }
   max-height: 80vh;
   border: 1px solid #ddd;
 }
-.note, .margin {
+.note, .margin, .image-desc, .lacuna {
   font-size: 0.85em;
   font-style: italic;
   color: #666;

@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { nanoid } from 'nanoid';
-import { DEFAULT_MODEL } from '@/lib/types/ai-models';
+import { getModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import type { JobStatus } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 
@@ -84,7 +84,8 @@ export async function POST(request: NextRequest) {
       },
       config: {
         page_ids: pageIds,
-        model: DEFAULT_MODEL,
+        // Routed per book, not a flash constant (#4729): Latin-script → lite, BPH / non-Latin / unknown → flash.
+        model: getModelForBook(book as RoutableBook),
         language: book.language || 'auto-detect',
       },
       initiated_by: 'scan_ui',

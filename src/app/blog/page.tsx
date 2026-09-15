@@ -26,6 +26,30 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'free-reading',
+    title: 'The Reading We Did Not Have to Pay For',
+    subtitle:
+      'Five and a half million of our unread pages came from the Internet Archive, which had already read them once. We tested that reading book by book against our own, took it where the two agree, and measured whether a cheap language model can rescue the rest. It cannot: it invents.',
+    date: '12 September 2026',
+    readTime: '9 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/pages/69b1863dc4be2cdd0edc573a/0011.jpg',
+    imageAlt: 'Title page of Oriatrike, or Physick Refined, the 1662 English Van Helmont, with an ink blot over one word.',
+  },
+  {
+    slug: 'atlas-of-lost-instruments',
+    title: 'An Atlas of Lost Instruments',
+    subtitle:
+      'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about sound that were discovered, invented, or fought over in books this library holds — and the 13,647 pages of music on them that no machine can yet read.',
+    date: '11 September 2026',
+    readTime: '12 min read',
+    tag: 'Collection',
+    tagColor: 'bg-accent-violet/10 text-accent-violet',
+    image: 'https://images.sourcelibrary.org/archived/695573e7f63a757109172b1d/293.jpg',
+    imageAlt: 'Plate XXII of Praetorius\'s Theatrum Instrumentorum, 1620: folk instruments including a keyed fiddle.',
+  },
+  {
     slug: 'suda-benchmark',
     title: 'Graded by the Suda',
     subtitle:

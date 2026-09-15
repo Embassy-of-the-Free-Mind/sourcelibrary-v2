@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { logAiUsage } from '@/lib/log-ai-usage';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const preferredRegion = 'fra1';
 
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        const client = getGeminiClient();
+        const client = getGeminiClient({ endpoint: '/api/search/ai-expand', type: 'other' });
         // flash-lite follows structured format reliably and is 50% cheaper
         const model = client.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 
@@ -149,7 +150,7 @@ The terms and image_terms are the most important part — they expand the search
             feature: 'ai_search_expand',
             model: 'gemini-3.1-flash-lite',
             inputTokens: meta?.promptTokenCount || 0,
-            outputTokens: meta?.candidatesTokenCount || 0,
+            outputTokens: outputTokensFrom(meta),
             ms: Date.now() - _aiStart,
             ok: true,
             country,

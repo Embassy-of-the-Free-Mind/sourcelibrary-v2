@@ -16,7 +16,10 @@
  *   TEXTLESS         leave the page untouched (cover / blank / divider).
  *
  * Reversible: SERVE snapshots before overwrite; MARK only sets flags and never
- * destroys text. Every action recorded in a report. Read the new-text files
+ * destroys text. Every action recorded in a report. Idempotent: a page already
+ * carrying the verdict (same text + provenance, or the same unreadable flag) is
+ * counted as `alreadyApplied` and not touched, so the lane can re-run a book
+ * after retried pages land without stacking page_revisions snapshots. Read the new-text files
  * from --textdir (one <book>_<page5>.txt per SERVE page).
  *
  * Run on Hetzner. Default is DRY RUN; pass --apply to write.
@@ -57,7 +60,7 @@ const rows = fs.readFileSync(VERDICTS, 'utf8').trim().split('\n')
 const byBook = new Map();
 for (const r of rows) { if (!byBook.has(r.book)) byBook.set(r.book, []); byBook.get(r.book).push(r); }
 
-const totals = { serve: 0, mark: 0, textless: 0, skipped: 0, books: 0 };
+const totals = { serve: 0, mark: 0, textless: 0, skipped: 0, alreadyApplied: 0, books: 0 };
 for (const [bookId, verdicts] of byBook) {
   const pageDocs = await db.collection('pages')
     .find({ book_id: bookId }, { projection: { id: 1, page_number: 1, ocr: 1 } })
@@ -72,6 +75,7 @@ for (const [bookId, verdicts] of byBook) {
     if (!p) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'no-page-doc' }); continue; }
     if (v.verdict === 'TEXTLESS') { totals.textless++; continue; }
     if (v.verdict === 'MARK_UNRELIABLE') {
+      if (p.ocr?.unreadable === true && p.ocr?.unreadable_reason === REASON) { totals.alreadyApplied++; continue; }
       markOps.push(p);
       totals.mark++;
       continue;
@@ -81,6 +85,15 @@ for (const [bookId, verdicts] of byBook) {
     if (!fs.existsSync(f)) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-no-text-file' }); continue; }
     const text = fs.readFileSync(f, 'utf8').trim();
     if (text.split('་').length < MIN_SYL) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-too-short' }); continue; }
+    // Idempotent re-run: the lane applies incrementally as books complete and
+    // re-adjudicates the same books once retried pages land. A page that already
+    // carries this exact text under this provenance gets no second revision
+    // snapshot and no rewrite (a re-snapshot would pile duplicate
+    // page_revisions rows every pass).
+    if (p.ocr?.pipeline === REASON && p.ocr?.data === text && !p.ocr?.unreadable) {
+      totals.alreadyApplied++;
+      continue;
+    }
     if (p.ocr?.data) serveIds.push(p.id);
     servePlan.push({ page: p, text });
   }
@@ -88,6 +101,10 @@ for (const [bookId, verdicts] of byBook) {
   if (!APPLY) {
     totals.serve += servePlan.length;
     rec({ book: bookId, status: 'dry-run', serve: servePlan.length, mark: markOps.length });
+    continue;
+  }
+  if (!servePlan.length && !markOps.length) {
+    rec({ book: bookId, status: 'already-applied' });
     continue;
   }
 

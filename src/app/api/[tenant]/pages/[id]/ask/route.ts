@@ -4,6 +4,7 @@ import { getGeminiClient } from '@/lib/gemini-client';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -213,7 +214,7 @@ export async function POST(
           .map((m: Message) => ({ role: m.role, content: m.content.slice(0, 4000) }))
       : [];
 
-    const model = getGeminiClient().getGenerativeModel({ model: DEFAULT_MODEL });
+    const model = getGeminiClient({ endpoint: '/api/[tenant]/pages/[id]/ask', type: 'other' }).getGenerativeModel({ model: DEFAULT_MODEL });
 
     // Build context from book info
     const bookContext = [
@@ -262,7 +263,7 @@ export async function POST(
     // Track usage
     const usageMetadata = response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = outputTokensFrom(usageMetadata);
 
     return NextResponse.json({
       answer,

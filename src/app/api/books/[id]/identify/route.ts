@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { withAuth } from '@/lib/auth-helpers';
+import { getGeminiClient } from '@/lib/gemini-client';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Lazy: resolving an API key at module scope would turn a missing
+// GEMINI_API_KEY into an import-time throw, and route modules are imported
+// during the build.
+let _genAI: ReturnType<typeof getGeminiClient> | null = null;
+const genAI = () => (_genAI ??= getGeminiClient({ endpoint: '/api/books/[id]/identify', type: 'other' }));
 
 const IDENTIFY_PROMPT = `Analyze these pages from a historical book and extract bibliographic information.
 
@@ -77,7 +81,7 @@ export const POST = withAuth(async (request, session, context) => {
     const pageContext = contextParts.join('\n\n');
 
     // Ask AI to identify
-    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+    const model = genAI().getGenerativeModel({ model: 'gemini-3-flash-preview' });
     const prompt = `${IDENTIFY_PROMPT}\n\n**Pages:**\n\n${pageContext}`;
 
     const result = await model.generateContent(prompt);

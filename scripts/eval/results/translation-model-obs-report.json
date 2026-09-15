@@ -1,0 +1,1628 @@
+{
+ "at": "2026-09-12T16:34:45.962Z",
+ "issue": 4759,
+ "design": "observational, within-book pairs, unit = book; SUGGESTIVE not decisive (see header)",
+ "all": {
+  "n_books": 137,
+  "n_pairs": 303,
+  "metrics": {
+   "verified_rate_lite": {
+    "rate": 0.375,
+    "ci": [
+     0.20353982300884957,
+     0.6082474226804123
+    ],
+    "units": 303,
+    "denom": 112
+   },
+   "verified_rate_flash": {
+    "rate": 0.26851851851851855,
+    "ci": [
+     0.18972332015810275,
+     0.352112676056338
+    ],
+    "units": 303,
+    "denom": 216
+   },
+   "verified_rate_delta_flash_minus_lite": {
+    "n_books": 26,
+    "delta": -0.2112179487179487,
+    "ci": [
+     -0.4294871794871794,
+     0.012820512820512775
+    ],
+    "decisive": false
+   },
+   "notes_emitted": {
+    "lite_mean": 0.4756690997566909,
+    "flash_mean": 0.6763990267639903,
+    "delta_flash_minus_lite": 0.2007299270072994,
+    "ci": [
+     -0.15936739659367416,
+     0.49391727493917276
+    ],
+    "decisive": false,
+    "flash_higher": 61,
+    "lite_higher": 25,
+    "sign_p": 0.00013037942991199413
+   },
+   "inline_terms": {
+    "lite_mean": 4.4464720194647205,
+    "flash_mean": 10.358880778588805,
+    "delta_flash_minus_lite": 5.912408759124085,
+    "ci": [
+     0.20437956204379404,
+     11.256690997566913
+    ],
+    "decisive": true,
+    "flash_higher": 61,
+    "lite_higher": 59,
+    "sign_p": 0.9273150210898639
+   },
+   "invented_tags": {
+    "lite_mean": 0.072992700729927,
+    "flash_mean": 0.053527980535279795,
+    "delta_flash_minus_lite": -0.019464720194647206,
+    "ci": [
+     -0.16301703163017034,
+     0.097323600973236
+    ],
+    "decisive": false,
+    "flash_higher": 3,
+    "lite_higher": 2,
+    "sign_p": 0.9999999999999999
+   },
+   "housekeeping_tags": {
+    "lite_mean": 0.22384428223844285,
+    "flash_mean": 0.05596107055961071,
+    "delta_flash_minus_lite": -0.16788321167883213,
+    "ci": [
+     -0.3527980535279806,
+     -0.021897810218978103
+    ],
+    "decisive": true,
+    "flash_higher": 6,
+    "lite_higher": 16,
+    "sign_p": 0.052478790283203056
+   },
+   "glossary_block": {
+    "lite_mean": 0,
+    "flash_mean": 0,
+    "delta_flash_minus_lite": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "body_chars": {
+    "lite_mean": 4075.843065693429,
+    "flash_mean": 5495.768856447688,
+    "delta_flash_minus_lite": 1419.9257907542597,
+    "ci": [
+     -2600.238442822385,
+     3529.991484184914
+    ],
+    "decisive": false,
+    "flash_higher": 98,
+    "lite_higher": 39,
+    "sign_p": 4.870586356414972e-7
+   },
+   "ocr_chars": {
+    "lite_mean": 4130.281021897811,
+    "flash_mean": 14438.889294403896,
+    "delta_flash_minus_lite": 10308.608272506084,
+    "ci": [
+     8598.838199513386,
+     11718.762773722625
+    ],
+    "decisive": true,
+    "flash_higher": 114,
+    "lite_higher": 23,
+    "sign_p": 1.0905070261352379e-15
+   },
+   "body_per_ocr_char": {
+    "lite_mean": 0.9848643010065217,
+    "flash_mean": 0.5892798425599999,
+    "delta_flash_minus_lite": -0.3955844584465218,
+    "ci": [
+     -0.5818253456542303,
+     -0.264348233349852
+    ],
+    "decisive": true,
+    "flash_higher": 39,
+    "lite_higher": 98,
+    "sign_p": 4.870586356414972e-7
+   }
+  }
+ },
+ "ocr_matched_only": {
+  "n_books": 137,
+  "n_pairs": 303,
+  "metrics": {
+   "verified_rate_lite": {
+    "rate": 0.375,
+    "ci": [
+     0.20353982300884957,
+     0.6082474226804123
+    ],
+    "units": 303,
+    "denom": 112
+   },
+   "verified_rate_flash": {
+    "rate": 0.26851851851851855,
+    "ci": [
+     0.18972332015810275,
+     0.352112676056338
+    ],
+    "units": 303,
+    "denom": 216
+   },
+   "verified_rate_delta_flash_minus_lite": {
+    "n_books": 26,
+    "delta": -0.2112179487179487,
+    "ci": [
+     -0.4294871794871794,
+     0.012820512820512775
+    ],
+    "decisive": false
+   },
+   "notes_emitted": {
+    "lite_mean": 0.4756690997566909,
+    "flash_mean": 0.6763990267639903,
+    "delta_flash_minus_lite": 0.2007299270072994,
+    "ci": [
+     -0.15936739659367416,
+     0.49391727493917276
+    ],
+    "decisive": false,
+    "flash_higher": 61,
+    "lite_higher": 25,
+    "sign_p": 0.00013037942991199413
+   },
+   "inline_terms": {
+    "lite_mean": 4.4464720194647205,
+    "flash_mean": 10.358880778588805,
+    "delta_flash_minus_lite": 5.912408759124085,
+    "ci": [
+     0.20437956204379404,
+     11.256690997566913
+    ],
+    "decisive": true,
+    "flash_higher": 61,
+    "lite_higher": 59,
+    "sign_p": 0.9273150210898639
+   },
+   "invented_tags": {
+    "lite_mean": 0.072992700729927,
+    "flash_mean": 0.053527980535279795,
+    "delta_flash_minus_lite": -0.019464720194647206,
+    "ci": [
+     -0.16301703163017034,
+     0.097323600973236
+    ],
+    "decisive": false,
+    "flash_higher": 3,
+    "lite_higher": 2,
+    "sign_p": 0.9999999999999999
+   },
+   "housekeeping_tags": {
+    "lite_mean": 0.22384428223844285,
+    "flash_mean": 0.05596107055961071,
+    "delta_flash_minus_lite": -0.16788321167883213,
+    "ci": [
+     -0.3527980535279806,
+     -0.021897810218978103
+    ],
+    "decisive": true,
+    "flash_higher": 6,
+    "lite_higher": 16,
+    "sign_p": 0.052478790283203056
+   },
+   "glossary_block": {
+    "lite_mean": 0,
+    "flash_mean": 0,
+    "delta_flash_minus_lite": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "body_chars": {
+    "lite_mean": 4075.843065693429,
+    "flash_mean": 5495.768856447688,
+    "delta_flash_minus_lite": 1419.9257907542597,
+    "ci": [
+     -2600.238442822385,
+     3529.991484184914
+    ],
+    "decisive": false,
+    "flash_higher": 98,
+    "lite_higher": 39,
+    "sign_p": 4.870586356414972e-7
+   },
+   "ocr_chars": {
+    "lite_mean": 4130.281021897811,
+    "flash_mean": 14438.889294403896,
+    "delta_flash_minus_lite": 10308.608272506084,
+    "ci": [
+     8598.838199513386,
+     11718.762773722625
+    ],
+    "decisive": true,
+    "flash_higher": 114,
+    "lite_higher": 23,
+    "sign_p": 1.0905070261352379e-15
+   },
+   "body_per_ocr_char": {
+    "lite_mean": 0.9848643010065217,
+    "flash_mean": 0.5892798425599999,
+    "delta_flash_minus_lite": -0.3955844584465218,
+    "ci": [
+     -0.5818253456542303,
+     -0.264348233349852
+    ],
+    "decisive": true,
+    "flash_higher": 39,
+    "lite_higher": 98,
+    "sign_p": 4.870586356414972e-7
+   }
+  }
+ },
+ "ocr_mismatched_only": {
+  "n_books": 0,
+  "n_pairs": 0,
+  "metrics": {
+   "verified_rate_lite": {
+    "rate": null,
+    "ci": null,
+    "units": 0,
+    "denom": 0
+   },
+   "verified_rate_flash": {
+    "rate": null,
+    "ci": null,
+    "units": 0,
+    "denom": 0
+   },
+   "verified_rate_delta_flash_minus_lite": null,
+   "notes_emitted": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "inline_terms": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "invented_tags": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "housekeeping_tags": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "glossary_block": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "body_chars": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "ocr_chars": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   },
+   "body_per_ocr_char": {
+    "lite_mean": null,
+    "flash_mean": null,
+    "delta_flash_minus_lite": null,
+    "ci": null,
+    "decisive": false,
+    "flash_higher": 0,
+    "lite_higher": 0,
+    "sign_p": 1
+   }
+  }
+ },
+ "confounds": {
+  "prompt_version": {
+   "lite": {
+    "11": 103,
+    "v10": 199,
+    "v6": 1
+   },
+   "flash": {
+    "11": 29,
+    "12": 231,
+    "v2": 28,
+    "v5.2026-02": 6,
+    "v5.1.2026-03b": 9
+   }
+  },
+  "ocr_model": {
+   "lite": {
+    "gemini-3-flash-preview": 107,
+    "gemini-3.1-flash-lite-preview": 196
+   },
+   "flash": {
+    "gemini-3-flash-preview": 107,
+    "gemini-3.1-flash-lite-preview": 196
+   }
+  },
+  "flash_era": {
+   "pre-2026-03-27": 41,
+   "post-2026-05-12": 260,
+   "in-window": 2
+  },
+  "page_distance": {
+   "mean": 7.141914191419142,
+   "max": 358
+  },
+  "languages": {
+   "Greek": 62,
+   "Syriac": 39,
+   "Tibetan": 155,
+   "Armenian": 2,
+   "Javanese": 3,
+   "Japanese": 5,
+   "Hebrew, Judeo-Arabic, and Ladino": 3,
+   "Hebrew and Judeo-Arabic": 4,
+   "Egyptian hieroglyphs": 3,
+   "Ladino and French": 3,
+   "Sanskrit": 4,
+   "Hebrew": 10,
+   "Hebrew, Aramaic, and Judeo-Arabic": 1,
+   "Geez": 3,
+   "Judeo-Arabic and Hebrew": 2,
+   "Arabic": 2,
+   "Avestan": 1,
+   "Aromanian (in Greek alphabet), Greek": 1
+  }
+ },
+ "by_language": {
+  "Greek": {
+   "n_books": 28,
+   "n_pairs": 62,
+   "metrics": {
+    "verified_rate_lite": {
+     "rate": 1,
+     "ci": [
+      1,
+      1
+     ],
+     "units": 62,
+     "denom": 17
+    },
+    "verified_rate_flash": {
+     "rate": 0.4883720930232558,
+     "ci": [
+      0.3053435114503817,
+      0.7241379310344828
+     ],
+     "units": 62,
+     "denom": 86
+    },
+    "verified_rate_delta_flash_minus_lite": {
+     "n_books": 5,
+     "delta": -0.44000000000000006,
+     "ci": [
+      -0.84,
+      -0.040000000000000036
+     ],
+     "decisive": true
+    },
+    "notes_emitted": {
+     "lite_mean": 0.369047619047619,
+     "flash_mean": 1.2261904761904763,
+     "delta_flash_minus_lite": 0.8571428571428572,
+     "ci": [
+      0.17857142857142883,
+      1.5238095238095237
+     ],
+     "decisive": true,
+     "flash_higher": 18,
+     "lite_higher": 5,
+     "sign_p": 0.010622024536132809
+    },
+    "inline_terms": {
+     "lite_mean": 2.113095238095238,
+     "flash_mean": 2.535714285714285,
+     "delta_flash_minus_lite": 0.422619047619047,
+     "ci": [
+      -1.327380952380953,
+      2.196428571428571
+     ],
+     "decisive": false,
+     "flash_higher": 13,
+     "lite_higher": 9,
+     "sign_p": 0.5234670639038079
+    },
+    "invented_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0.16666666666666666,
+     "delta_flash_minus_lite": 0.16666666666666666,
+     "ci": [
+      0,
+      0.4047619047619047
+     ],
+     "decisive": false,
+     "flash_higher": 2,
+     "lite_higher": 0,
+     "sign_p": 0.5
+    },
+    "housekeeping_tags": {
+     "lite_mean": 0.619047619047619,
+     "flash_mean": 0.16666666666666666,
+     "delta_flash_minus_lite": -0.45238095238095233,
+     "ci": [
+      -1.238095238095238,
+      0.04761904761904759
+     ],
+     "decisive": false,
+     "flash_higher": 4,
+     "lite_higher": 7,
+     "sign_p": 0.5488281250000002
+    },
+    "glossary_block": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "body_chars": {
+     "lite_mean": 1944.9583333333333,
+     "flash_mean": 2828.0178571428573,
+     "delta_flash_minus_lite": 883.0595238095241,
+     "ci": [
+      -245.85119047619082,
+      2033.0119047619048
+     ],
+     "decisive": false,
+     "flash_higher": 18,
+     "lite_higher": 10,
+     "sign_p": 0.18493334203958592
+    },
+    "ocr_chars": {
+     "lite_mean": 3371.5357142857147,
+     "flash_mean": 4712.738095238096,
+     "delta_flash_minus_lite": 1341.2023809523816,
+     "ci": [
+      -1542.1547619047615,
+      4402.119047619047
+     ],
+     "decisive": false,
+     "flash_higher": 15,
+     "lite_higher": 13,
+     "sign_p": 0.850554019212727
+    },
+    "body_per_ocr_char": {
+     "lite_mean": 0.7314755018059803,
+     "flash_mean": 1.007739474662963,
+     "delta_flash_minus_lite": 0.2762639728569828,
+     "ci": [
+      0.055199629205127776,
+      0.5048063419241738
+     ],
+     "decisive": true,
+     "flash_higher": 18,
+     "lite_higher": 10,
+     "sign_p": 0.18493334203958592
+    }
+   }
+  },
+  "Syriac": {
+   "n_books": 14,
+   "n_pairs": 39,
+   "metrics": {
+    "verified_rate_lite": {
+     "rate": 0.03125,
+     "ci": [
+      0,
+      0.3333333333333333
+     ],
+     "units": 39,
+     "denom": 32
+    },
+    "verified_rate_flash": {
+     "rate": 0.03225806451612903,
+     "ci": [
+      0,
+      0.125
+     ],
+     "units": 39,
+     "denom": 31
+    },
+    "verified_rate_delta_flash_minus_lite": {
+     "n_books": 3,
+     "delta": -0.1111111111111111,
+     "ci": [
+      -0.3333333333333333,
+      0
+     ],
+     "decisive": false
+    },
+    "notes_emitted": {
+     "lite_mean": 1.8095238095238095,
+     "flash_mean": 0.7500000000000001,
+     "delta_flash_minus_lite": -1.0595238095238093,
+     "ci": [
+      -4.273809523809525,
+      0.880952380952381
+     ],
+     "decisive": false,
+     "flash_higher": 7,
+     "lite_higher": 3,
+     "sign_p": 0.3437500000000002
+    },
+    "inline_terms": {
+     "lite_mean": 4.404761904761904,
+     "flash_mean": 4.988095238095238,
+     "delta_flash_minus_lite": 0.5833333333333339,
+     "ci": [
+      -7.690476190476191,
+      10.940476190476192
+     ],
+     "decisive": false,
+     "flash_higher": 5,
+     "lite_higher": 6,
+     "sign_p": 1
+    },
+    "invented_tags": {
+     "lite_mean": 0.6428571428571429,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": -0.6428571428571429,
+     "ci": [
+      -1.9285714285714286,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 1,
+     "sign_p": 1
+    },
+    "housekeeping_tags": {
+     "lite_mean": 0.33333333333333337,
+     "flash_mean": 0.047619047619047616,
+     "delta_flash_minus_lite": -0.28571428571428575,
+     "ci": [
+      -0.9047619047619048,
+      0.09523809523809523
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 2,
+     "sign_p": 1
+    },
+    "glossary_block": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "body_chars": {
+     "lite_mean": 9105.666666666666,
+     "flash_mean": 5875.702380952381,
+     "delta_flash_minus_lite": -3229.9642857142853,
+     "ci": [
+      -17971.666666666668,
+      5292.011904761905
+     ],
+     "decisive": false,
+     "flash_higher": 8,
+     "lite_higher": 6,
+     "sign_p": 0.7905273437500007
+    },
+    "ocr_chars": {
+     "lite_mean": 6106.9047619047615,
+     "flash_mean": 10794.666666666668,
+     "delta_flash_minus_lite": 4687.761904761906,
+     "ci": [
+      -114.47619047618991,
+      9034.09523809524
+     ],
+     "decisive": false,
+     "flash_higher": 10,
+     "lite_higher": 4,
+     "sign_p": 0.17956542968750006
+    },
+    "body_per_ocr_char": {
+     "lite_mean": 1.0856381955261758,
+     "flash_mean": 0.7350740308560194,
+     "delta_flash_minus_lite": -0.3505641646701564,
+     "ci": [
+      -0.9970011418797539,
+      0.12854356249394872
+     ],
+     "decisive": false,
+     "flash_higher": 6,
+     "lite_higher": 8,
+     "sign_p": 0.7905273437500007
+    }
+   }
+  },
+  "Tibetan": {
+   "n_books": 69,
+   "n_pairs": 155,
+   "metrics": {
+    "verified_rate_lite": {
+     "rate": 0.26666666666666666,
+     "ci": [
+      0.06896551724137931,
+      0.45652173913043476
+     ],
+     "units": 155,
+     "denom": 45
+    },
+    "verified_rate_flash": {
+     "rate": 0.11842105263157894,
+     "ci": [
+      0.029850746268656716,
+      0.2028985507246377
+     ],
+     "units": 155,
+     "denom": 76
+    },
+    "verified_rate_delta_flash_minus_lite": {
+     "n_books": 11,
+     "delta": -0.12121212121212122,
+     "ci": [
+      -0.393939393939394,
+      0.16666666666666666
+     ],
+     "decisive": false
+    },
+    "notes_emitted": {
+     "lite_mean": 0.27294685990338163,
+     "flash_mean": 0.4492753623188406,
+     "delta_flash_minus_lite": 0.17632850241545894,
+     "ci": [
+      0.00483091787439599,
+      0.3188405797101449
+     ],
+     "decisive": true,
+     "flash_higher": 28,
+     "lite_higher": 15,
+     "sign_p": 0.06599403445579827
+    },
+    "inline_terms": {
+     "lite_mean": 6.350241545893719,
+     "flash_mean": 13.22705314009662,
+     "delta_flash_minus_lite": 6.876811594202901,
+     "ci": [
+      0.10386473429951693,
+      15.432367149758457
+     ],
+     "decisive": true,
+     "flash_higher": 30,
+     "lite_higher": 35,
+     "sign_p": 0.6201447650813061
+    },
+    "invented_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "housekeeping_tags": {
+     "lite_mean": 0.01932367149758454,
+     "flash_mean": 0.01932367149758454,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      -0.048309178743961345,
+      0.04830917874396135
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 2,
+     "sign_p": 1
+    },
+    "glossary_block": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "body_chars": {
+     "lite_mean": 3550.08695652174,
+     "flash_mean": 6519.277777777777,
+     "delta_flash_minus_lite": 2969.1908212560375,
+     "ci": [
+      -37.84057971014772,
+      5117.869565217392
+     ],
+     "decisive": false,
+     "flash_higher": 54,
+     "lite_higher": 15,
+     "sign_p": 0.0000026128480035900046
+    },
+    "ocr_chars": {
+     "lite_mean": 4543.306763285023,
+     "flash_mean": 19808.925120772947,
+     "delta_flash_minus_lite": 15265.618357487923,
+     "ci": [
+      13593.642512077298,
+      16731.17391304348
+     ],
+     "decisive": true,
+     "flash_higher": 66,
+     "lite_higher": 3,
+     "sign_p": 1.8570350335603266e-16
+    },
+    "body_per_ocr_char": {
+     "lite_mean": 0.981965471729164,
+     "flash_mean": 0.39009958126811056,
+     "delta_flash_minus_lite": -0.5918658904610534,
+     "ci": [
+      -0.7386317463093535,
+      -0.4532891509352728
+     ],
+     "decisive": true,
+     "flash_higher": 9,
+     "lite_higher": 60,
+     "sign_p": 2.2444496451277492e-10
+    }
+   }
+  },
+  "Japanese": {
+   "n_books": 3,
+   "n_pairs": 5,
+   "metrics": {
+    "verified_rate_lite": {
+     "rate": 0.8888888888888888,
+     "ci": [
+      0,
+      1
+     ],
+     "units": 5,
+     "denom": 9
+    },
+    "verified_rate_flash": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "units": 5,
+     "denom": 5
+    },
+    "verified_rate_delta_flash_minus_lite": {
+     "n_books": 2,
+     "delta": -0.9375,
+     "ci": [
+      -1,
+      -0.875
+     ],
+     "decisive": true
+    },
+    "notes_emitted": {
+     "lite_mean": 1.5,
+     "flash_mean": 1,
+     "delta_flash_minus_lite": -0.5,
+     "ci": [
+      -3,
+      1.1666666666666665
+     ],
+     "decisive": false,
+     "flash_higher": 2,
+     "lite_higher": 1,
+     "sign_p": 1
+    },
+    "inline_terms": {
+     "lite_mean": 0.6666666666666666,
+     "flash_mean": 2.6666666666666665,
+     "delta_flash_minus_lite": 2,
+     "ci": [
+      -0.8333333333333335,
+      6.166666666666667
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 2,
+     "sign_p": 1
+    },
+    "invented_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "housekeeping_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "glossary_block": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "body_chars": {
+     "lite_mean": 733.8333333333334,
+     "flash_mean": 2061,
+     "delta_flash_minus_lite": 1327.1666666666665,
+     "ci": [
+      123.5,
+      2007.1666666666665
+     ],
+     "decisive": true,
+     "flash_higher": 3,
+     "lite_higher": 0,
+     "sign_p": 0.25000000000000006
+    },
+    "ocr_chars": {
+     "lite_mean": 910.1666666666666,
+     "flash_mean": 8775.333333333334,
+     "delta_flash_minus_lite": 7865.166666666667,
+     "ci": [
+      -68,
+      14872
+     ],
+     "decisive": false,
+     "flash_higher": 2,
+     "lite_higher": 1,
+     "sign_p": 1
+    },
+    "body_per_ocr_char": {
+     "lite_mean": 1.304274953231778,
+     "flash_mean": 0.8280836606432906,
+     "delta_flash_minus_lite": -0.47619129258848725,
+     "ci": [
+      -1.253682391948036,
+      0.5808476934706515
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 2,
+     "sign_p": 1
+    }
+   }
+  },
+  "Hebrew, Judeo-Arabic, and Ladino": {
+   "n_books": 3,
+   "n_pairs": 3,
+   "metrics": {
+    "verified_rate_lite": {
+     "rate": null,
+     "ci": null,
+     "units": 3,
+     "denom": 0
+    },
+    "verified_rate_flash": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "units": 3,
+     "denom": 3
+    },
+    "verified_rate_delta_flash_minus_lite": null,
+    "notes_emitted": {
+     "lite_mean": 0,
+     "flash_mean": 1,
+     "delta_flash_minus_lite": 1,
+     "ci": [
+      0,
+      2
+     ],
+     "decisive": false,
+     "flash_higher": 2,
+     "lite_higher": 0,
+     "sign_p": 0.5
+    },
+    "inline_terms": {
+     "lite_mean": 4.333333333333333,
+     "flash_mean": 0.6666666666666666,
+     "delta_flash_minus_lite": -3.6666666666666665,
+     "ci": [
+      -7,
+      0.6666666666666666
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 2,
+     "sign_p": 1
+    },
+    "invented_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "housekeeping_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "glossary_block": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "body_chars": {
+     "lite_mean": 1111.3333333333333,
+     "flash_mean": 15953.666666666666,
+     "delta_flash_minus_lite": 14842.333333333332,
+     "ci": [
+      5674,
+      27283.333333333332
+     ],
+     "decisive": true,
+     "flash_higher": 3,
+     "lite_higher": 0,
+     "sign_p": 0.25000000000000006
+    },
+    "ocr_chars": {
+     "lite_mean": 929,
+     "flash_mean": 18601,
+     "delta_flash_minus_lite": 17672,
+     "ci": [
+      15813,
+      20476
+     ],
+     "decisive": true,
+     "flash_higher": 3,
+     "lite_higher": 0,
+     "sign_p": 0.25000000000000006
+    },
+    "body_per_ocr_char": {
+     "lite_mean": 1.1946869326002203,
+     "flash_mean": 0.81495342284085,
+     "delta_flash_minus_lite": -0.37973350975937026,
+     "ci": [
+      -0.7503647877106361,
+      0.09263925221414171
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 2,
+     "sign_p": 1
+    }
+   }
+  },
+  "Hebrew and Judeo-Arabic": {
+   "n_books": 3,
+   "n_pairs": 4,
+   "metrics": {
+    "verified_rate_lite": {
+     "rate": null,
+     "ci": null,
+     "units": 4,
+     "denom": 0
+    },
+    "verified_rate_flash": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "units": 4,
+     "denom": 3
+    },
+    "verified_rate_delta_flash_minus_lite": null,
+    "notes_emitted": {
+     "lite_mean": 0,
+     "flash_mean": 0.8333333333333334,
+     "delta_flash_minus_lite": 0.8333333333333334,
+     "ci": [
+      0,
+      2
+     ],
+     "decisive": false,
+     "flash_higher": 2,
+     "lite_higher": 0,
+     "sign_p": 0.5
+    },
+    "inline_terms": {
+     "lite_mean": 0,
+     "flash_mean": 32.5,
+     "delta_flash_minus_lite": 32.5,
+     "ci": [
+      2,
+      85.5
+     ],
+     "decisive": true,
+     "flash_higher": 3,
+     "lite_higher": 0,
+     "sign_p": 0.25000000000000006
+    },
+    "invented_tags": {
+     "lite_mean": 0.3333333333333333,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": -0.3333333333333333,
+     "ci": [
+      -1,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 1,
+     "sign_p": 1
+    },
+    "housekeeping_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "glossary_block": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "body_chars": {
+     "lite_mean": 2084.8333333333335,
+     "flash_mean": 4380.333333333333,
+     "delta_flash_minus_lite": 2295.4999999999995,
+     "ci": [
+      -1137.6666666666667,
+      5771.833333333334
+     ],
+     "decisive": false,
+     "flash_higher": 2,
+     "lite_higher": 1,
+     "sign_p": 1
+    },
+    "ocr_chars": {
+     "lite_mean": 1851.5,
+     "flash_mean": 14557.666666666666,
+     "delta_flash_minus_lite": 12706.166666666666,
+     "ci": [
+      7039,
+      19016.5
+     ],
+     "decisive": true,
+     "flash_higher": 3,
+     "lite_higher": 0,
+     "sign_p": 0.25000000000000006
+    },
+    "body_per_ocr_char": {
+     "lite_mean": 1.1184923595444978,
+     "flash_mean": 0.3681301120531291,
+     "delta_flash_minus_lite": -0.7503622474913687,
+     "ci": [
+      -1.081138645668214,
+      -0.431868517953768
+     ],
+     "decisive": true,
+     "flash_higher": 0,
+     "lite_higher": 3,
+     "sign_p": 0.25000000000000006
+    }
+   }
+  },
+  "Hebrew": {
+   "n_books": 5,
+   "n_pairs": 10,
+   "metrics": {
+    "verified_rate_lite": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "units": 10,
+     "denom": 2
+    },
+    "verified_rate_flash": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "units": 10,
+     "denom": 4
+    },
+    "verified_rate_delta_flash_minus_lite": {
+     "n_books": 2,
+     "delta": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false
+    },
+    "notes_emitted": {
+     "lite_mean": 0.16666666666666666,
+     "flash_mean": 0.29999999999999993,
+     "delta_flash_minus_lite": 0.13333333333333328,
+     "ci": [
+      -0.16666666666666666,
+      0.4333333333333333
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "inline_terms": {
+     "lite_mean": 3.6,
+     "flash_mean": 1.2666666666666666,
+     "delta_flash_minus_lite": -2.3333333333333335,
+     "ci": [
+      -6.066666666666666,
+      1.1333333333333333
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 3,
+     "sign_p": 0.625
+    },
+    "invented_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0.5333333333333333,
+     "delta_flash_minus_lite": 0.5333333333333333,
+     "ci": [
+      0,
+      1.6
+     ],
+     "decisive": false,
+     "flash_higher": 1,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "housekeeping_tags": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "glossary_block": {
+     "lite_mean": 0,
+     "flash_mean": 0,
+     "delta_flash_minus_lite": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "decisive": false,
+     "flash_higher": 0,
+     "lite_higher": 0,
+     "sign_p": 1
+    },
+    "body_chars": {
+     "lite_mean": 4969.7,
+     "flash_mean": 4757.9,
+     "delta_flash_minus_lite": -211.80000000000018,
+     "ci": [
+      -7055.466666666667,
+      5247.133333333332
+     ],
+     "decisive": false,
+     "flash_higher": 3,
+     "lite_higher": 2,
+     "sign_p": 0.9999999999999999
+    },
+    "ocr_chars": {
+     "lite_mean": 3287.8333333333335,
+     "flash_mean": 19180.333333333332,
+     "delta_flash_minus_lite": 15892.499999999998,
+     "ci": [
+      11534.600000000002,
+      19958.333333333332
+     ],
+     "decisive": true,
+     "flash_higher": 5,
+     "lite_higher": 0,
+     "sign_p": 0.0625
+    },
+    "body_per_ocr_char": {
+     "lite_mean": 1.180504320361053,
+     "flash_mean": 0.31050004637704076,
+     "delta_flash_minus_lite": -0.8700042739840123,
+     "ci": [
+      -1.4052746652617114,
+      -0.3474868935185133
+     ],
+     "decisive": true,
+     "flash_higher": 0,
+     "lite_higher": 5,
+     "sign_p": 0.0625
+    }
+   }
+  }
+ },
+ "judge": {
+  "at": "2026-09-12T16:38:53.822Z",
+  "verdicts_file": "translation-model-obs-judge-verdicts.jsonl",
+  "lite_better": 13,
+  "flash_better": 2,
+  "equivalent": 15,
+  "fabricated": {
+   "lite": 0,
+   "flash": 5,
+   "none": 25
+  },
+  "unknown_ids": 0,
+  "rows": [
+   {
+    "id": "69942a3c045dfc482ad75e2e:2-1",
+    "language": "Greek",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Left correctly renders the one Italian line about a duplicate copy without staining and with marginal notes; right correctly renders the Latin Jesuit Roman College provenance line and every shelfmark number."
+   },
+   {
+    "id": "69943f85338b1d7fd14de391:1-2",
+    "language": "Syriac",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Both are boilerplate pages handled faithfully: left reproduces the cover image description of the marbled binding with no invented text, and right passes through the English Google disclaimer verbatim including the books.google.com URL."
+   },
+   {
+    "id": "69a5e9cb787d6e9b8d42e730:106-105",
+    "language": "Armenian",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Left correctly renders the two-line Mesrop Mashtots caption verse and glosses vardapet, while right accurately carries the whole Book Two preface including the David and Solomon citations and the cloud-then-sun, winter-then-spring simile."
+   },
+   {
+    "id": "69e7abf15f1a22ab19aa0c01:244-245",
+    "language": "Tibetan",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Both sources are degenerate looping Uchen OCR and both translations track it clause by clause without inventing content - left even annotates that the repeated phrase fills the rest of the page, right mirrors the repeated bsgrub/dge slong clauses."
+   },
+   {
+    "id": "69e010c0c47b5c9f88213cee:17-18",
+    "language": "Javanese",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Both pages are looping Javanese-script OCR and both translations mirror the loop without inventing content; left misreads the running head kaca pitung puluh (page seventy) as Book of Seventy-One, right renders wiwitipun dumateng pungkasanipun correctly and flags the repetition as an OCR artefact."
+   },
+   {
+    "id": "69e75cfacc48e59ad74eb323:45-46",
+    "language": "Japanese",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Both track their own garbled kuzushiji OCR: left renders the Mutsu/travel imagery actually present in it, and rights repeated ku-gu-ke-fu block mirrors an OCR that itself looped, though its gomaten-notation note is unsupported."
+   },
+   {
+    "id": "69c1bbf98522835be8460ee1:32-33",
+    "language": "Hebrew and Judeo-Arabic",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "Left renders the Syriac page line by line accurately (doxology, the prophet quotation, the Mar Ephrem rubric and death-remembrance verses), while right translates only five lines and replaces the rest with a note speculating that the OCR loop is mnemonic or liturgical repetition."
+   },
+   {
+    "id": "69e013c593b116d24238b3d7:43-44",
+    "language": "Egyptian hieroglyphs",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "Faced with equally degenerate glyph loops, left renders the two real lines (it-netjer, Amun) and flags the repetition in one note, while right mechanically expands the loop into thousands of words of Amun / Priest of Amun / Name of Amun."
+   },
+   {
+    "id": "69c1bb658522835be845f635:126-127",
+    "language": "Ladino and French",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "Left renders the Syriac page clause by clause, including the 1 Cor 1:18 quotation and the Moses / prophets / John the Baptist sequence, while right mechanically expands a degenerate Avestan OCR loop into ~80 identical This word, O Lord Wisdom lines."
+   },
+   {
+    "id": "69c1bc0b8522835be84613b7:69-70",
+    "language": "Hebrew",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Both sides face degenerate Syriac OCR and neither invents: left renders the paragraph-35 opening on the soul in the body and explicitly flags the hundred-fold repeated clause it skips, while right renders its varying power/region/discernment loop in full, adding only an unsourced Discernment heading."
+   },
+   {
+    "id": "69c1baf98522835be845be90:32-33",
+    "language": "Hebrew, Aramaic, and Judeo-Arabic",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Left OCR is a pure degenerate loop with no body text and left renders it honestly with a warning instead of inventing verses, while right accurately renders its real Leviticus 9 Hebrew-plus-Targum text verse by verse."
+   },
+   {
+    "id": "69c1bd498522835be8468c64:26-27",
+    "language": "Geez",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Left OCR is one clause looped to 18K chars and left mirrors the loop without inventing content, while right faithfully renders its genuine Stephen-protomartyr liturgy line by line including the Acts 7 phrases (I saw heaven opened, forgive them)."
+   },
+   {
+    "id": "69c1bb688522835be845f7d9:329-330",
+    "language": "Judeo-Arabic and Hebrew",
+    "verdict": "RIGHT_BETTER",
+    "winner": "lite",
+    "fabricated": "left",
+    "why": "Right renders every table cell of the Hebrew word-square exactly (Joseph, Abraham, Shaddai, the Prophet), while left translates an all-unclear grid by adding unsupported editorial matter — a previous-page Syriac colophon and a Bahra Hassab computus identification found nowhere in its OCR."
+   },
+   {
+    "id": "69e8b2a72ff2a8dc09e7860d:25-66",
+    "language": "Arabic",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "Both render their Ihya pages complete from first clause to the closing footnote with accurate technical terms, and right's added Quran citations (49:10, 43:67, 11:29) and left's hadith-chain footnote are both correct."
+   },
+   {
+    "id": "69b9a0fe4a1112994cb81c4d:198-199",
+    "language": "Avestan",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "right",
+    "why": "Right's OCR contains nothing but the syllable म repeated for 16,700 characters, yet its output supplies Brihadaranyaka Upanishad 4.4.7-10 in full with Devanagari text, transliteration and word-by-word glosses that exist nowhere in that source, while left renders its own legible verses accurately line for line."
+   },
+   {
+    "id": "69bfcc7e8ab50eb88e8c5059:3-2",
+    "language": "Aromanian (in Greek alphabet), Greek",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "both render every contents line present in their own OCR including riddles, the Leo the Wise oracle, Gennadius, the Franks piece, Cyril and Euthymius, each keeping its own editor reading Harles vs Hoeschel without inventing entries."
+   },
+   {
+    "id": "69c1bada8522835be845aee0:207-209",
+    "language": "Hebrew, Judeo-Arabic, and Ladino",
+    "verdict": "RIGHT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "right renders each Syriac strophe accurately, including the Sinai/Moses line and the commemoration of the departed with Abraham, Isaac and Jacob, while left mirrors a degenerate OCR loop and emits thousands of words of God! God! with no usable text."
+   },
+   {
+    "id": "69ad716ac5001c07fa847f7d:28-7",
+    "language": "Greek",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "left has only a printers AM monogram to describe and describes it correctly, and right renders the full introduction page including an accurate English rendering of the long De Faye French quotation, so neither side shows an error."
+   },
+   {
+    "id": "69a5f359d4c2e3cf8ecb82c3:42-43",
+    "language": "Syriac",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "left correctly declines to translate an OCR that is nothing but a repeating gamal-dalath sequence instead of inventing prose, and right accurately renders the Sunday-before-the-Fast prayer with its deacon and priest rubrics, following the sources own repetition."
+   },
+   {
+    "id": "69e787624a6785cfd60cb913:164-165",
+    "language": "Tibetan",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "left tracks the Tibetan list item by item through the stream-enterer, once-returner, non-returner and arhat fruits and the eightfold path, while right spends its whole output echoing the sources degenerate loop of the quality of seeing with an added opening line about the unconditioned element of space that is not in its OCR."
+   },
+   {
+    "id": "69e726a2a409200ea79efa2d:56-58",
+    "language": "Japanese",
+    "verdict": "RIGHT_BETTER",
+    "winner": "flash",
+    "fabricated": "none",
+    "why": "right renders its OCR sentence by sentence (Michinoku choja, childless prayer, birth and naming of Bunsho, the mikado Hyoshin), while left emits disconnected word-glosses that never cohere into the source sense."
+   },
+   {
+    "id": "69c1ba8d8522835be8459371:134-135",
+    "language": "Hebrew and Judeo-Arabic",
+    "verdict": "RIGHT_BETTER",
+    "winner": "lite",
+    "fabricated": "left",
+    "why": "right tracks its Syriac OCR clause by clause through the Son/Word attribute litany, while left collapses into 50+ identical loops and glosses the garbled Avestan as humata/hukhta/huvarshta words that do not appear in its OCR."
+   },
+   {
+    "id": "69c1bb0c8522835be845c840:32-31",
+    "language": "Hebrew",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "right",
+    "why": "right OCR contains zero Hebrew characters (only an ellipsis run) yet its translation supplies psalm lines about judging the earth and choosing Israel, while left renders the actual damaged Hebrew words it was given and marks them unclear."
+   },
+   {
+    "id": "6993898a74305116d72d23af:37-38",
+    "language": "Greek",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "both render their Phaedo stretches clause by clause and accurately (left the bodily-pleasures and senses argument, right the katharsis and practice-of-dying argument), with only minor slips on each side such as right taking kai allo to andri as for another of the men."
+   },
+   {
+    "id": "69a5f460d4c2e3cf8ecb90a2:134-135",
+    "language": "Syriac",
+    "verdict": "LEFT_BETTER",
+    "winner": "flash",
+    "fabricated": "none",
+    "why": "both OCRs are degenerate loops, but left renders the readable opening (Hallelujah, the testing before the Great Judge, the sahde) and flags the 200-fold repetition as an OCR corruption, whereas right renders its loop of yahiba literally and then dresses the garbage as a deliberate meditative exercise dissolving Creator and creation."
+   },
+   {
+    "id": "69e787424a6785cfd60cb29e:222-223",
+    "language": "Tibetan",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "left renders its full 2.2K-char page clause by clause, while right translates only the opening of a 22.8K-char page and replaces ~20K characters of repeated text with an editorial note summarizing the omission."
+   },
+   {
+    "id": "69c1bb4a8522835be845e71f:272-273",
+    "language": "Hebrew",
+    "verdict": "RIGHT_BETTER",
+    "winner": "lite",
+    "fabricated": "left",
+    "why": "right renders its dense gematria page clause by clause with correctly identified scriptural citations (Ps 76:3, Ps 118:20, Ps 39:2, Ex 23:7, Prov 12:19), while left collapses a 24K-char list of Sefer Hasidim siman numbers into invented ranges and an invented endpoint (section 5024) rather than translating it."
+   },
+   {
+    "id": "699389830f04c37dcfa616d6:218-219",
+    "language": "Greek",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "left tracks its Greek clause by clause and correctly renders the recurring numerals (ὡρῶν ια μβ = 11 hours 42 minutes, μοιρῶν κδ = 24 degrees), while right converts long runs of spaced-out letter-salad OCR into invented-looking numeral strings presented as astronomical data, drops the ἡλιακὴ margin, and leaks the raw <vocab> block into its output."
+   },
+   {
+    "id": "69a5f366d4c2e3cf8ecb8a85:52-53",
+    "language": "Syriac",
+    "verdict": "LEFT_BETTER",
+    "winner": "lite",
+    "fabricated": "none",
+    "why": "left renders every damaged line of its Peshitta Romans 9 column accurately (Isaac/Rebekah, Jacob loved and Esau hated, the Pharaoh quotation) with unclear markers preserved, whereas right mirrors an OCR repetition loop for roughly 4K characters, cuts off mid-word before its summary, and its note recasts the OCR artifact as a deliberate litany."
+   },
+   {
+    "id": "69e788644a6785cfd60d0dbb:96-97",
+    "language": "Tibetan",
+    "verdict": "EQUIVALENT",
+    "winner": "equivalent",
+    "fabricated": "none",
+    "why": "left renders its three short leaves accurately including the four immeasurables named in order (love, compassion, joy, equanimity) and the dharmadhatu verse, while right correctly renders its source phrase de ltar gsungs pai don ni and truthfully flags that the identical phrase fills the remaining 22K characters, so both are faithful to what their pages actually contain."
+   }
+  ],
+  "sign_p": 0.007385253906250008
+ }
+}

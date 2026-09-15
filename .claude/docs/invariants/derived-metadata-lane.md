@@ -81,3 +81,75 @@ re-reads the shared key and writes fresh corruption over good revision history.
 `ocr === 0` reports a correctly-repairing book as broken.
 
 Session record, with the remaining traps: `.claude/handoffs/2026-09-08-poisoned-derivation-repair.md`.
+
+## The TRANSLATION is a lane-3 artifact too, and it is the one a reader reads (#4523)
+
+Everything above is about metadata derived from page text. A **translation** is derived
+from page text in exactly the same way, and it is the derived artifact with the largest
+reader-facing surface — it is not metadata about the page, it is presented as the page.
+
+On 2026-09-10 a re-OCR lane replaced the transcription of 65,129 pages across 190 Tibetan
+books, because the old reading of cursive *dbu-med* was substantially invented. Lane 1
+(images) was never in question and lane 2 (text) was repaired. Lane 3 was not: the April
+English translations of the deleted text stayed exactly where they were, so a reader saw
+new, correct Tibetan beside an English translation of words that are no longer on the
+page. A further 22,099 pages carry a translation of a transcription flagged
+`ocr.unreadable` — the reader withholds those, and **only** the reader does: search,
+embeddings, quotes, exports, IIIF and the MCP tools all read `translation.data` and see no
+flag.
+
+- **Re-OCR without re-translation is a half-repair that ships.** Add `translation` to the
+  enumeration at the top of this file. A phase-satisfaction check will not catch it: the
+  page HAS a translation, so `translated` is true, and no phase will run again.
+- **The rule has to be a PREDICATE the sweep re-derives, never an id list.** Every future
+  apply pass adds pages. `scripts/lib/stale-translation.mjs` owns it:
+  `ocr.pipeline` set and `translation.updated_at <= ocr.updated_at`, or `ocr.unreadable`
+  with a translation. Both arms are self-healing — retranslate the page, or give it a
+  transcription we trust, and it stops matching, so there is no flag anyone has to
+  remember to clear. Standing sweep + drift audit are in `crontab.production`.
+- **MOVE the text out of the field, do not teach nine surfaces a filter.** Withholding
+  sets `pages.translation_withheld` and unsets `pages.translation`; every consumer stops
+  serving it at once. A filter list is a list of the surfaces you thought of, and the
+  surface you forget is the one that serves the fabrication. Two surfaces here were only
+  found by looking: the Supabase `pages` mirror (whose 5-minute sync selects by
+  `translation.updated_at`, a field the withhold REMOVES, so it would have kept the
+  English forever), and `page_translations`, whose snippet and vector had to be parked in
+  sibling columns.
+- **Nothing is deleted.** The prior translation goes to `translation_withheld` AND to
+  `page_revisions` under `withhold-stale-translation-4523`. It is a labelled corpus of
+  what the old model invented, which is worth having; and it is what
+  `scripts/maintenance/restore-withheld-translation.mjs` reads.
+- **A "translated" count is a claim about the current text.** `pages_translated` must be
+  resynced in the same pass, or the card still says 3,040 of 3,086 translated for a book
+  serving none.
+
+## Holding a book OUT of the derived lane while its page mapping is wrong (#4790)
+
+Sometimes the text is right and the images are right and the *mapping* between page
+number and source leaf is wrong for both at once: 197 Archive-filled books carry their
+IA OCR at a non-zero leaf offset *and* have #3368-shifted images, so text and image agree
+on screen while both point at the neighbouring leaf. Re-pointing the text alone would
+make the error visible (the repair script refuses CLASS C for exactly that reason), so the
+book waits for the joint image+text repair — and everything derived from its pages before
+then is built on a mapping the repair will move. Only the translation lane self-heals
+(`stale-translation.mjs`, above); chapters, index, quality score and embeddings do not.
+
+**The gate is `scripts/lib/pipeline-hold.mjs`: status `held` + marker `pipeline_auto.hold`.**
+The status is what every worker already selects on, so a held book is invisible to every
+lane with no query changed; the marker is what the status *writers* consult (the
+orchestrator's `setPipelineStatus` refuses, direct `updateOne` writers filter on
+`NOT_HELD`), because the way a hold fails is a rollback or a batch write-back that sets
+the status unconditionally. `scripts/audit/pipeline-hold-drift.mjs` reconciles the two daily
+(CLOBBERED / ORPHANED / LEAKED / RELEASABLE). Hold and release with
+`scripts/maintenance/hold-pipeline-books.mjs`; release restores the exact prior status.
+
+**Do not reach for a `derived_hold` flag on the book.** Every selection query would need it,
+and the one you forget is the one that runs. **Do not withhold the page text** for this
+case either: unlike #4523 the text on screen is correct today; the withhold pattern is
+for text that is *wrong*, the hold is for text whose *address* is about to change.
+
+**Corollary — the empty-target pages.** A repair that re-points text to its own leaf can find
+that leaf empty in the source OCR (30 pages on 2026-09-13). Those pages keep the neighbour's
+text; gate them with `ocr.unreadable` (`flag-ia-empty-target-pages.mjs`), which the reader,
+page counts, `translate-core` and the stale-translation sweep all already honour, rather
+than clearing them — clearing is a spend decision (a model read per page) and belongs to a human.

@@ -85,3 +85,44 @@ Two were wrong as first drafted:
 (book `6991d46921124c9ad6944323`) is dated **1526**. The scholarly standard is
 **1577** — it is ch. 6 of Pūrṇānanda's *Śrītattvacintāmaṇi*, Śaka 1499. The 1526
 figure circulates in popular sources. Worth correcting in the catalogue.
+
+## v5 (2026-09-10/11): retrieval moved to the local corpus, plus a native-language lane
+
+The July run retrieved over the network (Supabase `match_semantic`, ~10K RPCs at concurrency 5).
+v5 runs the same instrument against the local mirror (`~/sl-corpus`, built by
+`sourcelibrary-atlas/scripts/local-corpus/`) and adds the lane the paper's roadmap put first —
+probes written in the sources' own languages.
+
+    retrieve/retrieve-v5-local.mjs    same 144 probe sentences, one exact pass per probe over all
+                                      4.54M page vectors on disk; every language with >=200 embedded
+                                      rows is a stratum (155 of them, 169 strata with eras + tail).
+                                      Probe embeddings are the only network call (Gemini, cents) —
+                                      and the laptop is geo-blocked, so embed them on Hetzner.
+    retrieve/retrieve-v5-lexical.mjs  native-script terms over the original-language OCR (FTS5
+                                      trigram; character index `pages_cjk` for 2-char Chinese).
+                                      Every term is positive-controlled and script-gated; zero-hit
+                                      and gated terms are written to v5-lexical-summary.json, never
+                                      silently dropped. Hits on UNTRANSLATED pages go to a separate
+                                      file: they are the translation to-do, counted not read.
+    probes/native-west.jsonl          model-authored tradition vocabulary, one dimension per line
+    probes/native-east.jsonl          (Latin/Greek/German/French/Italian/Dutch; Chinese/Tibetan/
+                                      Sanskrit/Arabic/Hebrew/Persian). 873 terms.
+    probes/derive-native-terms.mjs    data-derived complement: page-terms (#4695 harvest) enriched
+                                      on July's experiential pages vs same-book background. Noisy
+                                      (names, OCR debris leak in) — the positive control and the
+                                      classifier are the filters, not this script.
+    build/merge-v5.mjs                one row per page with BOTH lanes' provenance; --max N draws a
+                                      language-stratified pilot.
+    classify/classify-v5.mjs          classify-v3's prompt and quote gate unchanged; paths from
+                                      $HOME, thinkingBudget 0, lane provenance carried through,
+                                      CLASSIFY_MAX for a costed pilot. PAID — sign-off first.
+
+Measured on the first run (2026-09-11): semantic lane 108,688 translated passages, English 6.2% of
+hits vs 13.5% of embedded rows (the stratification holds); lexical lane 32,338 passages from 2,111
+probes (130 zero-hit terms). Of 139,201 unique pages, only 1,797 were found by BOTH lanes: the
+English-probe embedding space and the sources' own vocabulary point at nearly disjoint pages —
+section 6 of the paper, made concrete. Which lane finds the experiential pages is the classifier's
+question, and it has not been run yet.
+
+Outputs live in `scripts/output/experience-map/v5/` (gitignored). Offline terminal Q&A over the
+same mirror: `sl-ask` (sourcelibrary-atlas `scripts/local-corpus/ask.mjs`, Ollama + sl-local tools).
