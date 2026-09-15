@@ -182,6 +182,9 @@ async function record(db) {
 }
 
 // ── report helpers ─────────────────────────────────────────────────────────────
+/** pageProse keeps the CONTENT of the scalar tags (`<script>printed</script>` → "printed"), and
+ *  "printed" is an imprint word — every model reading would count as an imprint difference. */
+const prose = (raw) => pageProse(String(raw ?? '').replace(/<(scan-quality|language|script|page-type|header|footer|page-number)\b[^>]*>[\s\S]*?<\/\1>/gi, ' '));
 const fold = (s) => String(s ?? '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
 const words = (s) => fold(s).split(' ').filter((w) => w.length > 1);
 /** Fraction of the catalogue field's words present in the page, so a field is "present" at ≥ 0.8. */
@@ -213,7 +216,7 @@ async function report(db) {
   const rows = [];
   for (const r of titlePages) {
     const b = books.get(r.book_id) || {};
-    const A = pageProse(r.archive_text), M = pageProse(r.model_text);
+    const A = prose(r.archive_text), M = prose(r.model_text);
     const cov = (f) => ({ archive: fieldCoverage(f, A), model: fieldCoverage(f, M) });
     const title = cov(b.title), author = cov(b.author);
     const ya = years(A), ym = years(M);
@@ -243,7 +246,7 @@ async function report(db) {
   const countRecovers = (k) => [...perBookRecovers.values()].filter((v) => v[k]).length;
   const typeTally = {}; for (const r of reread) typeTally[r.page_type || 'untagged'] = (typeTally[r.page_type || 'untagged'] || 0) + 1;
   const toc = reread.filter((r) => r.page_type === 'toc');
-  const copyright = reread.filter((r) => COPYRIGHT.test(pageProse(r.model_text)));
+  const copyright = reread.filter((r) => COPYRIGHT.test(prose(r.model_text)));
   const refused = res.filter((r) => r.outcome.startsWith('skipped:'));
   const refusedTally = {}; for (const r of refused) refusedTally[r.outcome.slice(8)] = (refusedTally[r.outcome.slice(8)] || 0) + 1;
   const spend = res.reduce((a, r) => a + (r.tokens?.cost_usd || 0), 0);
@@ -254,7 +257,7 @@ async function report(db) {
     digitizer_inserts_tagged_title_page: insertPages.length,
     title_pages: { pages: titlePages.length, books: perBook.size, books_differing: { any: count('any'), title: count('title'), author: count('author'), year: count('year'), imprint: count('imprint') }, books_where_model_recovers: { title: countRecovers('title'), author: countRecovers('author'), year: countRecovers('year'), imprint: countRecovers('imprint') } },
     toc_pages: toc.length, toc_books: new Set(toc.map((r) => r.book_id)).size,
-    copyright_versos: copyright.map((r) => ({ book_id: r.book_id, page_number: r.page_number, ia_identifier: books.get(r.book_id)?.ia_identifier ?? null, title: books.get(r.book_id)?.title ?? null, line: (pageProse(r.model_text).match(COPYRIGHT) || [''])[0] })),
+    copyright_versos: copyright.map((r) => ({ book_id: r.book_id, page_number: r.page_number, ia_identifier: books.get(r.book_id)?.ia_identifier ?? null, title: books.get(r.book_id)?.title ?? null, line: (prose(r.model_text).match(COPYRIGHT) || [''])[0] })),
     title_page_rows: rows.sort((a, b) => a.similarity - b.similarity),
   };
   writeJson('report.json', out);
