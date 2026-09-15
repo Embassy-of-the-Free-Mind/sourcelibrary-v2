@@ -13,6 +13,7 @@ import collectionRedirects from '@/lib/collection-redirects.json';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import CollectionFurtherReading from '@/components/collections/CollectionFurtherReading';
+import CollectionReadingList from '@/components/collections/CollectionReadingList';
 import IndexCatalogBrowser from '@/components/collections/IndexCatalogBrowser';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
@@ -34,6 +35,7 @@ import {
   type FurtherReadingBook,
   type FurtherReadingRef,
 } from '@/lib/further-reading';
+import { resolveReadingList, readingListBookIds, type ReadingListDoc } from '@/lib/reading-list';
 import { ObjectId } from 'mongodb';
 
 // ISR: rebuild at most once per day
@@ -507,6 +509,15 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     : [];
   const furtherReadingIds = furtherReadingRefs.map(r => r?.book_id).filter(Boolean);
 
+  // The reading list — the works a commissioned collection was BUILT AROUND,
+  // with the witnesses asked for and, per held book, what was actually found
+  // (the witness named / the list's fallback / another edition / a stopgap).
+  // Its books ARE members; the band only says which members were the point.
+  // Same `visible: true` rule as further reading: a ref that does not resolve
+  // renders nothing, so a hidden book's authored witness label cannot leak.
+  const readingListDoc = (collection.reading_list ?? null) as ReadingListDoc | null;
+  const readingListIds = readingListBookIds(readingListDoc);
+
   // Art collections share one canonical filter with the manifest API
   // (/api/collections/[id]?mode=manifest) — keep them in sync or the
   // server-rendered grid and the expanded grid show different works.
@@ -620,7 +631,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     }
   }
 
-  const [books, highlights, galleryImages, mentionedBooks, firstTranslations, furtherReadingBooks] = await Promise.all([
+  const [books, highlights, galleryImages, mentionedBooks, firstTranslations, furtherReadingBooks, readingListBooks] = await Promise.all([
     fetchBooksWithFallback(),
     curatedBookIds.length > 0
       ? withTimeout(
@@ -723,6 +734,20 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
         db.collection('books')
           .find(
             { id: { $in: furtherReadingIds }, visible: true, ...(tenantId ? { tenantId } : {}) },
+            { projection, maxTimeMS: 8000 },
+          )
+          .toArray(),
+        8000, [],
+      )
+      : Promise.resolve([]),
+    // Reading-list witnesses. Same `visible: true` guard, same reason. The
+    // shared `projection` already carries slug/title/display_title/author and
+    // the four page counters the readability word needs.
+    readingListIds.length > 0
+      ? withTimeout(
+        db.collection('books')
+          .find(
+            { id: { $in: readingListIds }, visible: true, ...(tenantId ? { tenantId } : {}) },
             { projection, maxTimeMS: 8000 },
           )
           .toArray(),
@@ -904,7 +929,16 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
         .map(b => ({ ...b, title: b.title || '' })),
       collection.slug,
     ),
-    readingListGaps: resolveReadingListGaps(collection.reading_list_gaps),
+    readingList: resolveReadingList(
+      readingListDoc,
+      (sanitizeBookThumbs(readingListBooks as Record<string, unknown>[]) as unknown as FurtherReadingBook[])
+        .map(b => ({ ...b, title: b.title || '' })),
+    ),
+    // `reading_list_gaps` predates `reading_list`; once the list exists its
+    // open rows ARE the gaps, so the older field is not rendered twice.
+    readingListGaps: readingListDoc?.items?.length
+      ? []
+      : resolveReadingListGaps(collection.reading_list_gaps),
     parentCollection,
     galleryCollectionSlug,
     galleryTotalCount,
@@ -993,7 +1027,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
   // tenant-scoped mismatch can still return null here.
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, furtherReading, readingListGaps, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, spanishBookCount } = data;
+  const { collection, books, highlights: curatedHighlightsData, firstTranslations, galleryImages, total, mentionedBooks, furtherReading, readingList, readingListGaps, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks, spanishBookCount } = data;
 
   // The band self-gates on empty, but the hero anchor needs to know in advance.
   const hasFurtherReading = furtherReading.length > 0 || readingListGaps.length > 0;
@@ -1303,6 +1337,12 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           </div>
         </div>
       )}
+
+      {/* The reading list — for a commissioned collection, the works it was
+          built around and the witnesses asked for. First content band on
+          purpose: the reader who wrote the list checks it before browsing.
+          Self-gates when the collection has none. */}
+      <CollectionReadingList rows={readingList} tenantSlug={tenantSlug} />
 
       {/* Featured books — a few of the collection's books, surfaced under the
           sub-collections and above the illustration gallery. Full catalogue stays below. */}
