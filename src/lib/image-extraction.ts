@@ -4,7 +4,7 @@
  */
 
 import Replicate from 'replicate';
-import { normalizeBbox } from '@/lib/bbox';
+import { normalizeBbox, normalizeRotation } from '@/lib/bbox';
 import { images } from '@/lib/api-client';
 import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
 import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
@@ -34,11 +34,12 @@ SKIP these — do NOT include them:
 - Ownership bookplates / ex-libris pasted into pastedowns or endpapers — if you must record one, use type "exlibris" with gallery_quality ≤ 0.3 (provenance, not the book's content)
 - Any element that is purely decorative with no intellectual content
 
-For each significant illustration return:
+For each significant illustration return ("rotation" is the clockwise turn in degrees — 0, 90, 180 or 270 — needed to make the illustration upright as printed; plates bound sideways in a book are common, so look at the figures and any lettering inside the illustration, not at the page):
 {
   "description": "Brief factual description",
   "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "rotation": 0,
   "confidence": 0.95,
   "gallery_quality": 0.85,
   "gallery_rationale": "Why gallery-worthy or not",
@@ -250,6 +251,7 @@ export async function extractWithGemini(
     description: item.description || '',
     type: item.type || 'unknown',
     bbox: normalizeBbox(item.bbox) ?? undefined,
+    rotation: normalizeRotation(item.rotation),
     confidence: item.confidence,
     gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
     gallery_rationale: item.gallery_rationale || undefined,

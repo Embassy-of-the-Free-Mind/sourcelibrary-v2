@@ -30,7 +30,7 @@ import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
-import { normalizeBbox } from '../lib/bbox.mjs';
+import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -602,6 +602,7 @@ async function processOneJob(db, job) {
             description: img.description || '',
             type: img.type || 'unknown',
             bbox: normalizeBbox(img.bbox) ?? undefined,
+            rotation: normalizeRotation(img.rotation),
             confidence: img.confidence,
             gallery_quality: typeof img.gallery_quality === 'number' ? img.gallery_quality : undefined,
             gallery_rationale: img.gallery_rationale || undefined,

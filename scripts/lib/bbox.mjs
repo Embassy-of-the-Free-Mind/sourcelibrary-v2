@@ -84,3 +84,19 @@ export function repairMixedUnitBbox(bbox) {
   if (fixed.width < MIN_BBOX_EXTENT || fixed.height < MIN_BBOX_EXTENT) return null;
   return { x: fixed.x, y: fixed.y, width: fixed.width, height: fixed.height };
 }
+
+/**
+ * Per-illustration rotation the vision model reports: the clockwise turn (degrees) needed to
+ * make the illustration upright as printed. Plates bound sideways (Talhoffer's fight book:
+ * every plate a fencer lying on his side) reached the gallery unrotated because no writer
+ * ever produced this field — gallery-doc.mjs carried `rotation` and the thumbnail route
+ * honoured it, but the extraction schema never asked (#4780 spot check, 2026-09-15: one
+ * row corpus-wide). Returns 0 | 90 | 180 | 270; undefined for absent or non-quarter values.
+ */
+export function normalizeRotation(raw) {
+  const n = typeof raw === 'string' ? (raw.trim() === '' ? NaN : Number(raw)) : raw;
+  if (typeof n !== 'number' || !Number.isFinite(n)) return undefined;
+  const q = Math.round(n / 90) * 90;
+  if (Math.abs(n - q) > 5) return undefined;
+  return ((q % 360) + 360) % 360;
+}

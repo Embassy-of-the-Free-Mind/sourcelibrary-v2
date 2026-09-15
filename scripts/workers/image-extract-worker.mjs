@@ -24,7 +24,7 @@ import sharp from 'sharp';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { normalizeBbox } from '../lib/bbox.mjs';
+import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -63,6 +63,12 @@ const RESPONSE_SCHEMA = {
             },
             required: ['x', 'y', 'width', 'height'],
           },
+          // Turn (clockwise degrees) needed to make the illustration upright. Plates bound
+          // sideways (Talhoffer's fight book: every plate is a fencer lying on his side)
+          // reached the gallery unrotated for a year because nothing asked for this —
+          // gallery-doc.mjs carried `rotation` and the thumbnail route honoured it, but no
+          // writer ever produced it (#4780 spot check, 2026-09-15: 1 row corpus-wide).
+          rotation: { type: SchemaType.NUMBER },
           confidence: { type: SchemaType.NUMBER },
           gallery_quality: { type: SchemaType.NUMBER },
           gallery_rationale: { type: SchemaType.STRING },
@@ -196,11 +202,12 @@ SKIP these — do NOT include them:
 
 If the page contains no significant illustrations, return \`extracted_images: []\` — an empty array. Do NOT return placeholder objects with missing or null fields. Either fill in every field (description, type, bbox, confidence, gallery_quality, gallery_rationale) for an illustration, or omit it entirely.
 
-For each significant illustration return:
+For each significant illustration return ("rotation" is the clockwise turn in degrees — 0, 90, 180 or 270 — needed to make the illustration upright as printed; plates bound sideways in a book are common, so look at the figures and any lettering inside the illustration, not at the page):
 {
   "description": "Brief factual description",
   "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "rotation": 0,
   "confidence": 0.95,
   "gallery_quality": 0.85,
   "gallery_rationale": "Why gallery-worthy or not",
@@ -876,6 +883,7 @@ async function processBook(db, book) {
           description: img.description || '',
           type: img.type || 'unknown',
           bbox: normalizeBbox(img.bbox) ?? undefined,
+          rotation: normalizeRotation(img.rotation),
           confidence: img.confidence,
           gallery_quality: typeof img.gallery_quality === 'number' ? img.gallery_quality : undefined,
           gallery_rationale: img.gallery_rationale || undefined,
