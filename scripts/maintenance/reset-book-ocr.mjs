@@ -16,6 +16,17 @@
  *   4. Clears ocr (and optionally translation) on the selected pages.
  *   5. Resets book counters and queues it at archive_complete.
  *
+ * A HELD book (scripts/lib/pipeline-hold.mjs) gets steps 1-4 and NOT step 5's
+ * status write. Everything this script destroys is legitimate to destroy under a
+ * hold — that is usually why the book is held — but the requeue is not: setting
+ * `archive_complete` on a held book silently LIFTS the hold and hands the book
+ * straight back to the lane the hold existed to keep it out of. The hold
+ * mechanism (#4790) postdates this script, so the write was unconditional until
+ * 2026-09-15, when a caller had to reimplement steps 4+5 by hand to avoid it.
+ * `batch-collector.mjs` states the same rule for its own write-back: a reset
+ * must never lift a pipeline hold. Release with
+ * `scripts/maintenance/hold-pipeline-books.mjs --release-held`, not by side effect.
+ *
  * Usage:
  *   set -a; source .env.production.local; set +a; \
  *   node scripts/maintenance/reset-book-ocr.mjs <book-id-or-slug> [options]
@@ -29,6 +40,7 @@
 
 import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
+import { isHeld } from '../lib/pipeline-hold.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -55,7 +67,10 @@ const db = client.db('bookstore');
 
 const book = await db.collection('books').findOne(
   { $or: [{ id: target }, { slug: target }] },
-  { projection: { id: 1, slug: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, 'pipeline_auto.ocr_generation': 1, 'pipeline_auto.status': 1, needs_splitting: 1, split_completed: 1 } }
+  // 'pipeline_auto.hold' is what isHeld() reads. Project it or the hold check
+  // below sees undefined on every book and silently passes them all through to
+  // the requeue — the #4563/#4565 projection-starvation shape.
+  { projection: { id: 1, slug: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, 'pipeline_auto.ocr_generation': 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, needs_splitting: 1, split_completed: 1 } }
 );
 if (!book) { console.error(`Book not found: ${target}`); process.exit(1); }
 
@@ -64,6 +79,15 @@ console.log(`\n=== Reset OCR: ${(book.title || '').slice(0, 60)} ===`);
 console.log(`id: ${book.id} | status: ${book.pipeline_auto?.status} | ocr ${book.pages_ocr}/${book.pages_count} | generation ${currentGen} -> ${currentGen + 1}`);
 if (book.needs_splitting && !book.split_completed) {
   console.log('NOTE: book is an unsplit spread — after reset it re-OCRs via the spread-aware path.');
+}
+const HELD = isHeld(book);
+if (HELD) {
+  const h = book.pipeline_auto.hold;
+  console.log(`HELD (${h.reason}${h.issue ? ` #${h.issue}` : ''}) — the reset will run, but pipeline_auto.status stays 'held'.`);
+  console.log(`  release condition: ${h.release}`);
+  console.log(`  release with: node scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ${h.reason} --book ${book.id} --apply`);
+} else {
+  console.log(`Not held — the book will be requeued at archive_complete.`);
 }
 if (DRY_RUN) console.log('DRY RUN — nothing will be written.');
 
@@ -128,14 +152,22 @@ console.log(`Pages cleared: ${clearRes.modifiedCount}`);
 // 7. Recount + requeue
 const remainingOcr = await db.collection('pages').countDocuments({ book_id: book.id, 'ocr.data': { $exists: true, $nin: [null, ''] } });
 const remainingTr = await db.collection('pages').countDocuments({ book_id: book.id, 'translation.data': { $exists: true, $nin: [null, ''] } });
+// A held book gets the counters but NOT the status write — see the header. The
+// counters are just recounts of what step 6 did; the status write is the one
+// that would release the hold.
 await db.collection('books').updateOne({ id: book.id }, {
   $set: {
     pages_ocr: remainingOcr,
     pages_translated: remainingTr,
-    'pipeline_auto.status': 'archive_complete',
+    ...(HELD ? {} : { 'pipeline_auto.status': 'archive_complete' }),
     'pipeline_auto.last_updated': new Date(),
   },
 });
-console.log(`Book requeued at archive_complete | pages_ocr: ${remainingOcr} | pages_translated: ${remainingTr} | generation: ${currentGen + 1}`);
+console.log(
+  HELD
+    ? `Book left HELD (status untouched) | pages_ocr: ${remainingOcr} | pages_translated: ${remainingTr} | generation: ${currentGen + 1}\n` +
+      `  It will NOT re-enter OCR until the hold is released: node scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ${book.pipeline_auto.hold.reason} --book ${book.id} --apply`
+    : `Book requeued at archive_complete | pages_ocr: ${remainingOcr} | pages_translated: ${remainingTr} | generation: ${currentGen + 1}`
+);
 
 await client.close();
