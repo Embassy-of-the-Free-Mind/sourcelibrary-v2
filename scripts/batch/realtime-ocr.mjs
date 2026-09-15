@@ -24,6 +24,15 @@
  *                      text was transcribed from a wrongly cropped image.
  *
  * Control options:
+ *   --model=flash|lite Which Gemini model reads the page (default: flash, the historical
+ *                      behaviour). `lite` is gemini-3.1-flash-lite — the model the batch OCR
+ *                      lane already routes every book to (scripts/lib/ocr-routing.mjs). Added
+ *                      for #4815: re-reading the Archive-filled front matter of 279 books.
+ *   --max-output-tokens=N  Output cap per page (default: 16384). A page the model
+ *                      loops on runs to the cap and is then discarded as a
+ *                      hallucination — at 16K that is ~3 minutes and $0.025 of
+ *                      output per looping page, and #4815 measured 10% of
+ *                      front-matter reads looping. A dense page needs ~2–4K.
  *   --limit=N          Max pages to process (default: 2000)
  *   --concurrency=N    Parallel API calls (default: 30)
  *   --dry-run          Show what would be processed, don't call Gemini
@@ -34,12 +43,24 @@ import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { MODEL_PRICING } from '../lib/model-pricing.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // --- Config ---
-const TARGET_MODEL = 'gemini-3-flash-preview';
+// Statuses a fully-OCR'd book may be ADVANCED from — the ones where OCR is the
+// pending stage. A book already past OCR (translating, enriched, complete…) must
+// never be sent back to `ocr_complete` by a re-read of some of its pages: that
+// re-enrols it in every downstream lane. A book still `archiving` must not be
+// pulled out of the archiver's lane either (the IA ingester, which fills the same
+// books, advances only from `archive_complete` for the same reason). Before #4815
+// this script advanced unconditionally, which was harmless only while it was used
+// on books that had never been OCR'd.
+const PRE_OCR_STATUSES = ['archive_complete', 'ocr_submitted'];
 const TARGET_PROMPT = 'v5.2026-02';
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02'];
 const SKIP_SOURCES = ['manual', 'manual-correction'];
@@ -53,6 +74,16 @@ const getArg = (name) => {
 };
 const hasFlag = (name) => args.includes(`--${name}`);
 
+const MODEL_CHOICE = getArg('model') || 'flash';
+if (!['flash', 'lite'].includes(MODEL_CHOICE)) {
+  console.error(`--model must be flash or lite, got ${MODEL_CHOICE}`);
+  process.exit(1);
+}
+const TARGET_MODEL = MODEL_CHOICE === 'lite' ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
+const PRICE = MODEL_PRICING[TARGET_MODEL];
+/** Computed estimate at the standard (realtime) rate, never billed truth — see model-pricing.mjs. */
+const costUsd = (inTok, outTok) => (PRICE ? (inTok * PRICE.input + outTok * PRICE.output) / 1e6 : null);
+const MAX_OUTPUT_TOKENS = parseInt(getArg('max-output-tokens') || '16384', 10);
 const MAX_PAGES = parseInt(getArg('limit') || '2000', 10);
 const CONCURRENCY = parseInt(getArg('concurrency') || '30', 10);
 const DRY_RUN = hasFlag('dry-run');
@@ -202,7 +233,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
       ]}],
       generationConfig: {
         temperature: 0.1,
-        maxOutputTokens: 16384,
+        maxOutputTokens: MAX_OUTPUT_TOKENS,
         thinkingConfig: { thinkingBudget: 0 },
       },
     }),
@@ -242,6 +273,10 @@ function isDigitizerPage(pageType, ocrText) {
   const bodyText = ocrText.replace(/<meta>[\s\S]*?<\/meta>/g, '');
   if (/this is a digital copy of a book|reproduction of a library book that was digitized|digitized by google as part of an ongoing/i.test(bodyText)) return true;
   if (/inserted by the internet archive|Digitized by the Internet Archive in \d{4}/i.test(bodyText)) return true;
+  // Cornell's insert ("The original of this book is in the Cornell University Library.
+  // There are no known copyright restrictions…") — the model tags it title-page on
+  // every volume (#4815 hand-read: 4 of 14 sampled "title pages" were this leaf).
+  if (/the original of this book is in the .{0,60}library|no known copyright restrictions/i.test(bodyText)) return true;
   const metaText = ocrText.match(/<meta>[\s\S]*?<\/meta>/gi)?.join(' ') || '';
   if (/digitization credit from the Internet Archive|Google Books digital preservation notice|digital preservation notice/i.test(metaText)) return true;
   return false;
@@ -266,13 +301,20 @@ function isDigitizerPage(pageType, ocrText) {
  * The rule this restores: a completeness predicate is satisfied by output OR by an
  * explicit recorded skip. Never by silence.
  */
-async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model }) {
+async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model, usage }) {
+  // A skip is still a billed call: a RECITATION refusal pays for the image, and a
+  // MAX_TOKENS loop pays for the whole output cap (#4815 measured 7% of front-matter
+  // reads looping to 16K tokens — more than the successful pages cost). Record the
+  // tokens so the meter sees the money that bought nothing.
   db.collection('gemini_usage').insertOne({
     type: 'ocr', mode: 'realtime', model,
     book_id: page.book_id, page_ids: [page.id],
     status: 'skipped', skip_reason: reason,
     finish_reason: finishReason ?? null,
     chars: chars ?? null,
+    input_tokens: usage?.inputTokens ?? 0,
+    output_tokens: usage?.outputTokens ?? 0,
+    cost_usd: usage ? costUsd(usage.inputTokens, usage.outputTokens) : null,
     duration_ms: durationMs ?? null,
     prompt_version: TARGET_PROMPT,
     endpoint: 'scripts/realtime-ocr.mjs', timestamp: new Date(),
@@ -322,13 +364,13 @@ async function processPage(page, promptText, db) {
           : result.finishReason === 'SAFETY' ? 'safety'
             : result.finishReason === 'MAX_TOKENS' ? 'max-tokens-no-text'
               : 'empty';
-      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL });
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL, usage: result.usage });
       return { pageId: page.id, status: 'skip', reason, finishReason: result.finishReason, durationMs };
     }
 
     // Hallucination guard
     if (result.text.length > 25000) {
-      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL });
+      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
@@ -369,6 +411,7 @@ async function processPage(page, promptText, db) {
       page_ids: [page.id],
       input_tokens: result.usage.inputTokens,
       output_tokens: result.usage.outputTokens,
+      cost_usd: costUsd(result.usage.inputTokens, result.usage.outputTokens),
       status: 'success',
       duration_ms: durationMs,
       prompt_version: TARGET_PROMPT,
@@ -489,22 +532,26 @@ async function processBatch(pages, promptText, db, runId) {
   let booksCompleted = 0;
   for (const [bookId, counts] of Object.entries(bookPages)) {
     try {
-      const ocrCount = await db.collection('pages').countDocuments({
-        book_id: bookId, 'ocr.data': { $exists: true, $ne: '' }
-      });
-      const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
+      // The canonical counter (page-counts.mjs): visible pages only, and a page
+      // marked unreadable is not OCR'd. The hand-rolled countDocuments this
+      // replaced counted hidden leaves and unreadable pages as transcribed.
+      const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
+      const ocrCount = counts?.with_ocr ?? 0;
+      const totalPages = counts?.total ?? 0;
       const ocrPercent = totalPages > 0 ? Math.round(ocrCount / totalPages * 100) : 0;
 
-      const bookUpdate = { pages_ocr: ocrCount, updated_at: new Date() };
+      await db.collection('books').updateOne({ id: bookId }, { $set: { pages_ocr: ocrCount, updated_at: new Date() } });
 
-      // If book is fully OCR'd (>= 95%), advance pipeline to ocr_complete
+      // If book is fully OCR'd (>= 95%), advance pipeline to ocr_complete — but only
+      // from a pre-OCR status, and never on a held book (#4790): the filter, not a
+      // read-then-write, is what makes this safe against the orchestrator racing us.
       if (ocrPercent >= 95) {
-        bookUpdate['pipeline_auto.status'] = 'ocr_complete';
-        bookUpdate['pipeline_auto.last_updated'] = new Date();
-        booksCompleted++;
+        const r = await db.collection('books').updateOne(
+          { id: bookId, ...NOT_HELD, $or: [{ 'pipeline_auto.status': { $in: PRE_OCR_STATUSES } }, { 'pipeline_auto.status': { $exists: false } }] },
+          { $set: { 'pipeline_auto.status': 'ocr_complete', 'pipeline_auto.last_updated': new Date(), updated_at: new Date() } },
+        );
+        if (r.modifiedCount === 1) booksCompleted++;
       }
-
-      await db.collection('books').updateOne({ id: bookId }, { $set: bookUpdate });
     } catch (e) {
       console.error(`  Failed to update book ${bookId}:`, e.message);
     }
@@ -527,7 +574,7 @@ async function main() {
   const db = client.db('bookstore');
 
   console.log(`=== Realtime OCR ===`);
-  console.log(`  mode=${targetMode} limit=${MAX_PAGES} concurrency=${CONCURRENCY} offset=${OFFSET}`);
+  console.log(`  mode=${targetMode} model=${TARGET_MODEL} limit=${MAX_PAGES} concurrency=${CONCURRENCY} offset=${OFFSET}`);
   if (SINGLE_BOOK) console.log(`  book=${SINGLE_BOOK}`);
   if (PIPELINE_STATUS) console.log(`  pipeline_status=${PIPELINE_STATUS}`);
   if (PROVIDER) console.log(`  provider=${PROVIDER}`);
@@ -674,8 +721,9 @@ async function main() {
         console.log(`  ${bid.substring(0, 24).padEnd(26)} ${count} pages`);
       }
 
-      const estCost = pages.length * 0.0023; // realtime rate
-      console.log(`\nEstimated cost: $${estCost.toFixed(2)} (realtime pricing)`);
+      // ~3K input tokens (prompt + image) and ~1K output per page at the standard rate.
+      const estCost = pages.length * (costUsd(3000, 1000) ?? 0.0023);
+      console.log(`\nEstimated cost: $${estCost.toFixed(2)} (${TARGET_MODEL}, realtime pricing)`);
       const estMinutes = Math.round(pages.length / (CONCURRENCY * 4) / 60);
       console.log(`Estimated time: ~${estMinutes} minutes at ${CONCURRENCY} concurrent`);
 
@@ -694,6 +742,9 @@ async function main() {
       source: 'scripts/realtime-ocr.mjs',
       config: {
         mode: targetMode,
+        model: TARGET_MODEL,
+        max_output_tokens: MAX_OUTPUT_TOKENS,
+        page_ids_file: PAGE_IDS_FILE || null,
         concurrency: CONCURRENCY,
         pipeline_status: PIPELINE_STATUS,
         provider: PROVIDER,

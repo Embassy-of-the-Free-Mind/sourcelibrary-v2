@@ -24,6 +24,7 @@ import sharp from 'sharp';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { normalizeBbox } from '../lib/bbox.mjs';
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -531,22 +532,6 @@ function parseImageExtractionResponse(text) {
   return empty;
 }
 
-function normalizeBbox(raw) {
-  const x = parseFloat(raw.x) || 0;
-  const y = parseFloat(raw.y) || 0;
-  const width = parseFloat(raw.width) || 0;
-  const height = parseFloat(raw.height) || 0;
-  if (x > 1 || y > 1 || width > 1 || height > 1) {
-    const scale = Math.max(x + width, y + height, 1000);
-    return {
-      x: Math.min(x / scale, 0.95),
-      y: Math.min(y / scale, 0.95),
-      width: Math.min(width / scale, 1),
-      height: Math.min(height / scale, 1),
-    };
-  }
-  return { x, y, width, height };
-}
 
 // ── Phase 2: book-level scan_quality rollup ──
 // Aggregates pages.scan_quality (v2) into a book-level summary that downstream
@@ -890,7 +875,7 @@ async function processBook(db, book) {
         const detectedImages = extractedRaw.map(img => ({
           description: img.description || '',
           type: img.type || 'unknown',
-          bbox: img.bbox ? normalizeBbox(img.bbox) : undefined,
+          bbox: normalizeBbox(img.bbox) ?? undefined,
           confidence: img.confidence,
           gallery_quality: typeof img.gallery_quality === 'number' ? img.gallery_quality : undefined,
           gallery_rationale: img.gallery_rationale || undefined,

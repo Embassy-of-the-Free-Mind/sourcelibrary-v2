@@ -64,6 +64,12 @@
  *     LANG_MISMATCH (counted as rejected), unless the book's `languages[]` lists it — a facing-page
  *     edition is tagged that way (language-fields.md). Both values are logged.
  *
+ * THE TOKEN IS THE SCRIPT'S UNIT (#4806, 2026-09-13). The word tokenizer above found ONE token in a
+ * page of unspaced Chinese, so every Chinese book scored 0 and 1.59M pages were written off on the
+ * instrument. Tokenization is now script-aware (scripts/lib/ia-ocr-agreement.mjs): characters for
+ * space-less runs, words elsewhere. Editorial blocks (`<image-desc>` …) are still counted — a known
+ * bias the cutoffs were calibrated on; see the lib header before "fixing" it.
+ *
  * LEAF OFFSET — RETIRED AS A CALIBRATION (#4790, 2026-09-13). The offset search below survives as a
  * DETECTOR only: the XML OBJECT sequence and the IIIF `/page/n<k>` index skip the same scandata-excluded
  * leaves, so the right offset is always 0. A non-zero winning vote means the reference pages were read
@@ -89,6 +95,7 @@ import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
 import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
 import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
+import { tokens, ratio } from '../lib/ia-ocr-agreement.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply');
@@ -159,20 +166,10 @@ function leafTexts(xml) {
 }
 const decode = (s) => s.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n));
 
-// ---------- agreement: word-sequence ratio (difflib-style 2M/(|a|+|b|)) ----------
-// Unicode-aware (#4780): letters and digits of ANY script count, so non-Latin garbage lowers the
-// score instead of vanishing from it. Curly apostrophes fold to ASCII (Gemini writes ’, IA writes ').
-const tokens = (s) => (s || '').replace(/<[^>]+>/g, ' ').normalize('NFC').replace(/[’‘ʼ]/g, "'").toLowerCase().match(/[\p{L}\p{N}']+/gu) || [];
-function ratio(a, b) {
-  a = a.slice(0, 600); b = b.slice(0, 600);
-  if (!a.length || !b.length) return 0;
-  const prev = new Uint16Array(b.length + 1); const cur = new Uint16Array(b.length + 1);
-  for (let i = 1; i <= a.length; i++) {
-    for (let j = 1; j <= b.length; j++) cur[j] = a[i - 1] === b[j - 1] ? prev[j - 1] + 1 : Math.max(prev[j], cur[j - 1]);
-    prev.set(cur);
-  }
-  return (2 * prev[b.length]) / (a.length + b.length);
-}
+// ---------- agreement: sequence ratio (difflib-style 2M/(|a|+|b|)) over script-aware tokens ----------
+// `tokens` / `ratio` live in scripts/lib/ia-ocr-agreement.mjs (#4806): word tokens for spaced scripts,
+// one token per CHARACTER for space-less runs (Han, kana, Thai …). The per-language cutoffs are
+// calibrated on that score — never re-inline a tokenizer here.
 /** Model OCR that carries an image description or a plate/illustration page-type: not a text page. */
 const isPlatePage = (t) => /<image-desc\b|\[Image:|<page-type>\s*(plate|illustration|image|photograph|figure|map)\b/i.test(t);
 const median = (xs) => { const s = [...xs].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
