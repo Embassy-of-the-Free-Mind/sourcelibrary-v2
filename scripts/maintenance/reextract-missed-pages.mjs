@@ -61,7 +61,7 @@ import { readFileSync } from 'fs';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { getPageSource } from '../lib/page-image-url.mjs';
-import { normalizeBbox } from '../lib/bbox.mjs';
+import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => { const a = args.find(x => x.startsWith(`--${n}=`)); return a ? a.split('=')[1] : d; };
@@ -272,7 +272,7 @@ async function main() {
           .filter(x => x && x.bbox && typeof x.gallery_quality === 'number') // drop zombie rows
           .map(x => ({
             description: x.description || '', type: x.type || 'unknown',
-            bbox: normalizeBbox(x.bbox) ?? undefined, confidence: x.confidence,
+            bbox: normalizeBbox(x.bbox) ?? undefined, rotation: normalizeRotation(x.rotation), confidence: x.confidence,
             gallery_quality: x.gallery_quality, gallery_rationale: x.gallery_rationale || undefined,
             metadata: x.metadata || undefined, museum_description: x.museum_description || undefined,
             detected_at: now, detection_source: 'vision_model', model: MODEL,
