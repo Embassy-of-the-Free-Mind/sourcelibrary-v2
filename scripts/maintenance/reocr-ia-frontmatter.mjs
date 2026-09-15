@@ -69,6 +69,9 @@ const SWEEP = 'ia-frontmatter-reocr-2026-09';
 const EVENT = 'ia_frontmatter_reocr';
 const REVISION_REASON = 'reocr_realtime';
 const ISSUE = 4815;
+/** The digitizer insert the model tags `title-page` (Cornell's leaf) — same test realtime-ocr.mjs now applies at write time. */
+const DIGITIZER_INSERT = /the original of this book is in the .{0,60}library|no known copyright restrictions|digitized by the internet archive in \d{4}|this is a digital copy of a book/i;
+const isInsert = (text) => DIGITIZER_INSERT.test(String(text || '').replace(/<meta>[\s\S]*?<\/meta>/g, ''));
 const FOUR_HOURS = 4 * 60 * 60 * 1000;
 
 fs.mkdirSync(OUT, { recursive: true });
@@ -155,6 +158,13 @@ async function record(db) {
   console.log(`run ${RUN_ID} started ${run.created_at.toISOString()} model ${run.config?.model}`);
   console.log(`outcomes ${JSON.stringify(tally)}; tokens in ${tokens.in} out ${tokens.out}; computed spend $${spend.toFixed(2)} (Mongo gemini_usage rows only — realtime-ocr writes no Supabase rows)`);
   const already = new Set((await db.collection('book_events').find({ type: EVENT, 'details.run_id': RUN_ID }, { projection: { book_id: 1 } }).toArray()).map((e) => e.book_id));
+  // Pages this pass wrote as `title-page` that are really a digitizer insert (the
+  // Cornell leaf): relabel, so title-page-ocr / cover scoring do not pick them.
+  const inserts = res.filter((r) => r.outcome === 'reread' && r.page_type === 'title-page' && isInsert(r.model_text));
+  if (inserts.length && APPLY) {
+    const u = await db.collection('pages').updateMany({ id: { $in: inserts.map((r) => r.page_id) }, page_type: 'title-page' }, { $set: { page_type: 'digitizer-insert', updated_at: new Date() } });
+    console.log(`relabelled ${u.modifiedCount}/${inserts.length} digitizer inserts the model had tagged title-page`);
+  } else if (inserts.length) console.log(`would relabel ${inserts.length} digitizer inserts tagged title-page`);
   let wrote = 0, skipped = 0;
   for (const [bookId, rows] of byBook) {
     const reread = rows.filter((r) => r.outcome === 'reread');
@@ -163,7 +173,7 @@ async function record(db) {
     if (!reread.length && !refused.length) { skipped++; continue; }
     if (already.has(bookId)) { skipped++; continue; }
     if (!APPLY) { wrote++; continue; }
-    const detail = { issue: ISSUE, run_id: RUN_ID, leaves: LEAVES, model: run.config?.model ?? null, pages_reread: reread.length, pages_refused: refused.length, pages_not_read: errored.length, refused: refused.map((r) => ({ page: r.page_number, reason: r.outcome.slice(8), finish_reason: r.finish_reason })), page_types: Object.fromEntries(Object.entries(reread.reduce((a, r) => { a[r.page_type || 'untagged'] = (a[r.page_type || 'untagged'] || 0) + 1; return a; }, {}))) };
+    const detail = { issue: ISSUE, run_id: RUN_ID, leaves: LEAVES, model: run.config?.model ?? null, pages_reread: reread.length, pages_refused: refused.length, pages_not_read: errored.length, inserts_relabelled: inserts.filter((r) => r.book_id === bookId).length, refused: refused.map((r) => ({ page: r.page_number, reason: r.outcome.slice(8), finish_reason: r.finish_reason })), page_types: Object.fromEntries(Object.entries(reread.reduce((a, r) => { a[r.page_type || 'untagged'] = (a[r.page_type || 'untagged'] || 0) + 1; return a; }, {}))) };
     await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'front-matter-reread', detail });
     await db.collection('book_events').insertOne({ book_id: bookId, type: EVENT, at: new Date(), source: 'reocr-ia-frontmatter', details: detail });
     wrote++;
@@ -198,7 +208,8 @@ async function report(db) {
   const since = new Date(readJson('pages.json').planned_at);
   const res = await outcomes(db, planned, since);
   const reread = res.filter((r) => r.outcome === 'reread');
-  const titlePages = reread.filter((r) => r.page_type === 'title-page');
+  const insertPages = reread.filter((r) => r.page_type === 'title-page' && isInsert(r.model_text));
+  const titlePages = reread.filter((r) => r.page_type === 'title-page' && !isInsert(r.model_text));
   const rows = [];
   for (const r of titlePages) {
     const b = books.get(r.book_id) || {};
@@ -240,6 +251,7 @@ async function report(db) {
     issue: ISSUE, generated_at: new Date().toISOString(), leaves: LEAVES,
     planned: planned.length, reread: reread.length, refused: refusedTally, not_read: res.filter((r) => r.outcome === 'error' || r.outcome === 'untouched').length,
     computed_spend_usd: +spend.toFixed(2), page_types: typeTally,
+    digitizer_inserts_tagged_title_page: insertPages.length,
     title_pages: { pages: titlePages.length, books: perBook.size, books_differing: { any: count('any'), title: count('title'), author: count('author'), year: count('year'), imprint: count('imprint') }, books_where_model_recovers: { title: countRecovers('title'), author: countRecovers('author'), year: countRecovers('year'), imprint: countRecovers('imprint') } },
     toc_pages: toc.length, toc_books: new Set(toc.map((r) => r.book_id)).size,
     copyright_versos: copyright.map((r) => ({ book_id: r.book_id, page_number: r.page_number, ia_identifier: books.get(r.book_id)?.ia_identifier ?? null, title: books.get(r.book_id)?.title ?? null, line: (pageProse(r.model_text).match(COPYRIGHT) || [''])[0] })),
@@ -252,7 +264,7 @@ async function report(db) {
     `Planned ${out.planned} Archive-read pages (page_number ≤ ${LEAVES}); re-read ${out.reread}; refused ${JSON.stringify(refusedTally)}; not read ${out.not_read}; computed spend $${out.computed_spend_usd}.`, '',
     `Page types on the re-read pages: ${Object.entries(typeTally).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(', ')}.`, '',
     `## Title pages`, '',
-    `${titlePages.length} pages in ${perBook.size} books tagged \`title-page\`. Books where the Archive reading and the model reading differ on: any field **${count('any')}**, title ${count('title')}, author ${count('author')}, year ${count('year')}, imprint ${count('imprint')}.`,
+    `${titlePages.length} pages in ${perBook.size} books tagged \`title-page\` (a further ${insertPages.length} tagged title-page are the Cornell digitizer insert, excluded and relabelled). Books where the Archive reading and the model reading differ on: any field **${count('any')}**, title ${count('title')}, author ${count('author')}, year ${count('year')}, imprint ${count('imprint')}.`,
     `Of those, books where the MODEL reading recovers something the Archive reading lacks: title ${countRecovers('title')}, author ${countRecovers('author')}, year ${countRecovers('year')}, imprint ${countRecovers('imprint')}.`,
     `(title/author = the fraction of the catalogue field's words present in each reading differs; year = the set of 4-digit years differs; imprint = a place/printer word one reading has and the other lacks. Directional counts say which reading has more.)`, '',
     `Lowest-similarity title pages (token Dice, Archive vs model):`, '',

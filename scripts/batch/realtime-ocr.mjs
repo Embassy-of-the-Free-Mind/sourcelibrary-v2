@@ -272,6 +272,10 @@ function isDigitizerPage(pageType, ocrText) {
   const bodyText = ocrText.replace(/<meta>[\s\S]*?<\/meta>/g, '');
   if (/this is a digital copy of a book|reproduction of a library book that was digitized|digitized by google as part of an ongoing/i.test(bodyText)) return true;
   if (/inserted by the internet archive|Digitized by the Internet Archive in \d{4}/i.test(bodyText)) return true;
+  // Cornell's insert ("The original of this book is in the Cornell University Library.
+  // There are no known copyright restrictions…") — the model tags it title-page on
+  // every volume (#4815 hand-read: 4 of 14 sampled "title pages" were this leaf).
+  if (/the original of this book is in the .{0,60}library|no known copyright restrictions/i.test(bodyText)) return true;
   const metaText = ocrText.match(/<meta>[\s\S]*?<\/meta>/gi)?.join(' ') || '';
   if (/digitization credit from the Internet Archive|Google Books digital preservation notice|digital preservation notice/i.test(metaText)) return true;
   return false;
