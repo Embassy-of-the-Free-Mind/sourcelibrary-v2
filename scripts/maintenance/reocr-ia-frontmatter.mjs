@@ -201,17 +201,29 @@ async function report(db) {
     const title = cov(b.title), author = cov(b.author);
     const ya = years(A), ym = years(M);
     const ia = imprintTokens(A), im = imprintTokens(M);
+    // A field "differs" when the two readings disagree on it in EITHER direction; the
+    // direction is kept so the report can separate what the model recovered from what
+    // it lost — one number would hide a model that reads title pages worse.
     const differs = {
-      title: title.archive != null && title.model != null && title.archive < 0.8 && title.model >= 0.8,
-      author: author.archive != null && author.model != null && author.archive < 0.8 && author.model >= 0.8,
+      title: title.archive != null && title.model != null && title.archive !== title.model,
+      author: author.archive != null && author.model != null && author.archive !== author.model,
       year: [...ym].some((y) => !ya.has(y)) || [...ya].some((y) => !ym.has(y)),
+      imprint: [...im].some((w) => !ia.has(w)) || [...ia].some((w) => !im.has(w)),
+    };
+    const recovers = {
+      title: differs.title && title.model > title.archive,
+      author: differs.author && author.model > author.archive,
+      year: [...ym].some((y) => !ya.has(y)),
       imprint: [...im].some((w) => !ia.has(w)),
     };
-    rows.push({ book_id: r.book_id, page_number: r.page_number, page_id: r.page_id, title: b.title, author: b.author, published: b.published, coverage: { title, author }, years: { archive: [...ya], model: [...ym] }, imprint_words_only_in_model: [...im].filter((w) => !ia.has(w)), similarity: +dice(A, M).toFixed(3), differs, any: Object.values(differs).some(Boolean), archive_prose: A.slice(0, 600), model_prose: M.slice(0, 600) });
+    rows.push({ book_id: r.book_id, page_number: r.page_number, page_id: r.page_id, title: b.title, author: b.author, published: b.published, coverage: { title, author }, years: { archive: [...ya], model: [...ym] }, imprint_words_only_in_model: [...im].filter((w) => !ia.has(w)), imprint_words_only_in_archive: [...ia].filter((w) => !im.has(w)), similarity: +dice(A, M).toFixed(3), differs, recovers, any: Object.values(differs).some(Boolean), archive_prose: A.slice(0, 600), model_prose: M.slice(0, 600) });
   }
   const perBook = new Map();
   for (const x of rows) { const cur = perBook.get(x.book_id) || { title: false, author: false, year: false, imprint: false, any: false }; for (const k of Object.keys(cur)) cur[k] = cur[k] || (k === 'any' ? x.any : x.differs[k]); perBook.set(x.book_id, cur); }
   const count = (k) => [...perBook.values()].filter((v) => v[k]).length;
+  const perBookRecovers = new Map();
+  for (const x of rows) { const cur = perBookRecovers.get(x.book_id) || { title: false, author: false, year: false, imprint: false }; for (const k of Object.keys(cur)) cur[k] = cur[k] || x.recovers[k]; perBookRecovers.set(x.book_id, cur); }
+  const countRecovers = (k) => [...perBookRecovers.values()].filter((v) => v[k]).length;
   const typeTally = {}; for (const r of reread) typeTally[r.page_type || 'untagged'] = (typeTally[r.page_type || 'untagged'] || 0) + 1;
   const toc = reread.filter((r) => r.page_type === 'toc');
   const copyright = reread.filter((r) => COPYRIGHT.test(pageProse(r.model_text)));
@@ -222,7 +234,7 @@ async function report(db) {
     issue: ISSUE, generated_at: new Date().toISOString(), leaves: LEAVES,
     planned: planned.length, reread: reread.length, refused: refusedTally, not_read: res.filter((r) => r.outcome === 'error' || r.outcome === 'untouched').length,
     computed_spend_usd: +spend.toFixed(2), page_types: typeTally,
-    title_pages: { pages: titlePages.length, books: perBook.size, books_differing: { any: count('any'), title: count('title'), author: count('author'), year: count('year'), imprint: count('imprint') } },
+    title_pages: { pages: titlePages.length, books: perBook.size, books_differing: { any: count('any'), title: count('title'), author: count('author'), year: count('year'), imprint: count('imprint') }, books_where_model_recovers: { title: countRecovers('title'), author: countRecovers('author'), year: countRecovers('year'), imprint: countRecovers('imprint') } },
     toc_pages: toc.length, toc_books: new Set(toc.map((r) => r.book_id)).size,
     copyright_versos: copyright.map((r) => ({ book_id: r.book_id, page_number: r.page_number, ia_identifier: books.get(r.book_id)?.ia_identifier ?? null, title: books.get(r.book_id)?.title ?? null, line: (pageProse(r.model_text).match(COPYRIGHT) || [''])[0] })),
     title_page_rows: rows.sort((a, b) => a.similarity - b.similarity),
@@ -235,7 +247,8 @@ async function report(db) {
     `Page types on the re-read pages: ${Object.entries(typeTally).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(', ')}.`, '',
     `## Title pages`, '',
     `${titlePages.length} pages in ${perBook.size} books tagged \`title-page\`. Books where the Archive reading and the model reading differ on: any field **${count('any')}**, title ${count('title')}, author ${count('author')}, year ${count('year')}, imprint ${count('imprint')}.`,
-    `(title/author = the catalogue field's words are ≥ 80% present in the model text and < 80% in the Archive text; year = the set of 4-digit years differs; imprint = a place/printer word the model read that the Archive did not.)`, '',
+    `Of those, books where the MODEL reading recovers something the Archive reading lacks: title ${countRecovers('title')}, author ${countRecovers('author')}, year ${countRecovers('year')}, imprint ${countRecovers('imprint')}.`,
+    `(title/author = the fraction of the catalogue field's words present in each reading differs; year = the set of 4-digit years differs; imprint = a place/printer word one reading has and the other lacks. Directional counts say which reading has more.)`, '',
     `Lowest-similarity title pages (token Dice, Archive vs model):`, '',
     '| book | p. | sim | differs | catalogue title |', '|---|---|---|---|---|',
     ...rows.slice(0, 25).map((x) => `| ${x.book_id} | ${x.page_number} | ${x.similarity} | ${Object.entries(x.differs).filter(([, v]) => v).map(([k]) => k).join(' ') || '—'} | ${String(x.title || '').slice(0, 60)} |`), '',

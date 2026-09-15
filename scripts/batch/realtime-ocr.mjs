@@ -290,13 +290,20 @@ function isDigitizerPage(pageType, ocrText) {
  * The rule this restores: a completeness predicate is satisfied by output OR by an
  * explicit recorded skip. Never by silence.
  */
-async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model }) {
+async function recordSkip(db, page, { reason, finishReason, chars, durationMs, model, usage }) {
+  // A skip is still a billed call: a RECITATION refusal pays for the image, and a
+  // MAX_TOKENS loop pays for the whole output cap (#4815 measured 7% of front-matter
+  // reads looping to 16K tokens — more than the successful pages cost). Record the
+  // tokens so the meter sees the money that bought nothing.
   db.collection('gemini_usage').insertOne({
     type: 'ocr', mode: 'realtime', model,
     book_id: page.book_id, page_ids: [page.id],
     status: 'skipped', skip_reason: reason,
     finish_reason: finishReason ?? null,
     chars: chars ?? null,
+    input_tokens: usage?.inputTokens ?? 0,
+    output_tokens: usage?.outputTokens ?? 0,
+    cost_usd: usage ? costUsd(usage.inputTokens, usage.outputTokens) : null,
     duration_ms: durationMs ?? null,
     prompt_version: TARGET_PROMPT,
     endpoint: 'scripts/realtime-ocr.mjs', timestamp: new Date(),
@@ -346,13 +353,13 @@ async function processPage(page, promptText, db) {
           : result.finishReason === 'SAFETY' ? 'safety'
             : result.finishReason === 'MAX_TOKENS' ? 'max-tokens-no-text'
               : 'empty';
-      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL });
+      await recordSkip(db, page, { reason, finishReason: result.finishReason, chars: result.text?.length ?? 0, durationMs, model: TARGET_MODEL, usage: result.usage });
       return { pageId: page.id, status: 'skip', reason, finishReason: result.finishReason, durationMs };
     }
 
     // Hallucination guard
     if (result.text.length > 25000) {
-      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL });
+      await recordSkip(db, page, { reason: 'hallucination', finishReason: result.finishReason, chars: result.text.length, durationMs, model: TARGET_MODEL, usage: result.usage });
       return { pageId: page.id, status: 'skip', reason: 'hallucination (>25k chars)', durationMs };
     }
 
