@@ -96,6 +96,7 @@ describe('resolveFurtherReading', () => {
     const out = resolveFurtherReading(
       [{ book_id: 'c' }, { book_id: 'a' }, { book_id: 'b' }],
       [A, B, C],
+      'forum-of-conscience',
     );
     expect(out.map(b => b.id)).toEqual(['c', 'a', 'b']);
   });
@@ -110,20 +111,57 @@ describe('resolveFurtherReading', () => {
     const out = resolveFurtherReading(
       [{ book_id: 'a' }, { book_id: 'hidden-or-removed' }, { book_id: 'b' }],
       [A, B],
+      'forum-of-conscience',
     );
     expect(out.map(b => b.id)).toEqual(['a', 'b']);
   });
 
   it('carries the authored note through onto the book', () => {
-    const out = resolveFurtherReading([{ book_id: 'a', note: 'Confessor’s manual.' }], [A]);
+    const out = resolveFurtherReading([{ book_id: 'a', note: 'Confessor’s manual.' }], [A], 'forum-of-conscience');
     expect(out[0].note).toBe('Confessor’s manual.');
   });
 
+  /**
+   * The band's own claim is that these books are NOT members. The enrich
+   * worker's collection-assignment phase does not know that: on
+   * forum-of-conscience it promoted 15 of 18 authored entries into the
+   * collection within four days, and each then rendered twice on one page —
+   * in the works grid AND under "adjacent, not a member".
+   */
+  it('drops a ref whose book has since been tagged into the collection', () => {
+    const promoted: FurtherReadingBook = {
+      ...B, collections: ['forum-of-conscience', 'roman-canon-law'],
+    };
+    const out = resolveFurtherReading(
+      [{ book_id: 'a' }, { book_id: 'b' }, { book_id: 'c' }],
+      [A, promoted, C],
+      'forum-of-conscience',
+    );
+    expect(out.map(b => b.id)).toEqual(['a', 'c']);
+  });
+
+  it('keeps a book tagged into OTHER collections', () => {
+    const elsewhere: FurtherReadingBook = { ...A, collections: ['roman-canon-law'] };
+    const out = resolveFurtherReading([{ book_id: 'a' }], [elsewhere], 'forum-of-conscience');
+    expect(out.map(b => b.id)).toEqual(['a']);
+  });
+
+  /**
+   * A guard that reads a field the loader forgot to project passes everything
+   * — the #4563/#4565 shape. This pins the tolerant behaviour so the failure
+   * is a visible duplicate rather than a crash, and the projection itself is
+   * commented at the query.
+   */
+  it('keeps a book whose collections field is absent, rather than throwing', () => {
+    const out = resolveFurtherReading([{ book_id: 'a' }], [A], 'forum-of-conscience');
+    expect(out.map(b => b.id)).toEqual(['a']);
+  });
+
   it('returns nothing for an absent or empty field', () => {
-    expect(resolveFurtherReading(undefined, [A])).toEqual([]);
-    expect(resolveFurtherReading([], [A])).toEqual([]);
+    expect(resolveFurtherReading(undefined, [A], 'forum-of-conscience')).toEqual([]);
+    expect(resolveFurtherReading([], [A], 'forum-of-conscience')).toEqual([]);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect(resolveFurtherReading({ book_id: 'a' } as any, [A])).toEqual([]);
+    expect(resolveFurtherReading({ book_id: 'a' } as any, [A], 'forum-of-conscience')).toEqual([]);
   });
 });
 
