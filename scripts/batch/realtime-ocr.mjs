@@ -24,6 +24,10 @@
  *                      text was transcribed from a wrongly cropped image.
  *
  * Control options:
+ *   --model=flash|lite Which Gemini model reads the page (default: flash, the historical
+ *                      behaviour). `lite` is gemini-3.1-flash-lite — the model the batch OCR
+ *                      lane already routes every book to (scripts/lib/ocr-routing.mjs). Added
+ *                      for #4815: re-reading the Archive-filled front matter of 279 books.
  *   --limit=N          Max pages to process (default: 2000)
  *   --concurrency=N    Parallel API calls (default: 30)
  *   --dry-run          Show what would be processed, don't call Gemini
@@ -34,12 +38,20 @@ import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
+import { MODEL_PRICING } from '../lib/model-pricing.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // --- Config ---
-const TARGET_MODEL = 'gemini-3-flash-preview';
+// Statuses a fully-OCR'd book may be ADVANCED from. A book already past OCR
+// (translating, enriched, complete…) must never be sent back to `ocr_complete`
+// by a re-read of some of its pages: that re-enrols it in every downstream lane.
+// Before #4815 this script advanced unconditionally, which was harmless only
+// while it was used on books that had never been OCR'd.
+const PRE_OCR_STATUSES = ['queued', 'archiving', 'archive_complete', 'ocr_submitted'];
 const TARGET_PROMPT = 'v5.2026-02';
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02'];
 const SKIP_SOURCES = ['manual', 'manual-correction'];
@@ -53,6 +65,15 @@ const getArg = (name) => {
 };
 const hasFlag = (name) => args.includes(`--${name}`);
 
+const MODEL_CHOICE = getArg('model') || 'flash';
+if (!['flash', 'lite'].includes(MODEL_CHOICE)) {
+  console.error(`--model must be flash or lite, got ${MODEL_CHOICE}`);
+  process.exit(1);
+}
+const TARGET_MODEL = MODEL_CHOICE === 'lite' ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
+const PRICE = MODEL_PRICING[TARGET_MODEL];
+/** Computed estimate at the standard (realtime) rate, never billed truth — see model-pricing.mjs. */
+const costUsd = (inTok, outTok) => (PRICE ? (inTok * PRICE.input + outTok * PRICE.output) / 1e6 : null);
 const MAX_PAGES = parseInt(getArg('limit') || '2000', 10);
 const CONCURRENCY = parseInt(getArg('concurrency') || '30', 10);
 const DRY_RUN = hasFlag('dry-run');
@@ -369,6 +390,7 @@ async function processPage(page, promptText, db) {
       page_ids: [page.id],
       input_tokens: result.usage.inputTokens,
       output_tokens: result.usage.outputTokens,
+      cost_usd: costUsd(result.usage.inputTokens, result.usage.outputTokens),
       status: 'success',
       duration_ms: durationMs,
       prompt_version: TARGET_PROMPT,
@@ -495,16 +517,18 @@ async function processBatch(pages, promptText, db, runId) {
       const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
       const ocrPercent = totalPages > 0 ? Math.round(ocrCount / totalPages * 100) : 0;
 
-      const bookUpdate = { pages_ocr: ocrCount, updated_at: new Date() };
+      await db.collection('books').updateOne({ id: bookId }, { $set: { pages_ocr: ocrCount, updated_at: new Date() } });
 
-      // If book is fully OCR'd (>= 95%), advance pipeline to ocr_complete
+      // If book is fully OCR'd (>= 95%), advance pipeline to ocr_complete — but only
+      // from a pre-OCR status, and never on a held book (#4790): the filter, not a
+      // read-then-write, is what makes this safe against the orchestrator racing us.
       if (ocrPercent >= 95) {
-        bookUpdate['pipeline_auto.status'] = 'ocr_complete';
-        bookUpdate['pipeline_auto.last_updated'] = new Date();
-        booksCompleted++;
+        const r = await db.collection('books').updateOne(
+          { id: bookId, ...NOT_HELD, $or: [{ 'pipeline_auto.status': { $in: PRE_OCR_STATUSES } }, { 'pipeline_auto.status': { $exists: false } }] },
+          { $set: { 'pipeline_auto.status': 'ocr_complete', 'pipeline_auto.last_updated': new Date(), updated_at: new Date() } },
+        );
+        if (r.modifiedCount === 1) booksCompleted++;
       }
-
-      await db.collection('books').updateOne({ id: bookId }, { $set: bookUpdate });
     } catch (e) {
       console.error(`  Failed to update book ${bookId}:`, e.message);
     }
@@ -527,7 +551,7 @@ async function main() {
   const db = client.db('bookstore');
 
   console.log(`=== Realtime OCR ===`);
-  console.log(`  mode=${targetMode} limit=${MAX_PAGES} concurrency=${CONCURRENCY} offset=${OFFSET}`);
+  console.log(`  mode=${targetMode} model=${TARGET_MODEL} limit=${MAX_PAGES} concurrency=${CONCURRENCY} offset=${OFFSET}`);
   if (SINGLE_BOOK) console.log(`  book=${SINGLE_BOOK}`);
   if (PIPELINE_STATUS) console.log(`  pipeline_status=${PIPELINE_STATUS}`);
   if (PROVIDER) console.log(`  provider=${PROVIDER}`);
@@ -674,8 +698,9 @@ async function main() {
         console.log(`  ${bid.substring(0, 24).padEnd(26)} ${count} pages`);
       }
 
-      const estCost = pages.length * 0.0023; // realtime rate
-      console.log(`\nEstimated cost: $${estCost.toFixed(2)} (realtime pricing)`);
+      // ~3K input tokens (prompt + image) and ~1K output per page at the standard rate.
+      const estCost = pages.length * (costUsd(3000, 1000) ?? 0.0023);
+      console.log(`\nEstimated cost: $${estCost.toFixed(2)} (${TARGET_MODEL}, realtime pricing)`);
       const estMinutes = Math.round(pages.length / (CONCURRENCY * 4) / 60);
       console.log(`Estimated time: ~${estMinutes} minutes at ${CONCURRENCY} concurrent`);
 
@@ -694,6 +719,8 @@ async function main() {
       source: 'scripts/realtime-ocr.mjs',
       config: {
         mode: targetMode,
+        model: TARGET_MODEL,
+        page_ids_file: PAGE_IDS_FILE || null,
         concurrency: CONCURRENCY,
         pipeline_status: PIPELINE_STATUS,
         provider: PROVIDER,
