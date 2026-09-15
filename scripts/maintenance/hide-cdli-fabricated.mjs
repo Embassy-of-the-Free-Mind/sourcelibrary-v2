@@ -36,6 +36,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const WITHDRAW = process.argv.includes('--withdraw-text');
@@ -75,7 +76,12 @@ async function main() {
         if ((p.translation?.data || '').length) await saveRevisionBeforeOverwrite(db, p.id, 'translation', { reason: 'fabricated_cuneiform_withdrawn_4851' });
         await db.collection('pages').updateOne({ id: p.id }, { $set: { ocr: {}, translation: {}, updated_at: new Date() } });
       }
-      await db.collection('books').updateOne({ id: book.id }, { $set: { pages_ocr: 0, pages_translated: 0 } });
+      // Counters derived, not assumed — the canonical module owns the definition
+      // (tests/unit/page-counter-writers.test.ts, #4499).
+      const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(book.id)).toArray();
+      await db.collection('books').updateOne({ id: book.id }, {
+        $set: { pages_ocr: counts?.with_ocr ?? 0, pages_translated: counts?.with_translation ?? 0 },
+      });
       console.log(`  withdrew fabricated text on ${pages.length} page(s) — kept in page_revisions`);
     }
     console.log('');

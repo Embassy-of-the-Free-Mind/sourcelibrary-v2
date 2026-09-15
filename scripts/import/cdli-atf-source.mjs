@@ -44,6 +44,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const BOOK_ID = (process.argv.find(a => a.startsWith('--book-id=')) || '').split('=')[1] || null;
@@ -133,9 +134,13 @@ async function main() {
         updated_at: now,
       },
     });
+    // Counters come from the canonical module, never from arithmetic here
+    // (tests/unit/page-counter-writers.test.ts, #4499).
+    const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(book.id)).toArray();
     await db.collection('books').updateOne({ id: book.id }, {
       $set: {
-        pages_translated: 0,
+        pages_ocr: counts?.with_ocr ?? 0,
+        pages_translated: counts?.with_translation ?? 0,
         'image_source.inscription_source': 'cdli-atf',
         updated_at: now,
       },
