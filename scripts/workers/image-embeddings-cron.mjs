@@ -28,7 +28,7 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = path.resolve(path.dirname(__filename), '..', '..');
@@ -89,9 +89,25 @@ async function main() {
       await client.close();
       process.exit(0);
     }
-    const allowed = await budgetAllowsDispatch(db, 'image-embeddings-cron', { control });
+    // Scoped guard (#4540/#4865). The unscoped one could only ever see the
+    // global daily dial, so this cron was refused on EVERY run once OCR and
+    // translation had spent it — which is daily. Measured 2026-09-15: the log
+    // read "CEILING REACHED" on every night since August while
+    // gallery_text_embeddings last gained a row on 9 Aug and 10,051 gallery
+    // images had been created since. It ran, and wrote nothing, and nothing
+    // downstream could tell.
+    //
+    // The child backfills embed the whole diff and take no book filter, so a
+    // scope envelope funds this cron as a whole rather than confining it: an
+    // envelope that is open means "image embeddings may run tonight". Their
+    // spend lands against the envelope's books where it can be attributed and
+    // against the global dial otherwise, exactly as the envelope contract says.
+    const gate = await budgetAllowsDispatchScoped(db, 'image-embeddings-cron', { control });
     await client.close();
-    if (!allowed) process.exit(0);
+    if (!gate.allowed) process.exit(0);
+    if (gate.envelopeIds) {
+      console.log(`[image-embeddings] Global dial closed; running under an open scope envelope (${gate.envelopeIds.size} book(s) in scope).`);
+    }
   }
 
   const results = [];

@@ -72,6 +72,30 @@ reason that module exists.
 - **3072 (`halfvec`)** is the same Gemini model's max-quality output. Artwork descriptions are longer and need the extra capacity. 3072 is above the 2000-dim HNSW cap for `vector_cosine_ops`, so the column type is `halfvec` (fp16) and the index uses `halfvec_cosine_ops` — see `lesson_pgvector_hnsw_dim_cap.md` for the gotcha. The 7th-decimal-place precision loss is negligible for retrieval.
 - **512 (`vector`)** is CLIP's native output dim. Visual model, completely independent from the Gemini text embeddings.
 
+## The writers must reach the ENVELOPE lane, not just the dial (#4865)
+
+Both embedders used the pre-#4540 `budgetAllowsDispatch`, which can only see the
+**global** daily dial. OCR and translation spend that dial before 02:00/04:30
+every day, so from August to 15 September **every scheduled embedding run was
+refused** — the crons were alive, the logs rotated nightly, and they wrote
+nothing:
+
+```
+embed-gemini (4-hourly):  CEILING REACHED — no new dispatch ($36.67 / $5.00)
+image-embeddings-cron:    CEILING REACHED — no new dispatch ($19.91 / $5.00)
+```
+
+Both now call `budgetAllowsDispatchScoped`, so a scope envelope can fund them
+while the dial stays closed to everything else. `embed-gemini` narrows its
+selected books to `envelopeIds` **after** the mode branch has chosen them — an
+envelope confines, it never widens — and the image cron runs whole (its child
+backfills take no book filter), which is what an open envelope means for it.
+
+**Tell that this has regressed:** a table's newest `created_at` is weeks old
+while its cron log is dated today. Coverage is invisible from every read path —
+an unembedded book and a book nothing matches both return an empty list — so
+the write side is the only place it can be measured (#4868).
+
 ## Who writes what, when
 
 - **Page vectors have TWO writers since 2026-08-07, and one shared composer.** `enrich-worker` Phase 6 writes them inline (via `scripts/lib/embed-book-pages.mjs`) so a book is searchable by meaning the moment it finishes enrichment; `embed-gemini.mjs` remains the bulk tool. Both compose text and rows through **`scripts/lib/page-embedding-text.mjs`** — import it, never re-type it, for the same reason as the book-level composer below.
