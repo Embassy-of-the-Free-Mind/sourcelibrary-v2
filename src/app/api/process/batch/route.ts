@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { performOCR } from '@/lib/ai';
@@ -77,7 +78,10 @@ async function processChunk(
       });
 
       // Auto-save to database
-      if (autoSave && page.pageId) {
+      // Degeneration-loop guard (#4850) — do not store a read that looped.
+      if (autoSave && page.pageId && loopVerdict(ocrResult.text || '').refuse) {
+        console.warn(`[process/batch] LOOP GUARD: refusing page ${page.pageId} (#4850)`);
+      } else if (autoSave && page.pageId) {
         await createRevision(page.pageId, 'ocr');
         await db.collection('pages').updateOne(
           { id: page.pageId, tenantId },

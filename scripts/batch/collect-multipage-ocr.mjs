@@ -14,6 +14,7 @@ import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -159,6 +160,16 @@ async function main() {
         if (ocrText.length > 25000) {
           console.warn(`  Page ${pageId}: ${ocrText.length} chars — likely hallucination, skipping`);
           failCount++;
+          continue;
+        }
+
+        // Degeneration-loop guard (#4850) — same refusal as batch-collector.mjs.
+        const loop = loopVerdict(ocrText);
+        if (loop.refuse) {
+          await recordLoopRefusal(db, {
+            pageId, bookId: job.book_id, pageNumber: null, text: ocrText,
+            model: job.model, verdict: loop, jobId: String(job._id),
+          });
           continue;
         }
 

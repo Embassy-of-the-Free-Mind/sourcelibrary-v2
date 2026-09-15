@@ -27,6 +27,7 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
+import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from '../lib/ocr-loop-guard.mjs';
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
@@ -422,6 +423,7 @@ async function processOneJob(db, job) {
     let humanEditedIds = new Set();
     let protectedCount = 0;
     let blankRefusedCount = 0;
+    let loopRefusedCount = 0;
 
     // First pass: fix null ocr/translation subdocuments (skip for image_extraction)
     if (job.type !== 'image_extraction') {
@@ -488,6 +490,25 @@ async function processOneJob(db, job) {
       }
     }
 
+    // ── Degeneration-loop guard (#4850) ─────────────────────────────────────
+    // A response that stopped transcribing and started repeating one unit until
+    // the output cap. Unlike the blank-page guard above this needs no image: the
+    // evidence is in the text. Unlike HALLUCINATION_LIMIT below it does not need
+    // the loop to be long — 153 of the 156 loops on the exhibit book were UNDER
+    // the 25,000-char limit, and 102 of them were translated into fluent invented
+    // prose (#4765), which is what makes the stored loop worse than a gap.
+    const loopVerdicts = new Map();
+    if (job.type === 'ocr' && loopGuardEnabled()) {
+      for (const r of pageResults) {
+        if (staleDropPages?.has(r.pageId) || humanEditedIds.has(r.pageId)) continue;
+        const v = loopVerdict(r.text);
+        if (v.refuse) loopVerdicts.set(r.pageId, v);
+      }
+      if (loopVerdicts.size) {
+        console.log(`  LOOP GUARD: refusing ${loopVerdicts.size} page(s) whose transcription is a repetition loop (#4850)`);
+      }
+    }
+
     // ── TeX-Greek repair (#4580) ────────────────────────────────────────────
     // The model sometimes spells a Greek word out as LaTeX math rather than
     // transcribing it: \dot{\alpha}\pi\text{o}\tau... for ἀποτελέσματος. That
@@ -529,6 +550,24 @@ async function processOneJob(db, job) {
       const outputTokens = outputTokensFrom(usage);
 
       if (job.type === 'ocr') {
+        // A repetition loop (#4850). Stamped as a failed page, not merely skipped,
+        // so the give-up counter below stops the pipeline paying for the same
+        // deterministic loop on every later pass — the same treatment as the
+        // over-length runaway, which is the same failure at greater length.
+        const loop = loopVerdicts.get(pageId);
+        if (loop) {
+          if (!DRY_RUN) {
+            await recordLoopRefusal(db, {
+              pageId, bookId: job.book_id, pageNumber: null, text,
+              model: job.model, verdict: loop, jobId: jobIdStr,
+            }).catch(e => console.warn(`  loop guard: could not record refusal for ${pageId}: ${e.message}`));
+          }
+          loopRefusedCount++;
+          failCount++;
+          noteFail('repetition-loop');
+          failedPageIds.set(pageId, 'repetition-loop');
+          continue;
+        }
         // Refused by the blank-page guard: keep the evidence, write no OCR.
         // A silent drop would be as bad as a silent save — nothing downstream
         // could tell "refused" from "never processed".
@@ -815,6 +854,7 @@ async function processOneJob(db, job) {
           ...(failCount > 0 ? { fail_reasons: failReasons } : {}),
           ...(protectedCount > 0 && { protected_pages: protectedCount }),
           ...(blankRefusedCount > 0 && { blank_refused_pages: blankRefusedCount }),
+          ...(loopRefusedCount > 0 && { loop_refused_pages: loopRefusedCount }),
           results_collected: true,
           completed_at: now,
           updated_at: now,
