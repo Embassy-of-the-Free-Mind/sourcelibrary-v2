@@ -4,6 +4,40 @@
 `.github/workflows/post-deploy-warm.yml`, any `CDN-Cache-Control` header in `next.config.ts`, any
 `revalidatePath` / `revalidateTag` call, or Vercel project settings.*
 
+## A cached 404 from a LAYOUT survives page-level revalidation (#4843)
+
+**Read this when:** publishing a book (or any record) that has been hidden, or
+chasing "the origin returns 200 but the site still 404s".
+
+The reader's hidden-book gate lives in the route-group **layout**
+(`src/app/book/[id]/page/[pageId]/(reader)/layout.tsx`) — it has to, because
+that is the only place above `loading.tsx` where `notFound()` can still set a
+real status instead of a soft 200. So while a book is hidden, every reader URL
+anyone touches is cached as a **layout-level** 404, and:
+
+- `revalidatePath('/book/<slug>/page/<pageId>')` (the default `'page'` type)
+  does not clear it;
+- `revalidatePath('/book/<slug>', 'layout')` — what `revalidate-book` does —
+  does not cascade to it either;
+- a Cloudflare purge only moves the problem one hop: `cf-cache-status: MISS`
+  with `x-vercel-cache: HIT` and a 404 body.
+
+**Tell:** the same URL returns **200 with a cache-buster query** and 404 without
+one. That is a cache key holding a stale render, never a data problem — check
+`x-vercel-cache` before touching Mongo.
+
+The call that clears them is the **route pattern with type `layout`**:
+`revalidatePath('/book/[id]/page/[pageId]', 'layout')`. It is deliberately
+broad (every reader page of every book), so it runs on the curatorial flip in
+`/api/books/[id]/visibility`, never in the per-book revalidation the pipeline
+calls after each OCR/translation batch. `/api/admin/revalidate` now accepts
+`{"type": "page" | "layout"}` for the same reason — without a type, a route
+pattern passed to `revalidatePath` is a silent no-op.
+
+Measured 2026-09-15: 9 of 81 links into 16 freshly published books still served
+a cached 404 after `revalidate-book` + a Cloudflare purge of both the link and
+its redirect target. Guard: `tests/unit/visibility-flip-cache-eviction.test.ts`.
+
 ## There are two independent caches, and a deploy can empty both
 
 ```
