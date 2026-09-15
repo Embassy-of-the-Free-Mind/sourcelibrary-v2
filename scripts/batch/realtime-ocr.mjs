@@ -46,6 +46,7 @@ import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { MODEL_PRICING } from '../lib/model-pricing.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
@@ -531,10 +532,12 @@ async function processBatch(pages, promptText, db, runId) {
   let booksCompleted = 0;
   for (const [bookId, counts] of Object.entries(bookPages)) {
     try {
-      const ocrCount = await db.collection('pages').countDocuments({
-        book_id: bookId, 'ocr.data': { $exists: true, $ne: '' }
-      });
-      const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
+      // The canonical counter (page-counts.mjs): visible pages only, and a page
+      // marked unreadable is not OCR'd. The hand-rolled countDocuments this
+      // replaced counted hidden leaves and unreadable pages as transcribed.
+      const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
+      const ocrCount = counts?.with_ocr ?? 0;
+      const totalPages = counts?.total ?? 0;
       const ocrPercent = totalPages > 0 ? Math.round(ocrCount / totalPages * 100) : 0;
 
       await db.collection('books').updateOne({ id: bookId }, { $set: { pages_ocr: ocrCount, updated_at: new Date() } });
