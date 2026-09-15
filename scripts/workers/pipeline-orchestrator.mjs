@@ -1916,11 +1916,12 @@ SKIP these — do NOT include them:
 
 If the page contains no significant illustrations, return \`[]\` — an empty array. Do NOT return placeholder objects with missing or null fields. Either fill in every field (description, type, bbox, confidence, gallery_quality, gallery_rationale) for an illustration, or omit it entirely.
 
-For each significant illustration return:
+For each significant illustration return ("rotation" is the clockwise turn in degrees — 0, 90, 180 or 270 — needed to make the illustration upright as printed; plates bound sideways in a book are common, so look at the figures and any lettering inside the illustration, not at the page):
 {
   "description": "Brief factual description",
   "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "rotation": 0,
   "confidence": 0.95,
   "gallery_quality": 0.85,
   "gallery_rationale": "Why gallery-worthy or not",

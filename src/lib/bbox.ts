@@ -49,3 +49,12 @@ export function normalizeBbox(raw: unknown): Bbox | null {
   if (out.width < MIN_BBOX_EXTENT || out.height < MIN_BBOX_EXTENT) return null;
   return out;
 }
+
+/** Twin of scripts/lib/bbox.mjs normalizeRotation — see the comment there. */
+export function normalizeRotation(raw: unknown): 0 | 90 | 180 | 270 | undefined {
+  const n = typeof raw === 'string' ? (raw.trim() === '' ? NaN : Number(raw)) : raw;
+  if (typeof n !== 'number' || !Number.isFinite(n)) return undefined;
+  const q = Math.round(n / 90) * 90;
+  if (Math.abs(n - q) > 5) return undefined;
+  return (((q % 360) + 360) % 360) as 0 | 90 | 180 | 270;
+}

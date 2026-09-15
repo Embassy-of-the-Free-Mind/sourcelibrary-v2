@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeBbox, MIN_BBOX_EXTENT } from '@/lib/bbox';
+import { normalizeBbox, normalizeRotation, MIN_BBOX_EXTENT } from '@/lib/bbox';
 import {
   normalizeBbox as normalizeMjs,
+  normalizeRotation as normalizeRotationMjs,
   repairMixedUnitBbox,
   MIN_BBOX_EXTENT as MIN_MJS,
 } from '../../scripts/lib/bbox.mjs';
@@ -64,5 +65,22 @@ describe('repairMixedUnitBbox: undoing the old normaliser', () => {
 
   it('refuses an inversion that would leave the page', () => {
     expect(repairMixedUnitBbox({ x: 0.9, y: 0.2, width: 0.0005, height: 0.4 })).toBeNull();
+  });
+});
+
+describe('normalizeRotation: the per-illustration turn the model reports', () => {
+  // The field existed on gallery docs and the thumbnail route honoured it, but no writer
+  // produced it — Talhoffer's 269 sideways plates carried none (#4780, 2026-09-15).
+  it('accepts the four quarter turns, as numbers or strings, and folds -90 / 450', () => {
+    for (const [raw, want] of [[0, 0], [90, 90], [180, 180], [270, 270], ['90', 90], [-90, 270], [450, 90], [92, 90]] as const) {
+      expect(normalizeRotation(raw)).toBe(want);
+      expect(normalizeRotationMjs(raw)).toBe(want);
+    }
+  });
+  it('drops what is absent or not a quarter turn', () => {
+    for (const raw of [undefined, null, '', 'left', 45, 30, NaN, {}]) {
+      expect(normalizeRotation(raw)).toBeUndefined();
+      expect(normalizeRotationMjs(raw)).toBeUndefined();
+    }
   });
 });
