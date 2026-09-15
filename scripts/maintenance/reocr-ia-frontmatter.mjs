@@ -196,7 +196,8 @@ function fieldCoverage(field, text) {
 const years = (s) => new Set((String(s ?? '').match(/\b1[4-9]\d\d\b/g) || []));
 const IMPRINT = /\b(printed|published|press|publishers?|verlag|imprimerie|libraire|typis|apud|sumptibus|excudebat|editore|tipografia|imprenta|london|paris|leipzig|berlin|new york|boston|edinburgh|oxford|cambridge|amsterdam|venetiis|lugduni|basileae|parisiis|londini)\b/i;
 const imprintTokens = (text) => new Set(words(text).filter((w) => IMPRINT.test(w)));
-const COPYRIGHT = /©|\bcopyright\b|all rights reserved|entered according to act|entered at stationers|droits? de (traduction|reproduction) r[ée]serv|alle rechte vorbehalten|printed in (great britain|the united states|germany|france)/i;
+// A rights NOTICE, not the word: "no known copyright restrictions" is the digitizer's leaf.
+const COPYRIGHT = /©|\bcopyright,?\s*(?:\d{4}|by\b)|all rights reserved|entered according to act|entered at stationers|droits? de (traduction|reproduction) r[ée]serv|alle rechte vorbehalten|printed in (great britain|the united states|germany|france)/i;
 /** Character-level similarity of two proses (token Dice) — a coarse "how different" number. */
 function dice(a, b) {
   const A = words(a), B = words(b); if (!A.length && !B.length) return 1;
@@ -207,7 +208,8 @@ function dice(a, b) {
 
 async function report(db) {
   const { pages: planned } = readJson('pages.json');
-  const books = new Map(readJson('books.json').map((b) => [b.id, b]));
+  // Catalogue fields come from the database, not books.json — a re-plan after a restart rewrites that file with the remainder only.
+  const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(planned.map((p) => p.book_id))] } }, { projection: { _id: 0, id: 1, title: 1, author: 1, published: 1, ia_identifier: 1 } }).toArray()).map((b) => [b.id, b]));
   const since = new Date(readJson('pages.json').planned_at);
   const res = await outcomes(db, planned, since);
   const reread = res.filter((r) => r.outcome === 'reread');
@@ -246,7 +248,7 @@ async function report(db) {
   const countRecovers = (k) => [...perBookRecovers.values()].filter((v) => v[k]).length;
   const typeTally = {}; for (const r of reread) typeTally[r.page_type || 'untagged'] = (typeTally[r.page_type || 'untagged'] || 0) + 1;
   const toc = reread.filter((r) => r.page_type === 'toc');
-  const copyright = reread.filter((r) => COPYRIGHT.test(prose(r.model_text)));
+  const copyright = reread.filter((r) => !isInsert(r.model_text) && COPYRIGHT.test(prose(r.model_text)));
   const refused = res.filter((r) => r.outcome.startsWith('skipped:'));
   const refusedTally = {}; for (const r of refused) refusedTally[r.outcome.slice(8)] = (refusedTally[r.outcome.slice(8)] || 0) + 1;
   const spend = res.reduce((a, r) => a + (r.tokens?.cost_usd || 0), 0);
