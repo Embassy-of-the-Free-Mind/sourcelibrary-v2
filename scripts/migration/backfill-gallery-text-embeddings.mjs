@@ -22,8 +22,16 @@
 
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd } from '../lib/embedding-usage.mjs';
 
 const BATCH_SIZE = 50;
+/**
+ * Flush one aggregated `gemini_usage` row per this many embedded texts (#4162).
+ * One row per 50-text batch would be thousands of rows on a big diff, and the
+ * spend guard treats >40,000 rows in a day as over-budget and fails closed —
+ * recording spend must never be able to halt the pipeline.
+ */
+const USAGE_FLUSH_EVERY = 1000;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-embedding-2-preview';
 const DIMS = 768;
@@ -96,6 +104,11 @@ async function main() {
   let embedded = 0, skipped = 0, errors = 0;
   let batch = [];
   const startTime = Date.now();
+  // Paid call site: record what it spends, or the dial is measuring a corpus
+  // this job is not part of (#4162, #4873). Accumulate, flush periodically.
+  const usage = newEmbedUsage();
+  let usageChars = 0;
+  let lastFlushAt = 0;
 
   for await (const img of cursor) {
     const id = `${img.page_id}-${img.detection_index}`;
@@ -118,11 +131,22 @@ async function main() {
           );
         }
         embedded += batch.length;
+        addEmbedUsage(usage, texts);
+        for (const s of texts) usageChars += s.length;
       } catch (e) {
         errors++;
         console.log(`  Batch error: ${e.message?.substring(0, 80)}`);
       }
       batch = [];
+
+      if (embedded - lastFlushAt >= USAGE_FLUSH_EVERY) {
+        lastFlushAt = embedded;
+        await logEmbeddingUsage(usage, {
+          model: GEMINI_MODEL,
+          endpoint: 'migration/backfill-gallery-text-embeddings',
+          db,
+        });
+      }
 
       if (embedded % 1000 === 0) {
         const rate = (embedded / ((Date.now() - startTime) / 1000)).toFixed(1);
@@ -147,12 +171,23 @@ async function main() {
         );
       }
       embedded += batch.length;
+      addEmbedUsage(usage, texts);
+      for (const s of texts) usageChars += s.length;
     } catch (e) {
       errors++;
     }
   }
 
+  // Flush the tail. A run that dies before here still has every earlier flush
+  // recorded — that is the point of flushing periodically rather than once.
+  await logEmbeddingUsage(usage, {
+    model: GEMINI_MODEL,
+    endpoint: 'migration/backfill-gallery-text-embeddings',
+    db,
+  });
+
   console.log(`\nDone: ${embedded} embedded, ${skipped} skipped, ${errors} errors`);
+  console.log(`Recorded spend: ~$${estimateUsd(usageChars).toFixed(4)} over ${usageChars.toLocaleString()} chars (estimated, see embedding-usage.mjs)`);
   await pgClient.end();
   await mongo.close();
 }
