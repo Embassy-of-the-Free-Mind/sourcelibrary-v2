@@ -55,9 +55,21 @@ while true; do
   ECOD=$($W --providers=e-codices --limit=4000 --concurrency=2 --rate=1.5 --timeout=120 --max-fails=80 2>&1)
   echo "$ECOD"
 
+  # Munich lane: BSB and MDZ (api.digitale-sammlungen.de). These MUST run from a
+  # residential connection. Measured 2026-09-15 from Hetzner: HTTP 429 on every
+  # page even at one worker and 2 req/s, while the same books archive from this
+  # machine with zero failures — the same datacenter-IP throttle Harvard and
+  # Gallica apply (.claude/docs/import-workflow.md). ~2,800 books / 930k pages were
+  # parked as "unreachable" by that throttle alone (#4872), so this lane is the
+  # difference between that backlog draining and never draining.
+  # Paced like e-codices rather than like the iiif lane: politeness is the point.
+  BSB=$($W --providers=bsb,mdz,sbb --limit=8000 --concurrency=3 --rate=2 --timeout=90 --max-fails=60 2>&1)
+  echo "$BSB"
+
   # Idle when fully drained; otherwise loop straight back for the next chunk.
   if echo "$IIIF" | grep -q "0 unarchived pages across 0 books" && \
-     echo "$ECOD" | grep -q "0 unarchived pages across 0 books"; then
+     echo "$ECOD" | grep -q "0 unarchived pages across 0 books" && \
+     echo "$BSB" | grep -q "0 unarchived pages across 0 books"; then
     echo "===== DRAINED — idling 1h $(date) ====="
     sleep 3600
   else
