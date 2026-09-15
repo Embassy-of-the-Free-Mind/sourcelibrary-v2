@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'where-the-instructions-are',
+    title: 'Where the Instructions Are',
+    subtitle:
+      'We asked the library how people were taught to move, breathe and sit. China answered with a posture for every fortnight of the year, India with a commentary that measures the gap from chin to chest. The West came back empty — and the emptiness was in our question: its body instructions are in rubrics, grimoires and lodge rituals, not in manuals.',
+    date: '15 September 2026',
+    readTime: '11 min read',
+    tag: 'Collection',
+    tagColor: 'bg-accent-violet/10 text-accent-violet',
+    image: 'https://images.sourcelibrary.org/gallery/6992ce183ea667fbac8281b4/6992ce193ea667fbac8281b8-0.jpg',
+    imageAlt: 'Woodcut from the Sancai tuhui of 1609: a seated figure performing the exercise prescribed for one fortnight of the year.',
+  },
+  {
     slug: 'free-reading',
     title: 'The Reading We Did Not Have to Pay For',
     subtitle:
