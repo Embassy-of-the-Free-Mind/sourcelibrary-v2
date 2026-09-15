@@ -23,6 +23,7 @@
  *   add --dry-run to OCR + report without writing to Mongo
  */
 import { MongoClient } from 'mongodb';
+import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -173,6 +174,9 @@ async function processBook(db, book) {
   if (!DRY) {
     const now = new Date();
     for (const { pageId, text } of pageOps) {
+      // Degeneration-loop guard (#4850). MinerU is not an LLM, but a stuck OCR pass
+      // writes the same shape into the same field, read by the same reader.
+      if (loopVerdict(text || '').refuse) { console.warn(`  LOOP GUARD: refusing page ${pageId} (#4850)`); continue; }
       const r = await pagesCol.updateOne(
         { _id: pageId, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': '' }] },
         { $set: { ocr: {

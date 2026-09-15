@@ -32,6 +32,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
+import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=')[1] ?? d;
@@ -118,6 +119,11 @@ for (const [bookId, verdicts] of byBook) {
     }
   }
   for (const { page, text } of servePlan) {
+    // Degeneration-loop guard (#4850) — never promote a looping read to SERVE.
+    if (loopVerdict(text || '').refuse) {
+      rec({ book: page.book_id, page: page.id, status: 'SKIP-repetition-loop' });
+      continue;
+    }
     await db.collection('pages').updateOne({ id: page.id }, {
       $set: {
         'ocr.data': text, 'ocr.language': 'Tibetan', 'ocr.model': MODEL,

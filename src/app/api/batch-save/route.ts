@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const maxDuration = 300;
@@ -107,6 +108,11 @@ export const POST = withAuth(async (request, session) => {
           const usage = result.response?.usageMetadata;
 
           if (job.type === 'ocr' || job.type === 'ocr_resubmit') {
+            // Degeneration-loop guard (#4850) — a looping read is not stored.
+            if (loopVerdict(text || '').refuse) {
+              console.warn(`[batch-save] LOOP GUARD: refusing page ${pageId} (#4850)`);
+              continue;
+            }
             await createRevision(pageId!, 'ocr', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },

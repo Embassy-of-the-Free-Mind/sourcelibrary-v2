@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { loopVerdict } from '@/lib/ocr-loop-guard';
 
 /**
  * Validate batch results for page mapping issues.
@@ -208,6 +209,12 @@ export const POST = withAuth(async (request, session, context) => {
     let updatedCount = 0;
 
     for (const { pageId, text } of updates) {
+      // Degeneration-loop guard (#4850) — an imported batch result is model output
+      // like any other, and this route is how a hand-collected job reaches the reader.
+      if (type === 'ocr' && loopVerdict(text || '').refuse) {
+        console.warn(`[import-batch] LOOP GUARD: refusing page ${pageId} (#4850)`);
+        continue;
+      }
       const updateField = type === 'ocr' ? 'ocr' : 'translation';
       const updateData = type === 'ocr'
         ? {
