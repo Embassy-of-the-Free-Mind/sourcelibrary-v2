@@ -37,6 +37,11 @@
  *                 blind to those pages, so they are never offered to the vision
  *                 model and read as "extracted, empty" permanently. Also skips
  *                 pages already examined.
+ *   --page-numbers=101,127,…
+ *                 Confine any mode to these page numbers of --book (a validation
+ *                 or a targeted re-read; without it --all-pages --limit=N takes
+ *                 the first N never-examined pages by page order, i.e. the front
+ *                 matter — measured 2026-09-15: 20 calls, 20 empty).
  *   --all-pages   Offer EVERY never-examined page (page_number > 0, no
  *                 detected_images) to the vision model — no marker, no
  *                 page_type needed. For books whose OCR vintage has neither
@@ -61,7 +66,7 @@ import { readFileSync } from 'fs';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { getPageSource } from '../lib/page-image-url.mjs';
-import { normalizeBbox } from '../lib/bbox.mjs';
+import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => { const a = args.find(x => x.startsWith(`--${n}=`)); return a ? a.split('=')[1] : d; };
@@ -97,6 +102,8 @@ const PAGE_TYPE_CANDIDATES = args.includes('--page-type-candidates');
 // this is a per-book recovery tool, not a corpus sweep — an unbounded all-pages
 // vision pass over the library would be a five-figure spend.
 const ALL_PAGES = args.includes('--all-pages');
+const PAGE_NUMBERS = (getArg('page-numbers', '') || '').split(',').map(Number).filter(n => Number.isInteger(n) && n > 0);
+if (PAGE_NUMBERS.length && !getArg('book', null)) { console.error('FATAL: --page-numbers requires --book=ID'); process.exit(1); }
 
 if (ALL_PAGES && !getArg('book', null)) {
   console.error('FATAL: --all-pages requires --book=ID (per-book recovery only, never a corpus sweep)');
@@ -199,7 +206,7 @@ async function main() {
     booksScanned++;
     const pages = await db.collection('pages').find({
       book_id: book.id,
-      page_number: { $gt: 0 },
+      page_number: PAGE_NUMBERS.length ? { $in: PAGE_NUMBERS } : { $gt: 0 },
       'detected_images.0': { $exists: false },
       miss_recheck_at: { $exists: false },
       // Default mode re-tests examined-but-empty pages (the vision-missed
@@ -272,7 +279,7 @@ async function main() {
           .filter(x => x && x.bbox && typeof x.gallery_quality === 'number') // drop zombie rows
           .map(x => ({
             description: x.description || '', type: x.type || 'unknown',
-            bbox: normalizeBbox(x.bbox) ?? undefined, confidence: x.confidence,
+            bbox: normalizeBbox(x.bbox) ?? undefined, rotation: normalizeRotation(x.rotation), confidence: x.confidence,
             gallery_quality: x.gallery_quality, gallery_rationale: x.gallery_rationale || undefined,
             metadata: x.metadata || undefined, museum_description: x.museum_description || undefined,
             detected_at: now, detection_source: 'vision_model', model: MODEL,
