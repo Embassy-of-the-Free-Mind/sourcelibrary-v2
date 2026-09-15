@@ -46,12 +46,15 @@ import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-re
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // --- Config ---
-// Statuses a fully-OCR'd book may be ADVANCED from. A book already past OCR
-// (translating, enriched, complete…) must never be sent back to `ocr_complete`
-// by a re-read of some of its pages: that re-enrols it in every downstream lane.
-// Before #4815 this script advanced unconditionally, which was harmless only
-// while it was used on books that had never been OCR'd.
-const PRE_OCR_STATUSES = ['queued', 'archiving', 'archive_complete', 'ocr_submitted'];
+// Statuses a fully-OCR'd book may be ADVANCED from — the ones where OCR is the
+// pending stage. A book already past OCR (translating, enriched, complete…) must
+// never be sent back to `ocr_complete` by a re-read of some of its pages: that
+// re-enrols it in every downstream lane. A book still `archiving` must not be
+// pulled out of the archiver's lane either (the IA ingester, which fills the same
+// books, advances only from `archive_complete` for the same reason). Before #4815
+// this script advanced unconditionally, which was harmless only while it was used
+// on books that had never been OCR'd.
+const PRE_OCR_STATUSES = ['archive_complete', 'ocr_submitted'];
 const TARGET_PROMPT = 'v5.2026-02';
 const ACCEPTABLE_PROMPTS = ['v5.2026-02', 'v4.2026-02', 'v3.2026-02'];
 const SKIP_SOURCES = ['manual', 'manual-correction'];
