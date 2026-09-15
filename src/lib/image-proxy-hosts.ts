@@ -46,6 +46,7 @@ export const ALLOWED_IMAGE_HOSTS = [
   'dl.ndl.go.jp',                    // National Diet Library Japan
   'e-rara.ch',                       // Swiss libraries
   'stacks.stanford.edu',             // Parker Library on the Web (CCCC, Cambridge)
+  'bl.digirati.io',                  // British Library IIIF (post-2023 host; api.bl.uk is gone)
   'media.getty.edu',                 // Getty (Florentine Codex)
   'cdli.earth',                      // CDLI tablet photos (witness images, #4350 —
                                      // the originals run to ~24MB, so the reader
