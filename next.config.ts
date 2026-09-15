@@ -55,6 +55,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'gallica.bnf.fr' },
       // MDZ (Bavarian State Library)
       { protocol: 'https', hostname: 'api.digitale-sammlungen.de' },
+      { protocol: 'https', hostname: 'stacks.stanford.edu' },
       // e-rara (Swiss rare books)
       { protocol: 'https', hostname: 'www.e-rara.ch' },
       // Vatican Library
