@@ -43,6 +43,7 @@ export const CSP_IMG_HOSTS = [
   'https://bl.digirati.io',
   'https://images.lib.cam.ac.uk',
   'https://www.e-codices.unifr.ch',
+  'https://stacks.stanford.edu',       // Parker Library (Corpus Christi College, Cambridge)
   'https://cdm21059.contentdm.oclc.org',
   'https://iiif.universiteitleiden.nl',
   'https://image.digitalcollections.manchester.ac.uk',

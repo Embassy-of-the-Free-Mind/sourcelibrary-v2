@@ -45,6 +45,7 @@ export const ALLOWED_IMAGE_HOSTS = [
   'rijksmuseum.nl',                  // Rijksmuseum
   'dl.ndl.go.jp',                    // National Diet Library Japan
   'e-rara.ch',                       // Swiss libraries
+  'stacks.stanford.edu',             // Parker Library on the Web (CCCC, Cambridge)
   'media.getty.edu',                 // Getty (Florentine Codex)
   'cdli.earth',                      // CDLI tablet photos (witness images, #4350 —
                                      // the originals run to ~24MB, so the reader
