@@ -69,6 +69,7 @@ import { OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { runGemini, fetchImage } from './lib/runners.mjs';
 import { getProductionOcrPrompt } from './lib/production-prompt.mjs';
 import { levenshtein } from './lib/metrics.mjs';
+import { tokens, ratio } from '../lib/ia-ocr-agreement.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const flag = (k) => process.argv.includes(k) || process.argv.some((a) => a.startsWith(`${k}=`));
@@ -119,14 +120,8 @@ function loadLeaves(iaId) {
   if (fs.existsSync(x)) return leafTexts(fs.readFileSync(x, 'utf8')).map(dehyphenateLineBreaks);
   return null;
 }
-const tokens = (s) => (s || '').replace(/<[^>]+>/g, ' ').normalize('NFC').replace(/[’‘ʼ]/g, "'").toLowerCase().match(/[\p{L}\p{N}']+/gu) || [];
-function ratio(a, b) {
-  a = a.slice(0, 600); b = b.slice(0, 600);
-  if (!a.length || !b.length) return 0;
-  const prev = new Uint16Array(b.length + 1); const cur = new Uint16Array(b.length + 1);
-  for (let i = 1; i <= a.length; i++) { for (let j = 1; j <= b.length; j++) cur[j] = a[i - 1] === b[j - 1] ? prev[j - 1] + 1 : Math.max(prev[j], cur[j - 1]); prev.set(cur); }
-  return (2 * prev[b.length]) / (a.length + b.length);
-}
+// `tokens` / `ratio` are the gate's own, imported from scripts/lib/ia-ocr-agreement.mjs (#4806) — the
+// inline copy that used to sit here drifted from the ingester's the moment either was edited.
 const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
 
 // ---------- metrics ----------

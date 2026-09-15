@@ -588,7 +588,7 @@ export function agreementWords(a, b) {
 // never-re-archived CONTROL pages in the same script scored the same way, which
 // is the metric failing rather than the data. Always route through
 // `agreementPrimary`, never `agreementWords`, unless you have checked the script.
-const SPACELESS_RE = /[\p{Script=Han}\p{Script=Tibetan}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Khmer}\p{Script=Lao}\p{Script=Myanmar}]/u;
+export const SPACELESS_RE = /[\p{Script=Han}\p{Script=Tibetan}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Khmer}\p{Script=Lao}\p{Script=Myanmar}]/u;
 
 export function scriptClassOf(s) {
   const letters = (s || '').replace(/[^\p{L}]/gu, '');
