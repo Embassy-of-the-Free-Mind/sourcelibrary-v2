@@ -170,6 +170,8 @@ const decode = (s) => s.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(
 // `tokens` / `ratio` live in scripts/lib/ia-ocr-agreement.mjs (#4806): word tokens for spaced scripts,
 // one token per CHARACTER for space-less runs (Han, kana, Thai …). The per-language cutoffs are
 // calibrated on that score — never re-inline a tokenizer here.
+/** Model OCR that carries an image description or a plate/illustration page-type: not a text page. */
+const isPlatePage = (t) => /<image-desc\b|\[Image:|<page-type>\s*(plate|illustration|image|photograph|figure|map)\b/i.test(t);
 const median = (xs) => { const s = [...xs].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
 
 /** leaf index (0-based) for a page: from the IA photo URL, else page_number - 1 */
@@ -220,10 +222,19 @@ await withMongo(async (db) => {
     // ≥ MIN_OFFSET_SHARE of them (front matter and plates are allowed to disagree).
     const leafTok = leaves.map((l) => tokens(l));
     const refs = [];
+    let plateRefs = 0;
     for (const p of pages) {
       // Reference = MODEL OCR only. Pages this script wrote earlier are the IA text itself and
       // would score 1.000 against it (the Shaker shelf re-scored at 1.000 on 2026-09-12).
-      const t = p.ocr?.data; if (!t || p.ocr?.source === SOURCE) continue; const k = leafIndex(p); const tt = tokens(t); if (tt.length < 20) continue;
+      const t = p.ocr?.data; if (!t || p.ocr?.source === SOURCE) continue;
+      // Reference = TEXT pages only (2026-09-14). A plate page is where the model DESCRIBES the
+      // picture and the Archive's engine reads the caption (often rotated, so garbage): the
+      // ratio there measures neither engine. Hassanein 1925 (6aa734a338e15c149514ce9b, 24 plates
+      // among 67 reference pages) scored 0.649 overall and was REJECTED at the 0.80 English gate
+      // while its 43 text pages agreed at 0.946. Pages the model tagged as pictures leave the
+      // reference; they are never filled either (the leaf-token check below still applies to them).
+      if (isPlatePage(t)) { plateRefs++; continue; }
+      const k = leafIndex(p); const tt = tokens(t); if (tt.length < 20) continue;
       const byOffset = {};
       for (let d = -MAX_OFFSET; d <= MAX_OFFSET; d++) { const j = k + d; if (j < 0 || j >= leaves.length || leafTok[j].length < 20) continue; byOffset[d] = ratio(tt, leafTok[j]); }
       if (!Object.keys(byOffset).length) continue;
@@ -252,11 +263,29 @@ await withMongo(async (db) => {
     // to refuse on, never a calibration: compensating for it wrote 51,851 pages of the neighbouring
     // leaf (repaired by scripts/maintenance/repair-ia-ocr-leaf-offset.mjs). The vote is still computed
     // and logged for diagnosis; the book is only ever filled at offset 0.
-    const fillable = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
+    const candidates = pages.filter((p) => !p.ocr?.data && !p.hidden).map((p) => ({ p, k: leafIndex(p) })).filter(({ k }) => k >= 0 && k < leaves.length && leafTok[k].length >= 20);
+    // GARBAGE-LEAF GUARD (2026-09-14). A plate with a rotated caption, or a photograph the engine
+    // reads as letters, passes the >= 20-token check and would be written as the page's text
+    // (Hassanein 1925: pages 68, 95, 249, 280 — "AIJUNOD UMO IIOY} UI UBIOM"). Language-agnostic
+    // test: the share of a leaf's tokens that occur anywhere in the book's OWN model-read text
+    // pages. On Hassanein every real leaf scored >= 0.51 (median 0.81) and the four garbage leaves
+    // <= 0.05. The cutoff is relative to the book's own median so a small-vocabulary book (few
+    // reference pages, an inflected language) is judged against itself, not against English.
+    // Measured 2026-09-14 on Hassanein: whole-book median 0.80 → cut 0.32; the four garbage leaves
+    // were the only ones below it.
+    const vocab = new Set();
+    for (const p of pages) { const t = p.ocr?.data; if (t && p.ocr?.source !== SOURCE && !isPlatePage(t)) for (const w of tokens(t)) vocab.add(w); }
+    const vocabShare = (k) => leafTok[k].filter((w) => vocab.has(w)).length / leafTok[k].length;
+    // Baseline = every IA leaf of the book with >= 20 tokens, not just the unfilled ones: after a
+    // first pass the unfilled remainder is exactly the garbage, and a median over it is garbage too.
+    const allShares = leafTok.map((t, k) => (t.length >= 20 ? vocabShare(k) : null)).filter((x) => x !== null);
+    const shareCut = 0.4 * median(allShares);
+    const fillable = candidates.filter(({ k }) => vocabShare(k) >= shareCut);
+    const garbageLeaves = candidates.length - fillable.length;
     const refShifted = offset !== 0 && offsetShare >= MIN_OFFSET_SHARE;
     const verdict = refShifted ? 'REF_SHIFTED' : med < gate.cutoff ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | fillable ${fillable.length} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}) | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
     if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
