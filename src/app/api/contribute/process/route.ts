@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { DEFAULT_MODEL, extractPageType, extractColumns } from '@/lib/types';
 import type { PromptReference } from '@/lib/types';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
+import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { getOcrPrompt, getTranslationPrompt } from '@/lib/prompts';
 import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
@@ -210,6 +211,14 @@ export async function POST(request: NextRequest) {
 
               // Snapshot manual edits before overwriting
               if (page.id) await createRevision(page.id, 'ocr', `contribute-${bookId}`);
+
+              // Degeneration-loop guard (#4850): a contributed read is the same
+              // model output as any other, and a loop here reaches the reader the
+              // same way.
+              if (loopVerdict(result.text || '').refuse) {
+                console.warn(`[contribute] LOOP GUARD: refusing page ${page.id} (#4850)`);
+                continue;
+              }
 
               // Update page with OCR result
               const pageType = extractPageType(result.text);

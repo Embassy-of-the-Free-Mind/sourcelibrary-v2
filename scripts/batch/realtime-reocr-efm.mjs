@@ -21,6 +21,7 @@ import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -166,6 +167,18 @@ async function processPage(page, promptText, db) {
 
     if (!result.text || result.text.length < 5) {
       return { pageId: page.id, status: 'empty', durationMs };
+    }
+
+    // Degeneration-loop guard (#4850) — the same refusal the batch collector and
+    // `realtime-ocr.mjs` make, because a loop stored here reaches the reader and
+    // the translator identically.
+    const loop = loopVerdict(result.text);
+    if (loop.refuse) {
+      await recordLoopRefusal(db, {
+        pageId: page.id, bookId: page.book_id, pageNumber: page.page_number,
+        text: result.text, model: TARGET_MODEL, verdict: loop,
+      });
+      return { pageId: page.id, status: 'loop-refused', durationMs };
     }
 
     // Extract metadata

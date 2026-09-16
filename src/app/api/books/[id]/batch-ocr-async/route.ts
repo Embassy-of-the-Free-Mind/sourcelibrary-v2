@@ -8,6 +8,7 @@ import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
+import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { findPendingBatchJob } from '@/lib/translate-write';
 import { contentHash } from '@/lib/steganographia';
 import { nanoid } from 'nanoid';
@@ -719,6 +720,30 @@ export const GET = withAuth(async (request, session, context) => {
 
         // Save each page result
         for (const { pageId, text } of pageResults) {
+            // Degeneration-loop guard (#4850): the model stopped transcribing and
+            // repeated one unit. The refused text is kept in `page_revisions` — the
+            // same contract as the .mjs collectors, which is where the corpus-wide
+            // version of this failure was measured.
+            const loop = loopVerdict(text);
+            if (loop.refuse) {
+              console.warn(`[batch-ocr] LOOP GUARD: refusing page ${pageId} — ${(loop.share * 100).toFixed(0)}% of the body is one ${loop.period}-char unit repeated ${loop.reps}x (#4850)`);
+              await db.collection('page_revisions').insertOne({
+                id: nanoid(12),
+                page_id: pageId,
+                book_id: bookId,
+                field: 'ocr',
+                data: text,
+                source: 'loop-guard-refused-2026-09',
+                model: jobDoc.model ?? null,
+                reason: '#4850',
+                note: `OCR refused at write time: ${(loop.share * 100).toFixed(0)}% of the ${loop.body}-character body is one ${loop.period}-character unit repeated ${loop.reps}x (degeneration loop).`,
+                batch_job_id: jobDoc.job_name ?? null,
+                created_at: new Date(),
+              }).catch((e: unknown) => console.warn(`[batch-ocr] could not record loop refusal for ${pageId}: ${(e as Error)?.message}`));
+              failCount++;
+              continue;
+            }
+
             const pageType = extractPageType(text);
             const columns = extractColumns(text);
             const detectedImages = parseDetectedImages(text);

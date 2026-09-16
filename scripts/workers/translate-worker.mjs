@@ -32,6 +32,8 @@ import {
   contentHash,
   SKIP_TRANSLATION_PAGE_TYPES,
   isBlankFromOcr,
+  isDegenerateSource,
+  SOURCE_LOOP_REASON,
   assessTranslationHealth,
   persistRefusedTranslation,
 } from '../lib/translate-core.mjs';
@@ -596,6 +598,26 @@ async function processBook(db, book, job, globalCounter, deadline) {
     // Remove from translation queue
     const blankIdSet = new Set(blankIds);
     pages.splice(0, pages.length, ...pages.filter(p => !blankIdSet.has(p.id)));
+  }
+
+  // ── Degeneration-loop sources (#4765/#4850) ──────────────────────────────
+  // Handed a page of one syllable repeated 3,000 times, the model does not decline:
+  // it writes fluent prose with no basis in the page, and downstream nothing can tell
+  // that translation from a real one. Refuse BEFORE the call, so the tokens are never
+  // billed, and stamp `translation.health_blocked` — the same field the post-hoc health
+  // gate uses, and already excluded by this query, so the page is not re-selected every
+  // run. The OCR text stays exactly where it is; this lane only declines to build on it.
+  const loopSources = pages.filter(p => isDegenerateSource(p.ocr?.data));
+  if (loopSources.length > 0) {
+    await db.collection('pages').bulkWrite(loopSources.map(p => ({
+      updateOne: {
+        filter: { id: p.id },
+        update: { $set: { 'translation.health_blocked': SOURCE_LOOP_REASON, 'translation.health_blocked_at': new Date(), updated_at: new Date() } },
+      },
+    })), { ordered: false }).catch(() => {});
+    console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
+    const loopIds = new Set(loopSources.map(p => p.id));
+    pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
   }
 
   if (pages.length === 0) {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
@@ -151,6 +152,13 @@ export const POST = withAuth(async (request, session, context) => {
       const ocrText = page.ocr?.data;
       if (!ocrText) {
         console.warn(`Page ${page.page_number} has no OCR text, skipping`);
+        continue;
+      }
+      // A looping transcription is not a text to translate (#4765/#4850): handed a
+      // loop, the model writes fluent prose with no basis in the page. Skipped before
+      // the batch is submitted, so nothing is billed for it.
+      if (loopVerdict(ocrText).refuse) {
+        console.warn(`[batch-translate] LOOP SOURCE: skipping page ${page.page_number} — its OCR is a repetition loop (#4850)`);
         continue;
       }
 

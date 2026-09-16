@@ -42,6 +42,7 @@
  *   node scripts/workers/ocr-correct-grounded.mjs --pre-1820 --limit 5 --apply
  */
 import { MongoClient } from 'mongodb';
+import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { GoogleGenAI } from '@google/genai';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -169,6 +170,12 @@ for (const book of books) {
       if (!v.verdict.ok) {
         rejected++; totals.rejected++;
         console.log(`    p${p.page_number}: REJECTED — ${v.verdict.reason}`);
+        continue;
+      }
+      // Degeneration-loop guard (#4850): a correction pass can loop like any read.
+      if (loopVerdict(v.text || '').refuse) {
+        rejected++; totals.rejected++;
+        console.log(`    p${p.page_number}: REJECTED — repetition loop (#4850)`);
         continue;
       }
       if (APPLY) {

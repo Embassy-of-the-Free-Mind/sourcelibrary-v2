@@ -21,6 +21,7 @@ import { retryDbWrite } from '@/lib/retry-utils';
 import { checkJobCompletion } from '@/lib/job-completion';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import { createRevision } from '@/lib/page-revisions';
+import { loopVerdict } from '@/lib/ocr-loop-guard';
 import type { PageJobType } from '@/lib/types/job';
 import type {
   WriteResultMessage,
@@ -74,6 +75,24 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
     try { await createRevision(pageId, 'ocr', jobId); } catch {}
     // Save OCR result to page
     const { text, language, model, promptVersion, promptId, promptHash, promptName, pageType, columns, scriptType, detectedImages, sourceUrl, codeVersion } = message.data;
+    // Degeneration-loop guard (#4850): a read that stopped transcribing and repeated
+    // one unit. Refused here as a failed page, with the text kept in `page_revisions`
+    // (`createRevision` above snapshots what was there, not the incoming loop, so the
+    // refusal is logged rather than silent).
+    const loop = loopVerdict(text || '');
+    if (loop.refuse) {
+      console.warn(`${LOG_PREFIX} LOOP GUARD: refusing page ${pageId} — ${(loop.share * 100).toFixed(0)}% of the body is one ${loop.period}-char unit repeated ${loop.reps}x (#4850)`);
+      await retryDbWrite(() => jobs.updateOne(
+        { id: jobId },
+        {
+          $addToSet: { failed_page_ids: pageId },
+          $inc: { 'progress.failed': 1 },
+          $set: { updated_at: new Date() },
+        }
+      ), `record loop refusal for page ${pageId}`, 3, LOG_PREFIX);
+      await safeCheckCompletion(db, jobId, bookId, targetPageIds, 'ocr');
+      return;
+    }
     const ocrSetPayload = {
       ocr: {
         data: text,

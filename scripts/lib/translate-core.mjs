@@ -25,6 +25,7 @@
 import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
+import { loopVerdict } from './ocr-loop-guard.mjs';
 
 export const MODEL_FLASH = 'gemini-3-flash-preview';
 export const MODEL_LITE = 'gemini-3.1-flash-lite';
@@ -347,11 +348,32 @@ export function isBlankFromOcr(ocrText) {
 }
 
 /**
+ * Is this page's SOURCE TEXT a degeneration loop (#4850)?
+ *
+ * The reason this belongs on the translation side as well as the OCR side: every
+ * fabrication the blind judge found in the #4759 read came from a looping input
+ * (#4765). Handed a page of one syllable repeated 3,000 times, the model does not
+ * decline — it writes fluent connected prose with no basis in the page, and the
+ * result is indistinguishable downstream from a real translation. The OCR gate stops
+ * NEW loops being stored; this stops the 69,223 already in the corpus (measured
+ * 2026-09-15) from being turned into prose.
+ *
+ * Pre-flight, so the call is never billed.
+ */
+export function isDegenerateSource(ocrText) {
+  return loopVerdict(ocrText || '').refuse;
+}
+
+/** The reason value stamped on `translation.health_blocked` for a looping source. */
+export const SOURCE_LOOP_REASON = 'source_loop';
+
+/**
  * THE translatability check. Returns { ok, reason } so callers can count and
  * log why pages were excluded rather than silently dropping them.
  *
  * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
- * 'skip-type', 'no-ocr', 'blank-ocr', 'recitation-blocked', 'safety-blocked'.
+ * 'skip-type', 'no-ocr', 'blank-ocr', 'ocr-loop', 'recitation-blocked',
+ * 'safety-blocked'.
  *
  * opts.extraSkipTypes extends (never replaces) the canonical list — e.g.
  * retranslate-stale deliberately also skips illustrations and title pages.
@@ -367,6 +389,9 @@ export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
   // the result an hour later. Same rule as page-counts.hasOcr.
   if (page?.ocr?.unreadable === true) return { ok: false, reason: 'ocr-unreadable' };
   if (isBlankFromOcr(ocr)) return { ok: false, reason: 'blank-ocr' };
+  // A looping transcription is not a text to translate — it is the input that
+  // produces a fabricated translation (#4765/#4850).
+  if (isDegenerateSource(ocr)) return { ok: false, reason: 'ocr-loop' };
   if (page?.translation?.recitation_blocked) return { ok: false, reason: 'recitation-blocked' };
   if (page?.translation?.safety_blocked) return { ok: false, reason: 'safety-blocked' };
   return { ok: true };
