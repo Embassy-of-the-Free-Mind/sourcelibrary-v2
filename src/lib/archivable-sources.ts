@@ -70,6 +70,8 @@ export const ARCHIVABLE_SOURCE_HOSTS = [
   'cdli.earth',
   // — verified 200 (4.6MB JPEG, 7.7s) from the Hetzner datacenter IP, 2026-09-15 —
   'stacks.stanford.edu',
+  // — verified 200 (576KB JPEG, 2.2s) from the Hetzner datacenter IP, 2026-09-15 —
+  'bl.digirati.io',
 ] as const;
 
 /**
