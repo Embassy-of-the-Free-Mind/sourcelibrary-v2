@@ -254,5 +254,3 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
     </AuthCheck>
   );
 }
-
-export default PaneEmptyState;
