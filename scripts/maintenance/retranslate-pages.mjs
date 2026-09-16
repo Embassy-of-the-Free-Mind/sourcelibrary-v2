@@ -76,7 +76,7 @@ const API_KEYS = [
 let keyIdx = 0;
 const aiClient = () => new GoogleGenerativeAI(API_KEYS[keyIdx++ % API_KEYS.length]);
 
-import { sanitizeTranslationTags } from '../lib/translate-core.mjs';
+import { sanitizeTranslationTags, isDegenerateSource } from '../lib/translate-core.mjs';
 
 // ── collapse/runaway detection now lives in translate-core (#3756) ──
 // The local copies this file carried were extracted into
@@ -143,6 +143,9 @@ await withMongo(async (db) => {
     if (!book) { skipped++; return; }
     const page = await db.collection('pages').findOne({ book_id: t.book_id, page_number: t.page_number });
     if (!page?.ocr?.data) { skipped++; return; }
+    // A looping source cannot be repaired by re-translating it (#4765/#4850) —
+    // the OCR has to be fixed first.
+    if (isDegenerateSource(page.ocr.data)) { skipped++; return; }
     const model = getModelForBook(book);
 
     // Idempotent/resumable: a page already healthy (e.g. fixed in a prior run) is skipped.

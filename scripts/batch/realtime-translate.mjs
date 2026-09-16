@@ -33,6 +33,7 @@ import {
   buildTranslationPrompt,
   writePageTranslation,
   SKIP_TRANSLATION_PAGE_TYPES,
+  isDegenerateSource,
 } from '../lib/translate-core.mjs';
 
 // --- Config ---
@@ -163,6 +164,15 @@ async function processBook(book, pages, prompts, db, globalStats) {
     if (!page.ocr?.data || page.ocr.data.length < 10) {
       bookSkipped++;
       globalStats.skipped++;
+      continue;
+    }
+
+    // A looping transcription is not a text to translate (#4765/#4850) — skipped
+    // BEFORE the call, because the model answers a loop with invented prose.
+    if (isDegenerateSource(page.ocr.data)) {
+      bookSkipped++;
+      globalStats.skipped++;
+      previousTranslation = null; // the loop breaks the context chain too
       continue;
     }
 

@@ -13,7 +13,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
-import { SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
+import { SKIP_TRANSLATION_PAGE_TYPES, isDegenerateSource } from '../lib/translate-core.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -181,6 +181,14 @@ async function main() {
       })
       .sort({ page_number: 1 })
       .toArray();
+
+    // Never rebuild a translation on a looping source (#4765/#4850).
+    const loopFree = stalePages.filter(p => !isDegenerateSource(p.ocr?.data));
+    if (loopFree.length !== stalePages.length) {
+      console.log(`  skipping ${stalePages.length - loopFree.length} page(s) whose OCR is a repetition loop (#4850)`);
+      stalePages.length = 0;
+      stalePages.push(...loopFree);
+    }
 
     if (stalePages.length === 0) continue;
 
