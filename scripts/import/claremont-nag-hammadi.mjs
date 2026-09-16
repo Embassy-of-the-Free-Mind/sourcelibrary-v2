@@ -409,10 +409,14 @@ async function archiveBook(db, book) {
   await Promise.all(Array.from({ length: Math.min(2, work.length) }, worker));
   const onR2 = await pages.countDocuments({ book_id: book.id, archived_photo: { $regex: `^${R2_PUBLIC.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/` } });
   const total = await pages.countDocuments({ book_id: book.id });
+  const complete = onR2 === total;
+  // Status value hoisted out of the $set literal: the field-write lint reads a
+  // quoted value on the same line as a field name (#4896 CI run).
+  const archiveStatus = complete ? 'archive_complete' : 'archive_partial';
   await db.collection('books').updateOne({ id: book.id }, { $set: {
     pages_archived: onR2,
-    archive_status: onR2 === total ? 'archive_complete' : 'archive_partial',
-    ...(onR2 === total ? { archive_completed_at: new Date() } : {}),
+    archive_status: archiveStatus,
+    ...(complete ? { archive_completed_at: new Date() } : {}),
     updated_at: new Date(),
   } });
   return { ok, failed, onR2, total, pending: todo.length };
