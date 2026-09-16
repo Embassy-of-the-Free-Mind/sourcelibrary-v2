@@ -235,7 +235,7 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
         </h2>
       </div>
     </Link>
-    <CollectionCoverEditor slug={col.slug} name={col.name} aspect="1/1" />
+    <CollectionCoverEditor slug={col.slug} name={col.name} />
     </div>
   );
 }
@@ -269,7 +269,7 @@ function CuratedCard({ col, tenantSlug, priority = false }: { col: CollectionDoc
         )}
       </div>
     </Link>
-    <CollectionCoverEditor slug={col.slug} name={col.name} aspect="1/1" />
+    <CollectionCoverEditor slug={col.slug} name={col.name} />
     </div>
   );
 }

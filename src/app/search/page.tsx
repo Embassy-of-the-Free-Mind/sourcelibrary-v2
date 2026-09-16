@@ -2182,7 +2182,7 @@ function SearchCollectionCard({ col }: { col: { slug: string; name: string; book
     <div className="relative group">
     <Link
       href={lp(`/collections/${col.slug}`)}
-      className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
+      className="group relative block overflow-hidden rounded-lg aspect-square"
     >
       {src && !imgError ? (
         <div className="absolute inset-0 overflow-hidden transition-transform duration-500 ease-out group-hover:scale-105">
@@ -2210,7 +2210,7 @@ function SearchCollectionCard({ col }: { col: { slug: string; name: string; book
         </h3>
       </div>
     </Link>
-    <CollectionCoverEditor slug={col.slug} name={col.name} aspect="4/3" />
+    <CollectionCoverEditor slug={col.slug} name={col.name} />
     </div>
   );
 }

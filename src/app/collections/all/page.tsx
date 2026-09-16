@@ -138,7 +138,7 @@ function CollectionCard({ col }: { col: SubCollection }) {
     <div className="relative group">
     <Link
       href={`/collections/${col.slug}`}
-      className={`group relative block overflow-hidden rounded-lg aspect-[4/3] ${!col.visible ? 'opacity-40' : ''
+      className={`group relative block overflow-hidden rounded-lg aspect-square ${!col.visible ? 'opacity-40' : ''
         }`}
     >
       {col.image ? (
@@ -166,7 +166,7 @@ function CollectionCard({ col }: { col: SubCollection }) {
         </h3>
       </div>
     </Link>
-    <CollectionCoverEditor slug={col.slug} name={col.name} aspect="4/3" />
+    <CollectionCoverEditor slug={col.slug} name={col.name} />
     </div>
   );
 }

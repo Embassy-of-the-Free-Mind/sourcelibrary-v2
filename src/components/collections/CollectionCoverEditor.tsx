@@ -17,13 +17,10 @@ import { cardFramingStyle, COVER_EVENT, DEFAULT_CARD_FRAMING, type CardFraming, 
  * It must not live inside the link: a button in an anchor navigates.
  * Renders nothing for readers; the API is gated on its own.
  */
-type Aspect = '4/3' | '1/1';
 interface Candidate { id: string; thumb: string; url: string; fallback: string | null; description: string; book_title: string }
 interface Current { url: string | null; framing: CardFraming }
 
-const ASPECT_CLS: Record<Aspect, string> = { '4/3': 'aspect-[4/3]', '1/1': 'aspect-square' };
-
-export default function CollectionCoverEditor({ slug, name, aspect = '4/3' }: { slug: string; name: string; aspect?: Aspect }) {
+export default function CollectionCoverEditor({ slug, name }: { slug: string; name: string }) {
   const { data: session } = useStableSession();
   const role = (session?.user as { role?: string } | undefined)?.role;
   const [open, setOpen] = useState(false);
@@ -38,12 +35,12 @@ export default function CollectionCoverEditor({ slug, name, aspect = '4/3' }: { 
       >
         <ImageIcon className="w-3.5 h-3.5" /> Cover
       </button>
-      {open && <CoverDialog slug={slug} name={name} aspect={aspect} onClose={() => setOpen(false)} />}
+      {open && <CoverDialog slug={slug} name={name} onClose={() => setOpen(false)} />}
     </>
   );
 }
 
-function CoverDialog({ slug, name, aspect, onClose }: { slug: string; name: string; aspect: Aspect; onClose: () => void }) {
+function CoverDialog({ slug, name, onClose }: { slug: string; name: string; onClose: () => void }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -126,7 +123,6 @@ function CoverDialog({ slug, name, aspect, onClose }: { slug: string; name: stri
     }
   };
 
-  const other: Aspect = aspect === '4/3' ? '1/1' : '4/3';
   const imgStyle = cardFramingStyle(f);
 
   return (
@@ -135,7 +131,7 @@ function CoverDialog({ slug, name, aspect, onClose }: { slug: string; name: stri
         <header className="flex items-center justify-between px-6 py-4 border-b border-border-light">
           <div>
             <h2 className="font-display text-[20px]" style={{ color: '#2b2620' }}>Cover for {name}</h2>
-            <p className="text-xs" style={{ color: '#8a8170' }}>Pick a plate, drag it into place, zoom. The same cover is used on search, the collections index and the full list.</p>
+            <p className="text-xs" style={{ color: '#8a8170' }}>Pick a plate, drag it into place, zoom. Cards are square everywhere: search, the collections index and the full list.</p>
           </div>
           <button onClick={onClose} aria-label="Close" className="p-1.5" style={{ color: '#6b6560' }}><X className="w-4 h-4" /></button>
         </header>
@@ -145,7 +141,8 @@ function CoverDialog({ slug, name, aspect, onClose }: { slug: string; name: stri
           <div>
             <div
               ref={box}
-              className={`relative overflow-hidden rounded-lg bg-warm ${ASPECT_CLS[aspect]} ${url ? 'cursor-move' : ''}`}
+              // Every collection card is square, so the preview is the card.
+              className={`relative overflow-hidden rounded-lg bg-warm aspect-square ${url ? 'cursor-move' : ''}`}
               style={{ touchAction: 'none' }}
               onPointerDown={url ? onPointerDown : undefined}
               onPointerMove={onPointerMove}
@@ -164,23 +161,15 @@ function CoverDialog({ slug, name, aspect, onClose }: { slug: string; name: stri
                 <h3 className="font-serif text-base text-white font-semibold leading-tight">{name}</h3>
               </div>
             </div>
-            <div className="mt-3 flex items-start gap-3">
-              <div className={`relative w-24 shrink-0 overflow-hidden rounded bg-warm ${ASPECT_CLS[other]}`} title={`How it reads at ${other}`}>
-                {url && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={url} alt="" className="absolute inset-0 h-full w-full object-cover" style={imgStyle} />
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="block text-[11px]" style={{ color: '#6b6560' }}>
-                  Zoom {Math.round(f.scale * 100)}%
-                  <input type="range" min={1} max={3} step={0.02} value={f.scale}
-                    onChange={(e) => setF((c) => ({ ...c, scale: Number(e.target.value) }))}
-                    className="mt-1 w-full" style={{ accentColor: '#1a1612' }} />
-                </label>
-                <p className="mt-1 text-[10px]" style={{ color: '#8a8170' }}>Drag the plate · x {Math.round(f.x)}% · y {Math.round(f.y)}% · small box shows the other card shape</p>
-                <button type="button" onClick={() => setF(DEFAULT_CARD_FRAMING)} className="mt-2 text-[11px] underline" style={{ color: '#6b6560' }}>Centre again</button>
-              </div>
+            <div className="mt-3">
+              <label className="block text-[11px]" style={{ color: '#6b6560' }}>
+                Zoom {Math.round(f.scale * 100)}%
+                <input type="range" min={1} max={3} step={0.02} value={f.scale}
+                  onChange={(e) => setF((c) => ({ ...c, scale: Number(e.target.value) }))}
+                  className="mt-1 w-full" style={{ accentColor: '#1a1612' }} />
+              </label>
+              <p className="mt-1 text-[10px]" style={{ color: '#8a8170' }}>Drag the plate · x {Math.round(f.x)}% · y {Math.round(f.y)}%</p>
+              <button type="button" onClick={() => setF(DEFAULT_CARD_FRAMING)} className="mt-2 text-[11px] underline" style={{ color: '#6b6560' }}>Centre again</button>
             </div>
           </div>
 
