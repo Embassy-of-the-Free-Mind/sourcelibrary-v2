@@ -31,6 +31,7 @@ import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
+import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 
 /**
  * Save current page content as a revision before overwriting — delegates to the
@@ -123,21 +124,16 @@ function parseImageExtractionResponse(text) {
 
 /**
  * Get batch job data via SDK. Tries all keys (jobs are key-scoped).
- * Returns { sdkJob, apiKey, keyIndex } or null if not found.
+ * Returns { sdkJob, apiKey, keyIndex } when found. When not found, returns
+ * { sdkJob: null, verdict, attempts } where verdict is 'not_found' ONLY if every
+ * key returned a genuine 404; a network/quota/5xx on any key is 'unmeasurable'
+ * (#4889 — an unmeasurable is not a death sentence).
  * The apiKey is needed for result file download (SDK download doesn't work for batch results).
  */
 async function getJobData(jobName) {
-  for (let i = 0; i < SDK_CLIENTS.length; i++) {
-    try {
-      const sdkJob = await SDK_CLIENTS[i].batches.get({ name: jobName });
-      if (sdkJob) return { sdkJob, apiKey: UNIQUE_KEYS[i], keyIndex: i };
-    } catch (e) {
-      const msg = e.message || '';
-      if (msg.includes('not found') || msg.includes('NOT_FOUND') || msg.includes('404')) continue;
-      // Other errors (network, etc) — try next key
-    }
-  }
-  return null;
+  const probe = await probeBatchJob(jobName, SDK_CLIENTS, UNIQUE_KEYS);
+  if (probe.verdict === 'exists') return { sdkJob: probe.sdkJob, apiKey: UNIQUE_KEYS[probe.keyIndex], keyIndex: probe.keyIndex };
+  return { sdkJob: null, verdict: probe.verdict, attempts: probe.attempts };
 }
 
 /**
@@ -222,7 +218,10 @@ async function processOneJob(db, job) {
   }
 
   const result = await getJobData(jobName);
-  if (!result) return { status: 'not_found', jobName };
+  if (!result.sdkJob) {
+    // 'not_found' = 404 on every key; 'unmeasurable' = some key could not answer.
+    return { status: result.verdict, jobName, attempts: result.attempts };
+  }
   const { sdkJob, apiKey: workingKey } = result;
   const state = getJobState(sdkJob);
 
@@ -1098,145 +1097,21 @@ async function advancePipelineStatus(db, bookId, jobType) {
 
 /**
  * Reconcile DB batch_jobs state with real Gemini-side state.
- * - Counts active jobs on each Gemini key via SDK batches.list()
+ * The logic lives in ./lib/batch-reconcile.mjs so a test can drive it (#4889);
+ * this wrapper only supplies the worker's clients, keys, and meter close-out.
+ * - Counts active jobs on each Gemini key via a page-budgeted batches.list()
  * - Detects DB zombies (pending in DB, no gemini_job_name)
- * - Detects Gemini orphans (active on Gemini, not tracked in DB) and cancels them
+ * - Cancels Gemini orphans (active on Gemini, unknown to the DB in ANY status)
+ * - Probes ghost candidates with batches.get on every key; fails only a real 404-everywhere
  * - Computes recent completion velocity
- * - Returns metrics for logging and system_config persistence
  */
 async function reconcileBatchState(db) {
-  const activeStates = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
-  const result = {
-    geminiActive: 0,
-    geminiActiveByKey: [],
-    dbActive: 0,
-    dbZombies: 0,
-    orphansCancelled: 0,
-    ghostsDetected: 0,
-    recentCompletions1h: 0,
-    recentCompletions6h: 0,
-    recentPagesSaved1h: 0,
-    recentPagesSaved6h: 0,
-    healthy: true,
-    issues: [],
-  };
-
-  // 1. Count real Gemini active jobs per key
-  const geminiJobNames = new Set();
-  for (let i = 0; i < SDK_CLIENTS.length; i++) {
-    let keyActive = 0;
-    try {
-      const pager = await SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
-      let consecutiveInactive = 0;
-      for await (const job of pager) {
-        if (activeStates.has(job.state)) {
-          keyActive++;
-          if (job.name) geminiJobNames.add(job.name);
-          consecutiveInactive = 0;
-        } else {
-          consecutiveInactive++;
-          if (consecutiveInactive >= 50) break;
-        }
-      }
-    } catch (err) {
-      result.issues.push(`Key ${i} list failed: ${err.message?.substring(0, 80)}`);
-    }
-    result.geminiActiveByKey.push(keyActive);
-    result.geminiActive += keyActive;
-  }
-
-  // 2. Count DB active jobs and detect zombies
-  const dbActiveJobs = await db.collection('batch_jobs').find({
-    status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
-  }).project({ _id: 1, job_name: 1, gemini_job_name: 1, status: 1, created_at: 1 }).toArray();
-
-  result.dbActive = dbActiveJobs.length;
-
-  // Zombies: in DB as active but no job_name (never submitted to Gemini)
-  const zombies = dbActiveJobs.filter(j => !j.job_name && !j.gemini_job_name);
-  result.dbZombies = zombies.length;
-
-  // Auto-cancel DB zombies older than 1 hour
-  if (zombies.length > 0) {
-    const oneHourAgo = new Date(Date.now() - 3600000);
-    const staleZombies = zombies.filter(z => new Date(z.created_at) < oneHourAgo);
-    if (staleZombies.length > 0) {
-      await db.collection('batch_jobs').updateMany(
-        { _id: { $in: staleZombies.map(z => z._id) } },
-        { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: 'batch-health: zombie (no gemini_job_name, >1h old)' } }
-      );
-      result.dbZombies = staleZombies.length;
-      result.issues.push(`Auto-cancelled ${staleZombies.length} DB zombie jobs`);
-    }
-  }
-
-  // 3. Detect Gemini orphans (active on Gemini, not in DB) and cancel them
-  const dbJobNames = new Set(dbActiveJobs.map(j => j.job_name || j.gemini_job_name).filter(Boolean));
-  const orphanNames = [...geminiJobNames].filter(name => !dbJobNames.has(name));
-  if (orphanNames.length > 0) {
-    for (const name of orphanNames) {
-      for (const client of SDK_CLIENTS) {
-        try { await client.batches.cancel({ name }); result.orphansCancelled++; break; } catch (_) {}
-      }
-    }
-    if (result.orphansCancelled > 0) {
-      result.issues.push(`Cancelled ${result.orphansCancelled} Gemini orphans`);
-    }
-  }
-
-  // 3b. Detect ghost jobs: named in DB but not found on Gemini (404)
-  // These sit in pending forever because processOneJob returns 'not_found' which wasn't handled.
-  // Now processOneJob marks them failed, but reconcile also catches stragglers.
-  const namedDbJobs = dbActiveJobs.filter(j => j.job_name || j.gemini_job_name);
-  const ghostJobs = namedDbJobs.filter(j => {
-    const name = j.job_name || j.gemini_job_name;
-    return !geminiJobNames.has(name);
+  return reconcileBatchStateLib(db, {
+    clients: SDK_CLIENTS,
+    keys: UNIQUE_KEYS,
+    closePlaceholder: (d, job, reason) => closeUsagePlaceholder(d, job, reason),
+    dryRun: DRY_RUN,
   });
-  result.ghostsDetected = ghostJobs.length;
-  if (ghostJobs.length > 0) {
-    // Only auto-fail ghosts older than 30 minutes (give fresh jobs time to appear on Gemini)
-    const thirtyMinAgo = new Date(Date.now() - 30 * 60000);
-    const staleGhosts = ghostJobs.filter(g => new Date(g.created_at) < thirtyMinAgo);
-    if (staleGhosts.length > 0) {
-      await db.collection('batch_jobs').updateMany(
-        { _id: { $in: staleGhosts.map(g => g._id) } },
-        { $set: { status: 'failed', error: 'Ghost: named in DB but 404 on all Gemini keys', updated_at: new Date() } }
-      );
-      result.issues.push(`Auto-failed ${staleGhosts.length} ghost jobs (named but 404 on Gemini)`);
-    }
-  }
-
-  // 4. Recent completion velocity
-  const now = Date.now();
-  result.recentCompletions1h = await db.collection('batch_jobs').countDocuments({
-    status: { $in: ['completed', 'saved'] }, updated_at: { $gte: new Date(now - 3600000) }
-  });
-  result.recentCompletions6h = await db.collection('batch_jobs').countDocuments({
-    status: { $in: ['completed', 'saved'] }, updated_at: { $gte: new Date(now - 6 * 3600000) }
-  });
-  result.recentPagesSaved1h = await db.collection('pages').countDocuments({
-    'ocr.updated_at': { $gte: new Date(now - 3600000) }
-  });
-  result.recentPagesSaved6h = await db.collection('pages').countDocuments({
-    'ocr.updated_at': { $gte: new Date(now - 6 * 3600000) }
-  });
-
-  // 5. Health assessment
-  if (result.geminiActive > 80) {
-    result.healthy = false;
-    result.issues.push(`Gemini active jobs (${result.geminiActive}) near limit (100)`);
-  }
-  if (result.dbZombies > 10) {
-    result.healthy = false;
-    result.issues.push(`${result.dbZombies} DB zombie jobs`);
-  }
-  if (result.geminiActive > 0 && result.recentCompletions1h === 0 && result.recentPagesSaved1h === 0) {
-    // Jobs are active but nothing completing — possible freeze
-    result.healthy = false;
-    result.issues.push(`${result.geminiActive} Gemini jobs active but 0 completions in last hour`);
-  }
-
-  return result;
 }
 
 // ── Main ──
@@ -1267,7 +1142,7 @@ async function run() {
   // Runs every collector cycle. Detects orphans (in Gemini but not DB, or vice versa),
   // auto-cancels Gemini orphans, and writes metrics for the enrichment snapshot.
   const batchHealth = await reconcileBatchState(db);
-  console.log(`[batch-health] Gemini active: ${batchHealth.geminiActive} | DB active: ${batchHealth.dbActive} | Orphans cancelled: ${batchHealth.orphansCancelled}`);
+  console.log(`[batch-health] Gemini active: ${batchHealth.geminiActive}${batchHealth.listingTruncated ? ' (listing truncated)' : ''} | DB active: ${batchHealth.dbActive} | Orphans cancelled: ${batchHealth.orphansCancelled} (spared, known to DB: ${batchHealth.orphansSparedKnownToDb}) | Ghosts: ${batchHealth.ghostsConfirmed} confirmed / ${batchHealth.ghostsAlive} alive / ${batchHealth.ghostsUnmeasurable} unmeasurable of ${batchHealth.ghostCandidates} candidates`);
 
   // Persist batch health for /status and enrichment snapshot
   try {
@@ -1321,6 +1196,7 @@ async function run() {
   let stillPending = 0;
   let totalPagesSaved = 0;
   let notFoundCount = 0;
+  let unmeasurableCount = 0;
   const bookIdsToUpdate = new Set();
   const parentIdsToUpdate = new Set();
   const pipelineAdvances = []; // { bookId, type } pairs for pipeline status updates
@@ -1360,17 +1236,39 @@ async function run() {
         if (val.parentJobId) parentIdsToUpdate.add(val.parentJobId);
       } else if (val.status === 'pending') {
         stillPending++;
+      } else if (val.status === 'unmeasurable') {
+        // At least one key could not answer (network, quota, 5xx) and none
+        // returned the job. Not a verdict — leave the row in flight and record
+        // what was tried so a repeat is auditable (#4889).
+        stillPending++;
+        unmeasurableCount++;
+        const jobToNote = batch[j];
+        if (jobToNote && !DRY_RUN) {
+          try {
+            await db.collection('batch_jobs').updateOne(
+              { _id: jobToNote._id },
+              { $set: { last_ghost_probe: { probed_at: new Date(), verdict: 'unmeasurable', keys_tried: val.attempts?.length || 0, attempts: val.attempts || [] } } }
+            );
+          } catch (e) { console.error(`  Failed to note unmeasurable job: ${e.message}`); }
+        }
       } else if (val.status === 'not_found') {
         notFoundCount++;
-        // Job has a gemini_job_name but Gemini returns 404 on all keys — it's gone.
-        // Mark as failed so it doesn't sit in pending forever.
+        // Job has a gemini_job_name and EVERY key returned a real 404 — it's gone.
+        // Mark as failed so it doesn't sit in pending forever, with the per-key
+        // evidence on the row (#4889).
         const jobToFail = batch[j];
         if (jobToFail && !DRY_RUN) {
           try {
             await db.collection('batch_jobs').updateOne(
               { _id: jobToFail._id },
-              { $set: { status: 'failed', error: 'Gemini 404: job no longer exists on any key', updated_at: new Date() } }
+              { $set: {
+                status: 'failed',
+                error: GHOST_ERROR,
+                ghost_verdict: { probed_at: new Date(), verdict: 'not_found', keys_tried: val.attempts?.length || 0, attempts: val.attempts || [] },
+                updated_at: new Date(),
+              } }
             );
+            await closeUsagePlaceholder(db, jobToFail, GHOST_ERROR);
             console.log(`  NOT_FOUND -> failed: ${jobToFail.gemini_job_name || jobToFail.job_name} (book: ${jobToFail.book_id})`);
             // Track for pipeline advance so book can be requeued
             const allBookIds = jobToFail.book_ids || (jobToFail.book_id ? [jobToFail.book_id] : []);
@@ -1533,7 +1431,7 @@ async function run() {
         { $set: { recovery_checked_at: new Date() } }
       );
 
-      if (!result) continue;
+      if (!result.sdkJob) continue;
       const state = getJobState(result.sdkJob);
 
       if (state !== 'JOB_STATE_SUCCEEDED') continue;
@@ -1641,6 +1539,7 @@ async function run() {
   if (namelessReaped > 0) console.log(`Nameless reaped: ${namelessReaped}`);
   if (zombiesReaped > 0) console.log(`Zombies reaped: ${zombiesReaped}`);
   if (notFoundCount > 0) console.log(`Gemini 404 (gone): ${notFoundCount}`);
+  if (unmeasurableCount > 0) console.log(`Gemini unreachable for ${unmeasurableCount} jobs (left in flight, not a verdict)`);
   if (ghostsCleaned > 0) console.log(`Ghosts cleaned: ${ghostsCleaned}`);
 
   // ── 404-on-all-keys alert (#2455) ──
