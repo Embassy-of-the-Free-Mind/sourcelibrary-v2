@@ -327,7 +327,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       .avif({ quality: AVIF_QUALITY, effort: 5 })
       .toBuffer();
 
-    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}.avif`;
+    // The source is part of the object key: the stored image is treated as
+    // immutable by every cache, so a book switched to plates must get a new
+    // URL rather than new bytes behind the old one.
+    const key = `hero-mosaic/${book.id}-v${MOSAIC_VERSION}${source === 'plates' ? '-plates' : ''}.avif`;
     const uploaded = await storagePut(key, composed, { contentType: 'image/avif', allowOverwrite: true });
 
     await db.collection('books').updateOne({ id: book.id }, { $set: { hero_mosaic_url: uploaded.url, hero_mosaic_version: MOSAIC_VERSION, hero_mosaic_built_from: source, hero_mosaic_at: new Date() } }).catch(() => {});
