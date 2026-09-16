@@ -66,7 +66,7 @@ import {
 import { firstTranslationClause } from '@/lib/first-translation-labels';
 import GalleryMasonry, { type Plate } from '@/components/GalleryMasonry';
 import HeroVariants from '@/components/book/HeroVariants';
-import { HERO_MOSAIC_VERSION } from '@/lib/hero-mosaic-version';
+import { heroMosaicCurrent, heroMosaicRouteUrl, heroMosaicSource, type HeroMosaicFields } from '@/lib/hero-mosaic-version';
 import AboutVariants from '@/components/book/AboutVariants';
 import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import PlusToggle from '@/components/book/PlusToggle';
@@ -1611,10 +1611,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
              composites + caches on first view. This skips a Vercel-function +
              Mongo + 302 hop on every load of a popular book. */
           mosaicUrl={
-            (book as unknown as { hero_mosaic_url?: string; hero_mosaic_version?: number }).hero_mosaic_url &&
-            (book as unknown as { hero_mosaic_version?: number }).hero_mosaic_version === HERO_MOSAIC_VERSION
-              ? (book as unknown as { hero_mosaic_url?: string }).hero_mosaic_url
-              : `/api/books/${book.id}/hero-mosaic`
+            (book as unknown as HeroMosaicFields).hero_mosaic_url && heroMosaicCurrent(book as unknown as HeroMosaicFields)
+              ? (book as unknown as HeroMosaicFields).hero_mosaic_url as string
+              : heroMosaicRouteUrl(book.id, heroMosaicSource(book as unknown as HeroMosaicFields))
           }
           actions={(
             /* Mobile-only: pinned to the foot of the hero (desktop keeps these
