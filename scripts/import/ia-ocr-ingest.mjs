@@ -57,6 +57,9 @@
  *  1. The XML keeps the typesetter's line-end hyphens (`am-\nmunition`; 84% of pages). Every leaf
  *     is run through `dehyphenateLineBreaks` (scripts/lib/dehyphenate.mjs) after loading — after,
  *     not inside `leafTexts`, so cached `.leaves.json` files get it too — before scoring and writing.
+ *  4. (#4784, 2026-09-16) A leaf can be junk inside an ACCEPTED book — a Devanagari page read as
+ *     Latin letters. Each fillable leaf is also scored against the book's model-read text by letter
+ *     trigram share (scripts/lib/ocr-plausibility.mjs) and skipped below 0.4 (`implausible_leaves`).
  *  2. The agreement tokenizer was `[a-z0-9']`: Greek, Cyrillic and Hebrew were invisible to the
  *     score, so a bilingual edition was judged on its English apparatus alone (De Anima accepted at
  *     0.91 without a single Greek word counted). Now `\p{L}\p{N}'` with the `u` flag.
@@ -93,6 +96,7 @@ import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
 import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
+import { referenceTrigramSet, isImplausible, DEFAULT_MIN_PLAUSIBILITY } from '../lib/ocr-plausibility.mjs';
 import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { tokens, ratio } from '../lib/ia-ocr-agreement.mjs';
@@ -197,7 +201,7 @@ await withMongo(async (db) => {
   const books = await B.find(q, { projection }).sort({ processing_priority: -1, visible: -1 }).limit(IDS_FILE ? 100000 : LIMIT).toArray();
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT_OVERRIDE !== null ? `${MIN_AGREEMENT_OVERRIDE} (OVERRIDE for every language)` : 'per language (scripts/lib/ia-ocr-gate.mjs)'}, min ref pages ${MIN_REF_PAGES})`);
 
-  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0 };
+  const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0, implausible_leaves: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
@@ -280,12 +284,24 @@ await withMongo(async (db) => {
     // first pass the unfilled remainder is exactly the garbage, and a median over it is garbage too.
     const allShares = leafTok.map((t, k) => (t.length >= 20 ? vocabShare(k) : null)).filter((x) => x !== null);
     const shareCut = 0.4 * median(allShares);
-    const fillable = candidates.filter(({ k }) => vocabShare(k) >= shareCut);
-    const garbageLeaves = candidates.length - fillable.length;
+    const wordFillable = candidates.filter(({ k }) => vocabShare(k) >= shareCut);
+    const garbageLeaves = candidates.length - wordFillable.length;
+    // PAGE-LEVEL PLAUSIBILITY (#4784, 2026-09-16). The word-share guard above clears a Devanagari
+    // leaf read as Latin junk (`kgg'7^ f<p^ I`) by 0.03 only, because a rare REAL word misses the
+    // vocabulary as surely as junk does (readable floor 0.59 vs junk 0.23, cut 0.26). Sub-word units
+    // separate them: the share of a leaf's in-word letter TRIGRAMS found in the book's model-read
+    // text is ≥ 0.72 on every readable graded page at 5 reference pages and ≤ 0.13 on the junk one
+    // (scripts/lib/ocr-plausibility.mjs carries the table). Cut 0.4, absolute; abstains (never
+    // refuses) on a short leaf or a reference under ~3 pages of prose. Word-shaped blur junk (the
+    // second #4784 instance) passes both tests — a known blind spot, not a claim of this guard.
+    const refSet = referenceTrigramSet(pages.filter((p) => p.ocr?.data && p.ocr?.source !== SOURCE && !isPlatePage(p.ocr.data)).map((p) => p.ocr.data));
+    const fillable = wordFillable.filter(({ k }) => !isImplausible(leaves[k], refSet, DEFAULT_MIN_PLAUSIBILITY));
+    const implausibleLeaves = wordFillable.length - fillable.length;
+    summary.implausible_leaves += implausibleLeaves;
     const refShifted = offset !== 0 && offsetShare >= MIN_OFFSET_SHARE;
     const verdict = refShifted ? 'REF_SHIFTED' : med < gate.cutoff ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}) | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}; implausible skipped ${implausibleLeaves}, trigram cut ${DEFAULT_MIN_PLAUSIBILITY}) | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}`);
     if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; continue; }
     summary.accepted++;
     if (!APPLY) { summary.pages_written += fillable.length; continue; }
