@@ -152,3 +152,40 @@ describe('withholdUpdate / restoreUpdate', () => {
     expect(restoreUpdate({ id: 'p' }, 'text')).toBeNull();
   });
 });
+
+/**
+ * Arm 3 (#4765/#4850): the transcription this English was made from is a degeneration
+ * loop. The same two silent failures apply — too narrow keeps fabricated prose in
+ * service, too wide takes down the translation of a genuinely repetitive page — so the
+ * controls here are as load-bearing as the positive case.
+ */
+describe('staleTranslationReason — arm 3, looping source', () => {
+  const LOOP = 'ᬧᬸᬦᬧᬦᭂᬫ᭄ᬧᬸᬳᬶᬗ᭄ᬓᬸᬯᬮᬦ᭄ᬢ᭄ᬭ '.repeat(60);
+  const clean = (over: Record<string, unknown> = {}) => page({ ocr: { data: 'Quod autem in hoc negotio de quo agimus non solum iuris sed etiam facti difficultas occurrat nemo est qui ambigat, nam etsi iuris ratio in promptu sit.' }, ...over });
+
+  it('flags a translation whose source is a repetition loop', () => {
+    expect(staleTranslationReason(page({ ocr: { data: LOOP } }))).toBe(WITHHOLD_REASONS.SOURCE_LOOP);
+  });
+
+  it('leaves a translation of ordinary text alone', () => {
+    expect(staleTranslationReason(clean())).toBe(null);
+  });
+
+  it('leaves a litany alone — repetition with variation is real text', () => {
+    const litany = ['Sancta Maria', 'Sancta Dei Genitrix', 'Sancta Virgo virginum', 'Mater Christi',
+      'Mater divinae gratiae', 'Mater purissima', 'Mater castissima', 'Mater inviolata',
+      'Mater intemerata', 'Mater amabilis', 'Virgo prudentissima', 'Virgo veneranda',
+      'Virgo praedicanda', 'Virgo potens', 'Virgo clemens', 'Virgo fidelis']
+      .map((n) => `${n}, ora pro nobis.`).join(' ');
+    expect(staleTranslationReason(page({ ocr: { data: litany } }))).toBe(null);
+  });
+
+  it('does not fire on a page with no stored translation — nothing is being served', () => {
+    expect(staleTranslationReason(page({ ocr: { data: LOOP }, translation: {} }))).toBe(null);
+  });
+
+  it('is self-healing: a re-OCR that removed the loop clears the arm', () => {
+    const repaired = clean({ ocr: { data: 'ᬦᬶᬫᬸᬦ᭄ᬬᬗ᭄ᬓᬯᬾᬦ᭄ᬢᭂᬦᬦ᭄ᬳᬶᬓᬶᬯᬾᬦ᭄ᬢᭂᬦ᭄ᬳᬾᬮᬶᬗ᭄ᬩ ᬲᬫᬸᬤ᭄ᬭ ᬯᬶᬤᬶ ᬢᬦ᭄ᬢ᭄ᬭ ᬧᬸᬦᬧᬦᭂᬫ᭄ᬧᬸ', updated_at: OCR_AT }, translation: { data: 'English', updated_at: AFTER } });
+    expect(staleTranslationReason(repaired)).toBe(null);
+  });
+});
