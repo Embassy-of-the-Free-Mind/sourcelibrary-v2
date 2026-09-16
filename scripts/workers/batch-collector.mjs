@@ -23,6 +23,7 @@ import { completeBatchUsage, sumBatchResponseUsage, outputTokensFrom } from './l
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
+import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
@@ -683,6 +684,9 @@ async function processOneJob(db, job) {
             if (!img.bbox) continue;
             if (typeof img.gallery_quality !== 'number') continue;
             if (img.gallery_quality < QUALITY_THRESHOLD) continue;
+            // A small decorative or an initial is not gallery content whatever its
+            // quality score — the prompt's SKIP list was never enforced (#4780).
+            if (isTrivialGalleryDetection(img)) continue;
             galleryDocs.push({ pageId, detectedImage: img, index: di });
           }
         } else {

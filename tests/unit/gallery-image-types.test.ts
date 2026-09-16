@@ -70,3 +70,42 @@ describe('coerceImageType', () => {
     }
   });
 });
+
+// The prompt has said "skip initials" since PR #450; the write path never checked.
+// 6,253 initials reached the gallery, 5,992 of them under 5% of the page (#4780).
+import { isTrivialGalleryDetection, TRIVIAL_MAX_AREA } from '@/lib/gallery-image-types';
+import {
+  isTrivialGalleryDetection as isTrivialGalleryDetectionJs,
+  TRIVIAL_MAX_AREA as TRIVIAL_MAX_AREA_JS,
+} from '../../scripts/lib/gallery-image-types.mjs';
+
+describe('isTrivialGalleryDetection', () => {
+  const small = { x: 0.449, y: 0.524, width: 0.076, height: 0.052 }; // the Paracelsus 'P', 0.4% of the page
+  const large = { x: 0.1, y: 0.1, width: 0.4, height: 0.3 };
+
+  const cases: Array<[string, Parameters<typeof isTrivialGalleryDetection>[0], boolean]> = [
+    ['small decorative initial (the case that slipped)', { type: 'decorative', description: 'Ornate woodcut initial P featuring a figure and foliage', bbox: small }, true],
+    ['small woodcut described as an initial', { type: 'woodcut', description: 'Historiated woodcut initial letter G with a figure', bbox: small }, true],
+    ['small decorative manicule (no initial word)', { type: 'decorative', description: 'A manicule (pointing hand) in the left margin', bbox: small }, true],
+    ['small drop cap by description', { type: 'engraving', description: 'Drop-cap T opening the chapter', bbox: small }, true],
+    ['large historiated initial stays', { type: 'decorative', description: 'Historiated woodcut initial S with two figures in a landscape', bbox: large }, false],
+    ['large decorative border stays', { type: 'decorative', description: 'Full-page architectural title border', bbox: large }, false],
+    ['small portrait stays', { type: 'portrait', description: 'Medallion portrait of the author', bbox: small }, false],
+    ['"initially" is not "initial"', { type: 'diagram', description: 'The apparatus as initially assembled', bbox: small }, false],
+    ['no bbox — nothing to judge, admit', { type: 'decorative', description: 'initial', bbox: null }, false],
+    ['type asserted but unusable is not decorative', { type: 'ornamental drop', description: 'an ornament', bbox: small }, false],
+  ];
+
+  for (const [name, img, expected] of cases) {
+    it(`${name} → ${expected}`, () => {
+      expect(isTrivialGalleryDetection(img)).toBe(expected);
+    });
+  }
+
+  it('behaves identically across the twins', () => {
+    expect(TRIVIAL_MAX_AREA_JS).toBe(TRIVIAL_MAX_AREA);
+    for (const [, img, expected] of cases) {
+      expect(isTrivialGalleryDetectionJs(img)).toBe(expected);
+    }
+  });
+});
