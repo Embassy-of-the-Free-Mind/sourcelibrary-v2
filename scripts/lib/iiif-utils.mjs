@@ -30,6 +30,9 @@ export const DOMAIN_LIMITS = {
   'iiif.wellcomecollection.org': 5,
   'www.e-rara.ch': 2,
   'digi.vatlib.it': 3,
+  // Claremont Colleges Digital Library (CONTENTdm). Its dmQuery endpoint 502s
+  // under a 500-row page at the default 5/s (2026-09-16); ask politely.
+  'ccdl.claremont.edu': 2,
   'iiif.bodleian.ox.ac.uk': 3,
   'images.lib.cam.ac.uk': 3,
   'image.digitalcollections.manchester.ac.uk': 3,

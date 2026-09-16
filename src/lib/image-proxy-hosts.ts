@@ -41,6 +41,7 @@ export const ALLOWED_IMAGE_HOSTS = [
   'iiif.bodleian.ox.ac.uk',
   'digital.archives.go.jp',          // National Archives of Japan
   'contentdm.oclc.org',              // ContentDM (Laurenziana, etc.)
+  'ccdl.claremont.edu',              // Claremont Colleges Digital Library (Nag Hammadi Archive)
   'uvaerfgoed.nl',                   // UVA heritage collections
   'rijksmuseum.nl',                  // Rijksmuseum
   'dl.ndl.go.jp',                    // National Diet Library Japan
