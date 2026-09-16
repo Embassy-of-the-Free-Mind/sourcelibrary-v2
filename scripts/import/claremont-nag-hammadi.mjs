@@ -136,8 +136,17 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function cdmJson(query) {
   const url = `${CDM}${query}/json`;
   await claimSlot(IIIF_HOST, getDomainLimit(url));
-  for (let attempt = 0; attempt < 4; attempt++) {
-    const res = await fetch(url, { headers: { 'User-Agent': UA } });
+  for (let attempt = 0; attempt < 6; attempt++) {
+    let res;
+    try {
+      res = await fetch(url, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(120_000) });
+    } catch (e) {
+      // CONTENTdm also drops the socket mid-response on a heavy page
+      // ("fetch failed: other side closed", 2026-09-16). Same treatment as a 5xx.
+      log(`  retry ${attempt + 1}: ${String(e?.cause?.message || e?.message).slice(0, 80)} — ${url.slice(-70)}`);
+      await sleep(5000 * (attempt + 1));
+      continue;
+    }
     if (res.status === 429) { noteRateLimited(url, Number(res.headers.get('retry-after'))); await sleep(2000 * (attempt + 1)); continue; }
     // CONTENTdm answers a heavy dmQuery page with a bare 502 now and then
     // (seen 2026-09-16 on the second 500-row page). A 5xx is the server's
@@ -146,7 +155,7 @@ async function cdmJson(query) {
     if (!res.ok) throw new Error(`HTTP ${res.status} ${url}`);
     return res.json();
   }
-  throw new Error(`gave up after 4 attempts (429/5xx) ${url}`);
+  throw new Error(`gave up after 6 attempts (429/5xx/socket) ${url}`);
 }
 
 /** Every record in the nha collection, deduplicated by pointer (the pager repeats ~15). */
