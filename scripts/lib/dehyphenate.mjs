@@ -23,8 +23,10 @@
  * check in #4780 measures how often it happens. The raw text survives in `page_revisions`.
  */
 
-// ASCII hyphen, U+2010 HYPHEN, U+00AD SOFT HYPHEN; the break may carry trailing/leading blanks.
-const LINE_BREAK_HYPHEN = /(\p{L})[-‐­][ \t]*\r?\n[ \t]*(?=\p{Ll})/gu;
+// ASCII hyphen, U+2010 HYPHEN, U+00AD SOFT HYPHEN, and U+00AC NOT SIGN — ABBYY writes its
+// soft-hyphen marker as ¬ on some Archive items (`non¬\ncommissioned`, The Voice of Africa,
+// #4780 day-3 spot check); the break may carry trailing/leading blanks.
+const LINE_BREAK_HYPHEN = /(\p{L})[-‐­¬][ \t]*\r?\n[ \t]*(?=\p{Ll})/gu;
 
 /**
  * @param {string} text  OCR text with `\n` line structure

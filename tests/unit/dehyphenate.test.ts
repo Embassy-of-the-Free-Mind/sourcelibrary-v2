@@ -34,6 +34,8 @@ describe('dehyphenateLineBreaks', () => {
     expect(dehyphenateLineBreaks('philo- \r\n sopher')).toBe('philosopher');
     expect(dehyphenateLineBreaks('ἀπο-\nδείξεις')).toBe('ἀποδείξεις');
     expect(dehyphenateLineBreaks('Erklä-\nrung')).toBe('Erklärung');
+    // ABBYY's soft-hyphen marker on some Archive items is the NOT SIGN (U+00AC).
+    expect(dehyphenateLineBreaks('non¬\ncommissioned')).toBe('noncommissioned');
   });
 
   it('KNOWN FALSE JOIN: a real compound whose second half is lowercase is joined too', () => {
