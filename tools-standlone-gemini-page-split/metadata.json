@@ -1,5 +1,0 @@
-{
-  "name": "BookSplit AI",
-  "description": "An intelligent tool that uses Gemini Vision to automatically detect and split open book pages into separate images.",
-  "requestFramePermissions": []
-}
