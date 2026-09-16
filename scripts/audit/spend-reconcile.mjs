@@ -347,6 +347,58 @@ async function billedOutput(token, projectId) {
   return { byModel, byDay };
 }
 
+/**
+ * Grounded SEARCH QUERIES — billed per query, not per token, and NOT PRICED HERE.
+ *
+ * Read off the August 2026 invoice (2026-09-16): 151,154 queries across three
+ * projects, **$2,116.15** — a quarter of an $8,389.32 month, in a unit no token
+ * figure can express. Our own meter has no field for it either: `gemini_usage`
+ * stores tokens and a token-derived cost, so a grounded call's search charge is
+ * invisible on both sides of this reconciliation.
+ *
+ * The obvious fix — count them from
+ * `quota/generate_content_search_request_usage` and multiply by the catalogue
+ * price ($0.014/query, SKU E662-8171-51CB) — DOES NOT WORK, and the way that was
+ * found is worth keeping:
+ *
+ *   - for August the quota metric totals 9,050 queries against the invoice's
+ *     151,154 — 17x low;
+ *   - positive control on 2026-09-03, a day the FT ladder made 4,896 grounded
+ *     skeptic calls: the metric reports 682.
+ *
+ * A quota gauge is not a billing counter. Pricing from it would have published a
+ * confident number an order of magnitude wrong, which is the exact failure this
+ * script exists to catch. The count is printed for shape only; the money comes
+ * from the Detailed usage cost BigQuery export (enabled 2026-09-16,
+ * `Sourcelibrary.billing_export`), which carries the real SKU.
+ */
+async function billedSearchRequests(token, projectId) {
+  const ts = await timeSeries(token, projectId,
+    'metric.type="generativelanguage.googleapis.com/quota/generate_content_search_request_usage/usage"');
+  let n = 0;
+  const byDay = {};
+  for (const s of ts) {
+    for (const pt of s.points || []) {
+      const v = Number(pt.value?.int64Value || 0);
+      n += v;
+      const d = dayKey(pt.interval?.startTime || pt.interval?.endTime || '');
+      if (d) byDay[d] = (byDay[d] || 0) + v;
+    }
+  }
+  return { count: n, byDay };
+}
+
+/** Per-query price for grounded search, read from the catalogue rather than assumed. */
+function searchQueryPrice(skus) {
+  const m = skus.filter(s => /search query/i.test(s.description) && /gemini 3/i.test(s.description) && !/free/i.test(s.description));
+  if (m.length !== 1) return null;
+  const pe = m[0].pricingInfo?.[0]?.pricingExpression || {};
+  const rates = (pe.tieredRates || [])
+    .map(r => Number(r.unitPrice?.units || 0) + Number(r.unitPrice?.nanos || 0) / 1e9)
+    .filter(v => v > 0);
+  return rates.length ? rates[rates.length - 1] : null;
+}
+
 /** Billed INPUT tokens per model, summed across the paid-tier quota buckets. */
 async function billedInput(token, projectId) {
   const byModel = {};
@@ -736,11 +788,13 @@ async function main() {
     log(`Price catalogue: ${skus.length} Gemini SKUs loaded (live from Cloud Billing).\n`);
 
     const billedOut = {}, billedIn = {}, billedOutByDay = {};
-    let googleCalls = 0;
+    let googleCalls = 0, searchRequests = 0;
     for (const p of PROJECTS) {
-      const [o, i, c] = await Promise.all([
+      const [o, i, c, sq] = await Promise.all([
         billedOutput(token, p.id), billedInput(token, p.id), googleCallCount(token, p.id),
+        billedSearchRequests(token, p.id),
       ]);
+      searchRequests += sq.count;
       for (const [m, v] of Object.entries(o.byModel)) billedOut[m] = (billedOut[m] || 0) + v;
       for (const [d, v] of Object.entries(o.byDay)) billedOutByDay[d] = (billedOutByDay[d] || 0) + v;
       for (const [m, v] of Object.entries(i)) billedIn[m] = (billedIn[m] || 0) + v;
@@ -775,6 +829,16 @@ async function main() {
       log(`  ${m.padEnd(30)} ${M(i).padStart(8)} ${M(o).padStart(10)}   ${(cost != null ? money(cost) : '—').padStart(9)}${note}`);
     }
     log(`  ${''.padEnd(30)} ${''.padStart(8)} ${'TOTAL'.padStart(10)}   ${money(est).padStart(9)}`);
+    // What this total does NOT contain. Grounded search is billed per query and
+    // the quota metric undercounts it 17x (see billedSearchRequests above), so it
+    // is reported as shape and never priced. August's invoice: $2,116.15 of
+    // search queries against $5,684 of tokens — the estimate above is a LOWER
+    // BOUND on the Gemini line, not the line.
+    const sqPrice = searchQueryPrice(skus);
+    log(`  NOT IN THIS TOTAL: grounded search queries, billed per query at $${sqPrice ?? '?'}.`);
+    log(`    quota metric saw ${searchRequests.toLocaleString()} this window — it reads ~17x low against the invoice,`);
+    log('    so it is shape, not money. Real figure: the Detailed usage cost export');
+    log('    (Sourcelibrary.billing_export, enabled 2026-09-16). August was $2,116.15.');
 
     // ---- our meters (BOTH stores — see the block comment above) ------------
     const uri = process.env.MONGODB_URI;
@@ -885,6 +949,9 @@ async function main() {
         log(`    ${'window'.padEnd(12)} ${M(billedTok).padStart(9)} ${M(meterTok).padStart(9)} ${M(billedTok - meterTok).padStart(10)}   ${M(batchTok).padStart(23)}`);
         log(`\n  realtime token coverage . ${v.coveragePct.toFixed(0)}%  (tolerance: gap below ${GAP_TOLERANCE_PCT}%)`);
         log(`  of which ai_usage-only features (librarian, podcast, voice): ${M(requestTok)}`);
+        // Stated so nobody reads full token coverage as full spend coverage:
+        // grounded search is billed per query and appears in no token figure.
+        log('  NB grounded search queries are billed PER QUERY and are in no figure above (August: $2,116.15).');
         if (metered.pricedNoTokens) {
           // A row with a price and no token counts is spend this comparison cannot
           // see: it lands in "unmetered" even though somebody did record it. Name
