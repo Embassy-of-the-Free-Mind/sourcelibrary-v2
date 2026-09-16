@@ -25,6 +25,7 @@ import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
+import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 
 // Structured-output schema. Forces scan_quality to be present as an object with the
 // required fields populated; extracted_images is left loosely shaped because its
@@ -930,6 +931,9 @@ async function processBook(db, book) {
           if (!img.bbox) continue;
           if (typeof img.gallery_quality !== 'number') continue;
           if (img.gallery_quality < QUALITY_THRESHOLD) continue;
+          // A small decorative or an initial is not gallery content whatever its
+          // quality score — the prompt's SKIP list was never enforced (#4780).
+          if (isTrivialGalleryDetection(img)) continue;
           // Build the fully-denormalized doc via the shared helper so the field
           // set stays identical across all writers (#2531). `page` is the source
           // page doc with photo fields + page_number; `book` carries visible/

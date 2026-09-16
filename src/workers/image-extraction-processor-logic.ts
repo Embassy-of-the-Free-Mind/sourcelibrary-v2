@@ -7,6 +7,7 @@ import { getImageExtractionPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
+import { isTrivialGalleryDetection } from '@/lib/gallery-image-types';
 import { sendWriteResult } from '@/lib/sqs-client';
 import {
   buildGalleryDoc,
@@ -296,6 +297,9 @@ async function buildGalleryDocs(
         if (!img.bbox) return null;
         if (!['vision_model', 'manual', 'ocr_tag'].includes(img.detection_source || '')) return null;
         if ((img.gallery_quality || 0) < 0.5) return null;
+        // A small decorative or an initial is not gallery content whatever its
+        // quality score — the prompt's SKIP list was never enforced (#4780).
+        if (isTrivialGalleryDetection(img)) return null;
 
         const adjustedQuality = adjustForScanQuality(
           img.gallery_quality || 0, page, img.bbox
