@@ -72,6 +72,11 @@ export const PUT = withAuth(async (req: NextRequest, session: Session, context?:
   if (!/^https:\/\/[^\s"']+$/.test(url) || url.length > 2000) {
     return NextResponse.json({ error: 'url must be an https URL' }, { status: 400 });
   }
+  // A 300px `-thumb` (the old hand-set hero_image, or a re-saved current
+  // cover) blurs in a 750px card; use its 600px `-card` sibling when that
+  // exists.
+  const card = toGalleryCardUrl(url);
+  if (card && (await exists(card))) url = card;
   // A `-card` variant is derived by convention and may not have been
   // backfilled for this crop; fall back to the full plate rather than ship a
   // card that 404s.
