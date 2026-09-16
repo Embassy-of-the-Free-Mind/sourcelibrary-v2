@@ -38,10 +38,12 @@ import { promisify } from 'util';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { logUsage, logUsageAsync, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd } from './lib/supabase-usage-logger.mjs';
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
+import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
+import { holdViolation } from '../lib/pipeline-hold.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -839,6 +841,24 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
   );
   const prevStatus = book?.pipeline_auto?.status;
 
+  // A HELD book accepts no status from a worker (#4790). The hold is a decision with a reason and
+  // a release condition (scripts/lib/pipeline-hold.mjs); every phase already skips `held` books
+  // by selection, and this refusal is what stops a rollback or a retry from lifting it by accident.
+  // Always enforced — unlike the output guard below there is no observe mode, because a hold is
+  // explicit and rare, and advancing past one is the exact failure it exists to prevent.
+  const holdRefusal = book ? holdViolation(book, status) : null;
+  if (holdRefusal) {
+    console.log(`  [pipeline-hold] ${bookId}: ${holdRefusal}`);
+    db.collection('audit_log').insertOne({
+      action: 'pipeline_status_refused_held',
+      book_id: bookId,
+      book_title: book?.title,
+      metadata: { attempted: status, from: prevStatus || 'none', hold: book.pipeline_auto.hold },
+      timestamp: new Date(),
+    }).catch(() => {});
+    return;
+  }
+
   const violation = book ? statusOutputViolation(book, status, extra) : null;
   if (violation) {
     console.log(`  [status-guard] ${bookId}: ${violation}${STATUS_GUARD_ENFORCE ? ' — REFUSED' : ''}`);
@@ -1580,6 +1600,8 @@ Output structure:
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'ocr', model: ocrModel, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -1850,6 +1872,8 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     page_ids: allDownloaded.map(d => d.pageId), page_count: allDownloaded.length,
     batch_job_id: childJobId, gemini_job_name: batchJob.name,
     input_tokens: 0, output_tokens: 0, status: 'submitted',
+    // Committed, not yet collected: price it now so the dial sees it (#4567).
+    cost_usd: estimateBatchCostUsd({ type: 'ocr', model: ocrModel, pageCount: allDownloaded.length }),
     endpoint: 'hetzner/pipeline-orchestrator',
   }, db);
 
@@ -1893,11 +1917,12 @@ SKIP these — do NOT include them:
 
 If the page contains no significant illustrations, return \`[]\` — an empty array. Do NOT return placeholder objects with missing or null fields. Either fill in every field (description, type, bbox, confidence, gallery_quality, gallery_rationale) for an illustration, or omit it entirely.
 
-For each significant illustration return:
+For each significant illustration return ("rotation" is the clockwise turn in degrees — 0, 90, 180 or 270 — needed to make the illustration upright as printed; plates bound sideways in a book are common, so look at the figures and any lettering inside the illustration, not at the page):
 {
   "description": "Brief factual description",
   "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "rotation": 0,
   "confidence": 0.95,
   "gallery_quality": 0.85,
   "gallery_rationale": "Why gallery-worthy or not",
@@ -2166,6 +2191,8 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'image_extraction', model: IMAGE_EXTRACTION_MODEL, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -2377,6 +2404,8 @@ async function submitCrossBookImageBatches(db, bookItems) {
       page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
       batch_job_id: childJobId, gemini_job_name: batchJob.name,
       input_tokens: 0, output_tokens: 0, status: 'submitted',
+      // Committed, not yet collected: price it now so the dial sees it (#4567).
+      cost_usd: estimateBatchCostUsd({ type: 'image_extraction', model: IMAGE_EXTRACTION_MODEL, pageCount: chunk.length }),
       endpoint: 'hetzner/pipeline-orchestrator',
     }, db);
   }
@@ -2929,10 +2958,10 @@ async function run() {
           'pipeline_auto.split_checked': { $ne: true },
         })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 })
         .limit(SPLIT_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1 });
+      if (SCOPE_ACTIVE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 });
 
       console.log(`  Candidates for split check: ${candidates.length}`);
 
@@ -3057,19 +3086,30 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               signal: AbortSignal.timeout(20000),
             });
 
-            if (geminiRes.ok) {
-              const geminiData = await geminiRes.json();
-              const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-              const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-              if (jsonMatch) {
-                const result = JSON.parse(jsonMatch[0]);
-                isConfirmedSpread = !!result.is_spread;
-              }
-            }
+            // A non-OK response or an unparseable answer is a FAILED check, not a
+            // "not a spread" verdict — before #4796 a 429 here silently wrote
+            // needs_splitting:false + split_checked:true and the book was never
+            // looked at again.
+            if (!geminiRes.ok) throw new Error(`Gemini HTTP ${geminiRes.status}`);
+            const geminiData = await geminiRes.json();
+            const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error(`Gemini returned no JSON: ${rawText.slice(0, 40)}`);
+            isConfirmedSpread = !!JSON.parse(jsonMatch[0]).is_spread;
           } catch (err) {
-            // On Gemini failure, assume spread (safer — OCR prompt handles non-spreads gracefully)
-            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}), assuming spread`);
-            isConfirmedSpread = true;
+            // Fail CLOSED (#4796). A classifier that could not see the image must
+            // not guess — the old branch "assumed spread", which sent single wide
+            // pages (maps, foldouts) into the splitter. Leave split_checked unset
+            // so the next cycle retries; after 3 failures park for a human.
+            const fails = (book.pipeline_auto?.split_confirm_failures || 0) + 1;
+            const $set = { 'pipeline_auto.split_confirm_failures': fails, 'pipeline_auto.last_updated': new Date() };
+            if (fails >= 3) {
+              $set['pipeline_auto.status'] = 'needs_attention';
+              $set['pipeline_auto.error'] = `Spread confirmation failed ${fails} times (#4796): ${err.message?.slice(0, 120)}`;
+            }
+            await db.collection('books').updateOne({ id: book.id }, { $set });
+            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}) — left unchecked, ${fails}/3${fails >= 3 ? ', PARKED' : ''}`);
+            continue;
           }
 
           if (!isConfirmedSpread) {
@@ -4493,13 +4533,30 @@ Rules:
       // Workers crash, get OOM-killed, or stall — their jobs rot forever, blocking the in-flight cap.
       if (!DRY_RUN) {
         const zombieThreshold = new Date(Date.now() - 1 * 60 * 60 * 1000);
-        const zombieJobs = await db.collection('jobs').find({
+        const allZombieJobs = await db.collection('jobs').find({
           status: 'processing',
           $or: [
             { updated_at: { $lt: zombieThreshold } },
             { updated_at: { $exists: false }, created_at: { $lt: zombieThreshold } },
           ],
-        }).project({ _id: 1, book_id: 1, book_title: 1, type: 1 }).toArray();
+        }).project({ _id: 1, id: 1, book_id: 1, book_title: 1, type: 1, config: 1, created_at: 1, progress: 1 }).toArray();
+
+        // Image jobs finalize on DRAIN, not on an exact count — see lib/image-job-drain.mjs and
+        // #4839. Cancelling them here is what fed the re-dispatch loop.
+        const imageZombies = allZombieJobs.filter(j => j.type === 'image_extraction');
+        let zombieJobs = allZombieJobs.filter(j => j.type !== 'image_extraction');
+        if (imageZombies.length > 0) {
+          try {
+            const { finalized, noResults } = await drainStalledImageJobs(db, imageZombies, { dryRun: DRY_RUN, source: 'orchestrator' });
+            for (const f of finalized) {
+              console.log(`  Image job drained: ${f.jobId} ${f.status} (${f.attempted}/${f.total} extracted, ${f.missing} never reported)`);
+            }
+            zombieJobs = zombieJobs.concat(noResults);
+          } catch (err) {
+            console.log(`  Image drain failed: ${err.message}`);
+            zombieJobs = zombieJobs.concat(imageZombies);
+          }
+        }
 
         if (zombieJobs.length > 0) {
           const zombieBookIds = zombieJobs.map(j => j.book_id);
@@ -4542,10 +4599,32 @@ Rules:
           const orphans = await db.collection('books').find({
             'pipeline_auto.status': from,
             $or: [{ job: { $exists: false } }, { job: null }],
-          }).project({ id: 1 }).toArray();
+          }).project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 }).toArray();
           if (orphans.length > 0) {
             // Verify no active jobs exist for these books
-            const orphanIds = orphans.map(b => b.id);
+            let orphanIds = orphans.map(b => b.id);
+
+            // A FINISHED image job is not an orphan — it is a book waiting to be advanced.
+            // The writer unsets `book.job` the moment a job completes, and this detector runs in
+            // Phase 4, before Phase 8's completion check. So it used to roll perfectly good books
+            // back to chapters_complete and Phase 8 re-extracted every page: 59 of the last 60
+            // COMPLETED image jobs were re-dispatched this way (measured 2026-09-15, #4839).
+            if (from === 'images_submitted') {
+              const finishedJobIds = orphans.map(b => b.pipeline_auto?.image_extraction_job_id).filter(Boolean);
+              if (finishedJobIds.length > 0) {
+                const finished = await db.collection('jobs').find({
+                  id: { $in: finishedJobIds },
+                  status: { $in: ['completed', 'completed_with_errors'] },
+                }).project({ id: 1 }).toArray();
+                const finishedSet = new Set(finished.map(j => j.id));
+                const waiting = orphans.filter(b => finishedSet.has(b.pipeline_auto?.image_extraction_job_id));
+                if (waiting.length > 0) {
+                  console.log(`  Orphan detector: ${waiting.length} images_submitted books have a finished job — leaving them for Phase 8 to advance`);
+                }
+                orphanIds = orphans.filter(b => !finishedSet.has(b.pipeline_auto?.image_extraction_job_id)).map(b => b.id);
+              }
+            }
+            if (orphanIds.length === 0) continue;
             const activeJobCount = await db.collection('jobs').countDocuments({
               book_id: { $in: orphanIds },
               status: { $in: ['pending', 'processing'] },
@@ -4555,7 +4634,7 @@ Rules:
                 { id: { $in: orphanIds }, 'pipeline_auto.status': from },
                 { $set: { 'pipeline_auto.status': to, updated_at: new Date() } },
               );
-              console.log(`  Orphan detector: rolled back ${orphans.length} books from ${from} to ${to}`);
+              console.log(`  Orphan detector: rolled back ${orphanIds.length} books from ${from} to ${to}`);
             }
           }
         }
@@ -5166,6 +5245,21 @@ Rules:
                 continue;
               }
 
+              // Bounded retries (#4839). A book whose dispatches keep draining with NOTHING
+              // reported has a broken lane, not a slow one — park it where a human can find it
+              // instead of re-paying for it every 35 minutes. Only drain-detected empty runs
+              // count, so this starts at zero for every book and cannot be inflated by the
+              // pre-fix loop's history.
+              const emptyDispatches = await countNoResultDispatches(db, book.id);
+              if (emptyDispatches >= MAX_NO_RESULT_DISPATCHES) {
+                await setPipelineStatus(db, book.id, 'needs_attention', {
+                  error: `Image extraction: ${emptyDispatches} dispatches drained with no page reporting a result (#4839)`,
+                });
+                console.log(`  Image extraction PARKED: ${book.title} — ${emptyDispatches} empty dispatches`);
+                log.errors.push(`Images gave up ${book.id}: ${emptyDispatches} empty dispatches`);
+                continue;
+              }
+
               const pageIds = bookPages.map(p => p.id);
               const jobId = nanoid(12);
 
@@ -5211,6 +5305,15 @@ Rules:
         }
       }
 
+      console.log(`  Images submitted: ${log.images_submitted}`);
+    }
+
+    // ── Phase 8 (advance): images_submitted -> images_complete ──
+    // Deliberately OUTSIDE the budget gate: advancing a book whose extraction already finished
+    // writes a status and spends nothing, while dispatch above is paid work. Keeping the two
+    // together meant a closed dial froze finished books at images_submitted until the 48h
+    // staleness sweep rolled them back — straight into another re-dispatch (#4839).
+    if (shouldRun(8)) {
       // Check completed image extraction — both batch API and Lambda/SQS paths
       let imagesPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_submitted' })
@@ -5272,7 +5375,7 @@ Rules:
           }
         }
       }
-      console.log(`  Images submitted: ${log.images_submitted}, advanced: ${log.images_advanced}`);
+      console.log(`  Images advanced: ${log.images_advanced}`);
     }
 
     // ── Phase 8.5: Staleness detection ──

@@ -50,7 +50,7 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
-import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -217,6 +217,9 @@ const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
 console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
+/** Books the open scope envelope allows, when the global dial is closed (#4865). */
+let ENVELOPE_IDS = null;
+
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
@@ -233,9 +236,24 @@ const db = mongoClient.db('bookstore');
       await mongoClient.close();
       process.exit(0);
     }
-    if (!await budgetAllowsDispatch(db, 'embed-gemini', { control })) {
+    // Scoped guard (#4540/#4865). With the unscoped one this worker could only
+    // see the global daily dial, so every 4-hourly run was refused once OCR and
+    // translation had spent it — which is daily. Measured 2026-09-15: four
+    // consecutive runs logged "CEILING REACHED" ($11.75, $25.23, $29.60,
+    // $36.67 against $5) while 23,200 live books held OCR text and no vector.
+    // An embeddings envelope could not fund it because the envelope lane was
+    // unreachable from here.
+    const gate = await budgetAllowsDispatchScoped(db, 'embed-gemini', { control });
+    if (!gate.allowed) {
       await mongoClient.close();
       process.exit(0);
+    }
+    if (gate.envelopeIds) {
+      // Confine the run to the envelope's books, as enrich-worker does. Applied
+      // after the mode branches below have chosen their book set, so it narrows
+      // whatever they picked rather than replacing it.
+      ENVELOPE_IDS = gate.envelopeIds;
+      console.log(`[embed-gemini] Global dial closed, scope envelope open — confining to ${ENVELOPE_IDS.size} envelope book(s).`);
     }
   }
 }
@@ -412,6 +430,31 @@ if (BOOK_ID) {
     console.log(`Incremental from: ${lastSync.toISOString()}`);
   } else {
     console.log('No existing data — doing full backfill');
+  }
+}
+
+// Narrow whatever the mode branch selected to the envelope's books (#4865).
+// Runs AFTER the branches so it intersects their choice instead of replacing
+// it: an envelope is a confinement, never a widening.
+if (ENVELOPE_IDS) {
+  const existing = pageQuery.book_id;
+  if (existing && typeof existing === 'string') {
+    if (!ENVELOPE_IDS.has(existing)) {
+      console.log(`[embed-gemini] Book ${existing} is not in an open envelope — nothing to do.`);
+      await mongoClient.close();
+      process.exit(0);
+    }
+  } else if (existing && Array.isArray(existing.$in)) {
+    const narrowed = existing.$in.filter((id) => ENVELOPE_IDS.has(id));
+    console.log(`[embed-gemini] Envelope narrows ${existing.$in.length.toLocaleString()} → ${narrowed.length.toLocaleString()} books.`);
+    if (narrowed.length === 0) {
+      await mongoClient.close();
+      process.exit(0);
+    }
+    pageQuery.book_id = { $in: narrowed };
+  } else {
+    pageQuery.book_id = { $in: [...ENVELOPE_IDS] };
+    console.log(`[embed-gemini] Envelope scope applied: ${ENVELOPE_IDS.size.toLocaleString()} books.`);
   }
 }
 

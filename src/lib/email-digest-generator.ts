@@ -7,6 +7,7 @@ import { getGeminiClient } from './gemini-client';
 import { getDb } from './mongodb';
 import { DigestContent, renderDigestHtml } from './email-templates';
 import { logGeminiCall, type GeminiTrigger } from './gemini-logger';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 interface DigestContext {
   new_books: Array<{
@@ -198,7 +199,7 @@ export async function generateDigest(periodDays: number = 14, options?: { trigge
     mode: 'realtime',
     model,
     input_tokens: usage?.promptTokenCount || 0,
-    output_tokens: usage?.candidatesTokenCount || 0,
+    output_tokens: outputTokensFrom(usage),
     status: 'success',
     duration_ms: duration,
     prompt_version: 'email-digest-v1',

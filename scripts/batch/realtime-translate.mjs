@@ -26,6 +26,7 @@
 
 import { MongoClient } from 'mongodb';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
+import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import {
   getTranslateModelForBook,
   loadTranslationPrompts,
@@ -113,7 +114,7 @@ async function callGemini(promptText, apiKey, model) {
   const usage = result.usageMetadata || {};
   return {
     text,
-    usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: usage.candidatesTokenCount || 0 },
+    usage: { inputTokens: usage.promptTokenCount || 0, outputTokens: outputTokensFrom(usage) },
   };
 }
 

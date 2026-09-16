@@ -55,6 +55,11 @@ const PROJECTS = [
   { id: 'gen-lang-client-0278315411', name: 'booksplit' },
   { id: 'gen-lang-client-0352480887', name: 'Sourcelibrary' },
   { id: 'gen-lang-client-0720939617', name: 'soma' },
+  // 2026-09-14: sourcelibrary2 holds GEMINI_API_KEY_FREE, installed on Hetzner and
+  // making calls. A key held by a runtime we read, in a project we did not, is the
+  // attribution hole this script exists to close.
+  { id: 'gen-lang-client-0181126711', name: 'sourcelibrary2' },
+  { id: 'gen-lang-client-0101787750', name: 'Gemini API' },
 ];
 
 const HETZNER = 'root@46.224.122.120';

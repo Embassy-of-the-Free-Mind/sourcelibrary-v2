@@ -58,6 +58,13 @@ export interface FurtherReadingBook extends TranslationCoverageBook {
   display_title?: string;
   author?: string;
   year?: number;
+  /**
+   * Collection slugs the book is tagged into. Required for the membership
+   * check in {@link resolveFurtherReading} — and it must be PROJECTED by the
+   * loader's query, or the check silently passes everything (#4563/#4565:
+   * guards reading projected-away fields).
+   */
+  collections?: string[];
   published?: string;
   language?: string;
   thumbnail?: string;
@@ -131,16 +138,35 @@ export function furtherReadingStatus(book: TranslationCoverageBook): FurtherRead
  * surface (`visibility-and-stats.md` — /collections/freemasonry named 13 removed
  * books for six weeks), and the only structural defence is that a resolve which
  * cannot find the book renders nothing rather than a bare id or a dead link.
+ *
+ * A ref whose book has SINCE BECOME A MEMBER is dropped too, and that is the
+ * reason `collectionSlug` is required rather than optional. Membership is not
+ * frozen at authoring time: the enrich worker's collection-assignment phase
+ * tags books into collections on its own, and on `forum-of-conscience` it
+ * promoted 15 of this band's 18 authored entries into the collection within
+ * four days of the band shipping (#4541, 2026-09-15). Each then rendered
+ * TWICE on one page — once in the works grid as a member, once below it as
+ * "adjacent to this collection, not a member of it" — so the band contradicted
+ * itself in the reader's view while both halves were individually correct.
+ *
+ * The guard belongs HERE, on the read side, and not in the script that writes
+ * `further_reading`: the writer that creates the contradiction is a different
+ * process on a different schedule and will never run the author's checks
+ * (CLAUDE.md, Multi-Session Awareness). Requiring the argument means the
+ * compiler, not a reviewer, catches the next call site that forgets it.
  */
 export function resolveFurtherReading(
   refs: FurtherReadingRef[] | undefined | null,
   books: FurtherReadingBook[],
+  collectionSlug: string,
 ): FurtherReadingEntry[] {
   if (!Array.isArray(refs) || refs.length === 0) return [];
   const byId = new Map(books.map(b => [b.id, b]));
   return refs.flatMap(ref => {
     const book = ref?.book_id ? byId.get(ref.book_id) : undefined;
     if (!book) return [];
+    if (collectionSlug && Array.isArray(book.collections)
+        && book.collections.includes(collectionSlug)) return [];
     return [{ ...book, note: ref.note }];
   });
 }

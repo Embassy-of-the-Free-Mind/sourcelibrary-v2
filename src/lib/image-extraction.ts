@@ -4,9 +4,11 @@
  */
 
 import Replicate from 'replicate';
+import { normalizeBbox, normalizeRotation } from '@/lib/bbox';
 import { images } from '@/lib/api-client';
 import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
 import { buildPageGrounding as buildGroundingBlock } from '@/lib/page-grounding';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 export const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
 
@@ -32,11 +34,12 @@ SKIP these — do NOT include them:
 - Ownership bookplates / ex-libris pasted into pastedowns or endpapers — if you must record one, use type "exlibris" with gallery_quality ≤ 0.3 (provenance, not the book's content)
 - Any element that is purely decorative with no intellectual content
 
-For each significant illustration return:
+For each significant illustration return ("rotation" is the clockwise turn in degrees — 0, 90, 180 or 270 — needed to make the illustration upright as printed; plates bound sideways in a book are common, so look at the figures and any lettering inside the illustration, not at the page):
 {
   "description": "Brief factual description",
   "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map|exlibris",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "rotation": 0,
   "confidence": 0.95,
   "gallery_quality": 0.85,
   "gallery_rationale": "Why gallery-worthy or not",
@@ -103,24 +106,6 @@ export interface ImageMetadata {
   condition?: string;
   iconclass?: string[];
   cit?: string[];
-}
-
-/**
- * Normalize bbox values to 0-1 range at storage time.
- * AI models sometimes return 0-1000 scale instead of the requested 0-1.
- */
-function normalizeBbox(raw: { x: number; y: number; width: number; height: number }) {
-  const { x, y, width, height } = raw;
-  if (x > 1 || y > 1 || width > 1 || height > 1) {
-    const scale = Math.max(x + width, y + height, 1000);
-    return {
-      x: Math.min(x / scale, 0.95),
-      y: Math.min(y / scale, 0.95),
-      width: Math.min(width / scale, 1),
-      height: Math.min(height / scale, 1),
-    };
-  }
-  return { x, y, width, height };
 }
 
 export interface DetectedImage {
@@ -246,8 +231,7 @@ export async function extractWithGemini(
     inputTokens: usageMetadata?.promptTokenCount || 0,
     // Count thought tokens too: if thinking is ever re-enabled here, the meter
     // sees it instead of going blind again (#4581).
-    outputTokens: (usageMetadata?.candidatesTokenCount || 0) +
-      (usageMetadata?.thoughtsTokenCount || 0),
+    outputTokens: outputTokensFrom(usageMetadata),
   };
 
   // Parse JSON from response
@@ -266,12 +250,8 @@ export async function extractWithGemini(
   const detectedImages: DetectedImage[] = parsed.map(item => ({
     description: item.description || '',
     type: item.type || 'unknown',
-    bbox: item.bbox ? normalizeBbox({
-      x: parseFloat(item.bbox.x) || 0,
-      y: parseFloat(item.bbox.y) || 0,
-      width: parseFloat(item.bbox.width) || 0,
-      height: parseFloat(item.bbox.height) || 0,
-    }) : undefined,
+    bbox: normalizeBbox(item.bbox) ?? undefined,
+    rotation: normalizeRotation(item.rotation),
     confidence: item.confidence,
     gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
     gallery_rationale: item.gallery_rationale || undefined,
@@ -347,12 +327,7 @@ export async function extractWithMistral(imageUrl: string): Promise<DetectedImag
   return parsed.map(item => ({
     description: item.description || '',
     type: item.type || 'unknown',
-    bbox: item.bbox ? normalizeBbox({
-      x: parseFloat(item.bbox.x) || 0,
-      y: parseFloat(item.bbox.y) || 0,
-      width: parseFloat(item.bbox.width) || 0,
-      height: parseFloat(item.bbox.height) || 0,
-    }) : undefined,
+    bbox: normalizeBbox(item.bbox) ?? undefined,
     confidence: item.confidence,
     gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
     gallery_rationale: item.gallery_rationale || undefined,

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { logGeminiCall } from '@/lib/gemini-logger';
+import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { createBookRevisions } from '@/lib/book-revisions';
 import { withAuth } from '@/lib/auth-helpers';
@@ -188,7 +188,7 @@ CRITICAL for quotes:
       book_id: bookId,
       page_count: pages.length,
       input_tokens: usageMetadata?.promptTokenCount || 0,
-      output_tokens: usageMetadata?.candidatesTokenCount || 0,
+      output_tokens: outputTokensFrom(usageMetadata),
       status: 'success',
       prompt_version: INDEX_PROMPT_VERSION,
       endpoint: '/api/books/[id]/index (processBatch)',
@@ -825,7 +825,7 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
     book_id: bookId,
     page_count: batchExtractions.length, // Number of batch sections processed
     input_tokens: usageMetadata?.promptTokenCount || 0,
-    output_tokens: usageMetadata?.candidatesTokenCount || 0,
+    output_tokens: outputTokensFrom(usageMetadata),
     status: 'success',
     prompt_version: INDEX_PROMPT_VERSION,
     endpoint: '/api/books/[id]/index (generateBookSummary)',

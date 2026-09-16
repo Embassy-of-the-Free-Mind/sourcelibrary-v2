@@ -12,7 +12,7 @@
  */
 
 import { getGeminiClient } from '@/lib/gemini-client';
-import { logGeminiCall, type GeminiTrigger } from '@/lib/gemini-logger';
+import { logGeminiCall, type GeminiTrigger, outputTokensFrom } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import { computeEndPages } from '@/lib/chapter-text';
@@ -310,7 +310,7 @@ export async function extractChaptersForBook(
 
   const usageMetadata = response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
-  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+  const outputTokens = outputTokensFrom(usageMetadata);
   const pricing = MODEL_PRICING[modelId] || MODEL_PRICING['default'];
   const costUsd = (inputTokens / 1_000_000) * pricing.input + (outputTokens / 1_000_000) * pricing.output;
 

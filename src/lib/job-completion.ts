@@ -37,8 +37,12 @@ export async function checkJobCompletion(options: CompletionCheckOptions): Promi
   const jobs = db.collection('jobs');
   const pages = db.collection('pages');
 
+  // The job's own start time is part of the completion test for image extraction — see
+  // getCompletionQuery.
+  const jobDoc = await jobs.findOne({ id: jobId }, { projection: { created_at: 1 } });
+
   // Count completed pages based on job type
-  const completionQuery = getCompletionQuery(bookId, targetPageIds, jobType);
+  const completionQuery = getCompletionQuery(bookId, targetPageIds, jobType, jobDoc?.created_at ? new Date(jobDoc.created_at) : null);
   const completedCount = await pages.countDocuments(completionQuery);
 
   await jobs.updateOne(
@@ -79,8 +83,25 @@ export async function checkJobCompletion(options: CompletionCheckOptions): Promi
 
 /**
  * Build the MongoDB query to count completed pages for a given job type.
+ *
+ * Image extraction counts pages that were ATTEMPTED during this run, not pages that happen to
+ * carry `detected_images`. A page the model looked at and found no illustrations on gets
+ * `image_extraction_updated_at` and never `detected_images` (the writer refuses to overwrite
+ * existing detections with an empty array), so counting detections meant such a page was paid for,
+ * finished, and permanently uncounted. Every book with one illustration-free candidate page then
+ * parked at `completed = total − k`, was reaped as a zombie, rolled back and re-dispatched whole —
+ * 1,385 cancellations and 3,209 re-paid pages in a week (#4839).
+ *
+ * `image_extraction_updated_at >= job.created_at` is the same test the extraction Lambda uses to
+ * decide a page is already current, so the two sides now agree. Without a job timestamp the old
+ * predicate is kept: it under-counts, which stalls a job rather than completing one early.
  */
-function getCompletionQuery(bookId: string, targetPageIds: string[], jobType: PageJobType) {
+export function getCompletionQuery(
+  bookId: string,
+  targetPageIds: string[],
+  jobType: PageJobType,
+  jobCreatedAt?: Date | null
+) {
   const baseFilter = { book_id: bookId, id: { $in: targetPageIds } };
 
   switch (jobType) {
@@ -89,7 +110,9 @@ function getCompletionQuery(bookId: string, targetPageIds: string[], jobType: Pa
     case 'translation':
       return { ...baseFilter, 'translation.data': { $exists: true, $nin: [null, ''] } };
     case 'image_extraction':
-      return { ...baseFilter, detected_images: { $exists: true } };
+      return jobCreatedAt
+        ? { ...baseFilter, image_extraction_updated_at: { $gte: jobCreatedAt } }
+        : { ...baseFilter, detected_images: { $exists: true } };
   }
 }
 

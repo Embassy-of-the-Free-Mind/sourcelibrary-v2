@@ -5,7 +5,7 @@ import { DEFAULT_MODEL, extractPageType, extractColumns } from '@/lib/types';
 import type { PromptReference } from '@/lib/types';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { getOcrPrompt, getTranslationPrompt } from '@/lib/prompts';
-import { logGeminiCall } from '@/lib/gemini-logger';
+import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
@@ -61,7 +61,7 @@ async function performOCRWithKey(
   return {
     text: result.response.text(),
     inputTokens: usageMetadata?.promptTokenCount || 0,
-    outputTokens: usageMetadata?.candidatesTokenCount || 0,
+    outputTokens: outputTokensFrom(usageMetadata),
     durationMs,
     promptRef: promptResult.reference,
   };
@@ -94,7 +94,7 @@ async function performTranslationWithKey(
   return {
     text: result.response.text(),
     inputTokens: usageMetadata?.promptTokenCount || 0,
-    outputTokens: usageMetadata?.candidatesTokenCount || 0,
+    outputTokens: outputTokensFrom(usageMetadata),
     durationMs,
     promptRef: promptResult.reference,
   };

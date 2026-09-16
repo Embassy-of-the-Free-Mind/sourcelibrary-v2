@@ -16,6 +16,7 @@ import { logAuditEvent } from './audit-logger';
 import { logMetadataChange } from './book-changelog';
 import { generateUniqueBookSlug, isPlaceholderSlug } from './slugify';
 import { getGeminiClient } from './gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 const MODEL = 'gemini-3-flash-preview';
 const MAX_OCR_PAGES = 25;
@@ -241,7 +242,7 @@ export async function enrichBookMetadata(
     const usageMeta = response.usageMetadata;
     usage = {
       input_tokens: usageMeta?.promptTokenCount || 0,
-      output_tokens: usageMeta?.candidatesTokenCount || 0,
+      output_tokens: outputTokensFrom(usageMeta),
     };
 
     try {

@@ -59,12 +59,29 @@
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/requeue-untranslated-complete.mjs
  *   node --env-file=.env.production.local scripts/maintenance/requeue-untranslated-complete.mjs --execute --limit 20
+ *
+ * Named-book mode (2026-09-14): after full OCR has been BOUGHT by hand for a
+ * preview-only `complete` book (scripts/batch/bulk-reocr-local.mjs --new-only),
+ * the book is still `complete` and the translate lane cannot see it. Pass
+ * --book-ids-file <path> (one id per line) to requeue exactly those books. The
+ * 90% OCR test still applies — a book whose batch has not collected yet is left
+ * alone and reported — but the zero-translation test relaxes to "< 90%
+ * translated", because a preview book usually carries its 25 preview
+ * translations. The requeue_reason names the file so the trail says why.
+ *
+ *   node --env-file=.env.production.local scripts/maintenance/requeue-untranslated-complete.mjs \
+ *     --book-ids-file scratchpad/body-techniques/bucketA-ids.txt --execute
  */
 import { MongoClient } from 'mongodb';
+import { readFileSync } from 'node:fs';
 
 const EXECUTE = process.argv.includes('--execute');
 const arg = (n, d) => { const i = process.argv.indexOf(n); return i > -1 ? process.argv[i + 1] : d; };
 const LIMIT = parseInt(arg('--limit', '1000'), 10);
+const IDS_FILE = arg('--book-ids-file', null);
+const NAMED_IDS = IDS_FILE
+  ? readFileSync(IDS_FILE, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#'))
+  : null;
 
 // The edition's own language. English editions need no translation, so their
 // absence of one is not evidence of anything (language-fields.md).
@@ -79,6 +96,17 @@ const SELECTOR = {
   $expr: { $gte: ['$pages_ocr', { $multiply: ['$pages_count', 0.9] }] },
   $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }],
 };
+if (NAMED_IDS) {
+  if (!NAMED_IDS.length) { console.error(`${IDS_FILE}: no ids`); process.exit(1); }
+  SELECTOR.id = { $in: NAMED_IDS };
+  // Preview books carry ~25 translated pages; "untranslated" here means the full
+  // OCR just bought has not been translated, not that nothing ever was.
+  delete SELECTOR.$or;
+  SELECTOR.$expr = { $and: [
+    { $gte: ['$pages_ocr', { $multiply: ['$pages_count', 0.9] }] },
+    { $lt: [{ $ifNull: ['$pages_translated', 0] }, { $multiply: ['$pages_count', 0.9] }] },
+  ] };
+}
 
 const uri = process.env.MONGODB_URI;
 if (!uri) { console.error('MONGODB_URI required'); process.exit(1); }
@@ -95,6 +123,23 @@ try {
   }).limit(LIMIT).toArray();
 
   console.log(`${EXECUTE ? 'EXECUTE' : 'DRY-RUN'} — ${todo.length} of ${total} matching books\n`);
+  if (NAMED_IDS) {
+    // Absence is not failure (CLAUDE.md): say which named books did NOT qualify and why.
+    const matched = new Set(todo.map((b) => b.id));
+    const rest = await books.find({ id: { $in: NAMED_IDS.filter((i) => !matched.has(i)) } }, {
+      projection: { id: 1, title: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, 'pipeline_auto.status': 1 },
+    }).toArray();
+    const seen = new Set(rest.map((b) => b.id));
+    for (const id of NAMED_IDS) if (!matched.has(id) && !seen.has(id)) console.log(`SKIP  ${id} — not in books`);
+    for (const b of rest) {
+      const why = ENGLISH.includes(b.language) ? 'English edition (no translation wanted)'
+        : b.pipeline_auto?.status !== 'complete' ? `status is ${b.pipeline_auto?.status}, not complete`
+        : (b.pages_ocr || 0) < 0.9 * b.pages_count ? `OCR ${b.pages_ocr}/${b.pages_count} — batch not collected yet`
+        : `translated ${b.pages_translated}/${b.pages_count} already`;
+      console.log(`SKIP  ${b.id} ${(b.title || '').slice(0, 40).padEnd(41)} ${why}`);
+    }
+    console.log('');
+  }
 
   const byLang = {};
   let pages = 0;
@@ -122,8 +167,10 @@ try {
           'pipeline_auto.status': 'ocr_complete',
           'pipeline_auto.requeued_from': 'complete',
           'pipeline_auto.requeued_at': new Date(),
-          'pipeline_auto.requeue_reason':
-            'Phase 9 finalize wrote `complete` from OCR coverage alone; translation never ran '
+          'pipeline_auto.requeue_reason': NAMED_IDS
+            ? `Full OCR bought by hand for a preview-only book (list: ${IDS_FILE}); requeued to `
+              + 'ocr_complete so the translate lane and Phases 6/7 can reach it.'
+            : 'Phase 9 finalize wrote `complete` from OCR coverage alone; translation never ran '
             + 'and no translate_skipped_reason was recorded. Requeued to ocr_complete so the '
             + 'translate lane and Phases 6/7 can reach it.',
           ...(prev.completed_at ? { 'pipeline_auto.previous_completed_at': prev.completed_at } : {}),

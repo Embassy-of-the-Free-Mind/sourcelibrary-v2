@@ -122,3 +122,34 @@ flag.
 - **A "translated" count is a claim about the current text.** `pages_translated` must be
   resynced in the same pass, or the card still says 3,040 of 3,086 translated for a book
   serving none.
+
+## Holding a book OUT of the derived lane while its page mapping is wrong (#4790)
+
+Sometimes the text is right and the images are right and the *mapping* between page
+number and source leaf is wrong for both at once: 197 Archive-filled books carry their
+IA OCR at a non-zero leaf offset *and* have #3368-shifted images, so text and image agree
+on screen while both point at the neighbouring leaf. Re-pointing the text alone would
+make the error visible (the repair script refuses CLASS C for exactly that reason), so the
+book waits for the joint image+text repair — and everything derived from its pages before
+then is built on a mapping the repair will move. Only the translation lane self-heals
+(`stale-translation.mjs`, above); chapters, index, quality score and embeddings do not.
+
+**The gate is `scripts/lib/pipeline-hold.mjs`: status `held` + marker `pipeline_auto.hold`.**
+The status is what every worker already selects on, so a held book is invisible to every
+lane with no query changed; the marker is what the status *writers* consult (the
+orchestrator's `setPipelineStatus` refuses, direct `updateOne` writers filter on
+`NOT_HELD`), because the way a hold fails is a rollback or a batch write-back that sets
+the status unconditionally. `scripts/audit/pipeline-hold-drift.mjs` reconciles the two daily
+(CLOBBERED / ORPHANED / LEAKED / RELEASABLE). Hold and release with
+`scripts/maintenance/hold-pipeline-books.mjs`; release restores the exact prior status.
+
+**Do not reach for a `derived_hold` flag on the book.** Every selection query would need it,
+and the one you forget is the one that runs. **Do not withhold the page text** for this
+case either: unlike #4523 the text on screen is correct today; the withhold pattern is
+for text that is *wrong*, the hold is for text whose *address* is about to change.
+
+**Corollary — the empty-target pages.** A repair that re-points text to its own leaf can find
+that leaf empty in the source OCR (30 pages on 2026-09-13). Those pages keep the neighbour's
+text; gate them with `ocr.unreadable` (`flag-ia-empty-target-pages.mjs`), which the reader,
+page counts, `translate-core` and the stale-translation sweep all already honour, rather
+than clearing them — clearing is a spend decision (a model read per page) and belongs to a human.

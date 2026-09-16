@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
-import { logGeminiCall } from '@/lib/gemini-logger';
+import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
@@ -167,7 +167,7 @@ export const POST = withAuth(async (request, session, context) => {
 
         const usageMetadata = result.response.usageMetadata;
         const inputTokens = usageMetadata?.promptTokenCount || 0;
-        const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+        const outputTokens = outputTokensFrom(usageMetadata);
         totalInputTokens += inputTokens;
         totalOutputTokens += outputTokens;
 

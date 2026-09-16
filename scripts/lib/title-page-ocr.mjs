@@ -20,10 +20,13 @@ export function pageProse(raw) {
   return String(raw ?? '')
     .replace(/<(warning|meta|image-desc|insert|note|margin|vocab|figure)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/([A-Za-zÀ-ÿ])[-‐‑—]\s*\n\s*([A-Za-zÀ-ÿ])/g, '$1$2')
+    // The centring markers go BEFORE the tag strip: `VII.<-` … `->New York` reads as
+    // one <…> tag otherwise, and everything between them — the title, on the
+    // Maimonides page that exposed it (#4815) — vanishes with it.
+    .replace(/->|<-/g, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/^#+\s*/gm, ' ')
     .replace(/[*_`>]+/g, ' ')
-    .replace(/->|<-/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }

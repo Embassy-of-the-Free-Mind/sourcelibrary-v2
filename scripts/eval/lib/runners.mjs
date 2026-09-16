@@ -6,6 +6,7 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { logUsage } from '../../workers/lib/supabase-usage-logger.mjs';
 import { execFileSync } from 'child_process';
 // Prices come from the one shared table — this file used to carry its own copy,
 // which is how `gemini-3.1-flash-lite` ended up costed 3.3x apart across lanes.
@@ -159,13 +160,33 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
   const outputTokens = usage.candidatesTokenCount || 0;
   const thinkingTokens = usage.thoughtsTokenCount || 0;
 
+  // Every eval harness in scripts/eval reaches Gemini through this one function,
+  // and until 2026-09-14 none of that spend reached a usage store (#4599). Paid
+  // evals run on Hetzner, where the Supabase key is present, so they now land in
+  // the same attribution table as the pipeline. The label says which harness:
+  // pass `opts.endpoint`; unlabelled calls still record, as `eval/runner`.
+  await logUsage({
+    type: opts.usageType || 'other',
+    mode: 'realtime',
+    model,
+    input_tokens: inputTokens,
+    // Billed output = visible + reasoning. The eval tables keep the two apart
+    // (outputTokens / thinkingTokens below); the MONEY never did, which is how
+    // `costUsd` understated every thinking-on arm.
+    output_tokens: outputTokens + thinkingTokens,
+    status: 'success',
+    duration_ms: durationMs,
+    endpoint: opts.endpoint || 'eval/runner',
+    triggered_by: 'manual',
+  }).catch(() => {});
+
   return {
     text,
     model,
     inputTokens,
     outputTokens,
     thinkingTokens,
-    costUsd: calcCost(model, inputTokens, outputTokens),
+    costUsd: calcCost(model, inputTokens, outputTokens + thinkingTokens),
     durationMs,
     finishReason: data.candidates?.[0]?.finishReason || 'unknown',
     ...(thinking && thoughtParts.length > 0 && { thoughtText: thoughtParts.map(p => p.thought || p.text).join('') }),

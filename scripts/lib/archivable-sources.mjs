@@ -36,6 +36,8 @@ export const ARCHIVABLE_SOURCE_HOSTS = [
   'dlc.services',
   'permalinkbnd.bnportugal.gov.pt',
   'cdli.earth',
+  // — verified 200 (4.6MB JPEG, 7.7s) from the Hetzner datacenter IP, 2026-09-15 —
+  'stacks.stanford.edu',
 ];
 
 /** Dot-boundary match: `archive.org` matches `ia1.us.archive.org`, never `evilarchive.org`. */

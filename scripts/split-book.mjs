@@ -34,11 +34,25 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const WITH_OCR = args.includes('--with-ocr');
 const GUTTER_ONLY = args.includes('--gutter-only');
+// Review override for a parked book (#4792): a person who has opened the pages
+// and confirmed the cut is safe records that decision here. It is persisted on
+// the book (pipeline_auto.split_approved) so Phase 1.3 honours it on every later
+// run instead of re-parking. --approve-center = cut at 500; --approve-split=N =
+// cut at N/1000. --by is mandatory: an approval without a name is not a review.
+const APPROVE_CENTER = args.includes('--approve-center');
+const approveSplitArg = args.find(a => a.startsWith('--approve-split='))?.split('=')[1];
+const APPROVE_SPLIT = approveSplitArg != null ? Number(approveSplitArg) : null;
+const APPROVED_BY = args.find(a => a.startsWith('--by='))?.split('=').slice(1).join('=') || null;
+if (APPROVE_CENTER && APPROVE_SPLIT != null) { console.log('Use --approve-center OR --approve-split=N, not both'); process.exit(1); }
+if (APPROVE_SPLIT != null && !(APPROVE_SPLIT > 0 && APPROVE_SPLIT < 1000)) { console.log(`--approve-split must be 1–999 (0–1000 scale), got "${approveSplitArg}"`); process.exit(1); }
+if ((APPROVE_CENTER || APPROVE_SPLIT != null) && !APPROVED_BY) { console.log('An approval needs --by=<name>'); process.exit(1); }
+if ((APPROVE_CENTER || APPROVE_SPLIT != null) && !GUTTER_ONLY) { console.log('Approvals apply to --gutter-only runs'); process.exit(1); }
+const APPROVAL_ARG = APPROVE_CENTER ? 500 : APPROVE_SPLIT;
 let detectGutterPixel; // lazy-loaded in gutter-only mode (avoids sharp import cost on OCR runs) // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
-  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only]');
+  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl] [--approve-center | --approve-split=N] --by=<name>');
   process.exit(1);
 }
 
@@ -141,10 +155,19 @@ async function getOriginalImageUrls(bookId, manifestUrl, pageCount) {
     }
   } catch {}
 
-  // Fallback: IIIF manifest
+  // Fallback: IIIF manifest. A non-OK or non-JSON answer (Harvard's nrs.harvard.edu
+  // returns 429 with an empty body) is "no manifest", not a crash (#4796) — the
+  // caller falls through to its own error message.
   console.log('  No archived copies — falling back to IIIF manifest (slow)');
-  const resp = await fetch(manifestUrl, { signal: AbortSignal.timeout(15000) });
-  const manifest = await resp.json();
+  let manifest;
+  try {
+    const resp = await fetch(manifestUrl, { signal: AbortSignal.timeout(15000) });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    manifest = await resp.json();
+  } catch (e) {
+    console.log(`  Manifest unusable (${e.message?.slice(0, 60)}) — no images from ${manifestUrl}`);
+    return [];
+  }
 
   const canvases = manifest.sequences?.[0]?.canvases || manifest.items || [];
   for (const canvas of canvases) {
@@ -278,12 +301,28 @@ function parseSpreadOCR(ocrText) {
 
 const book = await db.collection('books').findOne(
   { $or: [{ slug: targetSlug }, { id: targetSlug }] },
-  { projection: { id: 1, title: 1, pages_count: 1, slug: 1, split_completed: 1, needs_splitting: 1, image_source: 1 } }
+  { projection: { id: 1, title: 1, pages_count: 1, slug: 1, split_completed: 1, needs_splitting: 1, image_source: 1, language: 1, split_page_order: 1, 'pipeline_auto.split_approved': 1 } }
 );
 
 if (!book) { console.log('Book not found:', targetSlug); process.exit(1); }
 console.log(`\n=== ${book.title} ===`);
 console.log(`Current: ${book.pages_count} pages | needs_splitting: ${book.needs_splitting} | split_completed: ${book.split_completed}`);
+
+// --- Reading order (#4796) ---
+// A spread's two halves become consecutive pages. In a left-to-right book the
+// left leaf is read first; in a right-to-left book (Hebrew, Arabic, Persian,
+// Syriac, Urdu) and a vertically-set CJK book (Chinese, Japanese, Korean) the
+// RIGHT leaf is read first. Emitting left-then-right for every book put 41
+// books' pages in reversed reading order (Pardes Rimmonim: page 101 is ch.
+// 17–18, page 100 is ch. 18–19). `--page-order ltr|rtl` overrides the language
+// default (a modern horizontally-set Japanese book is ltr); the decision is
+// recorded on the book as `split_page_order` so it can be audited and undone.
+const RIGHT_FIRST = /arabic|hebrew|aramaic|syriac|persian|urdu|ottoman|chinese|japanese|korean|manchu/i;
+const orderArg = args.find(a => a.startsWith('--page-order='))?.split('=')[1];
+if (orderArg && orderArg !== 'ltr' && orderArg !== 'rtl') { console.log(`--page-order must be ltr or rtl, got "${orderArg}"`); process.exit(1); }
+const PAGE_ORDER = orderArg || (RIGHT_FIRST.test(String(book.language || '')) ? 'rtl' : 'ltr');
+const SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
+console.log(`Reading order: ${PAGE_ORDER} (${orderArg ? '--page-order' : `language "${book.language || 'unknown'}"`}) — ${SIDE_ORDER[0]} leaf first`);
 
 // --- Step 1: Get original image URLs ---
 const manifestUrl = book.image_source?.iiif_manifest;
@@ -295,7 +334,33 @@ console.log('\n--- Step 1: Get original image URLs ---');
 const existingPageCount = book.pages_count || 0;
 let iiifUrls;
 
-// Try archived copies first — use known page count instead of sequential HEAD probing.
+// Source order (#4796): the book's OWN page records first, then the two
+// /archived/{id}/ naming eras, then the IIIF manifest. The page record is the
+// one place every archiver writes, whatever path convention it used
+// (/pages/{id}/0001.jpg for Harvard and cmc_kloss, /archived/{id}/N.jpg for
+// IA-era books, …). Guessing paths first and falling back to the manifest
+// crashed 19 Harvard books whose manifest answers 429 — the page records had
+// the right URL the whole time.
+// Only safe for never-split books: on an already-split book `photo` is a
+// cropped half, not the spread. A URL that does not carry this book's id is
+// not trusted (#3362: a book-independent key is another book's page).
+if (book.split_completed !== true) {
+  const srcPages = await db.collection('pages')
+    .find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { page_number: 1, archived_photo: 1, photo: 1 } })
+    .sort({ page_number: 1 })
+    .toArray();
+  const urls = srcPages
+    .map(p => [p.archived_photo, p.photo].find(u => typeof u === 'string' && /^https?:\/\//.test(u) && u.includes(book.id)))
+    .filter(Boolean);
+  if (urls.length > 0 && urls.length >= srcPages.length * 0.9) {
+    iiifUrls = urls;
+    console.log(`  Using ${iiifUrls.length} page-record image URLs (provider: ${book.image_source?.provider || 'unknown'})`);
+  } else if (srcPages.length) {
+    console.log(`  Page records: only ${urls.length}/${srcPages.length} carry a book-scoped image URL — trying archive paths`);
+  }
+}
+
+// Archived copies by path — use known page count instead of sequential HEAD probing.
 // BPH books use zero-padded names (0001.jpg), others use plain (1.jpg). Try both.
 const archivePatterns = [
   { fmt: (i) => `${R2_URL}/archived/${book.id}/${String(i).padStart(4, '0')}.jpg`, label: '0001.jpg' },
@@ -335,25 +400,6 @@ for (const pattern of archivePatterns) {
 
 if (!iiifUrls && manifestUrl) {
   iiifUrls = await getOriginalImageUrls(book.id, manifestUrl, existingPageCount);
-}
-
-// Page-record fallback: providers that don't use the /archived/{id}/{n}.jpg
-// convention (e.g. cmc_kloss PDF extracts at /books/{id}/pages/NNNN.jpg, the
-// largest cohort) still carry the correct R2 URL on the page document itself.
-// Only safe for never-split books — on an already-split book `photo` is a
-// cropped half, not the spread. All #2454 first-time splits qualify.
-if (!iiifUrls && book.split_completed !== true) {
-  const srcPages = await db.collection('pages')
-    .find({ book_id: book.id }, { projection: { page_number: 1, archived_photo: 1, photo: 1 } })
-    .sort({ page_number: 1 })
-    .toArray();
-  const urls = srcPages
-    .map(p => p.archived_photo || p.photo)
-    .filter(u => typeof u === 'string' && /^https?:\/\//.test(u));
-  if (urls.length > 0 && urls.length >= srcPages.length * 0.9) {
-    iiifUrls = urls;
-    console.log(`  Using ${iiifUrls.length} page-record image URLs (provider: ${book.image_source?.provider || 'unknown'})`);
-  }
 }
 
 if (!iiifUrls || iiifUrls.length === 0) {
@@ -533,7 +579,13 @@ if (GUTTER_ONLY) {
         let gemPos = null;
         if (gemSampleIdx.has(idx)) {
           if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
-          try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch { /* gemini optional */ }
+          try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch (e) {
+            // Gemini is optional (pixel carries the page) but a silent skip hid
+            // a dead model name / geo-blocked key for months (#4796): count it
+            // and show the first message so "gemini-only 0" is explained.
+            stats.geminiErr = (stats.geminiErr || 0) + 1;
+            if (stats.geminiErr === 1) console.log(`  Gemini gutter sample failed: ${e.message?.slice(0, 100)}`);
+          }
         }
 
         if (pixPos != null && gemPos != null) {
@@ -577,7 +629,7 @@ if (GUTTER_ONLY) {
   // (a 10-page book parked over one diagram page is the failure this fixes).
   // Robust median + MAD over confident positions; scatter = no stable binding.
   const sorted = [...confidentPositions].sort((a, b) => a - b);
-  const median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
+  let median = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 500;
   const mad = sorted.length
     ? [...sorted.map(p => Math.abs(p - median))].sort((a, b) => a - b)[Math.floor(sorted.length / 2)]
     : 0;
@@ -587,16 +639,40 @@ if (GUTTER_ONLY) {
   const enoughSignal = confidentPositions.length >= Math.max(2, Math.ceil(landscapeCount * 0.25));
   const SCATTER_MAD = 60; // 0-1000 → 6% — robust scatter measure (MAD, not stdev: one outlier won't trip it)
   const scattered = confidentPositions.length >= 3 && mad > SCATTER_MAD;
-  console.log(`  Methods: agree ${stats.agree}, pixel-only ${stats.pixelOnly}, gemini-only ${stats.geminiOnly}, disagree ${stats.disagree}, portrait ${stats.portrait}, center-unc ${stats.centerUncertain}, kept-whole-unc ${stats.keptWholeUncertain}`);
+  console.log(`  Methods: agree ${stats.agree}, pixel-only ${stats.pixelOnly}, gemini-only ${stats.geminiOnly}, disagree ${stats.disagree}, portrait ${stats.portrait}, center-unc ${stats.centerUncertain}, kept-whole-unc ${stats.keptWholeUncertain}${stats.geminiErr ? `, GEMINI ERRORS ${stats.geminiErr}` : ''}`);
   console.log(`  Book consensus: median ${median}/1000, MAD ${mad}/1000, ${confidentPositions.length} confident/${landscapeCount} landscape${scattered ? ' — SCATTERED' : ''}`);
 
   // Park only when there's no trustworthy consensus: too few confident pages, or
   // genuinely scattered positions (maps/plates, not a spread book).
-  const parkReason = !enoughSignal
+  let parkReason = !enoughSignal
     ? `only ${confidentPositions.length}/${landscapeCount} landscape pages gave a confident gutter — too little signal`
     : scattered
       ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — inconsistent binding, needs review`
       : null;
+  const consensus = { median, mad, confident: confidentPositions.length, landscape: landscapeCount, methods: { ...stats }, at: new Date() };
+
+  // #4792: a review gate needs a path through it. A recorded approval (from
+  // --approve-center / --approve-split on this run, or persisted on the book by
+  // an earlier one) releases a parked book: the approved position becomes the
+  // book median, uncertain and outlier pages snap to it, confident pages within
+  // OUTLIER_TOL keep their own cut. Nothing here loosens the gate for books
+  // nobody has looked at — without an approval the park below is unchanged.
+  const approval = APPROVAL_ARG != null
+    ? { position: APPROVAL_ARG, by: APPROVED_BY, at: new Date(), consensus_seen: { median, mad, confident: confidentPositions.length, landscape: landscapeCount } }
+    : book.pipeline_auto?.split_approved || null;
+  if (parkReason && approval && typeof approval.position === 'number') {
+    console.log(`  REVIEW OVERRIDE: ${parkReason}`);
+    console.log(`  → approved cut at ${approval.position}/1000 by ${approval.by || 'unknown'} (${approval.at instanceof Date ? approval.at.toISOString() : approval.at}); proceeding`);
+    median = approval.position;
+    parkReason = null;
+    if (APPROVAL_ARG != null && !DRY_RUN) {
+      await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.split_approved': approval, 'pipeline_auto.last_updated': new Date() } });
+    } else if (APPROVAL_ARG != null) {
+      console.log('  (dry run — approval not recorded)');
+    }
+  } else if (approval && typeof approval.position === 'number') {
+    console.log(`  Note: book carries a split approval (${approval.position} by ${approval.by}) but the detector reached consensus on its own — using the detector's median ${median}`);
+  }
 
   // Resolve every landscape page against the consensus: outliers and uncertain
   // pages snap to the book median; pages near the median keep their own (more
@@ -630,6 +706,9 @@ if (GUTTER_ONLY) {
         'pipeline_auto.status': 'needs_attention',
         'pipeline_auto.error': `Split review needed (#2454): ${parkReason}`,
         'pipeline_auto.split_review_needed': true,
+        // What the detector saw, so a reviewer can judge without re-running
+        // (#4792); a reviewed book is released by --gutter-only --approve-center --by=<name>
+        'pipeline_auto.split_consensus': consensus,
         'pipeline_auto.last_updated': new Date(),
       },
     });
@@ -690,8 +769,9 @@ for (let idx = 0; idx < existingPages.length; idx++) {
     } else {
       // Spread: two OCR-less pages; the normal pipeline OCRs them as singles.
       const pos = typeof page._gutter === 'number' ? page._gutter : 500;
-      newPages.push({ side: 'left', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
-      newPages.push({ side: 'right', ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
+      for (const side of SIDE_ORDER) {
+        newPages.push({ side, ocr: null, sourceIdx: idx, splitPosition: pos, splitMethod: method, uncertain: !!page._uncertain });
+      }
     }
     continue;
   }
@@ -702,7 +782,9 @@ for (let idx = 0; idx < existingPages.length; idx++) {
     continue;
   }
 
-  for (const p of parsed.pages) {
+  // parseSpreadOCR returns [left, right]; emit in reading order.
+  const orderedPages = [...parsed.pages].sort((a, b) => SIDE_ORDER.indexOf(a.side) - SIDE_ORDER.indexOf(b.side));
+  for (const p of orderedPages) {
     newPages.push({
       side: p.side,
       ocr: p.ocr,
@@ -932,6 +1014,7 @@ await db.collection('books').updateOne({ id: book.id }, {
     needs_splitting: false,
     split_completed: true,
     split_completed_at: new Date(),
+    split_page_order: PAGE_ORDER, // #4796: which leaf of each spread became the lower page number
     thumbnail: coverPage?.url,
     cover_page: coverPage?.num,
     updated_at: new Date(),
@@ -944,6 +1027,8 @@ if (GUTTER_ONLY) {
   // so no spread prompt and no Phase 1.5 skip).
   await db.collection('books').updateOne({ id: book.id }, {
     $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() },
+    // A book released from the review gate (#4792) must not still read as parked.
+    $unset: { 'pipeline_auto.split_review_needed': '', 'pipeline_auto.error': '' },
   });
   console.log('  Requeued at archive_complete for single-page OCR');
 }

@@ -93,7 +93,13 @@ export function scorePageForCover(page, options = {}) {
       ocr.includes('hathitrust') || ocr.includes('scan sheet') ||
       ocr.includes('e-rara.ch') || ocr.includes('www.e-rara') ||
       ocr.includes('gallica.bnf') || ocr.includes('mdz-nbn') ||
-      ocr.includes('digital.staatsbibliothek') || ocr.includes('daten.digitale-sammlungen')) {
+      ocr.includes('digital.staatsbibliothek') || ocr.includes('daten.digitale-sammlungen') ||
+      // Cornell's insert ("The original of this book is in the Cornell University Library.
+      // There are no known copyright restrictions in the United States on the use of the
+      // text.") — the model tags it title-page on every volume (#4815 hand-read: 4 of 14
+      // sampled "title pages" were this leaf), so the page_type test above never fires.
+      /the original of this book is in the .{0,60}library/.test(ocr) ||
+      ocr.includes('no known copyright restrictions')) {
     return { score: -70, reason: 'digitizer insert' };
   }
 

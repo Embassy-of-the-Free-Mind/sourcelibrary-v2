@@ -538,7 +538,11 @@ export async function GET(request: NextRequest) {
         const esc = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const rx = { $regex: esc, $options: 'i' }; // case-insensitive phrase match on titles
         const imgPresent = { $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] };
-        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 } };
+        // description + enrichment.description must survive this projection, or
+        // artworkToGalleryItem has nothing to fall back to and every search-lane
+        // artwork tile reads as its own title (the #4798 fix covered the browse
+        // lane's projection in gallery-merge.ts only — same bug, second call site).
+        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 } };
         const bboxAspect = (b: any) => b && b.width > 0 && b.height > 0 ? Math.min(3, Math.max(0.33, (b.width / b.height) * 0.72)) : 0.72; // eslint-disable-line @typescript-eslint/no-explicit-any
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mapPlate = (d: any) => ({
@@ -551,7 +555,14 @@ export async function GET(request: NextRequest) {
 
         // (1) Title-matching artworks — strongest signal (e.g. "John the Apostle" in the name)
         const titleArtDocs = await db.collection('books').find(
-          { content_type: 'artwork', visible: true, ...tenantF, $and: [{ $or: [{ title: rx }, { display_title: rx }] }, imgPresent] },
+          // Inscriptions are the words written ON the artwork (enrichment.inscriptions,
+          // transcribed by scripts/artwork-enrichment.mjs). Until now they were rendered on
+          // the artwork page but matched by nothing, so "hypotyposin" — a word that appears
+          // only in Sadeler's engraved caption — returned an anatomy plate. Measured against
+          // production 2026-09-14: adding the two fields to this $or examines the same 57,614
+          // docs as the title-only version (869ms) because the lane already collection-scans.
+          // A dedicated artwork search index is the real fix — see the follow-up issue.
+          { content_type: 'artwork', visible: true, ...tenantF, $and: [{ $or: [{ title: rx }, { display_title: rx }, { 'enrichment.inscriptions': rx }, { 'enrichment.inscriptions_translation': rx }] }, imgPresent] },
           artProj,
         ).limit(10).toArray().catch(() => []);
         // (2) Books whose title matches → their top plates

@@ -199,7 +199,7 @@ async function main() {
   let spent = 0;
   let rung1Applied = 0, rung2Logged = 0;
 
-  async function skepticCall(prompt: string): Promise<{ text: string; queries: string[]; sources: string[]; chunks: Array<{ uri?: string; title?: string }>; cost: number } | { error: string }> {
+  async function skepticCall(prompt: string): Promise<{ text: string; queries: string[]; sources: string[]; chunks: Array<{ uri?: string; title?: string }>; cost: number; inputTokens: number; outputTokens: number } | { error: string }> {
     for (let attempt = 0; attempt <= 2; attempt++) {
       try {
         const ai = new GoogleGenAI({ apiKey: nextKey() });
@@ -212,13 +212,17 @@ async function main() {
         });
         const gm = (resp.candidates?.[0] as { groundingMetadata?: { webSearchQueries?: string[]; groundingChunks?: Array<{ web?: { uri?: string; title?: string } }> } })?.groundingMetadata ?? {};
         const u = resp.usageMetadata ?? {};
-        const cost = costOf(MODEL, u.promptTokenCount ?? 0, (u.candidatesTokenCount ?? 0) + ((u as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0));
+        const inputTokens = u.promptTokenCount ?? 0;
+        // Grounded search needs a POSITIVE thinking budget, so reasoning tokens are
+        // real here and Google bills them at the output rate.
+        const outputTokens = (u.candidatesTokenCount ?? 0) + ((u as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0);
+        const cost = costOf(MODEL, inputTokens, outputTokens);
         return {
           text: resp.text ?? '',
           queries: Array.isArray(gm.webSearchQueries) ? gm.webSearchQueries : [],
           sources: [...new Set((gm.groundingChunks ?? []).map((c) => c?.web?.title || c?.web?.uri).filter((s): s is string => !!s))],
           chunks: (gm.groundingChunks ?? []).map((c) => ({ uri: c?.web?.uri, title: c?.web?.title })),
-          cost,
+          cost, inputTokens, outputTokens,
         };
       } catch (err) {
         const msg = String((err as Error).message ?? err);
@@ -306,6 +310,11 @@ async function main() {
         });
         await db.collection('gemini_usage').insertOne({
           timestamp: new Date(), type: 'ft_ladder_skeptic', model: MODEL, book_id: b.id,
+          // Tokens, not only dollars. Without them this lane is invisible to every
+          // token-based reconciliation — 4,896 rows worth $36.06 in September read
+          // as UNMETERED spend in the billed-vs-metered check, which is the
+          // opposite of what a recorded row should do (#4599).
+          input_tokens: res.inputTokens, output_tokens: res.outputTokens,
           cost_usd: res.cost, status: 'ok', endpoint: 'script/ft-ladder',
         });
       }

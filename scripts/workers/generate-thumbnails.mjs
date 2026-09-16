@@ -313,6 +313,36 @@ async function main() {
     }
   }
 
+  // The vision model gets the AXIS of a sideways plate right and the SIGN wrong about
+  // a third of the time — measured on 20 Talhoffer plates that all need +90: run 1
+  // reported 90 on 12 and 270 on 8, run 2 (same pages) 90 on 14 and 270 on 6, with the
+  // per-page answer flipping between runs (#4780, 2026-09-15). A book's sideways plates
+  // are bound one way, so the sign is a BOOK property: take the majority over every
+  // sideways detection the book has and coerce the minority before cropping. Needs a
+  // clear majority over enough plates; a book with a genuine mix keeps what the model said.
+  const sidewaysByBook = new Map();
+  for (const page of pages) for (const det of page.detected_images || []) {
+    if (det?.rotation === 90 || det?.rotation === 270) {
+      const v = sidewaysByBook.get(page.book_id) || { 90: 0, 270: 0 };
+      v[det.rotation]++; sidewaysByBook.set(page.book_id, v);
+    }
+  }
+  const coerced = [];
+  for (const [bookId, v] of sidewaysByBook) {
+    const n = v[90] + v[270]; if (n < 4) continue;
+    const majority = v[90] >= v[270] ? 90 : 270; const share = v[majority] / n;
+    if (share < 0.6) { console.log(`  [rotation] ${bookId}: ${v[90]}×90 / ${v[270]}×270 — no clear majority, leaving the model's signs`); continue; }
+    for (const item of workItems) {
+      if (item.bookId !== bookId || (item.rotation !== 90 && item.rotation !== 270) || item.rotation === majority) continue;
+      coerced.push({ ...item, from: item.rotation }); item.rotation = majority;
+    }
+    if (coerced.some(c => c.bookId === bookId)) console.log(`  [rotation] ${bookId}: ${v[90]}×90 / ${v[270]}×270 → coercing ${coerced.filter(c => c.bookId === bookId).length} minority-sign detection(s) to ${majority}`);
+  }
+  for (const c of coerced) {
+    await pagesCol.updateOne({ id: c.pageId }, { $set: { [`detected_images.${c.detectionIndex}.rotation`]: c.rotation } });
+    await galleryCol.updateOne({ id: `${c.pageId}-${c.detectionIndex}` }, { $set: { rotation: c.rotation } });
+  }
+
   console.log(`Work items: ${workItems.length} detections across ${pages.length} pages`);
   console.log(`Processing with concurrency=${CONCURRENCY}...\n`);
 

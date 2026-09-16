@@ -37,6 +37,11 @@
  *                 blind to those pages, so they are never offered to the vision
  *                 model and read as "extracted, empty" permanently. Also skips
  *                 pages already examined.
+ *   --page-numbers=101,127,…
+ *                 Confine any mode to these page numbers of --book (a validation
+ *                 or a targeted re-read; without it --all-pages --limit=N takes
+ *                 the first N never-examined pages by page order, i.e. the front
+ *                 matter — measured 2026-09-15: 20 calls, 20 empty).
  *   --all-pages   Offer EVERY never-examined page (page_number > 0, no
  *                 detected_images) to the vision model — no marker, no
  *                 page_type needed. For books whose OCR vintage has neither
@@ -56,10 +61,12 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { readFileSync } from 'fs';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => { const a = args.find(x => x.startsWith(`--${n}=`)); return a ? a.split('=')[1] : d; };
@@ -95,6 +102,8 @@ const PAGE_TYPE_CANDIDATES = args.includes('--page-type-candidates');
 // this is a per-book recovery tool, not a corpus sweep — an unbounded all-pages
 // vision pass over the library would be a five-figure spend.
 const ALL_PAGES = args.includes('--all-pages');
+const PAGE_NUMBERS = (getArg('page-numbers', '') || '').split(',').map(Number).filter(n => Number.isInteger(n) && n > 0);
+if (PAGE_NUMBERS.length && !getArg('book', null)) { console.error('FATAL: --page-numbers requires --book=ID'); process.exit(1); }
 
 if (ALL_PAGES && !getArg('book', null)) {
   console.error('FATAL: --all-pages requires --book=ID (per-book recovery only, never a corpus sweep)');
@@ -141,14 +150,6 @@ function parseExtracted(text) {
   const a = cleaned.match(/\[[\s\S]*\]/);
   if (a) { try { const p = JSON.parse(a[0]); return Array.isArray(p) ? p : []; } catch {} }
   return [];
-}
-function normalizeBbox(raw) {
-  const x = parseFloat(raw.x) || 0, y = parseFloat(raw.y) || 0, width = parseFloat(raw.width) || 0, height = parseFloat(raw.height) || 0;
-  if (x > 1 || y > 1 || width > 1 || height > 1) {
-    const scale = Math.max(x + width, y + height, 1000);
-    return { x: Math.min(x / scale, 0.95), y: Math.min(y / scale, 0.95), width: Math.min(width / scale, 1), height: Math.min(height / scale, 1) };
-  }
-  return { x, y, width, height };
 }
 
 function pageHasNonTrivialHighSigMarker(ocr) {
@@ -205,7 +206,7 @@ async function main() {
     booksScanned++;
     const pages = await db.collection('pages').find({
       book_id: book.id,
-      page_number: { $gt: 0 },
+      page_number: PAGE_NUMBERS.length ? { $in: PAGE_NUMBERS } : { $gt: 0 },
       'detected_images.0': { $exists: false },
       miss_recheck_at: { $exists: false },
       // Default mode re-tests examined-but-empty pages (the vision-missed
@@ -260,14 +261,25 @@ async function main() {
       const ctx = [book.title && `Book: "${book.title}"`, book.author && `Author: ${book.author}`, book.year && `Year: ${book.year}`, book.language && `Language: ${book.language}`, book.subjects?.length && `Subjects: ${book.subjects.join(', ')}`].filter(Boolean).join(' | ');
       const prompt = ctx ? `BOOK CONTEXT:\n${ctx}\n\n${PROMPT}` : PROMPT;
       try {
-        const model = nextClient().getGenerativeModel({ model: MODEL, safetySettings: SAFETY, generationConfig: { temperature: 0.1, maxOutputTokens: 4096, responseMimeType: 'application/json' } });
+        // thinkingBudget 0: image extraction measured not-worse with thinking off
+        // (#4633 A/B, 4 pages — OFF found an emblem ON missed), and flash-preview
+        // otherwise bills ~1.5 thought tokens per visible one (#4581).
+        const model = nextClient().getGenerativeModel({ model: MODEL, safetySettings: SAFETY, generationConfig: { temperature: 0.1, maxOutputTokens: 4096, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } } });
         const res = await model.generateContent([{ text: prompt }, { inlineData: { mimeType: img.mimeType, data: img.data } }]);
+        // Record before parsing — a response we throw away was still billed (#4599).
+        await logUsage({
+          type: 'extract_images', mode: 'realtime', model: MODEL,
+          book_id: page._book, page_ids: [page.id],
+          input_tokens: res.response.usageMetadata?.promptTokenCount || 0,
+          output_tokens: outputTokensFrom(res.response.usageMetadata),
+          status: 'success', endpoint: 'script/reextract-missed-pages', triggered_by: 'workflow',
+        }, db).catch(() => {});
         const now = new Date();
         const raw = parseExtracted(res.response.text())
           .filter(x => x && x.bbox && typeof x.gallery_quality === 'number') // drop zombie rows
           .map(x => ({
             description: x.description || '', type: x.type || 'unknown',
-            bbox: normalizeBbox(x.bbox), confidence: x.confidence,
+            bbox: normalizeBbox(x.bbox) ?? undefined, rotation: normalizeRotation(x.rotation), confidence: x.confidence,
             gallery_quality: x.gallery_quality, gallery_rationale: x.gallery_rationale || undefined,
             metadata: x.metadata || undefined, museum_description: x.museum_description || undefined,
             detected_at: now, detection_source: 'vision_model', model: MODEL,

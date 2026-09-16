@@ -106,3 +106,62 @@ the OCR count is still growing, or the state machine is an infinite loop.
 The 13,329 existing books are NOT repaired by that fix — finalize only revisits
 `cover_selected`. Requeuing them queues ~$8,000 of OCR and translation behind the next
 open valve, which is actuation two hops upstream of the spend and belongs to a human.
+
+## `held` — the one status a worker may never write (#4790)
+
+`held` is set only by `scripts/lib/pipeline-hold.mjs` (via
+`scripts/maintenance/hold-pipeline-books.mjs`) and always together with
+`pipeline_auto.hold` — reason, issue, `held_at`, `held_from_status`, and a one-sentence
+release condition. No phase selects it, so a held book leaves every lane; and
+`setPipelineStatus` refuses any other status while the marker is present, so no rollback
+or retry can put it back. Release restores `held_from_status` and records a
+`pipeline_release` book_event. It is the opposite of `needs_attention`: not "something went
+wrong, a human should look" but "nothing is wrong yet, and running the lane would make it
+so". `scripts/audit/pipeline-hold-drift.mjs` finds a marker without the status (a writer
+this rule does not know about) and a hold whose release condition has been met.
+
+## A completion predicate must count what the writer actually writes (#4839)
+
+*Added 2026-09-15.*
+
+A job finishes when `progress.completed + failed >= total`. For image extraction the
+writer recounted `completed` as "target pages carrying `detected_images`" — but a
+candidate page the model looked at and found **no illustrations on** never gets that
+field, because the writer deliberately refuses to overwrite existing detections with an
+empty array. Such a page is extracted, paid for, and permanently uncounted. Every book
+with one illustration-free page parked at `completed = total − k` forever.
+
+**The two sides of a job must agree on what "done" means.** The extraction Lambda already
+had the honest test — it skips a page whose `image_extraction_updated_at >= job.created_at`
+— while the counter used a different one. Where a worker and its writer each carry their
+own notion of completion, they drift, and the drift is silent: no error, no failure count,
+just a job that never finishes.
+
+**A reaper that cancels is a re-dispatcher.** Cancelling the stalled job unset `book.job`;
+the orphan detector then rolled the book back and Phase 8 re-submitted **every page**, not
+the missing ones — every ~35 minutes, indefinitely. Measured to 2026-09-14: 1,385
+cancellations and 3,209 re-paid pages in 7 days; of 40 cancelled jobs sampled by their own
+`gemini_usage` rows, **all 40** had already paid for every page they were cancelled over.
+So: **finalize on drain, not on an exact count** (`scripts/workers/lib/image-job-drain.mjs`),
+and record the pages that never reported on the job row — an abandoned page must be
+findable, never a silent skip.
+
+**A detector that runs before the advance step will undo it.** The orphan detector (Phase 4)
+fires before Phase 8's completion check, and the writer unsets `book.job` the moment a job
+completes — so a *correctly finished* book looked exactly like an orphan. **59 of the last
+60 successfully completed image jobs were re-dispatched this way.** Before rolling a book
+back for want of a job, check whether the job it names has already finished.
+
+**Tell:** a lane whose jobs are almost all `cancelled` with a healthy `completed` count
+inside them, or a book whose `pipeline_auto.status` oscillates between a `*_submitted`
+state and the state before it.
+
+## Measuring a loop: the field that holds only the LATEST value (#4839)
+
+The first retrospective here said 391 of 400 cancelled jobs had produced nothing — because
+it asked `image_extraction_updated_at`, which keeps only the most recent extraction, so
+every earlier cycle's work had been overwritten by a later one and read as "never
+attempted". `gemini_usage` rows carry their own `job_id` and cannot be overwritten; judged
+by those, the same population was 40/40 fully paid. **When measuring what a past run did,
+use a record that is append-only per run, never a last-write-wins field on the object the
+run touched.**

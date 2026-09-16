@@ -46,6 +46,7 @@ import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { bucketByLeafDriftClass } from '../lib/ia-leaf-drift-class.mjs';
 
 const arg = (k, d) => { const eq = process.argv.find((a) => a.startsWith(`${k}=`)); if (eq) return eq.slice(k.length + 1); const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply'), CLEAR_EMPTY = process.argv.includes('--clear-empty');
@@ -58,15 +59,10 @@ const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
 const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
 function loadLeaves(iaId) { const j = path.join(CACHE, `${iaId}.leaves.json`); if (!fs.existsSync(j)) return null; return JSON.parse(fs.readFileSync(j, 'utf8')).map(dehyphenateLineBreaks); }
 
-/** CLASS from a joined row: A = repair, C = hold (agree on screen / cannot classify), B = not ours, OK = nothing to do. */
-function classOf(r) {
-  if (r.offset === 0) return r.cls?.includes('SHIFTED') ? 'B' : 'OK';
-  if (r.cls?.includes('SHIFTED') || r.cls?.includes('ambiguous') || r.cls?.includes('no scandata')) return 'C';
-  return 'A'; // iiif-archived, images ALIGNED, or no excluded leaf before the written pages
-}
-
+// CLASS per row lives in scripts/lib/ia-leaf-drift-class.mjs, shared with the pipeline hold
+// (hold-pipeline-books.mjs) so both read the same A/B/C/OK from a joined row.
 const rows = fs.readFileSync(FROM, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
-const byClass = { A: [], B: [], C: [], OK: [] }; for (const r of rows) byClass[classOf(r)].push(r);
+const byClass = bucketByLeafDriftClass(rows);
 console.log(`classes from ${FROM}: A (repair) ${byClass.A.length} books / ${byClass.A.reduce((s, r) => s + r.written, 0)} written pages | C (hold) ${byClass.C.length} / ${byClass.C.reduce((s, r) => s + r.written, 0)} | B (image repair) ${byClass.B.length} / ${byClass.B.reduce((s, r) => s + r.written, 0)} | OK ${byClass.OK.length}`);
 const targets = (BOOK ? byClass.A.filter((r) => r.book_id === BOOK) : byClass.A).slice(0, LIMIT);
 if (BOOK && !targets.length) { console.error(`${BOOK} is not CLASS A — refusing`); process.exit(2); }

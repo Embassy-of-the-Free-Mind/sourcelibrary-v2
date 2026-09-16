@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { outputTokensFrom } from '@/lib/gemini-logger';
 
 // Lazy: resolving an API key at module scope would turn a missing
 // GEMINI_API_KEY into an import-time throw, and route modules are imported
@@ -96,7 +97,7 @@ Example output: 487`;
     // Get token usage for cost tracking
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const outputTokens = outputTokensFrom(usageMetadata);
 
     return NextResponse.json({
       position,
